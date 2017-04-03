@@ -8,15 +8,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
-        <activity android:name=".activity.started.StartedActivity">
+        android:theme="@android:style/Theme.DeviceDefault">
+        <activity
+            android:name=".activity.started.StartedActivity"
+            android:theme = "@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.main.MainActivity"></activity>
+        <activity android:name=".activity.main.MainActivity">
+        </activity>
     </application>
 
 </manifest>

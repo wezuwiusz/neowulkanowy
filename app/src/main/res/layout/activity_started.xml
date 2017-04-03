@@ -28,7 +28,7 @@
         android:id="@+id/logoImage"
         android:layout_width="201dp"
         android:layout_height="176dp"
-        app:srcCompat="@drawable/logo_image"
+        android:src="@drawable/logo_image"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/nameApp"
