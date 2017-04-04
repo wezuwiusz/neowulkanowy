@@ -5,4 +5,7 @@
     <string name="pass_hint">Password</string>
     <string name="email_hint">E-mail</string>
     <string name="login_button">Log in</string>
+    <string name="county_hint">County</string>
+    <string name="warning_text">This application is not complete, so there may be a variety of errors or features that will not work. Please be patient and understanding.</string>
+    <string name="warning_label">Warning</string>
 </resources>

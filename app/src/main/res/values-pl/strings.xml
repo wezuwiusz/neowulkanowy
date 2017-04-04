@@ -6,4 +6,7 @@
     <string name="pass_hint">Hasło</string>
     <string name="email_hint">E-mail</string>
     <string name="login_button">Zaloguj</string>
+    <string name="county_hint">Powiat</string>
+    <string name="warning_text">Aplikacja ta nie jest ukończona, więc mogą występować różnego rodzaju błędy lub dane funkcje nie bedą działać. Prosimy o cierpliwość i wyrozumiałość.</string>
+    <string name="warning_label">Ostrzeżenie</string>
 </resources>
