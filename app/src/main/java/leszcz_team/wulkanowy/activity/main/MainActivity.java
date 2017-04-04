@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 
     private void autoComplete(){
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, COUNTRIES);
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 findViewById(R.id.county_text);
