@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.main.MainActivity">
+        <activity
+            android:name=".activity.main.MainActivity"
+            android:label="@string/login_title">
         </activity>
     </application>
 

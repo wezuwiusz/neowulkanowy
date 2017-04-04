@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Wulkanowy</string>
     <string name="under_logo">Raw version</string>
+    <string name="login_title">Login</string>
+    <string name="pass_hint">Password</string>
+    <string name="email_hint">E-mail</string>
+    <string name="login_button">Log in</string>
 </resources>
