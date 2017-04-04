@@ -67,10 +67,11 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.712" />
+        app:layout_constraintVertical_bias="0.712"
+        android:onClick="login"/>
 
     <AutoCompleteTextView
-        android:id="@+id/county_text"
+        android:id="@+id/countyText"
         android:layout_width="215dp"
         android:layout_height="45dp"
         android:hint="@string/county_hint"

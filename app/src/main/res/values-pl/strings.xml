@@ -9,4 +9,6 @@
     <string name="county_hint">Powiat</string>
     <string name="warning_text">Aplikacja ta nie jest ukończona, więc mogą występować różnego rodzaju błędy lub dane funkcje nie bedą działać. Prosimy o cierpliwość i wyrozumiałość.</string>
     <string name="warning_label">Ostrzeżenie</string>
+    <string name="data_text">Brak danych logowania</string>
+    <string name="error_feature_text">Funkcja którą chciałeś urucThe function you wanted to run does not workhomić nie działa</string>
 </resources>
