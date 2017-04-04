@@ -1,0 +1,28 @@
+image: registry.gitlab.com/showcheap/android-ci:T24-B25.0.1
+
+before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - chmod +x ./gradlew
+
+cache:
+  paths:
+     - .gradle/wrapper
+     - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+    - app/build/outputs/
+
+unitTests:
+  stage: test
+  script:
+    - ./gradlew test
+
+functionalTests:
+  stage: test
+  script:
+     - ./gradlew check
