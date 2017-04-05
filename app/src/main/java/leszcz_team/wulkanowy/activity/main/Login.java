@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Map;
@@ -16,7 +18,7 @@ public class Login extends AsyncTask<Void, Void, Void> {
     String password;
     String county;
     Activity activity;
-    String test;
+    String userMesage;
 
     public Login(String emailT, String passwordT, String countyT, Activity mainAC){
 
@@ -42,9 +44,11 @@ public class Login extends AsyncTask<Void, Void, Void> {
 
             Map<String, String> loginCookies = initial.cookies();
 
+            CheckPass checkPass = new CheckPass(initial);
+            userMesage = checkPass.start();
         }
         catch (IOException e){
-            test = e.toString();
+            userMesage = e.toString();
         }
 
         return null;
@@ -52,6 +56,8 @@ public class Login extends AsyncTask<Void, Void, Void> {
 
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        Toast.makeText(activity, test, Toast.LENGTH_LONG).show();
+        if (!userMesage.isEmpty()){
+            Toast.makeText(activity, userMesage, Toast.LENGTH_LONG).show();
+        }
     }
 }
