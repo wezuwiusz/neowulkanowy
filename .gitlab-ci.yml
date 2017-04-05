@@ -13,9 +13,11 @@ build:
   stage: build
   script:
     - ./gradlew assembleDebug
+    - mv app/build/outputs/apk/app-debug.apk .
   artifacts:
+    name: "${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}-${CI_BUILD_ID}"
     paths:
-    - app/build/outputs/
+    - app-debug.apk
 
 unitTests:
   stage: test
