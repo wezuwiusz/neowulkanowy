@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
         String email = adressEmail.getText().toString();
         String county = countyText.getText().toString();
 
-        if (password.isEmpty()|| email.isEmpty() || county.isEmpty()){
+        if (password.isEmpty() || email.isEmpty() || county.isEmpty()){
             Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
         }
         else{

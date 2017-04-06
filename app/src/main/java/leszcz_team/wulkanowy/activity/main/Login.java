@@ -7,8 +7,8 @@ import android.widget.Toast;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.jsoup.helper.HttpConnection.Response;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -19,15 +19,15 @@ public class Login extends AsyncTask<Void, Void, Void> {
     String email;
     String password;
     String county;
+
+    Map<String, String> loginCookies;
+
     Activity activity;
     String userMesage;
-    String wresults;
-    String wa;
-    Document doc4;
-    String htmlDefault = "https://cufs.vulcan.net.pl/Default/Account/LogOn";
-    String htmlStage2 = "https://cufs.vulcan.net.pl/{locationID}/FS/LS?wa=wsignin1.0&wtrealm=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx&wctx=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx";
-    String htmlStage3 = "https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx";
 
+    String urlForStepOne = "https://cufs.vulcan.net.pl/Default/Account/LogOn";
+    String urlForStepTwo = "https://cufs.vulcan.net.pl/{locationID}/FS/LS?wa=wsignin1.0&wtrealm=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx&wctx=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx";
+    String urlForStepThree = "https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx";
 
     public Login(String emailT, String passwordT, String countyT, Activity mainAC){
 
@@ -42,45 +42,72 @@ public class Login extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
 
         try {
-            Connection.Response initial = Jsoup
-                    .connect(htmlDefault)
-                    .data("LoginName", email)
-                    .data("Password", password)
-                    .method(Connection.Method.POST)
-                    .execute();
+            if (!stepOne()) {
+                return null;
+            }
 
-            Map<String, String> loginCookies = initial.cookies();
+            Document certificate = stepTwo();
 
-            CheckPass checkPass = new CheckPass(initial);
-            userMesage = checkPass.start();
+            Connection.Response step3 = stepThree(certificate);
+            Document dashboardHtml = step3.parse();
 
-            county = county.replace("ł", "l");
-            htmlStage2 = htmlStage2.replace("{locationID}", county);
+            Elements mesageAlert = dashboardHtml.getElementsByClass("welcome");
+            String helloText = dashboardHtml.getElementsByClass("welcome").text();
 
-            Document doc = Jsoup.connect(htmlStage2)
-                    .cookies(loginCookies)
-                    .get();
-
-            Elements wresultsInput = doc.select("input[name=wresult]");
-            wresults = wresultsInput.attr("value");
-
-            Elements waInput = doc.select("input[name=wa]");
-            wa = waInput.attr("value");
-
-            htmlStage3 = htmlStage3.replace("{locationID}", county);
-
-            doc4 = Jsoup.connect(htmlStage3)
-                    .data("wa", wa)
-                    .data("wresults", wresults)
-                    .post();
-
-
+            if (helloText.equals("Dzień dobry!")) {
+                userMesage = "Zalogowano pomyślnie! " + helloText;
+            } else {
+                userMesage = "Coś poszło nie tak :/";
+            }
         }
         catch (IOException e){
             userMesage = e.toString();
         }
 
         return null;
+    }
+
+    private boolean stepOne() throws IOException {
+        Connection.Response initial = Jsoup
+                .connect(urlForStepOne)
+                .data("LoginName", email)
+                .data("Password", password)
+                .method(Connection.Method.POST)
+                .execute();
+
+        loginCookies = initial.cookies();
+
+        CheckPass checkPass = new CheckPass(initial);
+        userMesage = checkPass.start();
+
+        return userMesage.isEmpty();
+    }
+
+    private Document stepTwo() throws IOException {
+        county = county.replace("ł", "l");
+        urlForStepTwo = urlForStepTwo.replace("{locationID}", county);
+
+        return Jsoup.connect(urlForStepTwo)
+                .cookies(loginCookies)
+                .get();
+    }
+
+    private Connection.Response stepThree(Document certificate) throws IOException {
+        Elements wresultsInput = certificate.select("input[name=wresult]");
+        String wresults = wresultsInput.attr("value");
+
+        Elements waInput = certificate.select("input[name=wa]");
+        String wa = waInput.attr("value");
+
+        urlForStepThree = urlForStepThree.replace("{locationID}", county);
+
+        return Jsoup.connect(urlForStepThree)
+                .data("wa", wa)
+                .data("wresult", wresults)
+                .cookies(loginCookies)
+                .followRedirects(true)
+                .method(Connection.Method.POST)
+                .execute();
     }
 
     protected void onPostExecute(Void result) {
