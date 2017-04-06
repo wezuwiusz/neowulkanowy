@@ -51,7 +51,6 @@ public class Login extends AsyncTask<Void, Void, Void> {
             Connection.Response step3 = stepThree(certificate);
             Document dashboardHtml = step3.parse();
 
-            Elements mesageAlert = dashboardHtml.getElementsByClass("welcome");
             String helloText = dashboardHtml.getElementsByClass("welcome").text();
 
             if (helloText.equals("Dzień dobry!")) {
