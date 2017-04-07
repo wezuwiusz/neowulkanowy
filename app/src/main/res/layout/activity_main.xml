@@ -72,6 +72,8 @@
 
     <AutoCompleteTextView
         android:id="@+id/countyText"
+        android:imeOptions="actionDone"
+        android:inputType="text"
         android:layout_width="215dp"
         android:layout_height="45dp"
         android:hint="@string/county_hint"
