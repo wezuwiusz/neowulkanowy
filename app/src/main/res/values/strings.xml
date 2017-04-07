@@ -10,4 +10,6 @@
     <string name="warning_label">Warning</string>
     <string name="data_text">No login data</string>
     <string name="error_feature_text">The function you wanted to run does not work</string>
+    <string name="login_accepted">Login is successful</string>
+    <string name="login_denied">Login is failed</string>
 </resources>

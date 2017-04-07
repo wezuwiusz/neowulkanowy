@@ -8,11 +8,11 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.jsoup.helper.HttpConnection.Response;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.Map;
+
+import leszcz_team.wulkanowy.R;
 
 public class Login extends AsyncTask<Void, Void, Void> {
 
@@ -25,17 +25,30 @@ public class Login extends AsyncTask<Void, Void, Void> {
     Activity activity;
     String userMesage;
 
-    String urlForStepOne = "https://cufs.vulcan.net.pl/Default/Account/LogOn";
-    String urlForStepTwo = "https://cufs.vulcan.net.pl/{locationID}/FS/LS?wa=wsignin1.0&wtrealm=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx&wctx=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx";
-    String urlForStepThree = "https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx";
+    String urlForStepOne;
+    String urlForStepTwo;
+    String urlForStepThree;
 
     public Login(String emailT, String passwordT, String countyT, Activity mainAC){
 
-        email = emailT;
-        password = passwordT;
-
-        county = "powiat" + countyT.substring(7);
         activity = mainAC;
+
+        if (emailT.equals("Debug")){
+            urlForStepOne = activity.getString(R.string.urlStepOneDebug);
+            urlForStepTwo = activity.getString(R.string.urlStepTwoDebug);
+            urlForStepThree = activity.getString(R.string.urlStepThreeDebug);
+            county = activity.getString(R.string.countyDebug);
+            email = activity.getString(R.string.emailDebug);
+            password = passwordT;
+        }
+        else{
+            urlForStepOne = activity.getString(R.string.urlStepOneRelease);
+            urlForStepTwo = activity.getString(R.string.urlStepTwoRelease);
+            urlForStepThree = activity.getString(R.string.urlStepThreeRelease);
+            county = "powiat" + countyT.substring(7);
+            email = emailT;
+            password = passwordT;
+        }
     }
 
     @Override
@@ -54,9 +67,10 @@ public class Login extends AsyncTask<Void, Void, Void> {
             String helloText = dashboardHtml.getElementsByClass("welcome").text();
 
             if (helloText.equals("Dzień dobry!")) {
-                userMesage = "Zalogowano pomyślnie! " + helloText;
-            } else {
-                userMesage = "Coś poszło nie tak :/";
+                userMesage = activity.getString(R.string.login_accepted);
+            }
+            else {
+                userMesage = activity.getString(R.string.login_denied);
             }
         }
         catch (IOException e){

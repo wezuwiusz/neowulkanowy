@@ -54,11 +54,12 @@ public class MainActivity extends Activity {
         String email = adressEmail.getText().toString();
         String county = countyText.getText().toString();
 
-        if (password.isEmpty() || email.isEmpty() || county.isEmpty()){
-            Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
-        }
-        else{
+        if (!email.isEmpty() || !password.isEmpty() || !county.isEmpty()){
             new Login(email, password, county, this).execute();
+        }
+        else if (password.isEmpty() || email.isEmpty() || county.isEmpty()) {
+            Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
+
         }
 
     }
