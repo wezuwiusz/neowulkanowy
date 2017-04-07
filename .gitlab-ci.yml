@@ -1,4 +1,4 @@
-image: registry.gitlab.com/showcheap/android-ci:T24-B25.0.1
+image: registry.gitlab.com/showcheap/android-ci:T25-B25.0.2
 
 before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
@@ -23,8 +23,14 @@ unitTests:
   stage: test
   script:
     - ./gradlew test
+  artifacts:
+    paths:
+    - app/build/reports
 
 functionalTests:
   stage: test
   script:
      - ./gradlew check
+  artifacts:
+    paths:
+    - app/build/reports

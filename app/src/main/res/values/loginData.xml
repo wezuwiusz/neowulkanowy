@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-        <string name="urlStepOneRelease">https://cufs.vulcan.net.pl/Default/Account/LogOn</string>
-        <string name="urlStepTwoRelease">https://cufs.vulcan.net.pl/{locationID}/FS/LS?wa=wsignin1.0&amp;wtrealm=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx&amp;wctx=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx</string>
-        <string name="urlStepThreeRelease">https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx"</string>
-        <string name="urlStepOneDebug">https://cufsdemo.vulcan.net.pl/Default/Account/LogOn</string>
-        <string name="urlStepTwoDebug">https://cufsdemo.vulcan.net.pl/{locationID}/FS/LS?wa=wsignin1.0&amp;wtrealm=https://uonetplusdemo.vulcan.net.pl/{locationID}/LoginEndpoint.aspx&amp;wctx=https://uonetplusdemo.vulcan.net.pl/{locationID}/LoginEndpoint.aspx</string>
-        <string name="urlStepThreeDebug">https://uonetplusdemo.vulcan.net.pl/{locationID}/LoginEndpoint.aspx"</string>
-        <string name="emailDebug">u43063@demouonetplus.vulcan.net.pl</string>
-        <string name="countyDebug">demouonetplus</string>
-
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="urlStepOneRelease">https://cufs.vulcan.net.pl/Default/Account/LogOn</string>
+    <string name="urlStepTwoRelease">https://cufs.vulcan.net.pl/{locationID}/FS/LS?wa=wsignin1.0&amp;wtrealm=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx&amp;wctx=https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx</string>
+    <string name="urlStepThreeRelease">https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx"</string>
+    <string name="urlStepOneDebug">https://cufsdemo.vulcan.net.pl/Default/Account/LogOn</string>
+    <string name="urlStepTwoDebug">https://cufsdemo.vulcan.net.pl/{locationID}/FS/LS?wa=wsignin1.0&amp;wtrealm=https://uonetplusdemo.vulcan.net.pl/{locationID}/LoginEndpoint.aspx&amp;wctx=https://uonetplusdemo.vulcan.net.pl/{locationID}/LoginEndpoint.aspx</string>
+    <string name="urlStepThreeDebug">https://uonetplusdemo.vulcan.net.pl/{locationID}/LoginEndpoint.aspx"</string>
+    <string name="emailDebug">u43063@demouonetplus.vulcan.net.pl</string>
+    <string name="countyDebug">demouonetplus</string>
 </resources>
