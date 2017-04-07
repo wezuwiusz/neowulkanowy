@@ -14,10 +14,6 @@ import leszcz_team.wulkanowy.R;
 
 public class MainActivity extends Activity {
 
-    private static final String[] COUNTRIES = new String[] {
-            "Powiat jarosławski", "Powiat przeworski"
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,17 +29,18 @@ public class MainActivity extends Activity {
                 .show();
 
         autoComplete();
-
     }
 
     private void autoComplete(){
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                findViewById(R.id.countyText);
+        // Get a reference to the AutoCompleteTextView in the layout
+        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.countyText);
+        // Get the string array
+        String[] countries = getResources().getStringArray(R.array.counties_array);
+        // Create the adapter and set it to the AutoCompleteTextView
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countries);
         textView.setAdapter(adapter);
-
     }
 
     public void login(View a){
