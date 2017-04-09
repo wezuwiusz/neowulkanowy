@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
         <activity
-            android:name=".activity.splash.SplashActivity"
-            android:theme = "@style/SplashTheme">
+            android:name=".activity.started.StartedActivity"
+            android:theme = "@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
