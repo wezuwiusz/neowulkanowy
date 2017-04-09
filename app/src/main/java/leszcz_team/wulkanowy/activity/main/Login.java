@@ -50,7 +50,7 @@ public class Login extends AsyncTask<Void, Void, Void> {
             urlForStepOne = activity.getString(R.string.urlStepOneRelease);
             urlForStepTwo = activity.getString(R.string.urlStepTwoRelease);
             urlForStepThree = activity.getString(R.string.urlStepThreeRelease);
-            county = "powiat" + countyT.substring(7);
+            county = countyT;
             email = emailT;
             password = passwordT;
         }
@@ -112,7 +112,6 @@ public class Login extends AsyncTask<Void, Void, Void> {
     }
 
     private Document stepTwo() throws IOException {
-        county = county.replace("ł", "l");
         urlForStepTwo = urlForStepTwo.replace("{locationID}", county);
 
         return Jsoup.connect(urlForStepTwo)

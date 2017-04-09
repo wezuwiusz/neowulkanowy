@@ -1,223 +1,565 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string-array name="counties_array">
-        <item value="powiatboleslawiecki">Powiat bolesławiecki</item>
-        <item value="powiataleksandrowski">Powiat aleksandrowski</item>
-        <item value="powiatbialski">Powiat bialski</item>
-        <item value="powiatgorzowski">Powiat gorzowski</item>
-        <item value="powiatbelchatowski">Powiat bełchatowski</item>
-        <item value="powiatbochenski">Powiat bocheński</item>
-        <item value="powiatbialobrzeski">Powiat białobrzeski</item>
-        <item value="powiatbrzeski">Powiat brzeski</item>
-        <item value="powiatbieszczadzki">Powiat bieszczadzki</item>
-        <item value="powiataugustowski">Powiat augustowski</item>
-        <item value="powiatbedzinski">Powiat będziński</item>
-        <item value="powiatchodzieski">Powiat chodzieski</item>
-        <item value="powiatbrodnicki">Powiat brodnicki</item>
-        <item value="powiatbilgorajski">Powiat biłgorajski</item>
-        <item value="powiatkrosnienski">Powiat krośnieński</item>
-        <item value="powiatbrzeski">Powiat brzeski</item>
-        <item value="powiatciechanowski">Powiat ciechanowski</item>
-        <item value="powiatbrzozowski">Powiat brzozowski</item>
-        <item value="powiatchojnicki">Powiat chojnicki</item>
-        <item value="powiatbielski">Powiat bielski</item>
-        <item value="powiatjedrzejowski">Powiat jędrzejowski</item>
-        <item value="powiatbraniewski">Powiat braniewski</item>
-        <item value="powiatczarnkowskotrzcianecki">Powiat czarnkowsko-trzcianecki</item>
-        <item value="powiatglogowski">Powiat głogowski</item>
-        <item value="powiatbydgoski">Powiat bydgoski</item>
-        <item value="powiatlaski">Powiat łaski</item>
-        <item value="powiatchrzanowski">Powiat chrzanowski</item>
-        <item value="powiatgarwolinski">Powiat garwoliński</item>
-        <item value="powiatkedzierzynskokozielski">Powiat kędzierzyńsko-kozielski</item>
-        <item value="powiatdebicki">Powiat dębicki</item>
-        <item value="powiatbielski">Powiat bielski</item>
-        <item value="powiatczluchowski">Powiat człuchowski</item>
-        <item value="powiatcieszynski">Powiat cieszyński</item>
-        <item value="powiatdzialdowski">Powiat działdowski</item>
-        <item value="powiatgnieznienski">Powiat gnieźnieński</item>
-        <item value="powiatchelminski">Powiat chełmiński</item>
-        <item value="powiathrubieszowski">Powiat hrubieszowski</item>
-        <item value="powiatnowosolski">Powiat nowosolski</item>
-        <item value="powiatleczycki">Powiat łęczycki</item>
-        <item value="powiatdabrowski">Powiat dąbrowski</item>
-        <item value="powiatjaroslawski">Powiat jarosławski</item>
-        <item value="powiatczestochowski">Powiat częstochowski</item>
-        <item value="powiatkielecki">Powiat kielecki</item>
-        <item value="powiatgostynski">Powiat gostyński</item>
-        <item value="powiatgoleniowski">Powiat goleniowski</item>
-        <item value="powiatgolubskodobrzynski">Powiat golubsko-dobrzyński</item>
-        <item value="powiatjanowski">Powiat janowski</item>
-        <item value="powiatslubicki">Powiat słubicki</item>
-        <item value="powiatlowicki">Powiat łowicki</item>
-        <item value="powiatgorlicki">Powiat gorlicki</item>
-        <item value="powiatkrapkowicki">Powiat krapkowicki</item>
-        <item value="powiatjasielski">Powiat jasielski</item>
-        <item value="powiatkartuski">Powiat kartuski</item>
-        <item value="powiatgliwicki">Powiat gliwicki</item>
-        <item value="powiatkonecki">Powiat konecki</item>
-        <item value="powiatelcki">Powiat ełcki</item>
-        <item value="powiatjeleniogorski">Powiat jeleniogórski</item>
-        <item value="powiatkrasnostawski">Powiat krasnostawski</item>
-        <item value="powiatlodzkiwschodni">Powiat łódzki wschodni</item>
-        <item value="powiatkrakowski">Powiat krakowski</item>
-        <item value="powiatgrojecki">Powiat grójecki</item>
-        <item value="powiatkoscierski">Powiat kościerski</item>
-        <item value="powiatklobucki">Powiat kłobucki</item>
-        <item value="powiatopatowski">Powiat opatowski</item>
-        <item value="powiatgizycki">Powiat giżycki</item>
-        <item value="powiatjarocinski">Powiat jarociński</item>
-        <item value="powiatgryfinski">Powiat gryfiński</item>
-        <item value="powiatinowroclawski">Powiat inowrocławski</item>
-        <item value="powiatkrasnicki">Powiat kraśnicki</item>
-        <item value="powiatopoczynski">Powiat opoczyński</item>
-        <item value="powiatlimanowski">Powiat limanowski</item>
-        <item value="powiatkozienicki">Powiat kozienicki</item>
-        <item value="powiatnyski">Powiat nyski</item>
-        <item value="powiatkrosnienski">Powiat krośnieński</item>
-        <item value="powiatlubliniecki">Powiat lubliniecki</item>
-        <item value="powiatostrowiecki">Powiat ostrowiecki</item>
-        <item value="powiatkaliski">Powiat kaliski</item>
-        <item value="powiatkamienski">Powiat kamieński</item>
-        <item value="powiatklodzki">Powiat kłodzki</item>
-        <item value="powiatlipnowski">Powiat lipnowski</item>
-        <item value="powiatlubartowski">Powiat lubartowski</item>
-        <item value="powiatpabianicki">Powiat pabianicki</item>
-        <item value="powiatoleski">Powiat oleski</item>
-        <item value="powiatlezajski">Powiat leżajski</item>
-        <item value="powiatmoniecki">Powiat moniecki</item>
-        <item value="powiatleborski">Powiat lęborski</item>
-        <item value="powiatmikolowski">Powiat mikołowski</item>
-        <item value="powiatketrzynski">Powiat kętrzyński</item>
-        <item value="powiatkepinski">Powiat kępiński</item>
-        <item value="powiatkolobrzeski">Powiat kołobrzeski</item>
-        <item value="powiatmogilenski">Powiat mogileński</item>
-        <item value="powiatlubelski">Powiat lubelski</item>
-        <item value="powiatzielonogorski">Powiat zielonogórski</item>
-        <item value="powiatmyslenicki">Powiat myślenicki</item>
-        <item value="powiatopolski">Powiat opolski</item>
-        <item value="powiatlubaczowski">Powiat lubaczowski</item>
-        <item value="powiatmalborski">Powiat malborski</item>
-        <item value="powiatmyszkowski">Powiat myszkowski</item>
-        <item value="powiatsandomierski">Powiat sandomierski</item>
-        <item value="powiatkolski">Powiat kolski</item>
-        <item value="powiatlubanski">Powiat lubański</item>
-        <item value="powiatnakielski">Powiat nakielski</item>
-        <item value="powiatzaganski">Powiat żagański</item>
-        <item value="powiatpiotrkowski">Powiat piotrkowski</item>
-        <item value="powiatnowosadecki">Powiat nowosądecki</item>
-        <item value="powiatsiemiatycki">Powiat siemiatycki</item>
-        <item value="powiatnowodworski">Powiat nowodworski</item>
-        <item value="powiatpszczynski">Powiat pszczyński</item>
-        <item value="powiatskarzyski">Powiat skarżyski</item>
-        <item value="powiatkoninski">Powiat koniński</item>
-        <item value="powiatlubinski">Powiat lubiński</item>
-        <item value="powiatradziejowski">Powiat radziejowski</item>
-        <item value="powiatlukowski">Powiat łukowski</item>
-        <item value="powiatzarski">Powiat żarski</item>
-        <item value="powiatpoddebicki">Powiat poddębicki</item>
-        <item value="powiatmakowski">Powiat makowski</item>
-        <item value="powiatmielecki">Powiat mielecki</item>
-        <item value="powiatsokolski">Powiat sokólski</item>
-        <item value="powiatraciborski">Powiat raciborski</item>
-        <item value="powiatstarachowicki">Powiat starachowicki</item>
-        <item value="powiatkoscianski">Powiat kościański</item>
-        <item value="powiatrypinski">Powiat rypiński</item>
-        <item value="powiatopolski">Powiat opolski</item>
-        <item value="powiatwschowski">Powiat wschowski</item>
-        <item value="powiatolkuski">Powiat olkuski</item>
-        <item value="powiatminski">Powiat miński</item>
-        <item value="powiatnizanski">Powiat niżański</item>
-        <item value="powiatslupski">Powiat słupski</item>
-        <item value="powiatrybnicki">Powiat rybnicki</item>
-        <item value="powiatkrotoszynski">Powiat krotoszyński</item>
-        <item value="powiatmilicki">Powiat milicki</item>
-        <item value="powiatsepolenski">Powiat sępoleński</item>
-        <item value="powiatrawski">Powiat rawski</item>
-        <item value="powiatoswiecimski">Powiat oświęcimski</item>
-        <item value="powiatprzemyski">Powiat przemyski</item>
-        <item value="powiatstarogardzki">Powiat starogardzki</item>
-        <item value="powiattarnogorski">Powiat tarnogórski</item>
-        <item value="powiatwloszczowski">Powiat włoszczowski</item>
-        <item value="powiatolecki">Powiat olecki</item>
-        <item value="powiatolesnicki">Powiat oleśnicki</item>
-        <item value="powiatpulawski">Powiat puławski</item>
-        <item value="powiatsieradzki">Powiat sieradzki</item>
-        <item value="powiatproszowicki">Powiat proszowicki</item>
-        <item value="powiatnowodworski">Powiat nowodworski</item>
-        <item value="powiatprzeworski">Powiat przeworski</item>
-        <item value="powiattczewski">Powiat tczewski</item>
-        <item value="powiatstargardzki">Powiat stargardzki</item>
-        <item value="powiatolawski">Powiat oławski</item>
-        <item value="powiattorunski">Powiat toruński</item>
-        <item value="powiatsuski">Powiat suski</item>
-        <item value="powiatropczyckosedziszowski">Powiat ropczycko-sędziszowski</item>
-        <item value="powiatwejherowski">Powiat wejherowski</item>
-        <item value="powiatwodzislawski">Powiat wodzisławski</item>
-        <item value="powiatostrodzki">Powiat ostródzki</item>
-        <item value="powiatnowotomyski">Powiat nowotomyski</item>
-        <item value="powiatpolkowicki">Powiat polkowicki</item>
-        <item value="powiattucholski">Powiat tucholski</item>
-        <item value="powiatrycki">Powiat rycki</item>
-        <item value="powiattomaszowski">Powiat tomaszowski</item>
-        <item value="powiattarnowski">Powiat tarnowski</item>
-        <item value="powiatrzeszowski">Powiat rzeszowski</item>
-        <item value="powiatsztumski">Powiat sztumski</item>
-        <item value="powiatzawiercianski">Powiat zawierciański</item>
-        <item value="powiatobornicki">Powiat obornicki</item>
-        <item value="powiatswidwinski">Powiat świdwiński</item>
-        <item value="powiatstrzelinski">Powiat strzeliński</item>
-        <item value="powiatswidnicki">Powiat świdnicki</item>
-        <item value="powiatwielunski">Powiat wieluński</item>
-        <item value="powiattatrzanski">Powiat tatrzański</item>
-        <item value="powiatotwocki">Powiat otwocki</item>
-        <item value="powiatsanocki">Powiat sanocki</item>
-        <item value="powiatzywiecki">Powiat żywiecki</item>
-        <item value="powiatszczycienski">Powiat szczycieński</item>
-        <item value="powiatwalecki">Powiat wałecki</item>
-        <item value="powiatsredzki">Powiat średzki</item>
-        <item value="powiattomaszowski">Powiat tomaszowski</item>
-        <item value="powiatwieruszowski">Powiat wieruszowski</item>
-        <item value="powiatwadowicki">Powiat wadowicki</item>
-        <item value="powiatpiaseczynski">Powiat piaseczyński</item>
-        <item value="powiatstalowowolski">Powiat stalowowolski</item>
-        <item value="powiatgoldapski">Powiat gołdapski</item>
-        <item value="powiatostrzeszowski">Powiat ostrzeszowski</item>
-        <item value="powiatlobeski">Powiat łobeski</item>
-        <item value="powiatswidnicki">Powiat świdnicki</item>
-        <item value="powiatzninski">Powiat żniński</item>
-        <item value="powiatzdunskowolski">Powiat zduńskowolski</item>
-        <item value="powiatplocki">Powiat płocki</item>
-        <item value="powiatstrzyzowski">Powiat strzyżowski</item>
-        <item value="powiatpilski">Powiat pilski</item>
-        <item value="powiattrzebnicki">Powiat trzebnicki</item>
-        <item value="powiatzgierski">Powiat zgierski</item>
-        <item value="powiatplonski">Powiat płoński</item>
-        <item value="powiattarnobrzeski">Powiat tarnobrzeski</item>
-        <item value="powiatpleszewski">Powiat pleszewski</item>
-        <item value="powiatleski">Powiat leski</item>
-        <item value="powiatpoznanski">Powiat poznański</item>
-        <item value="powiatwolowski">Powiat wołowski</item>
-        <item value="powiatrawicki">Powiat rawicki</item>
-        <item value="powiatwroclawski">Powiat wrocławski</item>
-        <item value="powiatslupecki">Powiat słupecki</item>
-        <item value="powiatszamotulski">Powiat szamotulski</item>
-        <item value="powiatzgorzelecki">Powiat zgorzelecki</item>
-        <item value="powiatradomski">Powiat radomski</item>
-        <item value="powiatsredzki">Powiat średzki</item>
-        <item value="powiatzlotoryjski">Powiat złotoryjski</item>
-        <item value="powiatsremski">Powiat śremski</item>
-        <item value="powiatturecki">Powiat turecki</item>
-        <item value="powiatwagrowiecki">Powiat wągrowiecki</item>
-        <item value="powiatsokolowski">Powiat sokołowski</item>
-        <item value="powiatwolsztynski">Powiat wolsztyński</item>
-        <item value="powiatwrzesinski">Powiat wrzesiński</item>
-        <item value="powiatzlotowski">Powiat złotowski</item>
-        <item value="powiatwarszawskizachodni">Powiat warszawski zachodni</item>
-        <item value="powiatwegrowski">Powiat węgrowski</item>
-        <item value="powiatwolominski">Powiat wołomiński</item>
-        <item value="powiatwyszkowski">Powiat wyszkowski</item>
-        <item value="powiatzurominski">Powiat żuromiński</item>
-        <item value="powiatzyrardowski">Powiat żyrardowski</item>
+    <string-array name="counties">
+        <item>Biała Podlaska</item>
+        <item>Białystok</item>
+        <item>Bielsko-Biała</item>
+        <item>Bydgoszcz</item>
+        <item>Bytom</item>
+        <item>Chełm</item>
+        <item>Chorzów</item>
+        <item>Częstochowa</item>
+        <item>Dąbrowa Górnicza</item>
+        <item>Elbląg</item>
+        <item>Gdańsk</item>
+        <item>Gdynia</item>
+        <item>Gliwice</item>
+        <item>Gorzów Wielkopolski</item>
+        <item>Grudziądz</item>
+        <item>Jastrzębie-Zdrój</item>
+        <item>Jaworzno</item>
+        <item>Jelenia Góra</item>
+        <item>Kalisz</item>
+        <item>Katowice</item>
+        <item>Kielce</item>
+        <item>Konin</item>
+        <item>Koszalin</item>
+        <item>Kraków</item>
+        <item>Krosno</item>
+        <item>Legnica</item>
+        <item>Leszno</item>
+        <item>Lublin</item>
+        <item>Mysłowice</item>
+        <item>Nowy Sącz</item>
+        <item>Olsztyn</item>
+        <item>Opole</item>
+        <item>Ostrołęka</item>
+        <item>Piekary Śląskie</item>
+        <item>Piotrków Trybunalski</item>
+        <item>Powiat aleksandrowski</item>
+        <item>Powiat augustowski</item>
+        <item>Powiat bełchatowski</item>
+        <item>Powiat bialski</item>
+        <item>Powiat białobrzeski</item>
+        <item>Powiat bielski</item>
+        <item>Powiat bielski</item>
+        <item>Powiat bieszczadzki</item>
+        <item>Powiat biłgorajski</item>
+        <item>Powiat bocheński</item>
+        <item>Powiat bolesławiecki</item>
+        <item>Powiat braniewski</item>
+        <item>Powiat brodnicki</item>
+        <item>Powiat brzeski</item>
+        <item>Powiat brzeski</item>
+        <item>Powiat brzozowski</item>
+        <item>Powiat bydgoski</item>
+        <item>Powiat będziński</item>
+        <item>Powiat chełmiński</item>
+        <item>Powiat chodzieski</item>
+        <item>Powiat chojnicki</item>
+        <item>Powiat chrzanowski</item>
+        <item>Powiat ciechanowski</item>
+        <item>Powiat cieszyński</item>
+        <item>Powiat czarnkowsko-trzcianecki</item>
+        <item>Powiat częstochowski</item>
+        <item>Powiat człuchowski</item>
+        <item>Powiat działdowski</item>
+        <item>Powiat dąbrowski</item>
+        <item>Powiat dębicki</item>
+        <item>Powiat ełcki</item>
+        <item>Powiat garwoliński</item>
+        <item>Powiat giżycki</item>
+        <item>Powiat gliwicki</item>
+        <item>Powiat gnieźnieński</item>
+        <item>Powiat goleniowski</item>
+        <item>Powiat golubsko-dobrzyński</item>
+        <item>Powiat gorlicki</item>
+        <item>Powiat gorzowski</item>
+        <item>Powiat gostyński</item>
+        <item>Powiat gołdapski</item>
+        <item>Powiat gryfiński</item>
+        <item>Powiat grójecki</item>
+        <item>Powiat głogowski</item>
+        <item>Powiat hrubieszowski</item>
+        <item>Powiat inowrocławski</item>
+        <item>Powiat janowski</item>
+        <item>Powiat jarociński</item>
+        <item>Powiat jarosławski</item>
+        <item>Powiat jasielski</item>
+        <item>Powiat jeleniogórski</item>
+        <item>Powiat jędrzejowski</item>
+        <item>Powiat kaliski</item>
+        <item>Powiat kamieński</item>
+        <item>Powiat kartuski</item>
+        <item>Powiat kielecki</item>
+        <item>Powiat kolski</item>
+        <item>Powiat konecki</item>
+        <item>Powiat koniński</item>
+        <item>Powiat kozienicki</item>
+        <item>Powiat kołobrzeski</item>
+        <item>Powiat kościański</item>
+        <item>Powiat kościerski</item>
+        <item>Powiat krakowski</item>
+        <item>Powiat krapkowicki</item>
+        <item>Powiat krasnostawski</item>
+        <item>Powiat kraśnicki</item>
+        <item>Powiat krotoszyński</item>
+        <item>Powiat krośnieński</item>
+        <item>Powiat krośnieński</item>
+        <item>Powiat kędzierzyńsko-kozielski</item>
+        <item>Powiat kępiński</item>
+        <item>Powiat kętrzyński</item>
+        <item>Powiat kłobucki</item>
+        <item>Powiat kłodzki</item>
+        <item>Powiat leski</item>
+        <item>Powiat leżajski</item>
+        <item>Powiat limanowski</item>
+        <item>Powiat lipnowski</item>
+        <item>Powiat lubaczowski</item>
+        <item>Powiat lubartowski</item>
+        <item>Powiat lubański</item>
+        <item>Powiat lubelski</item>
+        <item>Powiat lubiński</item>
+        <item>Powiat lubliniecki</item>
+        <item>Powiat lęborski</item>
+        <item>Powiat makowski</item>
+        <item>Powiat malborski</item>
+        <item>Powiat mielecki</item>
+        <item>Powiat mikołowski</item>
+        <item>Powiat milicki</item>
+        <item>Powiat miński</item>
+        <item>Powiat mogileński</item>
+        <item>Powiat moniecki</item>
+        <item>Powiat myszkowski</item>
+        <item>Powiat myślenicki</item>
+        <item>Powiat nakielski</item>
+        <item>Powiat niżański</item>
+        <item>Powiat nowodworski</item>
+        <item>Powiat nowodworski</item>
+        <item>Powiat nowosolski</item>
+        <item>Powiat nowosądecki</item>
+        <item>Powiat nowotomyski</item>
+        <item>Powiat nyski</item>
+        <item>Powiat obornicki</item>
+        <item>Powiat olecki</item>
+        <item>Powiat oleski</item>
+        <item>Powiat oleśnicki</item>
+        <item>Powiat olkuski</item>
+        <item>Powiat opatowski</item>
+        <item>Powiat opoczyński</item>
+        <item>Powiat opolski</item>
+        <item>Powiat opolski</item>
+        <item>Powiat ostrowiecki</item>
+        <item>Powiat ostrzeszowski</item>
+        <item>Powiat ostródzki</item>
+        <item>Powiat otwocki</item>
+        <item>Powiat oławski</item>
+        <item>Powiat oświęcimski</item>
+        <item>Powiat pabianicki</item>
+        <item>Powiat piaseczyński</item>
+        <item>Powiat pilski</item>
+        <item>Powiat piotrkowski</item>
+        <item>Powiat pleszewski</item>
+        <item>Powiat poddębicki</item>
+        <item>Powiat polkowicki</item>
+        <item>Powiat poznański</item>
+        <item>Powiat proszowicki</item>
+        <item>Powiat przemyski</item>
+        <item>Powiat przeworski</item>
+        <item>Powiat pszczyński</item>
+        <item>Powiat puławski</item>
+        <item>Powiat płocki</item>
+        <item>Powiat płoński</item>
+        <item>Powiat raciborski</item>
+        <item>Powiat radomski</item>
+        <item>Powiat radziejowski</item>
+        <item>Powiat rawicki</item>
+        <item>Powiat rawski</item>
+        <item>Powiat ropczycko-sędziszowski</item>
+        <item>Powiat rybnicki</item>
+        <item>Powiat rycki</item>
+        <item>Powiat rypiński</item>
+        <item>Powiat rzeszowski</item>
+        <item>Powiat sandomierski</item>
+        <item>Powiat sanocki</item>
+        <item>Powiat siemiatycki</item>
+        <item>Powiat sieradzki</item>
+        <item>Powiat skarżyski</item>
+        <item>Powiat sokołowski</item>
+        <item>Powiat sokólski</item>
+        <item>Powiat stalowowolski</item>
+        <item>Powiat starachowicki</item>
+        <item>Powiat stargardzki</item>
+        <item>Powiat starogardzki</item>
+        <item>Powiat strzeliński</item>
+        <item>Powiat strzyżowski</item>
+        <item>Powiat suski</item>
+        <item>Powiat szamotulski</item>
+        <item>Powiat szczycieński</item>
+        <item>Powiat sztumski</item>
+        <item>Powiat sępoleński</item>
+        <item>Powiat słubicki</item>
+        <item>Powiat słupecki</item>
+        <item>Powiat słupski</item>
+        <item>Powiat tarnobrzeski</item>
+        <item>Powiat tarnogórski</item>
+        <item>Powiat tarnowski</item>
+        <item>Powiat tatrzański</item>
+        <item>Powiat tczewski</item>
+        <item>Powiat tomaszowski</item>
+        <item>Powiat tomaszowski</item>
+        <item>Powiat toruński</item>
+        <item>Powiat trzebnicki</item>
+        <item>Powiat tucholski</item>
+        <item>Powiat turecki</item>
+        <item>Powiat wadowicki</item>
+        <item>Powiat warszawski zachodni</item>
+        <item>Powiat wałecki</item>
+        <item>Powiat wejherowski</item>
+        <item>Powiat wieluński</item>
+        <item>Powiat wieruszowski</item>
+        <item>Powiat wodzisławski</item>
+        <item>Powiat wolsztyński</item>
+        <item>Powiat wołomiński</item>
+        <item>Powiat wołowski</item>
+        <item>Powiat wrocławski</item>
+        <item>Powiat wrzesiński</item>
+        <item>Powiat wschowski</item>
+        <item>Powiat wyszkowski</item>
+        <item>Powiat wągrowiecki</item>
+        <item>Powiat węgrowski</item>
+        <item>Powiat włoszczowski</item>
+        <item>Powiat zawierciański</item>
+        <item>Powiat zduńskowolski</item>
+        <item>Powiat zgierski</item>
+        <item>Powiat zgorzelecki</item>
+        <item>Powiat zielonogórski</item>
+        <item>Powiat złotoryjski</item>
+        <item>Powiat złotowski</item>
+        <item>Powiat łaski</item>
+        <item>Powiat łobeski</item>
+        <item>Powiat łowicki</item>
+        <item>Powiat łukowski</item>
+        <item>Powiat łódzki wschodni</item>
+        <item>Powiat łęczycki</item>
+        <item>Powiat średzki</item>
+        <item>Powiat średzki</item>
+        <item>Powiat śremski</item>
+        <item>Powiat świdnicki</item>
+        <item>Powiat świdnicki</item>
+        <item>Powiat świdwiński</item>
+        <item>Powiat żagański</item>
+        <item>Powiat żarski</item>
+        <item>Powiat żniński</item>
+        <item>Powiat żuromiński</item>
+        <item>Powiat żyrardowski</item>
+        <item>Powiat żywiecki</item>
+        <item>Poznań</item>
+        <item>Przemyśl</item>
+        <item>Płock</item>
+        <item>Ruda Śląska</item>
+        <item>Rybnik</item>
+        <item>Rzeszów</item>
+        <item>Siedlce</item>
+        <item>Siemianowice Śląskie</item>
+        <item>Skierniewice</item>
+        <item>Sosnowiec</item>
+        <item>Szczecin</item>
+        <item>Słupsk</item>
+        <item>Tarnobrzeg</item>
+        <item>Tarnów</item>
+        <item>Toruń</item>
+        <item>Tychy</item>
+        <item>Wrocław</item>
+        <item>Włocławek</item>
+        <item>Zabrze</item>
+        <item>Zamość</item>
+        <item>Zielona Góra</item>
+        <item>Łomża</item>
+        <item>Łódź</item>
+        <item>Świnoujście</item>
+        <item>Świętochłowice</item>
+        <item>Żory</item>
+    </string-array>
+    <string-array name="counties_values">
+        <item>bialapodlaska</item>
+        <item>bialystok</item>
+        <item>bielskobiala</item>
+        <item>bydgoszcz</item>
+        <item>bytom</item>
+        <item>chelm</item>
+        <item>chorzow</item>
+        <item>czestochowa</item>
+        <item>dabrowagornicza</item>
+        <item>elblag</item>
+        <item>gdansk</item>
+        <item>gdynia</item>
+        <item>gliwice</item>
+        <item>gorzowwielkopolski</item>
+        <item>grudziadz</item>
+        <item>jastrzebiezdroj</item>
+        <item>jaworzno</item>
+        <item>jeleniagora</item>
+        <item>kalisz</item>
+        <item>katowice</item>
+        <item>kielce</item>
+        <item>konin</item>
+        <item>koszalin</item>
+        <item>krakow</item>
+        <item>krosno</item>
+        <item>legnica</item>
+        <item>leszno</item>
+        <item>lublin</item>
+        <item>myslowice</item>
+        <item>nowysacz</item>
+        <item>olsztyn</item>
+        <item>opole</item>
+        <item>ostroleka</item>
+        <item>piekaryslaskie</item>
+        <item>piotrkowtrybunalski</item>
+        <item>powiataleksandrowski</item>
+        <item>powiataugustowski</item>
+        <item>powiatbelchatowski</item>
+        <item>powiatbialski</item>
+        <item>powiatbialobrzeski</item>
+        <item>powiatbielski</item>
+        <item>powiatbielski</item>
+        <item>powiatbieszczadzki</item>
+        <item>powiatbilgorajski</item>
+        <item>powiatbochenski</item>
+        <item>powiatboleslawiecki</item>
+        <item>powiatbraniewski</item>
+        <item>powiatbrodnicki</item>
+        <item>powiatbrzeski</item>
+        <item>powiatbrzeski</item>
+        <item>powiatbrzozowski</item>
+        <item>powiatbydgoski</item>
+        <item>powiatbedzinski</item>
+        <item>powiatchelminski</item>
+        <item>powiatchodzieski</item>
+        <item>powiatchojnicki</item>
+        <item>powiatchrzanowski</item>
+        <item>powiatciechanowski</item>
+        <item>powiatcieszynski</item>
+        <item>powiatczarnkowskotrzcianecki</item>
+        <item>powiatczestochowski</item>
+        <item>powiatczluchowski</item>
+        <item>powiatdzialdowski</item>
+        <item>powiatdabrowski</item>
+        <item>powiatdebicki</item>
+        <item>powiatelcki</item>
+        <item>powiatgarwolinski</item>
+        <item>powiatgizycki</item>
+        <item>powiatgliwicki</item>
+        <item>powiatgnieznienski</item>
+        <item>powiatgoleniowski</item>
+        <item>powiatgolubskodobrzynski</item>
+        <item>powiatgorlicki</item>
+        <item>powiatgorzowski</item>
+        <item>powiatgostynski</item>
+        <item>powiatgoldapski</item>
+        <item>powiatgryfinski</item>
+        <item>powiatgrojecki</item>
+        <item>powiatglogowski</item>
+        <item>powiathrubieszowski</item>
+        <item>powiatinowroclawski</item>
+        <item>powiatjanowski</item>
+        <item>powiatjarocinski</item>
+        <item>powiatjaroslawski</item>
+        <item>powiatjasielski</item>
+        <item>powiatjeleniogorski</item>
+        <item>powiatjedrzejowski</item>
+        <item>powiatkaliski</item>
+        <item>powiatkamienski</item>
+        <item>powiatkartuski</item>
+        <item>powiatkielecki</item>
+        <item>powiatkolski</item>
+        <item>powiatkonecki</item>
+        <item>powiatkoninski</item>
+        <item>powiatkozienicki</item>
+        <item>powiatkolobrzeski</item>
+        <item>powiatkoscianski</item>
+        <item>powiatkoscierski</item>
+        <item>powiatkrakowski</item>
+        <item>powiatkrapkowicki</item>
+        <item>powiatkrasnostawski</item>
+        <item>powiatkrasnicki</item>
+        <item>powiatkrotoszynski</item>
+        <item>powiatkrosnienski</item>
+        <item>powiatkrosnienski</item>
+        <item>powiatkedzierzynskokozielski</item>
+        <item>powiatkepinski</item>
+        <item>powiatketrzynski</item>
+        <item>powiatklobucki</item>
+        <item>powiatklodzki</item>
+        <item>powiatleski</item>
+        <item>powiatlezajski</item>
+        <item>powiatlimanowski</item>
+        <item>powiatlipnowski</item>
+        <item>powiatlubaczowski</item>
+        <item>powiatlubartowski</item>
+        <item>powiatlubanski</item>
+        <item>powiatlubelski</item>
+        <item>powiatlubinski</item>
+        <item>powiatlubliniecki</item>
+        <item>powiatleborski</item>
+        <item>powiatmakowski</item>
+        <item>powiatmalborski</item>
+        <item>powiatmielecki</item>
+        <item>powiatmikolowski</item>
+        <item>powiatmilicki</item>
+        <item>powiatminski</item>
+        <item>powiatmogilenski</item>
+        <item>powiatmoniecki</item>
+        <item>powiatmyszkowski</item>
+        <item>powiatmyslenicki</item>
+        <item>powiatnakielski</item>
+        <item>powiatnizanski</item>
+        <item>powiatnowodworski</item>
+        <item>powiatnowodworski</item>
+        <item>powiatnowosolski</item>
+        <item>powiatnowosadecki</item>
+        <item>powiatnowotomyski</item>
+        <item>powiatnyski</item>
+        <item>powiatobornicki</item>
+        <item>powiatolecki</item>
+        <item>powiatoleski</item>
+        <item>powiatolesnicki</item>
+        <item>powiatolkuski</item>
+        <item>powiatopatowski</item>
+        <item>powiatopoczynski</item>
+        <item>powiatopolski</item>
+        <item>powiatopolski</item>
+        <item>powiatostrowiecki</item>
+        <item>powiatostrzeszowski</item>
+        <item>powiatostrodzki</item>
+        <item>powiatotwocki</item>
+        <item>powiatolawski</item>
+        <item>powiatoswiecimski</item>
+        <item>powiatpabianicki</item>
+        <item>powiatpiaseczynski</item>
+        <item>powiatpilski</item>
+        <item>powiatpiotrkowski</item>
+        <item>powiatpleszewski</item>
+        <item>powiatpoddebicki</item>
+        <item>powiatpolkowicki</item>
+        <item>powiatpoznanski</item>
+        <item>powiatproszowicki</item>
+        <item>powiatprzemyski</item>
+        <item>powiatprzeworski</item>
+        <item>powiatpszczynski</item>
+        <item>powiatpulawski</item>
+        <item>powiatplocki</item>
+        <item>powiatplonski</item>
+        <item>powiatraciborski</item>
+        <item>powiatradomski</item>
+        <item>powiatradziejowski</item>
+        <item>powiatrawicki</item>
+        <item>powiatrawski</item>
+        <item>powiatropczyckosedziszowski</item>
+        <item>powiatrybnicki</item>
+        <item>powiatrycki</item>
+        <item>powiatrypinski</item>
+        <item>powiatrzeszowski</item>
+        <item>powiatsandomierski</item>
+        <item>powiatsanocki</item>
+        <item>powiatsiemiatycki</item>
+        <item>powiatsieradzki</item>
+        <item>powiatskarzyski</item>
+        <item>powiatsokolowski</item>
+        <item>powiatsokolski</item>
+        <item>powiatstalowowolski</item>
+        <item>powiatstarachowicki</item>
+        <item>powiatstargardzki</item>
+        <item>powiatstarogardzki</item>
+        <item>powiatstrzelinski</item>
+        <item>powiatstrzyzowski</item>
+        <item>powiatsuski</item>
+        <item>powiatszamotulski</item>
+        <item>powiatszczycienski</item>
+        <item>powiatsztumski</item>
+        <item>powiatsepolenski</item>
+        <item>powiatslubicki</item>
+        <item>powiatslupecki</item>
+        <item>powiatslupski</item>
+        <item>powiattarnobrzeski</item>
+        <item>powiattarnogorski</item>
+        <item>powiattarnowski</item>
+        <item>powiattatrzanski</item>
+        <item>powiattczewski</item>
+        <item>powiattomaszowski</item>
+        <item>powiattomaszowski</item>
+        <item>powiattorunski</item>
+        <item>powiattrzebnicki</item>
+        <item>powiattucholski</item>
+        <item>powiatturecki</item>
+        <item>powiatwadowicki</item>
+        <item>powiatwarszawskizachodni</item>
+        <item>powiatwalecki</item>
+        <item>powiatwejherowski</item>
+        <item>powiatwielunski</item>
+        <item>powiatwieruszowski</item>
+        <item>powiatwodzislawski</item>
+        <item>powiatwolsztynski</item>
+        <item>powiatwolominski</item>
+        <item>powiatwolowski</item>
+        <item>powiatwroclawski</item>
+        <item>powiatwrzesinski</item>
+        <item>powiatwschowski</item>
+        <item>powiatwyszkowski</item>
+        <item>powiatwagrowiecki</item>
+        <item>powiatwegrowski</item>
+        <item>powiatwloszczowski</item>
+        <item>powiatzawiercianski</item>
+        <item>powiatzdunskowolski</item>
+        <item>powiatzgierski</item>
+        <item>powiatzgorzelecki</item>
+        <item>powiatzielonogorski</item>
+        <item>powiatzlotoryjski</item>
+        <item>powiatzlotowski</item>
+        <item>powiatlaski</item>
+        <item>powiatlobeski</item>
+        <item>powiatlowicki</item>
+        <item>powiatlukowski</item>
+        <item>powiatlodzkiwschodni</item>
+        <item>powiatleczycki</item>
+        <item>powiatsredzki</item>
+        <item>powiatsredzki</item>
+        <item>powiatsremski</item>
+        <item>powiatswidnicki</item>
+        <item>powiatswidnicki</item>
+        <item>powiatswidwinski</item>
+        <item>powiatzaganski</item>
+        <item>powiatzarski</item>
+        <item>powiatzninski</item>
+        <item>powiatzurominski</item>
+        <item>powiatzyrardowski</item>
+        <item>powiatzywiecki</item>
+        <item>poznan</item>
+        <item>przemysl</item>
+        <item>plock</item>
+        <item>rudaslaska</item>
+        <item>rybnik</item>
+        <item>rzeszow</item>
+        <item>siedlce</item>
+        <item>siemianowiceslaskie</item>
+        <item>skierniewice</item>
+        <item>sosnowiec</item>
+        <item>szczecin</item>
+        <item>slupsk</item>
+        <item>tarnobrzeg</item>
+        <item>tarnow</item>
+        <item>torun</item>
+        <item>tychy</item>
+        <item>wroclaw</item>
+        <item>wloclawek</item>
+        <item>zabrze</item>
+        <item>zamosc</item>
+        <item>zielonagora</item>
+        <item>lomza</item>
+        <item>lodz</item>
+        <item>swinoujscie</item>
+        <item>swietochlowice</item>
+        <item>zory</item>
     </string-array>
 </resources>

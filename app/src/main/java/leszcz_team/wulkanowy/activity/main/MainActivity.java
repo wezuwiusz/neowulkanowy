@@ -10,6 +10,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.LinkedHashMap;
+
 import leszcz_team.wulkanowy.R;
 
 public class MainActivity extends Activity {
@@ -36,7 +38,7 @@ public class MainActivity extends Activity {
         // Get a reference to the AutoCompleteTextView in the layout
         AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.countyText);
         // Get the string array
-        String[] countries = getResources().getStringArray(R.array.counties_array);
+        String[] countries = getResources().getStringArray(R.array.counties);
         // Create the adapter and set it to the AutoCompleteTextView
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countries);
@@ -51,6 +53,18 @@ public class MainActivity extends Activity {
         String email = adressEmail.getText().toString();
         String county = countyText.getText().toString();
 
+        String[] keys = this.getResources().getStringArray(R.array.counties);
+        String[] values = this.getResources().getStringArray(R.array.counties_values);
+        LinkedHashMap<String,String> map = new LinkedHashMap<String,String>();
+
+        for (int i = 0; i < Math.min(keys.length, values.length); ++i) {
+            map.put(keys[i], values[i]);
+        }
+
+        if(map.containsKey(county)) {
+            county = map.get(county);
+        }
+
         if (!email.isEmpty() || !password.isEmpty() || !county.isEmpty()){
             new Login(email, password, county, this).execute();
         }
@@ -58,6 +72,5 @@ public class MainActivity extends Activity {
             Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
 
         }
-
     }
 }
