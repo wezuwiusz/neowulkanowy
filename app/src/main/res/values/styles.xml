@@ -8,8 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="SplashTheme" parent="@android:style/Theme.DeviceDefault">
-        <item name="android:windowBackground">@drawable/background_splash</item>
+    <style name = "NoActionBar" parent = "@android:style/Theme.DeviceDefault">
+        <item name = "android:windowActionBar">false</item>
+        <item name = "android:windowNoTitle">true</item>
     </style>
 
 </resources>
