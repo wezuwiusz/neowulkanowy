@@ -1,6 +1,8 @@
 package leszcz_team.wulkanowy.activity.main;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -29,16 +31,19 @@ public class Login extends AsyncTask<Void, Void, Void> {
     String urlForStepTwo;
     String urlForStepThree;
 
+    ProgressDialog progress;
+
     public Login(String emailT, String passwordT, String countyT, Activity mainAC){
 
         activity = mainAC;
+        progress = new ProgressDialog(activity);
 
-        if (emailT.equals("Debug")){
+        if (countyT.equals("Debug")){
             urlForStepOne = activity.getString(R.string.urlStepOneDebug);
             urlForStepTwo = activity.getString(R.string.urlStepTwoDebug);
             urlForStepThree = activity.getString(R.string.urlStepThreeDebug);
             county = activity.getString(R.string.countyDebug);
-            email = activity.getString(R.string.emailDebug);
+            email = emailT;
             password = passwordT;
         }
         else{
@@ -49,6 +54,16 @@ public class Login extends AsyncTask<Void, Void, Void> {
             email = emailT;
             password = passwordT;
         }
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        progress.setTitle(activity.getText(R.string.login_title));
+        progress.setMessage(activity.getText(R.string.please_wait));
+        progress.setCancelable(false);
+        progress.show();
     }
 
     @Override
@@ -125,6 +140,7 @@ public class Login extends AsyncTask<Void, Void, Void> {
 
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
+        progress.dismiss();
         if (!userMesage.isEmpty()){
             Toast.makeText(activity, userMesage , Toast.LENGTH_LONG).show();
         }
