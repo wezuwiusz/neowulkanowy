@@ -13,4 +13,5 @@
     <string name="error_feature_text">Funkcja którą chciałeś uruchomić nie działa</string>
     <string name="login_accepted">Pomyślnie zalogowano</string>
     <string name="login_denied">Logowanie nie powiodło się</string>
+    <string name="please_wait">Proszę czekać...</string>
 </resources>

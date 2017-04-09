@@ -12,4 +12,5 @@
     <string name="error_feature_text">The function you wanted to run does not work</string>
     <string name="login_accepted">Login is successful</string>
     <string name="login_denied">Login is failed</string>
+    <string name="please_wait">Please wait...</string>
 </resources>
