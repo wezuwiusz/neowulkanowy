@@ -1,4 +1,4 @@
-package leszcz_team.wulkanowy;
+package io.github.wulkanowy;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("leszcz_team.wulkanowy", appContext.getPackageName());
+        assertEquals("io.github.wulkanowy", appContext.getPackageName());
     }
 }

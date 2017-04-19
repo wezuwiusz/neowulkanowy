@@ -1,4 +1,4 @@
-package leszcz_team.wulkanowy;
+package io.github.wulkanowy;
 
 import org.junit.Test;
 

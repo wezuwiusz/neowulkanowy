@@ -1,8 +1,7 @@
-package leszcz_team.wulkanowy.activity.main;
+package io.github.wulkanowy.activity.main;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -14,7 +13,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.Map;
 
-import leszcz_team.wulkanowy.R;
+import io.github.wulkanowy.R;
 
 public class Login extends AsyncTask<Void, Void, Void> {
 

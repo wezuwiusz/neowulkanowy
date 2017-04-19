@@ -1,4 +1,4 @@
-package leszcz_team.wulkanowy.activity.main;
+package io.github.wulkanowy.activity.main;
 
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;

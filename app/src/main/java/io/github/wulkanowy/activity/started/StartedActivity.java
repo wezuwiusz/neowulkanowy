@@ -1,9 +1,9 @@
-package leszcz_team.wulkanowy.activity.started;
+package io.github.wulkanowy.activity.started;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import leszcz_team.wulkanowy.R;
+import io.github.wulkanowy.R;
 
 public class StartedActivity extends Activity {
 

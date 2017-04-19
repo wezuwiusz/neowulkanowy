@@ -1,11 +1,11 @@
-package leszcz_team.wulkanowy.activity.started;
+package io.github.wulkanowy.activity.started;
 
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import leszcz_team.wulkanowy.activity.main.MainActivity;
+import io.github.wulkanowy.activity.main.MainActivity;
 
 public class LoadingTask extends AsyncTask<Void, Void, Void> {
 

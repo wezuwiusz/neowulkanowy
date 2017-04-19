@@ -1,4 +1,4 @@
-package leszcz_team.wulkanowy.activity.main;
+package io.github.wulkanowy.activity.main;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import java.util.LinkedHashMap;
 
-import leszcz_team.wulkanowy.R;
+import io.github.wulkanowy.R;
 
 public class MainActivity extends Activity {
 
