@@ -2,7 +2,6 @@ image: registry.gitlab.com/showcheap/android-ci:T25-B25.0.2
 
 before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./gradlew
 
 cache:
   paths:
