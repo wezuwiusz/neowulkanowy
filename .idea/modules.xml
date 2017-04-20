@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wulkanowy-android.iml" filepath="$PROJECT_DIR$/wulkanowy-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wulkanowy.iml" filepath="$PROJECT_DIR$/wulkanowy.iml" />
     </modules>
   </component>
 </project>
