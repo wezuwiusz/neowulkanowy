@@ -2,6 +2,7 @@ package io.github.wulkanowy.activity.main;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.activity.dashboard.DashboardActivity;
 
 public class Login extends AsyncTask<Void, Void, Void> {
 
@@ -142,5 +144,8 @@ public class Login extends AsyncTask<Void, Void, Void> {
         if (!userMesage.isEmpty()){
             Toast.makeText(activity, userMesage , Toast.LENGTH_LONG).show();
         }
+
+        Intent intent = new Intent(activity,DashboardActivity.class);
+        activity.startActivity(intent);
     }
 }
