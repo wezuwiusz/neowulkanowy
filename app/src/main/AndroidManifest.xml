@@ -24,10 +24,11 @@
         </activity>
         <activity
             android:name=".activity.main.MainActivity"
-            android:label="@string/login_title"></activity>
+            android:label="@string/login_title" />
         <activity
             android:name=".activity.dashboard.DashboardActivity"
-            android:label="@string/title_activity_dashboard"></activity>
+            android:label="@string/title_activity_dashboard"
+            android:theme="@style/Theme.AppCompat" />
     </application>
 
 </manifest>
