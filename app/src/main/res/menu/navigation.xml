@@ -3,17 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_marks"
         android:icon="@drawable/icon_marks_26dp"
         android:title="@string/title_marks" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_attendance"
         android:icon="@drawable/icon_attendance_24dp"
         android:title="@string/title_attendance" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
 
@@ -23,9 +23,8 @@
         android:title="@string/title_lessonplan" />
 
     <item
-        android:id="@+id/navigation_other"
+        android:id="@+id/navigation_settings"
         android:icon="@drawable/icon_other_24dp"
-        android:title="@string/title_other" />
-
+        android:title="@string/title_settings" />
 
 </menu>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wulkanowy</string>
     <string name="under_logo">Surowa wersja</string>
@@ -13,5 +12,11 @@
     <string name="error_feature_text">Funkcja którą chciałeś uruchomić nie działa</string>
     <string name="login_accepted">Pomyślnie zalogowano</string>
     <string name="login_denied">Logowanie nie powiodło się</string>
-    <string name="please_wait">Proszę czekać...</string>
+    <string name="please_wait">Proszę czekać…</string>
+    <string name="title_activity_dashboard">Aktywność dashboard</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_marks">Oceny</string>
+    <string name="title_attendance">Frekwencja</string>
+    <string name="title_lessonplan">Plan lekcji</string>
+    <string name="title_settings">Ustawienia</string>
 </resources>
