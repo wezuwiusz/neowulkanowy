@@ -9,7 +9,7 @@
     tools:context="io.github.wulkanowy.activity.dashboard.DashboardActivity"
     android:weightSum="1">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
