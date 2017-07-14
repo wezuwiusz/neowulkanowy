@@ -34,18 +34,22 @@ public class DashboardActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_marks:
+                    setTitle(R.string.title_marks);
                     transaction.replace(R.id.fragment_container, marksFragment);
                     transaction.commit();
                     return true;
                 case R.id.navigation_attendance:
+                    setTitle(R.string.title_attendance);
                     transaction.replace(R.id.fragment_container, attendanceFragment);
                     transaction.commit();
                     return true;
                 case R.id.navigation_dashboard:
+                    setTitle(R.string.title_dashboard);
                     transaction.replace(R.id.fragment_container, boardFragment);
                     transaction.commit();
                     return true;
                 case R.id.navigation_lessonplan:
+                    setTitle(R.string.title_lessonplan);
                     transaction.replace(R.id.fragment_container, lessonplanFragment);
                     transaction.commit();
                     return true;
@@ -63,6 +67,8 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        setTitle(R.string.title_dashboard);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_dashboard);

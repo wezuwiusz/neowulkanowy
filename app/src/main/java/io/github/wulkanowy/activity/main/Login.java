@@ -145,7 +145,10 @@ public class Login extends AsyncTask<Void, Void, Void> {
             Toast.makeText(activity, userMesage , Toast.LENGTH_LONG).show();
         }
 
-        Intent intent = new Intent(activity,DashboardActivity.class);
-        activity.startActivity(intent);
+        if (userMesage.equals(activity.getString(R.string.login_accepted))){
+            Intent intent = new Intent(activity,DashboardActivity.class);
+            activity.startActivity(intent);
+        }
+
     }
 }
