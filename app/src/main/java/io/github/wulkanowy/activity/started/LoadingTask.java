@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import io.github.wulkanowy.activity.dashboard.DashboardActivity;
 import io.github.wulkanowy.activity.main.MainActivity;
 
 public class LoadingTask extends AsyncTask<Void, Void, Void> {
@@ -27,10 +28,10 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
 
     protected void onPostExecute(Void result) {
 
+       /* Intent intent = new Intent(activity,MainActivity.class);
+        activity.startActivity(intent); */
+
         Intent intent = new Intent(activity,MainActivity.class);
         activity.startActivity(intent);
-
-
     }
 }
-

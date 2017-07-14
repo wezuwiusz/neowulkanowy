@@ -17,8 +17,5 @@ public class StartedActivity extends Activity {
     public void Task(){
 
         new LoadingTask(this).execute();
-
-
-
     }
 }

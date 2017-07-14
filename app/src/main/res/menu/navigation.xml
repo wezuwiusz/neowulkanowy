@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_marks"
+        android:icon="@drawable/icon_marks_26dp"
+        android:title="@string/title_marks" />
+
+    <item
+        android:id="@+id/navigation_attendance"
+        android:icon="@drawable/icon_attendance_24dp"
+        android:title="@string/title_attendance" />
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_dashboard" />
+
+    <item
+        android:id="@+id/navigation_lessonplan"
+        android:icon="@drawable/icon_lessonplan_24dp"
+        android:title="@string/title_lessonplan" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/icon_other_24dp"
+        android:title="@string/title_settings" />
+
+</menu>

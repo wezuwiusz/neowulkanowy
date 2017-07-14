@@ -12,5 +12,11 @@
     <string name="error_feature_text">The function you wanted to run does not work</string>
     <string name="login_accepted">Login is successful</string>
     <string name="login_denied">Login is failed</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="title_activity_dashboard">Dashboard Activity</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_marks">Marks</string>
+    <string name="title_attendance">Attendance</string>
+    <string name="title_lessonplan">Lesson Plan</string>
+    <string name="title_settings">Settings</string>
 </resources>
