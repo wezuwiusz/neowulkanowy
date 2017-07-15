@@ -31,7 +31,7 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
        /* Intent intent = new Intent(activity,MainActivity.class);
         activity.startActivity(intent); */
 
-        Intent intent = new Intent(activity,MainActivity.class);
+        Intent intent = new Intent(activity,DashboardActivity.class);
         activity.startActivity(intent);
     }
 }
