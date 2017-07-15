@@ -37,7 +37,7 @@ public class MarksFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_marks, container, false);
 
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(mActivity));
+        gridview.setAdapter(new ImageAdapter(view.getContext())); // uses the view to get the context instead of getActivity()
 
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -45,7 +45,7 @@ public class MarksFragment extends Fragment {
                 Toast.makeText(mActivity,"HALLO", Toast.LENGTH_SHORT).show();
             }
         });
-        return inflater.inflate(R.layout.fragment_marks, container, false);
+        return view;
     }
 
 }
