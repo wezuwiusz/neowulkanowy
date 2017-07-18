@@ -1,62 +1,56 @@
 package io.github.wulkanowy.activity.dashboard.marks;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import io.github.wulkanowy.R;
 
-public class ImageAdapter extends BaseAdapter {
-    private Context mContext;
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
-    public ImageAdapter(Context c) {
-        this.mContext = c;
+    private Context context;
+    private ArrayList<String> lista;
+
+    public ImageAdapter(Context context, ArrayList<String> lista) {
+        this.lista = lista;
+        this.context = context;
     }
 
-    public int getCount() {
-         return mThumbIds.length;
+    @Override
+    public ImageAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_layout, viewGroup, false);
+        return new ViewHolder(view);
     }
 
-    public Object getItem(int position) {
-        return null;
+    @Override
+    public void onBindViewHolder(ImageAdapter.ViewHolder viewHolder, int i) {
+
+        viewHolder.tv_android.setText(lista.get(i));
+        Picasso.with(context).load(R.drawable.sample_0).into(viewHolder.img_android);
     }
 
-    public long getItemId(int position) {
-        return 0;
+    @Override
+    public int getItemCount() {
+        return lista.size();
     }
 
-    // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-        if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView tv_android;
+        private ImageView img_android;
+        public ViewHolder(View view) {
+            super(view);
+
+            tv_android = (TextView)view.findViewById(R.id.tv_android);
+            img_android = (ImageView) view.findViewById(R.id.img_android);
         }
-
-        imageView.setImageResource(mThumbIds[position]);
-        return imageView;
     }
 
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7
-    };
 }
