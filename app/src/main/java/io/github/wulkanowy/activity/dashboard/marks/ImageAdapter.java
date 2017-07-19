@@ -36,6 +36,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         viewHolder.tv_android.setText(lista.get(i));
         Picasso.with(context)
                 .load(R.drawable.sample_0)
+                .resize(240,120)
                 .noFade()
                 .into(viewHolder.img_android);
 

@@ -2,7 +2,6 @@ package io.github.wulkanowy.activity.dashboard.marks;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,7 +17,6 @@ import io.github.wulkanowy.R;
 
 public class MarksFragment extends Fragment {
 
-    Activity mActivity;
 
     final String lista[] = {
             "Donut",
@@ -32,12 +30,6 @@ public class MarksFragment extends Fragment {
             "Lollipop",
             "Marshmallow"
     };
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (Activity) context;
-    }
-
 
     public MarksFragment() {
     }
