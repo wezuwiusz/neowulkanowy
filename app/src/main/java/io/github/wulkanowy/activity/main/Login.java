@@ -11,7 +11,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Map;
 
 import io.github.wulkanowy.R;
@@ -83,6 +85,12 @@ public class Login extends AsyncTask<Void, Void, Void> {
             String helloText = dashboardHtml.getElementsByClass("welcome").text();
 
             if (helloText.equals("Dzień dobry!")) {
+                String cookiesPath = activity.getFilesDir().getPath() + "/cookies.txt";
+                FileOutputStream out = new FileOutputStream(cookiesPath);
+                ObjectOutputStream outputStream = new ObjectOutputStream(out);
+                outputStream.writeObject(loginCookies);
+                outputStream.flush();
+
                 userMesage = activity.getString(R.string.login_accepted);
             }
             else {
@@ -129,13 +137,17 @@ public class Login extends AsyncTask<Void, Void, Void> {
 
         urlForStepThree = urlForStepThree.replace("{locationID}", county);
 
-        return Jsoup.connect(urlForStepThree)
+        Connection.Response res = Jsoup.connect(urlForStepThree)
                 .data("wa", wa)
                 .data("wresult", wresults)
                 .cookies(loginCookies)
                 .followRedirects(true)
                 .method(Connection.Method.POST)
                 .execute();
+
+        loginCookies = res.cookies();
+
+        return res;
     }
 
     protected void onPostExecute(Void result) {
