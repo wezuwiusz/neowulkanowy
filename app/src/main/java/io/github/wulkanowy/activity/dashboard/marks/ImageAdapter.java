@@ -34,7 +34,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public void onBindViewHolder(ImageAdapter.ViewHolder viewHolder, int i) {
 
         viewHolder.tv_android.setText(lista.get(i));
-        Picasso.with(context).load(R.drawable.sample_0).into(viewHolder.img_android);
+        Picasso.with(context)
+                .load(R.drawable.sample_0)
+                .noFade()
+                .into(viewHolder.img_android);
+
     }
 
     @Override
