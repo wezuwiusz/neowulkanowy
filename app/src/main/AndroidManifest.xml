@@ -15,7 +15,8 @@
         <activity
             android:name=".activity.started.StartedActivity"
             android:noHistory="true"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,11 +26,11 @@
         <activity
             android:name=".activity.main.MainActivity"
             android:label="@string/login_title"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".activity.dashboard.DashboardActivity"
             android:label="@string/title_activity_dashboard"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

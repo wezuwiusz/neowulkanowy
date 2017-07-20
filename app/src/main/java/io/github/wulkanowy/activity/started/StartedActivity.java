@@ -1,11 +1,11 @@
 package io.github.wulkanowy.activity.started;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import io.github.wulkanowy.R;
 
-public class StartedActivity extends Activity {
+public class StartedActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
