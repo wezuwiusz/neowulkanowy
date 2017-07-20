@@ -1,6 +1,7 @@
 # Wulkanowy
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b0365aa6584a4c1abf36141204bc8de3)](https://www.codacy.com/app/mklkj/wulkanowy?utm_source=github.com&utm_medium=referral&utm_content=wulkanowy/wulkanowy&utm_campaign=badger)
+[![Codacy Grade Badge](https://api.codacy.com/project/badge/Grade/b0365aa6584a4c1abf36141204bc8de3)](https://www.codacy.com/app/wulkanowy/wulkanowy)
+[![Codacy Coverage Badge](https://api.codacy.com/project/badge/Coverage/b0365aa6584a4c1abf36141204bc8de3)](https://www.codacy.com/app/wulkanowy/wulkanowy)
 [![Build Status](https://www.bitrise.io/app/daeff1893f3c8128.svg?token=Hjm1ACamk86JDeVVJHOeqQ&branch=master)](https://www.bitrise.io/app/daeff1893f3c8128)
 [![CircleCI](https://circleci.com/gh/wulkanowy/wulkanowy.svg?style=svg)](https://circleci.com/gh/wulkanowy/wulkanowy)
 

@@ -1,30 +1,19 @@
 package io.github.wulkanowy.activity.main;
 
-import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
 
-import java.io.IOException;
+class CheckPass {
 
-public class CheckPass {
+    private Document document;
 
-    Connection.Response page;
-
-    public CheckPass (Connection.Response pageT){
-        page = pageT;
+    CheckPass(Document doc) {
+        document = doc;
     }
 
-    public String start (){
-        try{
-            Document document = page.parse();
-            Elements mesageAlert = document.getElementsByClass("ErrorMessage center");
-            return mesageAlert.text();
-        }
-        catch (IOException e){
-            return e.toString();
-        }
+    boolean isLogged() {
+        Element messageAlert = document.select(".ErrorMessage").first();
 
-
+        return null == messageAlert;
     }
-
 }

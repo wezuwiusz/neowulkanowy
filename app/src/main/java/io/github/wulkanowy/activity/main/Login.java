@@ -72,6 +72,7 @@ public class Login extends AsyncTask<Void, Void, Void> {
 
         try {
             if (!stepOne()) {
+                userMesage = activity.getString(R.string.login_bad_credentials);
                 return null;
             }
 
@@ -106,10 +107,9 @@ public class Login extends AsyncTask<Void, Void, Void> {
 
         loginCookies = initial.cookies();
 
-        CheckPass checkPass = new CheckPass(initial);
-        userMesage = checkPass.start();
+        Document document = initial.parse();
 
-        return userMesage.isEmpty();
+        return new CheckPass(document).isLogged();
     }
 
     private Document stepTwo() throws IOException {
