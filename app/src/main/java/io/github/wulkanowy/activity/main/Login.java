@@ -2,7 +2,9 @@ package io.github.wulkanowy.activity.main;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ public class Login extends AsyncTask<Void, Void, Void> {
     String password;
     String county;
 
+    int check;
+
     Map<String, String> loginCookies;
 
     Activity activity;
@@ -36,20 +40,21 @@ public class Login extends AsyncTask<Void, Void, Void> {
 
     ProgressDialog progress;
 
-    public Login(String emailT, String passwordT, String countyT, Activity mainAC){
+    public Login(String emailT, String passwordT, String countyT, Activity mainAC, int check) {
 
         activity = mainAC;
         progress = new ProgressDialog(activity);
+        this.check = check;
 
-        if (countyT.equals("Debug")){
+
+        if (countyT.equals("Debug")) {
             urlForStepOne = activity.getString(R.string.urlStepOneDebug);
             urlForStepTwo = activity.getString(R.string.urlStepTwoDebug);
             urlForStepThree = activity.getString(R.string.urlStepThreeDebug);
             county = activity.getString(R.string.countyDebug);
             email = emailT;
             password = passwordT;
-        }
-        else{
+        } else {
             urlForStepOne = activity.getString(R.string.urlStepOneRelease);
             urlForStepTwo = activity.getString(R.string.urlStepTwoRelease);
             urlForStepThree = activity.getString(R.string.urlStepThreeRelease);
@@ -92,12 +97,10 @@ public class Login extends AsyncTask<Void, Void, Void> {
                 outputStream.flush();
 
                 userMesage = activity.getString(R.string.login_accepted);
-            }
-            else {
+            } else {
                 userMesage = activity.getString(R.string.login_denied);
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             userMesage = e.toString();
         }
 
@@ -153,14 +156,45 @@ public class Login extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
         progress.dismiss();
-        if (!userMesage.isEmpty()){
-            Toast.makeText(activity, userMesage , Toast.LENGTH_LONG).show();
+        if (!userMesage.isEmpty()) {
+            Toast.makeText(activity, userMesage, Toast.LENGTH_LONG).show();
         }
 
-        if (userMesage.equals(activity.getString(R.string.login_accepted))){
-            Intent intent = new Intent(activity,DashboardActivity.class);
-            activity.startActivity(intent);
+        if (userMesage.equals(activity.getString(R.string.login_accepted))) {
+            if (check == 0) {
+                if (createAccount()) {
+                    Intent intent = new Intent(activity, DashboardActivity.class);
+                    activity.startActivity(intent);
+                } else if (!createAccount()) {
+                    Toast.makeText(activity, "Konto już istnieje", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(activity, DashboardActivity.class);
+                    activity.startActivity(intent);
+                }
+            } else if (check == 1) {
+                Intent intent = new Intent(activity, DashboardActivity.class);
+                activity.startActivity(intent);
+            }
         }
 
+    }
+
+    public boolean createAccount() {
+
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("io.github.wulkanowy", Context.MODE_PRIVATE);
+        if (!sharedPreferences.contains(email)) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("wulkanowy",email);
+            editor.putString(email,email);
+            editor.putString("sandi" + email,password);
+            editor.putString("county" + email,county);
+            editor.commit();
+            return true;
+        }
+        else{
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("wulkanowy",email);
+            editor.commit();
+            return false;
+        }
     }
 }

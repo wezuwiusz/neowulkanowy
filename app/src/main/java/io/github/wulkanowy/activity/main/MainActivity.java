@@ -16,6 +16,10 @@ import io.github.wulkanowy.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    String password;
+    String email;
+    String county;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
         EditText adressEmail = (EditText)findViewById(R.id.emailText);
         EditText passwordText = (EditText)findViewById(R.id.passwordText);
         EditText countyText = (EditText)findViewById(R.id.countyText);
-        String password = passwordText.getText().toString();
-        String email = adressEmail.getText().toString();
-        String county = countyText.getText().toString();
+        password = passwordText.getText().toString();
+        email = adressEmail.getText().toString();
+        county = countyText.getText().toString();
 
         String[] keys = this.getResources().getStringArray(R.array.counties);
         String[] values = this.getResources().getStringArray(R.array.counties_values);
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!email.isEmpty() || !password.isEmpty() || !county.isEmpty()){
-            new Login(email, password, county, this).execute();
+            new Login(email, password, county, this, 0).execute();
         }
         else if (password.isEmpty() || email.isEmpty() || county.isEmpty()) {
             Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
