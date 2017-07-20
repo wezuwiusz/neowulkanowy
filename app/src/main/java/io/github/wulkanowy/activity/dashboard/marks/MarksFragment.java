@@ -1,7 +1,6 @@
 package io.github.wulkanowy.activity.dashboard.marks;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,26 +21,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import io.github.wulkanowy.R;
 
 public class MarksFragment extends Fragment {
 
 
-    final String lista[] = {
-            "Donut",
-            "Eclair",
-            "Froyo",
-            "Gingerbread",
-            "Honeycomb",
-            "Ice Cream Sandwich",
-            "Jelly Bean",
-            "KitKat",
-            "Lollipop",
-            "Marshmallow"
-    };
+    ArrayList<String> subject = new ArrayList<>();
+    View view;
 
     public MarksFragment() {
     }
@@ -51,20 +41,30 @@ public class MarksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        new MarksModel(container.getContext()).execute();
+        view = inflater.inflate(R.layout.fragment_marks, container, false);
+        if (subject.size() == 0) {
 
-        View view = inflater.inflate(R.layout.fragment_marks, container, false);
+            new MarksModel(container.getContext()).execute();
+        }
+        else if (subject.size() > 1) {
+
+            createGrid();
+            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        }
+
+
+        return view;
+    }
+
+    public void createGrid(){
 
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(view.getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
 
-        ArrayList<String> array = new ArrayList<>(Arrays.asList(lista));
-        ImageAdapter adapter = new ImageAdapter(view.getContext(),array);
+        ImageAdapter adapter = new ImageAdapter(view.getContext(),subject);
         recyclerView.setAdapter(adapter);
-
-        return view;
     }
 
     public class MarksModel extends AsyncTask<Void, Void, Void> {
@@ -107,6 +107,16 @@ public class MarksFragment extends Fragment {
                         .execute();
                 loginCookies = res.cookies();
 
+                //get subject name
+                String subjectPageurl = "https://uonetplus-opiekun.vulcan.net.pl/powiatjaroslawski/005791/Oceny/Wszystkie?details=1";
+                Document subjectPage = Jsoup.connect(subjectPageurl)
+                        .cookies(loginCookies)
+                        .get();
+                Elements subjectTile = subjectPage.select(".ocenyZwykle-table > tbody > tr");
+                for (Element titlelement : subjectTile){
+                    subject.add(titlelement.select("td:nth-child(1)").text());
+                }
+
                 // get marks view
                 String marksPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/powiatjaroslawski/005791/Oceny/Wszystkie?details=2";
                 Document marksPage = Jsoup.connect(marksPageUrl)
@@ -115,18 +125,33 @@ public class MarksFragment extends Fragment {
                 Elements marksRows = marksPage.select(".ocenySzczegoly-table > tbody > tr");
                 for (Element element : marksRows) {
                     System.out.println("----------");
-                    System.out.println("Subject: " + element.select("td:nth-child(1)").text());
+                    System.out.println("Subject" + element.select("td:nth-child(1)").text());
                     System.out.println("Grade: " + element.select("td:nth-child(2)").text());
                     System.out.println("Description: " + element.select("td:nth-child(3)").text());
                     System.out.println("Weight: " + element.select("td:nth-child(4)").text());
                     System.out.println("Date: " + element.select("td:nth-child(5)").text());
                     System.out.println("Teacher: " + element.select("td:nth-child(6)").text());
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             return null;
+        }
+
+        protected void onPostExecute(Void result) {
+
+            Set<String> hs = new HashSet<>();
+            hs.addAll(subject);
+            subject.clear();
+            subject.addAll(hs);
+
+            createGrid();
+
+            view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+            super.onPostExecute(result);
         }
     }
 

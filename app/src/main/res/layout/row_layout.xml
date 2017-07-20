@@ -20,6 +20,7 @@
         android:textColor="#000000"
         android:background="#FFFFFF"
         android:textStyle="bold"
+        android:lines="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
