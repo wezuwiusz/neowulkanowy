@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.dashboard.DashboardActivity;
 import io.github.wulkanowy.api.Cookies;
@@ -45,6 +49,16 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
             return R.string.login_bad_account_permission;
         } catch (LoginErrorException e) {
             return R.string.login_denied;
+        }
+
+        try {
+            String cookiesPath = activity.getFilesDir().getPath() + "/cookies.txt";
+            FileOutputStream out = new FileOutputStream(cookiesPath);
+            ObjectOutputStream outputStream = new ObjectOutputStream(out);
+            outputStream.writeObject(login.getJar());
+            outputStream.flush();
+        } catch (IOException e) {
+            return R.string.login_cookies_save_failed;
         }
 
         //Map<String, String> cookiesList = login.getJar();

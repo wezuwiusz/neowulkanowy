@@ -9,9 +9,8 @@
     <string name="warning_text">Aplikacja ta nie jest ukończona, więc mogą występować różnego rodzaju błędy lub dane funkcje nie bedą działać. Prosimy o cierpliwość i wyrozumiałość.</string>
     <string name="warning_label">Ostrzeżenie</string>
     <string name="data_text">Brak danych logowania</string>
-    <string name="error_feature_text">Funkcja którą chciałeś uruchomić nie działa</string>
     <string name="login_accepted">Pomyślnie zalogowano</string>
-    <string name="login_bad_credentials">Zła nazwa użytkownika lub hasło</string>
+    <string name="login_bad_credentials">Niepoprawny e-mail lub hasło</string>
     <string name="login_bad_account_permission">Brak uprawnień do otwarcia dziennika. Sprawdź wprowadzoną nazwę powiatu</string>
     <string name="login_denied">Logowanie nie powiodło się</string>
     <string name="please_wait">Proszę czekać…</string>
@@ -21,4 +20,6 @@
     <string name="title_attendance">Frekwencja</string>
     <string name="title_lessonplan">Plan lekcji</string>
     <string name="title_settings">Ustawienia</string>
+    <string name="noInternet_text">Brak połączenia z internetem</string>
+    <string name="login_cookies_save_failed">Nie udało się zapisać sesji</string>
 </resources>

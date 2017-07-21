@@ -14,19 +14,16 @@ import java.net.Socket;
 import java.net.SocketAddress;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.activity.main.Login;
+import io.github.wulkanowy.activity.main.LoginTask;
 import io.github.wulkanowy.activity.main.MainActivity;
 
-public class LoadingTask extends AsyncTask<Void, Void, Void> {
+ public class LoadingTask extends AsyncTask<Void, Void, Void> {
 
-    Activity activity;
-    boolean isOnline;
-    String idAccount;
-    String email;
-    String password;
-    String county;
+    private Activity activity;
+    private boolean isOnline;
 
-    final boolean SAVE_DATA = true;
+
+    private final boolean SAVE_DATA = false;
 
     LoadingTask(Activity main) {
         activity = main;
@@ -54,13 +51,13 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
 
                if (sharedPreferences.contains("wulkanowy")) {
 
-                   idAccount = sharedPreferences.getString("wulkanowy", "");
-                   email = sharedPreferences.getString(idAccount, "");
-                   password = sharedPreferences.getString("sandi" + email, "");
-                   county = sharedPreferences.getString("county" + email, "");
+                   String idAccount = sharedPreferences.getString("wulkanowy", "");
+                   String email = sharedPreferences.getString(idAccount, "");
+                   String password = sharedPreferences.getString("sandi" + email, "");
+                   String county = sharedPreferences.getString("county" + email, "");
 
                    if (!email.isEmpty() || !password.isEmpty() || !county.isEmpty()) {
-                       new Login(email, password, county, activity, 1).execute();
+                       new LoginTask(activity).execute(email, password, county);
                    } else if (password.isEmpty() || email.isEmpty() || county.isEmpty()) {
                        Toast.makeText(activity, R.string.data_text, Toast.LENGTH_SHORT).show();
 
@@ -80,11 +77,11 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
            Intent intent = new Intent(activity, MainActivity.class);
            activity.startActivity(intent);
 
-           Toast.makeText(activity,"Brak połączenia z internetem",Toast.LENGTH_SHORT ).show();
+           Toast.makeText(activity,R.string.noInternet_text,Toast.LENGTH_SHORT ).show();
        }
     }
 
-    public boolean isOnline() {
+    private boolean isOnline() {
         try {
             int timeoutMs = 1500;
             Socket sock = new Socket();

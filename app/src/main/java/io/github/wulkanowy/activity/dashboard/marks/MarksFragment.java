@@ -30,8 +30,8 @@ import io.github.wulkanowy.R;
 public class MarksFragment extends Fragment {
 
 
-    ArrayList<String> subject = new ArrayList<>();
-    View view;
+    private ArrayList<String> subject = new ArrayList<>();
+    private View view;
 
     public MarksFragment() {
     }
