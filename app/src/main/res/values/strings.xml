@@ -12,6 +12,7 @@
     <string name="error_feature_text">The function you wanted to run does not work</string>
     <string name="login_accepted">Login is successful</string>
     <string name="login_bad_credentials">Bad username or password</string>
+    <string name="login_bad_account_permission">No permission to open log. Check entered county name</string>
     <string name="login_denied">Login is failed</string>
     <string name="please_wait">Please wait…</string>
     <string name="title_activity_dashboard">Dashboard Activity</string>

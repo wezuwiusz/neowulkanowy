@@ -12,6 +12,7 @@
     <string name="error_feature_text">Funkcja którą chciałeś uruchomić nie działa</string>
     <string name="login_accepted">Pomyślnie zalogowano</string>
     <string name="login_bad_credentials">Zła nazwa użytkownika lub hasło</string>
+    <string name="login_bad_account_permission">Brak uprawnień do otwarcia dziennika. Sprawdź wprowadzoną nazwę powiatu</string>
     <string name="login_denied">Logowanie nie powiodło się</string>
     <string name="please_wait">Proszę czekać…</string>
     <string name="title_activity_dashboard">Aktywność dashboard</string>

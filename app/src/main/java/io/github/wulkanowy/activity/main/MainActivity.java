@@ -65,12 +65,10 @@ public class MainActivity extends Activity {
             county = map.get(county);
         }
 
-        if (!email.isEmpty() || !password.isEmpty() || !county.isEmpty()){
-            new Login(email, password, county, this).execute();
-        }
-        else if (password.isEmpty() || email.isEmpty() || county.isEmpty()) {
+        if (!email.isEmpty() && !password.isEmpty() && !county.isEmpty()){
+            new LoginTask(this).execute(email, password, county);
+        } else {
             Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
-
         }
     }
 }
