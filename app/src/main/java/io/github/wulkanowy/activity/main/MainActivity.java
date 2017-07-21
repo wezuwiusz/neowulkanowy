@@ -1,9 +1,9 @@
 package io.github.wulkanowy.activity.main;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -14,7 +14,11 @@ import java.util.LinkedHashMap;
 
 import io.github.wulkanowy.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
+
+    String password;
+    String email;
+    String county;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,9 @@ public class MainActivity extends Activity {
         EditText adressEmail = (EditText)findViewById(R.id.emailText);
         EditText passwordText = (EditText)findViewById(R.id.passwordText);
         EditText countyText = (EditText)findViewById(R.id.countyText);
-        String password = passwordText.getText().toString();
-        String email = adressEmail.getText().toString();
-        String county = countyText.getText().toString();
+        password = passwordText.getText().toString();
+        email = adressEmail.getText().toString();
+        county = countyText.getText().toString();
 
         String[] keys = this.getResources().getStringArray(R.array.counties);
         String[] values = this.getResources().getStringArray(R.array.counties_values);
@@ -65,10 +69,12 @@ public class MainActivity extends Activity {
             county = map.get(county);
         }
 
-        if (!email.isEmpty() && !password.isEmpty() && !county.isEmpty()){
-            new LoginTask(this).execute(email, password, county);
-        } else {
+        if (!email.isEmpty() || !password.isEmpty() || !county.isEmpty()){
+            new Login(email, password, county, this, 0).execute();
+        }
+        else if (password.isEmpty() || email.isEmpty() || county.isEmpty()) {
             Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
+
         }
     }
 }
