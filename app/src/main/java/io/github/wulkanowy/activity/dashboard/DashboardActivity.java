@@ -18,10 +18,10 @@ import io.github.wulkanowy.activity.dashboard.marks.MarksFragment;
 public class DashboardActivity extends AppCompatActivity {
 
 
-    MarksFragment marksFragment;
-    AttendanceFragment attendanceFragment = new AttendanceFragment();
-    BoardFragment boardFragment = new BoardFragment();
-    LessonplanFragment lessonplanFragment = new LessonplanFragment();
+    private MarksFragment marksFragment = new MarksFragment();
+    private AttendanceFragment attendanceFragment = new AttendanceFragment();
+    private BoardFragment boardFragment = new BoardFragment();
+    private LessonplanFragment lessonplanFragment = new LessonplanFragment();
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -67,8 +67,6 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        marksFragment = new MarksFragment();
 
         setTitle(R.string.title_dashboard);
 
