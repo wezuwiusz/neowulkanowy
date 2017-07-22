@@ -10,6 +10,10 @@ public class Cookies {
         cookies = items;
     }
 
+    public void addItems(Map<String, String> items) {
+        cookies.putAll(items);
+    }
+
     public Map<String, String> getAll() {
         return cookies;
     }

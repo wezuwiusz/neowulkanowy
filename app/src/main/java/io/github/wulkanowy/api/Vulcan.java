@@ -14,7 +14,15 @@ public abstract class Vulcan {
         return cookies.getAll();
     }
 
+    public Cookies getCookies() {
+        return cookies;
+    }
+
     public void setCookies(Map<String, String> items) {
         cookies.setItems(items);
+    }
+
+    public void addCookies(Map<String, String> items) {
+        cookies.addItems(items);
     }
 }

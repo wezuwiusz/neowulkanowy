@@ -1,6 +1,5 @@
 package io.github.wulkanowy.activity.dashboard.marks;
 
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,31 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.api.Cookies;
+import io.github.wulkanowy.api.grades.*;
 
 public class MarksFragment extends Fragment {
 
-
     private ArrayList<String> subject = new ArrayList<>();
+
     private View view;
 
     public MarksFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,15 +35,11 @@ public class MarksFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_marks, container, false);
         if (subject.size() == 0) {
-
-            new MarksModel(container.getContext()).execute();
-        }
-        else if (subject.size() > 1) {
-
+            new MarksTask(container.getContext()).execute();
+        } else if (subject.size() > 1) {
             createGrid();
             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }
-
 
         return view;
     }
@@ -67,12 +55,12 @@ public class MarksFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    public class MarksModel extends AsyncTask<Void, Void, Void> {
+    public class MarksTask extends AsyncTask<Void, Void, Void> {
 
         private Context mContext;
         private Map<String, String> loginCookies;
 
-        MarksModel(Context context) {
+        MarksTask(Context context) {
             mContext = context;
         }
 
@@ -83,57 +71,25 @@ public class MarksFragment extends Fragment {
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cookiesPath));
                 loginCookies = (Map<String, String>) ois.readObject();
-
-            } catch (ClassNotFoundException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (IOException e){
-                e.toString();
             }
 
-            // get link to uonetplus-opiekun.vulcan.net.pl module
-            String startPageUrl = "https://uonetplus.vulcan.net.pl/powiatjaroslawski/Start.mvc/Index";
             try {
-                Document startPage = Jsoup.connect(startPageUrl)
-                        .followRedirects(true)
-                        .cookies(loginCookies)
-                        .get();
-                Elements studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a");
-                String uonetPlusOpiekunUrl = studentTileLink.attr("href");
-
-                // get context module cookie
-                Connection.Response res = Jsoup.connect(uonetPlusOpiekunUrl)
-                        .followRedirects(true)
-                        .cookies(loginCookies)
-                        .execute();
-                loginCookies = res.cookies();
-
-                //get subject name
-                String subjectPageurl = "https://uonetplus-opiekun.vulcan.net.pl/powiatjaroslawski/005791/Oceny/Wszystkie?details=1";
-                Document subjectPage = Jsoup.connect(subjectPageurl)
-                        .cookies(loginCookies)
-                        .get();
-                Elements subjectTile = subjectPage.select(".ocenyZwykle-table > tbody > tr");
-                for (Element titlelement : subjectTile){
-                    subject.add(titlelement.select("td:nth-child(1)").text());
+                Cookies cookies = new Cookies();
+                cookies.setItems(loginCookies);
+                SubjectsList subjectsList = new SubjectsList(cookies, "powiatjaroslawski");
+                List<Subject> subjects = subjectsList.getAll();
+                for (Subject item : subjects){
+                    subject.add(item.getName());
                 }
 
-                // get marks view
-                String marksPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/powiatjaroslawski/005791/Oceny/Wszystkie?details=2";
-                Document marksPage = Jsoup.connect(marksPageUrl)
-                        .cookies(loginCookies)
-                        .get();
-                Elements marksRows = marksPage.select(".ocenySzczegoly-table > tbody > tr");
-                for (Element element : marksRows) {
-                    System.out.println("----------");
-                    System.out.println("Subject" + element.select("td:nth-child(1)").text());
-                    System.out.println("Grade: " + element.select("td:nth-child(2)").text());
-                    System.out.println("Description: " + element.select("td:nth-child(3)").text());
-                    System.out.println("Weight: " + element.select("td:nth-child(4)").text());
-                    System.out.println("Date: " + element.select("td:nth-child(5)").text());
-                    System.out.println("Teacher: " + element.select("td:nth-child(6)").text());
-
+                GradesList gradesList = new GradesList(cookies, "powiatjaroslawski");
+                List<Grade> grades = gradesList.getAll();
+                for (Grade item : grades){
+                    System.out.println(item.getSubject() + ": " + item.getValue());
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -141,12 +97,6 @@ public class MarksFragment extends Fragment {
         }
 
         protected void onPostExecute(Void result) {
-
-            Set<String> hs = new HashSet<>();
-            hs.addAll(subject);
-            subject.clear();
-            subject.addAll(hs);
-
             createGrid();
 
             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
@@ -154,6 +104,4 @@ public class MarksFragment extends Fragment {
             super.onPostExecute(result);
         }
     }
-
-
 }
