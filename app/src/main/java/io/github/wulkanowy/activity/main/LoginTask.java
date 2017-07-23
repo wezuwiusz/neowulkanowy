@@ -3,6 +3,7 @@ package io.github.wulkanowy.activity.main;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -13,7 +14,12 @@ import java.io.ObjectOutputStream;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.dashboard.DashboardActivity;
 import io.github.wulkanowy.api.Cookies;
-import io.github.wulkanowy.api.login.*;
+import io.github.wulkanowy.api.login.AccountPermissionException;
+import io.github.wulkanowy.api.login.BadCredentialsException;
+import io.github.wulkanowy.api.login.Login;
+import io.github.wulkanowy.api.login.LoginErrorException;
+import io.github.wulkanowy.database.accounts.AccountData;
+import io.github.wulkanowy.database.accounts.DatabaseAccount;
 
 public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
@@ -21,9 +27,12 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
     private ProgressDialog progress;
 
-    public LoginTask(Activity context) {
+    private boolean save;
+
+    public LoginTask(Activity context, boolean save) {
         activity = context;
         progress = new ProgressDialog(activity);
+        this.save = save;
     }
 
     @Override
@@ -61,6 +70,25 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
             return R.string.login_cookies_save_failed;
         }
 
+        if (save) {
+            AccountData accountData = new AccountData()
+                    .setName("")
+                    .setEmail(credentials[0])
+                    .setPassword(credentials[1])
+                    .setCounty(credentials[2]);
+
+            DatabaseAccount databaseAccount = new DatabaseAccount(activity);
+
+            try{
+            databaseAccount.open();
+            databaseAccount.put(accountData);
+            databaseAccount.close();
+            }
+            catch (SQLException e){
+
+                return R.string.SQLite_ioError_text;
+            }
+        }
         //Map<String, String> cookiesList = login.getJar();
 
         return R.string.login_accepted;

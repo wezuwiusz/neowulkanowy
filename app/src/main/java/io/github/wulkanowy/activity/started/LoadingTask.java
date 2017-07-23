@@ -2,9 +2,8 @@ package io.github.wulkanowy.activity.started;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.database.SQLException;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -16,14 +15,16 @@ import java.net.SocketAddress;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.main.LoginTask;
 import io.github.wulkanowy.activity.main.MainActivity;
+import io.github.wulkanowy.database.accounts.AccountData;
+import io.github.wulkanowy.database.accounts.DatabaseAccount;
 
- public class LoadingTask extends AsyncTask<Void, Void, Void> {
+public class LoadingTask extends AsyncTask<Void, Void, Void> {
 
     private Activity activity;
     private boolean isOnline;
 
 
-    private final boolean SAVE_DATA = false;
+    private final boolean SAVE_DATA = true;
 
     LoadingTask(Activity main) {
         activity = main;
@@ -31,6 +32,7 @@ import io.github.wulkanowy.activity.main.MainActivity;
 
     @Override
     protected Void doInBackground(Void... voids) {
+
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -45,33 +47,8 @@ import io.github.wulkanowy.activity.main.MainActivity;
     protected void onPostExecute(Void result) {
 
        if (isOnline) {
-           SharedPreferences sharedPreferences = activity.getSharedPreferences("io.github.wulkanowy", Context.MODE_PRIVATE);
 
-           if (SAVE_DATA) {
-
-               if (sharedPreferences.contains("wulkanowy")) {
-
-                   String idAccount = sharedPreferences.getString("wulkanowy", "");
-                   String email = sharedPreferences.getString(idAccount, "");
-                   String password = sharedPreferences.getString("sandi" + email, "");
-                   String county = sharedPreferences.getString("county" + email, "");
-
-                   if (!email.isEmpty() || !password.isEmpty() || !county.isEmpty()) {
-                       new LoginTask(activity).execute(email, password, county);
-                   } else if (password.isEmpty() || email.isEmpty() || county.isEmpty()) {
-                       Toast.makeText(activity, R.string.data_text, Toast.LENGTH_SHORT).show();
-
-                   }
-
-               } else {
-                   Intent intent = new Intent(activity, MainActivity.class);
-                   activity.startActivity(intent);
-               }
-           }
-           else{
-               Intent intent = new Intent(activity, MainActivity.class);
-               activity.startActivity(intent);
-           }
+           signIn();
        }
        else{
            Intent intent = new Intent(activity, MainActivity.class);
@@ -94,5 +71,33 @@ import io.github.wulkanowy.activity.main.MainActivity;
         } catch (IOException e) {
             return false;
         }
+    }
+
+    private boolean signIn(){
+
+        if (SAVE_DATA) {
+
+            DatabaseAccount databaseAccount = new DatabaseAccount(activity);
+            if (databaseAccount.checkExist()) {
+                try {
+                    AccountData accountData = databaseAccount.getAccount(1);
+                    databaseAccount.close();
+
+                    if (accountData != null) {
+                        new LoginTask(activity, false).execute(accountData.getEmail(), accountData.getPassword(), accountData.getCounty());
+                        return true;
+                    }
+                }
+                catch (SQLException e){
+
+                    Toast.makeText(activity,R.string.SQLite_ioError_text,Toast.LENGTH_LONG ).show();
+                }
+            }
+        }
+
+        Intent intent = new Intent(activity, MainActivity.class);
+        activity.startActivity(intent);
+
+        return false;
     }
 }

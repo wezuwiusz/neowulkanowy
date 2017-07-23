@@ -4,9 +4,9 @@ package io.github.wulkanowy.activity.dashboard;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.support.v4.app.FragmentTransaction;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.dashboard.attendance.AttendanceFragment;

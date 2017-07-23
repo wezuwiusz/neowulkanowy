@@ -22,4 +22,5 @@
     <string name="title_settings">Ustawienia</string>
     <string name="noInternet_text">Brak połączenia z internetem</string>
     <string name="login_cookies_save_failed">Nie udało się zapisać sesji</string>
+    <string name="SQLite_ioError_text">W bazie danych wystąpił błąd. Zrestartuj aplikacje a także sprawdź iość wolnego miejsca w pamięci wewnętrznej</string>
 </resources>

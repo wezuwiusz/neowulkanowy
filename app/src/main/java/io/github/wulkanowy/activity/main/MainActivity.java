@@ -22,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private float mTouchPosition;
     private float mReleasePosition;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!email.isEmpty() && !password.isEmpty() && !county.isEmpty()) {
-            new LoginTask(this).execute(email, password, county);
+            new LoginTask(this,true).execute(email, password, county);
         } else {
             Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
         }
