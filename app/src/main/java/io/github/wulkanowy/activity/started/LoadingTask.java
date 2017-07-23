@@ -23,7 +23,6 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
     private Activity activity;
     private boolean isOnline;
 
-
     private final boolean SAVE_DATA = true;
 
     LoadingTask(Activity main) {
@@ -33,10 +32,12 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (!SAVE_DATA) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         isOnline = isOnline();
@@ -47,10 +48,8 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
 
        if (isOnline) {
-
            signIn();
-       }
-       else{
+       } else{
            Intent intent = new Intent(activity, MainActivity.class);
            activity.startActivity(intent);
 
@@ -87,9 +86,7 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
                         new LoginTask(activity, false).execute(accountData.getEmail(), accountData.getPassword(), accountData.getCounty());
                         return true;
                     }
-                }
-                catch (SQLException e){
-
+                } catch (SQLException e){
                     Toast.makeText(activity,R.string.SQLite_ioError_text,Toast.LENGTH_LONG ).show();
                 }
             }

@@ -18,6 +18,8 @@ import io.github.wulkanowy.api.login.AccountPermissionException;
 import io.github.wulkanowy.api.login.BadCredentialsException;
 import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.login.LoginErrorException;
+import io.github.wulkanowy.api.user.BasicInformation;
+import io.github.wulkanowy.api.user.PersonalData;
 import io.github.wulkanowy.database.accounts.AccountData;
 import io.github.wulkanowy.database.accounts.DatabaseAccount;
 
@@ -71,22 +73,26 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
         }
 
         if (save) {
-            AccountData accountData = new AccountData()
-                    .setName("")
-                    .setEmail(credentials[0])
-                    .setPassword(credentials[1])
-                    .setCounty(credentials[2]);
+            try {
+                BasicInformation userInfo = new BasicInformation(login.getCookies(), credentials[2]);
+                PersonalData personalData = userInfo.getPersonalData();
+                String firstAndLastName = personalData.getFirstAndLastName();
 
-            DatabaseAccount databaseAccount = new DatabaseAccount(activity);
+                AccountData accountData = new AccountData()
+                        .setName(firstAndLastName)
+                        .setEmail(credentials[0])
+                        .setPassword(credentials[1])
+                        .setCounty(credentials[2]);
 
-            try{
-            databaseAccount.open();
-            databaseAccount.put(accountData);
-            databaseAccount.close();
-            }
-            catch (SQLException e){
+                DatabaseAccount databaseAccount = new DatabaseAccount(activity);
 
+                databaseAccount.open();
+                databaseAccount.put(accountData);
+                databaseAccount.close();
+            } catch (SQLException e) {
                 return R.string.SQLite_ioError_text;
+            } catch (IOException | LoginErrorException e) {
+                return R.string.login_denied;
             }
         }
         //Map<String, String> cookiesList = login.getJar();
