@@ -11,10 +11,6 @@ public class StartedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_started);
-        Task();
-    }
-
-    public void Task(){
 
         new LoadingTask(this).execute();
     }

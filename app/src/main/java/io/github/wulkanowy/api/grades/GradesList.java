@@ -17,7 +17,8 @@ import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class GradesList extends StudentAndParent {
 
-    private String gradesPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Oceny/Wszystkie?details=2";
+    private String gradesPageUrl =
+            "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Oceny/Wszystkie?details=2";
 
     private List<Grade> grades = new ArrayList<>();
 
@@ -37,7 +38,8 @@ public class GradesList extends StudentAndParent {
 
         for (Element row : marksRows) {
             Pattern pattern = Pattern.compile("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
-            Matcher matcher = pattern.matcher(row.select("td:nth-child(2) span.ocenaCzastkowa").attr("style"));
+            Matcher matcher = pattern.matcher(
+                    row.select("td:nth-child(2) span.ocenaCzastkowa").attr("style"));
             String color;
             if (!matcher.find()) {
                 color = "000000";

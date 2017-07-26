@@ -16,50 +16,14 @@ public class PersonalData {
 
     private String parentsNames;
 
+    public String getNames() {
+        return names;
+    }
+
     public PersonalData setNames(String names) {
         this.names = names;
 
         return this;
-    }
-
-    public PersonalData setDateAndBirthPlace(String dateAndBirthPlace) {
-        this.dateAndBirthPlace = dateAndBirthPlace;
-
-        return this;
-    }
-
-    public PersonalData setPesel(String pesel) {
-        this.pesel = pesel;
-
-        return this;
-    }
-
-    public PersonalData setGender(String gender) {
-        this.gender = gender;
-
-        return this;
-    }
-
-    public PersonalData setPolishCitizenship(String polishCitizenship) {
-        isPolishCitizenship = polishCitizenship;
-
-        return this;
-    }
-
-    public PersonalData setFamilyName(String familyName) {
-        this.familyName = familyName;
-
-        return this;
-    }
-
-    public PersonalData setParentsNames(String parentsNames) {
-        this.parentsNames = parentsNames;
-
-        return this;
-    }
-
-    public String getNames() {
-        return names;
     }
 
     public String getFirstName() {
@@ -82,23 +46,59 @@ public class PersonalData {
         return dateAndBirthPlace;
     }
 
+    public PersonalData setDateAndBirthPlace(String dateAndBirthPlace) {
+        this.dateAndBirthPlace = dateAndBirthPlace;
+
+        return this;
+    }
+
     public String getPesel() {
         return pesel;
+    }
+
+    public PersonalData setPesel(String pesel) {
+        this.pesel = pesel;
+
+        return this;
     }
 
     public String getGender() {
         return gender;
     }
 
+    public PersonalData setGender(String gender) {
+        this.gender = gender;
+
+        return this;
+    }
+
     public boolean isPolishCitizenship() {
-        return isPolishCitizenship.equals("Tak");
+        return "Tak".equals(isPolishCitizenship);
+    }
+
+    public PersonalData setPolishCitizenship(String polishCitizenship) {
+        isPolishCitizenship = polishCitizenship;
+
+        return this;
     }
 
     public String getFamilyName() {
         return familyName;
     }
 
+    public PersonalData setFamilyName(String familyName) {
+        this.familyName = familyName;
+
+        return this;
+    }
+
     public String getParentsNames() {
         return parentsNames;
+    }
+
+    public PersonalData setParentsNames(String parentsNames) {
+        this.parentsNames = parentsNames;
+
+        return this;
     }
 }

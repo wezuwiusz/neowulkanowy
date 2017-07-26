@@ -15,7 +15,8 @@ import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class SubjectsList extends StudentAndParent {
 
-    private String subjectsPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Oceny/Wszystkie?details=1";
+    private String subjectsPageUrl =
+            "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Oceny/Wszystkie?details=1";
 
     private List<Subject> subjects = new ArrayList<>();
 
@@ -33,7 +34,7 @@ public class SubjectsList extends StudentAndParent {
 
         Elements rows = subjectPage.select(".ocenyZwykle-table > tbody > tr");
 
-        for (Element subjectRow : rows){
+        for (Element subjectRow : rows) {
             subjects.add(new Subject()
                     .setName(subjectRow.select("td:nth-child(1)").text())
                     .setPredictedRating(subjectRow.select("td:nth-child(3)").text())

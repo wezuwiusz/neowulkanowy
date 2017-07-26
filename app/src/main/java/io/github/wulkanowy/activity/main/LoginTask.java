@@ -27,14 +27,15 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
     private Activity activity;
 
-    private ProgressDialog progress;
-
     private boolean save;
 
-    public LoginTask(Activity context, boolean save) {
-        activity = context;
-        progress = new ProgressDialog(activity);
+    private ProgressDialog progress;
+
+    public LoginTask(Activity activity, boolean save) {
+        this.activity = activity;
         this.save = save;
+
+        this.progress = new ProgressDialog(activity);
     }
 
     @Override
@@ -74,7 +75,8 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
         if (save) {
             try {
-                BasicInformation userInfo = new BasicInformation(login.getCookies(), credentials[2]);
+                BasicInformation userInfo = new BasicInformation(login.getCookies(),
+                        credentials[2]);
                 PersonalData personalData = userInfo.getPersonalData();
                 String firstAndLastName = personalData.getFirstAndLastName();
 
@@ -107,7 +109,7 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
         Toast.makeText(activity, activity.getString(messageID), Toast.LENGTH_LONG).show();
 
-        if (messageID == R.string.login_accepted){
+        if (messageID == R.string.login_accepted) {
             Intent intent = new Intent(activity, DashboardActivity.class);
             activity.startActivity(intent);
         }

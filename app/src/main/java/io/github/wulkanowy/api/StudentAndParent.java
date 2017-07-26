@@ -22,7 +22,7 @@ public class StudentAndParent extends Vulcan {
     public StudentAndParent(Cookies cookies, String locID) throws IOException {
         super(cookies);
 
-        locationID = locID;
+        this.locationID = locID;
 
         setUp();
     }

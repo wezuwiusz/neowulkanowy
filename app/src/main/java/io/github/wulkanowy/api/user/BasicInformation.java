@@ -12,11 +12,13 @@ import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class BasicInformation extends StudentAndParent {
 
-    private String studentDataPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Uczen.mvc/DanePodstawowe";
+    private String studentDataPageUrl =
+            "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Uczen.mvc/DanePodstawowe";
 
     private Document studentDataPageDocument;
 
-    public BasicInformation(Cookies cookies, String locationID) throws IOException, LoginErrorException {
+    public BasicInformation(Cookies cookies, String locationID)
+            throws IOException, LoginErrorException {
         super(cookies, locationID);
 
         studentDataPageDocument = getPage();

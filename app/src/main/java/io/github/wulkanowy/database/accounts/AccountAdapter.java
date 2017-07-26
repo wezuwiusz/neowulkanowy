@@ -1,6 +1,5 @@
 package io.github.wulkanowy.database.accounts;
 
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -9,53 +8,52 @@ import android.util.Log;
 
 public class AccountAdapter {
 
-    private DatabaseHelper databaseHelper;
-    private Context context;
-    public SQLiteDatabase database;
-
     private final String DATABASE_NAME = "accountdatabase.db";
     private final int DATABASE_VERSION = 1;
+    public SQLiteDatabase database;
+    private DatabaseHelper databaseHelper;
+    private Context context;
 
-    AccountAdapter(Context context){
-        this.context  = context;
+    AccountAdapter(Context context) {
+        this.context = context;
     }
 
-    public AccountAdapter open(){
+    public AccountAdapter open() {
 
         databaseHelper = new DatabaseHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
 
-        try{
+        try {
             database = databaseHelper.getWritableDatabase();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             database = databaseHelper.getReadableDatabase();
-            Log.w(DatabaseHelper.DEBUG_TAG,"Database in read-only");
+            Log.w(DatabaseHelper.DEBUG_TAG, "Database in read-only");
         }
 
-        Log.d(DatabaseHelper.DEBUG_TAG,"Open database");
+        Log.d(DatabaseHelper.DEBUG_TAG, "Open database");
 
         return this;
     }
 
-    public void close(){
+    public void close() {
         databaseHelper.close();
 
-        Log.d(DatabaseHelper.DEBUG_TAG,"Close database");
+        Log.d(DatabaseHelper.DEBUG_TAG, "Close database");
     }
 
-    public boolean checkExist(){
+    public boolean checkExist() {
 
         open();
 
-        Log.d(DatabaseHelper.DEBUG_TAG,"Check exist table");
+        Log.d(DatabaseHelper.DEBUG_TAG, "Check exist table");
 
         Cursor cursor = database.rawQuery("SELECT COUNT(*) FROM accounts", null);
-        if(cursor != null){
 
+        if (cursor != null) {
             cursor.moveToFirst();
 
             int count = cursor.getInt(0);
 
-            if(count > 0){
+            if (count > 0) {
                 return true;
             }
 

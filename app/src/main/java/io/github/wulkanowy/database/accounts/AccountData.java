@@ -13,48 +13,48 @@ public class AccountData {
 
     private String county;
 
-    public AccountData setId(int id){
+    public int getId() {
+        return id;
+    }
+
+    public AccountData setId(int id) {
         this.id = id;
         return this;
     }
 
-    public AccountData setName(String name){
+    public String getName() {
+        return name;
+    }
+
+    public AccountData setName(String name) {
         this.name = name;
         return this;
     }
 
-    public AccountData setEmail(String email){
+    public String getEmail() {
+        return email;
+    }
+
+    public AccountData setEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public AccountData setPassword(String password){
+    public String getPassword() {
+        return password;
+    }
+
+    public AccountData setPassword(String password) {
         this.password = password;
         return this;
     }
 
-    public AccountData setCounty(String county){
+    public String getCounty() {
+        return county;
+    }
+
+    public AccountData setCounty(String county) {
         this.county = county;
         return this;
-    }
-
-    public int getId(){
-        return id;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public String getEmail(){
-        return email;
-    }
-
-    public String getPassword(){
-        return password;
-    }
-
-    public String getCounty(){
-        return county;
     }
 }

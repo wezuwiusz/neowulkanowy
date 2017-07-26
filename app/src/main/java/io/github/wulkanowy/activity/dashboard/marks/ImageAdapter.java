@@ -17,26 +17,27 @@ import io.github.wulkanowy.R;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<String> lista;
+    private ArrayList<String> list;
 
-    public ImageAdapter(Context context, ArrayList<String> lista) {
-        this.lista = lista;
+    public ImageAdapter(Context context, ArrayList<String> list) {
+        this.list = list;
         this.context = context;
     }
 
     @Override
     public ImageAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_layout, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_layout,
+                viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ImageAdapter.ViewHolder viewHolder, int i) {
 
-        viewHolder.tv_android.setText(lista.get(i));
+        viewHolder.tv_android.setText(list.get(i));
         Picasso.with(context)
                 .load(R.drawable.sample_0)
-                .resize(240,120)
+                .resize(240, 120)
                 .noFade()
                 .into(viewHolder.img_android);
 
@@ -44,16 +45,17 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_android;
         private ImageView img_android;
+
         public ViewHolder(View view) {
             super(view);
 
-            tv_android = (TextView)view.findViewById(R.id.tv_android);
+            tv_android = (TextView) view.findViewById(R.id.tv_android);
             img_android = (ImageView) view.findViewById(R.id.img_android);
         }
     }

@@ -16,10 +16,18 @@ public class Grade {
 
     private String teacher;
 
+    public String getSubject() {
+        return subject;
+    }
+
     public Grade setSubject(String subject) {
         this.subject = subject;
 
         return this;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public Grade setValue(String value) {
@@ -28,10 +36,18 @@ public class Grade {
         return this;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public Grade setColor(String color) {
         this.color = color;
 
         return this;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public Grade setDescription(String description) {
@@ -40,10 +56,18 @@ public class Grade {
         return this;
     }
 
+    public String getWeight() {
+        return weight;
+    }
+
     public Grade setWeight(String weight) {
         this.weight = weight;
 
         return this;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public Grade setDate(String date) {
@@ -52,37 +76,13 @@ public class Grade {
         return this;
     }
 
+    public String getTeacher() {
+        return teacher;
+    }
+
     public Grade setTeacher(String teacher) {
         this.teacher = teacher;
 
         return this;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getTeacher() {
-        return teacher;
     }
 }

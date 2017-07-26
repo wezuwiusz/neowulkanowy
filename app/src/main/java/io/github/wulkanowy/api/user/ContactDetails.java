@@ -8,9 +8,17 @@ public class ContactDetails {
 
     private String email;
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public ContactDetails setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
+    }
+
+    public String getCellPhoneNumber() {
+        return cellPhoneNumber;
     }
 
     public ContactDetails setCellPhoneNumber(String cellPhoneNumber) {
@@ -18,20 +26,12 @@ public class ContactDetails {
         return this;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public ContactDetails setEmail(String email) {
         this.email = email;
         return this;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getCellPhoneNumber() {
-        return cellPhoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
     }
 }

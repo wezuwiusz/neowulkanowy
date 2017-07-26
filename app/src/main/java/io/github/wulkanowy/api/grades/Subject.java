@@ -6,10 +6,18 @@ public class Subject {
     private String predictedRating;
     private String finalRating;
 
+    public String getName() {
+        return name;
+    }
+
     public Subject setName(String name) {
         this.name = name;
 
         return this;
+    }
+
+    public String getPredictedRating() {
+        return predictedRating;
     }
 
     public Subject setPredictedRating(String predictedRating) {
@@ -18,21 +26,13 @@ public class Subject {
         return this;
     }
 
+    public String getFinalRating() {
+        return finalRating;
+    }
+
     public Subject setFinalRating(String finalRating) {
         this.finalRating = finalRating;
 
         return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPredictedRating() {
-        return predictedRating;
-    }
-
-    public String getFinalRating() {
-        return finalRating;
     }
 }

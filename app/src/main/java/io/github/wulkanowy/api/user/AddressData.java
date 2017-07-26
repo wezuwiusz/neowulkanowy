@@ -8,10 +8,18 @@ public class AddressData {
 
     private String correspondenceAddress;
 
+    public String getAddress() {
+        return address;
+    }
+
     public AddressData setAddress(String address) {
         this.address = address;
 
         return this;
+    }
+
+    public String getRegisteredAddress() {
+        return registeredAddress;
     }
 
     public AddressData setRegisteredAddress(String registeredAddress) {
@@ -20,21 +28,13 @@ public class AddressData {
         return this;
     }
 
+    public String getCorrespondenceAddress() {
+        return correspondenceAddress;
+    }
+
     public AddressData setCorrespondenceAddress(String correspondenceAddress) {
         this.correspondenceAddress = correspondenceAddress;
 
         return this;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getRegisteredAddress() {
-        return registeredAddress;
-    }
-
-    public String getCorrespondenceAddress() {
-        return correspondenceAddress;
     }
 }
