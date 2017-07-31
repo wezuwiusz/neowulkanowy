@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,7 @@ public class MarksFragment extends Fragment {
                 GradesList gradesList = new GradesList(cookies, "powiatjaroslawski");
                 List<Grade> grades = gradesList.getAll();
                 for (Grade item : grades) {
-                    System.out.println(item.getSubject() + ": " + item.getValue());
+                    Log.d("MarksFragment", item.getSubject() + ": " + item.getValue());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -22,6 +22,8 @@ import io.github.wulkanowy.api.user.BasicInformation;
 import io.github.wulkanowy.api.user.PersonalData;
 import io.github.wulkanowy.database.accounts.AccountData;
 import io.github.wulkanowy.database.accounts.DatabaseAccount;
+import io.github.wulkanowy.security.CryptoException;
+import io.github.wulkanowy.security.Safety;
 
 public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
@@ -80,10 +82,12 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
                 PersonalData personalData = userInfo.getPersonalData();
                 String firstAndLastName = personalData.getFirstAndLastName();
 
+                Safety safety = new Safety(activity);
+
                 AccountData accountData = new AccountData()
                         .setName(firstAndLastName)
                         .setEmail(credentials[0])
-                        .setPassword(credentials[1])
+                        .setPassword(safety.encrypt(credentials[0], credentials[1]))
                         .setCounty(credentials[2]);
 
                 DatabaseAccount databaseAccount = new DatabaseAccount(activity);
@@ -95,6 +99,10 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
                 return R.string.SQLite_ioError_text;
             } catch (IOException | LoginErrorException e) {
                 return R.string.login_denied;
+            } catch (CryptoException e) {
+                return R.string.encrypt_failed;
+            } catch (UnsupportedOperationException e) {
+                return R.string.root_failed;
             }
         }
         //Map<String, String> cookiesList = login.getJar();
@@ -109,7 +117,7 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
         Toast.makeText(activity, activity.getString(messageID), Toast.LENGTH_LONG).show();
 
-        if (messageID == R.string.login_accepted) {
+        if (messageID == R.string.login_accepted || messageID == R.string.root_failed || messageID == R.string.encrypt_failed) {
             Intent intent = new Intent(activity, DashboardActivity.class);
             activity.startActivity(intent);
         }

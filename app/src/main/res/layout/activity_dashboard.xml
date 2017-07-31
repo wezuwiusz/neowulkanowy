@@ -6,17 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="io.github.wulkanowy.activity.dashboard.DashboardActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context="io.github.wulkanowy.activity.dashboard.DashboardActivity">
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fitsSystemWindows="true"
         android:layout_weight="1"
-        />
+        android:fitsSystemWindows="true"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior" />
 
 
     <android.support.design.widget.BottomNavigationView
@@ -25,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation"
         app:itemIconTint="@color/bottomnavi_color"
-        app:itemTextColor="@color/bottomnavi_color"/>
+        app:itemTextColor="@color/bottomnavi_color"
+        app:menu="@menu/navigation" />
 
 </LinearLayout>

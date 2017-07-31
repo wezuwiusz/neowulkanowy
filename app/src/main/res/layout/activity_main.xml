@@ -4,60 +4,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/appName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:text="@string/app_name"
-                android:textSize="40sp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="40sp" />
 
-            <EditText
-                android:id="@+id/emailText"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="@string/email_hint"
-                android:inputType="textEmailAddress"
-                 />
+        <EditText
+            android:id="@+id/emailText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress" />
 
-            <EditText
-                android:id="@+id/passwordText"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="@string/pass_hint"
-                android:fontFamily="sans-serif"
-                android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/passwordText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:hint="@string/pass_hint"
+            android:inputType="textPassword" />
 
-            <AutoCompleteTextView
-                android:id="@+id/countyText"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:hint="@string/county_hint"
-                android:imeOptions="actionDone"
-                android:inputType="text" />
+        <AutoCompleteTextView
+            android:id="@+id/countyText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:hint="@string/county_hint"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
-            <Button
-                android:id="@+id/agreeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:onClick="login"
-                android:text="@string/login_button" />
+        <Button
+            android:id="@+id/agreeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:onClick="login"
+            android:text="@string/login_button" />
 
-        </LinearLayout>
+    </LinearLayout>
 </ScrollView>

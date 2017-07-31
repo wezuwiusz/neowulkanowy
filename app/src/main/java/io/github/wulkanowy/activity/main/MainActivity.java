@@ -54,12 +54,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View a) {
-        EditText emailText = (EditText) findViewById(R.id.emailText);
-        EditText passwordText = (EditText) findViewById(R.id.passwordText);
-        EditText countyText = (EditText) findViewById(R.id.countyText);
-        String password = passwordText.getText().toString();
-        String email = emailText.getText().toString();
-        String county = countyText.getText().toString();
+        String password = ((EditText) findViewById(R.id.passwordText)).getText().toString();
+        String email = ((EditText) findViewById(R.id.emailText)).getText().toString();
+        String county = ((EditText) findViewById(R.id.countyText)).getText().toString();
 
         String[] keys = this.getResources().getStringArray(R.array.counties);
         String[] values = this.getResources().getStringArray(R.array.counties_values);

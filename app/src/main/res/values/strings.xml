@@ -23,4 +23,7 @@
     <string name="noInternet_text">No internet connection</string>
     <string name="login_cookies_save_failed">Failed to save session</string>
     <string name="SQLite_ioError_text">An error occurred in the database. Restart the applications and check the free space in the internal memory</string>
+    <string name="root_failed">This device is rooted. Automatic login has been disabled</string>
+    <string name="encrypt_failed">Encryption failed. Automatic login has been disabled</string>
+    <string name="decrypt_failed">Decrypt is failed. Automatic login has been disable</string>
 </resources>
