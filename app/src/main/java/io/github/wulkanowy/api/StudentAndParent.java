@@ -20,20 +20,17 @@ public class StudentAndParent extends Vulcan {
     private String uonetPlusOpiekunUrl;
 
     public StudentAndParent(Cookies cookies, String locID) throws IOException {
-        super(cookies);
-
+        this.cookies = cookies;
         this.locationID = locID;
-
-        setUp();
     }
 
-    private void setUp() throws IOException {
+    public StudentAndParent setUp() throws IOException {
         startPageUrl = startPageUrl.replace("{locationID}", locationID);
 
         // get link to uonetplus-opiekun.vulcan.net.pl module
         Document startPage = Jsoup.connect(startPageUrl)
                 .followRedirects(true)
-                .cookies(getJar())
+                .cookies(getCookies())
                 .get();
         Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
         uonetPlusOpiekunUrl = studentTileLink.attr("href");
@@ -41,13 +38,15 @@ public class StudentAndParent extends Vulcan {
         //get context module cookie
         Connection.Response res = Jsoup.connect(uonetPlusOpiekunUrl)
                 .followRedirects(true)
-                .cookies(getJar())
+                .cookies(getCookies())
                 .execute();
 
-        addCookies(res.cookies());
+        cookies.addItems(res.cookies());
+
+        return this;
     }
 
-    protected String getLocationID() {
+    public String getLocationID() {
         return locationID;
     }
 
@@ -63,5 +62,9 @@ public class StudentAndParent extends Vulcan {
         String match = matcher.group(1);
 
         return match;
+    }
+
+    public String getRowDataChildValue(Element e, int index) {
+        return e.select(".daneWiersz .wartosc").get(index - 1).text();
     }
 }

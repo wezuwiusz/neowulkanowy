@@ -11,25 +11,29 @@ import java.util.List;
 
 import io.github.wulkanowy.api.Cookies;
 import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
-public class SubjectsList extends StudentAndParent {
+public class SubjectsList extends Vulcan {
+
+    private StudentAndParent snp = null;
 
     private String subjectsPageUrl =
             "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Oceny/Wszystkie?details=1";
 
     private List<Subject> subjects = new ArrayList<>();
 
-    public SubjectsList(Cookies cookies, String locationID) throws IOException {
-        super(cookies, locationID);
+    public SubjectsList(Cookies cookies, StudentAndParent snp) {
+        this.cookies = cookies;
+        this.snp = snp;
     }
 
     public List<Subject> getAll() throws IOException, LoginErrorException {
-        subjectsPageUrl = subjectsPageUrl.replace("{locationID}", getLocationID());
-        subjectsPageUrl = subjectsPageUrl.replace("{ID}", getID());
+        subjectsPageUrl = subjectsPageUrl.replace("{locationID}", snp.getLocationID());
+        subjectsPageUrl = subjectsPageUrl.replace("{ID}", snp.getID());
 
         Document subjectPage = Jsoup.connect(subjectsPageUrl)
-                .cookies(getJar())
+                .cookies(getCookies())
                 .get();
 
         Elements rows = subjectPage.select(".ocenyZwykle-table > tbody > tr");

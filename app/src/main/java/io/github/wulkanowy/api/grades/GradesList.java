@@ -13,25 +13,29 @@ import java.util.regex.Pattern;
 
 import io.github.wulkanowy.api.Cookies;
 import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
-public class GradesList extends StudentAndParent {
+public class GradesList extends Vulcan {
+
+    private StudentAndParent snp = null;
 
     private String gradesPageUrl =
             "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Oceny/Wszystkie?details=2";
 
     private List<Grade> grades = new ArrayList<>();
 
-    public GradesList(Cookies cookies, String locationID) throws IOException {
-        super(cookies, locationID);
+    public GradesList(Cookies cookies, StudentAndParent snp) {
+        this.cookies = cookies;
+        this.snp = snp;
     }
 
     public List<Grade> getAll() throws IOException, LoginErrorException {
-        gradesPageUrl = gradesPageUrl.replace("{locationID}", getLocationID());
-        gradesPageUrl = gradesPageUrl.replace("{ID}", getID());
+        gradesPageUrl = gradesPageUrl.replace("{locationID}", snp.getLocationID());
+        gradesPageUrl = gradesPageUrl.replace("{ID}", snp.getID());
 
         Document marksPage = Jsoup.connect(gradesPageUrl)
-                .cookies(getJar())
+                .cookies(getCookies())
                 .get();
 
         Elements marksRows = marksPage.select(".ocenySzczegoly-table > tbody > tr");

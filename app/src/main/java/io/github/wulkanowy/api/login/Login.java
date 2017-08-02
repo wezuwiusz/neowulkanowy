@@ -23,7 +23,7 @@ public class Login extends Vulcan {
             "https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx";
 
     public Login(Cookies cookies) {
-        super(cookies);
+        this.cookies = cookies;
     }
 
     public boolean login(String email, String password, String county)
@@ -61,7 +61,7 @@ public class Login extends Vulcan {
         certificatePageUrl = certificatePageUrl.replace("{locationID}", county);
 
         Document certificatePage = Jsoup.connect(certificatePageUrl)
-                .cookies(getJar())
+                .cookies(getCookies())
                 .get();
 
         return new String[]{
@@ -77,12 +77,12 @@ public class Login extends Vulcan {
         Connection.Response response = Jsoup.connect(loginEndpointPageUrl)
                 .data("wa", protocolVersion)
                 .data("wresult", certificate)
-                .cookies(getJar())
+                .cookies(getCookies())
                 .followRedirects(true)
                 .method(Connection.Method.POST)
                 .execute();
 
-        setCookies(response.cookies());
+        addCookies(response.cookies());
         Document html = response.parse();
 
         if (html.getElementsByTag("title").text().equals("Logowanie")) {

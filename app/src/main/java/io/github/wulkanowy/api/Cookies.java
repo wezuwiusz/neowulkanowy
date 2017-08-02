@@ -6,15 +6,17 @@ public class Cookies {
 
     private Map<String, String> cookies;
 
-    public void setItems(Map<String, String> items) {
-        cookies = items;
-    }
-
-    public void addItems(Map<String, String> items) {
-        cookies.putAll(items);
-    }
-
-    public Map<String, String> getAll() {
+    public Map<String, String> getItems() {
         return cookies;
+    }
+
+    public Cookies setItems(Map<String, String> items) {
+        this.cookies = items;
+        return this;
+    }
+
+    public Cookies addItems(Map<String, String> items) {
+        this.cookies.putAll(items);
+        return this;
     }
 }

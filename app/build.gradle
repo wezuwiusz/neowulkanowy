@@ -41,4 +41,6 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.6'
 
     testCompile 'junit:junit:4.12'
+    testCompile 'org.powermock:powermock-api-mockito:1.6.1'
+    testCompile group: 'org.unitils', name: 'unitils-core', version: '3.3'
 }

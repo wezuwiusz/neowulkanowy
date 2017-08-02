@@ -14,12 +14,14 @@ import java.io.ObjectOutputStream;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.dashboard.DashboardActivity;
 import io.github.wulkanowy.api.Cookies;
+import io.github.wulkanowy.api.StudentAndParent;
 import io.github.wulkanowy.api.login.AccountPermissionException;
 import io.github.wulkanowy.api.login.BadCredentialsException;
 import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.login.LoginErrorException;
 import io.github.wulkanowy.api.user.BasicInformation;
 import io.github.wulkanowy.api.user.PersonalData;
+import io.github.wulkanowy.api.user.User;
 import io.github.wulkanowy.database.accounts.AccountData;
 import io.github.wulkanowy.database.accounts.DatabaseAccount;
 import io.github.wulkanowy.security.CryptoException;
@@ -64,12 +66,11 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
         } catch (LoginErrorException e) {
             return R.string.login_denied;
         }
-
         try {
             String cookiesPath = activity.getFilesDir().getPath() + "/cookies.txt";
             FileOutputStream out = new FileOutputStream(cookiesPath);
             ObjectOutputStream outputStream = new ObjectOutputStream(out);
-            outputStream.writeObject(login.getJar());
+            outputStream.writeObject(login.getCookies());
             outputStream.flush();
         } catch (IOException e) {
             return R.string.login_cookies_save_failed;
@@ -77,8 +78,10 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
         if (save) {
             try {
-                BasicInformation userInfo = new BasicInformation(login.getCookies(),
-                        credentials[2]);
+                StudentAndParent snp = new StudentAndParent(login.getCookiesObject(),
+                        credentials[2]).setUp();
+                User user = new User(snp.getCookiesObject(), snp);
+                BasicInformation userInfo = new BasicInformation(user, snp);
                 PersonalData personalData = userInfo.getPersonalData();
                 String firstAndLastName = personalData.getFirstAndLastName();
 
@@ -117,7 +120,8 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
         Toast.makeText(activity, activity.getString(messageID), Toast.LENGTH_LONG).show();
 
-        if (messageID == R.string.login_accepted || messageID == R.string.root_failed || messageID == R.string.encrypt_failed) {
+        if (messageID == R.string.login_accepted || messageID == R.string.root_failed
+                || messageID == R.string.encrypt_failed) {
             Intent intent = new Intent(activity, DashboardActivity.class);
             activity.startActivity(intent);
         }
