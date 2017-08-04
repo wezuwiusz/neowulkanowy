@@ -1,6 +1,5 @@
 package io.github.wulkanowy.api.grades;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -20,8 +19,8 @@ public class GradesList extends Vulcan {
 
     private StudentAndParent snp = null;
 
-    private String gradesPageUrl =
-            "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/Oceny/Wszystkie?details=2";
+    private String gradesPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}"
+            + "/Oceny/Wszystkie?details=2&okres=";
 
     private List<Grade> grades = new ArrayList<>();
 
@@ -30,14 +29,20 @@ public class GradesList extends Vulcan {
         this.snp = snp;
     }
 
+    public String getGradesPageUrl() {
+        return gradesPageUrl;
+    }
+
     public List<Grade> getAll() throws IOException, LoginErrorException {
-        gradesPageUrl = gradesPageUrl.replace("{locationID}", snp.getLocationID());
-        gradesPageUrl = gradesPageUrl.replace("{ID}", snp.getID());
+        return getAll(snp.getCurrentSemester(snp.getSemesters()).getNumber());
+    }
 
-        Document marksPage = Jsoup.connect(gradesPageUrl)
-                .cookies(getCookies())
-                .get();
+    public List<Grade> getAll(String semester) throws IOException, LoginErrorException {
+        String url = getGradesPageUrl();
+        url = url.replace("{locationID}", snp.getLocationID());
+        url = url.replace("{ID}", snp.getID());
 
+        Document marksPage = getPageByUrl(url + semester);
         Elements marksRows = marksPage.select(".ocenySzczegoly-table > tbody > tr");
 
         for (Element row : marksRows) {

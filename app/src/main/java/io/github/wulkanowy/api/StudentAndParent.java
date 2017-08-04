@@ -4,8 +4,11 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,13 +18,20 @@ public class StudentAndParent extends Vulcan {
 
     private String startPageUrl = "https://uonetplus.vulcan.net.pl/{locationID}/Start.mvc/Index";
 
-    private String locationID;
+    private String gradesPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/"
+            + "Oceny/Wszystkie";
 
-    private String uonetPlusOpiekunUrl;
+    private String locationID = "";
+
+    private String uonetPlusOpiekunUrl = "";
 
     public StudentAndParent(Cookies cookies, String locID) throws IOException {
         this.cookies = cookies;
         this.locationID = locID;
+    }
+
+    public String getGradesPageUrl() {
+        return gradesPageUrl;
     }
 
     public StudentAndParent setUp() throws IOException {
@@ -66,5 +76,43 @@ public class StudentAndParent extends Vulcan {
 
     public String getRowDataChildValue(Element e, int index) {
         return e.select(".daneWiersz .wartosc").get(index - 1).text();
+    }
+
+    public List<Semester> getSemesters() throws IOException, LoginErrorException {
+        String url = getGradesPageUrl();
+        url = url.replace("{locationID}", getLocationID());
+        url = url.replace("{ID}", getID());
+
+        Document gradesPage = getPageByUrl(url);
+        Elements semesterOptions = gradesPage.select("#okresyKlasyfikacyjneDropDownList option");
+
+        List<Semester> semesters = new ArrayList<>();
+
+        for (Element e : semesterOptions) {
+            Semester semester = new Semester()
+                    .setId(e.text())
+                    .setNumber(e.attr("value"));
+
+            if ("selected".equals(e.attr("selected"))) {
+                semester.setCurrent(true);
+            }
+
+            semesters.add(semester);
+        }
+
+        return semesters;
+    }
+
+    public Semester getCurrentSemester(List<Semester> semesterList)
+            throws IOException, LoginErrorException {
+        Semester current = null;
+        for (Semester s : semesterList) {
+            if (s.isCurrent()) {
+                current = s;
+                break;
+            }
+        }
+
+        return current;
     }
 }
