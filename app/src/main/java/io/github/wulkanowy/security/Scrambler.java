@@ -45,6 +45,7 @@ public class Scrambler {
             keyStore = KeyStore.getInstance(ANDROID_KEYSTORE);
             keyStore.load(null);
         } catch (Exception e) {
+            Log.e(DEBUG_TAG, e.getMessage());
             throw new CryptoException(e.getMessage());
         }
 
@@ -59,6 +60,7 @@ public class Scrambler {
                 keyAliases.add(aliases.nextElement());
             }
         } catch (Exception e) {
+            Log.e(DEBUG_TAG, e.getMessage());
             throw new CryptoException(e.getMessage());
         }
 
@@ -104,9 +106,11 @@ public class Scrambler {
                     Log.w(DEBUG_TAG, "GenerateNewKey - " + alias + " is exist");
                 }
             } catch (Exception e) {
+                Log.e(DEBUG_TAG, e.getMessage());
                 throw new CryptoException(e.getMessage());
             }
         } else {
+            Log.e(DEBUG_TAG, "GenerateNewKey - String is empty");
             throw new CryptoException("GenerateNewKey - String is empty");
         }
 
@@ -125,6 +129,7 @@ public class Scrambler {
                 Log.e(DEBUG_TAG, e.getMessage());
             }
         } else {
+            Log.e(DEBUG_TAG, "DeleteKey - String is empty");
             throw new CryptoException("DeleteKey - String is empty");
         }
     }
@@ -154,9 +159,11 @@ public class Scrambler {
                 return encryptedText;
 
             } catch (Exception e) {
+                Log.e(DEBUG_TAG, e.getMessage());
                 throw new CryptoException(e.getMessage());
             }
         } else {
+            Log.e(DEBUG_TAG, "EncryptString - String is empty");
             throw new CryptoException("EncryptString - String is empty");
         }
     }
@@ -188,9 +195,11 @@ public class Scrambler {
                 return new String(ArrayUtils.toPrimitive(bytes), 0, bytes.length, "UTF-8");
 
             } catch (Exception e) {
+                Log.e(DEBUG_TAG, e.getMessage());
                 throw new CryptoException(e.getMessage());
             }
         } else {
+            Log.e(DEBUG_TAG, "EncryptString - String is empty");
             throw new CryptoException("EncryptString - String is empty");
 
         }

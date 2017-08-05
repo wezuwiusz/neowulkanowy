@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +19,17 @@ import java.util.Map;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.api.Cookies;
 import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.grades.Grade;
 import io.github.wulkanowy.api.grades.GradesList;
 import io.github.wulkanowy.api.grades.Subject;
 import io.github.wulkanowy.api.grades.SubjectsList;
-import io.github.wulkanowy.database.accounts.AccountData;
-import io.github.wulkanowy.database.accounts.DatabaseAccount;
+import io.github.wulkanowy.database.accounts.Account;
+import io.github.wulkanowy.database.accounts.AccountsDatabase;
+import io.github.wulkanowy.database.grades.GradesDatabase;
+import io.github.wulkanowy.database.subjects.SubjectsDatabase;
 
 public class MarksFragment extends Fragment {
 
-    private ArrayList<String> subject = new ArrayList<>();
+    private ArrayList<String> subjectsName = new ArrayList<>();
 
     private View view;
 
@@ -38,13 +38,13 @@ public class MarksFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_marks, container, false);
 
-        if (subject.size() == 0) {
+        if (subjectsName.size() == 0) {
             new MarksTask(container.getContext()).execute();
-        } else if (subject.size() > 1) {
+        } else if (subjectsName.size() > 1) {
             createGrid();
             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }
@@ -59,7 +59,7 @@ public class MarksFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        ImageAdapter adapter = new ImageAdapter(view.getContext(), subject);
+        ImageAdapter adapter = new ImageAdapter(view.getContext(), subjectsName);
         recyclerView.setAdapter(adapter);
     }
 
@@ -86,22 +86,31 @@ public class MarksFragment extends Fragment {
             try {
                 Cookies cookies = new Cookies();
                 cookies.setItems(loginCookies);
-                DatabaseAccount databaseAccount = new DatabaseAccount(mContext);
-                databaseAccount.open();
-                AccountData accountData = databaseAccount.getAccount(1);
-                databaseAccount.close();
-                StudentAndParent snp = new StudentAndParent(cookies, accountData.getCounty()).setUp();
+
+                AccountsDatabase accountsDatabase = new AccountsDatabase(mContext);
+                accountsDatabase.open();
+                Account account = accountsDatabase.getAccount(mContext.getSharedPreferences("LoginData", mContext.MODE_PRIVATE).getLong("isLogin", 0));
+                accountsDatabase.close();
+
+                StudentAndParent snp = new StudentAndParent(cookies, account.getCounty()).setUp();
                 SubjectsList subjectsList = new SubjectsList(snp.getCookiesObject(), snp);
-                List<Subject> subjects = subjectsList.getAll();
-                for (Subject item : subjects) {
-                    subject.add(item.getName());
+
+                SubjectsDatabase subjectsDatabase = new SubjectsDatabase(mContext);
+                subjectsDatabase.open();
+                subjectsDatabase.put(subjectsList.getAll());
+                List<Subject> subjects = subjectsDatabase.getAllSubjectsNames();
+                subjectsDatabase.close();
+
+                for (Subject subject : subjects) {
+                    subjectsName.add(subject.getName());
                 }
 
                 GradesList gradesList = new GradesList(snp.getCookiesObject(), snp);
-                List<Grade> grades = gradesList.getAll();
-                for (Grade item : grades) {
-                    Log.d("MarksFragment", item.getSubject() + ": " + item.getValue());
-                }
+                GradesDatabase gradesDatabase = new GradesDatabase(mContext);
+                gradesDatabase.open();
+                gradesDatabase.put(gradesList.getAll());
+                gradesDatabase.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

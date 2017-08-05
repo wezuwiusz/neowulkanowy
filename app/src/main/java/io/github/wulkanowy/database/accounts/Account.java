@@ -1,7 +1,7 @@
 package io.github.wulkanowy.database.accounts;
 
 
-public class AccountData {
+public class Account {
 
     private int id;
 
@@ -17,7 +17,7 @@ public class AccountData {
         return id;
     }
 
-    public AccountData setId(int id) {
+    public Account setId(int id) {
         this.id = id;
         return this;
     }
@@ -26,7 +26,7 @@ public class AccountData {
         return name;
     }
 
-    public AccountData setName(String name) {
+    public Account setName(String name) {
         this.name = name;
         return this;
     }
@@ -35,7 +35,7 @@ public class AccountData {
         return email;
     }
 
-    public AccountData setEmail(String email) {
+    public Account setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -44,7 +44,7 @@ public class AccountData {
         return password;
     }
 
-    public AccountData setPassword(String password) {
+    public Account setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -53,7 +53,7 @@ public class AccountData {
         return county;
     }
 
-    public AccountData setCounty(String county) {
+    public Account setCounty(String county) {
         this.county = county;
         return this;
     }

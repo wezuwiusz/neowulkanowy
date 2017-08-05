@@ -3,6 +3,7 @@ package io.github.wulkanowy.activity.main;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -22,8 +23,8 @@ import io.github.wulkanowy.api.login.LoginErrorException;
 import io.github.wulkanowy.api.user.BasicInformation;
 import io.github.wulkanowy.api.user.PersonalData;
 import io.github.wulkanowy.api.user.User;
-import io.github.wulkanowy.database.accounts.AccountData;
-import io.github.wulkanowy.database.accounts.DatabaseAccount;
+import io.github.wulkanowy.database.accounts.Account;
+import io.github.wulkanowy.database.accounts.AccountsDatabase;
 import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.security.Safety;
 
@@ -87,17 +88,23 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
                 Safety safety = new Safety(activity);
 
-                AccountData accountData = new AccountData()
+                Account account = new Account()
                         .setName(firstAndLastName)
                         .setEmail(credentials[0])
                         .setPassword(safety.encrypt(credentials[0], credentials[1]))
                         .setCounty(credentials[2]);
 
-                DatabaseAccount databaseAccount = new DatabaseAccount(activity);
+                AccountsDatabase accountsDatabase = new AccountsDatabase(activity);
 
-                databaseAccount.open();
-                databaseAccount.put(accountData);
-                databaseAccount.close();
+                accountsDatabase.open();
+                long idUser = accountsDatabase.put(account);
+                accountsDatabase.close();
+
+                SharedPreferences sharedPreferences = activity.getSharedPreferences("LoginData", activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putLong("isLogin", idUser);
+                editor.apply();
+
             } catch (SQLException e) {
                 return R.string.SQLite_ioError_text;
             } catch (IOException | LoginErrorException e) {

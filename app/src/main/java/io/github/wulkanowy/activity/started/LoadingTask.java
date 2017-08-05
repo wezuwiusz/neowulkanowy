@@ -14,8 +14,8 @@ import java.net.SocketAddress;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.main.LoginTask;
 import io.github.wulkanowy.activity.main.MainActivity;
-import io.github.wulkanowy.database.accounts.AccountData;
-import io.github.wulkanowy.database.accounts.DatabaseAccount;
+import io.github.wulkanowy.database.accounts.Account;
+import io.github.wulkanowy.database.accounts.AccountsDatabase;
 import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.security.Safety;
 
@@ -73,21 +73,22 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
     private boolean signIn() {
 
         if (SAVE_DATA) {
-            DatabaseAccount databaseAccount = new DatabaseAccount(activity);
+            AccountsDatabase accountsDatabase = new AccountsDatabase(activity);
+            accountsDatabase.open();
 
-            if (databaseAccount.checkExist()) {
+            if (accountsDatabase.checkExist("accounts", null, null)) {
                 try {
-                    AccountData accountData = databaseAccount.getAccount(1);
-                    databaseAccount.close();
+                    Account account = accountsDatabase.getAccount(activity.getSharedPreferences("LoginData", activity.MODE_PRIVATE).getLong("isLogin", 0));
+                    accountsDatabase.close();
 
-                    if (accountData != null) {
+                    if (account != null) {
 
                         Safety safety = new Safety(activity);
 
                         new LoginTask(activity, false).execute(
-                                accountData.getEmail(),
-                                safety.decrypt(accountData.getEmail(), accountData.getPassword()),
-                                accountData.getCounty()
+                                account.getEmail(),
+                                safety.decrypt(account.getEmail(), account.getPassword()),
+                                account.getCounty()
                         );
 
                         return true;
@@ -99,6 +100,7 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
                     Toast.makeText(activity, R.string.decrypt_failed, Toast.LENGTH_LONG).show();
                 }
             }
+            accountsDatabase.close();
         }
 
         Intent intent = new Intent(activity, MainActivity.class);

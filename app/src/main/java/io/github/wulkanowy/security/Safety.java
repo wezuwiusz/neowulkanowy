@@ -3,6 +3,7 @@ package io.github.wulkanowy.security;
 import android.content.Context;
 import android.os.Build;
 import android.util.Base64;
+import android.util.Log;
 
 import io.github.wulkanowy.utilities.RootUtilities;
 
@@ -24,6 +25,7 @@ public class Safety extends Scrambler {
             if (!RootUtilities.isRooted()) {
                 return new String(Base64.encode(plainText.getBytes(), Base64.DEFAULT));
             } else {
+                Log.e(Scrambler.DEBUG_TAG, "Password store in this devices isn't safe because is rooted");
                 throw new UnsupportedOperationException("Password store in this devices isn't safe because is rooted");
             }
         }
