@@ -84,6 +84,11 @@ public class StudentAndParent extends Vulcan {
         url = url.replace("{ID}", getID());
 
         Document gradesPage = getPageByUrl(url);
+
+        return getSemesters(gradesPage);
+    }
+
+    public List<Semester> getSemesters(Document gradesPage) {
         Elements semesterOptions = gradesPage.select("#okresyKlasyfikacyjneDropDownList option");
 
         List<Semester> semesters = new ArrayList<>();

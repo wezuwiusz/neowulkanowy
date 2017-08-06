@@ -10,22 +10,23 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.github.wulkanowy.api.Cookies;
+import io.github.wulkanowy.api.Semester;
 import io.github.wulkanowy.api.StudentAndParent;
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class GradesList extends Vulcan {
 
+    private Grades grades = null;
     private StudentAndParent snp = null;
 
     private String gradesPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}"
             + "/Oceny/Wszystkie?details=2&okres=";
 
-    private List<Grade> grades = new ArrayList<>();
+    private List<Grade> gradesList = new ArrayList<>();
 
-    public GradesList(Cookies cookies, StudentAndParent snp) {
-        this.cookies = cookies;
+    public GradesList(Grades grades, StudentAndParent snp) {
+        this.grades = grades;
         this.snp = snp;
     }
 
@@ -34,39 +35,41 @@ public class GradesList extends Vulcan {
     }
 
     public List<Grade> getAll() throws IOException, LoginErrorException {
-        return getAll(snp.getCurrentSemester(snp.getSemesters()).getNumber());
+        return getAll("");
     }
 
     public List<Grade> getAll(String semester) throws IOException, LoginErrorException {
-        String url = getGradesPageUrl();
-        url = url.replace("{locationID}", snp.getLocationID());
-        url = url.replace("{ID}", snp.getID());
+        Document gradesPage = grades.getGradesPageDocument(getGradesPageUrl() + semester);
+        Elements gradesRows = gradesPage.select(".ocenySzczegoly-table > tbody > tr");
+        Semester currentSemester = snp.getCurrentSemester(snp.getSemesters(gradesPage));
 
-        Document marksPage = getPageByUrl(url + semester);
-        Elements marksRows = marksPage.select(".ocenySzczegoly-table > tbody > tr");
-
-        for (Element row : marksRows) {
-            Pattern pattern = Pattern.compile("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
-            Matcher matcher = pattern.matcher(
-                    row.select("td:nth-child(2) span.ocenaCzastkowa").attr("style"));
-            String color;
-            if (!matcher.find()) {
-                color = "000000";
-            } else {
-                color = matcher.group(1);
+        for (Element row : gradesRows) {
+            if ("Brak ocen".equals(row.select("td:nth-child(2)").text())) {
+                continue;
             }
 
-            grades.add(new Grade()
+            String descriptions = row.select("td:nth-child(3)").text();
+            String symbol = descriptions.split(", ")[0];
+            String description = descriptions.replaceFirst(symbol, "").replaceFirst(", ", "");
+
+            Pattern pattern = Pattern.compile("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
+            Matcher matcher = pattern.matcher(row.select("td:nth-child(2) span.ocenaCzastkowa")
+                    .attr("style"));
+            String color = matcher.find() ? matcher.group(1) : "";
+
+            gradesList.add(new Grade()
                     .setSubject(row.select("td:nth-child(1)").text())
                     .setValue(row.select("td:nth-child(2)").text())
                     .setColor(color)
-                    .setDescription(row.select("td:nth-child(3)").text())
+                    .setSymbol(symbol)
+                    .setDescription(description)
                     .setWeight(row.select("td:nth-child(4)").text())
                     .setDate(row.select("td:nth-child(5)").text())
                     .setTeacher(row.select("td:nth-child(6)").text())
+                    .setSemester(currentSemester.getNumber())
             );
         }
 
-        return grades;
+        return gradesList;
     }
 }

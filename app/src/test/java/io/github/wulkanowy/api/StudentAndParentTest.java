@@ -10,6 +10,7 @@ import org.powermock.api.mockito.PowerMockito;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class StudentAndParentTest {
 
     private String fixtureFileName = "OcenyWszystkie-semester.html";
@@ -30,7 +31,9 @@ public class StudentAndParentTest {
         Mockito.when(snp.getLocationID()).thenReturn("symbol");
         Mockito.when(snp.getID()).thenReturn("123456");
         Mockito.when(snp.getSemesters()).thenCallRealMethod();
-        Mockito.when(snp.getCurrentSemester(Mockito.anyListOf(Semester.class))).thenCallRealMethod();
+        Mockito.when(snp.getSemesters(Mockito.any(Document.class))).thenCallRealMethod();
+        Mockito.when(snp.getCurrentSemester(Mockito.anyListOf(Semester.class)))
+                .thenCallRealMethod();
     }
 
     @Test

@@ -1,6 +1,5 @@
 package io.github.wulkanowy.api.grades;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -32,9 +31,7 @@ public class SubjectsList extends Vulcan {
         subjectsPageUrl = subjectsPageUrl.replace("{locationID}", snp.getLocationID());
         subjectsPageUrl = subjectsPageUrl.replace("{ID}", snp.getID());
 
-        Document subjectPage = Jsoup.connect(subjectsPageUrl)
-                .cookies(getCookies())
-                .get();
+        Document subjectPage = getPageByUrl(subjectsPageUrl);
 
         Elements rows = subjectPage.select(".ocenyZwykle-table > tbody > tr");
 
