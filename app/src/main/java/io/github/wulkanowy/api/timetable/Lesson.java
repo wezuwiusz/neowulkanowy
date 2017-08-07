@@ -3,23 +3,37 @@ package io.github.wulkanowy.api.timetable;
 public class Lesson {
 
     public static final String CLASS_PLANNING = "x-treelabel-ppl";
+
     public static final String CLASS_REALIZED = "x-treelabel-rlz";
+
     public static final String CLASS_MOVED_OR_CANCELED = "x-treelabel-inv";
+
     public static final String CLASS_NEW_MOVED_IN_OR_CHANGED = "x-treelabel-zas";
 
     private String subject = "";
+
     private String teacher = "";
+
     private String room = "";
+
     private String description = "";
+
     private String groupName = "";
+
     private String startTime = "";
+
     private String endTime = "";
 
     private boolean isEmpty = false;
+
     private boolean isDivisionIntoGroups = false;
+
     private boolean isPlanning = false;
+
     private boolean isRealized = false;
+
     private boolean isMovedOrCanceled = false;
+
     private boolean isNewMovedInOrChanged = false;
 
     public String getSubject() {

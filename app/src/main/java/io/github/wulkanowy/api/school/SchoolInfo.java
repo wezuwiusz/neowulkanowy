@@ -10,16 +10,17 @@ import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class SchoolInfo extends Vulcan {
 
-    private School school = null;
     private StudentAndParent snp = null;
 
-    public SchoolInfo(School school, StudentAndParent snp) {
-        this.school = school;
+    private String schoolPageUrl = "Szkola.mvc/Nauczyciele";
+
+    public SchoolInfo(StudentAndParent snp) {
         this.snp = snp;
     }
 
     public SchoolData getSchoolData() throws IOException, LoginErrorException {
-        Element e = school.getSchoolPageDocument().select(".mainContainer > article").get(0);
+        Element e = snp.getSnPPageDocument(schoolPageUrl)
+                .select(".mainContainer > article").get(0);
 
         return new SchoolData()
                 .setName(snp.getRowDataChildValue(e, 1))

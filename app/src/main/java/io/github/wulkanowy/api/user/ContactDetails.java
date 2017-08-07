@@ -2,11 +2,11 @@ package io.github.wulkanowy.api.user;
 
 public class ContactDetails {
 
-    private String phoneNumber;
+    private String phoneNumber = "";
 
-    private String cellPhoneNumber;
+    private String cellPhoneNumber = "";
 
-    private String email;
+    private String email = "";
 
     public String getPhoneNumber() {
         return phoneNumber;

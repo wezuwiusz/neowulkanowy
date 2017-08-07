@@ -17,16 +17,13 @@ import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class GradesList extends Vulcan {
 
-    private Grades grades = null;
     private StudentAndParent snp = null;
 
-    private String gradesPageUrl = "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}"
-            + "/Oceny/Wszystkie?details=2&okres=";
+    private String gradesPageUrl = "Oceny/Wszystkie?details=2&okres=";
 
-    private List<Grade> gradesList = new ArrayList<>();
+    private List<Grade> grades = new ArrayList<>();
 
-    public GradesList(Grades grades, StudentAndParent snp) {
-        this.grades = grades;
+    public GradesList(StudentAndParent snp) {
         this.snp = snp;
     }
 
@@ -39,7 +36,7 @@ public class GradesList extends Vulcan {
     }
 
     public List<Grade> getAll(String semester) throws IOException, LoginErrorException {
-        Document gradesPage = grades.getGradesPageDocument(getGradesPageUrl() + semester);
+        Document gradesPage = snp.getSnPPageDocument(getGradesPageUrl() + semester);
         Elements gradesRows = gradesPage.select(".ocenySzczegoly-table > tbody > tr");
         Semester currentSemester = snp.getCurrentSemester(snp.getSemesters(gradesPage));
 
@@ -57,7 +54,7 @@ public class GradesList extends Vulcan {
                     .attr("style"));
             String color = matcher.find() ? matcher.group(1) : "";
 
-            gradesList.add(new Grade()
+            grades.add(new Grade()
                     .setSubject(row.select("td:nth-child(1)").text())
                     .setValue(row.select("td:nth-child(2)").text())
                     .setColor(color)
@@ -70,6 +67,6 @@ public class GradesList extends Vulcan {
             );
         }
 
-        return gradesList;
+        return grades;
     }
 }

@@ -7,27 +7,31 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import io.github.wulkanowy.api.FixtureHelper;
+import io.github.wulkanowy.api.StudentAndParent;
 
 public class TableTest {
 
     private String fixtureStdFileName = "PlanLekcji-std.html";
+
     private String fixtureHolidaysFileName = "PlanLekcji-holidays.html";
+
     private String fixtureFullFileName = "PlanLekcji-full.html";
 
-    private Table getSetUpTable(String tick, String fixtureFileName) throws Exception {
+    private Table getSetUpTable(String fixtureFileName) throws Exception {
         String input = FixtureHelper.getAsString(getClass().getResourceAsStream(fixtureFileName));
 
         Document tablePageDocument = Jsoup.parse(input);
 
-        Timetable timetable = Mockito.mock(Timetable.class);
-        Mockito.when(timetable.getTablePageDocument(tick)).thenReturn(tablePageDocument);
+        StudentAndParent timetable = Mockito.mock(StudentAndParent.class);
+        Mockito.when(timetable.getSnPPageDocument(Mockito.anyString()))
+                .thenReturn(tablePageDocument);
 
         return new Table(timetable);
     }
 
     @Test
     public void getWeekTableStandardTest() throws Exception {
-        Table table = getSetUpTable("", fixtureStdFileName);
+        Table table = getSetUpTable(fixtureStdFileName);
         Week week = table.getWeekTable();
 
         Assert.assertEquals(5, week.getDays().size());
@@ -41,7 +45,7 @@ public class TableTest {
 
     @Test
     public void getWeekTableStandardLessonStartEndEndTest() throws Exception {
-        Table tableStd = getSetUpTable("", fixtureStdFileName);
+        Table tableStd = getSetUpTable(fixtureStdFileName);
         Week stdWeek = tableStd.getWeekTable();
 
         Assert.assertEquals("08:00", stdWeek.getDay(0).getLesson(0).getStartTime());
@@ -49,7 +53,7 @@ public class TableTest {
         Assert.assertEquals("12:15", stdWeek.getDay(2).getLesson(4).getEndTime());
         Assert.assertEquals("14:10", stdWeek.getDay(3).getLesson(7).getStartTime());
 
-        Table tableFull = getSetUpTable("", fixtureFullFileName);
+        Table tableFull = getSetUpTable(fixtureFullFileName);
         Week fullWeek = tableFull.getWeekTable();
 
         Assert.assertEquals("07:10", fullWeek.getDay(0).getLesson(0).getStartTime());
@@ -61,7 +65,7 @@ public class TableTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void getWeekTableStandardOutOfBoundsIndex() throws Exception {
-        Table table = getSetUpTable("", fixtureStdFileName);
+        Table table = getSetUpTable(fixtureStdFileName);
         Week week = table.getWeekTable();
 
         week.getDay(5);
@@ -69,7 +73,7 @@ public class TableTest {
 
     @Test
     public void getWeekTableHolidaysTest() throws Exception {
-        Table table = getSetUpTable("", fixtureHolidaysFileName);
+        Table table = getSetUpTable(fixtureHolidaysFileName);
         Week week = table.getWeekTable();
 
         Assert.assertTrue(week.getDay(1).isFreeDay());
@@ -84,7 +88,7 @@ public class TableTest {
 
     @Test
     public void getWeekTableHolidaysWithEmptyLessonsTest() throws Exception {
-        Table table = getSetUpTable("", fixtureHolidaysFileName);
+        Table table = getSetUpTable(fixtureHolidaysFileName);
         Week week = table.getWeekTable();
 
         Assert.assertEquals(5, week.getDays().size());
@@ -97,7 +101,7 @@ public class TableTest {
 
     @Test
     public void getWeekTableFullTest() throws Exception {
-        Table table = getSetUpTable("", fixtureFullFileName);
+        Table table = getSetUpTable(fixtureFullFileName);
         Week week = table.getWeekTable();
 
         Assert.assertFalse(week.getDay(1).getLesson(2).isEmpty());
@@ -105,7 +109,7 @@ public class TableTest {
 
     @Test
     public void getWeekTableFullLessonsGroupsDivisionTest() throws Exception {
-        Table table = getSetUpTable("", fixtureFullFileName);
+        Table table = getSetUpTable(fixtureFullFileName);
         Week week = table.getWeekTable();
 
         // class="", span*4
@@ -136,7 +140,7 @@ public class TableTest {
 
     @Test
     public void getWeekTableFullLessonsTypesTest() throws Exception {
-        Table table = getSetUpTable("", fixtureFullFileName);
+        Table table = getSetUpTable(fixtureFullFileName);
         Week week = table.getWeekTable();
 
         // class="", span*4
@@ -177,7 +181,7 @@ public class TableTest {
 
     @Test
     public void getWeekTableFullLessonsBasicInfoTest() throws Exception {
-        Table table = getSetUpTable("", fixtureFullFileName);
+        Table table = getSetUpTable(fixtureFullFileName);
         Week week = table.getWeekTable();
 
         // class="", span*4

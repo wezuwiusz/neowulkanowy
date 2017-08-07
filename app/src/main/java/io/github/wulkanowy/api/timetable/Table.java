@@ -8,15 +8,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.wulkanowy.api.StudentAndParent;
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class Table extends Vulcan {
 
-    private Timetable timetable;
+    private StudentAndParent snp;
 
-    public Table(Timetable timetable) {
-        this.timetable = timetable;
+    private String timetablePageurl = "Lekcja.mvc/PlanLekcji?data=";
+
+    public Table(StudentAndParent snp) {
+        this.snp = snp;
     }
 
     public Week getWeekTable() throws IOException, LoginErrorException {
@@ -24,7 +27,7 @@ public class Table extends Vulcan {
     }
 
     public Week getWeekTable(String tick) throws IOException, LoginErrorException {
-        Element table = timetable.getTablePageDocument(tick)
+        Element table = snp.getSnPPageDocument(timetablePageurl + tick)
                 .select(".mainContainer .presentData").first();
 
         Elements tableHeaderCells = table.select("thead th");
@@ -84,7 +87,7 @@ public class Table extends Vulcan {
                 .setDays(days);
     }
 
-    public Lesson getLessonFromElement(Element e) {
+    private Lesson getLessonFromElement(Element e) {
         Lesson lesson = new Lesson();
         Elements spans = e.select("span");
 
@@ -99,7 +102,7 @@ public class Table extends Vulcan {
         return lesson;
     }
 
-    public Lesson getLessonGroupDivisionInfo(Lesson lesson, Elements e) {
+    private Lesson getLessonGroupDivisionInfo(Lesson lesson, Elements e) {
         if ((4 == e.size() && (e.first().attr("class").equals("")) ||
                 (5 == e.size() && e.first().hasClass(Lesson.CLASS_NEW_MOVED_IN_OR_CHANGED)))) {
             lesson.setDivisionIntoGroups(true);
@@ -114,7 +117,7 @@ public class Table extends Vulcan {
         return lesson;
     }
 
-    public Lesson getLessonTypeInfo(Lesson lesson, Elements e) {
+    private Lesson getLessonTypeInfo(Lesson lesson, Elements e) {
         if (e.first().hasClass(Lesson.CLASS_MOVED_OR_CANCELED)) {
             lesson.setMovedOrCanceled(true);
         } else if (e.first().hasClass(Lesson.CLASS_NEW_MOVED_IN_OR_CHANGED)) {
@@ -131,7 +134,7 @@ public class Table extends Vulcan {
         return lesson;
     }
 
-    public Lesson getLessonDescriptionInfo(Lesson lesson, Elements e) {
+    private Lesson getLessonDescriptionInfo(Lesson lesson, Elements e) {
         if ((4 == e.size() || 5 == e.size())
                 && (e.first().hasClass(Lesson.CLASS_MOVED_OR_CANCELED)
                 || e.first().hasClass(Lesson.CLASS_NEW_MOVED_IN_OR_CHANGED))) {

@@ -7,20 +7,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.wulkanowy.api.StudentAndParent;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class AchievementsList {
 
-    private Notes notes = null;
+    private StudentAndParent snp = null;
 
     private List<String> achievementsList = new ArrayList<>();
 
-    public AchievementsList(Notes notes) {
-        this.notes = notes;
+    private String notesPageUrl = "UwagiOsiagniecia.mvc/Wszystkie";
+
+    public AchievementsList(StudentAndParent snp) {
+        this.snp = snp;
     }
 
     public List<String> getAllAchievements() throws LoginErrorException, IOException {
-        Element pageFragment = notes.getNotesPageDocument().select(".mainContainer > div").get(1);
+        Element pageFragment = snp.getSnPPageDocument(notesPageUrl)
+                .select(".mainContainer > div").get(1);
         Elements items = pageFragment.select("article");
 
         for (Element item : items) {

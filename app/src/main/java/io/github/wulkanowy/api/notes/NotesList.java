@@ -12,18 +12,19 @@ import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class NotesList {
 
-    private Notes notes = null;
     private StudentAndParent snp = null;
 
     private List<Note> notesList = new ArrayList<>();
 
-    public NotesList(Notes notes, StudentAndParent snp) {
-        this.notes = notes;
+    private String notesPageUrl = "UwagiOsiagniecia.mvc/Wszystkie";
+
+    public NotesList(StudentAndParent snp) {
         this.snp = snp;
     }
 
     public List<Note> getAllNotes() throws LoginErrorException, IOException {
-        Element pageFragment = notes.getNotesPageDocument().select(".mainContainer > div").get(0);
+        Element pageFragment = snp.getSnPPageDocument(notesPageUrl)
+                .select(".mainContainer > div").get(0);
         Elements items = pageFragment.select("article");
         Elements dates = pageFragment.select("h2");
 

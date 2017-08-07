@@ -2,11 +2,11 @@ package io.github.wulkanowy.api.user;
 
 public class AddressData {
 
-    private String address;
+    private String address = "";
 
-    private String registeredAddress;
+    private String registeredAddress = "";
 
-    private String correspondenceAddress;
+    private String correspondenceAddress = "";
 
     public String getAddress() {
         return address;

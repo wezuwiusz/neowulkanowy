@@ -2,44 +2,60 @@ package io.github.wulkanowy.api.user;
 
 public class PersonalData {
 
-    private String names;
+    private String name = "";
 
-    private String dateAndBirthPlace;
+    private String firstName = "";
 
-    private String pesel;
+    private String surname = "";
 
-    private String gender;
+    private String firstAndLastName = "";
 
-    private String isPolishCitizenship;
+    private String dateAndBirthPlace = "";
 
-    private String familyName;
+    private String pesel = "";
 
-    private String parentsNames;
+    private String gender = "";
 
-    public String getNames() {
-        return names;
+    private boolean isPolishCitizenship;
+
+    private String familyName = "";
+
+    private String parentsNames = "";
+
+    public String getName() {
+        return name;
     }
 
-    public PersonalData setNames(String names) {
-        this.names = names;
-
+    public PersonalData setName(String name) {
+        this.name = name;
         return this;
     }
 
     public String getFirstName() {
-        String[] name = names.split(" ");
+        return firstName;
+    }
 
-        return name[0];
+    public PersonalData setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
     }
 
     public String getSurname() {
-        String[] name = names.split(" ");
+        return surname;
+    }
 
-        return name[name.length - 1];
+    public PersonalData setSurname(String surname) {
+        this.surname = surname;
+        return this;
     }
 
     public String getFirstAndLastName() {
-        return getFirstName() + " " + getSurname();
+        return firstAndLastName;
+    }
+
+    public PersonalData setFirstAndLastName(String firstAndLastName) {
+        this.firstAndLastName = firstAndLastName;
+        return this;
     }
 
     public String getDateAndBirthPlace() {
@@ -48,7 +64,6 @@ public class PersonalData {
 
     public PersonalData setDateAndBirthPlace(String dateAndBirthPlace) {
         this.dateAndBirthPlace = dateAndBirthPlace;
-
         return this;
     }
 
@@ -58,7 +73,6 @@ public class PersonalData {
 
     public PersonalData setPesel(String pesel) {
         this.pesel = pesel;
-
         return this;
     }
 
@@ -68,17 +82,15 @@ public class PersonalData {
 
     public PersonalData setGender(String gender) {
         this.gender = gender;
-
         return this;
     }
 
     public boolean isPolishCitizenship() {
-        return "Tak".equals(isPolishCitizenship);
+        return isPolishCitizenship;
     }
 
-    public PersonalData setPolishCitizenship(String polishCitizenship) {
+    public PersonalData setPolishCitizenship(boolean polishCitizenship) {
         isPolishCitizenship = polishCitizenship;
-
         return this;
     }
 
@@ -88,7 +100,6 @@ public class PersonalData {
 
     public PersonalData setFamilyName(String familyName) {
         this.familyName = familyName;
-
         return this;
     }
 
@@ -98,7 +109,6 @@ public class PersonalData {
 
     public PersonalData setParentsNames(String parentsNames) {
         this.parentsNames = parentsNames;
-
         return this;
     }
 }

@@ -5,12 +5,11 @@ import org.jsoup.nodes.Document;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.unitils.reflectionassert.ReflectionAssert;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.FixtureHelper;
+import io.github.wulkanowy.api.StudentAndParent;
 
 public class AchievementsListTest {
 
@@ -23,33 +22,25 @@ public class AchievementsListTest {
 
         Document notesPageDocument = Jsoup.parse(input);
 
-        Notes notes = Mockito.mock(Notes.class);
-        Mockito.when(notes.getNotesPageDocument()).thenReturn(notesPageDocument);
+        StudentAndParent snp = Mockito.mock(StudentAndParent.class);
+        Mockito.when(snp.getSnPPageDocument(Mockito.anyString())).thenReturn(notesPageDocument);
 
-        return new AchievementsList(notes);
+        return new AchievementsList(snp);
     }
 
     @Test
     public void getAllAchievementsFilledTest() throws Exception {
-        List<String> expectedList = new ArrayList<>();
-        expectedList.add("I miejsce w ogólnopolskim konkursie ortograficznym");
-        expectedList.add("III miejsce w ogólnopolskim konkursie plastycznym");
+        List<String> list = getSetUpAchievementsList(fixtureFilledFileName).getAllAchievements();
 
-        List<String> actualList = getSetUpAchievementsList(
-                fixtureFilledFileName).getAllAchievements();
-
-        Assert.assertEquals(2, actualList.size());
-        ReflectionAssert.assertReflectionEquals(expectedList, actualList);
+        Assert.assertEquals(2, list.size());
+        Assert.assertEquals("I miejsce w ogólnopolskim konkursie ortograficznym", list.get(0));
+        Assert.assertEquals("III miejsce w ogólnopolskim konkursie plastycznym", list.get(1));
     }
 
     @Test
     public void getAllAchievementsEmptyTest() throws Exception {
-        List<String> expectedList = new ArrayList<>();
+        List<String> list = getSetUpAchievementsList(fixtureEmptyFileName).getAllAchievements();
 
-        List<String> actualList = getSetUpAchievementsList(
-                fixtureEmptyFileName).getAllAchievements();
-
-        Assert.assertEquals(0, actualList.size());
-        ReflectionAssert.assertReflectionEquals(expectedList, actualList);
+        Assert.assertEquals(0, list.size());
     }
 }

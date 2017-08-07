@@ -11,7 +11,7 @@ public class SchoolInfoTest extends SchoolTest {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        schoolInfo = new SchoolInfo(school, snp);
+        schoolInfo = new SchoolInfo(snp);
     }
 
     @Test

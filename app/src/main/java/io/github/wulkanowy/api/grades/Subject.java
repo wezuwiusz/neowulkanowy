@@ -10,11 +10,11 @@ public class Subject {
 
     private String finalRating;
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public Subject setId(int id){
+    public Subject setId(int id) {
         this.id = id;
 
         return this;

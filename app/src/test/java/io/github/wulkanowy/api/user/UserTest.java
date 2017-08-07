@@ -1,4 +1,4 @@
-package io.github.wulkanowy.api.school;
+package io.github.wulkanowy.api.user;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,20 +9,21 @@ import org.mockito.Mockito;
 import io.github.wulkanowy.api.FixtureHelper;
 import io.github.wulkanowy.api.StudentAndParent;
 
-public class SchoolTest {
+public class UserTest {
 
     protected StudentAndParent snp;
-    private String fixtureFileName = "Szkola.html";
+
+    private String fixtureFileName = "UczenDanePodstawowe.html";
 
     @Before
     public void setUp() throws Exception {
         String input = FixtureHelper.getAsString(getClass().getResourceAsStream(fixtureFileName));
 
-        Document schoolPageDocument = Jsoup.parse(input);
+        Document pageDocument = Jsoup.parse(input);
 
         snp = Mockito.mock(StudentAndParent.class);
-        Mockito.when(snp.getSnPPageDocument(Mockito.anyString())).thenReturn(schoolPageDocument);
-        Mockito.when(snp.getRowDataChildValue(Mockito.any(Element.class),
-                Mockito.anyInt())).thenCallRealMethod();
+        Mockito.when(snp.getSnPPageDocument(Mockito.anyString())).thenReturn(pageDocument);
+        Mockito.when(snp.getRowDataChildValue(Mockito.any(Element.class), Mockito.anyInt()))
+                .thenCallRealMethod();
     }
 }

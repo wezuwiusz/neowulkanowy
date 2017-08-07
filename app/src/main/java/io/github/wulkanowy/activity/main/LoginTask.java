@@ -22,7 +22,6 @@ import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.login.LoginErrorException;
 import io.github.wulkanowy.api.user.BasicInformation;
 import io.github.wulkanowy.api.user.PersonalData;
-import io.github.wulkanowy.api.user.User;
 import io.github.wulkanowy.database.accounts.Account;
 import io.github.wulkanowy.database.accounts.AccountsDatabase;
 import io.github.wulkanowy.security.CryptoException;
@@ -80,9 +79,8 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
         if (save) {
             try {
                 StudentAndParent snp = new StudentAndParent(login.getCookiesObject(),
-                        credentials[2]).setUp();
-                User user = new User(snp.getCookiesObject(), snp);
-                BasicInformation userInfo = new BasicInformation(user, snp);
+                        credentials[2]);
+                BasicInformation userInfo = new BasicInformation(snp);
                 PersonalData personalData = userInfo.getPersonalData();
                 String firstAndLastName = personalData.getFirstAndLastName();
 

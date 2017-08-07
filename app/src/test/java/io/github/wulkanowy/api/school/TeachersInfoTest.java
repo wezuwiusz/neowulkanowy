@@ -13,7 +13,7 @@ public class TeachersInfoTest extends SchoolTest {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        teachersInfo = new TeachersInfo(school);
+        teachersInfo = new TeachersInfo(snp);
     }
 
     @Test

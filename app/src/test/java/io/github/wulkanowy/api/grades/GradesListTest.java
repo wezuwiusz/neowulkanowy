@@ -1,20 +1,12 @@
 package io.github.wulkanowy.api.grades;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
 
 import java.util.List;
 
-import io.github.wulkanowy.api.FixtureHelper;
-import io.github.wulkanowy.api.Semester;
-import io.github.wulkanowy.api.StudentAndParent;
-
-public class GradesListTest {
+public class GradesListTest extends GradesTest {
 
     private String fixtureFileName = "OcenyWszystkie-filled.html";
 
@@ -22,25 +14,9 @@ public class GradesListTest {
 
     @Before
     public void setUp() throws Exception {
-        String input = FixtureHelper.getAsString(getClass().getResourceAsStream(fixtureFileName));
-        Document gradesPageDocument = Jsoup.parse(input);
+        super.setUp(fixtureFileName);
 
-        StudentAndParent snp = Mockito.mock(StudentAndParent.class);
-        PowerMockito.whenNew(StudentAndParent.class).withAnyArguments().thenReturn(snp);
-        Mockito.when(snp.getLocationID()).thenReturn("symbol");
-        Mockito.when(snp.getID()).thenReturn("123456");
-        Mockito.when(snp.getGradesPageUrl()).thenReturn("http://example.null");
-        Mockito.when(snp.getSemesters()).thenCallRealMethod();
-        Mockito.when(snp.getSemesters(Mockito.any(Document.class))).thenCallRealMethod();
-        Mockito.when(snp.getCurrentSemester(Mockito.anyListOf(Semester.class)))
-                .thenCallRealMethod();
-
-        Grades grades = Mockito.mock(Grades.class);
-        PowerMockito.whenNew(Grades.class).withAnyArguments().thenReturn(grades);
-        Mockito.when(grades.getGradesPageDocument(Mockito.anyString()))
-                .thenReturn(gradesPageDocument);
-
-        gradesList = new GradesList(grades, snp);
+        gradesList = new GradesList(snp);
     }
 
     @Test
