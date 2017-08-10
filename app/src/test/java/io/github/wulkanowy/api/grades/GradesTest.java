@@ -20,7 +20,7 @@ public class GradesTest {
         Mockito.when(snp.getSnPPageDocument(Mockito.anyString()))
                 .thenReturn(gradesPageDocument);
         Mockito.when(snp.getSemesters(Mockito.any(Document.class))).thenCallRealMethod();
-        Mockito.when(snp.getCurrentSemester(Mockito.anyListOf(Semester.class)))
+        Mockito.when(snp.getCurrentSemester(Mockito.<Semester>anyList()))
                 .thenCallRealMethod();
     }
 }

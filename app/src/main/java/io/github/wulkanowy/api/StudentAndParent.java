@@ -47,6 +47,10 @@ public class StudentAndParent extends Vulcan {
                 .replace("{ID}", getID());
     }
 
+    public String getGradesPageUrl() {
+        return gradesPageUrl;
+    }
+
     public String getLocationID() {
         return locationID;
     }
@@ -66,9 +70,7 @@ public class StudentAndParent extends Vulcan {
     }
 
     public String getRowDataChildValue(Element e, int index) {
-        Elements es = e.select(".daneWiersz .wartosc");
-
-        return es.get(index - 1).text();
+        return e.select(".daneWiersz .wartosc").get(index - 1).text();
     }
 
     public Document getSnPPageDocument(String url) throws IOException {
@@ -76,7 +78,7 @@ public class StudentAndParent extends Vulcan {
     }
 
     public List<Semester> getSemesters() throws IOException {
-        return getSemesters(getSnPPageDocument(gradesPageUrl));
+        return getSemesters(getSnPPageDocument(getGradesPageUrl()));
     }
 
     public List<Semester> getSemesters(Document gradesPage) {
