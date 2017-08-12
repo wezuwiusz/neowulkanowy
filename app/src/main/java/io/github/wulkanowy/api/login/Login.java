@@ -86,7 +86,7 @@ public class Login extends Vulcan {
             throw new AccountPermissionException();
         }
 
-        if (!html.select(".welcome").text().equals("Dzień dobry!")) {
+        if (!html.select("title").text().equals("Uonet+")) {
             throw new LoginErrorException();
         }
     }
