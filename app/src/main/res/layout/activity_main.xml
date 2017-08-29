@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,7 +27,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="@string/email_hint"
+            android:hint="@string/email_hint_text"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -37,8 +38,9 @@
             android:layout_marginTop="10dp"
             android:ems="10"
             android:fontFamily="sans-serif"
-            android:hint="@string/pass_hint"
-            android:inputType="textPassword" />
+            android:hint="@string/pass_hint_text"
+            android:inputType="textPassword"
+            tools:ignore="UnusedAttribute" />
 
         <AutoCompleteTextView
             android:id="@+id/countyText"
@@ -46,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:hint="@string/county_hint"
+            android:hint="@string/county_hint_text"
             android:imeOptions="actionDone"
             android:inputType="text" />
 
@@ -57,7 +59,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:onClick="login"
-            android:text="@string/login_button" />
+            android:text="@string/login_button_text" />
 
     </LinearLayout>
 </ScrollView>

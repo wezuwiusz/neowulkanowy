@@ -10,12 +10,9 @@ import io.github.wulkanowy.R;
 
 public class AttendanceFragment extends Fragment {
 
-    public AttendanceFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_attendance, container, false);
     }
 }

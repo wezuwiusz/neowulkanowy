@@ -97,7 +97,7 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
                     Toast.makeText(activity, R.string.SQLite_ioError_text,
                             Toast.LENGTH_LONG).show();
                 } catch (CryptoException e) {
-                    Toast.makeText(activity, R.string.decrypt_failed, Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, R.string.decrypt_failed_text, Toast.LENGTH_LONG).show();
                 }
             }
             accountsDatabase.close();

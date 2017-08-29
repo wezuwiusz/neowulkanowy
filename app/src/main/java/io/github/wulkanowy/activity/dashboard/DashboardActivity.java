@@ -10,12 +10,12 @@ import android.view.MenuItem;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.dashboard.attendance.AttendanceFragment;
 import io.github.wulkanowy.activity.dashboard.board.BoardFragment;
+import io.github.wulkanowy.activity.dashboard.grades.GradesFragment;
 import io.github.wulkanowy.activity.dashboard.lessonplan.LessonPlanFragment;
-import io.github.wulkanowy.activity.dashboard.marks.MarksFragment;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private MarksFragment marksFragment = new MarksFragment();
+    private GradesFragment gradesFragment = new GradesFragment();
     private AttendanceFragment attendanceFragment = new AttendanceFragment();
     private BoardFragment boardFragment = new BoardFragment();
     private LessonPlanFragment lessonPlanFragment = new LessonPlanFragment();
@@ -30,26 +30,26 @@ public class DashboardActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_marks:
-                    setTitle(R.string.title_marks);
-                    transaction.replace(R.id.fragment_container, marksFragment);
+                    setTitle(R.string.grades_text);
+                    transaction.replace(R.id.fragment_container, gradesFragment);
                     transaction.commit();
                     return true;
 
                 case R.id.navigation_attendance:
-                    setTitle(R.string.title_attendance);
+                    setTitle(R.string.attendance_text);
                     transaction.replace(R.id.fragment_container, attendanceFragment);
                     transaction.commit();
                     return true;
 
                 case R.id.navigation_lessonplan:
-                    setTitle(R.string.title_lessonplan);
+                    setTitle(R.string.lessonplan_text);
                     transaction.replace(R.id.fragment_container, lessonPlanFragment);
                     transaction.commit();
                     return true;
 
                 case R.id.navigation_dashboard:
                 default:
-                    setTitle(R.string.title_dashboard);
+                    setTitle(R.string.dashboard_text);
                     transaction.replace(R.id.fragment_container, boardFragment);
                     transaction.commit();
                     return true;
@@ -62,7 +62,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        setTitle(R.string.title_dashboard);
+        setTitle(R.string.dashboard_text);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_dashboard);

@@ -46,8 +46,8 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
     protected void onPreExecute() {
         super.onPreExecute();
 
-        progress.setTitle(activity.getText(R.string.login_title));
-        progress.setMessage(activity.getText(R.string.please_wait));
+        progress.setTitle(activity.getText(R.string.login_text));
+        progress.setMessage(activity.getText(R.string.please_wait_text));
         progress.setCancelable(false);
         progress.show();
     }
@@ -60,11 +60,11 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
         try {
             login.login(credentials[0], credentials[1], credentials[2]);
         } catch (BadCredentialsException e) {
-            return R.string.login_bad_credentials;
+            return R.string.login_bad_credentials_text;
         } catch (AccountPermissionException e) {
-            return R.string.login_bad_account_permission;
+            return R.string.login_bad_account_permission_text;
         } catch (LoginErrorException e) {
-            return R.string.login_denied;
+            return R.string.login_denied_text;
         }
         try {
             String cookiesPath = activity.getFilesDir().getPath() + "/cookies.txt";
@@ -73,7 +73,7 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
             outputStream.writeObject(login.getCookies());
             outputStream.flush();
         } catch (IOException e) {
-            return R.string.login_cookies_save_failed;
+            return R.string.login_cookies_save_failed_text;
         }
 
         if (save) {
@@ -106,16 +106,16 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
             } catch (SQLException e) {
                 return R.string.SQLite_ioError_text;
             } catch (IOException | LoginErrorException e) {
-                return R.string.login_denied;
+                return R.string.login_denied_text;
             } catch (CryptoException e) {
-                return R.string.encrypt_failed;
+                return R.string.encrypt_failed_text;
             } catch (UnsupportedOperationException e) {
-                return R.string.root_failed;
+                return R.string.root_failed_text;
             }
         }
         //Map<String, String> cookiesList = login.getJar();
 
-        return R.string.login_accepted;
+        return R.string.login_accepted_text;
     }
 
     protected void onPostExecute(Integer messageID) {
@@ -125,8 +125,8 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
         Toast.makeText(activity, activity.getString(messageID), Toast.LENGTH_LONG).show();
 
-        if (messageID == R.string.login_accepted || messageID == R.string.root_failed
-                || messageID == R.string.encrypt_failed) {
+        if (messageID == R.string.login_accepted_text || messageID == R.string.root_failed_text
+                || messageID == R.string.encrypt_failed_text) {
             Intent intent = new Intent(activity, DashboardActivity.class);
             activity.startActivity(intent);
         }

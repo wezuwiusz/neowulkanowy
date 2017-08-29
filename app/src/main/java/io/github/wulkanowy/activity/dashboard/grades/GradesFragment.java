@@ -1,10 +1,10 @@
-package io.github.wulkanowy.activity.dashboard.marks;
+package io.github.wulkanowy.activity.dashboard.grades;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,40 +27,35 @@ import io.github.wulkanowy.database.accounts.AccountsDatabase;
 import io.github.wulkanowy.database.grades.GradesDatabase;
 import io.github.wulkanowy.database.subjects.SubjectsDatabase;
 
-public class MarksFragment extends Fragment {
+public class GradesFragment extends Fragment {
 
-    private ArrayList<String> subjectsName = new ArrayList<>();
+    private List<SubjectWithGrades> subjectWithGradesList = new ArrayList<>();
 
     private View view;
-
-    public MarksFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_marks, container, false);
+        view = inflater.inflate(R.layout.fragment_grades, container, false);
 
-        if (subjectsName.size() == 0) {
+        if (subjectWithGradesList.size() == 0) {
             new MarksTask(container.getContext()).execute();
-        } else if (subjectsName.size() > 1) {
-            createGrid();
+        } else if (subjectWithGradesList.size() > 1) {
+            createExpListView();
             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }
 
         return view;
     }
 
-    public void createGrid() {
+    public void createExpListView() {
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(view.getContext(), 2);
-        recyclerView.setLayoutManager(layoutManager);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.subject_grade_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        GradesAdapter gradesAdapter = new GradesAdapter(subjectWithGradesList, view.getContext());
+        recyclerView.setAdapter(gradesAdapter);
 
-        ImageAdapter adapter = new ImageAdapter(view.getContext(), subjectsName);
-        recyclerView.setAdapter(adapter);
     }
 
     public class MarksTask extends AsyncTask<Void, Void, Void> {
@@ -75,6 +70,7 @@ public class MarksFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             String cookiesPath = mContext.getFilesDir().getPath() + "/cookies.txt";
+            long userId = mContext.getSharedPreferences("LoginData", mContext.MODE_PRIVATE).getLong("isLogin", 0);
 
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cookiesPath));
@@ -89,7 +85,7 @@ public class MarksFragment extends Fragment {
 
                 AccountsDatabase accountsDatabase = new AccountsDatabase(mContext);
                 accountsDatabase.open();
-                Account account = accountsDatabase.getAccount(mContext.getSharedPreferences("LoginData", mContext.MODE_PRIVATE).getLong("isLogin", 0));
+                Account account = accountsDatabase.getAccount(userId);
                 accountsDatabase.close();
 
                 StudentAndParent snp = new StudentAndParent(cookies, account.getCounty());
@@ -98,18 +94,23 @@ public class MarksFragment extends Fragment {
                 SubjectsDatabase subjectsDatabase = new SubjectsDatabase(mContext);
                 subjectsDatabase.open();
                 subjectsDatabase.put(subjectsList.getAll());
-                List<Subject> subjects = subjectsDatabase.getAllSubjectsNames();
                 subjectsDatabase.close();
 
-                for (Subject subject : subjects) {
-                    subjectsName.add(subject.getName());
-                }
 
                 GradesList gradesList = new GradesList(snp);
                 GradesDatabase gradesDatabase = new GradesDatabase(mContext);
                 gradesDatabase.open();
                 gradesDatabase.put(gradesList.getAll());
+
+                for (Subject subject : subjectsList.getAll()) {
+                    List<GradeItem> gradeItems = gradesDatabase.getSubjectGrades(userId, SubjectsDatabase.getSubjectId(subject.getName()));
+                    if (gradeItems.size() > 0) {
+                        subjectWithGradesList.add(new SubjectWithGrades(subject.getName(), gradeItems));
+                    }
+                }
+
                 gradesDatabase.close();
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -119,7 +120,7 @@ public class MarksFragment extends Fragment {
         }
 
         protected void onPostExecute(Void result) {
-            createGrid();
+            createExpListView();
 
             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 

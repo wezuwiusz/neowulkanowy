@@ -2,13 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.github.wulkanowy.activity.dashboard.marks.MarksFragment">
+    tools:context="io.github.wulkanowy.activity.dashboard.grades.GradesFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/card_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:id="@+id/subject_grade_recycler" />
 
     <RelativeLayout
         android:id="@+id/loadingPanel"

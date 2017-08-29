@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         new AlertDialog.Builder(this)
-                .setTitle(R.string.warning_label)
+                .setTitle(R.string.warning_label_text)
                 .setMessage(R.string.warning_text)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

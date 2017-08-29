@@ -11,6 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.wulkanowy.activity.dashboard.grades.GradeItem;
 import io.github.wulkanowy.api.grades.Grade;
 import io.github.wulkanowy.database.DatabaseAdapter;
 import io.github.wulkanowy.database.DatabaseComparer;
@@ -152,16 +153,16 @@ public class GradesDatabase extends DatabaseAdapter {
         return grade;
     }
 
-    public List<Grade> getSubjectGrades(long userId, long subjectId) throws SQLException {
+    public List<GradeItem> getSubjectGrades(long userId, long subjectId) throws SQLException {
 
         String whereExec = "SELECT * FROM " + grades + " WHERE " + userIdText + "=? AND " + subjectIdText + "=?";
 
-        List<Grade> gradesList = new ArrayList<>();
+        List<GradeItem> gradesList = new ArrayList<>();
 
         Cursor cursor = database.rawQuery(whereExec, new String[]{String.valueOf(userId), String.valueOf(subjectId)});
 
         while (cursor.moveToNext()) {
-            Grade grade = new Grade();
+            GradeItem grade = new GradeItem();
             grade.setId(cursor.getInt(0));
             grade.setUserID(cursor.getInt(1));
             grade.setSubjectID(cursor.getInt(2));

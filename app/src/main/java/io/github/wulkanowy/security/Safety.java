@@ -22,7 +22,7 @@ public class Safety extends Scrambler {
             return encryptString(email, plainText);
         } else {
 
-            if (!RootUtilities.isRooted()) {
+            if (RootUtilities.isRooted()) {
                 return new String(Base64.encode(plainText.getBytes(), Base64.DEFAULT));
             } else {
                 Log.e(Scrambler.DEBUG_TAG, "Password store in this devices isn't safe because is rooted");

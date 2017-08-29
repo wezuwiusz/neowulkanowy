@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Grade {
-    private int id;
+    protected int id;
 
     private int userID;
 
@@ -12,7 +12,7 @@ public class Grade {
 
     private String subject = "";
 
-    private String value = "";
+    protected String value = "";
 
     private String color = "";
 
