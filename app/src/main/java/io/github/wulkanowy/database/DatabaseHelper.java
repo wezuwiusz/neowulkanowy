@@ -9,12 +9,14 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public final static String DEBUG_TAG = "SQLiteWulkanowyDatabase";
+
     public final String ACCOUNT_TABLE = "CREATE TABLE IF NOT EXISTS accounts( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "name TEXT, " +
             "email TEXT," +
             "password TEXT, " +
             "county TEXT );";
+
     public final String SUBJECT_TABLE = "CREATE TABLE IF NOT EXISTS subjects( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "name TEXT, " +
@@ -22,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "finalRating1 TEXT, " +
             "predictedRating2 TEXT, " +
             "finalRating2 TEXT );";
+
     public final String GRADE_TABLE = "CREATE TABLE IF NOT EXISTS grades( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "userID INTEGER, " +
@@ -37,6 +40,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "semester INTEGER, " +
             "isNew INTEGER );";
 
+    public final String COOKIES_TABLE = "CREATE TABLE IF NOT EXISTS cookies( " +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "cookies TEXT );";
+
     public final String DROP_TABLE = "DROP TABLE IF EXISTS ";
 
     public DatabaseHelper(Context context, String name, CursorFactory factory, int version) {
@@ -48,6 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(ACCOUNT_TABLE);
         db.execSQL(SUBJECT_TABLE);
         db.execSQL(GRADE_TABLE);
+        db.execSQL(COOKIES_TABLE);
         Log.d(DEBUG_TAG, "Create database");
     }
 
@@ -56,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DROP_TABLE + "accounts");
         db.execSQL(DROP_TABLE + "subjects");
         db.execSQL(DROP_TABLE + "grades");
+        db.execSQL(DROP_TABLE + "cookies");
         onCreate(db);
         Log.d(DEBUG_TAG, "Database upgrade from ver." + oldVersion + " to ver." + newVersion);
     }

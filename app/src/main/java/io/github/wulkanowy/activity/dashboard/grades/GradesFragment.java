@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ import io.github.wulkanowy.api.grades.Subject;
 import io.github.wulkanowy.api.grades.SubjectsList;
 import io.github.wulkanowy.database.accounts.Account;
 import io.github.wulkanowy.database.accounts.AccountsDatabase;
+import io.github.wulkanowy.database.cookies.CookiesDatabase;
 import io.github.wulkanowy.database.grades.GradesDatabase;
 import io.github.wulkanowy.database.subjects.SubjectsDatabase;
 
@@ -61,7 +64,8 @@ public class GradesFragment extends Fragment {
     public class MarksTask extends AsyncTask<Void, Void, Void> {
 
         private Context mContext;
-        private Map<String, String> loginCookies;
+        
+        private Map<String, String> loginCookies = new HashMap<>();
 
         MarksTask(Context context) {
             mContext = context;
@@ -69,12 +73,15 @@ public class GradesFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            String cookiesPath = mContext.getFilesDir().getPath() + "/cookies.txt";
-            long userId = mContext.getSharedPreferences("LoginData", mContext.MODE_PRIVATE).getLong("isLogin", 0);
+            long userId = mContext.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("isLogin", 0);
 
             try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cookiesPath));
-                loginCookies = (Map<String, String>) ois.readObject();
+                Gson gson = new GsonBuilder().enableComplexMapKeySerialization()
+                        .setPrettyPrinting().create();
+                CookiesDatabase cookiesDatabase = new CookiesDatabase(mContext);
+                cookiesDatabase.open();
+                loginCookies = gson.fromJson(cookiesDatabase.getCookies(), loginCookies.getClass());
+                cookiesDatabase.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -102,7 +109,7 @@ public class GradesFragment extends Fragment {
                 gradesDatabase.open();
                 gradesDatabase.put(gradesList.getAll());
 
-                for (Subject subject : subjectsList.getAll()) {
+                for (Subject subject : subjectsDatabase.getAllSubjectsNames()) {
                     List<GradeItem> gradeItems = gradesDatabase.getSubjectGrades(userId, SubjectsDatabase.getSubjectId(subject.getName()));
                     if (gradeItems.size() > 0) {
                         subjectWithGradesList.add(new SubjectWithGrades(subject.getName(), gradeItems));

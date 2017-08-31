@@ -41,25 +41,6 @@ public class AccountsDatabase extends DatabaseAdapter {
         throw new SQLException("Attempt to write on read-only database");
     }
 
-    public long update(Account account) throws SQLException {
-
-        ContentValues updateAccount = new ContentValues();
-        updateAccount.put(name, account.getName());
-        updateAccount.put(email, account.getEmail());
-        updateAccount.put(password, account.getPassword());
-        updateAccount.put(county, account.getCounty());
-        String args[] = {account.getId() + ""};
-
-        if (!database.isReadOnly()) {
-            long updateId = database.update(accounts, updateAccount, "id=?", args);
-            Log.d(DatabaseHelper.DEBUG_TAG, "Update account " + updateId + " into database");
-            return updateId;
-        }
-
-        Log.e(DatabaseHelper.DEBUG_TAG, "Attempt to write on read-only database");
-        throw new SQLException("Attempt to write on read-only database");
-    }
-
     public Account getAccount(long id) throws SQLException {
 
         Account account = new Account();

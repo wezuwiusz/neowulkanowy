@@ -8,9 +8,10 @@ import android.database.SQLException;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import java.io.FileOutputStream;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.dashboard.DashboardActivity;
@@ -24,6 +25,7 @@ import io.github.wulkanowy.api.user.BasicInformation;
 import io.github.wulkanowy.api.user.PersonalData;
 import io.github.wulkanowy.database.accounts.Account;
 import io.github.wulkanowy.database.accounts.AccountsDatabase;
+import io.github.wulkanowy.database.cookies.CookiesDatabase;
 import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.security.Safety;
 
@@ -67,12 +69,13 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
             return R.string.login_denied_text;
         }
         try {
-            String cookiesPath = activity.getFilesDir().getPath() + "/cookies.txt";
-            FileOutputStream out = new FileOutputStream(cookiesPath);
-            ObjectOutputStream outputStream = new ObjectOutputStream(out);
-            outputStream.writeObject(login.getCookies());
-            outputStream.flush();
-        } catch (IOException e) {
+            Gson gson = new GsonBuilder().enableComplexMapKeySerialization()
+                    .setPrettyPrinting().create();
+            CookiesDatabase cookiesDatabase = new CookiesDatabase(activity);
+            cookiesDatabase.open();
+            cookiesDatabase.put(gson.toJson(login.getCookies()));
+            cookiesDatabase.close();
+        } catch (SQLException e) {
             return R.string.login_cookies_save_failed_text;
         }
 

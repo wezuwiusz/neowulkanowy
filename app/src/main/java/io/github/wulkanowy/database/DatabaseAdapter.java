@@ -9,9 +9,13 @@ import android.util.Log;
 public class DatabaseAdapter {
 
     private final String DATABASE_NAME = "accountdatabase.db";
-    private final int DATABASE_VERSION = 2;
+
+    private final int DATABASE_VERSION = 3;
+
     public static SQLiteDatabase database;
+
     private DatabaseHelper databaseHelper;
+
     public Context context;
 
     public DatabaseAdapter(Context context) {
@@ -69,12 +73,17 @@ public class DatabaseAdapter {
         return false;
     }
 
+    public boolean checkExist(String tableName) {
+        return checkExist(tableName, null, null);
+    }
+
     public void deleteAndCreate(String tableName) {
 
         database.execSQL(databaseHelper.DROP_TABLE + tableName);
         database.execSQL(databaseHelper.SUBJECT_TABLE);
         database.execSQL(databaseHelper.ACCOUNT_TABLE);
         database.execSQL(databaseHelper.GRADE_TABLE);
+        database.execSQL(databaseHelper.COOKIES_TABLE);
 
         Log.d(DatabaseHelper.DEBUG_TAG, "Recreate table " + tableName);
 

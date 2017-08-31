@@ -36,9 +36,9 @@ public class GradesDialogFragment extends DialogFragment {
         TextView colorText = (TextView) view.findViewById(R.id.color_dialog_text_value);
         TextView okTextClick = (TextView) view.findViewById(R.id.OK_dialog);
 
+        subjectText.setText(grade.getSubject());
         gradeText.setText(grade.getValue());
         gradeText.setBackgroundResource(grade.getValueColor());
-        subjectText.setText(grade.getSubject());
         weightText.setText(grade.getWeight());
         dateText.setText(grade.getDate());
         colorText.setText(colorHexToColorName(grade.getColor()));

@@ -4,7 +4,6 @@ package io.github.wulkanowy.database.grades;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.util.Log;
 
@@ -20,7 +19,6 @@ import io.github.wulkanowy.database.subjects.SubjectsDatabase;
 
 public class GradesDatabase extends DatabaseAdapter {
 
-    private String idText = "id";
     private String userIdText = "userID";
     private String subjectIdText = "subjectID";
     private String subject = "subject";
@@ -70,7 +68,7 @@ public class GradesDatabase extends DatabaseAdapter {
         List<Long> newIdList = new ArrayList<>();
         List<Grade> preparedList;
 
-        if (checkExist(grades, null, null)) {
+        if (checkExist(grades)) {
             preparedList = DatabaseComparer.compareGradesLists(gradeList, getAllUserGrades());
             deleteAndCreate(grades);
         } else {
@@ -82,75 +80,6 @@ public class GradesDatabase extends DatabaseAdapter {
             newIdList.add(put(grade));
         }
         return newIdList;
-    }
-
-    public long update(Grade grade) throws SQLException {
-
-        ContentValues updateGrade = new ContentValues();
-        updateGrade.put(userIdText, grade.getUserID());
-        updateGrade.put(subjectIdText, grade.getSubjectID());
-        updateGrade.put(subject, grade.getSubject());
-        updateGrade.put(value, grade.getValue());
-        updateGrade.put(color, grade.getColor());
-        updateGrade.put(symbol, grade.getSymbol());
-        updateGrade.put(description, grade.getDescription());
-        updateGrade.put(weight, grade.getWeight());
-        updateGrade.put(date, grade.getDate());
-        updateGrade.put(teacher, grade.getTeacher());
-        updateGrade.put(semester, grade.getSemester());
-        updateGrade.put(isNew, grade.isNew() ? 1 : 0);
-        String args[] = {grade.getId() + ""};
-
-        if (!database.isReadOnly()) {
-            long updateId = database.update(grades, updateGrade, "id=?", args);
-            Log.d(DatabaseHelper.DEBUG_TAG, "Update grade " + updateId + " into database");
-            return updateId;
-        }
-
-        Log.e(DatabaseHelper.DEBUG_TAG, "Attempt to write on read-only database");
-        throw new SQLException("Attempt to write on read-only database");
-
-    }
-
-    public Grade getGrade(long id) throws SQLException {
-
-        Grade grade = new Grade();
-
-        String[] columns = {idText, userIdText, subjectIdText, value, color, description, weight, date, teacher};
-        String args[] = {id + ""};
-
-        try {
-            Cursor cursor = database.query(grades, columns, "id=?", args, null, null, null, null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-                grade.setId(cursor.getInt(0));
-                grade.setUserID(cursor.getInt(1));
-                grade.setSubjectID(cursor.getInt(2));
-                grade.setSubject(cursor.getString(3));
-                grade.setValue(cursor.getString(4));
-                grade.setColor(cursor.getString(5));
-                grade.setSymbol(cursor.getString(6));
-                grade.setDescription(cursor.getString(7));
-                grade.setWeight(cursor.getString(8));
-                grade.setDate(cursor.getString(9));
-                grade.setTeacher(cursor.getString(10));
-                grade.setSemester(cursor.getString(11));
-                grade.setIsNew(cursor.getInt(12) != 0);
-                cursor.close();
-            }
-        } catch (SQLException e) {
-
-            Log.e(DatabaseHelper.DEBUG_TAG, e.getMessage());
-            throw e;
-        } catch (CursorIndexOutOfBoundsException e) {
-
-            Log.e(DatabaseHelper.DEBUG_TAG, e.getMessage());
-            throw new SQLException(e.getMessage());
-        }
-
-        Log.d(DatabaseHelper.DEBUG_TAG, "Extract grade " + id + " from database");
-
-        return grade;
     }
 
     public List<GradeItem> getSubjectGrades(long userId, long subjectId) throws SQLException {
