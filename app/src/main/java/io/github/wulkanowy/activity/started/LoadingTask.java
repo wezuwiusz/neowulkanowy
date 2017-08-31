@@ -88,7 +88,7 @@ public class LoadingTask extends AsyncTask<Void, Void, Void> {
                         new LoginTask(activity, false).execute(
                                 account.getEmail(),
                                 safety.decrypt(account.getEmail(), account.getPassword()),
-                                account.getCounty()
+                                account.getSymbol()
                         );
 
                         return true;

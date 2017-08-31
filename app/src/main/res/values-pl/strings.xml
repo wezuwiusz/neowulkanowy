@@ -4,7 +4,7 @@
     <string name="pass_hint_text">Hasło</string>
     <string name="email_hint_text">E-mail</string>
     <string name="login_button_text">Zaloguj</string>
-    <string name="county_hint_text">Powiat</string>
+    <string name="symbol_hint_text">Symbol</string>
     <string name="warning_text">Aplikacja ta nie jest ukończona, więc mogą występować różnego rodzaju błędy lub dane funkcje nie bedą działać. Prosimy o cierpliwość i wyrozumiałość.</string>
     <string name="warning_label_text">Ostrzeżenie</string>
     <string name="data_text">Brak danych logowania</string>

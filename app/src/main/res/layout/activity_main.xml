@@ -43,12 +43,12 @@
             tools:ignore="UnusedAttribute" />
 
         <AutoCompleteTextView
-            android:id="@+id/countyText"
+            android:id="@+id/symbolText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:hint="@string/county_hint_text"
+            android:hint="@string/symbol_hint_text"
             android:imeOptions="actionDone"
             android:inputType="text" />
 

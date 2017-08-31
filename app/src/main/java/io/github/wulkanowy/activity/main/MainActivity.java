@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private void autoComplete() {
 
         // Get a reference to the AutoCompleteTextView in the layout
-        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.countyText);
+        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.symbolText);
         // Get the string array
-        String[] countries = getResources().getStringArray(R.array.counties);
+        String[] countries = getResources().getStringArray(R.array.symbols);
         // Create the adapter and set it to the AutoCompleteTextView
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
                 countries);
@@ -56,22 +56,22 @@ public class MainActivity extends AppCompatActivity {
     public void login(View a) {
         String password = ((EditText) findViewById(R.id.passwordText)).getText().toString();
         String email = ((EditText) findViewById(R.id.emailText)).getText().toString();
-        String county = ((EditText) findViewById(R.id.countyText)).getText().toString();
+        String symbol = ((EditText) findViewById(R.id.symbolText)).getText().toString();
 
-        String[] keys = this.getResources().getStringArray(R.array.counties);
-        String[] values = this.getResources().getStringArray(R.array.counties_values);
+        String[] keys = this.getResources().getStringArray(R.array.symbols);
+        String[] values = this.getResources().getStringArray(R.array.symbols_values);
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
 
         for (int i = 0; i < Math.min(keys.length, values.length); ++i) {
             map.put(keys[i], values[i]);
         }
 
-        if (map.containsKey(county)) {
-            county = map.get(county);
+        if (map.containsKey(symbol)) {
+            symbol = map.get(symbol);
         }
 
-        if (!email.isEmpty() && !password.isEmpty() && !county.isEmpty()) {
-            new LoginTask(this, true).execute(email, password, county);
+        if (!email.isEmpty() && !password.isEmpty() && !symbol.isEmpty()) {
+            new LoginTask(this, true).execute(email, password, symbol);
         } else {
             Toast.makeText(this, R.string.data_text, Toast.LENGTH_SHORT).show();
         }

@@ -11,7 +11,7 @@ public class Account {
 
     private String password;
 
-    private String county;
+    private String symbol;
 
     public int getId() {
         return id;
@@ -49,12 +49,12 @@ public class Account {
         return this;
     }
 
-    public String getCounty() {
-        return county;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public Account setCounty(String county) {
-        this.county = county;
+    public Account setSymbol(String symbol) {
+        this.symbol = symbol;
         return this;
     }
 }

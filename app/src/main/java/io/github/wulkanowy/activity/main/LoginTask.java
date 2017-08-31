@@ -93,7 +93,7 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
                         .setName(firstAndLastName)
                         .setEmail(credentials[0])
                         .setPassword(safety.encrypt(credentials[0], credentials[1]))
-                        .setCounty(credentials[2]);
+                        .setSymbol(credentials[2]);
 
                 AccountsDatabase accountsDatabase = new AccountsDatabase(activity);
 

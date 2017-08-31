@@ -11,26 +11,26 @@ import io.github.wulkanowy.api.Vulcan;
 
 public class Login extends Vulcan {
 
-    private String loginPageUrl = "https://cufs.vulcan.net.pl/{locationID}/Account/LogOn";
+    private String loginPageUrl = "https://cufs.vulcan.net.pl/{symbol}/Account/LogOn";
 
-    private String certificatePageUrl = "https://cufs.vulcan.net.pl/{locationID}"
-                    + "/FS/LS?wa=wsignin1.0&wtrealm=https://uonetplus.vulcan.net.pl/{locationID}"
-                    + "/LoginEndpoint.aspx&wctx=https://uonetplus.vulcan.net.pl/{locationID}"
+    private String certificatePageUrl = "https://cufs.vulcan.net.pl/{symbol}"
+                    + "/FS/LS?wa=wsignin1.0&wtrealm=https://uonetplus.vulcan.net.pl/{symbol}"
+                    + "/LoginEndpoint.aspx&wctx=https://uonetplus.vulcan.net.pl/{symbol}"
                     + "/LoginEndpoint.aspx";
 
     private String loginEndpointPageUrl =
-            "https://uonetplus.vulcan.net.pl/{locationID}/LoginEndpoint.aspx";
+            "https://uonetplus.vulcan.net.pl/{symbol}/LoginEndpoint.aspx";
 
     public Login(Cookies cookies) {
         this.cookies = cookies;
     }
 
-    public boolean login(String email, String password, String county)
+    public boolean login(String email, String password, String symbol)
             throws BadCredentialsException, LoginErrorException, AccountPermissionException {
         try {
-            sendCredentials(email, password, county);
-            String[] certificate = getCertificateData(county);
-            sendCertificate(certificate[0], certificate[1], county);
+            sendCredentials(email, password, symbol);
+            String[] certificate = getCertificateData(symbol);
+            sendCertificate(certificate[0], certificate[1], symbol);
         } catch (IOException e) {
             throw new LoginErrorException();
         }
@@ -38,9 +38,9 @@ public class Login extends Vulcan {
         return true;
     }
 
-    private void sendCredentials(String email, String password, String county)
+    private void sendCredentials(String email, String password, String symbol)
             throws IOException, BadCredentialsException {
-        loginPageUrl = loginPageUrl.replace("{locationID}", county);
+        loginPageUrl = loginPageUrl.replace("{symbol}", symbol);
 
         Connection.Response response = Jsoup.connect(loginPageUrl)
                 .data("LoginName", email)
@@ -56,8 +56,8 @@ public class Login extends Vulcan {
         }
     }
 
-    private String[] getCertificateData(String county) throws IOException {
-        certificatePageUrl = certificatePageUrl.replace("{locationID}", county);
+    private String[] getCertificateData(String symbol) throws IOException {
+        certificatePageUrl = certificatePageUrl.replace("{symbol}", symbol);
 
         Document certificatePage = getPageByUrl(certificatePageUrl);
 
@@ -67,9 +67,9 @@ public class Login extends Vulcan {
         };
     }
 
-    private void sendCertificate(String protocolVersion, String certificate, String county)
+    private void sendCertificate(String protocolVersion, String certificate, String symbol)
             throws IOException, LoginErrorException, AccountPermissionException {
-        loginEndpointPageUrl = loginEndpointPageUrl.replace("{locationID}", county);
+        loginEndpointPageUrl = loginEndpointPageUrl.replace("{symbol}", symbol);
 
         Connection.Response response = Jsoup.connect(loginEndpointPageUrl)
                 .data("wa", protocolVersion)

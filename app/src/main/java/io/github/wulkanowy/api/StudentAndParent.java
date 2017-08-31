@@ -14,22 +14,22 @@ import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class StudentAndParent extends Vulcan {
 
-    private String startPageUrl = "https://uonetplus.vulcan.net.pl/{locationID}/Start.mvc/Index";
+    private String startPageUrl = "https://uonetplus.vulcan.net.pl/{symbol}/Start.mvc/Index";
 
-    private String baseUrl = "https://uonetplus-opiekun.vulcan.net.pl/{locationID}/{ID}/";
+    private String baseUrl = "https://uonetplus-opiekun.vulcan.net.pl/{symbol}/{ID}/";
 
     private String gradesPageUrl = baseUrl + "Oceny/Wszystkie";
 
-    private String locationID = "";
+    private String symbol = "";
 
     private String id = "";
 
     public StudentAndParent(Cookies cookies, String locID) throws IOException, LoginErrorException {
         this.cookies = cookies;
-        this.locationID = locID;
+        this.symbol = locID;
 
         // get link to uonetplus-opiekun.vulcan.net.pl module
-        Document startPage = getPageByUrl(startPageUrl.replace("{locationID}", locationID));
+        Document startPage = getPageByUrl(startPageUrl.replace("{symbol}", symbol));
         Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
         String uonetPlusOpiekunUrl = studentTileLink.attr("href");
 
@@ -43,19 +43,19 @@ public class StudentAndParent extends Vulcan {
 
         this.id = getCalculatedID(uonetPlusOpiekunUrl);
         this.baseUrl = baseUrl
-                .replace("{locationID}", getLocationID())
-                .replace("{ID}", getID());
+                .replace("{symbol}", getSymbol())
+                .replace("{ID}", getId());
     }
 
     public String getGradesPageUrl() {
         return gradesPageUrl;
     }
 
-    public String getLocationID() {
-        return locationID;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public String getID() {
+    public String getId() {
         return id;
     }
 

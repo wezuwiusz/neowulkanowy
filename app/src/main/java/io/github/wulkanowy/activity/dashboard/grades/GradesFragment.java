@@ -95,7 +95,7 @@ public class GradesFragment extends Fragment {
                 Account account = accountsDatabase.getAccount(userId);
                 accountsDatabase.close();
 
-                StudentAndParent snp = new StudentAndParent(cookies, account.getCounty());
+                StudentAndParent snp = new StudentAndParent(cookies, account.getSymbol());
                 SubjectsList subjectsList = new SubjectsList(snp);
 
                 SubjectsDatabase subjectsDatabase = new SubjectsDatabase(mContext);

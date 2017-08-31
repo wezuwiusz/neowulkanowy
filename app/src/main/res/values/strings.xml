@@ -4,13 +4,13 @@
     <string name="pass_hint_text">Password</string>
     <string name="email_hint_text">E-mail</string>
     <string name="login_button_text">Log in</string>
-    <string name="county_hint_text">County</string>
+    <string name="symbol_hint_text">Symbol</string>
     <string name="warning_text">This application is not complete, so there may be a variety of errors or features that will not work. Please be patient and understanding.</string>
     <string name="warning_label_text">Warning</string>
     <string name="data_text">No login data</string>
     <string name="login_accepted_text">Login is successful</string>
     <string name="login_bad_credentials_text">Bad e-mail or password</string>
-    <string name="login_bad_account_permission_text">No permission to open log. Check entered county name</string>
+    <string name="login_bad_account_permission_text">No permission to open log. Check entered symbol</string>
     <string name="login_denied_text">Login is failed</string>
     <string name="please_wait_text">Please wait…</string>
     <string name="activity_dashboard_text">Dashboard Activity</string>

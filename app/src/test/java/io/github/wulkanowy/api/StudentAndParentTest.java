@@ -27,8 +27,8 @@ public class StudentAndParentTest {
 
         Mockito.when(snp.getSnPPageDocument(Mockito.anyString())).thenReturn(gradesPageDocument);
         Mockito.when(snp.getCalculatedID(Mockito.anyString())).thenCallRealMethod();
-        Mockito.when(snp.getLocationID()).thenReturn("symbol");
-        Mockito.when(snp.getID()).thenReturn("123456");
+        Mockito.when(snp.getSymbol()).thenReturn("symbol");
+        Mockito.when(snp.getId()).thenReturn("123456");
         Mockito.when(snp.getSemesters()).thenCallRealMethod();
         Mockito.when(snp.getGradesPageUrl()).thenReturn("http://wulkanowy.null");
         Mockito.when(snp.getSemesters(Mockito.any(Document.class))).thenCallRealMethod();

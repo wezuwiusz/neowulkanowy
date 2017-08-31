@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string-array name="counties">
+    <string-array name="symbols">
         <item>Andrychów</item>
         <item>Augustów</item>
         <item>Baranów Sandomierski</item>
@@ -18,6 +18,7 @@
         <item>Błonie</item>
         <item>Bochnia</item>
         <item>Bogatynia</item>
+        <item>Boguchwała</item>
         <item>Bolesławiec</item>
         <item>Braniewo</item>
         <item>Brodnica</item>
@@ -297,6 +298,7 @@
         <item>Gmina Łużna</item>
         <item>Gmina Łysomice</item>
         <item>Gmina Maków Podhalański</item>
+        <item>Gmina Malbork</item>
         <item>Gmina Małdyty</item>
         <item>Gmina Małkinia Górna</item>
         <item>Gmina Marcinowice</item>
@@ -368,6 +370,7 @@
         <item>Gmina Parchowo</item>
         <item>Gmina Parczew</item>
         <item>Gmina Pawłosiów</item>
+        <item>Gmina Pawłowice</item>
         <item>Gmina Pelplin</item>
         <item>Gmina Piaski</item>
         <item>Gmina Piątnica</item>
@@ -1102,7 +1105,7 @@
         <item>Żyrardów</item>
         <item>Żywiec</item>
     </string-array>
-    <string-array name="counties_values">
+    <string-array name="symbols_values">
         <item>andrychow</item>
         <item>augustow</item>
         <item>baranowsandomierski</item>
@@ -1120,6 +1123,7 @@
         <item>blonie</item>
         <item>bochnia</item>
         <item>bogatynia</item>
+        <item>boguchwala</item>
         <item>boleslawiec</item>
         <item>braniewo</item>
         <item>brodnica</item>
@@ -1399,6 +1403,7 @@
         <item>gminaluzna</item>
         <item>gminalysomice</item>
         <item>gminamakowpodhalanski</item>
+        <item>gminamalbork</item>
         <item>gminamaldyty</item>
         <item>gminamalkiniagorna</item>
         <item>gminamarcinowice</item>
@@ -1470,6 +1475,7 @@
         <item>gminaparchowo</item>
         <item>gminaparczew</item>
         <item>gminapawlosiow</item>
+        <item>gminapawlowice</item>
         <item>gminapelplin</item>
         <item>gminapiaski</item>
         <item>gminapiatnica</item>

@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "name TEXT, " +
             "email TEXT," +
             "password TEXT, " +
-            "county TEXT );";
+            "symbol TEXT );";
 
     public final String SUBJECT_TABLE = "CREATE TABLE IF NOT EXISTS subjects( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +

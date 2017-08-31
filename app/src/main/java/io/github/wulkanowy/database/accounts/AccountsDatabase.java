@@ -15,7 +15,7 @@ public class AccountsDatabase extends DatabaseAdapter {
     private String name = "name";
     private String email = "email";
     private String password = "password";
-    private String county = "county";
+    private String symbol = "symbol";
     private String idText = "id";
     private String accounts = "accounts";
 
@@ -29,7 +29,7 @@ public class AccountsDatabase extends DatabaseAdapter {
         newAccount.put(name, account.getName());
         newAccount.put(email, account.getEmail());
         newAccount.put(password, account.getPassword());
-        newAccount.put(county, account.getCounty());
+        newAccount.put(symbol, account.getSymbol());
 
         if (!database.isReadOnly()) {
             long newId = database.insertOrThrow(accounts, null, newAccount);
@@ -45,7 +45,7 @@ public class AccountsDatabase extends DatabaseAdapter {
 
         Account account = new Account();
 
-        String[] columns = {idText, name, email, password, county};
+        String[] columns = {idText, name, email, password, symbol};
         String args[] = {id + ""};
 
         try {
@@ -56,7 +56,7 @@ public class AccountsDatabase extends DatabaseAdapter {
                 account.setName(cursor.getString(1));
                 account.setEmail(cursor.getString(2));
                 account.setPassword(cursor.getString(3));
-                account.setCounty(cursor.getString(4));
+                account.setSymbol(cursor.getString(4));
                 cursor.close();
             }
         } catch (SQLException e) {
