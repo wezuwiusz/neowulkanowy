@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "symbol TEXT, " +
             "description TEXT, " +
             "weight TEXT, " +
-            "date TEXT, " +
+            "date DATE, " +
             "teacher TEXT, " +
             "semester INTEGER, " +
             "isNew INTEGER );";

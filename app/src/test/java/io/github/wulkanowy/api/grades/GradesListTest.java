@@ -31,7 +31,7 @@ public class GradesListTest extends GradesTest {
         Assert.assertEquals("A1", grade1.getSymbol());
         Assert.assertEquals("Dzień Kobiet w naszej klasie", grade1.getDescription());
         Assert.assertEquals("1,00", grade1.getWeight());
-        Assert.assertEquals("21.03.2017", grade1.getDate());
+        Assert.assertEquals("2017-03-21", grade1.getDate());
         Assert.assertEquals("Patryk Maciejewski", grade1.getTeacher());
         Assert.assertEquals("7654321", grade1.getSemester());
 
@@ -42,7 +42,7 @@ public class GradesListTest extends GradesTest {
         Assert.assertEquals("BW3", grade2.getSymbol());
         Assert.assertEquals("Writing", grade2.getDescription());
         Assert.assertEquals("3,00", grade2.getWeight());
-        Assert.assertEquals("02.06.2017", grade2.getDate());
+        Assert.assertEquals("2017-06-02", grade2.getDate());
         Assert.assertEquals("Oliwia Woźniak", grade2.getTeacher());
         Assert.assertEquals("7654321", grade2.getSemester());
 
@@ -53,7 +53,7 @@ public class GradesListTest extends GradesTest {
         Assert.assertEquals("STR", grade3.getSymbol());
         Assert.assertEquals("", grade3.getDescription());
         Assert.assertEquals("8,00", grade3.getWeight());
-        Assert.assertEquals("02.04.2017", grade3.getDate());
+        Assert.assertEquals("2017-04-02", grade3.getDate());
         Assert.assertEquals("Klaudia Dziedzic", grade3.getTeacher());
         Assert.assertEquals("7654321", grade3.getSemester());
 
@@ -64,7 +64,7 @@ public class GradesListTest extends GradesTest {
         Assert.assertEquals("K", grade4.getSymbol());
         Assert.assertEquals("Kordian", grade4.getDescription());
         Assert.assertEquals("5,00", grade4.getWeight());
-        Assert.assertEquals("06.02.2017", grade4.getDate());
+        Assert.assertEquals("2017-02-06", grade4.getDate());
         Assert.assertEquals("Amelia Stępień", grade4.getTeacher());
         Assert.assertEquals("7654321", grade4.getSemester());
     }

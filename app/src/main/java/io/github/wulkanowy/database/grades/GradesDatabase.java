@@ -20,17 +20,29 @@ import io.github.wulkanowy.database.subjects.SubjectsDatabase;
 public class GradesDatabase extends DatabaseAdapter {
 
     private String userIdText = "userID";
+
     private String subjectIdText = "subjectID";
+
     private String subject = "subject";
+
     private String value = "value";
+
     private String color = "color";
+
     private String symbol = "symbol";
+
     private String description = "description";
+
     private String weight = "weight";
+
     private String date = "date";
+
     private String teacher = "teacher";
+
     private String isNew = "isNew";
+
     private String semester = "semester";
+
     private String grades = "grades";
 
     public GradesDatabase(Context context) {
@@ -84,11 +96,13 @@ public class GradesDatabase extends DatabaseAdapter {
 
     public List<GradeItem> getSubjectGrades(long userId, long subjectId) throws SQLException {
 
-        String whereExec = "SELECT * FROM " + grades + " WHERE " + userIdText + "=? AND " + subjectIdText + "=?";
+        String exec = "SELECT " + grades + ".*, strftime('%d.%m.%Y', " + date + ") " +
+                "FROM " + grades + " WHERE " + userIdText + "=? AND "
+                + subjectIdText + "=? ORDER BY " + date + " DESC";
 
         List<GradeItem> gradesList = new ArrayList<>();
 
-        Cursor cursor = database.rawQuery(whereExec, new String[]{String.valueOf(userId), String.valueOf(subjectId)});
+        Cursor cursor = database.rawQuery(exec, new String[]{String.valueOf(userId), String.valueOf(subjectId)});
 
         while (cursor.moveToNext()) {
             GradeItem grade = new GradeItem();
@@ -101,7 +115,7 @@ public class GradesDatabase extends DatabaseAdapter {
             grade.setSymbol(cursor.getString(6));
             grade.setDescription(cursor.getString(7));
             grade.setWeight(cursor.getString(8));
-            grade.setDate(cursor.getString(9));
+            grade.setDate(cursor.getString(13)); // last, because reformatted date is last
             grade.setTeacher(cursor.getString(10));
             grade.setSemester(cursor.getString(11));
             grade.setIsNew(cursor.getInt(12) != 0);
@@ -116,7 +130,8 @@ public class GradesDatabase extends DatabaseAdapter {
 
         List<Grade> gradesList = new ArrayList<>();
 
-        String exec = "SELECT * FROM " + grades + " WHERE " + userIdText + "=?";
+        String exec = "SELECT " + grades + ".*, strftime('%d.%m.%Y', " + date + ") " +
+                " FROM " + grades + " WHERE " + userIdText + "=? ORDER BY " + date + " DESC";
 
         Cursor cursor = database.rawQuery(exec, new String[]{String.valueOf(context.getSharedPreferences("LoginData", context.MODE_PRIVATE).getLong("isLogin", 0))});
 
@@ -138,4 +153,3 @@ public class GradesDatabase extends DatabaseAdapter {
         return gradesList;
     }
 }
-

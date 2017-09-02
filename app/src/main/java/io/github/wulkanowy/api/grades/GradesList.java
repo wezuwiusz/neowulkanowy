@@ -5,8 +5,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,11 +35,11 @@ public class GradesList extends Vulcan {
         return gradesPageUrl;
     }
 
-    public List<Grade> getAll() throws IOException, LoginErrorException {
+    public List<Grade> getAll() throws IOException, LoginErrorException, ParseException {
         return getAll("");
     }
 
-    public List<Grade> getAll(String semester) throws IOException, LoginErrorException {
+    public List<Grade> getAll(String semester) throws IOException, LoginErrorException, ParseException {
         Document gradesPage = snp.getSnPPageDocument(getGradesPageUrl() + semester);
         Elements gradesRows = gradesPage.select(".ocenySzczegoly-table > tbody > tr");
         Semester currentSemester = snp.getCurrentSemester(snp.getSemesters(gradesPage));
@@ -54,6 +58,10 @@ public class GradesList extends Vulcan {
                     .attr("style"));
             String color = matcher.find() ? matcher.group(1) : "";
 
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
+            Date d = sdf.parse(row.select("td:nth-child(5)").text());
+            sdf.applyPattern("yyyy-MM-dd");
+
             grades.add(new Grade()
                     .setSubject(row.select("td:nth-child(1)").text())
                     .setValue(row.select("td:nth-child(2)").text())
@@ -61,7 +69,7 @@ public class GradesList extends Vulcan {
                     .setSymbol(symbol)
                     .setDescription(description)
                     .setWeight(row.select("td:nth-child(4)").text())
-                    .setDate(row.select("td:nth-child(5)").text())
+                    .setDate(sdf.format(d))
                     .setTeacher(row.select("td:nth-child(6)").text())
                     .setSemester(currentSemester.getNumber())
             );

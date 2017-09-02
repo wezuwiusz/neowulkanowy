@@ -10,7 +10,7 @@ public class DatabaseAdapter {
 
     private final String DATABASE_NAME = "accountdatabase.db";
 
-    private final int DATABASE_VERSION = 4;
+    private final int DATABASE_VERSION = 5;
 
     public static SQLiteDatabase database;
 
