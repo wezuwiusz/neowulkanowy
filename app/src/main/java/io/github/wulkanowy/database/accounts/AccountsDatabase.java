@@ -13,10 +13,15 @@ import io.github.wulkanowy.database.DatabaseHelper;
 public class AccountsDatabase extends DatabaseAdapter {
 
     private String name = "name";
+
     private String email = "email";
+
     private String password = "password";
+
     private String symbol = "symbol";
+
     private String idText = "id";
+
     private String accounts = "accounts";
 
     public AccountsDatabase(Context context) {

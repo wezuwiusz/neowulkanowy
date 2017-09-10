@@ -5,7 +5,7 @@ import android.os.Build;
 
 import java.io.File;
 
-public class RootUtilities {
+abstract public class RootUtilities {
 
     public static boolean isRooted() {
 

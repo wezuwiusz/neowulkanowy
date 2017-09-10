@@ -5,12 +5,13 @@
     android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <uses-sdk tools:overrideLibrary="com.thoughtbot.expandablerecyclerview, com.thoughtbot.expandablecheckrecyclerview" />
+    <uses-sdk tools:overrideLibrary="com.thoughtbot.expandablerecyclerview" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -18,9 +19,9 @@
         android:theme="@style/WulkanowyTheme">
         <activity
             android:name=".activity.started.StartedActivity"
+            android:configChanges="orientation|screenSize"
             android:noHistory="true"
-            android:theme="@style/WulkanowyTheme.noActionBar"
-            android:configChanges="orientation|screenSize">
+            android:theme="@style/WulkanowyTheme.noActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,13 +30,21 @@
         </activity>
         <activity
             android:name=".activity.main.MainActivity"
-            android:label="@string/login_text"
             android:configChanges="orientation|screenSize"
+            android:label="@string/login_text"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.dashboard.DashboardActivity"
-            android:label="@string/activity_dashboard_text"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:label="@string/activity_dashboard_text" />
+
+        <service
+            android:name=".services.jobs.GradesSync$GradeJob"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

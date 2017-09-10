@@ -18,11 +18,17 @@ import io.github.wulkanowy.database.DatabaseHelper;
 public class SubjectsDatabase extends DatabaseAdapter {
 
     private static String idText = "id";
+
     private static String name = "name";
+
     private static String predictedRating1 = "predictedRating1";
+
     private static String finalRating1 = "finalRating1";
+
     private static String predictedRating2 = "predictedRating2";
+
     private static String finalRating2 = "finalRating2";
+
     private static String subjects = "subjects";
 
     public SubjectsDatabase(Context context) {

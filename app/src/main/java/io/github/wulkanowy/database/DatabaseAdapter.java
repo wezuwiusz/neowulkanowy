@@ -10,7 +10,7 @@ public class DatabaseAdapter {
 
     private final String DATABASE_NAME = "accountdatabase.db";
 
-    private final int DATABASE_VERSION = 5;
+    private final int DATABASE_VERSION = 6;
 
     public static SQLiteDatabase database;
 
@@ -44,7 +44,7 @@ public class DatabaseAdapter {
         Log.d(DatabaseHelper.DEBUG_TAG, "Close database");
     }
 
-    public boolean checkExist(String tableName, String dbfield, String fieldValue) {
+    protected boolean checkExist(String tableName, String dbfield, String fieldValue) {
 
         Cursor cursor;
 
@@ -73,17 +73,16 @@ public class DatabaseAdapter {
         return false;
     }
 
-    public boolean checkExist(String tableName) {
+    protected boolean checkExist(String tableName) {
         return checkExist(tableName, null, null);
     }
 
-    public void deleteAndCreate(String tableName) {
+    protected void deleteAndCreate(String tableName) {
 
         database.execSQL(databaseHelper.DROP_TABLE + tableName);
         database.execSQL(databaseHelper.SUBJECT_TABLE);
         database.execSQL(databaseHelper.ACCOUNT_TABLE);
         database.execSQL(databaseHelper.GRADE_TABLE);
-        database.execSQL(databaseHelper.COOKIES_TABLE);
 
         Log.d(DatabaseHelper.DEBUG_TAG, "Recreate table " + tableName);
 

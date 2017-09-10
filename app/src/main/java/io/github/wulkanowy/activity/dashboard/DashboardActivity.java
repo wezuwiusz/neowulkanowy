@@ -16,8 +16,11 @@ import io.github.wulkanowy.activity.dashboard.lessonplan.LessonPlanFragment;
 public class DashboardActivity extends AppCompatActivity {
 
     private GradesFragment gradesFragment = new GradesFragment();
+
     private AttendanceFragment attendanceFragment = new AttendanceFragment();
+
     private BoardFragment boardFragment = new BoardFragment();
+
     private LessonPlanFragment lessonPlanFragment = new LessonPlanFragment();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

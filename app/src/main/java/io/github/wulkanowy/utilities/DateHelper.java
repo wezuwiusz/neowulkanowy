@@ -10,6 +10,7 @@ import java.util.TimeZone;
 abstract public class DateHelper {
 
     private static final long TICKS_AT_EPOCH = 621355968000000000L;
+
     private static final long TICKS_PER_MILLISECOND = 10000;
 
     public static long getTicks(Date date) {

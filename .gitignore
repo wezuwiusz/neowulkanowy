@@ -22,6 +22,7 @@ local.properties
 # User-specific configurations
 .idea/copyright/profiles_settings.xml
 .idea/libraries/
+.idea/inspectionProfiles/
 .idea/.name
 .idea/compiler.xml
 .idea/encodings.xml

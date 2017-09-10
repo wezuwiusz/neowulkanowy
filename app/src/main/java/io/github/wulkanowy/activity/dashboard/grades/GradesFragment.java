@@ -10,23 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.api.Cookies;
-import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.grades.GradesList;
 import io.github.wulkanowy.api.grades.Subject;
-import io.github.wulkanowy.api.grades.SubjectsList;
-import io.github.wulkanowy.database.accounts.Account;
-import io.github.wulkanowy.database.accounts.AccountsDatabase;
-import io.github.wulkanowy.database.cookies.CookiesDatabase;
 import io.github.wulkanowy.database.grades.GradesDatabase;
 import io.github.wulkanowy.database.subjects.SubjectsDatabase;
 
@@ -63,65 +51,29 @@ public class GradesFragment extends Fragment {
 
     public class MarksTask extends AsyncTask<Void, Void, Void> {
 
-        private Context mContext;
-        
-        private Map<String, String> loginCookies = new HashMap<>();
+        private Context context;
 
         MarksTask(Context context) {
-            mContext = context;
+            this.context = context;
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            long userId = mContext.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("isLogin", 0);
 
-            try {
-                Gson gson = new GsonBuilder().enableComplexMapKeySerialization()
-                        .setPrettyPrinting().create();
-                CookiesDatabase cookiesDatabase = new CookiesDatabase(mContext);
-                cookiesDatabase.open();
-                loginCookies = gson.fromJson(cookiesDatabase.getCookies(), loginCookies.getClass());
-                cookiesDatabase.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            SubjectsDatabase subjectsDatabase = new SubjectsDatabase(context);
+            GradesDatabase gradesDatabase = new GradesDatabase(context);
 
-            try {
-                Cookies cookies = new Cookies();
-                cookies.setItems(loginCookies);
+            gradesDatabase.open();
 
-                AccountsDatabase accountsDatabase = new AccountsDatabase(mContext);
-                accountsDatabase.open();
-                Account account = accountsDatabase.getAccount(userId);
-                accountsDatabase.close();
-
-                StudentAndParent snp = new StudentAndParent(cookies, account.getSymbol());
-                SubjectsList subjectsList = new SubjectsList(snp);
-
-                SubjectsDatabase subjectsDatabase = new SubjectsDatabase(mContext);
-                subjectsDatabase.open();
-                subjectsDatabase.put(subjectsList.getAll());
-                subjectsDatabase.close();
-
-
-                GradesList gradesList = new GradesList(snp);
-                GradesDatabase gradesDatabase = new GradesDatabase(mContext);
-                gradesDatabase.open();
-                gradesDatabase.put(gradesList.getAll());
-
-                for (Subject subject : subjectsDatabase.getAllSubjectsNames()) {
-                    List<GradeItem> gradeItems = gradesDatabase.getSubjectGrades(userId, SubjectsDatabase.getSubjectId(subject.getName()));
-                    if (gradeItems.size() > 0) {
-                        subjectWithGradesList.add(new SubjectWithGrades(subject.getName(), gradeItems));
-                    }
+            for (Subject subject : subjectsDatabase.getAllSubjectsNames()) {
+                List<GradeItem> gradeItems = gradesDatabase.getSubjectGrades(context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("isLogin", 0),
+                        SubjectsDatabase.getSubjectId(subject.getName()));
+                if (gradeItems.size() > 0) {
+                    subjectWithGradesList.add(new SubjectWithGrades(subject.getName(), gradeItems));
                 }
-
-                gradesDatabase.close();
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+            gradesDatabase.close();
 
             return null;
         }
