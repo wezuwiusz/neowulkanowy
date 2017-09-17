@@ -67,7 +67,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         setTitle(R.string.dashboard_text);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -77,7 +77,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void onBackPressed() {
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
 
         if (navigation.getSelectedItemId() != R.id.navigation_dashboard) {
             navigation.setSelectedItemId(R.id.navigation_dashboard);

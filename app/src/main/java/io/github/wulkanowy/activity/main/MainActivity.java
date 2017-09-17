@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private void autoComplete() {
 
         // Get a reference to the AutoCompleteTextView in the layout
-        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.symbolText);
+        AutoCompleteTextView textView = findViewById(R.id.symbolText);
         // Get the string array
         String[] countries = getResources().getStringArray(R.array.symbols);
         // Create the adapter and set it to the AutoCompleteTextView

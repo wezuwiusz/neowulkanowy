@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.api.grades.Subject;
-import io.github.wulkanowy.database.grades.GradesDatabase;
-import io.github.wulkanowy.database.subjects.SubjectsDatabase;
+import io.github.wulkanowy.activity.WulkanowyApp;
+import io.github.wulkanowy.dao.entities.Account;
+import io.github.wulkanowy.dao.entities.AccountDao;
+import io.github.wulkanowy.dao.entities.DaoSession;
+import io.github.wulkanowy.dao.entities.Grade;
+import io.github.wulkanowy.dao.entities.Subject;
 
 public class GradesFragment extends Fragment {
 
@@ -30,9 +33,11 @@ public class GradesFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_grades, container, false);
 
-        if (subjectWithGradesList.size() == 0) {
-            new MarksTask(container.getContext()).execute();
-        } else if (subjectWithGradesList.size() > 1) {
+        DaoSession daoSession = ((WulkanowyApp) getActivity().getApplication()).getDaoSession();
+
+        if (subjectWithGradesList.equals(new ArrayList<>())) {
+            new GradesTask(daoSession).execute();
+        } else if (subjectWithGradesList.size() > 0) {
             createExpListView();
             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }
@@ -42,48 +47,46 @@ public class GradesFragment extends Fragment {
 
     public void createExpListView() {
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.subject_grade_recycler);
+        RecyclerView recyclerView = view.findViewById(R.id.subject_grade_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         GradesAdapter gradesAdapter = new GradesAdapter(subjectWithGradesList, view.getContext());
         recyclerView.setAdapter(gradesAdapter);
 
     }
 
-    public class MarksTask extends AsyncTask<Void, Void, Void> {
+    private class GradesTask extends AsyncTask<Void, Void, Void> {
 
-        private Context context;
+        private DaoSession daoSession;
 
-        MarksTask(Context context) {
-            this.context = context;
+        GradesTask(DaoSession daoSession) {
+            this.daoSession = daoSession;
         }
 
         @Override
         protected Void doInBackground(Void... params) {
 
-            SubjectsDatabase subjectsDatabase = new SubjectsDatabase(context);
-            GradesDatabase gradesDatabase = new GradesDatabase(context);
+            long userId = getActivity().getSharedPreferences("LoginData", Context.MODE_PRIVATE)
+                    .getLong("userId", 0);
 
-            gradesDatabase.open();
+            AccountDao accountDao = daoSession.getAccountDao();
+            Account account = accountDao.load(userId);
 
-            for (Subject subject : subjectsDatabase.getAllSubjectsNames()) {
-                List<GradeItem> gradeItems = gradesDatabase.getSubjectGrades(context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("isLogin", 0),
-                        SubjectsDatabase.getSubjectId(subject.getName()));
-                if (gradeItems.size() > 0) {
-                    subjectWithGradesList.add(new SubjectWithGrades(subject.getName(), gradeItems));
+            for (Subject subject : account.getSubjectList()) {
+                List<Grade> gradeList = subject.getGradeList();
+                if (gradeList.size() != 0) {
+                    SubjectWithGrades subjectWithGrades = new SubjectWithGrades(subject.getName(), gradeList);
+                    subjectWithGradesList.add(subjectWithGrades);
                 }
             }
-
-            gradesDatabase.close();
-
             return null;
         }
 
         protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
             createExpListView();
 
             view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-
-            super.onPostExecute(result);
         }
     }
 }

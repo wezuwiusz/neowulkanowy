@@ -14,7 +14,7 @@ public class StartedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_started);
 
-        TextView versionName = (TextView) findViewById(R.id.rawText);
+        TextView versionName = findViewById(R.id.rawText);
         versionName.setText(getText(R.string.version_text) + BuildConfig.VERSION_NAME);
 
         new LoadingTask(this).execute();

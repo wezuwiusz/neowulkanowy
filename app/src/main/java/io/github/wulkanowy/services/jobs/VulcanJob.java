@@ -19,14 +19,14 @@ public abstract class VulcanJob extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        Log.d(VulcanSync.DEBUG_TAG, "Start job");
+        Log.d(VulcanSync.DEBUG_TAG, "Wulkanowy services start");
         syncTask.execute(params);
         return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.d(VulcanSync.DEBUG_TAG, "Stop job");
+        Log.e(VulcanSync.DEBUG_TAG, "Wulkanowy serives stop");
         syncTask.cancel(true);
         return true;
     }

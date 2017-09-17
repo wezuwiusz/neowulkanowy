@@ -20,6 +20,7 @@ import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 import java.util.List;
 
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.dao.entities.Grade;
 
 import static android.view.animation.Animation.RELATIVE_TO_SELF;
 
@@ -51,7 +52,7 @@ public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.S
 
     @Override
     public void onBindChildViewHolder(GradeViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
-        holder.bind((GradeItem) group.getItems().get(childIndex));
+        holder.bind((Grade) group.getItems().get(childIndex));
     }
 
     public class SubjectViewHolder extends GroupViewHolder {
@@ -64,9 +65,9 @@ public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.S
 
         public SubjectViewHolder(View itemView) {
             super(itemView);
-            subjectName = (TextView) itemView.findViewById(R.id.subject_text);
-            indicatorDown = (ImageView) itemView.findViewById(R.id.group_indicator_down);
-            indicatorUp = (ImageView) itemView.findViewById(R.id.group_indicator_up);
+            subjectName = itemView.findViewById(R.id.subject_text);
+            indicatorDown = itemView.findViewById(R.id.group_indicator_down);
+            indicatorUp = itemView.findViewById(R.id.group_indicator_up);
 
         }
 
@@ -143,13 +144,13 @@ public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.S
 
         private TextView dateGrade;
 
-        private GradeItem grade;
+        private Grade grade;
 
         public GradeViewHolder(final View itemView) {
             super(itemView);
-            gradeValue = (TextView) itemView.findViewById(R.id.grade_text);
-            descriptionGrade = (TextView) itemView.findViewById(R.id.description_grade_text);
-            dateGrade = (TextView) itemView.findViewById(R.id.grade_date_text);
+            gradeValue = itemView.findViewById(R.id.grade_text);
+            descriptionGrade = itemView.findViewById(R.id.description_grade_text);
+            dateGrade = itemView.findViewById(R.id.grade_date_text);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -161,7 +162,7 @@ public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.S
             });
         }
 
-        public void bind(GradeItem grade) {
+        public void bind(Grade grade) {
             this.grade = grade;
             gradeValue.setText(grade.getValue());
             gradeValue.setBackgroundResource(grade.getValueColor());

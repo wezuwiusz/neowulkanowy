@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco-android'
 apply plugin: "io.github.ddimtirov.codacy"
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "io.github.wulkanowy"
+        testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
@@ -21,8 +23,14 @@ android {
         }
         debug {
             testCoverageEnabled = true
+            ext.enableCrashlytics = false
         }
     }
+}
+
+greendao {
+    schemaVersion 10
+    generateTests = true
 }
 
 dependencies {
@@ -43,7 +51,11 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.6'
     compile 'org.apache.commons:commons-collections4:4.1'
     compile 'org.jsoup:jsoup:1.10.3'
+    compile 'org.greenrobot:greendao:3.2.2'
+
+    debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
+    debugCompile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'
     
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.9.0'
+    testCompile 'org.mockito:mockito-core:2.10.0'
 }

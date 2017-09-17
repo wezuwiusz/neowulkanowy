@@ -9,16 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.dao.entities.Grade;
 
 public class GradesDialogFragment extends DialogFragment {
 
-    private GradeItem grade;
+    private Grade grade;
 
-    public static final GradesDialogFragment newInstance(GradeItem grade) {
+    public static final GradesDialogFragment newInstance(Grade grade) {
         return new GradesDialogFragment().setGrade(grade);
     }
 
-    public GradesDialogFragment setGrade(GradeItem grade) {
+    public GradesDialogFragment setGrade(Grade grade) {
         this.grade = grade;
         return this;
     }
@@ -27,14 +28,14 @@ public class GradesDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.grades_dialog, container, false);
 
-        TextView gradeText = (TextView) view.findViewById(R.id.dialog_grade_text);
-        TextView subjectText = (TextView) view.findViewById(R.id.subject_dialog_text_value);
-        TextView descriptionText = (TextView) view.findViewById(R.id.description_dialog_text_value);
-        TextView weightText = (TextView) view.findViewById(R.id.weight_dialog_text_value);
-        TextView teacherText = (TextView) view.findViewById(R.id.teacher_dialog_text_value);
-        TextView dateText = (TextView) view.findViewById(R.id.date_dialog_text_value);
-        TextView colorText = (TextView) view.findViewById(R.id.color_dialog_text_value);
-        TextView okTextClick = (TextView) view.findViewById(R.id.OK_dialog);
+        TextView gradeText = view.findViewById(R.id.dialog_grade_text);
+        TextView subjectText = view.findViewById(R.id.subject_dialog_text_value);
+        TextView descriptionText = view.findViewById(R.id.description_dialog_text_value);
+        TextView weightText = view.findViewById(R.id.weight_dialog_text_value);
+        TextView teacherText = view.findViewById(R.id.teacher_dialog_text_value);
+        TextView dateText = view.findViewById(R.id.date_dialog_text_value);
+        TextView colorText = view.findViewById(R.id.color_dialog_text_value);
+        TextView okTextClick = view.findViewById(R.id.OK_dialog);
 
         subjectText.setText(grade.getSubject());
         gradeText.setText(grade.getValue());

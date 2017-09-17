@@ -5,9 +5,11 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.util.List;
 
-public class SubjectWithGrades extends ExpandableGroup<GradeItem> {
+import io.github.wulkanowy.dao.entities.Grade;
 
-    public SubjectWithGrades(String title, List<GradeItem> items) {
+public class SubjectWithGrades extends ExpandableGroup<Grade> {
+
+    public SubjectWithGrades(String title, List<Grade> items) {
         super(title, items);
     }
 }

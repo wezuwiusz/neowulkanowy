@@ -38,7 +38,7 @@ public class LoadingTask extends AsyncTask<Void, Void, Boolean> {
             Toast.makeText(context, R.string.noInternet_text, Toast.LENGTH_LONG).show();
         }
 
-        if (context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("isLogin", 0) == 0) {
+        if (context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("userId", 0) == 0) {
             Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
         } else {

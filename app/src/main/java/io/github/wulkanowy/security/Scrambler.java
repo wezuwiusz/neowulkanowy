@@ -21,7 +21,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Enumeration;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -34,7 +33,7 @@ public class Scrambler {
 
     private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
 
-    public final static String DEBUG_TAG = "KeyStoreSecurity";
+    public final static String DEBUG_TAG = "WulkanowySecurity";
 
     public Context context;
 
@@ -52,22 +51,6 @@ public class Scrambler {
             throw new CryptoException(e.getMessage());
         }
 
-    }
-
-    public ArrayList<String> getAllAliases() throws CryptoException {
-
-        ArrayList<String> keyAliases = new ArrayList<>();
-        try {
-            Enumeration<String> aliases = keyStore.aliases();
-            while (aliases.hasMoreElements()) {
-                keyAliases.add(aliases.nextElement());
-            }
-        } catch (Exception e) {
-            Log.e(DEBUG_TAG, e.getMessage());
-            throw new CryptoException(e.getMessage());
-        }
-
-        return keyAliases;
     }
 
     @TargetApi(18)
@@ -122,21 +105,6 @@ public class Scrambler {
 
     }
 
-    public void deleteKey(String alias) throws CryptoException {
-
-        if (!alias.isEmpty()) {
-            try {
-                keyStore.deleteEntry(alias);
-                Log.d(DEBUG_TAG, "Key" + alias + "is delete");
-            } catch (Exception e) {
-                Log.e(DEBUG_TAG, e.getMessage());
-            }
-        } else {
-            Log.e(DEBUG_TAG, "DeleteKey - String is empty");
-            throw new CryptoException("DeleteKey - String is empty");
-        }
-    }
-
     public String encryptString(String alias, String text) throws CryptoException {
 
         if (!alias.isEmpty() && !text.isEmpty()) {
@@ -153,13 +121,9 @@ public class Scrambler {
                 cipherOutputStream.write(text.getBytes("UTF-8"));
                 cipherOutputStream.close();
 
-                Log.d(DEBUG_TAG, "String is encrypt");
-
                 byte[] vals = outputStream.toByteArray();
 
-                String encryptedText = Base64.encodeToString(vals, Base64.DEFAULT);
-                Log.d(DEBUG_TAG, encryptedText);
-                return encryptedText;
+                return Base64.encodeToString(vals, Base64.DEFAULT);
 
             } catch (Exception e) {
                 Log.e(DEBUG_TAG, e.getMessage());
@@ -192,8 +156,6 @@ public class Scrambler {
                 }
 
                 Byte[] bytes = values.toArray(new Byte[values.size()]);
-
-                Log.d(DEBUG_TAG, "String is decrypt");
 
                 return new String(ArrayUtils.toPrimitive(bytes), 0, bytes.length, "UTF-8");
 

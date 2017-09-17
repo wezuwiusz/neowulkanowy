@@ -1,14 +1,6 @@
 package io.github.wulkanowy.api.grades;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 public class Grade {
-    protected int id;
-
-    private int userID;
-
-    private int subjectID;
 
     private String subject = "";
 
@@ -27,38 +19,6 @@ public class Grade {
     private String teacher = "";
 
     private String semester = "";
-
-    private boolean isNew;
-
-    public int getId() {
-        return id;
-    }
-
-    public Grade setId(int id) {
-        this.id = id;
-
-        return this;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public Grade setUserID(int userID) {
-        this.userID = userID;
-
-        return this;
-    }
-
-    public int getSubjectID() {
-        return subjectID;
-    }
-
-    public Grade setSubjectID(int subjectID) {
-        this.subjectID = subjectID;
-
-        return this;
-    }
 
     public String getSubject() {
         return subject;
@@ -148,51 +108,5 @@ public class Grade {
         this.semester = semester;
 
         return this;
-    }
-
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public Grade setIsNew(boolean isNew) {
-        this.isNew = isNew;
-
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Grade grade = (Grade) o;
-
-        return new EqualsBuilder()
-                .append(subject, grade.subject)
-                .append(value, grade.value)
-                .append(color, grade.color)
-                .append(symbol, grade.symbol)
-                .append(description, grade.description)
-                .append(weight, grade.weight)
-                .append(date, grade.date)
-                .append(teacher, grade.teacher)
-                .append(semester, grade.semester)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(subject)
-                .append(value)
-                .append(color)
-                .append(symbol)
-                .append(description)
-                .append(weight)
-                .append(date)
-                .append(teacher)
-                .append(semester)
-                .toHashCode();
     }
 }

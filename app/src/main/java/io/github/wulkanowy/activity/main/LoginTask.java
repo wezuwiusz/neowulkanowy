@@ -1,7 +1,7 @@
 package io.github.wulkanowy.activity.main;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -21,21 +21,21 @@ import io.github.wulkanowy.utilities.ConnectionUtilities;
 
 public class LoginTask extends AsyncTask<String, Integer, Integer> {
 
-    private Context context;
+    private Activity activity;
 
     private ProgressDialog progress;
 
-    public LoginTask(Context context) {
-        this.context = context;
-        this.progress = new ProgressDialog(context);
+    public LoginTask(Activity activity) {
+        this.activity = activity;
+        this.progress = new ProgressDialog(activity);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
 
-        progress.setTitle(context.getText(R.string.login_text));
-        progress.setMessage(context.getText(R.string.please_wait_text));
+        progress.setTitle(activity.getText(R.string.login_text));
+        progress.setMessage(activity.getText(R.string.please_wait_text));
         progress.setCancelable(false);
         progress.show();
     }
@@ -43,10 +43,10 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
     @Override
     protected Integer doInBackground(String... credentials) {
 
-        if (ConnectionUtilities.isOnline(context)) {
+        if (ConnectionUtilities.isOnline(activity)) {
             VulcanSynchronisation vulcanSynchronisation = new VulcanSynchronisation();
             try {
-                vulcanSynchronisation.loginNewUser(credentials[0], credentials[1], credentials[2], context);
+                vulcanSynchronisation.loginNewUser(credentials[0], credentials[1], credentials[2], activity);
             } catch (BadCredentialsException e) {
                 return R.string.login_bad_credentials_text;
             } catch (AccountPermissionException e) {
@@ -57,8 +57,8 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
                 return R.string.login_denied_text;
             }
 
-            DataSynchronisation dataSynchronisation = new DataSynchronisation(context);
-            dataSynchronisation.syncGradesAndSubjects(vulcanSynchronisation);
+            DataSynchronisation dataSynchronisation = new DataSynchronisation(activity);
+            dataSynchronisation.syncSubjectsAndGrades(vulcanSynchronisation);
 
             return R.string.login_accepted_text;
 
@@ -71,16 +71,16 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
         super.onPostExecute(messageID);
 
         GradesSync gradesSync = new GradesSync();
-        gradesSync.scheduledJob(context);
+        gradesSync.scheduledJob(activity);
 
         progress.dismiss();
 
-        Toast.makeText(context, context.getString(messageID), Toast.LENGTH_LONG).show();
+        Toast.makeText(activity, activity.getString(messageID), Toast.LENGTH_LONG).show();
 
         if (messageID == R.string.login_accepted_text || messageID == R.string.root_failed_text
                 || messageID == R.string.encrypt_failed_text) {
-            Intent intent = new Intent(context, DashboardActivity.class);
-            context.startActivity(intent);
+            Intent intent = new Intent(activity, DashboardActivity.class);
+            activity.startActivity(intent);
         }
     }
 }
