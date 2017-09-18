@@ -18,6 +18,7 @@ public class GradeTest {
         Assert.assertEquals(R.color.one_grade, new Grade().setValue("1+").getValueColor());
         Assert.assertEquals(R.color.one_grade, new Grade().setValue("+1").getValueColor());
         Assert.assertEquals(R.color.default_grade, new Grade().setValue("Np").getValueColor());
+        Assert.assertEquals(R.color.default_grade, new Grade().setValue("7").getValueColor());
         Assert.assertEquals(R.color.default_grade, new Grade().setValue("").getValueColor());
     }
 
@@ -31,5 +32,22 @@ public class GradeTest {
 
         Assert.assertEquals(new Grade().setSubject("Religia").setValue("5").hashCode(),
                 new Grade().setSubject("Religia").setValue("5").hashCode());
+
+        Assert.assertFalse(new Grade().setSubject("Informatyka")
+                .equals(new FakeGrade().setSubject("Informatyka")));
+
+        Assert.assertFalse(new Grade().setSubject("Informatyka")
+                .equals(null));
+    }
+
+    private class FakeGrade {
+
+        private String subject;
+
+        private FakeGrade setSubject(String subject) {
+            this.subject = subject;
+            this.subject = this.subject + subject;
+            return this;
+        }
     }
 }

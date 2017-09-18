@@ -56,7 +56,11 @@ public class GradesList extends Vulcan {
             Pattern pattern = Pattern.compile("#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})");
             Matcher matcher = pattern.matcher(row.select("td:nth-child(2) span.ocenaCzastkowa")
                     .attr("style"));
-            String color = matcher.find() ? matcher.group(1) : "";
+
+            String color = "";
+            while (matcher.find()) {
+                color = matcher.group(1);
+            }
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
             Date d = sdf.parse(row.select("td:nth-child(5)").text());

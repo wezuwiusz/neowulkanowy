@@ -10,7 +10,7 @@ import java.util.List;
 import io.github.wulkanowy.dao.entities.Grade;
 
 
-public class EntitiesCompareTest {
+public class EntitiesCompareTest extends EntitiesCompare {
 
     private List<Grade> newList = new ArrayList<>();
 

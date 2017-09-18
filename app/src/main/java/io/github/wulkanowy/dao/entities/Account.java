@@ -200,9 +200,7 @@ public class Account {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1812283172)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
