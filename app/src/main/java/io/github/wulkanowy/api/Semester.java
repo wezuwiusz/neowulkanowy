@@ -3,7 +3,9 @@ package io.github.wulkanowy.api;
 public class Semester {
 
     private String number = "";
+
     private String id = "";
+
     private boolean isCurrent = false;
 
     public String getNumber() {

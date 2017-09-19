@@ -3,9 +3,13 @@ package io.github.wulkanowy.api.school;
 public class SchoolData {
 
     private String name = "";
+
     private String address = "";
+
     private String phoneNumber = "";
+
     private String headmaster = "";
+
     private String[] pedagogue;
 
     public String getName() {

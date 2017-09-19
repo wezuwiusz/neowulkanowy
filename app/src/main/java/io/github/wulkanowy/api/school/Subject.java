@@ -1,7 +1,9 @@
 package io.github.wulkanowy.api.school;
 
 public class Subject {
+
     private String name = "";
+
     private String[] teachers;
 
     public String getName() {
