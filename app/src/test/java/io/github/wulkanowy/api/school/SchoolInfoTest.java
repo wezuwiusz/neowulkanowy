@@ -4,30 +4,45 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SchoolInfoTest extends SchoolTest {
+import io.github.wulkanowy.api.StudentAndParentTestCase;
+
+public class SchoolInfoTest extends StudentAndParentTestCase {
 
     private SchoolInfo schoolInfo;
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
-        schoolInfo = new SchoolInfo(snp);
+        schoolInfo = new SchoolInfo(getSnp("Szkola.html"));
     }
 
     @Test
-    public void getSchoolDataTest() throws Exception {
-        SchoolData schoolData = schoolInfo.getSchoolData();
+    public void getNameTest() throws Exception {
+        Assert.assertEquals("Zespół Szkół nr 64", schoolInfo.getSchoolData().getName());
+    }
 
-        Assert.assertEquals("Zespół Szkół nr 64", schoolData.getName());
+    @Test
+    public void getAddressTest() throws Exception {
         Assert.assertEquals("ul. Wiśniowa 128, 01-234 Rogalowo, Nibylandia",
-                schoolData.getAddress());
-        Assert.assertEquals("55 5555555", schoolData.getPhoneNumber());
-        Assert.assertEquals("Antoni Sobczyk", schoolData.getHeadmaster());
+                schoolInfo.getSchoolData().getAddress());
+    }
+
+    @Test
+    public void getPhoneNumberTest() throws Exception {
+        Assert.assertEquals("55 5555555", schoolInfo.getSchoolData().getPhoneNumber());
+    }
+
+    @Test
+    public void getHeadmasterTest() throws Exception {
+        Assert.assertEquals("Antoni Sobczyk", schoolInfo.getSchoolData().getHeadmaster());
+    }
+
+    @Test
+    public void getPedagoguesTest() throws Exception {
         Assert.assertArrayEquals(new String[]{
                 "Zofia Czerwińska [ZC]",
                 "Aleksander Krzemiński [AK]",
                 "Karolina Kowalska [KK]",
                 "Bartek Dąbrowski [BD]"
-        }, schoolData.getPedagogues());
+        }, schoolInfo.getSchoolData().getPedagogues());
     }
 }

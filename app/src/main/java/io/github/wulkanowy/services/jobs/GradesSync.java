@@ -10,13 +10,14 @@ import com.firebase.jobdispatcher.Trigger;
 import java.io.IOException;
 
 import io.github.wulkanowy.activity.WulkanowyApp;
+import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.AccountPermissionException;
 import io.github.wulkanowy.api.login.BadCredentialsException;
-import io.github.wulkanowy.api.login.LoginErrorException;
+import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.dao.entities.DaoSession;
 import io.github.wulkanowy.security.CryptoException;
-import io.github.wulkanowy.services.synchronisation.DataSynchronisation;
-import io.github.wulkanowy.services.synchronisation.VulcanSynchronisation;
+import io.github.wulkanowy.services.LoginSession;
+import io.github.wulkanowy.services.VulcanSynchronization;
 
 public class GradesSync extends VulcanSync {
 
@@ -44,14 +45,13 @@ public class GradesSync extends VulcanSync {
 
         @Override
         public void workToBePerformed() throws CryptoException, BadCredentialsException,
-                LoginErrorException, AccountPermissionException, IOException {
+                NotLoggedInErrorException, AccountPermissionException, IOException {
 
             DaoSession daoSession = ((WulkanowyApp) getApplication()).getDaoSession();
 
-            VulcanSynchronisation vulcanSynchronisation = new VulcanSynchronisation();
-            DataSynchronisation dataSynchronisation = new DataSynchronisation(daoSession);
-            vulcanSynchronisation.loginCurrentUser(getApplicationContext(), daoSession);
-            dataSynchronisation.syncGrades(vulcanSynchronisation);
+            VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
+            vulcanSynchronization.loginCurrentUser(getApplicationContext(), daoSession, new Vulcan());
+            vulcanSynchronization.syncGrades();
         }
     }
 }

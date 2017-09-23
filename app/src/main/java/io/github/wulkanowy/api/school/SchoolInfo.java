@@ -5,10 +5,9 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 
 import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
-public class SchoolInfo extends Vulcan {
+public class SchoolInfo {
 
     private StudentAndParent snp = null;
 

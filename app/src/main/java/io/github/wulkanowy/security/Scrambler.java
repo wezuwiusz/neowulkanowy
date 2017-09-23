@@ -29,19 +29,19 @@ import javax.security.auth.x500.X500Principal;
 
 public class Scrambler {
 
-    private KeyStore keyStore;
+    public final static String DEBUG_TAG = "WulkanowySecurity";
 
     private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
 
-    public final static String DEBUG_TAG = "WulkanowySecurity";
+    protected Context context;
 
-    public Context context;
+    private KeyStore keyStore;
 
-    public Scrambler(Context context) {
+    protected Scrambler(Context context) {
         this.context = context;
     }
 
-    public void loadKeyStore() throws CryptoException {
+    protected void loadKeyStore() throws CryptoException {
 
         try {
             keyStore = KeyStore.getInstance(ANDROID_KEYSTORE);
@@ -54,7 +54,7 @@ public class Scrambler {
     }
 
     @TargetApi(18)
-    public void generateNewKey(String alias) throws CryptoException {
+    protected void generateNewKey(String alias) throws CryptoException {
 
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
@@ -105,7 +105,7 @@ public class Scrambler {
 
     }
 
-    public String encryptString(String alias, String text) throws CryptoException {
+    protected String encryptString(String alias, String text) throws CryptoException {
 
         if (!alias.isEmpty() && !text.isEmpty()) {
             try {
@@ -135,7 +135,7 @@ public class Scrambler {
         }
     }
 
-    public String decryptString(String alias, String text) throws CryptoException {
+    protected String decryptString(String alias, String text) throws CryptoException {
 
         if (!alias.isEmpty() && !text.isEmpty()) {
             try {

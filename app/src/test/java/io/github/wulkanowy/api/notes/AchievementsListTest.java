@@ -1,46 +1,36 @@
 package io.github.wulkanowy.api.notes;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.List;
 
-import io.github.wulkanowy.api.FixtureHelper;
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.StudentAndParentTestCase;
 
-public class AchievementsListTest {
+public class AchievementsListTest extends StudentAndParentTestCase {
 
-    private String fixtureFilledFileName = "UwagiOsiagniecia-filled.html";
+    private AchievementsList filledAchievementsList;
 
-    private String fixtureEmptyFileName = "UwagiOsiagniecia-empty.html";
+    private AchievementsList emptyAchievementsList;
 
-    private AchievementsList getSetUpAchievementsList(String fixtureFileName) throws Exception {
-        String input = FixtureHelper.getAsString(getClass().getResourceAsStream(fixtureFileName));
-
-        Document notesPageDocument = Jsoup.parse(input);
-
-        StudentAndParent snp = Mockito.mock(StudentAndParent.class);
-        Mockito.when(snp.getSnPPageDocument(Mockito.anyString())).thenReturn(notesPageDocument);
-
-        return new AchievementsList(snp);
+    @Before
+    public void setUp() throws Exception {
+        filledAchievementsList = new AchievementsList(getSnp("UwagiOsiagniecia-filled.html"));
+        emptyAchievementsList = new AchievementsList(getSnp("UwagiOsiagniecia-empty.html"));
     }
 
     @Test
-    public void getAllAchievementsFilledTest() throws Exception {
-        List<String> list = getSetUpAchievementsList(fixtureFilledFileName).getAllAchievements();
-
-        Assert.assertEquals(2, list.size());
-        Assert.assertEquals("I miejsce w ogólnopolskim konkursie ortograficznym", list.get(0));
-        Assert.assertEquals("III miejsce w ogólnopolskim konkursie plastycznym", list.get(1));
+    public void getAllAchievementsTest() throws Exception {
+        Assert.assertEquals(2, filledAchievementsList.getAllAchievements().size());
+        Assert.assertEquals(0, emptyAchievementsList.getAllAchievements().size());
     }
 
     @Test
-    public void getAllAchievementsEmptyTest() throws Exception {
-        List<String> list = getSetUpAchievementsList(fixtureEmptyFileName).getAllAchievements();
+    public void getAchievements() throws Exception {
+        List<String> filledList = filledAchievementsList.getAllAchievements();
 
-        Assert.assertEquals(0, list.size());
+        Assert.assertEquals("I miejsce w ogólnopolskim konkursie ortograficznym", filledList.get(0));
+        Assert.assertEquals("III miejsce w ogólnopolskim konkursie plastycznym", filledList.get(1));
     }
 }

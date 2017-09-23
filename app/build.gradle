@@ -55,6 +55,8 @@ dependencies {
 
     debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
     debugCompile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'
+
+    androidTestCompile 'org.mockito:mockito-android:2.10.0'
     
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.10.0'

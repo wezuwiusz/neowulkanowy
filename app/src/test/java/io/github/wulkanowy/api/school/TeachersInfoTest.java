@@ -6,35 +6,47 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class TeachersInfoTest extends SchoolTest {
+import io.github.wulkanowy.api.StudentAndParentTestCase;
+
+public class TeachersInfoTest extends StudentAndParentTestCase {
 
     private TeachersInfo teachersInfo;
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
-        teachersInfo = new TeachersInfo(snp);
+        teachersInfo = new TeachersInfo(getSnp("Szkola.html"));
     }
 
     @Test
-    public void getTeachersDataTest() throws Exception {
-        TeachersData teachersData = teachersInfo.getTeachersData();
+    public void getClassNameTest() throws Exception {
+        Assert.assertEquals("1a", teachersInfo.getTeachersData().getClassName());
+    }
 
-        Assert.assertEquals("1a", teachersData.getClassName());
+    @Test
+    public void getClassTeacherTest() throws Exception {
         Assert.assertArrayEquals(new String[]{
                 "Karolina Kowalska [AN]",
                 "Antoni Sobczyk [AS]"
-        }, teachersData.getClassTeacher());
+        }, teachersInfo.getTeachersData().getClassTeacher());
+    }
 
-        List<Subject> subjects = teachersData.getSubjects();
+    @Test
+    public void getTeachersDataSubjectsNameTest() throws Exception {
+        List<Subject> subjects = teachersInfo.getTeachersData().getSubjects();
 
         Assert.assertEquals("Biologia", subjects.get(0).getName());
+        Assert.assertEquals("Język angielski", subjects.get(6).getName());
+    }
+
+    @Test
+    public void getTeachersDataSubjectsTeachersTest() throws Exception {
+        List<Subject> subjects = teachersInfo.getTeachersData().getSubjects();
+
         Assert.assertArrayEquals(new String[]{"Karolina Kowalska [AN]"},
                 subjects.get(0).getTeachers());
         Assert.assertEquals("Karolina Kowalska [AN]",
                 subjects.get(0).getTeachers()[0]);
 
-        Assert.assertEquals("Język angielski", subjects.get(6).getName());
         Assert.assertArrayEquals(new String[]{
                 "Karolina Kowalska [AN]",
                 "Mateusz Kowal [MK]",

@@ -16,10 +16,9 @@ import java.util.regex.Pattern;
 
 import io.github.wulkanowy.api.Semester;
 import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
-public class GradesList extends Vulcan {
+public class GradesList {
 
     private StudentAndParent snp = null;
 

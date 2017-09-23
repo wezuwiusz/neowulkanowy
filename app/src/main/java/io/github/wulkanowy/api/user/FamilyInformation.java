@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
-public class FamilyInformation extends Vulcan {
+public class FamilyInformation {
 
     private StudentAndParent snp;
 

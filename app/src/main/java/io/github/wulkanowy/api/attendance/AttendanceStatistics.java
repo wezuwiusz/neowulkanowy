@@ -10,13 +10,13 @@ import java.util.List;
 
 import io.github.wulkanowy.api.StudentAndParent;
 
-public class Statistics {
+public class AttendanceStatistics {
 
     private StudentAndParent snp;
 
     private String attendancePageUrl = "Frekwencja.mvc";
 
-    public Statistics(StudentAndParent snp) {
+    public AttendanceStatistics(StudentAndParent snp) {
         this.snp = snp;
     }
 

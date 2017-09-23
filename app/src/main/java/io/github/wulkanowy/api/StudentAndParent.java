@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.login.LoginErrorException;
+import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 
-public class StudentAndParent extends Vulcan {
+public class StudentAndParent extends Api {
 
     private String startPageUrl = "https://uonetplus.vulcan.net.pl/{symbol}/Start.mvc/Index";
 
@@ -20,35 +20,30 @@ public class StudentAndParent extends Vulcan {
 
     private String gradesPageUrl = baseUrl + "Oceny/Wszystkie";
 
-    private String symbol = "";
+    private String symbol;
 
-    private String id = "";
+    private String id;
 
-    public StudentAndParent(Cookies cookies, String locID) throws IOException, LoginErrorException {
+    public StudentAndParent(Cookies cookies, String symbol) {
         this.cookies = cookies;
-        this.symbol = locID;
+        this.symbol = symbol;
+    }
 
-        // get link to uonetplus-opiekun.vulcan.net.pl module
-        Document startPage = getPageByUrl(startPageUrl.replace("{symbol}", symbol));
-        Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
-        String uonetPlusOpiekunUrl = studentTileLink.attr("href");
-
-        //get context module cookie
-        Connection.Response res = Jsoup.connect(uonetPlusOpiekunUrl)
-                .followRedirects(true)
-                .cookies(getCookies())
-                .execute();
-
-        cookies.addItems(res.cookies());
-
-        this.id = getCalculatedID(uonetPlusOpiekunUrl);
-        this.baseUrl = baseUrl
-                .replace("{symbol}", getSymbol())
-                .replace("{ID}", getId());
+    public StudentAndParent(Cookies cookies, String symbol, String id) {
+        this(cookies, symbol);
+        this.id = id;
     }
 
     public String getGradesPageUrl() {
         return gradesPageUrl;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public String getStartPageUrl() {
+        return startPageUrl;
     }
 
     public String getSymbol() {
@@ -59,11 +54,41 @@ public class StudentAndParent extends Vulcan {
         return id;
     }
 
-    public String getCalculatedID(String uonetPlusOpiekunUrl) throws LoginErrorException {
-        String[] path = uonetPlusOpiekunUrl.split("vulcan.net.pl/")[1].split("/");
+    public void storeContextCookies() throws IOException, NotLoggedInErrorException {
+        //get context cookie
+        Connection.Response res = Jsoup.connect(getSnpPageUrl())
+                .followRedirects(true)
+                .cookies(getCookies())
+                .execute();
+
+        cookies.addItems(res.cookies());
+    }
+
+    public String getSnpPageUrl() throws IOException, NotLoggedInErrorException {
+        if (null != getId()) {
+            return getBaseUrl().replace("{symbol}", getSymbol()).replace("{ID}", getId());
+        }
+
+        // get url to uonetplus-opiekun.vulcan.net.pl
+        Document startPage = getPageByUrl(getStartPageUrl().replace("{symbol}", getSymbol()));
+        Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
+
+        if (null == studentTileLink) {
+            throw new NotLoggedInErrorException();
+        }
+
+        String snpPageUrl = studentTileLink.attr("href");
+
+        this.id = getExtractedIdFromUrl(snpPageUrl);
+
+        return snpPageUrl;
+    }
+
+    public String getExtractedIdFromUrl(String snpPageUrl) throws NotLoggedInErrorException {
+        String[] path = snpPageUrl.split("vulcan.net.pl/")[1].split("/");
 
         if (4 != path.length) {
-            throw new LoginErrorException();
+            throw new NotLoggedInErrorException();
         }
 
         return path[1];
@@ -74,7 +99,9 @@ public class StudentAndParent extends Vulcan {
     }
 
     public Document getSnPPageDocument(String url) throws IOException {
-        return getPageByUrl(baseUrl + url);
+        return getPageByUrl(getBaseUrl()
+                .replace("{symbol}", getSymbol())
+                .replace("{ID}", getId()) + url);
     }
 
     public List<Semester> getSemesters() throws IOException {

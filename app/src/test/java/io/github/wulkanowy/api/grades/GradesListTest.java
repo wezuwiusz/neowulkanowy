@@ -6,66 +6,109 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class GradesListTest extends GradesTest {
+import io.github.wulkanowy.api.StudentAndParentTestCase;
 
-    private String fixtureFileName = "OcenyWszystkie-filled.html";
+public class GradesListTest extends StudentAndParentTestCase {
 
-    private GradesList gradesList;
+    private GradesList filled;
 
     @Before
     public void setUp() throws Exception {
-        super.setUp(fixtureFileName);
-
-        gradesList = new GradesList(snp);
+        filled = new GradesList(getSnp("OcenyWszystkie-filled.html"));
     }
 
     @Test
     public void getAllTest() throws Exception {
-        List<Grade> grades = gradesList.getAll();
-        Assert.assertEquals(6, grades.size()); // 2 items are skipped
+        Assert.assertEquals(6, filled.getAll().size()); // 2 items are skipped
+    }
 
-        Grade grade1 = grades.get(0);
-        Assert.assertEquals("Zajęcia z wychowawcą", grade1.getSubject());
-        Assert.assertEquals("5", grade1.getValue());
-        Assert.assertEquals("000000", grade1.getColor());
-        Assert.assertEquals("A1", grade1.getSymbol());
-        Assert.assertEquals("Dzień Kobiet w naszej klasie", grade1.getDescription());
-        Assert.assertEquals("1,00", grade1.getWeight());
-        Assert.assertEquals("2017-03-21", grade1.getDate());
-        Assert.assertEquals("Patryk Maciejewski", grade1.getTeacher());
-        Assert.assertEquals("7654321", grade1.getSemester());
+    @Test
+    public void getSubjectTest() throws Exception {
+        List<Grade> list = filled.getAll();
 
-        Grade grade2 = grades.get(3);
-        Assert.assertEquals("Język angielski", grade2.getSubject());
-        Assert.assertEquals("5", grade2.getValue());
-        Assert.assertEquals("1289F7", grade2.getColor());
-        Assert.assertEquals("BW3", grade2.getSymbol());
-        Assert.assertEquals("Writing", grade2.getDescription());
-        Assert.assertEquals("3,00", grade2.getWeight());
-        Assert.assertEquals("2017-06-02", grade2.getDate());
-        Assert.assertEquals("Oliwia Woźniak", grade2.getTeacher());
-        Assert.assertEquals("7654321", grade2.getSemester());
+        Assert.assertEquals("Zajęcia z wychowawcą", list.get(0).getSubject());
+        Assert.assertEquals("Język angielski", list.get(3).getSubject());
+        Assert.assertEquals("Wychowanie fizyczne", list.get(4).getSubject());
+        Assert.assertEquals("Język polski", list.get(5).getSubject());
+    }
 
-        Grade grade3 = grades.get(4);
-        Assert.assertEquals("Wychowanie fizyczne", grade3.getSubject());
-        Assert.assertEquals("1", grade3.getValue());
-        Assert.assertEquals("6ECD07", grade3.getColor());
-        Assert.assertEquals("STR", grade3.getSymbol());
-        Assert.assertEquals("", grade3.getDescription());
-        Assert.assertEquals("8,00", grade3.getWeight());
-        Assert.assertEquals("2017-04-02", grade3.getDate());
-        Assert.assertEquals("Klaudia Dziedzic", grade3.getTeacher());
-        Assert.assertEquals("7654321", grade3.getSemester());
+    @Test
+    public void getValueTest() throws Exception {
+        List<Grade> list = filled.getAll();
 
-        Grade grade4 = grades.get(5);
-        Assert.assertEquals("Język polski", grade4.getSubject());
-        Assert.assertEquals("1", grade4.getValue());
-        Assert.assertEquals("6ECD07", grade4.getColor());
-        Assert.assertEquals("K", grade4.getSymbol());
-        Assert.assertEquals("Kordian", grade4.getDescription());
-        Assert.assertEquals("5,00", grade4.getWeight());
-        Assert.assertEquals("2017-02-06", grade4.getDate());
-        Assert.assertEquals("Amelia Stępień", grade4.getTeacher());
-        Assert.assertEquals("7654321", grade4.getSemester());
+        Assert.assertEquals("5", list.get(0).getValue());
+        Assert.assertEquals("5", list.get(3).getValue());
+        Assert.assertEquals("1", list.get(4).getValue());
+        Assert.assertEquals("1", list.get(5).getValue());
+    }
+
+    @Test
+    public void getColorTest() throws Exception {
+        List<Grade> list = filled.getAll();
+
+        Assert.assertEquals("000000", list.get(0).getColor());
+        Assert.assertEquals("1289F7", list.get(3).getColor());
+        Assert.assertEquals("6ECD07", list.get(4).getColor());
+        Assert.assertEquals("6ECD07", list.get(5).getColor());
+    }
+
+    @Test
+    public void getSymbolTest() throws Exception {
+        List<Grade> list = filled.getAll();
+
+        Assert.assertEquals("A1", list.get(0).getSymbol());
+        Assert.assertEquals("BW3", list.get(3).getSymbol());
+        Assert.assertEquals("STR", list.get(4).getSymbol());
+        Assert.assertEquals("K", list.get(5).getSymbol());
+    }
+
+    @Test
+    public void getDescriptionTest() throws Exception {
+        List<Grade> list = filled.getAll();
+
+        Assert.assertEquals("Dzień Kobiet w naszej klasie", list.get(0).getDescription());
+        Assert.assertEquals("Writing", list.get(3).getDescription());
+        Assert.assertEquals("", list.get(4).getDescription());
+        Assert.assertEquals("Kordian", list.get(5).getDescription());
+    }
+
+    @Test
+    public void getWeightTest() throws Exception {
+        List<Grade> list = filled.getAll();
+
+        Assert.assertEquals("1,00", list.get(0).getWeight());
+        Assert.assertEquals("3,00", list.get(3).getWeight());
+        Assert.assertEquals("8,00", list.get(4).getWeight());
+        Assert.assertEquals("5,00", list.get(5).getWeight());
+    }
+
+    @Test
+    public void getDateTest() throws Exception {
+        List<Grade> list = filled.getAll();
+
+        Assert.assertEquals("2017-03-21", list.get(0).getDate());
+        Assert.assertEquals("2017-06-02", list.get(3).getDate());
+        Assert.assertEquals("2017-04-02", list.get(4).getDate());
+        Assert.assertEquals("2017-02-06", list.get(5).getDate());
+    }
+
+    @Test
+    public void getTeacherTest() throws Exception {
+        List<Grade> list = filled.getAll();
+
+        Assert.assertEquals("Patryk Maciejewski", list.get(0).getTeacher());
+        Assert.assertEquals("Oliwia Woźniak", list.get(3).getTeacher());
+        Assert.assertEquals("Klaudia Dziedzic", list.get(4).getTeacher());
+        Assert.assertEquals("Amelia Stępień", list.get(5).getTeacher());
+    }
+
+    @Test
+    public void getSemesterTest() throws Exception {
+        List<Grade> list = filled.getAll();
+
+        Assert.assertEquals("7654321", list.get(0).getSemester());
+        Assert.assertEquals("7654321", list.get(3).getSemester());
+        Assert.assertEquals("7654321", list.get(4).getSemester());
+        Assert.assertEquals("7654321", list.get(5).getSemester());
     }
 }

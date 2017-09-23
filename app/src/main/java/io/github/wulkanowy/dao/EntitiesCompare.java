@@ -17,7 +17,7 @@ public class EntitiesCompare {
                 .removeAll(newList, addedOrUpdatedGradeList));
 
         for (Grade grade : addedOrUpdatedGradeList) {
-            grade.setNew(true);
+            grade.setIsNew(true);
             updatedList.add(grade);
         }
 

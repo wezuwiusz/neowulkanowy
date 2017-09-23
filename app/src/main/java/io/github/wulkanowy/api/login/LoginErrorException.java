@@ -1,4 +1,4 @@
 package io.github.wulkanowy.api.login;
 
-public class LoginErrorException extends Exception {
+public class LoginErrorException extends NotLoggedInErrorException {
 }

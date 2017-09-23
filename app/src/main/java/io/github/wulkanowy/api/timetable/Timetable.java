@@ -9,16 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.LoginErrorException;
 
-public class Table extends Vulcan {
+public class Timetable {
 
     private StudentAndParent snp;
 
-    private String timetablePageurl = "Lekcja.mvc/PlanLekcji?data=";
+    private String timetablePageUrl = "Lekcja.mvc/PlanLekcji?data=";
 
-    public Table(StudentAndParent snp) {
+    public Timetable(StudentAndParent snp) {
         this.snp = snp;
     }
 
@@ -27,7 +26,7 @@ public class Table extends Vulcan {
     }
 
     public Week getWeekTable(String tick) throws IOException, LoginErrorException {
-        Element table = snp.getSnPPageDocument(timetablePageurl + tick)
+        Element table = snp.getSnPPageDocument(timetablePageUrl + tick)
                 .select(".mainContainer .presentData").first();
 
         Elements tableHeaderCells = table.select("thead th");
@@ -94,6 +93,12 @@ public class Table extends Vulcan {
         lesson.setSubject(spans.get(0).text());
         lesson.setTeacher(spans.get(1).text());
         lesson.setRoom(spans.get(2).text());
+
+        // okienko dla uczniów
+        if (5 == spans.size()) {
+            lesson.setTeacher(spans.get(2).text());
+            lesson.setRoom(spans.get(3).text());
+        }
 
         lesson = getLessonGroupDivisionInfo(lesson, spans);
         lesson = getLessonTypeInfo(lesson, spans);

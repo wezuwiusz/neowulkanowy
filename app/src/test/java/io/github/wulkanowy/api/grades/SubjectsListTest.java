@@ -1,83 +1,82 @@
 package io.github.wulkanowy.api.grades;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-public class SubjectsListTest extends GradesTest {
+import io.github.wulkanowy.api.StudentAndParentTestCase;
 
-    private String fixtureStdFileName = "OcenyWszystkie-subjects.html";
+public class SubjectsListTest extends StudentAndParentTestCase {
 
-    private String fixtureAverageFileName = "OcenyWszystkie-subjects-average.html";
+    private SubjectsList std;
 
-    public SubjectsList getSetUpSubjectsList(String fixtureFileName) throws Exception {
-        super.setUp(fixtureFileName);
+    private SubjectsList average;
 
-        return new SubjectsList(snp);
+    @Before
+    public void setUp() throws Exception {
+        std = new SubjectsList(getSnp("OcenyWszystkie-subjects.html"));
+        average = new SubjectsList(getSnp("OcenyWszystkie-subjects-average.html"));
     }
 
     @Test
-    public void getAllStdTest() throws Exception {
-        List<Subject> list = getSetUpSubjectsList(fixtureStdFileName).getAll();
-
-        Assert.assertEquals(5, list.size());
-
-        Subject subject0 = list.get(0);
-        Assert.assertEquals("Zachowanie", subject0.getName());
-        Assert.assertEquals("bardzo dobre", subject0.getPredictedRating());
-        Assert.assertEquals("bardzo dobre", subject0.getFinalRating());
-
-        Subject subject1 = list.get(1);
-        Assert.assertEquals("Praktyka zawodowa", subject1.getName());
-        Assert.assertEquals("-", subject1.getPredictedRating());
-        Assert.assertEquals("celujący", subject1.getFinalRating());
-
-        Subject subject2 = list.get(2);
-        Assert.assertEquals("Metodologia programowania", subject2.getName());
-        Assert.assertEquals("bardzo dobry", subject2.getPredictedRating());
-        Assert.assertEquals("celujący", subject2.getFinalRating());
-
-        Subject subject3 = list.get(3);
-        Assert.assertEquals("Podstawy przedsiębiorczości", subject3.getName());
-        Assert.assertEquals("3/4", subject3.getPredictedRating());
-        Assert.assertEquals("dostateczny", subject3.getFinalRating());
-
-        Subject subject4 = list.get(4);
-        Assert.assertEquals("Wychowanie do życia w rodzinie", subject4.getName());
-        Assert.assertEquals("-", subject4.getPredictedRating());
-        Assert.assertEquals("-", subject4.getFinalRating());
+    public void getAllTest() throws Exception {
+        Assert.assertEquals(5, std.getAll().size());
+        Assert.assertEquals(5, average.getAll().size());
     }
 
     @Test
-    public void getAllAverageTest() throws Exception {
-        List<Subject> list = getSetUpSubjectsList(fixtureAverageFileName).getAll();
+    public void getNameTest() throws Exception {
+        List<Subject> stdList = std.getAll();
 
-        Assert.assertEquals(5, list.size());
+        Assert.assertEquals("Zachowanie", stdList.get(0).getName());
+        Assert.assertEquals("Praktyka zawodowa", stdList.get(1).getName());
+        Assert.assertEquals("Metodologia programowania", stdList.get(2).getName());
+        Assert.assertEquals("Podstawy przedsiębiorczości", stdList.get(3).getName());
+        Assert.assertEquals("Wychowanie do życia w rodzinie", stdList.get(4).getName());
 
-        Subject subject0 = list.get(0);
-        Assert.assertEquals("Zachowanie", subject0.getName());
-        Assert.assertEquals("bardzo dobre", subject0.getPredictedRating());
-        Assert.assertEquals("bardzo dobre", subject0.getFinalRating());
+        List<Subject> averageList = average.getAll();
+        Assert.assertEquals("Zachowanie", averageList.get(0).getName());
+        Assert.assertEquals("Język polski", averageList.get(1).getName());
+        Assert.assertEquals("Wychowanie fizyczne", averageList.get(2).getName());
+        Assert.assertEquals("Język angielski", averageList.get(3).getName());
+        Assert.assertEquals("Wiedza o społeczeństwie", averageList.get(4).getName());
+    }
 
-        Subject subject1 = list.get(1);
-        Assert.assertEquals("Język polski", subject1.getName());
-        Assert.assertEquals("-", subject1.getPredictedRating());
-        Assert.assertEquals("dobry", subject1.getFinalRating());
+    @Test
+    public void getPredictedRatingTest() throws Exception {
+        List<Subject> stdList = std.getAll();
 
-        Subject subject2 = list.get(2);
-        Assert.assertEquals("Wychowanie fizyczne", subject2.getName());
-        Assert.assertEquals("bardzo dobry", subject2.getPredictedRating());
-        Assert.assertEquals("celujący", subject2.getFinalRating());
+        Assert.assertEquals("bardzo dobre", stdList.get(0).getPredictedRating());
+        Assert.assertEquals("-", stdList.get(1).getPredictedRating());
+        Assert.assertEquals("bardzo dobry", stdList.get(2).getPredictedRating());
+        Assert.assertEquals("3/4", stdList.get(3).getPredictedRating());
+        Assert.assertEquals("-", stdList.get(4).getPredictedRating());
 
-        Subject subject3 = list.get(3);
-        Assert.assertEquals("Język angielski", subject3.getName());
-        Assert.assertEquals("4/5", subject3.getPredictedRating());
-        Assert.assertEquals("bardzo dobry", subject3.getFinalRating());
+        List<Subject> averageList = average.getAll();
+        Assert.assertEquals("bardzo dobre", averageList.get(0).getPredictedRating());
+        Assert.assertEquals("-", averageList.get(1).getPredictedRating());
+        Assert.assertEquals("bardzo dobry", averageList.get(2).getPredictedRating());
+        Assert.assertEquals("4/5", averageList.get(3).getPredictedRating());
+        Assert.assertEquals("-", averageList.get(4).getPredictedRating());
+    }
 
-        Subject subject4 = list.get(4);
-        Assert.assertEquals("Wiedza o społeczeństwie", subject4.getName());
-        Assert.assertEquals("-", subject4.getPredictedRating());
-        Assert.assertEquals("-", subject4.getFinalRating());
+    @Test
+    public void getFinalRatingTest() throws Exception {
+        List<Subject> stdList = std.getAll();
+
+        Assert.assertEquals("bardzo dobre", stdList.get(0).getFinalRating());
+        Assert.assertEquals("celujący", stdList.get(1).getFinalRating());
+        Assert.assertEquals("celujący", stdList.get(2).getFinalRating());
+        Assert.assertEquals("dostateczny", stdList.get(3).getFinalRating());
+        Assert.assertEquals("-", stdList.get(4).getFinalRating());
+
+        List<Subject> averageList = average.getAll();
+        Assert.assertEquals("bardzo dobre", averageList.get(0).getFinalRating());
+        Assert.assertEquals("dobry", averageList.get(1).getFinalRating());
+        Assert.assertEquals("celujący", averageList.get(2).getFinalRating());
+        Assert.assertEquals("bardzo dobry", averageList.get(3).getFinalRating());
+        Assert.assertEquals("-", averageList.get(4).getFinalRating());
     }
 }

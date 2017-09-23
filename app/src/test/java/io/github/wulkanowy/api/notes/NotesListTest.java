@@ -1,57 +1,60 @@
 package io.github.wulkanowy.api.notes;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.List;
 
-import io.github.wulkanowy.api.FixtureHelper;
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.StudentAndParentTestCase;
 
-public class NotesListTest {
+public class NotesListTest extends StudentAndParentTestCase {
 
-    private String fixtureFilledFileName = "UwagiOsiagniecia-filled.html";
+    private NotesList filled;
 
-    private String fixtureEmptyFileName = "UwagiOsiagniecia-empty.html";
+    private NotesList empty;
 
-    private NotesList getSetUpNotesList(String fixtureFileName) throws Exception {
-        String input = FixtureHelper.getAsString(getClass().getResourceAsStream(fixtureFileName));
-
-        Document notesPageDocument = Jsoup.parse(input);
-
-        StudentAndParent snp = Mockito.mock(StudentAndParent.class);
-        Mockito.when(snp.getSnPPageDocument(Mockito.anyString())).thenReturn(notesPageDocument);
-        Mockito.when(snp.getRowDataChildValue(Mockito.any(Element.class),
-                Mockito.anyInt())).thenCallRealMethod();
-
-        return new NotesList(snp);
+    @Before
+    public void setUp() throws Exception {
+        filled = new NotesList(getSnp("UwagiOsiagniecia-filled.html"));
+        empty = new NotesList(getSnp("UwagiOsiagniecia-empty.html"));
     }
 
     @Test
-    public void getAllNotesFilledTest() throws Exception {
-        List<Note> list = getSetUpNotesList(fixtureFilledFileName).getAllNotes();
-
-        Assert.assertEquals(3, list.size());
-
-        Assert.assertEquals("06.06.2017", list.get(0).getDate());
-        Assert.assertEquals("Jan Kowalski [JK]", list.get(0).getTeacher());
-        Assert.assertEquals("Zaangażowanie społeczne", list.get(0).getCategory());
-        Assert.assertEquals("Pomoc przy pikniku charytatywnym", list.get(0).getContent());
-
-        Assert.assertEquals("01.10.2016", list.get(2).getDate());
-        Assert.assertEquals("Kochański Leszek [KL]", list.get(2).getTeacher());
-        Assert.assertEquals("Zachowanie na lekcji", list.get(2).getCategory());
-        Assert.assertEquals("Przeszkadzanie w prowadzeniu lekcji", list.get(2).getContent());
+    public void getAllNotesTest() throws Exception {
+        Assert.assertEquals(3, filled.getAllNotes().size());
+        Assert.assertEquals(0, empty.getAllNotes().size());
     }
 
     @Test
-    public void getAllNotesWhenEmpty() throws Exception {
-        List<Note> list = getSetUpNotesList(fixtureEmptyFileName).getAllNotes();
+    public void getDateTest() throws Exception {
+        List<Note> filledList = filled.getAllNotes();
 
-        Assert.assertEquals(0, list.size());
+        Assert.assertEquals("06.06.2017", filledList.get(0).getDate());
+        Assert.assertEquals("01.10.2016", filledList.get(2).getDate());
+    }
+
+    @Test
+    public void getTeacherTest() throws Exception {
+        List<Note> filledList = filled.getAllNotes();
+
+        Assert.assertEquals("Jan Kowalski [JK]", filledList.get(0).getTeacher());
+        Assert.assertEquals("Kochański Leszek [KL]", filledList.get(2).getTeacher());
+    }
+
+    @Test
+    public void getCategoryTest() throws Exception {
+        List<Note> filledList = filled.getAllNotes();
+
+        Assert.assertEquals("Zaangażowanie społeczne", filledList.get(0).getCategory());
+        Assert.assertEquals("Zachowanie na lekcji", filledList.get(2).getCategory());
+    }
+
+    @Test
+    public void getContentTest() throws Exception {
+        List<Note> filledList = filled.getAllNotes();
+
+        Assert.assertEquals("Pomoc przy pikniku charytatywnym", filledList.get(0).getContent());
+        Assert.assertEquals("Przeszkadzanie w prowadzeniu lekcji", filledList.get(2).getContent());
     }
 }

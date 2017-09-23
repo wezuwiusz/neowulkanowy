@@ -280,15 +280,6 @@ public class Grade implements Parcelable {
         return this;
     }
 
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public Grade setNew(boolean aNew) {
-        isNew = aNew;
-        return this;
-    }
-
     public boolean getIsNew() {
         return this.isNew;
     }
