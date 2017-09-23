@@ -35,7 +35,8 @@ public class GradesFragment extends Fragment {
 
         DaoSession daoSession = ((WulkanowyApp) getActivity().getApplication()).getDaoSession();
 
-        if (subjectWithGradesList.equals(new ArrayList<>())) {
+        if (new ArrayList<>().equals(subjectWithGradesList)) {
+            createExpListView();
             new GradesTask(daoSession).execute();
         } else if (subjectWithGradesList.size() > 0) {
             createExpListView();
@@ -45,7 +46,7 @@ public class GradesFragment extends Fragment {
         return view;
     }
 
-    public void createExpListView() {
+    private void createExpListView() {
 
         RecyclerView recyclerView = view.findViewById(R.id.subject_grade_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

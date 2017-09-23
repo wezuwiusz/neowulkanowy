@@ -29,19 +29,14 @@ import javax.security.auth.x500.X500Principal;
 
 public class Scrambler {
 
-    public final static String DEBUG_TAG = "WulkanowySecurity";
 
     private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
 
-    protected Context context;
+    public final static String DEBUG_TAG = "WulkanowySecurity";
 
     private KeyStore keyStore;
 
-    protected Scrambler(Context context) {
-        this.context = context;
-    }
-
-    protected void loadKeyStore() throws CryptoException {
+    public void loadKeyStore() throws CryptoException {
 
         try {
             keyStore = KeyStore.getInstance(ANDROID_KEYSTORE);
@@ -54,7 +49,7 @@ public class Scrambler {
     }
 
     @TargetApi(18)
-    protected void generateNewKey(String alias) throws CryptoException {
+    protected void generateNewKey(String alias, Context context) throws CryptoException {
 
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
@@ -62,7 +57,7 @@ public class Scrambler {
         AlgorithmParameterSpec spec;
 
         end.add(Calendar.YEAR, 10);
-        if (!alias.isEmpty()) {
+        if (!"".equals(alias)) {
             try {
                 if (!keyStore.containsAlias(alias)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

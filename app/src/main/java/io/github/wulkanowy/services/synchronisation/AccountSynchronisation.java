@@ -33,7 +33,7 @@ public class AccountSynchronisation {
 
             Log.d(VulcanSync.DEBUG_TAG, "Login current user id=" + String.valueOf(userId));
 
-            Safety safety = new Safety(context);
+            Safety safety = new Safety();
             Account account = accountDao.load(userId);
             vulcan.login(
                     account.getEmail(),
@@ -60,12 +60,12 @@ public class AccountSynchronisation {
 
         PersonalData personalData = vulcan.getBasicInformation().getPersonalData();
         AccountDao accountDao = daoSession.getAccountDao();
-        Safety safety = new Safety(context);
+        Safety safety = new Safety();
 
         Account account = new Account()
                 .setName(personalData.getFirstAndLastName())
                 .setEmail(email)
-                .setPassword(safety.encrypt(email, password))
+                .setPassword(safety.encrypt(email, password, context))
                 .setSymbol(symbol);
 
         userId = accountDao.insert(account);

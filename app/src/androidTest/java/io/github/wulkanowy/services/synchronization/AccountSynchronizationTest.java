@@ -72,11 +72,11 @@ public class AccountSynchronizationTest {
     public void loginCurrentUserTest() throws Exception {
         AccountDao accountDao = daoSession.getAccountDao();
 
-        Safety safety = new Safety(context);
+        Safety safety = new Safety();
 
         Long userId = accountDao.insert(new Account()
                 .setEmail("TEST@TEST")
-                .setPassword(safety.encrypt("TEST@TEST", "TEST"))
+                .setPassword(safety.encrypt("TEST@TEST", "TEST", context))
                 .setSymbol(""));
 
         setUserIdSharePreferences(userId);
@@ -117,7 +117,7 @@ public class AccountSynchronizationTest {
         Assert.assertNotNull(loginSession.getDaoSession());
         Assert.assertEquals(loginSession.getVulcan(), vulcan);
 
-        Safety safety = new Safety(context);
+        Safety safety = new Safety();
         Account account = daoSession.getAccountDao().load(userId);
 
         Assert.assertNotNull(account);

@@ -72,7 +72,7 @@ public class DashboardActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, boardFragment).commit();
+                .replace(R.id.fragment_container, boardFragment).commit();
     }
 
     public void onBackPressed() {

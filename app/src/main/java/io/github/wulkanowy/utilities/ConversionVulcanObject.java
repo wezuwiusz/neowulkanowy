@@ -1,7 +1,6 @@
 package io.github.wulkanowy.utilities;
 
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public abstract class ConversionVulcanObject {
         return subjectEntityList;
     }
 
-    public static List<Grade> gradesToGradeEntities(List<io.github.wulkanowy.api.grades.Grade> gradeList) throws ParseException {
+    public static List<Grade> gradesToGradeEntities(List<io.github.wulkanowy.api.grades.Grade> gradeList) {
 
         List<Grade> gradeEntityList = new ArrayList<>();
 

@@ -44,17 +44,17 @@ public class GradesDialogFragment extends DialogFragment {
         dateText.setText(grade.getDate());
         colorText.setText(colorHexToColorName(grade.getColor()));
 
-        if (grade.getDescription().equals("")) {
-            if (!grade.getSymbol().equals("")) {
+        if ("".equals(grade.getDescription())) {
+            if (!"".equals(grade.getSymbol())) {
                 descriptionText.setText(grade.getSymbol());
             }
-        } else if (!grade.getSymbol().equals("")) {
+        } else if (!"".equals(grade.getSymbol())) {
             descriptionText.setText(grade.getSymbol() + " - " + grade.getDescription());
         } else {
             descriptionText.setText(grade.getDescription());
         }
 
-        if (!grade.getTeacher().equals("")) {
+        if (!"".equals(grade.getTeacher())) {
             teacherText.setText(grade.getTeacher());
         }
 
@@ -68,7 +68,7 @@ public class GradesDialogFragment extends DialogFragment {
         return view;
     }
 
-    public int colorHexToColorName(String hexColor) {
+    public static int colorHexToColorName(String hexColor) {
         switch (hexColor) {
             case "000000": {
                 return R.string.color_black_text;
