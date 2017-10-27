@@ -40,7 +40,7 @@
             android:label="@string/activity_dashboard_text" />
 
         <service
-            android:name=".services.jobs.GradesSync$GradeJob"
+            android:name=".services.jobs.GradeJob$GradeService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />

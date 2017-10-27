@@ -15,12 +15,24 @@ public abstract class EntitiesCompare {
                 .removeAll(newList, oldList));
         List<Grade> updatedList = new ArrayList<>(CollectionUtils
                 .removeAll(newList, addedOrUpdatedGradeList));
+        List<Grade> lastList = new ArrayList<>();
 
         for (Grade grade : addedOrUpdatedGradeList) {
             grade.setIsNew(true);
+            if (oldList.size() != 0) {
+                grade.setRead(false);
+            }
             updatedList.add(grade);
         }
 
-        return updatedList;
+        for (Grade grade : updatedList) {
+            for (Grade grade1 : oldList) {
+                if (grade.equals(grade1)) {
+                    grade.setRead(grade1.getRead());
+                }
+            }
+            lastList.add(grade);
+        }
+        return lastList;
     }
 }

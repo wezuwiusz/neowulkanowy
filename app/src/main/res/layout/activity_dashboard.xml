@@ -9,12 +9,11 @@
     android:weightSum="1"
     tools:context="io.github.wulkanowy.activity.dashboard.DashboardActivity">
 
-    <FrameLayout
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fitsSystemWindows="true"
         app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior" />
 
 

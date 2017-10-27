@@ -19,7 +19,7 @@ import io.github.wulkanowy.dao.entities.DaoSession;
 import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.services.LoginSession;
 import io.github.wulkanowy.services.VulcanSynchronization;
-import io.github.wulkanowy.services.jobs.GradesSync;
+import io.github.wulkanowy.services.jobs.GradeJob;
 import io.github.wulkanowy.utilities.ConnectionUtilities;
 
 public class LoginTask extends AsyncTask<String, Integer, Integer> {
@@ -74,7 +74,7 @@ public class LoginTask extends AsyncTask<String, Integer, Integer> {
     protected void onPostExecute(Integer messageID) {
         super.onPostExecute(messageID);
 
-        GradesSync gradesSync = new GradesSync();
+        GradeJob gradesSync = new GradeJob();
         gradesSync.scheduledJob(activity);
 
         progress.dismiss();

@@ -19,21 +19,21 @@ import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.services.LoginSession;
 import io.github.wulkanowy.services.VulcanSynchronization;
 
-public class SubjectsSync extends VulcanSync {
+public class GradeJob extends VulcanJobHelper {
 
-    public static final String UNIQUE_TAG = "SubjectsSync34512";
+    public static final String UNIQUE_TAG = "GradesSync34512";
 
-    public static final int DEFAULT_INTERVAL_START = 0;
+    public static final int DEFAULT_INTERVAL_START = 60 * 50;
 
-    public static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + 10;
+    public static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + (60 * 10);
 
     @Override
     protected Job createJob(FirebaseJobDispatcher dispatcher) {
         return dispatcher.newJobBuilder()
-                .setLifetime(Lifetime.UNTIL_NEXT_BOOT)
-                .setService(SubjectJob.class)
+                .setLifetime(Lifetime.FOREVER)
+                .setService(GradeService.class)
                 .setTag(UNIQUE_TAG)
-                .setRecurring(false)
+                .setRecurring(true)
                 .setTrigger(Trigger.executionWindow(DEFAULT_INTERVAL_START, DEFAULT_INTERVAL_END))
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setReplaceCurrent(true)
@@ -41,7 +41,7 @@ public class SubjectsSync extends VulcanSync {
                 .build();
     }
 
-    private class SubjectJob extends VulcanJob {
+    public static class GradeService extends VulcanService {
 
         @Override
         public void workToBePerformed() throws CryptoException, BadCredentialsException,
@@ -51,8 +51,7 @@ public class SubjectsSync extends VulcanSync {
 
             VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
             vulcanSynchronization.loginCurrentUser(getApplicationContext(), daoSession, new Vulcan());
-            vulcanSynchronization.syncSubjectsAndGrades();
-
+            vulcanSynchronization.syncGrades();
         }
     }
 }

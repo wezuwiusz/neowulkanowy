@@ -19,21 +19,21 @@ import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.services.LoginSession;
 import io.github.wulkanowy.services.VulcanSynchronization;
 
-public class GradesSync extends VulcanSync {
+public class SubjectJob extends VulcanJobHelper {
 
-    public static final String UNIQUE_TAG = "GradesSync34512";
+    public static final String UNIQUE_TAG = "SubjectsSync34512";
 
-    public static final int DEFAULT_INTERVAL_START = 60 * 50;
+    public static final int DEFAULT_INTERVAL_START = 0;
 
-    public static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + (60 * 10);
+    public static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + 10;
 
     @Override
     protected Job createJob(FirebaseJobDispatcher dispatcher) {
         return dispatcher.newJobBuilder()
-                .setLifetime(Lifetime.FOREVER)
-                .setService(GradeJob.class)
+                .setLifetime(Lifetime.UNTIL_NEXT_BOOT)
+                .setService(SubjectService.class)
                 .setTag(UNIQUE_TAG)
-                .setRecurring(true)
+                .setRecurring(false)
                 .setTrigger(Trigger.executionWindow(DEFAULT_INTERVAL_START, DEFAULT_INTERVAL_END))
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setReplaceCurrent(true)
@@ -41,7 +41,7 @@ public class GradesSync extends VulcanSync {
                 .build();
     }
 
-    public static class GradeJob extends VulcanJob {
+    private class SubjectService extends VulcanService {
 
         @Override
         public void workToBePerformed() throws CryptoException, BadCredentialsException,
@@ -51,7 +51,8 @@ public class GradesSync extends VulcanSync {
 
             VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
             vulcanSynchronization.loginCurrentUser(getApplicationContext(), daoSession, new Vulcan());
-            vulcanSynchronization.syncGrades();
+            vulcanSynchronization.syncSubjectsAndGrades();
+
         }
     }
 }

@@ -8,7 +8,7 @@ import android.widget.Toast;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.dashboard.DashboardActivity;
 import io.github.wulkanowy.activity.main.MainActivity;
-import io.github.wulkanowy.services.jobs.GradesSync;
+import io.github.wulkanowy.services.jobs.GradeJob;
 import io.github.wulkanowy.utilities.ConnectionUtilities;
 
 public class LoadingTask extends AsyncTask<Void, Void, Boolean> {
@@ -42,7 +42,7 @@ public class LoadingTask extends AsyncTask<Void, Void, Boolean> {
             Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
         } else {
-            GradesSync gradesSync = new GradesSync();
+            GradeJob gradesSync = new GradeJob();
             gradesSync.scheduledJob(context);
 
             Intent intent = new Intent(context, DashboardActivity.class);

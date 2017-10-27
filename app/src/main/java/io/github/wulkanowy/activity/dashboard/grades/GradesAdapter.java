@@ -3,12 +3,9 @@ package io.github.wulkanowy.activity.dashboard.grades;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,16 +18,17 @@ import java.util.List;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.dao.entities.Grade;
-
-import static android.view.animation.Animation.RELATIVE_TO_SELF;
+import io.github.wulkanowy.utilities.AverageCalculator;
 
 public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.SubjectViewHolder, GradesAdapter.GradeViewHolder> {
 
     private Activity activity;
 
-    public GradesAdapter(List<? extends ExpandableGroup> groups, Context context) {
+    private int numberOfNotReadGrade;
+
+    public GradesAdapter(List<? extends ExpandableGroup> groups, Activity activity) {
         super(groups);
-        activity = (Activity) context;
+        this.activity = activity;
     }
 
     @Override
@@ -59,80 +57,42 @@ public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.S
 
         private TextView subjectName;
 
-        private ImageView indicatorDown;
+        private TextView numberOfGrades;
 
-        private ImageView indicatorUp;
+        private TextView averageGrades;
+
+        private ImageView subjectAlertNewGrades;
 
         public SubjectViewHolder(View itemView) {
             super(itemView);
             subjectName = itemView.findViewById(R.id.subject_text);
-            indicatorDown = itemView.findViewById(R.id.group_indicator_down);
-            indicatorUp = itemView.findViewById(R.id.group_indicator_up);
+            numberOfGrades = itemView.findViewById(R.id.subject_number_of_grades);
+            subjectAlertNewGrades = itemView.findViewById(R.id.subject_new_grades_alert);
+            averageGrades = itemView.findViewById(R.id.subject_grades_average);
 
+            subjectAlertNewGrades.setVisibility(View.INVISIBLE);
         }
 
         public void bind(ExpandableGroup group) {
-            subjectName.setText(group.getTitle());
+            int volumeGrades = group.getItemCount();
+            List<Grade> gradeList = group.getItems();
+            float average = AverageCalculator.calculate(gradeList);
 
-            if (isGroupExpanded(group)) {
-                indicatorDown.setVisibility(View.INVISIBLE);
-                indicatorUp.setVisibility(View.VISIBLE);
+            itemView.setTag(group.getTitle());
+
+            if (average < 0) {
+                averageGrades.setText(R.string.info_no_average);
             } else {
-                indicatorDown.setVisibility(View.VISIBLE);
-                indicatorUp.setVisibility(View.INVISIBLE);
+                averageGrades.setText(activity.getResources().getString(R.string.info_average_grades, average));
             }
-        }
+            subjectName.setText(group.getTitle());
+            numberOfGrades.setText(activity.getResources().getQuantityString(R.plurals.numberOfGrades, volumeGrades, volumeGrades));
 
-        @Override
-        public void expand() {
-            RotateAnimation rotate =
-                    new RotateAnimation(-360, -180, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
-            rotate.setDuration(300);
-            rotate.setFillAfter(false);
-            rotate.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    //Empty method definition
+            for (Grade grade : gradeList) {
+                if (!grade.getRead()) {
+                    subjectAlertNewGrades.setVisibility(View.VISIBLE);
                 }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    indicatorDown.setVisibility(View.INVISIBLE);
-                    indicatorUp.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                    //Empty method definition
-                }
-            });
-            indicatorDown.setAnimation(rotate);
-        }
-
-        @Override
-        public void collapse() {
-            RotateAnimation rotate =
-                    new RotateAnimation(360, 180, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f);
-            rotate.setDuration(300);
-            rotate.setFillAfter(false);
-            rotate.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    //Empty method definition
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    indicatorDown.setVisibility(View.VISIBLE);
-                    indicatorUp.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                    //Empty method definition
-                }
-            });
-            indicatorUp.setAnimation(rotate);
+            }
         }
     }
 
@@ -144,32 +104,29 @@ public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.S
 
         private TextView dateGrade;
 
-        private Grade grade;
+        private ImageView alertNewGrade;
 
-        public GradeViewHolder(final View itemView) {
+        private View itemView;
+
+        private Grade gradeItem;
+
+        public GradeViewHolder(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             gradeValue = itemView.findViewById(R.id.grade_text);
             descriptionGrade = itemView.findViewById(R.id.description_grade_text);
             dateGrade = itemView.findViewById(R.id.grade_date_text);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    GradesDialogFragment gradesDialogFragment = GradesDialogFragment.newInstance(grade);
-                    gradesDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-                    gradesDialogFragment.show(activity.getFragmentManager(), grade.toString());
-                }
-            });
+            alertNewGrade = itemView.findViewById(R.id.grade_new_grades_alert);
         }
 
         public void bind(Grade grade) {
-            this.grade = grade;
             gradeValue.setText(grade.getValue());
             gradeValue.setBackgroundResource(grade.getValueColor());
             dateGrade.setText(grade.getDate());
+            gradeItem = grade;
 
-            if (grade.getDescription().equals("") || grade.getDescription() == null) {
-                if (!grade.getSymbol().equals("")) {
+            if (grade.getDescription() == null || "".equals(grade.getDescription())) {
+                if (!"".equals(grade.getSymbol())) {
                     descriptionGrade.setText(grade.getSymbol());
                 } else {
                     descriptionGrade.setText(R.string.noDescription_text);
@@ -177,6 +134,37 @@ public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.S
             } else {
                 descriptionGrade.setText(grade.getDescription());
             }
+
+            if (gradeItem.getRead()) {
+                alertNewGrade.setVisibility(View.INVISIBLE);
+            } else {
+                alertNewGrade.setVisibility(View.VISIBLE);
+                numberOfNotReadGrade++;
+            }
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GradesDialogFragment gradesDialogFragment = GradesDialogFragment.newInstance(gradeItem);
+                    gradesDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+                    gradesDialogFragment.show(activity.getFragmentManager(), gradeItem.toString());
+
+                    if (!gradeItem.getRead()) {
+                        numberOfNotReadGrade--;
+                    }
+
+                    if (numberOfNotReadGrade == 0) {
+                        View subjectView = activity.findViewById(R.id.subject_grade_recycler).findViewWithTag(gradeItem.getSubject());
+                        View subjectAlertNewGrade = subjectView.findViewById(R.id.subject_new_grades_alert);
+                        subjectAlertNewGrade.setVisibility(View.INVISIBLE);
+                    }
+
+                    gradeItem.setRead(true);
+                    gradeItem.setIsNew(false);
+                    gradeItem.update();
+                    alertNewGrade.setVisibility(View.INVISIBLE);
+                }
+            });
 
         }
     }

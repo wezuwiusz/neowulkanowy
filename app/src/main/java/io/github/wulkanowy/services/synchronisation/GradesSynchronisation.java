@@ -19,7 +19,7 @@ import io.github.wulkanowy.dao.entities.GradeDao;
 import io.github.wulkanowy.dao.entities.Subject;
 import io.github.wulkanowy.dao.entities.SubjectDao;
 import io.github.wulkanowy.services.LoginSession;
-import io.github.wulkanowy.services.jobs.VulcanSync;
+import io.github.wulkanowy.services.jobs.VulcanJobHelper;
 import io.github.wulkanowy.utilities.ConversionVulcanObject;
 
 public class GradesSynchronisation {
@@ -57,6 +57,6 @@ public class GradesSynchronisation {
 
         gradeDao.insertInTx(lastList);
 
-        Log.d(VulcanSync.DEBUG_TAG, "Synchronization grades (amount = " + String.valueOf(lastList.size() + ")"));
+        Log.d(VulcanJobHelper.DEBUG_TAG, "Synchronization grades (amount = " + String.valueOf(lastList.size() + ")"));
     }
 }

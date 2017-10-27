@@ -12,7 +12,7 @@ import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.dao.entities.Subject;
 import io.github.wulkanowy.dao.entities.SubjectDao;
 import io.github.wulkanowy.services.LoginSession;
-import io.github.wulkanowy.services.jobs.VulcanSync;
+import io.github.wulkanowy.services.jobs.VulcanJobHelper;
 import io.github.wulkanowy.utilities.ConversionVulcanObject;
 
 public class SubjectsSynchronisation {
@@ -36,6 +36,6 @@ public class SubjectsSynchronisation {
         subjectDao.insertInTx(preparedList);
 
 
-        Log.d(VulcanSync.DEBUG_TAG, "Synchronization subjects (amount = " + String.valueOf(subjectEntitiesList.size() + ")"));
+        Log.d(VulcanJobHelper.DEBUG_TAG, "Synchronization subjects (amount = " + String.valueOf(subjectEntitiesList.size() + ")"));
     }
 }

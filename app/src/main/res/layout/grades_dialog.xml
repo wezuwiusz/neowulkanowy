@@ -179,6 +179,7 @@
                 android:layout_marginRight="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="@string/ok_text"
                 android:textSize="16sp" />

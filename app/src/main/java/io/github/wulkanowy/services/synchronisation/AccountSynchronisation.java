@@ -18,7 +18,7 @@ import io.github.wulkanowy.dao.entities.DaoSession;
 import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.security.Safety;
 import io.github.wulkanowy.services.LoginSession;
-import io.github.wulkanowy.services.jobs.VulcanSync;
+import io.github.wulkanowy.services.jobs.VulcanJobHelper;
 
 public class AccountSynchronisation {
 
@@ -31,7 +31,7 @@ public class AccountSynchronisation {
 
         if (userId != 0) {
 
-            Log.d(VulcanSync.DEBUG_TAG, "Login current user id=" + String.valueOf(userId));
+            Log.d(VulcanJobHelper.DEBUG_TAG, "Login current user id=" + String.valueOf(userId));
 
             Safety safety = new Safety();
             Account account = accountDao.load(userId);
@@ -46,7 +46,7 @@ public class AccountSynchronisation {
                     .setUserId(userId)
                     .setVulcan(vulcan);
         } else {
-            Log.wtf(VulcanSync.DEBUG_TAG, "loginCurrentUser - USERID IS EMPTY");
+            Log.wtf(VulcanJobHelper.DEBUG_TAG, "loginCurrentUser - USERID IS EMPTY");
             throw new IOException("Can't find user with index 0");
         }
     }
@@ -70,7 +70,7 @@ public class AccountSynchronisation {
 
         userId = accountDao.insert(account);
 
-        Log.d(VulcanSync.DEBUG_TAG, "Login and save new user id=" + String.valueOf(userId));
+        Log.d(VulcanJobHelper.DEBUG_TAG, "Login and save new user id=" + String.valueOf(userId));
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

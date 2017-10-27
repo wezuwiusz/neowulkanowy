@@ -2,36 +2,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border"
-    android:foreground="?attr/selectableItemBackgroundBorderless">
+    android:background="@drawable/subject_border_1px"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/subject_text"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginRight="35dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/app_name"
-        android:textSize="19sp" />
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/subject_grades_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subject_text"
+        android:layout_marginTop="5dp"
+        android:text="@string/app_name"
+        android:textColor="#4C4C4C"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/subject_number_of_grades"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subject_text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/subject_grades_average"
+        android:layout_toRightOf="@+id/subject_grades_average"
+        android:text="@string/app_name"
+        android:textColor="#4C4C4C"
+        android:textSize="12sp" />
 
     <ImageView
-        android:id="@+id/group_indicator_down"
+        android:id="@+id/subject_new_grades_alert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/ic_arrow_down" />
-
-    <ImageView
-        android:id="@+id/group_indicator_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:rotation="180"
-        app:srcCompat="@drawable/ic_arrow_down" />
-
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/subject_alert_circle" />
 </RelativeLayout>
