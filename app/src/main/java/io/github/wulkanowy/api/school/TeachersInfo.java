@@ -21,7 +21,7 @@ public class TeachersInfo {
         this.snp = snp;
     }
 
-    public TeachersData getTeachersData() throws IOException, LoginErrorException {
+    public TeachersData getTeachersData() throws IOException {
         Document doc = snp.getSnPPageDocument(schoolPageUrl);
         Elements rows = doc.select(".mainContainer > table tbody tr");
         String description = doc.select(".mainContainer > p").first().text();

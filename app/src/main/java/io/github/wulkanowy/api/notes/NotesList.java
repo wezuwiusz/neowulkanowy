@@ -22,7 +22,7 @@ public class NotesList {
         this.snp = snp;
     }
 
-    public List<Note> getAllNotes() throws LoginErrorException, IOException {
+    public List<Note> getAllNotes() throws IOException {
         Element pageFragment = snp.getSnPPageDocument(notesPageUrl)
                 .select(".mainContainer > div").get(0);
         Elements items = pageFragment.select("article");

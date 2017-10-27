@@ -31,10 +31,44 @@ public class VulcanTest extends Vulcan {
                 .thenReturn(snp);
     }
 
-    @Test(expected = NotLoggedInErrorException.class)
+    @Test
     public void getStudentAndParentTest() throws Exception {
+        Cookies cookies = new Cookies();
+
+        Vulcan vulcan = Mockito.mock(Vulcan.class);
+        Mockito.when(vulcan.getCookiesObject()).thenReturn(cookies);
+
+        StudentAndParent snp = Mockito.mock(StudentAndParent.class);
+        Mockito.doNothing().when(snp).storeContextCookies();
+        Mockito.when(snp.getCookiesObject()).thenReturn(cookies);
+        Mockito.when(vulcan.createSnp( // nullable because method uses class vars, refactor?
+                Mockito.nullable(Cookies.class), Mockito.nullable(String.class), Mockito.nullable(String.class)
+        )).thenReturn(snp);
+
+        Mockito.when(vulcan.getStudentAndParent()).thenCallRealMethod();
+
+        StudentAndParent vulcanSnP = vulcan.getStudentAndParent();
+
+        Assert.assertEquals(snp, vulcanSnP);
+        Assert.assertEquals(vulcanSnP, vulcan.getStudentAndParent());
+    }
+
+    @Test(expected = NotLoggedInErrorException.class)
+    public void getStudentAndParentNotLoggedInTest() throws Exception {
         Mockito.when(vulcan.getStudentAndParent()).thenCallRealMethod();
         vulcan.getStudentAndParent();
+    }
+
+    @Test
+    public void createSnPTest() throws Exception {
+        Vulcan vulcan = new Vulcan();
+        vulcan.login(new Cookies(), "testSymbol");
+
+        Assert.assertThat(vulcan.createSnp(new Cookies(), "testSymbol", null),
+                CoreMatchers.instanceOf(StudentAndParent.class));
+
+        Assert.assertThat(vulcan.createSnp(new Cookies(), "testSymbol", "testId"),
+                CoreMatchers.instanceOf(StudentAndParent.class));
     }
 
     @Test(expected = NotLoggedInErrorException.class)

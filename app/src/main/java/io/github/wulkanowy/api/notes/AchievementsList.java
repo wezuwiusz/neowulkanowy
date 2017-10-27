@@ -22,7 +22,7 @@ public class AchievementsList {
         this.snp = snp;
     }
 
-    public List<String> getAllAchievements() throws LoginErrorException, IOException {
+    public List<String> getAllAchievements() throws IOException {
         Element pageFragment = snp.getSnPPageDocument(notesPageUrl)
                 .select(".mainContainer > div").get(1);
         Elements items = pageFragment.select("article");

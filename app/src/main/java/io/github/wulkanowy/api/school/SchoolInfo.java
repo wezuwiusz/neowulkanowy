@@ -17,7 +17,7 @@ public class SchoolInfo {
         this.snp = snp;
     }
 
-    public SchoolData getSchoolData() throws IOException, LoginErrorException {
+    public SchoolData getSchoolData() throws IOException {
         Element e = snp.getSnPPageDocument(schoolPageUrl)
                 .select(".mainContainer > article").get(0);
 

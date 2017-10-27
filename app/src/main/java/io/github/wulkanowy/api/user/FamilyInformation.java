@@ -16,11 +16,11 @@ public class FamilyInformation {
 
     private String studentDataPageUrl = "Uczen.mvc/DanePodstawowe";
 
-    public FamilyInformation(StudentAndParent snp) throws IOException, LoginErrorException {
+    public FamilyInformation(StudentAndParent snp) {
         this.snp = snp;
     }
 
-    public List<FamilyMember> getFamilyMembers() throws IOException, LoginErrorException {
+    public List<FamilyMember> getFamilyMembers() throws IOException {
         Elements membersElements = snp.getSnPPageDocument(studentDataPageUrl)
                 .select(".mainContainer > article:nth-of-type(n+4)");
 

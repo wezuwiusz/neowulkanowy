@@ -20,7 +20,7 @@ public class BasicInformation {
         this.snp = snp;
     }
 
-    public Document getStudentDataPageDocument() throws IOException, LoginErrorException {
+    public Document getStudentDataPageDocument() throws IOException {
         if (null == studentDataPageDocument) {
             studentDataPageDocument = snp.getSnPPageDocument(studentDataPageUrl);
         }

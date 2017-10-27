@@ -39,7 +39,7 @@ android {
 }
 
 greendao {
-    schemaVersion 13
+    schemaVersion 14
     generateTests = true
 }
 
@@ -57,6 +57,7 @@ dependencies {
     compile 'org.apache.commons:commons-collections4:4.1'
     compile 'org.jsoup:jsoup:1.10.3'
     compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.android.support:customtabs:27.0.0'
 
     debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
     debugCompile 'net.zetetic:android-database-sqlcipher:3.5.7@aar'

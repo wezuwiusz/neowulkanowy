@@ -1,4 +1,4 @@
-package io.github.wulkanowy.activity.started;
+package io.github.wulkanowy.activity.splash;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.dashboard.DashboardActivity;
-import io.github.wulkanowy.activity.main.MainActivity;
+import io.github.wulkanowy.activity.login.LoginActivity;
 import io.github.wulkanowy.services.jobs.GradeJob;
 import io.github.wulkanowy.utilities.ConnectionUtilities;
 
@@ -39,7 +39,7 @@ public class LoadingTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         if (context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("userId", 0) == 0) {
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, LoginActivity.class);
             context.startActivity(intent);
         } else {
             GradeJob gradesSync = new GradeJob();
@@ -48,7 +48,6 @@ public class LoadingTask extends AsyncTask<Void, Void, Boolean> {
             Intent intent = new Intent(context, DashboardActivity.class);
             context.startActivity(intent);
         }
-
 
     }
 }

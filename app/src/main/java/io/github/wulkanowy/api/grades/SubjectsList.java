@@ -21,7 +21,7 @@ public class SubjectsList {
         this.snp = snp;
     }
 
-    public List<Subject> getAll() throws IOException, LoginErrorException {
+    public List<Subject> getAll() throws IOException {
         Document subjectPage = snp.getSnPPageDocument(subjectsPageUrl);
 
         Elements rows = subjectPage.select(".ocenyZwykle-table > tbody > tr");

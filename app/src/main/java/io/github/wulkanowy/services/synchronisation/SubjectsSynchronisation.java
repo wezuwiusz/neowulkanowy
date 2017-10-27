@@ -18,7 +18,7 @@ import io.github.wulkanowy.utilities.ConversionVulcanObject;
 public class SubjectsSynchronisation {
 
     public void sync(LoginSession loginSession) throws IOException,
-            ParseException, NotLoggedInErrorException {
+            NotLoggedInErrorException {
 
         SubjectsList subjectsList = loginSession.getVulcan().getSubjectsList();
         SubjectDao subjectDao = loginSession.getDaoSession().getSubjectDao();

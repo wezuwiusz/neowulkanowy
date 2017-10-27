@@ -3,8 +3,11 @@ package io.github.wulkanowy.api.school;
 import java.util.List;
 
 public class TeachersData {
+
     private String className = "";
+
     private String[] classTeacher;
+
     private List<Subject> subjects;
 
     public String getClassName() {

@@ -1,18 +1,28 @@
 <resources>
     <string name="app_name">Wulkanowy</string>
-    <string name="login_text">Logowanie</string>
-    <string name="pass_hint_text">Hasło</string>
-    <string name="email_hint_text">E-mail</string>
-    <string name="login_button_text">Zaloguj</string>
-    <string name="symbol_hint_text">Symbol</string>
-    <string name="warning_text">Aplikacja ta nie jest ukończona, więc mogą występować różnego rodzaju błędy lub dane funkcje nie bedą działać. Prosimy o cierpliwość i wyrozumiałość.</string>
-    <string name="warning_label_text">Ostrzeżenie</string>
-    <string name="data_text">Brak danych logowania</string>
+
+    <!-- Strings related to login -->
+    <string name="title_activity_login">Zaloguj się</string>
+    <string name="login_heading">Zaloguj się za pomocą konta VULCAN</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Hasło</string>
+    <string name="prompt_symbol">Symbol</string>
+    <string name="action_sign_in">Zaloguj</string>
+    <string name="step_connecting">Łączenie z dziennikiem</string>
+    <string name="step_login">Logowanie</string>
+    <string name="step_synchronization">Synchronizacja</string>
+    <string name="error_invalid_email">Ten adres email nie jest poprawny</string>
+    <string name="error_invalid_password">To hasło jest za krótkie</string>
+    <string name="error_incorrect_password">To hasło jest niepoprawne</string>
+    <string name="error_field_required">To pole jest wymagane</string>
+    <string name="error_bad_account_permission">Brak dostępu do dziennika. Sprawdź inny symbol</string>
     <string name="login_accepted_text">Pomyślnie zalogowano</string>
     <string name="login_bad_credentials_text">Niepoprawny e-mail lub hasło</string>
     <string name="login_bad_account_permission_text">Brak uprawnień do otwarcia dziennika. Sprawdź wprowadzoną nazwę powiatu</string>
-    <string name="login_denied_text">Logowanie nie powiodło się</string>
-    <string name="please_wait_text">Proszę czekać…</string>
+    <string name="login_denied_text">Logowanie nie powiodło się. Spróbuj zrestartować aplikację</string>
+    <string name="action_create_account">Nie masz jeszcze konta? Załóż je</string>
+    <string name="action_forgot_password">Zapomniałeś hasła?</string>
+
     <string name="activity_dashboard_text">Aktywność dashboard</string>
     <string name="dashboard_text">Dashboard</string>
     <string name="grades_text">Oceny</string>

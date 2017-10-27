@@ -27,17 +27,21 @@ public class Vulcan extends Api {
 
     private StudentAndParent snp;
 
-    public void login(String email, String password, String symbol)
-            throws BadCredentialsException, AccountPermissionException, LoginErrorException {
-        Login login = new Login(new Cookies());
-        login.login(email, password, symbol);
-
+    public void login(Cookies cookies, String symbol) {
+        this.cookies = cookies;
         this.symbol = symbol;
-        this.cookies = login.getCookiesObject();
+    }
+
+    public void login(String email, String password, String symbol)
+            throws BadCredentialsException, AccountPermissionException, LoginErrorException, IOException {
+        Login login = new Login(new Cookies());
+        String realSymbol = login.login(email, password, symbol);
+
+        login(login.getCookiesObject(), realSymbol);
     }
 
     public void login(String email, String password, String symbol, String id)
-            throws BadCredentialsException, AccountPermissionException, LoginErrorException {
+            throws BadCredentialsException, AccountPermissionException, LoginErrorException, IOException {
         login(email, password, symbol);
 
         this.id = id;
@@ -52,17 +56,21 @@ public class Vulcan extends Api {
             return snp;
         }
 
-        if (null == id) {
-            snp = new StudentAndParent(cookies, symbol);
-        } else {
-            snp = new StudentAndParent(cookies, symbol, id);
-        }
+        snp = createSnp(cookies, symbol, id);
 
         snp.storeContextCookies();
 
         this.cookies = snp.getCookiesObject();
 
         return snp;
+    }
+
+    public StudentAndParent createSnp(Cookies cookies, String symbol, String id) {
+        if (null == id) {
+            return new StudentAndParent(cookies, symbol);
+        }
+
+        return new StudentAndParent(cookies, symbol, id);
     }
 
     public AttendanceStatistics getAttendanceStatistics() throws IOException, NotLoggedInErrorException {

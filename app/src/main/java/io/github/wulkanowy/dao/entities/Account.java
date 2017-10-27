@@ -27,6 +27,9 @@ public class Account {
     @Property(nameInDb = "SYMBOL")
     private String symbol;
 
+    @Property(nameInDb = "SNPID")
+    private String snpId;
+
     @ToMany(referencedJoinProperty = "userId")
     private List<Subject> subjectList;
 
@@ -45,14 +48,15 @@ public class Account {
     @Generated(hash = 335469827)
     private transient AccountDao myDao;
 
-    @Generated(hash = 1514643300)
-    public Account(Long id, String name, String email, String password,
-                   String symbol) {
+    @Generated(hash = 735765217)
+    public Account(Long id, String name, String email, String password, String symbol,
+            String snpId) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.symbol = symbol;
+        this.snpId = snpId;
     }
 
     @Generated(hash = 882125521)
@@ -101,6 +105,15 @@ public class Account {
 
     public Account setSymbol(String symbol) {
         this.symbol = symbol;
+        return this;
+    }
+
+    public String getSnpId() {
+        return this.snpId;
+    }
+
+    public Account setSnpId(String snpId) {
+        this.snpId = snpId;
         return this;
     }
 

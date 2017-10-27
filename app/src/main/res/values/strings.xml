@@ -1,18 +1,28 @@
 <resources>
     <string name="app_name">Wulkanowy</string>
-    <string name="login_text">Login</string>
-    <string name="pass_hint_text">Password</string>
-    <string name="email_hint_text">E-mail</string>
-    <string name="login_button_text">Log in</string>
-    <string name="symbol_hint_text">Symbol</string>
-    <string name="warning_text">This application is not complete, so there may be a variety of errors or features that will not work. Please be patient and understanding.</string>
-    <string name="warning_label_text">Warning</string>
-    <string name="data_text">No login data</string>
+
+    <!-- Strings related to login -->
+    <string name="title_activity_login">Sign in</string>
+    <string name="login_heading">Sign in with VULCAN account</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_symbol">Symbol</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="step_connecting">Connecting with log</string>
+    <string name="step_login">Login</string>
+    <string name="step_synchronization">Synchronization</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_bad_account_permission">No permission to open log. Check another symbol</string>
     <string name="login_accepted_text">Login is successful</string>
     <string name="login_bad_credentials_text">Bad e-mail or password</string>
     <string name="login_bad_account_permission_text">No permission to open log. Check entered symbol</string>
-    <string name="login_denied_text">Login is failed</string>
-    <string name="please_wait_text">Please wait…</string>
+    <string name="login_denied_text">Login is failed. Try restart the app</string>
+    <string name="action_create_account">No account yet? Create one</string>
+    <string name="action_forgot_password">Forgot password?</string>
+
     <string name="activity_dashboard_text">Dashboard Activity</string>
     <string name="dashboard_text">Dashboard</string>
     <string name="grades_text">Grades</string>

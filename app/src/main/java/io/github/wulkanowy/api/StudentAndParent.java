@@ -1,7 +1,5 @@
 package io.github.wulkanowy.api;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -55,13 +53,7 @@ public class StudentAndParent extends Api {
     }
 
     public void storeContextCookies() throws IOException, NotLoggedInErrorException {
-        //get context cookie
-        Connection.Response res = Jsoup.connect(getSnpPageUrl())
-                .followRedirects(true)
-                .cookies(getCookies())
-                .execute();
-
-        cookies.addItems(res.cookies());
+        getPageByUrl(getSnpPageUrl());
     }
 
     public String getSnpPageUrl() throws IOException, NotLoggedInErrorException {

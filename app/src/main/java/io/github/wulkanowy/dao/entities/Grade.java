@@ -355,9 +355,7 @@ public class Grade implements Parcelable {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1187286414)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

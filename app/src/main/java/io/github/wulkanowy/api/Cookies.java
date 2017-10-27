@@ -1,10 +1,11 @@
 package io.github.wulkanowy.api;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Cookies {
 
-    private Map<String, String> cookies;
+    private Map<String, String> cookies = new HashMap<>();
 
     public Map<String, String> getItems() {
         return cookies;

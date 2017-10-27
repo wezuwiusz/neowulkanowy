@@ -38,7 +38,7 @@ public class GradesList {
         return getAll("");
     }
 
-    public List<Grade> getAll(String semester) throws IOException, LoginErrorException, ParseException {
+    public List<Grade> getAll(String semester) throws IOException, ParseException {
         Document gradesPage = snp.getSnPPageDocument(getGradesPageUrl() + semester);
         Elements gradesRows = gradesPage.select(".ocenySzczegoly-table > tbody > tr");
         Semester currentSemester = snp.getCurrentSemester(snp.getSemesters(gradesPage));

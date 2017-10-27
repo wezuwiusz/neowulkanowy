@@ -25,7 +25,7 @@ public class Timetable {
         return getWeekTable("");
     }
 
-    public Week getWeekTable(String tick) throws IOException, LoginErrorException {
+    public Week getWeekTable(String tick) throws IOException {
         Element table = snp.getSnPPageDocument(timetablePageUrl + tick)
                 .select(".mainContainer .presentData").first();
 
