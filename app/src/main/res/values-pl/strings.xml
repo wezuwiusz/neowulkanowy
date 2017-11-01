@@ -44,7 +44,7 @@
     <string name="color_blue_text">Niebieski</string>
     <string name="color_green_text">Zielony</string>
     <string name="noColor_text">Brak koloru</string>
-    <string name="ok_text">OK</string>
+    <string name="dialog_close">Zamknij</string>
     <string name="refresh_error_text">"Podczas odświeżania zawartości wystąpił błąd. "</string>
     <string name="snackbar_no_grades">Brak nowych ocen</string>
     <string name="snackbar_new_grade">Ilość nowych ocen: %1$d</string>

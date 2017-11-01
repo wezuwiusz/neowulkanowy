@@ -167,22 +167,19 @@
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/OK_dialog"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+            <Button
+                android:id="@+id/close_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
                 android:focusable="true"
-                android:gravity="center"
-                android:text="@string/ok_text"
-                android:textSize="16sp" />
+                android:text="@string/dialog_close"
+                android:textAllCaps="true"
+                android:textSize="15sp"
+                />
 
         </RelativeLayout>
     </LinearLayout>

@@ -44,7 +44,7 @@
     <string name="color_blue_text">Blue</string>
     <string name="color_green_text">Green</string>
     <string name="noColor_text">No color</string>
-    <string name="ok_text">OK</string>
+    <string name="dialog_close">Close</string>
     <string name="refresh_error_text">An error occurred while refreshing the content.</string>
     <string name="snackbar_no_grades">No new grades</string>
     <string name="snackbar_new_grade">Number of new grades: %1$d</string>

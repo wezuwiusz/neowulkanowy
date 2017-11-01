@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import io.github.wulkanowy.R;
@@ -35,7 +36,7 @@ public class GradesDialogFragment extends DialogFragment {
         TextView teacherText = view.findViewById(R.id.teacher_dialog_text_value);
         TextView dateText = view.findViewById(R.id.date_dialog_text_value);
         TextView colorText = view.findViewById(R.id.color_dialog_text_value);
-        TextView okTextClick = view.findViewById(R.id.OK_dialog);
+        Button closeDialog = view.findViewById(R.id.close_dialog);
 
         subjectText.setText(grade.getSubject());
         gradeText.setText(grade.getValue());
@@ -58,7 +59,7 @@ public class GradesDialogFragment extends DialogFragment {
             teacherText.setText(grade.getTeacher());
         }
 
-        okTextClick.setOnClickListener(new View.OnClickListener() {
+        closeDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
