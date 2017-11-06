@@ -17,7 +17,7 @@ import io.github.wulkanowy.security.Safety;
 import io.github.wulkanowy.services.LoginSession;
 import io.github.wulkanowy.services.jobs.VulcanJobHelper;
 
-public class AccountAuthorization {
+public class CurrentAccountLogin {
 
     private final Context context;
 
@@ -25,7 +25,7 @@ public class AccountAuthorization {
 
     private final Vulcan vulcan;
 
-    public AccountAuthorization(Context context, DaoSession daoSession, Vulcan vulcan) {
+    public CurrentAccountLogin(Context context, DaoSession daoSession, Vulcan vulcan) {
         this.context = context;
         this.daoSession = daoSession;
         this.vulcan = vulcan;

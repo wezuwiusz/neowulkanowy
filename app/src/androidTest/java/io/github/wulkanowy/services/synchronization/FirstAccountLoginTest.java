@@ -22,9 +22,9 @@ import io.github.wulkanowy.dao.entities.DaoMaster;
 import io.github.wulkanowy.dao.entities.DaoSession;
 import io.github.wulkanowy.security.Safety;
 import io.github.wulkanowy.services.LoginSession;
-import io.github.wulkanowy.services.synchronisation.AccountRegistration;
+import io.github.wulkanowy.services.synchronisation.FirstAccountLogin;
 
-public class AccountRegistrationTest {
+public class FirstAccountLoginTest {
 
     private static DaoSession daoSession;
 
@@ -55,9 +55,9 @@ public class AccountRegistrationTest {
         Login login = Mockito.mock(Login.class);
         Mockito.when(login.sendCredentials(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(certificate);
-        AccountRegistration accountRegistration = new AccountRegistration(login, new Vulcan(), "TEST@TEST", "TEST_PASS", "TEST_SYMBOL");
+        FirstAccountLogin firstAccountLogin = new FirstAccountLogin(login, new Vulcan(), "TEST@TEST", "TEST_PASS", "TEST_SYMBOL");
 
-        Assert.assertEquals(certificate, accountRegistration.connect());
+        Assert.assertEquals(certificate, firstAccountLogin.connect());
     }
 
     @Test
@@ -79,8 +79,8 @@ public class AccountRegistrationTest {
         Login login = Mockito.mock(Login.class);
         Mockito.when(login.sendCertificate(Mockito.anyString(), Mockito.anyString())).thenReturn("TEST-SYMBOL");
 
-        AccountRegistration accountRegistration = new AccountRegistration(login, vulcan, "TEST@TEST", "TEST-PASS", "default");
-        LoginSession loginSession = accountRegistration.login(targetContext, daoSession, "<xml>cert</xml>");
+        FirstAccountLogin firstAccountLogin = new FirstAccountLogin(login, vulcan, "TEST@TEST", "TEST-PASS", "default");
+        LoginSession loginSession = firstAccountLogin.login(targetContext, daoSession, "<xml>cert</xml>");
 
         Long userId = targetContext.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("userId", 0);
 

@@ -18,9 +18,9 @@ public abstract class EntitiesCompare {
         List<Grade> lastList = new ArrayList<>();
 
         for (Grade grade : addedOrUpdatedGradeList) {
-            grade.setIsNew(true);
             if (oldList.size() != 0) {
                 grade.setRead(false);
+                grade.setIsNew(true);
             }
             updatedList.add(grade);
         }

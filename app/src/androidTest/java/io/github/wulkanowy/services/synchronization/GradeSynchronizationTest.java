@@ -47,7 +47,7 @@ public class GradeSynchronizationTest {
     }
 
     @Test
-    public void syncGradesEmptyBaseTest() throws Exception {
+    public void syncGradesEmptyDatabaseTest() throws Exception {
         Long userId = daoSession.getAccountDao().insert(new Account().setEmail("TEST@TEST"));
         Long subjectId = daoSession.getSubjectDao().insert(new Subject().setName("Matematyka").setUserId(userId));
 
@@ -75,7 +75,7 @@ public class GradeSynchronizationTest {
         Assert.assertEquals(subjectId, grade.getSubjectId());
         Assert.assertEquals("Matematyka", grade.getSubject());
         Assert.assertEquals("5", grade.getValue());
-        Assert.assertTrue(grade.getIsNew());
+        Assert.assertFalse(grade.getIsNew());
     }
 
     @AfterClass

@@ -21,11 +21,11 @@ import io.github.wulkanowy.services.VulcanSynchronization;
 
 public class GradeJob extends VulcanJobHelper {
 
-    public static final String UNIQUE_TAG = "GradesSync34512";
+    private static final String UNIQUE_TAG = "GradesSync34512";
 
-    public static final int DEFAULT_INTERVAL_START = 60 * 50;
+    private static final int DEFAULT_INTERVAL_START = 60 * 50;
 
-    public static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + (60 * 10);
+    private static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + (60 * 10);
 
     @Override
     protected Job createJob(FirebaseJobDispatcher dispatcher) {

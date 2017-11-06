@@ -3,6 +3,7 @@ package io.github.wulkanowy.activity.dashboard;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -14,6 +15,8 @@ import io.github.wulkanowy.activity.dashboard.grades.GradesFragment;
 import io.github.wulkanowy.activity.dashboard.lessonplan.LessonPlanFragment;
 
 public class DashboardActivity extends AppCompatActivity {
+
+    private Fragment currentFragment;
 
     private GradesFragment gradesFragment = new GradesFragment();
 
@@ -28,35 +31,32 @@ public class DashboardActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
             switch (item.getItemId()) {
                 case R.id.navigation_marks:
                     setTitle(R.string.grades_text);
-                    transaction.replace(R.id.fragment_container, gradesFragment);
-                    transaction.commit();
-                    return true;
+                    currentFragment = gradesFragment;
+                    break;
 
                 case R.id.navigation_attendance:
                     setTitle(R.string.attendance_text);
-                    transaction.replace(R.id.fragment_container, attendanceFragment);
-                    transaction.commit();
-                    return true;
+                    currentFragment = attendanceFragment;
+                    break;
 
                 case R.id.navigation_lessonplan:
                     setTitle(R.string.lessonplan_text);
-                    transaction.replace(R.id.fragment_container, lessonPlanFragment);
-                    transaction.commit();
-                    return true;
+                    currentFragment = lessonPlanFragment;
+                    break;
 
                 case R.id.navigation_dashboard:
                 default:
                     setTitle(R.string.dashboard_text);
-                    transaction.replace(R.id.fragment_container, boardFragment);
-                    transaction.commit();
-                    return true;
+                    currentFragment = boardFragment;
+                    break;
             }
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, currentFragment);
+            transaction.commit();
+            return true;
         }
     };
 
@@ -65,14 +65,27 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        setTitle(R.string.dashboard_text);
-
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        if (savedInstanceState != null) {
+            currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, "currentFragment");
+            setTitle(savedInstanceState.getString("activityTitle"));
+        } else {
+            currentFragment = boardFragment;
+            setTitle(R.string.dashboard_text);
+        }
+
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, boardFragment).commit();
+                .replace(R.id.fragment_container, currentFragment).commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("activityTitle", getTitle().toString());
+        getSupportFragmentManager().putFragment(outState, "currentFragment", currentFragment);
     }
 
     public void onBackPressed() {

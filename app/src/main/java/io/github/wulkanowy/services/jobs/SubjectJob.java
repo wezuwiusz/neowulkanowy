@@ -21,11 +21,11 @@ import io.github.wulkanowy.services.VulcanSynchronization;
 
 public class SubjectJob extends VulcanJobHelper {
 
-    public static final String UNIQUE_TAG = "SubjectsSync34512";
+    private static final String UNIQUE_TAG = "SubjectsSync34512";
 
-    public static final int DEFAULT_INTERVAL_START = 0;
+    private static final int DEFAULT_INTERVAL_START = 0;
 
-    public static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + 10;
+    private static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + 10;
 
     @Override
     protected Job createJob(FirebaseJobDispatcher dispatcher) {

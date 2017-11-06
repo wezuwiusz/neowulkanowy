@@ -8,8 +8,6 @@ import java.io.File;
 abstract public class RootUtilities {
 
     public static boolean isRooted() {
-
-
         String buildTags = Build.TAGS;
         if (buildTags != null && buildTags.contains("test-keys")) {
             return true;
@@ -23,7 +21,6 @@ abstract public class RootUtilities {
         } catch (Exception e1) {
             // ignore
         }
-
         return canExecuteCommand("/system/xbin/which su")
                 || canExecuteCommand("/system/bin/which su") || canExecuteCommand("which su");
     }
@@ -36,7 +33,6 @@ abstract public class RootUtilities {
         } catch (Exception e) {
             executedSuccesfully = false;
         }
-
         return executedSuccesfully;
     }
 }

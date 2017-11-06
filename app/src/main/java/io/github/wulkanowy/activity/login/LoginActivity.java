@@ -144,8 +144,8 @@ public class LoginActivity extends Activity {
             symbol = "Default";
         }
 
-        String[] keys = this.getResources().getStringArray(R.array.symbols);
-        String[] values = this.getResources().getStringArray(R.array.symbols_values);
+        String[] keys = getResources().getStringArray(R.array.symbols);
+        String[] values = getResources().getStringArray(R.array.symbols_values);
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
 
         for (int i = 0; i < Math.min(keys.length, values.length); ++i) {
@@ -198,9 +198,9 @@ public class LoginActivity extends Activity {
                     float y = ev.getRawY() + view.getTop() - scrcoords[1];
                     if (x < view.getLeft() || x > view.getRight() || y < view.getTop()
                             || y > view.getBottom()) {
-                        ((InputMethodManager) this.getSystemService(
+                        ((InputMethodManager) getSystemService(
                                 Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-                                (this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+                                (getWindow().getDecorView().getApplicationWindowToken()), 0);
                     }
                 }
             }

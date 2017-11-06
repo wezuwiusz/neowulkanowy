@@ -12,21 +12,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.activity.WulkanowyApp;
 import io.github.wulkanowy.activity.dashboard.DashboardActivity;
-import io.github.wulkanowy.api.Cookies;
-import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.AccountPermissionException;
 import io.github.wulkanowy.api.login.BadCredentialsException;
-import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.dao.entities.DaoSession;
 import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.services.LoginSession;
 import io.github.wulkanowy.services.VulcanSynchronization;
-import io.github.wulkanowy.services.synchronisation.AccountRegistration;
+import io.github.wulkanowy.services.jobs.GradeJob;
 import io.github.wulkanowy.utilities.ConnectionUtilities;
 
 /**
@@ -41,16 +39,16 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
 
     private final String symbol;
 
-    private Activity activity;
+    private WeakReference<Activity> activity;
 
-    private View progressView;
+    private WeakReference<View> progressView;
 
-    private View loginFormView;
+    private WeakReference<View> loginFormView;
 
-    private TextView showText;
+    private WeakReference<TextView> showText;
 
     public LoginTask(Activity activity, String email, String password, String symbol) {
-        this.activity = activity;
+        this.activity = new WeakReference<>(activity);
         this.email = email;
         this.password = password;
         this.symbol = symbol;
@@ -58,28 +56,24 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
 
     @Override
     protected void onPreExecute() {
-        showText = activity.findViewById(R.id.login_progress_text);
+        showText = new WeakReference<>((TextView) activity.get().findViewById(R.id.login_progress_text));
     }
 
     @Override
     protected Integer doInBackground(Void... params) {
-        if (ConnectionUtilities.isOnline(activity)) {
-            AccountRegistration accountRegistration = new AccountRegistration(
-                    new Login(new Cookies()),
-                    new Vulcan(),
-                    email, password, symbol);
+        if (ConnectionUtilities.isOnline(activity.get())) {
+            VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
 
-            DaoSession daoSession = ((WulkanowyApp) activity.getApplication()).getDaoSession();
+            DaoSession daoSession = ((WulkanowyApp) activity.get().getApplication()).getDaoSession();
 
             try {
-                publishProgress("1", activity.getResources().getString(R.string.step_connecting));
-                String certificate = accountRegistration.connect();
+                publishProgress("1", activity.get().getResources().getString(R.string.step_connecting));
+                vulcanSynchronization.firstLoginConnectStep(email, password, symbol);
 
-                publishProgress("2", activity.getResources().getString(R.string.step_login));
-                LoginSession loginSession = accountRegistration.login(activity, daoSession, certificate);
+                publishProgress("2", activity.get().getResources().getString(R.string.step_login));
+                vulcanSynchronization.firstLoginSignInStep(activity.get(), daoSession);
 
-                publishProgress("3", activity.getResources().getString(R.string.step_synchronization));
-                VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(loginSession);
+                publishProgress("3", activity.get().getResources().getString(R.string.step_synchronization));
                 vulcanSynchronization.syncSubjectsAndGrades();
 
             } catch (BadCredentialsException e) {
@@ -92,7 +86,8 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
                 return R.string.login_denied_text;
             }
 
-            accountRegistration.scheduleSynchronization(activity);
+            GradeJob gradeJob = new GradeJob();
+            gradeJob.scheduledJob(activity.get());
 
             return R.string.login_accepted_text;
 
@@ -103,7 +98,7 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
 
     @Override
     protected void onProgressUpdate(String... progress) {
-        showText.setText(progress[0] + "/3 - " + progress[1] + "...");
+        showText.get().setText(String.format("%1$s/3 - %2$s...", progress[0], progress[1]));
     }
 
     @Override
@@ -113,33 +108,32 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
         switch (messageID) {
             // if success
             case R.string.login_accepted_text:
-                Intent intent = new Intent(activity, DashboardActivity.class);
-                activity.finish();
-                activity.startActivity(intent);
+                Intent intent = new Intent(activity.get(), DashboardActivity.class);
+                activity.get().finish();
+                activity.get().startActivity(intent);
                 break;
 
             // if bad credentials entered
             case R.string.login_bad_credentials_text:
-                EditText passwordView = activity.findViewById(R.id.password);
-                passwordView.setError(activity.getString(R.string.error_incorrect_password));
+                EditText passwordView = activity.get().findViewById(R.id.password);
+                passwordView.setError(activity.get().getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();
                 break;
 
             // if no permission
             case R.string.error_bad_account_permission:
                 // Change to visible symbol input view
-                TextInputLayout symbolLayout = activity.findViewById(R.id.to_symbol_input_layout);
+                TextInputLayout symbolLayout = activity.get().findViewById(R.id.to_symbol_input_layout);
                 symbolLayout.setVisibility(View.VISIBLE);
 
-                EditText symbolView = activity.findViewById(R.id.symbol);
-                symbolView.setError(activity.getString(R.string.error_bad_account_permission));
+                EditText symbolView = activity.get().findViewById(R.id.symbol);
+                symbolView.setError(activity.get().getString(R.string.error_bad_account_permission));
                 symbolView.requestFocus();
                 break;
 
             default:
-                Snackbar
-                        .make(activity.findViewById(R.id.coordinatorLayout), messageID, Snackbar.LENGTH_LONG)
-                        .show();
+                Snackbar.make(activity.get().findViewById(R.id.coordinatorLayout),
+                        messageID, Snackbar.LENGTH_LONG).show();
                 break;
         }
     }
@@ -153,33 +147,33 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
      * Shows the progress UI and hides the login form.
      */
     public void showProgress(final boolean show) {
-        loginFormView = activity.findViewById(R.id.login_form);
-        progressView = activity.findViewById(R.id.login_progress);
+        loginFormView = new WeakReference<>(activity.get().findViewById(R.id.login_form));
+        progressView = new WeakReference<>(activity.get().findViewById(R.id.login_progress));
 
-        int animTime = activity.getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int animTime = activity.get().getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         changeLoginFormVisibility(show, animTime);
         changeProgressVisibility(show, animTime);
     }
 
     private void changeLoginFormVisibility(final boolean show, final int animTime) {
-        loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        loginFormView.animate().setDuration(animTime).alpha(
+        loginFormView.get().setVisibility(show ? View.GONE : View.VISIBLE);
+        loginFormView.get().animate().setDuration(animTime).alpha(
                 show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                loginFormView.get().setVisibility(show ? View.GONE : View.VISIBLE);
             }
         });
     }
 
     private void changeProgressVisibility(final boolean show, final int animTime) {
-        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressView.animate().setDuration(animTime).alpha(
+        progressView.get().setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.get().animate().setDuration(animTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressView.get().setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
     }

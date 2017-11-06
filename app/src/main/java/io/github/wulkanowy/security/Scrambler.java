@@ -36,7 +36,7 @@ public class Scrambler {
 
     private KeyStore keyStore;
 
-    public void loadKeyStore() throws CryptoException {
+    protected void loadKeyStore() throws CryptoException {
 
         try {
             keyStore = KeyStore.getInstance(ANDROID_KEYSTORE);

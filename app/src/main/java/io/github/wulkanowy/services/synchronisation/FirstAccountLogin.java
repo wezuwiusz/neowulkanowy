@@ -16,9 +16,8 @@ import io.github.wulkanowy.dao.entities.DaoSession;
 import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.security.Safety;
 import io.github.wulkanowy.services.LoginSession;
-import io.github.wulkanowy.services.jobs.GradeJob;
 
-public class AccountRegistration {
+public class FirstAccountLogin {
 
 
     private final Login login;
@@ -31,7 +30,7 @@ public class AccountRegistration {
 
     private final String symbol;
 
-    public AccountRegistration(Login login, Vulcan vulcan, String email, String password, String symbol) {
+    public FirstAccountLogin(Login login, Vulcan vulcan, String email, String password, String symbol) {
         this.login = login;
         this.vulcan = vulcan;
         this.email = email;
@@ -73,10 +72,5 @@ public class AccountRegistration {
                 .setVulcan(vulcan)
                 .setUserId(userId)
                 .setDaoSession(daoSession);
-    }
-
-    public void scheduleSynchronization(Context context) {
-        GradeJob gradesSync = new GradeJob();
-        gradesSync.scheduledJob(context);
     }
 }

@@ -46,14 +46,26 @@ public class EntitiesCompareTest extends EntitiesCompare {
     }
 
     @Test
-    public void testCompareNewGradePositive() {
+    public void testCompareNewGradeEmptyOldList() {
 
         newList.add(grade1);
 
         List<Grade> updatedList = EntitiesCompare.compareGradeList(newList, oldList);
 
-        Assert.assertEquals(true, (updatedList.get(0)).getIsNew());
+        Assert.assertFalse(updatedList.get(0).getIsNew());
 
+    }
+
+    @Test
+    public void testCompareNewGradePositive() {
+        newList.add(grade1);
+        newList.add(grade2);
+        oldList.add(grade2);
+
+        List<Grade> updatedList = EntitiesCompare.compareGradeList(newList, oldList);
+
+        Assert.assertFalse(updatedList.get(0).getIsNew());
+        Assert.assertTrue(updatedList.get(1).getIsNew());
     }
 
     @Test
@@ -66,8 +78,8 @@ public class EntitiesCompareTest extends EntitiesCompare {
 
         List<Grade> updatedList = EntitiesCompare.compareGradeList(newList, oldList);
 
-        Assert.assertEquals(false, (updatedList.get(0)).getIsNew());
-        Assert.assertEquals(false, (updatedList.get(1)).getIsNew());
+        Assert.assertFalse(updatedList.get(0).getIsNew());
+        Assert.assertFalse(updatedList.get(1).getIsNew());
     }
 
     @Test
@@ -76,5 +88,19 @@ public class EntitiesCompareTest extends EntitiesCompare {
         List<Grade> updatedList = EntitiesCompare.compareGradeList(newList, oldList);
 
         Assert.assertEquals(new ArrayList<>(), updatedList);
+    }
+
+    @Test
+    public void testCompareReadGradeTest() {
+        newList.add(grade1);
+        newList.add(grade2);
+        oldList.add(grade2.setRead(true));
+
+        List<Grade> updatedList = EntitiesCompare.compareGradeList(newList, oldList);
+
+        Assert.assertTrue(updatedList.get(0).getRead());
+        Assert.assertFalse(updatedList.get(0).getIsNew());
+        Assert.assertFalse(updatedList.get(1).getRead());
+        Assert.assertTrue(updatedList.get(1).getIsNew());
     }
 }
