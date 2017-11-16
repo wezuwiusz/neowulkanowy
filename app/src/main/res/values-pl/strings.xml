@@ -23,38 +23,59 @@
     <string name="action_create_account">Nie masz jeszcze konta? Załóż je</string>
     <string name="action_forgot_password">Zapomniałeś hasła?</string>
 
+    <string name="color_black_text">Czarny</string>
+    <string name="color_red_text">Czerwony</string>
+    <string name="color_blue_text">Niebieski</string>
+    <string name="color_green_text">Zielony</string>
+    <string name="noColor_text">Brak koloru</string>
+
     <string name="activity_dashboard_text">Aktywność dashboard</string>
     <string name="dashboard_text">Dashboard</string>
     <string name="grades_text">Oceny</string>
     <string name="attendance_text">Frekwencja</string>
     <string name="lessonplan_text">Plan lekcji</string>
     <string name="settings_text">Ustawienia</string>
+    <string name="activity_under_construction">Ta część aplikacji jest w budowie</string>
+    <string name="fragment_no_grades">Brak ocen</string>
+
     <string name="noInternet_text">Brak połączenia z internetem</string>
     <string name="root_failed_text">To urządzenie posiada posiada podwyższone uprawnienia (root). Automatyczne logowanie zosatło wyłączone.</string>
     <string name="encrypt_failed_text">Szyfrowanie nie powiodło się. Automatyczne logowanie zostało wyłączone</string>
     <string name="version_text">Wersja %1$s</string>
+    <string name="refresh_error_text">"Podczas odświeżania zawartości wystąpił błąd. "</string>
+
     <string name="dialog_description_text">Opis</string>
     <string name="dialog_weight_text">Waga</string>
     <string name="noDescription_text">Brak opisu</string>
     <string name="dialog_teacher_text">Nauczyciel</string>
     <string name="dialog_date_text">Data</string>
     <string name="dialog_color_text">Kolor</string>
-    <string name="color_black_text">Czarny</string>
-    <string name="color_red_text">Czerwony</string>
-    <string name="color_blue_text">Niebieski</string>
-    <string name="color_green_text">Zielony</string>
-    <string name="noColor_text">Brak koloru</string>
     <string name="dialog_close">Zamknij</string>
-    <string name="refresh_error_text">"Podczas odświeżania zawartości wystąpił błąd. "</string>
+
     <string name="snackbar_no_grades">Brak nowych ocen</string>
     <string name="snackbar_new_grade">Ilość nowych ocen: %1$d</string>
 
-    <plurals name="numberOfGrades">
+    <string name="info_average_grades">Średnia: %1$.2f</string>
+    <string name="info_no_average">Brak średniej</string>
+
+    <plurals name="numberOfGradesPlurals">
         <item quantity="one">%d ocena</item>
         <item quantity="few">%d oceny</item>
         <item quantity="many">%d ocen</item>
         <item quantity="other">%d ocen</item>
     </plurals>
-    <string name="info_average_grades">Średnia: %1$.2f</string>
-    <string name="info_no_average">Brak średniej</string>
+
+    <plurals name="newGradePlurals">
+        <item quantity="one">Nowa ocena</item>
+        <item quantity="few">Nowe oceny</item>
+        <item quantity="many">Nowych ocen</item>
+        <item quantity="other">Nowych ocen</item>
+    </plurals>
+
+    <plurals name="receivedNewGradePlurals">
+        <item quantity="one">Dostałeś %1$d ocenę</item>
+        <item quantity="few">"Dostałeś %1$d oceny</item>
+        <item quantity="many">Dostałeś %1$d ocen</item>
+        <item quantity="other">Dostałeś %1$d ocen</item>
+    </plurals>
 </resources>

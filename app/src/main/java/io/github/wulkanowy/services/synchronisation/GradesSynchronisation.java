@@ -35,6 +35,9 @@ public class GradesSynchronisation {
 
         Account account = accountDao.load(loginSession.getUserId());
 
+        account.resetGradeList();
+        account.resetSubjectList();
+
         List<Grade> gradesFromDb = account.getGradeList();
         List<Grade> gradeEntitiesList = ConversionVulcanObject.gradesToGradeEntities(gradesList.getAll());
         List<Grade> updatedList = EntitiesCompare.compareGradeList(gradeEntitiesList, gradesFromDb);

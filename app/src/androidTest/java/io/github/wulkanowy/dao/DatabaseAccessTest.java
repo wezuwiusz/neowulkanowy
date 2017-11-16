@@ -37,7 +37,7 @@ public class DatabaseAccessTest extends DatabaseAccess {
         daoSession.getGradeDao().insert(new Grade()
                 .setIsNew(true));
 
-        Assert.assertEquals(1, DatabaseAccess.getNewGrades(daoSession).size());
+        Assert.assertEquals(1, new DatabaseAccess().getNewGrades(daoSession).size());
     }
 
     @AfterClass

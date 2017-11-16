@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_marks"
-        android:icon="@drawable/icon_marks_26dp"
+        android:icon="@drawable/icon_grade_26dp"
         android:title="@string/grades_text" />
 
     <item

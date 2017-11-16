@@ -1,12 +1,35 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="io.github.wulkanowy.activity.dashboard.board.BoardFragment">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fragment Dashboard" />
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/wrench_under_construction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp"
+            android:contentDescription="@string/activity_dashboard_text"
+            android:minHeight="100dp"
+            android:minWidth="100dp"
+            app:srcCompat="@drawable/ic_wrench_construction" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:text="@string/activity_under_construction"
+            android:textSize="17sp"
+            android:textAlignment="center"
+            android:id="@+id/textView3" />
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

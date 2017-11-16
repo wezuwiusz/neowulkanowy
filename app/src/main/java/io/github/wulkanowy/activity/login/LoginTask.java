@@ -3,11 +3,13 @@ package io.github.wulkanowy.activity.login;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -118,6 +120,7 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
                 EditText passwordView = activity.get().findViewById(R.id.password);
                 passwordView.setError(activity.get().getString(R.string.error_incorrect_password));
                 passwordView.requestFocus();
+                showSoftKeyboard(passwordView);
                 break;
 
             // if no permission
@@ -129,6 +132,7 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
                 EditText symbolView = activity.get().findViewById(R.id.symbol);
                 symbolView.setError(activity.get().getString(R.string.error_bad_account_permission));
                 symbolView.requestFocus();
+                showSoftKeyboard(symbolView);
                 break;
 
             default:
@@ -154,6 +158,15 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
 
         changeLoginFormVisibility(show, animTime);
         changeProgressVisibility(show, animTime);
+    }
+
+    private void showSoftKeyboard(EditText editText) {
+        InputMethodManager manager = (InputMethodManager)
+                activity.get().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (manager != null) {
+            manager.showSoftInput(editText,
+                    InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
     private void changeLoginFormVisibility(final boolean show, final int animTime) {

@@ -35,6 +35,8 @@
     <string name="attendance_text">Attendance</string>
     <string name="lessonplan_text">Lesson Plan</string>
     <string name="settings_text">Settings</string>
+    <string name="activity_under_construction">This section of app is under construction.</string>
+    <string name="fragment_no_grades">No grades</string>
 
     <string name="noInternet_text">No internet connection</string>
     <string name="root_failed_text">This device is rooted. Automatic login has been disabled</string>
@@ -53,10 +55,21 @@
     <string name="snackbar_no_grades">No new grades</string>
     <string name="snackbar_new_grade">Number of new grades: %1$d</string>
 
-    <plurals name="numberOfGrades">
+    <string name="info_average_grades">Average: %1$.2f</string>
+    <string name="info_no_average">No average</string>
+
+    <plurals name="numberOfGradesPlurals">
         <item quantity="one">%d grade</item>
         <item quantity="other">%d grades</item>
     </plurals>
-    <string name="info_average_grades">Average: %1$.2f</string>
-    <string name="info_no_average">No average</string>
+
+    <plurals name="newGradePlurals">
+        <item quantity="one">New grade</item>
+        <item quantity="other">New grades</item>
+    </plurals>
+
+    <plurals name="receivedNewGradePlurals">
+        <item quantity="one">You received %1$d grade</item>
+        <item quantity="other">You received %1$d grades</item>
+    </plurals>
 </resources>

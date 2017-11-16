@@ -11,9 +11,6 @@ import io.github.wulkanowy.R;
 
 public class LessonPlanFragment extends Fragment {
 
-    public LessonPlanFragment() {
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

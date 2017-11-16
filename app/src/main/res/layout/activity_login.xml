@@ -15,10 +15,12 @@
         android:id="@+id/login_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="178dp"
         android:gravity="center_horizontal"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/login_progress_horizontal"
@@ -28,10 +30,9 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="91dp"
-            android:minHeight="30dp"
             android:indeterminate="true"
-            android:minWidth="220dp"
-            />
+            android:minHeight="30dp"
+            android:minWidth="220dp" />
 
         <TextView
             android:id="@+id/login_progress_text"
@@ -39,8 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/login_progress_horizontal"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="42dp"
-            />
+            android:layout_marginBottom="42dp" />
     </RelativeLayout>
 
     <ScrollView

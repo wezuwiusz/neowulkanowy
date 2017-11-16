@@ -161,11 +161,12 @@ public class LoginActivity extends Activity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
+            // Show a progress spinner and kick off a background task to
             // perform the user login attempt.
             LoginTask authTask = new LoginTask(this, email, password, symbol);
             authTask.showProgress(true);
             authTask.execute();
+            hideSoftKeyboard();
         }
     }
 
@@ -175,6 +176,15 @@ public class LoginActivity extends Activity {
 
     private boolean isPasswordValid(String password) {
         return password.length() > 7;
+    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager manager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (manager != null) {
+            manager.hideSoftInputFromWindow(getWindow()
+                    .getDecorView().getApplicationWindowToken(), 0);
+        }
     }
 
     @Override
@@ -192,15 +202,13 @@ public class LoginActivity extends Activity {
                         || ev.getAction() == MotionEvent.ACTION_MOVE) && view instanceof EditText
                         && !view.getClass().getName().startsWith("android.webkit.")) {
 
-                    int scrcoords[] = new int[2];
-                    view.getLocationOnScreen(scrcoords);
-                    float x = ev.getRawX() + view.getLeft() - scrcoords[0];
-                    float y = ev.getRawY() + view.getTop() - scrcoords[1];
+                    int coordinators[] = new int[2];
+                    view.getLocationOnScreen(coordinators);
+                    float x = ev.getRawX() + view.getLeft() - coordinators[0];
+                    float y = ev.getRawY() + view.getTop() - coordinators[1];
                     if (x < view.getLeft() || x > view.getRight() || y < view.getTop()
                             || y > view.getBottom()) {
-                        ((InputMethodManager) getSystemService(
-                                Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-                                (getWindow().getDecorView().getApplicationWindowToken()), 0);
+                        hideSoftKeyboard();
                     }
                 }
             }

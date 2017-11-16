@@ -3,7 +3,6 @@ package io.github.wulkanowy.services.synchronisation;
 import android.util.Log;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 

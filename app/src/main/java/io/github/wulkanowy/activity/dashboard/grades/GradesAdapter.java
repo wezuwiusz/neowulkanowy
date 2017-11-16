@@ -86,7 +86,7 @@ public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.S
                 averageGrades.setText(activity.getResources().getString(R.string.info_average_grades, average));
             }
             subjectName.setText(group.getTitle());
-            numberOfGrades.setText(activity.getResources().getQuantityString(R.plurals.numberOfGrades, volumeGrades, volumeGrades));
+            numberOfGrades.setText(activity.getResources().getQuantityString(R.plurals.numberOfGradesPlurals, volumeGrades, volumeGrades));
 
             for (Grade grade : gradeList) {
                 if (!grade.getRead()) {

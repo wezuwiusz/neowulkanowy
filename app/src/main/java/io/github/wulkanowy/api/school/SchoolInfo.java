@@ -5,7 +5,6 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 
 import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class SchoolInfo {
 

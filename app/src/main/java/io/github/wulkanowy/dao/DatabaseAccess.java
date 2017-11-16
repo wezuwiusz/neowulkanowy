@@ -8,9 +8,9 @@ import io.github.wulkanowy.dao.entities.DaoSession;
 import io.github.wulkanowy.dao.entities.Grade;
 import io.github.wulkanowy.dao.entities.GradeDao;
 
-public abstract class DatabaseAccess {
+public class DatabaseAccess {
 
-    public static List<Grade> getNewGrades(DaoSession daoSession) {
+    public List<Grade> getNewGrades(DaoSession daoSession) {
         Query<Grade> gradeQuery = daoSession.getGradeDao().queryBuilder()
                 .where(GradeDao.Properties.IsNew.eq(1))
                 .build();

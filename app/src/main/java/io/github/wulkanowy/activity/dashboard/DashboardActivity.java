@@ -66,15 +66,21 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setSelectedItemId(R.id.navigation_dashboard);
+        navigation.setSelectedItemId(R.id.navigation_marks);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         if (savedInstanceState != null) {
             currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, "currentFragment");
             setTitle(savedInstanceState.getString("activityTitle"));
         } else {
-            currentFragment = boardFragment;
+            currentFragment = gradesFragment;
             setTitle(R.string.dashboard_text);
+        }
+
+        int cardID = getIntent().getIntExtra("cardID", 0);
+
+        if (cardID == 1) {
+            currentFragment = gradesFragment;
         }
 
         getSupportFragmentManager().beginTransaction()
