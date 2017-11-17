@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import io.github.wulkanowy.api.attendance.AttendanceStatistics;
 import io.github.wulkanowy.api.attendance.AttendanceTable;
+import io.github.wulkanowy.api.exams.ExamsWeek;
 import io.github.wulkanowy.api.grades.GradesList;
 import io.github.wulkanowy.api.grades.SubjectsList;
 import io.github.wulkanowy.api.login.AccountPermissionException;
@@ -79,6 +80,10 @@ public class Vulcan extends Api {
 
     public AttendanceTable getAttendanceTable() throws IOException, NotLoggedInErrorException {
         return new AttendanceTable(getStudentAndParent());
+    }
+
+    public ExamsWeek getExamsList() throws IOException, NotLoggedInErrorException {
+        return new ExamsWeek(getStudentAndParent());
     }
 
     public GradesList getGradesList() throws IOException, NotLoggedInErrorException {
