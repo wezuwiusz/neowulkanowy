@@ -1,0 +1,84 @@
+apply plugin: 'java-library'
+apply plugin: 'jacoco'
+apply plugin: "io.github.ddimtirov.codacy"
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+ext {
+    PUBLISH_GROUP_ID = 'io.github.wulkanowy'
+    PUBLISH_ARTIFACT_ID = 'api'
+    PUBLISH_VERSION = '0.1.0'
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
+}
+
+dependencies {
+    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'org.apache.commons:commons-lang3:3.6'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.11.0'
+}
+
+def siteUrl = 'https://github.com/wulkanowy/wulkanowy'
+def gitUrl = 'https://github.com/wulkanowy/wulkanowy.git'
+
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    configurations = ['archives']
+    pkg {
+        repo = 'wulkanowy'
+        name = 'api'
+        userOrg = 'wulkanowy'
+        licenses = ['Apache-2.0']
+        vcsUrl = gitUrl
+        labels = ['aar', 'android', 'wulkanowy', 'api']
+        publicDownloadNumbers = true
+
+        version {
+            name = '0.1.0'
+            released  = new Date()
+        }
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'Bintray publish Gradle aar'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'mklkj'
+                        name 'Mikołaj Pich'
+                        email 'm.pich@outlook.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
