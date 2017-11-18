@@ -39,10 +39,11 @@
     <string name="fragment_no_grades">No grades</string>
 
     <string name="noInternet_text">No internet connection</string>
-    <string name="root_failed_text">This device is rooted. Automatic login has been disabled</string>
     <string name="encrypt_failed_text">Encryption failed. Automatic login has been disabled</string>
     <string name="version_text">Version %1$s</string>
     <string name="refresh_error_text">An error occurred while refreshing the content.</string>
+    <string name="alert_dialog_blocked_app">Application lock</string>
+    <string name="alert_dialog_blocked_app_message">For the sake of safety of personal data stored on a device with increased authorization (root), the Wulkanowy application has been blocked.</string>
 
     <string name="dialog_description_text">Description</string>
     <string name="dialog_weight_text">Weight</string>

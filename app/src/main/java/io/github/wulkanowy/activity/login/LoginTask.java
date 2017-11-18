@@ -4,10 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -86,6 +88,8 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
                 return R.string.encrypt_failed_text;
             } catch (NotLoggedInErrorException | IOException e) {
                 return R.string.login_denied_text;
+            } catch (UnsupportedOperationException e) {
+                return -1;
             }
 
             GradeJob gradeJob = new GradeJob();
@@ -133,6 +137,21 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
                 symbolView.setError(activity.get().getString(R.string.error_bad_account_permission));
                 symbolView.requestFocus();
                 showSoftKeyboard(symbolView);
+                break;
+
+            // if rooted and SDK < 18
+            case -1:
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity.get())
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle(R.string.alert_dialog_blocked_app)
+                        .setMessage(R.string.alert_dialog_blocked_app_message)
+                        .setPositiveButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                alertDialog.show();
                 break;
 
             default:

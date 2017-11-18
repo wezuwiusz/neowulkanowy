@@ -39,10 +39,11 @@
     <string name="fragment_no_grades">Brak ocen</string>
 
     <string name="noInternet_text">Brak połączenia z internetem</string>
-    <string name="root_failed_text">To urządzenie posiada posiada podwyższone uprawnienia (root). Automatyczne logowanie zosatło wyłączone.</string>
     <string name="encrypt_failed_text">Szyfrowanie nie powiodło się. Automatyczne logowanie zostało wyłączone</string>
     <string name="version_text">Wersja %1$s</string>
     <string name="refresh_error_text">"Podczas odświeżania zawartości wystąpił błąd. "</string>
+    <string name="alert_dialog_blocked_app">Blokada aplikacji</string>
+    <string name="alert_dialog_blocked_app_message">W obawie o bezpieczeństwo przechowywanych danych osobistych na urządzeniu z podwyższonymi uprawnieniami (root), aplikacja Wulkanowy została zablokowana</string>
 
     <string name="dialog_description_text">Opis</string>
     <string name="dialog_weight_text">Waga</string>
