@@ -31,7 +31,7 @@ dependencies {
 
 def siteUrl = 'https://github.com/wulkanowy/wulkanowy'
 def gitUrl = 'https://github.com/wulkanowy/wulkanowy.git'
-
+version = '0.1.0'
 
 bintray {
     user = System.getenv('BINTRAY_USER')
@@ -48,6 +48,7 @@ bintray {
 
         version {
             name = '0.1.0'
+            vcsTag = '0.1.0'
             released  = new Date()
         }
     }
