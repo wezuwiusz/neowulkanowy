@@ -1,0 +1,36 @@
+apply plugin: 'org.sonarqube'
+
+sonarqube {
+
+    //noinspection GroovyAssignabilityCheck
+    properties {
+        def files = fileTree("${rootProject.projectDir}/api/build/libs/").filter { it.isFile() }.files.name
+        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-27/android.jar," +
+                "${project.rootDir}/api/build/libs/" + files[0]
+
+        property "sonar.projectName", GROUP_ID + ":app"
+        property "sonar.projectKey", GROUP_ID + ":app"
+
+        property "sonar.sources", "src/main/java"
+        property "sonar.exclusions", "build/**,**/*.png,*.iml, **/*generated*," +
+                "src/**/entities/*.java, src/androidTest/**/entities/*.java"
+        property "sonar.import_unknown_files", true
+
+        // Defines where the java files are
+        property "sonar.binaries", "build/intermediates/classes/debug"
+        property "sonar.libraries", libraries
+
+        // Defines where the xml files are
+        property "sonar.java.binaries", "build/intermediates/classes/debug"
+        property "sonar.java.libraries", libraries
+
+        // Analyze tests classes
+        property "sonar.tests", "src/test/java, src/androidTest/java"
+        property "sonar.java.test.binaries", "build/intermediates/classes/debug"
+        property "sonar.java.test.libraries", libraries
+
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.android.lint.report", "build/reports/lint-results.xml"
+        property "sonar.jacoco.reportPaths", fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
+    }
+}

@@ -14,14 +14,14 @@ public class TeachersInfo {
 
     private StudentAndParent snp = null;
 
-    private String schoolPageUrl = "Szkola.mvc/Nauczyciele";
+    private static final String SCHOOL_PAGE_URL = "Szkola.mvc/Nauczyciele";
 
     public TeachersInfo(StudentAndParent snp) {
         this.snp = snp;
     }
 
     public TeachersData getTeachersData() throws IOException {
-        Document doc = snp.getSnPPageDocument(schoolPageUrl);
+        Document doc = snp.getSnPPageDocument(SCHOOL_PAGE_URL);
         Elements rows = doc.select(".mainContainer > table tbody tr");
         String description = doc.select(".mainContainer > p").first().text();
 

@@ -90,7 +90,7 @@ public class Login extends Api {
         Elements els = Jsoup.parse(certificate.replaceAll(":", ""), "", Parser.xmlParser())
                 .select("[AttributeName=\"UserInstance\"] samlAttributeValue");
 
-        if (0 == els.size()) {
+        if (els.isEmpty()) {
             return "";
         }
 

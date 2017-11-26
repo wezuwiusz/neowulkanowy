@@ -8,7 +8,7 @@ import java.util.List;
 
 import io.github.wulkanowy.dao.entities.Grade;
 
-public class AverageCalculatorTest extends AverageCalculator {
+public class AverageCalculatorTest {
 
     @Test
     public void averageTest() {

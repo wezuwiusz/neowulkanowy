@@ -13,23 +13,23 @@ public class AchievementsList {
 
     private StudentAndParent snp = null;
 
-    private List<String> achievementsList = new ArrayList<>();
+    private List<String> achievements = new ArrayList<>();
 
-    private String notesPageUrl = "UwagiOsiagniecia.mvc/Wszystkie";
+    private static final String NOTES_PAGE_URL = "UwagiOsiagniecia.mvc/Wszystkie";
 
     public AchievementsList(StudentAndParent snp) {
         this.snp = snp;
     }
 
     public List<String> getAllAchievements() throws IOException {
-        Element pageFragment = snp.getSnPPageDocument(notesPageUrl)
+        Element pageFragment = snp.getSnPPageDocument(NOTES_PAGE_URL)
                 .select(".mainContainer > div").get(1);
         Elements items = pageFragment.select("article");
 
         for (Element item : items) {
-            achievementsList.add(item.text());
+            achievements.add(item.text());
         }
 
-        return achievementsList;
+        return achievements;
     }
 }

@@ -202,7 +202,7 @@ public class LoginActivity extends Activity {
                         || ev.getAction() == MotionEvent.ACTION_MOVE) && view instanceof EditText
                         && !view.getClass().getName().startsWith("android.webkit.")) {
 
-                    int coordinators[] = new int[2];
+                    int[] coordinators = new int[2];
                     view.getLocationOnScreen(coordinators);
                     float x = ev.getRawX() + view.getLeft() - coordinators[0];
                     float y = ev.getRawY() + view.getTop() - coordinators[1];

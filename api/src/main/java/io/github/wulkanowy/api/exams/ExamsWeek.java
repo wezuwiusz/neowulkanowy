@@ -14,7 +14,7 @@ public class ExamsWeek {
 
     private final StudentAndParent snp;
 
-    private final String examsPageUrl = "Sprawdziany.mvc/Terminarz?rodzajWidoku=2&data=";
+    private static final String EXAMS_PAGE_URL = "Sprawdziany.mvc/Terminarz?rodzajWidoku=2&data=";
 
     public ExamsWeek(StudentAndParent snp) {
         this.snp = snp;
@@ -25,7 +25,7 @@ public class ExamsWeek {
     }
 
     public Week getWeek(String tick, final boolean onlyNotEmpty) throws IOException {
-        Document examsPage = snp.getSnPPageDocument(examsPageUrl + tick);
+        Document examsPage = snp.getSnPPageDocument(EXAMS_PAGE_URL + tick);
         Elements examsDays = examsPage.select(".mainContainer > div:not(.navigation)");
 
         List<Day> days = new ArrayList<>();

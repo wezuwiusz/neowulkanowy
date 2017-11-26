@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class DateHelperTest extends DateHelper {
+public class DateHelperTest {
 
     @Test
     public void getTicksDateObjectTest() throws Exception {

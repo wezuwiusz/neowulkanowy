@@ -9,24 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class Timetable {
 
     private StudentAndParent snp;
 
-    private String timetablePageUrl = "Lekcja.mvc/PlanLekcji?data=";
+    private static final String TIMETABLE_PAGE_URL = "Lekcja.mvc/PlanLekcji?data=";
 
     public Timetable(StudentAndParent snp) {
         this.snp = snp;
     }
 
-    public Week getWeekTable() throws IOException, LoginErrorException {
+    public Week getWeekTable() throws IOException {
         return getWeekTable("");
     }
 
     public Week getWeekTable(String tick) throws IOException {
-        Element table = snp.getSnPPageDocument(timetablePageUrl + tick)
+        Element table = snp.getSnPPageDocument(TIMETABLE_PAGE_URL + tick)
                 .select(".mainContainer .presentData").first();
 
         Elements tableHeaderCells = table.select("thead th");
@@ -100,14 +99,14 @@ public class Timetable {
             lesson.setRoom(spans.get(3).text());
         }
 
-        lesson = getLessonGroupDivisionInfo(lesson, spans);
-        lesson = getLessonTypeInfo(lesson, spans);
-        lesson = getLessonDescriptionInfo(lesson, spans);
+        addGroupDivisionInfo(lesson, spans);
+        adTypeInfo(lesson, spans);
+        addDescriptionInfo(lesson, spans);
 
         return lesson;
     }
 
-    private Lesson getLessonGroupDivisionInfo(Lesson lesson, Elements e) {
+    private void addGroupDivisionInfo(Lesson lesson, Elements e) {
         if ((4 == e.size() && (e.first().attr("class").equals("")) ||
                 (5 == e.size() && e.first().hasClass(Lesson.CLASS_NEW_MOVED_IN_OR_CHANGED)))) {
             lesson.setDivisionIntoGroups(true);
@@ -118,11 +117,9 @@ public class Timetable {
             lesson.setTeacher(e.get(2).text());
             lesson.setRoom(e.get(3).text());
         }
-
-        return lesson;
     }
 
-    private Lesson getLessonTypeInfo(Lesson lesson, Elements e) {
+    private void adTypeInfo(Lesson lesson, Elements e) {
         if (e.first().hasClass(Lesson.CLASS_MOVED_OR_CANCELED)) {
             lesson.setMovedOrCanceled(true);
         } else if (e.first().hasClass(Lesson.CLASS_NEW_MOVED_IN_OR_CHANGED)) {
@@ -135,17 +132,13 @@ public class Timetable {
                 || e.first().attr("class").equals("")) {
             lesson.setRealized(true);
         }
-
-        return lesson;
     }
 
-    private Lesson getLessonDescriptionInfo(Lesson lesson, Elements e) {
+    private void addDescriptionInfo(Lesson lesson, Elements e) {
         if ((4 == e.size() || 5 == e.size())
                 && (e.first().hasClass(Lesson.CLASS_MOVED_OR_CANCELED)
                 || e.first().hasClass(Lesson.CLASS_NEW_MOVED_IN_OR_CHANGED))) {
             lesson.setDescription(StringUtils.substringBetween(e.last().text(), "(", ")"));
         }
-
-        return lesson;
     }
 }

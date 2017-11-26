@@ -13,23 +13,23 @@ public class NotesList {
 
     private StudentAndParent snp = null;
 
-    private List<Note> notesList = new ArrayList<>();
+    private List<Note> notes = new ArrayList<>();
 
-    private String notesPageUrl = "UwagiOsiagniecia.mvc/Wszystkie";
+    private static final String NOTES_PAGE_URL = "UwagiOsiagniecia.mvc/Wszystkie";
 
     public NotesList(StudentAndParent snp) {
         this.snp = snp;
     }
 
     public List<Note> getAllNotes() throws IOException {
-        Element pageFragment = snp.getSnPPageDocument(notesPageUrl)
+        Element pageFragment = snp.getSnPPageDocument(NOTES_PAGE_URL)
                 .select(".mainContainer > div").get(0);
         Elements items = pageFragment.select("article");
         Elements dates = pageFragment.select("h2");
 
         int index = 0;
         for (Element item : items) {
-            notesList.add(new Note()
+            notes.add(new Note()
                     .setDate(dates.get(index++).text())
                     .setTeacher(snp.getRowDataChildValue(item, 1))
                     .setCategory(snp.getRowDataChildValue(item, 2))
@@ -37,6 +37,6 @@ public class NotesList {
             );
         }
 
-        return notesList;
+        return notes;
     }
 }

@@ -4,7 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-public abstract class ConnectionUtilities {
+public class ConnectionUtilities {
+
+    private ConnectionUtilities() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static boolean isOnline(Context context) {
         ConnectivityManager connectivityManager =

@@ -7,7 +7,11 @@ import java.util.List;
 import io.github.wulkanowy.dao.entities.Grade;
 import io.github.wulkanowy.dao.entities.Subject;
 
-public abstract class ConversionVulcanObject {
+public class ConversionVulcanObject {
+
+    private ConversionVulcanObject() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static List<Subject> subjectsToSubjectEntities(List<io.github.wulkanowy.api.grades.Subject> subjectList) {
 

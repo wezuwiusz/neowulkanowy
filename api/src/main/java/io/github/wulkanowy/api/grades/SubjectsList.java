@@ -14,14 +14,14 @@ public class SubjectsList {
 
     private StudentAndParent snp = null;
 
-    private String subjectsPageUrl = "Oceny/Wszystkie?details=1";
+    private static final String SUBJECTS_PAGE_URL = "Oceny/Wszystkie?details=1";
 
     public SubjectsList(StudentAndParent snp) {
         this.snp = snp;
     }
 
     public List<Subject> getAll() throws IOException {
-        Document subjectPage = snp.getSnPPageDocument(subjectsPageUrl);
+        Document subjectPage = snp.getSnPPageDocument(SUBJECTS_PAGE_URL);
 
         Elements rows = subjectPage.select(".ocenyZwykle-table > tbody > tr");
 

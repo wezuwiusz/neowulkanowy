@@ -10,14 +10,14 @@ public class SchoolInfo {
 
     private StudentAndParent snp = null;
 
-    private String schoolPageUrl = "Szkola.mvc/Nauczyciele";
+    private static final String SCHOOL_PAGE_URL = "Szkola.mvc/Nauczyciele";
 
     public SchoolInfo(StudentAndParent snp) {
         this.snp = snp;
     }
 
     public SchoolData getSchoolData() throws IOException {
-        Element e = snp.getSnPPageDocument(schoolPageUrl)
+        Element e = snp.getSnPPageDocument(SCHOOL_PAGE_URL)
                 .select(".mainContainer > article").get(0);
 
         return new SchoolData()

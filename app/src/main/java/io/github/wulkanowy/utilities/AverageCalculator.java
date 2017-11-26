@@ -4,7 +4,11 @@ import java.util.List;
 
 import io.github.wulkanowy.dao.entities.Grade;
 
-public abstract class AverageCalculator {
+public class AverageCalculator {
+
+    private AverageCalculator() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static float calculate(List<Grade> gradeList) {
 

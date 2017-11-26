@@ -32,7 +32,7 @@ public class Scrambler {
 
     private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
 
-    public final static String DEBUG_TAG = "WulkanowySecurity";
+    public static final String DEBUG_TAG = "WulkanowySecurity";
 
     private KeyStore keyStore;
 

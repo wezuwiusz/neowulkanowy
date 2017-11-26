@@ -9,7 +9,7 @@ import java.util.List;
 import io.github.wulkanowy.api.grades.Grade;
 import io.github.wulkanowy.api.grades.Subject;
 
-public class ConversionVulcanObjectTest extends ConversionVulcanObject {
+public class ConversionVulcanObjectTest {
 
     @Test
     public void subjectConversionTest() {

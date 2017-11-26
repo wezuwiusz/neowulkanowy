@@ -1,11 +1,14 @@
 package io.github.wulkanowy.utilities;
 
-
 import android.os.Build;
 
 import java.io.File;
 
-abstract public class RootUtilities {
+public class RootUtilities {
+
+    private RootUtilities() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static boolean isRooted() {
         String buildTags = Build.TAGS;

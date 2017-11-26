@@ -7,11 +7,15 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-abstract public class DateHelper {
+public class DateHelper {
 
     private static final long TICKS_AT_EPOCH = 621355968000000000L;
 
     private static final long TICKS_PER_MILLISECOND = 10000;
+
+    private DateHelper() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static long getTicks(Date date) {
         Calendar calendar = Calendar.getInstance();

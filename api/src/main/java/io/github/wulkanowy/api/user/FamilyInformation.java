@@ -13,14 +13,14 @@ public class FamilyInformation {
 
     private StudentAndParent snp;
 
-    private String studentDataPageUrl = "Uczen.mvc/DanePodstawowe";
+    private static final String STUDENT_DATA_PAGE_URL = "Uczen.mvc/DanePodstawowe";
 
     public FamilyInformation(StudentAndParent snp) {
         this.snp = snp;
     }
 
     public List<FamilyMember> getFamilyMembers() throws IOException {
-        Elements membersElements = snp.getSnPPageDocument(studentDataPageUrl)
+        Elements membersElements = snp.getSnPPageDocument(STUDENT_DATA_PAGE_URL)
                 .select(".mainContainer > article:nth-of-type(n+4)");
 
         List<FamilyMember> familyMembers = new ArrayList<>();

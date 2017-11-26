@@ -16,7 +16,9 @@ public class StudentAndParent extends Api {
 
     private String baseUrl = "https://uonetplus-opiekun.vulcan.net.pl/{symbol}/{ID}/";
 
-    private String gradesPageUrl = baseUrl + "Oceny/Wszystkie";
+    private static final String SYMBOL_PLACEHOLDER = "{symbol}";
+
+    private static final String GRADES_PAGE_URL = "Oceny/Wszystkie";
 
     private String symbol;
 
@@ -33,7 +35,7 @@ public class StudentAndParent extends Api {
     }
 
     public String getGradesPageUrl() {
-        return gradesPageUrl;
+        return baseUrl + GRADES_PAGE_URL;
     }
 
     public String getBaseUrl() {
@@ -58,11 +60,11 @@ public class StudentAndParent extends Api {
 
     public String getSnpPageUrl() throws IOException, NotLoggedInErrorException {
         if (null != getId()) {
-            return getBaseUrl().replace("{symbol}", getSymbol()).replace("{ID}", getId());
+            return getBaseUrl().replace(SYMBOL_PLACEHOLDER, getSymbol()).replace("{ID}", getId());
         }
 
         // get url to uonetplus-opiekun.vulcan.net.pl
-        Document startPage = getPageByUrl(getStartPageUrl().replace("{symbol}", getSymbol()));
+        Document startPage = getPageByUrl(getStartPageUrl().replace(SYMBOL_PLACEHOLDER, getSymbol()));
         Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
 
         if (null == studentTileLink) {
@@ -92,7 +94,7 @@ public class StudentAndParent extends Api {
 
     public Document getSnPPageDocument(String url) throws IOException {
         return getPageByUrl(getBaseUrl()
-                .replace("{symbol}", getSymbol())
+                .replace(SYMBOL_PLACEHOLDER, getSymbol())
                 .replace("{ID}", getId()) + url);
     }
 

@@ -8,7 +8,7 @@ import io.github.wulkanowy.utilities.RootUtilities;
 
 public class Safety extends Scrambler {
 
-    public String encrypt(String email, String plainText, Context context) throws CryptoException, UnsupportedOperationException {
+    public String encrypt(String email, String plainText, Context context) throws CryptoException {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             loadKeyStore();

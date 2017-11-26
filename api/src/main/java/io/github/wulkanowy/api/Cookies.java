@@ -5,19 +5,19 @@ import java.util.Map;
 
 public class Cookies {
 
-    private Map<String, String> cookies = new HashMap<>();
+    private Map<String, String> jar = new HashMap<>();
 
     public Map<String, String> getItems() {
-        return cookies;
+        return jar;
     }
 
     public Cookies setItems(Map<String, String> items) {
-        this.cookies = items;
+        this.jar = items;
         return this;
     }
 
     public Cookies addItems(Map<String, String> items) {
-        this.cookies.putAll(items);
+        this.jar.putAll(items);
         return this;
     }
 }

@@ -16,13 +16,12 @@ import java.util.regex.Pattern;
 
 import io.github.wulkanowy.api.Semester;
 import io.github.wulkanowy.api.StudentAndParent;
-import io.github.wulkanowy.api.login.LoginErrorException;
 
 public class GradesList {
 
     private StudentAndParent snp = null;
 
-    private String gradesPageUrl = "Oceny/Wszystkie?details=2&okres=";
+    private static final String GRADES_PAGE_URL = "Oceny/Wszystkie?details=2&okres=";
 
     private List<Grade> grades = new ArrayList<>();
 
@@ -31,10 +30,10 @@ public class GradesList {
     }
 
     public String getGradesPageUrl() {
-        return gradesPageUrl;
+        return GRADES_PAGE_URL;
     }
 
-    public List<Grade> getAll() throws IOException, LoginErrorException, ParseException {
+    public List<Grade> getAll() throws IOException, ParseException {
         return getAll("");
     }
 

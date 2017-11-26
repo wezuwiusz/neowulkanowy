@@ -7,7 +7,11 @@ import java.util.List;
 
 import io.github.wulkanowy.dao.entities.Grade;
 
-public abstract class EntitiesCompare {
+public class EntitiesCompare {
+
+    private EntitiesCompare() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static List<Grade> compareGradeList(List<Grade> newList, List<Grade> oldList) {
 
@@ -18,7 +22,7 @@ public abstract class EntitiesCompare {
         List<Grade> lastList = new ArrayList<>();
 
         for (Grade grade : addedOrUpdatedGradeList) {
-            if (oldList.size() != 0) {
+            if (!oldList.isEmpty()) {
                 grade.setRead(false);
                 grade.setIsNew(true);
             }
