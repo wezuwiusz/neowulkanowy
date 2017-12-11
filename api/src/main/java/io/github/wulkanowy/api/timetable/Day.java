@@ -9,6 +9,8 @@ public class Day {
 
     private String date = "";
 
+    private String dayName = "";
+
     private boolean isFreeDay = false;
 
     private String freeDayName = "";
@@ -32,6 +34,15 @@ public class Day {
 
     public Day setDate(String date) {
         this.date = date;
+        return this;
+    }
+
+    public String getDayName() {
+        return dayName;
+    }
+
+    public Day setDayName(String dayName) {
+        this.dayName = dayName;
         return this;
     }
 

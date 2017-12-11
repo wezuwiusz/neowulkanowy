@@ -21,7 +21,7 @@ public class RootUtilities {
             if (file.exists()) {
                 return true;
             }
-        } catch (Exception e1) {
+        } catch (Exception e) {
             // ignore
         }
         return canExecuteCommand("/system/xbin/which su")

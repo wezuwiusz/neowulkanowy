@@ -4,8 +4,9 @@ apply plugin: 'jacoco'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
 
 ext {
     PUBLISH_GROUP_ID = GROUP_ID

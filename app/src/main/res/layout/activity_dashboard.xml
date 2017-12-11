@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="io.github.wulkanowy.activity.dashboard.DashboardActivity">
+    tools:context="io.github.wulkanowy.ui.main.DashboardActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/fragment_container"

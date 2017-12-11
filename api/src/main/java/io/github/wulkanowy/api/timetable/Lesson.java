@@ -10,6 +10,8 @@ public class Lesson {
 
     public static final String CLASS_NEW_MOVED_IN_OR_CHANGED = "x-treelabel-zas";
 
+    private String number = "";
+
     private String subject = "";
 
     private String teacher = "";
@@ -24,6 +26,8 @@ public class Lesson {
 
     private String endTime = "";
 
+    private String date = "";
+
     private boolean isEmpty = false;
 
     private boolean isDivisionIntoGroups = false;
@@ -35,6 +39,15 @@ public class Lesson {
     private boolean isMovedOrCanceled = false;
 
     private boolean isNewMovedInOrChanged = false;
+
+    public String getNumber() {
+        return number;
+    }
+
+    public Lesson setNumber(String number) {
+        this.number = number;
+        return this;
+    }
 
     public String getSubject() {
         return subject;
@@ -96,6 +109,15 @@ public class Lesson {
 
     public Lesson setEndTime(String endTime) {
         this.endTime = endTime;
+        return this;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public Lesson setDate(String date) {
+        this.date = date;
         return this;
     }
 

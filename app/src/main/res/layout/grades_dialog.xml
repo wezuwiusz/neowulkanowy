@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="450dp"
-        android:minWidth="325dp"
+        android:minWidth="300dp"
         android:orientation="vertical">
 
 
@@ -176,7 +176,7 @@
                 android:layout_alignParentRight="true"
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
-                android:text="@string/dialog_close"
+                android:text="@string/generic_dialog_close"
                 android:textAllCaps="true"
                 android:textSize="15sp"
                 />

@@ -8,6 +8,8 @@ import java.util.List;
 
 import io.github.wulkanowy.api.grades.Grade;
 import io.github.wulkanowy.api.grades.Subject;
+import io.github.wulkanowy.api.timetable.Day;
+import io.github.wulkanowy.api.timetable.Lesson;
 
 public class ConversionVulcanObjectTest {
 
@@ -41,5 +43,37 @@ public class ConversionVulcanObjectTest {
     public void gradeConversionEmptyTest() {
         Assert.assertEquals(new ArrayList<>(),
                 ConversionVulcanObject.gradesToGradeEntities(new ArrayList<Grade>()));
+    }
+
+    @Test
+    public void dayConversionEmptyTest() {
+        Assert.assertEquals(new ArrayList<>(),
+                ConversionVulcanObject.daysToDaysEntities(new ArrayList<Day>()));
+    }
+
+    @Test
+    public void dayConversionTest() {
+        List<Day> dayList = new ArrayList<>();
+        dayList.add(new Day().setDate("20.12.2012"));
+        List<io.github.wulkanowy.dao.entities.Day> dayEntityList =
+                ConversionVulcanObject.daysToDaysEntities(dayList);
+
+        Assert.assertEquals("20.12.2012", dayEntityList.get(0).getDate());
+    }
+
+    @Test
+    public void lessonConversionEmptyTest() {
+        Assert.assertEquals(new ArrayList<>(),
+                ConversionVulcanObject.lessonsToLessonsEntities(new ArrayList<Lesson>()));
+    }
+
+    @Test
+    public void lessonConversionTest() {
+        List<Lesson> lessonList = new ArrayList<>();
+        lessonList.add(new Lesson().setRoom("20"));
+        List<io.github.wulkanowy.dao.entities.Lesson> lessonEntityList =
+                ConversionVulcanObject.lessonsToLessonsEntities(lessonList);
+
+        Assert.assertEquals("20", lessonEntityList.get(0).getRoom());
     }
 }

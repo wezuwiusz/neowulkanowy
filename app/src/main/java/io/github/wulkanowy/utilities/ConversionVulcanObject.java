@@ -4,8 +4,11 @@ package io.github.wulkanowy.utilities;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.wulkanowy.dao.entities.Day;
 import io.github.wulkanowy.dao.entities.Grade;
+import io.github.wulkanowy.dao.entities.Lesson;
 import io.github.wulkanowy.dao.entities.Subject;
+import io.github.wulkanowy.dao.entities.Week;
 
 public class ConversionVulcanObject {
 
@@ -47,5 +50,53 @@ public class ConversionVulcanObject {
             gradeEntityList.add(gradeEntity);
         }
         return gradeEntityList;
+    }
+
+    public static Week weekToWeekEntitie(io.github.wulkanowy.api.timetable.Week week) {
+        return new Week().setStartDayDate(week.getStartDayDate());
+    }
+
+
+    public static List<Day> daysToDaysEntities(List<io.github.wulkanowy.api.timetable.Day> dayList) {
+
+        List<Day> dayEntityList = new ArrayList<>();
+
+        for (io.github.wulkanowy.api.timetable.Day day : dayList) {
+            Day dayEntity = new Day()
+                    .setDate(day.getDate())
+                    .setDayName(day.getDayName())
+                    .setFreeDay(day.isFreeDay())
+                    .setFreeDayName(day.getFreeDayName());
+
+            dayEntityList.add(dayEntity);
+        }
+        return dayEntityList;
+    }
+
+    public static List<Lesson> lessonsToLessonsEntities(List<io.github.wulkanowy.api.timetable.Lesson> lessonList) {
+
+        List<Lesson> lessonEntityList = new ArrayList<>();
+
+        for (io.github.wulkanowy.api.timetable.Lesson lesson : lessonList) {
+            Lesson lessonEntity = new Lesson()
+                    .setNumber(lesson.getNumber())
+                    .setSubject(lesson.getSubject())
+                    .setTeacher(lesson.getTeacher())
+                    .setRoom(lesson.getRoom())
+                    .setDescription(lesson.getDescription())
+                    .setGroupName(lesson.getGroupName())
+                    .setStartTime(lesson.getStartTime())
+                    .setEndTime(lesson.getEndTime())
+                    .setDate(lesson.getDate())
+                    .setEmpty(lesson.isEmpty())
+                    .setDivisionIntoGroups(lesson.isDivisionIntoGroups())
+                    .setPlanning(lesson.isPlanning())
+                    .setRealized(lesson.isRealized())
+                    .setMovedOrCanceled(lesson.isMovedOrCanceled())
+                    .setNewMovedInOrChanged(lesson.isNewMovedInOrChanged());
+
+            lessonEntityList.add(lessonEntity);
+        }
+        return lessonEntityList;
     }
 }

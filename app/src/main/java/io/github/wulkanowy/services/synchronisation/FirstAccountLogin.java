@@ -44,7 +44,7 @@ public class FirstAccountLogin {
     }
 
     public LoginSession login(Context context, DaoSession daoSession, String certificate)
-            throws NotLoggedInErrorException, AccountPermissionException, IOException, CryptoException{
+            throws NotLoggedInErrorException, AccountPermissionException, IOException, CryptoException {
 
         long userId;
 

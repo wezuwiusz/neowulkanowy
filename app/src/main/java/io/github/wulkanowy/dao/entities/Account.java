@@ -9,7 +9,10 @@ import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
 
-@Entity(nameInDb = "Accounts")
+@Entity(
+        nameInDb = "Accounts",
+        active = true
+)
 public class Account {
 
     @Id(autoincrement = true)
@@ -36,6 +39,9 @@ public class Account {
     @ToMany(referencedJoinProperty = "userId")
     private List<Grade> gradeList;
 
+    @ToMany(referencedJoinProperty = "userId")
+    private List<Day> dayList;
+
     /**
      * Used to resolve relations
      */
@@ -50,7 +56,7 @@ public class Account {
 
     @Generated(hash = 735765217)
     public Account(Long id, String name, String email, String password, String symbol,
-            String snpId) {
+                   String snpId) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -211,6 +217,36 @@ public class Account {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 300459794)
+    public List<Day> getDayList() {
+        if (dayList == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            DayDao targetDao = daoSession.getDayDao();
+            List<Day> dayListNew = targetDao._queryAccount_DayList(id);
+            synchronized (this) {
+                if (dayList == null) {
+                    dayList = dayListNew;
+                }
+            }
+        }
+        return dayList;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1010399236)
+    public synchronized void resetDayList() {
+        dayList = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

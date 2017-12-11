@@ -11,7 +11,7 @@
     <uses-sdk tools:overrideLibrary="com.thoughtbot.expandablerecyclerview" />
 
     <application
-        android:name=".activity.WulkanowyApp"
+        android:name=".ui.WulkanowyApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/WulkanowyTheme">
         <activity
-            android:name=".activity.splash.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:theme="@style/WulkanowyTheme.noActionBar">
@@ -30,17 +30,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activity.dashboard.DashboardActivity"
+            android:name=".ui.main.DashboardActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_dashboard_text" />
 
         <service
-            android:name=".services.jobs.GradeJob$GradeService"
+            android:name=".services.jobs.FullSyncJob$SyncService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />

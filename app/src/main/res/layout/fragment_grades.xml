@@ -4,7 +4,7 @@
     android:id="@+id/coordinator_grade"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.github.wulkanowy.activity.dashboard.grades.GradesFragment">
+    tools:context="io.github.wulkanowy.ui.main.grades.GradesFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -9,7 +9,10 @@ import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
 
-@Entity(nameInDb = "Subjects")
+@Entity(
+        nameInDb = "Subjects",
+        active = true
+)
 public class Subject {
 
     @Id(autoincrement = true)

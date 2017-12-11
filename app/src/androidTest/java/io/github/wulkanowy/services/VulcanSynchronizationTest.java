@@ -6,18 +6,26 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
 @RunWith(AndroidJUnit4.class)
 public class VulcanSynchronizationTest {
 
-    @Test
-    public void syncNoLoginSessionSubjectTest() {
+    @Test(expected = IOException.class)
+    public void syncNoLoginSessionSubjectTest() throws IOException {
         VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
-        Assert.assertFalse(vulcanSynchronization.syncSubjectsAndGrades());
+        vulcanSynchronization.syncSubjectsAndGrades();
     }
 
-    @Test
-    public void syncNoLoginSessionGradeTest() {
+    @Test(expected = IOException.class)
+    public void syncNoLoginSessionGradeTest() throws IOException {
         VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
-        Assert.assertFalse(vulcanSynchronization.syncGrades());
+        vulcanSynchronization.syncGrades();
+    }
+
+    @Test(expected = IOException.class)
+    public void syncNoLoginSessionTimetableTest() throws IOException {
+        VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
+        vulcanSynchronization.syncTimetable();
     }
 }

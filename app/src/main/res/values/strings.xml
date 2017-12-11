@@ -51,13 +51,29 @@
     <string name="dialog_teacher_text">Teacher</string>
     <string name="dialog_date_text">Date</string>
     <string name="dialog_color_text">Color</string>
-    <string name="dialog_close">Close</string>
+
+    <string name="timetable_dialog_lesson">Lesson</string>
+    <string name="timetable_dialog_room">Room</string>
+    <string name="timetable_dialog_group">Group</string>
+    <string name="timetable_dialog_time">Times</string>
+    <string name="timetable_dialog_description">Changes</string>
+
+    <string name="timetable_refresh_success">Successful synchronisation</string>
+
+    <string name="generic_dialog_details">Details</string>
+    <string name="generic_dialog_close">Close</string>
+    <string name="generic_dialog_teacher">Teacher</string>
+
+    <string name="generic_app_no_data">No data</string>
+    <string name="generic_timeout_error">Too long wait for connection</string>
 
     <string name="snackbar_no_grades">No new grades</string>
     <string name="snackbar_new_grade">Number of new grades: %1$d</string>
 
     <string name="info_average_grades">Average: %1$.2f</string>
     <string name="info_no_average">No average</string>
+
+    <string name="timetable_subitem_room">Room %s</string>
 
     <plurals name="numberOfGradesPlurals">
         <item quantity="one">%d grade</item>
