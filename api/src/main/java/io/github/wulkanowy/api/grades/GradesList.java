@@ -15,17 +15,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.github.wulkanowy.api.Semester;
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class GradesList {
 
-    private StudentAndParent snp = null;
-
     private static final String GRADES_PAGE_URL = "Oceny/Wszystkie?details=2&okres=";
+
+    private SnP snp = null;
 
     private List<Grade> grades = new ArrayList<>();
 
-    public GradesList(StudentAndParent snp) {
+    public GradesList(SnP snp) {
         this.snp = snp;
     }
 

@@ -3,12 +3,12 @@ package io.github.wulkanowy.ui.main;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.List;
 
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.api.login.VulcanOfflineException;
 
 public class RefreshTask extends AsyncTask<Void, Void, List<?>> {
 
@@ -30,11 +30,15 @@ public class RefreshTask extends AsyncTask<Void, Void, List<?>> {
         } catch (UnknownHostException e) {
             stringEventId = R.string.noInternet_text;
             Log.i(DEBUG_TAG, "Synchronization is failed because occur problem with internet",
-                    new IOException());
+                    e.getCause());
             return null;
         } catch (SocketTimeoutException e) {
             stringEventId = R.string.generic_timeout_error;
             Log.i(DEBUG_TAG, "Too long wait for connection with internet", e);
+            return null;
+        } catch (VulcanOfflineException e) {
+            stringEventId = R.string.error_host_offline;
+            Log.i(DEBUG_TAG, "VULCAN services is offline");
             return null;
         } catch (Exception e) {
             stringEventId = R.string.refresh_error_text;

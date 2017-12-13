@@ -8,8 +8,8 @@ import java.io.IOException;
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.AccountPermissionException;
 import io.github.wulkanowy.api.login.BadCredentialsException;
-import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
+import io.github.wulkanowy.api.login.VulcanOfflineException;
 import io.github.wulkanowy.dao.entities.Account;
 import io.github.wulkanowy.dao.entities.AccountDao;
 import io.github.wulkanowy.dao.entities.DaoSession;
@@ -19,38 +19,22 @@ import io.github.wulkanowy.services.LoginSession;
 
 public class FirstAccountLogin {
 
+    private final Context context;
 
-    private final Login login;
+    private final DaoSession daoSession;
 
     private final Vulcan vulcan;
 
-    private final String email;
-
-    private final String password;
-
-    private final String symbol;
-
-    public FirstAccountLogin(Login login, Vulcan vulcan, String email, String password, String symbol) {
-        this.login = login;
+    public FirstAccountLogin(Context context, DaoSession daoSession, Vulcan vulcan) {
+        this.context = context;
+        this.daoSession = daoSession;
         this.vulcan = vulcan;
-        this.email = email;
-        this.password = password;
-        this.symbol = symbol;
     }
 
-    public String connect()
-            throws BadCredentialsException, IOException {
-        return login.sendCredentials(email, password, symbol);
-    }
+    public LoginSession login(String email, String password, String symbol)
+            throws NotLoggedInErrorException, AccountPermissionException, IOException, CryptoException, VulcanOfflineException, BadCredentialsException {
 
-    public LoginSession login(Context context, DaoSession daoSession, String certificate)
-            throws NotLoggedInErrorException, AccountPermissionException, IOException, CryptoException {
-
-        long userId;
-
-        String realSymbol = login.sendCertificate(certificate, symbol);
-
-        vulcan.login(login.getCookiesObject(), realSymbol);
+        vulcan.login(email, password, symbol);
 
         AccountDao accountDao = daoSession.getAccountDao();
         Safety safety = new Safety();
@@ -61,7 +45,7 @@ public class FirstAccountLogin {
                 .setSymbol(vulcan.getStudentAndParent().getSymbol())
                 .setSnpId(vulcan.getStudentAndParent().getId());
 
-        userId = accountDao.insert(account);
+        long userId = accountDao.insert(account);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("LoginData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

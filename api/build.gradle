@@ -7,7 +7,6 @@ apply plugin: 'com.github.dcendents.android-maven'
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
 
-
 ext {
     PUBLISH_GROUP_ID = GROUP_ID
     PUBLISH_ARTIFACT_ID = 'api'
@@ -29,7 +28,7 @@ jacocoTestReport {
 }
 
 dependencies {
-    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'org.jsoup:jsoup:1.11.2'
     implementation 'org.apache.commons:commons-lang3:3.6'
 
     testImplementation 'junit:junit:4.12'

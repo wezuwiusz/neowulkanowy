@@ -12,15 +12,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class Timetable {
 
-    private StudentAndParent snp;
-
     private static final String TIMETABLE_PAGE_URL = "Lekcja.mvc/PlanLekcji?data=";
 
-    public Timetable(StudentAndParent snp) {
+    private SnP snp;
+
+    public Timetable(SnP snp) {
         this.snp = snp;
     }
 

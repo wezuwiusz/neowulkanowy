@@ -5,19 +5,19 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class BasicInformation {
-
-    private Document studentDataPageDocument;
-
-    private StudentAndParent snp;
 
     private static final String STUDENT_DATA_PAGE_URL = "Uczen.mvc/DanePodstawowe";
 
     private static final String CONTENT_QUERY = ".mainContainer > article";
 
-    public BasicInformation(StudentAndParent snp) {
+    private Document studentDataPageDocument;
+
+    private SnP snp;
+
+    public BasicInformation(SnP snp) {
         this.snp = snp;
     }
 

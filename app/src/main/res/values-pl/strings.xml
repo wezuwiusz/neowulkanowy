@@ -39,6 +39,7 @@
     <string name="fragment_no_grades">Brak ocen</string>
 
     <string name="noInternet_text">Brak połączenia z internetem</string>
+    <string name="error_host_offline">Przerwa techniczna. Spróbuj ponownie później</string>
     <string name="encrypt_failed_text">Szyfrowanie nie powiodło się. Automatyczne logowanie zostało wyłączone</string>
     <string name="version_text">Wersja %1$s</string>
     <string name="refresh_error_text">"Podczas odświeżania zawartości wystąpił błąd. "</string>

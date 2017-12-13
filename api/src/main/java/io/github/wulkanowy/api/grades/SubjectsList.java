@@ -8,15 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class SubjectsList {
 
-    private StudentAndParent snp = null;
-
     private static final String SUBJECTS_PAGE_URL = "Oceny/Wszystkie?details=1";
 
-    public SubjectsList(StudentAndParent snp) {
+    private SnP snp = null;
+
+    public SubjectsList(SnP snp) {
         this.snp = snp;
     }
 

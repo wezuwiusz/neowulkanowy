@@ -12,6 +12,7 @@ import io.github.wulkanowy.api.login.BadCredentialsException;
 import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.login.LoginErrorException;
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
+import io.github.wulkanowy.api.login.VulcanOfflineException;
 import io.github.wulkanowy.api.notes.AchievementsList;
 import io.github.wulkanowy.api.notes.NotesList;
 import io.github.wulkanowy.api.school.SchoolInfo;
@@ -26,29 +27,80 @@ public class Vulcan extends Api {
 
     private String symbol;
 
-    private StudentAndParent snp;
+    private SnP snp;
 
-    public void login(Cookies cookies, String symbol) {
+    private String protocolSchema = "https";
+
+    private String logHost = "vulcan.net.pl";
+
+    private String email;
+
+    public Vulcan login(Cookies cookies, String symbol) {
         this.cookies = cookies;
         this.symbol = symbol;
+
+        return this;
     }
 
-    public void login(String email, String password, String symbol)
-            throws BadCredentialsException, AccountPermissionException, LoginErrorException, IOException {
-        Login login = new Login(new Cookies());
-        String realSymbol = login.login(email, password, symbol);
+    public Vulcan login(String email, String password, String symbol)
+            throws BadCredentialsException, AccountPermissionException,
+            LoginErrorException, IOException, VulcanOfflineException {
+        Login login = getLoginObject();
+
+        setFullEndpointInfo(email);
+        login.setProtocolSchema(protocolSchema);
+        login.setLogHost(logHost);
+
+        String realSymbol = login.login(this.email, password, symbol);
 
         login(login.getCookiesObject(), realSymbol);
+
+        return this;
     }
 
-    public void login(String email, String password, String symbol, String id)
-            throws BadCredentialsException, AccountPermissionException, LoginErrorException, IOException {
+    public Vulcan login(String email, String password, String symbol, String id)
+            throws BadCredentialsException, AccountPermissionException,
+            LoginErrorException, IOException, VulcanOfflineException {
         login(email, password, symbol);
 
         this.id = id;
+
+        return this;
     }
 
-    public StudentAndParent getStudentAndParent() throws IOException, NotLoggedInErrorException {
+    public String getProtocolSchema() {
+        return protocolSchema;
+    }
+
+    public String getLogHost() {
+        return logHost;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Login getLoginObject() {
+        return new Login(new Cookies());
+    }
+
+    public Vulcan setFullEndpointInfo(String email) {
+        String[] creds = email.split("\\\\");
+
+        this.email = email;
+
+        if (creds.length >= 2) {
+            String[] url = creds[0].split("://");
+
+            this.protocolSchema = url[0];
+            this.logHost = url[1];
+            this.email = creds[2];
+        }
+
+        return this;
+    }
+
+    public SnP getStudentAndParent() throws IOException, NotLoggedInErrorException {
         if (null == getCookiesObject()) {
             throw new NotLoggedInErrorException();
         }
@@ -58,6 +110,8 @@ public class Vulcan extends Api {
         }
 
         snp = createSnp(cookies, symbol, id);
+        snp.setLogHost(logHost);
+        snp.setProtocolSchema(protocolSchema);
 
         snp.storeContextCookies();
 
@@ -66,7 +120,7 @@ public class Vulcan extends Api {
         return snp;
     }
 
-    public StudentAndParent createSnp(Cookies cookies, String symbol, String id) {
+    public SnP createSnp(Cookies cookies, String symbol, String id) {
         if (null == id) {
             return new StudentAndParent(cookies, symbol);
         }

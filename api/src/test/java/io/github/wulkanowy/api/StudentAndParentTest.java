@@ -26,7 +26,8 @@ public class StudentAndParentTest {
 
         Mockito.when(snp.getSnPPageDocument(Mockito.anyString())).thenReturn(gradesPageDocument);
         Mockito.when(snp.getExtractedIdFromUrl(Mockito.anyString())).thenCallRealMethod();
-        Mockito.when(snp.getBaseUrl()).thenReturn("https://uonetplus-opiekun.vulcan.net.pl/{symbol}/{ID}/");
+        Mockito.when(snp.getLogHost()).thenReturn("vulcan.net.pl");
+        Mockito.when(snp.getBaseUrl()).thenReturn("https://uonetplus-opiekun.vulcan.net.pl/symbol/123456/");
         Mockito.when(snp.getSymbol()).thenReturn("symbol");
         Mockito.when(snp.getId()).thenReturn("123456");
         Mockito.when(snp.getSemesters()).thenCallRealMethod();

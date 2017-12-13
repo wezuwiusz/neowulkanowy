@@ -171,11 +171,11 @@ public class LoginActivity extends Activity {
     }
 
     private boolean isEmailValid(String email) {
-        return email.contains("@");
+        return email.contains("@") || email.contains("\\\\");
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 7;
+        return password.length() > 4;
     }
 
     private void hideSoftKeyboard() {

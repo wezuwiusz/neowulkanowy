@@ -24,6 +24,7 @@ import io.github.wulkanowy.R;
 import io.github.wulkanowy.api.login.AccountPermissionException;
 import io.github.wulkanowy.api.login.BadCredentialsException;
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
+import io.github.wulkanowy.api.login.VulcanOfflineException;
 import io.github.wulkanowy.dao.entities.DaoSession;
 import io.github.wulkanowy.security.CryptoException;
 import io.github.wulkanowy.services.LoginSession;
@@ -68,20 +69,15 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
     @Override
     protected Integer doInBackground(Void... params) {
         if (ConnectionUtilities.isOnline(activity.get())) {
+            DaoSession daoSession = ((WulkanowyApp) activity.get().getApplication()).getDaoSession();
             VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
 
-            DaoSession daoSession = ((WulkanowyApp) activity.get().getApplication()).getDaoSession();
-
             try {
-                publishProgress("1", activity.get().getResources().getString(R.string.step_connecting));
-                vulcanSynchronization.firstLoginConnectStep(email, password, symbol);
+                publishProgress("1", activity.get().getResources().getString(R.string.step_login));
+                vulcanSynchronization.firstLoginSignInStep(activity.get(), daoSession, email, password, symbol);
 
-                publishProgress("2", activity.get().getResources().getString(R.string.step_login));
-                vulcanSynchronization.firstLoginSignInStep(activity.get(), daoSession);
-
-                publishProgress("3", activity.get().getResources().getString(R.string.step_synchronization));
+                publishProgress("2", activity.get().getResources().getString(R.string.step_synchronization));
                 vulcanSynchronization.syncAll();
-
             } catch (BadCredentialsException e) {
                 return R.string.login_bad_credentials_text;
             } catch (AccountPermissionException e) {
@@ -94,6 +90,8 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
                 return R.string.generic_timeout_error;
             } catch (NotLoggedInErrorException | IOException e) {
                 return R.string.login_denied_text;
+            } catch (VulcanOfflineException e) {
+                return R.string.error_host_offline;
             } catch (UnsupportedOperationException e) {
                 return -1;
             }
@@ -109,7 +107,7 @@ public class LoginTask extends AsyncTask<Void, String, Integer> {
 
     @Override
     protected void onProgressUpdate(String... progress) {
-        showText.get().setText(String.format("%1$s/3 - %2$s...", progress[0], progress[1]));
+        showText.get().setText(String.format("%1$s/2 - %2$s...", progress[0], progress[1]));
     }
 
     @Override

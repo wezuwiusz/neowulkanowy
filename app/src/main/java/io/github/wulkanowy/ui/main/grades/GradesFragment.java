@@ -22,6 +22,7 @@ import java.util.List;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.api.Vulcan;
+import io.github.wulkanowy.api.login.VulcanOfflineException;
 import io.github.wulkanowy.dao.DatabaseAccess;
 import io.github.wulkanowy.dao.entities.Account;
 import io.github.wulkanowy.dao.entities.AccountDao;
@@ -146,7 +147,7 @@ public class GradesFragment extends Fragment {
         }
     }
 
-    private static class RefreshTask extends AsyncTask<Void, Void, Boolean> {
+    private static class RefreshTask extends AsyncTask<Void, Void, Integer> {
 
         private DaoSession daoSession;
 
@@ -161,24 +162,27 @@ public class GradesFragment extends Fragment {
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Integer doInBackground(Void... params) {
             VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
             try {
                 vulcanSynchronization.loginCurrentUser(activity.get(), daoSession, new Vulcan());
                 vulcanSynchronization.syncGrades();
                 downloadGradesFormDatabase(daoSession);
-                return true;
+                return 1;
+            } catch (VulcanOfflineException e) {
+                Log.e(VulcanJobHelper.DEBUG_TAG, "There was a synchronization problem, because vulcan is offline", e);
+                return R.string.error_host_offline;
             } catch (Exception e) {
                 Log.e(VulcanJobHelper.DEBUG_TAG, "There was a synchronization problem", e);
-                return false;
+                return R.string.refresh_error_text;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(Integer messageID) {
+            super.onPostExecute(messageID);
 
-            if (result) {
+            if (1 == messageID) {
                 if (mainView.get() != null && activity.get() != null) {
                     createExpList(mainView.get(), activity.get());
                 }
@@ -195,7 +199,7 @@ public class GradesFragment extends Fragment {
                             Snackbar.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(activity.get(), R.string.refresh_error_text, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity.get(), messageID, Toast.LENGTH_SHORT).show();
             }
 
             if (mainView.get() != null) {

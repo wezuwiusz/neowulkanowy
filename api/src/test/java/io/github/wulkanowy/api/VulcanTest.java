@@ -8,8 +8,10 @@ import org.mockito.Mockito;
 
 import io.github.wulkanowy.api.attendance.AttendanceStatistics;
 import io.github.wulkanowy.api.attendance.AttendanceTable;
+import io.github.wulkanowy.api.exams.ExamsWeek;
 import io.github.wulkanowy.api.grades.GradesList;
 import io.github.wulkanowy.api.grades.SubjectsList;
+import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.api.notes.AchievementsList;
 import io.github.wulkanowy.api.notes.NotesList;
@@ -32,6 +34,38 @@ public class VulcanTest extends Vulcan {
     }
 
     @Test
+    public void setFullEndpointInfoTest() throws Exception {
+        SnP snp = new StudentAndParent(new Cookies(), "Default");
+        Login login = Mockito.mock(Login.class);
+
+        Vulcan vulcan = Mockito.mock(Vulcan.class);
+        Mockito.when(vulcan.login(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenCallRealMethod();
+        Mockito.when(vulcan.login(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenCallRealMethod();
+        Mockito.when(vulcan.getLoginObject()).thenReturn(login);
+        Mockito.when(vulcan.createSnp(Mockito.any(Cookies.class), Mockito.anyString(), Mockito.anyString())).thenReturn(snp);
+        Mockito.when(vulcan.getCookiesObject()).thenCallRealMethod();
+        Mockito.when(vulcan.getStudentAndParent()).thenCallRealMethod();
+
+        Mockito.when(vulcan.setFullEndpointInfo(Mockito.anyString())).thenCallRealMethod();
+
+        Mockito.when(vulcan.getProtocolSchema()).thenCallRealMethod();
+        Mockito.when(vulcan.getLogHost()).thenCallRealMethod();
+        Mockito.when(vulcan.getEmail()).thenCallRealMethod();
+
+        vulcan.login("http://fakelog.net\\\\admin", "pass", "Default", "123");
+        Assert.assertEquals("http", vulcan.getProtocolSchema());
+        Assert.assertEquals("fakelog.net", vulcan.getLogHost());
+        Assert.assertEquals("admin", vulcan.getEmail());
+    }
+
+    @Test
+    public void getLoginObjectTest() throws Exception {
+        Mockito.when(vulcan.getLoginObject()).thenCallRealMethod();
+
+        Assert.assertThat(vulcan.getLoginObject(), CoreMatchers.instanceOf(Login.class));
+    }
+
+    @Test
     public void getStudentAndParentTest() throws Exception {
         Cookies cookies = new Cookies();
 
@@ -47,7 +81,7 @@ public class VulcanTest extends Vulcan {
 
         Mockito.when(vulcan.getStudentAndParent()).thenCallRealMethod();
 
-        StudentAndParent vulcanSnP = vulcan.getStudentAndParent();
+        SnP vulcanSnP = vulcan.getStudentAndParent();
 
         Assert.assertEquals(snp, vulcanSnP);
         Assert.assertEquals(vulcanSnP, vulcan.getStudentAndParent());
@@ -91,6 +125,13 @@ public class VulcanTest extends Vulcan {
         Mockito.when(vulcan.getAttendanceStatistics()).thenCallRealMethod();
         Assert.assertThat(vulcan.getAttendanceStatistics(),
                 CoreMatchers.instanceOf(AttendanceStatistics.class));
+    }
+
+    @Test
+    public void getExamsListTest() throws Exception {
+        Mockito.when(vulcan.getExamsList()).thenCallRealMethod();
+        Assert.assertThat(vulcan.getExamsList(),
+                CoreMatchers.instanceOf(ExamsWeek.class));
     }
 
     @Test

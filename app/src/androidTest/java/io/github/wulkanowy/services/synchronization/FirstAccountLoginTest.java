@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 
 import io.github.wulkanowy.api.StudentAndParent;
 import io.github.wulkanowy.api.Vulcan;
-import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.user.BasicInformation;
 import io.github.wulkanowy.api.user.PersonalData;
 import io.github.wulkanowy.dao.entities.Account;
@@ -50,17 +49,6 @@ public class FirstAccountLoginTest {
     }
 
     @Test
-    public void connectTest() throws Exception {
-        String certificate = "<xml>Certificate</xml>";
-        Login login = Mockito.mock(Login.class);
-        Mockito.when(login.sendCredentials(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
-                .thenReturn(certificate);
-        FirstAccountLogin firstAccountLogin = new FirstAccountLogin(login, new Vulcan(), "TEST@TEST", "TEST_PASS", "TEST_SYMBOL");
-
-        Assert.assertEquals(certificate, firstAccountLogin.connect());
-    }
-
-    @Test
     public void loginTest() throws Exception {
         StudentAndParent snp = Mockito.mock(StudentAndParent.class);
         Mockito.when(snp.getSymbol()).thenReturn("TEST-SYMBOL");
@@ -76,11 +64,8 @@ public class FirstAccountLoginTest {
         Mockito.doReturn(basicInformation).when(vulcan).getBasicInformation();
         Mockito.doReturn(snp).when(vulcan).getStudentAndParent();
 
-        Login login = Mockito.mock(Login.class);
-        Mockito.when(login.sendCertificate(Mockito.anyString(), Mockito.anyString())).thenReturn("TEST-SYMBOL");
-
-        FirstAccountLogin firstAccountLogin = new FirstAccountLogin(login, vulcan, "TEST@TEST", "TEST-PASS", "default");
-        LoginSession loginSession = firstAccountLogin.login(targetContext, daoSession, "<xml>cert</xml>");
+        FirstAccountLogin firstAccountLogin = new FirstAccountLogin(targetContext, daoSession, vulcan);
+        LoginSession loginSession = firstAccountLogin.login("TEST@TEST", "TEST-PASS", "default");
 
         Long userId = targetContext.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("userId", 0);
 

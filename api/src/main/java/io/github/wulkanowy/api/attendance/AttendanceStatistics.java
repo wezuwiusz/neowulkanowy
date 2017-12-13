@@ -8,15 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class AttendanceStatistics {
 
-    private StudentAndParent snp;
+    private SnP snp;
 
     private String attendancePageUrl = "Frekwencja.mvc";
 
-    public AttendanceStatistics(StudentAndParent snp) {
+    public AttendanceStatistics(SnP snp) {
         this.snp = snp;
     }
 

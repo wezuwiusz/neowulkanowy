@@ -20,6 +20,7 @@ import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.AccountPermissionException;
 import io.github.wulkanowy.api.login.BadCredentialsException;
 import io.github.wulkanowy.api.login.LoginErrorException;
+import io.github.wulkanowy.api.login.VulcanOfflineException;
 import io.github.wulkanowy.dao.entities.Account;
 import io.github.wulkanowy.dao.entities.AccountDao;
 import io.github.wulkanowy.dao.entities.DaoMaster;
@@ -60,7 +61,7 @@ public class CurrentAccountLoginTest {
 
     @Test(expected = IOException.class)
     public void emptyUserIdTest() throws CryptoException, BadCredentialsException,
-            AccountPermissionException, IOException, LoginErrorException {
+            AccountPermissionException, IOException, LoginErrorException, VulcanOfflineException {
 
         CurrentAccountLogin currentAccountLogin = new CurrentAccountLogin(context, daoSession, new Vulcan());
         currentAccountLogin.loginCurrentUser();
@@ -80,7 +81,7 @@ public class CurrentAccountLoginTest {
         setUserIdSharePreferences(userId);
 
         Vulcan vulcan = Mockito.mock(Vulcan.class);
-        Mockito.doNothing().when(vulcan).login("TEST@TEST", "TEST", "TEST_SYMBOL", "TEST_ID");
+        Mockito.when(vulcan.login("TEST@TEST", "TEST", "TEST_SYMBOL", "TEST_ID")).thenReturn(new Vulcan());
 
         CurrentAccountLogin currentAccountLogin = new CurrentAccountLogin(targetContext, daoSession, vulcan);
         LoginSession loginSession = currentAccountLogin.loginCurrentUser();

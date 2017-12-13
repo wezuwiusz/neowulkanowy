@@ -108,6 +108,14 @@ public class LoginTest {
         login.sendCertificate(getFixtureAsString("cert.xml"), "demo123");
     }
 
+    @Test(expected = VulcanOfflineException.class)
+    public void sendCertificateVulcanOfflineTest() throws Exception {
+        Login login = getSetUpLogin("PrzerwaTechniczna.html");
+        Mockito.when(login.findSymbol(Mockito.anyString(), Mockito.anyString())).thenCallRealMethod();
+        Mockito.when(login.sendCertificate(Mockito.anyString(), Mockito.anyString())).thenCallRealMethod();
+        login.sendCertificate(getFixtureAsString("cert.xml"), "demo123");
+    }
+
     @Test
     public void findSymbolInCertificateTest() throws Exception {
         Login login = new Login(new Cookies());

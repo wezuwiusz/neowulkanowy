@@ -7,15 +7,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class AttendanceTable {
 
-    private StudentAndParent snp;
+    private SnP snp;
 
     private String attendancePageUrl = "Frekwencja.mvc?data=";
 
-    public AttendanceTable(StudentAndParent snp) {
+    public AttendanceTable(SnP snp) {
         this.snp = snp;
     }
 

@@ -7,15 +7,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class FamilyInformation {
 
-    private StudentAndParent snp;
-
     private static final String STUDENT_DATA_PAGE_URL = "Uczen.mvc/DanePodstawowe";
 
-    public FamilyInformation(StudentAndParent snp) {
+    private SnP snp;
+
+    public FamilyInformation(SnP snp) {
         this.snp = snp;
     }
 

@@ -8,15 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class ExamsWeek {
 
-    private final StudentAndParent snp;
-
     private static final String EXAMS_PAGE_URL = "Sprawdziany.mvc/Terminarz?rodzajWidoku=2&data=";
 
-    public ExamsWeek(StudentAndParent snp) {
+    private final SnP snp;
+
+    public ExamsWeek(SnP snp) {
         this.snp = snp;
     }
 

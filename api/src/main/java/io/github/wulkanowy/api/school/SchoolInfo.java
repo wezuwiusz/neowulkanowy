@@ -4,15 +4,15 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 
-import io.github.wulkanowy.api.StudentAndParent;
+import io.github.wulkanowy.api.SnP;
 
 public class SchoolInfo {
 
-    private StudentAndParent snp = null;
-
     private static final String SCHOOL_PAGE_URL = "Szkola.mvc/Nauczyciele";
 
-    public SchoolInfo(StudentAndParent snp) {
+    private SnP snp = null;
+
+    public SchoolInfo(SnP snp) {
         this.snp = snp;
     }
 
