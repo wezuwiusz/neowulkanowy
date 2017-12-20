@@ -28,7 +28,7 @@ jacocoTestReport {
 }
 
 dependencies {
-    implementation 'org.jsoup:jsoup:1.11.2'
+    implementation 'org.jsoup:jsoup:1.10.3'
     implementation 'org.apache.commons:commons-lang3:3.6'
 
     testImplementation 'junit:junit:4.12'
