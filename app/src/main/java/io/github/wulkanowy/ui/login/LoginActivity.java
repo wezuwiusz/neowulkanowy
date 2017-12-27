@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import java.util.LinkedHashMap;
 
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.services.Updater;
 
 /**
  * A login screen that offers login via email/password.
@@ -35,10 +37,14 @@ public class LoginActivity extends Activity {
 
     private AutoCompleteTextView symbolView;
 
+    private Updater updater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        updater = new Updater(this).checkForUpdates();
 
         // Set up the login form.
         emailView = findViewById(R.id.email);
@@ -65,6 +71,12 @@ public class LoginActivity extends Activity {
         findViewById(R.id.action_forgot_password).setOnClickListener(getButtonLinkListener(
                 "https://cufs.vulcan.net.pl/Default/AccountManage/UnlockAccount"
         ));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        updater.onRequestPermissionsResult(requestCode, grantResults);
     }
 
     private TextView.OnEditorActionListener getTextViewSignInListener() {
@@ -214,5 +226,11 @@ public class LoginActivity extends Activity {
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        updater.onDestroy(this);
     }
 }

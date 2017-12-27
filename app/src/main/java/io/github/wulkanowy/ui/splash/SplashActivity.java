@@ -32,14 +32,16 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void executeOnRunApp() {
+        Intent intent;
+
         if (getSharedPreferences("LoginData", Context.MODE_PRIVATE).getLong("userId", 0) == 0) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, LoginActivity.class);
         } else {
             new FullSyncJob().scheduledJob(getApplicationContext());
 
-            Intent intent = new Intent(this, DashboardActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, DashboardActivity.class);
         }
+
+        startActivity(intent);
     }
 }
