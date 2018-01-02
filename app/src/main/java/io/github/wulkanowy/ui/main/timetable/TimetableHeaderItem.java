@@ -14,7 +14,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractExpandableHeaderItem;
 import eu.davidea.viewholders.ExpandableViewHolder;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.dao.entities.Day;
+import io.github.wulkanowy.db.dao.entities.Day;
 
 public class TimetableHeaderItem
         extends AbstractExpandableHeaderItem<TimetableHeaderItem.HeaderViewHolder, TimetableSubItem> {

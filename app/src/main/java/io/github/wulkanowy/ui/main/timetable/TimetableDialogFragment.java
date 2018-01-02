@@ -14,7 +14,7 @@ import android.widget.TextView;
 import org.apache.commons.lang3.StringUtils;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.dao.entities.Lesson;
+import io.github.wulkanowy.db.dao.entities.Lesson;
 
 public class TimetableDialogFragment extends DialogFragment {
 

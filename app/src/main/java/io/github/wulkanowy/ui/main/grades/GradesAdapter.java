@@ -18,8 +18,8 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.dao.entities.Grade;
-import io.github.wulkanowy.utilities.AverageCalculator;
+import io.github.wulkanowy.db.dao.entities.Grade;
+import io.github.wulkanowy.utils.AverageCalculator;
 
 public class GradesAdapter extends ExpandableRecyclerViewAdapter<GradesAdapter.SubjectViewHolder, GradesAdapter.GradeViewHolder> {
 

@@ -21,19 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.WulkanowyApp;
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.login.VulcanOfflineException;
-import io.github.wulkanowy.dao.DatabaseAccess;
-import io.github.wulkanowy.dao.entities.Account;
-import io.github.wulkanowy.dao.entities.AccountDao;
-import io.github.wulkanowy.dao.entities.DaoSession;
-import io.github.wulkanowy.dao.entities.Grade;
-import io.github.wulkanowy.dao.entities.Subject;
-import io.github.wulkanowy.services.LoginSession;
-import io.github.wulkanowy.services.VulcanSynchronization;
+import io.github.wulkanowy.db.dao.DatabaseAccess;
+import io.github.wulkanowy.db.dao.entities.Account;
+import io.github.wulkanowy.db.dao.entities.AccountDao;
+import io.github.wulkanowy.db.dao.entities.DaoSession;
+import io.github.wulkanowy.db.dao.entities.Grade;
+import io.github.wulkanowy.db.dao.entities.Subject;
 import io.github.wulkanowy.services.jobs.VulcanJobHelper;
-import io.github.wulkanowy.ui.WulkanowyApp;
-import io.github.wulkanowy.utilities.ConnectionUtilities;
+import io.github.wulkanowy.services.sync.LoginSession;
+import io.github.wulkanowy.services.sync.VulcanSync;
+import io.github.wulkanowy.utils.NetworkUtils;
 
 public class GradesFragment extends Fragment {
 
@@ -106,7 +106,7 @@ public class GradesFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (ConnectionUtilities.isOnline(getContext())) {
+                if (NetworkUtils.isOnline(getContext())) {
                     new RefreshTask(getActivity(), mainView, daoSession).execute();
                 } else {
                     Toast.makeText(mainView.getContext(), R.string.noInternet_text, Toast.LENGTH_SHORT).show();
@@ -163,17 +163,17 @@ public class GradesFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(Void... params) {
-            VulcanSynchronization vulcanSynchronization = new VulcanSynchronization(new LoginSession());
+            VulcanSync vulcanSync = new VulcanSync(new LoginSession());
             try {
-                vulcanSynchronization.loginCurrentUser(activity.get(), daoSession, new Vulcan());
-                vulcanSynchronization.syncGrades();
+                vulcanSync.loginCurrentUser(activity.get(), daoSession, new Vulcan());
+                vulcanSync.syncGrades();
                 downloadGradesFormDatabase(daoSession);
                 return 1;
             } catch (VulcanOfflineException e) {
-                Log.e(VulcanJobHelper.DEBUG_TAG, "There was a synchronization problem, because vulcan is offline", e);
+                Log.e(VulcanJobHelper.DEBUG_TAG, "There was a sync problem, because vulcan is offline", e);
                 return R.string.error_host_offline;
             } catch (Exception e) {
-                Log.e(VulcanJobHelper.DEBUG_TAG, "There was a synchronization problem", e);
+                Log.e(VulcanJobHelper.DEBUG_TAG, "There was a sync problem", e);
                 return R.string.refresh_error_text;
             }
         }

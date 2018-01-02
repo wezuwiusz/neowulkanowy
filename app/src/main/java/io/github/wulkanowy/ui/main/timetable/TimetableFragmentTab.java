@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.dao.entities.Day;
-import io.github.wulkanowy.dao.entities.Lesson;
-import io.github.wulkanowy.dao.entities.Week;
-import io.github.wulkanowy.dao.entities.WeekDao;
-import io.github.wulkanowy.services.VulcanSynchronization;
+import io.github.wulkanowy.db.dao.entities.Day;
+import io.github.wulkanowy.db.dao.entities.Lesson;
+import io.github.wulkanowy.db.dao.entities.Week;
+import io.github.wulkanowy.db.dao.entities.WeekDao;
+import io.github.wulkanowy.services.sync.VulcanSync;
 import io.github.wulkanowy.ui.main.AbstractFragment;
 
 public class TimetableFragmentTab extends AbstractFragment<TimetableHeaderItem> {
@@ -119,7 +119,7 @@ public class TimetableFragmentTab extends AbstractFragment<TimetableHeaderItem> 
 
     @Override
     public void onRefresh() throws Exception {
-        VulcanSynchronization synchronization = new VulcanSynchronization();
+        VulcanSync synchronization = new VulcanSync();
         synchronization.loginCurrentUser(getContext(), getDaoSession());
         synchronization.syncTimetable(date);
     }

@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.login;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -23,6 +21,7 @@ import java.util.LinkedHashMap;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.services.Updater;
+import io.github.wulkanowy.utils.KeyboardUtils;
 
 /**
  * A login screen that offers login via email/password.
@@ -178,7 +177,7 @@ public class LoginActivity extends Activity {
             LoginTask authTask = new LoginTask(this, email, password, symbol);
             authTask.showProgress(true);
             authTask.execute();
-            hideSoftKeyboard();
+            KeyboardUtils.hideSoftInput(this);
         }
     }
 
@@ -188,15 +187,6 @@ public class LoginActivity extends Activity {
 
     private boolean isPasswordValid(String password) {
         return password.length() > 4;
-    }
-
-    private void hideSoftKeyboard() {
-        InputMethodManager manager = (InputMethodManager)
-                getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (manager != null) {
-            manager.hideSoftInputFromWindow(getWindow()
-                    .getDecorView().getApplicationWindowToken(), 0);
-        }
     }
 
     @Override
@@ -220,7 +210,7 @@ public class LoginActivity extends Activity {
                     float y = ev.getRawY() + view.getTop() - coordinators[1];
                     if (x < view.getLeft() || x > view.getRight() || y < view.getTop()
                             || y > view.getBottom()) {
-                        hideSoftKeyboard();
+                        KeyboardUtils.hideSoftInput(this);
                     }
                 }
             }

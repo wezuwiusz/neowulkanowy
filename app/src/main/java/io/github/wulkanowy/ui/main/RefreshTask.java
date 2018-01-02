@@ -42,7 +42,7 @@ public class RefreshTask extends AsyncTask<Void, Void, List<?>> {
             return null;
         } catch (Exception e) {
             stringEventId = R.string.refresh_error_text;
-            Log.e(DEBUG_TAG, "There was a synchronization problem", e);
+            Log.e(DEBUG_TAG, "There was a sync problem", e);
             return null;
         }
     }

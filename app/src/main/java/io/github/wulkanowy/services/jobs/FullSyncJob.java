@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.Random;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.dao.DatabaseAccess;
-import io.github.wulkanowy.dao.entities.DaoSession;
-import io.github.wulkanowy.dao.entities.Grade;
-import io.github.wulkanowy.services.VulcanSynchronization;
+import io.github.wulkanowy.WulkanowyApp;
+import io.github.wulkanowy.db.dao.DatabaseAccess;
+import io.github.wulkanowy.db.dao.entities.DaoSession;
+import io.github.wulkanowy.db.dao.entities.Grade;
 import io.github.wulkanowy.services.notifications.NotificationBuilder;
-import io.github.wulkanowy.ui.WulkanowyApp;
+import io.github.wulkanowy.services.sync.VulcanSync;
 import io.github.wulkanowy.ui.main.DashboardActivity;
 
-public class FullSyncJob extends VulcanJobHelper<FullSyncJob> {
+public class FullSyncJob extends VulcanJobHelper {
 
     private static final String UNIQUE_TAG = "FullSync";
 
@@ -51,7 +51,7 @@ public class FullSyncJob extends VulcanJobHelper<FullSyncJob> {
         public void workToBePerformed() throws Exception {
             DaoSession daoSession = ((WulkanowyApp) getApplication()).getDaoSession();
 
-            VulcanSynchronization synchronization = new VulcanSynchronization()
+            VulcanSync synchronization = new VulcanSync()
                     .loginCurrentUser(getApplicationContext(), daoSession);
             synchronization.syncAll();
             List<Grade> newGradeList = new DatabaseAccess().getNewGrades(daoSession);

@@ -15,7 +15,8 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.dao.entities.Lesson;
+import io.github.wulkanowy.db.dao.entities.Lesson;
+
 
 public class TimetableSubItem extends AbstractSectionableItem<TimetableSubItem.SubItemViewHolder, TimetableHeaderItem> {
 

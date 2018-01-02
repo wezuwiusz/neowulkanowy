@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.utilities.TimeUtilities;
+import io.github.wulkanowy.utils.TimeUtils;
 
 public class TimetableFragment extends Fragment {
 
@@ -81,7 +81,7 @@ public class TimetableFragment extends Fragment {
 
     private void setDateStringList() {
         if (dateStringList.isEmpty()) {
-            dateStringList = TimeUtilities.getMondaysFromCurrentSchoolYear(DATE_PATTERN);
+            dateStringList = TimeUtils.getMondaysFromCurrentSchoolYear(DATE_PATTERN);
         }
     }
 

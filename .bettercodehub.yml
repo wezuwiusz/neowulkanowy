@@ -1,5 +1,5 @@
 exclude:
-- /app/src/main/java/io/github/wulkanowy/dao/entities/.*
+- /app/src/main/java/io/github/wulkanowy/db/dao/entities/.*
 component_depth: 1
 languages:
 - java
