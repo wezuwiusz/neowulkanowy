@@ -29,10 +29,10 @@ jacocoTestReport {
 
 dependencies {
     implementation 'org.jsoup:jsoup:1.10.3'
-    implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation 'org.apache.commons:commons-lang3:3.7'
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.11.0'
+    testImplementation 'org.mockito:mockito-core:2.13.0'
 }
 
 version = PUBLISH_VERSION
