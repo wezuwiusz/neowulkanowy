@@ -148,6 +148,7 @@ public class TimetableTest extends StudentAndParentTestCase {
         Assert.assertEquals("zastępstwo (poprzednio: Religia)", full.getWeekTable().getDay(2).getLesson(0).getDescription());
         Assert.assertEquals("zastępstwo (poprzednio: Wychowanie fizyczne)", full.getWeekTable().getDay(3).getLesson(1).getDescription());
         Assert.assertEquals("", full.getWeekTable().getDay(4).getLesson(0).getDescription());
+        Assert.assertEquals("egzamin", full.getWeekTable().getDay(3).getLesson(0).getDescription());
         Assert.assertEquals("", holidays.getWeekTable().getDay(3).getLesson(3).getDescription());
     }
 

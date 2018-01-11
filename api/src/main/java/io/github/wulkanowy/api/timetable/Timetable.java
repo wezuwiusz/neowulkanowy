@@ -88,6 +88,8 @@ public class Timetable {
     }
 
     private void addLessonDetails(Lesson lesson, Elements e) {
+        moveWarningToLessonNode(e);
+
         switch (e.size()) {
             case 1:
                 addLessonInfoFromElement(lesson, e.first());
@@ -101,6 +103,15 @@ public class Timetable {
             default:
                 lesson.setEmpty(true);
                 break;
+        }
+    }
+
+    private void moveWarningToLessonNode(Elements e) {
+        Elements warn = e.select(".uwaga-panel");
+
+        if (!warn.isEmpty()) {
+            e.select(".x-treelabel-rlz").last().text("(" + warn.text() + ")");
+            e.remove(1);
         }
     }
 
