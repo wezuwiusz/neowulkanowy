@@ -33,7 +33,7 @@ jobs:
           command: ./gradlew dependencies --no-daemon --stacktrace --console=plain -PdisablePreDex || true
       - run:
           name: Initial build
-          command: ./gradlew -x test -x lint build assembleDebug --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew build assembleDebug -x test -x lint -x fabricGenerateResourcesRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - store_artifacts:
           path: ./app/build/outputs/apk/
           destination: apks/
@@ -54,7 +54,7 @@ jobs:
           <<: *general_cache_key
       - run:
           name: Run lint
-          command: ./gradlew lint --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew lint -x fabricGenerateResourcesRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - store_artifacts:
           path: ./app/build/reports/
           destination: lint_reports/app/
@@ -73,7 +73,7 @@ jobs:
           <<: *general_cache_key
       - run:
           name: Run app tests
-          command: ./gradlew :app:test :app:jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew :app:test :app:jacocoTestReport -x fabricGenerateResourcesRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Upload unit code coverage to codecov
           command: bash <(curl -s https://codecov.io/bash) -F app

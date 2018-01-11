@@ -4,10 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
+
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.utils.Log;
+import io.fabric.sdk.android.Fabric;
 import io.github.wulkanowy.db.dao.entities.DaoMaster;
 import io.github.wulkanowy.db.dao.entities.DaoSession;
 
@@ -24,6 +28,8 @@ public class WulkanowyApp extends Application {
         if (BuildConfig.DEBUG) {
             enableDebugLog();
         }
+
+        initializeFabric();
 
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "wulkanowy-db");
 
@@ -44,6 +50,15 @@ public class WulkanowyApp extends Application {
     private void enableDebugLog() {
         QueryBuilder.LOG_VALUES = true;
         FlexibleAdapter.enableLogs(Log.Level.DEBUG);
+    }
+
+    private void initializeFabric() {
+        Fabric.with(new Fabric.Builder(this)
+                .kits(new Crashlytics.Builder()
+                        .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                        .build())
+                .debuggable(BuildConfig.DEBUG)
+                .build());
     }
 
     public DaoSession getDaoSession() {
