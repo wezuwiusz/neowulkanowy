@@ -38,11 +38,11 @@ public final class AverageCalculator {
             if (valueOfGrade.matches("[-][0-6]")
                     || valueOfGrade.matches("[0-6][-]")) {
                 String replacedValue = valueOfGrade.replaceAll("[-]", "");
-                return Float.valueOf(replacedValue) - 0.25f;
+                return Float.valueOf(replacedValue) - 0.33f;
             } else if (valueOfGrade.matches("[+][0-6]")
                     || valueOfGrade.matches("[0-6][+]")) {
                 String replacedValue = valueOfGrade.replaceAll("[+]", "");
-                return Float.valueOf((replacedValue)) + 0.25f;
+                return Float.valueOf((replacedValue)) + 0.33f;
             } else if (valueOfGrade.matches("[-|=]{1,2}[0-6]")
                     || valueOfGrade.matches("[0-6][-|=]{1,2}")) {
                 String replacedValue = valueOfGrade.replaceAll("[-|=]{1,2}", "");
