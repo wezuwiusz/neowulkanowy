@@ -21,7 +21,7 @@ import io.github.wulkanowy.api.timetable.Timetable;
 import io.github.wulkanowy.api.user.BasicInformation;
 import io.github.wulkanowy.api.user.FamilyInformation;
 
-public class Vulcan extends Api {
+public class Vulcan {
 
     private String id;
 
@@ -35,25 +35,27 @@ public class Vulcan extends Api {
 
     private String email;
 
-    public Vulcan login(Cookies cookies, String symbol) {
-        this.cookies = cookies;
-        this.symbol = symbol;
+    private Client client = new Client();
 
-        return this;
+    private Login login = new Login(client);
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
     }
 
     public Vulcan login(String email, String password, String symbol)
             throws BadCredentialsException, AccountPermissionException,
             LoginErrorException, IOException, VulcanOfflineException {
-        Login login = getLoginObject();
 
         setFullEndpointInfo(email);
         login.setProtocolSchema(protocolSchema);
         login.setLogHost(logHost);
 
-        String realSymbol = login.login(this.email, password, symbol);
-
-        login(login.getCookiesObject(), realSymbol);
+        this.symbol = login.login(this.email, password, symbol);
 
         return this;
     }
@@ -80,11 +82,7 @@ public class Vulcan extends Api {
         return email;
     }
 
-    public Login getLoginObject() {
-        return new Login(new Cookies());
-    }
-
-    public Vulcan setFullEndpointInfo(String email) {
+    private void setFullEndpointInfo(String email) {
         String[] creds = email.split("\\\\");
 
         this.email = email;
@@ -96,12 +94,10 @@ public class Vulcan extends Api {
             this.logHost = url[1];
             this.email = creds[2];
         }
-
-        return this;
     }
 
     public SnP getStudentAndParent() throws IOException, NotLoggedInErrorException {
-        if (null == getCookiesObject()) {
+        if (0 == client.getCookies().size()) {
             throw new NotLoggedInErrorException();
         }
 
@@ -109,23 +105,23 @@ public class Vulcan extends Api {
             return snp;
         }
 
-        snp = createSnp(cookies, symbol, id);
+        snp = createSnp(client, symbol, id);
         snp.setLogHost(logHost);
         snp.setProtocolSchema(protocolSchema);
 
         snp.storeContextCookies();
 
-        this.cookies = snp.getCookiesObject();
+//        this.cookies = client.getCookiesObject();
 
         return snp;
     }
 
-    public SnP createSnp(Cookies cookies, String symbol, String id) {
+    SnP createSnp(Client client, String symbol, String id) {
         if (null == id) {
-            return new StudentAndParent(cookies, symbol);
+            return new StudentAndParent(client, symbol);
         }
 
-        return new StudentAndParent(cookies, symbol, id);
+        return new StudentAndParent(client, symbol, id);
     }
 
     public AttendanceStatistics getAttendanceStatistics() throws IOException, NotLoggedInErrorException {

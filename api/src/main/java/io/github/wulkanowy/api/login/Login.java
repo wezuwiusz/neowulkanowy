@@ -8,10 +8,9 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import io.github.wulkanowy.api.Api;
-import io.github.wulkanowy.api.Cookies;
+import io.github.wulkanowy.api.Client;
 
-public class Login extends Api {
+public class Login {
 
     private static final String loginPageUrl = "{schema}://cufs.{host}/{symbol}/Account/LogOn" +
             "?ReturnUrl=%2F{symbol}%2FFS%2FLS%3Fwa%3Dwsignin1.0%26wtrealm%3D" +
@@ -27,8 +26,10 @@ public class Login extends Api {
 
     private String symbol = "Default";
 
-    public Login(Cookies cookies) {
-        this.cookies = cookies;
+    private Client client;
+
+    public Login(Client client) {
+        this.client = client;
     }
 
     public void setProtocolSchema(String schema) {
@@ -66,7 +67,7 @@ public class Login extends Api {
             throws IOException, BadCredentialsException {
         this.symbol = symbol;
 
-        Document html = postPageByUrl(getLoginPageUrl(), new String[][]{
+        Document html = client.postPageByUrl(getLoginPageUrl(), new String[][]{
                 {"LoginName", email},
                 {"Password", password}
         });
@@ -82,7 +83,7 @@ public class Login extends Api {
             throws IOException, LoginErrorException, AccountPermissionException, VulcanOfflineException {
         this.symbol = findSymbol(defaultSymbol, certificate);
 
-        Document html = postPageByUrl(getLoginEndpointPageUrl(), new String[][]{
+        Document html = client.postPageByUrl(getLoginEndpointPageUrl(), new String[][]{
                 {"wa", "wsignin1.0"},
                 {"wresult", certificate}
         });

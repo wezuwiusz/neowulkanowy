@@ -7,15 +7,19 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.Map;
 
-public abstract class Api {
+public class Client {
 
-    protected Cookies cookies = new Cookies();
+    private Cookies cookies = new Cookies();
 
-    public Cookies getCookiesObject() {
+    Cookies getCookiesObject() {
         return cookies;
     }
 
-    public Map<String, String> getCookies() {
+    void setCookies(Cookies cookies) {
+        this.cookies = cookies;
+    }
+
+     Map<String, String> getCookies() {
         return cookies.getItems();
     }
 

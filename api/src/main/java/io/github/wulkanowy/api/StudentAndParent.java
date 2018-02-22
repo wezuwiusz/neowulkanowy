@@ -10,7 +10,7 @@ import java.util.List;
 
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 
-public class StudentAndParent extends Api implements SnP {
+public class StudentAndParent implements SnP {
 
     private static final String startPageUrl = "{schema}://uonetplus.{host}/{symbol}/Start.mvc/Index";
 
@@ -20,7 +20,9 @@ public class StudentAndParent extends Api implements SnP {
 
     private static final String GRADES_PAGE_URL = "Oceny/Wszystkie";
 
-    protected String logHost = "vulcan.net.pl";
+    private Client client;
+
+    private String logHost = "vulcan.net.pl";
 
     private String protocolSchema = "https";
 
@@ -28,13 +30,13 @@ public class StudentAndParent extends Api implements SnP {
 
     private String id;
 
-    public StudentAndParent(Cookies cookies, String symbol) {
-        this.cookies = cookies;
+    public StudentAndParent(Client client, String symbol) {
+        this.client = client;
         this.symbol = symbol;
     }
 
-    public StudentAndParent(Cookies cookies, String symbol, String id) {
-        this(cookies, symbol);
+    public StudentAndParent(Client client, String symbol, String id) {
+        this(client, symbol);
         this.id = id;
     }
 
@@ -78,7 +80,7 @@ public class StudentAndParent extends Api implements SnP {
     }
 
     public void storeContextCookies() throws IOException, NotLoggedInErrorException {
-        getPageByUrl(getSnpPageUrl());
+        client.getPageByUrl(getSnpPageUrl());
     }
 
     public String getSnpPageUrl() throws IOException, NotLoggedInErrorException {
@@ -87,7 +89,7 @@ public class StudentAndParent extends Api implements SnP {
         }
 
         // get url to uonetplus-opiekun.vulcan.net.pl
-        Document startPage = getPageByUrl(getStartPageUrl());
+        Document startPage = client.getPageByUrl(getStartPageUrl());
         Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
 
         if (null == studentTileLink) {
@@ -116,7 +118,7 @@ public class StudentAndParent extends Api implements SnP {
     }
 
     public Document getSnPPageDocument(String url) throws IOException {
-        return getPageByUrl(getBaseUrl()
+        return client.getPageByUrl(getBaseUrl()
                 .replace(SYMBOL_PLACEHOLDER, getSymbol())
                 .replace("{ID}", getId()) + url);
     }

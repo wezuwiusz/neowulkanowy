@@ -22,8 +22,6 @@ public interface SnP {
 
     void storeContextCookies() throws IOException, NotLoggedInErrorException;
 
-    Cookies getCookiesObject();
-
     String getRowDataChildValue(Element e, int index);
 
     Document getSnPPageDocument(String url) throws IOException;
