@@ -13,6 +13,7 @@ import io.github.wulkanowy.api.login.Login;
 import io.github.wulkanowy.api.login.LoginErrorException;
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.api.login.VulcanOfflineException;
+import io.github.wulkanowy.api.messages.Messages;
 import io.github.wulkanowy.api.notes.AchievementsList;
 import io.github.wulkanowy.api.notes.NotesList;
 import io.github.wulkanowy.api.school.SchoolInfo;
@@ -111,8 +112,6 @@ public class Vulcan {
 
         snp.storeContextCookies();
 
-//        this.cookies = client.getCookiesObject();
-
         return snp;
     }
 
@@ -170,5 +169,9 @@ public class Vulcan {
 
     public FamilyInformation getFamilyInformation() throws IOException, NotLoggedInErrorException {
         return new FamilyInformation(getStudentAndParent());
+    }
+
+    public Messages getMessages() {
+        return new Messages(client, getProtocolSchema(), getLogHost(), symbol);
     }
 }
