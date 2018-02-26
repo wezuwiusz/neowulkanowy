@@ -12,67 +12,27 @@ import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 
 public class StudentAndParent implements SnP {
 
-    private static final String startPageUrl = "{schema}://uonetplus.{host}/{symbol}/Start.mvc/Index";
+    private static final String START_PAGE_URL = "{schema}://uonetplus.{host}/{symbol}/Start.mvc/Index";
 
-    private static final String baseUrl = "{schema}://uonetplus-opiekun.{host}/{symbol}/{ID}/";
-
-    private static final String SYMBOL_PLACEHOLDER = "{symbol}";
+    private static final String BASE_URL = "{schema}://uonetplus-opiekun.{host}/{symbol}/{ID}/";
 
     private static final String GRADES_PAGE_URL = "Oceny/Wszystkie";
 
     private Client client;
 
-    private String logHost = "vulcan.net.pl";
-
-    private String protocolSchema = "https";
-
-    private String symbol;
-
     private String id;
 
-    public StudentAndParent(Client client, String symbol) {
+    StudentAndParent(Client client) {
         this.client = client;
-        this.symbol = symbol;
     }
 
-    public StudentAndParent(Client client, String symbol, String id) {
-        this(client, symbol);
+    StudentAndParent(Client client, String id) {
+        this(client);
         this.id = id;
     }
 
-    public void setProtocolSchema(String schema) {
-        this.protocolSchema = schema;
-    }
-
-    public String getLogHost() {
-        return logHost;
-    }
-
-    public void setLogHost(String hostname) {
-        this.logHost = hostname;
-    }
-
-    public String getStartPageUrl() {
-        return startPageUrl
-                .replace("{schema}", protocolSchema)
-                .replace("{host}", logHost)
-                .replace(SYMBOL_PLACEHOLDER, getSymbol());
-    }
-
-    public String getBaseUrl() {
-        return baseUrl
-                .replace("{schema}", protocolSchema)
-                .replace("{host}", logHost)
-                .replace(SYMBOL_PLACEHOLDER, getSymbol())
-                .replace("{ID}", getId());
-    }
-
-    public String getGradesPageUrl() {
-        return getBaseUrl() + GRADES_PAGE_URL;
-    }
-
-    public String getSymbol() {
-        return symbol;
+    private String getBaseUrl() {
+        return BASE_URL.replace("{ID}", getId());
     }
 
     public String getId() {
@@ -80,16 +40,16 @@ public class StudentAndParent implements SnP {
     }
 
     public void storeContextCookies() throws IOException, NotLoggedInErrorException {
-        client.getPageByUrl(getSnpPageUrl());
+        client.getPageByUrl(getSnpHomePageUrl());
     }
 
-    public String getSnpPageUrl() throws IOException, NotLoggedInErrorException {
+    String getSnpHomePageUrl() throws IOException, NotLoggedInErrorException {
         if (null != getId()) {
             return getBaseUrl();
         }
 
         // get url to uonetplus-opiekun.vulcan.net.pl
-        Document startPage = client.getPageByUrl(getStartPageUrl());
+        Document startPage = client.getPageByUrl(START_PAGE_URL);
         Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
 
         if (null == studentTileLink) {
@@ -103,14 +63,14 @@ public class StudentAndParent implements SnP {
         return snpPageUrl;
     }
 
-    public String getExtractedIdFromUrl(String snpPageUrl) throws NotLoggedInErrorException {
-        String[] path = snpPageUrl.split(getLogHost() + "/")[1].split("/");
+    String getExtractedIdFromUrl(String snpPageUrl) throws NotLoggedInErrorException {
+        String[] path = snpPageUrl.split(client.getHost())[1].split("/");
 
-        if (4 != path.length) {
+        if (5 != path.length) {
             throw new NotLoggedInErrorException();
         }
 
-        return path[1];
+        return path[2];
     }
 
     public String getRowDataChildValue(Element e, int index) {
@@ -118,13 +78,11 @@ public class StudentAndParent implements SnP {
     }
 
     public Document getSnPPageDocument(String url) throws IOException {
-        return client.getPageByUrl(getBaseUrl()
-                .replace(SYMBOL_PLACEHOLDER, getSymbol())
-                .replace("{ID}", getId()) + url);
+        return client.getPageByUrl(getBaseUrl() + url);
     }
 
     public List<Semester> getSemesters() throws IOException {
-        return getSemesters(getSnPPageDocument(getGradesPageUrl()));
+        return getSemesters(getSnPPageDocument(GRADES_PAGE_URL));
     }
 
     public List<Semester> getSemesters(Document gradesPage) {

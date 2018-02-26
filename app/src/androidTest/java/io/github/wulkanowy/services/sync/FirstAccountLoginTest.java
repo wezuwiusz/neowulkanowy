@@ -50,7 +50,6 @@ public class FirstAccountLoginTest {
     @Test
     public void loginTest() throws Exception {
         StudentAndParent snp = Mockito.mock(StudentAndParent.class);
-        Mockito.when(snp.getSymbol()).thenReturn("TEST-SYMBOL");
         Mockito.when(snp.getId()).thenReturn("TEST-ID");
 
         PersonalData personalData = Mockito.mock(PersonalData.class);
@@ -60,8 +59,9 @@ public class FirstAccountLoginTest {
         Mockito.doReturn(personalData).when(basicInformation).getPersonalData();
 
         Vulcan vulcan = Mockito.mock(Vulcan.class);
-        Mockito.doReturn(basicInformation).when(vulcan).getBasicInformation();
+        Mockito.doReturn("TEST-SYMBOL").when(vulcan).login(Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
         Mockito.doReturn(snp).when(vulcan).getStudentAndParent();
+        Mockito.doReturn(basicInformation).when(vulcan).getBasicInformation();
 
         FirstAccountLogin firstAccountLogin = new FirstAccountLogin(targetContext, daoSession, vulcan);
         LoginSession loginSession = firstAccountLogin.login("TEST@TEST", "TEST-PASS", "default");

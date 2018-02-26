@@ -25,7 +25,7 @@ public class MessagesTest {
     public void getMessages() throws Exception {
         Client client = getFixtureAsString("GetWiadomosciOdebrane.json");
 
-        Messages messages = new Messages(client, "", "", "");
+        Messages messages = new Messages(client);
         List<Message> messageList = messages.getReceived();
 
         Assert.assertEquals(true, messageList.get(1).unread);
@@ -39,7 +39,7 @@ public class MessagesTest {
     public void getMessagesEmpty() throws Exception {
         Client client = getFixtureAsString("GetWiadomosciUsuniete-empty.json");
 
-        Messages messages = new Messages(client, "", "", "");
+        Messages messages = new Messages(client);
         List<Message> messageList = messages.getSent();
 
         Assert.assertTrue(messageList.isEmpty());
@@ -49,7 +49,7 @@ public class MessagesTest {
     public void getMessagesError() throws Exception {
         Client client = getFixtureAsString("UndefinedError.txt");
 
-        Messages messages = new Messages(client, "", "", "");
+        Messages messages = new Messages(client);
         messages.getDeleted();
     }
 
@@ -57,7 +57,7 @@ public class MessagesTest {
     public void getMessagesBadRequest() throws Exception {
         Client client = getFixtureAsString("PageError.html");
 
-        Messages messages = new Messages(client, "", "", "");
+        Messages messages = new Messages(client);
         messages.getDeleted();
     }
 
@@ -65,7 +65,7 @@ public class MessagesTest {
     public void getMessage() throws Exception {
         Client client = getFixtureAsString("GetTrescWiadomosci.json");
 
-        Messages messages = new Messages(client, "", "", "");
+        Messages messages = new Messages(client);
         Message message = messages.getMessage(123, Messages.RECEIVED_FOLDER);
         Assert.assertEquals(12345, message.id);
         Assert.assertEquals("Witam, …. \nPozdrawiam Krzysztof Czerkas", message.content);
@@ -75,7 +75,7 @@ public class MessagesTest {
     public void getMessageError() throws Exception {
         Client client = getFixtureAsString("UndefinedError.txt");
 
-        Messages messages = new Messages(client, "", "", "");
+        Messages messages = new Messages(client);
         messages.getMessage(321, Messages.SENT_FOLDER);
     }
 
@@ -83,7 +83,7 @@ public class MessagesTest {
     public void getMessageBadRequest() throws Exception {
         Client client = getFixtureAsString("PageError.html");
 
-        Messages messages = new Messages(client, "", "", "");
+        Messages messages = new Messages(client);
         messages.getMessage(1, Messages.DELETED_FOLDER);
     }
 }

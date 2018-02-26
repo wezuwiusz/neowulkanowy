@@ -36,9 +36,9 @@ public class Vulcan {
 
     private String email;
 
-    private Client client = new Client();
+    private Client client;
 
-    private Login login = new Login(client);
+    private Login login;
 
     public void setClient(Client client) {
         this.client = client;
@@ -48,17 +48,16 @@ public class Vulcan {
         this.login = login;
     }
 
-    public Vulcan login(String email, String password, String symbol)
+    public String login(String email, String password, String symbol)
             throws BadCredentialsException, AccountPermissionException,
             LoginErrorException, IOException, VulcanOfflineException {
 
         setFullEndpointInfo(email);
-        login.setProtocolSchema(protocolSchema);
-        login.setLogHost(logHost);
+        login = getLogin();
 
         this.symbol = login.login(this.email, password, symbol);
 
-        return this;
+        return this.symbol;
     }
 
     public Vulcan login(String email, String password, String symbol, String id)
@@ -71,11 +70,11 @@ public class Vulcan {
         return this;
     }
 
-    public String getProtocolSchema() {
+    String getProtocolSchema() {
         return protocolSchema;
     }
 
-    public String getLogHost() {
+    String getLogHost() {
         return logHost;
     }
 
@@ -97,8 +96,28 @@ public class Vulcan {
         }
     }
 
+    protected Client getClient() {
+        if (null != client) {
+            return client;
+        }
+
+        client = new Client(getProtocolSchema(), getLogHost(), symbol);
+
+        return client;
+    }
+
+    protected Login getLogin() {
+        if (null != login) {
+            return login;
+        }
+
+        login = new Login(getClient());
+
+        return login;
+    }
+
     public SnP getStudentAndParent() throws IOException, NotLoggedInErrorException {
-        if (0 == client.getCookies().size()) {
+        if (0 == getClient().getCookies().size()) {
             throw new NotLoggedInErrorException();
         }
 
@@ -106,21 +125,19 @@ public class Vulcan {
             return snp;
         }
 
-        snp = createSnp(client, symbol, id);
-        snp.setLogHost(logHost);
-        snp.setProtocolSchema(protocolSchema);
+        snp = createSnp(getClient(), id);
 
         snp.storeContextCookies();
 
         return snp;
     }
 
-    SnP createSnp(Client client, String symbol, String id) {
+    SnP createSnp(Client client, String id) {
         if (null == id) {
-            return new StudentAndParent(client, symbol);
+            return new StudentAndParent(client);
         }
 
-        return new StudentAndParent(client, symbol, id);
+        return new StudentAndParent(client, id);
     }
 
     public AttendanceStatistics getAttendanceStatistics() throws IOException, NotLoggedInErrorException {
@@ -172,6 +189,6 @@ public class Vulcan {
     }
 
     public Messages getMessages() {
-        return new Messages(client, getProtocolSchema(), getLogHost(), symbol);
+        return new Messages(getClient());
     }
 }

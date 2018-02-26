@@ -28,15 +28,14 @@ public class StudentAndParentTest {
 
     @Test
     public void snpTest() throws Exception {
-        StudentAndParent snp = new StudentAndParent(client, "demo123", "id123");
-        Assert.assertEquals("demo123", snp.getSymbol());
+        StudentAndParent snp = new StudentAndParent(client, "id123");
         Assert.assertEquals("id123", snp.getId());
     }
 
     @Test
     public void getSnpPageUrlWithIdTest() throws Exception {
-        Assert.assertEquals("https://uonetplus-opiekun.vulcan.net.pl/symbol/123456/",
-                (new StudentAndParent(client, "symbol", "123456")).getSnpPageUrl());
+        Assert.assertEquals("{schema}://uonetplus-opiekun.{host}/{symbol}/123456/",
+                (new StudentAndParent(client, "123456")).getSnpHomePageUrl());
     }
 
     @Test
@@ -44,11 +43,12 @@ public class StudentAndParentTest {
         String input = FixtureHelper.getAsString(getClass().getResourceAsStream("Start.html"));
         Document startPageDocument = Jsoup.parse(input);
 
+        Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(startPageDocument);
-        StudentAndParent snp = new StudentAndParent(client, "symbol");
+        StudentAndParent snp = new StudentAndParent(client);
 
         Assert.assertEquals("https://uonetplus-opiekun.vulcan.net.pl/symbol/534213/Start/Index/",
-                snp.getSnpPageUrl());
+                snp.getSnpHomePageUrl());
     }
 
     @Test(expected = NotLoggedInErrorException.class)
@@ -58,13 +58,14 @@ public class StudentAndParentTest {
         );
 
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(wrongPageDocument);
-        StudentAndParent snp = new StudentAndParent(client, "symbol");
+        StudentAndParent snp = new StudentAndParent(client);
 
-        snp.getSnpPageUrl();
+        snp.getSnpHomePageUrl();
     }
 
     @Test
     public void getExtractedIDStandardTest() throws Exception {
+        Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
         StudentAndParent snp = new StudentAndParent(client, "symbol");
         Assert.assertEquals("123456", snp.getExtractedIdFromUrl("https://uonetplus-opiekun"
                 + ".vulcan.net.pl/powiat/123456/Start/Index/"));
@@ -72,21 +73,23 @@ public class StudentAndParentTest {
 
     @Test
     public void getExtractedIDDemoTest() throws Exception {
+        Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
         StudentAndParent snp = new StudentAndParent(client, "symbol");
-        Assert.assertEquals("demo12345", snp.getExtractedIdFromUrl("https://uonetplus-opiekundemo"
-                + ".vulcan.net.pl/demoupowiat/demo12345/Start/Index/"));
+        Assert.assertEquals("demo12345",
+                snp.getExtractedIdFromUrl("https://uonetplus-opiekun.vulcan.net.pl/demoupowiat/demo12345/Start/Index/"));
     }
 
     @Test(expected = NotLoggedInErrorException.class)
     public void getExtractedIDNotLoggedTest() throws Exception {
+        Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
         StudentAndParent snp = new StudentAndParent(client, "symbol");
-        Assert.assertEquals("123", snp.getExtractedIdFromUrl("https://uonetplus"
-                + ".vulcan.net.pl/powiat/"));
+        Assert.assertEquals("123",
+                snp.getExtractedIdFromUrl("https://uonetplus.vulcan.net.pl/powiat/"));
     }
 
     @Test
     public void getSemestersTest() throws Exception {
-        SnP snp = new StudentAndParent(client, "symbol", "123456");
+        SnP snp = new StudentAndParent(client, "123456");
         List<Semester> semesters = snp.getSemesters();
 
         Assert.assertEquals(2, semesters.size());

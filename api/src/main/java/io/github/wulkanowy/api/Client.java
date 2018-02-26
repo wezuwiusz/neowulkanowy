@@ -9,22 +9,41 @@ import java.util.Map;
 
 public class Client {
 
+    private String protocol;
+
+    private String host;
+
+    private String symbol;
+
     private Cookies cookies = new Cookies();
 
-    Cookies getCookiesObject() {
-        return cookies;
+    Client(String protocol, String host, String symbol) {
+        this.protocol = protocol;
+        this.host = host;
+        this.symbol = symbol;
     }
 
-    void setCookies(Cookies cookies) {
-        this.cookies = cookies;
+    String getHost() {
+        return host;
     }
 
-     Map<String, String> getCookies() {
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    Map<String, String> getCookies() {
         return cookies.getItems();
     }
 
-    public Document getPageByUrl(String url) throws IOException {
-        Connection.Response response = Jsoup.connect(url)
+    private String getFilledUrl(String url) {
+        return url
+                .replace("{schema}", protocol)
+                .replace("{host}", host.replace(":", "%253A"))
+                .replace("{symbol}", symbol == null ? "Default" : symbol);
+    }
+
+    Document getPageByUrl(String url) throws IOException {
+        Connection.Response response = Jsoup.connect(getFilledUrl(url))
                 .followRedirects(true)
                 .cookies(getCookies())
                 .execute();
@@ -35,7 +54,7 @@ public class Client {
     }
 
     public Document postPageByUrl(String url, String[][] params) throws IOException {
-        Connection connection = Jsoup.connect(url);
+        Connection connection = Jsoup.connect(getFilledUrl(url));
 
         for (String[] data : params) {
             connection.data(data[0], data[1]);
@@ -53,7 +72,7 @@ public class Client {
     }
 
     public String getJsonStringByUrl(String url) throws IOException {
-        Connection.Response response = Jsoup.connect(url)
+        Connection.Response response = Jsoup.connect(getFilledUrl(url))
                 .followRedirects(true)
                 .ignoreContentType(true)
                 .cookies(getCookies())
@@ -65,7 +84,7 @@ public class Client {
     }
 
     public String postJsonStringByUrl(String url, String[][] params) throws IOException {
-        Connection connection = Jsoup.connect(url);
+        Connection connection = Jsoup.connect(getFilledUrl(url));
 
         for (String[] data : params) {
             connection.data(data[0], data[1]);

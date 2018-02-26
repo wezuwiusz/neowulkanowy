@@ -33,7 +33,7 @@ public class FirstAccountLogin {
     public LoginSession login(String email, String password, String symbol)
             throws NotLoggedInErrorException, AccountPermissionException, IOException, CryptoException, VulcanOfflineException, BadCredentialsException {
 
-        vulcan.login(email, password, symbol);
+        String realSymbol = vulcan.login(email, password, symbol);
 
         AccountDao accountDao = daoSession.getAccountDao();
         Safety safety = new Safety();
@@ -41,7 +41,7 @@ public class FirstAccountLogin {
                 .setName(vulcan.getBasicInformation().getPersonalData().getFirstAndLastName())
                 .setEmail(email)
                 .setPassword(safety.encrypt(email, password, context))
-                .setSymbol(vulcan.getStudentAndParent().getSymbol())
+                .setSymbol(realSymbol)
                 .setSnpId(vulcan.getStudentAndParent().getId());
 
         long userId = accountDao.insert(account);
