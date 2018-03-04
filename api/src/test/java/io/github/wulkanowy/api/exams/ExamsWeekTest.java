@@ -19,23 +19,23 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
     @Test
     public void getWeekTest() throws Exception {
-        Assert.assertEquals("23.10.2017", onePerDay.getCurrent().getStartDate());
+        Assert.assertEquals("23.10.2017", onePerDay.getCurrent().getStartDayDate());
     }
 
     @Test
     public void getDaysListTest() throws Exception {
-        Assert.assertEquals(3, onePerDay.getCurrent().getDayList().size());
-        Assert.assertEquals(7, onePerDay.getWeek("", false).getDayList().size());
+        Assert.assertEquals(3, onePerDay.getCurrent().getDays().size());
+        Assert.assertEquals(7, onePerDay.getWeek("", false).getDays().size());
     }
 
     @Test
     public void getExamsListTest() throws Exception {
-        List<Day> notEmpty = onePerDay.getCurrent().getDayList();
+        List<ExamDay> notEmpty = onePerDay.getCurrent().getDays();
         Assert.assertEquals(1, notEmpty.get(0).getExamList().size());
         Assert.assertEquals(1, notEmpty.get(1).getExamList().size());
         Assert.assertEquals(1, notEmpty.get(2).getExamList().size());
 
-        List<Day> emptyToo = onePerDay.getWeek("", false).getDayList();
+        List<ExamDay> emptyToo = onePerDay.getWeek("", false).getDays();
         Assert.assertEquals(1, emptyToo.get(0).getExamList().size());
         Assert.assertEquals(1, emptyToo.get(1).getExamList().size());
         Assert.assertEquals(1, emptyToo.get(4).getExamList().size());
@@ -43,7 +43,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
     @Test
     public void getDayDateTest() throws Exception {
-        List<Day> dayList = onePerDay.getCurrent().getDayList();
+        List<ExamDay> dayList = onePerDay.getCurrent().getDays();
 
         Assert.assertEquals("23.10.2017", dayList.get(0).getDate());
         Assert.assertEquals("24.10.2017", dayList.get(1).getDate());
@@ -52,7 +52,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
     @Test
     public void getExamSubjectAndGroupTest() throws Exception {
-        List<Day> dayList = onePerDay.getCurrent().getDayList();
+        List<ExamDay> dayList = onePerDay.getCurrent().getDays();
 
         Assert.assertEquals("Sieci komputerowe 3Ti|zaw2", dayList.get(0).getExamList().get(0).getSubjectAndGroup());
         Assert.assertEquals("Język angielski 3Ti|J1", dayList.get(1).getExamList().get(0).getSubjectAndGroup());
@@ -61,7 +61,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
     @Test
     public void getExamTypeTest() throws Exception {
-        List<Day> dayList = onePerDay.getCurrent().getDayList();
+        List<ExamDay> dayList = onePerDay.getCurrent().getDays();
 
         Assert.assertEquals("Sprawdzian", dayList.get(0).getExamList().get(0).getType());
         Assert.assertEquals("Sprawdzian", dayList.get(1).getExamList().get(0).getType());
@@ -70,7 +70,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
     @Test
     public void getExamDescriptionTest() throws Exception {
-        List<Day> dayList = onePerDay.getCurrent().getDayList();
+        List<ExamDay> dayList = onePerDay.getCurrent().getDays();
 
         Assert.assertEquals("Łącza danych", dayList.get(0).getExamList().get(0).getDescription());
         Assert.assertEquals("Czasy teraźniejsze", dayList.get(1).getExamList().get(0).getDescription());
@@ -79,7 +79,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
     @Test
     public void getExamTeacherTest() throws Exception {
-        List<Day> dayList = onePerDay.getCurrent().getDayList();
+        List<ExamDay> dayList = onePerDay.getCurrent().getDays();
 
         Assert.assertEquals("Adam Wiśniewski [AW]", dayList.get(0).getExamList().get(0).getTeacher());
         Assert.assertEquals("Natalia Nowak [NN]", dayList.get(1).getExamList().get(0).getTeacher());
@@ -88,7 +88,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
     @Test
     public void getExamEntryDateTest() throws Exception {
-        List<Day> dayList = onePerDay.getCurrent().getDayList();
+        List<ExamDay> dayList = onePerDay.getCurrent().getDays();
 
         Assert.assertEquals("16.10.2017", dayList.get(0).getExamList().get(0).getEntryDate());
         Assert.assertEquals("17.10.2017", dayList.get(1).getExamList().get(0).getEntryDate());

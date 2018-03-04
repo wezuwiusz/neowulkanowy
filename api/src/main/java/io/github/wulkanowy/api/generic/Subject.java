@@ -1,4 +1,4 @@
-package io.github.wulkanowy.api.attendance;
+package io.github.wulkanowy.api.generic;
 
 public class Subject {
 

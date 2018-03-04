@@ -42,7 +42,8 @@ public class TimetableSync implements TimetableSyncContract {
     public void syncTimetable(String date) throws NotLoggedInErrorException, IOException, ParseException {
         long userId = sharedPref.getCurrentUserId();
 
-        io.github.wulkanowy.api.timetable.Week weekFromNet = date == null ? vulcan.getTimetable().getWeekTable()
+        io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> weekFromNet =
+                date == null ? vulcan.getTimetable().getWeekTable()
                 : vulcan.getTimetable().getWeekTable(String.valueOf(TimeUtils.getNetTicks(date)));
 
         Week weekFromDb = daoSession.getWeekDao().queryBuilder()
@@ -59,11 +60,11 @@ public class TimetableSync implements TimetableSyncContract {
             weekId = weekFromDb.getId();
         }
 
-        List<io.github.wulkanowy.api.timetable.Day> dayListFromNet = weekFromNet.getDays();
+        List<io.github.wulkanowy.api.generic.Day> dayListFromNet = weekFromNet.getDays();
 
         List<Lesson> updatedLessonList = new ArrayList<>();
 
-        for (io.github.wulkanowy.api.timetable.Day dayFromNet : dayListFromNet) {
+        for (io.github.wulkanowy.api.generic.Day dayFromNet : dayListFromNet) {
             Day dayFromNetEntity = DataObjectConverter.dayToDayEntity(dayFromNet);
 
             Day dayFromDb = daoSession.getDayDao().queryBuilder()

@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Locale;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.generic.Day;
+import io.github.wulkanowy.api.generic.Lesson;
+import io.github.wulkanowy.api.generic.Week;
 
 public class Timetable {
 
@@ -24,11 +27,11 @@ public class Timetable {
         this.snp = snp;
     }
 
-    public Week getWeekTable() throws IOException, ParseException {
+    public Week<Day> getWeekTable() throws IOException, ParseException {
         return getWeekTable("");
     }
 
-    public Week getWeekTable(final String tick) throws IOException, ParseException {
+    public Week<Day> getWeekTable(final String tick) throws IOException, ParseException {
         Element table = snp.getSnPPageDocument(TIMETABLE_PAGE_URL + tick)
                 .select(".mainContainer .presentData").first();
 
@@ -36,7 +39,7 @@ public class Timetable {
 
         setLessonToDays(table, days);
 
-        return new Week()
+        return new Week<Day>()
                 .setStartDayDate(days.get(0).getDate())
                 .setDays(days);
     }
@@ -125,19 +128,19 @@ public class Timetable {
     }
 
     private void addTypeInfo(Lesson lesson, Elements spans) {
-        if (spans.first().hasClass(Lesson.CLASS_PLANNING)) {
+        if (spans.first().hasClass(LessonTypes.CLASS_PLANNING)) {
             lesson.setPlanning(true);
         }
 
-        if (spans.first().hasClass(Lesson.CLASS_MOVED_OR_CANCELED)) {
+        if (spans.first().hasClass(LessonTypes.CLASS_MOVED_OR_CANCELED)) {
             lesson.setMovedOrCanceled(true);
         }
 
-        if (spans.first().hasClass(Lesson.CLASS_NEW_MOVED_IN_OR_CHANGED)) {
+        if (spans.first().hasClass(LessonTypes.CLASS_NEW_MOVED_IN_OR_CHANGED)) {
             lesson.setNewMovedInOrChanged(true);
         }
 
-        if (spans.last().hasClass(Lesson.CLASS_REALIZED) || "".equals(spans.first().attr("class"))) {
+        if (spans.last().hasClass(LessonTypes.CLASS_REALIZED) || "".equals(spans.first().attr("class"))) {
             lesson.setRealized(true);
         }
     }
@@ -151,7 +154,7 @@ public class Timetable {
     }
 
     private void addChangesInfo(Lesson lesson, Elements spans) {
-        if (!spans.last().hasClass(Lesson.CLASS_REALIZED)) {
+        if (!spans.last().hasClass(LessonTypes.CLASS_REALIZED)) {
             return;
         }
 
@@ -183,11 +186,11 @@ public class Timetable {
     }
 
     private void addGroupLessonInfo(Lesson lesson, Elements spans) {
-        if (4 == spans.size() && !spans.last().hasClass(Lesson.CLASS_REALIZED)) {
+        if (4 == spans.size() && !spans.last().hasClass(LessonTypes.CLASS_REALIZED)) {
             lesson.setRoom(spans.last().text());
         }
 
-        if ((4 == spans.size() && !spans.last().hasClass(Lesson.CLASS_REALIZED) || 5 == spans.size())) {
+        if ((4 == spans.size() && !spans.last().hasClass(LessonTypes.CLASS_REALIZED) || 5 == spans.size())) {
             String[] subjectAndGroupInfo = getLessonAndGroupInfoFromSpan(spans.get(0));
             lesson.setSubject(subjectAndGroupInfo[0]);
             lesson.setGroupName(subjectAndGroupInfo[1]);

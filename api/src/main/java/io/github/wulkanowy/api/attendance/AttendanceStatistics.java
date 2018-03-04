@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.generic.Month;
+import io.github.wulkanowy.api.generic.Subject;
 
 public class AttendanceStatistics {
 

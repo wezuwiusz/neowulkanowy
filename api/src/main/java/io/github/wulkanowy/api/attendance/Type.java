@@ -3,6 +3,8 @@ package io.github.wulkanowy.api.attendance;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.wulkanowy.api.generic.Month;
+
 public class Type {
 
     private String name = "";

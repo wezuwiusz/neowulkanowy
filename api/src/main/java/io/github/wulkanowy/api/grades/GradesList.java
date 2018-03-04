@@ -29,7 +29,7 @@ public class GradesList {
         this.snp = snp;
     }
 
-    public String getGradesPageUrl() {
+    private String getGradesPageUrl() {
         return GRADES_PAGE_URL;
     }
 

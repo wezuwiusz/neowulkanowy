@@ -1,4 +1,4 @@
-package io.github.wulkanowy.api.timetable;
+package io.github.wulkanowy.api.generic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ public class Day {
 
     private List<Lesson> lessons = new ArrayList<>();
 
-    private String date = "";
+    protected String date = "";
 
     private String dayName = "";
 
@@ -41,26 +41,23 @@ public class Day {
         return dayName;
     }
 
-    public Day setDayName(String dayName) {
+    public void setDayName(String dayName) {
         this.dayName = dayName;
-        return this;
     }
 
     public boolean isFreeDay() {
         return isFreeDay;
     }
 
-    public Day setFreeDay(boolean freeDay) {
+    public void setFreeDay(boolean freeDay) {
         isFreeDay = freeDay;
-        return this;
     }
 
     public String getFreeDayName() {
         return freeDayName;
     }
 
-    public Day setFreeDayName(String freeDayName) {
+    public void setFreeDayName(String freeDayName) {
         this.freeDayName = freeDayName;
-        return this;
     }
 }

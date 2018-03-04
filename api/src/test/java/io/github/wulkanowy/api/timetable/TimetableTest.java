@@ -37,7 +37,7 @@ public class TimetableTest extends StudentAndParentTestCase {
         Assert.assertEquals("2017-07-31", holidays.getWeekTable().getStartDayDate());
     }
 
-    // Day
+    // ExamDay
 
     @Test
     public void getDayNameTest() throws Exception {

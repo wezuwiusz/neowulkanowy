@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.List;
 
 import io.github.wulkanowy.api.StudentAndParentTestCase;
+import io.github.wulkanowy.api.generic.Month;
 
 public class AttendanceStatisticsTest extends StudentAndParentTestCase {
 

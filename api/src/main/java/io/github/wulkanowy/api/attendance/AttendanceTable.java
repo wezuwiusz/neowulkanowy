@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.generic.Day;
+import io.github.wulkanowy.api.generic.Lesson;
+import io.github.wulkanowy.api.generic.Week;
 
 public class AttendanceTable {
 
@@ -19,11 +22,11 @@ public class AttendanceTable {
         this.snp = snp;
     }
 
-    public Week getWeekTable() throws IOException {
+    public Week<Day> getWeekTable() throws IOException {
         return getWeekTable("");
     }
 
-    public Week getWeekTable(String tick) throws IOException {
+    public Week<Day> getWeekTable(String tick) throws IOException {
         Element table = snp.getSnPPageDocument(attendancePageUrl + tick)
                 .select(".mainContainer .presentData").first();
 
@@ -49,7 +52,7 @@ public class AttendanceTable {
 
         String[] dayDescription = headerCells.get(1).html().split("<br>");
 
-        return new Week()
+        return new Week<Day>()
                 .setStartDayDate(dayDescription[1])
                 .setDays(days);
     }
@@ -58,7 +61,7 @@ public class AttendanceTable {
         Lesson lesson = new Lesson();
         lesson.setSubject(cell.select("span").text());
 
-        if (Lesson.CLASS_NOT_EXIST.equals(cell.attr("class"))) {
+        if (LessonTypes.CLASS_NOT_EXIST.equals(cell.attr("class"))) {
             lesson.setNotExist(true);
             lesson.setEmpty(true);
 
@@ -66,25 +69,25 @@ public class AttendanceTable {
         }
 
         switch (cell.select("div").attr("class")) {
-            case Lesson.CLASS_PRESENCE:
+            case LessonTypes.CLASS_PRESENCE:
                 lesson.setPresence(true);
                 break;
-            case Lesson.CLASS_ABSENCE_UNEXCUSED:
+            case LessonTypes.CLASS_ABSENCE_UNEXCUSED:
                 lesson.setAbsenceUnexcused(true);
                 break;
-            case Lesson.CLASS_ABSENCE_EXCUSED:
+            case LessonTypes.CLASS_ABSENCE_EXCUSED:
                 lesson.setAbsenceExcused(true);
                 break;
-            case Lesson.CLASS_ABSENCE_FOR_SCHOOL_REASONS:
+            case LessonTypes.CLASS_ABSENCE_FOR_SCHOOL_REASONS:
                 lesson.setAbsenceForSchoolReasons(true);
                 break;
-            case Lesson.CLASS_UNEXCUSED_LATENESS:
+            case LessonTypes.CLASS_UNEXCUSED_LATENESS:
                 lesson.setUnexcusedLateness(true);
                 break;
-            case Lesson.CLASS_EXCUSED_LATENESS:
+            case LessonTypes.CLASS_EXCUSED_LATENESS:
                 lesson.setExcusedLateness(true);
                 break;
-            case Lesson.CLASS_EXEMPTION:
+            case LessonTypes.CLASS_EXEMPTION:
                 lesson.setExemption(true);
                 break;
 

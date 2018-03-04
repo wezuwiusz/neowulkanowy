@@ -1,14 +1,6 @@
-package io.github.wulkanowy.api.timetable;
+package io.github.wulkanowy.api.generic;
 
 public class Lesson {
-
-    public static final String CLASS_PLANNING = "x-treelabel-ppl";
-
-    public static final String CLASS_REALIZED = "x-treelabel-rlz";
-
-    public static final String CLASS_MOVED_OR_CANCELED = "x-treelabel-inv";
-
-    public static final String CLASS_NEW_MOVED_IN_OR_CHANGED = "x-treelabel-zas";
 
     private String number = "";
 
@@ -40,13 +32,28 @@ public class Lesson {
 
     private boolean isNewMovedInOrChanged = false;
 
+    private boolean isNotExist = false;
+
+    private boolean isPresence = false;
+
+    private boolean isAbsenceUnexcused = false;
+
+    private boolean isAbsenceExcused = false;
+
+    private boolean isUnexcusedLateness = false;
+
+    private boolean isAbsenceForSchoolReasons = false;
+
+    private boolean isExcusedLateness = false;
+
+    private boolean isExemption = false;
+
     public String getNumber() {
         return number;
     }
 
-    public Lesson setNumber(String number) {
+    public void setNumber(String number) {
         this.number = number;
-        return this;
     }
 
     public String getSubject() {
@@ -89,27 +96,24 @@ public class Lesson {
         return groupName;
     }
 
-    public Lesson setGroupName(String groupName) {
+    public void setGroupName(String groupName) {
         this.groupName = groupName;
-        return this;
     }
 
     public String getStartTime() {
         return startTime;
     }
 
-    public Lesson setStartTime(String startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
-        return this;
     }
 
     public String getEndTime() {
         return endTime;
     }
 
-    public Lesson setEndTime(String endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
-        return this;
     }
 
     public String getDate() {
@@ -134,44 +138,103 @@ public class Lesson {
         return isDivisionIntoGroups;
     }
 
-    public Lesson setDivisionIntoGroups(boolean divisionIntoGroups) {
+    public void setDivisionIntoGroups(boolean divisionIntoGroups) {
         isDivisionIntoGroups = divisionIntoGroups;
-        return this;
     }
 
     public boolean isPlanning() {
         return isPlanning;
     }
 
-    public Lesson setPlanning(boolean planning) {
+    public void setPlanning(boolean planning) {
         isPlanning = planning;
-        return this;
     }
 
     public boolean isRealized() {
         return isRealized;
     }
 
-    public Lesson setRealized(boolean realized) {
+    public void setRealized(boolean realized) {
         isRealized = realized;
-        return this;
     }
 
     public boolean isMovedOrCanceled() {
         return isMovedOrCanceled;
     }
 
-    public Lesson setMovedOrCanceled(boolean movedOrCanceled) {
+    public void setMovedOrCanceled(boolean movedOrCanceled) {
         isMovedOrCanceled = movedOrCanceled;
-        return this;
     }
 
     public boolean isNewMovedInOrChanged() {
         return isNewMovedInOrChanged;
     }
 
-    public Lesson setNewMovedInOrChanged(boolean newMovedInOrChanged) {
+    public void setNewMovedInOrChanged(boolean newMovedInOrChanged) {
         isNewMovedInOrChanged = newMovedInOrChanged;
-        return this;
+    }
+
+    public boolean isNotExist() {
+        return isNotExist;
+    }
+
+    public void setNotExist(boolean notExist) {
+        isNotExist = notExist;
+    }
+
+    public boolean isPresence() {
+        return isPresence;
+    }
+
+    public void setPresence(boolean presence) {
+        isPresence = presence;
+    }
+
+    public boolean isAbsenceUnexcused() {
+        return isAbsenceUnexcused;
+    }
+
+    public void setAbsenceUnexcused(boolean absenceUnexcused) {
+        isAbsenceUnexcused = absenceUnexcused;
+    }
+
+    public boolean isAbsenceExcused() {
+        return isAbsenceExcused;
+    }
+
+    public void setAbsenceExcused(boolean absenceExcused) {
+        isAbsenceExcused = absenceExcused;
+    }
+
+    public boolean isUnexcusedLateness() {
+        return isUnexcusedLateness;
+    }
+
+    public void setUnexcusedLateness(boolean unexcusedLateness) {
+        isUnexcusedLateness = unexcusedLateness;
+    }
+
+    public boolean isAbsenceForSchoolReasons() {
+        return isAbsenceForSchoolReasons;
+    }
+
+    public void setAbsenceForSchoolReasons(boolean absenceForSchoolReasons) {
+        isAbsenceForSchoolReasons = absenceForSchoolReasons;
+    }
+
+    public boolean isExcusedLateness() {
+        return isExcusedLateness;
+    }
+
+    public void setExcusedLateness(boolean excusedLateness) {
+        isExcusedLateness = excusedLateness;
+    }
+
+    public boolean isExemption() {
+        return isExemption;
+    }
+
+    public void setExemption(boolean exemption) {
+        isExemption = exemption;
     }
 }
