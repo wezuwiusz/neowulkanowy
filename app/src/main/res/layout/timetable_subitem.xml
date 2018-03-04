@@ -88,7 +88,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/ic_timetable_swap"
+            app:srcCompat="@drawable/ic_swap_30dp"
             tool:ignore="contentDescription"/>
 
     </RelativeLayout>

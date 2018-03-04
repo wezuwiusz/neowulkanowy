@@ -13,7 +13,6 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.utils.Log;
 import io.fabric.sdk.android.Fabric;
 import io.github.wulkanowy.data.RepositoryContract;
-import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.di.component.ApplicationComponent;
 import io.github.wulkanowy.di.component.DaggerApplicationComponent;
 import io.github.wulkanowy.di.modules.ApplicationModule;
@@ -34,15 +33,10 @@ public class WulkanowyApp extends Application {
                 .build();
         applicationComponent.inject(this);
 
-        initializeFabric();
         if (BuildConfig.DEBUG) {
             enableDebugLog();
         }
-
-    }
-
-    public ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
+        initializeFabric();
     }
 
     private void enableDebugLog() {
@@ -59,7 +53,7 @@ public class WulkanowyApp extends Application {
                 .build());
     }
 
-    public DaoSession getDaoSession() {
-        return null;
+    public ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
     }
 }

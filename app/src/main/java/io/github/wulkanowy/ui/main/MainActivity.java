@@ -104,28 +104,28 @@ public class MainActivity extends BaseActivity implements MainContract.View,
     private void initiationBottomNav() {
         bottomNavigation.addItem(new AHBottomNavigationItem(
                 getString(R.string.grades_text),
-                getResources().getDrawable(R.drawable.icon_grade_26dp)
+                getResources().getDrawable(R.drawable.ic_menu_grade_26dp)
         ));
         bottomNavigation.addItem(new AHBottomNavigationItem(
                 getString(R.string.attendance_text),
-                getResources().getDrawable(R.drawable.icon_attendance_24dp)
+                getResources().getDrawable(R.drawable.ic_menu_attendance_24dp)
         ));
         bottomNavigation.addItem(new AHBottomNavigationItem(
                 getString(R.string.dashboard_text),
-                getResources().getDrawable(R.drawable.ic_dashboard_black_24dp)
+                getResources().getDrawable(R.drawable.ic_menu_dashboard_24dp)
         ));
         bottomNavigation.addItem(new AHBottomNavigationItem(
                 getString(R.string.lessonplan_text),
-                getResources().getDrawable(R.drawable.icon_lessonplan_24dp)
+                getResources().getDrawable(R.drawable.ic_menu_timetable_24dp)
         ));
         bottomNavigation.addItem(new AHBottomNavigationItem(
                 getString(R.string.settings_text),
-                getResources().getDrawable(R.drawable.icon_other_24dp)
+                getResources().getDrawable(R.drawable.ic_menu_other_24dp)
         ));
 
         bottomNavigation.setAccentColor(getResources().getColor(R.color.colorPrimary));
         bottomNavigation.setInactiveColor(Color.BLACK);
-        bottomNavigation.setBackgroundColor(getResources().getColor(R.color.colorBackgroundBottomNavi));
+        bottomNavigation.setBackgroundColor(getResources().getColor(R.color.colorBackgroundBottomNav));
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         bottomNavigation.setOnTabSelectedListener(this);
         bottomNavigation.setCurrentItem(initTabPosition);

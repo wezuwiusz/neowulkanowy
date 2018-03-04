@@ -32,8 +32,6 @@ android {
         versionName "0.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField "String", "UPDATE_URL", "\"https://bitrise-redirector.herokuapp.com" +
-                "/v0.1/apps/daeff1893f3c8128/builds/" + "${getCurrentGitBranch()}" + "/artifacts/app-release-bitrise-signed.apk/info\""
         manifestPlaceholders = [
                 fabricApiKey: System.getenv("FABRIC_API_KEY") ?: "null"
         ]
@@ -105,21 +103,4 @@ dependencies {
 
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'org.mockito:mockito-android:2.13.0'
-}
-
-static def getCurrentGitBranch() {
-    if (gitBranch() == "HEAD") {
-        return System.getenv("BITRISE_GIT_BRANCH")
-    }
-
-    return gitBranch()
-}
-
-static def gitBranch() {
-    def branch = "null"
-    def proc = "git rev-parse --abbrev-ref HEAD".execute()
-    proc.in.eachLine { line -> branch = line }
-    proc.err.eachLine { line -> println line }
-    proc.waitFor()
-    branch
 }

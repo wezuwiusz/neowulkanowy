@@ -83,7 +83,7 @@ public class SyncJob extends SimpleJobService {
         service.notify(service.notificationBuilder()
                 .setContentTitle(getStringTitle())
                 .setContentText(getStringContent())
-                .setSmallIcon(R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.ic_stat_notify)
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
