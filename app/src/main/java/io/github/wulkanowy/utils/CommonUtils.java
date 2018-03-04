@@ -1,6 +1,6 @@
 package io.github.wulkanowy.utils;
 
-import android.content.Context;
+import android.app.Activity;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 
@@ -12,11 +12,11 @@ public final class CommonUtils {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void openInternalBrowserViewer(Context context, String url) {
+    public static void openInternalBrowserViewer(Activity activity, String url) {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        builder.setToolbarColor(context.getResources().getColor(R.color.colorPrimary));
+        builder.setToolbarColor(activity.getResources().getColor(R.color.colorPrimary));
         CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(context, Uri.parse(url));
+        customTabsIntent.launchUrl(activity, Uri.parse(url));
     }
 
     public static int colorHexToColorName(String hexColor) {

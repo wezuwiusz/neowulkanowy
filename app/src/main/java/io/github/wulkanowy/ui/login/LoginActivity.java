@@ -97,14 +97,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @OnClick(R.id.login_activity_create_text)
     void onCreateAccountButtonClick() {
-        CommonUtils.openInternalBrowserViewer(getApplicationContext(),
-                AppConstant.VULCAN_CREATE_ACCOUNT_URL);
+        CommonUtils.openInternalBrowserViewer(this, AppConstant.VULCAN_CREATE_ACCOUNT_URL);
     }
 
     @OnClick(R.id.login_activity_forgot_text)
     void onForgotPasswordButtonClick() {
-        CommonUtils.openInternalBrowserViewer(getApplicationContext(),
-                AppConstant.VULCAN_FORGOT_PASS_URL);
+        CommonUtils.openInternalBrowserViewer(this, AppConstant.VULCAN_FORGOT_PASS_URL);
     }
 
     @Override
