@@ -1,107 +1,116 @@
 package io.github.wulkanowy.ui.main.grades;
 
 
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.utils.CommonUtils;
 
 public class GradesDialogFragment extends DialogFragment {
 
+    private static final String ARGUMENT_KEY = "Item";
+
     private Grade grade;
 
+    @BindView(R.id.grade_dialog_value)
+    TextView value;
+
+    @BindView(R.id.grade_dialog_subject)
+    TextView subject;
+
+    @BindView(R.id.grade_dialog_description_value)
+    TextView description;
+
+    @BindView(R.id.grade_dialog_weight_value)
+    TextView weight;
+
+    @BindView(R.id.grade_dialog_teacher_value)
+    TextView teacher;
+
+    @BindView(R.id.grade_dialog_color_value)
+    TextView color;
+
+    @BindView(R.id.grade_dialog_date_value)
+    TextView date;
+
     public GradesDialogFragment() {
-        setRetainInstance(true);
+        //empty constructor for fragment
     }
 
-    public static final GradesDialogFragment newInstance(Grade grade) {
-        return new GradesDialogFragment().setGrade(grade);
+    public static GradesDialogFragment newInstance(Grade item) {
+        GradesDialogFragment dialogFragment = new GradesDialogFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARGUMENT_KEY, item);
+
+        dialogFragment.setArguments(bundle);
+
+        return dialogFragment;
     }
 
-    public static int colorHexToColorName(String hexColor) {
-        switch (hexColor) {
-            case "000000":
-                return R.string.color_black_text;
-
-            case "F04C4C":
-                return R.string.color_red_text;
-
-            case "20A4F7":
-                return R.string.color_blue_text;
-
-            case "6ECD07":
-                return R.string.color_green_text;
-
-            default:
-                return R.string.noColor_text;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            grade = (Grade) getArguments().getSerializable(ARGUMENT_KEY);
         }
-    }
-
-    private GradesDialogFragment setGrade(Grade grade) {
-        this.grade = grade;
-        return this;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.grades_dialog, container, false);
+        View view = inflater.inflate(R.layout.grade_dialog, container, false);
 
-        TextView gradeText = view.findViewById(R.id.dialog_grade_text);
-        TextView subjectText = view.findViewById(R.id.subject_dialog_text_value);
-        TextView descriptionText = view.findViewById(R.id.description_dialog_text_value);
-        TextView weightText = view.findViewById(R.id.weight_dialog_text_value);
-        TextView teacherText = view.findViewById(R.id.teacher_dialog_text_value);
-        TextView dateText = view.findViewById(R.id.date_dialog_text_value);
-        TextView colorText = view.findViewById(R.id.color_dialog_text_value);
-        Button closeDialog = view.findViewById(R.id.close_dialog);
+        ButterKnife.bind(this, view);
 
-        subjectText.setText(grade.getSubject());
-        gradeText.setText(grade.getValue());
-        gradeText.setBackgroundResource(grade.getValueColor());
-        weightText.setText(grade.getWeight());
-        dateText.setText(grade.getDate());
-        colorText.setText(colorHexToColorName(grade.getColor()));
+        subject.setText(grade.getSubject());
+        value.setText(grade.getValue());
+        value.setBackgroundResource(grade.getValueColor());
+        weight.setText(grade.getWeight());
+        date.setText(grade.getDate());
+        color.setText(CommonUtils.colorHexToColorName(grade.getColor()));
+        teacher.setText(getTeacherString());
+        description.setText(getDescriptionString());
 
-        if ("".equals(grade.getDescription())) {
-            if (!"".equals(grade.getSymbol())) {
-                descriptionText.setText(grade.getSymbol());
-            }
-        } else if (!"".equals(grade.getSymbol())) {
-            descriptionText.setText(String.format("%1$s - %2$s", grade.getSymbol(), grade.getDescription()));
-        } else {
-            descriptionText.setText(grade.getDescription());
-        }
-
-        if (!"".equals(grade.getTeacher())) {
-            teacherText.setText(grade.getTeacher());
-        }
-
-        closeDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
 
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        Dialog dialog = getDialog();
-        if (dialog != null && getRetainInstance()) {
-            dialog.setDismissMessage(null);
+    @OnClick(R.id.grade_dialog_close_button)
+    void onClickClose() {
+        dismiss();
+    }
+
+    private String getDescriptionString() {
+        if ("".equals(grade.getDescription())) {
+            if (!"".equals(grade.getSymbol())) {
+                return grade.getSymbol();
+            } else {
+                return getString(R.string.noDescription_text);
+            }
+        } else if (!"".equals(grade.getSymbol())) {
+            return String.format("%1$s - %2$s", grade.getSymbol(), grade.getDescription());
+        } else {
+            return grade.getDescription();
         }
-        super.onDestroyView();
+    }
+
+    private String getTeacherString() {
+        if (grade.getTeacher() != null && !"".equals(grade.getTeacher())) {
+            return grade.getTeacher();
+        } else {
+            return getString(R.string.generic_app_no_data);
+        }
     }
 }

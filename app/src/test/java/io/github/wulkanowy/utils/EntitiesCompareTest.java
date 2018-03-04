@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.Grade;
 
 
 public class EntitiesCompareTest {
@@ -52,7 +52,8 @@ public class EntitiesCompareTest {
 
         List<Grade> updatedList = EntitiesCompare.compareGradeList(newList, oldList);
 
-        Assert.assertFalse(updatedList.get(0).getIsNew());
+        Assert.assertTrue(updatedList.get(0).getRead());
+        Assert.assertTrue(updatedList.get(0).getIsNew());
 
     }
 

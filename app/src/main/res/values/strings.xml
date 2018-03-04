@@ -33,7 +33,7 @@
     <string name="dashboard_text">Dashboard</string>
     <string name="grades_text">Grades</string>
     <string name="attendance_text">Attendance</string>
-    <string name="lessonplan_text">Lesson Plan</string>
+    <string name="lessonplan_text">Timetable</string>
     <string name="settings_text">Settings</string>
     <string name="activity_under_construction">This section of app is under construction.</string>
     <string name="fragment_no_grades">No grades</string>

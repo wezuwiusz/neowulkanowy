@@ -1,15 +1,16 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator_grade"
+    android:id="@+id/timetable_tab_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="io.github.wulkanowy.ui.main.grades.GradesFragment">
 
     <RelativeLayout
-        android:id="@+id/timetable_progress_bar"
+        android:id="@+id/timetable_tab_fragment_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -18,12 +19,12 @@
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/timetable_tab_fragment_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/timetable_refresh_layout">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/timetable_recycler"
+            android:id="@+id/timetable_tab_fragment_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

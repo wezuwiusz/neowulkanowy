@@ -5,7 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.Grade;
 
 public final class EntitiesCompare {
 
@@ -24,8 +24,8 @@ public final class EntitiesCompare {
         for (Grade grade : addedOrUpdatedGradeList) {
             if (!oldList.isEmpty()) {
                 grade.setRead(false);
-                grade.setIsNew(true);
             }
+            grade.setIsNew(true);
             updatedList.add(grade);
         }
 

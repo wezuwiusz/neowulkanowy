@@ -2,7 +2,7 @@ package io.github.wulkanowy.utils;
 
 import java.util.List;
 
-import io.github.wulkanowy.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.Grade;
 
 public final class AverageCalculator {
 

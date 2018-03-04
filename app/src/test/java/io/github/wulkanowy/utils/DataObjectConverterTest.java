@@ -17,7 +17,7 @@ public class DataObjectConverterTest {
     public void subjectConversionTest() {
         List<Subject> subjectList = new ArrayList<>();
         subjectList.add(new Subject().setName("Matematyka"));
-        List<io.github.wulkanowy.db.dao.entities.Subject> subjectEntitiesList =
+        List<io.github.wulkanowy.data.db.dao.entities.Subject> subjectEntitiesList =
                 DataObjectConverter.subjectsToSubjectEntities(subjectList);
 
         Assert.assertEquals("Matematyka", subjectEntitiesList.get(0).getName());
@@ -33,7 +33,7 @@ public class DataObjectConverterTest {
     public void gradesConversionTest() {
         List<Grade> gradeList = new ArrayList<>();
         gradeList.add(new Grade().setDescription("Lorem ipsum"));
-        List<io.github.wulkanowy.db.dao.entities.Grade> gradeEntitiesList =
+        List<io.github.wulkanowy.data.db.dao.entities.Grade> gradeEntitiesList =
                 DataObjectConverter.gradesToGradeEntities(gradeList);
 
         Assert.assertEquals("Lorem ipsum", gradeEntitiesList.get(0).getDescription());
@@ -55,7 +55,7 @@ public class DataObjectConverterTest {
     public void dayConversionTest() {
         List<Day> dayList = new ArrayList<>();
         dayList.add(new Day().setDate("20.12.2012"));
-        List<io.github.wulkanowy.db.dao.entities.Day> dayEntityList =
+        List<io.github.wulkanowy.data.db.dao.entities.Day> dayEntityList =
                 DataObjectConverter.daysToDaysEntities(dayList);
 
         Assert.assertEquals("20.12.2012", dayEntityList.get(0).getDate());
@@ -71,7 +71,7 @@ public class DataObjectConverterTest {
     public void lessonConversionTest() {
         List<Lesson> lessonList = new ArrayList<>();
         lessonList.add(new Lesson().setRoom("20"));
-        List<io.github.wulkanowy.db.dao.entities.Lesson> lessonEntityList =
+        List<io.github.wulkanowy.data.db.dao.entities.Lesson> lessonEntityList =
                 DataObjectConverter.lessonsToLessonsEntities(lessonList);
 
         Assert.assertEquals("20", lessonEntityList.get(0).getRoom());

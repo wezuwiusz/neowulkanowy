@@ -41,10 +41,10 @@ public class TimeUtilsTest {
 
     @Test
     public void getTicsStringTest() throws Exception {
-        Assert.assertEquals(636370560000000000L, TimeUtils.getNetTicks("31.07.2017"));
-        Assert.assertEquals(636334272000000000L, TimeUtils.getNetTicks("19.06.2017"));
-        Assert.assertEquals(636189120000000000L, TimeUtils.getNetTicks("02.01.2017"));
-        Assert.assertEquals(636080256000000000L, TimeUtils.getNetTicks("29.08.2016"));
+        Assert.assertEquals(636370560000000000L, TimeUtils.getNetTicks("2017-07-31"));
+        Assert.assertEquals(636334272000000000L, TimeUtils.getNetTicks("2017-06-19"));
+        Assert.assertEquals(636189120000000000L, TimeUtils.getNetTicks("2017-01-02"));
+        Assert.assertEquals(636080256000000000L, TimeUtils.getNetTicks("2016-08-29"));
     }
 
     @Test

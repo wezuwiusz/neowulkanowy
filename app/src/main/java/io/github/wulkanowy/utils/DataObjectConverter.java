@@ -4,11 +4,11 @@ package io.github.wulkanowy.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.db.dao.entities.Day;
-import io.github.wulkanowy.db.dao.entities.Grade;
-import io.github.wulkanowy.db.dao.entities.Lesson;
-import io.github.wulkanowy.db.dao.entities.Subject;
-import io.github.wulkanowy.db.dao.entities.Week;
+import io.github.wulkanowy.data.db.dao.entities.Day;
+import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.Lesson;
+import io.github.wulkanowy.data.db.dao.entities.Subject;
+import io.github.wulkanowy.data.db.dao.entities.Week;
 
 public final class DataObjectConverter {
 
@@ -52,8 +52,16 @@ public final class DataObjectConverter {
         return gradeEntityList;
     }
 
-    public static Week weekToWeekEntitie(io.github.wulkanowy.api.timetable.Week week) {
+    public static Week weekToWeekEntity(io.github.wulkanowy.api.timetable.Week week) {
         return new Week().setStartDayDate(week.getStartDayDate());
+    }
+
+    public static Day dayToDayEntity(io.github.wulkanowy.api.timetable.Day day) {
+        return new Day()
+                .setDate(day.getDate())
+                .setDayName(day.getDayName())
+                .setFreeDay(day.isFreeDay())
+                .setFreeDayName(day.getFreeDayName());
     }
 
 
@@ -62,15 +70,28 @@ public final class DataObjectConverter {
         List<Day> dayEntityList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.timetable.Day day : dayList) {
-            Day dayEntity = new Day()
-                    .setDate(day.getDate())
-                    .setDayName(day.getDayName())
-                    .setFreeDay(day.isFreeDay())
-                    .setFreeDayName(day.getFreeDayName());
-
-            dayEntityList.add(dayEntity);
+            dayEntityList.add(dayToDayEntity(day));
         }
         return dayEntityList;
+    }
+
+    public static Lesson lessonToLessonEntity(io.github.wulkanowy.api.timetable.Lesson lesson) {
+        return new Lesson()
+                .setNumber(lesson.getNumber())
+                .setSubject(lesson.getSubject())
+                .setTeacher(lesson.getTeacher())
+                .setRoom(lesson.getRoom())
+                .setDescription(lesson.getDescription())
+                .setGroupName(lesson.getGroupName())
+                .setStartTime(lesson.getStartTime())
+                .setEndTime(lesson.getEndTime())
+                .setDate(lesson.getDate())
+                .setEmpty(lesson.isEmpty())
+                .setDivisionIntoGroups(lesson.isDivisionIntoGroups())
+                .setPlanning(lesson.isPlanning())
+                .setRealized(lesson.isRealized())
+                .setMovedOrCanceled(lesson.isMovedOrCanceled())
+                .setNewMovedInOrChanged(lesson.isNewMovedInOrChanged());
     }
 
     public static List<Lesson> lessonsToLessonsEntities(List<io.github.wulkanowy.api.timetable.Lesson> lessonList) {
@@ -78,24 +99,7 @@ public final class DataObjectConverter {
         List<Lesson> lessonEntityList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.timetable.Lesson lesson : lessonList) {
-            Lesson lessonEntity = new Lesson()
-                    .setNumber(lesson.getNumber())
-                    .setSubject(lesson.getSubject())
-                    .setTeacher(lesson.getTeacher())
-                    .setRoom(lesson.getRoom())
-                    .setDescription(lesson.getDescription())
-                    .setGroupName(lesson.getGroupName())
-                    .setStartTime(lesson.getStartTime())
-                    .setEndTime(lesson.getEndTime())
-                    .setDate(lesson.getDate())
-                    .setEmpty(lesson.isEmpty())
-                    .setDivisionIntoGroups(lesson.isDivisionIntoGroups())
-                    .setPlanning(lesson.isPlanning())
-                    .setRealized(lesson.isRealized())
-                    .setMovedOrCanceled(lesson.isMovedOrCanceled())
-                    .setNewMovedInOrChanged(lesson.isNewMovedInOrChanged());
-
-            lessonEntityList.add(lessonEntity);
+            lessonEntityList.add(lessonToLessonEntity(lesson));
         }
         return lessonEntityList;
     }

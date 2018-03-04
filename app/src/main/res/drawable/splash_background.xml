@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="#FFF" />
+        </shape>
+    </item>
+
+    <item
+        android:width="250dp"
+        android:height="250dp"
+        android:drawable="@drawable/img_splash_512px"
+        android:gravity="center">
+        <!-- Only for 23 sdk -->
+    </item>
+</layer-list>

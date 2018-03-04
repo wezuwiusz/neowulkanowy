@@ -1,27 +1,28 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinator_grade"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grade_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="io.github.wulkanowy.ui.main.grades.GradesFragment">
 
     <RelativeLayout
+        android:id="@+id/grade_fragment_no_item_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:id="@+id/fragment_no_grades">
+        android:gravity="center">
 
         <ImageView
-            android:id="@+id/wrench_under_construction"
+            android:id="@+id/grade_fragment_no_item_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView3"
+            android:layout_below="@+id/grade_fragment_no_item_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
             android:contentDescription="@string/activity_dashboard_text"
             android:minHeight="100dp"
             android:minWidth="100dp"
+            android:tint="@android:color/black"
             app:srcCompat="@drawable/icon_grade_26dp" />
 
         <TextView
@@ -29,30 +30,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="46dp"
             android:text="@string/fragment_no_grades"
-            android:textSize="20sp"
+            android:id="@+id/grade_fragment_no_item_text"
             android:textAlignment="center"
-            android:id="@+id/textView3" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/loadingPanel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true" />
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/grade_swipe_refresh"
+        android:id="@+id/grade_fragment_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/subject_grade_recycler"
+            android:id="@+id/grade_fragment_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

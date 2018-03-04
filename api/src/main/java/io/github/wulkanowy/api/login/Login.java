@@ -27,14 +27,6 @@ public class Login {
         this.client = client;
     }
 
-    private String getLoginPageUrl() {
-        return LOGIN_PAGE_URL;
-    }
-
-    private String getLoginEndpointPageUrl() {
-        return LOGIN_ENDPOINT_PAGE_URL;
-    }
-
     public String login(String email, String password, String symbol)
             throws BadCredentialsException, LoginErrorException,
             AccountPermissionException, IOException, VulcanOfflineException {
@@ -47,7 +39,7 @@ public class Login {
             throws IOException, BadCredentialsException {
         this.symbol = symbol;
 
-        Document html = client.postPageByUrl(getLoginPageUrl(), new String[][]{
+        Document html = client.postPageByUrl(LOGIN_PAGE_URL, new String[][]{
                 {"LoginName", email},
                 {"Password", password}
         });
@@ -64,8 +56,7 @@ public class Login {
         this.symbol = findSymbol(defaultSymbol, certificate);
         client.setSymbol(this.symbol);
 
-        Document html = client.postPageByUrl(getLoginEndpointPageUrl()
-                .replace("{symbol}", this.symbol), new String[][]{
+        Document html = client.postPageByUrl(LOGIN_ENDPOINT_PAGE_URL, new String[][]{
                 {"wa", "wsignin1.0"},
                 {"wresult", certificate}
         });

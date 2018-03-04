@@ -1,121 +1,114 @@
 package io.github.wulkanowy.ui.main.timetable;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
+import javax.inject.Inject;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.utils.TimeUtils;
+import io.github.wulkanowy.di.component.FragmentComponent;
+import io.github.wulkanowy.ui.base.BaseFragment;
+import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
 
-public class TimetableFragment extends Fragment {
+public class TimetableFragment extends BaseFragment implements TimetableContract.View, TabLayout.OnTabSelectedListener {
 
-    private final String DATE_PATTERN = "yyyy-MM-dd";
+    @BindView(R.id.timetable_fragment_viewpager)
+    ViewPager viewPager;
 
-    private List<String> dateStringList = new ArrayList<>();
+    @BindView(R.id.timetable_fragment_tab_layout)
+    TabLayout tabLayout;
 
-    private TimetablePagerAdapter pagerAdapter;
+    @Inject
+    TimetablePagerAdapter pagerAdapter;
 
-    private ViewPager viewPager;
-
-    private TabLayout tabLayout;
-
-    public TimetableFragment() {
-        //empty constructor for fragment
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
+    @Inject
+    TimetableContract.Presenter presenter;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timetable, container, false);
-        viewPager = view.findViewById(R.id.timetable_fragment_viewpager);
-        tabLayout = view.findViewById(R.id.timetable_fragment_tab);
-        new CreateTabTask(this).execute();
+
+        FragmentComponent component = getFragmentComponent();
+        if (component != null) {
+            component.inject(this);
+            setButterKnife(ButterKnife.bind(this, view));
+            presenter.onStart(this, (OnFragmentIsReadyListener) getActivity());
+        }
         return view;
     }
 
-    private TimetablePagerAdapter getPagerAdapter() {
-        TimetablePagerAdapter pagerAdapter = new TimetablePagerAdapter(getChildFragmentManager());
-        for (String date : dateStringList) {
-            pagerAdapter.addFragment(TimetableFragmentTab.newInstance(date), date);
+    @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        super.setMenuVisibility(menuVisible);
+        if (presenter != null) {
+            presenter.onFragmentVisible(menuVisible);
         }
-        return pagerAdapter;
     }
 
-    private String getDateOfCurrentMonday() {
-        DateTime currentDate = new DateTime();
-
-        if (currentDate.getDayOfWeek() == DateTimeConstants.SATURDAY) {
-            currentDate = currentDate.plusDays(2);
-        } else if (currentDate.getDayOfWeek() == DateTimeConstants.SUNDAY) {
-            currentDate = currentDate.plusDays(1);
-        } else {
-            currentDate = currentDate.withDayOfWeek(DateTimeConstants.MONDAY);
-        }
-        return currentDate.toString(DATE_PATTERN);
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        presenter.onTabSelected(tab.getPosition());
     }
 
-    private void setAdapterOnViewPager() {
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+        presenter.onTabUnselected(tab.getPosition());
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+        //do nothing
+    }
+
+    @Override
+    public void setTabDataToAdapter(TabsData tabsData) {
+        pagerAdapter.setTabsData(tabsData);
+    }
+
+    @Override
+    public void setAdapterWithTabLayout() {
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(dateStringList.indexOf(getDateOfCurrentMonday()));
-    }
 
-    private void setDateStringList() {
-        if (dateStringList.isEmpty()) {
-            dateStringList = TimeUtils.getMondaysFromCurrentSchoolYear(DATE_PATTERN);
-        }
-    }
-
-    private void setViewPagerOnTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(this);
     }
 
-    protected final void setLoadingBarInvisible() {
-        if (getView() != null) {
-            getView().findViewById(R.id.timetable_tab_progress_bar).setVisibility(View.GONE);
+    @Override
+    public void setChildFragmentSelected(int position, boolean selected) {
+        ((TimetableTabFragment) pagerAdapter.getItem(position)).setSelected(selected);
+    }
+
+    @Override
+    public void scrollViewPagerToPosition(int position) {
+        viewPager.setCurrentItem(position, false);
+    }
+
+    @Override
+    public void setActivityTitle() {
+        setTitle(getString(R.string.lessonplan_text));
+    }
+
+    @Override
+    public void onError(String message) {
+        if (getActivity() != null) {
+            Snackbar.make(getActivity().findViewById(R.id.main_activity_view_pager),
+                    message, Snackbar.LENGTH_LONG).show();
         }
     }
 
-    private static class CreateTabTask extends AsyncTask<Void, Void, Void> {
-
-        private TimetableFragment fragment;
-
-        public CreateTabTask(TimetableFragment fragment) {
-            this.fragment = fragment;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            fragment.setDateStringList();
-            fragment.pagerAdapter = fragment.getPagerAdapter();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            fragment.setAdapterOnViewPager();
-            fragment.setViewPagerOnTabLayout();
-            fragment.setLoadingBarInvisible();
-        }
+    @Override
+    public void onDestroyView() {
+        presenter.onDestroy();
+        super.onDestroyView();
     }
 }

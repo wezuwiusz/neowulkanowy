@@ -5,6 +5,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.List;
 
@@ -14,20 +16,35 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractExpandableHeaderItem;
 import eu.davidea.viewholders.ExpandableViewHolder;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.db.dao.entities.Day;
+import io.github.wulkanowy.data.db.dao.entities.Day;
 
 public class TimetableHeaderItem
         extends AbstractExpandableHeaderItem<TimetableHeaderItem.HeaderViewHolder, TimetableSubItem> {
 
     private Day day;
 
-    public TimetableHeaderItem(Day day) {
+    TimetableHeaderItem(Day day) {
         this.day = day;
     }
 
     @Override
     public boolean equals(Object o) {
-        return this == o;
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TimetableHeaderItem that = (TimetableHeaderItem) o;
+
+        return new EqualsBuilder()
+                .append(day, that.day)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(day)
+                .toHashCode();
     }
 
     @Override
@@ -42,45 +59,42 @@ public class TimetableHeaderItem
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, HeaderViewHolder holder, int position, List payloads) {
-        holder.dayName.setText(StringUtils.capitalize(day.getDayName()));
-        holder.date.setText(day.getDate());
-
-        boolean alertActive = false;
-
-        for (TimetableSubItem subItem : getSubItems()) {
-            if (subItem.getLesson().getIsMovedOrCanceled() ||
-                    subItem.getLesson().getIsNewMovedInOrChanged()) {
-                alertActive = true;
-            }
-        }
-
-        if (alertActive) {
-            holder.alert.setVisibility(View.VISIBLE);
-        } else {
-            holder.alert.setVisibility(View.GONE);
-        }
+        holder.onBind(day, getSubItems());
     }
 
-    public static class HeaderViewHolder extends ExpandableViewHolder {
+    static class HeaderViewHolder extends ExpandableViewHolder {
 
-        @BindView(R.id.timetable_header_dayName_text)
-        public TextView dayName;
+        @BindView(R.id.timetable_header_day)
+        TextView dayName;
 
-        @BindView(R.id.timetable_header_date_text)
-        public TextView date;
+        @BindView(R.id.timetable_header_date)
+        TextView date;
 
         @BindView(R.id.timetable_header_alert_image)
-        public ImageView alert;
+        ImageView alert;
 
-        public HeaderViewHolder(View view, FlexibleAdapter adapter) {
+        HeaderViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    toggleExpansion();
-                }
-            });
+            view.setOnClickListener(this);
             ButterKnife.bind(this, view);
+        }
+
+        void onBind(Day item, List<TimetableSubItem> subItems) {
+            dayName.setText(StringUtils.capitalize(item.getDayName()));
+            date.setText(item.getDate());
+            alert.setVisibility(isSubItemNewMovedInOrChanged(subItems) ? View.VISIBLE : View.INVISIBLE);
+        }
+
+        private boolean isSubItemNewMovedInOrChanged(List<TimetableSubItem> subItems) {
+            boolean isAlertActive = false;
+
+            for (TimetableSubItem subItem : subItems) {
+                if (subItem.getLesson().getIsMovedOrCanceled() ||
+                        subItem.getLesson().getIsNewMovedInOrChanged()) {
+                    isAlertActive = true;
+                }
+            }
+            return isAlertActive;
         }
     }
 }

@@ -8,7 +8,7 @@
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/timetable_header_dayName_text"
+        android:id="@+id/timetable_header_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -23,12 +23,12 @@
         android:textSize="19sp" />
 
     <TextView
-        android:id="@+id/timetable_header_date_text"
+        android:id="@+id/timetable_header_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/timetable_header_dayName_text"
+        android:layout_below="@+id/timetable_header_day"
         android:layout_marginTop="5dp"
         android:maxLines="1"
         android:text="@string/app_name"

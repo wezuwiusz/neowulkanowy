@@ -30,13 +30,13 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:maxLength="1"
+            android:maxLength="2"
             android:text="0"
             android:textSize="32sp"
             tool:ignore="all"/>
 
         <TextView
-            android:id="@+id/timetable_subItem_lesson_text"
+            android:id="@+id/timetable_subItem_lesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -57,8 +57,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/timetable_subItem_number_of_lesson"
-            android:layout_alignLeft="@id/timetable_subItem_lesson_text"
-            android:layout_alignStart="@id/timetable_subItem_lesson_text"
+            android:layout_alignLeft="@id/timetable_subItem_lesson"
+            android:layout_alignStart="@id/timetable_subItem_lesson"
             android:maxLines="1"
             android:text="@string/grades_text"
             android:textColor="#4C4C4C"
@@ -82,7 +82,7 @@
             tool:ignore="all"/>
 
         <ImageView
-            android:id="@+id/timetable_subItem_change_image"
+            android:id="@+id/timetable_subItem_alert_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

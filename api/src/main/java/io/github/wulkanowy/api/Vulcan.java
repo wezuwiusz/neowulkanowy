@@ -48,7 +48,7 @@ public class Vulcan {
         this.login = login;
     }
 
-    public String login(String email, String password, String symbol)
+    public void login(String email, String password, String symbol)
             throws BadCredentialsException, AccountPermissionException,
             LoginErrorException, IOException, VulcanOfflineException {
 
@@ -56,8 +56,6 @@ public class Vulcan {
         login = getLogin();
 
         this.symbol = login.login(this.email, password, symbol);
-
-        return this.symbol;
     }
 
     public Vulcan login(String email, String password, String symbol, String id)
@@ -80,6 +78,10 @@ public class Vulcan {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     private void setFullEndpointInfo(String email) {

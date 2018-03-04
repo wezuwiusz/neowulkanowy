@@ -1,8 +1,9 @@
 package io.github.wulkanowy.ui.main.timetable;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,19 +16,17 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.db.dao.entities.Lesson;
+import io.github.wulkanowy.data.db.dao.entities.Lesson;
 
 
-public class TimetableSubItem extends AbstractSectionableItem<TimetableSubItem.SubItemViewHolder, TimetableHeaderItem> {
+public class TimetableSubItem
+        extends AbstractSectionableItem<TimetableSubItem.SubItemViewHolder, TimetableHeaderItem> {
 
     private Lesson lesson;
 
-    private FragmentManager fragmentManager;
-
-    public TimetableSubItem(TimetableHeaderItem header, Lesson lesson, FragmentManager fragmentManager) {
+    public TimetableSubItem(TimetableHeaderItem header, Lesson lesson) {
         super(header);
         this.lesson = lesson;
-        this.fragmentManager = fragmentManager;
     }
 
     public Lesson getLesson() {
@@ -51,63 +50,74 @@ public class TimetableSubItem extends AbstractSectionableItem<TimetableSubItem.S
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, SubItemViewHolder holder, int position, List payloads) {
-        holder.lessonName.setText(lesson.getSubject());
-        holder.lessonTime.setText(String.format("%1$s - %2$s", lesson.getStartTime(), lesson.getEndTime()));
-        holder.numberOfLesson.setText(lesson.getNumber());
-        holder.room.setText(lesson.getRoom());
-
-        holder.setDialog(lesson, fragmentManager);
-
-        if (lesson.getIsMovedOrCanceled() || lesson.getIsNewMovedInOrChanged()) {
-            holder.change.setVisibility(View.VISIBLE);
-        } else {
-            holder.change.setVisibility(View.GONE);
-        }
-
-        if (lesson.getIsMovedOrCanceled()) {
-            holder.lessonName.setPaintFlags(holder.lessonName.getPaintFlags()
-                    | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            holder.lessonName.setPaintFlags(holder.lessonName.getPaintFlags()
-                    & (~Paint.STRIKE_THRU_TEXT_FLAG));
-        }
-
-        if (!lesson.getRoom().isEmpty()) {
-            holder.room.setText(holder.getContentView().getContext().getString(R.string.timetable_subitem_room, lesson.getRoom()));
-        }
+        holder.onBind(lesson);
     }
 
-    public static class SubItemViewHolder extends FlexibleViewHolder {
+    static class SubItemViewHolder extends FlexibleViewHolder {
 
-        @BindView(R.id.timetable_subItem_lesson_text)
-        public TextView lessonName;
+        @BindView(R.id.timetable_subItem_lesson)
+        TextView lessonName;
 
         @BindView(R.id.timetable_subItem_number_of_lesson)
-        public TextView numberOfLesson;
+        TextView numberOfLesson;
 
         @BindView(R.id.timetable_subItem_time)
-        public TextView lessonTime;
+        TextView lessonTime;
 
         @BindView(R.id.timetable_subItem_room)
-        public TextView room;
+        TextView room;
 
-        @BindView(R.id.timetable_subItem_change_image)
-        public ImageView change;
+        @BindView(R.id.timetable_subItem_alert_image)
+        ImageView alert;
 
-        public SubItemViewHolder(View view, FlexibleAdapter adapter) {
+        private Context context;
+
+        private Lesson item;
+
+        SubItemViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);
+            context = view.getContext();
+            view.setOnClickListener(this);
         }
 
-        public void setDialog(final Lesson lesson, final FragmentManager fragmentManager) {
-            getContentView().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    TimetableDialogFragment dialogFragment = TimetableDialogFragment.newInstance(lesson);
-                    dialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
-                    dialogFragment.show(fragmentManager, lesson.toString());
-                }
-            });
+        void onBind(Lesson lesson) {
+            item = lesson;
+
+            lessonName.setText(lesson.getSubject());
+            lessonTime.setText(getLessonTimeString());
+            numberOfLesson.setText(lesson.getNumber());
+            room.setText(getRoomString());
+            alert.setVisibility(lesson.getIsMovedOrCanceled() || lesson.getIsNewMovedInOrChanged()
+                    ? View.VISIBLE : View.INVISIBLE);
+            lessonName.setPaintFlags(lesson.getIsMovedOrCanceled() ? lessonName.getPaintFlags()
+                    | Paint.STRIKE_THRU_TEXT_FLAG :
+                    lessonName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            room.setText(getRoomString());
+        }
+
+        @Override
+        public void onClick(View view) {
+            super.onClick(view);
+            showDialog();
+        }
+
+        private String getLessonTimeString() {
+            return String.format("%1$s - %2$s", item.getStartTime(), item.getEndTime());
+        }
+
+        private String getRoomString() {
+            if (!item.getRoom().isEmpty()) {
+                return context.getString(R.string.timetable_subitem_room, item.getRoom());
+            } else {
+                return item.getRoom();
+            }
+        }
+
+        private void showDialog() {
+            TimetableDialogFragment dialogFragment = TimetableDialogFragment.newInstance(item);
+            dialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+            dialogFragment.show(((FragmentActivity) context).getSupportFragmentManager(), item.toString());
         }
     }
 }

@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static io.github.wulkanowy.utils.AppConstant.DATE_PATTERN;
+
 public final class TimeUtils {
 
     private static final long TICKS_AT_EPOCH = 621355968000000000L;
@@ -31,7 +33,7 @@ public final class TimeUtils {
     }
 
     public static long getNetTicks(String dateString) throws ParseException {
-        return getNetTicks(dateString, "dd.MM.yyyy");
+        return getNetTicks(dateString, DATE_PATTERN);
     }
 
     public static long getNetTicks(String dateString, String dateFormat) throws ParseException {
@@ -46,7 +48,7 @@ public final class TimeUtils {
         return new Date((netTicks - TICKS_AT_EPOCH) / TICKS_PER_MILLISECOND);
     }
 
-    public static List<String> getMondaysFromCurrentSchoolYear(String dateFormat) {
+    public static List<String> getMondaysFromCurrentSchoolYear() {
         LocalDate startDate = new LocalDate(getCurrentSchoolYear(), 9, 1);
         LocalDate endDate = new LocalDate(getCurrentSchoolYear() + 1, 8, 31);
 
@@ -61,7 +63,7 @@ public final class TimeUtils {
         }
 
         while (startDate.isBefore(endDate)) {
-            dateList.add(startDate.toString(dateFormat));
+            dateList.add(startDate.toString(DATE_PATTERN));
             startDate = startDate.plusWeeks(1);
         }
         return dateList;
@@ -70,5 +72,18 @@ public final class TimeUtils {
     public static int getCurrentSchoolYear() {
         DateTime dateTime = new DateTime();
         return dateTime.getMonthOfYear() <= 8 ? dateTime.getYear() - 1 : dateTime.getYear();
+    }
+
+    public static String getDateOfCurrentMonday(boolean normalize) {
+        DateTime currentDate = new DateTime();
+
+        if (currentDate.getDayOfWeek() == DateTimeConstants.SATURDAY && normalize) {
+            currentDate = currentDate.plusDays(2);
+        } else if (currentDate.getDayOfWeek() == DateTimeConstants.SUNDAY && normalize) {
+            currentDate = currentDate.plusDays(1);
+        } else {
+            currentDate = currentDate.withDayOfWeek(DateTimeConstants.MONDAY);
+        }
+        return currentDate.toString(DATE_PATTERN);
     }
 }

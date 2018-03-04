@@ -2,26 +2,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentBottom="true">
-
-    <RelativeLayout
-        android:id="@+id/timetable_tab_progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true" />
-    </RelativeLayout>
+    android:layout_alignParentBottom="true"
+    android:id="@+id/timetable_fragment_container">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/timetable_fragment_tab"
+            android:id="@+id/timetable_fragment_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMinWidth="125dp"
@@ -31,6 +20,6 @@
             android:id="@+id/timetable_fragment_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/timetable_fragment_tab" />
+            android:layout_below="@id/timetable_fragment_tab_layout" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
