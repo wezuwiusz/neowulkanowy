@@ -5,4 +5,11 @@
             <solid android:color="#FFF" />
         </shape>
     </item>
+
+    <item
+        android:width="250dp"
+        android:height="250dp"
+        android:drawable="@drawable/img_splash_512px"
+        android:gravity="center">
+    </item>
 </layer-list>
