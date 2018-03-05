@@ -14,7 +14,11 @@ public interface TimetableTabContract {
 
         void hideRefreshingBar();
 
+        void showNoItem(boolean show);
+
         void showProgressBar(boolean show);
+
+        void setFreeWeekName(String text);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

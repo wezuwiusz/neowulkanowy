@@ -26,6 +26,8 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
     private String date;
 
+    private String freeWeekName;
+
     private boolean isFirstSight = false;
 
     @Inject
@@ -37,6 +39,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
     public void onStart(TimetableTabContract.View view, boolean isPrimary) {
         super.onStart(view);
         getView().showProgressBar(true);
+        getView().showNoItem(false);
         onFragmentSelected(isPrimary);
     }
 
@@ -70,7 +73,9 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
     @Override
     public void onCanceledRefreshAsync() {
-        // do nothing
+        if (isViewAttached()) {
+            getView().hideRefreshingBar();
+        }
     }
 
     @Override
@@ -100,8 +105,14 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
         headerItems = new ArrayList<>();
 
+        boolean isFreeWeek = true;
+
         for (Day day : dayList) {
             TimetableHeaderItem headerItem = new TimetableHeaderItem(day);
+
+            if (isFreeWeek) {
+                isFreeWeek = day.isFreeDay();
+            }
 
             List<Lesson> lessonList = day.getLessons();
 
@@ -115,6 +126,11 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
             headerItem.setExpanded(false);
             headerItems.add(headerItem);
         }
+
+        if (isFreeWeek) {
+            freeWeekName = dayList.get(4).getFreeDayName();
+            headerItems = new ArrayList<>();
+        }
     }
 
     @Override
@@ -124,7 +140,12 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
     @Override
     public void onEndLoadingAsync(boolean result, Exception exception) {
-        getView().updateAdapterList(headerItems);
+        if (headerItems.isEmpty()) {
+            getView().showNoItem(true);
+            getView().setFreeWeekName(freeWeekName);
+        } else {
+            getView().updateAdapterList(headerItems);
+        }
         getView().showProgressBar(false);
     }
 
@@ -140,7 +161,6 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         isFirstSight = false;
 
         if (refreshTask != null) {
@@ -151,5 +171,6 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
             loadingTask.cancel(true);
             loadingTask = null;
         }
+        super.onDestroy();
     }
 }

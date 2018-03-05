@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.main.timetable;
 
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.List;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -73,6 +75,15 @@ public class TimetableHeaderItem
         @BindView(R.id.timetable_header_alert_image)
         ImageView alert;
 
+        @BindView(R.id.timetable_header_free_name)
+        TextView freeName;
+
+        @BindColor(R.color.secondary_text)
+        int secondaryColor;
+
+        @BindColor(R.color.free_day)
+        int backgroundFreeDay;
+
         HeaderViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             view.setOnClickListener(this);
@@ -83,6 +94,14 @@ public class TimetableHeaderItem
             dayName.setText(StringUtils.capitalize(item.getDayName()));
             date.setText(item.getDate());
             alert.setVisibility(isSubItemNewMovedInOrChanged(subItems) ? View.VISIBLE : View.INVISIBLE);
+            freeName.setVisibility(item.isFreeDay() ? View.VISIBLE : View.INVISIBLE);
+            freeName.setText(item.getFreeDayName());
+
+            if (item.isFreeDay()) {
+                ((FrameLayout) getContentView()).setForeground(null);
+                getContentView().setBackgroundColor(backgroundFreeDay);
+                dayName.setTextColor(secondaryColor);
+            }
         }
 
         private boolean isSubItemNewMovedInOrChanged(List<TimetableSubItem> subItems) {

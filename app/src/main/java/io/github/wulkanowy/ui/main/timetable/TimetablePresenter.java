@@ -98,10 +98,12 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        isFirstSight = false;
+
         if (loadingTask != null) {
             loadingTask.cancel(true);
             loadingTask = null;
         }
+        super.onDestroy();
     }
 }

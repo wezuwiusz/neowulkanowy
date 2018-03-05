@@ -23,15 +23,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (loginAsync != null) {
-            loginAsync.cancel(true);
-            loginAsync = null;
-        }
-    }
-
-    @Override
     public void attemptLogin(String email, String password, String symbol) {
         getView().resetViewErrors();
 
@@ -57,7 +48,9 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
 
     @Override
     public void onStartAsync() {
-        getView().showLoginProgress(true);
+        if (isViewAttached()) {
+            getView().showLoginProgress(true);
+        }
     }
 
     @Override
@@ -90,7 +83,9 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
 
     @Override
     public void onCanceledAsync() {
-        getView().showLoginProgress(false);
+        if (isViewAttached()) {
+            getView().showLoginProgress(false);
+        }
     }
 
     private boolean isEmailValid(String email) {
@@ -139,5 +134,14 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             correct = false;
         }
         return correct;
+    }
+
+    @Override
+    public void onDestroy() {
+        if (loginAsync != null) {
+            loginAsync.cancel(true);
+            loginAsync = null;
+        }
+        super.onDestroy();
     }
 }

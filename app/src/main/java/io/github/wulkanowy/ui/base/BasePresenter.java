@@ -25,6 +25,10 @@ public class BasePresenter<V extends BaseContract.View> implements BaseContract.
         view = null;
     }
 
+    protected boolean isViewAttached() {
+        return view != null;
+    }
+
     public final RepositoryContract getRepository() {
         return repository;
     }

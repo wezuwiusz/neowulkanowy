@@ -73,6 +73,7 @@
 
     <string name="info_average_grades">Średnia: %1$.2f</string>
     <string name="info_no_average">Brak średniej</string>
+    <string name="info_free_week">Brak lekcji w tym tygodniu</string>
     <string name="timetable_subitem_room">Sala %s</string>
 
     <plurals name="numberOfGradesPlurals">

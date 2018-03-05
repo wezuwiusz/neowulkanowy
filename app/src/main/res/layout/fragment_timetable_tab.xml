@@ -1,5 +1,6 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/timetable_tab_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,6 +17,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/timetable_tab_fragment_no_item_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/timetable_tab_fragment_no_item_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timetable_tab_fragment_no_item_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:minHeight="100dp"
+            android:minWidth="100dp"
+            android:tint="@android:color/black"
+            app:srcCompat="@drawable/ic_menu_timetable_24dp"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:id="@+id/timetable_tab_fragment_no_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:text="@string/info_free_week"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/timetable_tab_fragment_no_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="20sp"
+            android:layout_below="@id/timetable_tab_fragment_no_item_image"
+            android:textAlignment="center"
+            android:layout_marginTop="15dp" />
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout

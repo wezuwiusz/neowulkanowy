@@ -19,18 +19,18 @@
             android:layout_below="@+id/grade_fragment_no_item_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:contentDescription="@string/activity_dashboard_text"
             android:minHeight="100dp"
             android:minWidth="100dp"
             android:tint="@android:color/black"
-            app:srcCompat="@drawable/ic_menu_grade_26dp" />
+            app:srcCompat="@drawable/ic_menu_grade_26dp"
+            tools:ignore="contentDescription" />
 
         <TextView
+            android:id="@+id/grade_fragment_no_item_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="46dp"
             android:text="@string/fragment_no_grades"
-            android:id="@+id/grade_fragment_no_item_text"
             android:textAlignment="center"
             android:textSize="20sp" />
     </RelativeLayout>

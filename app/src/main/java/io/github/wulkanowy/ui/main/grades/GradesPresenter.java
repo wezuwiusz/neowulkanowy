@@ -78,7 +78,9 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
 
     @Override
     public void onCanceledRefreshAsync() {
-        getView().hideRefreshingBar();
+        if (isViewAttached()) {
+            getView().hideRefreshingBar();
+        }
     }
 
     @Override
@@ -138,13 +140,14 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
         } else {
             getView().updateAdapterList(headerItems);
             getView().showNoItem(false);
-            listener.onFragmentIsReady();
         }
+        listener.onFragmentIsReady();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        isFirstSight = false;
+
         if (refreshTask != null) {
             refreshTask.cancel(true);
             refreshTask = null;
@@ -153,5 +156,6 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
             loadingTask.cancel(true);
             loadingTask = null;
         }
+        super.onDestroy();
     }
 }
