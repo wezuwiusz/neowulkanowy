@@ -19,4 +19,8 @@ public final class LogUtils {
     public static void error(String message) {
         Log.e(AppConstant.APP_NAME, message);
     }
+
+    public static void info(String message) {
+        Log.i(AppConstant.APP_NAME, message);
+    }
 }
