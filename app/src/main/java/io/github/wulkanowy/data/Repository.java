@@ -1,6 +1,5 @@
 package io.github.wulkanowy.data;
 
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
@@ -13,6 +12,7 @@ import io.github.wulkanowy.api.login.BadCredentialsException;
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.api.login.VulcanOfflineException;
 import io.github.wulkanowy.data.db.dao.entities.Account;
+import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.db.dao.entities.GradeDao;
@@ -21,6 +21,7 @@ import io.github.wulkanowy.data.db.dao.entities.WeekDao;
 import io.github.wulkanowy.data.db.resources.ResourcesContract;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.data.sync.SyncContract;
+import io.github.wulkanowy.data.sync.attendance.AttendanceSyncContract;
 import io.github.wulkanowy.data.sync.login.LoginSyncContract;
 import io.github.wulkanowy.data.sync.timetable.TimetableSyncContract;
 import io.github.wulkanowy.di.annotations.SyncGrades;
@@ -38,6 +39,8 @@ public class Repository implements RepositoryContract {
 
     private final LoginSyncContract loginSync;
 
+    private final AttendanceSyncContract attendanceSync;
+
     private final TimetableSyncContract timetableSync;
 
     private final SyncContract gradeSync;
@@ -49,6 +52,7 @@ public class Repository implements RepositoryContract {
                ResourcesContract resources,
                DaoSession daoSession,
                LoginSyncContract loginSync,
+               AttendanceSyncContract attendanceSync,
                TimetableSyncContract timetableSync,
                @SyncGrades SyncContract gradeSync,
                @SyncSubjects SyncContract subjectSync) {
@@ -56,6 +60,7 @@ public class Repository implements RepositoryContract {
         this.resources = resources;
         this.daoSession = daoSession;
         this.loginSync = loginSync;
+        this.attendanceSync = attendanceSync;
         this.timetableSync = timetableSync;
         this.gradeSync = gradeSync;
         this.subjectSync = subjectSync;
@@ -82,6 +87,11 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
+    public String getAttendanceLessonDescription(AttendanceLesson lesson) {
+        return resources.getAttendanceLessonDescription(lesson);
+    }
+
+    @Override
     public void loginUser(String email, String password, String symbol)
             throws NotLoggedInErrorException, AccountPermissionException, IOException,
             CryptoException, VulcanOfflineException, BadCredentialsException {
@@ -105,6 +115,16 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
+    public void syncAttendance() throws NotLoggedInErrorException, ParseException, IOException {
+        attendanceSync.syncAttendance();
+    }
+
+    @Override
+    public void syncAttendance(String date) throws NotLoggedInErrorException, ParseException, IOException {
+        attendanceSync.syncAttendance(date);
+    }
+
+    @Override
     public void syncTimetable() throws NotLoggedInErrorException, IOException, ParseException {
         timetableSync.syncTimetable();
     }
@@ -118,6 +138,7 @@ public class Repository implements RepositoryContract {
     public void syncAll() throws NotLoggedInErrorException, IOException, ParseException {
         syncSubjects();
         syncGrades();
+        syncAttendance();
         syncTimetable();
     }
 

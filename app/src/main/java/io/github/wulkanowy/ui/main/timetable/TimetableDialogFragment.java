@@ -15,13 +15,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.data.db.dao.entities.Lesson;
+import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
 
 public class TimetableDialogFragment extends DialogFragment {
 
     private static final String ARGUMENT_KEY = "Item";
 
-    private Lesson lesson;
+    private TimetableLesson lesson;
 
     @BindView(R.id.timetable_dialog_lesson_value)
     TextView lessonName;
@@ -54,7 +54,7 @@ public class TimetableDialogFragment extends DialogFragment {
         //empty constructor for fragment
     }
 
-    public static TimetableDialogFragment newInstance(Lesson lesson) {
+    public static TimetableDialogFragment newInstance(TimetableLesson lesson) {
         TimetableDialogFragment dialogFragment = new TimetableDialogFragment();
 
         Bundle bundle = new Bundle();
@@ -69,7 +69,7 @@ public class TimetableDialogFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            lesson = (Lesson) getArguments().getSerializable(ARGUMENT_KEY);
+            lesson = (TimetableLesson) getArguments().getSerializable(ARGUMENT_KEY);
         }
     }
 

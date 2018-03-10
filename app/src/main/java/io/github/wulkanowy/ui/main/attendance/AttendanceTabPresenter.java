@@ -1,5 +1,4 @@
-package io.github.wulkanowy.ui.main.timetable;
-
+package io.github.wulkanowy.ui.main.attendance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,36 +6,34 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.github.wulkanowy.data.RepositoryContract;
+import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.data.db.dao.entities.Day;
-import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.ui.base.BasePresenter;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
-public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.View>
-        implements TimetableTabContract.Presenter, AsyncListeners.OnRefreshListener,
+public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.View>
+        implements AttendanceTabContract.Presenter, AsyncListeners.OnRefreshListener,
         AsyncListeners.OnFirstLoadingListener {
 
     private AbstractTask refreshTask;
 
     private AbstractTask loadingTask;
 
-    private List<TimetableHeaderItem> headerItems = new ArrayList<>();
+    private List<AttendanceHeaderItem> headerItems = new ArrayList<>();
 
     private String date;
-
-    private String freeWeekName;
 
     private boolean isFirstSight = false;
 
     @Inject
-    TimetableTabPresenter(RepositoryContract repository) {
+    AttendanceTabPresenter(RepositoryContract repository) {
         super(repository);
     }
 
     @Override
-    public void onStart(TimetableTabContract.View view, boolean isPrimary) {
+    public void onStart(AttendanceTabContract.View view, boolean isPrimary) {
         super.onStart(view);
         getView().showProgressBar(true);
         getView().showNoItem(false);
@@ -96,7 +93,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
     public void onDoInBackgroundLoading() throws Exception {
         Week week = getRepository().getWeek(date);
 
-        if (week == null || !week.getIsTimetableSynced()) {
+        if (week == null || !week.getIsAttendanceSynced()) {
             syncData();
             week = getRepository().getWeek(date);
         }
@@ -105,21 +102,22 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
         headerItems = new ArrayList<>();
 
-        boolean isFreeWeek = true;
+        boolean isEmptyWeek = true;
 
         for (Day day : dayList) {
-            TimetableHeaderItem headerItem = new TimetableHeaderItem(day);
+            AttendanceHeaderItem headerItem = new AttendanceHeaderItem(day);
 
-            if (isFreeWeek) {
-                isFreeWeek = day.getIsFreeDay();
+            if (isEmptyWeek) {
+                isEmptyWeek = day.getAttendanceLessons().isEmpty();
             }
 
-            List<TimetableLesson> lessonList = day.getTimetableLessons();
+            List<AttendanceLesson> lessonList = day.getAttendanceLessons();
 
-            List<TimetableSubItem> subItems = new ArrayList<>();
+            List<AttendanceSubItem> subItems = new ArrayList<>();
 
-            for (TimetableLesson lesson : lessonList) {
-                subItems.add(new TimetableSubItem(headerItem, lesson));
+            for (AttendanceLesson lesson : lessonList) {
+                lesson.setDescription(getRepository().getAttendanceLessonDescription(lesson));
+                subItems.add(new AttendanceSubItem(headerItem, lesson));
             }
 
             headerItem.setSubItems(subItems);
@@ -127,8 +125,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
             headerItems.add(headerItem);
         }
 
-        if (isFreeWeek) {
-            freeWeekName = dayList.get(4).getFreeDayName();
+        if (isEmptyWeek) {
             headerItems = new ArrayList<>();
         }
     }
@@ -142,7 +139,6 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
     public void onEndLoadingAsync(boolean result, Exception exception) {
         if (headerItems.isEmpty()) {
             getView().showNoItem(true);
-            getView().setFreeWeekName(freeWeekName);
             getView().updateAdapterList(null);
         } else {
             getView().updateAdapterList(headerItems);
@@ -158,7 +154,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
     private void syncData() throws Exception {
         getRepository().loginCurrentUser();
-        getRepository().syncTimetable(date);
+        getRepository().syncAttendance(date);
     }
 
     @Override
@@ -173,6 +169,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
             loadingTask.cancel(true);
             loadingTask = null;
         }
+
         super.onDestroy();
     }
 }

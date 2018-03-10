@@ -20,8 +20,8 @@ public class AttendanceTableTest extends StudentAndParentTestCase {
 
     @Test
     public void getWeekStartByDate() throws Exception {
-        Assert.assertEquals("31.08.2015", excellent.getWeekTable().getStartDayDate());
-        Assert.assertEquals("05.09.2016", full.getWeekTable().getStartDayDate());
+        Assert.assertEquals("2015-08-31", excellent.getWeekTable().getStartDayDate());
+        Assert.assertEquals("2016-09-05", full.getWeekTable().getStartDayDate());
     }
 
     @Test
@@ -38,13 +38,13 @@ public class AttendanceTableTest extends StudentAndParentTestCase {
 
     @Test
     public void getDayDate() throws Exception {
-        Assert.assertEquals("31.08.2015", excellent.getWeekTable().getDay(0).getDate());
-        Assert.assertEquals("02.09.2015", excellent.getWeekTable().getDay(2).getDate());
-        Assert.assertEquals("04.09.2015", excellent.getWeekTable().getDay(4).getDate());
+        Assert.assertEquals("2015-08-31", excellent.getWeekTable().getDay(0).getDate());
+        Assert.assertEquals("2015-09-02", excellent.getWeekTable().getDay(2).getDate());
+        Assert.assertEquals("2015-09-04", excellent.getWeekTable().getDay(4).getDate());
 
-        Assert.assertEquals("05.09.2016", full.getWeekTable().getDay(0).getDate());
-        Assert.assertEquals("07.09.2016", full.getWeekTable().getDay(2).getDate());
-        Assert.assertEquals("09.09.2016", full.getWeekTable().getDay(4).getDate());
+        Assert.assertEquals("2016-09-05", full.getWeekTable().getDay(0).getDate());
+        Assert.assertEquals("2016-09-07", full.getWeekTable().getDay(2).getDate());
+        Assert.assertEquals("2016-09-09", full.getWeekTable().getDay(4).getDate());
     }
 
     @Test

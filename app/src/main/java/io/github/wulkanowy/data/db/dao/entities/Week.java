@@ -26,6 +26,12 @@ public class Week {
     @Property(nameInDb = "START_DATE")
     private String startDayDate = "";
 
+    @Property(nameInDb = "IS_ATTENDANCE_SYNCED")
+    private boolean isAttendanceSynced = false;
+
+    @Property(nameInDb = "IS_TIMETABLE_SYNCED")
+    private boolean isTimetableSynced = false;
+
     @ToMany(referencedJoinProperty = "weekId")
     private List<Day> dayList;
 
@@ -37,11 +43,14 @@ public class Week {
     @Generated(hash = 1019310398)
     private transient WeekDao myDao;
 
-    @Generated(hash = 36829814)
-    public Week(Long id, Long userId, String startDayDate) {
+    @Generated(hash = 1745118398)
+    public Week(Long id, Long userId, String startDayDate, boolean isAttendanceSynced,
+            boolean isTimetableSynced) {
         this.id = id;
         this.userId = userId;
         this.startDayDate = startDayDate;
+        this.isAttendanceSynced = isAttendanceSynced;
+        this.isTimetableSynced = isTimetableSynced;
     }
 
     @Generated(hash = 2135529658)
@@ -73,6 +82,22 @@ public class Week {
     public Week setStartDayDate(String startDayDate) {
         this.startDayDate = startDayDate;
         return this;
+    }
+
+    public boolean getIsAttendanceSynced() {
+        return this.isAttendanceSynced;
+    }
+
+    public void setIsAttendanceSynced(boolean isAttendanceSynced) {
+        this.isAttendanceSynced = isAttendanceSynced;
+    }
+
+    public boolean getIsTimetableSynced() {
+        return this.isTimetableSynced;
+    }
+
+    public void setIsTimetableSynced(boolean isTimetableSynced) {
+        this.isTimetableSynced = isTimetableSynced;
     }
 
     /**

@@ -91,4 +91,23 @@
         <item quantity="one">You received %1$d grade</item>
         <item quantity="other">You received %1$d grades</item>
     </plurals>
+
+    <string name="attendance_absence_for_school_reasons">Absence for school reasons</string>
+    <string name="attendance_absence_excused">Absence excused</string>
+    <string name="attendance_absence_unexcused">Unexcused absence</string>
+    <string name="attendance_exemption">Exemption</string>
+    <string name="attendance_excused_lateness">Excused lateness</string>
+    <string name="attendance_unexcused_lateness">Unexcused lateness</string>
+    <string name="attendance_present">Present</string>
+    <string name="attendance_dialog_description">Description</string>
+    <string name="attendance_dialog_date">Date</string>
+    <string name="attendance_dialog_subject">Subject</string>
+    <string name="attendance_dialog_number">Lesson number</string>
+    <string name="attendance_no_entries">No entries</string>
+    <plurals name="numberOfAbsences">
+        <item quantity="one">%1$d absence</item>
+        <item quantity="few">%1$d absences</item>
+        <item quantity="many">%1$d absences</item>
+        <item quantity="other">%1$d absences</item>
+    </plurals>
 </resources>

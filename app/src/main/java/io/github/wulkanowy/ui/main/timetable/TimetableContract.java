@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.main.timetable;
 import io.github.wulkanowy.di.annotations.PerActivity;
 import io.github.wulkanowy.ui.base.BaseContract;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
+import io.github.wulkanowy.ui.main.TabsData;
 
 public interface TimetableContract {
 

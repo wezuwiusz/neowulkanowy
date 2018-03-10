@@ -18,6 +18,7 @@ import io.github.wulkanowy.R;
 import io.github.wulkanowy.di.component.FragmentComponent;
 import io.github.wulkanowy.ui.base.BaseFragment;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
+import io.github.wulkanowy.ui.main.TabsData;
 
 public class TimetableFragment extends BaseFragment implements TimetableContract.View, TabLayout.OnTabSelectedListener {
 

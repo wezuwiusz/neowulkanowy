@@ -96,4 +96,22 @@
         <item quantity="many">Dostałeś %1$d ocen</item>
         <item quantity="other">Dostałeś %1$d ocen</item>
     </plurals>
+
+    <string name="attendance_absence_for_school_reasons">Nieobecny z przyczyn szkolnych</string>
+    <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
+    <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
+    <string name="attendance_exemption">Zwolniony</string>
+    <string name="attendance_excused_lateness">Spóźnienie usprawiedliowione</string>
+    <string name="attendance_unexcused_lateness">Spóźnienie nieusprawiedliwione</string>
+    <string name="attendance_present">Obecny</string>
+    <string name="attendance_dialog_description">Opis</string>
+    <string name="attendance_dialog_date">Data</string>
+    <string name="attendance_dialog_subject">Przedmiot</string>
+    <string name="attendance_dialog_number">Numer lekcji</string>
+    <string name="attendance_no_entries">Brak wpisów</string>
+    <plurals name="numberOfAbsences">
+        <item quantity="one">%1$d nieobecność</item>
+        <item quantity="few">%1$d nieobecności</item>
+        <item quantity="many">%1$d nieobecności</item>
+    </plurals>
 </resources>

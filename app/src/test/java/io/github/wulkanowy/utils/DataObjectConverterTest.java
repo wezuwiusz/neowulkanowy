@@ -10,6 +10,7 @@ import io.github.wulkanowy.api.grades.Grade;
 import io.github.wulkanowy.api.grades.Subject;
 import io.github.wulkanowy.api.generic.Day;
 import io.github.wulkanowy.api.generic.Lesson;
+import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
 
 public class DataObjectConverterTest {
 
@@ -64,15 +65,15 @@ public class DataObjectConverterTest {
     @Test
     public void lessonConversionEmptyTest() {
         Assert.assertEquals(new ArrayList<>(),
-                DataObjectConverter.lessonsToLessonsEntities(new ArrayList<Lesson>()));
+                DataObjectConverter.lessonsToTimetableLessonsEntities(new ArrayList<Lesson>()));
     }
 
     @Test
     public void lessonConversionTest() {
         List<Lesson> lessonList = new ArrayList<>();
         lessonList.add(new Lesson().setRoom("20"));
-        List<io.github.wulkanowy.data.db.dao.entities.Lesson> lessonEntityList =
-                DataObjectConverter.lessonsToLessonsEntities(lessonList);
+        List<TimetableLesson> lessonEntityList =
+                DataObjectConverter.lessonsToTimetableLessonsEntities(lessonList);
 
         Assert.assertEquals("20", lessonEntityList.get(0).getRoom());
     }

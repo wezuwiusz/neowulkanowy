@@ -1,36 +1,25 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="io.github.wulkanowy.ui.main.attendance.AttendanceFragment">
+    android:layout_alignParentBottom="true"
+    android:id="@+id/attendance_fragment_container">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/wrench_under_construction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="45dp"
-            android:contentDescription="@string/activity_dashboard_text"
-            android:minHeight="100dp"
-            android:minWidth="100dp"
-            app:srcCompat="@drawable/ic_wrench_24dp" />
-
-        <TextView
+        <android.support.design.widget.TabLayout
+            android:id="@+id/attendance_fragment_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="47dp"
-            android:text="@string/activity_under_construction"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:id="@+id/textView3" />
-    </RelativeLayout>
+            app:tabMinWidth="125dp"
+            app:tabMode="scrollable"/>
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/attendance_fragment_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/attendance_fragment_tab_layout" />
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

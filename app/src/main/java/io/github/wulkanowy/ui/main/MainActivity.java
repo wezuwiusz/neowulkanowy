@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.services.SyncJob;
 import io.github.wulkanowy.ui.base.BaseActivity;
+import io.github.wulkanowy.ui.main.attendance.AttendanceFragment;
 import io.github.wulkanowy.ui.main.dashboard.DashboardFragment;
 import io.github.wulkanowy.ui.main.grades.GradesFragment;
 import io.github.wulkanowy.ui.main.timetable.TimetableFragment;
@@ -134,7 +135,7 @@ public class MainActivity extends BaseActivity implements MainContract.View,
 
     private void initiationViewPager() {
         pagerAdapter.addFragment(new GradesFragment());
-        pagerAdapter.addFragment(new DashboardFragment());
+        pagerAdapter.addFragment(new AttendanceFragment());
         pagerAdapter.addFragment(new DashboardFragment());
         pagerAdapter.addFragment(new TimetableFragment());
         pagerAdapter.addFragment(new DashboardFragment());

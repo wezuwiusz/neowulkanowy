@@ -10,11 +10,11 @@ import org.greenrobot.greendao.annotation.Property;
 import java.io.Serializable;
 
 @Entity(
-        nameInDb = "Lessons",
+        nameInDb = "TimetableLessons",
         active = true,
         indexes = {@Index(value = "dayId,date,startTime,endTime", unique = true)}
 )
-public class Lesson implements Serializable {
+public class TimetableLesson implements Serializable {
 
     @Id(autoincrement = true)
     private Long id;
@@ -78,14 +78,15 @@ public class Lesson implements Serializable {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 610143130)
-    private transient LessonDao myDao;
+    @Generated(hash = 1119360138)
+    private transient TimetableLessonDao myDao;
 
-    @Generated(hash = 140778287)
-    public Lesson(Long id, Long dayId, String number, String subject, String teacher, String room,
-                  String description, String groupName, String startTime, String endTime, String date,
-                  boolean isEmpty, boolean isDivisionIntoGroups, boolean isPlanning, boolean isRealized,
-                  boolean isMovedOrCanceled, boolean isNewMovedInOrChanged) {
+    @Generated(hash = 627457324)
+    public TimetableLesson(Long id, Long dayId, String number, String subject,
+                           String teacher, String room, String description, String groupName,
+                           String startTime, String endTime, String date, boolean isEmpty,
+                           boolean isDivisionIntoGroups, boolean isPlanning, boolean isRealized,
+                           boolean isMovedOrCanceled, boolean isNewMovedInOrChanged) {
         this.id = id;
         this.dayId = dayId;
         this.number = number;
@@ -105,8 +106,8 @@ public class Lesson implements Serializable {
         this.isNewMovedInOrChanged = isNewMovedInOrChanged;
     }
 
-    @Generated(hash = 1669664117)
-    public Lesson() {
+    @Generated(hash = 1878030142)
+    public TimetableLesson() {
     }
 
     public Long getId() {
@@ -126,137 +127,83 @@ public class Lesson implements Serializable {
     }
 
     public String getNumber() {
-        return number;
+        return this.number;
     }
 
-    public Lesson setNumber(String number) {
+    public TimetableLesson setNumber(String number) {
         this.number = number;
         return this;
     }
 
     public String getSubject() {
-        return subject;
+        return this.subject;
     }
 
-    public Lesson setSubject(String subject) {
+    public TimetableLesson setSubject(String subject) {
         this.subject = subject;
         return this;
     }
 
     public String getTeacher() {
-        return teacher;
+        return this.teacher;
     }
 
-    public Lesson setTeacher(String teacher) {
+    public TimetableLesson setTeacher(String teacher) {
         this.teacher = teacher;
         return this;
     }
 
     public String getRoom() {
-        return room;
+        return this.room;
     }
 
-    public Lesson setRoom(String room) {
+    public TimetableLesson setRoom(String room) {
         this.room = room;
         return this;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
-    public Lesson setDescription(String description) {
+    public TimetableLesson setDescription(String description) {
         this.description = description;
         return this;
     }
 
     public String getGroupName() {
-        return groupName;
+        return this.groupName;
     }
 
-    public Lesson setGroupName(String groupName) {
+    public TimetableLesson setGroupName(String groupName) {
         this.groupName = groupName;
         return this;
     }
 
     public String getStartTime() {
-        return startTime;
+        return this.startTime;
     }
 
-    public Lesson setStartTime(String startTime) {
+    public TimetableLesson setStartTime(String startTime) {
         this.startTime = startTime;
         return this;
     }
 
     public String getEndTime() {
-        return endTime;
+        return this.endTime;
     }
 
-    public Lesson setEndTime(String endTime) {
+    public TimetableLesson setEndTime(String endTime) {
         this.endTime = endTime;
         return this;
     }
 
     public String getDate() {
-        return date;
+        return this.date;
     }
 
-    public Lesson setDate(String date) {
+    public TimetableLesson setDate(String date) {
         this.date = date;
-        return this;
-    }
-
-    public boolean isEmpty() {
-        return isEmpty;
-    }
-
-    public Lesson setEmpty(boolean empty) {
-        isEmpty = empty;
-        return this;
-    }
-
-    public boolean isDivisionIntoGroups() {
-        return isDivisionIntoGroups;
-    }
-
-    public Lesson setDivisionIntoGroups(boolean divisionIntoGroups) {
-        isDivisionIntoGroups = divisionIntoGroups;
-        return this;
-    }
-
-    public boolean isPlanning() {
-        return isPlanning;
-    }
-
-    public Lesson setPlanning(boolean planning) {
-        isPlanning = planning;
-        return this;
-    }
-
-    public boolean isRealized() {
-        return isRealized;
-    }
-
-    public Lesson setRealized(boolean realized) {
-        isRealized = realized;
-        return this;
-    }
-
-    public boolean isMovedOrCanceled() {
-        return isMovedOrCanceled;
-    }
-
-    public Lesson setMovedOrCanceled(boolean movedOrCanceled) {
-        isMovedOrCanceled = movedOrCanceled;
-        return this;
-    }
-
-    public boolean isNewMovedInOrChanged() {
-        return isNewMovedInOrChanged;
-    }
-
-    public Lesson setNewMovedInOrChanged(boolean newMovedInOrChanged) {
-        isNewMovedInOrChanged = newMovedInOrChanged;
         return this;
     }
 
@@ -264,48 +211,54 @@ public class Lesson implements Serializable {
         return this.isEmpty;
     }
 
-    public void setIsEmpty(boolean isEmpty) {
+    public TimetableLesson setEmpty(boolean isEmpty) {
         this.isEmpty = isEmpty;
+        return this;
     }
 
     public boolean getIsDivisionIntoGroups() {
         return this.isDivisionIntoGroups;
     }
 
-    public void setIsDivisionIntoGroups(boolean isDivisionIntoGroups) {
+    public TimetableLesson setDivisionIntoGroups(boolean isDivisionIntoGroups) {
         this.isDivisionIntoGroups = isDivisionIntoGroups;
+        return this;
     }
 
     public boolean getIsPlanning() {
         return this.isPlanning;
     }
 
-    public void setIsPlanning(boolean isPlanning) {
+    public TimetableLesson setPlanning(boolean isPlanning) {
         this.isPlanning = isPlanning;
+        return this;
     }
 
     public boolean getIsRealized() {
         return this.isRealized;
     }
 
-    public void setIsRealized(boolean isRealized) {
+    public TimetableLesson setRealized(boolean isRealized) {
         this.isRealized = isRealized;
+        return this;
     }
 
     public boolean getIsMovedOrCanceled() {
         return this.isMovedOrCanceled;
     }
 
-    public void setIsMovedOrCanceled(boolean isMovedOrCanceled) {
+    public TimetableLesson setMovedOrCanceled(boolean isMovedOrCanceled) {
         this.isMovedOrCanceled = isMovedOrCanceled;
+        return this;
     }
 
     public boolean getIsNewMovedInOrChanged() {
         return this.isNewMovedInOrChanged;
     }
 
-    public void setIsNewMovedInOrChanged(boolean isNewMovedInOrChanged) {
+    public TimetableLesson setNewMovedInOrChanged(boolean isNewMovedInOrChanged) {
         this.isNewMovedInOrChanged = isNewMovedInOrChanged;
+        return this;
     }
 
     /**
@@ -344,10 +297,34 @@ public class Lesson implements Serializable {
         myDao.update(this);
     }
 
+    public void setIsEmpty(boolean isEmpty) {
+        this.isEmpty = isEmpty;
+    }
+
+    public void setIsDivisionIntoGroups(boolean isDivisionIntoGroups) {
+        this.isDivisionIntoGroups = isDivisionIntoGroups;
+    }
+
+    public void setIsPlanning(boolean isPlanning) {
+        this.isPlanning = isPlanning;
+    }
+
+    public void setIsRealized(boolean isRealized) {
+        this.isRealized = isRealized;
+    }
+
+    public void setIsMovedOrCanceled(boolean isMovedOrCanceled) {
+        this.isMovedOrCanceled = isMovedOrCanceled;
+    }
+
+    public void setIsNewMovedInOrChanged(boolean isNewMovedInOrChanged) {
+        this.isNewMovedInOrChanged = isNewMovedInOrChanged;
+    }
+
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 2078826279)
+    @Generated(hash = 1885258429)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getLessonDao() : null;
+        myDao = daoSession != null ? daoSession.getTimetableLessonDao() : null;
     }
 }

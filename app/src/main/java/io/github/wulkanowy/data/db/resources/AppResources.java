@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.api.login.VulcanOfflineException;
+import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.di.annotations.ApplicationContext;
 import io.github.wulkanowy.utils.AppConstant;
 import io.github.wulkanowy.utils.LogUtils;
@@ -55,5 +56,36 @@ public class AppResources implements ResourcesContract {
         } else {
             return exception.getMessage();
         }
+    }
+
+    @Override
+    public String getAttendanceLessonDescription(AttendanceLesson lesson) {
+        int id = R.string.attendance_present;
+
+        if (lesson.getIsAbsenceForSchoolReasons()) {
+            id = R.string.attendance_absence_for_school_reasons;
+        }
+
+        if (lesson.getIsAbsenceExcused()) {
+            id =  R.string.attendance_absence_excused;
+        }
+
+        if (lesson.getIsAbsenceUnexcused()) {
+            id =  R.string.attendance_absence_unexcused;
+        }
+
+        if (lesson.getIsExemption()) {
+            id =  R.string.attendance_exemption;
+        }
+
+        if (lesson.getIsExcusedLateness()) {
+            id =  R.string.attendance_excused_lateness;
+        }
+
+        if (lesson.getIsUnexcusedLateness()) {
+            id =  R.string.attendance_unexcused_lateness;
+        }
+
+        return resources.getString(id);
     }
 }

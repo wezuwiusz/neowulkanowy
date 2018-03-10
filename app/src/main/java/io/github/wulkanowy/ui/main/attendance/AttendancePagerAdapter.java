@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.main.timetable;
+package io.github.wulkanowy.ui.main.attendance;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import io.github.wulkanowy.ui.main.TabsData;
 
-public class TimetablePagerAdapter extends FragmentStatePagerAdapter {
+public class AttendancePagerAdapter extends FragmentStatePagerAdapter {
 
     private TabsData tabsData;
 
-    public TimetablePagerAdapter(FragmentManager fragmentManager) {
+    public AttendancePagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 
