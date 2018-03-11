@@ -157,7 +157,6 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
     }
 
     private void syncData() throws Exception {
-        getRepository().loginCurrentUser();
         getRepository().syncTimetable(date);
     }
 

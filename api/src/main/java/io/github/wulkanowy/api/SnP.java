@@ -6,19 +6,17 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.List;
 
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
-
 public interface SnP {
 
     String getId();
 
-    void storeContextCookies() throws IOException, NotLoggedInErrorException;
+    StudentAndParent storeContextCookies() throws IOException, VulcanException;
 
     String getRowDataChildValue(Element e, int index);
 
-    Document getSnPPageDocument(String url) throws IOException;
+    Document getSnPPageDocument(String url) throws IOException, VulcanException;
 
-    List<Semester> getSemesters() throws IOException;
+    List<Semester> getSemesters() throws IOException, VulcanException;
 
     List<Semester> getSemesters(Document gradesPage);
 

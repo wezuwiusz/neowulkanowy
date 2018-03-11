@@ -42,6 +42,8 @@ public interface LoginContract {
 
         void onStartAsync();
 
+        void onDoInBackground(int stepNumber) throws Exception;
+
         void onLoginProgress(int step);
 
         void onEndAsync(boolean success, Exception exception);

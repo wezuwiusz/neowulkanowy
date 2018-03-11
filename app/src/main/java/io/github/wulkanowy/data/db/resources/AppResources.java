@@ -11,8 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
-import io.github.wulkanowy.api.login.VulcanOfflineException;
+import io.github.wulkanowy.api.NotLoggedInErrorException;
+import io.github.wulkanowy.api.VulcanOfflineException;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.di.annotations.ApplicationContext;
 import io.github.wulkanowy.utils.AppConstant;

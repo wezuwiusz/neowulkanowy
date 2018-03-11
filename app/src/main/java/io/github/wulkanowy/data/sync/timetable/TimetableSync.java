@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.github.wulkanowy.api.Vulcan;
+import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.api.generic.Lesson;
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.Day;
 import io.github.wulkanowy.data.db.dao.entities.DayDao;
@@ -42,12 +42,12 @@ public class TimetableSync implements TimetableSyncContract {
     }
 
     @Override
-    public void syncTimetable() throws NotLoggedInErrorException, IOException, ParseException {
+    public void syncTimetable() throws IOException, ParseException, VulcanException {
         syncTimetable(null);
     }
 
     @Override
-    public void syncTimetable(String date) throws NotLoggedInErrorException, IOException, ParseException {
+    public void syncTimetable(String date) throws IOException, ParseException, VulcanException {
         this.userId = sharedPref.getCurrentUserId();
 
         io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> weekApi = getWeekFromApi(getNormalizedDate(date));
@@ -59,7 +59,7 @@ public class TimetableSync implements TimetableSyncContract {
 
         daoSession.getTimetableLessonDao().saveInTx(lessonList);
 
-        LogUtils.debug("Synchronization lessons (amount = " + lessonList.size() + ")");
+        LogUtils.debug("Synchronization timetable lessons (amount = " + lessonList.size() + ")");
     }
 
     private String getNormalizedDate(String date) throws ParseException {
@@ -67,7 +67,7 @@ public class TimetableSync implements TimetableSyncContract {
     }
 
     private io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> getWeekFromApi(String date)
-            throws IOException, NotLoggedInErrorException, ParseException {
+            throws IOException, VulcanException, ParseException {
         return vulcan.getTimetable().getWeekTable(date);
     }
 

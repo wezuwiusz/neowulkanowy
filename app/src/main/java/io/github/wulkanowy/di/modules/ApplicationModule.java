@@ -21,11 +21,11 @@ import io.github.wulkanowy.data.db.resources.ResourcesContract;
 import io.github.wulkanowy.data.db.shared.SharedPref;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.data.sync.SyncContract;
+import io.github.wulkanowy.data.sync.account.AccountSync;
+import io.github.wulkanowy.data.sync.account.AccountSyncContract;
 import io.github.wulkanowy.data.sync.attendance.AttendanceSync;
 import io.github.wulkanowy.data.sync.attendance.AttendanceSyncContract;
 import io.github.wulkanowy.data.sync.grades.GradeSync;
-import io.github.wulkanowy.data.sync.login.LoginSync;
-import io.github.wulkanowy.data.sync.login.LoginSyncContract;
 import io.github.wulkanowy.data.sync.subjects.SubjectSync;
 import io.github.wulkanowy.data.sync.timetable.TimetableSync;
 import io.github.wulkanowy.data.sync.timetable.TimetableSyncContract;
@@ -100,8 +100,8 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    LoginSyncContract provideLoginSync(LoginSync loginSync) {
-        return loginSync;
+    AccountSyncContract provideLoginSync(AccountSync accountSync) {
+        return accountSync;
     }
 
     @SyncGrades

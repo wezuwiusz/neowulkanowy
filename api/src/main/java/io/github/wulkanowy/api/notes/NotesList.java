@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 
 public class NotesList {
 
@@ -21,7 +22,7 @@ public class NotesList {
         this.snp = snp;
     }
 
-    public List<Note> getAllNotes() throws IOException {
+    public List<Note> getAllNotes() throws IOException, VulcanException {
         Element pageFragment = snp.getSnPPageDocument(NOTES_PAGE_URL)
                 .select(".mainContainer > div").get(0);
         Elements items = pageFragment.select("article");

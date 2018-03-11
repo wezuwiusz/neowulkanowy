@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.List;
 
 import io.github.wulkanowy.api.Client;
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
+import io.github.wulkanowy.api.NotLoggedInErrorException;
+import io.github.wulkanowy.api.VulcanException;
 
 public class Messages {
 
@@ -37,19 +38,19 @@ public class Messages {
         this.client = client;
     }
 
-    public List<Message> getReceived() throws IOException, NotLoggedInErrorException, BadRequestException {
+    public List<Message> getReceived() throws IOException, VulcanException {
         return getMessages(RECEIVED_URL);
     }
 
-    public List<Message> getSent() throws IOException, NotLoggedInErrorException, BadRequestException {
+    public List<Message> getSent() throws IOException, VulcanException {
         return getMessages(SENT_URL);
     }
 
-    public List<Message> getDeleted() throws IOException, NotLoggedInErrorException, BadRequestException {
+    public List<Message> getDeleted() throws IOException, VulcanException {
         return getMessages(DELETED_URL);
     }
 
-    private List<Message> getMessages(String url) throws IOException, NotLoggedInErrorException, BadRequestException {
+    private List<Message> getMessages(String url) throws IOException, VulcanException {
         String res = client.getJsonStringByUrl(url);
 
         List<Message> messages;
@@ -67,7 +68,7 @@ public class Messages {
         return messages;
     }
 
-    public Message getMessage(int id, int folder) throws IOException, BadRequestException, NotLoggedInErrorException {
+    public Message getMessage(int id, int folder) throws IOException, VulcanException {
         String res = client.postJsonStringByUrl(MESSAGE_URL, new String[][]{
                 {"idWiadomosc", String.valueOf(id)},
                 {"Folder", String.valueOf(folder)}

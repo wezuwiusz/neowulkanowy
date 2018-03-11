@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.api.generic.Month;
 import io.github.wulkanowy.api.generic.Subject;
 
@@ -22,15 +23,15 @@ public class AttendanceStatistics {
         this.snp = snp;
     }
 
-    public Types getTypesTable() throws IOException {
+    public Types getTypesTable() throws IOException, VulcanException {
         return getTypesTable("");
     }
 
-    public Types getTypesTable(String tick) throws IOException {
+    public Types getTypesTable(String tick) throws IOException, VulcanException {
         return getTypesTable(tick, -1);
     }
 
-    public List<Subject> getSubjectList() throws IOException {
+    public List<Subject> getSubjectList() throws IOException, VulcanException {
         Element mainContainer = snp.getSnPPageDocument(attendancePageUrl)
                 .select(".mainContainer #idPrzedmiot").first();
 
@@ -46,7 +47,7 @@ public class AttendanceStatistics {
         return subjectList;
     }
 
-    public Types getTypesTable(String tick, Integer subjectId) throws IOException {
+    public Types getTypesTable(String tick, Integer subjectId) throws IOException, VulcanException {
         Element mainContainer = snp.getSnPPageDocument((attendancePageUrl
                 + "?data={tick}&idPrzedmiot={subject}")
                 .replace("{tick}", tick)

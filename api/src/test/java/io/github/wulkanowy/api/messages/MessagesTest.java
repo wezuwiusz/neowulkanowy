@@ -8,7 +8,7 @@ import java.util.List;
 
 import io.github.wulkanowy.api.Client;
 import io.github.wulkanowy.api.FixtureHelper;
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
+import io.github.wulkanowy.api.NotLoggedInErrorException;
 
 public class MessagesTest {
 

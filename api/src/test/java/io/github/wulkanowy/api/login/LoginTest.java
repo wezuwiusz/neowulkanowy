@@ -1,6 +1,5 @@
 package io.github.wulkanowy.api.login;
 
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Assert;
@@ -75,13 +74,6 @@ public class LoginTest {
     @Test(expected = LoginErrorException.class)
     public void sendCertificateLoginErrorTest() throws Exception {
         Login login = new Login(getClient("Logowanie-certyfikat.html")); // change to other document
-
-        login.sendCertificate(getFixtureAsString("cert.xml"), "demo123");
-    }
-
-    @Test(expected = VulcanOfflineException.class)
-    public void sendCertificateVulcanOfflineTest() throws Exception {
-        Login login = new Login(getClient("PrzerwaTechniczna.html"));
 
         login.sendCertificate(getFixtureAsString("cert.xml"), "demo123");
     }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.api.generic.Day;
 import io.github.wulkanowy.api.generic.Lesson;
 import io.github.wulkanowy.api.generic.Week;
@@ -27,11 +28,11 @@ public class Timetable {
         this.snp = snp;
     }
 
-    public Week<Day> getWeekTable() throws IOException, ParseException {
+    public Week<Day> getWeekTable() throws IOException, ParseException, VulcanException {
         return getWeekTable("");
     }
 
-    public Week<Day> getWeekTable(final String tick) throws IOException, ParseException {
+    public Week<Day> getWeekTable(final String tick) throws IOException, ParseException, VulcanException {
         Element table = snp.getSnPPageDocument(TIMETABLE_PAGE_URL + tick)
                 .select(".mainContainer .presentData").first();
 

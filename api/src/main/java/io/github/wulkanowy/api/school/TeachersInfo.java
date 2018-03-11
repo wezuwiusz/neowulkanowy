@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 
 public class TeachersInfo {
 
@@ -20,7 +21,7 @@ public class TeachersInfo {
         this.snp = snp;
     }
 
-    public TeachersData getTeachersData() throws IOException {
+    public TeachersData getTeachersData() throws IOException, VulcanException {
         Document doc = snp.getSnPPageDocument(SCHOOL_PAGE_URL);
         Elements rows = doc.select(".mainContainer > table tbody tr");
         String description = doc.select(".mainContainer > p").first().text();

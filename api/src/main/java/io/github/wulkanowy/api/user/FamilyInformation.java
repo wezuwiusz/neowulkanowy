@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 
 public class FamilyInformation {
 
@@ -19,7 +20,7 @@ public class FamilyInformation {
         this.snp = snp;
     }
 
-    public List<FamilyMember> getFamilyMembers() throws IOException {
+    public List<FamilyMember> getFamilyMembers() throws IOException, VulcanException {
         Elements membersElements = snp.getSnPPageDocument(STUDENT_DATA_PAGE_URL)
                 .select(".mainContainer > article:nth-of-type(n+4)");
 

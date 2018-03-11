@@ -6,10 +6,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.grades.Grade;
-import io.github.wulkanowy.api.grades.Subject;
 import io.github.wulkanowy.api.generic.Day;
 import io.github.wulkanowy.api.generic.Lesson;
+import io.github.wulkanowy.api.grades.Grade;
+import io.github.wulkanowy.api.grades.Subject;
 import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
 
 public class DataObjectConverterTest {

@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 
 public class BasicInformation {
 
@@ -21,7 +22,7 @@ public class BasicInformation {
         this.snp = snp;
     }
 
-    public Document getStudentDataPageDocument() throws IOException {
+    public Document getStudentDataPageDocument() throws IOException, VulcanException {
         if (null == studentDataPageDocument) {
             studentDataPageDocument = snp.getSnPPageDocument(STUDENT_DATA_PAGE_URL);
         }
@@ -29,7 +30,7 @@ public class BasicInformation {
         return studentDataPageDocument;
     }
 
-    public PersonalData getPersonalData() throws IOException {
+    public PersonalData getPersonalData() throws IOException, VulcanException {
         Element e = getStudentDataPageDocument().select(CONTENT_QUERY).get(0);
 
         String name = snp.getRowDataChildValue(e, 1);
@@ -48,7 +49,7 @@ public class BasicInformation {
                 .setParentsNames(snp.getRowDataChildValue(e, 7));
     }
 
-    public AddressData getAddressData() throws IOException {
+    public AddressData getAddressData() throws IOException, VulcanException {
         Element e = getStudentDataPageDocument().select(CONTENT_QUERY).get(1);
 
         return new AddressData()
@@ -58,7 +59,7 @@ public class BasicInformation {
 
     }
 
-    public ContactDetails getContactDetails() throws IOException {
+    public ContactDetails getContactDetails() throws IOException, VulcanException {
         Element e = getStudentDataPageDocument().select(CONTENT_QUERY).get(2);
 
         return new ContactDetails()

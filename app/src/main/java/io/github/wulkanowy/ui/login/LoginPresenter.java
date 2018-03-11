@@ -17,6 +17,12 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
 
     private LoginTask loginAsync;
 
+    private String email;
+
+    private String password;
+
+    private String symbol;
+
     @Inject
     LoginPresenter(RepositoryContract repository) {
         super(repository);
@@ -26,17 +32,17 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     public void attemptLogin(String email, String password, String symbol) {
         getView().resetViewErrors();
 
+        this.email = email;
+        this.password = password;
+        this.symbol = getNormalizedSymbol(symbol);
+
         if (!isAllFieldCorrect(password, email)) {
             getView().showSoftInput();
             return;
         }
 
         if (getView().isNetworkConnected()) {
-            // Dopóki używamy AsyncTask presenter będzie musiał "wiedzieć" o AsyncTaskach
-            loginAsync = new LoginTask(this,
-                    email,
-                    password,
-                    getNormalizedSymbol(symbol));
+            loginAsync = new LoginTask(this);
             loginAsync.execute();
 
         } else {
@@ -50,6 +56,18 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     public void onStartAsync() {
         if (isViewAttached()) {
             getView().showLoginProgress(true);
+        }
+    }
+
+    @Override
+    public void onDoInBackground(int stepNumber) throws Exception {
+        switch (stepNumber) {
+            case 1:
+                getRepository().registerUser(email, password, symbol);
+                break;
+            case 2:
+                getRepository().syncAll();
+                break;
         }
     }
 

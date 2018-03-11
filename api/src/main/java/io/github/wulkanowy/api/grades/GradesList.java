@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 import io.github.wulkanowy.api.Semester;
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 
 public class GradesList {
 
@@ -33,11 +34,11 @@ public class GradesList {
         return GRADES_PAGE_URL;
     }
 
-    public List<Grade> getAll() throws IOException, ParseException {
+    public List<Grade> getAll() throws IOException, ParseException, VulcanException {
         return getAll("");
     }
 
-    public List<Grade> getAll(String semester) throws IOException, ParseException {
+    public List<Grade> getAll(String semester) throws IOException, ParseException, VulcanException {
         Document gradesPage = snp.getSnPPageDocument(getGradesPageUrl() + semester);
         Elements gradesRows = gradesPage.select(".ocenySzczegoly-table > tbody > tr");
         Semester currentSemester = snp.getCurrentSemester(snp.getSemesters(gradesPage));

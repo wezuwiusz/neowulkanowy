@@ -5,6 +5,7 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 
 public class SchoolInfo {
 
@@ -16,7 +17,7 @@ public class SchoolInfo {
         this.snp = snp;
     }
 
-    public SchoolData getSchoolData() throws IOException {
+    public SchoolData getSchoolData() throws IOException, VulcanException {
         Element e = snp.getSnPPageDocument(SCHOOL_PAGE_URL)
                 .select(".mainContainer > article").get(0);
 

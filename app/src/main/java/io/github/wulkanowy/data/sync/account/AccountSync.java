@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data.sync.login;
+package io.github.wulkanowy.data.sync.account;
 
 import android.content.Context;
 
@@ -8,10 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.github.wulkanowy.api.Vulcan;
-import io.github.wulkanowy.api.login.AccountPermissionException;
-import io.github.wulkanowy.api.login.BadCredentialsException;
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
-import io.github.wulkanowy.api.login.VulcanOfflineException;
+import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.data.db.dao.entities.Account;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
@@ -21,7 +18,7 @@ import io.github.wulkanowy.utils.security.CryptoException;
 import io.github.wulkanowy.utils.security.Scrambler;
 
 @Singleton
-public class LoginSync implements LoginSyncContract {
+public class AccountSync implements AccountSyncContract {
 
     private final DaoSession daoSession;
 
@@ -32,8 +29,8 @@ public class LoginSync implements LoginSyncContract {
     private final Context context;
 
     @Inject
-    LoginSync(DaoSession daoSession, SharedPrefContract sharedPref,
-              Vulcan vulcan, @ApplicationContext Context context) {
+    AccountSync(DaoSession daoSession, SharedPrefContract sharedPref,
+                Vulcan vulcan, @ApplicationContext Context context) {
         this.daoSession = daoSession;
         this.sharedPref = sharedPref;
         this.vulcan = vulcan;
@@ -41,13 +38,12 @@ public class LoginSync implements LoginSyncContract {
     }
 
     @Override
-    public void loginUser(String email, String password, String symbol)
-            throws NotLoggedInErrorException, AccountPermissionException, IOException,
-            CryptoException, VulcanOfflineException, BadCredentialsException {
+    public void registerUser(String email, String password, String symbol)
+            throws VulcanException, IOException, CryptoException {
 
-        LogUtils.debug("Login new user email=" + email);
+        LogUtils.debug("Register new user email=" + email);
 
-        vulcan.login(email, password, symbol);
+        vulcan.setCredentials(email, password, symbol, null);
 
         Account account = new Account()
                 .setName(vulcan.getBasicInformation().getPersonalData().getFirstAndLastName())
@@ -56,24 +52,25 @@ public class LoginSync implements LoginSyncContract {
                 .setSymbol(vulcan.getSymbol())
                 .setSnpId(vulcan.getStudentAndParent().getId());
 
-        sharedPref.setCurrentUserId(daoSession.getAccountDao().insert(account));
+        daoSession.getAccountDao().insert(account);
+
+        sharedPref.setCurrentUserId(account.getId());
     }
 
     @Override
-    public void loginCurrentUser() throws NotLoggedInErrorException, AccountPermissionException,
-            IOException, CryptoException, VulcanOfflineException, BadCredentialsException {
+    public void initLastUser() throws VulcanException, IOException, CryptoException {
 
         long userId = sharedPref.getCurrentUserId();
 
         if (userId == 0) {
-            throw new IOException("Can't find logged user");
+            throw new IOException("Can't find saved user");
         }
 
-        LogUtils.debug("Login current user id=" + userId);
+        LogUtils.debug("Initialization current user id=" + userId);
 
         Account account = daoSession.getAccountDao().load(userId);
 
-        vulcan.login(account.getEmail(),
+        vulcan.setCredentials(account.getEmail(),
                 Scrambler.decrypt(account.getEmail(), account.getPassword()),
                 account.getSymbol(),
                 account.getSnpId());

@@ -153,7 +153,6 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
     }
 
     private void syncData() throws Exception {
-        getRepository().loginCurrentUser();
         getRepository().syncAttendance(date);
     }
 

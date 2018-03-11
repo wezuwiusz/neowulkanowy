@@ -1,4 +1,6 @@
 package io.github.wulkanowy.api.login;
 
-public class BadCredentialsException extends Exception {
+import io.github.wulkanowy.api.VulcanException;
+
+public class BadCredentialsException extends VulcanException {
 }

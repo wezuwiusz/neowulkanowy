@@ -4,21 +4,12 @@ import android.os.AsyncTask;
 
 public class LoginTask extends AsyncTask<Void, Integer, Boolean> {
 
-    private String email;
-
-    private String password;
-
-    private String symbol;
-
     private LoginContract.Presenter presenter;
 
     private Exception exception;
 
-    LoginTask(LoginContract.Presenter presenter, String email, String password, String symbol) {
+    LoginTask(LoginContract.Presenter presenter) {
         this.presenter = presenter;
-        this.email = email;
-        this.password = password;
-        this.symbol = symbol;
     }
 
     @Override
@@ -30,10 +21,10 @@ public class LoginTask extends AsyncTask<Void, Integer, Boolean> {
     protected Boolean doInBackground(Void... params) {
         try {
             publishProgress(1);
-            presenter.getRepository().loginUser(email, password, symbol);
+            presenter.onDoInBackground(1);
 
             publishProgress(2);
-            presenter.getRepository().syncAll();
+            presenter.onDoInBackground(2);
         } catch (Exception e) {
             exception = e;
             return false;

@@ -3,21 +3,15 @@ package io.github.wulkanowy.api;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cookies {
+class Cookies {
 
     private Map<String, String> jar = new HashMap<>();
 
-    public Map<String, String> getItems() {
+    Map<String, String> getItems() {
         return jar;
     }
 
-    public Cookies setItems(Map<String, String> items) {
-        this.jar = items;
-        return this;
-    }
-
-    public Cookies addItems(Map<String, String> items) {
-        this.jar.putAll(items);
-        return this;
+    void addItems(Map<String, String> items) {
+        jar.putAll(items);
     }
 }

@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.github.wulkanowy.api.Vulcan;
+import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.api.generic.Lesson;
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLessonDao;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
@@ -42,12 +42,12 @@ public class AttendanceSync implements AttendanceSyncContract {
     }
 
     @Override
-    public void syncAttendance() throws IOException, NotLoggedInErrorException, ParseException {
+    public void syncAttendance() throws IOException, ParseException, VulcanException {
         syncAttendance(null);
     }
 
     @Override
-    public void syncAttendance(String date) throws IOException, NotLoggedInErrorException, ParseException {
+    public void syncAttendance(String date) throws IOException, ParseException, VulcanException {
         this.userId = sharedPref.getCurrentUserId();
 
         io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> weekApi = getWeekFromApi(getNormalizedDate(date));
@@ -59,7 +59,7 @@ public class AttendanceSync implements AttendanceSyncContract {
 
         daoSession.getAttendanceLessonDao().saveInTx(lessonList);
 
-        LogUtils.debug("Synchronization lessons (amount = " + lessonList.size() + ")");
+        LogUtils.debug("Synchronization attendance lessons (amount = " + lessonList.size() + ")");
     }
 
     private String getNormalizedDate(String date) throws ParseException {
@@ -67,7 +67,7 @@ public class AttendanceSync implements AttendanceSyncContract {
     }
 
     private io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> getWeekFromApi(String date)
-            throws IOException, NotLoggedInErrorException, ParseException {
+            throws IOException, ParseException, VulcanException {
         return vulcan.getAttendanceTable().getWeekTable(date);
     }
 

@@ -7,10 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.github.wulkanowy.api.login.AccountPermissionException;
-import io.github.wulkanowy.api.login.BadCredentialsException;
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
-import io.github.wulkanowy.api.login.VulcanOfflineException;
+import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.data.db.dao.entities.Account;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
@@ -21,8 +18,8 @@ import io.github.wulkanowy.data.db.dao.entities.WeekDao;
 import io.github.wulkanowy.data.db.resources.ResourcesContract;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.data.sync.SyncContract;
+import io.github.wulkanowy.data.sync.account.AccountSyncContract;
 import io.github.wulkanowy.data.sync.attendance.AttendanceSyncContract;
-import io.github.wulkanowy.data.sync.login.LoginSyncContract;
 import io.github.wulkanowy.data.sync.timetable.TimetableSyncContract;
 import io.github.wulkanowy.di.annotations.SyncGrades;
 import io.github.wulkanowy.di.annotations.SyncSubjects;
@@ -37,7 +34,7 @@ public class Repository implements RepositoryContract {
 
     private final DaoSession daoSession;
 
-    private final LoginSyncContract loginSync;
+    private final AccountSyncContract accountSync;
 
     private final AttendanceSyncContract attendanceSync;
 
@@ -51,7 +48,7 @@ public class Repository implements RepositoryContract {
     Repository(SharedPrefContract sharedPref,
                ResourcesContract resources,
                DaoSession daoSession,
-               LoginSyncContract loginSync,
+               AccountSyncContract accountSync,
                AttendanceSyncContract attendanceSync,
                TimetableSyncContract timetableSync,
                @SyncGrades SyncContract gradeSync,
@@ -59,7 +56,7 @@ public class Repository implements RepositoryContract {
         this.sharedPref = sharedPref;
         this.resources = resources;
         this.daoSession = daoSession;
-        this.loginSync = loginSync;
+        this.accountSync = accountSync;
         this.attendanceSync = attendanceSync;
         this.timetableSync = timetableSync;
         this.gradeSync = gradeSync;
@@ -92,50 +89,48 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
-    public void loginUser(String email, String password, String symbol)
-            throws NotLoggedInErrorException, AccountPermissionException, IOException,
-            CryptoException, VulcanOfflineException, BadCredentialsException {
-        loginSync.loginUser(email, password, symbol);
+    public void registerUser(String email, String password, String symbol) throws VulcanException,
+            IOException, CryptoException {
+        accountSync.registerUser(email, password, symbol);
     }
 
     @Override
-    public void loginCurrentUser() throws NotLoggedInErrorException, AccountPermissionException,
-            IOException, CryptoException, VulcanOfflineException, BadCredentialsException {
-        loginSync.loginCurrentUser();
+    public void initLastUser() throws VulcanException, IOException, CryptoException {
+        accountSync.initLastUser();
     }
 
     @Override
-    public void syncGrades() throws NotLoggedInErrorException, IOException, ParseException {
+    public void syncGrades() throws VulcanException, IOException, ParseException {
         gradeSync.sync();
     }
 
     @Override
-    public void syncSubjects() throws NotLoggedInErrorException, IOException, ParseException {
+    public void syncSubjects() throws VulcanException, IOException, ParseException {
         subjectSync.sync();
     }
 
     @Override
-    public void syncAttendance() throws NotLoggedInErrorException, ParseException, IOException {
+    public void syncAttendance() throws ParseException, IOException, VulcanException {
         attendanceSync.syncAttendance();
     }
 
     @Override
-    public void syncAttendance(String date) throws NotLoggedInErrorException, ParseException, IOException {
+    public void syncAttendance(String date) throws ParseException, IOException, VulcanException {
         attendanceSync.syncAttendance(date);
     }
 
     @Override
-    public void syncTimetable() throws NotLoggedInErrorException, IOException, ParseException {
+    public void syncTimetable() throws VulcanException, IOException, ParseException {
         timetableSync.syncTimetable();
     }
 
     @Override
-    public void syncTimetable(String date) throws NotLoggedInErrorException, IOException, ParseException {
+    public void syncTimetable(String date) throws VulcanException, IOException, ParseException {
         timetableSync.syncTimetable(date);
     }
 
     @Override
-    public void syncAll() throws NotLoggedInErrorException, IOException, ParseException {
+    public void syncAll() throws VulcanException, IOException, ParseException {
         syncSubjects();
         syncGrades();
         syncAttendance();

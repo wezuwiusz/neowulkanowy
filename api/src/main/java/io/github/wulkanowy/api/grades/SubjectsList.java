@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.wulkanowy.api.SnP;
+import io.github.wulkanowy.api.VulcanException;
 
 public class SubjectsList {
 
@@ -20,7 +21,7 @@ public class SubjectsList {
         this.snp = snp;
     }
 
-    public List<Subject> getAll() throws IOException {
+    public List<Subject> getAll() throws IOException, VulcanException {
         Document subjectPage = snp.getSnPPageDocument(SUBJECTS_PAGE_URL);
 
         Elements rows = subjectPage.select(".ocenyZwykle-table > tbody > tr");

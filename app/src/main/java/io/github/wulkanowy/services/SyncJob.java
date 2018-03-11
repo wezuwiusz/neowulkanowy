@@ -62,7 +62,7 @@ public class SyncJob extends SimpleJobService {
     @Override
     public int onRunJob(JobParameters job) {
         try {
-            repository.loginCurrentUser();
+            repository.initLastUser();
             repository.syncAll();
 
             gradeList = repository.getNewGrades();

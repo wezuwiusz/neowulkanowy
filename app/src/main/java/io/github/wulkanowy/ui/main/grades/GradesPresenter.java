@@ -71,7 +71,6 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
 
     @Override
     public void onDoInBackgroundRefresh() throws Exception {
-        getRepository().loginCurrentUser();
         getRepository().syncSubjects();
         getRepository().syncGrades();
     }

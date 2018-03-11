@@ -6,26 +6,26 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
+import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.data.db.dao.entities.Account;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.data.db.resources.ResourcesContract;
+import io.github.wulkanowy.data.sync.account.AccountSyncContract;
 import io.github.wulkanowy.data.sync.attendance.AttendanceSyncContract;
-import io.github.wulkanowy.data.sync.login.LoginSyncContract;
 import io.github.wulkanowy.data.sync.timetable.TimetableSyncContract;
 
 @Singleton
-public interface RepositoryContract extends ResourcesContract, LoginSyncContract,
+public interface RepositoryContract extends ResourcesContract, AccountSyncContract,
         AttendanceSyncContract, TimetableSyncContract {
 
     long getCurrentUserId();
 
-    void syncGrades() throws NotLoggedInErrorException, IOException, ParseException;
+    void syncGrades() throws VulcanException, IOException, ParseException;
 
-    void syncSubjects() throws NotLoggedInErrorException, IOException, ParseException;
+    void syncSubjects() throws VulcanException, IOException, ParseException;
 
-    void syncAll() throws NotLoggedInErrorException, IOException, ParseException;
+    void syncAll() throws VulcanException, IOException, ParseException;
 
     Account getCurrentUser();
 

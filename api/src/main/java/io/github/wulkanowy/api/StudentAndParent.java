@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
-
 public class StudentAndParent implements SnP {
 
     private static final String START_PAGE_URL = "{schema}://uonetplus.{host}/{symbol}/Start.mvc/Index";
@@ -22,12 +20,8 @@ public class StudentAndParent implements SnP {
 
     private String id;
 
-    StudentAndParent(Client client) {
-        this.client = client;
-    }
-
     StudentAndParent(Client client, String id) {
-        this(client);
+        this.client = client;
         this.id = id;
     }
 
@@ -39,11 +33,12 @@ public class StudentAndParent implements SnP {
         return id;
     }
 
-    public void storeContextCookies() throws IOException, NotLoggedInErrorException {
+    public StudentAndParent storeContextCookies() throws IOException, VulcanException {
         client.getPageByUrl(getSnpHomePageUrl());
+        return this;
     }
 
-    String getSnpHomePageUrl() throws IOException, NotLoggedInErrorException {
+    String getSnpHomePageUrl() throws IOException, VulcanException {
         if (null != getId()) {
             return getBaseUrl();
         }
@@ -77,11 +72,11 @@ public class StudentAndParent implements SnP {
         return e.select(".daneWiersz .wartosc").get(index - 1).text();
     }
 
-    public Document getSnPPageDocument(String url) throws IOException {
+    public Document getSnPPageDocument(String url) throws IOException, VulcanException {
         return client.getPageByUrl(getBaseUrl() + url);
     }
 
-    public List<Semester> getSemesters() throws IOException {
+    public List<Semester> getSemesters() throws IOException, VulcanException {
         return getSemesters(getSnPPageDocument(GRADES_PAGE_URL));
     }
 

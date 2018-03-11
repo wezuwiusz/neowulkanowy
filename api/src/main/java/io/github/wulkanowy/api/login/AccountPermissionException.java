@@ -1,4 +1,6 @@
 package io.github.wulkanowy.api.login;
 
-public class AccountPermissionException extends Exception {
+import io.github.wulkanowy.api.VulcanException;
+
+public class AccountPermissionException extends VulcanException {
 }

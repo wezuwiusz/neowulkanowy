@@ -1,4 +1,6 @@
 package io.github.wulkanowy.api.messages;
 
-class BadRequestException extends Exception {
+import io.github.wulkanowy.api.VulcanException;
+
+class BadRequestException extends VulcanException {
 }

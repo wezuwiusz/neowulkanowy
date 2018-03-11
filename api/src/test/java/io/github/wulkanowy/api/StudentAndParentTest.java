@@ -10,8 +10,6 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.wulkanowy.api.login.NotLoggedInErrorException;
-
 public class StudentAndParentTest {
 
     private Client client;
@@ -45,7 +43,7 @@ public class StudentAndParentTest {
 
         Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(startPageDocument);
-        StudentAndParent snp = new StudentAndParent(client);
+        StudentAndParent snp = new StudentAndParent(client, null);
 
         Assert.assertEquals("https://uonetplus-opiekun.vulcan.net.pl/symbol/534213/Start/Index/",
                 snp.getSnpHomePageUrl());
@@ -58,7 +56,7 @@ public class StudentAndParentTest {
         );
 
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(wrongPageDocument);
-        StudentAndParent snp = new StudentAndParent(client);
+        StudentAndParent snp = new StudentAndParent(client, null);
 
         snp.getSnpHomePageUrl();
     }
