@@ -91,15 +91,16 @@ public class GradeHeaderItem
             numberText.setText(resources.getQuantityString(R.plurals.numberOfGradesPlurals,
                     subItems.size(), subItems.size()));
             averageText.setText(getGradesAverageString(item));
-            alertImage.setVisibility(isSubItemsRead(subItems) ? View.INVISIBLE : View.VISIBLE);
-            alertImage.setTag(item.getName());
+            alertImage.setVisibility(isSubItemsReadAndSaveAlertView(subItems)
+                    ? View.INVISIBLE : View.VISIBLE);
         }
 
-        private boolean isSubItemsRead(List<GradesSubItem> subItems) {
+        private boolean isSubItemsReadAndSaveAlertView(List<GradesSubItem> subItems) {
             boolean isRead = true;
 
             for (GradesSubItem item : subItems) {
                 isRead = item.getGrade().getRead();
+                item.setSubjectAlertImage(alertImage);
             }
             return isRead;
         }

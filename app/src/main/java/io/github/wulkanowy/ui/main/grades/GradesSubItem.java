@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.main.grades;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -27,6 +26,8 @@ public class GradesSubItem
 
     private static int numberOfNotReadGrade;
 
+    private View subjectAlertImage;
+
     GradesSubItem(GradeHeaderItem header, Grade grade) {
         super(header);
         this.grade = grade;
@@ -34,6 +35,10 @@ public class GradesSubItem
 
     public Grade getGrade() {
         return grade;
+    }
+
+    public void setSubjectAlertImage(View subjectAlertImage) {
+        this.subjectAlertImage = subjectAlertImage;
     }
 
     @Override
@@ -68,7 +73,7 @@ public class GradesSubItem
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, SubItemViewHolder holder, int position, List payloads) {
-        holder.onBind(grade);
+        holder.onBind(grade, subjectAlertImage);
     }
 
     static class SubItemViewHolder extends FlexibleViewHolder {
@@ -85,6 +90,8 @@ public class GradesSubItem
         @BindView(R.id.grade_subitem_alert_image)
         View alert;
 
+        private View subjectAlertImage;
+
         private Context context;
 
         private Grade item;
@@ -96,8 +103,9 @@ public class GradesSubItem
             view.setOnClickListener(this);
         }
 
-        void onBind(Grade item) {
+        void onBind(Grade item, View subjectAlertImage) {
             this.item = item;
+            this.subjectAlertImage = subjectAlertImage;
 
             value.setText(item.getValue());
             value.setBackgroundResource(item.getValueColor());
@@ -119,8 +127,7 @@ public class GradesSubItem
                 numberOfNotReadGrade--;
 
                 if (numberOfNotReadGrade == 0) {
-                    ((Activity) context).findViewById(R.id.grade_fragment_container)
-                            .findViewWithTag(item.getSubject()).setVisibility(View.INVISIBLE);
+                    subjectAlertImage.setVisibility(View.INVISIBLE);
                 }
                 item.setIsNew(false);
                 item.setRead(true);
