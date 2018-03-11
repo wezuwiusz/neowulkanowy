@@ -7,6 +7,6 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/wulkanowy/wulkanowy/badge.svg?targetFile=app%2Fbuild.gradle&style=flat-square)](https://snyk.io/test/github/wulkanowy/wulkanowy?targetFile=app%2Fbuild.gradle)
 [![Bintray](https://img.shields.io/bintray/v/wulkanowy/wulkanowy/api.svg?style=flat-square)](https://bintray.com/wulkanowy/wulkanowy/api)
 
-[Pobierz wersję rozwojową](https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/master/artifacts/app-release-bitrise-signed.apk)
+[Pobierz wersję rozwojową](https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/master/artifacts/app-debug-bitrise-signed.apk)
 
 Wulkanowy to aplikacja na androida polepszająca wygodę używania dziennika UONET+.
