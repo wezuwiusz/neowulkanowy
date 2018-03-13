@@ -37,7 +37,7 @@ public class GradesSubItem
         return grade;
     }
 
-    public void setSubjectAlertImage(View subjectAlertImage) {
+    void setSubjectAlertImage(View subjectAlertImage) {
         this.subjectAlertImage = subjectAlertImage;
     }
 

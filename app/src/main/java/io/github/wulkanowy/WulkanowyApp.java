@@ -16,6 +16,7 @@ import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.di.component.ApplicationComponent;
 import io.github.wulkanowy.di.component.DaggerApplicationComponent;
 import io.github.wulkanowy.di.modules.ApplicationModule;
+import io.github.wulkanowy.utils.LogUtils;
 
 public class WulkanowyApp extends Application {
 
@@ -37,6 +38,17 @@ public class WulkanowyApp extends Application {
             enableDebugLog();
         }
         initializeFabric();
+        initializeUserSession();
+    }
+
+    private void initializeUserSession() {
+        if (repository.getCurrentUserId() != 0) {
+            try {
+                repository.initLastUser();
+            } catch (Exception e) {
+                LogUtils.error("An error occurred when the application was started", e);
+            }
+        }
     }
 
     private void enableDebugLog() {

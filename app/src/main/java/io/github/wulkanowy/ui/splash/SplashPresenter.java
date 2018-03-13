@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.ui.base.BasePresenter;
-import io.github.wulkanowy.utils.LogUtils;
 
 public class SplashPresenter extends BasePresenter<SplashContract.View>
         implements SplashContract.Presenter {
@@ -24,12 +23,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.View>
         if (getRepository().getCurrentUserId() == 0) {
             getView().openLoginActivity();
         } else {
-            try {
-                getRepository().initLastUser();
-                getView().openMainActivity();
-            } catch (Exception e) {
-                LogUtils.error("An error occurred when the application was started", e);
-            }
+            getView().openMainActivity();
         }
     }
 }
