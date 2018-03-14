@@ -109,6 +109,7 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
         headerItems = new ArrayList<>();
 
         for (Subject subject : subjectList) {
+            subject.resetGradeList();
             List<Grade> gradeList = subject.getGradeList();
 
             if (!gradeList.isEmpty()) {

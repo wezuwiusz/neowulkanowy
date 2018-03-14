@@ -108,6 +108,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
         boolean isFreeWeek = true;
 
         for (Day day : dayList) {
+            day.resetTimetableLessons();
             TimetableHeaderItem headerItem = new TimetableHeaderItem(day);
 
             if (isFreeWeek) {

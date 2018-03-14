@@ -105,6 +105,7 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
         boolean isEmptyWeek = true;
 
         for (Day day : dayList) {
+            day.resetAttendanceLessons();
             AttendanceHeaderItem headerItem = new AttendanceHeaderItem(day);
 
             if (isEmptyWeek) {
@@ -168,7 +169,6 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
             loadingTask.cancel(true);
             loadingTask = null;
         }
-
         super.onDestroy();
     }
 }
