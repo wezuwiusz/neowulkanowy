@@ -1,5 +1,8 @@
 package io.github.wulkanowy.ui.main.timetable;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -84,10 +87,16 @@ public class TimetableHeaderItem
         @BindColor(R.color.free_day)
         int backgroundFreeDay;
 
+        @BindColor(android.R.color.black)
+        int black;
+
+        private Context context;
+
         HeaderViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             view.setOnClickListener(this);
             ButterKnife.bind(this, view);
+            context = view.getContext();
         }
 
         void onBind(Day item, List<TimetableSubItem> subItems) {
@@ -96,12 +105,27 @@ public class TimetableHeaderItem
             alert.setVisibility(isSubItemNewMovedInOrChanged(subItems) ? View.VISIBLE : View.INVISIBLE);
             freeName.setVisibility(item.getIsFreeDay() ? View.VISIBLE : View.INVISIBLE);
             freeName.setText(item.getFreeDayName());
+            setInactiveHeader(item.getIsFreeDay());
+        }
 
-            if (item.getIsFreeDay()) {
-                ((FrameLayout) getContentView()).setForeground(null);
+        private void setInactiveHeader(boolean inactive) {
+            ((FrameLayout) getContentView()).setForeground(inactive ? null : getSelectableDrawable());
+            dayName.setTextColor(inactive ? secondaryColor : black);
+
+            if (inactive) {
                 getContentView().setBackgroundColor(backgroundFreeDay);
-                dayName.setTextColor(secondaryColor);
+            } else {
+                getContentView().setBackgroundDrawable(context.getResources()
+                        .getDrawable(R.drawable.ic_border));
             }
+        }
+
+        private Drawable getSelectableDrawable() {
+            int[] attrs = new int[]{R.attr.selectableItemBackground};
+            TypedArray typedArray = context.obtainStyledAttributes(attrs);
+            Drawable drawable = typedArray.getDrawable(0);
+            typedArray.recycle();
+            return drawable;
         }
 
         private boolean isSubItemNewMovedInOrChanged(List<TimetableSubItem> subItems) {

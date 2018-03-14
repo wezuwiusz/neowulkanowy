@@ -1,5 +1,8 @@
 package io.github.wulkanowy.ui.main.attendance;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -87,10 +90,16 @@ public class AttendanceHeaderItem
         @BindColor(R.color.free_day)
         int backgroundFreeDay;
 
+        @BindColor(android.R.color.black)
+        int black;
+
+        private Context context;
+
         HeaderViewHolder(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             view.setOnClickListener(this);
             ButterKnife.bind(this, view);
+            context = view.getContext();
         }
 
         void onBind(Day item, List<AttendanceSubItem> subItems) {
@@ -103,12 +112,28 @@ public class AttendanceHeaderItem
             description.setVisibility(numberOfHours > 0 ? View.VISIBLE : View.INVISIBLE);
             alert.setVisibility(isSubItemsHasChanges(subItems) ? View.VISIBLE : View.INVISIBLE);
             freeName.setVisibility(subItems.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+            setInactiveHeader(item.getAttendanceLessons().isEmpty());
+        }
 
-            if (item.getAttendanceLessons().isEmpty()) {
-                ((FrameLayout) getContentView()).setForeground(null);
+
+        private void setInactiveHeader(boolean inactive) {
+            ((FrameLayout) getContentView()).setForeground(inactive ? null : getSelectableDrawable());
+            dayName.setTextColor(inactive ? secondaryColor : black);
+
+            if (inactive) {
                 getContentView().setBackgroundColor(backgroundFreeDay);
-                dayName.setTextColor(secondaryColor);
+            } else {
+                getContentView().setBackgroundDrawable(context.getResources()
+                        .getDrawable(R.drawable.ic_border));
             }
+        }
+
+        private Drawable getSelectableDrawable() {
+            int[] attrs = new int[]{R.attr.selectableItemBackground};
+            TypedArray typedArray = context.obtainStyledAttributes(attrs);
+            Drawable drawable = typedArray.getDrawable(0);
+            typedArray.recycle();
+            return drawable;
         }
 
         private int countNotPresentHours(List<AttendanceSubItem> subItems) {
@@ -118,17 +143,16 @@ public class AttendanceHeaderItem
                     i++;
                 }
             }
-
             return i;
         }
 
         private boolean isSubItemsHasChanges(List<AttendanceSubItem> subItems) {
             for (AttendanceSubItem subItem : subItems) {
-                if (subItem.getLesson().getIsAbsenceUnexcused() || subItem.getLesson().getIsUnexcusedLateness()) {
+                if (subItem.getLesson().getIsAbsenceUnexcused() || subItem.getLesson()
+                        .getIsUnexcusedLateness()) {
                     return true;
                 }
             }
-
             return false;
         }
     }
