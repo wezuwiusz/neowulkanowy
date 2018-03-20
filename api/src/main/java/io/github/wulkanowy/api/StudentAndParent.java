@@ -48,7 +48,7 @@ public class StudentAndParent implements SnP {
         Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
 
         if (null == studentTileLink) {
-            throw new NotLoggedInErrorException();
+            throw new NotLoggedInErrorException("You are probably not logged in. Force login");
         }
 
         String snpPageUrl = studentTileLink.attr("href");
@@ -62,7 +62,7 @@ public class StudentAndParent implements SnP {
         String[] path = snpPageUrl.split(client.getHost())[1].split("/");
 
         if (5 != path.length) {
-            throw new NotLoggedInErrorException();
+            throw new NotLoggedInErrorException("You are probably not logged in");
         }
 
         return path[2];

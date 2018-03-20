@@ -12,7 +12,6 @@ import javax.inject.Singleton;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.api.NotLoggedInErrorException;
-import io.github.wulkanowy.api.VulcanOfflineException;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.di.annotations.ApplicationContext;
 import io.github.wulkanowy.utils.AppConstant;
@@ -51,8 +50,6 @@ public class AppResources implements ResourcesContract {
             return resources.getString(R.string.generic_timeout_error);
         } else if (exception instanceof NotLoggedInErrorException || exception instanceof IOException) {
             return resources.getString(R.string.login_denied_text);
-        } else if (exception instanceof VulcanOfflineException) {
-            return resources.getString(R.string.error_host_offline);
         } else {
             return exception.getMessage();
         }

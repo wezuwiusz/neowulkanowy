@@ -108,7 +108,11 @@ public class Client {
 
         this.cookies.addItems(response.cookies());
 
-        return checkForErrors(response.parse());
+        Document doc = checkForErrors(response.parse());
+
+        lastSuccessRequest = new Date();
+
+        return doc;
     }
 
     public Document postPageByUrl(String url, String[][] params) throws IOException, VulcanException {
@@ -165,15 +169,15 @@ public class Client {
     }
 
     Document checkForErrors(Document doc) throws VulcanException {
-        if ("Przerwa techniczna".equals(doc.select("title").text())) {
-            throw new VulcanOfflineException();
+        String title = doc.select("title").text();
+        if ("Przerwa techniczna".equals(title)) {
+            throw new VulcanOfflineException(title);
         }
 
-        if ("Zaloguj się".equals(doc.select(".loginButton").text())) {
-            throw new NotLoggedInErrorException();
+        String singIn = doc.select(".loginButton").text();
+        if ("Zaloguj się".equals(singIn)) {
+            throw new NotLoggedInErrorException(singIn);
         }
-
-        lastSuccessRequest = new Date();
 
         return doc;
     }

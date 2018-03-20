@@ -32,7 +32,7 @@ public class Vulcan {
 
     public Client getClient() throws NotLoggedInErrorException {
         if (null == client) {
-            throw new NotLoggedInErrorException();
+            throw new NotLoggedInErrorException("Use setCredentials() method first");
         }
 
         return client;

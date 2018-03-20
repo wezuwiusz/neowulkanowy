@@ -73,7 +73,6 @@
     <string name="info_average_grades">Average: %1$.2f</string>
     <string name="info_no_average">No average</string>
     <string name="info_free_week">No lesson in this week</string>
-    <string name="error_host_offline">Technical break</string>
 
     <string name="timetable_subitem_room">Room %s</string>
 

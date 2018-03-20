@@ -2,6 +2,7 @@ package io.github.wulkanowy.api.login;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
@@ -42,8 +43,9 @@ public class Login {
                 {"Password", password}
         });
 
-        if (null != html.select(".ErrorMessage").first()) {
-            throw new BadCredentialsException();
+        Element errorMessage = html.select(".ErrorMessage").first();
+        if (null != errorMessage) {
+            throw new BadCredentialsException(errorMessage.text());
         }
 
         return html.select("input[name=wresult]").attr("value");
@@ -59,11 +61,11 @@ public class Login {
         }).select("title").text();
 
         if ("Logowanie".equals(title)) {
-            throw new AccountPermissionException();
+            throw new AccountPermissionException("No account access. Try another symbol");
         }
 
         if (!"Uonet+".equals(title)) {
-            throw new LoginErrorException();
+            throw new LoginErrorException("Could not log in, unknown error");
         }
 
         return this.symbol;
