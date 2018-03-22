@@ -20,7 +20,9 @@ import io.github.wulkanowy.ui.base.BaseFragment;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
 import io.github.wulkanowy.ui.main.TabsData;
 
-public class AttendanceFragment extends BaseFragment implements AttendanceContract.View, TabLayout.OnTabSelectedListener {
+public class AttendanceFragment extends BaseFragment implements AttendanceContract.View {
+
+    private static final String CURRENT_ITEM_KEY = "CurrentItem";
 
     @BindView(R.id.attendance_fragment_viewpager)
     ViewPager viewPager;
@@ -45,6 +47,10 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
             component.inject(this);
             setButterKnife(ButterKnife.bind(this, view));
             presenter.onStart(this, (OnFragmentIsReadyListener) getActivity());
+
+            if (savedInstanceState != null) {
+                presenter.setRestoredPosition(savedInstanceState.getInt(CURRENT_ITEM_KEY));
+            }
         }
 
         return view;
@@ -54,23 +60,8 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
     public void setMenuVisibility(boolean menuVisible) {
         super.setMenuVisibility(menuVisible);
         if (presenter != null) {
-            presenter.onFragmentVisible(menuVisible);
+            presenter.onFragmentActivated(menuVisible);
         }
-    }
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        presenter.onTabSelected(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-        presenter.onTabUnselected(tab.getPosition());
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-        //do nothing
     }
 
     @Override
@@ -81,14 +72,7 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
     @Override
     public void setAdapterWithTabLayout() {
         viewPager.setAdapter(pagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.addOnTabSelectedListener(this);
-    }
-
-    @Override
-    public void setChildFragmentSelected(int position, boolean selected) {
-        ((AttendanceTabFragment) pagerAdapter.getItem(position)).setSelected(selected);
     }
 
     @Override
@@ -107,6 +91,12 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
             Snackbar.make(getActivity().findViewById(R.id.main_activity_view_pager),
                     message, Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CURRENT_ITEM_KEY, viewPager.getCurrentItem());
+        super.onSaveInstanceState(outState);
     }
 
     @Override

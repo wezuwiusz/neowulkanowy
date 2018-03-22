@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
@@ -60,12 +61,13 @@ class AttendanceSubItem
     }
 
     @Override
-    public AttendanceSubItem.SubItemViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
-        return new AttendanceSubItem.SubItemViewHolder(view, adapter);
+    public SubItemViewHolder createViewHolder(View view, FlexibleAdapter<IFlexible> adapter) {
+        return new SubItemViewHolder(view, adapter);
     }
 
     @Override
-    public void bindViewHolder(FlexibleAdapter adapter, AttendanceSubItem.SubItemViewHolder holder, int position, List payloads) {
+    public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, SubItemViewHolder holder,
+                               int position, List<Object> payloads) {
         holder.onBind(lesson);
     }
 

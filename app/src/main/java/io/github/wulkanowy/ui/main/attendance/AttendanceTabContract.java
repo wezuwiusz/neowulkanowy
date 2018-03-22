@@ -21,11 +21,9 @@ public interface AttendanceTabContract {
 
     interface Presenter extends BaseContract.Presenter<AttendanceTabContract.View> {
 
-        void onFragmentSelected(boolean isSelected);
+        void onFragmentActivated(boolean isSelected);
 
         void setArgumentDate(String date);
-
-        void onStart(AttendanceTabContract.View view, boolean isPrimary);
 
         void onRefresh();
     }

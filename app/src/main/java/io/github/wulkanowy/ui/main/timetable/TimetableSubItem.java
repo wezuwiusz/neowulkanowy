@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
@@ -27,7 +28,7 @@ public class TimetableSubItem
 
     private TimetableLesson lesson;
 
-    public TimetableSubItem(TimetableHeaderItem header, TimetableLesson lesson) {
+    TimetableSubItem(TimetableHeaderItem header, TimetableLesson lesson) {
         super(header);
         this.lesson = lesson;
     }
@@ -62,12 +63,13 @@ public class TimetableSubItem
     }
 
     @Override
-    public SubItemViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+    public SubItemViewHolder createViewHolder(View view, FlexibleAdapter<IFlexible> adapter) {
         return new SubItemViewHolder(view, adapter);
     }
 
     @Override
-    public void bindViewHolder(FlexibleAdapter adapter, SubItemViewHolder holder, int position, List payloads) {
+    public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, SubItemViewHolder holder,
+                               int position, List<Object> payloads) {
         holder.onBind(lesson);
     }
 

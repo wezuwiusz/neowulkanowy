@@ -24,7 +24,7 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
 
     private OnFragmentIsReadyListener listener;
 
-    private int positionToScroll;
+    private int positionToScroll = 0;
 
     private boolean isFirstSight = false;
 
@@ -45,7 +45,10 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
         if (dates.isEmpty()) {
             dates = TimeUtils.getMondaysFromCurrentSchoolYear();
         }
-        positionToScroll = dates.indexOf(TimeUtils.getDateOfCurrentMonday(true));
+
+        if (positionToScroll == 0) {
+            positionToScroll = dates.indexOf(TimeUtils.getDateOfCurrentMonday(true));
+        }
 
         if (!isFirstSight) {
             isFirstSight = true;
@@ -57,20 +60,10 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
     }
 
     @Override
-    public void onFragmentVisible(boolean isVisible) {
+    public void onFragmentActivated(boolean isVisible) {
         if (isVisible) {
             getView().setActivityTitle();
         }
-    }
-
-    @Override
-    public void onTabSelected(int position) {
-        getView().setChildFragmentSelected(position, true);
-    }
-
-    @Override
-    public void onTabUnselected(int position) {
-        getView().setChildFragmentSelected(position, false);
     }
 
     @Override
@@ -84,7 +77,6 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
     @Override
     public void onCanceledLoadingAsync() {
         //do nothing
-
     }
 
     @Override
@@ -95,6 +87,11 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
             getView().scrollViewPagerToPosition(positionToScroll);
             listener.onFragmentIsReady();
         }
+    }
+
+    @Override
+    public void setRestoredPosition(int position) {
+        this.positionToScroll = position;
     }
 
     @Override

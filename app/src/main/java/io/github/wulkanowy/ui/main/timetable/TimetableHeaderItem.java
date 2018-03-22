@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractExpandableHeaderItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.ExpandableViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Day;
@@ -58,12 +59,13 @@ public class TimetableHeaderItem
     }
 
     @Override
-    public HeaderViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
+    public HeaderViewHolder createViewHolder(View view, FlexibleAdapter<IFlexible> adapter) {
         return new HeaderViewHolder(view, adapter);
     }
 
     @Override
-    public void bindViewHolder(FlexibleAdapter adapter, HeaderViewHolder holder, int position, List payloads) {
+    public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, HeaderViewHolder holder,
+                               int position, List<Object> payloads) {
         holder.onBind(day, getSubItems());
     }
 

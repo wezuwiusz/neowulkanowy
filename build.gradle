@@ -7,9 +7,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
@@ -29,6 +26,31 @@ subprojects {
 
 ext {
     GROUP_ID = "io.github.wulkanowy"
+
+    supportVersion = "26.1.0"
+    firebaseJob = "0.8.5"
+    apacheLang = "3.7"
+    apacheCollections = "4.1"
+    flexibleAdapter = "5.0.2"
+    flexibleUi = "1.0.0-b2"
+    greenDao = "3.2.2"
+    greenDaoHelper = "v2.0.2"
+    butterknife = "8.8.1"
+    jodaTime = "2.9.9"
+    dagger2 = "2.15"
+    ahbottom = "2.1.0"
+    jsoup = "1.10.3"
+    gson = "2.8.2"
+
+    debugDb = "1.0.3"
+    sqlcipher = "3.5.9"
+
+    junit = "4.12"
+    mockito = "2.16.0"
+    testRunner = "1.0.1"
+
+    crashlyticsSdk = "2.9.1"
+    crashlyticsAnswers = "1.4.1"
 }
 
 allprojects {

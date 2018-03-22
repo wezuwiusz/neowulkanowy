@@ -17,20 +17,16 @@ public interface TimetableContract {
 
         void setAdapterWithTabLayout();
 
-        void setChildFragmentSelected(int position, boolean selected);
-
         boolean isMenuVisible();
     }
 
     @PerActivity
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void onFragmentVisible(boolean isVisible);
-
-        void onTabSelected(int position);
-
-        void onTabUnselected(int position);
+        void onFragmentActivated(boolean isVisible);
 
         void onStart(View view, OnFragmentIsReadyListener listener);
+
+        void setRestoredPosition(int position);
     }
 }

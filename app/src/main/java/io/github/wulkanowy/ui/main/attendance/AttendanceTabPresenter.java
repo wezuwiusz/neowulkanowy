@@ -33,21 +33,22 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
     }
 
     @Override
-    public void onStart(AttendanceTabContract.View view, boolean isPrimary) {
+    public void onStart(AttendanceTabContract.View view) {
         super.onStart(view);
         getView().showProgressBar(true);
         getView().showNoItem(false);
-        onFragmentSelected(isPrimary);
     }
 
     @Override
-    public void onFragmentSelected(boolean isSelected) {
-        if (!isFirstSight && isSelected) {
+    public void onFragmentActivated(boolean isSelected) {
+        if (!isFirstSight && isSelected && isViewAttached()) {
             isFirstSight = true;
 
             loadingTask = new AbstractTask();
             loadingTask.setOnFirstLoadingListener(this);
             loadingTask.execute();
+        } else if (!isSelected) {
+            cancelAsyncTasks();
         }
     }
 
@@ -157,10 +158,7 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
         getRepository().syncAttendance(date);
     }
 
-    @Override
-    public void onDestroy() {
-        isFirstSight = false;
-
+    private void cancelAsyncTasks() {
         if (refreshTask != null) {
             refreshTask.cancel(true);
             refreshTask = null;
@@ -169,6 +167,12 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
             loadingTask.cancel(true);
             loadingTask = null;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        cancelAsyncTasks();
+        isFirstSight = false;
         super.onDestroy();
     }
 }

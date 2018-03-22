@@ -23,11 +23,9 @@ public interface TimetableTabContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void onFragmentSelected(boolean isSelected);
+        void onFragmentActivated(boolean isSelected);
 
         void setArgumentDate(String date);
-
-        void onStart(View view, boolean isPrimary);
 
         void onRefresh();
     }

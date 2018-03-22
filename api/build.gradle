@@ -28,12 +28,12 @@ jacocoTestReport {
 }
 
 dependencies {
-    implementation 'org.jsoup:jsoup:1.10.3'
-    implementation 'org.apache.commons:commons-lang3:3.7'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation "org.jsoup:jsoup:$jsoup"
+    implementation "org.apache.commons:commons-lang3:$apacheLang"
+    implementation "com.google.code.gson:gson:$gson"
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.13.0'
+    testImplementation "junit:junit:$junit"
+    testImplementation "org.mockito:mockito-core:$mockito"
 }
 
 version = PUBLISH_VERSION
