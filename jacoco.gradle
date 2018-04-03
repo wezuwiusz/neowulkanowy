@@ -1,7 +1,11 @@
 apply plugin: "jacoco"
 
 jacoco {
-    toolVersion "0.7.4.201502262128"
+    toolVersion "0.8.1"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
 }
 
 // run ./gradlew clean createDebugCoverageReport jacocoTestReport

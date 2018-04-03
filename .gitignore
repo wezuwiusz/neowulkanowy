@@ -32,6 +32,8 @@ local.properties
 .idea/tasks.xml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/caches/
+.idea/codeStyles/
 *.iml
 
 # OS-specific files
