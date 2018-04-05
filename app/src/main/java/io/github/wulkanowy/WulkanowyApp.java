@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -28,6 +29,8 @@ public class WulkanowyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        AndroidThreeTen.init(this);
+
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .applicationModule(new ApplicationModule(this))

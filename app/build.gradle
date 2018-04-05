@@ -80,9 +80,9 @@ dependencies {
     implementation "org.greenrobot:greendao:$greenDao"
     implementation "com.github.yuweiguocn:GreenDaoUpgradeHelper:$greenDaoHelper"
     implementation "com.jakewharton:butterknife:$butterknife"
-    implementation "joda-time:joda-time:$jodaTime"
     implementation "com.google.dagger:dagger-android-support:$dagger2"
     implementation "com.aurelhubert:ahbottomnavigation:$ahbottom"
+    implementation "com.jakewharton.threetenabp:threetenabp:$threeTenABP"
 
     implementation("com.crashlytics.sdk.android:crashlytics:$crashlyticsSdk@aar") {
         transitive = true

@@ -36,7 +36,7 @@ ext {
     greenDao = "3.2.2"
     greenDaoHelper = "v2.0.2"
     butterknife = "8.8.1"
-    jodaTime = "2.9.9"
+    threeTenABP = "1.0.5"
     dagger2 = "2.15"
     ahbottom = "2.1.0"
     jsoup = "1.10.3"

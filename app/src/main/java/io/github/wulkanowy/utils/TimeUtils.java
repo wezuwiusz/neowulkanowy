@@ -1,8 +1,8 @@
 package io.github.wulkanowy.utils;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
-import org.joda.time.LocalDate;
+import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static io.github.wulkanowy.utils.AppConstant.DATE_PATTERN;
-
 public final class TimeUtils {
 
     private static final long TICKS_AT_EPOCH = 621355968000000000L;
 
     private static final long TICKS_PER_MILLISECOND = 10000;
+
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppConstant.DATE_PATTERN);
 
     private TimeUtils() {
         throw new IllegalStateException("Utility class");
@@ -33,7 +33,7 @@ public final class TimeUtils {
     }
 
     public static long getNetTicks(String dateString) throws ParseException {
-        return getNetTicks(dateString, DATE_PATTERN);
+        return getNetTicks(dateString, AppConstant.DATE_PATTERN);
     }
 
     public static long getNetTicks(String dateString, String dateFormat) throws ParseException {
@@ -49,12 +49,12 @@ public final class TimeUtils {
     }
 
     public static List<String> getMondaysFromCurrentSchoolYear() {
-        LocalDate startDate = new LocalDate(getCurrentSchoolYear(), 9, 1);
-        LocalDate endDate = new LocalDate(getCurrentSchoolYear() + 1, 8, 31);
+        LocalDate startDate = LocalDate.of(getCurrentSchoolYear(), 9, 1);
+        LocalDate endDate = LocalDate.of(getCurrentSchoolYear() + 1, 8, 31);
 
         List<String> dateList = new ArrayList<>();
 
-        LocalDate thisMonday = startDate.withDayOfWeek(DateTimeConstants.MONDAY);
+        LocalDate thisMonday = startDate.with(DayOfWeek.MONDAY);
 
         if (startDate.isAfter(thisMonday)) {
             startDate = thisMonday.plusWeeks(1);
@@ -63,27 +63,27 @@ public final class TimeUtils {
         }
 
         while (startDate.isBefore(endDate)) {
-            dateList.add(startDate.toString(DATE_PATTERN));
+            dateList.add(startDate.format(formatter));
             startDate = startDate.plusWeeks(1);
         }
         return dateList;
     }
 
     public static int getCurrentSchoolYear() {
-        DateTime dateTime = new DateTime();
-        return dateTime.getMonthOfYear() <= 8 ? dateTime.getYear() - 1 : dateTime.getYear();
+        LocalDate localDate = LocalDate.now();
+        return localDate.getMonthValue() <= 8 ? localDate.getYear() - 1 : localDate.getYear();
     }
 
     public static String getDateOfCurrentMonday(boolean normalize) {
-        DateTime currentDate = new DateTime();
+        LocalDate currentDate = LocalDate.now();
 
-        if (currentDate.getDayOfWeek() == DateTimeConstants.SATURDAY && normalize) {
+        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY && normalize) {
             currentDate = currentDate.plusDays(2);
-        } else if (currentDate.getDayOfWeek() == DateTimeConstants.SUNDAY && normalize) {
+        } else if (currentDate.getDayOfWeek() == DayOfWeek.SUNDAY && normalize) {
             currentDate = currentDate.plusDays(1);
         } else {
-            currentDate = currentDate.withDayOfWeek(DateTimeConstants.MONDAY);
+            currentDate = currentDate.with(DayOfWeek.MONDAY);
         }
-        return currentDate.toString(DATE_PATTERN);
+        return currentDate.format(formatter);
     }
 }
