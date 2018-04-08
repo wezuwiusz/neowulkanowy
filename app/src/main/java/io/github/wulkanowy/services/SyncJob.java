@@ -81,12 +81,12 @@ public class SyncJob extends SimpleJobService {
     }
 
     private void showNotification() {
-        NotificationService service = new NotificationService(getApplicationContext());
+        GradeNotify gradeNotify = new GradeNotify(getApplicationContext());
 
-        service.notify(service.notificationBuilder()
+        gradeNotify.notify(gradeNotify.notificationBuilder()
                 .setContentTitle(getStringTitle())
                 .setContentText(getStringContent())
-                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setSmallIcon(R.drawable.ic_notify_grade)
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

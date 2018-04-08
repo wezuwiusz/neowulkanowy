@@ -118,4 +118,6 @@
     <string name="pref_services_switch">Enable background data refreshing</string>
     <string name="pref_services_interval">Interval between data refreshing</string>
     <string name="pref_services_mobile_data">Synchronization via WiFi only</string>
+
+    <string name="notify_grade_channel">New grades</string>
 </resources>

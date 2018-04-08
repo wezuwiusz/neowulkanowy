@@ -122,4 +122,6 @@
     <string name="pref_services_switch">Włącz odświeżanie danych w tle</string>
     <string name="pref_services_interval">Interwał między odświeżaniem danych</string>
     <string name="pref_services_mobile_data">Synchronizacja tylko przez WiFi</string>
+
+    <string name="notify_grade_channel">Nowe oceny</string>
 </resources>
