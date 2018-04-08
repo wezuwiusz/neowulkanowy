@@ -10,4 +10,4 @@
 
 [Pobierz wersję rozwojową](https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/master/artifacts/app-debug-bitrise-signed.apk)
 
-Wulkanowy to aplikacja na androida polepszająca wygodę używania dziennika UONET+.
+Androidowy klient dziennika VULCAN UONET+.

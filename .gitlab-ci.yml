@@ -26,7 +26,7 @@ tests:
      - .gradle
     policy: pull
   script:
-    - ./gradlew --no-daemon --stacktrace test
+    - ./gradlew --no-daemon --stacktrace -x fabricGenerateResourcesRelease test
   artifacts:
     paths:
     - app/build/reports/tests
@@ -39,7 +39,7 @@ lint:
      - .gradle
     policy: pull
   script:
-    - ./gradlew --no-daemon --stacktrace lint
+    - ./gradlew --no-daemon --stacktrace -x fabricGenerateResourcesRelease lint
   artifacts:
     paths:
     - app/build/reports
