@@ -95,6 +95,16 @@ public class GradeHeaderItem
                     ? View.INVISIBLE : View.VISIBLE);
         }
 
+        @Override
+        public void onClick(View view) {
+            super.onClick(view);
+            if (subjectName.getLineCount() == 1) {
+                subjectName.setMaxLines(3);
+            } else {
+                subjectName.setMaxLines(1);
+            }
+        }
+
         private boolean isSubItemsReadAndSaveAlertView(List<GradesSubItem> subItems) {
             boolean isRead = true;
 
