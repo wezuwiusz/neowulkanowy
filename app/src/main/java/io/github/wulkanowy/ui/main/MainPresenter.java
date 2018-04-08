@@ -17,10 +17,21 @@ public class MainPresenter extends BasePresenter<MainContract.View>
     }
 
     @Override
-    public void onStart(MainContract.View view) {
+    public void onStart(MainContract.View view, int tabPositionIntent) {
         super.onStart(view);
         getView().showProgressBar(true);
         getView().hideActionBar();
+
+        int tabPosition;
+
+        if (tabPositionIntent != -1) {
+            tabPosition = tabPositionIntent;
+        } else {
+            tabPosition = getRepository().getStartupTab();
+        }
+
+        getView().initiationBottomNav(tabPosition);
+        getView().initiationViewPager(tabPosition);
     }
 
     @Override
@@ -32,11 +43,11 @@ public class MainPresenter extends BasePresenter<MainContract.View>
 
     @Override
     public void onFragmentIsReady() {
-        if (fragmentCount < 5) {
+        if (fragmentCount < 4) {
             fragmentCount++;
         }
 
-        if (fragmentCount == 5) {
+        if (fragmentCount == 4) {
             getView().showActionBar();
             getView().showProgressBar(false);
         }

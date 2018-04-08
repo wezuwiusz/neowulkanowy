@@ -14,6 +14,7 @@ import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.SimpleJobService;
 import com.firebase.jobdispatcher.Trigger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,30 +28,32 @@ import io.github.wulkanowy.utils.LogUtils;
 
 public class SyncJob extends SimpleJobService {
 
-    private static final int DEFAULT_INTERVAL_START = 60 * 50;
-
-    private static final int DEFAULT_INTERVAL_END = DEFAULT_INTERVAL_START + (60 * 40);
-
     public static final String EXTRA_INTENT_KEY = "cardId";
 
-    private List<Grade> gradeList;
+    public static final String JOB_TAG = "SyncJob";
+
+    private List<Grade> gradeList = new ArrayList<>();
 
     @Inject
     RepositoryContract repository;
 
-    public static void start(Context context) {
+    public static void start(Context context, int interval, boolean useOnlyWifi) {
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
 
         dispatcher.mustSchedule(dispatcher.newJobBuilder()
                 .setLifetime(Lifetime.FOREVER)
                 .setService(SyncJob.class)
-                .setTag("SyncJob")
+                .setTag(JOB_TAG)
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow(DEFAULT_INTERVAL_START, DEFAULT_INTERVAL_END))
-                .setConstraints(Constraint.ON_ANY_NETWORK)
+                .setTrigger(Trigger.executionWindow(interval * 60, (interval + 10) * 60))
+                .setConstraints(useOnlyWifi ? Constraint.ON_UNMETERED_NETWORK : Constraint.ON_ANY_NETWORK)
                 .setReplaceCurrent(false)
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .build());
+    }
+
+    public static void stop(Context context) {
+        new FirebaseJobDispatcher(new GooglePlayDriver(context)).cancel(JOB_TAG);
     }
 
     @Override
@@ -67,7 +70,7 @@ public class SyncJob extends SimpleJobService {
 
             gradeList = repository.getNewGrades();
 
-            if (!gradeList.isEmpty()) {
+            if (!gradeList.isEmpty() && repository.isNotifyEnable()) {
                 showNotification();
             }
             return JobService.RESULT_SUCCESS;

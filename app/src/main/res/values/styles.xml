@@ -13,6 +13,7 @@
         <item name="titleTextColor">@android:color/primary_text_dark</item>
         <item name="subtitleTextColor">@android:color/primary_text_dark</item>
         <item name="android:colorBackground">@android:color/white</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="WulkanowyTheme.SplashTheme" parent="WulkanowyTheme">

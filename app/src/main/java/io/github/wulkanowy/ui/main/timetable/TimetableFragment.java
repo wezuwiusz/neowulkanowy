@@ -80,7 +80,7 @@ public class TimetableFragment extends BaseFragment implements TimetableContract
 
     @Override
     public void setActivityTitle() {
-        setTitle(getString(R.string.lessonplan_text));
+        setTitle(getString(R.string.timetable_text));
     }
 
     @Override

@@ -69,6 +69,31 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
+    public int getStartupTab() {
+        return sharedPref.getStartupTab();
+    }
+
+    @Override
+    public int getServicesInterval() {
+        return sharedPref.getServicesInterval();
+    }
+
+    @Override
+    public boolean isServicesEnable() {
+        return sharedPref.isServicesEnable();
+    }
+
+    @Override
+    public boolean isNotifyEnable() {
+        return sharedPref.isNotifyEnable();
+    }
+
+    @Override
+    public boolean isMobileDisable() {
+        return sharedPref.isMobileDisable();
+    }
+
+    @Override
     public String[] getSymbolsKeysArray() {
         return resources.getSymbolsKeysArray();
     }

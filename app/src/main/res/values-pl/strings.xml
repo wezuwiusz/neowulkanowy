@@ -33,7 +33,7 @@
     <string name="dashboard_text">Dashboard</string>
     <string name="grades_text">Oceny</string>
     <string name="attendance_text">Frekwencja</string>
-    <string name="lessonplan_text">Plan lekcji</string>
+    <string name="timetable_text">Plan lekcji</string>
     <string name="settings_text">Ustawienia</string>
     <string name="activity_under_construction">Ta część aplikacji jest w budowie</string>
     <string name="fragment_no_grades">Brak ocen</string>
@@ -113,4 +113,13 @@
         <item quantity="few">%1$d nieobecności</item>
         <item quantity="many">%1$d nieobecności</item>
     </plurals>
+
+    <string name="pref_view">Widok</string>
+    <string name="pref_tab_list">Domyślny widok</string>
+    <string name="pref_notify">Powiadomienia</string>
+    <string name="pref_notify_switch">Pokazuj powiadomienia</string>
+    <string name="pref_services">Usługi</string>
+    <string name="pref_services_switch">Włącz odświeżanie danych w tle</string>
+    <string name="pref_services_interval">Interwał między odświeżaniem danych</string>
+    <string name="pref_services_mobile_data">Synchronizacja tylko przez WiFi</string>
 </resources>

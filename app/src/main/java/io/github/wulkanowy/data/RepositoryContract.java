@@ -21,6 +21,16 @@ public interface RepositoryContract extends ResourcesContract, AccountSyncContra
 
     long getCurrentUserId();
 
+    int getStartupTab();
+
+    boolean isServicesEnable();
+
+    boolean isNotifyEnable();
+
+    int getServicesInterval();
+
+    boolean isMobileDisable();
+
     void syncGrades() throws VulcanException, IOException, ParseException;
 
     void syncSubjects() throws VulcanException, IOException, ParseException;

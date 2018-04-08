@@ -14,10 +14,16 @@ public interface MainContract {
         void showActionBar();
 
         void hideActionBar();
+
+        void initiationViewPager(int tabPosition);
+
+        void initiationBottomNav(int tabPosition);
     }
 
     @PerActivity
     interface Presenter extends BaseContract.Presenter<View> {
+
+        void onStart(View view, int tabPositionIntent);
 
         void onTabSelected(int position, boolean wasSelected);
 

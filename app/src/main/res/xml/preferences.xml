@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_view">
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/startup_tab_entries"
+            android:entryValues="@array/startup_tab_value"
+            android:key="startup_tab"
+            android:summary="%s"
+            android:title="@string/pref_tab_list" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_services">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="services_enable"
+            android:title="@string/pref_services_switch" />
+        <ListPreference
+            android:defaultValue="60"
+            android:dependency="services_enable"
+            android:entries="@array/services_interval_entries"
+            android:entryValues="@array/services_interval_value"
+            android:key="services_interval"
+            android:summary="%s"
+            android:title="@string/pref_services_interval" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="services_disable_mobile"
+            android:title="@string/pref_services_mobile_data"
+            android:dependency="services_enable" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_notify">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="services_enable"
+            android:key="notify_enable"
+            android:title="@string/pref_notify_switch" />
+    </PreferenceCategory>
+</PreferenceScreen>

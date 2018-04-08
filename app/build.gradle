@@ -72,6 +72,7 @@ dependencies {
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:cardview-v7:$supportVersion"
     implementation "com.android.support:customtabs:$supportVersion"
+    implementation "com.android.support:preference-v14:$supportVersion"
     implementation "com.firebase:firebase-jobdispatcher:$firebaseJob"
     implementation "org.apache.commons:commons-lang3:$apacheLang"
     implementation "org.apache.commons:commons-collections4:$apacheCollections"
