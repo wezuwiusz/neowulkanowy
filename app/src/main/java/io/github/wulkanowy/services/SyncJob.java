@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
+import com.crashlytics.android.Crashlytics;
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
@@ -75,6 +76,7 @@ public class SyncJob extends SimpleJobService {
             }
             return JobService.RESULT_SUCCESS;
         } catch (Exception e) {
+            Crashlytics.logException(e);
             LogUtils.error("During background synchronization an error occurred", e);
             return JobService.RESULT_FAIL_RETRY;
         }

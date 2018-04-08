@@ -3,6 +3,8 @@ package io.github.wulkanowy.data.db.resources;
 import android.content.Context;
 import android.content.res.Resources;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -41,6 +43,7 @@ public class AppResources implements ResourcesContract {
     @Override
     public String getErrorLoginMessage(Exception exception) {
         LogUtils.error(AppConstant.APP_NAME + " encountered a error", exception);
+        Crashlytics.logException(exception);
 
         if (exception instanceof CryptoException) {
             return resources.getString(R.string.encrypt_failed_text);
@@ -64,23 +67,23 @@ public class AppResources implements ResourcesContract {
         }
 
         if (lesson.getIsAbsenceExcused()) {
-            id =  R.string.attendance_absence_excused;
+            id = R.string.attendance_absence_excused;
         }
 
         if (lesson.getIsAbsenceUnexcused()) {
-            id =  R.string.attendance_absence_unexcused;
+            id = R.string.attendance_absence_unexcused;
         }
 
         if (lesson.getIsExemption()) {
-            id =  R.string.attendance_exemption;
+            id = R.string.attendance_exemption;
         }
 
         if (lesson.getIsExcusedLateness()) {
-            id =  R.string.attendance_excused_lateness;
+            id = R.string.attendance_excused_lateness;
         }
 
         if (lesson.getIsUnexcusedLateness()) {
-            id =  R.string.attendance_unexcused_lateness;
+            id = R.string.attendance_unexcused_lateness;
         }
 
         return resources.getString(id);
