@@ -3,8 +3,6 @@ package io.github.wulkanowy.data.sync.account;
 import android.content.Context;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;

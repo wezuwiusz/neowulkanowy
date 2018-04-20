@@ -2,9 +2,6 @@ package io.github.wulkanowy.data.db.dao.entities;
 
 import org.greenrobot.greendao.test.AbstractDaoTestLongPk;
 
-import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
-import io.github.wulkanowy.data.db.dao.entities.AttendanceLessonDao;
-
 public class AttendanceLessonTest extends AbstractDaoTestLongPk<AttendanceLessonDao, AttendanceLesson> {
 
     public AttendanceLessonTest() {

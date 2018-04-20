@@ -16,7 +16,6 @@ import javax.inject.Singleton;
 
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.data.db.dao.entities.DaoMaster;
-import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.migrations.Migration23;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.di.annotations.ApplicationContext;
