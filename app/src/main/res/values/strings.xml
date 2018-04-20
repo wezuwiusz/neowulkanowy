@@ -58,7 +58,7 @@
     <string name="timetable_dialog_time">Times</string>
     <string name="timetable_dialog_description">Changes</string>
 
-    <string name="timetable_refresh_success">Successful synchronisation</string>
+    <string name="sync_completed">Synchronization completed</string>
 
     <string name="generic_dialog_details">Details</string>
     <string name="generic_dialog_close">Close</string>

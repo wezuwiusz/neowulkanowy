@@ -112,7 +112,7 @@ public class AttendanceTabFragment extends BaseFragment implements AttendanceTab
 
     @Override
     public void onRefreshSuccess() {
-        onError(R.string.timetable_refresh_success);
+        onError(R.string.sync_completed);
     }
 
     @Override
