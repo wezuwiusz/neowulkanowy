@@ -18,16 +18,22 @@ import io.github.wulkanowy.api.user.FamilyInformation;
 
 public class Vulcan {
 
-    private String id;
-
     private SnP snp;
 
     private Client client;
 
-    public void setCredentials(String email, String password, String symbol, String id) {
-        client = new Client(email, password, symbol);
+    private String schoolId;
 
-        this.id = id;
+    private String studentId;
+
+    private String diaryId;
+
+    public void setCredentials(String email, String password, String symbol, String schoolId, String studentId, String diaryId) {
+        this.schoolId = schoolId;
+        this.studentId = studentId;
+        this.diaryId = diaryId;
+
+        client = new Client(email, password, symbol);
     }
 
     public Client getClient() throws NotLoggedInErrorException {
@@ -43,18 +49,15 @@ public class Vulcan {
 
     }
 
-    public SnP getStudentAndParent() throws IOException, VulcanException {
+    public SnP getStudentAndParent() throws VulcanException, IOException {
         if (null != this.snp) {
             return this.snp;
         }
 
-        this.snp = new StudentAndParent(getClient(), id).storeContextCookies();
+        this.snp = new StudentAndParent(getClient(), schoolId, studentId, diaryId)
+                .setUp();
 
         return this.snp;
-    }
-
-    public String getId() throws IOException, VulcanException {
-        return getStudentAndParent().getId();
     }
 
     public AttendanceTable getAttendanceTable() throws IOException, VulcanException {

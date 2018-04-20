@@ -1,12 +1,9 @@
 package io.github.wulkanowy.api;
 
-import org.hamcrest.CoreMatchers;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Assert;
 import org.junit.Test;
-
-import io.github.wulkanowy.api.login.Login;
 
 public class ClientTest {
 
@@ -47,20 +44,6 @@ public class ClientTest {
         Document doc = Jsoup.parse(getFixtureAsString("login/Logowanie-notLoggedIn.html"));
 
         client.checkForErrors(doc);
-    }
-
-    @Test
-    public void getClientTest() throws Exception {
-        Client client = new Client("", "", "");
-
-        Assert.assertThat(client.getLogin(), CoreMatchers.instanceOf(Login.class));
-    }
-
-    @Test
-    public void getClientTwiceTest() throws Exception {
-        Client client = new Client("", "", "");
-
-        Assert.assertEquals(client.getLogin(), client.getLogin());
     }
 
     @Test

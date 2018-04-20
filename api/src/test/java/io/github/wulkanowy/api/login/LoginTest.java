@@ -11,12 +11,16 @@ import io.github.wulkanowy.api.FixtureHelper;
 
 public class LoginTest {
 
+    private Document getFixtureAsDocument(String fixtureFileName) {
+        return Jsoup.parse(getFixtureAsString(fixtureFileName));
+    }
+
     private String getFixtureAsString(String fixtureFileName) {
         return FixtureHelper.getAsString(getClass().getResourceAsStream(fixtureFileName));
     }
 
     private Client getClient(String fixtureFileName) throws Exception {
-        Document doc = Jsoup.parse(getFixtureAsString(fixtureFileName));
+        Document doc = getFixtureAsDocument(fixtureFileName);
 
         Client client = Mockito.mock(Client.class);
         Mockito.when(client.postPageByUrl(Mockito.anyString(), Mockito.any(String[][].class))).thenReturn(doc);
@@ -26,25 +30,36 @@ public class LoginTest {
 
     @Test
     public void loginTest() throws Exception {
-        Login login = new Login(getClient("Logowanie-success.html"));
+        Client client = getClient("Logowanie-success.html");
+        Mockito.when(client.getPageByUrl(Mockito.anyString(), Mockito.anyBoolean()))
+                .thenReturn(getFixtureAsDocument("Logowanie-error.html"));
+        Login login = new Login(client);
 
         Assert.assertEquals("d123", login.login("a@a", "pswd", "d123"));
     }
 
     @Test(expected = BadCredentialsException.class)
     public void sendWrongCredentialsTest() throws Exception {
-        Login login = new Login(getClient("Logowanie-error.html"));
+        Client client = getClient("Logowanie-error.html");
+        Mockito.when(client.getPageByUrl(Mockito.anyString(), Mockito.anyBoolean()))
+                .thenReturn(getFixtureAsDocument("Logowanie-error.html")); // -error.html because it html with form used by
+        Login login = new Login(client);
 
-        login.sendCredentials("a@a", "pswd", "d123");
+        login.sendCredentials("a@a", "pswd");
     }
 
     @Test
     public void sendCredentialsCertificateTest() throws Exception {
-        Login login = new Login(getClient("Logowanie-certyfikat.html"));
+        Client client = getClient("Logowanie-certyfikat.html");
+        Mockito.when(client.getPageByUrl(Mockito.anyString(), Mockito.anyBoolean()))
+                .thenReturn(getFixtureAsDocument("Logowanie-error.html")); // -error.html because it html with form used by
+        Login login = new Login(client);
 
         Assert.assertEquals(
                 getFixtureAsString("cert.xml").replaceAll("\\s+",""),
-                login.sendCredentials("a@a", "passwd", "d123").replaceAll("\\s+","")
+                login.sendCredentials("a@a", "passwd")
+                        .select("input[name=wresult]").attr("value")
+                        .replaceAll("\\s+","")
         );
     }
 
@@ -53,7 +68,7 @@ public class LoginTest {
         Login login = new Login(getClient("Logowanie-success.html"));
 
         Assert.assertEquals("wulkanowyschool321",
-                login.sendCertificate("", "wulkanowyschool321"));
+                login.sendCertificate(new Document(""), "wulkanowyschool321"));
     }
 
     @Test
@@ -61,21 +76,21 @@ public class LoginTest {
         Login login = new Login(getClient("Logowanie-success.html"));
 
         Assert.assertEquals("demo12345",
-                login.sendCertificate(getFixtureAsString("cert.xml"), "Default"));
+                login.sendCertificate(getFixtureAsDocument("Logowanie-certyfikat.html"), "Default"));
     }
 
     @Test(expected = AccountPermissionException.class)
     public void sendCertificateAccountPermissionTest() throws Exception {
         Login login = new Login(getClient("Logowanie-brak-dostepu.html"));
 
-        login.sendCertificate(getFixtureAsString("cert.xml"), "demo123");
+        login.sendCertificate(getFixtureAsDocument("cert.xml"), "demo123");
     }
 
     @Test(expected = LoginErrorException.class)
     public void sendCertificateLoginErrorTest() throws Exception {
         Login login = new Login(getClient("Logowanie-certyfikat.html")); // change to other document
 
-        login.sendCertificate(getFixtureAsString("cert.xml"), "demo123");
+        login.sendCertificate(getFixtureAsDocument("cert.xml"), "demo123");
     }
 
     @Test

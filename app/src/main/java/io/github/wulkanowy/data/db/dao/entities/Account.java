@@ -4,6 +4,8 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.JoinProperty;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToMany;
 
@@ -18,20 +20,29 @@ public class Account {
     @Id(autoincrement = true)
     private Long id;
 
+    @Index(unique = true)
+    @Property(nameInDb = "REAL_ID")
+    private String realId;
+
+    @Property(nameInDb = "SYMBOL")
+    private String symbol;
+
+    @Property(nameInDb = "SCHOOL_ID")
+    private String schoolId;
+
     @Property(nameInDb = "NAME")
     private String name;
 
-    @Property(nameInDb = "E-MAIL")
+    @Property(nameInDb = "E_MAIL")
     private String email;
 
     @Property(nameInDb = "PASSWORD")
     private String password;
 
-    @Property(nameInDb = "SYMBOL")
-    private String symbol;
-
-    @Property(nameInDb = "SNPID")
-    private String snpId;
+    @ToMany(joinProperties = {
+            @JoinProperty(name = "realId", referencedName = "studentId")
+    })
+    private List<Diary> diaryList;
 
     @ToMany(referencedJoinProperty = "userId")
     private List<Subject> subjectList;
@@ -54,15 +65,16 @@ public class Account {
     @Generated(hash = 335469827)
     private transient AccountDao myDao;
 
-    @Generated(hash = 735765217)
-    public Account(Long id, String name, String email, String password, String symbol,
-                   String snpId) {
+    @Generated(hash = 727721142)
+    public Account(Long id, String realId, String symbol, String schoolId, String name,
+            String email, String password) {
         this.id = id;
+        this.realId = realId;
+        this.symbol = symbol;
+        this.schoolId = schoolId;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.symbol = symbol;
-        this.snpId = snpId;
     }
 
     @Generated(hash = 882125521)
@@ -75,6 +87,15 @@ public class Account {
 
     public Account setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getRealId() {
+        return realId;
+    }
+
+    public Account setRealId(String realId) {
+        this.realId = realId;
         return this;
     }
 
@@ -114,13 +135,81 @@ public class Account {
         return this;
     }
 
-    public String getSnpId() {
-        return this.snpId;
+    public String getSchoolId() {
+        return schoolId;
     }
 
-    public Account setSnpId(String snpId) {
-        this.snpId = snpId;
+    public Account setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
         return this;
+    }
+
+    public Account setDiaryList(List<Diary> diaryList) {
+        this.diaryList = diaryList;
+        return this;
+    }
+
+    public Account setSubjectList(List<Subject> subjectList) {
+        this.subjectList = subjectList;
+        return this;
+    }
+
+    public Account setGradeList(List<Grade> gradeList) {
+        this.gradeList = gradeList;
+        return this;
+    }
+
+    public Account setDayList(List<Day> dayList) {
+        this.dayList = dayList;
+        return this;
+    }
+
+    public DaoSession getDaoSession() {
+        return daoSession;
+    }
+
+    public Account setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        return this;
+    }
+
+    public AccountDao getMyDao() {
+        return myDao;
+    }
+
+    public Account setMyDao(AccountDao myDao) {
+        this.myDao = myDao;
+        return this;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1472214466)
+    public List<Diary> getDiaryList() {
+        if (diaryList == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            DiaryDao targetDao = daoSession.getDiaryDao();
+            List<Diary> diaryListNew = targetDao._queryAccount_DiaryList(realId);
+            synchronized (this) {
+                if (diaryList == null) {
+                    diaryList = diaryListNew;
+                }
+            }
+        }
+        return diaryList;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1078514341)
+    public synchronized void resetDiaryList() {
+        diaryList = null;
     }
 
     /**
@@ -184,6 +273,36 @@ public class Account {
     }
 
     /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 300459794)
+    public List<Day> getDayList() {
+        if (dayList == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            DayDao targetDao = daoSession.getDayDao();
+            List<Day> dayListNew = targetDao._queryAccount_DayList(id);
+            synchronized (this) {
+                if (dayList == null) {
+                    dayList = dayListNew;
+                }
+            }
+        }
+        return dayList;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1010399236)
+    public synchronized void resetDayList() {
+        dayList = null;
+    }
+
+    /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
      */
@@ -217,36 +336,6 @@ public class Account {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 300459794)
-    public List<Day> getDayList() {
-        if (dayList == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            DayDao targetDao = daoSession.getDayDao();
-            List<Day> dayListNew = targetDao._queryAccount_DayList(id);
-            synchronized (this) {
-                if (dayList == null) {
-                    dayList = dayListNew;
-                }
-            }
-        }
-        return dayList;
-    }
-
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 1010399236)
-    public synchronized void resetDayList() {
-        dayList = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */

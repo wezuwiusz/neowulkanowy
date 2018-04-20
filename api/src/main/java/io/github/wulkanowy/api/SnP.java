@@ -8,17 +8,25 @@ import java.util.List;
 
 public interface SnP {
 
-    String getId();
+    String getSchoolID();
 
-    StudentAndParent storeContextCookies() throws IOException, VulcanException;
+    void setDiaryID(String id);
+
+    String getStudentID();
+
+    List<Student> getStudents() throws IOException, VulcanException;
+
+    StudentAndParent setUp() throws IOException, VulcanException;
 
     String getRowDataChildValue(Element e, int index);
 
     Document getSnPPageDocument(String url) throws IOException, VulcanException;
 
+    List<Diary> getDiaries() throws IOException, VulcanException;
+
     List<Semester> getSemesters() throws IOException, VulcanException;
 
     List<Semester> getSemesters(Document gradesPage);
 
-    Semester getCurrentSemester(List<Semester> semesterList);
+    <T> T getCurrent(List<? extends ParamItem> list);
 }

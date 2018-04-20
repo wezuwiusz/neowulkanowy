@@ -16,7 +16,7 @@ public class VulcanTest {
     @Test
     public void getClientTest() throws Exception {
         Vulcan vulcan = new Vulcan();
-        vulcan.setCredentials("email", "password", "symbol", null);
+        vulcan.setCredentials("email", "password", "symbol", null, null, null);
 
         Assert.assertThat(vulcan.getClient(), CoreMatchers.instanceOf(Client.class));
     }
@@ -24,7 +24,7 @@ public class VulcanTest {
     @Test
     public void getClientTwiceTest() throws Exception {
         Vulcan vulcan = new Vulcan();
-        vulcan.setCredentials("email", "password", "symbol", null);
+        vulcan.setCredentials("email", "password", "symbol", null, null, null);
 
         Assert.assertEquals(vulcan.getClient(), vulcan.getClient());
     }

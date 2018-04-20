@@ -18,26 +18,19 @@ public class Login {
             "{schema}%253a%252f%252fuonetplus.{host}%252f{symbol}%252fLoginEndpoint.aspx%26wctx%3D" +
             "{schema}%253a%252f%252fuonetplus.{host}%252f{symbol}%252fLoginEndpoint.aspx";
 
-    private static final String LOGIN_ENDPOINT_PAGE_URL =
-            "{schema}://uonetplus.{host}/{symbol}/LoginEndpoint.aspx";
-
     private Client client;
-
-    private String symbol;
 
     public Login(Client client) {
         this.client = client;
     }
 
     public String login(String email, String password, String symbol) throws VulcanException, IOException {
-        String certificate = sendCredentials(email, password, symbol);
+        Document certDoc = sendCredentials(email, password);
 
-        return sendCertificate(certificate, symbol);
+        return sendCertificate(certDoc, symbol);
     }
 
-    String sendCredentials(String email, String password, String symbol) throws IOException, VulcanException {
-        this.symbol = symbol;
-
+    Document sendCredentials(String email, String password) throws IOException, VulcanException {
         Document html = client.postPageByUrl(LOGIN_PAGE_URL, new String[][]{
                 {"LoginName", email},
                 {"Password", password}
@@ -48,27 +41,37 @@ public class Login {
             throw new BadCredentialsException(errorMessage.text());
         }
 
-        return html.select("input[name=wresult]").attr("value");
+        return html;
     }
 
-    String sendCertificate(String certificate, String defaultSymbol) throws IOException, VulcanException {
-        this.symbol = findSymbol(defaultSymbol, certificate);
-        client.setSymbol(this.symbol);
+    String sendCertificate(Document doc, String defaultSymbol) throws IOException, VulcanException {
+        String certificate = doc.select("input[name=wresult]").val();
 
-        String title = client.postPageByUrl(LOGIN_ENDPOINT_PAGE_URL, new String[][]{
-                {"wa", "wsignin1.0"},
-                {"wresult", certificate}
-        }).select("title").text();
+        String symbol = findSymbol(defaultSymbol, certificate);
+        client.setSymbol(symbol);
+
+        Document targetDoc = sendCertData(doc);
+        String title = targetDoc.select("title").text();
 
         if ("Logowanie".equals(title)) {
             throw new AccountPermissionException("No account access. Try another symbol");
         }
 
         if (!"Uonet+".equals(title)) {
-            throw new LoginErrorException("Could not log in, unknown error");
+            throw new LoginErrorException("Expected page title `UONET+`, got " + title);
         }
 
-        return this.symbol;
+        return symbol;
+    }
+
+    private Document sendCertData(Document doc) throws IOException, VulcanException {
+        String url = doc.select("form[name=hiddenform]").attr("action");
+
+        return client.postPageByUrl(url.replaceFirst("Default", "{symbol}"), new String[][]{
+                {"wa", "wsignin1.0"},
+                {"wresult", doc.select("input[name=wresult]").val()},
+                {"wctx", doc.select("input[name=wctx]").val()}
+        });
     }
 
     private String findSymbol(String symbol, String certificate) {
@@ -80,14 +83,14 @@ public class Login {
     }
 
     String findSymbolInCertificate(String certificate) {
-        Elements els = Jsoup
+        Elements instances = Jsoup
                 .parse(certificate.replaceAll(":", ""), "", Parser.xmlParser())
                 .select("[AttributeName=\"UserInstance\"] samlAttributeValue");
 
-        if (els.isEmpty()) {
+        if (instances.isEmpty()) {
             return "";
         }
 
-        return els.get(1).text();
+        return instances.get(1).text();
     }
 }

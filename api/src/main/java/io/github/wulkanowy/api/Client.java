@@ -21,11 +21,9 @@ public class Client {
 
     private String password;
 
-    private String symbol = "Default";
+    private String symbol;
 
-    private Login login;
-
-    private Date lastSuccessRequest = new Date();
+    private Date lastSuccessRequest = null;
 
     private Cookies cookies = new Cookies();
 
@@ -56,23 +54,14 @@ public class Client {
             return;
         }
 
-        this.symbol = getLogin().login(email, password, symbol);
+        this.cookies = new Cookies();
+        this.symbol = new Login(this).login(email, password, symbol);
     }
 
     private boolean isLoggedIn() {
-        return getCookies().size() > 0 &&
+        return getCookies().size() > 0 && lastSuccessRequest != null &&
                 29 > TimeUnit.MILLISECONDS.toMinutes(new Date().getTime() - lastSuccessRequest.getTime());
 
-    }
-
-    Login getLogin() {
-        if (null != login) {
-            return login;
-        }
-
-        login = new Login(this);
-
-        return login;
     }
 
     public String getSymbol() {
@@ -81,6 +70,10 @@ public class Client {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public void addCookies(Map<String, String> items) {
+        cookies.addItems(items);
     }
 
     private Map<String, String> getCookies() {
@@ -98,8 +91,22 @@ public class Client {
                 .replace("{symbol}", symbol);
     }
 
-    Document getPageByUrl(String url) throws IOException, VulcanException {
-        login();
+    public Document getPageByUrl(String url) throws IOException, VulcanException {
+        return getPageByUrl(url, true, null);
+    }
+
+    public Document getPageByUrl(String url, boolean loginBefore) throws IOException, VulcanException {
+        return getPageByUrl(url, loginBefore, null);
+    }
+
+    public Document getPageByUrl(String url, boolean loginBefore, Map<String, String> cookies) throws IOException, VulcanException {
+        if (loginBefore) {
+            login();
+        }
+
+        if (null != cookies) {
+            this.cookies.addItems(cookies);
+        }
 
         Connection.Response response = Jsoup.connect(getFilledUrl(url))
                 .followRedirects(true)
@@ -110,7 +117,9 @@ public class Client {
 
         Document doc = checkForErrors(response.parse());
 
-        lastSuccessRequest = new Date();
+        if (loginBefore) {
+            lastSuccessRequest = new Date();
+        }
 
         return doc;
     }
@@ -169,6 +178,8 @@ public class Client {
     }
 
     Document checkForErrors(Document doc) throws VulcanException {
+        lastSuccessRequest = null;
+
         String title = doc.select("title").text();
         if ("Przerwa techniczna".equals(title)) {
             throw new VulcanOfflineException(title);
@@ -177,6 +188,10 @@ public class Client {
         String singIn = doc.select(".loginButton").text();
         if ("Zaloguj się".equals(singIn)) {
             throw new NotLoggedInErrorException(singIn);
+        }
+
+        if ("Błąd strony".equals(title)) {
+            throw new VulcanException("Nieznany błąd");
         }
 
         return doc;

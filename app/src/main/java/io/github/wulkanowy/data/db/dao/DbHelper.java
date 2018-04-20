@@ -3,19 +3,21 @@ package io.github.wulkanowy.data.db.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.github.yuweiguocn.library.greendao.MigrationHelper;
-
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.StandardDatabase;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.github.wulkanowy.BuildConfig;
-import io.github.wulkanowy.data.db.dao.entities.AccountDao;
+import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.data.db.dao.entities.DaoMaster;
-import io.github.wulkanowy.data.db.dao.entities.GradeDao;
-import io.github.wulkanowy.data.db.dao.entities.SubjectDao;
+import io.github.wulkanowy.data.db.dao.entities.DaoSession;
+import io.github.wulkanowy.data.db.dao.migrations.Migration23;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.di.annotations.ApplicationContext;
 import io.github.wulkanowy.di.annotations.DatabaseInfo;
@@ -24,29 +26,16 @@ import io.github.wulkanowy.utils.LogUtils;
 @Singleton
 public class DbHelper extends DaoMaster.OpenHelper {
 
-    private SharedPrefContract sharedPref;
+    private final SharedPrefContract sharedPref;
+
+    private final Vulcan vulcan;
 
     @Inject
     DbHelper(@ApplicationContext Context context, @DatabaseInfo String dbName,
-             SharedPrefContract sharedPref) {
+             SharedPrefContract sharedPref, Vulcan vulcan) {
         super(context, dbName);
         this.sharedPref = sharedPref;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void onUpgrade(Database db, int oldVersion, int newVersion) {
-        MigrationHelper.DEBUG = BuildConfig.DEBUG;
-        MigrationHelper.migrate(db, new MigrationHelper.ReCreateAllTableListener() {
-            @Override
-            public void onCreateAllTables(Database db, boolean ifNotExists) {
-                DaoMaster.createAllTables(db, ifNotExists);
-            }
-            @Override
-            public void onDropAllTables(Database db, boolean ifExists) {
-                DaoMaster.dropAllTables(db, ifExists);
-            }
-        }, AccountDao.class, SubjectDao.class, GradeDao.class);
+        this.vulcan = vulcan;
     }
 
     @Override
@@ -55,7 +44,49 @@ public class DbHelper extends DaoMaster.OpenHelper {
         DaoMaster.dropAllTables(database, true);
         onCreate(database);
         sharedPref.setCurrentUserId(0);
-
         LogUtils.info("Cleaning user data oldVersion=" + oldVersion + " newVersion=" + newVersion);
+    }
+
+    @Override
+    public void onUpgrade(Database db, int oldVersion, int newVersion) {
+        List<Migration> migrations = getMigrations();
+
+        // Only run migrations past the old version
+        for (Migration migration : migrations) {
+            if (oldVersion < migration.getVersion()) {
+                try {
+                    LogUtils.info("Applying migration to db schema v" + migration.getVersion() + "...");
+                    migration.runMigration(db, sharedPref, vulcan);
+                    LogUtils.info("Migration " + migration.getVersion() + " complete");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    DaoMaster.dropAllTables(db, true);
+                    sharedPref.setCurrentUserId(0);
+                    break;
+                }
+            }
+        }
+    }
+
+    private List<Migration> getMigrations() {
+        List<Migration> migrations = new ArrayList<>();
+        migrations.add(new Migration23());
+
+        // Sorting just to be safe, in case other people add migrations in the wrong order.
+        Comparator<Migration> migrationComparator = new Comparator<Migration>() {
+            @Override
+            public int compare(Migration m1, Migration m2) {
+                return m1.getVersion().compareTo(m2.getVersion());
+            }
+        };
+        Collections.sort(migrations, migrationComparator);
+
+        return migrations;
+    }
+
+    public interface Migration {
+        Integer getVersion();
+
+        void runMigration(Database db, SharedPrefContract sharedPref, Vulcan vulcan) throws Exception;
     }
 }

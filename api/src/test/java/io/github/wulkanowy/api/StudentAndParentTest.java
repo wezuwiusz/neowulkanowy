@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,18 +23,21 @@ public class StudentAndParentTest {
 
         client = Mockito.mock(Client.class);
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(gradesPageDocument);
+        Mockito.when(client.getPageByUrl(
+                Mockito.anyString(),
+                Mockito.anyBoolean(), Mockito.anyMap())).thenReturn(gradesPageDocument);
     }
 
     @Test
-    public void snpTest() throws Exception {
-        StudentAndParent snp = new StudentAndParent(client, "id123");
-        Assert.assertEquals("id123", snp.getId());
+    public void snpTest() {
+        StudentAndParent snp = new StudentAndParent(client, "id123", null, null);
+        Assert.assertEquals("id123", snp.getSchoolID());
     }
 
     @Test
     public void getSnpPageUrlWithIdTest() throws Exception {
         Assert.assertEquals("{schema}://uonetplus-opiekun.{host}/{symbol}/123456/",
-                (new StudentAndParent(client, "123456")).getSnpHomePageUrl());
+                (new StudentAndParent(client, "123456", null, null)).getSnpHomePageUrl());
     }
 
     @Test
@@ -43,7 +47,7 @@ public class StudentAndParentTest {
 
         Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(startPageDocument);
-        StudentAndParent snp = new StudentAndParent(client, null);
+        StudentAndParent snp = new StudentAndParent(client, null, null, null);
 
         Assert.assertEquals("https://uonetplus-opiekun.vulcan.net.pl/symbol/534213/Start/Index/",
                 snp.getSnpHomePageUrl());
@@ -56,7 +60,7 @@ public class StudentAndParentTest {
         );
 
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(wrongPageDocument);
-        StudentAndParent snp = new StudentAndParent(client, null);
+        StudentAndParent snp = new StudentAndParent(client, null, null, null);
 
         snp.getSnpHomePageUrl();
     }
@@ -64,7 +68,7 @@ public class StudentAndParentTest {
     @Test
     public void getExtractedIDStandardTest() throws Exception {
         Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
-        StudentAndParent snp = new StudentAndParent(client, "symbol");
+        StudentAndParent snp = new StudentAndParent(client, "symbol", null, null);
         Assert.assertEquals("123456", snp.getExtractedIdFromUrl("https://uonetplus-opiekun"
                 + ".vulcan.net.pl/powiat/123456/Start/Index/"));
     }
@@ -72,7 +76,7 @@ public class StudentAndParentTest {
     @Test
     public void getExtractedIDDemoTest() throws Exception {
         Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
-        StudentAndParent snp = new StudentAndParent(client, "symbol");
+        StudentAndParent snp = new StudentAndParent(client, "symbol", null, null);
         Assert.assertEquals("demo12345",
                 snp.getExtractedIdFromUrl("https://uonetplus-opiekun.vulcan.net.pl/demoupowiat/demo12345/Start/Index/"));
     }
@@ -80,44 +84,75 @@ public class StudentAndParentTest {
     @Test(expected = NotLoggedInErrorException.class)
     public void getExtractedIDNotLoggedTest() throws Exception {
         Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
-        StudentAndParent snp = new StudentAndParent(client, "symbol");
+        StudentAndParent snp = new StudentAndParent(client, "symbol", null, null);
         Assert.assertEquals("123",
                 snp.getExtractedIdFromUrl("https://uonetplus.vulcan.net.pl/powiat/"));
     }
 
     @Test
     public void getSemestersTest() throws Exception {
-        SnP snp = new StudentAndParent(client, "123456");
+        SnP snp = new StudentAndParent(client, "123456", null, null);
         List<Semester> semesters = snp.getSemesters();
 
         Assert.assertEquals(2, semesters.size());
 
         Assert.assertEquals("1", semesters.get(0).getId());
-        Assert.assertEquals("1234", semesters.get(0).getNumber());
+        Assert.assertEquals("1234", semesters.get(0).getName());
         Assert.assertFalse(semesters.get(0).isCurrent());
 
         Assert.assertEquals("2", semesters.get(1).getId());
-        Assert.assertEquals("1235", semesters.get(1).getNumber());
+        Assert.assertEquals("1235", semesters.get(1).getName());
         Assert.assertTrue(semesters.get(1).isCurrent());
     }
 
     @Test
-    public void getCurrentSemesterTest() throws Exception {
+    public void getCurrentSemesterTest() {
         List<Semester> semesters = new ArrayList<>();
-        semesters.add(new Semester().setNumber("1500100900").setId("1").setCurrent(false));
-        semesters.add(new Semester().setNumber("1500100901").setId("2").setCurrent(true));
+        semesters.add(new Semester().setName("1500100900").setId("1").setCurrent(false));
+        semesters.add(new Semester().setName("1500100901").setId("2").setCurrent(true));
 
-        SnP snp = new StudentAndParent(client, "");
-        Assert.assertTrue(snp.getCurrentSemester(semesters).isCurrent());
-        Assert.assertEquals("2", snp.getCurrentSemester(semesters).getId());
-        Assert.assertEquals("1500100901", snp.getCurrentSemester(semesters).getNumber());
+        SnP snp = new StudentAndParent(client, "", null, null);
+        Semester semester = snp.getCurrent(semesters);
+
+        Assert.assertTrue(semester.isCurrent());
+        Assert.assertEquals("2", semester.getId());
+        Assert.assertEquals("1500100901", semester.getName());
     }
 
     @Test
-    public void getCurrentSemesterFromEmptyTest() throws Exception {
-        SnP snp = new StudentAndParent(client, "");
+    public void getCurrentSemesterFromEmptyTest() {
+        SnP snp = new StudentAndParent(client, "", null, null);
         List<Semester> semesters = new ArrayList<>();
 
-        Assert.assertNull(snp.getCurrentSemester(semesters));
+        Assert.assertNull(snp.getCurrent(semesters));
+    }
+
+    @Test
+    public void getDiariesAndStudentTest() throws IOException, VulcanException {
+        Document snpHome = Jsoup.parse(FixtureHelper.getAsString(
+                getClass().getResourceAsStream("StudentAndParent.html")));
+
+        client = Mockito.mock(Client.class);
+        Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(snpHome);
+        SnP snp = new StudentAndParent(client, "", null, null);
+
+        snp.setUp();
+
+        Assert.assertEquals("3Ti 2017", snp.getDiaries().get(0).getName());
+        Assert.assertEquals("2Ti 2016", snp.getDiaries().get(1).getName());
+        Assert.assertEquals("1Ti 2015", snp.getDiaries().get(2).getName());
+
+        Assert.assertEquals("1300", snp.getDiaries().get(0).getId());
+        Assert.assertEquals("1200", snp.getDiaries().get(1).getId());
+        Assert.assertEquals("1100", snp.getDiaries().get(2).getId());
+
+        Assert.assertTrue(snp.getDiaries().get(0).isCurrent());
+        Assert.assertFalse(snp.getDiaries().get(1).isCurrent());
+        Assert.assertFalse(snp.getDiaries().get(2).isCurrent());
+
+        Assert.assertEquals("100", snp.getDiaries().get(0).getStudentId());
+
+        Assert.assertEquals("Jan Kowal", snp.getStudents().get(0).getName());
+        Assert.assertEquals("100", snp.getStudents().get(0).getStudentId());
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.data.db.dao.entities.Day;
+import io.github.wulkanowy.data.db.dao.entities.Diary;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
 import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
@@ -17,8 +18,22 @@ public final class DataObjectConverter {
         throw new IllegalStateException("Utility class");
     }
 
-    public static List<Subject> subjectsToSubjectEntities(List<io.github.wulkanowy.api.grades.Subject> subjectList) {
+    public static List<Diary> diariesToDiaryEntities(List<io.github.wulkanowy.api.Diary> diaryList) {
+        List<Diary> diaryEntityList = new ArrayList<>();
 
+        for (io.github.wulkanowy.api.Diary diary : diaryList) {
+            Diary diaryEntity = new Diary()
+                    .setValue(diary.getId())
+                    .setName(diary.getName())
+                    .setStudentId(diary.getStudentId())
+                    .setIsCurrent(diary.isCurrent());
+            diaryEntityList.add(diaryEntity);
+        }
+
+        return diaryEntityList;
+    }
+
+    public static List<Subject> subjectsToSubjectEntities(List<io.github.wulkanowy.api.grades.Subject> subjectList) {
         List<Subject> subjectEntityList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.grades.Subject subject : subjectList) {
@@ -33,7 +48,6 @@ public final class DataObjectConverter {
     }
 
     public static List<Grade> gradesToGradeEntities(List<io.github.wulkanowy.api.grades.Grade> gradeList) {
-
         List<Grade> gradeEntityList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.grades.Grade grade : gradeList) {
@@ -67,7 +81,6 @@ public final class DataObjectConverter {
 
 
     public static List<Day> daysToDaysEntities(List<io.github.wulkanowy.api.generic.Day> dayList) {
-
         List<Day> dayEntityList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.generic.Day day : dayList) {
@@ -110,7 +123,6 @@ public final class DataObjectConverter {
     }
 
     public static List<TimetableLesson> lessonsToTimetableLessonsEntities(List<io.github.wulkanowy.api.generic.Lesson> lessonList) {
-
         List<TimetableLesson> lessonEntityList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.generic.Lesson lesson : lessonList) {
@@ -120,7 +132,6 @@ public final class DataObjectConverter {
     }
 
     public static List<AttendanceLesson> lessonsToAttendanceLessonsEntities(List<io.github.wulkanowy.api.generic.Lesson> lessonList) {
-
         List<AttendanceLesson> lessonEntityList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.generic.Lesson lesson : lessonList) {

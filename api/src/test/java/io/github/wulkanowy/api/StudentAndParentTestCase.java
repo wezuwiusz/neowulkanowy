@@ -16,7 +16,7 @@ public abstract class StudentAndParentTestCase {
         Mockito.when(snp.getSnPPageDocument(Mockito.anyString()))
                 .thenReturn(tablePageDocument);
         Mockito.when(snp.getSemesters(Mockito.any(Document.class))).thenCallRealMethod();
-        Mockito.when(snp.getCurrentSemester(Mockito.<Semester>anyList()))
+        Mockito.when(snp.getCurrent(Mockito.<Semester>anyList()))
                 .thenCallRealMethod();
         Mockito.when(snp.getRowDataChildValue(Mockito.any(Element.class),
                 Mockito.anyInt())).thenCallRealMethod();
