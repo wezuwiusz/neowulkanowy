@@ -57,7 +57,7 @@ public class TimetableWidgetProvider extends AppWidgetProvider {
     private void setToggleIntent(RemoteViews views, Context context) {
         Intent refreshIntent = new Intent(context, TimetableWidgetProvider.class);
         refreshIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,
                 refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.timetable_widget_toggle, pendingIntent);
     }

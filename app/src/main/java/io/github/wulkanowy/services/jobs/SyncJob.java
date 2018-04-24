@@ -95,7 +95,7 @@ public class SyncJob extends SimpleJobService {
                 .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0,
                         MainActivity.getStartIntent(getApplicationContext())
                                 .putExtra(MainActivity.EXTRA_CARD_ID_KEY, 0)
-                        , 0
+                        , PendingIntent.FLAG_UPDATE_CURRENT
                 ))
                 .build());
     }
