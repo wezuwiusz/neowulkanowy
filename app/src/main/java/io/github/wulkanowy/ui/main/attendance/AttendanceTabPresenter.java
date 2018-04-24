@@ -94,7 +94,7 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
     public void onDoInBackgroundLoading() throws Exception {
         Week week = getRepository().getWeek(date);
 
-        if (week == null || !week.getIsAttendanceSynced()) {
+        if (week == null || !week.getAttendanceSynced()) {
             syncData();
             week = getRepository().getWeek(date);
         }

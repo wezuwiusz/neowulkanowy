@@ -96,12 +96,12 @@ public class StudentAndParentTest {
 
         Assert.assertEquals(2, semesters.size());
 
-        Assert.assertEquals("1", semesters.get(0).getId());
-        Assert.assertEquals("1234", semesters.get(0).getName());
+        Assert.assertEquals("1", semesters.get(0).getName());
+        Assert.assertEquals("1234", semesters.get(0).getId());
         Assert.assertFalse(semesters.get(0).isCurrent());
 
-        Assert.assertEquals("2", semesters.get(1).getId());
-        Assert.assertEquals("1235", semesters.get(1).getName());
+        Assert.assertEquals("2", semesters.get(1).getName());
+        Assert.assertEquals("1235", semesters.get(1).getId());
         Assert.assertTrue(semesters.get(1).isCurrent());
     }
 
@@ -150,9 +150,7 @@ public class StudentAndParentTest {
         Assert.assertFalse(snp.getDiaries().get(1).isCurrent());
         Assert.assertFalse(snp.getDiaries().get(2).isCurrent());
 
-        Assert.assertEquals("100", snp.getDiaries().get(0).getStudentId());
-
         Assert.assertEquals("Jan Kowal", snp.getStudents().get(0).getName());
-        Assert.assertEquals("100", snp.getStudents().get(0).getStudentId());
+        Assert.assertEquals("100", snp.getStudents().get(0).getId());
     }
 }

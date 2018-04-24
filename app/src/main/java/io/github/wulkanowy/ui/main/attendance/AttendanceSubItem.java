@@ -102,7 +102,7 @@ class AttendanceSubItem
             lessonName.setText(lesson.getSubject());
             lessonNumber.setText((String.valueOf(lesson.getNumber())));
             lessonDescription.setText(lesson.getDescription());
-            alert.setVisibility(lesson.getIsAbsenceUnexcused() || lesson.getIsUnexcusedLateness()
+            alert.setVisibility(lesson.getAbsenceUnexcused() || lesson.getUnexcusedLateness()
                     ? View.VISIBLE : View.INVISIBLE);
         }
 

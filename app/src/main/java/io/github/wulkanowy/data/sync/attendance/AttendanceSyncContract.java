@@ -7,7 +7,7 @@ import io.github.wulkanowy.api.VulcanException;
 
 public interface AttendanceSyncContract {
 
-    void syncAttendance(String date) throws IOException, ParseException, VulcanException;
+    void syncAttendance(long diaryId, String date) throws IOException, ParseException, VulcanException;
 
-    void syncAttendance() throws IOException, ParseException, VulcanException;
+    void syncAttendance(long diaryId) throws IOException, ParseException, VulcanException;
 }

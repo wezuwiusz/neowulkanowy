@@ -19,7 +19,7 @@ public class DataObjectConverterTest {
         List<Subject> subjectList = new ArrayList<>();
         subjectList.add(new Subject().setName("Matematyka"));
         List<io.github.wulkanowy.data.db.dao.entities.Subject> subjectEntitiesList =
-                DataObjectConverter.subjectsToSubjectEntities(subjectList);
+                DataObjectConverter.subjectsToSubjectEntities(subjectList, 1L);
 
         Assert.assertEquals("Matematyka", subjectEntitiesList.get(0).getName());
     }
@@ -27,7 +27,7 @@ public class DataObjectConverterTest {
     @Test
     public void subjectConversionEmptyTest() {
         Assert.assertEquals(new ArrayList<>(),
-                DataObjectConverter.subjectsToSubjectEntities(new ArrayList<Subject>()));
+                DataObjectConverter.subjectsToSubjectEntities(new ArrayList<Subject>(), 1L));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class DataObjectConverterTest {
         List<Grade> gradeList = new ArrayList<>();
         gradeList.add(new Grade().setDescription("Lorem ipsum"));
         List<io.github.wulkanowy.data.db.dao.entities.Grade> gradeEntitiesList =
-                DataObjectConverter.gradesToGradeEntities(gradeList);
+                DataObjectConverter.gradesToGradeEntities(gradeList, 1L);
 
         Assert.assertEquals("Lorem ipsum", gradeEntitiesList.get(0).getDescription());
     }
@@ -43,7 +43,7 @@ public class DataObjectConverterTest {
     @Test
     public void gradeConversionEmptyTest() {
         Assert.assertEquals(new ArrayList<>(),
-                DataObjectConverter.gradesToGradeEntities(new ArrayList<Grade>()));
+                DataObjectConverter.gradesToGradeEntities(new ArrayList<Grade>(), 1L));
     }
 
     @Test

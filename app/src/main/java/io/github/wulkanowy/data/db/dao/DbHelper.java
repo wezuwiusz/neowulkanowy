@@ -17,6 +17,7 @@ import javax.inject.Singleton;
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.data.db.dao.entities.DaoMaster;
 import io.github.wulkanowy.data.db.dao.migrations.Migration23;
+import io.github.wulkanowy.data.db.dao.migrations.Migration24;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.di.annotations.ApplicationContext;
 import io.github.wulkanowy.di.annotations.DatabaseInfo;
@@ -39,11 +40,9 @@ public class DbHelper extends DaoMaster.OpenHelper {
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Database database = new StandardDatabase(db);
-        DaoMaster.dropAllTables(database, true);
-        onCreate(database);
-        sharedPref.setCurrentUserId(0);
         LogUtils.info("Cleaning user data oldVersion=" + oldVersion + " newVersion=" + newVersion);
+        Database database = new StandardDatabase(db);
+        recreateDatabase(database);
     }
 
     @Override
@@ -59,17 +58,23 @@ public class DbHelper extends DaoMaster.OpenHelper {
                     LogUtils.info("Migration " + migration.getVersion() + " complete");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    DaoMaster.dropAllTables(db, true);
-                    sharedPref.setCurrentUserId(0);
+                    recreateDatabase(db);
                     break;
                 }
             }
         }
     }
 
+    private void recreateDatabase(Database db) {
+        sharedPref.setCurrentUserId(0);
+        DaoMaster.dropAllTables(db, true);
+        onCreate(db);
+    }
+
     private List<Migration> getMigrations() {
         List<Migration> migrations = new ArrayList<>();
         migrations.add(new Migration23());
+        migrations.add(new Migration24());
 
         // Sorting just to be safe, in case other people add migrations in the wrong order.
         Comparator<Migration> migrationComparator = new Comparator<Migration>() {

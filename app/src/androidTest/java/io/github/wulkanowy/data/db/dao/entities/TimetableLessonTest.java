@@ -12,12 +12,12 @@ public class TimetableLessonTest extends AbstractDaoTestLongPk<TimetableLessonDa
     protected TimetableLesson createEntity(Long key) {
         TimetableLesson entity = new TimetableLesson();
         entity.setId(key);
-        entity.setIsEmpty(false);
-        entity.setIsDivisionIntoGroups(false);
-        entity.setIsPlanning(false);
-        entity.setIsRealized(false);
-        entity.setIsMovedOrCanceled(false);
-        entity.setIsNewMovedInOrChanged(false);
+        entity.setEmpty(false);
+        entity.setDivisionIntoGroups(false);
+        entity.setPlanning(false);
+        entity.setRealized(false);
+        entity.setMovedOrCanceled(false);
+        entity.setNewMovedInOrChanged(false);
         return entity;
     }
 

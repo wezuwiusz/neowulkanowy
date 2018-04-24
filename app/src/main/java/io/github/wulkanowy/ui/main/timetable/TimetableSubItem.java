@@ -108,9 +108,9 @@ public class TimetableSubItem
             lessonTime.setText(getLessonTimeString());
             numberOfLesson.setText(lesson.getNumber());
             room.setText(getRoomString());
-            alert.setVisibility(lesson.getIsMovedOrCanceled() || lesson.getIsNewMovedInOrChanged()
+            alert.setVisibility(lesson.getMovedOrCanceled() || lesson.getNewMovedInOrChanged()
                     ? View.VISIBLE : View.INVISIBLE);
-            lessonName.setPaintFlags(lesson.getIsMovedOrCanceled() ? lessonName.getPaintFlags()
+            lessonName.setPaintFlags(lesson.getMovedOrCanceled() ? lessonName.getPaintFlags()
                     | Paint.STRIKE_THRU_TEXT_FLAG :
                     lessonName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             room.setText(getRoomString());

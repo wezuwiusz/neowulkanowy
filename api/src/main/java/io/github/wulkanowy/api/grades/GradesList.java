@@ -14,7 +14,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.github.wulkanowy.api.Semester;
 import io.github.wulkanowy.api.SnP;
 import io.github.wulkanowy.api.VulcanException;
 
@@ -42,24 +41,18 @@ public class GradesList {
         Document gradesPage = snp.getSnPPageDocument(getGradesPageUrl() + semester);
         Elements gradesRows = gradesPage.select(".ocenySzczegoly-table > tbody > tr");
 
-        if ("".equals(semester)) {
-            List<Semester> semesterList = snp.getSemesters(gradesPage);
-            Semester currentSemester = snp.getCurrent(semesterList);
-            semester = currentSemester.getName();
-        }
-
         for (Element row : gradesRows) {
             if ("Brak ocen".equals(row.select("td:nth-child(2)").text())) {
                 continue;
             }
 
-            grades.add(getGrade(row, semester));
+            grades.add(getGrade(row));
         }
 
         return grades;
     }
 
-    private Grade getGrade(Element row, String semester) throws ParseException {
+    private Grade getGrade(Element row) throws ParseException {
         String descriptions = row.select("td:nth-child(3)").text();
 
         String symbol = descriptions.split(", ")[0];
@@ -75,8 +68,7 @@ public class GradesList {
                 .setDescription(description)
                 .setWeight(row.select("td:nth-child(4)").text())
                 .setDate(date)
-                .setTeacher(row.select("td:nth-child(6)").text())
-                .setSemester(semester);
+                .setTeacher(row.select("td:nth-child(6)").text());
     }
 
     private String getColor(String styleAttr) {

@@ -18,7 +18,6 @@ import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
 import io.github.wulkanowy.data.db.dao.entities.TimetableLessonDao;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.data.db.dao.entities.WeekDao;
-import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.utils.DataObjectConverter;
 import io.github.wulkanowy.utils.LogUtils;
 import io.github.wulkanowy.utils.TimeUtils;
@@ -28,27 +27,24 @@ public class TimetableSync implements TimetableSyncContract {
 
     private final DaoSession daoSession;
 
-    private final SharedPrefContract sharedPref;
-
     private final Vulcan vulcan;
 
-    private long userId;
+    private long diaryId;
 
     @Inject
-    TimetableSync(DaoSession daoSession, SharedPrefContract sharedPref, Vulcan vulcan) {
+    TimetableSync(DaoSession daoSession, Vulcan vulcan) {
         this.daoSession = daoSession;
-        this.sharedPref = sharedPref;
         this.vulcan = vulcan;
     }
 
     @Override
-    public void syncTimetable() throws IOException, ParseException, VulcanException {
-        syncTimetable(null);
+    public void syncTimetable(long diaryId) throws IOException, ParseException, VulcanException {
+        syncTimetable(diaryId, null);
     }
 
     @Override
-    public void syncTimetable(String date) throws IOException, ParseException, VulcanException {
-        this.userId = sharedPref.getCurrentUserId();
+    public void syncTimetable(long diaryId, String date) throws IOException, ParseException, VulcanException {
+        this.diaryId = diaryId;
 
         io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> weekApi = getWeekFromApi(getNormalizedDate(date));
         Week weekDb = getWeekFromDb(weekApi.getStartDayDate());
@@ -67,27 +63,27 @@ public class TimetableSync implements TimetableSyncContract {
     }
 
     private io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> getWeekFromApi(String date)
-            throws IOException, VulcanException, ParseException {
+            throws IOException, ParseException, VulcanException {
         return vulcan.getTimetable().getWeekTable(date);
     }
 
     private Week getWeekFromDb(String date) {
-        return daoSession.getWeekDao()
-                .queryBuilder()
-                .where(WeekDao.Properties.UserId.eq(userId), WeekDao.Properties.StartDayDate.eq(date))
-                .unique();
+        return daoSession.getWeekDao().queryBuilder().where(
+                WeekDao.Properties.DiaryId.eq(diaryId),
+                WeekDao.Properties.StartDayDate.eq(date)
+        ).unique();
     }
 
     private Long updateWeekInDb(Week dbEntity, io.github.wulkanowy.api.generic.Week fromApi) {
         if (dbEntity != null) {
-            dbEntity.setIsTimetableSynced(true);
+            dbEntity.setTimetableSynced(true);
             dbEntity.update();
 
             return dbEntity.getId();
         }
 
-        Week apiEntity = DataObjectConverter.weekToWeekEntity(fromApi).setUserId(userId);
-        apiEntity.setIsTimetableSynced(true);
+        Week apiEntity = DataObjectConverter.weekToWeekEntity(fromApi).setDiaryId(diaryId);
+        apiEntity.setTimetableSynced(true);
 
         return daoSession.getWeekDao().insert(apiEntity);
     }
@@ -97,7 +93,7 @@ public class TimetableSync implements TimetableSyncContract {
 
         for (io.github.wulkanowy.api.generic.Day dayFromApi : dayListFromApi) {
 
-            Day dbDayEntity = getDayFromDb(dayFromApi.getDate());
+            Day dbDayEntity = getDayFromDb(dayFromApi.getDate(), weekId);
 
             Day apiDayEntity = DataObjectConverter.dayToDayEntity(dayFromApi);
 
@@ -109,15 +105,14 @@ public class TimetableSync implements TimetableSyncContract {
         return updatedLessonList;
     }
 
-    private Day getDayFromDb(String date) {
-        return daoSession.getDayDao()
-                .queryBuilder()
-                .where(DayDao.Properties.UserId.eq(userId), DayDao.Properties.Date.eq(date))
-                .unique();
+    private Day getDayFromDb(String date, long weekId) {
+        return daoSession.getDayDao().queryBuilder().where(
+                DayDao.Properties.WeekId.eq(weekId),
+                DayDao.Properties.Date.eq(date)
+        ).unique();
     }
 
     private long updateDay(Day dayFromDb, Day apiDayEntity, long weekId) {
-        apiDayEntity.setUserId(userId);
         apiDayEntity.setWeekId(weekId);
 
         if (null != dayFromDb) {

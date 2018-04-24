@@ -18,8 +18,6 @@ public class Grade {
 
     private String teacher = "";
 
-    private String semester = "";
-
     public String getSubject() {
         return subject;
     }
@@ -96,16 +94,6 @@ public class Grade {
 
     public Grade setTeacher(String teacher) {
         this.teacher = teacher;
-
-        return this;
-    }
-
-    public String getSemester() {
-        return semester;
-    }
-
-    public Grade setSemester(String semester) {
-        this.semester = semester;
 
         return this;
     }

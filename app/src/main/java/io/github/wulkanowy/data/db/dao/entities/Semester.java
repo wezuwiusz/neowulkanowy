@@ -10,27 +10,30 @@ import org.greenrobot.greendao.annotation.ToMany;
 import java.util.List;
 
 @Entity(
-        nameInDb = "Subjects",
+        nameInDb = "Semesters",
         active = true
 )
-public class Subject {
+public class Semester {
 
     @Id(autoincrement = true)
     private Long id;
 
-    @Property(nameInDb = "semester_id")
-    private Long semesterId;
+    @Property(nameInDb = "diary_id")
+    private Long diaryId;
+
+    @Property(nameInDb = "current")
+    private boolean current;
 
     @Property(nameInDb = "name")
     private String name;
 
-    @Property(nameInDb = "predicted_rating")
-    private String predictedRating;
+    @Property(nameInDb = "value")
+    private String value;
 
-    @Property(nameInDb = "final_rating")
-    private String finalRating;
+    @ToMany(referencedJoinProperty = "semesterId")
+    private List<Subject> subjectList;
 
-    @ToMany(referencedJoinProperty = "subjectId")
+    @ToMany(referencedJoinProperty = "semesterId")
     private List<Grade> gradeList;
 
     /**
@@ -42,21 +45,20 @@ public class Subject {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1644932788)
-    private transient SubjectDao myDao;
+    @Generated(hash = 282930393)
+    private transient SemesterDao myDao;
 
-    @Generated(hash = 1817932538)
-    public Subject(Long id, Long semesterId, String name, String predictedRating,
-                   String finalRating) {
+    @Generated(hash = 1661077309)
+    public Semester(Long id, Long diaryId, boolean current, String name, String value) {
         this.id = id;
-        this.semesterId = semesterId;
+        this.diaryId = diaryId;
+        this.current = current;
         this.name = name;
-        this.predictedRating = predictedRating;
-        this.finalRating = finalRating;
+        this.value = value;
     }
 
-    @Generated(hash = 1617906264)
-    public Subject() {
+    @Generated(hash = 58335877)
+    public Semester() {
     }
 
     public Long getId() {
@@ -67,12 +69,12 @@ public class Subject {
         this.id = id;
     }
 
-    public Long getSemesterId() {
-        return this.semesterId;
+    public Long getDiaryId() {
+        return this.diaryId;
     }
 
-    public Subject setSemesterId(Long semesterId) {
-        this.semesterId = semesterId;
+    public Semester setDiaryId(Long diaryId) {
+        this.diaryId = diaryId;
         return this;
     }
 
@@ -80,27 +82,57 @@ public class Subject {
         return this.name;
     }
 
-    public Subject setName(String name) {
+    public Semester setName(String name) {
         this.name = name;
         return this;
     }
 
-    public String getPredictedRating() {
-        return this.predictedRating;
+    public String getValue() {
+        return this.value;
     }
 
-    public Subject setPredictedRating(String predictedRating) {
-        this.predictedRating = predictedRating;
+    public Semester setValue(String value) {
+        this.value = value;
         return this;
     }
 
-    public String getFinalRating() {
-        return this.finalRating;
+    public boolean getCurrent() {
+        return this.current;
     }
 
-    public Subject setFinalRating(String finalRating) {
-        this.finalRating = finalRating;
+    public Semester setCurrent(boolean current) {
+        this.current = current;
         return this;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 723353662)
+    public List<Subject> getSubjectList() {
+        if (subjectList == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            SubjectDao targetDao = daoSession.getSubjectDao();
+            List<Subject> subjectListNew = targetDao._querySemester_SubjectList(id);
+            synchronized (this) {
+                if (subjectList == null) {
+                    subjectList = subjectListNew;
+                }
+            }
+        }
+        return subjectList;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 594294258)
+    public synchronized void resetSubjectList() {
+        subjectList = null;
     }
 
     /**
@@ -143,7 +175,7 @@ public class Subject {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 1358847893)
+    @Generated(hash = 390330007)
     public List<Grade> getGradeList() {
         if (gradeList == null) {
             final DaoSession daoSession = this.daoSession;
@@ -151,7 +183,7 @@ public class Subject {
                 throw new DaoException("Entity is detached from DAO context");
             }
             GradeDao targetDao = daoSession.getGradeDao();
-            List<Grade> gradeListNew = targetDao._querySubject_GradeList(id);
+            List<Grade> gradeListNew = targetDao._querySemester_GradeList(id);
             synchronized (this) {
                 if (gradeList == null) {
                     gradeList = gradeListNew;
@@ -168,9 +200,9 @@ public class Subject {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 937984622)
+    @Generated(hash = 676204164)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getSubjectDao() : null;
+        myDao = daoSession != null ? daoSession.getSemesterDao() : null;
     }
 }

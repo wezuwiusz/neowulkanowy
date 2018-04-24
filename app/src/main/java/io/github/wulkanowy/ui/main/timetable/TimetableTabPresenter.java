@@ -97,7 +97,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
     public void onDoInBackgroundLoading() throws Exception {
         Week week = getRepository().getWeek(date);
 
-        if (week == null || !week.getIsTimetableSynced()) {
+        if (week == null || !week.getTimetableSynced()) {
             syncData();
             week = getRepository().getWeek(date);
         }
@@ -113,7 +113,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
             TimetableHeaderItem headerItem = new TimetableHeaderItem(day);
 
             if (isFreeWeek) {
-                isFreeWeek = day.getIsFreeDay();
+                isFreeWeek = day.getFreeDay();
             }
 
             List<TimetableLesson> lessonList = day.getTimetableLessons();

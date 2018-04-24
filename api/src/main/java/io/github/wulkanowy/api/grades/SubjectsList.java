@@ -13,16 +13,21 @@ import io.github.wulkanowy.api.VulcanException;
 
 public class SubjectsList {
 
-    private static final String SUBJECTS_PAGE_URL = "Oceny/Wszystkie?details=1";
+    private static final String SUBJECTS_PAGE_URL = "Oceny/Wszystkie?details=1&okres=";
 
-    private SnP snp = null;
+    private SnP snp;
 
     public SubjectsList(SnP snp) {
         this.snp = snp;
     }
 
+
     public List<Subject> getAll() throws IOException, VulcanException {
-        Document subjectPage = snp.getSnPPageDocument(SUBJECTS_PAGE_URL);
+        return getAll("");
+    }
+
+    public List<Subject> getAll(String semester) throws IOException, VulcanException {
+        Document subjectPage = snp.getSnPPageDocument(SUBJECTS_PAGE_URL + semester);
 
         Elements rows = subjectPage.select(".ocenyZwykle-table > tbody > tr");
 

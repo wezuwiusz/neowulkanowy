@@ -141,7 +141,7 @@ public class AttendanceHeaderItem
         private int countNotPresentHours(List<AttendanceSubItem> subItems) {
             int i = 0;
             for (AttendanceSubItem subItem : subItems) {
-                if (subItem.getLesson().getIsAbsenceUnexcused()) {
+                if (subItem.getLesson().getAbsenceUnexcused()) {
                     i++;
                 }
             }
@@ -150,8 +150,8 @@ public class AttendanceHeaderItem
 
         private boolean isSubItemsHasChanges(List<AttendanceSubItem> subItems) {
             for (AttendanceSubItem subItem : subItems) {
-                if (subItem.getLesson().getIsAbsenceUnexcused() || subItem.getLesson()
-                        .getIsUnexcusedLateness()) {
+                if (subItem.getLesson().getAbsenceUnexcused() || subItem.getLesson()
+                        .getUnexcusedLateness()) {
                     return true;
                 }
             }

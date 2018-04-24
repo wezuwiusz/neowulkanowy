@@ -12,7 +12,7 @@ public class DayTest extends AbstractDaoTestLongPk<DayDao, Day> {
     protected Day createEntity(Long key) {
         Day entity = new Day();
         entity.setId(key);
-        entity.setIsFreeDay(false);
+        entity.setFreeDay(false);
         return entity;
     }
 

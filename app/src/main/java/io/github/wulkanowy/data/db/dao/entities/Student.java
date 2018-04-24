@@ -6,28 +6,32 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToMany;
-import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.List;
 
 @Entity(
-        nameInDb = "Accounts",
+        nameInDb = "Students",
         active = true
 )
-public class Account {
+public class Student {
 
     @Id(autoincrement = true)
     private Long id;
 
-    @Unique
-    @Property(nameInDb = "email")
-    private String email;
+    @Property(nameInDb = "symbol_id")
+    private Long symbolId;
 
-    @Property(nameInDb = "password")
-    private String password;
+    @Property(nameInDb = "current")
+    private boolean current;
 
-    @ToMany(referencedJoinProperty = "userId")
-    private List<Symbol> symbolList;
+    @Property(nameInDb = "real_id")
+    private String realId;
+
+    @Property(nameInDb = "name")
+    private String name;
+
+    @ToMany(referencedJoinProperty = "studentId")
+    private List<Diary> diaryList;
 
     /**
      * Used to resolve relations
@@ -38,18 +42,20 @@ public class Account {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 335469827)
-    private transient AccountDao myDao;
+    @Generated(hash = 1943931642)
+    private transient StudentDao myDao;
 
-    @Generated(hash = 1104194311)
-    public Account(Long id, String email, String password) {
+    @Generated(hash = 1334215952)
+    public Student(Long id, Long symbolId, boolean current, String realId, String name) {
         this.id = id;
-        this.email = email;
-        this.password = password;
+        this.symbolId = symbolId;
+        this.current = current;
+        this.realId = realId;
+        this.name = name;
     }
 
-    @Generated(hash = 882125521)
-    public Account() {
+    @Generated(hash = 1556870573)
+    public Student() {
     }
 
     public Long getId() {
@@ -60,21 +66,39 @@ public class Account {
         this.id = id;
     }
 
-    public String getEmail() {
-        return this.email;
+    public Long getSymbolId() {
+        return this.symbolId;
     }
 
-    public Account setEmail(String email) {
-        this.email = email;
+    public Student setSymbolId(Long symbolId) {
+        this.symbolId = symbolId;
         return this;
     }
 
-    public String getPassword() {
-        return this.password;
+    public String getRealId() {
+        return this.realId;
     }
 
-    public Account setPassword(String password) {
-        this.password = password;
+    public Student setRealId(String realId) {
+        this.realId = realId;
+        return this;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Student setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public boolean getCurrent() {
+        return this.current;
+    }
+
+    public Student setCurrent(boolean current) {
+        this.current = current;
         return this;
     }
 
@@ -82,30 +106,30 @@ public class Account {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 822972496)
-    public List<Symbol> getSymbolList() {
-        if (symbolList == null) {
+    @Generated(hash = 508305571)
+    public List<Diary> getDiaryList() {
+        if (diaryList == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            SymbolDao targetDao = daoSession.getSymbolDao();
-            List<Symbol> symbolListNew = targetDao._queryAccount_SymbolList(id);
+            DiaryDao targetDao = daoSession.getDiaryDao();
+            List<Diary> diaryListNew = targetDao._queryStudent_DiaryList(id);
             synchronized (this) {
-                if (symbolList == null) {
-                    symbolList = symbolListNew;
+                if (diaryList == null) {
+                    diaryList = diaryListNew;
                 }
             }
         }
-        return symbolList;
+        return diaryList;
     }
 
     /**
      * Resets a to-many relationship, making the next get call to query for a fresh result.
      */
-    @Generated(hash = 1716801695)
-    public synchronized void resetSymbolList() {
-        symbolList = null;
+    @Generated(hash = 1078514341)
+    public synchronized void resetDiaryList() {
+        diaryList = null;
     }
 
     /**
@@ -145,9 +169,10 @@ public class Account {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1812283172)
+    @Generated(hash = 1701634981)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getAccountDao() : null;
+        myDao = daoSession != null ? daoSession.getStudentDao() : null;
     }
+
 }

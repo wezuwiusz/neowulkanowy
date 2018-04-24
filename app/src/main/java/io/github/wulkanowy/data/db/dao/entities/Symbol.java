@@ -6,28 +6,35 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToMany;
-import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.List;
 
 @Entity(
-        nameInDb = "Accounts",
+        nameInDb = "Symbols",
         active = true
 )
-public class Account {
+public class Symbol {
 
     @Id(autoincrement = true)
     private Long id;
 
-    @Unique
-    @Property(nameInDb = "email")
-    private String email;
+    @Property(nameInDb = "user_id")
+    private Long userId;
 
-    @Property(nameInDb = "password")
-    private String password;
+    @Property(nameInDb = "host")
+    private String host;
 
-    @ToMany(referencedJoinProperty = "userId")
-    private List<Symbol> symbolList;
+    @Property(nameInDb = "school_id")
+    private String schoolId;
+
+    @Property(nameInDb = "symbol")
+    private String symbol;
+
+    @Property(nameInDb = "type")
+    private String type;
+
+    @ToMany(referencedJoinProperty = "symbolId")
+    private List<Student> studentList;
 
     /**
      * Used to resolve relations
@@ -38,18 +45,22 @@ public class Account {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 335469827)
-    private transient AccountDao myDao;
+    @Generated(hash = 684907977)
+    private transient SymbolDao myDao;
 
-    @Generated(hash = 1104194311)
-    public Account(Long id, String email, String password) {
+    @Generated(hash = 242774339)
+    public Symbol(Long id, Long userId, String host, String schoolId, String symbol,
+                  String type) {
         this.id = id;
-        this.email = email;
-        this.password = password;
+        this.userId = userId;
+        this.host = host;
+        this.schoolId = schoolId;
+        this.symbol = symbol;
+        this.type = type;
     }
 
-    @Generated(hash = 882125521)
-    public Account() {
+    @Generated(hash = 460475327)
+    public Symbol() {
     }
 
     public Long getId() {
@@ -60,21 +71,48 @@ public class Account {
         this.id = id;
     }
 
-    public String getEmail() {
-        return this.email;
+    public Long getUserId() {
+        return this.userId;
     }
 
-    public Account setEmail(String email) {
-        this.email = email;
+    public Symbol setUserId(Long userId) {
+        this.userId = userId;
         return this;
     }
 
-    public String getPassword() {
-        return this.password;
+    public String getHost() {
+        return this.host;
     }
 
-    public Account setPassword(String password) {
-        this.password = password;
+    public Symbol setHost(String host) {
+        this.host = host;
+        return this;
+    }
+
+    public String getSchoolId() {
+        return this.schoolId;
+    }
+
+    public Symbol setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
+        return this;
+    }
+
+    public String getSymbol() {
+        return this.symbol;
+    }
+
+    public Symbol setSymbol(String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public Symbol setType(String type) {
+        this.type = type;
         return this;
     }
 
@@ -82,30 +120,30 @@ public class Account {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 822972496)
-    public List<Symbol> getSymbolList() {
-        if (symbolList == null) {
+    @Generated(hash = 604366458)
+    public List<Student> getStudentList() {
+        if (studentList == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            SymbolDao targetDao = daoSession.getSymbolDao();
-            List<Symbol> symbolListNew = targetDao._queryAccount_SymbolList(id);
+            StudentDao targetDao = daoSession.getStudentDao();
+            List<Student> studentListNew = targetDao._querySymbol_StudentList(id);
             synchronized (this) {
-                if (symbolList == null) {
-                    symbolList = symbolListNew;
+                if (studentList == null) {
+                    studentList = studentListNew;
                 }
             }
         }
-        return symbolList;
+        return studentList;
     }
 
     /**
      * Resets a to-many relationship, making the next get call to query for a fresh result.
      */
-    @Generated(hash = 1716801695)
-    public synchronized void resetSymbolList() {
-        symbolList = null;
+    @Generated(hash = 1628625923)
+    public synchronized void resetStudentList() {
+        studentList = null;
     }
 
     /**
@@ -145,9 +183,9 @@ public class Account {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1812283172)
+    @Generated(hash = 632145708)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getAccountDao() : null;
+        myDao = daoSession != null ? daoSession.getSymbolDao() : null;
     }
 }

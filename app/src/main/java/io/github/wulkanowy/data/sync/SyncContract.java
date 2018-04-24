@@ -7,5 +7,5 @@ import io.github.wulkanowy.api.VulcanException;
 
 public interface SyncContract {
 
-    void sync() throws VulcanException, IOException, ParseException;
+    void sync(long semesterId) throws VulcanException, IOException, ParseException;
 }

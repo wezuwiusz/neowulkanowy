@@ -5,7 +5,6 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
-import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToMany;
 
@@ -14,36 +13,32 @@ import java.util.List;
 @Entity(
         nameInDb = "Days",
         active = true,
-        indexes = {@Index(value = "userId,weekId,date", unique = true)}
+        indexes = {@Index(value = "weekId,date", unique = true)}
 )
 public class Day {
 
     @Id(autoincrement = true)
     private Long id;
 
-    @Property(nameInDb = "USER_ID")
-    private Long userId;
-
-    @Property(nameInDb = "WEEK_ID")
+    @Property(nameInDb = "week_id")
     private Long weekId;
 
-    @Property(nameInDb = "DATE")
+    @Property(nameInDb = "date")
     private String date = "";
 
-    @Property(nameInDb = "DAY_NAME")
+    @Property(nameInDb = "day_name")
     private String dayName = "";
 
-    @Property(nameInDb = "IS_FREE_DAY")
-    private boolean isFreeDay = false;
+    @Property(nameInDb = "free_day")
+    private boolean freeDay = false;
 
-    @Property(nameInDb = "FREE_DAY_NAME")
+    @Property(nameInDb = "free_day_name")
     private String freeDayName = "";
 
     @ToMany(referencedJoinProperty = "dayId")
     private List<TimetableLesson> timetableLessons;
 
     @ToMany(referencedJoinProperty = "dayId")
-    @OrderBy("number ASC")
     private List<AttendanceLesson> attendanceLessons;
 
     /**
@@ -58,15 +53,14 @@ public class Day {
     @Generated(hash = 312167767)
     private transient DayDao myDao;
 
-    @Generated(hash = 723729681)
-    public Day(Long id, Long userId, Long weekId, String date, String dayName,
-            boolean isFreeDay, String freeDayName) {
+    @Generated(hash = 523139020)
+    public Day(Long id, Long weekId, String date, String dayName, boolean freeDay,
+               String freeDayName) {
         this.id = id;
-        this.userId = userId;
         this.weekId = weekId;
         this.date = date;
         this.dayName = dayName;
-        this.isFreeDay = isFreeDay;
+        this.freeDay = freeDay;
         this.freeDayName = freeDayName;
     }
 
@@ -82,26 +76,16 @@ public class Day {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
     public Long getWeekId() {
-        return weekId;
+        return this.weekId;
     }
 
-    public Day setWeekId(Long weekId) {
+    public void setWeekId(Long weekId) {
         this.weekId = weekId;
-        return this;
-    }
-
-    public Day setUserId(Long userId) {
-        this.userId = userId;
-        return this;
     }
 
     public String getDate() {
-        return date;
+        return this.date;
     }
 
     public Day setDate(String date) {
@@ -110,7 +94,7 @@ public class Day {
     }
 
     public String getDayName() {
-        return dayName;
+        return this.dayName;
     }
 
     public Day setDayName(String dayName) {
@@ -118,17 +102,17 @@ public class Day {
         return this;
     }
 
-    public boolean getIsFreeDay() {
-        return this.isFreeDay;
+    public boolean getFreeDay() {
+        return this.freeDay;
     }
 
-    public Day setIsFreeDay(boolean isFreeDay) {
-        this.isFreeDay = isFreeDay;
+    public Day setFreeDay(boolean freeDay) {
+        this.freeDay = freeDay;
         return this;
     }
 
     public String getFreeDayName() {
-        return freeDayName;
+        return this.freeDayName;
     }
 
     public Day setFreeDayName(String freeDayName) {
@@ -159,7 +143,9 @@ public class Day {
         return timetableLessons;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1687683740)
     public synchronized void resetTimetableLessons() {
         timetableLessons = null;
@@ -188,7 +174,9 @@ public class Day {
         return attendanceLessons;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1343075564)
     public synchronized void resetAttendanceLessons() {
         attendanceLessons = null;

@@ -91,8 +91,8 @@ public class TimetableDialogFragment extends DialogFragment {
             teacherLabel.setVisibility(View.GONE);
         }
 
-        if (!lesson.getGroupName().isEmpty()) {
-            group.setText(lesson.getGroupName());
+        if (!lesson.getGroup().isEmpty()) {
+            group.setText(lesson.getGroup());
         } else {
             group.setVisibility(View.GONE);
             groupLabel.setVisibility(View.GONE);

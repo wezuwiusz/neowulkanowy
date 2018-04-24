@@ -100,7 +100,7 @@ public class Migration23 implements DbHelper.Migration {
     private void insertDiaries(Database db, List<Diary> list) {
         for (Diary diary : list) {
             db.execSQL("INSERT INTO Diaries(STUDENT_ID, NAME, VALUE, IS_CURRENT) VALUES(" +
-                    "\"" + diary.getStudentId() + "\"," +
+                    "\"" + diary.getId() + "\"," +
                     "\"" + diary.getName() + "\"," +
                     "\"" + diary.getId() + "\"," +
                     "\"" + (diary.isCurrent() ? "1" : "0") + "\"" +

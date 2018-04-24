@@ -17,15 +17,6 @@ public class Student implements ParamItem {
         return this;
     }
 
-    public String getStudentId() {
-        return getId();
-    }
-
-    @Override
-    public Student setStudentId(String studentId) {
-        return setId(studentId);
-    }
-
     public String getName() {
         return name;
     }

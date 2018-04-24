@@ -16,58 +16,58 @@ import java.io.Serializable;
 )
 public class TimetableLesson implements Serializable {
 
+    private static final long serialVersionUID = 42L;
+
     @Id(autoincrement = true)
     private Long id;
 
-    @Property(nameInDb = "DAY_ID")
+    @Property(nameInDb = "day_id")
     private Long dayId;
 
-    @Property(nameInDb = "NUMBER_OF_LESSON")
+    @Property(nameInDb = "number")
     private String number;
 
-    @Property(nameInDb = "SUBJECT_NAME")
+    @Property(nameInDb = "subject")
     private String subject = "";
 
-    @Property(nameInDb = "TEACHER")
+    @Property(nameInDb = "teacher")
     private String teacher = "";
 
-    @Property(nameInDb = "ROOM")
+    @Property(nameInDb = "room")
     private String room = "";
 
-    @Property(nameInDb = "DESCRIPTION")
+    @Property(nameInDb = "description")
     private String description = "";
 
-    @Property(nameInDb = "GROUP_NAME")
-    private String groupName = "";
+    @Property(nameInDb = "group")
+    private String group = "";
 
-    @Property(nameInDb = "START_TIME")
+    @Property(nameInDb = "start_time")
     private String startTime = "";
 
-    @Property(nameInDb = "END_TIME")
+    @Property(nameInDb = "end_time")
     private String endTime = "";
 
-    @Property(nameInDb = "DATE")
+    @Property(nameInDb = "date")
     private String date = "";
 
-    @Property(nameInDb = "IS_EMPTY")
-    private boolean isEmpty = false;
+    @Property(nameInDb = "empty")
+    private boolean empty = false;
 
-    @Property(nameInDb = "IS_DIVISION_INTO_GROUP")
-    private boolean isDivisionIntoGroups = false;
+    @Property(nameInDb = "division_into_groups")
+    private boolean divisionIntoGroups = false;
 
-    @Property(nameInDb = "IS_PLANNING")
-    private boolean isPlanning = false;
+    @Property(nameInDb = "planning")
+    private boolean planning = false;
 
-    @Property(nameInDb = "IS_REALIZED")
-    private boolean isRealized = false;
+    @Property(nameInDb = "realized")
+    private boolean realized = false;
 
-    @Property(nameInDb = "IS_MOVED_CANCELED")
-    private boolean isMovedOrCanceled = false;
+    @Property(nameInDb = "moved_canceled")
+    private boolean movedOrCanceled = false;
 
-    @Property(nameInDb = "IS_NEW_MOVED_IN_CANCELED")
-    private boolean isNewMovedInOrChanged = false;
-
-    private static final long serialVersionUID = 42L;
+    @Property(nameInDb = "new_moved_in_canceled")
+    private boolean newMovedInOrChanged = false;
 
     /**
      * Used to resolve relations
@@ -81,12 +81,12 @@ public class TimetableLesson implements Serializable {
     @Generated(hash = 1119360138)
     private transient TimetableLessonDao myDao;
 
-    @Generated(hash = 627457324)
+    @Generated(hash = 1955911128)
     public TimetableLesson(Long id, Long dayId, String number, String subject,
-                           String teacher, String room, String description, String groupName,
-                           String startTime, String endTime, String date, boolean isEmpty,
-                           boolean isDivisionIntoGroups, boolean isPlanning, boolean isRealized,
-                           boolean isMovedOrCanceled, boolean isNewMovedInOrChanged) {
+                           String teacher, String room, String description, String group,
+                           String startTime, String endTime, String date, boolean empty,
+                           boolean divisionIntoGroups, boolean planning, boolean realized,
+                           boolean movedOrCanceled, boolean newMovedInOrChanged) {
         this.id = id;
         this.dayId = dayId;
         this.number = number;
@@ -94,16 +94,16 @@ public class TimetableLesson implements Serializable {
         this.teacher = teacher;
         this.room = room;
         this.description = description;
-        this.groupName = groupName;
+        this.group = group;
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = date;
-        this.isEmpty = isEmpty;
-        this.isDivisionIntoGroups = isDivisionIntoGroups;
-        this.isPlanning = isPlanning;
-        this.isRealized = isRealized;
-        this.isMovedOrCanceled = isMovedOrCanceled;
-        this.isNewMovedInOrChanged = isNewMovedInOrChanged;
+        this.empty = empty;
+        this.divisionIntoGroups = divisionIntoGroups;
+        this.planning = planning;
+        this.realized = realized;
+        this.movedOrCanceled = movedOrCanceled;
+        this.newMovedInOrChanged = newMovedInOrChanged;
     }
 
     @Generated(hash = 1878030142)
@@ -122,8 +122,9 @@ public class TimetableLesson implements Serializable {
         return this.dayId;
     }
 
-    public void setDayId(Long dayId) {
+    public TimetableLesson setDayId(Long dayId) {
         this.dayId = dayId;
+        return this;
     }
 
     public String getNumber() {
@@ -171,12 +172,12 @@ public class TimetableLesson implements Serializable {
         return this;
     }
 
-    public String getGroupName() {
-        return this.groupName;
+    public String getGroup() {
+        return this.group;
     }
 
-    public TimetableLesson setGroupName(String groupName) {
-        this.groupName = groupName;
+    public TimetableLesson setGroup(String group) {
+        this.group = group;
         return this;
     }
 
@@ -207,57 +208,57 @@ public class TimetableLesson implements Serializable {
         return this;
     }
 
-    public boolean getIsEmpty() {
-        return this.isEmpty;
+    public boolean getEmpty() {
+        return this.empty;
     }
 
-    public TimetableLesson setEmpty(boolean isEmpty) {
-        this.isEmpty = isEmpty;
+    public TimetableLesson setEmpty(boolean empty) {
+        this.empty = empty;
         return this;
     }
 
-    public boolean getIsDivisionIntoGroups() {
-        return this.isDivisionIntoGroups;
+    public boolean getDivisionIntoGroups() {
+        return this.divisionIntoGroups;
     }
 
-    public TimetableLesson setDivisionIntoGroups(boolean isDivisionIntoGroups) {
-        this.isDivisionIntoGroups = isDivisionIntoGroups;
+    public TimetableLesson setDivisionIntoGroups(boolean divisionIntoGroups) {
+        this.divisionIntoGroups = divisionIntoGroups;
         return this;
     }
 
-    public boolean getIsPlanning() {
-        return this.isPlanning;
+    public boolean getPlanning() {
+        return this.planning;
     }
 
-    public TimetableLesson setPlanning(boolean isPlanning) {
-        this.isPlanning = isPlanning;
+    public TimetableLesson setPlanning(boolean planning) {
+        this.planning = planning;
         return this;
     }
 
-    public boolean getIsRealized() {
-        return this.isRealized;
+    public boolean getRealized() {
+        return this.realized;
     }
 
-    public TimetableLesson setRealized(boolean isRealized) {
-        this.isRealized = isRealized;
+    public TimetableLesson setRealized(boolean realized) {
+        this.realized = realized;
         return this;
     }
 
-    public boolean getIsMovedOrCanceled() {
-        return this.isMovedOrCanceled;
+    public boolean getMovedOrCanceled() {
+        return this.movedOrCanceled;
     }
 
-    public TimetableLesson setMovedOrCanceled(boolean isMovedOrCanceled) {
-        this.isMovedOrCanceled = isMovedOrCanceled;
+    public TimetableLesson setMovedOrCanceled(boolean movedOrCanceled) {
+        this.movedOrCanceled = movedOrCanceled;
         return this;
     }
 
-    public boolean getIsNewMovedInOrChanged() {
-        return this.isNewMovedInOrChanged;
+    public boolean getNewMovedInOrChanged() {
+        return this.newMovedInOrChanged;
     }
 
-    public TimetableLesson setNewMovedInOrChanged(boolean isNewMovedInOrChanged) {
-        this.isNewMovedInOrChanged = isNewMovedInOrChanged;
+    public TimetableLesson setNewMovedInOrChanged(boolean newMovedInOrChanged) {
+        this.newMovedInOrChanged = newMovedInOrChanged;
         return this;
     }
 
@@ -295,30 +296,6 @@ public class TimetableLesson implements Serializable {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    public void setIsEmpty(boolean isEmpty) {
-        this.isEmpty = isEmpty;
-    }
-
-    public void setIsDivisionIntoGroups(boolean isDivisionIntoGroups) {
-        this.isDivisionIntoGroups = isDivisionIntoGroups;
-    }
-
-    public void setIsPlanning(boolean isPlanning) {
-        this.isPlanning = isPlanning;
-    }
-
-    public void setIsRealized(boolean isRealized) {
-        this.isRealized = isRealized;
-    }
-
-    public void setIsMovedOrCanceled(boolean isMovedOrCanceled) {
-        this.isMovedOrCanceled = isMovedOrCanceled;
-    }
-
-    public void setIsNewMovedInOrChanged(boolean isNewMovedInOrChanged) {
-        this.isNewMovedInOrChanged = isNewMovedInOrChanged;
     }
 
     /** called by internal mechanisms, do not call yourself. */

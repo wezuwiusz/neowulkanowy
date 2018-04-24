@@ -4,8 +4,6 @@ public class Diary implements ParamItem {
 
     private String id = "";
 
-    private String studentId = "";
-
     private String name = "";
 
     private boolean current = false;
@@ -16,16 +14,6 @@ public class Diary implements ParamItem {
 
     public Diary setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    @Override
-    public Diary setStudentId(String studentId) {
-        this.studentId = studentId;
         return this;
     }
 

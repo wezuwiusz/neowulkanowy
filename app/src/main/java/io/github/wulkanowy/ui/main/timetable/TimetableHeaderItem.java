@@ -105,9 +105,9 @@ public class TimetableHeaderItem
             dayName.setText(StringUtils.capitalize(item.getDayName()));
             date.setText(item.getDate());
             alert.setVisibility(isSubItemNewMovedInOrChanged(subItems) ? View.VISIBLE : View.INVISIBLE);
-            freeName.setVisibility(item.getIsFreeDay() ? View.VISIBLE : View.INVISIBLE);
+            freeName.setVisibility(item.getFreeDay() ? View.VISIBLE : View.INVISIBLE);
             freeName.setText(item.getFreeDayName());
-            setInactiveHeader(item.getIsFreeDay());
+            setInactiveHeader(item.getFreeDay());
         }
 
         private void setInactiveHeader(boolean inactive) {
@@ -134,8 +134,8 @@ public class TimetableHeaderItem
             boolean isAlertActive = false;
 
             for (TimetableSubItem subItem : subItems) {
-                if (subItem.getLesson().getIsMovedOrCanceled() ||
-                        subItem.getLesson().getIsNewMovedInOrChanged()) {
+                if (subItem.getLesson().getMovedOrCanceled() ||
+                        subItem.getLesson().getNewMovedInOrChanged()) {
                     isAlertActive = true;
                 }
             }

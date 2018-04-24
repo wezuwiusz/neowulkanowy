@@ -11,8 +11,13 @@ import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.data.db.dao.entities.Account;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
+import io.github.wulkanowy.data.db.dao.entities.DiaryDao;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.db.dao.entities.GradeDao;
+import io.github.wulkanowy.data.db.dao.entities.SemesterDao;
+import io.github.wulkanowy.data.db.dao.entities.StudentDao;
+import io.github.wulkanowy.data.db.dao.entities.Subject;
+import io.github.wulkanowy.data.db.dao.entities.SymbolDao;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.data.db.dao.entities.WeekDao;
 import io.github.wulkanowy.data.db.resources.ResourcesContract;
@@ -136,32 +141,32 @@ public class Repository implements RepositoryContract {
 
     @Override
     public void syncGrades() throws VulcanException, IOException, ParseException {
-        gradeSync.sync();
+        gradeSync.sync(getCurrentSemesterId());
     }
 
     @Override
     public void syncSubjects() throws VulcanException, IOException, ParseException {
-        subjectSync.sync();
+        subjectSync.sync(getCurrentSemesterId());
     }
 
     @Override
     public void syncAttendance() throws ParseException, IOException, VulcanException {
-        attendanceSync.syncAttendance();
+        attendanceSync.syncAttendance(getCurrentDiaryId());
     }
 
     @Override
     public void syncAttendance(String date) throws ParseException, IOException, VulcanException {
-        attendanceSync.syncAttendance(date);
+        attendanceSync.syncAttendance(getCurrentDiaryId(), date);
     }
 
     @Override
     public void syncTimetable() throws VulcanException, IOException, ParseException {
-        timetableSync.syncTimetable();
+        timetableSync.syncTimetable(getCurrentDiaryId());
     }
 
     @Override
     public void syncTimetable(String date) throws VulcanException, IOException, ParseException {
-        timetableSync.syncTimetable(date);
+        timetableSync.syncTimetable(getCurrentDiaryId(), date);
     }
 
     @Override
@@ -179,16 +184,52 @@ public class Repository implements RepositoryContract {
 
     @Override
     public Week getWeek(String date) {
-        return daoSession.getWeekDao().queryBuilder()
-                .where(WeekDao.Properties.StartDayDate.eq(date),
-                        WeekDao.Properties.UserId.eq(getCurrentUserId()))
-                .unique();
+        return daoSession.getWeekDao().queryBuilder().where(
+                WeekDao.Properties.StartDayDate.eq(date),
+                WeekDao.Properties.DiaryId.eq(getCurrentDiaryId())
+        ).unique();
+    }
+
+    public List<Subject> getSubjectList() {
+        return daoSession.getSemesterDao().load(getCurrentSemesterId()).getSubjectList();
     }
 
     @Override
     public List<Grade> getNewGrades() {
-        return daoSession.getGradeDao().queryBuilder()
-                .where(GradeDao.Properties.IsNew.eq(1))
-                .list();
+        return daoSession.getGradeDao().queryBuilder().where(
+                GradeDao.Properties.IsNew.eq(1),
+                GradeDao.Properties.SemesterId.eq(getCurrentSemesterId())
+        ).list();
+    }
+
+    @Override
+    public long getCurrentSymbolId() {
+        return daoSession.getSymbolDao().queryBuilder().where(
+                SymbolDao.Properties.UserId.eq(getCurrentUserId())
+        ).unique().getId();
+    }
+
+    @Override
+    public long getCurrentStudentId() {
+        return daoSession.getStudentDao().queryBuilder().where(
+                StudentDao.Properties.SymbolId.eq(getCurrentSymbolId()),
+                StudentDao.Properties.Current.eq(true)
+        ).unique().getId();
+    }
+
+    @Override
+    public long getCurrentDiaryId() {
+        return daoSession.getDiaryDao().queryBuilder().where(
+                DiaryDao.Properties.StudentId.eq(getCurrentStudentId()),
+                DiaryDao.Properties.Current.eq(true)
+        ).unique().getId();
+    }
+
+    @Override
+    public long getCurrentSemesterId() {
+        return daoSession.getSemesterDao().queryBuilder().where(
+                SemesterDao.Properties.DiaryId.eq(getCurrentDiaryId()),
+                SemesterDao.Properties.Current.eq(true)
+        ).unique().getId();
     }
 }

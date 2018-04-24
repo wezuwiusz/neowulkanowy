@@ -7,7 +7,7 @@ import io.github.wulkanowy.api.VulcanException;
 
 public interface TimetableSyncContract {
 
-    void syncTimetable(String date) throws VulcanException, IOException, ParseException;
+    void syncTimetable(long diaryId, String date) throws VulcanException, IOException, ParseException;
 
-    void syncTimetable() throws VulcanException, IOException, ParseException;
+    void syncTimetable(long diaryId) throws VulcanException, IOException, ParseException;
 }

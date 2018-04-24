@@ -13,44 +13,48 @@ import java.util.List;
 @Entity(
         nameInDb = "Weeks",
         active = true,
-        indexes ={@Index(value = "userId,startDayDate", unique = true)}
+        indexes = {@Index(value = "diaryId,startDayDate", unique = true)}
 )
 public class Week {
 
     @Id(autoincrement = true)
     private Long id;
 
-    @Property(nameInDb = "USER_ID")
-    private Long userId;
+    @Property(nameInDb = "diary_id")
+    private Long diaryId;
 
-    @Property(nameInDb = "START_DATE")
+    @Property(nameInDb = "start_day_date")
     private String startDayDate = "";
 
-    @Property(nameInDb = "IS_ATTENDANCE_SYNCED")
-    private boolean isAttendanceSynced = false;
+    @Property(nameInDb = "attendance_synced")
+    private boolean attendanceSynced = false;
 
-    @Property(nameInDb = "IS_TIMETABLE_SYNCED")
-    private boolean isTimetableSynced = false;
+    @Property(nameInDb = "timetable_synced")
+    private boolean timetableSynced = false;
 
     @ToMany(referencedJoinProperty = "weekId")
     private List<Day> dayList;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1019310398)
     private transient WeekDao myDao;
 
-    @Generated(hash = 1745118398)
-    public Week(Long id, Long userId, String startDayDate, boolean isAttendanceSynced,
-            boolean isTimetableSynced) {
+    @Generated(hash = 1608180902)
+    public Week(Long id, Long diaryId, String startDayDate,
+                boolean attendanceSynced, boolean timetableSynced) {
         this.id = id;
-        this.userId = userId;
+        this.diaryId = diaryId;
         this.startDayDate = startDayDate;
-        this.isAttendanceSynced = isAttendanceSynced;
-        this.isTimetableSynced = isTimetableSynced;
+        this.attendanceSynced = attendanceSynced;
+        this.timetableSynced = timetableSynced;
     }
 
     @Generated(hash = 2135529658)
@@ -66,12 +70,12 @@ public class Week {
         return this;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getDiaryId() {
+        return diaryId;
     }
 
-    public Week setUserId(Long userId) {
-        this.userId = userId;
+    public Week setDiaryId(Long diaryId) {
+        this.diaryId = diaryId;
         return this;
     }
 
@@ -84,20 +88,22 @@ public class Week {
         return this;
     }
 
-    public boolean getIsAttendanceSynced() {
-        return this.isAttendanceSynced;
+    public boolean isAttendanceSynced() {
+        return attendanceSynced;
     }
 
-    public void setIsAttendanceSynced(boolean isAttendanceSynced) {
-        this.isAttendanceSynced = isAttendanceSynced;
+    public Week setAttendanceSynced(boolean attendanceSynced) {
+        this.attendanceSynced = attendanceSynced;
+        return this;
     }
 
-    public boolean getIsTimetableSynced() {
-        return this.isTimetableSynced;
+    public boolean isTimetableSynced() {
+        return timetableSynced;
     }
 
-    public void setIsTimetableSynced(boolean isTimetableSynced) {
-        this.isTimetableSynced = isTimetableSynced;
+    public Week setTimetableSynced(boolean timetableSynced) {
+        this.timetableSynced = timetableSynced;
+        return this;
     }
 
     /**
@@ -122,7 +128,9 @@ public class Week {
         return dayList;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 1010399236)
     public synchronized void resetDayList() {
         dayList = null;
@@ -162,6 +170,14 @@ public class Week {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public boolean getAttendanceSynced() {
+        return this.attendanceSynced;
+    }
+
+    public boolean getTimetableSynced() {
+        return this.timetableSynced;
     }
 
     /** called by internal mechanisms, do not call yourself. */

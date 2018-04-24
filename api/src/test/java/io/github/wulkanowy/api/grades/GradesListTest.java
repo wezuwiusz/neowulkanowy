@@ -101,14 +101,4 @@ public class GradesListTest extends StudentAndParentTestCase {
         Assert.assertEquals("Klaudia Dziedzic", list.get(4).getTeacher());
         Assert.assertEquals("Amelia Stępień", list.get(5).getTeacher());
     }
-
-    @Test
-    public void getSemesterTest() throws Exception {
-        List<Grade> list = filled.getAll();
-
-        Assert.assertEquals("7654321", list.get(0).getSemester());
-        Assert.assertEquals("7654321", list.get(3).getSemester());
-        Assert.assertEquals("7654321", list.get(4).getSemester());
-        Assert.assertEquals("7654321", list.get(5).getSemester());
-    }
 }

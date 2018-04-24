@@ -4,8 +4,6 @@ public class Semester implements ParamItem {
 
     private String id = "";
 
-    private String studentId = "";
-
     private String name = "";
 
     private boolean current = false;
@@ -16,16 +14,6 @@ public class Semester implements ParamItem {
 
     public Semester setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    @Override
-    public Semester setStudentId(String studentId) {
-        this.studentId = studentId;
         return this;
     }
 

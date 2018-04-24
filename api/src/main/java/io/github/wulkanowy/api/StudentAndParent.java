@@ -140,8 +140,8 @@ public class StudentAndParent implements SnP {
 
         for (Element e : semesterOptions) {
             Semester semester = new Semester()
-                    .setId(e.text())
-                    .setName(e.attr("value"));
+                    .setId(e.attr("value"))
+                    .setName(e.text());
 
             if (isCurrent(e)) {
                 semester.setCurrent(true);
@@ -166,9 +166,6 @@ public class StudentAndParent implements SnP {
 
                 if (isCurrent(e)) {
                     item.setCurrent(true);
-                }
-                if (item instanceof Diary) {
-                    item.setStudentId(getStudentID());
                 }
 
                 list.add((T) item);

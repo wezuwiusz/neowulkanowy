@@ -9,15 +9,13 @@ import javax.inject.Singleton;
 import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.data.db.dao.entities.Account;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.Subject;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.data.db.resources.ResourcesContract;
 import io.github.wulkanowy.data.sync.account.AccountSyncContract;
-import io.github.wulkanowy.data.sync.attendance.AttendanceSyncContract;
-import io.github.wulkanowy.data.sync.timetable.TimetableSyncContract;
 
 @Singleton
-public interface RepositoryContract extends ResourcesContract, AccountSyncContract,
-        AttendanceSyncContract, TimetableSyncContract {
+public interface RepositoryContract extends ResourcesContract, AccountSyncContract {
 
     long getCurrentUserId();
 
@@ -39,11 +37,29 @@ public interface RepositoryContract extends ResourcesContract, AccountSyncContra
 
     void syncSubjects() throws VulcanException, IOException, ParseException;
 
+    void syncAttendance() throws ParseException, IOException, VulcanException;
+
+    void syncAttendance(String date) throws ParseException, IOException, VulcanException;
+
+    void syncTimetable() throws VulcanException, IOException, ParseException;
+
+    void syncTimetable(String date) throws VulcanException, IOException, ParseException;
+
     void syncAll() throws VulcanException, IOException, ParseException;
 
     Account getCurrentUser();
 
     Week getWeek(String date);
 
+    List<Subject> getSubjectList();
+
     List<Grade> getNewGrades();
+
+    long getCurrentStudentId();
+
+    long getCurrentSymbolId();
+
+    long getCurrentDiaryId();
+
+    long getCurrentSemesterId();
 }

@@ -103,8 +103,8 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
     }
 
     @Override
-    public void onDoInBackgroundLoading() throws Exception {
-        List<Subject> subjectList = getRepository().getCurrentUser().getSubjectList();
+    public void onDoInBackgroundLoading() {
+        List<Subject> subjectList = getRepository().getSubjectList();
 
         headerItems = new ArrayList<>();
 

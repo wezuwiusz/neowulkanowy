@@ -5,6 +5,9 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.ToMany;
+
+import java.util.List;
 
 @Entity(
         nameInDb = "Diaries",
@@ -15,17 +18,20 @@ public class Diary {
     @Id(autoincrement = true)
     private Long id;
 
-    @Property(nameInDb = "STUDENT_ID")
-    private String studentId;
+    @Property(nameInDb = "student_id")
+    private Long studentId;
 
-    @Property(nameInDb = "NAME")
+    @Property(nameInDb = "current")
+    private boolean current;
+
+    @Property(nameInDb = "name")
     private String name;
 
-    @Property(nameInDb = "VALUE")
+    @Property(nameInDb = "value")
     private String value;
 
-    @Property(nameInDb = "IS_CURRENT")
-    private boolean isCurrent;
+    @ToMany(referencedJoinProperty = "diaryId")
+    private List<Semester> semesterList;
 
     /**
      * Used to resolve relations
@@ -39,14 +45,13 @@ public class Diary {
     @Generated(hash = 21166549)
     private transient DiaryDao myDao;
 
-    @Generated(hash = 459332202)
-    public Diary(Long id, String studentId, String name, String value,
-                 boolean isCurrent) {
+    @Generated(hash = 277096196)
+    public Diary(Long id, Long studentId, boolean current, String name, String value) {
         this.id = id;
         this.studentId = studentId;
+        this.current = current;
         this.name = name;
         this.value = value;
-        this.isCurrent = isCurrent;
     }
 
     @Generated(hash = 112123061)
@@ -54,25 +59,24 @@ public class Diary {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
-    public Diary setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public Long getStudentId() {
+        return this.studentId;
     }
 
-    public Diary setStudentId(String studentId) {
+    public Diary setStudentId(Long studentId) {
         this.studentId = studentId;
         return this;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Diary setName(String name) {
@@ -81,7 +85,7 @@ public class Diary {
     }
 
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     public Diary setValue(String value) {
@@ -89,31 +93,43 @@ public class Diary {
         return this;
     }
 
-    public boolean getIsCurrent() {
-        return isCurrent;
+    public boolean getCurrent() {
+        return this.current;
     }
 
-    public Diary setIsCurrent(boolean current) {
-        isCurrent = current;
+    public Diary setCurrent(boolean current) {
+        this.current = current;
         return this;
     }
 
-    public DaoSession getDaoSession() {
-        return daoSession;
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1738383053)
+    public List<Semester> getSemesterList() {
+        if (semesterList == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            SemesterDao targetDao = daoSession.getSemesterDao();
+            List<Semester> semesterListNew = targetDao._queryDiary_SemesterList(id);
+            synchronized (this) {
+                if (semesterList == null) {
+                    semesterList = semesterListNew;
+                }
+            }
+        }
+        return semesterList;
     }
 
-    public Diary setDaoSession(DaoSession daoSession) {
-        this.daoSession = daoSession;
-        return this;
-    }
-
-    public DiaryDao getMyDao() {
-        return myDao;
-    }
-
-    public Diary setMyDao(DiaryDao myDao) {
-        this.myDao = myDao;
-        return this;
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 995060657)
+    public synchronized void resetSemesterList() {
+        semesterList = null;
     }
 
     /**

@@ -21,71 +21,43 @@ public class Grade implements Serializable {
     @Id(autoincrement = true)
     protected Long id;
 
-    @Property(nameInDb = "SUBJECT_ID")
+    @Property(nameInDb = "semester_id")
+    private Long semesterId;
+
+    @Property(nameInDb = "subject_id")
     private Long subjectId;
 
-    @Property(nameInDb = "USER_ID")
-    private Long userId;
-
-    @Property(nameInDb = "SUBJECT")
+    @Property(nameInDb = "subject")
     private String subject = "";
 
-    @Property(nameInDb = "VALUE")
+    @Property(nameInDb = "value")
     protected String value = "";
 
-    @Property(nameInDb = "COLOR")
-    private String color = "";
-
-    @Property(nameInDb = "SYMBOL")
-    private String symbol = "";
-
-    @Property(nameInDb = "DESCRIPTION")
-    private String description = "";
-
-    @Property(nameInDb = "WEIGHT")
+    @Property(nameInDb = "weight")
     private String weight = "";
 
-    @Property(nameInDb = "DATE")
+    @Property(nameInDb = "date")
     private String date = "";
 
-    @Property(nameInDb = "TEACHER")
+    @Property(nameInDb = "symbol")
+    private String symbol = "";
+
+    @Property(nameInDb = "color")
+    private String color = "";
+
+    @Property(nameInDb = "description")
+    private String description = "";
+
+    @Property(nameInDb = "teacher")
     private String teacher = "";
 
-    @Property(nameInDb = "SEMESTER")
-    private String semester = "";
-
-    @Property(nameInDb = "IS_NEW")
+    @Property(nameInDb = "is_new")
     private boolean isNew = false;
 
-    @Property(nameInDb = "READ")
+    @Property(nameInDb = "read")
     private boolean read = true;
 
     private static final long serialVersionUID = 42L;
-
-    @Generated(hash = 568899968)
-    public Grade(Long id, Long subjectId, Long userId, String subject, String value,
-                 String color, String symbol, String description, String weight,
-                 String date, String teacher, String semester, boolean isNew,
-                 boolean read) {
-        this.id = id;
-        this.subjectId = subjectId;
-        this.userId = userId;
-        this.subject = subject;
-        this.value = value;
-        this.color = color;
-        this.symbol = symbol;
-        this.description = description;
-        this.weight = weight;
-        this.date = date;
-        this.teacher = teacher;
-        this.semester = semester;
-        this.isNew = isNew;
-        this.read = read;
-    }
-
-    @Generated(hash = 2042976393)
-    public Grade() {
-    }
 
     /**
      * Used to resolve relations
@@ -98,6 +70,29 @@ public class Grade implements Serializable {
      */
     @Generated(hash = 681281562)
     private transient GradeDao myDao;
+
+    @Generated(hash = 2042976393)
+    public Grade() {
+    }
+
+    @Generated(hash = 619853992)
+    public Grade(Long id, Long semesterId, Long subjectId, String subject, String value,
+                 String weight, String date, String symbol, String color, String description,
+                 String teacher, boolean isNew, boolean read) {
+        this.id = id;
+        this.semesterId = semesterId;
+        this.subjectId = subjectId;
+        this.subject = subject;
+        this.value = value;
+        this.weight = weight;
+        this.date = date;
+        this.symbol = symbol;
+        this.color = color;
+        this.description = description;
+        this.teacher = teacher;
+        this.isNew = isNew;
+        this.read = read;
+    }
 
     public int getValueColor() {
 
@@ -133,6 +128,7 @@ public class Grade implements Serializable {
         Grade grade = (Grade) o;
 
         return new EqualsBuilder()
+                .append(semesterId, grade.semesterId)
                 .append(subject, grade.subject)
                 .append(value, grade.value)
                 .append(color, grade.color)
@@ -141,13 +137,13 @@ public class Grade implements Serializable {
                 .append(weight, grade.weight)
                 .append(date, grade.date)
                 .append(teacher, grade.teacher)
-                .append(semester, grade.semester)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(semesterId)
                 .append(subject)
                 .append(value)
                 .append(color)
@@ -156,48 +152,19 @@ public class Grade implements Serializable {
                 .append(weight)
                 .append(date)
                 .append(teacher)
-                .append(semester)
                 .toHashCode();
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
-    public Grade setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
-    }
-
-    public Long getSubjectId() {
-        return subjectId;
-    }
-
-    public Grade setSubjectId(Long subjectId) {
-        this.subjectId = subjectId;
-        return this;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public Grade setUserId(Long userId) {
-        this.userId = userId;
-        return this;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public Grade setSubject(String subject) {
-        this.subject = subject;
-        return this;
     }
 
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     public Grade setValue(String value) {
@@ -205,8 +172,26 @@ public class Grade implements Serializable {
         return this;
     }
 
+    public Long getSemesterId() {
+        return this.semesterId;
+    }
+
+    public Grade setSemesterId(Long semesterId) {
+        this.semesterId = semesterId;
+        return this;
+    }
+
+    public String getSubject() {
+        return this.subject;
+    }
+
+    public Grade setSubject(String subject) {
+        this.subject = subject;
+        return this;
+    }
+
     public String getColor() {
-        return color;
+        return this.color;
     }
 
     public Grade setColor(String color) {
@@ -215,7 +200,7 @@ public class Grade implements Serializable {
     }
 
     public String getSymbol() {
-        return symbol;
+        return this.symbol;
     }
 
     public Grade setSymbol(String symbol) {
@@ -224,7 +209,7 @@ public class Grade implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public Grade setDescription(String description) {
@@ -233,7 +218,7 @@ public class Grade implements Serializable {
     }
 
     public String getWeight() {
-        return weight;
+        return this.weight;
     }
 
     public Grade setWeight(String weight) {
@@ -242,7 +227,7 @@ public class Grade implements Serializable {
     }
 
     public String getDate() {
-        return date;
+        return this.date;
     }
 
     public Grade setDate(String date) {
@@ -251,7 +236,7 @@ public class Grade implements Serializable {
     }
 
     public String getTeacher() {
-        return teacher;
+        return this.teacher;
     }
 
     public Grade setTeacher(String teacher) {
@@ -259,22 +244,12 @@ public class Grade implements Serializable {
         return this;
     }
 
-    public String getSemester() {
-        return semester;
-    }
-
-    public Grade setSemester(String semester) {
-        this.semester = semester;
-        return this;
-    }
-
     public boolean getIsNew() {
         return this.isNew;
     }
 
-    public Grade setIsNew(boolean isNew) {
+    public void setIsNew(boolean isNew) {
         this.isNew = isNew;
-        return this;
     }
 
     public boolean getRead() {
@@ -285,6 +260,17 @@ public class Grade implements Serializable {
         this.read = read;
         return this;
     }
+
+
+    public Long getSubjectId() {
+        return this.subjectId;
+    }
+
+
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
+    }
+
 
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
@@ -298,6 +284,7 @@ public class Grade implements Serializable {
         myDao.delete(this);
     }
 
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
@@ -310,6 +297,7 @@ public class Grade implements Serializable {
         myDao.refresh(this);
     }
 
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
      * Entity must attached to an entity context.
@@ -321,6 +309,7 @@ public class Grade implements Serializable {
         }
         myDao.update(this);
     }
+
 
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1187286414)

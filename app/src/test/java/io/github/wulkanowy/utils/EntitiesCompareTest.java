@@ -30,8 +30,7 @@ public class EntitiesCompareTest {
                 .setDescription("Lorem ipsum")
                 .setWeight("10")
                 .setDate("01.01.2017")
-                .setTeacher("Andrzej")
-                .setSemester("777");
+                .setTeacher("Andrzej");
 
         grade2 = new Grade()
                 .setSubject("Religia")
@@ -41,8 +40,7 @@ public class EntitiesCompareTest {
                 .setDescription("Wolna wola")
                 .setWeight("10")
                 .setDate("01.01.2017")
-                .setTeacher("Andrzej")
-                .setSemester("777");
+                .setTeacher("Andrzej");
     }
 
     @Test

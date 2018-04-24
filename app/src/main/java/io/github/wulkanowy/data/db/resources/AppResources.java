@@ -62,27 +62,27 @@ public class AppResources implements ResourcesContract {
     public String getAttendanceLessonDescription(AttendanceLesson lesson) {
         int id = R.string.attendance_present;
 
-        if (lesson.getIsAbsenceForSchoolReasons()) {
+        if (lesson.getAbsenceForSchoolReasons()) {
             id = R.string.attendance_absence_for_school_reasons;
         }
 
-        if (lesson.getIsAbsenceExcused()) {
+        if (lesson.getAbsenceExcused()) {
             id = R.string.attendance_absence_excused;
         }
 
-        if (lesson.getIsAbsenceUnexcused()) {
+        if (lesson.getAbsenceUnexcused()) {
             id = R.string.attendance_absence_unexcused;
         }
 
-        if (lesson.getIsExemption()) {
+        if (lesson.getExemption()) {
             id = R.string.attendance_exemption;
         }
 
-        if (lesson.getIsExcusedLateness()) {
+        if (lesson.getExcusedLateness()) {
             id = R.string.attendance_excused_lateness;
         }
 
-        if (lesson.getIsUnexcusedLateness()) {
+        if (lesson.getUnexcusedLateness()) {
             id = R.string.attendance_unexcused_lateness;
         }
 
