@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.db.shared;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -15,6 +16,8 @@ import io.github.wulkanowy.ui.main.settings.SettingsFragment;
 public class SharedPref implements SharedPrefContract {
 
     private static final String SHARED_KEY_USER_ID = "USER_ID";
+
+    private static final String SHARED_KEY_TIMETABLE_WIDGET_STATE = "TIMETABLE_WIDGET_STATE";
 
     private final SharedPreferences appSharedPref;
 
@@ -34,6 +37,17 @@ public class SharedPref implements SharedPrefContract {
     @Override
     public void setCurrentUserId(long userId) {
         appSharedPref.edit().putLong(SHARED_KEY_USER_ID, userId).apply();
+    }
+
+    @SuppressLint("ApplySharedPref")
+    @Override
+    public void setTimetableWidgetState(boolean nextDay) {
+        appSharedPref.edit().putBoolean(SHARED_KEY_TIMETABLE_WIDGET_STATE, nextDay).commit();
+    }
+
+    @Override
+    public boolean getTimetableWidgetState() {
+        return appSharedPref.getBoolean(SHARED_KEY_TIMETABLE_WIDGET_STATE, false);
     }
 
     @Override

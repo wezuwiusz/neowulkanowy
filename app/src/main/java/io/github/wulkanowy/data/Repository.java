@@ -69,6 +69,16 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
+    public void setTimetableWidgetState(boolean nextDay) {
+        sharedPref.setTimetableWidgetState(nextDay);
+    }
+
+    @Override
+    public boolean getTimetableWidgetState() {
+        return sharedPref.getTimetableWidgetState();
+    }
+
+    @Override
     public int getStartupTab() {
         return sharedPref.getStartupTab();
     }

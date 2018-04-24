@@ -6,6 +6,10 @@ public interface SharedPrefContract {
 
     void setCurrentUserId(long userId);
 
+    void setTimetableWidgetState(boolean nextDay);
+
+    boolean getTimetableWidgetState();
+
     int getStartupTab();
 
     int getServicesInterval();

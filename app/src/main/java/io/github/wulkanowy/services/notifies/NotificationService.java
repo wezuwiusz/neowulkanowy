@@ -1,4 +1,4 @@
-package io.github.wulkanowy.services;
+package io.github.wulkanowy.services.notifies;
 
 
 import android.annotation.TargetApi;
@@ -21,11 +21,11 @@ public class NotificationService {
         this.context = context;
     }
 
-    void notify(Notification notification) {
+    public void notify(Notification notification) {
         getManager().notify(new Random().nextInt(1000), notification);
     }
 
-    NotificationCompat.Builder notificationBuilder() {
+    public NotificationCompat.Builder notificationBuilder() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();
         }

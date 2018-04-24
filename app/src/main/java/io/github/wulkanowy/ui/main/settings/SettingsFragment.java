@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.services.SyncJob;
+import io.github.wulkanowy.services.jobs.SyncJob;
 
 public class SettingsFragment extends PreferenceFragmentCompat
         implements SharedPreferences.OnSharedPreferenceChangeListener {

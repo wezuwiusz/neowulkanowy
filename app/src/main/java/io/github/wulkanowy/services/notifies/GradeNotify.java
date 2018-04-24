@@ -1,4 +1,4 @@
-package io.github.wulkanowy.services;
+package io.github.wulkanowy.services.notifies;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -8,11 +8,11 @@ import android.content.Context;
 
 import io.github.wulkanowy.R;
 
-class GradeNotify extends NotificationService {
+public class GradeNotify extends NotificationService {
 
     private static final String CHANNEL_ID = "Grade_Notify";
 
-    GradeNotify(Context context) {
+    public GradeNotify(Context context) {
         super(context);
     }
 

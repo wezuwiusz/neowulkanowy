@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.services.SyncJob;
 import io.github.wulkanowy.ui.base.BaseActivity;
 import io.github.wulkanowy.ui.main.attendance.AttendanceFragment;
 import io.github.wulkanowy.ui.main.dashboard.DashboardFragment;
@@ -26,6 +25,8 @@ import io.github.wulkanowy.ui.main.timetable.TimetableFragment;
 
 public class MainActivity extends BaseActivity implements MainContract.View,
         AHBottomNavigation.OnTabSelectedListener, OnFragmentIsReadyListener {
+
+    public static final String EXTRA_CARD_ID_KEY = "cardId";
 
     @BindView(R.id.main_activity_nav)
     AHBottomNavigation bottomNavigation;
@@ -54,7 +55,7 @@ public class MainActivity extends BaseActivity implements MainContract.View,
         getActivityComponent().inject(this);
         setButterKnife(ButterKnife.bind(this));
 
-        presenter.onStart(this, getIntent().getIntExtra(SyncJob.EXTRA_INTENT_KEY, -1));
+        presenter.onStart(this, getIntent().getIntExtra(EXTRA_CARD_ID_KEY, -1));
     }
 
     @Override

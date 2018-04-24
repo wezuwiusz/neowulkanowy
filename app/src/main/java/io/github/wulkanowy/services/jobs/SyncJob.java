@@ -1,4 +1,4 @@
-package io.github.wulkanowy.services;
+package io.github.wulkanowy.services.jobs;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -24,12 +24,11 @@ import io.github.wulkanowy.R;
 import io.github.wulkanowy.WulkanowyApp;
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.services.notifies.GradeNotify;
 import io.github.wulkanowy.ui.main.MainActivity;
 import io.github.wulkanowy.utils.LogUtils;
 
 public class SyncJob extends SimpleJobService {
-
-    public static final String EXTRA_INTENT_KEY = "cardId";
 
     public static final String JOB_TAG = "SyncJob";
 
@@ -94,7 +93,8 @@ public class SyncJob extends SimpleJobService {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setColor(getResources().getColor(R.color.colorPrimary))
                 .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0,
-                        MainActivity.getStartIntent(getApplicationContext()).putExtra(EXTRA_INTENT_KEY, 0)
+                        MainActivity.getStartIntent(getApplicationContext())
+                                .putExtra(MainActivity.EXTRA_CARD_ID_KEY, 0)
                         , 0
                 ))
                 .build());

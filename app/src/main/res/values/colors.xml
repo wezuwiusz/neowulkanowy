@@ -11,6 +11,7 @@
     <color name="two_grade">#CE9AD2</color>
     <color name="one_grade">#d32f2f</color>
     <color name="secondary_text">#4c4c4c</color>
+    <color name="second_text_color">#333</color>
     <color name="default_grade">#cdcdcd</color>
     <color name="free_day">#eee</color>
 </resources>

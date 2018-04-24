@@ -120,4 +120,7 @@
     <string name="pref_services_mobile_data">Synchronization via WiFi only</string>
 
     <string name="notify_grade_channel">New grades</string>
+    <string name="widget_timetable_no_lesson">No lessons</string>
+    <string name="widget_timetable_today">Today</string>
+    <string name="widget_timetable_tomorrow">Tomorrow</string>
 </resources>

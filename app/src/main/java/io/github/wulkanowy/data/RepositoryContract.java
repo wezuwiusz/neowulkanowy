@@ -23,6 +23,10 @@ public interface RepositoryContract extends ResourcesContract, AccountSyncContra
 
     int getStartupTab();
 
+    void setTimetableWidgetState(boolean nextDay);
+
+    boolean getTimetableWidgetState();
+
     boolean isServicesEnable();
 
     boolean isNotifyEnable();

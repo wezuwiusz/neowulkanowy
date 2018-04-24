@@ -86,4 +86,20 @@ public final class TimeUtils {
         }
         return currentDate.format(formatter);
     }
+
+    public static int getTodayOrNextDayValue(boolean nextDay) {
+        DayOfWeek day = LocalDate.now().getDayOfWeek();
+        if (nextDay) {
+            if (day == DayOfWeek.SUNDAY) {
+                return 0;
+            }
+            return day.getValue();
+        }
+        return day.getValue() - 1;
+    }
+
+    public static String getTodayOrNextDay(boolean nextDay) {
+        LocalDate current = LocalDate.now();
+        return nextDay ? current.plusDays(1).format(formatter) : current.format(formatter);
+    }
 }

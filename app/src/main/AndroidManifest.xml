@@ -39,12 +39,24 @@
             android:label="@string/activity_dashboard_text" />
 
         <service
-            android:name=".services.SyncJob"
+            android:name=".services.jobs.SyncJob"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
+        <service
+            android:name=".services.widgets.TimetableWidgetServices"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver android:name=".ui.widgets.TimetableWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider" />
+        </receiver>
 
         <meta-data
             android:name="io.fabric.ApiKey"
