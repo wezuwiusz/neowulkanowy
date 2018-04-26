@@ -1,12 +1,18 @@
 package io.github.wulkanowy.utils;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 
-public final class AverageCalculator {
+public final class GradeUtils {
 
-    private AverageCalculator() {
+    private final static Pattern validGradePattern = Pattern.compile("^(\\++|-|--|=)?[0-6](\\++|-|--|=)?$");
+    private final static Pattern simpleGradeValuePattern = Pattern.compile("([0-6])");
+
+    private GradeUtils() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -57,5 +63,34 @@ public final class AverageCalculator {
 
     private static int getIntegerForWeightOfGrade(String weightOfGrade) {
         return Integer.valueOf(weightOfGrade.substring(0, weightOfGrade.length() - 3));
+    }
+
+    public static int getValueColor(String value) {
+        Matcher m1 = validGradePattern.matcher(value);
+        if (!m1.find()) {
+            return R.color.default_grade;
+        }
+
+        Matcher m2 = simpleGradeValuePattern.matcher(m1.group());
+        if (!m2.find()) {
+            return R.color.default_grade;
+        }
+
+        switch (Integer.parseInt(m2.group())) {
+            case 6:
+                return R.color.six_grade;
+            case 5:
+                return R.color.five_grade;
+            case 4:
+                return R.color.four_grade;
+            case 3:
+                return R.color.three_grade;
+            case 2:
+                return R.color.two_grade;
+            case 1:
+                return R.color.one_grade;
+            default:
+                return R.color.default_grade;
+        }
     }
 }

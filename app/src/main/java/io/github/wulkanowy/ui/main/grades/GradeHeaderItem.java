@@ -18,7 +18,7 @@ import eu.davidea.viewholders.ExpandableViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
 import io.github.wulkanowy.utils.AnimationUtils;
-import io.github.wulkanowy.utils.AverageCalculator;
+import io.github.wulkanowy.utils.GradeUtils;
 
 public class GradeHeaderItem
         extends AbstractExpandableHeaderItem<GradeHeaderItem.HeaderViewHolder, GradesSubItem> {
@@ -168,7 +168,7 @@ public class GradeHeaderItem
         }
 
         private String getGradesAverageString(Subject item) {
-            float average = AverageCalculator.calculate(item.getGradeList());
+            float average = GradeUtils.calculate(item.getGradeList());
 
             if (average < 0) {
                 return resources.getString(R.string.info_no_average);

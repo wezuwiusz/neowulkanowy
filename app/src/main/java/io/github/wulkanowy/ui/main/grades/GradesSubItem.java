@@ -18,6 +18,7 @@ import eu.davidea.flexibleadapter.items.AbstractSectionableItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.utils.GradeUtils;
 
 public class GradesSubItem
         extends AbstractSectionableItem<GradesSubItem.SubItemViewHolder, GradeHeaderItem> {
@@ -108,7 +109,7 @@ public class GradesSubItem
             this.subjectAlertImage = subjectAlertImage;
 
             value.setText(item.getValue());
-            value.setBackgroundResource(item.getValueColor());
+            value.setBackgroundResource(GradeUtils.getValueColor(item.getValue()));
             date.setText(item.getDate());
             description.setText(getDescriptionString());
             alert.setVisibility(item.getRead() ? View.INVISIBLE : View.VISIBLE);

@@ -10,8 +10,6 @@ import org.greenrobot.greendao.annotation.Property;
 
 import java.io.Serializable;
 
-import io.github.wulkanowy.R;
-
 @Entity(
         nameInDb = "Grades",
         active = true
@@ -92,31 +90,6 @@ public class Grade implements Serializable {
         this.teacher = teacher;
         this.isNew = isNew;
         this.read = read;
-    }
-
-    public int getValueColor() {
-
-        String replacedString = value.replaceAll("[^0-9]", "");
-
-        if (!"".equals(replacedString)) {
-            switch (Integer.parseInt(replacedString)) {
-                case 6:
-                    return R.color.six_grade;
-                case 5:
-                    return R.color.five_grade;
-                case 4:
-                    return R.color.four_grade;
-                case 3:
-                    return R.color.three_grade;
-                case 2:
-                    return R.color.two_grade;
-                case 1:
-                    return R.color.one_grade;
-                default:
-                    return R.color.default_grade;
-            }
-        }
-        return R.color.default_grade;
     }
 
     @Override
