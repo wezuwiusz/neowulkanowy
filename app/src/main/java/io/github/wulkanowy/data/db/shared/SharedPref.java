@@ -56,6 +56,11 @@ public class SharedPref implements SharedPrefContract {
     }
 
     @Override
+    public boolean isShowGradesSummary() {
+        return settingsSharedPref.getBoolean(SettingsFragment.SHARED_KEY_GRADES_SUMMARY, false);
+    }
+
+    @Override
     public int getServicesInterval() {
         return Integer.parseInt(settingsSharedPref.getString(SettingsFragment.SHARED_KEY_SERVICES_INTERVAL, "60"));
     }

@@ -29,6 +29,8 @@ public interface RepositoryContract extends ResourcesContract, AccountSyncContra
 
     boolean isNotifyEnable();
 
+    boolean isShowGradesSummary();
+
     int getServicesInterval();
 
     boolean isMobileDisable();

@@ -72,6 +72,8 @@
 
     <string name="info_average_grades">Average: %1$.2f</string>
     <string name="info_no_average">No average</string>
+    <string name="info_grades_predicted_rating">Predicted: %1$s</string>
+    <string name="info_grades_final_rating">Final: %1$s</string>
     <string name="info_free_week">No lesson in this week</string>
 
     <string name="timetable_subitem_room">Room %s</string>
@@ -110,11 +112,14 @@
         <item quantity="other">%1$d absences</item>
     </plurals>
 
+    <string name="pref_view_header">View</string>
     <string name="pref_tab_list">Default view after startup</string>
-    <string name="pref_view">View</string>
-    <string name="pref_notify">Notifications</string>
+    <string name="pref_grades_summary_line_show">Show summary in grades</string>
+
+    <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show the notifications</string>
-    <string name="pref_services">Services</string>
+
+    <string name="pref_services_header">Services</string>
     <string name="pref_services_switch">Enable background data refreshing</string>
     <string name="pref_services_interval">Interval between data refreshing</string>
     <string name="pref_services_mobile_data">Synchronization via WiFi only</string>

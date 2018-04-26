@@ -46,6 +46,30 @@
         android:textColor="@color/secondary_text"
         android:textSize="12sp" />
 
+    <TextView
+        android:id="@+id/grade_header_predicted_rating_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/grade_header_average_text"
+        android:layout_marginTop="5dp"
+        android:text="@string/info_grades_predicted_rating"
+        android:textColor="@color/secondary_text"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/grade_header_final_rating_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/grade_header_average_text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/grade_header_predicted_rating_text"
+        android:layout_toRightOf="@+id/grade_header_predicted_rating_text"
+        android:text="@string/info_grades_final_rating"
+        android:textColor="@color/secondary_text"
+        android:textSize="12sp" />
+
     <ImageView
         android:id="@+id/grade_header_alert_image"
         android:layout_width="wrap_content"

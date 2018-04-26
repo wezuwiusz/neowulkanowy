@@ -35,7 +35,9 @@ public class SubjectSync implements SyncContract {
     public void sync(long semesterId) throws VulcanException, IOException {
         this.semesterId = semesterId;
 
-        List<Subject> lastList = getUpdatedList(getSubjectsFromNet());
+        Semester semester = daoSession.getSemesterDao().load(semesterId);
+
+        List<Subject> lastList = getUpdatedList(getSubjectsFromNet(semester));
 
         daoSession.getSubjectDao().deleteInTx(getSubjectsFromDb());
         daoSession.getSubjectDao().insertInTx(lastList);
@@ -43,9 +45,9 @@ public class SubjectSync implements SyncContract {
         LogUtils.debug("Synchronization subjects (amount = " + lastList.size() + ")");
     }
 
-    private List<Subject> getSubjectsFromNet() throws VulcanException, IOException {
+    private List<Subject> getSubjectsFromNet(Semester semester) throws VulcanException, IOException {
         return DataObjectConverter.subjectsToSubjectEntities(
-                vulcan.getSubjectsList().getAll(String.valueOf(semesterId)), semesterId);
+                vulcan.getSubjectsList().getAll(semester.getValue()), semesterId);
     }
 
     private List<Subject> getSubjectsFromDb() {

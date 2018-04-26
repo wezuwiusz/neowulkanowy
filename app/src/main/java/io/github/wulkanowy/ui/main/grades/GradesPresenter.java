@@ -105,6 +105,7 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
     @Override
     public void onDoInBackgroundLoading() {
         List<Subject> subjectList = getRepository().getSubjectList();
+        boolean isShowSummary = getRepository().isShowGradesSummary();
 
         headerItems = new ArrayList<>();
 
@@ -113,7 +114,7 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
             List<Grade> gradeList = subject.getGradeList();
 
             if (!gradeList.isEmpty()) {
-                GradeHeaderItem headerItem = new GradeHeaderItem(subject);
+                GradeHeaderItem headerItem = new GradeHeaderItem(subject, isShowSummary);
 
                 List<GradesSubItem> subItems = new ArrayList<>();
 

@@ -17,6 +17,7 @@ import eu.davidea.flexibleadapter.items.AbstractExpandableHeaderItem;
 import eu.davidea.viewholders.ExpandableViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
+import io.github.wulkanowy.utils.AnimationUtils;
 import io.github.wulkanowy.utils.AverageCalculator;
 
 public class GradeHeaderItem
@@ -24,8 +25,11 @@ public class GradeHeaderItem
 
     private Subject subject;
 
-    GradeHeaderItem(Subject subject) {
+    private final boolean isShowSummary;
+
+    GradeHeaderItem(Subject subject, boolean isShowSummary) {
         this.subject = subject;
+        this.isShowSummary = isShowSummary;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class GradeHeaderItem
 
     @Override
     public HeaderViewHolder createViewHolder(View view, FlexibleAdapter adapter) {
-        return new HeaderViewHolder(view, adapter);
+        return new HeaderViewHolder(view, adapter, isShowSummary);
     }
 
     @Override
@@ -74,16 +78,27 @@ public class GradeHeaderItem
         @BindView(R.id.grade_header_number_of_grade_text)
         TextView numberText;
 
+        @BindView(R.id.grade_header_predicted_rating_text)
+        TextView predictedTest;
+
+        @BindView(R.id.grade_header_final_rating_text)
+        TextView finalText;
+
         @BindView(R.id.grade_header_alert_image)
         View alertImage;
 
         Resources resources;
 
-        HeaderViewHolder(View view, FlexibleAdapter adapter) {
+        private boolean isSummaryTogglable = true;
+
+        private boolean isShowSummary;
+
+        HeaderViewHolder(View view, FlexibleAdapter adapter, boolean isShowSummary) {
             super(view, adapter);
             ButterKnife.bind(this, view);
             resources = view.getResources();
             view.setOnClickListener(this);
+            this.isShowSummary = isShowSummary;
         }
 
         void onBind(Subject item, List<GradesSubItem> subItems) {
@@ -91,6 +106,29 @@ public class GradeHeaderItem
             numberText.setText(resources.getQuantityString(R.plurals.numberOfGradesPlurals,
                     subItems.size(), subItems.size()));
             averageText.setText(getGradesAverageString(item));
+
+            predictedTest.setText(resources.getString(R.string.info_grades_predicted_rating,
+                    item.getPredictedRating()));
+            finalText.setText(resources.getString(R.string.info_grades_final_rating,
+                    item.getFinalRating()));
+            predictedTest.setVisibility(View.GONE);
+            finalText.setVisibility(View.GONE);
+
+            boolean isSummaryEmpty = true;
+
+            if (!"-".equals(item.getPredictedRating()) || !"-".equals(item.getFinalRating())) {
+                isSummaryEmpty = false;
+            }
+
+            if (isSummaryEmpty) {
+                isSummaryTogglable = false;
+            } else if (isShowSummary) {
+                predictedTest.setVisibility(View.VISIBLE);
+                finalText.setVisibility(View.VISIBLE);
+
+                isSummaryTogglable = false;
+            }
+
             alertImage.setVisibility(isSubItemsReadAndSaveAlertView(subItems)
                     ? View.INVISIBLE : View.VISIBLE);
         }
@@ -103,6 +141,19 @@ public class GradeHeaderItem
             } else {
                 subjectName.setMaxLines(1);
             }
+
+            if (isSummaryTogglable) {
+                toggleText(predictedTest);
+                toggleText(finalText);
+            }
+        }
+
+        private void toggleText(final View view) {
+            if (view.getVisibility() == View.GONE) {
+                AnimationUtils.slideDown(view);
+            } else {
+                AnimationUtils.slideUp(view);
+            }
         }
 
         private boolean isSubItemsReadAndSaveAlertView(List<GradesSubItem> subItems) {
@@ -112,6 +163,7 @@ public class GradeHeaderItem
                 isRead = item.getGrade().getRead();
                 item.setSubjectAlertImage(alertImage);
             }
+
             return isRead;
         }
 
@@ -120,9 +172,9 @@ public class GradeHeaderItem
 
             if (average < 0) {
                 return resources.getString(R.string.info_no_average);
-            } else {
-                return resources.getString(R.string.info_average_grades, average);
             }
+
+            return resources.getString(R.string.info_average_grades, average);
         }
     }
 }

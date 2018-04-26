@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/pref_view">
+    <PreferenceCategory android:title="@string/pref_view_header">
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/startup_tab_entries"
@@ -8,8 +8,12 @@
             android:key="startup_tab"
             android:summary="%s"
             android:title="@string/pref_tab_list" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="grades_summary"
+            android:title="@string/pref_grades_summary_line_show"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_services">
+    <PreferenceCategory android:title="@string/pref_services_header">
         <SwitchPreference
             android:defaultValue="true"
             android:key="services_enable"
@@ -28,7 +32,7 @@
             android:title="@string/pref_services_mobile_data"
             android:dependency="services_enable" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_notify">
+    <PreferenceCategory android:title="@string/pref_notify_header">
         <SwitchPreference
             android:defaultValue="true"
             android:dependency="services_enable"

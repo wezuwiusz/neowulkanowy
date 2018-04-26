@@ -72,6 +72,8 @@
 
     <string name="info_average_grades">Średnia: %1$.2f</string>
     <string name="info_no_average">Brak średniej</string>
+    <string name="info_grades_predicted_rating">Przewidywana: %1$s</string>
+    <string name="info_grades_final_rating">Końcowa: %1$s</string>
     <string name="info_free_week">Brak lekcji w tym tygodniu</string>
     <string name="timetable_subitem_room">Sala %s</string>
 
@@ -114,11 +116,15 @@
         <item quantity="many">%1$d nieobecności</item>
     </plurals>
 
-    <string name="pref_view">Widok</string>
+
+    <string name="pref_view_header">Widok</string>
     <string name="pref_tab_list">Domyślny widok</string>
-    <string name="pref_notify">Powiadomienia</string>
+    <string name="pref_grades_summary_line_show">Pokazuj podsumowanie w ocenach</string>
+
+    <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
-    <string name="pref_services">Usługi</string>
+
+    <string name="pref_services_header">Usługi</string>
     <string name="pref_services_switch">Włącz odświeżanie danych w tle</string>
     <string name="pref_services_interval">Interwał między odświeżaniem danych</string>
     <string name="pref_services_mobile_data">Synchronizacja tylko przez WiFi</string>

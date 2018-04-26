@@ -12,6 +12,8 @@ public interface SharedPrefContract {
 
     int getStartupTab();
 
+    boolean isShowGradesSummary();
+
     int getServicesInterval();
 
     boolean isMobileDisable();

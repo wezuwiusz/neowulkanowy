@@ -89,6 +89,11 @@ public class Repository implements RepositoryContract {
     }
 
     @Override
+    public boolean isShowGradesSummary() {
+        return sharedPref.isShowGradesSummary();
+    }
+
+    @Override
     public int getServicesInterval() {
         return sharedPref.getServicesInterval();
     }
