@@ -20,10 +20,13 @@ import io.github.wulkanowy.utils.TimeUtils;
 
 public class TimetableWidgetProvider extends AppWidgetProvider {
 
+    private static final String ACTION_TIMETABLE_TOGGLE = "timetable_toggle";
+
     @Inject
     RepositoryContract repository;
 
     @Override
+
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         inject(context);
 
@@ -43,20 +46,27 @@ public class TimetableWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
         inject(context);
 
-        if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
-            final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        if (ACTION_TIMETABLE_TOGGLE.equals(intent.getAction())) {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             ComponentName thisWidget = new ComponentName(context.getPackageName(),
                     TimetableWidgetProvider.class.getName());
-            final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
             repository.getSharedRepo().setTimetableWidgetState(!repository.getSharedRepo().getTimetableWidgetState());
             onUpdate(context, appWidgetManager, appWidgetIds);
         }
     }
 
+    @Override
+    public void onDisabled(Context context) {
+        super.onDisabled(context);
+        inject(context);
+        repository.getSharedRepo().setTimetableWidgetState(false);
+    }
+
     private void setToggleIntent(RemoteViews views, Context context) {
         Intent refreshIntent = new Intent(context, TimetableWidgetProvider.class);
-        refreshIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        refreshIntent.setAction(ACTION_TIMETABLE_TOGGLE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,
                 refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.timetable_widget_toggle, pendingIntent);
