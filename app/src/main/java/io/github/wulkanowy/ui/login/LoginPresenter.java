@@ -64,10 +64,10 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     public void onDoInBackground(int stepNumber) throws Exception {
         switch (stepNumber) {
             case 1:
-                getRepository().registerUser(email, password, symbol);
+                getRepository().getSyncRepo().registerUser(email, password, symbol);
                 break;
             case 2:
-                getRepository().syncAll();
+                getRepository().getSyncRepo().syncAll();
                 break;
         }
     }
@@ -93,7 +93,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             getView().setErrorSymbolRequired();
             getView().showSoftInput();
         } else {
-            getView().onError(getRepository().getErrorLoginMessage(exception));
+            getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
 
         getView().showActionBar(true);
@@ -121,8 +121,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             return AppConstant.DEFAULT_SYMBOL;
         }
 
-        String[] keys = getRepository().getSymbolsKeysArray();
-        String[] values = getRepository().getSymbolsValuesArray();
+        String[] keys = getRepository().getResRepo().getSymbolsKeysArray();
+        String[] values = getRepository().getResRepo().getSymbolsValuesArray();
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
 
         for (int i = 0; i < Math.min(keys.length, values.length); ++i) {

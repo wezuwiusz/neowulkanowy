@@ -13,7 +13,7 @@ import io.github.wulkanowy.di.annotations.SharedPreferencesInfo;
 import io.github.wulkanowy.ui.main.settings.SettingsFragment;
 
 @Singleton
-public class SharedPref implements SharedPrefContract {
+public class SharedPrefRepository implements SharedPrefContract {
 
     private static final String SHARED_KEY_USER_ID = "USER_ID";
 
@@ -24,7 +24,7 @@ public class SharedPref implements SharedPrefContract {
     private final SharedPreferences settingsSharedPref;
 
     @Inject
-    SharedPref(@ApplicationContext Context context, @SharedPreferencesInfo String sharedName) {
+    SharedPrefRepository(@ApplicationContext Context context, @SharedPreferencesInfo String sharedName) {
         appSharedPref = context.getSharedPreferences(sharedName, Context.MODE_PRIVATE);
         settingsSharedPref = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -32,6 +32,11 @@ public class SharedPref implements SharedPrefContract {
     @Override
     public long getCurrentUserId() {
         return appSharedPref.getLong(SHARED_KEY_USER_ID, 0);
+    }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        return getCurrentUserId() != 0;
     }
 
     @Override

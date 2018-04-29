@@ -71,8 +71,8 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
 
     @Override
     public void onDoInBackgroundRefresh() throws Exception {
-        getRepository().syncSubjects();
-        getRepository().syncGrades();
+        getRepository().getSyncRepo().syncSubjects();
+        getRepository().getSyncRepo().syncGrades();
     }
 
     @Override
@@ -89,7 +89,7 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
             loadingTask.setOnFirstLoadingListener(this);
             loadingTask.execute();
 
-            int numberOfNewGrades = getRepository().getNewGrades().size();
+            int numberOfNewGrades = getRepository().getDbRepo().getNewGrades().size();
 
             if (numberOfNewGrades <= 0) {
                 getView().onRefreshSuccessNoGrade();
@@ -97,15 +97,15 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
                 getView().onRefreshSuccess(numberOfNewGrades);
             }
         } else {
-            getView().onError(getRepository().getErrorLoginMessage(exception));
+            getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
         getView().hideRefreshingBar();
     }
 
     @Override
     public void onDoInBackgroundLoading() {
-        List<Subject> subjectList = getRepository().getSubjectList();
-        boolean isShowSummary = getRepository().isShowGradesSummary();
+        List<Subject> subjectList = getRepository().getDbRepo().getSubjectList();
+        boolean isShowSummary = getRepository().getSharedRepo().isShowGradesSummary();
 
         headerItems = new ArrayList<>();
 

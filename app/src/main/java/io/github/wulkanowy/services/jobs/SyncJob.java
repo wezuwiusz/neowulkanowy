@@ -65,12 +65,12 @@ public class SyncJob extends SimpleJobService {
     @Override
     public int onRunJob(JobParameters job) {
         try {
-            repository.initLastUser();
-            repository.syncAll();
+            repository.getSyncRepo().initLastUser();
+            repository.getSyncRepo().syncAll();
 
-            gradeList = repository.getNewGrades();
+            gradeList = repository.getDbRepo().getNewGrades();
 
-            if (!gradeList.isEmpty() && repository.isNotifyEnable()) {
+            if (!gradeList.isEmpty() && repository.getSharedRepo().isNotifyEnable()) {
                 showNotification();
             }
             return JobService.RESULT_SUCCESS;

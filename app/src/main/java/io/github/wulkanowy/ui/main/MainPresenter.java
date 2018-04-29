@@ -27,7 +27,7 @@ public class MainPresenter extends BasePresenter<MainContract.View>
         if (tabPositionIntent != -1) {
             tabPosition = tabPositionIntent;
         } else {
-            tabPosition = getRepository().getStartupTab();
+            tabPosition = getRepository().getSharedRepo().getStartupTab();
         }
 
         getView().initiationBottomNav(tabPosition);

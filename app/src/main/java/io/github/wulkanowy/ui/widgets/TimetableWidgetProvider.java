@@ -49,7 +49,7 @@ public class TimetableWidgetProvider extends AppWidgetProvider {
                     TimetableWidgetProvider.class.getName());
             final int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 
-            repository.setTimetableWidgetState(!repository.getTimetableWidgetState());
+            repository.getSharedRepo().setTimetableWidgetState(!repository.getSharedRepo().getTimetableWidgetState());
             onUpdate(context, appWidgetManager, appWidgetIds);
         }
     }
@@ -80,7 +80,7 @@ public class TimetableWidgetProvider extends AppWidgetProvider {
         views.setRemoteAdapter(appWidgetId, R.id.timetable_widget_list, intent);
         views.setEmptyView(R.id.timetable_widget_list, R.id.timetable_widget_empty);
 
-        boolean nextDay = repository.getTimetableWidgetState();
+        boolean nextDay = repository.getSharedRepo().getTimetableWidgetState();
 
         String toggleText = context.getString(nextDay ? R.string.widget_timetable_tomorrow
                 : R.string.widget_timetable_today);

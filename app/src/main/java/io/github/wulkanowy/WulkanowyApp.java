@@ -45,9 +45,9 @@ public class WulkanowyApp extends Application {
     }
 
     private void initializeUserSession() {
-        if (repository.getCurrentUserId() != 0) {
+        if (repository.getSharedRepo().isUserLoggedIn()) {
             try {
-                repository.initLastUser();
+                repository.getSyncRepo().initLastUser();
             } catch (Exception e) {
                 LogUtils.error("An error occurred when the application was started", e);
             }

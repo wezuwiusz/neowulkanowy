@@ -50,10 +50,10 @@ public class TimetableWidgetFactory implements RemoteViewsService.RemoteViewsFac
         inject();
         lessonList = new ArrayList<>();
 
-        if (repository.getCurrentUserId() != 0) {
+        if (repository.getSharedRepo().isUserLoggedIn()) {
 
-            Week week = repository.getWeek(TimeUtils.getDateOfCurrentMonday(true));
-            int valueOfDay = TimeUtils.getTodayOrNextDayValue(repository.getTimetableWidgetState());
+            Week week = repository.getDbRepo().getWeek(TimeUtils.getDateOfCurrentMonday(true));
+            int valueOfDay = TimeUtils.getTodayOrNextDayValue(repository.getSharedRepo().getTimetableWidgetState());
 
             if (valueOfDay != 5 && valueOfDay != 6 && week != null) {
                 week.resetDayList();

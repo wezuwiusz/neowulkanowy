@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data.sync.account;
+package io.github.wulkanowy.data.sync;
 
 import android.content.Context;
 
@@ -27,7 +27,7 @@ import io.github.wulkanowy.utils.security.CryptoException;
 import io.github.wulkanowy.utils.security.Scrambler;
 
 @Singleton
-public class AccountSync implements AccountSyncContract {
+public class AccountSync {
 
     private final DaoSession daoSession;
 
@@ -46,7 +46,6 @@ public class AccountSync implements AccountSyncContract {
         this.context = context;
     }
 
-    @Override
     public void registerUser(String email, String password, String symbol)
             throws VulcanException, IOException, CryptoException {
 
@@ -119,7 +118,6 @@ public class AccountSync implements AccountSyncContract {
         daoSession.getSemesterDao().insertInTx(semesterList);
     }
 
-    @Override
     public void initLastUser() throws IOException, CryptoException {
 
         long userId = sharedPref.getCurrentUserId();
@@ -131,26 +129,27 @@ public class AccountSync implements AccountSyncContract {
         LogUtils.debug("Initialization current user id=" + userId);
 
         Account account = daoSession.getAccountDao().load(userId);
-        String email = account.getEmail();
-        String pass = Scrambler.decrypt(account.getEmail(), account.getPassword());
 
-        Symbol symbolE = daoSession.getSymbolDao().queryBuilder().where(
+        Symbol symbol = daoSession.getSymbolDao().queryBuilder().where(
                 SymbolDao.Properties.UserId.eq(account.getId())).unique();
-        String symbol = symbolE.getSymbol();
-        String schoolId = symbolE.getSchoolId();
 
-        Student studentE = daoSession.getStudentDao().queryBuilder().where(
-                StudentDao.Properties.SymbolId.eq(symbolE.getId()),
+        Student student = daoSession.getStudentDao().queryBuilder().where(
+                StudentDao.Properties.SymbolId.eq(symbol.getId()),
                 StudentDao.Properties.Current.eq(true)
         ).unique();
-        String studentId = studentE.getRealId();
 
-        Diary diaryE = daoSession.getDiaryDao().queryBuilder().where(
-                DiaryDao.Properties.StudentId.eq(studentE.getId()),
+        Diary diary = daoSession.getDiaryDao().queryBuilder().where(
+                DiaryDao.Properties.StudentId.eq(student.getId()),
                 DiaryDao.Properties.Current.eq(true)
         ).unique();
-        String diaryId = diaryE.getValue();
 
-        vulcan.setCredentials(email, pass, symbol, schoolId, studentId, diaryId);
+        vulcan.setCredentials(
+                account.getEmail(),
+                Scrambler.decrypt(account.getEmail(), account.getPassword()),
+                symbol.getSymbol(),
+                symbol.getSchoolId(),
+                student.getRealId(),
+                diary.getValue()
+        );
     }
 }

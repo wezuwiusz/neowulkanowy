@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data.sync.subjects;
+package io.github.wulkanowy.data.sync;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,12 +12,11 @@ import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.Semester;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
-import io.github.wulkanowy.data.sync.SyncContract;
 import io.github.wulkanowy.utils.DataObjectConverter;
 import io.github.wulkanowy.utils.LogUtils;
 
 @Singleton
-public class SubjectSync implements SyncContract {
+public class SubjectSync {
 
     private final DaoSession daoSession;
 
@@ -31,7 +30,6 @@ public class SubjectSync implements SyncContract {
         this.vulcan = vulcan;
     }
 
-    @Override
     public void sync(long semesterId) throws VulcanException, IOException {
         this.semesterId = semesterId;
 

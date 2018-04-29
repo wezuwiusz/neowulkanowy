@@ -21,12 +21,12 @@ import io.github.wulkanowy.utils.LogUtils;
 import io.github.wulkanowy.utils.security.CryptoException;
 
 @Singleton
-public class AppResources implements ResourcesContract {
+public class ResourcesRepository implements ResourcesContract {
 
     private Resources resources;
 
     @Inject
-    AppResources(@ApplicationContext Context context) {
+    ResourcesRepository(@ApplicationContext Context context) {
         resources = context.getResources();
     }
 

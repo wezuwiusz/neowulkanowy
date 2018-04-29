@@ -88,18 +88,18 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
             getView().onRefreshSuccess();
         } else {
-            getView().onError(getRepository().getErrorLoginMessage(exception));
+            getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
         getView().hideRefreshingBar();
     }
 
     @Override
     public void onDoInBackgroundLoading() throws Exception {
-        Week week = getRepository().getWeek(date);
+        Week week = getRepository().getDbRepo().getWeek(date);
 
         if (week == null || !week.getTimetableSynced()) {
             syncData();
-            week = getRepository().getWeek(date);
+            week = getRepository().getDbRepo().getWeek(date);
         }
 
         List<Day> dayList = week.getDayList();
@@ -159,7 +159,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
     }
 
     private void syncData() throws Exception {
-        getRepository().syncTimetable(date);
+        getRepository().getSyncRepo().syncTimetable(0, date);
     }
 
     private void cancelAsyncTasks() {

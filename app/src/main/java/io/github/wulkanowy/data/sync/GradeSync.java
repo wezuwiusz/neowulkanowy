@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data.sync.grades;
+package io.github.wulkanowy.data.sync;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -14,13 +14,12 @@ import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.db.dao.entities.Semester;
 import io.github.wulkanowy.data.db.dao.entities.SubjectDao;
-import io.github.wulkanowy.data.sync.SyncContract;
 import io.github.wulkanowy.utils.DataObjectConverter;
 import io.github.wulkanowy.utils.EntitiesCompare;
 import io.github.wulkanowy.utils.LogUtils;
 
 @Singleton
-public class GradeSync implements SyncContract {
+public class GradeSync {
 
     private final DaoSession daoSession;
 
@@ -34,7 +33,6 @@ public class GradeSync implements SyncContract {
         this.vulcan = vulcan;
     }
 
-    @Override
     public void sync(long semesterId) throws IOException, VulcanException, ParseException {
         this.semesterId = semesterId;
 
