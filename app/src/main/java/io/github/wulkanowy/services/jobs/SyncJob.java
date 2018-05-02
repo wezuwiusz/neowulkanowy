@@ -68,7 +68,7 @@ public class SyncJob extends SimpleJobService {
             repository.getSyncRepo().initLastUser();
             repository.getSyncRepo().syncAll();
 
-            gradeList = repository.getDbRepo().getNewGrades();
+            gradeList = repository.getDbRepo().getNewGrades(repository.getDbRepo().getCurrentSemesterName());
 
             if (!gradeList.isEmpty() && repository.getSharedRepo().isNotifyEnable()) {
                 showNotification();

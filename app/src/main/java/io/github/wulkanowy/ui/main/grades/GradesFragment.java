@@ -1,12 +1,17 @@
 package io.github.wulkanowy.ui.main.grades;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -40,6 +45,8 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
     @Inject
     GradesContract.Presenter presenter;
 
+    int currentSemester = -1;
+
     public GradesFragment() {
         // empty constructor for fragment
     }
@@ -57,6 +64,40 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
         }
 
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.semester_switch, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_filter) {
+            CharSequence[] items = new CharSequence[]{
+                    getResources().getString(R.string.semester_text, 1),
+                    getResources().getString(R.string.semester_text, 2),
+            };
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.switch_semester)
+                    .setNegativeButton(R.string.cancel, null)
+                    .setSingleChoiceItems(items, this.currentSemester, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            presenter.onSemesterChange(which);
+                            dialog.cancel();
+                        }
+                    }).show();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -85,6 +126,10 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
     @Override
     public void setActivityTitle() {
         setTitle(getString(R.string.grades_text));
+    }
+
+    public void setCurrentSemester(int currentSemester) {
+        this.currentSemester = currentSemester;
     }
 
     @Override

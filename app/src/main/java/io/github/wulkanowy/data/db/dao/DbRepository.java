@@ -8,6 +8,7 @@ import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.DiaryDao;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.db.dao.entities.GradeDao;
+import io.github.wulkanowy.data.db.dao.entities.Semester;
 import io.github.wulkanowy.data.db.dao.entities.SemesterDao;
 import io.github.wulkanowy.data.db.dao.entities.StudentDao;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
@@ -37,15 +38,16 @@ public class DbRepository implements DbContract {
         ).unique();
     }
 
-    public List<Subject> getSubjectList() {
-        return daoSession.getSemesterDao().load(getCurrentSemesterId()).getSubjectList();
+
+    public List<Subject> getSubjectList(int semesterName) {
+        return daoSession.getSemesterDao().load(getSemesterId(semesterName)).getSubjectList();
     }
 
     @Override
-    public List<Grade> getNewGrades() {
+    public List<Grade> getNewGrades(int semesterName) {
         return daoSession.getGradeDao().queryBuilder().where(
                 GradeDao.Properties.IsNew.eq(1),
-                GradeDao.Properties.SemesterId.eq(getCurrentSemesterId())
+                GradeDao.Properties.SemesterId.eq(getSemesterId(semesterName))
         ).list();
     }
 
@@ -73,10 +75,27 @@ public class DbRepository implements DbContract {
     }
 
     @Override
+    public long getSemesterId(int name) {
+        return daoSession.getSemesterDao().queryBuilder().where(
+                SemesterDao.Properties.DiaryId.eq(getCurrentDiaryId()),
+                SemesterDao.Properties.Name.eq(String.valueOf(name))
+        ).unique().getId();
+    }
+
+    @Override
     public long getCurrentSemesterId() {
+        return getCurrentSemester().getId();
+    }
+
+    @Override
+    public int getCurrentSemesterName() {
+        return Integer.valueOf(getCurrentSemester().getName());
+    }
+
+    private Semester getCurrentSemester() {
         return daoSession.getSemesterDao().queryBuilder().where(
                 SemesterDao.Properties.DiaryId.eq(getCurrentDiaryId()),
                 SemesterDao.Properties.Current.eq(true)
-        ).unique().getId();
+        ).unique();
     }
 }

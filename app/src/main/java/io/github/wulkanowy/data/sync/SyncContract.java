@@ -16,11 +16,11 @@ public interface SyncContract {
 
     void initLastUser() throws IOException, CryptoException;
 
-    void syncGrades(long semesterId) throws VulcanException, IOException, ParseException;
+    void syncGrades(int semesterName) throws VulcanException, IOException, ParseException;
 
     void syncGrades() throws VulcanException, IOException, ParseException;
 
-    void syncSubjects(long semesterId) throws VulcanException, IOException;
+    void syncSubjects(int semesterName) throws VulcanException, IOException;
 
     void syncSubjects() throws VulcanException, IOException;
 

@@ -10,9 +10,9 @@ public interface DbContract {
 
     Week getWeek(String date);
 
-    List<Subject> getSubjectList();
+    List<Subject> getSubjectList(int semesterName);
 
-    List<Grade> getNewGrades();
+    List<Grade> getNewGrades(int semesterName);
 
     long getCurrentStudentId();
 
@@ -20,5 +20,9 @@ public interface DbContract {
 
     long getCurrentDiaryId();
 
+    long getSemesterId(int name);
+
     long getCurrentSemesterId();
+
+    int getCurrentSemesterName();
 }

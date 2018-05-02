@@ -48,8 +48,8 @@ public class SyncRepository implements SyncContract {
     }
 
     @Override
-    public void syncGrades(long semesterId) throws VulcanException, IOException, ParseException {
-        gradeSync.sync(semesterId);
+    public void syncGrades(int semesterName) throws VulcanException, IOException, ParseException {
+        gradeSync.sync(semesterName);
     }
 
     @Override
@@ -58,8 +58,8 @@ public class SyncRepository implements SyncContract {
     }
 
     @Override
-    public void syncSubjects(long semesterId) throws VulcanException, IOException {
-        subjectSync.sync(semesterId);
+    public void syncSubjects(int semesterName) throws VulcanException, IOException {
+        subjectSync.sync(semesterName);
     }
 
     @Override

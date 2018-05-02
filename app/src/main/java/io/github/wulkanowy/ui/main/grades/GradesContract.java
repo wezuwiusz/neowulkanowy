@@ -24,6 +24,8 @@ public interface GradesContract {
 
         void setActivityTitle();
 
+        void setCurrentSemester(int semester);
+
         boolean isMenuVisible();
 
     }
@@ -36,5 +38,7 @@ public interface GradesContract {
         void onRefresh();
 
         void onStart(View view, OnFragmentIsReadyListener listener);
+
+        void onSemesterChange(int which);
     }
 }

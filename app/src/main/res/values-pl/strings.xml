@@ -52,6 +52,10 @@
     <string name="dialog_date_text">Data</string>
     <string name="dialog_color_text">Kolor</string>
 
+    <string name="switch_semester">Zmień semestr</string>
+    <string name="semester_text">Semestr %d</string>
+    <string name="cancel">Anuluj</string>
+
     <string name="timetable_dialog_lesson">Lekcja</string>
     <string name="timetable_dialog_room">Sala</string>
     <string name="timetable_dialog_group">Grupa</string>
