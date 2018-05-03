@@ -124,6 +124,8 @@
     <string name="pref_view_header">Widok</string>
     <string name="pref_tab_list">Domyślny widok</string>
     <string name="pref_grades_summary_line_show">Pokazuj podsumowanie w ocenach</string>
+    <string name="pref_attendance_present_show">Pokazuj obecność we frekwencji</string>
+    <string name="required_restart">Wymagany restart</string>
 
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>

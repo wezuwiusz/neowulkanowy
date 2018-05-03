@@ -119,6 +119,8 @@
     <string name="pref_view_header">View</string>
     <string name="pref_tab_list">Default view after startup</string>
     <string name="pref_grades_summary_line_show">Show summary in grades</string>
+    <string name="pref_attendance_present_show">Show present in attendance</string>
+    <string name="required_restart">Required restart</string>
 
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show the notifications</string>

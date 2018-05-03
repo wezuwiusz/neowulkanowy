@@ -93,6 +93,7 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
     @Override
     public void onDoInBackgroundLoading() throws Exception {
         Week week = getRepository().getDbRepo().getWeek(date);
+        boolean isShowPresent = getRepository().getSharedRepo().isShowAttendancePresent();
 
         if (week == null || !week.getAttendanceSynced()) {
             syncData();
@@ -118,8 +119,16 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
             List<AttendanceSubItem> subItems = new ArrayList<>();
 
             for (AttendanceLesson lesson : lessonList) {
+                if (!isShowPresent && lesson.getPresence()) {
+                    continue;
+                }
+
                 lesson.setDescription(getRepository().getResRepo().getAttendanceLessonDescription(lesson));
                 subItems.add(new AttendanceSubItem(headerItem, lesson));
+            }
+
+            if (!isShowPresent && subItems.isEmpty()) {
+                continue;
             }
 
             headerItem.setSubItems(subItems);

@@ -66,6 +66,11 @@ public class SharedPrefRepository implements SharedPrefContract {
     }
 
     @Override
+    public boolean isShowAttendancePresent() {
+        return settingsSharedPref.getBoolean(SettingsFragment.SHARED_KEY_ATTENDANCE_PRESENT, false);
+    }
+
+    @Override
     public int getServicesInterval() {
         return Integer.parseInt(settingsSharedPref.getString(SettingsFragment.SHARED_KEY_SERVICES_INTERVAL, "60"));
     }

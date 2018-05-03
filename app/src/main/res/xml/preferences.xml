@@ -11,7 +11,13 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="grades_summary"
-            android:title="@string/pref_grades_summary_line_show"/>
+            android:title="@string/pref_grades_summary_line_show"
+            android:summary="@string/required_restart" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="attendance_present"
+            android:title="@string/pref_attendance_present_show"
+            android:summary="@string/required_restart" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_services_header">
         <SwitchPreference

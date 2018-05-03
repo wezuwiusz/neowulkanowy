@@ -14,6 +14,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
     public static final String SHARED_KEY_GRADES_SUMMARY = "grades_summary";
 
+    public static final String SHARED_KEY_ATTENDANCE_PRESENT = "attendance_present";
+
     public static final String SHARED_KEY_SERVICES_ENABLE = "services_enable";
 
     public static final String SHARED_KEY_NOTIFY_ENABLE = "notify_enable";
