@@ -7,10 +7,16 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
+}
+
+plugins {
+
+    // gradle dependencyUpdates -Drevision=release
+    id "com.github.ben-manes.versions" version "0.17.0"
 }
 
 project.ext.preDexLibs = !project.hasProperty("disablePreDex")
@@ -28,28 +34,31 @@ ext {
     GROUP_ID = "io.github.wulkanowy"
 
     supportVersion = "26.1.0"
+    flexibleAdapter = "5.0.2"
+    flexibleUi = "1.0.0-b2"
+
     firebaseJob = "0.8.5"
     apacheLang = "3.7"
     apacheCollections = "4.1"
-    flexibleAdapter = "5.0.2"
-    flexibleUi = "1.0.0-b2"
     greenDao = "3.2.2"
     greenDaoHelper = "v2.0.2"
+    greenDaoGradle = "3.2.2"
     butterknife = "8.8.1"
-    threeTenABP = "1.0.5"
+    threeTenABP = "1.1.0"
     dagger2 = "2.15"
-    ahbottom = "2.1.0"
-    jsoup = "1.10.3"
-    gson = "2.8.2"
+    ahbottom = "2.2.0"
+    jsoup = "1.11.3"
+    gson = "2.8.4"
 
     debugDb = "1.0.3"
     sqlcipher = "3.5.9"
 
     junit = "4.12"
-    mockito = "2.16.0"
-    testRunner = "1.0.1"
+    mockito = "2.18.3"
+    testRunner = "1.0.2"
 
-    crashlyticsSdk = "2.9.1"
+    fabricGradle = "1.25.3"
+    crashlyticsSdk = "2.9.2"
     crashlyticsAnswers = "1.4.1"
 }
 
