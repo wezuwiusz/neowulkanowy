@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.main.timetable;
+package io.github.wulkanowy.ui.main.exams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import io.github.wulkanowy.utils.TimeUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
-public class TimetablePresenter extends BasePresenter<TimetableContract.View>
-        implements TimetableContract.Presenter, AsyncListeners.OnFirstLoadingListener {
+public class ExamsPresenter extends BasePresenter<ExamsContract.View>
+        implements ExamsContract.Presenter, AsyncListeners.OnFirstLoadingListener {
 
     private AbstractTask loadingTask;
 
@@ -26,12 +26,12 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
     private boolean isFirstSight = false;
 
     @Inject
-    TimetablePresenter(RepositoryContract repository) {
+    ExamsPresenter(RepositoryContract repository) {
         super(repository);
     }
 
     @Override
-    public void onStart(TimetableContract.View view, OnFragmentIsReadyListener listener) {
+    public void onStart(ExamsContract.View view, OnFragmentIsReadyListener listener) {
         super.onStart(view);
         this.listener = listener;
 
@@ -64,6 +64,11 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
     }
 
     @Override
+    public void setRestoredPosition(int position) {
+        this.positionToScroll = position;
+    }
+
+    @Override
     public void onDoInBackgroundLoading() throws Exception {
         for (String date : dates) {
             getView().setTabDataToAdapter(date);
@@ -72,7 +77,7 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
 
     @Override
     public void onCanceledLoadingAsync() {
-        //do nothing
+        // do nothing
     }
 
     @Override
@@ -82,11 +87,6 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
             getView().scrollViewPagerToPosition(positionToScroll);
             listener.onFragmentIsReady();
         }
-    }
-
-    @Override
-    public void setRestoredPosition(int position) {
-        this.positionToScroll = position;
     }
 
     @Override

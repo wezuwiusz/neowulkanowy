@@ -30,7 +30,7 @@
     <string name="noColor_text">No color</string>
 
     <string name="activity_dashboard_text">Dashboard Activity</string>
-    <string name="dashboard_text">Dashboard</string>
+    <string name="exams_text">Exams</string>
     <string name="grades_text">Grades</string>
     <string name="attendance_text">Attendance</string>
     <string name="timetable_text">Timetable</string>
@@ -134,4 +134,6 @@
     <string name="widget_timetable_no_lesson">No lessons</string>
     <string name="widget_timetable_today">Today</string>
     <string name="widget_timetable_tomorrow">Tomorrow</string>
+    <string name="exams_no_entries">No exams in this week</string>
+    <string name="exams_type">Type</string>
 </resources>

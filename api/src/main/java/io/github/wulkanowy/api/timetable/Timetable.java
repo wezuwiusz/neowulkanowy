@@ -14,7 +14,6 @@ import java.util.Locale;
 
 import io.github.wulkanowy.api.SnP;
 import io.github.wulkanowy.api.VulcanException;
-import io.github.wulkanowy.api.generic.Day;
 import io.github.wulkanowy.api.generic.Lesson;
 import io.github.wulkanowy.api.generic.Week;
 
@@ -28,25 +27,25 @@ public class Timetable {
         this.snp = snp;
     }
 
-    public Week<Day> getWeekTable() throws IOException, ParseException, VulcanException {
+    public Week<TimetableDay> getWeekTable() throws IOException, ParseException, VulcanException {
         return getWeekTable("");
     }
 
-    public Week<Day> getWeekTable(final String tick) throws IOException, ParseException, VulcanException {
+    public Week<TimetableDay> getWeekTable(final String tick) throws IOException, ParseException, VulcanException {
         Element table = snp.getSnPPageDocument(TIMETABLE_PAGE_URL + tick)
                 .select(".mainContainer .presentData").first();
 
-        List<Day> days = getDays(table.select("thead th"));
+        List<TimetableDay> days = getDays(table.select("thead th"));
 
         setLessonToDays(table, days);
 
-        return new Week<Day>()
+        return new Week<TimetableDay>()
                 .setStartDayDate(days.get(0).getDate())
                 .setDays(days);
     }
 
-    private List<Day> getDays(Elements tableHeaderCells) throws ParseException {
-        List<Day> days = new ArrayList<>();
+    private List<TimetableDay> getDays(Elements tableHeaderCells) throws ParseException {
+        List<TimetableDay> days = new ArrayList<>();
 
         for (int i = 2; i < 7; i++) {
             String[] dayHeaderCell = tableHeaderCells.get(i).html().split("<br>");
@@ -55,7 +54,7 @@ public class Timetable {
             Date d = sdf.parse(dayHeaderCell[1].trim());
             sdf.applyPattern("yyyy-MM-dd");
 
-            Day day = new Day();
+            TimetableDay day = new TimetableDay();
             day.setDayName(dayHeaderCell[0]);
             day.setDate(sdf.format(d));
 
@@ -70,7 +69,7 @@ public class Timetable {
         return days;
     }
 
-    private void setLessonToDays(Element table, List<Day> days) {
+    private void setLessonToDays(Element table, List<TimetableDay> days) {
         for (Element row : table.select("tbody tr")) {
             Elements hours = row.select("td");
 

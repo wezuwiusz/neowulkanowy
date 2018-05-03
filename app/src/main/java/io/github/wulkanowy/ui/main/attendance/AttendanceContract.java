@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.main.attendance;
 import io.github.wulkanowy.di.annotations.PerActivity;
 import io.github.wulkanowy.ui.base.BaseContract;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
-import io.github.wulkanowy.ui.main.TabsData;
 
 public interface AttendanceContract {
 
@@ -13,7 +12,7 @@ public interface AttendanceContract {
 
         void scrollViewPagerToPosition(int position);
 
-        void setTabDataToAdapter(TabsData tabsData);
+        void setTabDataToAdapter(String date);
 
         void setAdapterWithTabLayout();
 

@@ -3,7 +3,7 @@
     <string-array name="startup_tab_entries" translatable="false">
         <item>@string/grades_text</item>
         <item>@string/attendance_text</item>
-        <item>@string/dashboard_text</item>
+        <item>@string/exams_text</item>
         <item>@string/timetable_text</item>
     </string-array>
     <string-array name="startup_tab_value" translatable="false">

@@ -40,7 +40,7 @@ public class TimetableSync {
     public void syncTimetable(long diaryId, String date) throws IOException, ParseException, VulcanException {
         this.diaryId = diaryId;
 
-        io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> weekApi = getWeekFromApi(getNormalizedDate(date));
+        io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.timetable.TimetableDay> weekApi = getWeekFromApi(getNormalizedDate(date));
         Week weekDb = getWeekFromDb(weekApi.getStartDayDate());
 
         long weekId = updateWeekInDb(weekDb, weekApi);
@@ -56,7 +56,7 @@ public class TimetableSync {
         return null != date ? String.valueOf(TimeUtils.getNetTicks(date)) : "";
     }
 
-    private io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> getWeekFromApi(String date)
+    private io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.timetable.TimetableDay> getWeekFromApi(String date)
             throws IOException, ParseException, VulcanException {
         return vulcan.getTimetable().getWeekTable(date);
     }
@@ -82,14 +82,14 @@ public class TimetableSync {
         return daoSession.getWeekDao().insert(apiEntity);
     }
 
-    private List<TimetableLesson> updateDays(List<io.github.wulkanowy.api.generic.Day> dayListFromApi, long weekId) {
+    private List<TimetableLesson> updateDays(List<io.github.wulkanowy.api.timetable.TimetableDay> dayListFromApi, long weekId) {
         List<TimetableLesson> updatedLessonList = new ArrayList<>();
 
-        for (io.github.wulkanowy.api.generic.Day dayFromApi : dayListFromApi) {
+        for (io.github.wulkanowy.api.timetable.TimetableDay dayFromApi : dayListFromApi) {
 
             Day dbDayEntity = getDayFromDb(dayFromApi.getDate(), weekId);
 
-            Day apiDayEntity = DataObjectConverter.dayToDayEntity(dayFromApi);
+            Day apiDayEntity = DataObjectConverter.timetableDayToDayEntity(dayFromApi);
 
             long dayId = updateDay(dbDayEntity, apiDayEntity, weekId);
 

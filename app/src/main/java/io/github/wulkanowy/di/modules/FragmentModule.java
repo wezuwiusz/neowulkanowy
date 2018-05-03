@@ -6,20 +6,22 @@ import dagger.Module;
 import dagger.Provides;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import io.github.wulkanowy.di.annotations.PerFragment;
+import io.github.wulkanowy.ui.base.BasePagerAdapter;
 import io.github.wulkanowy.ui.main.attendance.AttendanceContract;
 import io.github.wulkanowy.ui.main.attendance.AttendanceHeaderItem;
-import io.github.wulkanowy.ui.main.attendance.AttendancePagerAdapter;
 import io.github.wulkanowy.ui.main.attendance.AttendancePresenter;
 import io.github.wulkanowy.ui.main.attendance.AttendanceTabContract;
 import io.github.wulkanowy.ui.main.attendance.AttendanceTabPresenter;
-import io.github.wulkanowy.ui.main.dashboard.DashboardContract;
-import io.github.wulkanowy.ui.main.dashboard.DashboardPresenter;
+import io.github.wulkanowy.ui.main.exams.ExamsContract;
+import io.github.wulkanowy.ui.main.exams.ExamsPresenter;
+import io.github.wulkanowy.ui.main.exams.ExamsSubItem;
+import io.github.wulkanowy.ui.main.exams.ExamsTabContract;
+import io.github.wulkanowy.ui.main.exams.ExamsTabPresenter;
 import io.github.wulkanowy.ui.main.grades.GradeHeaderItem;
 import io.github.wulkanowy.ui.main.grades.GradesContract;
 import io.github.wulkanowy.ui.main.grades.GradesPresenter;
 import io.github.wulkanowy.ui.main.timetable.TimetableContract;
 import io.github.wulkanowy.ui.main.timetable.TimetableHeaderItem;
-import io.github.wulkanowy.ui.main.timetable.TimetablePagerAdapter;
 import io.github.wulkanowy.ui.main.timetable.TimetablePresenter;
 import io.github.wulkanowy.ui.main.timetable.TimetableTabContract;
 import io.github.wulkanowy.ui.main.timetable.TimetableTabPresenter;
@@ -47,8 +49,8 @@ public class FragmentModule {
 
     @PerFragment
     @Provides
-    DashboardContract.Presenter provideDashboardPresenter(DashboardPresenter dashboardPresenter) {
-        return dashboardPresenter;
+    ExamsContract.Presenter provideDashboardPresenter(ExamsPresenter examsPresenter) {
+        return examsPresenter;
     }
 
     @PerFragment
@@ -58,12 +60,27 @@ public class FragmentModule {
     }
 
     @Provides
-    AttendancePagerAdapter provideAttendancePagerAdapter() {
-        return new AttendancePagerAdapter(fragment.getChildFragmentManager());
+    BasePagerAdapter provideBasePagerAdapter() {
+        return new BasePagerAdapter(fragment.getChildFragmentManager());
     }
 
     @Provides
     FlexibleAdapter<AttendanceHeaderItem> provideAttendanceTabAdapter() {
+        return new FlexibleAdapter<>(null);
+    }
+
+    @Provides
+    FlexibleAdapter<TimetableHeaderItem> provideTimetableTabAdapter() {
+        return new FlexibleAdapter<>(null);
+    }
+
+    @Provides
+    FlexibleAdapter<GradeHeaderItem> provideGradesAdapter() {
+        return new FlexibleAdapter<>(null);
+    }
+
+    @Provides
+    FlexibleAdapter<ExamsSubItem> provideExamAdapter() {
         return new FlexibleAdapter<>(null);
     }
 
@@ -80,17 +97,7 @@ public class FragmentModule {
     }
 
     @Provides
-    TimetablePagerAdapter provideTimetablePagerAdapter() {
-        return new TimetablePagerAdapter(fragment.getChildFragmentManager());
-    }
-
-    @Provides
-    FlexibleAdapter<TimetableHeaderItem> provideTimetableTabAdapter() {
-        return new FlexibleAdapter<>(null);
-    }
-
-    @Provides
-    FlexibleAdapter<GradeHeaderItem> provideGradesAdapter() {
-        return new FlexibleAdapter<>(null);
+    ExamsTabContract.Presenter provideExamsTabPresenter(ExamsTabPresenter examsTabPresenter) {
+        return examsTabPresenter;
     }
 }

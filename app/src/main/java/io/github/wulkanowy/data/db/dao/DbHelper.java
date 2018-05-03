@@ -17,7 +17,7 @@ import javax.inject.Singleton;
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.data.db.dao.entities.DaoMaster;
 import io.github.wulkanowy.data.db.dao.migrations.Migration23;
-import io.github.wulkanowy.data.db.dao.migrations.Migration24;
+import io.github.wulkanowy.data.db.dao.migrations.Migration25;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.di.annotations.ApplicationContext;
 import io.github.wulkanowy.di.annotations.DatabaseInfo;
@@ -66,6 +66,7 @@ public class DbHelper extends DaoMaster.OpenHelper {
     }
 
     private void recreateDatabase(Database db) {
+        LogUtils.info("Database is recreating...");
         sharedPref.setCurrentUserId(0);
         DaoMaster.dropAllTables(db, true);
         onCreate(db);
@@ -74,7 +75,7 @@ public class DbHelper extends DaoMaster.OpenHelper {
     private List<Migration> getMigrations() {
         List<Migration> migrations = new ArrayList<>();
         migrations.add(new Migration23());
-        migrations.add(new Migration24());
+        migrations.add(new Migration25());
 
         // Sorting just to be safe, in case other people add migrations in the wrong order.
         Comparator<Migration> migrationComparator = new Comparator<Migration>() {

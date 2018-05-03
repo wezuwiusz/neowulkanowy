@@ -23,16 +23,20 @@ public class SyncRepository implements SyncContract {
 
     private final AccountSync accountSync;
 
+    private final ExamsSync examsSync;
+
     private final DbContract database;
 
     @Inject
     SyncRepository(GradeSync gradeSync, SubjectSync subjectSync, AttendanceSync attendanceSync,
-                   TimetableSync timetableSync, AccountSync accountSync, DbContract database) {
+                   TimetableSync timetableSync, AccountSync accountSync, ExamsSync examsSync,
+                   DbContract database) {
         this.gradeSync = gradeSync;
         this.subjectSync = subjectSync;
         this.attendanceSync = attendanceSync;
         this.timetableSync = timetableSync;
         this.accountSync = accountSync;
+        this.examsSync = examsSync;
         this.database = database;
     }
 
@@ -96,10 +100,25 @@ public class SyncRepository implements SyncContract {
     }
 
     @Override
+    public void syncExams() throws VulcanException, IOException, ParseException {
+        examsSync.syncExams(database.getCurrentDiaryId(), null);
+    }
+
+    @Override
+    public void syncExams(long diaryId, String date) throws VulcanException, IOException, ParseException {
+        if (diaryId != 0) {
+            examsSync.syncExams(diaryId, date);
+        } else {
+            examsSync.syncExams(database.getCurrentDiaryId(), date);
+        }
+    }
+
+    @Override
     public void syncAll() throws VulcanException, IOException, ParseException {
         syncSubjects();
         syncGrades();
         syncAttendance();
         syncTimetable();
+        syncExams();
     }
 }

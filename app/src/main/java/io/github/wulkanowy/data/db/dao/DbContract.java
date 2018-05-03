@@ -10,6 +10,8 @@ public interface DbContract {
 
     Week getWeek(String date);
 
+    Week getWeek(long diaryId, String date);
+
     List<Subject> getSubjectList(int semesterName);
 
     List<Grade> getNewGrades(int semesterName);

@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.ui.base.BasePresenter;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
-import io.github.wulkanowy.ui.main.TabsData;
 import io.github.wulkanowy.utils.TimeUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
@@ -19,8 +18,6 @@ public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
     private AbstractTask loadingTask;
 
     private List<String> dates = new ArrayList<>();
-
-    private TabsData tabsData = new TabsData();
 
     private OnFragmentIsReadyListener listener;
 
@@ -69,8 +66,7 @@ public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
     @Override
     public void onDoInBackgroundLoading() throws Exception {
         for (String date : dates) {
-            tabsData.addTitle(date);
-            tabsData.addFragment(AttendanceTabFragment.newInstance(date));
+            getView().setTabDataToAdapter(date);
         }
     }
 
@@ -83,7 +79,6 @@ public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
     @Override
     public void onEndLoadingAsync(boolean result, Exception exception) {
         if (result) {
-            getView().setTabDataToAdapter(tabsData);
             getView().setAdapterWithTabLayout();
             getView().scrollViewPagerToPosition(positionToScroll);
             listener.onFragmentIsReady();

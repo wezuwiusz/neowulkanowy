@@ -102,6 +102,7 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
             week = getRepository().getDbRepo().getWeek(date);
         }
 
+        week.resetDayList();
         List<Day> dayList = week.getDayList();
 
         headerItems = new ArrayList<>();

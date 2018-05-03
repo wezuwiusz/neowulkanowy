@@ -32,13 +32,18 @@ public class DbRepository implements DbContract {
 
     @Override
     public Week getWeek(String date) {
+        return getWeek(getCurrentDiaryId(), date);
+    }
+
+    @Override
+    public Week getWeek(long diaryId, String date) {
         return daoSession.getWeekDao().queryBuilder().where(
                 WeekDao.Properties.StartDayDate.eq(date),
-                WeekDao.Properties.DiaryId.eq(getCurrentDiaryId())
+                WeekDao.Properties.DiaryId.eq(diaryId)
         ).unique();
     }
 
-
+    @Override
     public List<Subject> getSubjectList(int semesterName) {
         return daoSession.getSemesterDao().load(getSemesterId(semesterName)).getSubjectList();
     }

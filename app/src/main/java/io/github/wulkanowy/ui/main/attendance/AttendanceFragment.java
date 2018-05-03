@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.di.component.FragmentComponent;
 import io.github.wulkanowy.ui.base.BaseFragment;
+import io.github.wulkanowy.ui.base.BasePagerAdapter;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
-import io.github.wulkanowy.ui.main.TabsData;
 
 public class AttendanceFragment extends BaseFragment implements AttendanceContract.View {
 
@@ -31,7 +31,7 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
     TabLayout tabLayout;
 
     @Inject
-    AttendancePagerAdapter pagerAdapter;
+    BasePagerAdapter pagerAdapter;
 
     @Inject
     AttendanceContract.Presenter presenter;
@@ -65,8 +65,8 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
     }
 
     @Override
-    public void setTabDataToAdapter(TabsData tabsData) {
-        pagerAdapter.setTabsData(tabsData);
+    public void setTabDataToAdapter(String date) {
+        pagerAdapter.addFragment(AttendanceTabFragment.newInstance(date), date);
     }
 
     @Override

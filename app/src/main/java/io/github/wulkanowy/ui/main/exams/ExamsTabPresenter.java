@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.main.attendance;
+package io.github.wulkanowy.ui.main.exams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,34 +6,34 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.github.wulkanowy.data.RepositoryContract;
-import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.data.db.dao.entities.Day;
+import io.github.wulkanowy.data.db.dao.entities.Exam;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.ui.base.BasePresenter;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
-public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.View>
-        implements AttendanceTabContract.Presenter, AsyncListeners.OnRefreshListener,
-        AsyncListeners.OnFirstLoadingListener {
+public class ExamsTabPresenter extends BasePresenter<ExamsTabContract.View>
+        implements ExamsTabContract.Presenter, AsyncListeners.OnFirstLoadingListener,
+        AsyncListeners.OnRefreshListener {
 
     private AbstractTask refreshTask;
 
     private AbstractTask loadingTask;
 
-    private List<AttendanceHeaderItem> headerItems = new ArrayList<>();
+    private List<ExamsSubItem> subItems = new ArrayList<>();
 
     private String date;
 
     private boolean isFirstSight = false;
 
     @Inject
-    AttendanceTabPresenter(RepositoryContract repository) {
+    public ExamsTabPresenter(RepositoryContract repository) {
         super(repository);
     }
 
     @Override
-    public void onStart(AttendanceTabContract.View view) {
+    public void onStart(ExamsTabContract.View view) {
         super.onStart(view);
         getView().showProgressBar(true);
         getView().showNoItem(false);
@@ -50,6 +50,11 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
         } else if (!isSelected) {
             cancelAsyncTasks();
         }
+    }
+
+    @Override
+    public void setArgumentDate(String date) {
+        this.date = date;
     }
 
     @Override
@@ -93,9 +98,8 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
     @Override
     public void onDoInBackgroundLoading() throws Exception {
         Week week = getRepository().getDbRepo().getWeek(date);
-        boolean isShowPresent = getRepository().getSharedRepo().isShowAttendancePresent();
 
-        if (week == null || !week.getAttendanceSynced()) {
+        if (week == null || !week.getExamsSynced()) {
             syncData();
             week = getRepository().getDbRepo().getWeek(date);
         }
@@ -103,42 +107,17 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
         week.resetDayList();
         List<Day> dayList = week.getDayList();
 
-        headerItems = new ArrayList<>();
-
-        boolean isEmptyWeek = true;
+        subItems = new ArrayList<>();
 
         for (Day day : dayList) {
-            day.resetAttendanceLessons();
-            AttendanceHeaderItem headerItem = new AttendanceHeaderItem(day);
+            day.resetExams();
+            ExamsHeaderItem headerItem = new ExamsHeaderItem(day);
 
-            if (isEmptyWeek) {
-                isEmptyWeek = day.getAttendanceLessons().isEmpty();
+            List<Exam> examList = day.getExams();
+
+            for (Exam exam : examList) {
+                subItems.add(new ExamsSubItem(headerItem, exam));
             }
-
-            List<AttendanceLesson> lessonList = day.getAttendanceLessons();
-
-            List<AttendanceSubItem> subItems = new ArrayList<>();
-
-            for (AttendanceLesson lesson : lessonList) {
-                if (!isShowPresent && lesson.getPresence()) {
-                    continue;
-                }
-
-                lesson.setDescription(getRepository().getResRepo().getAttendanceLessonDescription(lesson));
-                subItems.add(new AttendanceSubItem(headerItem, lesson));
-            }
-
-            if (!isShowPresent && subItems.isEmpty()) {
-                continue;
-            }
-
-            headerItem.setSubItems(subItems);
-            headerItem.setExpanded(false);
-            headerItems.add(headerItem);
-        }
-
-        if (isEmptyWeek) {
-            headerItems = new ArrayList<>();
         }
     }
 
@@ -149,23 +128,18 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
 
     @Override
     public void onEndLoadingAsync(boolean result, Exception exception) {
-        if (headerItems.isEmpty()) {
+        if (subItems.isEmpty()) {
             getView().showNoItem(true);
             getView().updateAdapterList(null);
         } else {
-            getView().updateAdapterList(headerItems);
+            getView().updateAdapterList(subItems);
             getView().showNoItem(false);
         }
         getView().showProgressBar(false);
     }
 
-    @Override
-    public void setArgumentDate(String date) {
-        this.date = date;
-    }
-
     private void syncData() throws Exception {
-        getRepository().getSyncRepo().syncAttendance(0, date);
+        getRepository().getSyncRepo().syncExams(0, date);
     }
 
     private void cancelAsyncTasks() {
@@ -181,8 +155,8 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
 
     @Override
     public void onDestroy() {
-        cancelAsyncTasks();
         isFirstSight = false;
+        cancelAsyncTasks();
         super.onDestroy();
     }
 }

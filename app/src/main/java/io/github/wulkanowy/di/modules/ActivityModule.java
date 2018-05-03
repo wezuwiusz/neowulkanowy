@@ -8,10 +8,10 @@ import dagger.Module;
 import dagger.Provides;
 import io.github.wulkanowy.di.annotations.ActivityContext;
 import io.github.wulkanowy.di.annotations.PerActivity;
+import io.github.wulkanowy.ui.base.BasePagerAdapter;
 import io.github.wulkanowy.ui.login.LoginContract;
 import io.github.wulkanowy.ui.login.LoginPresenter;
 import io.github.wulkanowy.ui.main.MainContract;
-import io.github.wulkanowy.ui.main.MainPagerAdapter;
 import io.github.wulkanowy.ui.main.MainPresenter;
 import io.github.wulkanowy.ui.splash.SplashContract;
 import io.github.wulkanowy.ui.splash.SplashPresenter;
@@ -58,7 +58,7 @@ public class ActivityModule {
     }
 
     @Provides
-    MainPagerAdapter provideMainPagerAdapter() {
-        return new MainPagerAdapter(activity.getSupportFragmentManager());
+    BasePagerAdapter provideMainPagerAdapter() {
+        return new BasePagerAdapter(activity.getSupportFragmentManager());
     }
 }

@@ -32,6 +32,9 @@ public class Week {
     @Property(nameInDb = "timetable_synced")
     private boolean timetableSynced = false;
 
+    @Property(nameInDb = "exams_synced")
+    private boolean examsSynced = false;
+
     @ToMany(referencedJoinProperty = "weekId")
     private List<Day> dayList;
 
@@ -47,14 +50,15 @@ public class Week {
     @Generated(hash = 1019310398)
     private transient WeekDao myDao;
 
-    @Generated(hash = 1608180902)
-    public Week(Long id, Long diaryId, String startDayDate,
-                boolean attendanceSynced, boolean timetableSynced) {
+    @Generated(hash = 23357599)
+    public Week(Long id, Long diaryId, String startDayDate, boolean attendanceSynced,
+                boolean timetableSynced, boolean examsSynced) {
         this.id = id;
         this.diaryId = diaryId;
         this.startDayDate = startDayDate;
         this.attendanceSynced = attendanceSynced;
         this.timetableSynced = timetableSynced;
+        this.examsSynced = examsSynced;
     }
 
     @Generated(hash = 2135529658)
@@ -88,8 +92,8 @@ public class Week {
         return this;
     }
 
-    public boolean isAttendanceSynced() {
-        return attendanceSynced;
+    public boolean getAttendanceSynced() {
+        return this.attendanceSynced;
     }
 
     public Week setAttendanceSynced(boolean attendanceSynced) {
@@ -97,13 +101,22 @@ public class Week {
         return this;
     }
 
-    public boolean isTimetableSynced() {
-        return timetableSynced;
+    public boolean getTimetableSynced() {
+        return this.timetableSynced;
     }
 
     public Week setTimetableSynced(boolean timetableSynced) {
         this.timetableSynced = timetableSynced;
         return this;
+    }
+
+    public Week setExamsSynced(boolean examsSynced) {
+        this.examsSynced = examsSynced;
+        return this;
+    }
+
+    public boolean getExamsSynced() {
+        return examsSynced;
     }
 
     /**
@@ -170,14 +183,6 @@ public class Week {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    public boolean getAttendanceSynced() {
-        return this.attendanceSynced;
-    }
-
-    public boolean getTimetableSynced() {
-        return this.timetableSynced;
     }
 
     /** called by internal mechanisms, do not call yourself. */

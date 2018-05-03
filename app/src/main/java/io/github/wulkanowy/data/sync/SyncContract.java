@@ -32,5 +32,9 @@ public interface SyncContract {
 
     void syncTimetable(long diaryId, String date) throws VulcanException, IOException, ParseException;
 
+    void syncExams() throws VulcanException, IOException, ParseException;
+
+    void syncExams(long diaryId, String date) throws VulcanException, IOException, ParseException;
+
     void syncAll() throws VulcanException, IOException, ParseException;
 }

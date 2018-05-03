@@ -11,10 +11,6 @@ public class Day {
 
     private String dayName = "";
 
-    private boolean isFreeDay = false;
-
-    private String freeDayName = "";
-
     public Lesson getLesson(int index) {
         return lessons.get(index);
     }
@@ -43,21 +39,5 @@ public class Day {
 
     public void setDayName(String dayName) {
         this.dayName = dayName;
-    }
-
-    public boolean isFreeDay() {
-        return isFreeDay;
-    }
-
-    public void setFreeDay(boolean freeDay) {
-        isFreeDay = freeDay;
-    }
-
-    public String getFreeDayName() {
-        return freeDayName;
-    }
-
-    public void setFreeDayName(String freeDayName) {
-        this.freeDayName = freeDayName;
     }
 }
