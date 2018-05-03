@@ -44,3 +44,5 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+.idea/codeStyles/
+.idea/caches/

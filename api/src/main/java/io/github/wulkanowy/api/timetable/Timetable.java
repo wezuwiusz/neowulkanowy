@@ -95,11 +95,14 @@ public class Timetable {
         moveWarningToLessonNode(e);
 
         switch (e.size()) {
+            case 2:
+                Element span = e.last().select("span").first();
+                if (span.hasClass(LessonTypes.CLASS_MOVED_OR_CANCELED)) {
+                    lesson.setNewMovedInOrChanged(true);
+                    lesson.setDescription("poprzednio: " + getLessonAndGroupInfoFromSpan(span)[0]);
+                }
             case 1:
                 addLessonInfoFromElement(lesson, e.first());
-                break;
-            case 2:
-                addLessonInfoFromElement(lesson, e.last());
                 break;
             case 3:
                 addLessonInfoFromElement(lesson, e.get(1));

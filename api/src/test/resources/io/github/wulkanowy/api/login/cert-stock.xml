@@ -1,9 +1,9 @@
 <trust:RequestSecurityTokenResponseCollection xmlns:trust="http://docs.oasis-open.org/ws-sx/ws-trust/200512">
-	<trust:RequestSecurityTokenResponse Context="https://uonetplus.fake-log.com/Default/LoginEndpoint.aspx">
+	<trust:RequestSecurityTokenResponse Context="https://uonetplus.fakelog.cf/Default/LoginEndpoint.aspx">
 		<trust:RequestedSecurityToken>
 			<saml:Assertion AssertionID="_12345678-1234-1234-1234-1234567890ab" IssueInstant="2017-10-18T22:00:29.006Z" Issuer="CUFSTokenService" MajorVersion="1" MinorVersion="1" xmlns:saml="urn:oasis:names:tc:SAML:1.0:assertion">
 				<saml:AttributeStatement>
-					<saml:Attribute AttributeName="UserInstance" AttributeNamespace="http://schemas.fake-log.com/ws/identity/claims">
+					<saml:Attribute AttributeName="UserInstance" AttributeNamespace="http://schemas.fakelog.cf/ws/identity/claims">
 						<saml:AttributeValue>Default</saml:AttributeValue>
 						<saml:AttributeValue>demo12345</saml:AttributeValue>
 						<saml:AttributeValue>incorrect value</saml:AttributeValue>

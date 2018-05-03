@@ -24,6 +24,7 @@ public class LoginTest {
 
         Client client = Mockito.mock(Client.class);
         Mockito.when(client.postPageByUrl(Mockito.anyString(), Mockito.any(String[][].class))).thenReturn(doc);
+        Mockito.when(client.getPageByUrl(Mockito.anyString(), Mockito.anyBoolean())).thenReturn(doc);
 
         return client;
     }
@@ -56,10 +57,8 @@ public class LoginTest {
         Login login = new Login(client);
 
         Assert.assertEquals(
-                getFixtureAsString("cert.xml").replaceAll("\\s+",""),
-                login.sendCredentials("a@a", "passwd")
-                        .select("input[name=wresult]").attr("value")
-                        .replaceAll("\\s+","")
+                getFixtureAsString("cert-stock.xml").replaceAll("\\s+",""),
+                login.sendCredentials("a@a", "passwd").select("input[name=wresult]").attr("value").replaceAll("\\s+","")
         );
     }
 
@@ -83,21 +82,21 @@ public class LoginTest {
     public void sendCertificateAccountPermissionTest() throws Exception {
         Login login = new Login(getClient("Logowanie-brak-dostepu.html"));
 
-        login.sendCertificate(getFixtureAsDocument("cert.xml"), "demo123");
+        login.sendCertificate(getFixtureAsDocument("cert-stock.xml"), "demo123");
     }
 
     @Test(expected = LoginErrorException.class)
     public void sendCertificateLoginErrorTest() throws Exception {
         Login login = new Login(getClient("Logowanie-certyfikat.html")); // change to other document
 
-        login.sendCertificate(getFixtureAsDocument("cert.xml"), "demo123");
+        login.sendCertificate(getFixtureAsDocument("cert-stock.xml"), "demo123");
     }
 
     @Test
     public void findSymbolInCertificateTest() throws Exception {
         Login login = new Login(getClient("Logowanie-certyfikat.html"));
 
-        String certificate = getFixtureAsString("cert.xml");
+        String certificate = getFixtureAsString("cert-stock.xml");
 
         Assert.assertEquals("demo12345", login.findSymbolInCertificate(certificate));
     }

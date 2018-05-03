@@ -44,7 +44,11 @@ public class Client {
             String[] url = creds[0].split("://");
 
             protocol = url[0];
-            host = url[1];
+            String[] path = url[1].split("/");
+            host = path[0];
+            if (path.length > 1) {
+                symbol = path[1];
+            }
             email = creds[2];
         }
     }
