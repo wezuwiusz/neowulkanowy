@@ -57,7 +57,7 @@ public class SharedPrefRepository implements SharedPrefContract {
 
     @Override
     public int getStartupTab() {
-        return Integer.parseInt(settingsSharedPref.getString(SettingsFragment.SHARED_KEY_START_TAB, "2"));
+        return Integer.parseInt(settingsSharedPref.getString(SettingsFragment.SHARED_KEY_START_TAB, "0"));
     }
 
     @Override

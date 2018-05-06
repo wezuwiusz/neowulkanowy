@@ -170,13 +170,13 @@ public final class DataObjectConverter {
         return lessonEntityList;
     }
 
-    public static List<Exam> examsToExamsEntitiy(List<io.github.wulkanowy.api.exams.Exam> examList) {
+    public static List<Exam> examsToExamsEntity(List<io.github.wulkanowy.api.exams.Exam> examList) {
         List<Exam> examEntityList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.exams.Exam exam : examList) {
             examEntityList.add(new Exam()
                     .setDescription(exam.getDescription())
-                    .setDate(exam.getEntryDate())
+                    .setEntryDate(exam.getEntryDate())
                     .setSubjectAndGroup(exam.getSubjectAndGroup())
                     .setTeacher(exam.getTeacher())
                     .setType(exam.getType()));

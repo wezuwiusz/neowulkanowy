@@ -58,7 +58,7 @@ public class ExamsWeek {
                         .setType(snp.getRowDataChildValue(e, 2))
                         .setDescription(snp.getRowDataChildValue(e, 3))
                         .setTeacher(snp.getRowDataChildValue(e, 4).split(", ")[0])
-                        .setEntryDate(snp.getRowDataChildValue(e, 4).split(", ")[1])
+                        .setEntryDate(getFormattedDate(snp.getRowDataChildValue(e, 4).split(", ")[1]))
                 );
             }
 

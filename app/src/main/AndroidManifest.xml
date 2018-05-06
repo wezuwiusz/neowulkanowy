@@ -32,12 +32,14 @@
             android:name=".ui.login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_login"
+            android:theme="@style/WulkanowyTheme.LoginTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_dashboard_text"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/WulkanowyTheme" />
 
         <service
             android:name=".services.jobs.SyncJob"

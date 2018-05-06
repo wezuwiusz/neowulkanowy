@@ -141,4 +141,5 @@
     <string name="widget_timetable_tomorrow">Jutro</string>
     <string name="exams_no_entries">Brak sprawdzianów w tym tygodniu</string>
     <string name="exams_type">Typ</string>
+    <string name="exams_dialog_entry_date">Data wpisu</string>
 </resources>

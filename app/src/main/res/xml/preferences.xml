@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/pref_view_header">
         <ListPreference
-            android:defaultValue="2"
+            android:defaultValue="0"
             android:entries="@array/startup_tab_entries"
             android:entryValues="@array/startup_tab_value"
             android:key="startup_tab"

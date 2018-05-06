@@ -136,4 +136,5 @@
     <string name="widget_timetable_tomorrow">Tomorrow</string>
     <string name="exams_no_entries">No exams in this week</string>
     <string name="exams_type">Type</string>
+    <string name="exams_dialog_entry_date">Date of entry</string>
 </resources>

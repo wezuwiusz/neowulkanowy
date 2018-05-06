@@ -31,7 +31,7 @@ public class ExamsDialogFragment extends DialogFragment {
     TextView teacher;
 
     @BindView(R.id.exams_dialog_date_value)
-    TextView date;
+    TextView entryDate;
 
     @BindView(R.id.exams_dialog_description_value)
     TextView description;
@@ -65,7 +65,7 @@ public class ExamsDialogFragment extends DialogFragment {
         subject.setText(exam.getSubjectAndGroup());
         teacher.setText(exam.getTeacher());
         type.setText(exam.getType());
-        date.setText(exam.getDate());
+        entryDate.setText(exam.getEntryDate());
 
         if (!exam.getDescription().isEmpty()) {
             description.setText(exam.getDescription());

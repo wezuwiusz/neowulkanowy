@@ -104,8 +104,8 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
     public void getExamEntryDateTest() throws Exception {
         List<ExamDay> dayList = onePerDay.getCurrent().getDays();
 
-        Assert.assertEquals("16.10.2017", dayList.get(0).getExamList().get(0).getEntryDate());
-        Assert.assertEquals("17.10.2017", dayList.get(1).getExamList().get(0).getEntryDate());
-        Assert.assertEquals("16.10.2017", dayList.get(2).getExamList().get(0).getEntryDate());
+        Assert.assertEquals("2017-10-16", dayList.get(0).getExamList().get(0).getEntryDate());
+        Assert.assertEquals("2017-10-17", dayList.get(1).getExamList().get(0).getEntryDate());
+        Assert.assertEquals("2017-10-16", dayList.get(2).getExamList().get(0).getEntryDate());
     }
 }

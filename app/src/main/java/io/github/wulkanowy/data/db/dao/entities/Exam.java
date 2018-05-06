@@ -33,8 +33,8 @@ public class Exam implements Serializable {
     @Property(nameInDb = "teacher")
     private String teacher = "";
 
-    @Property(nameInDb = "date")
-    private String date = "";
+    @Property(nameInDb = "entry_date")
+    private String entryDate = "";
 
     private static final long serialVersionUID = 42L;
 
@@ -50,16 +50,16 @@ public class Exam implements Serializable {
     @Generated(hash = 973692038)
     private transient ExamDao myDao;
 
-    @Generated(hash = 1455345431)
-    public Exam(Long id, Long dayId, String subjectAndGroup, String type,
-                String description, String teacher, String date) {
+    @Generated(hash = 998653360)
+    public Exam(Long id, Long dayId, String subjectAndGroup, String type, String description,
+                String teacher, String entryDate) {
         this.id = id;
         this.dayId = dayId;
         this.subjectAndGroup = subjectAndGroup;
         this.type = type;
         this.description = description;
         this.teacher = teacher;
-        this.date = date;
+        this.entryDate = entryDate;
     }
 
     @Generated(hash = 945526930)
@@ -120,12 +120,12 @@ public class Exam implements Serializable {
         return this;
     }
 
-    public String getDate() {
-        return date;
+    public String getEntryDate() {
+        return entryDate;
     }
 
-    public Exam setDate(String date) {
-        this.date = date;
+    public Exam setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
         return this;
     }
 

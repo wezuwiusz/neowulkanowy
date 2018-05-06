@@ -6,11 +6,11 @@ import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.data.db.dao.DbHelper;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 
-public class Migration25 implements DbHelper.Migration {
+public class Migration26 implements DbHelper.Migration {
 
     @Override
     public Integer getVersion() {
-        return 25;
+        return 26;
     }
 
     @Override

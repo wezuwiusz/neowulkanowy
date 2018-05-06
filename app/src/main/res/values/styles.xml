@@ -16,9 +16,22 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
+    <style name="WulkanowyTheme.LoginTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="actionMenuTextColor">@android:color/primary_text_dark</item>
+        <item name="android:textColorPrimary">@android:color/primary_text_light</item>
+        <item name="android:textColorSecondary">@android:color/primary_text_light</item>
+        <item name="android:textColorSecondaryInverse">@android:color/primary_text_dark</item>
+        <item name="android:textColorTertiary">@android:color/primary_text_light</item>
+        <item name="android:textColorTertiaryInverse">@android:color/primary_text_dark</item>
+        <item name="titleTextColor">@android:color/primary_text_dark</item>
+        <item name="subtitleTextColor">@android:color/primary_text_dark</item>
+        <item name="android:colorBackground">@android:color/white</item>
+    </style>
+
     <style name="WulkanowyTheme.SplashTheme" parent="WulkanowyTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
