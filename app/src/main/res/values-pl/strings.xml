@@ -135,6 +135,18 @@
     <string name="pref_services_interval">Interwał między odświeżaniem danych</string>
     <string name="pref_services_mobile_data">Synchronizacja tylko przez WiFi</string>
 
+    <string name="pref_about_header">O aplikacji</string>
+    <string name="pref_about">Informacje o Wulkanowym</string>
+    <string name="pref_about_summary">Wulkanowy to nieoficjalny klient dziennika VULCAN UONET+</string>
+    <string name="pref_about_version">Wersja</string>
+    <string name="pref_about_osl">Licencje open source</string>
+    <string name="pref_about_osl_summary">Szczegóły licencji na oprogramowanie open source</string>
+    <string name="pref_about_support">Kod źródłowy i feedback</string>
+    <string name="about_programmer_step1">Nie, nie zostaniesz programistą!</string>
+    <string name="about_programmer_step2">Musisz bardziej się postarać!</string>
+    <string name="about_programmer_step3">Kliknij jeszcze parę razy</string>
+    <string name="about_programmer">Odwiedź zakładkę Kod źródłowy i pokaż jaki z ciebie programista!</string>
+
     <string name="notify_grade_channel">Nowe oceny</string>
     <string name="widget_timetable_no_lesson">Brak lekcji</string>
     <string name="widget_timetable_today">Dziś</string>

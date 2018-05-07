@@ -19,6 +19,8 @@ public final class AppConstant {
 
     public static final String DATE_PATTERN = "yyyy-MM-dd";
 
+    public static final String REPO_URL = "https://github.com/wulkanowy/wulkanowy";
+
     private AppConstant() {
         throw new IllegalStateException("Utility class");
     }

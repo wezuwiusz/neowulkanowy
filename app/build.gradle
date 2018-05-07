@@ -2,11 +2,13 @@ buildscript {
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url 'https://maven.fabric.io/public' }
+        google()
     }
 
     dependencies {
         classpath "org.greenrobot:greendao-gradle-plugin:$greenDaoGradle"
         classpath "io.fabric.tools:gradle:$fabricGradle"
+        classpath "com.google.gms:oss-licenses:0.9.2"
     }
 }
 
@@ -19,6 +21,7 @@ apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'io.fabric'
 apply from: '../jacoco.gradle'
 apply from: '../android-sonarqube.gradle'
+apply plugin: 'com.google.gms.oss.licenses.plugin'
 
 android {
     compileSdkVersion 26
@@ -87,6 +90,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger2"
     implementation "com.aurelhubert:ahbottomnavigation:$ahbottom"
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenABP"
+    implementation "com.google.android.gms:play-services-oss-licenses:$ossLicenses"
 
     implementation("com.crashlytics.sdk.android:crashlytics:$crashlyticsSdk@aar") {
         transitive = true

@@ -40,6 +40,12 @@
             android:label="@string/activity_dashboard_text"
             android:launchMode="singleTop"
             android:theme="@style/WulkanowyTheme" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/WulkanowyTheme.LoginTheme" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/WulkanowyTheme.LoginTheme" />
 
         <service
             android:name=".services.jobs.SyncJob"

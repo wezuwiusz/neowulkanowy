@@ -14,7 +14,6 @@ buildscript {
 }
 
 plugins {
-
     // gradle dependencyUpdates -Drevision=release
     id "com.github.ben-manes.versions" version "0.17.0"
 }
@@ -45,10 +44,11 @@ ext {
     greenDaoGradle = "3.2.2"
     butterknife = "8.8.1"
     threeTenABP = "1.1.0"
-    dagger2 = "2.15"
+    dagger2 = "2.16"
     ahbottom = "2.2.0"
     jsoup = "1.11.3"
     gson = "2.8.4"
+    ossLicenses = "15.0.1"
 
     debugDb = "1.0.3"
     sqlcipher = "3.5.9"

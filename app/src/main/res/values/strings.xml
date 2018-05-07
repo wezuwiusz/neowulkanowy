@@ -130,6 +130,18 @@
     <string name="pref_services_interval">Interval between data refreshing</string>
     <string name="pref_services_mobile_data">Synchronization via WiFi only</string>
 
+    <string name="pref_about_header">About</string>
+    <string name="pref_about">About Wulkanowy</string>
+    <string name="pref_about_summary">Wulkanowy is an unofficial VULCAN UONET+ log client</string>
+    <string name="pref_about_version">Version</string>
+    <string name="pref_about_osl">Open source licenses</string>
+    <string name="pref_about_osl_summary">License details for open source software</string>
+    <string name="pref_about_support">Source code &amp; feedback</string>
+    <string name="about_programmer_step1">No, you will not become a programmer!</string>
+    <string name="about_programmer_step2">You must try harder!</string>
+    <string name="about_programmer_step3">Click a few more times</string>
+    <string name="about_programmer">Visit the Source code tab and show how good a programmer you are!</string>
+
     <string name="notify_grade_channel">New grades</string>
     <string name="widget_timetable_no_lesson">No lessons</string>
     <string name="widget_timetable_today">Today</string>

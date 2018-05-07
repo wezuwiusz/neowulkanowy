@@ -2,13 +2,17 @@ package io.github.wulkanowy.ui.main.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.PreferenceScreen;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.services.jobs.SyncJob;
 
 public class SettingsFragment extends PreferenceFragmentCompat
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+        implements SharedPreferences.OnSharedPreferenceChangeListener,
+        PreferenceFragmentCompat.OnPreferenceStartScreenCallback{
 
     public static final String SHARED_KEY_START_TAB = "startup_tab";
 
@@ -27,6 +31,31 @@ public class SettingsFragment extends PreferenceFragmentCompat
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
+    }
+
+    @Override
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public Fragment getCallbackFragment() {
+        return this;
+    }
+
+    @Override
+    public boolean onPreferenceStartScreen(PreferenceFragmentCompat preferenceFragmentCompat,
+                                           PreferenceScreen preferenceScreen) {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        AboutScreen fragment = new AboutScreen();
+        Bundle args = new Bundle();
+        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, preferenceScreen.getKey());
+        fragment.setArguments(args);
+        ft.add(R.id.main_activity_container, fragment, preferenceScreen.getKey());
+        ft.addToBackStack(preferenceScreen.getKey());
+        ft.commit();
+
+        return true;
     }
 
     @Override

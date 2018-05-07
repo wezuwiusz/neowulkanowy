@@ -45,4 +45,27 @@
             android:key="notify_enable"
             android:title="@string/pref_notify_switch" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_about_header">
+        <PreferenceScreen
+            android:key="pref_about"
+            android:title="@string/pref_about"
+            android:persistent="false">
+            <PreferenceCategory android:title="@string/pref_about">
+                <Preference
+                    android:selectable="false"
+                    android:summary="@string/pref_about_summary"/>
+                <Preference
+                    android:key="about_version"
+                    android:title="@string/pref_about_version"/>
+                <Preference
+                    android:key="about_osl"
+                    android:title="@string/pref_about_osl"
+                    android:summary="@string/pref_about_osl_summary"/>
+                <Preference
+                    android:key="about_repo"
+                    android:title="@string/pref_about_support">
+                </Preference>
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>
