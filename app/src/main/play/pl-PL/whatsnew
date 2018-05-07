@@ -1,0 +1,11 @@
+Wersja 0.4.0:
+- dodano widget planu lekcji
+- dodano widok sprawdzianów
+- dodano informacje o końcowych ocenach z przedmiotu
+- dodano przełącznik semestru w ocenach 
+- dodano opcję ukrycia obecności
+- dodano wyróżnik aktualnego tygodnia
+- dodano podstawową obsługę niestandardowych dzienników Vulcan (np. Opolska eSzkoła)
+- naprawiono animacje w ocenach
+- naprawiono wyświetlanie oceny w szczególnych przypadkach
+- optymalizacja aplikacji

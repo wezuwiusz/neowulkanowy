@@ -30,7 +30,7 @@
     <string name="noColor_text">Brak koloru</string>
 
     <string name="activity_dashboard_text">Aktywność dashboard</string>
-    <string name="exams_text">Exams</string>
+    <string name="exams_text">Sprawdziany</string>
     <string name="grades_text">Oceny</string>
     <string name="attendance_text">Frekwencja</string>
     <string name="timetable_text">Plan lekcji</string>

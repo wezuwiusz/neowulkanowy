@@ -9,6 +9,7 @@ buildscript {
         classpath "org.greenrobot:greendao-gradle-plugin:$greenDaoGradle"
         classpath "io.fabric.tools:gradle:$fabricGradle"
         classpath "com.google.gms:oss-licenses:0.9.2"
+        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
     }
 }
 
@@ -22,28 +23,48 @@ apply plugin: 'io.fabric'
 apply from: '../jacoco.gradle'
 apply from: '../android-sonarqube.gradle'
 apply plugin: 'com.google.gms.oss.licenses.plugin'
+apply plugin: 'com.github.triplet.play'
 
 android {
     compileSdkVersion 26
     buildToolsVersion '27.0.3'
+
+    playAccountConfigs {
+        defaultAccountConfig {
+            serviceAccountEmail = System.getenv("PLAY_SERVICE_ACCOUNT_EMAIL")
+            pk12File = file('key.p12')
+        }
+    }
+
     defaultConfig {
         applicationId "io.github.wulkanowy"
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 7
-        versionName "0.3.1"
+        versionCode 8
+        versionName "0.4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        playAccountConfig = playAccountConfigs.defaultAccountConfig
         manifestPlaceholders = [
                 fabricApiKey: System.getenv("FABRIC_API_KEY") ?: "null"
         ]
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("upload-key.jks")
+            storePassword System.getenv("PLAY_STORE_PASSWORD")
+            keyAlias System.getenv("PLAY_KEY_ALIAS")
+            keyPassword System.getenv("PLAY_KEY_PASSWORD")
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             applicationIdSuffix ".dev"
@@ -62,6 +83,11 @@ android {
             }
         }
     }
+}
+
+play {
+    track = 'alpha'
+    uploadImages = true
 }
 
 greendao {
