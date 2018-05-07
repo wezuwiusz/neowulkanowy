@@ -17,6 +17,8 @@ public interface TimetableContract {
         void setAdapterWithTabLayout();
 
         boolean isMenuVisible();
+
+        void setThemeForTab(int position);
     }
 
     @PerFragment

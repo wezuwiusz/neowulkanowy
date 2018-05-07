@@ -81,6 +81,14 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
     }
 
     @Override
+    public void setThemeForTab(int position) {
+        TabLayout.Tab tab = tabLayout.getTabAt(position);
+        if (tab != null) {
+            tab.setCustomView(R.layout.current_week_tab);
+        }
+    }
+
+    @Override
     public void setActivityTitle() {
         setTitle(getString(R.string.attendance_text));
     }

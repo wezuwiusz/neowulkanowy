@@ -79,6 +79,7 @@ public class TimetablePresenter extends BasePresenter<TimetableContract.View>
     public void onEndLoadingAsync(boolean result, Exception exception) {
         if (result) {
             getView().setAdapterWithTabLayout();
+            getView().setThemeForTab(positionToScroll);
             getView().scrollViewPagerToPosition(positionToScroll);
             listener.onFragmentIsReady();
         }

@@ -17,6 +17,8 @@ public interface AttendanceContract {
         void setAdapterWithTabLayout();
 
         boolean isMenuVisible();
+
+        void setThemeForTab(int position);
     }
 
     @PerActivity

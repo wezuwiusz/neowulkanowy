@@ -80,6 +80,7 @@ public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
     public void onEndLoadingAsync(boolean result, Exception exception) {
         if (result) {
             getView().setAdapterWithTabLayout();
+            getView().setThemeForTab(positionToScroll);
             getView().scrollViewPagerToPosition(positionToScroll);
             listener.onFragmentIsReady();
         }

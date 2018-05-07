@@ -17,6 +17,8 @@ public interface ExamsContract {
         void setTabDataToAdapter(String date);
 
         void setAdapterWithTabLayout();
+
+        void setThemeForTab(int position);
     }
 
     @PerActivity

@@ -74,6 +74,14 @@ public class ExamsFragment extends BaseFragment implements ExamsContract.View {
     }
 
     @Override
+    public void setThemeForTab(int position) {
+        TabLayout.Tab tab = tabLayout.getTabAt(position);
+        if (tab != null) {
+            tab.setCustomView(R.layout.current_week_tab);
+        }
+    }
+
+    @Override
     public void setTabDataToAdapter(String date) {
         pagerAdapter.addFragment(ExamsTabFragment.newInstance(date), date);
     }
