@@ -21,6 +21,8 @@ import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
 
 public class ExamsFragment extends BaseFragment implements ExamsContract.View {
 
+    private static final String CURRENT_ITEM_KEY = "CurrentItem";
+
     @BindView(R.id.exams_fragment_viewpager)
     ViewPager viewPager;
 
@@ -43,6 +45,10 @@ public class ExamsFragment extends BaseFragment implements ExamsContract.View {
             component.inject(this);
             setButterKnife(ButterKnife.bind(this, view));
             presenter.onStart(this, (OnFragmentIsReadyListener) getActivity());
+
+            if (savedInstanceState != null) {
+                presenter.setRestoredPosition(savedInstanceState.getInt(CURRENT_ITEM_KEY));
+            }
         }
         return view;
     }
@@ -90,6 +96,12 @@ public class ExamsFragment extends BaseFragment implements ExamsContract.View {
     public void setAdapterWithTabLayout() {
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CURRENT_ITEM_KEY, viewPager.getCurrentItem());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
