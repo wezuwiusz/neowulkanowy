@@ -56,7 +56,7 @@ public class GradesList {
         String descriptions = row.select("td:nth-child(3)").text();
 
         String symbol = descriptions.split(", ")[0];
-        String description = descriptions.replaceFirst(symbol, "").replaceFirst(", ", "");
+        String description = descriptions.replaceFirst(Pattern.quote(symbol), "").replaceFirst(", ", "");
         String color = getColor(row.select("td:nth-child(2) span.ocenaCzastkowa").attr("style"));
         String date = formatDate(row.select("td:nth-child(5)").text());
 

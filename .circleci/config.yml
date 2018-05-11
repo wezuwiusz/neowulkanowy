@@ -227,5 +227,7 @@ workflows:
           requires:
             - instrumented
           filters:
+            branches:
+              only: master
             tags:
               only: /.*/

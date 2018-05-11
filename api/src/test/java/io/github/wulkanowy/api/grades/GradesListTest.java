@@ -19,7 +19,7 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getAllTest() throws Exception {
-        Assert.assertEquals(6, filled.getAll().size()); // 2 items are skipped
+        Assert.assertEquals(7, filled.getAll().size()); // 2 items are skipped
     }
 
     @Test
@@ -60,6 +60,7 @@ public class GradesListTest extends StudentAndParentTestCase {
         Assert.assertEquals("BW3", list.get(3).getSymbol());
         Assert.assertEquals("STR", list.get(4).getSymbol());
         Assert.assertEquals("K", list.get(5).getSymbol());
+        Assert.assertEquals("+Odp", list.get(6).getSymbol());
     }
 
     @Test
@@ -70,6 +71,7 @@ public class GradesListTest extends StudentAndParentTestCase {
         Assert.assertEquals("Writing", list.get(3).getDescription());
         Assert.assertEquals("", list.get(4).getDescription());
         Assert.assertEquals("Kordian", list.get(5).getDescription());
+        Assert.assertEquals("Kordian", list.get(6).getDescription());
     }
 
     @Test
