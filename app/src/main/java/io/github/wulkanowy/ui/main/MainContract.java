@@ -18,6 +18,8 @@ public interface MainContract {
         void initiationViewPager(int tabPosition);
 
         void initiationBottomNav(int tabPosition);
+
+        void startSyncService(int interval, boolean useOnlyWifi);
     }
 
     @PerActivity

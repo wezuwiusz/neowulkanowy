@@ -5,7 +5,6 @@ import android.os.Bundle;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import io.github.wulkanowy.services.jobs.SyncJob;
 import io.github.wulkanowy.services.notifies.NotificationService;
 import io.github.wulkanowy.ui.base.BaseActivity;
 import io.github.wulkanowy.ui.login.LoginActivity;
@@ -42,11 +41,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     public void openMainActivity() {
         startActivity(MainActivity.getStartIntent(this));
         finish();
-    }
-
-    @Override
-    public void startSyncService(int interval, boolean useOnlyWifi) {
-        SyncJob.start(getApplicationContext(), interval, useOnlyWifi);
     }
 
     @Override

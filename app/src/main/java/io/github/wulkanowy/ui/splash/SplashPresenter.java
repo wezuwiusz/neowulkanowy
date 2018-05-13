@@ -20,11 +20,6 @@ public class SplashPresenter extends BasePresenter<SplashContract.View>
         super.onStart(activity);
         getView().cancelNotifications();
 
-        if (getRepository().getSharedRepo().isServicesEnable()) {
-            getView().startSyncService(getRepository().getSharedRepo().getServicesInterval(),
-                    getRepository().getSharedRepo().isMobileDisable());
-        }
-
         if (getRepository().getSharedRepo().isUserLoggedIn()) {
             getView().openMainActivity();
         } else {

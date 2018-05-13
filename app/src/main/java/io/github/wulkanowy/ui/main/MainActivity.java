@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.services.jobs.SyncJob;
 import io.github.wulkanowy.ui.base.BaseActivity;
 import io.github.wulkanowy.ui.base.BasePagerAdapter;
 import io.github.wulkanowy.ui.main.attendance.AttendanceFragment;
@@ -138,6 +139,11 @@ public class MainActivity extends BaseActivity implements MainContract.View,
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(4);
         viewPager.setCurrentItem(tabPosition, false);
+    }
+
+    @Override
+    public void startSyncService(int interval, boolean useOnlyWifi) {
+        SyncJob.start(getApplicationContext(), interval, useOnlyWifi);
     }
 
     @Override
