@@ -228,6 +228,6 @@ workflows:
             - instrumented
           filters:
             branches:
-              only: master
+              ignore: /.*/
             tags:
-              only: /.*/
+              only: /^\d+\.\d+\.\d+$/

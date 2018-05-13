@@ -94,14 +94,18 @@ public class Timetable {
         moveWarningToLessonNode(e);
 
         switch (e.size()) {
+            case 1:
+                addLessonInfoFromElement(lesson, e.first());
+                break;
             case 2:
                 Element span = e.last().select("span").first();
                 if (span.hasClass(LessonTypes.CLASS_MOVED_OR_CANCELED)) {
                     lesson.setNewMovedInOrChanged(true);
                     lesson.setDescription("poprzednio: " + getLessonAndGroupInfoFromSpan(span)[0]);
+                    addLessonInfoFromElement(lesson, e.first());
+                } else {
+                    addLessonInfoFromElement(lesson, e.last());
                 }
-            case 1:
-                addLessonInfoFromElement(lesson, e.first());
                 break;
             case 3:
                 addLessonInfoFromElement(lesson, e.get(1));
@@ -167,7 +171,8 @@ public class Timetable {
             lesson.setRoom(spans.get(5).text());
             lesson.setMovedOrCanceled(false);
             lesson.setNewMovedInOrChanged(true);
-            lesson.setDescription(StringUtils.substringBetween(spans.last().text(), "(", ")")
+            lesson.setDescription(StringUtils.defaultString(StringUtils.substringBetween(
+                    spans.last().text(), "(", ")"), spans.last().text())
                     + " (poprzednio: " + spans.get(0).text() + ")");
         } else if (9 == spans.size()) {
             String[] subjectAndGroupInfo = getLessonAndGroupInfoFromSpan(spans.get(4));
@@ -178,13 +183,15 @@ public class Timetable {
             lesson.setMovedOrCanceled(false);
             lesson.setNewMovedInOrChanged(true);
             lesson.setDivisionIntoGroups(true);
-            lesson.setDescription(StringUtils.substringBetween(spans.last().text(), "(", ")")
+            lesson.setDescription(StringUtils.defaultString(StringUtils.substringBetween(
+                    spans.last().text(), "(", ")"), spans.last().text())
                     + " (poprzednio: " + getLessonAndGroupInfoFromSpan(spans.get(0))[0] + ")");
         } else if (4 <= spans.size()) {
             lesson.setSubject(spans.get(0).text());
             lesson.setTeacher(spans.get(1).text());
             lesson.setRoom(spans.get(2).text());
-            lesson.setDescription(StringUtils.substringBetween(spans.last().text(), "(", ")"));
+            lesson.setDescription(StringUtils.defaultString(StringUtils.substringBetween(
+                    spans.last().text(), "(", ")"), spans.last().text()));
         }
     }
 
@@ -212,7 +219,8 @@ public class Timetable {
 
         return new String[]{
                 span.text().replace(" " + groupName, ""),
-                StringUtils.substringBetween(groupName, "[", "]")
+                StringUtils.defaultString(StringUtils.substringBetween(
+                        groupName, "[", "]"), groupName)
         };
     }
 }

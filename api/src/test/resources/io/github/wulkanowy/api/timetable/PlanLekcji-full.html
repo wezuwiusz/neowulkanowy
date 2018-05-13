@@ -3,6 +3,40 @@
   <head>
     <meta charset="utf-8">
     <title>Witryna ucznia i rodzica – Plan lekcji</title>
+    <style>
+      table, th, td {
+        border: 1px solid;
+        border-collapse: collapse;
+      }
+      table td > div:not(:last-child) {
+        border-bottom: 5px solid silver;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+      }
+      table td div span:nth-child(1) {
+        display: block;
+      }
+      table span {
+        font-size: smaller;
+      }
+      .x-treelabel-ppl {
+        background: #99f;
+        font-style: italic;
+      }
+      .x-treelabel-rlz {
+        background: #f3a;
+      }
+      .x-treelabel-inv {
+        background: #f00;
+      }
+      .x-treelabel-zas {
+        background: #0f0;
+      }
+      table span:not([class]),
+      table span[class=""] {
+        background: #999;
+      }
+    </style>
   </head>
   <body>
     <main class="mainContainer">
@@ -238,7 +272,17 @@
                   <span></span>
                 </div>
               </td>
-              <td></td>
+              <td>
+                <div>
+                  <span class="x-treelabel-inv">Religia</span>
+                  <span class="x-treelabel-inv">Cyranka Krystian</span>
+                  <span class="x-treelabel-inv">3</span>
+                  <span class="x-treelabel-ppl x-treelabel-zas">Wychowanie do życia w rodzinie</span>
+                  <span class="x-treelabel-ppl x-treelabel-zas">Nowak Jadwiga</span>
+                  <span class="x-treelabel-ppl x-treelabel-zas">3</span>
+                  <span class="x-treelabel-rlz">bez nawiasów</span>
+                </div>
+              </td>
             </tr>
             <tr>
               <td>4</td>
