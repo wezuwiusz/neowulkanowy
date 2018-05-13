@@ -106,7 +106,11 @@ public class StudentAndParent implements SnP {
 
         Document doc = client.getPageByUrl(getBaseUrl() + url, true, cookies);
 
-        if ("Witryna ucznia i rodzica – Strona główna".equals(doc.select("title").first().text())) {
+        if (!doc.title().startsWith("Witryna ucznia i rodzica")) {
+            throw new VulcanException("Expected SnP page, got page with title: " + doc.title());
+        }
+
+        if (doc.title().endsWith("Strona główna")) {
             throw new VulcanException("Sesja została nieprawidłowo zainicjowana");
         }
 

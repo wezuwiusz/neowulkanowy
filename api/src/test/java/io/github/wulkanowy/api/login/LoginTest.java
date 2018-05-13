@@ -34,6 +34,10 @@ public class LoginTest {
         Client client = getClient("Logowanie-success.html");
         Mockito.when(client.getPageByUrl(Mockito.anyString(), Mockito.anyBoolean()))
                 .thenReturn(getFixtureAsDocument("Logowanie-error.html"));
+        Mockito.when(client.postPageByUrl(Mockito.eq(Login.LOGIN_PAGE_URL), Mockito.any(String[][].class)))
+                .thenReturn(getFixtureAsDocument("Logowanie-certyfikat.html"));
+        Mockito.doCallRealMethod().when(client).setSymbol(Mockito.anyString());
+        Mockito.when(client.getSymbol()).thenCallRealMethod();
         Login login = new Login(client);
 
         Assert.assertEquals("d123", login.login("a@a", "pswd", "d123"));
@@ -57,22 +61,31 @@ public class LoginTest {
         Login login = new Login(client);
 
         Assert.assertEquals(
-                getFixtureAsString("cert-stock.xml").replaceAll("\\s+",""),
-                login.sendCredentials("a@a", "passwd").select("input[name=wresult]").attr("value").replaceAll("\\s+","")
+                getFixtureAsString("cert-stock.xml").replaceAll("\\s+", ""),
+                login.sendCredentials("a@a", "passwd")
+                        .select("input[name=wresult]")
+                        .attr("value")
+                        .replaceAll("\\s+", "")
         );
     }
 
     @Test
     public void sendCertificateNotDefaultSymbolSuccessTest() throws Exception {
-        Login login = new Login(getClient("Logowanie-success.html"));
+        Client client = getClient("Logowanie-success.html");
+        Mockito.doCallRealMethod().when(client).setSymbol(Mockito.anyString());
+        Mockito.when(client.getSymbol()).thenCallRealMethod();
+        Login login = new Login(client);
 
-        Assert.assertEquals("wulkanowyschool321",
-                login.sendCertificate(new Document(""), "wulkanowyschool321"));
+        Assert.assertEquals("wulkanowyschool321", login.sendCertificate(
+                getFixtureAsDocument("Logowanie-certyfikat.html"), "wulkanowyschool321"));
     }
 
     @Test
     public void sendCertificateDefaultSymbolSuccessTest() throws Exception {
-        Login login = new Login(getClient("Logowanie-success.html"));
+        Client client = getClient("Logowanie-success.html");
+        Mockito.doCallRealMethod().when(client).setSymbol(Mockito.anyString());
+        Mockito.when(client.getSymbol()).thenCallRealMethod();
+        Login login = new Login(client);
 
         Assert.assertEquals("demo12345",
                 login.sendCertificate(getFixtureAsDocument("Logowanie-certyfikat.html"), "Default"));
@@ -80,16 +93,18 @@ public class LoginTest {
 
     @Test(expected = AccountPermissionException.class)
     public void sendCertificateAccountPermissionTest() throws Exception {
-        Login login = new Login(getClient("Logowanie-brak-dostepu.html"));
+        Client client = getClient("Logowanie-brak-dostepu.html");
 
-        login.sendCertificate(getFixtureAsDocument("cert-stock.xml"), "demo123");
+        Login login = new Login(client);
+
+        login.sendCertificate(getFixtureAsDocument("Logowanie-certyfikat.html"), "demo123");
     }
 
     @Test(expected = LoginErrorException.class)
     public void sendCertificateLoginErrorTest() throws Exception {
         Login login = new Login(getClient("Logowanie-certyfikat.html")); // change to other document
 
-        login.sendCertificate(getFixtureAsDocument("cert-stock.xml"), "demo123");
+        login.sendCertificate(getFixtureAsDocument("Logowanie-certyfikat.html"), "demo123");
     }
 
     @Test
@@ -101,10 +116,10 @@ public class LoginTest {
         Assert.assertEquals("demo12345", login.findSymbolInCertificate(certificate));
     }
 
-    @Test
-    public void findSymbolInInvalidCertificateTest() throws Exception {
+    @Test(expected = AccountPermissionException.class)
+    public void findSymbolInCertificateWithoutSecondInstanceTest() throws Exception {
         Login login = new Login(getClient("Logowanie-certyfikat.html"));
 
-        Assert.assertEquals("", login.findSymbolInCertificate("<xml></xml>")); // change to real cert with empty symbols
+        login.findSymbolInCertificate(getFixtureAsString("cert-no-symbols.xml"));
     }
 }

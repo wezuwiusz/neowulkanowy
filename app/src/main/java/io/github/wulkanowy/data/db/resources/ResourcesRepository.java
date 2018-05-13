@@ -52,7 +52,7 @@ public class ResourcesRepository implements ResourcesContract {
         } else if (exception instanceof SocketTimeoutException) {
             return resources.getString(R.string.generic_timeout_error);
         } else if (exception instanceof NotLoggedInErrorException || exception instanceof IOException) {
-            return resources.getString(R.string.login_denied_text);
+            return resources.getString(R.string.login_failed_text);
         } else {
             return exception.getMessage();
         }

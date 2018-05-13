@@ -19,7 +19,7 @@
     <string name="login_accepted_text">Login is successful</string>
     <string name="login_bad_credentials_text">Bad e-mail or password</string>
     <string name="login_bad_account_permission_text">No permission to open log. Check entered symbol</string>
-    <string name="login_denied_text">Login is failed. Try restart the app</string>
+    <string name="login_failed_text">Login is failed. Try again or restart the app</string>
     <string name="action_create_account">No account yet? Create one</string>
     <string name="action_forgot_password">Forgot password?</string>
 

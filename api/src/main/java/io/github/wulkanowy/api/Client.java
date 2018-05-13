@@ -23,7 +23,7 @@ public class Client {
 
     private String symbol;
 
-    private Date lastSuccessRequest = null;
+    private Date lastSuccessRequest;
 
     private Cookies cookies = new Cookies();
 
@@ -103,7 +103,7 @@ public class Client {
         return getPageByUrl(url, loginBefore, null);
     }
 
-    public Document getPageByUrl(String url, boolean loginBefore, Map<String, String> cookies) throws IOException, VulcanException {
+    public synchronized Document getPageByUrl(String url, boolean loginBefore, Map<String, String> cookies) throws IOException, VulcanException {
         if (loginBefore) {
             login();
         }
@@ -128,7 +128,7 @@ public class Client {
         return doc;
     }
 
-    public Document postPageByUrl(String url, String[][] params) throws IOException, VulcanException {
+    public synchronized Document postPageByUrl(String url, String[][] params) throws IOException, VulcanException {
         Connection connection = Jsoup.connect(getFilledUrl(url));
 
         for (String[] data : params) {

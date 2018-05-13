@@ -19,7 +19,7 @@
     <string name="login_accepted_text">Pomyślnie zalogowano</string>
     <string name="login_bad_credentials_text">Niepoprawny e-mail lub hasło</string>
     <string name="login_bad_account_permission_text">Brak uprawnień do otwarcia dziennika. Sprawdź wprowadzoną nazwę powiatu</string>
-    <string name="login_denied_text">Logowanie nie powiodło się. Spróbuj zrestartować aplikację</string>
+    <string name="login_failed_text">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
     <string name="action_create_account">Nie masz jeszcze konta? Załóż je</string>
     <string name="action_forgot_password">Zapomniałeś hasła?</string>
 

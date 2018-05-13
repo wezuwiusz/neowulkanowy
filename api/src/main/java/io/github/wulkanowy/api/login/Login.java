@@ -13,7 +13,7 @@ import io.github.wulkanowy.api.VulcanException;
 
 public class Login {
 
-    private static final String LOGIN_PAGE_URL = "{schema}://cufs.{host}/{symbol}/Account/LogOn" +
+    static final String LOGIN_PAGE_URL = "{schema}://cufs.{host}/{symbol}/Account/LogOn" +
             "?ReturnUrl=%2F{symbol}%2FFS%2FLS%3Fwa%3Dwsignin1.0%26wtrealm%3D" +
             "{schema}%253a%252f%252fuonetplus.{host}%252f{symbol}%252fLoginEndpoint.aspx%26wctx%3D" +
             "{schema}%253a%252f%252fuonetplus.{host}%252f{symbol}%252fLoginEndpoint.aspx";
@@ -47,6 +47,8 @@ public class Login {
             );
             credentials = getFormStateParams(formSecond, email, password);
             nextUrl = formSecond.select("#form1").first().attr("abs:action");
+        } else if (!"Logowanie".equals(loginPage.select("#h1Default").text())) {
+            throw new VulcanException("Expected login page, got page with title: " + loginPage.title());
         }
 
         Document html = client.postPageByUrl(nextUrl, credentials);
@@ -77,14 +79,17 @@ public class Login {
     String sendCertificate(Document doc, String defaultSymbol) throws IOException, VulcanException {
         String certificate = doc.select("input[name=wresult]").val();
 
-        String symbol = findSymbol(defaultSymbol, certificate);
-        client.setSymbol(symbol);
+        if ("".equals(certificate)) {
+            throw new VulcanException("Expected certificate, got empty string. Page title: " + doc.title());
+        }
+
+        client.setSymbol(findSymbol(defaultSymbol, certificate));
 
         Document targetDoc = sendCertData(doc);
-        String title = targetDoc.select("title").text();
+        String title = targetDoc.title();
 
         if ("Working...".equals(title)) { // on adfs login
-            title = sendCertData(targetDoc).select("title").text();
+            title = sendCertData(targetDoc).title();
         }
 
         if ("Logowanie".equals(title)) {
@@ -95,11 +100,15 @@ public class Login {
             throw new LoginErrorException("Expected page title `UONET+`, got " + title);
         }
 
-        return symbol;
+        return client.getSymbol();
     }
 
     private Document sendCertData(Document doc) throws IOException, VulcanException {
         String url = doc.select("form[name=hiddenform]").attr("action");
+
+        if (!doc.title().equals("Working...")) {
+            throw new VulcanException("Expected certificate page, got page with title: " + doc.title());
+        }
 
         return client.postPageByUrl(url.replaceFirst("Default", "{symbol}"), new String[][]{
                 {"wa", "wsignin1.0"},
@@ -108,7 +117,7 @@ public class Login {
         });
     }
 
-    private String findSymbol(String symbol, String certificate) {
+    private String findSymbol(String symbol, String certificate) throws AccountPermissionException {
         if ("Default".equals(symbol)) {
             return findSymbolInCertificate(certificate);
         }
@@ -116,13 +125,13 @@ public class Login {
         return symbol;
     }
 
-    String findSymbolInCertificate(String certificate) {
+    String findSymbolInCertificate(String certificate) throws AccountPermissionException {
         Elements instances = Jsoup
                 .parse(certificate.replaceAll(":", ""), "", Parser.xmlParser())
                 .select("[AttributeName=\"UserInstance\"] samlAttributeValue");
 
-        if (instances.isEmpty()) {
-            return "";
+        if (instances.size() < 2) { // 1st index is always `Default`
+            throw new AccountPermissionException("First login detected, specify symbol");
         }
 
         return instances.get(1).text();
