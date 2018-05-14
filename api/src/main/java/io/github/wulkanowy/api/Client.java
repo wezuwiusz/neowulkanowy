@@ -58,7 +58,6 @@ public class Client {
             return;
         }
 
-        this.cookies = new Cookies();
         this.symbol = new Login(this).login(email, password, symbol);
     }
 
@@ -142,6 +141,8 @@ public class Client {
                 .execute();
 
         this.cookies.addItems(response.cookies());
+
+        response.bufferUp(); // fixes cert parsing issues
 
         return checkForErrors(response.parse());
     }
