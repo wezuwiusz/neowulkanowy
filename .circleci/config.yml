@@ -199,24 +199,40 @@ jobs:
 workflows:
   version: 2
 
-  build_check_tests:
+  build-test-deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            tags:
+              only: /.*/
       - lint:
+          filters:
+            tags:
+              only: /.*/
           requires:
             - build
       - app-test:
+          filters:
+            tags:
+              only: /.*/
           requires:
             - build
       - api-test:
+          filters:
+            tags:
+              only: /.*/
           requires:
             - build
       - instrumented:
-          requires:
-            - build
+          filters:
+            tags:
+              only: /.*/
           requires:
             - build
       - sonarcube:
+          filters:
+            tags:
+              only: /.*/
           requires:
             - build
             - lint
@@ -227,5 +243,7 @@ workflows:
           requires:
             - instrumented
           filters:
+            tags:
+              only: /\d+\.\d+\.\d+/
             branches:
-              only: master
+              ignore: /.*/

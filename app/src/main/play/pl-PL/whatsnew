@@ -1,3 +1,4 @@
-Wersja 0.4.1:
-- naprawiono odświeżanie ocen
-- wyeliminowano możliwość wystąpienia crashu w planie lekcji
+Wersja 0.4.2:
+- naprawiono logowanie do niestandardowych dzienników
+- naprawiono synchronizację sprawdzianów
+- naprawiono problemy z logowaniem (powinny występować rzadziej)
