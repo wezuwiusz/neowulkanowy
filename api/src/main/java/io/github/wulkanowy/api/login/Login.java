@@ -130,6 +130,10 @@ public class Login {
                 .parse(certificate.replaceAll(":", ""), "", Parser.xmlParser())
                 .select("[AttributeName=\"UserInstance\"] samlAttributeValue");
 
+        if (instances.isEmpty()) { // on adfs login
+            return "";
+        }
+
         if (instances.size() < 2) { // 1st index is always `Default`
             throw new AccountPermissionException("First login detected, specify symbol");
         }
