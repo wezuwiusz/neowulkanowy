@@ -4,13 +4,15 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Property;
 
 import java.io.Serializable;
 
 @Entity(
         nameInDb = "Exams",
-        active = true
+        active = true,
+        indexes = {@Index(value = "dayId,entryDate,subjectAndGroup,type,teacher", unique = true)}
 )
 
 public class Exam implements Serializable {
