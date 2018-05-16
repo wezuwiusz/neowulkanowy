@@ -24,6 +24,7 @@ import io.github.wulkanowy.R;
 import io.github.wulkanowy.WulkanowyApp;
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.data.sync.NotRegisteredUserException;
 import io.github.wulkanowy.services.notifies.GradeNotify;
 import io.github.wulkanowy.ui.main.MainActivity;
 import io.github.wulkanowy.utils.LogUtils;
@@ -74,9 +75,12 @@ public class SyncJob extends SimpleJobService {
                 showNotification();
             }
             return JobService.RESULT_SUCCESS;
+        } catch (NotRegisteredUserException e) {
+            logError(e);
+            stop(getApplicationContext());
+            return JobService.RESULT_FAIL_NORETRY;
         } catch (Exception e) {
-            Crashlytics.logException(e);
-            LogUtils.error("During background synchronization an error occurred", e);
+            logError(e);
             return JobService.RESULT_FAIL_RETRY;
         }
     }
@@ -115,5 +119,10 @@ public class SyncJob extends SimpleJobService {
             return getResources().getQuantityString(R.plurals.receivedNewGradePlurals,
                     gradeList.size(), gradeList.size());
         }
+    }
+
+    private void logError(Exception e) {
+        Crashlytics.logException(e);
+        LogUtils.error("During background synchronization an error occurred", e);
     }
 }

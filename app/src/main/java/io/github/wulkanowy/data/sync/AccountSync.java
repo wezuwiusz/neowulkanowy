@@ -118,12 +118,12 @@ public class AccountSync {
         daoSession.getSemesterDao().insertInTx(semesterList);
     }
 
-    public void initLastUser() throws IOException, CryptoException {
+    public void initLastUser() throws CryptoException {
 
         long userId = sharedPref.getCurrentUserId();
 
         if (userId == 0) {
-            throw new IOException("Can't find saved user");
+            throw new NotRegisteredUserException("Can't find user id in SharedPreferences");
         }
 
         LogUtils.debug("Initialization current user id=" + userId);

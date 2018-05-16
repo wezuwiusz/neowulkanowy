@@ -13,8 +13,6 @@ public interface SplashContract {
         void openMainActivity();
 
         void cancelNotifications();
-
-        void stopSyncService();
     }
 
     @PerActivity
