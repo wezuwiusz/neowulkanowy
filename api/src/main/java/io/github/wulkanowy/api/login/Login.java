@@ -36,29 +36,29 @@ public class Login {
                 {"Password", password}
         };
 
-        String nextUrl = LOGIN_PAGE_URL;
-        Document loginPage = client.getPageByUrl(nextUrl, false);
+        Document nextDoc = sendCredentialsData(credentials, LOGIN_PAGE_URL);
 
-        Element formFirst = loginPage.select("#form1").first();
-        if (null != formFirst) { // on adfs login
-            Document formSecond = client.postPageByUrl(
-                    formFirst.attr("abs:action"),
-                    getFormStateParams(formFirst, "", "")
-            );
-            credentials = getFormStateParams(formSecond, email, password);
-            nextUrl = formSecond.select("#form1").first().attr("abs:action");
-        } else if (!"Logowanie".equals(loginPage.select("#h1Default").text())) {
-            throw new VulcanException("Expected login page, got page with title: " + loginPage.title());
-        }
-
-        Document html = client.postPageByUrl(nextUrl, credentials);
-
-        Element errorMessage = html.select(".ErrorMessage, #ErrorTextLabel").first();
+        Element errorMessage = nextDoc.selectFirst(".ErrorMessage, #ErrorTextLabel");
         if (null != errorMessage) {
             throw new BadCredentialsException(errorMessage.text());
         }
 
-        return html;
+        return nextDoc;
+    }
+
+    private Document sendCredentialsData(String[][] credentials, String nextUrl) throws IOException, VulcanException {
+        Element formFirst = client.getPageByUrl(nextUrl, false).selectFirst("#form1");
+
+        if (null != formFirst) { // only on adfs login
+            Document formSecond = client.postPageByUrl(
+                    formFirst.attr("abs:action"),
+                    getFormStateParams(formFirst, "", "")
+            );
+            credentials = getFormStateParams(formSecond, credentials[0][1], credentials[1][1]);
+            nextUrl = formSecond.selectFirst("#form1").attr("abs:action");
+        }
+
+        return client.postPageByUrl(nextUrl, credentials);
     }
 
     private String[][] getFormStateParams(Element form, String email, String password) {
@@ -77,13 +77,7 @@ public class Login {
     }
 
     String sendCertificate(Document doc, String defaultSymbol) throws IOException, VulcanException {
-        String certificate = doc.select("input[name=wresult]").val();
-
-        if ("".equals(certificate)) {
-            throw new VulcanException("Expected certificate, got empty string. Page title: " + doc.title());
-        }
-
-        client.setSymbol(findSymbol(defaultSymbol, certificate));
+        client.setSymbol(findSymbol(defaultSymbol, doc.select("input[name=wresult]").val()));
 
         Document targetDoc = sendCertData(doc);
         String title = targetDoc.title();
@@ -105,10 +99,6 @@ public class Login {
 
     private Document sendCertData(Document doc) throws IOException, VulcanException {
         String url = doc.select("form[name=hiddenform]").attr("action");
-
-        if (!doc.title().equals("Working...")) {
-            throw new VulcanException("Expected certificate page, got page with title: " + doc.title());
-        }
 
         return client.postPageByUrl(url.replaceFirst("Default", "{symbol}"), new String[][]{
                 {"wa", "wsignin1.0"},

@@ -63,7 +63,7 @@ public class Client {
 
     private boolean isLoggedIn() {
         return getCookies().size() > 0 && lastSuccessRequest != null &&
-                29 > TimeUnit.MILLISECONDS.toMinutes(new Date().getTime() - lastSuccessRequest.getTime());
+                5 > TimeUnit.MILLISECONDS.toMinutes(new Date().getTime() - lastSuccessRequest.getTime());
 
     }
 
@@ -142,7 +142,7 @@ public class Client {
 
         this.cookies.addItems(response.cookies());
 
-        response.bufferUp(); // fixes cert parsing issues
+        response.bufferUp(); // fixes cert parsing issues #109
 
         return checkForErrors(response.parse());
     }
@@ -195,8 +195,8 @@ public class Client {
             throw new NotLoggedInErrorException(singIn);
         }
 
-        if ("Błąd strony".equals(title)) {
-            throw new VulcanException("Nieznany błąd");
+        if (title.startsWith("Błąd")) {
+            throw new NotLoggedInErrorException(title + " " + doc.selectFirst("p, body"));
         }
 
         return doc;
