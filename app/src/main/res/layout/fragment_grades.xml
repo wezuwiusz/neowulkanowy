@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="46dp"
             android:text="@string/fragment_no_grades"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="20sp" />
     </RelativeLayout>
 
