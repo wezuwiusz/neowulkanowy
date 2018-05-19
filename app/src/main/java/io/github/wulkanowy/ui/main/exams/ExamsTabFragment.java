@@ -135,7 +135,7 @@ public class ExamsTabFragment extends BaseFragment implements ExamsTabContract.V
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         presenter.onDestroy();
+        super.onDestroyView();
     }
 }
