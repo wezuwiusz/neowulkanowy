@@ -81,7 +81,7 @@ public class Timetable {
                 lesson.setStartTime(startEndEnd[0]);
                 lesson.setEndTime(startEndEnd[1]);
                 lesson.setDate(days.get(i - 2).getDate());
-                lesson.setNumber(hours.get(0).text());
+                lesson.setNumber(Integer.valueOf(hours.get(0).text()));
 
                 addLessonDetails(lesson, hours.get(i).select("div"));
 

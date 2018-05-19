@@ -106,7 +106,7 @@ public class TimetableSubItem
 
             lessonName.setText(lesson.getSubject());
             lessonTime.setText(getLessonTimeString());
-            numberOfLesson.setText(lesson.getNumber());
+            numberOfLesson.setText(String.valueOf(lesson.getNumber()));
             room.setText(getRoomString());
             alert.setVisibility(lesson.getMovedOrCanceled() || lesson.getNewMovedInOrChanged()
                     ? View.VISIBLE : View.INVISIBLE);

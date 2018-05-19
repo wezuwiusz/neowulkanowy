@@ -5,6 +5,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.OrderBy;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToMany;
 
@@ -35,9 +36,11 @@ public class Day {
     @Property(nameInDb = "free_day_name")
     private String freeDayName = "";
 
+    @OrderBy("number ASC")
     @ToMany(referencedJoinProperty = "dayId")
     private List<TimetableLesson> timetableLessons;
 
+    @OrderBy("number ASC")
     @ToMany(referencedJoinProperty = "dayId")
     private List<AttendanceLesson> attendanceLessons;
 
@@ -50,9 +53,7 @@ public class Day {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 312167767)
     private transient DayDao myDao;
 
@@ -186,6 +187,36 @@ public class Day {
     }
 
     /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1231531946)
+    public List<Exam> getExams() {
+        if (exams == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            ExamDao targetDao = daoSession.getExamDao();
+            List<Exam> examsNew = targetDao._queryDay_Exams(id);
+            synchronized (this) {
+                if (exams == null) {
+                    exams = examsNew;
+                }
+            }
+        }
+        return exams;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 841969952)
+    public synchronized void resetExams() {
+        exams = null;
+    }
+
+    /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
      */
@@ -222,39 +253,13 @@ public class Day {
     }
 
     /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
+     * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 1231531946)
-    public List<Exam> getExams() {
-        if (exams == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            ExamDao targetDao = daoSession.getExamDao();
-            List<Exam> examsNew = targetDao._queryDay_Exams(id);
-            synchronized (this) {
-                if (exams == null) {
-                    exams = examsNew;
-                }
-            }
-        }
-        return exams;
-    }
-
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 841969952)
-    public synchronized void resetExams() {
-        exams = null;
-    }
-
-    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1409317752)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getDayDao() : null;
     }
+
+
 }

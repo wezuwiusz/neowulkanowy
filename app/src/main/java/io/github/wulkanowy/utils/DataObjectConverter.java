@@ -156,7 +156,7 @@ public final class DataObjectConverter {
 
         for (io.github.wulkanowy.api.generic.Lesson lesson : lessonList) {
             lessonEntityList.add(new AttendanceLesson()
-                    .setNumber(Integer.valueOf(lesson.getNumber()))
+                    .setNumber(lesson.getNumber())
                     .setSubject(lesson.getSubject())
                     .setDate(lesson.getDate())
                     .setPresence(lesson.isPresence())

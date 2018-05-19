@@ -63,7 +63,7 @@ public class AttendanceTable {
             for (int i = 1; i < size; i++) {
                 Lesson lesson = new Lesson();
                 lesson.setDate(days.get(i - 1).getDate());
-                lesson.setNumber(hours.get(0).text());
+                lesson.setNumber(Integer.valueOf(hours.get(0).text()));
 
                 addLessonDetails(lesson, hours.get(i));
 

@@ -1,5 +1,7 @@
 package io.github.wulkanowy.data.db.dao.entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -12,7 +14,7 @@ import java.io.Serializable;
 @Entity(
         nameInDb = "TimetableLessons",
         active = true,
-        indexes = {@Index(value = "dayId,date,startTime,endTime", unique = true)}
+        indexes = {@Index(value = "dayId,date,number,startTime,endTime", unique = true)}
 )
 public class TimetableLesson implements Serializable {
 
@@ -25,7 +27,7 @@ public class TimetableLesson implements Serializable {
     private Long dayId;
 
     @Property(nameInDb = "number")
-    private String number;
+    private int number = 0;
 
     @Property(nameInDb = "subject")
     private String subject = "";
@@ -75,18 +77,15 @@ public class TimetableLesson implements Serializable {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 1119360138)
     private transient TimetableLessonDao myDao;
 
-    @Generated(hash = 1955911128)
-    public TimetableLesson(Long id, Long dayId, String number, String subject,
-                           String teacher, String room, String description, String group,
-                           String startTime, String endTime, String date, boolean empty,
-                           boolean divisionIntoGroups, boolean planning, boolean realized,
-                           boolean movedOrCanceled, boolean newMovedInOrChanged) {
+    @Generated(hash = 1665905034)
+    public TimetableLesson(Long id, Long dayId, int number, String subject, String teacher,
+                           String room, String description, String group, String startTime, String endTime,
+                           String date, boolean empty, boolean divisionIntoGroups, boolean planning,
+                           boolean realized, boolean movedOrCanceled, boolean newMovedInOrChanged) {
         this.id = id;
         this.dayId = dayId;
         this.number = number;
@@ -109,7 +108,7 @@ public class TimetableLesson implements Serializable {
     @Generated(hash = 1878030142)
     public TimetableLesson() {
     }
-
+    
     public Long getId() {
         return this.id;
     }
@@ -127,11 +126,11 @@ public class TimetableLesson implements Serializable {
         return this;
     }
 
-    public String getNumber() {
+    public int getNumber() {
         return this.number;
     }
 
-    public TimetableLesson setNumber(String number) {
+    public TimetableLesson setNumber(int number) {
         this.number = number;
         return this;
     }
@@ -260,6 +259,32 @@ public class TimetableLesson implements Serializable {
     public TimetableLesson setNewMovedInOrChanged(boolean newMovedInOrChanged) {
         this.newMovedInOrChanged = newMovedInOrChanged;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TimetableLesson lesson = (TimetableLesson) o;
+
+        return new EqualsBuilder()
+                .append(number, lesson.number)
+                .append(startTime, lesson.startTime)
+                .append(endTime, lesson.endTime)
+                .append(date, lesson.date)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(number)
+                .append(startTime)
+                .append(endTime)
+                .append(date)
+                .toHashCode();
     }
 
     /**

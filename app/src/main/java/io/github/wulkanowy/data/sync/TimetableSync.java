@@ -1,5 +1,7 @@
 package io.github.wulkanowy.data.sync;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -125,6 +127,16 @@ public class TimetableSync {
         List<TimetableLesson> lessonsFromApiEntities = DataObjectConverter
                 .lessonsToTimetableLessonsEntities(lessons);
 
+        List<TimetableLesson> lessonsFromDbEntities = getLessonsFromDb(dayId);
+
+        if (!lessonsFromDbEntities.isEmpty()) {
+            List<TimetableLesson> lessonToRemove = new ArrayList<>(CollectionUtils.removeAll(lessonsFromDbEntities, lessonsFromApiEntities));
+
+            for (TimetableLesson timetableLesson : lessonToRemove) {
+                daoSession.getTimetableLessonDao().delete(timetableLesson);
+            }
+        }
+
         for (TimetableLesson apiLessonEntity : lessonsFromApiEntities) {
             TimetableLesson lessonFromDb = getLessonFromDb(apiLessonEntity, dayId);
 
@@ -147,5 +159,9 @@ public class TimetableSync {
                         TimetableLessonDao.Properties.StartTime.eq(apiEntity.getStartTime()),
                         TimetableLessonDao.Properties.EndTime.eq(apiEntity.getEndTime()))
                 .unique();
+    }
+
+    private List<TimetableLesson> getLessonsFromDb(long dayId) {
+        return daoSession.getDayDao().load(dayId).getTimetableLessons();
     }
 }
