@@ -135,6 +135,7 @@ public class ExamsSync {
                 .where(ExamDao.Properties.DayId.eq(dayId),
                         ExamDao.Properties.EntryDate.eq(examApi.getEntryDate()),
                         ExamDao.Properties.SubjectAndGroup.eq(examApi.getSubjectAndGroup()),
+                        ExamDao.Properties.Type.eq(examApi.getType()),
                         ExamDao.Properties.Teacher.eq(examApi.getTeacher()))
                 .unique();
     }
