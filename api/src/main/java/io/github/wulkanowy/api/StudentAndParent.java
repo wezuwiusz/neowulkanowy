@@ -65,12 +65,12 @@ public class StudentAndParent implements SnP {
             return getBaseUrl();
         }
 
-        // get url to uonetplus-opiekun.vulcan.net.pl
+        // get url to uonetplus-opiekun.fakelog.cf
         Document startPage = client.getPageByUrl(START_PAGE_URL);
         Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
 
         if (null == studentTileLink) {
-            throw new NotLoggedInErrorException("You are probably not logged in. Force login");
+            throw new VulcanException("Na pewno używasz konta z dostępem do Witryny ucznia i rodzica?");
         }
 
         String snpPageUrl = studentTileLink.attr("href");
@@ -84,7 +84,7 @@ public class StudentAndParent implements SnP {
         String[] path = snpPageUrl.split(client.getHost())[1].split("/");
 
         if (5 != path.length) {
-            throw new NotLoggedInErrorException("You are probably not logged in");
+            throw new NotLoggedInErrorException("You are probably not logged in " + snpPageUrl);
         }
 
         return path[2];

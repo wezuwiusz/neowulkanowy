@@ -25,7 +25,7 @@ public class ClientTest {
 
         Document doc = Jsoup.parse(getFixtureAsString("login/Logowanie-success.html"));
 
-        Assert.assertEquals(doc, client.checkForErrors(doc));
+        Assert.assertEquals(doc, client.checkForErrors(doc, 200));
     }
 
     @Test(expected = VulcanOfflineException.class)
@@ -34,7 +34,7 @@ public class ClientTest {
 
         Document doc = Jsoup.parse(getFixtureAsString("login/PrzerwaTechniczna.html"));
 
-        client.checkForErrors(doc);
+        client.checkForErrors(doc, 200);
     }
 
     @Test(expected = NotLoggedInErrorException.class)
@@ -43,7 +43,7 @@ public class ClientTest {
 
         Document doc = Jsoup.parse(getFixtureAsString("login/Logowanie-notLoggedIn.html"));
 
-        client.checkForErrors(doc);
+        client.checkForErrors(doc, 200);
     }
 
     @Test

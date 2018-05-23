@@ -118,7 +118,7 @@ public class Client {
 
         this.cookies.addItems(response.cookies());
 
-        Document doc = checkForErrors(response.parse());
+        Document doc = checkForErrors(response.parse(), response.statusCode());
 
         if (loginBefore) {
             lastSuccessRequest = new Date();
@@ -144,7 +144,7 @@ public class Client {
 
         response.bufferUp(); // fixes cert parsing issues #109
 
-        return checkForErrors(response.parse());
+        return checkForErrors(response.parse(), response.statusCode());
     }
 
     public String getJsonStringByUrl(String url) throws IOException, VulcanException {
@@ -182,7 +182,7 @@ public class Client {
         return response.body();
     }
 
-    Document checkForErrors(Document doc) throws VulcanException {
+    Document checkForErrors(Document doc, int code) throws VulcanException {
         lastSuccessRequest = null;
 
         String title = doc.select("title").text();
@@ -195,8 +195,8 @@ public class Client {
             throw new NotLoggedInErrorException(singIn);
         }
 
-        if (title.startsWith("Błąd")) {
-            throw new NotLoggedInErrorException(title + " " + doc.selectFirst("p, body"));
+        if ("Błąd strony".equals(title)) {
+            throw new NotLoggedInErrorException(title + " " + doc.selectFirst("p, body") + ", status: " + code);
         }
 
         return doc;

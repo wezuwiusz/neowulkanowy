@@ -53,7 +53,7 @@ public class StudentAndParentTest {
                 snp.getSnpHomePageUrl());
     }
 
-    @Test(expected = NotLoggedInErrorException.class)
+    @Test(expected = VulcanException.class)
     public void getSnpPageUrlWithWrongPage() throws Exception {
         Document wrongPageDocument = Jsoup.parse(
                 FixtureHelper.getAsString(getClass().getResourceAsStream("OcenyWszystkie-semester.html"))

@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 import io.github.wulkanowy.api.Client;
+import io.github.wulkanowy.api.NotLoggedInErrorException;
 import io.github.wulkanowy.api.VulcanException;
 
 public class Login {
@@ -26,6 +27,10 @@ public class Login {
 
     public String login(String email, String password, String symbol) throws VulcanException, IOException {
         Document certDoc = sendCredentials(email, password);
+
+        if ("Błąd".equals(certDoc.title())) {
+            throw new NotLoggedInErrorException(certDoc.selectFirst("body").text());
+        }
 
         return sendCertificate(certDoc, symbol);
     }
