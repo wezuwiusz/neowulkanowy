@@ -105,6 +105,7 @@ public class TimetableTest extends StudentAndParentTestCase {
         Assert.assertEquals("Zajęcia techniczne", std.getWeekTable().getDay(2).getLesson(4).getSubject());
         Assert.assertEquals("Wychowanie fizyczne", std.getWeekTable().getDay(1).getLesson(1).getSubject());
         Assert.assertEquals("Język angielski", full.getWeekTable().getDay(0).getLesson(1).getSubject());
+        Assert.assertEquals("Wychowanie fizyczne", full.getWeekTable().getDay(0).getLesson(9).getSubject());
         Assert.assertEquals("Wychowanie do życia w rodzinie", full.getWeekTable().getDay(2).getLesson(0).getSubject());
         Assert.assertEquals("Wychowanie fizyczne", full.getWeekTable().getDay(3).getLesson(1).getSubject());
         Assert.assertEquals("Uroczyste zakończenie roku szkolnego", full.getWeekTable().getDay(4).getLesson(0).getSubject());
