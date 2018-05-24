@@ -2,6 +2,8 @@ package io.github.wulkanowy.data.sync;
 
 import android.content.Context;
 
+import org.greenrobot.greendao.database.Database;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import javax.inject.Singleton;
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.data.db.dao.entities.Account;
+import io.github.wulkanowy.data.db.dao.entities.DaoMaster;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.Diary;
 import io.github.wulkanowy.data.db.dao.entities.DiaryDao;
@@ -48,6 +51,8 @@ public class AccountSync {
 
     public void registerUser(String email, String password, String symbol)
             throws VulcanException, IOException, CryptoException {
+
+        clearUserData();
 
         vulcan.setCredentials(email, password, symbol, null, null, null);
 
@@ -151,5 +156,12 @@ public class AccountSync {
                 student.getRealId(),
                 diary.getValue()
         );
+    }
+
+    private void clearUserData() {
+        Database database = daoSession.getDatabase();
+        DaoMaster.dropAllTables(database, true);
+        DaoMaster.createAllTables(database, true);
+        sharedPref.setCurrentUserId(0);
     }
 }
