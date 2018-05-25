@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.main.timetable;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import io.github.wulkanowy.data.db.dao.entities.Day;
 import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.ui.base.BasePresenter;
+import io.github.wulkanowy.utils.FabricUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
@@ -91,6 +91,8 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
             getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
         getView().hideRefreshingBar();
+
+        FabricUtils.logRefresh("Timetable", result, date);
     }
 
     @Override

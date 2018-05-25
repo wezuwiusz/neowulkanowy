@@ -11,6 +11,7 @@ import io.github.wulkanowy.api.login.BadCredentialsException;
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.ui.base.BasePresenter;
 import io.github.wulkanowy.utils.AppConstant;
+import io.github.wulkanowy.utils.FabricUtils;
 
 public class LoginPresenter extends BasePresenter<LoginContract.View>
         implements LoginContract.Presenter {
@@ -84,6 +85,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     @Override
     public void onEndAsync(boolean success, Exception exception) {
         if (success) {
+            FabricUtils.logRegister(true, getRepository().getDbRepo().getCurrentSymbol().getSymbol());
             getView().openMainActivity();
             return;
         } else if (exception instanceof BadCredentialsException) {
@@ -93,6 +95,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             getView().setErrorSymbolRequired();
             getView().showSoftInput();
         } else {
+            FabricUtils.logRegister(false, symbol);
             getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
 

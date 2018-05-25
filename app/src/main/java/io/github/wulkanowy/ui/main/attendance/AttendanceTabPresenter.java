@@ -10,6 +10,7 @@ import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.data.db.dao.entities.Day;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.ui.base.BasePresenter;
+import io.github.wulkanowy.utils.FabricUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
@@ -88,6 +89,8 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
             getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
         getView().hideRefreshingBar();
+
+        FabricUtils.logRefresh("Attendance", result, date);
     }
 
     @Override

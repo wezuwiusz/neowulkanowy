@@ -47,7 +47,7 @@ ext {
     dagger2 = "2.16"
     ahbottom = "2.2.0"
     jsoup = "1.11.3"
-    gson = "2.8.4"
+    gson = "2.8.5"
     ossLicenses = "15.0.1"
 
     debugDb = "1.0.3"
@@ -57,8 +57,8 @@ ext {
     mockito = "2.18.3"
     testRunner = "1.0.2"
 
-    fabricGradle = "1.25.3"
-    crashlyticsSdk = "2.9.2"
+    fabricGradle = "1.25.4"
+    crashlyticsSdk = "2.9.3"
     crashlyticsAnswers = "1.4.1"
 }
 

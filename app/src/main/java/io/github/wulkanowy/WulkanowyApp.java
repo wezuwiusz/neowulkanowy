@@ -3,6 +3,7 @@ package io.github.wulkanowy;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
@@ -61,9 +62,12 @@ public class WulkanowyApp extends Application {
 
     private void initializeFabric() {
         Fabric.with(new Fabric.Builder(this)
-                .kits(new Crashlytics.Builder()
-                        .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                        .build())
+                .kits(
+                        new Crashlytics.Builder()
+                                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                                .build(),
+                        new Answers()
+                )
                 .debuggable(BuildConfig.DEBUG)
                 .build());
     }

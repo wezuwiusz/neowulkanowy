@@ -1,5 +1,8 @@
 package io.github.wulkanowy.ui.main.grades;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +13,7 @@ import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
 import io.github.wulkanowy.ui.base.BasePresenter;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
+import io.github.wulkanowy.utils.FabricUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
@@ -59,6 +63,9 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
         getView().setCurrentSemester(which);
 
         reloadGrades();
+
+        Answers.getInstance().logCustom(new CustomEvent("Semester change")
+                .putCustomAttribute("Name", semesterName));
     }
 
     private void reloadGrades() {
@@ -100,8 +107,8 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
     }
 
     @Override
-    public void onEndRefreshAsync(boolean success, Exception exception) {
-        if (success) {
+    public void onEndRefreshAsync(boolean result, Exception exception) {
+        if (result) {
             reloadGrades();
 
             int numberOfNewGrades = getRepository().getDbRepo().getNewGrades(semesterName).size();
@@ -115,6 +122,8 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
             getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
         getView().hideRefreshingBar();
+
+        FabricUtils.logRefresh("Grades", result, null);
     }
 
     @Override

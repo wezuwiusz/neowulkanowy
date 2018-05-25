@@ -10,6 +10,7 @@ import io.github.wulkanowy.data.db.dao.entities.Day;
 import io.github.wulkanowy.data.db.dao.entities.Exam;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.ui.base.BasePresenter;
+import io.github.wulkanowy.utils.FabricUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
@@ -93,6 +94,8 @@ public class ExamsTabPresenter extends BasePresenter<ExamsTabContract.View>
             getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
         getView().hideRefreshingBar();
+
+        FabricUtils.logRefresh("Exams", result, date);
     }
 
     @Override

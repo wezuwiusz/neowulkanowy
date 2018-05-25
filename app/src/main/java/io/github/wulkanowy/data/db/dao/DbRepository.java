@@ -12,6 +12,7 @@ import io.github.wulkanowy.data.db.dao.entities.Semester;
 import io.github.wulkanowy.data.db.dao.entities.SemesterDao;
 import io.github.wulkanowy.data.db.dao.entities.StudentDao;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
+import io.github.wulkanowy.data.db.dao.entities.Symbol;
 import io.github.wulkanowy.data.db.dao.entities.SymbolDao;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.data.db.dao.entities.WeekDao;
@@ -57,10 +58,15 @@ public class DbRepository implements DbContract {
     }
 
     @Override
-    public long getCurrentSymbolId() {
+    public Symbol getCurrentSymbol() {
         return daoSession.getSymbolDao().queryBuilder().where(
                 SymbolDao.Properties.UserId.eq(sharedPref.getCurrentUserId())
-        ).unique().getId();
+        ).unique();
+    }
+
+    @Override
+    public long getCurrentSymbolId() {
+        return getCurrentSymbol().getId();
     }
 
     @Override

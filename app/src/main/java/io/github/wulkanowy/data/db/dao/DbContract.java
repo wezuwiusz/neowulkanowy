@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
+import io.github.wulkanowy.data.db.dao.entities.Symbol;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 
 public interface DbContract {
@@ -19,6 +20,8 @@ public interface DbContract {
     long getCurrentStudentId();
 
     long getCurrentSymbolId();
+
+    Symbol getCurrentSymbol();
 
     long getCurrentDiaryId();
 
