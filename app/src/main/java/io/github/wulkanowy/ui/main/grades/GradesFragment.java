@@ -80,6 +80,7 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_filter) {
+            presenter.onSemesterSwitchActive();
             CharSequence[] items = new CharSequence[]{
                     getResources().getString(R.string.semester_text, 1),
                     getResources().getString(R.string.semester_text, 2),

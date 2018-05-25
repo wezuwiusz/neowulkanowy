@@ -3,6 +3,8 @@ package io.github.wulkanowy.ui.main.grades;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 
+import org.threeten.bp.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,10 +60,14 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
     }
 
     @Override
+    public void onSemesterSwitchActive() {
+        cancelAsyncTasks();
+    }
+
+    @Override
     public void onSemesterChange(int which) {
         semesterName = which + 1;
         getView().setCurrentSemester(which);
-
         reloadGrades();
 
         Answers.getInstance().logCustom(new CustomEvent("Semester change")
@@ -123,7 +129,7 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
         }
         getView().hideRefreshingBar();
 
-        FabricUtils.logRefresh("Grades", result, null);
+        FabricUtils.logRefresh("Grades", result, LocalDate.now().toString());
     }
 
     @Override
@@ -165,10 +171,7 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
         listener.onFragmentIsReady();
     }
 
-    @Override
-    public void onDestroy() {
-        isFirstSight = false;
-
+    private void cancelAsyncTasks() {
         if (refreshTask != null) {
             refreshTask.cancel(true);
             refreshTask = null;
@@ -177,6 +180,12 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
             loadingTask.cancel(true);
             loadingTask = null;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        isFirstSight = false;
+        cancelAsyncTasks();
         super.onDestroy();
     }
 }

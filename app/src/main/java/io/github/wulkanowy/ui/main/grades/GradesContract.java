@@ -40,5 +40,7 @@ public interface GradesContract {
         void onStart(View view, OnFragmentIsReadyListener listener);
 
         void onSemesterChange(int which);
+
+        void onSemesterSwitchActive();
     }
 }
