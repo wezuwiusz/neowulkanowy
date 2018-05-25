@@ -122,7 +122,9 @@ public class Timetable {
         Elements warn = e.select(".uwaga-panel");
 
         if (!warn.isEmpty()) {
-            e.select(".x-treelabel-rlz").last().text("(" + warn.text() + ")");
+            e.select("span").last()
+                    .addClass("x-treelabel-rlz")
+                    .text(warn.text());
             e.remove(1);
         }
     }
