@@ -61,13 +61,13 @@
                 android:id="@+id/login_activity_email_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
                 android:layout_marginBottom="12dp">
 
                 <EditText
                     android:id="@+id/login_activity_email_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -76,6 +76,7 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/login_activity_pass_text_input"
                 android:layout_width="match_parent"
+                android:hint="@string/prompt_password"
                 android:layout_height="wrap_content">
 
                 <EditText
@@ -83,7 +84,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:hint="@string/prompt_password"
                     android:imeActionLabel="@string/action_sign_in"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
@@ -95,16 +95,15 @@
                 android:id="@+id/login_activity_symbol_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/prompt_symbol"
                 android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/login_activity_symbol_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_symbol"
                     android:imeActionLabel="@string/action_sign_in"
                     android:imeOptions="actionDone"
-                    android:importantForAutofill="noExcludeDescendants"
                     android:inputType="textAutoComplete"
                     android:maxLines="1" />
 
