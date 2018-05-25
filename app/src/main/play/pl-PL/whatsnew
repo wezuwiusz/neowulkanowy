@@ -1,4 +1,5 @@
-Wersja 0.4.3:
-- naprawiono błąd z pokazywaniem usuniętych lekcji w planie
-- naprawiono drobne błędy z wyrównaniem tekstu na starszych urządzeniach
-- poprawiono synchronizację w tle spowodowaną błędem w komunikacji z serwerem
+Wersja 0.4.4:
+- naprawiono błędy w synchronizacji planu lekcji
+- naprawiono błędy podczas pierwszego logowania
+- naprawiono błąd podczas zmiany semestru
+- kolejny raz poprawiono synchronizację w tle

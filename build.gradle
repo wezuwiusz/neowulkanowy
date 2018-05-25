@@ -59,7 +59,9 @@ ext {
 
     fabricGradle = "1.25.4"
     crashlyticsSdk = "2.9.3"
-    crashlyticsAnswers = "1.4.1"
+    crashlyticsAnswers = "1.4.2"
+
+    playPublisher = "1.2.2"
 }
 
 allprojects {
