@@ -11,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.di.component.FragmentComponent;
 import io.github.wulkanowy.ui.base.BaseFragment;
 import io.github.wulkanowy.ui.base.BasePagerAdapter;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
+import io.github.wulkanowy.ui.main.timetable.tab.TimetableTabFragment;
 
 public class TimetableFragment extends BaseFragment implements TimetableContract.View {
 
@@ -30,6 +30,7 @@ public class TimetableFragment extends BaseFragment implements TimetableContract
     @BindView(R.id.timetable_fragment_tab_layout)
     TabLayout tabLayout;
 
+    @Named("Timetable")
     @Inject
     BasePagerAdapter pagerAdapter;
 
@@ -40,16 +41,12 @@ public class TimetableFragment extends BaseFragment implements TimetableContract
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_timetable, container, false);
+        injectViews(view);
 
-        FragmentComponent component = getFragmentComponent();
-        if (component != null) {
-            component.inject(this);
-            setButterKnife(ButterKnife.bind(this, view));
-            presenter.onStart(this, (OnFragmentIsReadyListener) getActivity());
+        presenter.attachView(this, (OnFragmentIsReadyListener) getActivity());
 
-            if (savedInstanceState != null) {
-                presenter.setRestoredPosition(savedInstanceState.getInt(CURRENT_ITEM_KEY));
-            }
+        if (savedInstanceState != null) {
+            presenter.setRestoredPosition(savedInstanceState.getInt(CURRENT_ITEM_KEY));
         }
         return view;
     }
@@ -92,14 +89,6 @@ public class TimetableFragment extends BaseFragment implements TimetableContract
     }
 
     @Override
-    public void onError(String message) {
-        if (getActivity() != null) {
-            Snackbar.make(getActivity().findViewById(R.id.main_activity_view_pager),
-                    message, Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(CURRENT_ITEM_KEY, viewPager.getCurrentItem());
         super.onSaveInstanceState(outState);
@@ -107,7 +96,7 @@ public class TimetableFragment extends BaseFragment implements TimetableContract
 
     @Override
     public void onDestroyView() {
-        presenter.onDestroy();
+        presenter.detachView();
         super.onDestroyView();
     }
 }

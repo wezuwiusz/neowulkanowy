@@ -5,7 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.view.View;
@@ -18,7 +18,6 @@ import android.widget.TextView;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import io.github.wulkanowy.R;
@@ -64,14 +63,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        injectViews();
 
-        setButterKnife(ButterKnife.bind(this));
-        getActivityComponent().inject(this);
-
-        presenter.onStart(this);
-
+        presenter.attachView(this);
         setUpOnCreate();
-
     }
 
     protected void setUpOnCreate() {
@@ -166,12 +161,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    public void onError(String message) {
-        Snackbar.make(findViewById(R.id.login_activity_container), message,
-                Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
     public void setStepOneLoginProgress() {
         onLoginProgressUpdate("1", getString(R.string.step_login));
     }
@@ -222,13 +211,19 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         }
     }
 
+    @NonNull
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.onDestroy();
+    protected View getMessageView() {
+        return findViewById(R.id.login_activity_container);
     }
 
     private void onLoginProgressUpdate(String step, String message) {
         loginProgressText.setText(String.format("%1$s/2 - %2$s...", step, message));
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.detachView();
+        super.onDestroy();
     }
 }

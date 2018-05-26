@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.main.attendance;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,8 @@ public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
     }
 
     @Override
-    public void onStart(AttendanceContract.View view, OnFragmentIsReadyListener listener) {
-        super.onStart(view);
+    public void attachView(@NonNull AttendanceContract.View view, OnFragmentIsReadyListener listener) {
+        super.attachView(view);
         this.listener = listener;
 
         if (getView().isMenuVisible()) {
@@ -64,7 +66,7 @@ public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
     }
 
     @Override
-    public void onDoInBackgroundLoading() throws Exception {
+    public void onDoInBackgroundLoading() {
         for (String date : dates) {
             getView().setTabDataToAdapter(date);
         }
@@ -92,14 +94,13 @@ public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
     }
 
     @Override
-    public void onDestroy() {
+    public void detachView() {
         isFirstSight = false;
 
         if (loadingTask != null) {
             loadingTask.cancel(true);
             loadingTask = null;
         }
-
-        super.onDestroy();
+        super.detachView();
     }
 }

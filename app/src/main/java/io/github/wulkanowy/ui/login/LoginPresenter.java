@@ -47,7 +47,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             loginAsync.execute();
 
         } else {
-            getView().onNoNetworkError();
+            getView().showNoNetworkMessage();
         }
 
         getView().hideSoftInput();
@@ -96,7 +96,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             getView().showSoftInput();
         } else {
             FabricUtils.logRegister(false, symbol);
-            getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
+            getView().showMessage(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
 
         getView().showActionBar(true);
@@ -160,11 +160,11 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     }
 
     @Override
-    public void onDestroy() {
+    public void detachView() {
         if (loginAsync != null) {
             loginAsync.cancel(true);
             loginAsync = null;
         }
-        super.onDestroy();
+        super.detachView();
     }
 }

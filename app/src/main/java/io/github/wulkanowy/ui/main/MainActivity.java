@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,9 +14,9 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.services.jobs.SyncJob;
 import io.github.wulkanowy.ui.base.BaseActivity;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity implements MainContract.View,
     @BindView(R.id.main_activity_progress_bar)
     View progressBar;
 
+    @Named("Main")
     @Inject
     BasePagerAdapter pagerAdapter;
 
@@ -55,11 +57,9 @@ public class MainActivity extends BaseActivity implements MainContract.View,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        injectViews();
 
-        getActivityComponent().inject(this);
-        setButterKnife(ButterKnife.bind(this));
-
-        presenter.onStart(this, getIntent().getIntExtra(EXTRA_CARD_ID_KEY, -1));
+        presenter.attachView(this, getIntent().getIntExtra(EXTRA_CARD_ID_KEY, -1));
     }
 
     @Override
@@ -146,9 +146,15 @@ public class MainActivity extends BaseActivity implements MainContract.View,
         SyncJob.start(getApplicationContext(), interval, useOnlyWifi);
     }
 
+    @NonNull
+    @Override
+    protected View getMessageView() {
+        return findViewById(R.id.main_activity_view_pager);
+    }
+
     @Override
     protected void onDestroy() {
+        presenter.detachView();
         super.onDestroy();
-        presenter.onDestroy();
     }
 }

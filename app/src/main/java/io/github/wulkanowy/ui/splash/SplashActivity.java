@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
+import io.github.wulkanowy.services.jobs.SyncJob;
 import io.github.wulkanowy.services.notifies.NotificationService;
 import io.github.wulkanowy.ui.base.BaseActivity;
 import io.github.wulkanowy.ui.login.LoginActivity;
@@ -18,16 +18,12 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getActivityComponent().inject(this);
-        setButterKnife(ButterKnife.bind(this));
-
-        presenter.onStart(this);
+        presenter.attachView(this);
     }
 
     @Override
     protected void onDestroy() {
-        presenter.onDestroy();
+        presenter.detachView();
         super.onDestroy();
     }
 

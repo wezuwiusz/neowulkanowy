@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.base;
 
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 
 import io.github.wulkanowy.data.RepositoryContract;
@@ -16,12 +18,12 @@ public class BasePresenter<V extends BaseContract.View> implements BaseContract.
     }
 
     @Override
-    public void onStart(V view) {
+    public void attachView(@NonNull V view) {
         this.view = view;
     }
 
     @Override
-    public void onDestroy() {
+    public void detachView() {
         view = null;
     }
 

@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -20,11 +19,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.di.component.FragmentComponent;
 import io.github.wulkanowy.ui.base.BaseFragment;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
 
@@ -55,14 +52,9 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grades, container, false);
+        injectViews(view);
 
-        FragmentComponent component = getFragmentComponent();
-        if (component != null) {
-            component.inject(this);
-            setButterKnife(ButterKnife.bind(this, view));
-            presenter.onStart(this, (OnFragmentIsReadyListener) getActivity());
-        }
-
+        presenter.attachView(this, (OnFragmentIsReadyListener) getActivity());
         return view;
     }
 
@@ -102,14 +94,14 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
     }
 
     @Override
-    protected void setUpOnViewCreated(View fragmentView) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         noItemView.setVisibility(View.GONE);
 
         adapter.setAutoCollapseOnExpand(true);
         adapter.setAutoScrollOnExpand(true);
         adapter.expandItemsAtStartUp();
 
-        recyclerView.setLayoutManager(new SmoothScrollLinearLayoutManager(fragmentView.getContext()));
+        recyclerView.setLayoutManager(new SmoothScrollLinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
 
         refreshLayout.setColorSchemeResources(android.R.color.black);
@@ -155,25 +147,17 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
 
     @Override
     public void onRefreshSuccessNoGrade() {
-        onError(R.string.snackbar_no_grades);
+        showMessage(R.string.snackbar_no_grades);
     }
 
     @Override
     public void onRefreshSuccess(int number) {
-        onError(getString(R.string.snackbar_new_grade, number));
-    }
-
-    @Override
-    public void onError(String message) {
-        if (getActivity() != null) {
-            Snackbar.make(getActivity().findViewById(R.id.main_activity_view_pager),
-                    message, Snackbar.LENGTH_LONG).show();
-        }
+        showMessage(getString(R.string.snackbar_new_grade, number));
     }
 
     @Override
     public void onDestroyView() {
-        presenter.onDestroy();
+        presenter.detachView();
         super.onDestroyView();
     }
 }

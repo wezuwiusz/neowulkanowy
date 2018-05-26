@@ -1,27 +1,22 @@
 package io.github.wulkanowy.ui.base;
 
-import android.support.annotation.StringRes;
-
-import io.github.wulkanowy.di.annotations.PerActivity;
+import android.support.annotation.NonNull;
 
 public interface BaseContract {
 
     interface View {
 
-        void onError(@StringRes int resId);
+        void showMessage(@NonNull String text);
 
-        void onError(String message);
-
-        void onNoNetworkError();
+        void showNoNetworkMessage();
 
         boolean isNetworkConnected();
     }
 
-    @PerActivity
     interface Presenter<V extends View> {
 
-        void onStart(V view);
+        void attachView(@NonNull V view);
 
-        void onDestroy();
+        void detachView();
     }
 }

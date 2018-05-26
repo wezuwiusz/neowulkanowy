@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.main.exams;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,8 @@ public class ExamsPresenter extends BasePresenter<ExamsContract.View>
     }
 
     @Override
-    public void onStart(ExamsContract.View view, OnFragmentIsReadyListener listener) {
-        super.onStart(view);
+    public void attachView(@NonNull ExamsContract.View view, OnFragmentIsReadyListener listener) {
+        super.attachView(view);
         this.listener = listener;
 
         if (getView().isMenuVisible()) {
@@ -69,7 +71,7 @@ public class ExamsPresenter extends BasePresenter<ExamsContract.View>
     }
 
     @Override
-    public void onDoInBackgroundLoading() throws Exception {
+    public void onDoInBackgroundLoading() {
         for (String date : dates) {
             getView().setTabDataToAdapter(date);
         }
@@ -91,13 +93,13 @@ public class ExamsPresenter extends BasePresenter<ExamsContract.View>
     }
 
     @Override
-    public void onDestroy() {
+    public void detachView() {
         isFirstSight = false;
 
         if (loadingTask != null) {
             loadingTask.cancel(true);
             loadingTask = null;
         }
-        super.onDestroy();
+        super.detachView();
     }
 }

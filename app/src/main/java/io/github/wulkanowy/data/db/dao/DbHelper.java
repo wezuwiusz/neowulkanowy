@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import io.github.wulkanowy.api.Vulcan;
@@ -21,8 +22,6 @@ import io.github.wulkanowy.data.db.dao.migrations.Migration26;
 import io.github.wulkanowy.data.db.dao.migrations.Migration27;
 import io.github.wulkanowy.data.db.dao.migrations.Migration28;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
-import io.github.wulkanowy.di.annotations.ApplicationContext;
-import io.github.wulkanowy.di.annotations.DatabaseInfo;
 import io.github.wulkanowy.utils.LogUtils;
 
 @Singleton
@@ -33,7 +32,7 @@ public class DbHelper extends DaoMaster.OpenHelper {
     private final Vulcan vulcan;
 
     @Inject
-    DbHelper(@ApplicationContext Context context, @DatabaseInfo String dbName,
+    DbHelper(Context context, @Named("dbName") String dbName,
              SharedPrefContract sharedPref, Vulcan vulcan) {
         super(context, dbName);
         this.sharedPref = sharedPref;

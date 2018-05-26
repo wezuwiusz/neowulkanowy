@@ -1,6 +1,8 @@
 package io.github.wulkanowy.ui.main;
 
 
+import android.support.annotation.NonNull;
+
 import javax.inject.Inject;
 
 import io.github.wulkanowy.data.RepositoryContract;
@@ -17,15 +19,15 @@ public class MainPresenter extends BasePresenter<MainContract.View>
     }
 
     @Override
-    public void onStart(MainContract.View view, int tabPositionIntent) {
-        super.onStart(view);
+    public void attachView(@NonNull MainContract.View view, int initTabId) {
+        super.attachView(view);
         getView().showProgressBar(true);
         getView().hideActionBar();
 
         int tabPosition;
 
-        if (tabPositionIntent != -1) {
-            tabPosition = tabPositionIntent;
+        if (initTabId != -1) {
+            tabPosition = initTabId;
         } else {
             tabPosition = getRepository().getSharedRepo().getStartupTab();
         }

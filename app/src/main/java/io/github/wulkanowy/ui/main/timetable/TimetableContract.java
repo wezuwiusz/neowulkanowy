@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.main.timetable;
 
-import io.github.wulkanowy.di.annotations.PerFragment;
+import android.support.annotation.NonNull;
+
 import io.github.wulkanowy.ui.base.BaseContract;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
 
@@ -21,12 +22,11 @@ public interface TimetableContract {
         void setThemeForTab(int position);
     }
 
-    @PerFragment
     interface Presenter extends BaseContract.Presenter<View> {
 
         void onFragmentActivated(boolean isVisible);
 
-        void onStart(View view, OnFragmentIsReadyListener listener);
+        void attachView(@NonNull View view, OnFragmentIsReadyListener listener);
 
         void setRestoredPosition(int position);
     }

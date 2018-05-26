@@ -23,7 +23,6 @@ import io.github.wulkanowy.data.db.dao.entities.StudentDao;
 import io.github.wulkanowy.data.db.dao.entities.Symbol;
 import io.github.wulkanowy.data.db.dao.entities.SymbolDao;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
-import io.github.wulkanowy.di.annotations.ApplicationContext;
 import io.github.wulkanowy.utils.DataObjectConverter;
 import io.github.wulkanowy.utils.LogUtils;
 import io.github.wulkanowy.utils.security.CryptoException;
@@ -42,7 +41,7 @@ public class AccountSync {
 
     @Inject
     AccountSync(DaoSession daoSession, SharedPrefContract sharedPref,
-                Vulcan vulcan, @ApplicationContext Context context) {
+                Vulcan vulcan, Context context) {
         this.daoSession = daoSession;
         this.sharedPref = sharedPref;
         this.vulcan = vulcan;

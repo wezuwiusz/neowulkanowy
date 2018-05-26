@@ -10,14 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.di.component.FragmentComponent;
 import io.github.wulkanowy.ui.base.BaseFragment;
 import io.github.wulkanowy.ui.base.BasePagerAdapter;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
+import io.github.wulkanowy.ui.main.exams.tab.ExamsTabFragment;
 
 public class ExamsFragment extends BaseFragment implements ExamsContract.View {
 
@@ -30,6 +31,7 @@ public class ExamsFragment extends BaseFragment implements ExamsContract.View {
     TabLayout tabLayout;
 
     @Inject
+    @Named("Exams")
     BasePagerAdapter pagerAdapter;
 
     @Inject
@@ -39,16 +41,12 @@ public class ExamsFragment extends BaseFragment implements ExamsContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exams, container, false);
+        injectViews(view);
 
-        FragmentComponent component = getFragmentComponent();
-        if (component != null) {
-            component.inject(this);
-            setButterKnife(ButterKnife.bind(this, view));
-            presenter.onStart(this, (OnFragmentIsReadyListener) getActivity());
+        presenter.attachView(this, (OnFragmentIsReadyListener) getActivity());
 
-            if (savedInstanceState != null) {
-                presenter.setRestoredPosition(savedInstanceState.getInt(CURRENT_ITEM_KEY));
-            }
+        if (savedInstanceState != null) {
+            presenter.setRestoredPosition(savedInstanceState.getInt(CURRENT_ITEM_KEY));
         }
         return view;
     }
@@ -58,14 +56,6 @@ public class ExamsFragment extends BaseFragment implements ExamsContract.View {
         super.setMenuVisibility(menuVisible);
         if (presenter != null) {
             presenter.onFragmentActivated(menuVisible);
-        }
-    }
-
-    @Override
-    public void onError(String message) {
-        if (getActivity() != null) {
-            Snackbar.make(getActivity().findViewById(R.id.main_activity_view_pager),
-                    message, Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -107,6 +97,6 @@ public class ExamsFragment extends BaseFragment implements ExamsContract.View {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        presenter.onDestroy();
+        presenter.detachView();
     }
 }

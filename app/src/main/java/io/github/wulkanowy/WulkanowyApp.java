@@ -1,7 +1,5 @@
 package io.github.wulkanowy;
 
-import android.app.Application;
-
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -11,18 +9,16 @@ import org.greenrobot.greendao.query.QueryBuilder;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.utils.Log;
 import io.fabric.sdk.android.Fabric;
 import io.github.wulkanowy.data.RepositoryContract;
-import io.github.wulkanowy.di.component.ApplicationComponent;
-import io.github.wulkanowy.di.component.DaggerApplicationComponent;
-import io.github.wulkanowy.di.modules.ApplicationModule;
+import io.github.wulkanowy.di.DaggerAppComponent;
 import io.github.wulkanowy.utils.LogUtils;
 
-public class WulkanowyApp extends Application {
-
-    protected ApplicationComponent applicationComponent;
+public class WulkanowyApp extends DaggerApplication {
 
     @Inject
     RepositoryContract repository;
@@ -31,12 +27,6 @@ public class WulkanowyApp extends Application {
     public void onCreate() {
         super.onCreate();
         AndroidThreeTen.init(this);
-
-        applicationComponent = DaggerApplicationComponent
-                .builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
-        applicationComponent.inject(this);
 
         if (BuildConfig.DEBUG) {
             enableDebugLog();
@@ -72,7 +62,8 @@ public class WulkanowyApp extends Application {
                 .build());
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().create(this);
     }
 }

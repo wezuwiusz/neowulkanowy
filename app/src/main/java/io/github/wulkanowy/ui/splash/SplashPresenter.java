@@ -16,8 +16,8 @@ public class SplashPresenter extends BasePresenter<SplashContract.View>
     }
 
     @Override
-    public void onStart(@NonNull SplashContract.View activity) {
-        super.onStart(activity);
+    public void attachView(@NonNull SplashContract.View view) {
+        super.attachView(view);
         getView().cancelNotifications();
 
         if (getRepository().getSharedRepo().isUserLoggedIn()) {

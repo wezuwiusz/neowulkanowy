@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.main.grades;
 
+import android.support.annotation.NonNull;
+
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 
@@ -41,8 +43,8 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
     }
 
     @Override
-    public void onStart(GradesContract.View view, OnFragmentIsReadyListener listener) {
-        super.onStart(view);
+    public void attachView(@NonNull GradesContract.View view, OnFragmentIsReadyListener listener) {
+        super.attachView(view);
         this.listener = listener;
 
         if (getView().isMenuVisible()) {
@@ -94,7 +96,7 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
             refreshTask.setOnRefreshListener(this);
             refreshTask.execute();
         } else {
-            getView().onNoNetworkError();
+            getView().showNoNetworkMessage();
             getView().hideRefreshingBar();
         }
     }
@@ -125,7 +127,7 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
                 getView().onRefreshSuccess(numberOfNewGrades);
             }
         } else {
-            getView().onError(getRepository().getResRepo().getErrorLoginMessage(exception));
+            getView().showMessage(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
         getView().hideRefreshingBar();
 
@@ -183,9 +185,9 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
     }
 
     @Override
-    public void onDestroy() {
+    public void detachView() {
         isFirstSight = false;
         cancelAsyncTasks();
-        super.onDestroy();
+        super.detachView();
     }
 }

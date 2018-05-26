@@ -15,7 +15,6 @@ import javax.inject.Singleton;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.api.NotLoggedInErrorException;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
-import io.github.wulkanowy.di.annotations.ApplicationContext;
 import io.github.wulkanowy.utils.AppConstant;
 import io.github.wulkanowy.utils.LogUtils;
 import io.github.wulkanowy.utils.security.CryptoException;
@@ -26,7 +25,7 @@ public class ResourcesRepository implements ResourcesContract {
     private Resources resources;
 
     @Inject
-    ResourcesRepository(@ApplicationContext Context context) {
+    ResourcesRepository(Context context) {
         resources = context.getResources();
     }
 

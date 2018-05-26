@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.main.attendance;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,14 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.github.wulkanowy.R;
-import io.github.wulkanowy.di.component.FragmentComponent;
 import io.github.wulkanowy.ui.base.BaseFragment;
 import io.github.wulkanowy.ui.base.BasePagerAdapter;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
+import io.github.wulkanowy.ui.main.attendance.tab.AttendanceTabFragment;
 
 public class AttendanceFragment extends BaseFragment implements AttendanceContract.View {
 
@@ -31,6 +30,7 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
     TabLayout tabLayout;
 
     @Inject
+    @Named("Attendance")
     BasePagerAdapter pagerAdapter;
 
     @Inject
@@ -41,18 +41,13 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_attendance, container, false);
+        injectViews(view);
 
-        FragmentComponent component = getFragmentComponent();
-        if (component != null) {
-            component.inject(this);
-            setButterKnife(ButterKnife.bind(this, view));
-            presenter.onStart(this, (OnFragmentIsReadyListener) getActivity());
+        presenter.attachView(this, (OnFragmentIsReadyListener) getActivity());
 
-            if (savedInstanceState != null) {
-                presenter.setRestoredPosition(savedInstanceState.getInt(CURRENT_ITEM_KEY));
-            }
+        if (savedInstanceState != null) {
+            presenter.setRestoredPosition(savedInstanceState.getInt(CURRENT_ITEM_KEY));
         }
-
         return view;
     }
 
@@ -94,14 +89,6 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
     }
 
     @Override
-    public void onError(String message) {
-        if (getActivity() != null) {
-            Snackbar.make(getActivity().findViewById(R.id.main_activity_view_pager),
-                    message, Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(CURRENT_ITEM_KEY, viewPager.getCurrentItem());
         super.onSaveInstanceState(outState);
@@ -109,7 +96,7 @@ public class AttendanceFragment extends BaseFragment implements AttendanceContra
 
     @Override
     public void onDestroyView() {
-        presenter.onDestroy();
+        presenter.detachView();
         super.onDestroyView();
     }
 }
