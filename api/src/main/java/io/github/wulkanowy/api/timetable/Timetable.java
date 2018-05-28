@@ -19,7 +19,7 @@ import io.github.wulkanowy.api.generic.Week;
 
 public class Timetable {
 
-    private static final String TIMETABLE_PAGE_URL = "Lekcja.mvc/PlanLekcji?data=";
+    private static final String TIMETABLE_PAGE_URL = "Lekcja.mvc/PlanZajec?data=";
 
     private SnP snp;
 
