@@ -1,5 +1,2 @@
-Wersja 0.4.4:
-- naprawiono błędy w synchronizacji planu lekcji
-- naprawiono błędy podczas pierwszego logowania
-- naprawiono błąd podczas zmiany semestru
-- kolejny raz poprawiono synchronizację w tle
+Wersja 0.4.5:
+- naprawiono logownie
