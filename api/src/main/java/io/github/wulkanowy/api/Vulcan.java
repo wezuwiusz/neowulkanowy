@@ -8,6 +8,8 @@ import io.github.wulkanowy.api.exams.ExamsWeek;
 import io.github.wulkanowy.api.grades.GradesList;
 import io.github.wulkanowy.api.grades.SubjectsList;
 import io.github.wulkanowy.api.messages.Messages;
+import io.github.wulkanowy.api.mobile.RegisterDevice;
+import io.github.wulkanowy.api.mobile.RegisteredDevices;
 import io.github.wulkanowy.api.notes.AchievementsList;
 import io.github.wulkanowy.api.notes.NotesList;
 import io.github.wulkanowy.api.school.SchoolInfo;
@@ -106,6 +108,14 @@ public class Vulcan {
 
     public FamilyInformation getFamilyInformation() throws IOException, VulcanException {
         return new FamilyInformation(getStudentAndParent());
+    }
+
+    public RegisteredDevices getRegisteredDevices() throws VulcanException, IOException {
+        return new RegisteredDevices(getStudentAndParent());
+    }
+
+    public RegisterDevice getRegisterDevice() throws VulcanException, IOException {
+        return new RegisterDevice(getStudentAndParent());
     }
 
     public Messages getMessages() throws VulcanException {
