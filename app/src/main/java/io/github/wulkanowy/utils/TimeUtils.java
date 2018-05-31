@@ -44,6 +44,10 @@ public final class TimeUtils {
         return getNetTicks(dateObject);
     }
 
+    public static LocalDate getParsedDate(String dateString, String dateFormat) {
+        return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(dateFormat));
+    }
+
     public static Date getDate(long netTicks) {
         return new Date((netTicks - TICKS_AT_EPOCH) / TICKS_PER_MILLISECOND);
     }
@@ -101,5 +105,10 @@ public final class TimeUtils {
     public static String getTodayOrNextDay(boolean nextDay) {
         LocalDate current = LocalDate.now();
         return nextDay ? current.plusDays(1).format(formatter) : current.format(formatter);
+    }
+
+    public static boolean isDateInWeek(LocalDate firstWeekDay, LocalDate date) {
+        return date.isAfter(firstWeekDay.minusDays(1)) && date.isBefore(firstWeekDay.plusDays(5));
+
     }
 }

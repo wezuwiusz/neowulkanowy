@@ -1,7 +1,8 @@
 package io.github.wulkanowy.ui.main.timetable.tab;
 
-
 import android.support.annotation.NonNull;
+
+import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,9 @@ import io.github.wulkanowy.data.db.dao.entities.Day;
 import io.github.wulkanowy.data.db.dao.entities.TimetableLesson;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.ui.base.BasePresenter;
+import io.github.wulkanowy.utils.AppConstant;
 import io.github.wulkanowy.utils.FabricUtils;
+import io.github.wulkanowy.utils.TimeUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
@@ -48,8 +51,6 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
     @Override
     public void onFragmentActivated(boolean isSelected) {
         if (!isFirstSight && isSelected && isViewAttached()) {
-            isFirstSight = true;
-
             loadingTask = new AbstractTask();
             loadingTask.setOnFirstLoadingListener(this);
             loadingTask.execute();
@@ -148,15 +149,24 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
 
     @Override
     public void onEndLoadingAsync(boolean result, Exception exception) {
+        getView().showNoItem(headerItems.isEmpty());
+        getView().updateAdapterList(headerItems);
+
         if (headerItems.isEmpty()) {
-            getView().showNoItem(true);
             getView().setFreeWeekName(freeWeekName);
-            getView().updateAdapterList(null);
         } else {
-            getView().updateAdapterList(headerItems);
-            getView().showNoItem(false);
+            expandCurrentDayHeader();
         }
         getView().showProgressBar(false);
+        isFirstSight = true;
+    }
+
+    private void expandCurrentDayHeader() {
+        LocalDate monday = TimeUtils.getParsedDate(date, AppConstant.DATE_PATTERN);
+
+        if (TimeUtils.isDateInWeek(monday, LocalDate.now()) && !isFirstSight) {
+            getView().expandItem(LocalDate.now().getDayOfWeek().getValue() - 1);
+        }
     }
 
     @Override

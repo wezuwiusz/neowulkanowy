@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.main.timetable.tab;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -89,6 +88,12 @@ public class TimetableTabFragment extends BaseFragment implements TimetableTabCo
     @Override
     public void updateAdapterList(List<TimetableHeaderItem> headerItems) {
         adapter.updateDataSet(headerItems);
+    }
+
+    @Override
+    public void expandItem(int position) {
+        adapter.expand(adapter.getItem(position), true);
+        recyclerView.scrollToPosition(position);
     }
 
     @Override
