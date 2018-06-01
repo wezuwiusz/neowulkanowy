@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.wulkanowy.api.generic.Semester;
+
 public class StudentAndParentTest {
 
     private Client client;

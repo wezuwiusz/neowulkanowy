@@ -30,8 +30,8 @@ public class NotesListTest extends StudentAndParentTestCase {
     public void getDateTest() throws Exception {
         List<Note> filledList = filled.getAllNotes();
 
-        Assert.assertEquals("06.06.2017", filledList.get(0).getDate());
-        Assert.assertEquals("01.10.2016", filledList.get(2).getDate());
+        Assert.assertEquals("2017-06-06", filledList.get(0).getDate());
+        Assert.assertEquals("2016-10-01", filledList.get(2).getDate());
     }
 
     @Test

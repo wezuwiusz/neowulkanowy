@@ -11,6 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.github.wulkanowy.api.generic.Diary;
+import io.github.wulkanowy.api.generic.ParamItem;
+import io.github.wulkanowy.api.generic.Semester;
+import io.github.wulkanowy.api.generic.Student;
+
 public class StudentAndParent implements SnP {
 
     private static final String START_PAGE_URL = "{schema}://uonetplus.{host}/{symbol}/Start.mvc/Index";

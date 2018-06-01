@@ -1,6 +1,6 @@
-package io.github.wulkanowy.api;
+package io.github.wulkanowy.api.generic;
 
-public class Semester implements ParamItem {
+public class Student implements ParamItem {
 
     private String id = "";
 
@@ -12,7 +12,7 @@ public class Semester implements ParamItem {
         return id;
     }
 
-    public Semester setId(String id) {
+    public Student setId(String id) {
         this.id = id;
         return this;
     }
@@ -21,8 +21,8 @@ public class Semester implements ParamItem {
         return name;
     }
 
-    public Semester setName(String number) {
-        this.name = number;
+    public Student setName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -30,7 +30,7 @@ public class Semester implements ParamItem {
         return current;
     }
 
-    public Semester setCurrent(boolean current) {
+    public Student setCurrent(boolean current) {
         this.current = current;
         return this;
     }

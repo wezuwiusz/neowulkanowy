@@ -6,6 +6,11 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.List;
 
+import io.github.wulkanowy.api.generic.Diary;
+import io.github.wulkanowy.api.generic.ParamItem;
+import io.github.wulkanowy.api.generic.Semester;
+import io.github.wulkanowy.api.generic.Student;
+
 public interface SnP {
 
     String getSchoolID();

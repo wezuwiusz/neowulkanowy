@@ -14,9 +14,7 @@ public class AchievementsList {
 
     private static final String NOTES_PAGE_URL = "UwagiOsiagniecia.mvc/Wszystkie";
 
-    private SnP snp = null;
-
-    private List<String> achievements = new ArrayList<>();
+    private SnP snp;
 
     public AchievementsList(SnP snp) {
         this.snp = snp;
@@ -26,6 +24,8 @@ public class AchievementsList {
         Element pageFragment = snp.getSnPPageDocument(NOTES_PAGE_URL)
                 .select(".mainContainer > div").get(1);
         Elements items = pageFragment.select("article");
+
+        List<String> achievements = new ArrayList<>();
 
         for (Element item : items) {
             achievements.add(item.text());

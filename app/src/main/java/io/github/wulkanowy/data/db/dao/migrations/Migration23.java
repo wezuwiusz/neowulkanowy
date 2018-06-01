@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.github.wulkanowy.api.Diary;
+import io.github.wulkanowy.api.generic.Diary;
 import io.github.wulkanowy.api.Vulcan;
 import io.github.wulkanowy.data.db.dao.DbHelper;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;

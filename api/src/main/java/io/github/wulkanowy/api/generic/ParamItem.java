@@ -1,6 +1,6 @@
-package io.github.wulkanowy.api;
+package io.github.wulkanowy.api.generic;
 
-interface ParamItem {
+public interface ParamItem {
 
     ParamItem setId(String id);
 

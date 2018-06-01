@@ -4,18 +4,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import io.github.wulkanowy.api.SnP;
 import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.api.generic.Day;
 import io.github.wulkanowy.api.generic.Lesson;
 import io.github.wulkanowy.api.generic.Week;
+
+import static io.github.wulkanowy.api.DateTimeUtilsKt.getDateAsTick;
+import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
 
 public class AttendanceTable {
 
@@ -27,13 +26,12 @@ public class AttendanceTable {
         this.snp = snp;
     }
 
-    public Week<Day> getWeekTable() throws IOException, ParseException, VulcanException {
+    public Week<Day> getWeekTable() throws IOException, VulcanException {
         return getWeekTable("");
     }
 
-    public Week<Day> getWeekTable(String tick) throws IOException, ParseException, VulcanException {
-        Element table = snp.getSnPPageDocument(ATTENDANCE_PAGE_URL + tick)
-
+    public Week<Day> getWeekTable(String date) throws IOException, VulcanException {
+        Element table = snp.getSnPPageDocument(ATTENDANCE_PAGE_URL + getDateAsTick(date))
                 .select(".mainContainer .presentData").first();
 
         Elements headerCells = table.select("thead th");
@@ -42,14 +40,10 @@ public class AttendanceTable {
         for (int i = 1; i < headerCells.size(); i++) {
             String[] dayHeaderCell = headerCells.get(i).html().split("<br>");
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
-            Date d = sdf.parse(dayHeaderCell[1].trim());
-            sdf.applyPattern("yyyy-MM-dd");
-
-            Day day = new Day();
-            day.setDayName(dayHeaderCell[0]);
-            day.setDate(sdf.format(d));
-            days.add(day);
+            days.add(new Day()
+                    .setDayName(dayHeaderCell[0])
+                    .setDate(getFormattedDate(dayHeaderCell[1].trim()))
+            );
         }
 
         Elements hoursInDays = table.select("tbody tr");

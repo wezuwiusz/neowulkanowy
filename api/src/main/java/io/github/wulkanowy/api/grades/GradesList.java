@@ -5,17 +5,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.github.wulkanowy.api.SnP;
 import io.github.wulkanowy.api.VulcanException;
+
+import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
 
 public class GradesList {
 
@@ -23,23 +21,15 @@ public class GradesList {
 
     private SnP snp;
 
-    private List<Grade> grades = new ArrayList<>();
-
     public GradesList(SnP snp) {
         this.snp = snp;
     }
 
-    private String getGradesPageUrl() {
-        return GRADES_PAGE_URL;
-    }
-
-    public List<Grade> getAll() throws IOException, ParseException, VulcanException {
-        return getAll("");
-    }
-
-    public List<Grade> getAll(String semester) throws IOException, ParseException, VulcanException {
-        Document gradesPage = snp.getSnPPageDocument(getGradesPageUrl() + semester);
+    public List<Grade> getAll(String semester) throws IOException, VulcanException {
+        Document gradesPage = snp.getSnPPageDocument(GRADES_PAGE_URL + semester);
         Elements gradesRows = gradesPage.select(".ocenySzczegoly-table > tbody > tr");
+
+        List<Grade> grades = new ArrayList<>();
 
         for (Element row : gradesRows) {
             if ("Brak ocen".equals(row.select("td:nth-child(2)").text())) {
@@ -52,13 +42,13 @@ public class GradesList {
         return grades;
     }
 
-    private Grade getGrade(Element row) throws ParseException {
+    private Grade getGrade(Element row) {
         String descriptions = row.select("td:nth-child(3)").text();
 
         String symbol = descriptions.split(", ")[0];
         String description = descriptions.replaceFirst(Pattern.quote(symbol), "").replaceFirst(", ", "");
         String color = getColor(row.select("td:nth-child(2) span.ocenaCzastkowa").attr("style"));
-        String date = formatDate(row.select("td:nth-child(5)").text());
+        String date = getFormattedDate(row.select("td:nth-child(5)").text());
 
         return new Grade()
                 .setSubject(row.select("td:nth-child(1)").text())
@@ -81,13 +71,5 @@ public class GradesList {
         }
 
         return color;
-    }
-
-    private String formatDate(String date) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
-        Date d = sdf.parse(date);
-        sdf.applyPattern("yyyy-MM-dd");
-
-        return sdf.format(d);
     }
 }

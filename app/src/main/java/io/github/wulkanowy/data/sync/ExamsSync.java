@@ -1,7 +1,6 @@
 package io.github.wulkanowy.data.sync;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.data.db.dao.entities.WeekDao;
 import io.github.wulkanowy.utils.DataObjectConverter;
 import io.github.wulkanowy.utils.LogUtils;
-import io.github.wulkanowy.utils.TimeUtils;
 
 public class ExamsSync {
 
@@ -35,11 +33,10 @@ public class ExamsSync {
         this.vulcan = vulcan;
     }
 
-    public void syncExams(long diaryId, String date) throws IOException, VulcanException,
-            ParseException {
+    public void syncExams(long diaryId, String date) throws IOException, VulcanException {
         this.diaryId = diaryId;
 
-        io.github.wulkanowy.api.generic.Week<ExamDay> weekApi = getWeekFromApi(getNormalizedDate(date));
+        io.github.wulkanowy.api.generic.Week<ExamDay> weekApi = getWeekFromApi(date);
         Week weekDb = getWeekFromDb(weekApi.getStartDayDate());
 
         long weekId = updateWeekInDb(weekDb, weekApi);
@@ -59,7 +56,7 @@ public class ExamsSync {
     }
 
     private io.github.wulkanowy.api.generic.Week<ExamDay> getWeekFromApi(String date)
-            throws VulcanException, IOException, ParseException {
+            throws VulcanException, IOException {
         return vulcan.getExamsList().getWeek(date, true);
     }
 
@@ -75,10 +72,6 @@ public class ExamsSync {
         weekApiEntity.setExamsSynced(true);
 
         return daoSession.getWeekDao().insert(weekApiEntity);
-    }
-
-    private String getNormalizedDate(String date) throws ParseException {
-        return null != date ? String.valueOf(TimeUtils.getNetTicks(date)) : "";
     }
 
     private Day getDayFromDb(String date, long weekId) {

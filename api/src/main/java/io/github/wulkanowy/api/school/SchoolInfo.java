@@ -11,7 +11,7 @@ public class SchoolInfo {
 
     private static final String SCHOOL_PAGE_URL = "Szkola.mvc/Nauczyciele";
 
-    private SnP snp = null;
+    private SnP snp;
 
     public SchoolInfo(SnP snp) {
         this.snp = snp;

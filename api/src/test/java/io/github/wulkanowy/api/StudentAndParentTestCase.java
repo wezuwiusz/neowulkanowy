@@ -5,6 +5,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.mockito.Mockito;
 
+import io.github.wulkanowy.api.generic.Semester;
+
 public abstract class StudentAndParentTestCase {
 
     protected StudentAndParent getSnp(String fixtureFileName) throws Exception {

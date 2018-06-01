@@ -1,6 +1,6 @@
-package io.github.wulkanowy.api;
+package io.github.wulkanowy.api.generic;
 
-public class Diary implements ParamItem {
+public class Semester implements ParamItem {
 
     private String id = "";
 
@@ -12,7 +12,7 @@ public class Diary implements ParamItem {
         return id;
     }
 
-    public Diary setId(String id) {
+    public Semester setId(String id) {
         this.id = id;
         return this;
     }
@@ -21,17 +21,16 @@ public class Diary implements ParamItem {
         return name;
     }
 
-    public Diary setName(String name) {
-        this.name = name;
+    public Semester setName(String number) {
+        this.name = number;
         return this;
     }
 
-    @Override
     public boolean isCurrent() {
         return current;
     }
 
-    public Diary setCurrent(boolean current) {
+    public Semester setCurrent(boolean current) {
         this.current = current;
         return this;
     }

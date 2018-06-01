@@ -19,12 +19,12 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getAllTest() throws Exception {
-        Assert.assertEquals(7, filled.getAll().size()); // 2 items are skipped
+        Assert.assertEquals(7, filled.getAll("").size()); // 2 items are skipped
     }
 
     @Test
     public void getSubjectTest() throws Exception {
-        List<Grade> list = filled.getAll();
+        List<Grade> list = filled.getAll("");
 
         Assert.assertEquals("Zajęcia z wychowawcą", list.get(0).getSubject());
         Assert.assertEquals("Język angielski", list.get(3).getSubject());
@@ -34,7 +34,7 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getValueTest() throws Exception {
-        List<Grade> list = filled.getAll();
+        List<Grade> list = filled.getAll("");
 
         Assert.assertEquals("5", list.get(0).getValue());
         Assert.assertEquals("5", list.get(3).getValue());
@@ -44,7 +44,7 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getColorTest() throws Exception {
-        List<Grade> list = filled.getAll();
+        List<Grade> list = filled.getAll("");
 
         Assert.assertEquals("000000", list.get(0).getColor());
         Assert.assertEquals("1289F7", list.get(3).getColor());
@@ -54,7 +54,7 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getSymbolTest() throws Exception {
-        List<Grade> list = filled.getAll();
+        List<Grade> list = filled.getAll("");
 
         Assert.assertEquals("A1", list.get(0).getSymbol());
         Assert.assertEquals("BW3", list.get(3).getSymbol());
@@ -65,7 +65,7 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getDescriptionTest() throws Exception {
-        List<Grade> list = filled.getAll();
+        List<Grade> list = filled.getAll("");
 
         Assert.assertEquals("Dzień Kobiet w naszej klasie", list.get(0).getDescription());
         Assert.assertEquals("Writing", list.get(3).getDescription());
@@ -76,7 +76,7 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getWeightTest() throws Exception {
-        List<Grade> list = filled.getAll();
+        List<Grade> list = filled.getAll("");
 
         Assert.assertEquals("1,00", list.get(0).getWeight());
         Assert.assertEquals("3,00", list.get(3).getWeight());
@@ -86,7 +86,7 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getDateTest() throws Exception {
-        List<Grade> list = filled.getAll();
+        List<Grade> list = filled.getAll("");
 
         Assert.assertEquals("2017-03-21", list.get(0).getDate());
         Assert.assertEquals("2017-06-02", list.get(3).getDate());
@@ -96,7 +96,7 @@ public class GradesListTest extends StudentAndParentTestCase {
 
     @Test
     public void getTeacherTest() throws Exception {
-        List<Grade> list = filled.getAll();
+        List<Grade> list = filled.getAll("");
 
         Assert.assertEquals("Patryk Maciejewski", list.get(0).getTeacher());
         Assert.assertEquals("Oliwia Woźniak", list.get(3).getTeacher());

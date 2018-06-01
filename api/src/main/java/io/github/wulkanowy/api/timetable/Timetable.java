@@ -5,17 +5,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import io.github.wulkanowy.api.SnP;
 import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.api.generic.Lesson;
 import io.github.wulkanowy.api.generic.Week;
+
+import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
+import static io.github.wulkanowy.api.DateTimeUtilsKt.getDateAsTick;
 
 public class Timetable {
 
@@ -27,12 +26,12 @@ public class Timetable {
         this.snp = snp;
     }
 
-    public Week<TimetableDay> getWeekTable() throws IOException, ParseException, VulcanException {
+    public Week<TimetableDay> getWeekTable() throws IOException, VulcanException {
         return getWeekTable("");
     }
 
-    public Week<TimetableDay> getWeekTable(final String tick) throws IOException, ParseException, VulcanException {
-        Element table = snp.getSnPPageDocument(TIMETABLE_PAGE_URL + tick)
+    public Week<TimetableDay> getWeekTable(final String date) throws IOException, VulcanException {
+        Element table = snp.getSnPPageDocument(TIMETABLE_PAGE_URL + getDateAsTick(date))
                 .select(".mainContainer .presentData").first();
 
         List<TimetableDay> days = getDays(table.select("thead th"));
@@ -44,19 +43,15 @@ public class Timetable {
                 .setDays(days);
     }
 
-    private List<TimetableDay> getDays(Elements tableHeaderCells) throws ParseException {
+    private List<TimetableDay> getDays(Elements tableHeaderCells) {
         List<TimetableDay> days = new ArrayList<>();
 
         for (int i = 2; i < 7; i++) {
             String[] dayHeaderCell = tableHeaderCells.get(i).html().split("<br>");
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.ROOT);
-            Date d = sdf.parse(dayHeaderCell[1].trim());
-            sdf.applyPattern("yyyy-MM-dd");
-
             TimetableDay day = new TimetableDay();
             day.setDayName(dayHeaderCell[0]);
-            day.setDate(sdf.format(d));
+            day.setDate(getFormattedDate(dayHeaderCell[1].trim()));
 
             if (tableHeaderCells.get(i).hasClass("free-day")) {
                 day.setFreeDay(true);

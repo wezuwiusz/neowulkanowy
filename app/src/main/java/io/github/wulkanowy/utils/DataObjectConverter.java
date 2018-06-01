@@ -21,10 +21,10 @@ public final class DataObjectConverter {
         throw new IllegalStateException("Utility class");
     }
 
-    public static List<Student> studentsToStudentEntities(List<io.github.wulkanowy.api.Student> students, Long symbolId) {
+    public static List<Student> studentsToStudentEntities(List<io.github.wulkanowy.api.generic.Student> students, Long symbolId) {
         List<Student> studentList = new ArrayList<>();
 
-        for (io.github.wulkanowy.api.Student student : students) {
+        for (io.github.wulkanowy.api.generic.Student student : students) {
             studentList.add(new Student()
                     .setName(student.getName())
                     .setCurrent(student.isCurrent())
@@ -36,10 +36,10 @@ public final class DataObjectConverter {
         return studentList;
     }
 
-    public static List<Diary> diariesToDiaryEntities(List<io.github.wulkanowy.api.Diary> diaryList, Long studentId) {
+    public static List<Diary> diariesToDiaryEntities(List<io.github.wulkanowy.api.generic.Diary> diaryList, Long studentId) {
         List<Diary> diaryEntityList = new ArrayList<>();
 
-        for (io.github.wulkanowy.api.Diary diary : diaryList) {
+        for (io.github.wulkanowy.api.generic.Diary diary : diaryList) {
             diaryEntityList.add(new Diary()
                     .setStudentId(studentId)
                     .setValue(diary.getId())
@@ -50,10 +50,10 @@ public final class DataObjectConverter {
         return diaryEntityList;
     }
 
-    public static List<Semester> semestersToSemesterEntities(List<io.github.wulkanowy.api.Semester> semesters, long diaryId) {
+    public static List<Semester> semestersToSemesterEntities(List<io.github.wulkanowy.api.generic.Semester> semesters, long diaryId) {
         List<Semester> semesterList = new ArrayList<>();
 
-        for (io.github.wulkanowy.api.Semester semester : semesters) {
+        for (io.github.wulkanowy.api.generic.Semester semester : semesters) {
             semesterList.add(new Semester()
                     .setDiaryId(diaryId)
                     .setName(semester.getName())

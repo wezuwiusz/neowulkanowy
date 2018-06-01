@@ -37,7 +37,8 @@ public class Day {
         return dayName;
     }
 
-    public void setDayName(String dayName) {
+    public Day setDayName(String dayName) {
         this.dayName = dayName;
+        return this;
     }
 }
