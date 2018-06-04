@@ -44,7 +44,7 @@ public class TimetableTabFragment extends BaseFragment implements TimetableTabCo
     TimetableTabContract.Presenter presenter;
 
     @Inject
-    FlexibleAdapter<TimetableHeaderItem> adapter;
+    FlexibleAdapter<TimetableHeader> adapter;
 
     private boolean isFragmentVisible = false;
 
@@ -86,7 +86,7 @@ public class TimetableTabFragment extends BaseFragment implements TimetableTabCo
     }
 
     @Override
-    public void updateAdapterList(List<TimetableHeaderItem> headerItems) {
+    public void updateAdapterList(List<TimetableHeader> headerItems) {
         adapter.updateDataSet(headerItems);
     }
 

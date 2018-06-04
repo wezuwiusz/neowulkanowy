@@ -40,7 +40,7 @@ public class AttendanceTabFragment extends BaseFragment implements AttendanceTab
     AttendanceTabContract.Presenter presenter;
 
     @Inject
-    FlexibleAdapter<AttendanceHeaderItem> adapter;
+    FlexibleAdapter<AttendanceHeader> adapter;
 
     private boolean isFragmentVisible = false;
 
@@ -83,7 +83,7 @@ public class AttendanceTabFragment extends BaseFragment implements AttendanceTab
     }
 
     @Override
-    public void updateAdapterList(List<AttendanceHeaderItem> headerItems) {
+    public void updateAdapterList(List<AttendanceHeader> headerItems) {
         adapter.updateDataSet(headerItems);
     }
 

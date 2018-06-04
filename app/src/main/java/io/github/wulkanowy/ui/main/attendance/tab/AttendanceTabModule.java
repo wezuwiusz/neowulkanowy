@@ -15,7 +15,7 @@ public abstract class AttendanceTabModule {
 
     @PerChildFragment
     @Provides
-    static FlexibleAdapter<AttendanceHeaderItem> provideAdapter() {
+    static FlexibleAdapter<AttendanceHeader> provideAdapter() {
         return new FlexibleAdapter<>(null);
     }
 }

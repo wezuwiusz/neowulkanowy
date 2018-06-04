@@ -12,7 +12,12 @@ public abstract class GradesModule {
     abstract GradesContract.Presenter provideGradesPresenter(GradesPresenter gradesPresenter);
 
     @Provides
-    static FlexibleAdapter<GradeHeaderItem> provideGradesAdapter() {
+    static FlexibleAdapter<GradesHeader> provideGradesAdapter() {
+        return new FlexibleAdapter<>(null);
+    }
+
+    @Provides
+    static FlexibleAdapter<GradesSummarySubItem> provideGradesSummaryAdapter() {
         return new FlexibleAdapter<>(null);
     }
 }

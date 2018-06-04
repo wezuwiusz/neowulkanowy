@@ -25,11 +25,11 @@ import io.github.wulkanowy.ui.main.timetable.TimetableDialogFragment;
 
 
 public class TimetableSubItem
-        extends AbstractSectionableItem<TimetableSubItem.SubItemViewHolder, TimetableHeaderItem> {
+        extends AbstractSectionableItem<TimetableSubItem.SubItemViewHolder, TimetableHeader> {
 
     private TimetableLesson lesson;
 
-    TimetableSubItem(TimetableHeaderItem header, TimetableLesson lesson) {
+    TimetableSubItem(TimetableHeader header, TimetableLesson lesson) {
         super(header);
         this.lesson = lesson;
     }

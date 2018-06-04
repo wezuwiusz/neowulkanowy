@@ -18,11 +18,11 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Day;
 
-public class ExamsHeaderItem extends AbstractHeaderItem<ExamsHeaderItem.HeaderVieHolder> {
+public class ExamsHeader extends AbstractHeaderItem<ExamsHeader.HeaderVieHolder> {
 
     private Day day;
 
-    ExamsHeaderItem(Day day) {
+    ExamsHeader(Day day) {
         this.day = day;
     }
 
@@ -32,7 +32,7 @@ public class ExamsHeaderItem extends AbstractHeaderItem<ExamsHeaderItem.HeaderVi
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        ExamsHeaderItem that = (ExamsHeaderItem) o;
+        ExamsHeader that = (ExamsHeader) o;
 
         return new EqualsBuilder()
                 .append(day, that.day)

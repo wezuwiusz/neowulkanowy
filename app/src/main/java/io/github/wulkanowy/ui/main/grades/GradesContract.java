@@ -12,7 +12,9 @@ public interface GradesContract {
 
     interface View extends BaseContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-        void updateAdapterList(List<GradeHeaderItem> headerItems);
+        void updateAdapterList(List<GradesHeader> headerItems);
+
+        void updateSummaryAdapterList(List<GradesSummarySubItem> summarySubItems);
 
         void showNoItem(boolean show);
 
@@ -27,6 +29,8 @@ public interface GradesContract {
         void setCurrentSemester(int semester);
 
         boolean isMenuVisible();
+
+        void setSummaryAverages(String calculatedValue, String predictedValue, String finalValue );
 
     }
 

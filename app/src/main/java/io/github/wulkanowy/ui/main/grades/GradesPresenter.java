@@ -9,6 +9,7 @@ import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -18,6 +19,7 @@ import io.github.wulkanowy.data.db.dao.entities.Subject;
 import io.github.wulkanowy.ui.base.BasePresenter;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
 import io.github.wulkanowy.utils.FabricUtils;
+import io.github.wulkanowy.utils.GradeUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
 
@@ -31,11 +33,19 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
 
     private OnFragmentIsReadyListener listener;
 
-    private List<GradeHeaderItem> headerItems = new ArrayList<>();
+    private List<GradesHeader> headerItems = new ArrayList<>();
+
+    private List<GradesSummarySubItem> summarySubItems = new ArrayList<>();
 
     private boolean isFirstSight = false;
 
     private int semesterName;
+
+    private float finalAverage;
+
+    private float predictedAverage;
+
+    private float calculatedAverage;
 
     @Inject
     GradesPresenter(RepositoryContract repository) {
@@ -56,7 +66,6 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
 
         if (!isFirstSight) {
             isFirstSight = true;
-
             reloadGrades();
         }
     }
@@ -74,12 +83,6 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
 
         Answers.getInstance().logCustom(new CustomEvent("Semester change")
                 .putCustomAttribute("Name", semesterName));
-    }
-
-    private void reloadGrades() {
-        loadingTask = new AbstractTask();
-        loadingTask.setOnFirstLoadingListener(this);
-        loadingTask.execute();
     }
 
     @Override
@@ -140,13 +143,17 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
         boolean isShowSummary = getRepository().getSharedRepo().isShowGradesSummary();
 
         headerItems = new ArrayList<>();
+        summarySubItems = new ArrayList<>();
 
         for (Subject subject : subjectList) {
             subject.resetGradeList();
             List<Grade> gradeList = subject.getGradeList();
 
+            GradesSummaryHeader summaryHeader = new GradesSummaryHeader(subject, GradeUtils.calculateWeightedAverage(gradeList));
+            summarySubItems.add(new GradesSummarySubItem(summaryHeader, subject));
+
             if (!gradeList.isEmpty()) {
-                GradeHeaderItem headerItem = new GradeHeaderItem(subject, isShowSummary);
+                GradesHeader headerItem = new GradesHeader(subject, isShowSummary);
 
                 List<GradesSubItem> subItems = new ArrayList<>();
 
@@ -159,6 +166,10 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
                 headerItems.add(headerItem);
             }
         }
+
+        finalAverage = GradeUtils.calculateSubjectsAverage(subjectList, false);
+        predictedAverage = GradeUtils.calculateSubjectsAverage(subjectList, true);
+        calculatedAverage = GradeUtils.calculateDetailedSubjectsAverage(subjectList);
     }
 
     @Override
@@ -170,7 +181,33 @@ public class GradesPresenter extends BasePresenter<GradesContract.View>
     public void onEndLoadingAsync(boolean result, Exception exception) {
         getView().showNoItem(headerItems.isEmpty());
         getView().updateAdapterList(headerItems);
+
+        setSummaryAverages();
+        getView().updateSummaryAdapterList(summarySubItems);
+
         listener.onFragmentIsReady();
+    }
+
+    private void setSummaryAverages() {
+        getView().setSummaryAverages(
+                getFormattedAverage(calculatedAverage),
+                getFormattedAverage(predictedAverage),
+                getFormattedAverage(finalAverage)
+        );
+    }
+
+    private String getFormattedAverage(float average) {
+        if (-1.0f == average) {
+            return "-- --";
+        }
+
+        return String.format(Locale.FRANCE, "%.2f", average);
+    }
+
+    private void reloadGrades() {
+        loadingTask = new AbstractTask();
+        loadingTask.setOnFirstLoadingListener(this);
+        loadingTask.execute();
     }
 
     private void cancelAsyncTasks() {

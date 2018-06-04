@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.Subject;
 
 public final class GradeUtils {
 
@@ -16,53 +17,33 @@ public final class GradeUtils {
         throw new IllegalStateException("Utility class");
     }
 
-    public static float calculate(List<Grade> gradeList) {
+    public static float calculateWeightedAverage(List<Grade> gradeList) {
 
         float counter = 0f;
         float denominator = 0f;
 
         for (Grade grade : gradeList) {
-            int integerWeight = getIntegerForWeightOfGrade(grade.getWeight());
-            float floatValue = getMathematicalValueOfGrade(grade.getValue());
+            int weight = getWeightValue(grade.getWeight());
+            float value = getWeightedGradeValue(grade.getValue());
 
-            if (floatValue != -1f) {
-                counter += floatValue * integerWeight;
-                denominator += integerWeight;
+            if (value != -1.0f) {
+                counter += value * weight;
+                denominator += weight;
             }
         }
 
         if (counter == 0f) {
-            return -1f;
-        } else {
-            return counter / denominator;
+            return -1.0f;
         }
+        return counter / denominator;
     }
 
-    private static float getMathematicalValueOfGrade(String valueOfGrade) {
-        if (valueOfGrade.matches("[-|+|=]{0,2}[0-6]")
-                || valueOfGrade.matches("[0-6][-|+|=]{0,2}")) {
-            if (valueOfGrade.matches("[-][0-6]")
-                    || valueOfGrade.matches("[0-6][-]")) {
-                String replacedValue = valueOfGrade.replaceAll("[-]", "");
-                return Float.valueOf(replacedValue) - 0.33f;
-            } else if (valueOfGrade.matches("[+][0-6]")
-                    || valueOfGrade.matches("[0-6][+]")) {
-                String replacedValue = valueOfGrade.replaceAll("[+]", "");
-                return Float.valueOf((replacedValue)) + 0.33f;
-            } else if (valueOfGrade.matches("[-|=]{1,2}[0-6]")
-                    || valueOfGrade.matches("[0-6][-|=]{1,2}")) {
-                String replacedValue = valueOfGrade.replaceAll("[-|=]{1,2}", "");
-                return Float.valueOf((replacedValue)) - 0.5f;
-            } else {
-                return Float.valueOf(valueOfGrade);
-            }
-        } else {
-            return -1;
-        }
+    public static float calculateSubjectsAverage(List<Subject> subjectList, boolean usePredicted) {
+        return calculateSubjectsAverage(subjectList, usePredicted, false);
     }
 
-    private static int getIntegerForWeightOfGrade(String weightOfGrade) {
-        return Integer.valueOf(weightOfGrade.substring(0, weightOfGrade.length() - 3));
+    public static float calculateDetailedSubjectsAverage(List<Subject> subjectList) {
+        return calculateSubjectsAverage(subjectList, false, true);
     }
 
     public static int getValueColor(String value) {
@@ -92,5 +73,81 @@ public final class GradeUtils {
             default:
                 return R.color.default_grade;
         }
+    }
+
+    private static float calculateSubjectsAverage(List<Subject> subjectList, boolean usePredicted, boolean useSubjectsAverages) {
+        float counter = 0f;
+        float denominator = 0f;
+
+        for (Subject subject : subjectList) {
+            float value;
+
+            if (useSubjectsAverages) {
+                value = calculateWeightedAverage(subject.getGradeList());
+            } else {
+                value = getGradeValue(usePredicted ? subject.getPredictedRating() : subject.getFinalRating());
+            }
+
+            if (value != -1.0f) {
+                counter += Math.round(value);
+                denominator++;
+            }
+        }
+
+        if (counter == 0) {
+            return -1.0f;
+        }
+
+        return counter / denominator;
+    }
+
+    private static float getGradeValue(String grade) {
+        if (validGradePattern.matcher(grade).matches()) {
+            return getWeightedGradeValue(grade);
+        }
+
+        return getVerbalGradeValue(grade);
+    }
+
+    private static float getVerbalGradeValue(String grade) {
+        switch (grade) {
+            case "celujący":
+                return 6f;
+            case "bardzo dobry":
+                return 5f;
+            case "dobry":
+                return 4f;
+            case "dostateczny":
+                return 3f;
+            case "dopuszczający":
+                return 2f;
+            case "niedostateczny":
+                return 1f;
+            default:
+                return -1f;
+        }
+    }
+
+    private static float getWeightedGradeValue(String value) {
+        if (validGradePattern.matcher(value).matches()) {
+            if (value.matches("[-][0-6]") || value.matches("[0-6][-]")) {
+                String replacedValue = value.replaceAll("[-]", "");
+                return Float.valueOf(replacedValue) - 0.33f;
+            } else if (value.matches("[+][0-6]") || value.matches("[0-6][+]")) {
+                String replacedValue = value.replaceAll("[+]", "");
+                return Float.valueOf((replacedValue)) + 0.33f;
+            } else if (value.matches("[-|=]{1,2}[0-6]") || value.matches("[0-6][-|=]{1,2}")) {
+                String replacedValue = value.replaceAll("[-|=]{1,2}", "");
+                return Float.valueOf((replacedValue)) - 0.5f;
+            } else {
+                return Float.valueOf(value);
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    private static int getWeightValue(String weightOfGrade) {
+        return Integer.valueOf(weightOfGrade.substring(0, weightOfGrade.length() - 3));
     }
 }

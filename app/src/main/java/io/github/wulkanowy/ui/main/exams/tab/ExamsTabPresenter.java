@@ -116,7 +116,7 @@ public class ExamsTabPresenter extends BasePresenter<ExamsTabContract.View>
 
         for (Day day : dayList) {
             day.resetExams();
-            ExamsHeaderItem headerItem = new ExamsHeaderItem(day);
+            ExamsHeader headerItem = new ExamsHeader(day);
 
             List<Exam> examList = day.getExams();
 

@@ -8,7 +8,7 @@ public interface TimetableTabContract {
 
     interface View extends BaseContract.View {
 
-        void updateAdapterList(List<TimetableHeaderItem> headerItems);
+        void updateAdapterList(List<TimetableHeader> headerItems);
 
         void expandItem(int item);
 

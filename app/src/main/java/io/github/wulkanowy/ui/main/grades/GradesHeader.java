@@ -20,14 +20,14 @@ import io.github.wulkanowy.data.db.dao.entities.Subject;
 import io.github.wulkanowy.utils.AnimationUtils;
 import io.github.wulkanowy.utils.GradeUtils;
 
-public class GradeHeaderItem
-        extends AbstractExpandableHeaderItem<GradeHeaderItem.HeaderViewHolder, GradesSubItem> {
+public class GradesHeader
+        extends AbstractExpandableHeaderItem<GradesHeader.HeaderViewHolder, GradesSubItem> {
 
     private Subject subject;
 
     private final boolean isShowSummary;
 
-    GradeHeaderItem(Subject subject, boolean isShowSummary) {
+    GradesHeader(Subject subject, boolean isShowSummary) {
         this.subject = subject;
         this.isShowSummary = isShowSummary;
     }
@@ -38,7 +38,7 @@ public class GradeHeaderItem
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        GradeHeaderItem that = (GradeHeaderItem) o;
+        GradesHeader that = (GradesHeader) o;
 
         return new EqualsBuilder()
                 .append(subject, that.subject)
@@ -54,7 +54,7 @@ public class GradeHeaderItem
 
     @Override
     public int getLayoutRes() {
-        return R.layout.grade_header;
+        return R.layout.grades_header;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class GradeHeaderItem
         }
 
         private String getGradesAverageString() {
-            float average = GradeUtils.calculate(item.getGradeList());
+            float average = GradeUtils.calculateWeightedAverage(item.getGradeList());
 
             if (average < 0) {
                 return resources.getString(R.string.info_no_average);

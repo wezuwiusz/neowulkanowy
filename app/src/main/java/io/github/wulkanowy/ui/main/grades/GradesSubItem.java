@@ -21,7 +21,7 @@ import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.utils.GradeUtils;
 
 public class GradesSubItem
-        extends AbstractSectionableItem<GradesSubItem.SubItemViewHolder, GradeHeaderItem> {
+        extends AbstractSectionableItem<GradesSubItem.SubItemViewHolder, GradesHeader> {
 
     private Grade grade;
 
@@ -29,7 +29,7 @@ public class GradesSubItem
 
     private View subjectAlertImage;
 
-    GradesSubItem(GradeHeaderItem header, Grade grade) {
+    GradesSubItem(GradesHeader header, Grade grade) {
         super(header);
         this.grade = grade;
     }
@@ -64,7 +64,7 @@ public class GradesSubItem
 
     @Override
     public int getLayoutRes() {
-        return R.layout.grade_subitem;
+        return R.layout.grades_subitem;
     }
 
     @Override

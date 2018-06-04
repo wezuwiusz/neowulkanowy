@@ -15,7 +15,7 @@ public abstract class TimetableTabModule {
 
     @PerChildFragment
     @Provides
-    static FlexibleAdapter<TimetableHeaderItem> provideTimetableAdapter() {
+    static FlexibleAdapter<TimetableHeader> provideTimetableAdapter() {
         return new FlexibleAdapter<>(null);
     }
 }

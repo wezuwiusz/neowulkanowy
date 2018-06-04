@@ -21,11 +21,11 @@ import io.github.wulkanowy.data.db.dao.entities.Exam;
 import io.github.wulkanowy.ui.main.exams.ExamsDialogFragment;
 
 public class ExamsSubItem
-        extends AbstractSectionableItem<ExamsSubItem.SubItemViewHolder, ExamsHeaderItem> {
+        extends AbstractSectionableItem<ExamsSubItem.SubItemViewHolder, ExamsHeader> {
 
     private Exam exam;
 
-    ExamsSubItem(ExamsHeaderItem header, Exam exam) {
+    ExamsSubItem(ExamsHeader header, Exam exam) {
         super(header);
         this.exam = exam;
     }

@@ -23,11 +23,11 @@ import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.ui.main.attendance.AttendanceDialogFragment;
 
 class AttendanceSubItem
-        extends AbstractSectionableItem<AttendanceSubItem.SubItemViewHolder, AttendanceHeaderItem> {
+        extends AbstractSectionableItem<AttendanceSubItem.SubItemViewHolder, AttendanceHeader> {
 
     private AttendanceLesson lesson;
 
-    AttendanceSubItem(AttendanceHeaderItem header, AttendanceLesson lesson) {
+    AttendanceSubItem(AttendanceHeader header, AttendanceLesson lesson) {
         super(header);
         this.lesson = lesson;
     }

@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -27,8 +28,17 @@ import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
 
 public class GradesFragment extends BaseFragment implements GradesContract.View {
 
+    @BindView(R.id.grade_fragment_summary_container)
+    View summary;
+
+    @BindView(R.id.grade_fragment_details_container)
+    View details;
+
     @BindView(R.id.grade_fragment_recycler)
     RecyclerView recyclerView;
+
+    @BindView(R.id.grade_fragment_summary_recycler)
+    RecyclerView summaryRecyclerView;
 
     @BindView(R.id.grade_fragment_no_item_container)
     View noItemView;
@@ -36,8 +46,20 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
     @BindView(R.id.grade_fragment_swipe_refresh)
     SwipeRefreshLayout refreshLayout;
 
+    @BindView(R.id.grade_fragment_summary_predicted_average)
+    TextView predictedAverage;
+
+    @BindView(R.id.grade_fragment_summary_calculated_average)
+    TextView calculatedAverage;
+
+    @BindView(R.id.grade_fragment_summary_final_average)
+    TextView finalAverage;
+
     @Inject
-    FlexibleAdapter<GradeHeaderItem> adapter;
+    FlexibleAdapter<GradesHeader> adapter;
+
+    @Inject
+    FlexibleAdapter<GradesSummarySubItem> summaryAdapter;
 
     @Inject
     GradesContract.Presenter presenter;
@@ -66,43 +88,57 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.semester_switch, menu);
+        inflater.inflate(R.menu.grades_action_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_filter) {
-            presenter.onSemesterSwitchActive();
-            CharSequence[] items = new CharSequence[]{
-                    getResources().getString(R.string.semester_text, 1),
-                    getResources().getString(R.string.semester_text, 2),
-            };
-            new AlertDialog.Builder(getContext())
-                    .setTitle(R.string.switch_semester)
-                    .setNegativeButton(R.string.cancel, null)
-                    .setSingleChoiceItems(items, this.currentSemester, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            presenter.onSemesterChange(which);
-                            dialog.cancel();
-                        }
-                    }).show();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_semester_switch:
+                presenter.onSemesterSwitchActive();
+                CharSequence[] items = new CharSequence[]{
+                        getResources().getString(R.string.semester_text, 1),
+                        getResources().getString(R.string.semester_text, 2),
+                };
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.switch_semester)
+                        .setNegativeButton(R.string.cancel, null)
+                        .setSingleChoiceItems(items, this.currentSemester, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                presenter.onSemesterChange(which);
+                                dialog.cancel();
+                            }
+                        }).show();
+                return true;
+            case R.id.action_summary_switch:
+                boolean isDetailsVisible = details.getVisibility() == View.VISIBLE;
+
+                item.setTitle(isDetailsVisible ? R.string.action_title_details : R.string.action_title_summary);
+                details.setVisibility(isDetailsVisible ? View.INVISIBLE : View.VISIBLE);
+                summary.setVisibility(isDetailsVisible ? View.VISIBLE : View.INVISIBLE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         noItemView.setVisibility(View.GONE);
+        summary.setVisibility(View.INVISIBLE);
+        details.setVisibility(View.VISIBLE);
 
         adapter.setAutoCollapseOnExpand(true);
         adapter.setAutoScrollOnExpand(true);
         adapter.expandItemsAtStartUp();
+        summaryAdapter.setDisplayHeadersAtStartUp(true);
 
         recyclerView.setLayoutManager(new SmoothScrollLinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
+        summaryRecyclerView.setLayoutManager(new SmoothScrollLinearLayoutManager(view.getContext()));
+        summaryRecyclerView.setAdapter(summaryAdapter);
+        summaryRecyclerView.setNestedScrollingEnabled(false);
 
         refreshLayout.setColorSchemeResources(android.R.color.black);
         refreshLayout.setOnRefreshListener(this);
@@ -114,6 +150,13 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
         if (presenter != null) {
             presenter.onFragmentVisible(menuVisible);
         }
+    }
+
+    @Override
+    public void setSummaryAverages(String calculatedValue, String predictedValue, String finalValue) {
+        calculatedAverage.setText(calculatedValue);
+        predictedAverage.setText(predictedValue);
+        finalAverage.setText(finalValue);
     }
 
     @Override
@@ -141,8 +184,13 @@ public class GradesFragment extends BaseFragment implements GradesContract.View 
     }
 
     @Override
-    public void updateAdapterList(List<GradeHeaderItem> headerItems) {
+    public void updateAdapterList(List<GradesHeader> headerItems) {
         adapter.updateDataSet(headerItems);
+    }
+
+    @Override
+    public void updateSummaryAdapterList(List<GradesSummarySubItem> summarySubItems) {
+        summaryAdapter.updateDataSet(summarySubItems);
     }
 
     @Override

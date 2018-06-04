@@ -81,6 +81,9 @@
     <string name="info_free_week">Brak lekcji w tym tygodniu</string>
     <string name="timetable_subitem_room">Sala %s</string>
 
+    <string name="grades_predicted_rating">Przewidywana</string>
+    <string name="grades_final_rating">Końcowa</string>
+
     <plurals name="numberOfGradesPlurals">
         <item quantity="one">%d ocena</item>
         <item quantity="few">%d oceny</item>
@@ -154,4 +157,10 @@
     <string name="exams_no_entries">Brak sprawdzianów w tym tygodniu</string>
     <string name="exams_type">Typ</string>
     <string name="exams_dialog_entry_date">Data wpisu</string>
+
+    <string name="grades_summary_calculated_average">Obliczona średnia</string>
+    <string name="grades_summary_predicted_average">Szacowana średnia</string>
+    <string name="grades_summary_final_average">Końcowa średnia</string>
+    <string name="action_title_summary">Podsumowanie</string>
+    <string name="action_title_details">Szczegóły</string>
 </resources>

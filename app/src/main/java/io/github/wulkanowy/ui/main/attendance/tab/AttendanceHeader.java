@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.main.timetable.tab;
+package io.github.wulkanowy.ui.main.attendance.tab;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -24,12 +24,12 @@ import eu.davidea.viewholders.ExpandableViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Day;
 
-public class TimetableHeaderItem
-        extends AbstractExpandableHeaderItem<TimetableHeaderItem.HeaderViewHolder, TimetableSubItem> {
+public class AttendanceHeader
+        extends AbstractExpandableHeaderItem<AttendanceHeader.HeaderViewHolder, AttendanceSubItem> {
 
     private Day day;
 
-    TimetableHeaderItem(Day day) {
+    AttendanceHeader(Day day) {
         this.day = day;
     }
 
@@ -39,7 +39,7 @@ public class TimetableHeaderItem
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        TimetableHeaderItem that = (TimetableHeaderItem) o;
+        AttendanceHeader that = (AttendanceHeader) o;
 
         return new EqualsBuilder()
                 .append(day, that.day)
@@ -55,7 +55,7 @@ public class TimetableHeaderItem
 
     @Override
     public int getLayoutRes() {
-        return R.layout.timetable_header;
+        return R.layout.attendance_header;
     }
 
     @Override
@@ -71,16 +71,19 @@ public class TimetableHeaderItem
 
     static class HeaderViewHolder extends ExpandableViewHolder {
 
-        @BindView(R.id.timetable_header_day)
+        @BindView(R.id.attendance_header_day)
         TextView dayName;
 
-        @BindView(R.id.timetable_header_date)
+        @BindView(R.id.attendance_header_date)
         TextView date;
 
-        @BindView(R.id.timetable_header_alert_image)
+        @BindView(R.id.attendance_header_description)
+        TextView description;
+
+        @BindView(R.id.attendance_header_alert_image)
         ImageView alert;
 
-        @BindView(R.id.timetable_header_free_name)
+        @BindView(R.id.attendance_header_free_name)
         TextView freeName;
 
         @BindColor(R.color.secondary_text)
@@ -101,14 +104,19 @@ public class TimetableHeaderItem
             context = view.getContext();
         }
 
-        void onBind(Day item, List<TimetableSubItem> subItems) {
+        void onBind(Day item, List<AttendanceSubItem> subItems) {
             dayName.setText(StringUtils.capitalize(item.getDayName()));
             date.setText(item.getDate());
-            alert.setVisibility(isSubItemNewMovedInOrChanged(subItems) ? View.VISIBLE : View.INVISIBLE);
-            freeName.setVisibility(item.getFreeDay() ? View.VISIBLE : View.INVISIBLE);
-            freeName.setText(item.getFreeDayName());
-            setInactiveHeader(item.getFreeDay());
+
+            int numberOfHours = countNotPresentHours(subItems);
+            description.setText((getContentView().getResources().getQuantityString(R.plurals.numberOfAbsences,
+                    numberOfHours, numberOfHours)));
+            description.setVisibility(numberOfHours > 0 ? View.VISIBLE : View.INVISIBLE);
+            alert.setVisibility(isSubItemsHasChanges(subItems) ? View.VISIBLE : View.INVISIBLE);
+            freeName.setVisibility(subItems.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+            setInactiveHeader(item.getAttendanceLessons().isEmpty());
         }
+
 
         private void setInactiveHeader(boolean inactive) {
             ((FrameLayout) getContentView()).setForeground(inactive ? null : getSelectableDrawable());
@@ -130,16 +138,24 @@ public class TimetableHeaderItem
             return drawable;
         }
 
-        private boolean isSubItemNewMovedInOrChanged(List<TimetableSubItem> subItems) {
-            boolean isAlertActive = false;
-
-            for (TimetableSubItem subItem : subItems) {
-                if (subItem.getLesson().getMovedOrCanceled() ||
-                        subItem.getLesson().getNewMovedInOrChanged()) {
-                    isAlertActive = true;
+        private int countNotPresentHours(List<AttendanceSubItem> subItems) {
+            int i = 0;
+            for (AttendanceSubItem subItem : subItems) {
+                if (subItem.getLesson().getAbsenceUnexcused()) {
+                    i++;
                 }
             }
-            return isAlertActive;
+            return i;
+        }
+
+        private boolean isSubItemsHasChanges(List<AttendanceSubItem> subItems) {
+            for (AttendanceSubItem subItem : subItems) {
+                if (subItem.getLesson().getAbsenceUnexcused() || subItem.getLesson()
+                        .getUnexcusedLateness()) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

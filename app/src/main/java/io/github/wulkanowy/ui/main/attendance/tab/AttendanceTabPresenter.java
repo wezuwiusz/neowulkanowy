@@ -24,7 +24,7 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
 
     private AbstractTask loadingTask;
 
-    private List<AttendanceHeaderItem> headerItems = new ArrayList<>();
+    private List<AttendanceHeader> headerItems = new ArrayList<>();
 
     private String date;
 
@@ -115,7 +115,7 @@ public class AttendanceTabPresenter extends BasePresenter<AttendanceTabContract.
 
         for (Day day : dayList) {
             day.resetAttendanceLessons();
-            AttendanceHeaderItem headerItem = new AttendanceHeaderItem(day);
+            AttendanceHeader headerItem = new AttendanceHeader(day);
 
             if (isEmptyWeek) {
                 isEmptyWeek = day.getAttendanceLessons().isEmpty();

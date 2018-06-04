@@ -71,7 +71,7 @@ public class GradesDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.grade_dialog, container, false);
+        View view = inflater.inflate(R.layout.grades_dialog, container, false);
 
         ButterKnife.bind(this, view);
 

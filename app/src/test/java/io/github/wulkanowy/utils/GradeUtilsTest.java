@@ -1,6 +1,5 @@
 package io.github.wulkanowy.utils;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8,11 +7,14 @@ import java.util.List;
 
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.Subject;
+
+import static org.junit.Assert.assertEquals;
 
 public class GradeUtilsTest {
 
     @Test
-    public void averageTest() {
+    public void weightedAverageTest() {
         List<Grade> gradeList = new ArrayList<>();
         gradeList.add(new Grade().setValue("np.").setWeight("1,00"));
         gradeList.add(new Grade().setValue("-5").setWeight("10,00"));
@@ -29,31 +31,48 @@ public class GradeUtilsTest {
         gradeList1.add(new Grade().setValue("5+").setWeight("10,00"));
         gradeList1.add(new Grade().setValue("5").setWeight("10,00"));
 
-        Assert.assertEquals(4.8f, GradeUtils.calculate(gradeList), 0.0f);
-        Assert.assertEquals(4.8f, GradeUtils.calculate(gradeList1), 0.0f);
+        assertEquals(4.8f, GradeUtils.calculateWeightedAverage(gradeList), 0.0f);
+        assertEquals(4.8f, GradeUtils.calculateWeightedAverage(gradeList1), 0.0f);
     }
 
     @Test
-    public void errorAverageTest() {
+    public void subjectsAverageTest() {
+        List<Subject> subjectList = new ArrayList<>();
+        subjectList.add(new Subject().setPredictedRating("2").setFinalRating("3"));
+        subjectList.add(new Subject().setPredictedRating("niedostateczny").setFinalRating("dopuszczający"));
+        subjectList.add(new Subject().setPredictedRating("dostateczny").setFinalRating("dobry"));
+        subjectList.add(new Subject().setPredictedRating("bardzo dobry").setFinalRating("celujący"));
+        subjectList.add(new Subject().setPredictedRating("2/3").setFinalRating("-4"));
+
+        assertEquals(3.8f, GradeUtils.calculateSubjectsAverage(subjectList, false), 0.0f);
+        assertEquals(2.75f, GradeUtils.calculateSubjectsAverage(subjectList, true), 0.0f);
+    }
+
+    @Test
+    public void abnormalAverageTest() {
         List<Grade> gradeList = new ArrayList<>();
         gradeList.add(new Grade().setValue("np.").setWeight("1,00"));
 
-        Assert.assertEquals(-1f, GradeUtils.calculate(gradeList), 0.0f);
+        List<Subject> subjectList = new ArrayList<>();
+        subjectList.add(new Subject().setFinalRating("nieklasyfikowany"));
+
+        assertEquals(-1f, GradeUtils.calculateWeightedAverage(gradeList), 0.0f);
+        assertEquals(-1f, GradeUtils.calculateSubjectsAverage(subjectList, false), 0.0f);
     }
 
     @Test
-    public void getValueColor() {
-        Assert.assertEquals(R.color.six_grade, GradeUtils.getValueColor("-6"));
-        Assert.assertEquals(R.color.five_grade, GradeUtils.getValueColor("--5"));
-        Assert.assertEquals(R.color.four_grade, GradeUtils.getValueColor("=4"));
-        Assert.assertEquals(R.color.three_grade, GradeUtils.getValueColor("3-"));
-        Assert.assertEquals(R.color.two_grade, GradeUtils.getValueColor("2--"));
-        Assert.assertEquals(R.color.two_grade, GradeUtils.getValueColor("2="));
-        Assert.assertEquals(R.color.one_grade, GradeUtils.getValueColor("1+"));
-        Assert.assertEquals(R.color.one_grade, GradeUtils.getValueColor("+1"));
-        Assert.assertEquals(R.color.default_grade, GradeUtils.getValueColor("6 (.XI)"));
-        Assert.assertEquals(R.color.default_grade, GradeUtils.getValueColor("Np"));
-        Assert.assertEquals(R.color.default_grade, GradeUtils.getValueColor("7"));
-        Assert.assertEquals(R.color.default_grade, GradeUtils.getValueColor(""));
+    public void getValueColorTest() {
+        assertEquals(R.color.six_grade, GradeUtils.getValueColor("-6"));
+        assertEquals(R.color.five_grade, GradeUtils.getValueColor("--5"));
+        assertEquals(R.color.four_grade, GradeUtils.getValueColor("=4"));
+        assertEquals(R.color.three_grade, GradeUtils.getValueColor("3-"));
+        assertEquals(R.color.two_grade, GradeUtils.getValueColor("2--"));
+        assertEquals(R.color.two_grade, GradeUtils.getValueColor("2="));
+        assertEquals(R.color.one_grade, GradeUtils.getValueColor("1+"));
+        assertEquals(R.color.one_grade, GradeUtils.getValueColor("+1"));
+        assertEquals(R.color.default_grade, GradeUtils.getValueColor("6 (.XI)"));
+        assertEquals(R.color.default_grade, GradeUtils.getValueColor("Np"));
+        assertEquals(R.color.default_grade, GradeUtils.getValueColor("7"));
+        assertEquals(R.color.default_grade, GradeUtils.getValueColor(""));
     }
 }

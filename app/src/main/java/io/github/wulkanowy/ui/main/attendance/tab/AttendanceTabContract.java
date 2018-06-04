@@ -8,7 +8,7 @@ public interface AttendanceTabContract {
 
     interface View extends BaseContract.View {
 
-        void updateAdapterList(List<AttendanceHeaderItem> headerItems);
+        void updateAdapterList(List<AttendanceHeader> headerItems);
 
         void onRefreshSuccess();
 
