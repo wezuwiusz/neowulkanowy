@@ -85,7 +85,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     @Override
     public void onEndAsync(boolean success, Exception exception) {
         if (success) {
-            FabricUtils.logRegister(true, getRepository().getDbRepo().getCurrentSymbol().getSymbol());
+            FabricUtils.logRegister(true, getRepository().getDbRepo().getCurrentSymbol().getSymbol(), "Success");
             getView().openMainActivity();
             return;
         } else if (exception instanceof BadCredentialsException) {
@@ -95,7 +95,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             getView().setErrorSymbolRequired();
             getView().showSoftInput();
         } else {
-            FabricUtils.logRegister(false, symbol);
+            FabricUtils.logRegister(false, symbol, exception.getMessage());
             getView().showMessage(getRepository().getResRepo().getErrorLoginMessage(exception));
         }
 

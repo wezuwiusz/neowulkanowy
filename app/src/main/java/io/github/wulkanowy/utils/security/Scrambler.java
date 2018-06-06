@@ -26,7 +26,7 @@ import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.security.auth.x500.X500Principal;
 
-import io.github.wulkanowy.utils.LogUtils;
+import timber.log.Timber;
 
 public final class Scrambler {
 
@@ -111,7 +111,7 @@ public final class Scrambler {
             throw new CryptoException("GenerateNewKey - String is empty");
         }
 
-        LogUtils.debug("Key pair are create");
+        Timber.d("Key pair are create");
 
     }
 

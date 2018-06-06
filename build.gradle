@@ -50,6 +50,10 @@ ext {
     gson = "2.8.5"
     ossLicenses = "15.0.1"
 
+    slf4jApi = "1.7.25"
+    slf4jTimber = "1.0.1"
+    timber = "4.7.0"
+
     debugDb = "1.0.3"
     sqlcipher = "3.5.9"
 

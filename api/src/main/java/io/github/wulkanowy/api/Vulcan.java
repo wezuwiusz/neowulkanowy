@@ -1,5 +1,8 @@
 package io.github.wulkanowy.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 import io.github.wulkanowy.api.attendance.AttendanceStatistics;
@@ -30,17 +33,21 @@ public class Vulcan {
 
     private String diaryId;
 
+    private static final Logger logger = LoggerFactory.getLogger(Vulcan.class);
+
     public void setCredentials(String email, String password, String symbol, String schoolId, String studentId, String diaryId) {
         this.schoolId = schoolId;
         this.studentId = studentId;
         this.diaryId = diaryId;
 
         client = new Client(email, password, symbol);
+
+        logger.debug("Client created with symbol " + symbol);
     }
 
     public Client getClient() throws NotLoggedInErrorException {
         if (null == client) {
-            throw new NotLoggedInErrorException("Use setCredentials() method first");
+            throw new NotLoggedInErrorException("Vulcan must be initialized by calling setCredentials() prior to fetch data");
         }
 
         return client;

@@ -3,8 +3,6 @@ package io.github.wulkanowy.data.db.dao.entities;
 import org.junit.Assert;
 import org.junit.Test;
 
-import io.github.wulkanowy.R;
-
 public class GradeTest {
 
     @Test

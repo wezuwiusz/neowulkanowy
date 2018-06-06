@@ -22,7 +22,7 @@ import io.github.wulkanowy.data.db.dao.migrations.Migration26;
 import io.github.wulkanowy.data.db.dao.migrations.Migration27;
 import io.github.wulkanowy.data.db.dao.migrations.Migration28;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
-import io.github.wulkanowy.utils.LogUtils;
+import timber.log.Timber;
 
 @Singleton
 public class DbHelper extends DaoMaster.OpenHelper {
@@ -41,7 +41,7 @@ public class DbHelper extends DaoMaster.OpenHelper {
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        LogUtils.info("Cleaning user data oldVersion=" + oldVersion + " newVersion=" + newVersion);
+        Timber.i("Cleaning user data oldVersion=%s newVersion=%s", oldVersion, newVersion);
         Database database = new StandardDatabase(db);
         recreateDatabase(database);
     }
@@ -54,11 +54,11 @@ public class DbHelper extends DaoMaster.OpenHelper {
         for (Migration migration : migrations) {
             if (oldVersion < migration.getVersion()) {
                 try {
-                    LogUtils.info("Applying migration to db schema v" + migration.getVersion() + "...");
+                    Timber.i("Applying migration to db schema v%s...", migration.getVersion());
                     migration.runMigration(db, sharedPref, vulcan);
-                    LogUtils.info("Migration " + migration.getVersion() + " complete");
+                    Timber.i("Migration %s complete", migration.getVersion());
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Timber.e(e, "Failed to apply migration");
                     recreateDatabase(db);
                     break;
                 }
@@ -67,7 +67,7 @@ public class DbHelper extends DaoMaster.OpenHelper {
     }
 
     private void recreateDatabase(Database db) {
-        LogUtils.info("Database is recreating...");
+        Timber.i("Database is recreating...");
         sharedPref.setCurrentUserId(0);
         DaoMaster.dropAllTables(db, true);
         onCreate(db);

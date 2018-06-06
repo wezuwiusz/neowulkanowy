@@ -32,6 +32,7 @@ dependencies {
     implementation "org.jsoup:jsoup:$jsoup"
     implementation "org.apache.commons:commons-lang3:$apacheLang"
     implementation "com.google.code.gson:gson:$gson"
+    implementation "org.slf4j:slf4j-api:$slf4jApi"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 

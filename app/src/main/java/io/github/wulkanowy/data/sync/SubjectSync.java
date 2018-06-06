@@ -13,7 +13,7 @@ import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.Semester;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
 import io.github.wulkanowy.utils.DataObjectConverter;
-import io.github.wulkanowy.utils.LogUtils;
+import timber.log.Timber;
 
 @Singleton
 public class SubjectSync {
@@ -40,7 +40,7 @@ public class SubjectSync {
         daoSession.getSubjectDao().deleteInTx(getSubjectsFromDb());
         daoSession.getSubjectDao().insertInTx(lastList);
 
-        LogUtils.debug("Synchronization subjects (amount = " + lastList.size() + ")");
+        Timber.d("Subjects synchronization complete (%s)", lastList.size());
     }
 
     private List<Subject> getSubjectsFromNet(Semester semester) throws VulcanException, IOException {

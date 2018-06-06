@@ -1,8 +1,7 @@
 package io.github.wulkanowy.api.mobile
 
 import io.github.wulkanowy.api.SnP
-import java.text.SimpleDateFormat
-import java.util.*
+import io.github.wulkanowy.api.getFormattedDate
 
 class RegisteredDevices(private val snp: SnP) {
 
@@ -28,21 +27,12 @@ class RegisteredDevices(private val snp: SnP) {
             devices.add(Device(
                     cells[0].text().replace(" ($system)", ""),
                     system,
-                    formatDate(cells[1].text()),
+                    getFormattedDate(cells[1].text(), "dd.MM.yyyy 'godz:' HH:mm:ss", "yyyy-MM-dd HH:mm:ss"),
                     cells[2].select("a").attr("href")
                             .split("/").last().toInt()
             ))
         }
 
         return devices
-    }
-
-    // TODO: Move to date utils
-    private fun formatDate(date: String): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy 'godz:' HH:mm:ss", Locale.ROOT)
-        val d = sdf.parse(date)
-        sdf.applyPattern("yyyy-MM-dd HH:mm:ss")
-
-        return sdf.format(d)
     }
 }

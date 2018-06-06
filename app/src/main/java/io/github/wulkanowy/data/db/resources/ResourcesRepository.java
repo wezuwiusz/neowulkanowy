@@ -3,8 +3,6 @@ package io.github.wulkanowy.data.db.resources;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -16,8 +14,8 @@ import io.github.wulkanowy.R;
 import io.github.wulkanowy.api.NotLoggedInErrorException;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.utils.AppConstant;
-import io.github.wulkanowy.utils.LogUtils;
 import io.github.wulkanowy.utils.security.CryptoException;
+import timber.log.Timber;
 
 @Singleton
 public class ResourcesRepository implements ResourcesContract {
@@ -41,8 +39,7 @@ public class ResourcesRepository implements ResourcesContract {
 
     @Override
     public String getErrorLoginMessage(Exception exception) {
-        LogUtils.error(AppConstant.APP_NAME + " encountered a error", exception);
-        Crashlytics.logException(exception);
+        Timber.e(exception,"%s encountered a error", AppConstant.APP_NAME);
 
         if (exception instanceof CryptoException) {
             return resources.getString(R.string.encrypt_failed_text);

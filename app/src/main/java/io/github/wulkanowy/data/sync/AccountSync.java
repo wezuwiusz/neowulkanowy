@@ -24,9 +24,9 @@ import io.github.wulkanowy.data.db.dao.entities.Symbol;
 import io.github.wulkanowy.data.db.dao.entities.SymbolDao;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.utils.DataObjectConverter;
-import io.github.wulkanowy.utils.LogUtils;
 import io.github.wulkanowy.utils.security.CryptoException;
 import io.github.wulkanowy.utils.security.Scrambler;
+import timber.log.Timber;
 
 @Singleton
 public class AccountSync {
@@ -73,7 +73,7 @@ public class AccountSync {
     }
 
     private Account insertAccount(String email, String password) throws CryptoException {
-        LogUtils.debug("Register account: " + email);
+        Timber.d("Register account");
         Account account = new Account()
                 .setEmail(email)
                 .setPassword(Scrambler.encrypt(email, password, context));
@@ -82,10 +82,11 @@ public class AccountSync {
     }
 
     private Symbol insertSymbol(Account account) throws VulcanException, IOException {
-        LogUtils.debug("Register symbol: " + vulcan.getSymbol());
+        String schoolId = vulcan.getStudentAndParent().getSchoolID();
+        Timber.d("Register symbol %s", vulcan.getSymbol());
         Symbol symbol = new Symbol()
                 .setUserId(account.getId())
-                .setSchoolId(vulcan.getStudentAndParent().getSchoolID())
+                .setSchoolId(schoolId)
                 .setSymbol(vulcan.getSymbol());
         daoSession.getSymbolDao().insert(symbol);
 
@@ -97,7 +98,7 @@ public class AccountSync {
                 vulcan.getStudentAndParent().getStudents(),
                 symbol.getId()
         );
-        LogUtils.debug("Register students: " + studentList.size());
+        Timber.d("Register students %s", studentList.size());
         daoSession.getStudentDao().insertInTx(studentList);
     }
 
@@ -108,7 +109,7 @@ public class AccountSync {
                         StudentDao.Properties.SymbolId.eq(symbolEntity.getId()),
                         StudentDao.Properties.Current.eq(true)
                 ).unique().getId());
-        LogUtils.debug("Register diaries: " + diaryList.size());
+        Timber.d("Register diaries %s", diaryList.size());
         daoSession.getDiaryDao().insertInTx(diaryList);
     }
 
@@ -118,7 +119,7 @@ public class AccountSync {
                 daoSession.getDiaryDao().queryBuilder().where(
                         DiaryDao.Properties.Current.eq(true)
                 ).unique().getId());
-        LogUtils.debug("Register semesters: " + semesterList.size());
+        Timber.d("Register semesters %s", semesterList.size());
         daoSession.getSemesterDao().insertInTx(semesterList);
     }
 
@@ -130,7 +131,7 @@ public class AccountSync {
             throw new NotRegisteredUserException("Can't find user id in SharedPreferences");
         }
 
-        LogUtils.debug("Initialization current user id=" + userId);
+        Timber.d("Init current user (%s)", userId);
 
         Account account = daoSession.getAccountDao().load(userId);
 

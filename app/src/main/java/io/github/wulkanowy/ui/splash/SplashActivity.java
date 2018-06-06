@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 
-import io.github.wulkanowy.services.jobs.SyncJob;
 import io.github.wulkanowy.services.notifies.NotificationService;
 import io.github.wulkanowy.ui.base.BaseActivity;
 import io.github.wulkanowy.ui.login.LoginActivity;

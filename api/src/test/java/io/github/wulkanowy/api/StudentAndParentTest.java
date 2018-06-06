@@ -83,7 +83,7 @@ public class StudentAndParentTest {
                 snp.getExtractedIdFromUrl("https://uonetplus-opiekun.vulcan.net.pl/demoupowiat/demo12345/Start/Index/"));
     }
 
-    @Test(expected = NotLoggedInErrorException.class)
+    @Test(expected = VulcanException.class)
     public void getExtractedIDNotLoggedTest() throws Exception {
         Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
         StudentAndParent snp = new StudentAndParent(client, "symbol", null, null);
@@ -131,8 +131,8 @@ public class StudentAndParentTest {
 
     @Test
     public void getDiariesAndStudentTest() throws IOException, VulcanException {
-        Document snpHome = Jsoup.parse(FixtureHelper.getAsString(
-                getClass().getResourceAsStream("StudentAndParent.html")));
+        String input = FixtureHelper.getAsString(getClass().getResourceAsStream("WitrynaUczniaIRodzica.html"));
+        Document snpHome = Jsoup.parse(input);
 
         client = Mockito.mock(Client.class);
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(snpHome);

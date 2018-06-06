@@ -18,7 +18,7 @@ import io.github.wulkanowy.data.db.dao.entities.DayDao;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.data.db.dao.entities.WeekDao;
 import io.github.wulkanowy.utils.DataObjectConverter;
-import io.github.wulkanowy.utils.LogUtils;
+import timber.log.Timber;
 
 @Singleton
 public class AttendanceSync {
@@ -47,7 +47,7 @@ public class AttendanceSync {
 
         daoSession.getAttendanceLessonDao().saveInTx(lessonList);
 
-        LogUtils.debug("Synchronization attendance lessons (amount = " + lessonList.size() + ")");
+        Timber.d("Attendance synchronization complete (%s)", lessonList.size());
     }
 
     private io.github.wulkanowy.api.generic.Week<io.github.wulkanowy.api.generic.Day> getWeekFromApi(String date)

@@ -4,7 +4,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
-import com.crashlytics.android.Crashlytics;
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
@@ -27,7 +26,8 @@ import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.sync.NotRegisteredUserException;
 import io.github.wulkanowy.services.notifies.GradeNotify;
 import io.github.wulkanowy.ui.main.MainActivity;
-import io.github.wulkanowy.utils.LogUtils;
+import io.github.wulkanowy.utils.FabricUtils;
+import timber.log.Timber;
 
 public class SyncJob extends SimpleJobService {
 
@@ -74,13 +74,18 @@ public class SyncJob extends SimpleJobService {
             if (!gradeList.isEmpty() && repository.getSharedRepo().isNotifyEnable()) {
                 showNotification();
             }
+
+            FabricUtils.logLogin("Background", true);
+
             return JobService.RESULT_SUCCESS;
         } catch (NotRegisteredUserException e) {
             logError(e);
             stop(getApplicationContext());
+
             return JobService.RESULT_FAIL_NORETRY;
         } catch (Exception e) {
             logError(e);
+
             return JobService.RESULT_FAIL_RETRY;
         }
     }
@@ -122,7 +127,7 @@ public class SyncJob extends SimpleJobService {
     }
 
     private void logError(Exception e) {
-        Crashlytics.logException(e);
-        LogUtils.error("During background synchronization an error occurred", e);
+        FabricUtils.logLogin("Background", false);
+        Timber.e(e, "During background synchronization an error occurred");
     }
 }

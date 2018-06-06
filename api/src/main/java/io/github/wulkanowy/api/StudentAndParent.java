@@ -3,6 +3,8 @@ package io.github.wulkanowy.api;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +34,8 @@ public class StudentAndParent implements SnP {
 
     private String diaryID;
 
+    private static final Logger logger = LoggerFactory.getLogger(StudentAndParent.class);
+
     StudentAndParent(Client client, String schoolID, String studentID, String diaryID) {
         this.client = client;
         this.schoolID = schoolID;
@@ -42,6 +46,11 @@ public class StudentAndParent implements SnP {
     public StudentAndParent setUp() throws IOException, VulcanException {
         if (null == getStudentID() || "".equals(getStudentID())) {
             Document doc = client.getPageByUrl(getSnpHomePageUrl());
+
+            if (doc.select("#idSection").isEmpty()) {
+                logger.error("Expected SnP page, got page with title: {} {}", doc.title(), doc.selectFirst("body"));
+                throw new VulcanException("Nieznany błąd podczas pobierania danych. Strona: " + doc.title());
+            }
 
             Student student = getCurrent(getStudents(doc));
             studentID = student.getId();
@@ -72,24 +81,27 @@ public class StudentAndParent implements SnP {
 
         // get url to uonetplus-opiekun.fakelog.cf
         Document startPage = client.getPageByUrl(START_PAGE_URL);
-        Element studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a").first();
+        Elements studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a");
 
-        if (null == studentTileLink) {
+        logger.debug("studentTileLink: {}", studentTileLink.size());
+
+        if (studentTileLink.isEmpty()) {
             throw new VulcanException("Na pewno używasz konta z dostępem do Witryny ucznia i rodzica?");
         }
 
-        String snpPageUrl = studentTileLink.attr("href");
+        String snpPageUrl = studentTileLink.last().attr("href");
 
         this.schoolID = getExtractedIdFromUrl(snpPageUrl);
 
         return snpPageUrl;
     }
 
-    String getExtractedIdFromUrl(String snpPageUrl) throws NotLoggedInErrorException {
+    String getExtractedIdFromUrl(String snpPageUrl) throws VulcanException {
         String[] path = snpPageUrl.split(client.getHost())[1].split("/");
 
         if (5 != path.length) {
-            throw new NotLoggedInErrorException("You are probably not logged in " + snpPageUrl);
+            logger.error("Expected snp url, got {}", snpPageUrl);
+            throw new VulcanException("Na pewno używasz konta z dostępem do Witryny ucznia i rodzica?");
         }
 
         return path[2];
@@ -107,12 +119,12 @@ public class StudentAndParent implements SnP {
         Map<String, String> cookies = new HashMap<>();
         cookies.put("idBiezacyDziennik", diaryID);
         cookies.put("idBiezacyUczen", studentID);
-        client.addCookies(cookies);
 
         Document doc = client.getPageByUrl(getBaseUrl() + url, true, cookies);
 
         if (!doc.title().startsWith("Witryna ucznia i rodzica")) {
-            throw new VulcanException("Expected SnP page, got page with title: " + doc.title());
+            logger.error("Expected SnP page, got page with title: {} {}", doc.title(), doc.selectFirst("body"));
+            throw new VulcanException("Nieznany błąd podczas pobierania danych. Strona: " + doc.title());
         }
 
         if (doc.title().endsWith("Strona główna")) {

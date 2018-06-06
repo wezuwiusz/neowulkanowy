@@ -1,7 +1,6 @@
 package io.github.wulkanowy.data.sync;
 
 import java.io.IOException;
-import java.text.ParseException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -47,17 +46,17 @@ public class SyncRepository implements SyncContract {
     }
 
     @Override
-    public void initLastUser() throws IOException, CryptoException {
+    public void initLastUser() throws CryptoException {
         accountSync.initLastUser();
     }
 
     @Override
-    public void syncGrades(int semesterName) throws VulcanException, IOException, ParseException {
+    public void syncGrades(int semesterName) throws VulcanException, IOException {
         gradeSync.sync(semesterName);
     }
 
     @Override
-    public void syncGrades() throws VulcanException, IOException, ParseException {
+    public void syncGrades() throws VulcanException, IOException {
         gradeSync.sync(database.getCurrentSemesterId());
     }
 
@@ -72,12 +71,12 @@ public class SyncRepository implements SyncContract {
     }
 
     @Override
-    public void syncAttendance() throws ParseException, IOException, VulcanException {
+    public void syncAttendance() throws IOException, VulcanException {
         attendanceSync.syncAttendance(database.getCurrentDiaryId(), null);
     }
 
     @Override
-    public void syncAttendance(long diaryId, String date) throws ParseException, IOException, VulcanException {
+    public void syncAttendance(long diaryId, String date) throws IOException, VulcanException {
         if (diaryId != 0) {
             attendanceSync.syncAttendance(diaryId, date);
         } else {
@@ -86,12 +85,12 @@ public class SyncRepository implements SyncContract {
     }
 
     @Override
-    public void syncTimetable() throws VulcanException, IOException, ParseException {
+    public void syncTimetable() throws VulcanException, IOException {
         timetableSync.syncTimetable(database.getCurrentDiaryId(), null);
     }
 
     @Override
-    public void syncTimetable(long diaryId, String date) throws VulcanException, IOException, ParseException {
+    public void syncTimetable(long diaryId, String date) throws VulcanException, IOException {
         if (diaryId != 0) {
             timetableSync.syncTimetable(diaryId, date);
         } else {
@@ -100,12 +99,12 @@ public class SyncRepository implements SyncContract {
     }
 
     @Override
-    public void syncExams() throws VulcanException, IOException, ParseException {
+    public void syncExams() throws VulcanException, IOException {
         examsSync.syncExams(database.getCurrentDiaryId(), null);
     }
 
     @Override
-    public void syncExams(long diaryId, String date) throws VulcanException, IOException, ParseException {
+    public void syncExams(long diaryId, String date) throws VulcanException, IOException {
         if (diaryId != 0) {
             examsSync.syncExams(diaryId, date);
         } else {
@@ -114,7 +113,7 @@ public class SyncRepository implements SyncContract {
     }
 
     @Override
-    public void syncAll() throws VulcanException, IOException, ParseException {
+    public void syncAll() throws VulcanException, IOException {
         syncSubjects();
         syncGrades();
         syncAttendance();

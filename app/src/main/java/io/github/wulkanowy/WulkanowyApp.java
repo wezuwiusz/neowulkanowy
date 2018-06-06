@@ -12,11 +12,12 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.utils.Log;
 import io.fabric.sdk.android.Fabric;
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.di.DaggerAppComponent;
-import io.github.wulkanowy.utils.LogUtils;
+import io.github.wulkanowy.utils.FabricUtils;
+import io.github.wulkanowy.utils.LoggerUtils;
+import timber.log.Timber;
 
 public class WulkanowyApp extends DaggerApplication {
 
@@ -39,15 +40,18 @@ public class WulkanowyApp extends DaggerApplication {
         if (repository.getSharedRepo().isUserLoggedIn()) {
             try {
                 repository.getSyncRepo().initLastUser();
+                FabricUtils.logLogin("Open app", true);
             } catch (Exception e) {
-                LogUtils.error("An error occurred when the application was started", e);
+                FabricUtils.logLogin("Open app", false);
+                Timber.e(e, "An error occurred when the application was started");
             }
         }
     }
 
     private void enableDebugLog() {
         QueryBuilder.LOG_VALUES = true;
-        FlexibleAdapter.enableLogs(Log.Level.DEBUG);
+        FlexibleAdapter.enableLogs(eu.davidea.flexibleadapter.utils.Log.Level.DEBUG);
+        Timber.plant(new LoggerUtils.DebugLogTree());
     }
 
     private void initializeFabric() {
@@ -60,6 +64,7 @@ public class WulkanowyApp extends DaggerApplication {
                 )
                 .debuggable(BuildConfig.DEBUG)
                 .build());
+        Timber.plant(new LoggerUtils.CrashlyticsTree());
     }
 
     @Override

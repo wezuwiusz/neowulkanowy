@@ -17,7 +17,7 @@ import io.github.wulkanowy.data.db.dao.entities.ExamDao;
 import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.data.db.dao.entities.WeekDao;
 import io.github.wulkanowy.utils.DataObjectConverter;
-import io.github.wulkanowy.utils.LogUtils;
+import timber.log.Timber;
 
 public class ExamsSync {
 
@@ -45,7 +45,7 @@ public class ExamsSync {
 
         daoSession.getExamDao().saveInTx(examList);
 
-        LogUtils.debug("Synchronization exams (amount = " + examList.size() + ")");
+        Timber.d("Exams synchronization complete (%s)", examList.size());
     }
 
     private Week getWeekFromDb(String date) {

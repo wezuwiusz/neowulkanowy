@@ -14,9 +14,13 @@ fun getFormattedDate(date: String): String {
 }
 
 fun getFormattedDate(date: String, format: String): String {
-    val sdf = SimpleDateFormat(LOG_DATE_PATTERN, Locale.ROOT)
+    return getFormattedDate(date, LOG_DATE_PATTERN, format)
+}
+
+fun getFormattedDate(date: String, fromFormat: String, toFormat: String): String {
+    val sdf = SimpleDateFormat(fromFormat, Locale.ROOT)
     val d = sdf.parse(date)
-    sdf.applyPattern(format)
+    sdf.applyPattern(toFormat)
 
     return sdf.format(d)
 }
