@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.widgets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
@@ -75,13 +76,21 @@ public class TimetableWidgetFactory implements RemoteViewsService.RemoteViewsFac
         views.setTextViewText(R.id.timetable_widget_item_room, getRoomText(position));
 
         if (!getDescriptionText(position).isEmpty()) {
+            views.setViewVisibility(R.id.timetable_widget_item_description, View.VISIBLE);
             views.setTextViewText(R.id.timetable_widget_item_description, getDescriptionText(position));
         } else {
             views.setViewVisibility(R.id.timetable_widget_item_description, View.GONE);
         }
 
-        views.setOnClickFillInIntent(R.id.timetable_widget_item_container, new Intent());
+        if (lessonList.get(position).getMovedOrCanceled()) {
+            views.setInt(R.id.timetable_widget_item_subject, "setPaintFlags",
+                    Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        } else {
+            views.setInt(R.id.timetable_widget_item_subject, "setPaintFlags",
+                    Paint.ANTI_ALIAS_FLAG);
+        }
 
+        views.setOnClickFillInIntent(R.id.timetable_widget_item_container, new Intent());
         return views;
     }
 
