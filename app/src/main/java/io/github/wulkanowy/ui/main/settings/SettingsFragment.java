@@ -1,18 +1,23 @@
 package io.github.wulkanowy.ui.main.settings;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.PreferenceScreen;
+import android.widget.Toast;
 
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
+
+import io.github.wulkanowy.BuildConfig;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.services.jobs.SyncJob;
+import io.github.wulkanowy.utils.AppConstant;
 
 public class SettingsFragment extends PreferenceFragmentCompat
-        implements SharedPreferences.OnSharedPreferenceChangeListener,
-        PreferenceFragmentCompat.OnPreferenceStartScreenCallback{
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final String SHARED_KEY_START_TAB = "startup_tab";
 
@@ -28,6 +33,38 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
     public static final String SHARED_KEY_SERVICES_MOBILE_DISABLED = "services_disable_mobile";
 
+    public static final String SHARED_KEY_ABOUT_VERSION = "about_version";
+
+    public static final String SHARED_KEY_ABOUT_LICENSES = "about_osl";
+
+    public static final String SHARED_KEY_ABOUT_REPO = "about_repo";
+
+    private Preference.OnPreferenceClickListener onProgrammerListener = new Preference.OnPreferenceClickListener() {
+        private int clicks = 0;
+
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            Toast.makeText(getActivity(), getVersionToast(clicks++), Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        private int getVersionToast(int click) {
+            if (0 == click) {
+                return R.string.about_programmer_step1;
+            }
+
+            if (1 == click) {
+                return R.string.about_programmer_step2;
+            }
+
+            if (9 > click) {
+                return R.string.about_programmer_step3;
+            }
+
+            return R.string.about_programmer;
+        }
+    };
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
@@ -36,26 +73,17 @@ public class SettingsFragment extends PreferenceFragmentCompat
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        findPreference(SHARED_KEY_ABOUT_VERSION).setSummary(BuildConfig.VERSION_NAME);
+        findPreference(SHARED_KEY_ABOUT_VERSION).setOnPreferenceClickListener(onProgrammerListener);
+        findPreference(SHARED_KEY_ABOUT_REPO).setIntent(new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.REPO_URL)));
+        findPreference(SHARED_KEY_ABOUT_LICENSES).setIntent(new Intent(getActivity(), OssLicensesMenuActivity.class)
+                .putExtra("title", getString(R.string.pref_about_osl)));
     }
 
     @Override
     public Fragment getCallbackFragment() {
         return this;
-    }
-
-    @Override
-    public boolean onPreferenceStartScreen(PreferenceFragmentCompat preferenceFragmentCompat,
-                                           PreferenceScreen preferenceScreen) {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        AboutScreen fragment = new AboutScreen();
-        Bundle args = new Bundle();
-        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, preferenceScreen.getKey());
-        fragment.setArguments(args);
-        ft.add(R.id.main_activity_container, fragment, preferenceScreen.getKey());
-        ft.addToBackStack(preferenceScreen.getKey());
-        ft.commit();
-
-        return true;
     }
 
     @Override

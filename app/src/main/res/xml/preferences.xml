@@ -11,13 +11,13 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="grades_summary"
-            android:title="@string/pref_grades_summary_line_show"
-            android:summary="@string/required_restart" />
+            android:summary="@string/required_restart"
+            android:title="@string/pref_grades_summary_line_show" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="attendance_present"
-            android:title="@string/pref_attendance_present_show"
-            android:summary="@string/required_restart" />
+            android:summary="@string/required_restart"
+            android:title="@string/pref_attendance_present_show" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_services_header">
         <SwitchPreference
@@ -34,9 +34,9 @@
             android:title="@string/pref_services_interval" />
         <SwitchPreference
             android:defaultValue="false"
+            android:dependency="services_enable"
             android:key="services_disable_mobile"
-            android:title="@string/pref_services_mobile_data"
-            android:dependency="services_enable" />
+            android:title="@string/pref_services_mobile_data" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_notify_header">
         <SwitchPreference
@@ -45,27 +45,16 @@
             android:key="notify_enable"
             android:title="@string/pref_notify_switch" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_about_header">
-        <PreferenceScreen
-            android:key="pref_about"
-            android:title="@string/pref_about"
-            android:persistent="false">
-            <PreferenceCategory android:title="@string/pref_about">
-                <Preference
-                    android:selectable="false"
-                    android:summary="@string/pref_about_summary"/>
-                <Preference
-                    android:key="about_version"
-                    android:title="@string/pref_about_version"/>
-                <Preference
-                    android:key="about_osl"
-                    android:title="@string/pref_about_osl"
-                    android:summary="@string/pref_about_osl_summary"/>
-                <Preference
-                    android:key="about_repo"
-                    android:title="@string/pref_about_support">
-                </Preference>
-            </PreferenceCategory>
-        </PreferenceScreen>
+    <PreferenceCategory android:title="@string/pref_about">
+        <Preference
+            android:key="about_version"
+            android:title="@string/pref_about_version" />
+        <Preference
+            android:key="about_osl"
+            android:summary="@string/pref_about_osl_summary"
+            android:title="@string/pref_about_osl" />
+        <Preference
+            android:key="about_repo"
+            android:title="@string/pref_about_support" />
     </PreferenceCategory>
 </PreferenceScreen>
