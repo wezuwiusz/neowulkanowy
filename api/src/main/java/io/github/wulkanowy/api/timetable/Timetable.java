@@ -3,6 +3,8 @@ package io.github.wulkanowy.api.timetable;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,14 +15,16 @@ import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.api.generic.Lesson;
 import io.github.wulkanowy.api.generic.Week;
 
-import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
 import static io.github.wulkanowy.api.DateTimeUtilsKt.getDateAsTick;
+import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
 
 public class Timetable {
 
     private static final String TIMETABLE_PAGE_URL = "Lekcja.mvc/PlanZajec?data=";
 
     private SnP snp;
+
+    private static final Logger logger = LoggerFactory.getLogger(Timetable.class);
 
     public Timetable(SnP snp) {
         this.snp = snp;
@@ -45,8 +49,13 @@ public class Timetable {
 
     private List<TimetableDay> getDays(Elements tableHeaderCells) {
         List<TimetableDay> days = new ArrayList<>();
+        int numberOfDays = tableHeaderCells.size();
 
-        for (int i = 2; i < 7; i++) {
+        if (numberOfDays > 7) {
+            logger.info("Number of days: {}", numberOfDays);
+        }
+
+        for (int i = 2; i < numberOfDays; i++) {
             String[] dayHeaderCell = tableHeaderCells.get(i).html().split("<br>");
 
             TimetableDay day = new TimetableDay();
@@ -126,6 +135,11 @@ public class Timetable {
 
     private void addLessonInfoFromElement(Lesson lesson, Element e) {
         Elements spans = e.select("span");
+
+        if (spans.isEmpty()) {
+            logger.warn("Lesson span is empty");
+            return;
+        }
 
         addTypeInfo(lesson, spans);
         addNormalLessonInfo(lesson, spans);
@@ -213,6 +227,10 @@ public class Timetable {
     }
 
     private String[] getLessonAndGroupInfoFromSpan(Element span) {
+        if (!span.text().contains("[")) {
+            return new String[] {span.text(), ""};
+        }
+
         String[] subjectNameArray = span.text().split(" ");
         String groupName = subjectNameArray[subjectNameArray.length - 1];
 

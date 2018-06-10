@@ -62,6 +62,7 @@ public class Client {
             return;
         }
 
+        clearCookies();
         this.symbol = new Login(this).login(email, password, symbol);
         logger.info("Login successful on {} at {}", getHost(), new Date());
     }
@@ -85,6 +86,10 @@ public class Client {
 
     private Map<String, String> getCookies() {
         return cookies.getItems();
+    }
+
+    public void clearCookies() {
+        cookies = new Cookies();
     }
 
     String getHost() {
@@ -216,7 +221,7 @@ public class Client {
         }
 
         if ("Błąd strony".equals(title)) {
-            throw new NotLoggedInErrorException(title + " " + doc.selectFirst("body") + ", status: " + code);
+            throw new NotLoggedInErrorException(title + " " + doc.body() + ", status: " + code);
         }
 
         return doc;
