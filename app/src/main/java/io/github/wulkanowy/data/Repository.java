@@ -47,4 +47,10 @@ public class Repository implements RepositoryContract {
     public SyncContract getSyncRepo() {
         return synchronization;
     }
+
+    @Override
+    public void cleanAllData() {
+        sharedPref.cleanSharedPref();
+        database.recreateDatabase();
+    }
 }

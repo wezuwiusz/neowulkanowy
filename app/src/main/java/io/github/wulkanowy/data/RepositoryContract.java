@@ -17,4 +17,6 @@ public interface RepositoryContract {
     DbContract getDbRepo();
 
     SyncContract getSyncRepo();
+
+    void cleanAllData();
 }

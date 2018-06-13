@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import io.github.wulkanowy.R;
+import io.github.wulkanowy.api.login.BadCredentialsException;
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
 import io.github.wulkanowy.data.sync.NotRegisteredUserException;
@@ -80,6 +81,12 @@ public class SyncJob extends SimpleJobService {
             return JobService.RESULT_SUCCESS;
         } catch (NotRegisteredUserException e) {
             logError(e);
+            stop(getApplicationContext());
+
+            return JobService.RESULT_FAIL_NORETRY;
+        } catch (BadCredentialsException e) {
+            logError(e);
+            repository.cleanAllData();
             stop(getApplicationContext());
 
             return JobService.RESULT_FAIL_NORETRY;

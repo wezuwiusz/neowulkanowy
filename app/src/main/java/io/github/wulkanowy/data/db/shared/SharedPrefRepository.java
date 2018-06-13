@@ -88,4 +88,10 @@ public class SharedPrefRepository implements SharedPrefContract {
     public boolean isMobileDisable() {
         return settingsSharedPref.getBoolean(SettingsFragment.SHARED_KEY_SERVICES_MOBILE_DISABLED, false);
     }
+
+    @Override
+    public void cleanSharedPref() {
+        appSharedPref.edit().clear().apply();
+        settingsSharedPref.edit().clear().apply();
+    }
 }

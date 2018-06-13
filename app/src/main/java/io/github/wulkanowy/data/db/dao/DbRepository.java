@@ -1,9 +1,12 @@
 package io.github.wulkanowy.data.db.dao;
 
+import org.greenrobot.greendao.database.Database;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.github.wulkanowy.data.db.dao.entities.DaoMaster;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.DiaryDao;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
@@ -108,5 +111,13 @@ public class DbRepository implements DbContract {
                 SemesterDao.Properties.DiaryId.eq(getCurrentDiaryId()),
                 SemesterDao.Properties.Current.eq(true)
         ).unique();
+    }
+
+    @Override
+    public void recreateDatabase() {
+        Database database = daoSession.getDatabase();
+
+        DaoMaster.dropAllTables(database, true);
+        DaoMaster.createAllTables(database, true);
     }
 }

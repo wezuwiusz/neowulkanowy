@@ -30,4 +30,6 @@ public interface DbContract {
     long getCurrentSemesterId();
 
     int getCurrentSemesterName();
+
+    void recreateDatabase();
 }

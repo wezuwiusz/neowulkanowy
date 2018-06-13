@@ -28,4 +28,6 @@ public interface SharedPrefContract {
     boolean isServicesEnable();
 
     boolean isNotifyEnable();
+
+    void cleanSharedPref();
 }
