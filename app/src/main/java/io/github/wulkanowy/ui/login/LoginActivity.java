@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -215,6 +216,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     protected View getMessageView() {
         return findViewById(R.id.login_activity_container);
+    }
+
+
+    @Override
+    public void onSyncFailed() {
+        Toast.makeText(getApplicationContext(), R.string.login_sync_error, Toast.LENGTH_LONG).show();
     }
 
     private void onLoginProgressUpdate(String step, String message) {

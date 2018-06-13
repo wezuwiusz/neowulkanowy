@@ -33,6 +33,8 @@ public interface LoginContract {
 
         void showActionBar(boolean show);
 
+        void onSyncFailed();
+
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
@@ -45,7 +47,7 @@ public interface LoginContract {
 
         void onLoginProgress(int step);
 
-        void onEndAsync(boolean success, Exception exception);
+        void onEndAsync(int success, Exception exception);
 
         void onCanceledAsync();
     }

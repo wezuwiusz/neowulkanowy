@@ -158,4 +158,5 @@
     <string name="grades_summary_final_average">Final average</string>
     <string name="action_title_summary">Summary</string>
     <string name="action_title_details">Details</string>
+    <string name="login_sync_error">An error has occurred during synchronization</string>
 </resources>

@@ -2,7 +2,13 @@ package io.github.wulkanowy.ui.login;
 
 import android.os.AsyncTask;
 
-public class LoginTask extends AsyncTask<Void, Integer, Boolean> {
+public class LoginTask extends AsyncTask<Void, Integer, Integer> {
+
+    public final static int LOGIN_AND_SYNC_SUCCESS = 1;
+
+    public final static int LOGIN_FAILED = -1;
+
+    public final static int SYNC_FAILED = 2;
 
     private LoginContract.Presenter presenter;
 
@@ -18,18 +24,23 @@ public class LoginTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    protected Integer doInBackground(Void... params) {
         try {
             publishProgress(1);
             presenter.onDoInBackground(1);
+        } catch (Exception e) {
+            exception = e;
+            return LOGIN_FAILED;
+        }
 
+        try {
             publishProgress(2);
             presenter.onDoInBackground(2);
         } catch (Exception e) {
             exception = e;
-            return false;
+            return SYNC_FAILED;
         }
-        return true;
+        return LOGIN_AND_SYNC_SUCCESS;
     }
 
     @Override
@@ -38,7 +49,7 @@ public class LoginTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean success) {
+    protected void onPostExecute(Integer success) {
         presenter.onEndAsync(success, exception);
     }
 

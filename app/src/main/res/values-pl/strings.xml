@@ -163,4 +163,5 @@
     <string name="grades_summary_final_average">Końcowa średnia</string>
     <string name="action_title_summary">Podsumowanie</string>
     <string name="action_title_details">Szczegóły</string>
+    <string name="login_sync_error">Podczas synchronizacji wystąpił błąd</string>
 </resources>

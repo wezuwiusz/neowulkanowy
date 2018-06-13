@@ -83,22 +83,30 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
     }
 
     @Override
-    public void onEndAsync(boolean success, Exception exception) {
-        if (success) {
-            FabricUtils.logRegister(true, getRepository().getDbRepo().getCurrentSymbol().getSymbol(), "Success");
-            getView().openMainActivity();
-            return;
-        } else if (exception instanceof BadCredentialsException) {
-            getView().setErrorPassIncorrect();
-            getView().showSoftInput();
-        } else if (exception instanceof AccountPermissionException) {
-            getView().setErrorSymbolRequired();
-            getView().showSoftInput();
-        } else {
-            FabricUtils.logRegister(false, symbol, exception.getMessage());
-            getView().showMessage(getRepository().getResRepo().getErrorLoginMessage(exception));
+    public void onEndAsync(int success, Exception exception) {
+        switch (success) {
+            case LoginTask.LOGIN_AND_SYNC_SUCCESS:
+                FabricUtils.logRegister(true, getRepository().getDbRepo().getCurrentSymbol().getSymbol(), "Success");
+                getView().openMainActivity();
+                return;
+            case LoginTask.SYNC_FAILED:
+                FabricUtils.logRegister(true, symbol, exception.getMessage());
+                getView().onSyncFailed();
+                getView().openMainActivity();
+                return;
+            case LoginTask.LOGIN_FAILED:
+                if (exception instanceof BadCredentialsException) {
+                    getView().setErrorPassIncorrect();
+                    getView().showSoftInput();
+                } else if (exception instanceof AccountPermissionException) {
+                    getView().setErrorSymbolRequired();
+                    getView().showSoftInput();
+                } else {
+                    FabricUtils.logRegister(false, symbol, exception.getMessage());
+                    getView().showMessage(getRepository().getResRepo().getErrorLoginMessage(exception));
+                }
+                break;
         }
-
         getView().showActionBar(true);
         getView().showLoginProgress(false);
     }
