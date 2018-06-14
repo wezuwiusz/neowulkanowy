@@ -29,7 +29,7 @@
         android:layout_below="@+id/grade_header_subject_text"
         android:layout_marginTop="5dp"
         android:text="@string/app_name"
-        android:textColor="@color/secondary_text"
+        android:textColor="?android:attr/android:textColorSecondary"
         android:textSize="12sp" />
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_toEndOf="@+id/grade_header_average_text"
         android:layout_toRightOf="@+id/grade_header_average_text"
         android:text="@string/app_name"
-        android:textColor="@color/secondary_text"
+        android:textColor="?android:attr/android:textColorSecondary"
         android:textSize="12sp" />
 
     <TextView
@@ -55,7 +55,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:text="@string/info_grades_predicted_rating"
-        android:textColor="@color/secondary_text"
+        android:textColor="?android:attr/android:textColorSecondary"
         android:textSize="12sp" />
 
     <TextView
@@ -67,7 +67,7 @@
         android:layout_toEndOf="@+id/grade_header_predicted_rating_text"
         android:layout_toRightOf="@+id/grade_header_predicted_rating_text"
         android:text="@string/info_grades_final_rating"
-        android:textColor="@color/secondary_text"
+        android:textColor="?android:attr/android:textColorSecondary"
         android:textSize="12sp" />
 
     <ImageView

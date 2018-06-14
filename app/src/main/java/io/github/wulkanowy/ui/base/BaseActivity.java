@@ -54,5 +54,6 @@ public abstract class BaseActivity extends DaggerAppCompatActivity implements Ba
         if (unbinder != null) {
             unbinder.unbind();
         }
+        invalidateOptionsMenu();
     }
 }

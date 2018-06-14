@@ -18,6 +18,13 @@
             android:key="attendance_present"
             android:summary="@string/required_restart"
             android:title="@string/pref_attendance_present_show" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"
+            android:key="theme"
+            android:summary="%s"
+            android:title="@string/pref_view_theme_dark" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_services_header">
         <SwitchPreference

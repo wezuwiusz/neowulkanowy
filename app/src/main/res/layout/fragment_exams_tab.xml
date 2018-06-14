@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/exams_tab_fragment_no_item_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,8 +34,8 @@
             android:layout_marginTop="40dp"
             android:minHeight="100dp"
             android:minWidth="100dp"
-            android:tint="@android:color/black"
             app:srcCompat="@drawable/ic_menu_exams_24dp"
+            app:tint="?android:attr/textColorPrimary"
             tools:ignore="contentDescription" />
 
         <TextView

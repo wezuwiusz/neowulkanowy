@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="WulkanowyTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+    <style name="WulkanowyTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
@@ -14,9 +14,10 @@
         <item name="subtitleTextColor">@android:color/primary_text_dark</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="bottomNavBackground">@color/bottom_nav_background_inverse</item>
     </style>
 
-    <style name="WulkanowyTheme.LoginTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="WulkanowyTheme.DarkActionBar" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>

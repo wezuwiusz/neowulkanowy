@@ -18,6 +18,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.View>
     @Override
     public void attachView(@NonNull SplashContract.View view) {
         super.attachView(view);
+        getView().setCurrentThemeMode(getRepository().getSharedRepo().getCurrentTheme());
         getView().cancelNotifications();
 
         if (getRepository().getSharedRepo().isUserLoggedIn()) {

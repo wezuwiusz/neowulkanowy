@@ -169,6 +169,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
                 android:text="@string/generic_dialog_close"
+                android:textColor="?android:attr/android:textColorSecondary"
                 android:textAllCaps="true"
                 android:textSize="15sp" />
 

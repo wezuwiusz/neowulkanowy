@@ -11,6 +11,8 @@ public interface SplashContract {
         void openMainActivity();
 
         void cancelNotifications();
+
+        void setCurrentThemeMode(int mode);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

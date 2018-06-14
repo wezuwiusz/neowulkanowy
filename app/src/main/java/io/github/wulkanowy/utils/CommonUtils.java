@@ -1,7 +1,11 @@
 package io.github.wulkanowy.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.net.Uri;
+import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.customtabs.CustomTabsIntent;
 
 import io.github.wulkanowy.R;
@@ -35,6 +39,16 @@ public final class CommonUtils {
 
             default:
                 return R.string.noColor_text;
+        }
+    }
+
+    @ColorInt
+    public static int getThemeAttrColor(Context context, @AttrRes int colorAttr) {
+        final TypedArray array = context.obtainStyledAttributes(null, new int[]{colorAttr});
+        try {
+            return array.getColor(0, 0);
+        } finally {
+            array.recycle();
         }
     }
 }

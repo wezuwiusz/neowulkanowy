@@ -48,7 +48,7 @@
                 android:layout_below="@+id/timetable_dialog_details"
                 android:layout_marginTop="10dp"
                 android:text="@string/timetable_dialog_description"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimary"
                 android:textSize="17sp" />
 
             <TextView
@@ -60,7 +60,7 @@
                 android:layout_below="@+id/timetable_dialog_description"
                 android:layout_marginTop="3dp"
                 android:text="@string/generic_app_no_data"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimary"
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
@@ -192,6 +192,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:focusable="true"
                 android:text="@string/generic_dialog_close"
+                android:textColor="?android:attr/android:textColorSecondary"
                 android:textAllCaps="true"
                 android:textSize="15sp" />
 

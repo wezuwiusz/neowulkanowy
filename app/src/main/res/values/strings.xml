@@ -125,6 +125,8 @@
     <string name="pref_attendance_present_show">Show present in attendance</string>
     <string name="required_restart">Required restart</string>
 
+    <string name="pref_view_theme_dark">Dark theme (Beta)</string>
+
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show the notifications</string>
 

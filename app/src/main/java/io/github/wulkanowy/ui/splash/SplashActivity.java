@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.splash;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 
 import javax.inject.Inject;
 
@@ -36,6 +37,10 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     public void openMainActivity() {
         startActivity(MainActivity.getStartIntent(this));
         finish();
+    }
+
+    public void setCurrentThemeMode(int mode) {
+        AppCompatDelegate.setDefaultNightMode(mode);
     }
 
     @Override
