@@ -75,4 +75,11 @@ public class GradeUtilsTest {
         assertEquals(R.color.default_grade, GradeUtils.getValueColor("7"));
         assertEquals(R.color.default_grade, GradeUtils.getValueColor(""));
     }
+
+    @Test
+    public void getShortGradeValueTest() {
+        assertEquals("6", GradeUtils.getShortGradeValue("celujący"));
+        assertEquals("1", GradeUtils.getShortGradeValue("niedostateczny"));
+        assertEquals("wzorowe", GradeUtils.getShortGradeValue("wzorowe"));
+    }
 }

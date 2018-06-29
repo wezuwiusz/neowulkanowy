@@ -101,7 +101,7 @@ public final class GradeUtils {
         return counter / denominator;
     }
 
-    private static float getGradeValue(String grade) {
+    public static float getGradeValue(String grade) {
         if (validGradePattern.matcher(grade).matches()) {
             return getWeightedGradeValue(grade);
         }
@@ -125,6 +125,25 @@ public final class GradeUtils {
                 return 1f;
             default:
                 return -1f;
+        }
+    }
+
+    public static String getShortGradeValue(String grade) {
+        switch (grade) {
+            case "celujący":
+                return "6";
+            case "bardzo dobry":
+                return "5";
+            case "dobry":
+                return "4";
+            case "dostateczny":
+                return "3";
+            case "dopuszczający":
+                return "2";
+            case "niedostateczny":
+                return "1";
+            default:
+                return grade;
         }
     }
 

@@ -16,6 +16,7 @@ import eu.davidea.flexibleadapter.items.IFlexible;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
+import io.github.wulkanowy.utils.GradeUtils;
 
 public class GradesSummarySubItem
         extends AbstractSectionableItem<GradesSummarySubItem.SubItemViewHolder, GradesSummaryHeader> {
@@ -76,8 +77,8 @@ public class GradesSummarySubItem
         }
 
         void onBind(Subject item) {
-            predictedGrade.setText(item.getPredictedRating());
-            finalGrade.setText(item.getFinalRating());
+            predictedGrade.setText(GradeUtils.getShortGradeValue(item.getPredictedRating()));
+            finalGrade.setText(GradeUtils.getShortGradeValue(item.getFinalRating()));
         }
     }
 }

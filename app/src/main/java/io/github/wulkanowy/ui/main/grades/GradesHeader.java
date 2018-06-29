@@ -113,9 +113,9 @@ public class GradesHeader
             averageText.setText(getGradesAverageString());
 
             predictedText.setText(resources.getString(R.string.info_grades_predicted_rating,
-                    item.getPredictedRating()));
+                    GradeUtils.getShortGradeValue(item.getPredictedRating())));
             finalText.setText(resources.getString(R.string.info_grades_final_rating,
-                    item.getFinalRating()));
+                    GradeUtils.getShortGradeValue(item.getFinalRating())));
 
             resetViews();
             toggleSubjectText();
