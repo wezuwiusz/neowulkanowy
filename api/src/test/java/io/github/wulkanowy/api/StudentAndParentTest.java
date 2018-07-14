@@ -32,68 +32,13 @@ public class StudentAndParentTest {
 
     @Test
     public void snpTest() {
-        StudentAndParent snp = new StudentAndParent(client, "id123", null, null);
-        Assert.assertEquals("id123", snp.getSchoolID());
-    }
-
-    @Test
-    public void getSnpPageUrlWithIdTest() throws Exception {
-        Assert.assertEquals("{schema}://uonetplus-opiekun.{host}/{symbol}/123456/",
-                (new StudentAndParent(client, "123456", null, null)).getSnpHomePageUrl());
-    }
-
-    @Test
-    public void getSnpPageUrlWithoutIdTest() throws Exception {
-        String input = FixtureHelper.getAsString(getClass().getResourceAsStream("Start.html"));
-        Document startPageDocument = Jsoup.parse(input);
-
-        Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
-        Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(startPageDocument);
-        StudentAndParent snp = new StudentAndParent(client, null, null, null);
-
-        Assert.assertEquals("https://uonetplus-opiekun.vulcan.net.pl/symbol/534213/Start/Index/",
-                snp.getSnpHomePageUrl());
-    }
-
-    @Test(expected = VulcanException.class)
-    public void getSnpPageUrlWithWrongPage() throws Exception {
-        Document wrongPageDocument = Jsoup.parse(
-                FixtureHelper.getAsString(getClass().getResourceAsStream("OcenyWszystkie-semester.html"))
-        );
-
-        Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(wrongPageDocument);
-        StudentAndParent snp = new StudentAndParent(client, null, null, null);
-
-        snp.getSnpHomePageUrl();
-    }
-
-    @Test
-    public void getExtractedIDStandardTest() throws Exception {
-        Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
-        StudentAndParent snp = new StudentAndParent(client, "symbol", null, null);
-        Assert.assertEquals("123456", snp.getExtractedIdFromUrl("https://uonetplus-opiekun"
-                + ".vulcan.net.pl/powiat/123456/Start/Index/"));
-    }
-
-    @Test
-    public void getExtractedIDDemoTest() throws Exception {
-        Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
-        StudentAndParent snp = new StudentAndParent(client, "symbol", null, null);
-        Assert.assertEquals("demo12345",
-                snp.getExtractedIdFromUrl("https://uonetplus-opiekun.vulcan.net.pl/demoupowiat/demo12345/Start/Index/"));
-    }
-
-    @Test(expected = VulcanException.class)
-    public void getExtractedIDNotLoggedTest() throws Exception {
-        Mockito.when(client.getHost()).thenReturn("vulcan.net.pl");
-        StudentAndParent snp = new StudentAndParent(client, "symbol", null, null);
-        Assert.assertEquals("123",
-                snp.getExtractedIdFromUrl("https://uonetplus.vulcan.net.pl/powiat/"));
+        StudentAndParent snp = new StudentAndParent(client, "1234", null);
+        Assert.assertEquals("1234", snp.getStudentID());
     }
 
     @Test
     public void getSemestersTest() throws Exception {
-        SnP snp = new StudentAndParent(client, "123456", null, null);
+        SnP snp = new StudentAndParent(client, null, null);
         List<Semester> semesters = snp.getSemesters();
 
         Assert.assertEquals(2, semesters.size());
@@ -113,7 +58,7 @@ public class StudentAndParentTest {
         semesters.add(new Semester().setName("1500100900").setId("1").setCurrent(false));
         semesters.add(new Semester().setName("1500100901").setId("2").setCurrent(true));
 
-        SnP snp = new StudentAndParent(client, "", null, null);
+        SnP snp = new StudentAndParent(client, null, null);
         Semester semester = snp.getCurrent(semesters);
 
         Assert.assertTrue(semester.isCurrent());
@@ -123,7 +68,7 @@ public class StudentAndParentTest {
 
     @Test
     public void getCurrentSemesterFromEmptyTest() {
-        SnP snp = new StudentAndParent(client, "", null, null);
+        SnP snp = new StudentAndParent(client, null, null);
         List<Semester> semesters = new ArrayList<>();
 
         Assert.assertNull(snp.getCurrent(semesters));
@@ -136,7 +81,7 @@ public class StudentAndParentTest {
 
         client = Mockito.mock(Client.class);
         Mockito.when(client.getPageByUrl(Mockito.anyString())).thenReturn(snpHome);
-        SnP snp = new StudentAndParent(client, "", null, null);
+        SnP snp = new StudentAndParent(client, null, null);
 
         snp.setUp();
 

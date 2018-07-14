@@ -12,16 +12,24 @@ public class ClientTest {
     }
 
     @Test
-    public void setFullEndpointInfoTest() throws Exception {
-        Client client = new Client("http://fakelog.net\\\\admin", "pass", "Default");
+    public void setFullEndpointInfoTest() {
+        Client client = new Client("http://fakelog.cf\\\\admin", "pass", "Default", "123");
 
-        Assert.assertEquals("fakelog.net", client.getHost());
+        Assert.assertEquals("fakelog.cf", client.getHost());
         Assert.assertEquals("Default", client.getSymbol());
     }
 
     @Test
+    public void setFullEndpointInfoWithSymbolTest() {
+        Client client = new Client("http://fakelog.cf/notdefault\\\\admin", "pass", "Default", "123");
+
+        Assert.assertEquals("fakelog.cf", client.getHost());
+        Assert.assertEquals("notdefault", client.getSymbol()); //
+    }
+
+    @Test
     public void checkForNoErrorsTest() throws Exception {
-        Client client = new Client("", "", "");
+        Client client = new Client("", "", "", "123");
 
         Document doc = Jsoup.parse(getFixtureAsString("login/Logowanie-success.html"));
 
@@ -30,7 +38,7 @@ public class ClientTest {
 
     @Test(expected = VulcanOfflineException.class)
     public void checkForErrorsOffline() throws Exception {
-        Client client = new Client("", "", "");
+        Client client = new Client("", "", "", "123");
 
         Document doc = Jsoup.parse(getFixtureAsString("login/PrzerwaTechniczna.html"));
 
@@ -39,7 +47,7 @@ public class ClientTest {
 
     @Test(expected = NotLoggedInErrorException.class)
     public void checkForErrors() throws Exception {
-        Client client = new Client("", "", "");
+        Client client = new Client("", "", "", "123");
 
         Document doc = Jsoup.parse(getFixtureAsString("login/Logowanie-notLoggedIn.html"));
 
@@ -48,16 +56,23 @@ public class ClientTest {
 
     @Test
     public void getFilledUrlTest() throws Exception {
-        Client client = new Client("http://fakelog.cf\\\\admin", "", "symbol123");
+        Client client = new Client("http://fakelog.cf\\\\admin", "", "symbol123", "321");
 
-        Assert.assertEquals("http://uonetplus.fakelog.cf/symbol123/LoginEndpoint.aspx",
-                client.getFilledUrl("{schema}://uonetplus.{host}/{symbol}/LoginEndpoint.aspx"));
+        Assert.assertEquals("http://uonetplus-opiekun.fakelog.cf/symbol123/321/Oceny/Wszystkie",
+                client.getFilledUrl("{schema}://uonetplus-opiekun.{host}/{symbol}/{ID}/Oceny/Wszystkie"));
     }
 
     @Test
-    public void getSymbolTest() throws Exception {
-        Client client = new Client("", "", "symbol4321");
+    public void getSymbolTest() {
+        Client client = new Client("", "", "symbol4321", "123");
 
         Assert.assertEquals("symbol4321", client.getSymbol());
+    }
+
+    @Test
+    public void getSchoolIdTest() throws Exception {
+        Client client = new Client("", "", "1", "123456");
+
+        Assert.assertEquals("123456", client.getSchoolId());
     }
 }

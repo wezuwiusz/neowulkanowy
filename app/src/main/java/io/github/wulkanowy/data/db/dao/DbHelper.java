@@ -21,6 +21,7 @@ import io.github.wulkanowy.data.db.dao.migrations.Migration23;
 import io.github.wulkanowy.data.db.dao.migrations.Migration26;
 import io.github.wulkanowy.data.db.dao.migrations.Migration27;
 import io.github.wulkanowy.data.db.dao.migrations.Migration28;
+import io.github.wulkanowy.data.db.dao.migrations.Migration29;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import timber.log.Timber;
 
@@ -79,6 +80,7 @@ public class DbHelper extends DaoMaster.OpenHelper {
         migrations.add(new Migration26());
         migrations.add(new Migration27());
         migrations.add(new Migration28());
+        migrations.add(new Migration29());
 
         // Sorting just to be safe, in case other people add migrations in the wrong order.
         Comparator<Migration> migrationComparator = new Comparator<Migration>() {

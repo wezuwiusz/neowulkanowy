@@ -20,15 +20,11 @@ import io.github.wulkanowy.api.generic.Student;
 
 public class StudentAndParent implements SnP {
 
-    private static final String START_PAGE_URL = "{schema}://uonetplus.{host}/{symbol}/Start.mvc/Index";
-
     private static final String BASE_URL = "{schema}://uonetplus-opiekun.{host}/{symbol}/{ID}/";
 
     private static final String GRADES_PAGE_URL = "Oceny/Wszystkie";
 
     private Client client;
-
-    private String schoolID;
 
     private String studentID;
 
@@ -36,16 +32,15 @@ public class StudentAndParent implements SnP {
 
     private static final Logger logger = LoggerFactory.getLogger(StudentAndParent.class);
 
-    StudentAndParent(Client client, String schoolID, String studentID, String diaryID) {
+    StudentAndParent(Client client, String studentID, String diaryID) {
         this.client = client;
-        this.schoolID = schoolID;
         this.studentID = studentID;
         this.diaryID = diaryID;
     }
 
     public StudentAndParent setUp() throws IOException, VulcanException {
         if (null == getStudentID() || "".equals(getStudentID())) {
-            Document doc = client.getPageByUrl(getSnpHomePageUrl());
+            Document doc = client.getPageByUrl(BASE_URL);
 
             if (doc.select("#idSection").isEmpty()) {
                 logger.error("Expected SnP page, got page with title: {} {}", doc.title(), doc.selectFirst("body"));
@@ -62,49 +57,8 @@ public class StudentAndParent implements SnP {
         return this;
     }
 
-    public String getSchoolID() {
-        return schoolID;
-    }
-
     public String getStudentID() {
         return studentID;
-    }
-
-    private String getBaseUrl() {
-        return BASE_URL.replace("{ID}", getSchoolID());
-    }
-
-    String getSnpHomePageUrl() throws IOException, VulcanException {
-        if (null != getSchoolID()) {
-            return getBaseUrl();
-        }
-
-        // get url to uonetplus-opiekun.fakelog.cf
-        Document startPage = client.getPageByUrl(START_PAGE_URL);
-        Elements studentTileLink = startPage.select(".panel.linkownia.pracownik.klient > a");
-
-        logger.debug("studentTileLink: {}", studentTileLink.size());
-
-        if (studentTileLink.isEmpty()) {
-            throw new VulcanException("Na pewno używasz konta z dostępem do Witryny ucznia i rodzica?");
-        }
-
-        String snpPageUrl = studentTileLink.last().attr("href");
-
-        this.schoolID = getExtractedIdFromUrl(snpPageUrl);
-
-        return snpPageUrl;
-    }
-
-    String getExtractedIdFromUrl(String snpPageUrl) throws VulcanException {
-        String[] path = snpPageUrl.split(client.getHost())[1].split("/");
-
-        if (5 != path.length) {
-            logger.error("Expected snp url, got {}", snpPageUrl);
-            throw new VulcanException("Na pewno używasz konta z dostępem do Witryny ucznia i rodzica?");
-        }
-
-        return path[2];
     }
 
     public String getRowDataChildValue(Element e, int index) {
@@ -120,7 +74,7 @@ public class StudentAndParent implements SnP {
         cookies.put("idBiezacyDziennik", diaryID);
         cookies.put("idBiezacyUczen", studentID);
 
-        Document doc = client.getPageByUrl(getBaseUrl() + url, true, cookies);
+        Document doc = client.getPageByUrl(BASE_URL + url, true, cookies);
 
         if (!doc.title().startsWith("Witryna ucznia i rodzica")) {
             logger.error("Expected SnP page, got page with title: {} {}", doc.title(), doc.selectFirst("body"));
@@ -135,7 +89,7 @@ public class StudentAndParent implements SnP {
     }
 
     public List<Diary> getDiaries() throws IOException, VulcanException {
-        return getDiaries(client.getPageByUrl(getBaseUrl()));
+        return getDiaries(client.getPageByUrl(BASE_URL));
     }
 
     private List<Diary> getDiaries(Document doc) throws IOException, VulcanException {
@@ -143,7 +97,7 @@ public class StudentAndParent implements SnP {
     }
 
     public List<Student> getStudents() throws IOException, VulcanException {
-        return getStudents(client.getPageByUrl(getBaseUrl()));
+        return getStudents(client.getPageByUrl(BASE_URL));
     }
 
     private List<Student> getStudents(Document doc) throws IOException, VulcanException {

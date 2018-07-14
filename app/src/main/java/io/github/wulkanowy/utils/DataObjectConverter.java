@@ -9,6 +9,7 @@ import io.github.wulkanowy.data.db.dao.entities.Day;
 import io.github.wulkanowy.data.db.dao.entities.Diary;
 import io.github.wulkanowy.data.db.dao.entities.Exam;
 import io.github.wulkanowy.data.db.dao.entities.Grade;
+import io.github.wulkanowy.data.db.dao.entities.School;
 import io.github.wulkanowy.data.db.dao.entities.Semester;
 import io.github.wulkanowy.data.db.dao.entities.Student;
 import io.github.wulkanowy.data.db.dao.entities.Subject;
@@ -21,7 +22,22 @@ public final class DataObjectConverter {
         throw new IllegalStateException("Utility class");
     }
 
-    public static List<Student> studentsToStudentEntities(List<io.github.wulkanowy.api.generic.Student> students, Long symbolId) {
+    public static List<School> schoolsToSchoolsEntities(List<io.github.wulkanowy.api.generic.School> schools, Long symbolId) {
+        List<School> studentList = new ArrayList<>();
+
+        for (io.github.wulkanowy.api.generic.School school : schools) {
+            studentList.add(new School()
+                    .setName(school.getName())
+                    .setCurrent(school.getCurrent())
+                    .setRealId(school.getId())
+                    .setSymbolId(symbolId)
+            );
+        }
+
+        return studentList;
+    }
+
+    public static List<Student> studentsToStudentEntities(List<io.github.wulkanowy.api.generic.Student> students, Long schoolId) {
         List<Student> studentList = new ArrayList<>();
 
         for (io.github.wulkanowy.api.generic.Student student : students) {
@@ -29,7 +45,7 @@ public final class DataObjectConverter {
                     .setName(student.getName())
                     .setCurrent(student.isCurrent())
                     .setRealId(student.getId())
-                    .setSymbolId(symbolId)
+                    .setSchoolId(schoolId)
             );
         }
 

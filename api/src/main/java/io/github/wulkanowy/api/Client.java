@@ -8,9 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.github.wulkanowy.api.generic.School;
 import io.github.wulkanowy.api.login.Login;
 
 public class Client {
@@ -25,16 +27,21 @@ public class Client {
 
     private String symbol;
 
+    private String schoolId;
+
+    private List<School> schools;
+
     private Date lastSuccessRequest;
 
     private Cookies cookies = new Cookies();
 
     private static final Logger logger = LoggerFactory.getLogger(Client.class);
 
-    Client(String email, String password, String symbol) {
+    Client(String email, String password, String symbol, String schoolId) {
         this.email = email;
         this.password = password;
         this.symbol = symbol;
+        this.schoolId = schoolId;
 
         setFullEndpointInfo(email);
     }
@@ -62,14 +69,18 @@ public class Client {
             return;
         }
 
+        logger.info("Not logged. Login...");
+
         clearCookies();
-        this.symbol = new Login(this).login(email, password, symbol);
+        new Login(this).login(email, password, symbol);
+        lastSuccessRequest = new Date();
+
         logger.info("Login successful on {} at {}", getHost(), new Date());
     }
 
     private boolean isLoggedIn() {
-        logger.debug("Last success request: {}", lastSuccessRequest);
-        logger.debug("Cookies: {}", getCookies().size());
+        logger.trace("Last success request: {}", lastSuccessRequest);
+        logger.trace("Cookies: {}", getCookies().size());
 
         return getCookies().size() > 0 && lastSuccessRequest != null &&
                 5 > TimeUnit.MILLISECONDS.toMinutes(new Date().getTime() - lastSuccessRequest.getTime());
@@ -92,15 +103,30 @@ public class Client {
         cookies = new Cookies();
     }
 
-    String getHost() {
+    public String getHost() {
         return host;
+    }
+
+    public void setSchools(List<School> schools) {
+        this.schools = schools;
+        this.schoolId = schools.get(0).getId();
+    }
+
+    public List<School> getSchools() throws IOException, VulcanException {
+        login();
+        return schools;
+    }
+
+    public String getSchoolId() throws IOException, VulcanException {
+        return schoolId != null ? schoolId : getSchools().get(0).getId();
     }
 
     String getFilledUrl(String url) {
         return url
                 .replace("{schema}", protocol)
-                .replace("{host}", host.replace(":", "%253A"))
-                .replace("{symbol}", symbol);
+                .replace("{host}", host)
+                .replace("{symbol}", symbol)
+                .replace("{ID}", schoolId != null ? schoolId : "");
     }
 
     public Document getPageByUrl(String url) throws IOException, VulcanException {

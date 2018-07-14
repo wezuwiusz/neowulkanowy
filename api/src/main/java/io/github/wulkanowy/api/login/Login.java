@@ -16,8 +16,9 @@ import io.github.wulkanowy.api.VulcanException;
 
 public class Login {
 
-    static final String LOGIN_PAGE_URL = "{schema}://cufs.{host}/{symbol}/Account/LogOn" +
-            "?ReturnUrl=%2F{symbol}%2FFS%2FLS%3Fwa%3Dwsignin1.0%26wtrealm%3D" +
+    protected static final String LOGIN_PAGE_URL = "{schema}://cufs.{host}/{symbol}/Account/LogOn";
+
+    private static final String LOGIN_PAGE_URL_QUERY = "?ReturnUrl=%2F{symbol}%2FFS%2FLS%3Fwa%3Dwsignin1.0%26wtrealm%3D" +
             "{schema}%253a%252f%252fuonetplus.{host}%252f{symbol}%252fLoginEndpoint.aspx%26wctx%3D" +
             "{schema}%253a%252f%252fuonetplus.{host}%252f{symbol}%252fLoginEndpoint.aspx";
 
@@ -29,7 +30,7 @@ public class Login {
         this.client = client;
     }
 
-    public String login(String email, String password, String symbol) throws VulcanException, IOException {
+    public void login(String email, String password, String symbol) throws VulcanException, IOException {
         Document certDoc = sendCredentials(email, password);
 
         if ("Błąd".equals(certDoc.title())) {
@@ -37,7 +38,7 @@ public class Login {
             throw new NotLoggedInErrorException(certDoc.body().text());
         }
 
-        return sendCertificate(certDoc, symbol);
+        sendCertificate(certDoc, symbol);
     }
 
     Document sendCredentials(String email, String password) throws IOException, VulcanException {
@@ -46,7 +47,7 @@ public class Login {
                 {"Password", password}
         };
 
-        Document nextDoc = sendCredentialsData(credentials, LOGIN_PAGE_URL);
+        Document nextDoc = sendCredentialsData(credentials, LOGIN_PAGE_URL + LOGIN_PAGE_URL_QUERY.replace(":", "%253A"));
 
         Element errorMessage = nextDoc.selectFirst(".ErrorMessage, #ErrorTextLabel");
         if (null != errorMessage) {
@@ -86,7 +87,7 @@ public class Login {
         };
     }
 
-    String sendCertificate(Document doc, String defaultSymbol) throws IOException, VulcanException {
+    void sendCertificate(Document doc, String defaultSymbol) throws IOException, VulcanException {
         client.setSymbol(findSymbol(defaultSymbol, doc.select("input[name=wresult]").val()));
 
         Document targetDoc = sendCertData(doc);
@@ -106,7 +107,7 @@ public class Login {
             throw new LoginErrorException("Expected page title `UONET+`, got " + title);
         }
 
-        return client.getSymbol();
+        client.setSchools(new StartPage(client).getSchools(targetDoc));
     }
 
     private Document sendCertData(Document doc) throws IOException, VulcanException {

@@ -15,7 +15,7 @@ public class Migration27 implements DbHelper.Migration {
     }
 
     @Override
-    public void runMigration(Database db, SharedPrefContract sharedPref, Vulcan vulcan) throws Exception {
+    public void runMigration(Database db, SharedPrefContract sharedPref, Vulcan vulcan) {
         ExamDao.dropTable(db, true);
         ExamDao.createTable(db, true);
 

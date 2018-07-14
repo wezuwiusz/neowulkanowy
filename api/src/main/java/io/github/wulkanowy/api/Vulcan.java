@@ -4,10 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 import io.github.wulkanowy.api.attendance.AttendanceStatistics;
 import io.github.wulkanowy.api.attendance.AttendanceTable;
 import io.github.wulkanowy.api.exams.ExamsWeek;
+import io.github.wulkanowy.api.generic.School;
 import io.github.wulkanowy.api.grades.GradesList;
 import io.github.wulkanowy.api.grades.SubjectsList;
 import io.github.wulkanowy.api.messages.Messages;
@@ -27,8 +29,6 @@ public class Vulcan {
 
     private Client client;
 
-    private String schoolId;
-
     private String studentId;
 
     private String diaryId;
@@ -36,11 +36,10 @@ public class Vulcan {
     private static final Logger logger = LoggerFactory.getLogger(Vulcan.class);
 
     public void setCredentials(String email, String password, String symbol, String schoolId, String studentId, String diaryId) {
-        this.schoolId = schoolId;
         this.studentId = studentId;
         this.diaryId = diaryId;
 
-        client = new Client(email, password, symbol);
+        client = new Client(email, password, symbol, schoolId);
 
         logger.debug("Client created with symbol " + symbol);
     }
@@ -55,7 +54,10 @@ public class Vulcan {
 
     public String getSymbol() throws NotLoggedInErrorException {
         return getClient().getSymbol();
+    }
 
+    public List<School> getSchools() throws VulcanException, IOException {
+        return getClient().getSchools();
     }
 
     public SnP getStudentAndParent() throws VulcanException, IOException {
@@ -63,7 +65,7 @@ public class Vulcan {
             return this.snp;
         }
 
-        this.snp = new StudentAndParent(getClient(), schoolId, studentId, diaryId)
+        this.snp = new StudentAndParent(getClient(), studentId, diaryId)
                 .setUp();
 
         return this.snp;

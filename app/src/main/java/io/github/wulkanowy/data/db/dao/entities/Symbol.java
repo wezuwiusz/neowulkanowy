@@ -24,9 +24,6 @@ public class Symbol {
     @Property(nameInDb = "host")
     private String host;
 
-    @Property(nameInDb = "school_id")
-    private String schoolId;
-
     @Property(nameInDb = "symbol")
     private String symbol;
 
@@ -34,7 +31,7 @@ public class Symbol {
     private String type;
 
     @ToMany(referencedJoinProperty = "symbolId")
-    private List<Student> studentList;
+    private List<School> schoolList;
 
     /**
      * Used to resolve relations
@@ -48,13 +45,11 @@ public class Symbol {
     @Generated(hash = 684907977)
     private transient SymbolDao myDao;
 
-    @Generated(hash = 242774339)
-    public Symbol(Long id, Long userId, String host, String schoolId, String symbol,
-                  String type) {
+    @Generated(hash = 1034469460)
+    public Symbol(Long id, Long userId, String host, String symbol, String type) {
         this.id = id;
         this.userId = userId;
         this.host = host;
-        this.schoolId = schoolId;
         this.symbol = symbol;
         this.type = type;
     }
@@ -89,15 +84,6 @@ public class Symbol {
         return this;
     }
 
-    public String getSchoolId() {
-        return this.schoolId;
-    }
-
-    public Symbol setSchoolId(String schoolId) {
-        this.schoolId = schoolId;
-        return this;
-    }
-
     public String getSymbol() {
         return this.symbol;
     }
@@ -120,30 +106,28 @@ public class Symbol {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 604366458)
-    public List<Student> getStudentList() {
-        if (studentList == null) {
+    @Generated(hash = 1733082867)
+    public List<School> getSchoolList() {
+        if (schoolList == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            StudentDao targetDao = daoSession.getStudentDao();
-            List<Student> studentListNew = targetDao._querySymbol_StudentList(id);
+            SchoolDao targetDao = daoSession.getSchoolDao();
+            List<School> schoolListNew = targetDao._querySymbol_SchoolList(id);
             synchronized (this) {
-                if (studentList == null) {
-                    studentList = studentListNew;
+                if (schoolList == null) {
+                    schoolList = schoolListNew;
                 }
             }
         }
-        return studentList;
+        return schoolList;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 1628625923)
-    public synchronized void resetStudentList() {
-        studentList = null;
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1757777300)
+    public synchronized void resetSchoolList() {
+        schoolList = null;
     }
 
     /**

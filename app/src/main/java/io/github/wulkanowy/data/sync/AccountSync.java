@@ -17,6 +17,8 @@ import io.github.wulkanowy.data.db.dao.entities.DaoMaster;
 import io.github.wulkanowy.data.db.dao.entities.DaoSession;
 import io.github.wulkanowy.data.db.dao.entities.Diary;
 import io.github.wulkanowy.data.db.dao.entities.DiaryDao;
+import io.github.wulkanowy.data.db.dao.entities.School;
+import io.github.wulkanowy.data.db.dao.entities.SchoolDao;
 import io.github.wulkanowy.data.db.dao.entities.Semester;
 import io.github.wulkanowy.data.db.dao.entities.Student;
 import io.github.wulkanowy.data.db.dao.entities.StudentDao;
@@ -57,12 +59,15 @@ public class AccountSync {
 
         daoSession.getDatabase().beginTransaction();
 
+        Timber.i("Register start");
+
         try {
             Account account = insertAccount(email, password);
             Symbol symbolEntity = insertSymbol(account);
-            insertStudents(symbolEntity);
-            insertDiaries(symbolEntity);
-            insertSemesters();
+            School schoolEntity = insertSchools(symbolEntity);
+            Student student = insertStudents(schoolEntity);
+            Diary diary = insertDiaries(student);
+            insertSemesters(diary);
 
             sharedPref.setCurrentUserId(account.getId());
 
@@ -70,6 +75,8 @@ public class AccountSync {
         } finally {
             daoSession.getDatabase().endTransaction();
         }
+
+        Timber.i("Register end");
     }
 
     private Account insertAccount(String email, String password) throws CryptoException {
@@ -82,44 +89,64 @@ public class AccountSync {
     }
 
     private Symbol insertSymbol(Account account) throws VulcanException, IOException {
-        String schoolId = vulcan.getStudentAndParent().getSchoolID();
-        Timber.d("Register symbol %s", vulcan.getSymbol());
+        vulcan.getSchools();
+        Timber.d("Register symbol (%s)", vulcan.getSymbol());
         Symbol symbol = new Symbol()
                 .setUserId(account.getId())
-                .setSchoolId(schoolId)
                 .setSymbol(vulcan.getSymbol());
         daoSession.getSymbolDao().insert(symbol);
 
         return symbol;
     }
 
-    private void insertStudents(Symbol symbol) throws VulcanException, IOException {
-        List<Student> studentList = DataObjectConverter.studentsToStudentEntities(
-                vulcan.getStudentAndParent().getStudents(),
+    private School insertSchools(Symbol symbol) throws VulcanException, IOException {
+        List<School> schoolList = DataObjectConverter.schoolsToSchoolsEntities(
+                vulcan.getSchools(),
                 symbol.getId()
         );
-        Timber.d("Register students %s", studentList.size());
-        daoSession.getStudentDao().insertInTx(studentList);
+        Timber.d("Register schools (%s)", schoolList.size());
+        daoSession.getSchoolDao().insertInTx(schoolList);
+
+        return daoSession.getSchoolDao().queryBuilder().where(
+                SchoolDao.Properties.SymbolId.eq(symbol.getId()),
+                SchoolDao.Properties.Current.eq(true)
+        ).unique();
     }
 
-    private void insertDiaries(Symbol symbolEntity) throws VulcanException, IOException {
+    private Student insertStudents(School school) throws VulcanException, IOException {
+        List<Student> studentList = DataObjectConverter.studentsToStudentEntities(
+                vulcan.getStudentAndParent().getStudents(),
+                school.getId()
+        );
+        Timber.d("Register students (%s)", studentList.size());
+        daoSession.getStudentDao().insertInTx(studentList);
+
+        return daoSession.getStudentDao().queryBuilder().where(
+                StudentDao.Properties.SchoolId.eq(school.getId()),
+                StudentDao.Properties.Current.eq(true)
+        ).unique();
+    }
+
+    private Diary insertDiaries(Student student) throws VulcanException, IOException {
         List<Diary> diaryList = DataObjectConverter.diariesToDiaryEntities(
                 vulcan.getStudentAndParent().getDiaries(),
-                daoSession.getStudentDao().queryBuilder().where(
-                        StudentDao.Properties.SymbolId.eq(symbolEntity.getId()),
-                        StudentDao.Properties.Current.eq(true)
-                ).unique().getId());
-        Timber.d("Register diaries %s", diaryList.size());
+                student.getId()
+        );
+        Timber.d("Register diaries (%s)", diaryList.size());
         daoSession.getDiaryDao().insertInTx(diaryList);
+
+        return daoSession.getDiaryDao().queryBuilder().where(
+                DiaryDao.Properties.StudentId.eq(student.getId()),
+                DiaryDao.Properties.Current.eq(true)
+        ).unique();
     }
 
-    private void insertSemesters() throws VulcanException, IOException {
+    private void insertSemesters(Diary diary) throws VulcanException, IOException {
         List<Semester> semesterList = DataObjectConverter.semestersToSemesterEntities(
                 vulcan.getStudentAndParent().getSemesters(),
-                daoSession.getDiaryDao().queryBuilder().where(
-                        DiaryDao.Properties.Current.eq(true)
-                ).unique().getId());
-        Timber.d("Register semesters %s", semesterList.size());
+                diary.getId()
+        );
+        Timber.d("Register semesters (%s)", semesterList.size());
         daoSession.getSemesterDao().insertInTx(semesterList);
     }
 
@@ -138,8 +165,11 @@ public class AccountSync {
         Symbol symbol = daoSession.getSymbolDao().queryBuilder().where(
                 SymbolDao.Properties.UserId.eq(account.getId())).unique();
 
+        School school = daoSession.getSchoolDao().queryBuilder().where(
+                SchoolDao.Properties.SymbolId.eq(symbol.getId())).unique();
+
         Student student = daoSession.getStudentDao().queryBuilder().where(
-                StudentDao.Properties.SymbolId.eq(symbol.getId()),
+                StudentDao.Properties.SchoolId.eq(school.getId()),
                 StudentDao.Properties.Current.eq(true)
         ).unique();
 
@@ -152,7 +182,7 @@ public class AccountSync {
                 account.getEmail(),
                 Scrambler.decrypt(account.getEmail(), account.getPassword()),
                 symbol.getSymbol(),
-                symbol.getSchoolId(),
+                school.getRealId(),
                 student.getRealId(),
                 diary.getValue()
         );

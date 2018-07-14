@@ -13,8 +13,6 @@ import io.github.wulkanowy.api.generic.Student;
 
 public interface SnP {
 
-    String getSchoolID();
-
     void setDiaryID(String id);
 
     String getStudentID();

@@ -17,6 +17,8 @@ public interface DbContract {
 
     List<Grade> getNewGrades(int semesterName);
 
+    long getCurrentSchoolId();
+
     long getCurrentStudentId();
 
     long getCurrentSymbolId();

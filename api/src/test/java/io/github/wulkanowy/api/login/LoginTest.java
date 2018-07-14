@@ -38,9 +38,11 @@ public class LoginTest {
                 .thenReturn(getFixtureAsDocument("Logowanie-certyfikat.html"));
         Mockito.doCallRealMethod().when(client).setSymbol(Mockito.anyString());
         Mockito.when(client.getSymbol()).thenCallRealMethod();
+        Mockito.when(client.getHost()).thenReturn("fakelog.cf");
         Login login = new Login(client);
+        login.login("a@a", "pswd", "d123");
 
-        Assert.assertEquals("d123", login.login("a@a", "pswd", "d123"));
+        Assert.assertEquals("d123", client.getSymbol());
     }
 
     @Test(expected = BadCredentialsException.class)
@@ -74,10 +76,12 @@ public class LoginTest {
         Client client = getClient("Logowanie-success.html");
         Mockito.doCallRealMethod().when(client).setSymbol(Mockito.anyString());
         Mockito.when(client.getSymbol()).thenCallRealMethod();
+        Mockito.when(client.getHost()).thenReturn("fakelog.cf");
         Login login = new Login(client);
 
-        Assert.assertEquals("wulkanowyschool321", login.sendCertificate(
-                getFixtureAsDocument("Logowanie-certyfikat.html"), "wulkanowyschool321"));
+        login.sendCertificate(getFixtureAsDocument("Logowanie-certyfikat.html"), "wulkanowyschool321");
+
+        Assert.assertEquals("wulkanowyschool321", client.getSymbol());
     }
 
     @Test
@@ -85,10 +89,12 @@ public class LoginTest {
         Client client = getClient("Logowanie-success.html");
         Mockito.doCallRealMethod().when(client).setSymbol(Mockito.anyString());
         Mockito.when(client.getSymbol()).thenCallRealMethod();
+        Mockito.when(client.getHost()).thenReturn("fakelog.cf");
         Login login = new Login(client);
 
-        Assert.assertEquals("demo12345",
-                login.sendCertificate(getFixtureAsDocument("Logowanie-certyfikat.html"), "Default"));
+        login.sendCertificate(getFixtureAsDocument("Logowanie-certyfikat.html"), "Default");
+
+        Assert.assertEquals("demo12345", client.getSymbol());
     }
 
     @Test(expected = AccountPermissionException.class)
