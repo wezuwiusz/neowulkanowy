@@ -10,9 +10,11 @@ import javax.inject.Inject;
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.ui.base.BasePresenter;
 import io.github.wulkanowy.ui.main.OnFragmentIsReadyListener;
-import io.github.wulkanowy.utils.TimeUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
+
+import static io.github.wulkanowy.utils.TimeUtilsKt.getFirstDayOfCurrentWeek;
+import static io.github.wulkanowy.utils.TimeUtilsKt.getMondaysFromCurrentSchoolYear;
 
 public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
         implements AttendanceContract.Presenter, AsyncListeners.OnFirstLoadingListener {
@@ -42,11 +44,11 @@ public class AttendancePresenter extends BasePresenter<AttendanceContract.View>
         }
 
         if (dates.isEmpty()) {
-            dates = TimeUtils.getMondaysFromCurrentSchoolYear();
+            dates = getMondaysFromCurrentSchoolYear();
         }
 
         if (positionToScroll == 0) {
-            positionToScroll = dates.indexOf(TimeUtils.getDateOfCurrentMonday(true));
+            positionToScroll = dates.indexOf(getFirstDayOfCurrentWeek());
         }
 
         if (!isFirstSight) {

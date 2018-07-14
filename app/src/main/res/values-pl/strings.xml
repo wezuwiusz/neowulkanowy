@@ -136,6 +136,7 @@
 
     <string name="pref_services_header">Usługi</string>
     <string name="pref_services_switch">Włącz odświeżanie danych w tle</string>
+    <string name="pref_services_suspended_on_holidays">Zawieszone na wakacjach</string>
     <string name="pref_services_interval">Interwał między odświeżaniem danych</string>
     <string name="pref_services_mobile_data">Synchronizacja tylko przez WiFi</string>
 

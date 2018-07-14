@@ -16,9 +16,11 @@ import io.github.wulkanowy.data.db.dao.entities.Week;
 import io.github.wulkanowy.ui.base.BasePresenter;
 import io.github.wulkanowy.utils.AppConstant;
 import io.github.wulkanowy.utils.FabricUtils;
-import io.github.wulkanowy.utils.TimeUtils;
 import io.github.wulkanowy.utils.async.AbstractTask;
 import io.github.wulkanowy.utils.async.AsyncListeners;
+
+import static io.github.wulkanowy.utils.TimeUtilsKt.getParsedDate;
+import static io.github.wulkanowy.utils.TimeUtilsKt.isDateInWeek;
 
 public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.View>
         implements TimetableTabContract.Presenter, AsyncListeners.OnRefreshListener,
@@ -162,9 +164,9 @@ public class TimetableTabPresenter extends BasePresenter<TimetableTabContract.Vi
     }
 
     private void expandCurrentDayHeader() {
-        LocalDate monday = TimeUtils.getParsedDate(date, AppConstant.DATE_PATTERN);
+        LocalDate monday = getParsedDate(date, AppConstant.DATE_PATTERN);
 
-        if (TimeUtils.isDateInWeek(monday, LocalDate.now()) && !isFirstSight) {
+        if (isDateInWeek(monday, LocalDate.now()) && !isFirstSight) {
             getView().expandItem(LocalDate.now().getDayOfWeek().getValue() - 1);
         }
     }

@@ -87,11 +87,8 @@ jobs:
           name: Upload unit code coverage to codecov
           command: bash <(curl -s https://codecov.io/bash) -F app
       - store_artifacts:
-          path: ./app/build/reports/tests/
-          destination: tests_reports/
-      - store_artifacts:
-          path: ./app/build/reports/jacoco/jacocoTestDebugUnitTestReport/
-          destination: coverage_reports/
+          path: ./app/build/reports/
+          destination: reports/
       - store_test_results:
           path: ./app/build/test-results
       - persist_to_workspace:
@@ -112,11 +109,8 @@ jobs:
           name: Upload code coverage to codecov
           command: bash <(curl -s https://codecov.io/bash) -F api
       - store_artifacts:
-          path: ./api/build/reports/tests/
-          destination: tests_reports/
-      - store_artifacts:
-          path: ./api/build/reports/jacoco/test/
-          destination: coverage_reports/
+          path: ./api/build/reports/
+          destination: reports/
       - store_test_results:
           path: ./api/build/test-results
       - persist_to_workspace:
@@ -130,7 +124,7 @@ jobs:
       - *attach_workspace
       - run:
           name: Setup emulator
-          command: sdkmanager "system-images;android-19;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-19;google_apis;armeabi-v7a"
+          command: sdkmanager "system-images;android-16;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-16;default;armeabi-v7a"
       - run:
           name: Launch emulator
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on

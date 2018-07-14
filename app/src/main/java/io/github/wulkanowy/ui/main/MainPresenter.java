@@ -1,12 +1,13 @@
 package io.github.wulkanowy.ui.main;
 
-
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.ui.base.BasePresenter;
+
+import static io.github.wulkanowy.utils.TimeUtilsKt.isHolidays;
 
 public class MainPresenter extends BasePresenter<MainContract.View>
         implements MainContract.Presenter {
@@ -35,7 +36,7 @@ public class MainPresenter extends BasePresenter<MainContract.View>
         getView().initiationBottomNav(tabPosition);
         getView().initiationViewPager(tabPosition);
 
-        if (getRepository().getSharedRepo().isServicesEnable()) {
+        if (getRepository().getSharedRepo().isServicesEnable() && !isHolidays()) {
             getView().startSyncService(getRepository().getSharedRepo().getServicesInterval(),
                     getRepository().getSharedRepo().isMobileDisable());
         }

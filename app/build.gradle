@@ -17,11 +17,13 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt' // sync warning probably caused by bug https://issuetracker.google.com/issues/74537216
 apply plugin: 'io.fabric'
-apply from: '../jacoco.gradle'
-apply from: '../android-sonarqube.gradle'
+apply from: 'jacoco.gradle'
+apply from: 'android-sonarqube.gradle'
 apply plugin: 'com.google.gms.oss.licenses.plugin'
 apply plugin: 'com.github.triplet.play'
 
@@ -128,12 +130,12 @@ dependencies {
         transitive = true
     }
 
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2"
+    kapt "com.jakewharton:butterknife-compiler:$butterknife"
 
     debugImplementation "com.amitshekhar.android:debug-db:$debugDb"
-    debugImplementation "net.zetetic:android-database-sqlcipher:$sqlcipher"
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"

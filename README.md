@@ -10,6 +10,6 @@
 
 [Pobierz wersję beta](https://play.google.com/store/apps/details?id=io.github.wulkanowy&amp;utm_source=vcs)
 
-[Pobierz wersję rozwojową](https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/master/artifacts/app-debug-bitrise-signed.apk)
+[Pobierz wersję DEV](https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/master/artifacts/0)
 
 Androidowy klient dziennika VULCAN UONET+.

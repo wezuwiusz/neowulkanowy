@@ -30,6 +30,8 @@ import io.github.wulkanowy.ui.main.MainActivity;
 import io.github.wulkanowy.utils.FabricUtils;
 import timber.log.Timber;
 
+import static io.github.wulkanowy.utils.TimeUtilsKt.isHolidays;
+
 public class SyncJob extends SimpleJobService {
 
     public static final String JOB_TAG = "SyncJob";
@@ -66,6 +68,12 @@ public class SyncJob extends SimpleJobService {
 
     @Override
     public int onRunJob(JobParameters job) {
+        if (isHolidays()) {
+            stop(getApplicationContext());
+
+            return JobService.RESULT_FAIL_NORETRY;
+        }
+
         try {
             repository.getSyncRepo().initLastUser();
             repository.getSyncRepo().syncAll();

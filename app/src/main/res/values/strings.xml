@@ -132,6 +132,7 @@
 
     <string name="pref_services_header">Services</string>
     <string name="pref_services_switch">Enable background data refreshing</string>
+    <string name="pref_services_suspended_on_holidays">Suspended on holidays</string>
     <string name="pref_services_interval">Interval between data refreshing</string>
     <string name="pref_services_mobile_data">Synchronization via WiFi only</string>
 

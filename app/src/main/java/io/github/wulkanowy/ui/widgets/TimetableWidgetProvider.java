@@ -16,7 +16,8 @@ import io.github.wulkanowy.R;
 import io.github.wulkanowy.data.RepositoryContract;
 import io.github.wulkanowy.services.widgets.TimetableWidgetServices;
 import io.github.wulkanowy.ui.main.MainActivity;
-import io.github.wulkanowy.utils.TimeUtils;
+
+import static io.github.wulkanowy.utils.TimeUtilsKt.getTodayOrNextDay;
 
 public class TimetableWidgetProvider extends AppWidgetProvider {
 
@@ -95,7 +96,7 @@ public class TimetableWidgetProvider extends AppWidgetProvider {
                 : R.string.widget_timetable_today);
 
         views.setTextViewText(R.id.timetable_widget_toggle, toggleText);
-        views.setTextViewText(R.id.timetable_widget_date, TimeUtils.getTodayOrNextDay(nextDay));
+        views.setTextViewText(R.id.timetable_widget_date, getTodayOrNextDay(nextDay));
     }
 
     private void updateWidget(RemoteViews views, AppWidgetManager appWidgetManager, int appWidgetId) {
