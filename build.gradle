@@ -36,13 +36,12 @@ subprojects {
 ext {
     GROUP_ID = "io.github.wulkanowy"
 
-    supportVersion = "26.1.0"
-    flexibleAdapter = "5.0.2"
-    flexibleUi = "1.0.0-b2"
-
+    supportVersion = "27.1.1"
+    flexibleAdapter = "5.0.5"
+    flexibleUi = "1.0.0-b5"
     firebaseJob = "0.8.5"
     apacheLang = "3.7"
-    apacheCollections = "4.1"
+    apacheCollections = "4.2"
     greenDao = "3.2.2"
     greenDaoHelper = "v2.0.2"
     greenDaoGradle = "3.2.2"
@@ -52,8 +51,7 @@ ext {
     ahbottom = "2.2.0"
     jsoup = "1.11.3"
     gson = "2.8.5"
-    ossLicenses = "15.0.1"
-
+    ossLicenses = "16.0.0"
     slf4jApi = "1.7.25"
     slf4jTimber = "1.0.1"
     timber = "4.7.1"
@@ -61,7 +59,7 @@ ext {
     debugDb = "1.0.4"
 
     junit = "4.12"
-    mockito = "2.19.0"
+    mockito = "2.19.1"
     testRunner = "1.0.2"
 
     fabricGradle = "1.25.4"

@@ -5,7 +5,7 @@ sonarqube {
     //noinspection GroovyAssignabilityCheck
     properties {
         def files = fileTree("${rootProject.projectDir}/api/build/libs/").filter { it.isFile() }.files.name
-        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-26/android.jar," +
+        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-27/android.jar," +
                 "${project.rootDir}/api/build/libs/" + files[0]
 
         property "sonar.projectName", GROUP_ID + ":app"
