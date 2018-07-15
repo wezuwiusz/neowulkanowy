@@ -43,8 +43,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 15
-        versionName "0.5.1"
+        versionCode 16
+        versionName "0.5.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         playAccountConfig = playAccountConfigs.defaultAccountConfig
