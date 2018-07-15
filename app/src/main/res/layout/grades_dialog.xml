@@ -83,7 +83,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/grade_dialog_description_value"
                 android:layout_marginTop="10dp"
-                android:text="@string/dialog_weight_text"
+                android:text="@string/grade_weight_text"
                 android:textSize="17sp" />
 
             <TextView

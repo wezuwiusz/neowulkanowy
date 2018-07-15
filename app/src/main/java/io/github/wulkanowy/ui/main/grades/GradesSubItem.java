@@ -88,6 +88,9 @@ public class GradesSubItem
         @BindView(R.id.grade_subitem_date)
         TextView date;
 
+        @BindView(R.id.grade_subitem_weight)
+        TextView weight;
+
         @BindView(R.id.grade_subitem_alert_image)
         View alert;
 
@@ -110,8 +113,9 @@ public class GradesSubItem
 
             value.setText(item.getValue());
             value.setBackgroundResource(GradeUtils.getValueColor(item.getValue()));
-            date.setText(item.getDate());
             description.setText(getDescriptionString());
+            date.setText(item.getDate());
+            weight.setText(String.format("%s: %s", context.getResources().getString(R.string.grade_weight_text), item.getWeight()));
             alert.setVisibility(item.getRead() ? View.INVISIBLE : View.VISIBLE);
 
             if (!item.getRead()) {

@@ -46,7 +46,7 @@
     <string name="alert_dialog_blocked_app_message">For the sake of safety of personal data stored on a device with increased authorization (root), the Wulkanowy application has been blocked.</string>
 
     <string name="dialog_description_text">Description</string>
-    <string name="dialog_weight_text">Weight</string>
+    <string name="grade_weight_text">Weight</string>
     <string name="noDescription_text">No description</string>
     <string name="dialog_teacher_text">Teacher</string>
     <string name="dialog_date_text">Date</string>
