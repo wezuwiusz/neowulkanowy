@@ -49,29 +49,29 @@ public final class GradeUtils {
     public static int getValueColor(String value) {
         Matcher m1 = validGradePattern.matcher(value);
         if (!m1.find()) {
-            return R.color.default_grade;
+            return R.color.grade_default;
         }
 
         Matcher m2 = simpleGradeValuePattern.matcher(m1.group());
         if (!m2.find()) {
-            return R.color.default_grade;
+            return R.color.grade_default;
         }
 
         switch (Integer.parseInt(m2.group())) {
             case 6:
-                return R.color.six_grade;
+                return R.color.grade_six;
             case 5:
-                return R.color.five_grade;
+                return R.color.grade_five;
             case 4:
-                return R.color.four_grade;
+                return R.color.grade_four;
             case 3:
-                return R.color.three_grade;
+                return R.color.grade_three;
             case 2:
-                return R.color.two_grade;
+                return R.color.grade_two;
             case 1:
-                return R.color.one_grade;
+                return R.color.grade_one;
             default:
-                return R.color.default_grade;
+                return R.color.grade_default;
         }
     }
 

@@ -62,18 +62,18 @@ public class GradeUtilsTest {
 
     @Test
     public void getValueColorTest() {
-        assertEquals(R.color.six_grade, GradeUtils.getValueColor("-6"));
-        assertEquals(R.color.five_grade, GradeUtils.getValueColor("--5"));
-        assertEquals(R.color.four_grade, GradeUtils.getValueColor("=4"));
-        assertEquals(R.color.three_grade, GradeUtils.getValueColor("3-"));
-        assertEquals(R.color.two_grade, GradeUtils.getValueColor("2--"));
-        assertEquals(R.color.two_grade, GradeUtils.getValueColor("2="));
-        assertEquals(R.color.one_grade, GradeUtils.getValueColor("1+"));
-        assertEquals(R.color.one_grade, GradeUtils.getValueColor("+1"));
-        assertEquals(R.color.default_grade, GradeUtils.getValueColor("6 (.XI)"));
-        assertEquals(R.color.default_grade, GradeUtils.getValueColor("Np"));
-        assertEquals(R.color.default_grade, GradeUtils.getValueColor("7"));
-        assertEquals(R.color.default_grade, GradeUtils.getValueColor(""));
+        assertEquals(R.color.grade_six, GradeUtils.getValueColor("-6"));
+        assertEquals(R.color.grade_five, GradeUtils.getValueColor("--5"));
+        assertEquals(R.color.grade_four, GradeUtils.getValueColor("=4"));
+        assertEquals(R.color.grade_three, GradeUtils.getValueColor("3-"));
+        assertEquals(R.color.grade_two, GradeUtils.getValueColor("2--"));
+        assertEquals(R.color.grade_two, GradeUtils.getValueColor("2="));
+        assertEquals(R.color.grade_one, GradeUtils.getValueColor("1+"));
+        assertEquals(R.color.grade_one, GradeUtils.getValueColor("+1"));
+        assertEquals(R.color.grade_default, GradeUtils.getValueColor("6 (.XI)"));
+        assertEquals(R.color.grade_default, GradeUtils.getValueColor("Np"));
+        assertEquals(R.color.grade_default, GradeUtils.getValueColor("7"));
+        assertEquals(R.color.grade_default, GradeUtils.getValueColor(""));
     }
 
     @Test

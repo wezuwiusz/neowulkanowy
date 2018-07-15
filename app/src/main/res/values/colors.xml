@@ -4,13 +4,15 @@
     <color name="colorPrimaryDark">#9a0007</color>
     <color name="colorPrimaryLight">#ff6659</color>
     <color name="colorBackgroundBottomNav">#f0f0f0</color>
-    <color name="six_grade">#92b53d</color>
-    <color name="five_grade">#66B266</color>
-    <color name="four_grade">#55BBDB</color>
-    <color name="three_grade">#FFE68C</color>
-    <color name="two_grade">#CE9AD2</color>
-    <color name="one_grade">#d32f2f</color>
-    <color name="default_grade">#cdcdcd</color>
+
+    <color name="grade_text">#ffffff</color>
+    <color name="grade_six">#91b43c</color>
+    <color name="grade_five">#2cbd92</color>
+    <color name="grade_four">#50b6d6</color>
+    <color name="grade_three">#d2ab24</color>
+    <color name="grade_two">#9071b3</color>
+    <color name="grade_one">#d65757</color>
+    <color name="grade_default">#3d5f9c</color>
 
     <color name="secondary_text">#4c4c4c</color>
     <color name="second_text_color">#333</color>
