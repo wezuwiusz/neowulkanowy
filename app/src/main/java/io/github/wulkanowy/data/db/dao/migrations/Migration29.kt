@@ -32,7 +32,7 @@ class Migration29 : DbHelper.Migration {
 
     private fun modifyStudents(db: Database) {
         db.execSQL("ALTER TABLE Students ADD COLUMN school_id INTEGER")
-        db.execSQL("UPDATE Students SET (school_id) = ('1')")
+        db.execSQL("UPDATE Students SET school_id = '1'")
     }
 
     private fun getRealSchoolId(db: Database): String {
