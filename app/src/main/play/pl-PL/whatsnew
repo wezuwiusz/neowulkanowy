@@ -1,8 +1,5 @@
-Wersja 0.5.0:
-- dodano podsumowanie ocen z przedmiotów
-- dodano ciemny motyw (wczesna wersja)
-- otwieranie aktualnego dnia w planie lekcji
-- ukrywanie górnego paska przy przewijaniu
-- naprawa wyświetlania zastępstw w widgecie
-- poprawa wyświetlania końcowych ocen
-- poprawa pierwsze logowania
+Wersja 0.5.1:
+- dodano wagę ocen na liście
+- naprawiono błędy podczas logowania
+- zmieniono nasycenie kolorów ocen
+- wyłączenie synchronizacji podczas wakacji
