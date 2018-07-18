@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.wulkanowy"
-
     android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -36,8 +35,7 @@
             android:name=".ui.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_dashboard_text"
-            android:launchMode="singleTop"
-            />
+            android:launchMode="singleTop" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/WulkanowyTheme.DarkActionBar" />

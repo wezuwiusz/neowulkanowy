@@ -26,8 +26,8 @@ import io.github.wulkanowy.data.db.dao.entities.Symbol;
 import io.github.wulkanowy.data.db.dao.entities.SymbolDao;
 import io.github.wulkanowy.data.db.shared.SharedPrefContract;
 import io.github.wulkanowy.utils.DataObjectConverter;
-import io.github.wulkanowy.utils.security.CryptoException;
 import io.github.wulkanowy.utils.security.Scrambler;
+import io.github.wulkanowy.utils.security.ScramblerException;
 import timber.log.Timber;
 
 @Singleton
@@ -51,7 +51,7 @@ public class AccountSync {
     }
 
     public void registerUser(String email, String password, String symbol)
-            throws VulcanException, IOException, CryptoException {
+            throws VulcanException, IOException, ScramblerException {
 
         clearUserData();
 
@@ -79,11 +79,11 @@ public class AccountSync {
         Timber.i("Register end");
     }
 
-    private Account insertAccount(String email, String password) throws CryptoException {
+    private Account insertAccount(String email, String password) throws ScramblerException {
         Timber.d("Register account");
         Account account = new Account()
                 .setEmail(email)
-                .setPassword(Scrambler.encrypt(email, password, context));
+                .setPassword(Scrambler.encrypt(password, context));
         daoSession.getAccountDao().insert(account);
         return account;
     }
@@ -150,7 +150,7 @@ public class AccountSync {
         daoSession.getSemesterDao().insertInTx(semesterList);
     }
 
-    public void initLastUser() throws CryptoException {
+    public void initLastUser() throws ScramblerException {
 
         long userId = sharedPref.getCurrentUserId();
 
@@ -180,7 +180,7 @@ public class AccountSync {
 
         vulcan.setCredentials(
                 account.getEmail(),
-                Scrambler.decrypt(account.getEmail(), account.getPassword()),
+                Scrambler.decrypt(account.getPassword()),
                 symbol.getSymbol(),
                 school.getRealId(),
                 student.getRealId(),

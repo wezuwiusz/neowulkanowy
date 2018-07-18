@@ -14,7 +14,6 @@ import io.github.wulkanowy.R;
 import io.github.wulkanowy.api.NotLoggedInErrorException;
 import io.github.wulkanowy.data.db.dao.entities.AttendanceLesson;
 import io.github.wulkanowy.utils.AppConstant;
-import io.github.wulkanowy.utils.security.CryptoException;
 import timber.log.Timber;
 
 @Singleton
@@ -39,11 +38,9 @@ public class ResourcesRepository implements ResourcesContract {
 
     @Override
     public String getErrorLoginMessage(Exception exception) {
-        Timber.e(exception,"%s encountered a error", AppConstant.APP_NAME);
+        Timber.e(exception, "%s encountered a error", AppConstant.APP_NAME);
 
-        if (exception instanceof CryptoException) {
-            return resources.getString(R.string.encrypt_failed_text);
-        } else if (exception instanceof UnknownHostException) {
+        if (exception instanceof UnknownHostException) {
             return resources.getString(R.string.noInternet_text);
         } else if (exception instanceof SocketTimeoutException) {
             return resources.getString(R.string.generic_timeout_error);

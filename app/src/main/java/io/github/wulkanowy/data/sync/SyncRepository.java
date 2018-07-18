@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 
 import io.github.wulkanowy.api.VulcanException;
 import io.github.wulkanowy.data.db.dao.DbContract;
-import io.github.wulkanowy.utils.security.CryptoException;
+import io.github.wulkanowy.utils.security.ScramblerException;
 
 @Singleton
 public class SyncRepository implements SyncContract {
@@ -41,12 +41,12 @@ public class SyncRepository implements SyncContract {
 
     @Override
     public void registerUser(String email, String password, String symbol) throws VulcanException,
-            IOException, CryptoException {
+            IOException, ScramblerException {
         accountSync.registerUser(email, password, symbol);
     }
 
     @Override
-    public void initLastUser() throws CryptoException {
+    public void initLastUser() throws ScramblerException {
         accountSync.initLastUser();
     }
 

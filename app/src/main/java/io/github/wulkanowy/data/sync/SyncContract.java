@@ -6,15 +6,16 @@ import java.text.ParseException;
 import javax.inject.Singleton;
 
 import io.github.wulkanowy.api.VulcanException;
-import io.github.wulkanowy.utils.security.CryptoException;
+import io.github.wulkanowy.utils.security.ScramblerException;
 
 @Singleton
 public interface SyncContract {
 
     void registerUser(String email, String password, String symbol) throws VulcanException,
-            IOException, CryptoException;
+            IOException, ScramblerException;
 
-    void initLastUser() throws IOException, CryptoException;
+    void initLastUser() throws IOException, ScramblerException;
+
 
     void syncGrades(int semesterName) throws VulcanException, IOException, ParseException;
 

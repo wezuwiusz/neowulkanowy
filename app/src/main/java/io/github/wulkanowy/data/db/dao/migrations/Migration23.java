@@ -30,7 +30,7 @@ public class Migration23 implements DbHelper.Migration {
         final Map<String, String> user = getAccountData(db);
         vulcan.setCredentials(
                 user.get("email"),
-                Scrambler.decrypt(user.get("email"), user.get("password")),
+                Scrambler.decrypt(user.get("password")),
                 user.get("symbol"),
                 user.get("school_id"),
                 "", // inserted in code bellow

@@ -141,4 +141,5 @@ dependencies {
 
     androidTestImplementation "com.android.support.test:runner:$testRunner"
     androidTestImplementation "org.mockito:mockito-android:$mockito"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
