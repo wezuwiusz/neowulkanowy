@@ -16,6 +16,7 @@ import io.github.wulkanowy.api.generic.Week;
 import static io.github.wulkanowy.api.DateTimeUtilsKt.getDateAsTick;
 import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
 
+@Deprecated
 public class ExamsWeek {
 
     private static final String EXAMS_PAGE_URL = "Sprawdziany.mvc/Terminarz?rodzajWidoku=2&data=";

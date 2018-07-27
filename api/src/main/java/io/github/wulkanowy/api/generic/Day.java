@@ -3,6 +3,7 @@ package io.github.wulkanowy.api.generic;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class Day {
 
     private List<Lesson> lessons = new ArrayList<>();

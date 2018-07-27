@@ -1,5 +1,6 @@
 package io.github.wulkanowy.api.attendance;
 
+@Deprecated
 class LessonTypes {
 
     static final String CLASS_NOT_EXIST = "x-sp-nieobecny-w-oddziale";

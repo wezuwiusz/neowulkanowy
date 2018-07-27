@@ -11,6 +11,7 @@ import java.util.List;
 import io.github.wulkanowy.api.SnP;
 import io.github.wulkanowy.api.VulcanException;
 
+@Deprecated
 public class SubjectsList {
 
     private static final String SUBJECTS_PAGE_URL = "Oceny/Wszystkie?details=1&okres=";

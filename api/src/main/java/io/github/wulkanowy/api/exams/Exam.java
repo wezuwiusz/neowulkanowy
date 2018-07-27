@@ -1,5 +1,6 @@
 package io.github.wulkanowy.api.exams;
 
+@Deprecated
 public class Exam {
 
     private String subjectAndGroup = "";

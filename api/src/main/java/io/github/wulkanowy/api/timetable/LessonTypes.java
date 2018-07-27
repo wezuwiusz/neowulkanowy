@@ -1,5 +1,6 @@
 package io.github.wulkanowy.api.timetable;
 
+@Deprecated
 class LessonTypes {
 
     static final String CLASS_PLANNING = "x-treelabel-ppl";

@@ -2,6 +2,7 @@ package io.github.wulkanowy.api.timetable;
 
 import io.github.wulkanowy.api.generic.Day;
 
+@Deprecated
 public class TimetableDay extends Day {
 
     private boolean isFreeDay = false;

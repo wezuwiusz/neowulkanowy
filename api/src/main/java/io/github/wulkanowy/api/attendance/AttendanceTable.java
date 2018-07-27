@@ -16,6 +16,7 @@ import io.github.wulkanowy.api.generic.Week;
 import static io.github.wulkanowy.api.DateTimeUtilsKt.getDateAsTick;
 import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
 
+@Deprecated
 public class AttendanceTable {
 
     private final static String ATTENDANCE_PAGE_URL = "Frekwencja.mvc?data=";

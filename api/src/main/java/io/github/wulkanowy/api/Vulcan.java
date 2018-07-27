@@ -6,12 +6,20 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.List;
 
+import io.github.wulkanowy.api.attendance.Attendance;
+import io.github.wulkanowy.api.attendance.AttendanceLesson;
 import io.github.wulkanowy.api.attendance.AttendanceStatistics;
 import io.github.wulkanowy.api.attendance.AttendanceTable;
+import io.github.wulkanowy.api.exams.ExamEntry;
+import io.github.wulkanowy.api.exams.Exams;
 import io.github.wulkanowy.api.exams.ExamsWeek;
 import io.github.wulkanowy.api.generic.School;
+import io.github.wulkanowy.api.grades.GradeKt;
+import io.github.wulkanowy.api.grades.Grades;
 import io.github.wulkanowy.api.grades.GradesList;
+import io.github.wulkanowy.api.grades.GradesSummary;
 import io.github.wulkanowy.api.grades.SubjectsList;
+import io.github.wulkanowy.api.grades.Summary;
 import io.github.wulkanowy.api.messages.Messages;
 import io.github.wulkanowy.api.mobile.RegisterDevice;
 import io.github.wulkanowy.api.mobile.RegisteredDevices;
@@ -20,6 +28,8 @@ import io.github.wulkanowy.api.notes.NotesList;
 import io.github.wulkanowy.api.school.SchoolInfo;
 import io.github.wulkanowy.api.school.TeachersInfo;
 import io.github.wulkanowy.api.timetable.Timetable;
+import io.github.wulkanowy.api.timetable.TimetableKt;
+import io.github.wulkanowy.api.timetable.TimetableLesson;
 import io.github.wulkanowy.api.user.BasicInformation;
 import io.github.wulkanowy.api.user.FamilyInformation;
 
@@ -71,6 +81,11 @@ public class Vulcan {
         return this.snp;
     }
 
+    public List<AttendanceLesson> getAttendance(String dateStart) throws VulcanException, IOException {
+        return new Attendance(getStudentAndParent()).getAttendance(dateStart);
+    }
+
+    @Deprecated
     public AttendanceTable getAttendanceTable() throws IOException, VulcanException {
         return new AttendanceTable(getStudentAndParent());
     }
@@ -79,14 +94,29 @@ public class Vulcan {
         return new AttendanceStatistics(getStudentAndParent());
     }
 
+    public List<ExamEntry> getExams(String dateStart) throws VulcanException, IOException {
+        return new Exams(getStudentAndParent()).getExams(dateStart);
+    }
+
+    @Deprecated
     public ExamsWeek getExamsList() throws IOException, VulcanException {
         return new ExamsWeek(getStudentAndParent());
     }
 
+    public List<GradeKt> getGrades(String semester) throws VulcanException, IOException {
+        return new Grades(getStudentAndParent()).getGrades(semester);
+    }
+
+    @Deprecated
     public GradesList getGradesList() throws IOException, VulcanException {
         return new GradesList(getStudentAndParent());
     }
 
+    public List<Summary> getGradesSummary(String semester) throws VulcanException, IOException {
+        return new GradesSummary(getStudentAndParent()).getSummary(semester);
+    }
+
+    @Deprecated
     public SubjectsList getSubjectsList() throws IOException, VulcanException {
         return new SubjectsList(getStudentAndParent());
     }
@@ -107,6 +137,11 @@ public class Vulcan {
         return new TeachersInfo(getStudentAndParent());
     }
 
+    public List<TimetableLesson> getTimetable(String dateStart) throws VulcanException, IOException {
+        return new TimetableKt(getStudentAndParent()).getTimetable(dateStart);
+    }
+
+    @Deprecated
     public Timetable getTimetable() throws IOException, VulcanException {
         return new Timetable(getStudentAndParent());
     }

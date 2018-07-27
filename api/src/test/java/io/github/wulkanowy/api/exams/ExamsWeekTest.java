@@ -28,7 +28,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
     @Test
     public void getDaysListTest() throws Exception {
-        Assert.assertEquals(3, onePerDay.getCurrent().getDays().size());
+        Assert.assertEquals(5, onePerDay.getCurrent().getDays().size());
         Assert.assertEquals(7, onePerDay.getWeek("", false).getDays().size());
         Assert.assertEquals(0, empty.getCurrent().getDays().size());
     }
@@ -38,7 +38,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
         List<ExamDay> notEmpty = onePerDay.getCurrent().getDays();
         Assert.assertEquals(1, notEmpty.get(0).getExamList().size());
         Assert.assertEquals(1, notEmpty.get(1).getExamList().size());
-        Assert.assertEquals(1, notEmpty.get(2).getExamList().size());
+        Assert.assertEquals(1, notEmpty.get(4).getExamList().size());
 
         List<ExamDay> emptyToo = onePerDay.getWeek("", false).getDays();
         Assert.assertEquals(1, emptyToo.get(0).getExamList().size());
@@ -52,7 +52,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
         Assert.assertEquals("2017-10-23", dayList.get(0).getDate());
         Assert.assertEquals("2017-10-24", dayList.get(1).getDate());
-        Assert.assertEquals("2017-10-27", dayList.get(2).getDate());
+        Assert.assertEquals("2017-10-27", dayList.get(4).getDate());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
         Assert.assertEquals("Poniedziałek", dayList.get(0).getDayName());
         Assert.assertEquals("Wtorek", dayList.get(1).getDayName());
-        Assert.assertEquals("Piątek", dayList.get(2).getDayName());
+        Assert.assertEquals("Piątek", dayList.get(4).getDayName());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
         Assert.assertEquals("Sieci komputerowe 3Ti|zaw2", dayList.get(0).getExamList().get(0).getSubjectAndGroup());
         Assert.assertEquals("Język angielski 3Ti|J1", dayList.get(1).getExamList().get(0).getSubjectAndGroup());
-        Assert.assertEquals("Metodologia programowania 3Ti|zaw2", dayList.get(2).getExamList().get(0).getSubjectAndGroup());
+        Assert.assertEquals("Metodologia programowania 3Ti|zaw2", dayList.get(4).getExamList().get(0).getSubjectAndGroup());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
         Assert.assertEquals("Sprawdzian", dayList.get(0).getExamList().get(0).getType());
         Assert.assertEquals("Sprawdzian", dayList.get(1).getExamList().get(0).getType());
-        Assert.assertEquals("Sprawdzian", dayList.get(2).getExamList().get(0).getType());
+        Assert.assertEquals("Sprawdzian", dayList.get(4).getExamList().get(0).getType());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
         Assert.assertEquals("Łącza danych", dayList.get(0).getExamList().get(0).getDescription());
         Assert.assertEquals("Czasy teraźniejsze", dayList.get(1).getExamList().get(0).getDescription());
-        Assert.assertEquals("", dayList.get(2).getExamList().get(0).getDescription());
+        Assert.assertEquals("", dayList.get(4).getExamList().get(0).getDescription());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
         Assert.assertEquals("Adam Wiśniewski [AW]", dayList.get(0).getExamList().get(0).getTeacher());
         Assert.assertEquals("Natalia Nowak [NN]", dayList.get(1).getExamList().get(0).getTeacher());
-        Assert.assertEquals("Małgorzata Nowacka [MN]", dayList.get(2).getExamList().get(0).getTeacher());
+        Assert.assertEquals("Małgorzata Nowacka [MN]", dayList.get(4).getExamList().get(0).getTeacher());
     }
 
     @Test
@@ -106,6 +106,6 @@ public class ExamsWeekTest extends StudentAndParentTestCase {
 
         Assert.assertEquals("2017-10-16", dayList.get(0).getExamList().get(0).getEntryDate());
         Assert.assertEquals("2017-10-17", dayList.get(1).getExamList().get(0).getEntryDate());
-        Assert.assertEquals("2017-10-16", dayList.get(2).getExamList().get(0).getEntryDate());
+        Assert.assertEquals("2017-10-16", dayList.get(4).getExamList().get(0).getEntryDate());
     }
 }

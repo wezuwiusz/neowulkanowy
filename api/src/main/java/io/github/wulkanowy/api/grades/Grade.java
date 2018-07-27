@@ -1,5 +1,6 @@
 package io.github.wulkanowy.api.grades;
 
+@Deprecated
 public class Grade {
 
     protected String value = "";

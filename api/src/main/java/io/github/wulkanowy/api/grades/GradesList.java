@@ -15,6 +15,7 @@ import io.github.wulkanowy.api.VulcanException;
 
 import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
 
+@Deprecated
 public class GradesList {
 
     private static final String GRADES_PAGE_URL = "Oceny/Wszystkie?details=2&okres=";

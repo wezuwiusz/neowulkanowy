@@ -9,15 +9,16 @@ const val API_DATE_PATTERN = "yyyy-MM-dd"
 const val TICKS_AT_EPOCH = 621355968000000000L
 const val TICKS_PER_MILLISECOND = 10000
 
-fun getFormattedDate(date: String): String {
+fun getFormattedDate(date: String?): String {
     return getFormattedDate(date, API_DATE_PATTERN)
 }
 
-fun getFormattedDate(date: String, format: String): String {
+fun getFormattedDate(date: String?, format: String): String {
     return getFormattedDate(date, LOG_DATE_PATTERN, format)
 }
 
-fun getFormattedDate(date: String, fromFormat: String, toFormat: String): String {
+fun getFormattedDate(date: String?, fromFormat: String, toFormat: String): String {
+    if (date.isNullOrEmpty()) return ""
     val sdf = SimpleDateFormat(fromFormat, Locale.ROOT)
     val d = sdf.parse(date)
     sdf.applyPattern(toFormat)

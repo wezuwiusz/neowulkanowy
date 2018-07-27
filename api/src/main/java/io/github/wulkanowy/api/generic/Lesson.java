@@ -1,5 +1,6 @@
 package io.github.wulkanowy.api.generic;
 
+@Deprecated
 public class Lesson {
 
     private int number = 0;

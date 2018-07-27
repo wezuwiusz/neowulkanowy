@@ -18,6 +18,7 @@ import io.github.wulkanowy.api.generic.Week;
 import static io.github.wulkanowy.api.DateTimeUtilsKt.getDateAsTick;
 import static io.github.wulkanowy.api.DateTimeUtilsKt.getFormattedDate;
 
+@Deprecated
 public class Timetable {
 
     private static final String TIMETABLE_PAGE_URL = "Lekcja.mvc/PlanZajec?data=";
