@@ -20,6 +20,8 @@ import io.github.wulkanowy.api.grades.GradesList;
 import io.github.wulkanowy.api.grades.GradesSummary;
 import io.github.wulkanowy.api.grades.SubjectsList;
 import io.github.wulkanowy.api.grades.Summary;
+import io.github.wulkanowy.api.homework.Homework;
+import io.github.wulkanowy.api.homework.HomeworkList;
 import io.github.wulkanowy.api.messages.Messages;
 import io.github.wulkanowy.api.mobile.RegisterDevice;
 import io.github.wulkanowy.api.mobile.RegisteredDevices;
@@ -114,6 +116,10 @@ public class Vulcan {
 
     public List<Summary> getGradesSummary(String semester) throws VulcanException, IOException {
         return new GradesSummary(getStudentAndParent()).getSummary(semester);
+    }
+
+    public List<Homework> getHomework(String date) throws VulcanException, IOException {
+        return new HomeworkList(getStudentAndParent()).getHomework(date);
     }
 
     @Deprecated

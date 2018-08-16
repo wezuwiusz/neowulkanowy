@@ -14,7 +14,7 @@ class Exams(private val snp: SnP) {
                 .select(".mainContainer > div:not(.navigation)").map {
                     val date = getFormattedDate(it.selectFirst("h2")?.text()?.split(", ")?.last()?.trim())
 
-                    it.select("article").map { getExam(it, date) }
+                    it.select("article").mapIndexed { _, element -> getExam(element, date) }
                 }.flatten()
     }
 
