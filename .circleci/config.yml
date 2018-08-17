@@ -25,6 +25,8 @@ jobs:
   build:
     <<: *container_config
     steps:
+      - run: |
+          curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash
       - checkout
       - restore_cache:
           <<: *general_cache_key
@@ -32,20 +34,11 @@ jobs:
           name: Setup environment
           command: ./gradlew dependencies --no-daemon --stacktrace --console=plain -PdisablePreDex || true
       - run:
-          name: Decrypt keys
-          command: |
-            openssl aes-256-cbc -d -in ./app/key-encrypted.p12 -k $ENCRYPT_KEY >> ./app/key.p12
-            openssl aes-256-cbc -d -in ./app/upload-key-encrypted.jks -k $ENCRYPT_KEY >> ./app/upload-key.jks
-      - run:
           name: Initial build
-          command: ./gradlew build assembleDebug -x test -x lint -x fabricGenerateResourcesRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew build -x test -x lint -x fabricGenerateResourcesRelease -x packageRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
-          name: Clear keys
-          command: |
-            rm ./app/key.p12 ./app/upload-key.jks
-      - store_artifacts:
-          path: ./app/build/outputs/apk/
-          destination: apks/
+          name: Run FOSSA
+          command: fossa --no-ansi
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -170,7 +163,7 @@ jobs:
           command: ./gradlew jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Run sonarqube runner
-          command: ./gradlew -x test -x lint sonarqube -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$CIRCLE_BRANCH --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: "[[ -v CIRCLE_PR_NUMBER ]] && ./gradlew -x test -x lint sonarqube -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$CIRCLE_BRANCH --no-daemon --stacktrace --console=plain -PdisablePreDex || true"
 
   deploy:
     <<: *container_config
