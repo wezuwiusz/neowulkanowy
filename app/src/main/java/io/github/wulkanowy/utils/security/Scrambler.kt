@@ -49,18 +49,14 @@ object Scrambler {
 
     @JvmStatic
     fun encrypt(plainText: String, context: Context): String {
-        if (StringUtils.isEmpty(plainText)) {
-            throw ScramblerException("Text to be encrypted is empty")
-        }
+        if (plainText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
         if (SDK_INT < JELLY_BEAN_MR2) {
             return String(Base64.encode(plainText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
         }
 
-        try {
-            if (!isKeyPairExist()) {
-                generateKeyPair(context)
-            }
+        return try {
+            if (!isKeyPairExist()) generateKeyPair(context)
 
             val cipher = getCipher()
             cipher.init(ENCRYPT_MODE, getPublicKey())
@@ -70,26 +66,23 @@ object Scrambler {
             cipherOutputStream.write(plainText.toByteArray(KEY_CHARSET))
             cipherOutputStream.close()
 
-            return Base64.encodeToString(outputStream.toByteArray(), DEFAULT)
-        } catch (e: Exception) {
-            throw ScramblerException("An error occurred while encrypting text", e)
+            Base64.encodeToString(outputStream.toByteArray(), DEFAULT)
+        } catch (exception: Exception) {
+            Timber.e(exception, "An error occurred while encrypting text")
+            String(Base64.encode(plainText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
         }
 
     }
 
     @JvmStatic
     fun decrypt(cipherText: String): String {
-        if (StringUtils.isEmpty(cipherText)) {
-            throw ScramblerException("Text to be encrypted is empty")
-        }
+        if (StringUtils.isEmpty(cipherText)) throw ScramblerException("Text to be encrypted is empty")
 
-        if (SDK_INT < JELLY_BEAN_MR2) {
+        if (SDK_INT < JELLY_BEAN_MR2 || cipherText.length < 250) {
             return String(Base64.decode(cipherText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
         }
 
-        if (!isKeyPairExist()) {
-            throw ScramblerException("KeyPair doesn't exist")
-        }
+        if (!isKeyPairExist()) throw ScramblerException("KeyPair doesn't exist")
 
         try {
             val cipher = getCipher()
@@ -111,7 +104,6 @@ object Scrambler {
         } catch (e: Exception) {
             throw ScramblerException("An error occurred while decrypting text", e)
         }
-
     }
 
     private fun getKeyStoreInstance(): KeyStore {
@@ -130,11 +122,8 @@ object Scrambler {
 
 
     private fun getCipher(): Cipher {
-        if (SDK_INT >= M) {
-            return Cipher.getInstance(KEY_TRANSFORMATION_ALGORITHM, KEY_CIPHER_M_PROVIDER)
-        }
-
-        return Cipher.getInstance(KEY_TRANSFORMATION_ALGORITHM, KEY_CIPHER_JELLY_PROVIDER)
+        return if (SDK_INT >= M) Cipher.getInstance(KEY_TRANSFORMATION_ALGORITHM, KEY_CIPHER_M_PROVIDER)
+        else Cipher.getInstance(KEY_TRANSFORMATION_ALGORITHM, KEY_CIPHER_JELLY_PROVIDER)
     }
 
     @TargetApi(JELLY_BEAN_MR2)

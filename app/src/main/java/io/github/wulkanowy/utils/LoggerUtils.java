@@ -36,7 +36,7 @@ public final class LoggerUtils {
                     priority = Log.ERROR;
                 }
             }
-            super.log(priority, AppConstant.APP_NAME, message, t);
+            super.log(priority, AppConstantKt.APP_NAME, message, t);
         }
 
         @Override

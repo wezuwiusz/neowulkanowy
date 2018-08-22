@@ -3,17 +3,19 @@
 
     <!-- Strings related to login -->
     <string name="title_activity_login">Sign in</string>
-    <string name="login_heading">Sign in with VULCAN account</string>
+    <string name="login_heading">Sign in with student or parent account</string>
+    <string name="login_heading_symbol">Enter the VULCAN diary symbol</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_symbol">Symbol</string>
     <string name="action_sign_in">Sign in</string>
     <string name="step_connecting">Connecting with log</string>
-    <string name="step_login">Login</string>
-    <string name="step_synchronization">Synchronization</string>
+    <string name="step_login">Login&#8230;</string>
+    <string name="step_synchronization">Synchronization&#8230;</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_incorrect_symbol">No student found. Check the symbol</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_bad_account_permission">No permission to open log. Check another symbol</string>
     <string name="login_accepted_text">Login is successful</string>
@@ -22,6 +24,7 @@
     <string name="login_failed_text">Login is failed. Try again or restart the app</string>
     <string name="action_create_account">No account yet? Create one</string>
     <string name="action_forgot_password">Forgot password?</string>
+    <string name="login_options_header">Select student</string>
 
     <string name="color_black_text">Black</string>
     <string name="color_red_text">Red</string>

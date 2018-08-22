@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.github.wulkanowy.api.generic.School;
+import io.github.wulkanowy.api.login.AccountPermissionException;
 import io.github.wulkanowy.api.login.Login;
 
 public class Client {
@@ -30,6 +31,8 @@ public class Client {
     private String schoolId;
 
     private List<School> schools;
+
+    private List<String> symbols;
 
     private Date lastSuccessRequest;
 
@@ -115,6 +118,20 @@ public class Client {
     public List<School> getSchools() throws IOException, VulcanException {
         login();
         return schools;
+    }
+
+    public void setSymbols(List<String> symbols) {
+        this.symbols = symbols;
+    }
+
+    public List<String> getSymbols() throws IOException, VulcanException {
+        try {
+            login();
+        } catch (AccountPermissionException e) {
+            // logger.error(e.getMessage(), e);
+        }
+
+        return symbols;
     }
 
     public String getSchoolId() throws IOException, VulcanException {

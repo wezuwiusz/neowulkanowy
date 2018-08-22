@@ -72,6 +72,10 @@ public class Vulcan {
         return getClient().getSchools();
     }
 
+    public List<String> getSymbols() throws VulcanException, IOException {
+        return getClient().getSymbols();
+    }
+
     public SnP getStudentAndParent() throws VulcanException, IOException {
         if (null != this.snp) {
             return this.snp;
@@ -81,6 +85,11 @@ public class Vulcan {
                 .setUp();
 
         return this.snp;
+    }
+
+    public void logout() {
+        client = null;
+        snp = null;
     }
 
     public List<AttendanceLesson> getAttendance(String dateStart) throws VulcanException, IOException {

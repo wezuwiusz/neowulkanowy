@@ -28,7 +28,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_login"
+            android:label="@string/login_options_header"
             android:theme="@style/WulkanowyTheme.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity

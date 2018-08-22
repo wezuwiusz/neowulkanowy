@@ -1,12 +1,6 @@
 package io.github.wulkanowy.utils;
 
-import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import io.github.wulkanowy.R;
-import io.github.wulkanowy.data.db.dao.entities.Grade;
-import io.github.wulkanowy.data.db.dao.entities.Subject;
 
 public final class GradeUtils {
 
@@ -17,7 +11,7 @@ public final class GradeUtils {
         throw new IllegalStateException("Utility class");
     }
 
-    public static float calculateWeightedAverage(List<Grade> gradeList) {
+    /*public static float calculateWeightedAverage(List<Grade> gradeList) {
 
         float counter = 0f;
         float denominator = 0f;
@@ -168,5 +162,5 @@ public final class GradeUtils {
 
     private static int getWeightValue(String weightOfGrade) {
         return Integer.valueOf(weightOfGrade.substring(0, weightOfGrade.length() - 3));
-    }
+    }*/
 }

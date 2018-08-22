@@ -139,6 +139,7 @@ jobs:
       - run:
           name: Collect logs from emulator
           command: adb logcat -d > ./app/build/reports/logcat_emulator.txt
+          when: always
       - run:
           name: Upload code covarage to codecov
           command: bash <(curl -s https://codecov.io/bash) -F instrumented

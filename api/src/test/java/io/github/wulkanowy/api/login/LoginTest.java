@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
+
 import io.github.wulkanowy.api.Client;
 import io.github.wulkanowy.api.FixtureHelper;
 
@@ -118,14 +120,17 @@ public class LoginTest {
         Login login = new Login(getClient("Logowanie-certyfikat.html"));
 
         String certificate = getFixtureAsString("cert-stock.xml");
+        List<String> symbols = login.getSymbolsFromCertificate(certificate);
 
-        Assert.assertEquals("demo12345", login.findSymbolInCertificate(certificate));
+        Assert.assertEquals("demo12345", login.getLastSymbol(symbols));
     }
 
     @Test(expected = AccountPermissionException.class)
     public void findSymbolInCertificateWithoutSecondInstanceTest() throws Exception {
         Login login = new Login(getClient("Logowanie-certyfikat.html"));
 
-        login.findSymbolInCertificate(getFixtureAsString("cert-no-symbols.xml"));
+        List<String> symbols = login.getSymbolsFromCertificate(getFixtureAsString("cert-no-symbols.xml"));
+
+        login.getLastSymbol(symbols);
     }
 }

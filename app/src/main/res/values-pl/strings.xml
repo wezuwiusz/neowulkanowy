@@ -3,7 +3,8 @@
 
     <!-- Strings related to login -->
     <string name="title_activity_login">Zaloguj się</string>
-    <string name="login_heading">Zaloguj się za pomocą konta VULCAN</string>
+    <string name="login_heading">Zaloguj się za pomocą konta ucznia lub rodzica</string>
+    <string name="login_heading_symbol">Podaj symbol dziennika VULCAN</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Hasło</string>
     <string name="prompt_symbol">Symbol</string>
@@ -14,6 +15,7 @@
     <string name="error_invalid_email">Ten adres email nie jest poprawny</string>
     <string name="error_invalid_password">To hasło jest za krótkie</string>
     <string name="error_incorrect_password">To hasło jest niepoprawne</string>
+    <string name="error_incorrect_symbol">Nie znaleziono ucznia. Sprwadź symbol</string>
     <string name="error_field_required">To pole jest wymagane</string>
     <string name="error_bad_account_permission">Brak dostępu do dziennika. Sprawdź inny symbol</string>
     <string name="login_accepted_text">Pomyślnie zalogowano</string>
@@ -22,6 +24,7 @@
     <string name="login_failed_text">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
     <string name="action_create_account">Nie masz jeszcze konta? Załóż je</string>
     <string name="action_forgot_password">Zapomniałeś hasła?</string>
+    <string name="login_options_header">Wybierz ucznia</string>
 
     <string name="color_black_text">Czarny</string>
     <string name="color_red_text">Czerwony</string>

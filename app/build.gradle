@@ -1,7 +1,7 @@
-apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt' // sync warning probably caused by bug https://issuetracker.google.com/issues/74537216
+apply plugin: 'kotlin-kapt'// sync warning probably caused by bug https://issuetracker.google.com/issues/74537216
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply from: 'jacoco.gradle'
 apply from: 'android-sonarqube.gradle'
@@ -16,7 +16,6 @@ buildscript {
     }
 
     dependencies {
-        classpath "org.greenrobot:greendao-gradle-plugin:$greenDaoGradle"
         classpath "io.fabric.tools:gradle:$fabricGradle"
         classpath "com.google.gms:oss-licenses:0.9.2"
         classpath "com.github.triplet.gradle:play-publisher:$playPublisher"
@@ -45,6 +44,7 @@ android {
         targetSdkVersion 27
         versionCode 16
         versionName "0.5.2"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         playAccountConfig = playAccountConfigs.defaultAccountConfig
@@ -73,6 +73,7 @@ android {
             versionNameSuffix "-dev"
             testCoverageEnabled = true
             ext.enableCrashlytics = false
+            multiDexKeepProguard file('proguard-multidex-rules.pro')
         }
     }
 
@@ -87,14 +88,13 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 play {
     track = 'alpha'
     uploadImages = true
-}
-
-greendao {
-    schemaVersion 29
-    generateTests = true
 }
 
 configurations.all {
@@ -103,18 +103,16 @@ configurations.all {
 
 dependencies {
     implementation project(':api')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.android.support:support-v4:$supportVersion"
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:cardview-v7:$supportVersion"
-    implementation "com.android.support:customtabs:$supportVersion"
     implementation "com.android.support:preference-v14:$supportVersion"
     implementation "com.firebase:firebase-jobdispatcher:$firebaseJob"
     implementation "org.apache.commons:commons-lang3:$apacheLang"
     implementation "org.apache.commons:commons-collections4:$apacheCollections"
     implementation "eu.davidea:flexible-adapter:$flexibleAdapter"
     implementation "eu.davidea:flexible-adapter-ui:$flexibleUi"
-    implementation "org.greenrobot:greendao:$greenDao"
     implementation "com.jakewharton:butterknife:$butterknife"
     implementation "com.google.dagger:dagger-android-support:$dagger2"
     implementation "com.aurelhubert:ahbottomnavigation:$ahbottom"
@@ -122,6 +120,12 @@ dependencies {
     implementation "com.google.android.gms:play-services-oss-licenses:$ossLicenses"
     implementation "com.jakewharton.timber:timber:$timber"
     implementation "at.favre.lib:slf4j-timber:$slf4jTimber"
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.0"
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
 
     implementation("com.crashlytics.sdk.android:crashlytics:$crashlyticsSdk@aar") {
         transitive = true
@@ -133,11 +137,13 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger2"
     kapt "com.google.dagger:dagger-android-processor:$dagger2"
     kapt "com.jakewharton:butterknife-compiler:$butterknife"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
 
     debugImplementation "com.amitshekhar.android:debug-db:$debugDb"
 
     testImplementation "junit:junit:$junit"
-    testImplementation "org.mockito:mockito-core:$mockito"
+    testImplementation "org.mockito:mockito-inline:$mockito"
+    testImplementation "org.jsoup:jsoup:$jsoup"
 
     androidTestImplementation "com.android.support.test:runner:$testRunner"
     androidTestImplementation "org.mockito:mockito-android:$mockito"

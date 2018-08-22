@@ -7,7 +7,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.TemporalAdjusters
 import java.util.*
 
-private val formatter = DateTimeFormatter.ofPattern(AppConstant.DATE_PATTERN)
+private val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN)
 
 fun getParsedDate(dateString: String, dateFormat: String): LocalDate {
     return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(dateFormat))

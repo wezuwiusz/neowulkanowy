@@ -1,5 +1,6 @@
 package io.github.wulkanowy.api.login;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.wulkanowy.api.Client;
 import io.github.wulkanowy.api.NotLoggedInErrorException;
@@ -121,26 +124,39 @@ public class Login {
     }
 
     private String findSymbol(String symbol, String certificate) throws AccountPermissionException {
+        List<String> symbols = getSymbolsFromCertificate(certificate);
+        client.setSymbols(symbols);
+
         if ("Default".equals(symbol)) {
-            return findSymbolInCertificate(certificate);
+            return getLastSymbol(symbols);
         }
 
         return symbol;
     }
 
-    String findSymbolInCertificate(String certificate) throws AccountPermissionException {
+    List<String> getSymbolsFromCertificate(String certificate) {
         Elements instances = Jsoup
                 .parse(certificate.replaceAll(":", ""), "", Parser.xmlParser())
                 .select("[AttributeName=\"UserInstance\"] samlAttributeValue");
 
-        if (instances.isEmpty()) { // on adfs login
+        List<String> symbols = new ArrayList<>();
+
+        for (Element e : instances) {
+            symbols.add(e.text());
+        }
+
+        return symbols;
+    }
+
+    String getLastSymbol(List<String> symbols) throws AccountPermissionException {
+        if (symbols.isEmpty()) { // on adfs login
             return "";
         }
 
-        if (instances.size() < 2) { // 1st index is always `Default`
+        if (symbols.size() < 2) { // 1st index is always `Default`
             throw new AccountPermissionException("First login detected, specify symbol");
         }
 
-        return instances.get(1).text();
+        return StringUtils.stripAccents(symbols.get(1).replaceAll("\\s", ""));
     }
 }
