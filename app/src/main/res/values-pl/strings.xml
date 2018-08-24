@@ -32,12 +32,13 @@
     <string name="color_green_text">Zielony</string>
     <string name="noColor_text">Brak koloru</string>
 
-    <string name="activity_dashboard_text">Aktywność dashboard</string>
+    <string name="activity_main_text">Główna aktywność</string>
     <string name="exams_text">Sprawdziany</string>
     <string name="grades_text">Oceny</string>
     <string name="attendance_text">Frekwencja</string>
     <string name="timetable_text">Plan lekcji</string>
     <string name="settings_text">Ustawienia</string>
+    <string name="more_text">Więcej</string>
     <string name="activity_under_construction">Ta część aplikacji jest w budowie</string>
     <string name="fragment_no_grades">Brak ocen</string>
 

@@ -37,7 +37,10 @@ class LoginOptionsPresenter @Inject constructor(
             Single.fromCallable { repository.save(it) }
                     .subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
-                    .doOnSubscribe { _ -> view?.showLoginProgress(true) }
+                    .doOnSubscribe { _ ->
+                        view?.showLoginProgress(true)
+                        view?.showActionBar(false)
+                    }
                     .doOnSuccess { _ -> view?.openMainView() }
                     .subscribe({ _ -> }, { error -> errorHandler.proceed(error) })
         })

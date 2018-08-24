@@ -1,11 +1,16 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/attendanceContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
-    android:id="@+id/attendance_fragment_container">
+    android:layout_alignParentBottom="true">
 
-    <RelativeLayout
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Attendance" />
+
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,5 +26,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/attendance_fragment_tab_layout" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 </android.support.design.widget.CoordinatorLayout>

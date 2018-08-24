@@ -34,7 +34,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/activity_dashboard_text"
+            android:label="@string/activity_main_text"
             android:launchMode="singleTop" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"

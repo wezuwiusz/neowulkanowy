@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
@@ -57,8 +59,8 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
     }
 
     override fun showLoginProgress(show: Boolean) {
-        loginOptionsProgressContainer.visibility = if (show) View.GONE else View.VISIBLE
-        loginOptionsRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        loginOptionsProgressContainer.visibility = if (show) VISIBLE else GONE
+        loginOptionsRecycler.visibility = if (show) GONE else VISIBLE
     }
 
     override fun showActionBar(show: Boolean) {

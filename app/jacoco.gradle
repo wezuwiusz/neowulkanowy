@@ -20,16 +20,18 @@ task jacocoTestReport(type: JacocoReport) {
         html.enabled = true
     }
 
-    def excludes = [
-            "**/R.class",
-            "**/R\$*.class",
-            "**/*\$ViewInjector*.*",
-            "**/BuildConfig.*",
-            "**/Manifest*.*",
-            "**/*Test*.*",
-            "android/**/*.*",
-            "**/*Fragment.*",
-            "**/*Activity.*"
+    def excludes = ['**/R.class',
+                    '**/R$*.class',
+                    '**/BuildConfig.*',
+                    '**/Manifest*.*',
+                    '**/*Test*.*',
+                    'android/**/*.*',
+                    '**/*Module.*',
+                    '**/*Dagger*.*',
+                    '**/*MembersInjector*.*',
+                    '**/*_Provide*Factory*.*',
+                    '**/*_Factory.*',
+                    '**/*$*$*.*'
     ]
 
     // generated classes
@@ -43,14 +45,9 @@ task jacocoTestReport(type: JacocoReport) {
             excludes: excludes
     )
 
-    // sources
-    sourceDirectories = files([
-            android.sourceSets.main.java.srcDirs,
-            "src/main/kotlin"
-    ])
-
+    sourceDirectories = files("$project.projectDir/src/main/java")
     executionData = fileTree(
             dir: project.projectDir,
-            includes: ["**/*.exec" , "**/*.ec"]
+            includes: ["**/*.exec", "**/*.ec"]
     )
 }

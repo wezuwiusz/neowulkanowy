@@ -32,12 +32,13 @@
     <string name="color_green_text">Green</string>
     <string name="noColor_text">No color</string>
 
-    <string name="activity_dashboard_text">Dashboard Activity</string>
+    <string name="activity_main_text">Main Activity</string>
     <string name="exams_text">Exams</string>
     <string name="grades_text">Grades</string>
     <string name="attendance_text">Attendance</string>
     <string name="timetable_text">Timetable</string>
     <string name="settings_text">Settings</string>
+    <string name="more_text">More</string>
     <string name="activity_under_construction">This section of app is under construction.</string>
     <string name="fragment_no_grades">No grades</string>
 

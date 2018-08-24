@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.splash
 import android.os.Bundle
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.login.LoginActivity
+import io.github.wulkanowy.ui.main.MainActivity
 import javax.inject.Inject
 
 class SplashActivity : BaseActivity(), SplashView {
@@ -26,7 +27,7 @@ class SplashActivity : BaseActivity(), SplashView {
     }
 
     override fun openMainActivity() {
-        //TODO('Not implemented)
+        startActivity(MainActivity.getStartIntent(this))
         finish()
     }
 }

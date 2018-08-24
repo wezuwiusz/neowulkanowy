@@ -113,7 +113,6 @@ dependencies {
     implementation "org.apache.commons:commons-collections4:$apacheCollections"
     implementation "eu.davidea:flexible-adapter:$flexibleAdapter"
     implementation "eu.davidea:flexible-adapter-ui:$flexibleUi"
-    implementation "com.jakewharton:butterknife:$butterknife"
     implementation "com.google.dagger:dagger-android-support:$dagger2"
     implementation "com.aurelhubert:ahbottomnavigation:$ahbottom"
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenABP"
@@ -126,6 +125,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
     implementation 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
+    implementation 'com.ncapdevi:frag-nav:3.0.0-RC3'
 
     implementation("com.crashlytics.sdk.android:crashlytics:$crashlyticsSdk@aar") {
         transitive = true
@@ -136,7 +136,6 @@ dependencies {
 
     kapt "com.google.dagger:dagger-compiler:$dagger2"
     kapt "com.google.dagger:dagger-android-processor:$dagger2"
-    kapt "com.jakewharton:butterknife-compiler:$butterknife"
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
     debugImplementation "com.amitshekhar.android:debug-db:$debugDb"
