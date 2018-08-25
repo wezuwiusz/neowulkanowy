@@ -38,7 +38,7 @@ class StudentLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        studentLocal.save(Student(email = "test", password = "test123", schoolId = "23"))
+        studentLocal.save(Student(email = "test", password = "test123", schoolId = "23")).blockingAwait()
         assert(sharedHelper.getLong(StudentLocal.CURRENT_USER_KEY, 0) == 1L)
 
         assert(studentLocal.isStudentLoggedIn)

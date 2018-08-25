@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
-            android:text="@string/step_login" />
+            android:text="@string/login_progress" />
     </RelativeLayout>
 
     <ScrollView
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/login_heading"
+                android:text="@string/login_header_default"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -66,7 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:hint="@string/prompt_email">
+                    android:hint="@string/login_email_hint">
 
                     <EditText
                         android:id="@+id/loginEmailEdit"
@@ -80,13 +80,13 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password">
+                    android:hint="@string/login_password_hint">
 
                     <EditText
                         android:id="@+id/loginPassEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:imeActionLabel="@string/action_sign_in"
+                        android:imeActionLabel="@string/login_sign_in"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:maxLines="1"
@@ -99,14 +99,14 @@
                 android:id="@+id/loginSymbolInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_symbol"
+                android:hint="@string/login_symbol_hint"
                 android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/loginSymbolEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeActionLabel="@string/action_sign_in"
+                    android:imeActionLabel="@string/login_sign_in"
                     android:imeOptions="actionDone"
                     android:inputType="textAutoComplete"
                     android:maxLines="1" />
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/action_sign_in"
+                android:text="@string/login_sign_in"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 app:backgroundTint="@color/colorPrimary" />

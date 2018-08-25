@@ -4,6 +4,7 @@ import io.github.wulkanowy.TestSchedulers
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.reactivex.Completable
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -61,8 +62,8 @@ class LoginOptionsPresenterTest {
 
     @Test
     fun onSelectedStudentTest() {
+        doReturn(Completable.complete()).`when`(repository).save(testStudent)
         presenter.onSelectStudent(testStudent)
-        verify(repository).save(testStudent)
         verify(loginOptionsView).showLoginProgress(true)
         verify(loginOptionsView).openMainView()
 
@@ -70,7 +71,7 @@ class LoginOptionsPresenterTest {
 
     @Test
     fun onSelectedStudentErrorTest() {
-        doThrow(testException).`when`(repository).save(testStudent)
+        doReturn(Completable.error(testException)).`when`(repository).save(testStudent)
         presenter.onSelectStudent(testStudent)
         verify(loginOptionsView).showLoginProgress(true)
         verify(errorHandler).proceed(testException)

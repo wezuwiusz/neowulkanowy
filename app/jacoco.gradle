@@ -1,7 +1,7 @@
 apply plugin: "jacoco"
 
 jacoco {
-    toolVersion "0.8.1"
+    toolVersion "0.8.2"
     reportsDir = file("$buildDir/reports")
 }
 
@@ -9,7 +9,6 @@ tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
 }
 
-// run ./gradlew clean createDebugCoverageReport jacocoTestReport
 task jacocoTestReport(type: JacocoReport) {
 
     group = "Reporting"
@@ -30,17 +29,12 @@ task jacocoTestReport(type: JacocoReport) {
                     '**/*Dagger*.*',
                     '**/*MembersInjector*.*',
                     '**/*_Provide*Factory*.*',
-                    '**/*_Factory.*',
-                    '**/*$*$*.*'
-    ]
+                    '**/*_Factory.*']
 
-    // generated classes
     classDirectories = fileTree(
-            // Java generated classes on Android project (debug build)
             dir: "$buildDir/intermediates/classes/debug",
             excludes: excludes
     ) + fileTree(
-            // Kotlin generated classes on Android project (debug build)
             dir: "$buildDir/tmp/kotlin-classes/debug",
             excludes: excludes
     )

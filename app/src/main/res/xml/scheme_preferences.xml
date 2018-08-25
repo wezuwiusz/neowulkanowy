@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_view_header">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/startup_tab_entries"
+            android:entryValues="@array/startup_tab_value"
+            android:key="startup_tab"
+            android:summary="%s"
+            android:title="@string/pref_view_list" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="grades_summary"
+            android:summary="@string/pref_restart"
+            android:title="@string/pref_view_summary" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="attendance_present"
+            android:summary="@string/pref_restart"
+            android:title="@string/pref_view_present" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"
+            android:key="theme"
+            android:summary="%s"
+            android:title="@string/pref_view_theme_dark" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_services_header">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="services_enable"
+            android:title="@string/pref_services_switch" />
+        <ListPreference
+            android:defaultValue="60"
+            android:dependency="services_enable"
+            android:entries="@array/services_interval_entries"
+            android:entryValues="@array/services_interval_value"
+            android:key="services_interval"
+            android:summary="%s"
+            android:title="@string/pref_services_interval" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="services_enable"
+            android:key="services_disable_mobile"
+            android:title="@string/pref_services_wifi" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_notify_header">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="services_enable"
+            android:key="notify_enable"
+            android:title="@string/pref_notify_switch" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_about_description">
+        <Preference
+            android:key="about_version"
+            android:title="@string/pref_about_version" />
+        <Preference
+            android:key="about_osl"
+            android:summary="@string/pref_about_osl_summary"
+            android:title="@string/pref_about_osl" />
+        <Preference
+            android:key="about_repo"
+            android:title="@string/pref_about_support" />
+    </PreferenceCategory>
+</PreferenceScreen>

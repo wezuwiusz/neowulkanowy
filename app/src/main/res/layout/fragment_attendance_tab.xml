@@ -35,7 +35,7 @@
             android:minHeight="100dp"
             android:minWidth="100dp"
             app:tint="?android:attr/textColorPrimary"
-            app:srcCompat="@drawable/ic_menu_attendance_24dp"
+            app:srcCompat="@drawable/ic_menu_main_attendance_24dp"
             tools:ignore="contentDescription" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="46dp"
             android:gravity="center"
-            android:text="@string/attendance_no_entries"
+            android:text="@string/attendance_no_items"
             android:textSize="20sp" />
     </RelativeLayout>
 

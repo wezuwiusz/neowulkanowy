@@ -2,7 +2,7 @@ package io.github.wulkanowy.data
 
 import android.content.res.Resources
 import io.github.wulkanowy.R
-import io.github.wulkanowy.api.NotLoggedInErrorException
+import io.github.wulkanowy.api.auth.NotLoggedInException
 import timber.log.Timber
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -17,9 +17,9 @@ open class ErrorHandler @Inject constructor(private val resources: Resources) {
         Timber.i(error, "An exception occurred while the Wulkanowy was running")
 
         showErrorMessage((when (error) {
-            is UnknownHostException -> resources.getString(R.string.noInternet_text)
-            is SocketTimeoutException -> resources.getString(R.string.generic_timeout_error)
-            is NotLoggedInErrorException, is IOException -> resources.getString(R.string.login_failed_text)
+            is UnknownHostException -> resources.getString(R.string.all_no_internet)
+            is SocketTimeoutException -> resources.getString(R.string.all_timeout)
+            is NotLoggedInException, is IOException -> resources.getString(R.string.all_login_failed)
             else -> error.localizedMessage
         }))
     }
@@ -28,4 +28,3 @@ open class ErrorHandler @Inject constructor(private val resources: Resources) {
         showErrorMessage = {}
     }
 }
-

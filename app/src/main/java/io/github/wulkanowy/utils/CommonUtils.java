@@ -16,19 +16,19 @@ public final class CommonUtils {
     public static int colorHexToColorName(String hexColor) {
         switch (hexColor) {
             case "000000":
-                return R.string.color_black_text;
+                return R.string.all_black;
 
             case "F04C4C":
-                return R.string.color_red_text;
+                return R.string.all_red;
 
             case "20A4F7":
-                return R.string.color_blue_text;
+                return R.string.all_blue;
 
             case "6ECD07":
-                return R.string.color_green_text;
+                return R.string.all_green;
 
             default:
-                return R.string.noColor_text;
+                return R.string.all_empty_color;
         }
     }
 

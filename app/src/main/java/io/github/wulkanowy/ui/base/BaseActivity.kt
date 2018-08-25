@@ -23,7 +23,7 @@ abstract class BaseActivity : DaggerAppCompatActivity(), BaseView {
     }
 
     override fun showNoNetworkMessage() {
-        showMessage(getString(R.string.noInternet_text))
+        showMessage(getString(R.string.all_no_internet))
     }
 
     override fun onDestroy() {

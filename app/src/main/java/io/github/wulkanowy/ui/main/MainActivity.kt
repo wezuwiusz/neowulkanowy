@@ -58,11 +58,11 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
     override fun initBottomNav() {
         mainBottomNav.run {
             addItems(mutableListOf(
-                    AHBottomNavigationItem(R.string.grades_text, R.drawable.ic_menu_grade_26dp, 0),
-                    AHBottomNavigationItem(R.string.attendance_text, R.drawable.ic_menu_attendance_24dp, 0),
-                    AHBottomNavigationItem(R.string.exams_text, R.drawable.ic_menu_exams_24dp, 0),
-                    AHBottomNavigationItem(R.string.timetable_text, R.drawable.ic_menu_timetable_24dp, 0),
-                    AHBottomNavigationItem(R.string.more_text, R.drawable.ic_menu_other_24dp, 0)
+                    AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_menu_main_grade_26dp, 0),
+                    AHBottomNavigationItem(R.string.attendance_title, R.drawable.ic_menu_main_attendance_24dp, 0),
+                    AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_menu_main_exam_24dp, 0),
+                    AHBottomNavigationItem(R.string.timetable_title, R.drawable.ic_menu_main_timetable_24dp, 0),
+                    AHBottomNavigationItem(R.string.more_title, R.drawable.ic_menu_main_more_24dp, 0)
             ))
             accentColor = ContextCompat.getColor(context, R.color.colorPrimary)
             inactiveColor = ContextCompat.getColor(context, android.R.color.black)
@@ -89,14 +89,14 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
         setTitle(title)
     }
 
-    override fun defaultTitle(): String = getString(R.string.activity_main_text)
+    override fun defaultTitle(): String = getString(R.string.main_title)
 
     override fun mapOfTitles(): Map<Int, String> {
-        return mapOf(0 to R.string.grades_text,
-                1 to R.string.attendance_text,
-                2 to R.string.exams_text,
-                3 to R.string.timetable_text,
-                4 to R.string.more_text
+        return mapOf(0 to R.string.grade_title,
+                1 to R.string.attendance_title,
+                2 to R.string.exam_title,
+                3 to R.string.timetable_title,
+                4 to R.string.more_title
         ).mapValues { getString(it.value) }
     }
 
@@ -105,4 +105,3 @@ class MainActivity : BaseActivity(), MainView, FragNavController.TransactionList
         navController.onSaveInstanceState(outState)
     }
 }
-

@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.dao.StudentDao
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.security.Scrambler.decrypt
 import io.github.wulkanowy.utils.security.Scrambler.encrypt
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,9 +24,10 @@ class StudentLocal @Inject constructor(
     val isStudentLoggedIn: Boolean
         get() = sharedPref.getLong(CURRENT_USER_KEY, 0) != 0L
 
-    fun save(student: Student) {
-        sharedPref.putLong(CURRENT_USER_KEY, studentDb.insert(student.copy(
-                password = encrypt(student.password, context))))
+    fun save(student: Student): Completable {
+        return Single.fromCallable { studentDb.insert(student.copy(password = encrypt(student.password, context))) }
+                .map { sharedPref.putLong(CURRENT_USER_KEY, it) }
+                .ignoreElement()
     }
 
     fun getCurrentStudent(): Single<Student> {

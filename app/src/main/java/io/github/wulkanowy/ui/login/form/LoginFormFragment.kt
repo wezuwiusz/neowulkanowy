@@ -54,7 +54,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun showSymbolInput() {
-        loginHeader.text = getString(R.string.login_heading_symbol)
+        loginHeader.text = getString(R.string.login_header_symbol)
         loginMainForm.visibility = GONE
         loginSymbolInput.visibility = VISIBLE
         loginSymbolEdit.requestFocus()
@@ -68,49 +68,49 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     override fun setErrorEmailRequired() {
         loginEmailEdit.run {
             requestFocus()
-            error = getString(R.string.error_field_required)
+            error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorEmailInvalid() {
         loginEmailEdit.run {
             requestFocus()
-            error = getString(R.string.error_invalid_email)
+            error = getString(R.string.login_invalid_email)
         }
     }
 
     override fun setErrorPassRequired(focus: Boolean) {
         loginPassEdit.run {
             if (focus) requestFocus()
-            error = getString(R.string.error_field_required)
+            error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassInvalid(focus: Boolean) {
         loginPassEdit.run {
             if (focus) requestFocus()
-            error = getString(R.string.error_invalid_password)
+            error = getString(R.string.login_invalid_password)
         }
     }
 
     override fun setErrorSymbolRequire() {
         loginSymbolEdit.run {
             requestFocus()
-            error = getString(R.string.error_field_required)
+            error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassIncorrect() {
         loginPassEdit.run {
             requestFocus()
-            error = getString(R.string.error_incorrect_password)
+            error = getString(R.string.login_incorrect_password)
         }
     }
 
     override fun setErrorSymbolIncorrect() {
         loginSymbolEdit.run {
             requestFocus()
-            error = getString(R.string.error_incorrect_symbol)
+            error = getString(R.string.login_incorrect_symbol)
         }
     }
 

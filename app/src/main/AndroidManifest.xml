@@ -28,13 +28,13 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/login_options_header"
+            android:label="@string/login_title"
             android:theme="@style/WulkanowyTheme.DarkActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.main.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/activity_main_text"
+            android:label="@string/main_title"
             android:launchMode="singleTop" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
@@ -60,12 +60,11 @@
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider" />
+                android:resource="@xml/provider_widget_timetable" />
         </receiver>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="${fabricApiKey}" />
     </application>
-
 </manifest>

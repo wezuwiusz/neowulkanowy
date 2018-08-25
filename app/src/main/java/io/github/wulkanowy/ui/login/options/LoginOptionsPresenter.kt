@@ -5,7 +5,6 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.schedulers.SchedulersManager
-import io.reactivex.Single
 import javax.inject.Inject
 
 class LoginOptionsPresenter @Inject constructor(
@@ -33,16 +32,13 @@ class LoginOptionsPresenter @Inject constructor(
     }
 
     fun onSelectStudent(student: Student) {
-        disposable.add(student.let {
-            Single.fromCallable { repository.save(it) }
-                    .subscribeOn(schedulers.backgroundThread())
-                    .observeOn(schedulers.mainThread())
-                    .doOnSubscribe { _ ->
-                        view?.showLoginProgress(true)
-                        view?.showActionBar(false)
-                    }
-                    .doOnSuccess { _ -> view?.openMainView() }
-                    .subscribe({ _ -> }, { error -> errorHandler.proceed(error) })
-        })
+        disposable.add(repository.save(student)
+                .subscribeOn(schedulers.backgroundThread())
+                .observeOn(schedulers.mainThread())
+                .doOnSubscribe { _ ->
+                    view?.showLoginProgress(true)
+                    view?.showActionBar(false)
+                }
+                .subscribe({ view?.openMainView() }, { errorHandler.proceed(it) }))
     }
 }

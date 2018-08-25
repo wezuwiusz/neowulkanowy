@@ -7,7 +7,7 @@ import android.support.v7.preference.PreferenceManager
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import dagger.Module
 import dagger.Provides
-import io.github.wulkanowy.api.Vulcan
+import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.utils.DATABASE_NAME
 import javax.inject.Singleton
@@ -23,7 +23,7 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideVulcanApi() = Vulcan()
+    fun provideApi() = Api()
 
     @Singleton
     @Provides

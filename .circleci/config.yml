@@ -89,28 +89,6 @@ jobs:
           paths:
             - "./app/build/jacoco"
 
-  api-test:
-    <<: *container_config
-    steps:
-      - *attach_workspace
-      - restore_cache:
-          <<: *general_cache_key
-      - run:
-          name: Run api tests
-          command: ./gradlew :api:test :api:jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
-      - run:
-          name: Upload code coverage to codecov
-          command: bash <(curl -s https://codecov.io/bash) -F api
-      - store_artifacts:
-          path: ./api/build/reports/
-          destination: reports/
-      - store_test_results:
-          path: ./api/build/test-results
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - "./api/build/jacoco"
-
   instrumented:
     <<: *container_config
     steps:
@@ -202,12 +180,6 @@ workflows:
               only: /.*/
           requires:
             - build
-      - api-test:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build
       - instrumented:
           filters:
             tags:
@@ -222,7 +194,6 @@ workflows:
             - build
             - lint
             - app-test
-            - api-test
             - instrumented
       - deploy:
           requires:

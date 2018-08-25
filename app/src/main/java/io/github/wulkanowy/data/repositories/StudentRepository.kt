@@ -5,6 +5,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.local.StudentLocal
 import io.github.wulkanowy.data.repositories.remote.StudentRemote
+import io.reactivex.Completable
 import io.reactivex.Single
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -31,9 +32,7 @@ class StudentRepository @Inject constructor(
         return cachedStudents
     }
 
-    fun save(student: Student) {
-        local.save(student)
-    }
+    fun save(student: Student): Completable = local.save(student)
 
     fun getCurrentStudent(): Single<Student> = local.getCurrentStudent()
 

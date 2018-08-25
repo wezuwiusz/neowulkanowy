@@ -33,7 +33,7 @@
     </style>
 
     <style name="WulkanowyTheme.SplashTheme" parent="WulkanowyTheme">
-        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowBackground">@drawable/layer_splash_background</item>
     </style>
 
 </resources>
