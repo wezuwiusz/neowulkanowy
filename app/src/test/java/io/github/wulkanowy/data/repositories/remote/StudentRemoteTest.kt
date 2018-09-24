@@ -25,7 +25,7 @@ class StudentRemoteTest {
         doReturn(Single.just(listOf(Pupil("", "", "", "test", "", ""))))
                 .`when`(mockApi).getPupils()
 
-        val students = StudentRemote(mockApi).getConnectedStudents("", "", "").blockingGet()
+        val students = SessionRemote(mockApi).getConnectedStudents("", "", "").blockingGet()
         assertEquals(1, students.size)
         assertEquals("test", students.first().studentName)
     }

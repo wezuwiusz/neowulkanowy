@@ -9,6 +9,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.main.MainActivity
@@ -22,7 +23,11 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
     lateinit var presenter: LoginOptionsPresenter
 
     @Inject
-    lateinit var loginAdapter: FlexibleAdapter<LoginOptionsItem>
+    lateinit var loginAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+
+    companion object {
+        fun newInstance() = LoginOptionsFragment()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_options, container, false)
@@ -34,7 +39,13 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
     }
 
     override fun initRecycler() {
-        loginAdapter.setOnItemClickListener { item -> item?.let { presenter.onSelectStudent(it.student) } }
+        loginAdapter.run {
+            setOnItemClickListener { position ->
+                (getItem(position) as? LoginOptionsItem)?.let {
+                    presenter.onSelectStudent(it.student)
+                }
+            }
+        }
         loginOptionsRecycler.run {
             adapter = loginAdapter
             layoutManager = SmoothScrollLinearLayoutManager(context)
@@ -47,7 +58,7 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
 
     override fun updateData(data: List<LoginOptionsItem>) {
         loginAdapter.run {
-            updateDataSet(data)
+            updateDataSet(data, true)
         }
     }
 
@@ -65,5 +76,10 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
 
     override fun showActionBar(show: Boolean) {
         (activity as AppCompatActivity?)?.supportActionBar?.run { if (show) show() else hide() }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.detachView()
     }
 }

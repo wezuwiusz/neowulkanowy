@@ -21,12 +21,12 @@ class SplashActivity : BaseActivity(), SplashView {
         presenter.detachView()
     }
 
-    override fun openLoginActivity() {
+    override fun openLoginView() {
         startActivity(LoginActivity.getStartIntent(this))
         finish()
     }
 
-    override fun openMainActivity() {
+    override fun openMainView() {
         startActivity(MainActivity.getStartIntent(this))
         finish()
     }

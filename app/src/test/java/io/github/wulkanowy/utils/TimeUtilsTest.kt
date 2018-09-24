@@ -86,55 +86,55 @@ class TimeUtilsTest {
     }
 
     @Test fun isHolidaysInSchoolEndTest() {
-        assertFalse(isHolidays(LocalDate.of(2017, 6, 23), 2017))
-        assertFalse(isHolidays(LocalDate.of(2018, 6, 22), 2018))
-        assertFalse(isHolidays(LocalDate.of(2019, 6, 21), 2019))
-        assertFalse(isHolidays(LocalDate.of(2020, 6, 26), 2020))
-        assertFalse(isHolidays(LocalDate.of(2021, 6, 25), 2021))
-        assertFalse(isHolidays(LocalDate.of(2022, 6, 24), 2022))
-        assertFalse(isHolidays(LocalDate.of(2023, 6, 23), 2023))
-        assertFalse(isHolidays(LocalDate.of(2024, 6, 21), 2024))
-        assertFalse(isHolidays(LocalDate.of(2025, 6, 27), 2025))
+        assertFalse(isHolidays(LocalDate.of(2017, 6, 23)))
+        assertFalse(isHolidays(LocalDate.of(2018, 6, 22)))
+        assertFalse(isHolidays(LocalDate.of(2019, 6, 21)))
+        assertFalse(isHolidays(LocalDate.of(2020, 6, 26)))
+        assertFalse(isHolidays(LocalDate.of(2021, 6, 25)))
+        assertFalse(isHolidays(LocalDate.of(2022, 6, 24)))
+        assertFalse(isHolidays(LocalDate.of(2023, 6, 23)))
+        assertFalse(isHolidays(LocalDate.of(2024, 6, 21)))
+        assertFalse(isHolidays(LocalDate.of(2025, 6, 27)))
     }
 
     @Test fun isHolidaysInHolidaysStartTest() {
-        assertTrue(isHolidays(LocalDate.of(2017, 6, 24), 2017))
-        assertTrue(isHolidays(LocalDate.of(2018, 6, 23), 2018))
-        assertTrue(isHolidays(LocalDate.of(2019, 6, 22), 2019))
-        assertTrue(isHolidays(LocalDate.of(2020, 6, 27), 2020))
-        assertTrue(isHolidays(LocalDate.of(2021, 6, 26), 2021))
-        assertTrue(isHolidays(LocalDate.of(2022, 6, 25), 2022))
-        assertTrue(isHolidays(LocalDate.of(2023, 6, 24), 2023))
-        assertTrue(isHolidays(LocalDate.of(2024, 6, 22), 2024))
-        assertTrue(isHolidays(LocalDate.of(2025, 6, 28), 2025))
+        assertTrue(isHolidays(LocalDate.of(2017, 6, 24)))
+        assertTrue(isHolidays(LocalDate.of(2018, 6, 23)))
+        assertTrue(isHolidays(LocalDate.of(2019, 6, 22)))
+        assertTrue(isHolidays(LocalDate.of(2020, 6, 27)))
+        assertTrue(isHolidays(LocalDate.of(2021, 6, 26)))
+        assertTrue(isHolidays(LocalDate.of(2022, 6, 25)))
+        assertTrue(isHolidays(LocalDate.of(2023, 6, 24)))
+        assertTrue(isHolidays(LocalDate.of(2024, 6, 22)))
+        assertTrue(isHolidays(LocalDate.of(2025, 6, 28)))
     }
 
     @Test fun isHolidaysInHolidaysEndTest() {
-        assertTrue(isHolidays(LocalDate.of(2017, 9, 1), 2017)) // friday
-        assertTrue(isHolidays(LocalDate.of(2017, 9, 2), 2017)) // saturday
-        assertTrue(isHolidays(LocalDate.of(2017, 9, 3), 2017)) // sunday
-        assertTrue(isHolidays(LocalDate.of(2018, 9, 1), 2018)) // saturday
-        assertTrue(isHolidays(LocalDate.of(2018, 9, 2), 2018)) // sunday
-        assertTrue(isHolidays(LocalDate.of(2019, 9, 1), 2019)) // sunday
-        assertTrue(isHolidays(LocalDate.of(2020, 8, 31), 2020)) // monday
-        assertTrue(isHolidays(LocalDate.of(2021, 8, 31), 2021)) // tuesday
-        assertTrue(isHolidays(LocalDate.of(2022, 8, 31), 2022)) // wednesday
-        assertTrue(isHolidays(LocalDate.of(2023, 9, 1), 2023)) // friday
-        assertTrue(isHolidays(LocalDate.of(2023, 9, 2), 2023)) // saturday
-        assertTrue(isHolidays(LocalDate.of(2023, 9, 3), 2023)) // sunday
-        assertTrue(isHolidays(LocalDate.of(2024, 9, 1), 2024)) // sunday
-        assertTrue(isHolidays(LocalDate.of(2025, 8, 31), 2025)) // sunday
+        assertTrue(isHolidays(LocalDate.of(2017, 9, 1))) // friday
+        assertTrue(isHolidays(LocalDate.of(2017, 9, 2))) // saturday
+        assertTrue(isHolidays(LocalDate.of(2017, 9, 3))) // sunday
+        assertTrue(isHolidays(LocalDate.of(2018, 9, 1))) // saturday
+        assertTrue(isHolidays(LocalDate.of(2018, 9, 2))) // sunday
+        assertTrue(isHolidays(LocalDate.of(2019, 9, 1))) // sunday
+        assertTrue(isHolidays(LocalDate.of(2020, 8, 31))) // monday
+        assertTrue(isHolidays(LocalDate.of(2021, 8, 31))) // tuesday
+        assertTrue(isHolidays(LocalDate.of(2022, 8, 31))) // wednesday
+        assertTrue(isHolidays(LocalDate.of(2023, 9, 1))) // friday
+        assertTrue(isHolidays(LocalDate.of(2023, 9, 2))) // saturday
+        assertTrue(isHolidays(LocalDate.of(2023, 9, 3))) // sunday
+        assertTrue(isHolidays(LocalDate.of(2024, 9, 1))) // sunday
+        assertTrue(isHolidays(LocalDate.of(2025, 8, 31))) // sunday
     }
 
     @Test fun isHolidaysInSchoolStartTest() {
-        assertFalse(isHolidays(LocalDate.of(2017, 9, 4), 2017)) // monday
-        assertFalse(isHolidays(LocalDate.of(2018, 9, 3), 2018)) // monday
-        assertFalse(isHolidays(LocalDate.of(2019, 9, 2), 2019)) // monday
-        assertFalse(isHolidays(LocalDate.of(2020, 9, 1), 2020)) // tuesday
-        assertFalse(isHolidays(LocalDate.of(2021, 9, 1), 2021)) // wednesday
-        assertFalse(isHolidays(LocalDate.of(2022, 9, 1), 2022)) // thursday
-        assertFalse(isHolidays(LocalDate.of(2023, 9, 4), 2023)) // monday
-        assertFalse(isHolidays(LocalDate.of(2024, 9, 2), 2024)) // monday
-        assertFalse(isHolidays(LocalDate.of(2025, 9, 1), 2025)) // monday
+        assertFalse(isHolidays(LocalDate.of(2017, 9, 4))) // monday
+        assertFalse(isHolidays(LocalDate.of(2018, 9, 3))) // monday
+        assertFalse(isHolidays(LocalDate.of(2019, 9, 2))) // monday
+        assertFalse(isHolidays(LocalDate.of(2020, 9, 1))) // tuesday
+        assertFalse(isHolidays(LocalDate.of(2021, 9, 1))) // wednesday
+        assertFalse(isHolidays(LocalDate.of(2022, 9, 1))) // thursday
+        assertFalse(isHolidays(LocalDate.of(2023, 9, 4))) // monday
+        assertFalse(isHolidays(LocalDate.of(2024, 9, 2))) // monday
+        assertFalse(isHolidays(LocalDate.of(2025, 9, 1))) // monday
     }
 }

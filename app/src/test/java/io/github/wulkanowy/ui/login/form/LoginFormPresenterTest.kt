@@ -2,7 +2,7 @@ package io.github.wulkanowy.ui.login.form
 
 import io.github.wulkanowy.TestSchedulers
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.login.LoginErrorHandler
 import io.reactivex.Single
 import org.junit.Before
@@ -18,7 +18,7 @@ class LoginFormPresenterTest {
     lateinit var loginFormView: LoginFormView
 
     @Mock
-    lateinit var repository: StudentRepository
+    lateinit var repository: SessionRepository
 
     @Mock
     lateinit var errorHandler: LoginErrorHandler

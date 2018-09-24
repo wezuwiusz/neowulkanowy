@@ -156,4 +156,6 @@
     <string name="all_sync_fail">There was an error during synchronization</string>
     <string name="all_timeout">Too long wait for connection</string>
     <string name="all_login_failed">Login is failed. Try again or restart the app</string>
+    <string name="prev">Prev</string>
+    <string name="next">Next</string>
 </resources>

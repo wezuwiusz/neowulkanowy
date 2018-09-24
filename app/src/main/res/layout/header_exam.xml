@@ -10,7 +10,7 @@
     android:paddingTop="10dp">
 
     <TextView
-        android:id="@+id/exams_header_name"
+        android:id="@+id/examHeaderDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -18,7 +18,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/exams_header_date"
+        android:id="@+id/examHeaderDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -26,8 +26,8 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/exams_header_name"
-        android:layout_toRightOf="@id/exams_header_name"
+        android:layout_toEndOf="@id/examHeaderDay"
+        android:layout_toRightOf="@id/examHeaderDay"
         android:gravity="end"
         android:text="@string/app_name"
         android:textSize="13sp" />

@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.login.form
 
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.login.LoginErrorHandler
 import io.github.wulkanowy.utils.DEFAULT_SYMBOL
@@ -10,7 +10,7 @@ import javax.inject.Inject
 class LoginFormPresenter @Inject constructor(
         private val schedulers: SchedulersManager,
         private val errorHandler: LoginErrorHandler,
-        private val studentRepository: StudentRepository)
+        private val sessionRepository: SessionRepository)
     : BasePresenter<LoginFormView>(errorHandler) {
 
     private var wasEmpty = false
@@ -22,7 +22,7 @@ class LoginFormPresenter @Inject constructor(
 
     fun attemptLogin(email: String, password: String, symbol: String) {
         if (!validateCredentials(email, password, symbol)) return
-        disposable.add(studentRepository.getConnectedStudents(email, password, normalizeSymbol(symbol))
+        disposable.add(sessionRepository.getConnectedStudents(email, password, normalizeSymbol(symbol))
                 .observeOn(schedulers.mainThread())
                 .subscribeOn(schedulers.backgroundThread())
                 .doOnSubscribe {
@@ -34,7 +34,7 @@ class LoginFormPresenter @Inject constructor(
                             showSoftKeyboard()
                         }
                     }
-                    studentRepository.clearCache()
+                    sessionRepository.clearCache()
                 }
                 .doFinally { view?.showLoginProgress(false) }
                 .subscribe({

@@ -14,9 +14,9 @@ import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
-class StudentLocalTest {
+class SessionLocalTest {
 
-    private lateinit var studentLocal: StudentLocal
+    private lateinit var studentLocal: SessionLocal
 
     private lateinit var testDb: AppDatabase
 
@@ -28,7 +28,7 @@ class StudentLocalTest {
         testDb = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
                 .build()
         sharedHelper = SharedPrefHelper(context.getSharedPreferences("TEST", Context.MODE_PRIVATE))
-        studentLocal = StudentLocal(testDb.studentDao(), sharedHelper, context)
+        studentLocal = SessionLocal(testDb.studentDao(), testDb.semesterDao(), sharedHelper, context)
     }
 
     @After
@@ -38,12 +38,12 @@ class StudentLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        studentLocal.save(Student(email = "test", password = "test123", schoolId = "23")).blockingAwait()
-        assert(sharedHelper.getLong(StudentLocal.CURRENT_USER_KEY, 0) == 1L)
+        studentLocal.saveStudent(Student(email = "test", password = "test123", schoolId = "23")).blockingAwait()
+        assert(sharedHelper.getLong(SessionLocal.LAST_USER_KEY, 0) == 1L)
 
-        assert(studentLocal.isStudentLoggedIn)
+        assert(studentLocal.isSessionSaved)
 
-        val student = studentLocal.getCurrentStudent().blockingGet()
+        val student = studentLocal.getLastStudent().blockingGet()
         assertEquals("23", student.schoolId)
     }
 }

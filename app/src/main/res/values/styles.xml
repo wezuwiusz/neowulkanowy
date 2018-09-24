@@ -36,4 +36,12 @@
         <item name="android:windowBackground">@drawable/layer_splash_background</item>
     </style>
 
+    <style name="DialogFragmentTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:textColorTertiary">@android:color/primary_text_light</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">false</item>
+    </style>
+
 </resources>

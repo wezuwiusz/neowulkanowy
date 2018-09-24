@@ -163,4 +163,7 @@
     <string name="all_sync_fail">Podczas synchronizacji wystąpił błąd</string>
     <string name="all_timeout">Zbyt długie oczekiwanie na połączenie</string>
     <string name="all_login_failed">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
+
+    <string name="prev">Poprzedni</string>
+    <string name="next">Następny</string>
 </resources>

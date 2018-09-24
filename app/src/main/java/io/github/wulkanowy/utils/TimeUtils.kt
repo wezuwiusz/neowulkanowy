@@ -4,6 +4,7 @@ import org.threeten.bp.DayOfWeek.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.temporal.TemporalAdjuster
 import org.threeten.bp.temporal.TemporalAdjusters
 import java.util.*
 
@@ -68,29 +69,35 @@ fun isDateInWeek(firstWeekDay: LocalDate, date: LocalDate): Boolean {
     return date.isAfter(firstWeekDay.minusDays(1)) && date.isBefore(firstWeekDay.plusDays(5))
 }
 
+fun getNearMonday(date: LocalDate): LocalDate {
+    return when(date.dayOfWeek) {
+        MONDAY -> date
+        SATURDAY, SUNDAY -> date.with(TemporalAdjusters.next(MONDAY))
+        else -> date.with(TemporalAdjusters.previous(MONDAY))
+    }
+}
+
 /**
  * [Dz.U. 2016 poz. 1335](http://prawo.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20160001335)
  */
-fun isHolidays(): Boolean = isHolidays(LocalDate.now(), Year.now().value)
+fun isHolidays(): Boolean = isHolidays(LocalDate.now())
 
-fun isHolidays(day: LocalDate, year: Int): Boolean {
-    return day.isAfter(getLastSchoolDay(year)) && day.isBefore(getFirstSchoolDay(year))
+fun isHolidays(day: LocalDate): Boolean {
+    return day.isAfter(getLastSchoolDay(day.year)) && day.isBefore(getFirstSchoolDay(day.year))
 }
 
-fun getFirstSchoolDay(year: Int): LocalDate? {
+fun getFirstSchoolDay(year: Int): LocalDate {
     val firstSeptember = LocalDate.of(year, 9, 1)
 
     return when (firstSeptember.dayOfWeek) {
         FRIDAY,
         SATURDAY,
         SUNDAY -> firstSeptember.with(TemporalAdjusters.firstInMonth(MONDAY))
-        else -> {
-            firstSeptember
-        }
+        else -> firstSeptember
     }
 }
 
-fun getLastSchoolDay(year: Int): LocalDate? {
+fun getLastSchoolDay(year: Int): LocalDate {
     return LocalDate
             .of(year, 6, 20)
             .with(TemporalAdjusters.next(FRIDAY))

@@ -2,14 +2,14 @@ package io.github.wulkanowy.ui.login.options
 
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.schedulers.SchedulersManager
 import javax.inject.Inject
 
 class LoginOptionsPresenter @Inject constructor(
         private val errorHandler: ErrorHandler,
-        private val repository: StudentRepository,
+        private val repository: SessionRepository,
         private val schedulers: SchedulersManager)
     : BasePresenter<LoginOptionsView>(errorHandler) {
 
@@ -32,7 +32,7 @@ class LoginOptionsPresenter @Inject constructor(
     }
 
     fun onSelectStudent(student: Student) {
-        disposable.add(repository.save(student)
+        disposable.add(repository.saveStudent(student)
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
                 .doOnSubscribe { _ ->
