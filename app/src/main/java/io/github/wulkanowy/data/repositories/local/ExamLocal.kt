@@ -12,10 +12,9 @@ import javax.inject.Inject
 
 class ExamLocal @Inject constructor(private val examDb: ExamDao) {
 
-    fun getExams(semester: Semester, startDate: LocalDate): Maybe<List<Exam>> {
-        return examDb.getExams(semester.diaryId, semester.studentId, startDate.toDate(),
-                startDate.with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).toDate()
-        ).filter { !it.isEmpty() }
+    fun getExams(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Exam>> {
+        return examDb.getExams(semester.diaryId, semester.studentId, startDate, endDate)
+                .filter { !it.isEmpty() }
     }
 
     fun saveExams(exams: List<Exam>) {

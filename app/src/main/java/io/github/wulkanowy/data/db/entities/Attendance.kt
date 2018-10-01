@@ -6,8 +6,8 @@ import android.arch.persistence.room.PrimaryKey
 import org.threeten.bp.LocalDate
 import java.io.Serializable
 
-@Entity(tableName = "Exams")
-data class Exam(
+@Entity(tableName = "Attendance")
+data class Attendance(
 
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0,
@@ -20,19 +20,21 @@ data class Exam(
 
         var date: LocalDate,
 
-        @ColumnInfo(name = "entry_date")
-        var entryDate: LocalDate = LocalDate.now(),
+        var number: Int = 0,
 
         var subject: String = "",
 
-        var group: String = "",
+        var name: String = "",
 
-        var type: String = "",
+        var presence: Boolean = false,
 
-        var description: String = "",
+        var absence: Boolean = false,
 
-        var teacher: String = "",
+        var exemption: Boolean = false,
 
-        @ColumnInfo(name = "teacher_symbol")
-        var teacherSymbol: String = ""
+        var lateness: Boolean = false,
+
+        var excused: Boolean = false,
+
+        var deleted: Boolean = false
 ) : Serializable

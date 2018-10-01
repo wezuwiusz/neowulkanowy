@@ -7,12 +7,11 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.ExamRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.utils.extension.getWeekFirstDayNextOnWeekEnd
 import io.github.wulkanowy.utils.extension.isHolidays
 import io.github.wulkanowy.utils.extension.toFormat
-import io.github.wulkanowy.utils.getNearMonday
 import io.github.wulkanowy.utils.schedulers.SchedulersManager
 import org.threeten.bp.LocalDate
-import java.util.*
 import javax.inject.Inject
 
 class ExamPresenter @Inject constructor(
@@ -22,7 +21,7 @@ class ExamPresenter @Inject constructor(
         private val sessionRepository: SessionRepository
 ) : BasePresenter<ExamView>(errorHandler) {
 
-    var currentDate: LocalDate = getNearMonday(LocalDate.now())
+    var currentDate: LocalDate = LocalDate.now().getWeekFirstDayNextOnWeekEnd()
         private set
 
     override fun attachView(view: ExamView) {
@@ -35,13 +34,13 @@ class ExamPresenter @Inject constructor(
     fun loadExamsForNextWeek() = loadData(currentDate.plusDays(7).toEpochDay())
 
     fun loadData(date: Long?, forceRefresh: Boolean = false) {
-        this.currentDate = LocalDate.ofEpochDay(date ?: getNearMonday(currentDate).toEpochDay())
+        this.currentDate = LocalDate.ofEpochDay(date ?: currentDate.getWeekFirstDayNextOnWeekEnd().toEpochDay())
         if (currentDate.isHolidays()) return
 
         disposable.clear()
         disposable.add(sessionRepository.getSemesters()
                 .map { selectSemester(it, -1) }
-                .flatMap { examRepository.getExams(it, currentDate, forceRefresh) }
+                .flatMap { examRepository.getExams(it, currentDate, currentDate.plusDays(4), forceRefresh) }
                 .map { it.groupBy { exam -> exam.date }.toSortedMap() }
                 .map { createExamItems(it) }
                 .subscribeOn(schedulers.backgroundThread())
@@ -72,7 +71,7 @@ class ExamPresenter @Inject constructor(
                 .subscribe({ view?.updateData(it) }) { errorHandler.proceed(it) })
     }
 
-    private fun createExamItems(items: Map<Date, List<Exam>>): List<ExamItem> {
+    private fun createExamItems(items: Map<LocalDate, List<Exam>>): List<ExamItem> {
         return items.flatMap {
             val header = ExamHeader().apply { date = it.key }
             it.value.reversed().map { item ->

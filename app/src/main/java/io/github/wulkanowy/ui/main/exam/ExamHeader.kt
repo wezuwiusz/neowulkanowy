@@ -10,12 +10,11 @@ import io.github.wulkanowy.utils.extension.getWeekDayName
 import io.github.wulkanowy.utils.extension.toFormat
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.header_exam.*
-import org.apache.commons.lang3.StringUtils
-import java.util.*
+import org.threeten.bp.LocalDate
 
 class ExamHeader : AbstractHeaderItem<ExamHeader.ViewHolder>() {
 
-    lateinit var date: Date
+    lateinit var date: LocalDate
 
     override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ViewHolder {
         return ViewHolder(view, adapter)
@@ -41,7 +40,7 @@ class ExamHeader : AbstractHeaderItem<ExamHeader.ViewHolder>() {
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder,
                                 position: Int, payloads: MutableList<Any>?) {
         holder.run {
-            examHeaderDay.text = StringUtils.capitalize(date.getWeekDayName())
+            examHeaderDay.text = date.getWeekDayName().capitalize()
             examHeaderDate.text = date.toFormat()
         }
     }

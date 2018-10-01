@@ -52,4 +52,8 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideExamDao(database: AppDatabase) = database.examsDao()
+
+    @Singleton
+    @Provides
+    fun provideAttendanceDao(database: AppDatabase) = database.attendanceDao()
 }

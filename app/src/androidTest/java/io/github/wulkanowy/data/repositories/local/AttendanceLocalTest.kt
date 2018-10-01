@@ -4,7 +4,7 @@ import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
-import io.github.wulkanowy.data.db.entities.Exam
+import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Semester
 import org.junit.After
 import org.junit.Before
@@ -14,16 +14,16 @@ import org.threeten.bp.LocalDate
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
-class ExamLocalTest {
+class AttendanceLocalTest {
 
-    private lateinit var examLocal: ExamLocal
+    private lateinit var attendanceLocal: AttendanceLocal
 
     private lateinit var testDb: AppDatabase
 
     @Before
     fun createDb() {
         testDb = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(), AppDatabase::class.java).build()
-        examLocal = ExamLocal(testDb.examsDao())
+        attendanceLocal = AttendanceLocal(testDb.attendanceDao())
     }
 
     @After
@@ -33,20 +33,20 @@ class ExamLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        examLocal.saveExams(listOf(
-                Exam(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 10)),
-                Exam(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 14)),
-                Exam(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 17)) // in next week
+        attendanceLocal.saveAttendance(listOf(
+                Attendance(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 10)),
+                Attendance(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 14)),
+                Attendance(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 17)) // in next week
         ))
 
-        val exams = examLocal
-                .getExams(Semester(studentId = "1", diaryId = "2", semesterId = "3"),
+        val attendance = attendanceLocal
+                .getAttendance(Semester(studentId = "1", diaryId = "2", semesterId = "3"),
                         LocalDate.of(2018, 9, 10),
                         LocalDate.of(2018, 9, 14)
                 )
                 .blockingGet()
-        assertEquals(2, exams.size)
-        assertEquals(exams[0].date, LocalDate.of(2018, 9, 10))
-        assertEquals(exams[1].date, LocalDate.of(2018, 9, 14))
+        assertEquals(2, attendance.size)
+        assertEquals(attendance[0].date, LocalDate.of(2018, 9, 10))
+        assertEquals(attendance[1].date, LocalDate.of(2018, 9, 14))
     }
 }
