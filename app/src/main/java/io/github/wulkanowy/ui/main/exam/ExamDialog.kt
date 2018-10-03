@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
-import io.github.wulkanowy.utils.extension.toFormat
+import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.android.synthetic.main.dialog_exam.*
 
 class ExamDialog : DialogFragment() {
@@ -43,7 +43,7 @@ class ExamDialog : DialogFragment() {
         examDialogSubjectValue.text = exam.subject
         examDialogTypeValue.text = exam.type
         examDialogTeacherValue.text = exam.teacher
-        examDialogDateValue.text = exam.entryDate.toFormat()
+        examDialogDateValue.text = exam.entryDate.toFormattedString()
         examDialogDescriptionValue.text = exam.description
 
         examDialogClose.setOnClickListener { dismiss() }

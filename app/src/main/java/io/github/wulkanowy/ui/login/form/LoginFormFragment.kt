@@ -11,8 +11,8 @@ import android.widget.ArrayAdapter
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.login.LoginSwitchListener
-import io.github.wulkanowy.utils.extension.hideSoftInput
-import io.github.wulkanowy.utils.extension.showSoftInput
+import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
 import javax.inject.Inject
 
@@ -20,6 +20,10 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     @Inject
     lateinit var presenter: LoginFormPresenter
+
+    companion object {
+        fun newInstance() = LoginFormFragment()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_form, container, false)
@@ -132,8 +136,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormProgressContainer.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         presenter.detachView()
     }
 }

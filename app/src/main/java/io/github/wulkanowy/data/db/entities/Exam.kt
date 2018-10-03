@@ -13,26 +13,26 @@ data class Exam(
         var id: Long = 0,
 
         @ColumnInfo(name = "student_id")
-        var studentId: String = "",
+        var studentId: String,
 
         @ColumnInfo(name = "diary_id")
-        var diaryId: String = "",
+        var diaryId: String,
 
         var date: LocalDate,
 
         @ColumnInfo(name = "entry_date")
         var entryDate: LocalDate = LocalDate.now(),
 
-        var subject: String = "",
+        var subject: String,
 
-        var group: String = "",
+        var group: String,
 
-        var type: String = "",
+        var type: String,
 
-        var description: String = "",
+        var description: String,
 
-        var teacher: String = "",
+        var teacher: String,
 
         @ColumnInfo(name = "teacher_symbol")
-        var teacherSymbol: String = ""
+        var teacherSymbol: String
 ) : Serializable

@@ -34,13 +34,13 @@ class ExamLocalTest {
     @Test
     fun saveAndReadTest() {
         examLocal.saveExams(listOf(
-                Exam(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 10)),
-                Exam(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 14)),
-                Exam(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 17)) // in next week
+                Exam(0, "1", "2", LocalDate.of(2018, 9, 10), LocalDate.now(), "", "", "", "", "", ""),
+                Exam(0, "1", "2", LocalDate.of(2018, 9, 14), LocalDate.now(), "", "", "", "", "", ""),
+                Exam(0, "1", "2", LocalDate.of(2018, 9, 17), LocalDate.now(), "", "", "", "", "", "")
         ))
 
         val exams = examLocal
-                .getExams(Semester(studentId = "1", diaryId = "2", semesterId = "3"),
+                .getExams(Semester(1, "1", "2", "", "3", 1),
                         LocalDate.of(2018, 9, 10),
                         LocalDate.of(2018, 9, 14)
                 )

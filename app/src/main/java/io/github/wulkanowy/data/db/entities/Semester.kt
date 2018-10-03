@@ -19,13 +19,13 @@ data class Semester(
         var diaryId: String,
 
         @ColumnInfo(name = "diary_name")
-        var diaryName: String = "",
+        var diaryName: String,
 
         @ColumnInfo(name = "semester_id")
         var semesterId: String,
 
         @ColumnInfo(name = "semester_name")
-        var semesterName: Int = 0,
+        var semesterName: Int,
 
         @ColumnInfo(name = "is_current")
         var current: Boolean = false

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
-import io.github.wulkanowy.utils.extension.toFormat
+import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.android.synthetic.main.dialog_attendance.*
 
 class AttendanceDialog : DialogFragment() {
@@ -42,7 +42,7 @@ class AttendanceDialog : DialogFragment() {
 
         attendanceDialogSubject.text = attendance.subject
         attendanceDialogDescription.text = attendance.name
-        attendanceDialogDate.text = attendance.date.toFormat()
+        attendanceDialogDate.text = attendance.date.toFormattedString()
         attendanceDialogNumber.text = attendance.number.toString()
         attendanceDialogClose.setOnClickListener { dismiss() }
     }

@@ -9,19 +9,19 @@
     android:paddingTop="7dp">
 
     <TextView
-        android:id="@+id/grades_summary_header_name"
+        android:id="@+id/gradeSummaryHeaderName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:layout_toLeftOf="@id/grades_summary_header_average"
-        android:layout_toStartOf="@id/grades_summary_header_average"
+        android:layout_toLeftOf="@id/gradeSummaryHeaderAverage"
+        android:layout_toStartOf="@id/gradeSummaryHeaderAverage"
         android:text="@string/app_name"
         android:textSize="17sp" />
 
     <TextView
-        android:id="@+id/grades_summary_header_average"
+        android:id="@+id/gradeSummaryHeaderAverage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

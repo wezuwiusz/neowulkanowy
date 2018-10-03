@@ -34,13 +34,13 @@ class AttendanceLocalTest {
     @Test
     fun saveAndReadTest() {
         attendanceLocal.saveAttendance(listOf(
-                Attendance(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 10)),
-                Attendance(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 14)),
-                Attendance(studentId = "1", diaryId = "2", date = LocalDate.of(2018, 9, 17)) // in next week
+                Attendance(0, "1", "2", LocalDate.of(2018, 9, 10), 0, "", ""),
+                Attendance(0, "1", "2", LocalDate.of(2018, 9, 14), 0, "", ""),
+                Attendance(0, "1", "2", LocalDate.of(2018, 9, 17), 0, "", "")
         ))
 
         val attendance = attendanceLocal
-                .getAttendance(Semester(studentId = "1", diaryId = "2", semesterId = "3"),
+                .getAttendance(Semester(1, "1", "2", "", "3", 1),
                         LocalDate.of(2018, 9, 10),
                         LocalDate.of(2018, 9, 14)
                 )

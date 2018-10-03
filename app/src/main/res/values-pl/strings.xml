@@ -34,14 +34,16 @@
     <string name="grade_switch_semester">Zmień semestr</string>
     <string name="grade_no_items">Brak ocen</string>
     <string name="grade_weight">Waga</string>
+    <string name="grade_comment">Komentarz</string>
     <string name="grade_no_new_items">Brak nowych ocen</string>
     <string name="grade_number_new_items">Ilość nowych ocen: %1$d</string>
     <string name="grade_average">Średnia: %1$.2f</string>
     <string name="grade_no_average">Brak średniej</string>
     <string name="grade_predicted">Przewidywana: %1$s</string>
     <string name="grade_final">Końcowa: %1$s</string>
+    <string name="grade_summary_final_grade">Ocena końcowa</string>
+    <string name="grade_summary_predicted_grade">Przewidywana ocena</string>
     <string name="grade_summary_calculated_average">Obliczona średnia</string>
-    <string name="grade_summary_predicted_average">Szacowana średnia</string>
     <string name="grade_summary_final_average">Końcowa średnia</string>
     <string name="grade_menu_summary">Podsumowanie</string>
     <plurals name="grade_number_item">
@@ -99,6 +101,7 @@
     <string name="all_color">Kolor</string>
     <string name="all_details">Szczegóły</string>
     <string name="all_close">Zamknij</string>
+    <string name="all_cancel">Anuluj</string>
     <string name="all_no_data">Brak danych</string>
     <string name="all_subject">Przedmiot</string>
 

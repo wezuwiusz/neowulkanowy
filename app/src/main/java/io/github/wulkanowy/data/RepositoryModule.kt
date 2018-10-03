@@ -1,15 +1,14 @@
 package io.github.wulkanowy.data
 
-import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
 import android.support.v7.preference.PreferenceManager
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
+import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.strategy.SocketInternetObservingStrategy
 import dagger.Module
 import dagger.Provides
 import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.AppDatabase
-import io.github.wulkanowy.utils.DATABASE_NAME
 import javax.inject.Singleton
 
 @Module
@@ -18,7 +17,10 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideInternetObservingSettings(): InternetObservingSettings {
-        return InternetObservingSettings.create()
+        return InternetObservingSettings
+                .strategy(SocketInternetObservingStrategy())
+                .host("www.google.com")
+                .build()
     }
 
     @Singleton
@@ -27,10 +29,7 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
-                .build()
-    }
+    fun provideDatabase(context: Context) = AppDatabase.newInstance(context)
 
     @Provides
     fun provideErrorHandler(context: Context) = ErrorHandler(context.resources)
@@ -48,6 +47,14 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideSemesterDao(database: AppDatabase) = database.semesterDao()
+
+    @Singleton
+    @Provides
+    fun provideGradeDao(database: AppDatabase) = database.gradeDao()
+
+    @Singleton
+    @Provides
+    fun provideGradeSummaryDao(database: AppDatabase) = database.gradeSummaryDao()
 
     @Singleton
     @Provides

@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.login.form
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.login.LoginErrorHandler
-import io.github.wulkanowy.utils.DEFAULT_SYMBOL
 import io.github.wulkanowy.utils.schedulers.SchedulersManager
 import javax.inject.Inject
 
@@ -83,6 +82,6 @@ class LoginFormPresenter @Inject constructor(
     }
 
     private fun normalizeSymbol(symbol: String): String {
-        return if (symbol.isEmpty()) DEFAULT_SYMBOL else symbol
+        return if (symbol.isEmpty()) "Default" else symbol
     }
 }

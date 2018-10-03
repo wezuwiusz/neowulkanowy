@@ -1,4 +1,4 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/timetable_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,22 +9,4 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="Timetable" />
-
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/timetable_fragment_tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMinWidth="125dp"
-            app:tabMode="scrollable"/>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/timetable_fragment_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/timetable_fragment_tab_layout" />
-    </RelativeLayout>-->
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

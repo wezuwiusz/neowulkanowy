@@ -4,15 +4,22 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface MainView : BaseView {
 
-    fun initFragmentController()
+    fun initView()
 
-    fun initBottomNav()
-
-    fun switchMenuFragment(position: Int)
+    fun switchMenuView(position: Int)
 
     fun setViewTitle(title: String)
 
-    fun defaultTitle(): String
+    fun expandActionBar(show: Boolean)
 
-    fun mapOfTitles(): Map<Int, String>
+    fun viewTitle(index: Int): String
+
+    fun currentMenuIndex(): Int
+
+    fun notifyMenuViewReselected()
+
+    interface MenuFragmentView {
+
+        fun onFragmentReselected()
+    }
 }

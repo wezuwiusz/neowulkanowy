@@ -6,8 +6,8 @@ import eu.davidea.flexibleadapter.items.AbstractHeaderItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.ExpandableViewHolder
 import io.github.wulkanowy.R
-import io.github.wulkanowy.utils.extension.getWeekDayName
-import io.github.wulkanowy.utils.extension.toFormat
+import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.weekDayName
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.header_exam.*
 import org.threeten.bp.LocalDate
@@ -40,8 +40,8 @@ class ExamHeader : AbstractHeaderItem<ExamHeader.ViewHolder>() {
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder,
                                 position: Int, payloads: MutableList<Any>?) {
         holder.run {
-            examHeaderDay.text = date.getWeekDayName().capitalize()
-            examHeaderDate.text = date.toFormat()
+            examHeaderDay.text = date.weekDayName.capitalize()
+            examHeaderDate.text = date.toFormattedString()
         }
     }
 

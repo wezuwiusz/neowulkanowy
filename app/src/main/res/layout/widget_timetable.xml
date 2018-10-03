@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/widget_bar_height"
+        android:layout_height="@dimen/timetable_widget_bar_height"
         android:background="@color/colorPrimary">
 
         <Button
@@ -45,7 +45,7 @@
         <TextView
             android:id="@+id/timetable_widget_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/widget_bar_height"
+            android:layout_height="@dimen/timetable_widget_bar_height"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_toLeftOf="@id/timetable_widget_toggle"
@@ -62,7 +62,7 @@
         android:id="@+id/timetable_widget_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/widget_bar_height" />
+        android:layout_marginTop="@dimen/timetable_widget_bar_height" />
 
     <TextView
         android:id="@+id/timetable_widget_empty"

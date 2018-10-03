@@ -7,10 +7,10 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.ExamRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
-import io.github.wulkanowy.utils.extension.getWeekFirstDayNextOnWeekEnd
-import io.github.wulkanowy.utils.extension.isHolidays
-import io.github.wulkanowy.utils.extension.toFormat
+import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.schedulers.SchedulersManager
+import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.weekFirstDayNextOnWeekEnd
 import org.threeten.bp.LocalDate
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class ExamPresenter @Inject constructor(
         private val sessionRepository: SessionRepository
 ) : BasePresenter<ExamView>(errorHandler) {
 
-    var currentDate: LocalDate = LocalDate.now().getWeekFirstDayNextOnWeekEnd()
+    var currentDate: LocalDate = LocalDate.now().weekFirstDayNextOnWeekEnd
         private set
 
     override fun attachView(view: ExamView) {
@@ -34,8 +34,9 @@ class ExamPresenter @Inject constructor(
     fun loadExamsForNextWeek() = loadData(currentDate.plusDays(7).toEpochDay())
 
     fun loadData(date: Long?, forceRefresh: Boolean = false) {
-        this.currentDate = LocalDate.ofEpochDay(date ?: currentDate.getWeekFirstDayNextOnWeekEnd().toEpochDay())
-        if (currentDate.isHolidays()) return
+        this.currentDate = LocalDate.ofEpochDay(date
+                ?: currentDate.weekFirstDayNextOnWeekEnd.toEpochDay())
+        if (currentDate.isHolidays) return
 
         disposable.clear()
         disposable.add(sessionRepository.getSemesters()
@@ -51,9 +52,10 @@ class ExamPresenter @Inject constructor(
                         showProgress(!forceRefresh)
                         if (!forceRefresh) showEmpty(false)
                         showContent(null == date && forceRefresh)
-                        showPreButton(!currentDate.minusDays(7).isHolidays())
-                        showNextButton(!currentDate.plusDays(7).isHolidays())
-                        updateNavigationWeek("${currentDate.toFormat("dd.MM")}-${currentDate.plusDays(4).toFormat("dd.MM")}")
+                        showPreButton(!currentDate.minusDays(7).isHolidays)
+                        showNextButton(!currentDate.plusDays(7).isHolidays)
+                        updateNavigationWeek(currentDate.toFormattedString("dd.MM") +
+                                "-${currentDate.plusDays(4).toFormattedString("dd.MM")}")
                     }
                 }
                 .doAfterSuccess {

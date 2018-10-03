@@ -10,7 +10,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.utils.extension.setOnItemClickListener
+import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_attendance.*
 import javax.inject.Inject
 

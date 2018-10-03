@@ -12,7 +12,6 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties.*
 import android.util.Base64
 import android.util.Base64.DEFAULT
-import org.apache.commons.lang3.StringUtils
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -76,7 +75,7 @@ object Scrambler {
 
     @JvmStatic
     fun decrypt(cipherText: String): String {
-        if (StringUtils.isEmpty(cipherText)) throw ScramblerException("Text to be encrypted is empty")
+        if (cipherText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
         if (SDK_INT < JELLY_BEAN_MR2 || cipherText.length < 250) {
             return String(Base64.decode(cipherText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)

@@ -13,18 +13,18 @@ data class Attendance(
         var id: Long = 0,
 
         @ColumnInfo(name = "student_id")
-        var studentId: String = "",
+        var studentId: String,
 
         @ColumnInfo(name = "diary_id")
-        var diaryId: String = "",
+        var diaryId: String,
 
         var date: LocalDate,
 
-        var number: Int = 0,
+        var number: Int,
 
-        var subject: String = "",
+        var subject: String,
 
-        var name: String = "",
+        var name: String,
 
         var presence: Boolean = false,
 

@@ -6,8 +6,7 @@ import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.local.ExamLocal
 import io.github.wulkanowy.data.repositories.remote.ExamRemote
-import io.github.wulkanowy.utils.extension.getWeekFirstDayAlwaysCurrent
-import io.github.wulkanowy.utils.extension.toDate
+import io.github.wulkanowy.utils.weekFirstDayAlwaysCurrent
 import io.reactivex.Single
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
@@ -24,7 +23,7 @@ class ExamRepository @Inject constructor(
 ) {
 
     fun getExams(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false): Single<List<Exam>> {
-        val start = startDate.getWeekFirstDayAlwaysCurrent()
+        val start = startDate.weekFirstDayAlwaysCurrent
         val end = endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY))
 
         return local.getExams(semester, start, end).filter { !forceRefresh }

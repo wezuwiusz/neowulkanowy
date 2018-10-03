@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="WulkanowyTheme" parent="@style/Theme.AppCompat.DayNight">
+    <style name="WulkanowyTheme" parent="@style/Base.Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
@@ -15,25 +15,16 @@
         <item name="android:colorBackground">@android:color/white</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="bottomNavBackground">@color/bottom_nav_background_inverse</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
-    <style name="WulkanowyTheme.DarkActionBar" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="actionMenuTextColor">@android:color/primary_text_dark</item>
-        <item name="android:textColorPrimary">@android:color/primary_text_light</item>
-        <item name="android:textColorSecondary">@android:color/primary_text_light</item>
-        <item name="android:textColorSecondaryInverse">@android:color/primary_text_dark</item>
-        <item name="android:textColorTertiary">@android:color/primary_text_light</item>
-        <item name="android:textColorTertiaryInverse">@android:color/primary_text_dark</item>
-        <item name="titleTextColor">@android:color/primary_text_dark</item>
-        <item name="subtitleTextColor">@android:color/primary_text_dark</item>
-        <item name="android:colorBackground">@android:color/white</item>
-    </style>
-
-    <style name="WulkanowyTheme.SplashTheme" parent="WulkanowyTheme">
+    <style name="WulkanowyTheme.SplashScreen" parent="WulkanowyTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/layer_splash_background</item>
+    </style>
+
+    <style name="WulkanowyTheme.NoActionBar" parent="WulkanowyTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="DialogFragmentTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">

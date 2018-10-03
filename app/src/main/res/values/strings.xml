@@ -34,14 +34,16 @@
     <string name="grade_switch_semester">Change semester</string>
     <string name="grade_no_items">No grades</string>
     <string name="grade_weight">Weight</string>
+    <string name="grade_comment">Comment</string>
     <string name="grade_no_new_items">No new grades</string>
     <string name="grade_number_new_items">Number of new ratings: %1$d</string>
     <string name="grade_average">Average: %1$.2f</string>
     <string name="grade_no_average">No average</string>
     <string name="grade_predicted">Predicted: %1$s</string>
     <string name="grade_final">Final: %1$s</string>
+    <string name="grade_summary_final_grade">Final grade</string>
+    <string name="grade_summary_predicted_grade">Predicted grade</string>
     <string name="grade_summary_calculated_average">Calculated average</string>
-    <string name="grade_summary_predicted_average">Predicted average</string>
     <string name="grade_summary_final_average">Final average</string>
     <string name="grade_menu_summary">Summary</string>
     <plurals name="grade_number_item">
@@ -94,6 +96,7 @@
     <string name="all_color">Color</string>
     <string name="all_details">Details</string>
     <string name="all_close">Close</string>
+    <string name="all_cancel">Cancel</string>
     <string name="all_no_data">No data</string>
     <string name="all_subject">Subject</string>
 

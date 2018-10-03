@@ -42,9 +42,8 @@ class SessionRepository @Inject constructor(
     }
 
     fun saveStudent(student: Student): Completable {
-        return remote.getSemesters(student).flatMapCompletable {
-            local.saveSemesters(it)
-        }.concatWith(local.saveStudent(student))
+        return remote.getSemesters(student).flatMapCompletable { local.saveSemesters(it) }
+                .concatWith(local.saveStudent(student))
     }
 
     fun clearCache() {

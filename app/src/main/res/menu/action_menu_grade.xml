@@ -4,16 +4,9 @@
     tools:context="io.github.wulkanowy.timetable.MainActivity">
 
     <item
-        android:id="@+id/action_semester_switch"
+        android:id="@+id/gradeMenuSemester"
         android:icon="@drawable/ic_menu_grade_semester_24dp"
         android:orderInCategory="2"
         android:title="@string/grade_switch_semester"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_summary_switch"
-        android:icon="@drawable/ic_menu_grade_summary_24dp"
-        android:orderInCategory="1"
-        android:title="@string/grade_menu_summary"
         app:showAsAction="ifRoom" />
 </menu>

@@ -15,7 +15,7 @@ class SplashPresenterTest {
     lateinit var splashView: SplashView
 
     @Mock
-    lateinit var studentRepository: SessionRepository
+    lateinit var sessionRepository: SessionRepository
 
     @Mock
     lateinit var errorHandler: ErrorHandler
@@ -25,19 +25,19 @@ class SplashPresenterTest {
     @Before
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
-        presenter = SplashPresenter(studentRepository, errorHandler)
+        presenter = SplashPresenter(sessionRepository, errorHandler)
     }
 
     @Test
     fun testOpenLoginView() {
-        doReturn(false).`when`(studentRepository).isSessionSaved
+        doReturn(false).`when`(sessionRepository).isSessionSaved
         presenter.attachView(splashView)
         verify(splashView).openLoginView()
     }
 
     @Test
     fun testMainMainView() {
-        doReturn(true).`when`(studentRepository).isSessionSaved
+        doReturn(true).`when`(sessionRepository).isSessionSaved
         presenter.attachView(splashView)
         verify(splashView).openMainView()
     }

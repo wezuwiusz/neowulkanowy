@@ -11,7 +11,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.utils.extension.setOnItemClickListener
+import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_exam.*
 import javax.inject.Inject
 

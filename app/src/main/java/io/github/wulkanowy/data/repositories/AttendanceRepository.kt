@@ -6,7 +6,7 @@ import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.local.AttendanceLocal
 import io.github.wulkanowy.data.repositories.remote.AttendanceRemote
-import io.github.wulkanowy.utils.extension.getWeekFirstDayAlwaysCurrent
+import io.github.wulkanowy.utils.weekFirstDayAlwaysCurrent
 import io.reactivex.Single
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
@@ -21,7 +21,7 @@ class AttendanceRepository @Inject constructor(
 ) {
 
     fun getAttendance(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false): Single<List<Attendance>> {
-        val start = startDate.getWeekFirstDayAlwaysCurrent()
+        val start = startDate.weekFirstDayAlwaysCurrent
         val end = endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY))
 
         return local.getAttendance(semester, start, end).filter { !forceRefresh }
