@@ -63,11 +63,11 @@
 
     <!--Timetable-->
     <string name="timetable_lesson">Lekcja</string>
-    <string name="timetable_room">Sala %s</string>
+    <string name="timetable_room">Sala</string>
     <string name="timetable_group">Grupa</string>
     <string name="timetable_time">Godziny</string>
     <string name="timetable_changes">Zmiany</string>
-    <string name="timetable_no_items">Brak lekcji w tym tygodniu</string>
+    <string name="timetable_no_items">Brak lekcji w tym dniu</string>
 
 
     <!--Attendance-->

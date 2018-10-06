@@ -63,7 +63,7 @@
     <string name="timetable_group">Group</string>
     <string name="timetable_time">Hours</string>
     <string name="timetable_changes">Changes</string>
-    <string name="timetable_no_items">No lesson in this week</string>
+    <string name="timetable_no_items">No lesson in this day</string>
 
 
     <!--Attendance-->

@@ -94,11 +94,6 @@ class ExamFragment : BaseFragment(), ExamView {
         outState.putLong(SAVED_DATE_KEY, presenter.currentDate.toEpochDay())
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        presenter.loadData(date = savedInstanceState?.getLong(SAVED_DATE_KEY))
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.detachView()

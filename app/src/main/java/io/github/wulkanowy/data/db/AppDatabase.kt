@@ -15,6 +15,7 @@ import javax.inject.Singleton
             Student::class,
             Semester::class,
             Exam::class,
+            Timetable::class,
             Attendance::class,
             Grade::class,
             GradeSummary::class
@@ -37,6 +38,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun semesterDao(): SemesterDao
 
     abstract fun examsDao(): ExamDao
+
+    abstract fun timetableDao(): TimetableDao
 
     abstract fun attendanceDao(): AttendanceDao
 

@@ -2,6 +2,7 @@ package io.github.wulkanowy.utils
 
 import org.threeten.bp.DayOfWeek.*
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatter.ofPattern
 import org.threeten.bp.temporal.TemporalAdjusters
@@ -15,13 +16,16 @@ fun Date.toLocalDate(): LocalDate {
     return LocalDate.parse(SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(this))
 }
 
+fun Date.toLocalDateTime(): LocalDateTime = LocalDateTime.parse(SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+        Locale.getDefault()).format(this), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
 fun String.toLocalDate(format: String = DATE_PATTERN): LocalDate {
     return LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
 }
 
-fun LocalDate.toFormattedString(format: String): String = this.format(ofPattern(format))
+fun LocalDate.toFormattedString(format: String = DATE_PATTERN): String = this.format(ofPattern(format))
 
-fun LocalDate.toFormattedString(): String = this.toFormattedString(DATE_PATTERN)
+fun LocalDateTime.toFormattedString(format: String = DATE_PATTERN): String = this.format(DateTimeFormatter.ofPattern(format))
 
 inline val LocalDate.nextWorkDay: LocalDate
     get() {

@@ -63,4 +63,8 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideAttendanceDao(database: AppDatabase) = database.attendanceDao()
+
+    @Singleton
+    @Provides
+    fun provideTimetableDao(database: AppDatabase) = database.timetableDao()
 }

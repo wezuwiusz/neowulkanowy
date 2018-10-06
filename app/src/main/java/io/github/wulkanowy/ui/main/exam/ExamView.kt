@@ -2,7 +2,6 @@ package io.github.wulkanowy.ui.main.exam
 
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.ui.base.BaseView
-import org.threeten.bp.LocalDate
 
 interface ExamView : BaseView {
 

@@ -2,10 +2,10 @@ package io.github.wulkanowy.data.repositories
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.repositories.local.AttendanceLocal
-import io.github.wulkanowy.data.repositories.remote.AttendanceRemote
+import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.data.repositories.local.TimetableLocal
+import io.github.wulkanowy.data.repositories.remote.TimetableRemote
 import io.github.wulkanowy.utils.weekFirstDayAlwaysCurrent
 import io.reactivex.Single
 import org.threeten.bp.DayOfWeek
@@ -16,24 +16,24 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AttendanceRepository @Inject constructor(
+class TimetableRepository @Inject constructor(
         private val settings: InternetObservingSettings,
-        private val local: AttendanceLocal,
-        private val remote: AttendanceRemote
+        private val local: TimetableLocal,
+        private val remote: TimetableRemote
 ) {
 
-    fun getAttendance(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false): Single<List<Attendance>> {
+    fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false): Single<List<Timetable>> {
         val start = startDate.weekFirstDayAlwaysCurrent
         val end = endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY))
 
-        return local.getAttendance(semester, start, end).filter { !forceRefresh }
+        return local.getLessons(semester, start, end).filter { !forceRefresh }
                 .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-                    if (it) remote.getAttendance(semester, start, end)
+                    if (it) remote.getLessons(semester, start, end)
                     else Single.error(UnknownHostException())
                 }.flatMap { newLessons ->
-                    local.getAttendance(semester, start, end).toSingle(emptyList()).map { grades ->
-                        local.deleteAttendance(grades - newLessons)
-                        local.saveAttendance(newLessons - grades)
+                    local.getLessons(semester, start, end).toSingle(emptyList()).map { lessons ->
+                        local.deleteLessons(lessons - newLessons)
+                        local.saveLessons(newLessons - lessons)
                         newLessons
                     }
                 }).map { list ->
