@@ -12,6 +12,10 @@ data class Student(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0,
 
+        var endpoint: String,
+
+        var loginType: String,
+
         var email: String,
 
         var password: String,

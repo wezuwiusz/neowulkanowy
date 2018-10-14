@@ -2,7 +2,7 @@ package io.github.wulkanowy.data
 
 import android.content.res.Resources
 import io.github.wulkanowy.R
-import io.github.wulkanowy.api.auth.NotLoggedInException
+import io.github.wulkanowy.api.login.NotLoggedInException
 import timber.log.Timber
 import java.io.IOException
 import java.net.SocketTimeoutException

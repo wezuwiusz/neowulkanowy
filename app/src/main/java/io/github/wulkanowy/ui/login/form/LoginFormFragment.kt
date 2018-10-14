@@ -36,16 +36,24 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override fun initInputs() {
         loginSignButton.setOnClickListener {
-            presenter.attemptLogin(loginEmailEdit.text.toString(),
+            presenter.attemptLogin(
+                    loginNicknameEdit.text.toString(),
                     loginPassEdit.text.toString(),
-                    loginSymbolEdit.text.toString())
+                    loginSymbolEdit.text.toString(),
+                    resources.getStringArray(R.array.endpoints_values)[loginHostEdit.selectedItemPosition]
+            )
         }
 
         loginPassEdit.setOnEditorActionListener { _, id, _ -> onEditAction(id) }
 
+        loginHostEdit.run {
+            adapter = ArrayAdapter.createFromResource(context, R.array.endpoints_keys, android.R.layout.simple_spinner_item).apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
+        }
+
         loginSymbolEdit.run {
-            setAdapter(ArrayAdapter(context, android.R.layout.simple_list_item_1,
-                    resources.getStringArray(R.array.symbols_values)))
+            setAdapter(ArrayAdapter(context, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.symbols_values)))
             setOnEditorActionListener { _, id, _ -> onEditAction(id) }
         }
     }
@@ -69,17 +77,10 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         (activity as LoginSwitchListener?)?.switchFragment(1)
     }
 
-    override fun setErrorEmailRequired() {
-        loginEmailEdit.run {
+    override fun setErrorNicknameRequired() {
+        loginNicknameEdit.run {
             requestFocus()
             error = getString(R.string.login_field_required)
-        }
-    }
-
-    override fun setErrorEmailInvalid() {
-        loginEmailEdit.run {
-            requestFocus()
-            error = getString(R.string.login_invalid_email)
         }
     }
 
@@ -119,7 +120,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun resetViewErrors() {
-        loginEmailEdit.error = null
+        loginNicknameEdit.error = null
         loginPassEdit.error = null
     }
 

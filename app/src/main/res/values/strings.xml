@@ -15,13 +15,13 @@
     <!--Login form-->
     <string name="login_header_default">Sign in with the student or parent account</string>
     <string name="login_header_symbol">Enter the VULCAN diary symbol</string>
-    <string name="login_email_hint">Email</string>
+    <string name="login_nickname_hint">Email or nick</string>
     <string name="login_password_hint">Password</string>
+    <string name="login_host_hint">Log</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_progress">Logging in&#8230;</string>
     <string name="login_sync">Synchronization&#8230;</string>
-    <string name="login_invalid_email">This email address is invalid</string>
     <string name="login_invalid_password">This password is too short</string>
     <string name="login_incorrect_password">This password is incorrect</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>

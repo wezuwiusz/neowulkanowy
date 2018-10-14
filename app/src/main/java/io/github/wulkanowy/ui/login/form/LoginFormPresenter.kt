@@ -19,9 +19,9 @@ class LoginFormPresenter @Inject constructor(
         view.initInputs()
     }
 
-    fun attemptLogin(email: String, password: String, symbol: String) {
+    fun attemptLogin(email: String, password: String, symbol: String, endpoint: String) {
         if (!validateCredentials(email, password, symbol)) return
-        disposable.add(sessionRepository.getConnectedStudents(email, password, normalizeSymbol(symbol))
+        disposable.add(sessionRepository.getConnectedStudents(email, password, symbol, endpoint)
                 .observeOn(schedulers.mainThread())
                 .subscribeOn(schedulers.backgroundThread())
                 .doOnSubscribe {
@@ -51,11 +51,11 @@ class LoginFormPresenter @Inject constructor(
                 }, { errorHandler.proceed(it) }))
     }
 
-    private fun validateCredentials(email: String, password: String, symbol: String): Boolean {
+    private fun validateCredentials(login: String, password: String, symbol: String): Boolean {
         var isCorrect = true
 
-        if (email.isEmpty()) {
-            view?.setErrorEmailRequired()
+        if (login.isEmpty()) {
+            view?.setErrorNicknameRequired()
             isCorrect = false
         }
 
@@ -69,19 +69,10 @@ class LoginFormPresenter @Inject constructor(
             isCorrect = false
         }
 
-        if (!email.contains("[@]|[\\\\]{4}".toRegex()) && email.isNotEmpty()) {
-            view?.setErrorEmailInvalid()
-            isCorrect = false
-        }
-
-        if (password.length <= 4 && password.isNotEmpty()) {
+        if (password.length < 6 && password.isNotEmpty()) {
             view?.setErrorPassInvalid(focus = isCorrect)
             isCorrect = false
         }
         return isCorrect
-    }
-
-    private fun normalizeSymbol(symbol: String): String {
-        return if (symbol.isEmpty()) "Default" else symbol
     }
 }

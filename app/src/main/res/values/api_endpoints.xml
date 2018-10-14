@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string-array name="endpoints_keys">
+        <item>Vulcan</item>
+        <item>Opolska eSzkoła</item>
+        <item>Gdańska Platforma Edukacyjna</item>
+        <item>EduNet Miasta Tarnowa</item>
+        <item>ResMan Rzeszów</item>
+        <item>Fakelog</item>
+        <item>Fakelog lokalnie</item>
+    </string-array>
+    <string-array name="endpoints_values">
+        <item>https://vulcan.net.pl</item>
+        <item>https://eszkola.opolskie.pl</item>
+        <item>https://edu.gdansk.pl</item>
+        <item>https://umt.tarnow.pl</item>
+        <item>https://resman.pl</item>
+        <item>https://fakelog.cf</item>
+        <item>http://fakelog.localhost:3000</item>
+    </string-array>
+</resources>
