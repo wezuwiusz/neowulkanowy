@@ -11,13 +11,17 @@ interface TimetableView : BaseView {
 
     fun updateNavigationDay(date: String)
 
+    fun isViewEmpty(): Boolean
+
+    fun clearData()
+
+    fun hideRefresh()
+
     fun showEmpty(show: Boolean)
 
     fun showProgress(show: Boolean)
 
     fun showContent(show: Boolean)
-
-    fun showRefresh(show: Boolean)
 
     fun showPreButton(show: Boolean)
 
@@ -25,6 +29,5 @@ interface TimetableView : BaseView {
 
     fun showTimetableDialog(lesson: Timetable)
 
-    fun isViewEmpty(): Boolean
-    fun clearData()
+    fun roomString(): String
 }

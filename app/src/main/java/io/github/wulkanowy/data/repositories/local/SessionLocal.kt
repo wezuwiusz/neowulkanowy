@@ -6,8 +6,8 @@ import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.dao.StudentDao
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.utils.security.Scrambler.decrypt
-import io.github.wulkanowy.utils.security.Scrambler.encrypt
+import io.github.wulkanowy.utils.security.decrypt
+import io.github.wulkanowy.utils.security.encrypt
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single

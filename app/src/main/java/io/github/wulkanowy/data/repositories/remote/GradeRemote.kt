@@ -26,7 +26,7 @@ class GradeRemote @Inject constructor(private val api: Api) {
                                 subject = it.subject,
                                 entry = it.entry,
                                 value = it.value,
-                                modifier = it.modifier.toDouble(),
+                                modifier = it.modifier,
                                 comment = it.comment,
                                 color = it.color,
                                 gradeSymbol = it.symbol,

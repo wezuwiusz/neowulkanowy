@@ -24,7 +24,12 @@ class GradeSummaryRepository @Inject constructor(
                         .flatMap {
                             if (it) remote.getGradeSummary(semester)
                             else Single.error(UnknownHostException())
-                        }
-                ).doOnSuccess { local.saveGradesSummary(it) }
+                        }.flatMap { newGradesSummary ->
+                            local.getGradesSummary(semester).toSingle(emptyList())
+                                    .doOnSuccess { oldGradesSummary ->
+                                        local.deleteGradesSummary(oldGradesSummary - newGradesSummary)
+                                        local.saveGradesSummary(newGradesSummary - oldGradesSummary)
+                                    }
+                        }.flatMap { local.getGradesSummary(semester).toSingle(emptyList()) })
     }
 }

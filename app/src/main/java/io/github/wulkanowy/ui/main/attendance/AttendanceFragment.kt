@@ -10,11 +10,12 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_attendance.*
 import javax.inject.Inject
 
-class AttendanceFragment : BaseFragment(), AttendanceView {
+class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MenuFragmentView {
 
     @Inject
     lateinit var presenter: AttendancePresenter
@@ -24,6 +25,7 @@ class AttendanceFragment : BaseFragment(), AttendanceView {
 
     companion object {
         private const val SAVED_DATE_KEY = "CURRENT_DATE"
+
         fun newInstance() = AttendanceFragment()
     }
 
@@ -33,40 +35,41 @@ class AttendanceFragment : BaseFragment(), AttendanceView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.run {
-            attachView(this@AttendanceFragment)
-            loadData(date = savedInstanceState?.getLong(SAVED_DATE_KEY))
-        }
+        messageContainer = attendanceRecycler
+        presenter.onAttachView(this, savedInstanceState?.getLong(SAVED_DATE_KEY))
     }
 
     override fun initView() {
-        attendanceAdapter.run {
-            isAutoCollapseOnExpand = true
-            isAutoScrollOnExpand = true
-            setOnItemClickListener { presenter.onAttendanceItemSelected(getItem(it))}
+        attendanceAdapter.apply {
+            setOnItemClickListener { presenter.onAttendanceItemSelected(getItem(it)) }
         }
+
         attendanceRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = attendanceAdapter
         }
-        attendanceSwipe.setOnRefreshListener { presenter.loadData(date = null, forceRefresh = true) }
-        attendancePreviousButton.setOnClickListener { presenter.loadAttendanceForPreviousDay() }
-        attendanceNextButton.setOnClickListener { presenter.loadAttendanceForNextDay() }
+        attendanceSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        attendancePreviousButton.setOnClickListener { presenter.onPreviousDay() }
+        attendanceNextButton.setOnClickListener { presenter.onNextDay() }
     }
 
     override fun updateData(data: List<AttendanceItem>) {
         attendanceAdapter.updateDataSet(data, true)
     }
 
-    override fun clearData() {
-        attendanceAdapter.clear()
-    }
-
     override fun updateNavigationDay(date: String) {
         attendanceNavDate.text = date
     }
 
+    override fun clearData() {
+        attendanceAdapter.clear()
+    }
+
     override fun isViewEmpty() = attendanceAdapter.isEmpty
+
+    override fun onFragmentReselected() {
+        presenter.onViewReselected()
+    }
 
     override fun showEmpty(show: Boolean) {
         attendanceEmpty.visibility = if (show) View.VISIBLE else View.GONE
@@ -80,8 +83,8 @@ class AttendanceFragment : BaseFragment(), AttendanceView {
         attendanceRecycler.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    override fun showRefresh(show: Boolean) {
-        attendanceSwipe.isRefreshing = show
+    override fun hideRefresh() {
+        attendanceSwipe.isRefreshing = false
     }
 
     override fun showPreButton(show: Boolean) {
@@ -102,8 +105,8 @@ class AttendanceFragment : BaseFragment(), AttendanceView {
     }
 
     override fun onDestroyView() {
+        presenter.onDetachView()
         super.onDestroyView()
-        presenter.detachView()
     }
 }
 

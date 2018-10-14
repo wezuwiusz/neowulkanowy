@@ -9,16 +9,16 @@ import javax.inject.Inject
 
 class TimetableLocal @Inject constructor(private val timetableDb: TimetableDao) {
 
-    fun getLessons(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Timetable>> {
+    fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Timetable>> {
         return timetableDb.getTimetable(semester.diaryId, semester.studentId, startDate, endDate)
                 .filter { !it.isEmpty() }
     }
 
-    fun saveLessons(lessons: List<Timetable>) {
-        timetableDb.insertAll(lessons)
+    fun saveTimetable(timetables: List<Timetable>) {
+        timetableDb.insertAll(timetables)
     }
 
-    fun deleteLessons(exams: List<Timetable>) {
-        timetableDb.deleteAll(exams)
+    fun deleteTimetable(timetables: List<Timetable>) {
+        timetableDb.deleteAll(timetables)
     }
 }

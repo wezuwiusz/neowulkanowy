@@ -17,12 +17,12 @@ class GradeDetailsPresenter @Inject constructor(
         private val gradeRepository: GradeRepository,
         private val sessionRepository: SessionRepository) : BasePresenter<GradeDetailsView>(errorHandler) {
 
-    override fun attachView(view: GradeDetailsView) {
-        super.attachView(view)
+    override fun onAttachView(view: GradeDetailsView) {
+        super.onAttachView(view)
         view.initView()
     }
 
-    fun loadData(semesterId: String, forceRefresh: Boolean) {
+    fun onParentViewLoadData(semesterId: String, forceRefresh: Boolean) {
         disposable.add(sessionRepository.getSemesters()
                 .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
                 .map { createGradeItems(it.groupBy { grade -> grade.subject }.toSortedMap()) }
@@ -76,7 +76,7 @@ class GradeDetailsPresenter @Inject constructor(
         }
     }
 
-    fun onParentChangeSemester() {
+    fun onParentViewChangeSemester() {
         view?.run {
             showProgress(true)
             showRefresh(false)

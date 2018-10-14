@@ -22,7 +22,7 @@ class LoginPresenterTest {
         MockitoAnnotations.initMocks(this)
         clearInvocations(loginView)
         presenter = LoginPresenter(errorHandler)
-        presenter.attachView(loginView)
+        presenter.onAttachView(loginView)
     }
 
     @Test

@@ -9,19 +9,19 @@ interface AttendanceView : BaseView {
 
     fun updateData(data: List<AttendanceItem>)
 
-    fun clearData()
-
     fun updateNavigationDay(date: String)
 
+    fun clearData()
+
     fun isViewEmpty(): Boolean
+
+    fun hideRefresh()
 
     fun showEmpty(show: Boolean)
 
     fun showProgress(show: Boolean)
 
     fun showContent(show: Boolean)
-
-    fun showRefresh(show: Boolean)
 
     fun showPreButton(show: Boolean)
 

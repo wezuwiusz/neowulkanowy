@@ -14,8 +14,8 @@ class LoginFormPresenter @Inject constructor(
 
     private var wasEmpty = false
 
-    override fun attachView(view: LoginFormView) {
-        super.attachView(view)
+    override fun onAttachView(view: LoginFormView) {
+        super.onAttachView(view)
         view.initInputs()
     }
 

@@ -34,9 +34,9 @@ class ExamLocalTest {
     @Test
     fun saveAndReadTest() {
         examLocal.saveExams(listOf(
-                Exam(0, "1", "2", LocalDate.of(2018, 9, 10), LocalDate.now(), "", "", "", "", "", ""),
-                Exam(0, "1", "2", LocalDate.of(2018, 9, 14), LocalDate.now(), "", "", "", "", "", ""),
-                Exam(0, "1", "2", LocalDate.of(2018, 9, 17), LocalDate.now(), "", "", "", "", "", "")
+                Exam("1", "2", LocalDate.of(2018, 9, 10), LocalDate.now(), "", "", "", "", "", ""),
+                Exam("1", "2", LocalDate.of(2018, 9, 14), LocalDate.now(), "", "", "", "", "", ""),
+                Exam("1", "2", LocalDate.of(2018, 9, 17), LocalDate.now(), "", "", "", "", "", "")
         ))
 
         val exams = examLocal

@@ -7,8 +7,8 @@ import javax.inject.Inject
 class LoginPresenter @Inject constructor(errorHandler: ErrorHandler)
     : BasePresenter<LoginView>(errorHandler) {
 
-    override fun attachView(view: LoginView) {
-        super.attachView(view)
+    override fun onAttachView(view: LoginView) {
+        super.onAttachView(view)
         view.run {
             initAdapter()
             hideActionBar()

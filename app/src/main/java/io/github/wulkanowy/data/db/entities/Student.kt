@@ -2,11 +2,9 @@ package io.github.wulkanowy.data.db.entities
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
-@Entity(tableName = "Students",
-        indices = [Index(value = ["student_id", "student_name"], unique = true)])
+@Entity(tableName = "Students")
 data class Student(
 
         @PrimaryKey(autoGenerate = true)

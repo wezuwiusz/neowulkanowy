@@ -39,7 +39,7 @@ class MainActivity : BaseActivity(), MainView {
         setSupportActionBar(mainToolbar)
         messageContainer = mainFragmentContainer
 
-        presenter.attachView(this)
+        presenter.onAttachView(this)
         navController.initialize(DEFAULT_TAB, savedInstanceState)
     }
 
@@ -90,10 +90,6 @@ class MainActivity : BaseActivity(), MainView {
         supportActionBar?.title = title
     }
 
-    override fun expandActionBar(show: Boolean) {
-        mainAppBarContainer.setExpanded(show, true)
-    }
-
     override fun viewTitle(index: Int): String {
         return getString(listOf(R.string.grade_title,
                 R.string.attendance_title,
@@ -119,6 +115,6 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.detachView()
+        presenter.onDetachView()
     }
 }

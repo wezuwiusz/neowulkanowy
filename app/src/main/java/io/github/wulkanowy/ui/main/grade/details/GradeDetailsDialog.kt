@@ -30,6 +30,7 @@ class GradeDetailsDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, 0)
         arguments?.run {
             grade = getSerializable(ARGUMENT_KEY) as Grade
         }
@@ -48,7 +49,7 @@ class GradeDetailsDialog : DialogFragment() {
         gradeDialogColorValue.text = getString(grade.colorStringId)
 
         gradeDialogCommentValue.apply {
-            if (grade.comment.isEmpty()) {
+            if (grade.comment.isBlank()) {
                 visibility = GONE
                 gradeDialogComment.visibility = GONE
             } else text = grade.comment
@@ -59,15 +60,15 @@ class GradeDetailsDialog : DialogFragment() {
             setBackgroundResource(grade.valueColor)
         }
 
-        gradeDialogTeacherValue.text = if (grade.teacher.isEmpty()) {
+        gradeDialogTeacherValue.text = if (grade.teacher.isBlank()) {
             getString(R.string.all_no_data)
         } else grade.teacher
 
         gradeDialogDescriptionValue.text = grade.run {
             when {
-                description.isEmpty() && gradeSymbol.isNotEmpty() -> gradeSymbol
-                description.isEmpty() && gradeSymbol.isEmpty() -> getString(R.string.all_no_description)
-                gradeSymbol.isNotEmpty() && description.isNotEmpty() -> "$gradeSymbol - $description"
+                description.isBlank() && gradeSymbol.isNotBlank() -> gradeSymbol
+                description.isBlank() && gradeSymbol.isBlank() -> getString(R.string.all_no_description)
+                gradeSymbol.isNotBlank() && description.isNotBlank() -> "$gradeSymbol - $description"
                 else -> description
             }
         }

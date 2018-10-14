@@ -31,14 +31,14 @@ class SplashPresenterTest {
     @Test
     fun testOpenLoginView() {
         doReturn(false).`when`(sessionRepository).isSessionSaved
-        presenter.attachView(splashView)
+        presenter.onAttachView(splashView)
         verify(splashView).openLoginView()
     }
 
     @Test
     fun testMainMainView() {
         doReturn(true).`when`(sessionRepository).isSessionSaved
-        presenter.attachView(splashView)
+        presenter.onAttachView(splashView)
         verify(splashView).openMainView()
     }
 }

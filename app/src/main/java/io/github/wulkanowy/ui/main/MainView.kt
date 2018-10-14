@@ -10,8 +10,6 @@ interface MainView : BaseView {
 
     fun setViewTitle(title: String)
 
-    fun expandActionBar(show: Boolean)
-
     fun viewTitle(index: Int): String
 
     fun currentMenuIndex(): Int

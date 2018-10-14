@@ -34,14 +34,10 @@ class GradeExtensionTest {
     @Test
     fun calcSummaryAverage() {
         assertEquals(2.5, listOf(
-                GradeSummary(0, "", "", "", "",
-                        "5"),
-                GradeSummary(0, "", "", "", "",
-                        "-5"),
-                GradeSummary(0, "", "", "", "",
-                        "test"),
-                GradeSummary(0, "", "", "", "",
-                        "0")
+                GradeSummary("", "", "", "", "5"),
+                GradeSummary("", "", "", "", "-5"),
+                GradeSummary("", "", "", "", "test"),
+                GradeSummary("", "", "", "", "0")
         ).calcAverage(), 0.005)
     }
 }

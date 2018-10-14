@@ -14,33 +14,33 @@ class TimeExtensionTest {
     }
 
     @Test
-    fun toFormattedStringTest() {
-        assertEquals("2018-10-01", LocalDate.of(2018, 10, 1).toFormattedString())
+    fun toFormattedStringLocalDateTest() {
+        assertEquals("01.10.2018", LocalDate.of(2018, 10, 1).toFormattedString())
         assertEquals("2018-10.01", LocalDate.of(2018, 10, 1).toFormattedString("yyyy-MM.dd"))
     }
 
     @Test
-    fun toFormat_LocalDateTime() {
-        assertEquals("2018-10-01", LocalDateTime.of(2018, 10, 1, 10, 0, 0).toFormattedString())
+    fun toFormattedStringLocalDateTimeTest() {
+        assertEquals("01.10.2018", LocalDateTime.of(2018, 10, 1, 10, 0, 0).toFormattedString())
         assertEquals("2018-10-01 10:00:00", LocalDateTime.of(2018, 10, 1, 10, 0, 0).toFormattedString("uuuu-MM-dd HH:mm:ss"))
     }
 
     @Test
-    fun weekFirstDayAlwaysCurrentTest() {
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 2).weekFirstDayAlwaysCurrent)
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 5).weekFirstDayAlwaysCurrent)
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 6).weekFirstDayAlwaysCurrent)
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 7).weekFirstDayAlwaysCurrent)
-        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 8).weekFirstDayAlwaysCurrent)
+    fun mondayTest() {
+        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 2).monday)
+        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 5).monday)
+        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 6).monday)
+        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 7).monday)
+        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 8).monday)
     }
 
     @Test
-    fun weekFirstDayNextOnWeekEndTest() {
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 2).weekFirstDayNextOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 5).weekFirstDayNextOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 6).weekFirstDayNextOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 7).weekFirstDayNextOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 8).weekFirstDayNextOnWeekEnd)
+    fun fridayTest() {
+        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 2).friday)
+        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 5).friday)
+        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 6).friday)
+        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 7).friday)
+        assertEquals(LocalDate.of(2018, 10, 12), LocalDate.of(2018, 10, 8).friday)
     }
 
     @Test
@@ -53,43 +53,44 @@ class TimeExtensionTest {
 
     @Test
     fun nextSchoolDayTest() {
-        assertEquals(LocalDate.of(2018, 10, 2), LocalDate.of(2018, 10, 1).nextWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 3), LocalDate.of(2018, 10, 2).nextWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 4), LocalDate.of(2018, 10, 3).nextWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 4).nextWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 5).nextWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 6).nextWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 7).nextWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 9), LocalDate.of(2018, 10, 8).nextWorkDay)
+        assertEquals(LocalDate.of(2018, 10, 2), LocalDate.of(2018, 10, 1).nextSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 3), LocalDate.of(2018, 10, 2).nextSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 4), LocalDate.of(2018, 10, 3).nextSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 4).nextSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 5).nextSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 6).nextSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 7).nextSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 9), LocalDate.of(2018, 10, 8).nextSchoolDay)
     }
 
     @Test
     fun previousSchoolDayTest() {
-        assertEquals(LocalDate.of(2018, 10, 9), LocalDate.of(2018, 10, 10).previousWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 9).previousWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 8).previousWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 7).previousWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 6).previousWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 4), LocalDate.of(2018, 10, 5).previousWorkDay)
-        assertEquals(LocalDate.of(2018, 10, 3), LocalDate.of(2018, 10, 4).previousWorkDay)
+        assertEquals(LocalDate.of(2018, 10, 9), LocalDate.of(2018, 10, 10).previousSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 8), LocalDate.of(2018, 10, 9).previousSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 8).previousSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 7).previousSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 5), LocalDate.of(2018, 10, 6).previousSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 4), LocalDate.of(2018, 10, 5).previousSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 3), LocalDate.of(2018, 10, 4).previousSchoolDay)
+    }
+
+
+    @Test
+    fun nextOrSameSchoolDayTest() {
+        assertEquals(LocalDate.of(2018, 9, 28), LocalDate.of(2018, 9, 28).nextOrSameSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 9, 29).nextOrSameSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 9, 30).nextOrSameSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 1).nextOrSameSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 2), LocalDate.of(2018, 10, 2).nextOrSameSchoolDay)
     }
 
     @Test
-    fun nearSchoolDayPrevOnWeekEndTest() {
-        assertEquals(LocalDate.of(2018, 9, 28), LocalDate.of(2018, 9, 28).nearSchoolDayPrevOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 9, 28), LocalDate.of(2018, 9, 29).nearSchoolDayPrevOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 9, 28), LocalDate.of(2018, 9, 30).nearSchoolDayPrevOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 1).nearSchoolDayPrevOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 2), LocalDate.of(2018, 10, 2).nearSchoolDayPrevOnWeekEnd)
-    }
-
-    @Test
-    fun nearSchoolDayNextOnWeekEndTest() {
-        assertEquals(LocalDate.of(2018, 9, 28), LocalDate.of(2018, 9, 28).nearSchoolDayNextOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 9, 29).nearSchoolDayNextOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 9, 30).nearSchoolDayNextOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 1).nearSchoolDayNextOnWeekEnd)
-        assertEquals(LocalDate.of(2018, 10, 2), LocalDate.of(2018, 10, 2).nearSchoolDayNextOnWeekEnd)
+    fun previousOrSameSchoolDayTest() {
+        assertEquals(LocalDate.of(2018, 9, 28), LocalDate.of(2018, 9, 28).previousOrSameSchoolDay)
+        assertEquals(LocalDate.of(2018, 9, 28), LocalDate.of(2018, 9, 29).previousOrSameSchoolDay)
+        assertEquals(LocalDate.of(2018, 9, 28), LocalDate.of(2018, 9, 30).previousOrSameSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 1), LocalDate.of(2018, 10, 1).previousOrSameSchoolDay)
+        assertEquals(LocalDate.of(2018, 10, 2), LocalDate.of(2018, 10, 2).previousOrSameSchoolDay)
     }
 
     @Test

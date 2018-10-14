@@ -10,14 +10,11 @@ import java.io.Serializable
 @Entity(tableName = "Timetable")
 data class Timetable(
 
-        @PrimaryKey(autoGenerate = true)
-        var id: Long = 0,
-
         @ColumnInfo(name = "student_id")
-        var studentId: String = "",
+        var studentId: String,
 
         @ColumnInfo(name = "diary_id")
-        var diaryId: String = "",
+        var diaryId: String,
 
         val number: Int = 0,
 
@@ -27,17 +24,21 @@ data class Timetable(
 
         val date: LocalDate,
 
-        val subject: String = "",
+        val subject: String,
 
-        val group: String = "",
+        val group: String,
 
-        val room: String = "",
+        val room: String,
 
-        val teacher: String = "",
+        val teacher: String,
 
-        val info: String = "",
+        val info: String,
 
         val changes: Boolean = false,
 
         val canceled: Boolean = false
-) : Serializable
+) : Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}

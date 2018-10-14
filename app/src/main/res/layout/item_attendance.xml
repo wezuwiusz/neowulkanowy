@@ -4,6 +4,7 @@
     android:id="@+id/attendanceItemContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/ic_all_divider"
     android:foreground="?attr/selectableItemBackgroundBorderless"
     android:paddingStart="12dp"
     android:paddingLeft="12dp"

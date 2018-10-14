@@ -31,7 +31,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.attachView(this)
+        presenter.onAttachView(this)
     }
 
     override fun initInputs() {
@@ -139,6 +139,6 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter.detachView()
+        presenter.onDetachView()
     }
 }

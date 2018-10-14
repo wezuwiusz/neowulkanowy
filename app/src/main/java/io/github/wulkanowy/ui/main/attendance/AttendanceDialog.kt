@@ -26,14 +26,13 @@ class AttendanceDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentTheme)
+        setStyle(STYLE_NO_TITLE, 0)
         arguments?.run {
             attendance = getSerializable(ARGUMENT_KEY) as Attendance
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dialog.setTitle(getString(R.string.all_details))
         return inflater.inflate(R.layout.dialog_attendance, container, false)
     }
 

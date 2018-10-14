@@ -13,12 +13,7 @@ class SplashActivity : BaseActivity(), SplashView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.attachView(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.detachView()
+        presenter.onAttachView(this)
     }
 
     override fun openLoginView() {
@@ -29,5 +24,10 @@ class SplashActivity : BaseActivity(), SplashView {
     override fun openMainView() {
         startActivity(MainActivity.getStartIntent(this))
         finish()
+    }
+
+    override fun onDestroy() {
+        presenter.onDetachView()
+        super.onDestroy()
     }
 }

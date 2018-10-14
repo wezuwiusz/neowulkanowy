@@ -31,7 +31,7 @@ class GradeDetailsItem(val grade: Grade, private val weightString: String, priva
                 text = grade.entry
                 setBackgroundResource(valueColor)
             }
-            gradeItemDescription.text = if (grade.description.isNotEmpty()) grade.description else grade.gradeSymbol
+            gradeItemDescription.text = if (grade.description.isNotBlank()) grade.description else grade.gradeSymbol
             gradeItemDate.text = grade.date.toFormattedString()
             gradeItemWeight.text = "$weightString: ${grade.weight}"
             gradeItemNote.visibility = if (grade.isNew) VISIBLE else GONE

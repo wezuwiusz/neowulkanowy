@@ -4,18 +4,25 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:minWidth="300dp"
         android:orientation="vertical"
         android:padding="20dp">
+
+        <TextView
+            android:id="@+id/exam_dialog_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/all_details"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/examDialogSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/all_subject"
-            android:textIsSelectable="true"
             android:textSize="17sp" />
 
         <TextView
@@ -33,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/exam_type"
-            android:textIsSelectable="true"
             android:textSize="17sp" />
 
         <TextView
@@ -102,8 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="15dp"
-            android:padding="0dp"
+            android:layout_marginTop="20dp"
             android:text="@string/all_close"
             android:textAllCaps="true"
             android:textSize="15sp" />

@@ -11,11 +11,12 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_exam.*
 import javax.inject.Inject
 
-class ExamFragment : BaseFragment(), ExamView {
+class ExamFragment : BaseFragment(), ExamView, MainView.MenuFragmentView {
 
     @Inject
     lateinit var presenter: ExamPresenter
@@ -34,10 +35,8 @@ class ExamFragment : BaseFragment(), ExamView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.run {
-            attachView(this@ExamFragment)
-            loadData(date = savedInstanceState?.getLong(SAVED_DATE_KEY))
-        }
+        messageContainer = examRecycler
+        presenter.onAttachView(this, savedInstanceState?.getLong(SAVED_DATE_KEY))
     }
 
     override fun initView() {
@@ -48,9 +47,13 @@ class ExamFragment : BaseFragment(), ExamView {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = examAdapter
         }
-        examSwipe.setOnRefreshListener { presenter.loadData(date = null, forceRefresh = true) }
-        examPreviousButton.setOnClickListener { presenter.loadExamsForPreviousWeek() }
-        examNextButton.setOnClickListener { presenter.loadExamsForNextWeek()}
+        examSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        examPreviousButton.setOnClickListener { presenter.onPreviousWeek() }
+        examNextButton.setOnClickListener { presenter.onNextWeek() }
+    }
+
+    override fun hideRefresh() {
+        examSwipe.isRefreshing = false
     }
 
     override fun updateData(data: List<ExamItem>) {
@@ -59,6 +62,16 @@ class ExamFragment : BaseFragment(), ExamView {
 
     override fun updateNavigationWeek(date: String) {
         examNavDate.text = date
+    }
+
+    override fun clearData() {
+        examAdapter.clear()
+    }
+
+    override fun isViewEmpty() = examAdapter.isEmpty
+
+    override fun onFragmentReselected() {
+        presenter.onViewReselected()
     }
 
     override fun showEmpty(show: Boolean) {
@@ -71,10 +84,6 @@ class ExamFragment : BaseFragment(), ExamView {
 
     override fun showContent(show: Boolean) {
         examRecycler.visibility = if (show) VISIBLE else GONE
-    }
-
-    override fun showRefresh(show: Boolean) {
-        examSwipe.isRefreshing = show
     }
 
     override fun showPreButton(show: Boolean) {
@@ -95,7 +104,7 @@ class ExamFragment : BaseFragment(), ExamView {
     }
 
     override fun onDestroyView() {
+        presenter.onDetachView()
         super.onDestroyView()
-        presenter.detachView()
     }
 }

@@ -59,7 +59,7 @@
 
     <!--Timetable-->
     <string name="timetable_lesson">Lesson</string>
-    <string name="timetable_room">Room %s</string>
+    <string name="timetable_room">Room</string>
     <string name="timetable_group">Group</string>
     <string name="timetable_time">Hours</string>
     <string name="timetable_changes">Changes</string>
@@ -99,6 +99,8 @@
     <string name="all_cancel">Cancel</string>
     <string name="all_no_data">No data</string>
     <string name="all_subject">Subject</string>
+    <string name="all_prev">Prev</string>
+    <string name="all_next">Next</string>
 
 
     <!--Timetable Widget-->
@@ -150,6 +152,7 @@
     <string name="all_red">Red</string>
     <string name="all_blue">Blue</string>
     <string name="all_green">Green</string>
+    <string name="all_purple">Purple</string>
     <string name="all_empty_color">No color</string>
 
 
@@ -159,6 +162,4 @@
     <string name="all_sync_fail">There was an error during synchronization</string>
     <string name="all_timeout">Too long wait for connection</string>
     <string name="all_login_failed">Login is failed. Try again or restart the app</string>
-    <string name="prev">Prev</string>
-    <string name="next">Next</string>
 </resources>

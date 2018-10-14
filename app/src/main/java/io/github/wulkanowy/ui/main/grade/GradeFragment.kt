@@ -24,6 +24,8 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MenuFragmentView {
     lateinit var pagerAdapter: BasePagerAdapter
 
     companion object {
+        private const val SAVED_SEMESTER_KEY = "CURRENT_SEMESTER"
+
         fun newInstance() = GradeFragment()
     }
 
@@ -38,7 +40,7 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MenuFragmentView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.attachView(this)
+        presenter.onAttachView(this, savedInstanceState?.getInt(SAVED_SEMESTER_KEY))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -113,8 +115,13 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MenuFragmentView {
         (pagerAdapter.registeredFragments[index] as? GradeView.GradeChildView)?.onParentChangeSemester()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(SAVED_SEMESTER_KEY, presenter.selectedIndex)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter.detachView()
+        presenter.onDetachView()
     }
 }

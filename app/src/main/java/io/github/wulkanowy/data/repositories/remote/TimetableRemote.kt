@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class TimetableRemote @Inject constructor(private val api: Api) {
 
-    fun getLessons(semester: Semester, startDate: LocalDate, endDate: LocalDate): Single<List<Timetable>> {
+    fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate): Single<List<Timetable>> {
         return Single.just(api.run {
             if (diaryId != semester.diaryId) {
                 diaryId = semester.diaryId

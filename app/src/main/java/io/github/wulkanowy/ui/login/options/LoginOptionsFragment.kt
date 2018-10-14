@@ -35,7 +35,7 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.attachView(this)
+        presenter.onAttachView(this)
     }
 
     override fun initRecycler() {
@@ -80,6 +80,6 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter.detachView()
+        presenter.onDetachView()
     }
 }

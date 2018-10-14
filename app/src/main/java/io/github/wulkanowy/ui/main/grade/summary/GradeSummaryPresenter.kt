@@ -20,12 +20,12 @@ class GradeSummaryPresenter @Inject constructor(
         private val schedulers: SchedulersManager)
     : BasePresenter<GradeSummaryView>(errorHandler) {
 
-    override fun attachView(view: GradeSummaryView) {
-        super.attachView(view)
+    override fun onAttachView(view: GradeSummaryView) {
+        super.onAttachView(view)
         view.initView()
     }
 
-    fun loadData(semesterId: String, forceRefresh: Boolean) {
+    fun onParentViewLoadData(semesterId: String, forceRefresh: Boolean) {
         disposable.add(sessionRepository.getSemesters()
                 .map { semester -> semester.first { it.semesterId == semesterId } }
                 .flatMap {
@@ -76,7 +76,7 @@ class GradeSummaryPresenter @Inject constructor(
         }
     }
 
-    fun onParentChangeSemester() {
+    fun onParentViewChangeSemester() {
         view?.run {
             showProgress(true)
             showRefresh(false)
@@ -110,12 +110,12 @@ class GradeSummaryPresenter @Inject constructor(
 
     private fun checkEmpty(gradeSummary: GradeSummary, averages: Map<String, Double>): Boolean {
         return gradeSummary.run {
-            finalGrade.isEmpty() && predictedGrade.isEmpty() && averages[subject] == null
+            finalGrade.isBlank() && predictedGrade.isBlank() && averages[subject] == null
         }
     }
 
     private fun formatAverage(average: Double, defaultValue: String = "-- --"): String {
-        return if (average == 0.0 || average.isNaN()) defaultValue
+        return if (average == 0.0) defaultValue
         else format(FRANCE, "%.2f", average)
     }
 }

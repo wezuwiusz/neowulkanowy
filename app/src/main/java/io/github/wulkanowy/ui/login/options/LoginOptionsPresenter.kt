@@ -13,8 +13,8 @@ class LoginOptionsPresenter @Inject constructor(
         private val schedulers: SchedulersManager)
     : BasePresenter<LoginOptionsView>(errorHandler) {
 
-    override fun attachView(view: LoginOptionsView) {
-        super.attachView(view)
+    override fun onAttachView(view: LoginOptionsView) {
+        super.onAttachView(view)
         view.initRecycler()
     }
 

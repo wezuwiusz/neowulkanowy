@@ -2,15 +2,10 @@ package io.github.wulkanowy.data.db.entities
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
-@Entity(tableName = "Grades_Summary",
-        indices = [Index(value = ["semester_id", "student_id", "subject"], unique = true)])
+@Entity(tableName = "Grades_Summary")
 data class GradeSummary(
-
-        @PrimaryKey(autoGenerate = true)
-        var id: Long = 0,
 
         @ColumnInfo(name = "semester_id")
         var semesterId: String,
@@ -23,4 +18,8 @@ data class GradeSummary(
         var predictedGrade: String,
 
         var finalGrade: String
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+
+}

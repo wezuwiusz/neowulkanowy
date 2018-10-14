@@ -9,8 +9,8 @@ class SplashPresenter @Inject constructor(private val sessionRepository: Session
                                           errorHandler: ErrorHandler)
     : BasePresenter<SplashView>(errorHandler) {
 
-    override fun attachView(view: SplashView) {
-        super.attachView(view)
+    override fun onAttachView(view: SplashView) {
+        super.onAttachView(view)
         view.run { if (sessionRepository.isSessionSaved) openMainView() else openLoginView() }
     }
 }

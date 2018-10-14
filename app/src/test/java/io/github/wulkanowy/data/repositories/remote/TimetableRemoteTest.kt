@@ -11,7 +11,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import java.sql.Date
 
 class TimetableRemoteTest {
@@ -41,7 +40,7 @@ class TimetableRemoteTest {
         every { semesterMock.studentId } returns "1"
         every { semesterMock.diaryId } returns "1"
 
-        val timetable = TimetableRemote(mockApi).getLessons(semesterMock,
+        val timetable = TimetableRemote(mockApi).getTimetable(semesterMock,
                 LocalDate.of(2018, 9, 10),
                 LocalDate.of(2018, 9, 15)
         ).blockingGet()

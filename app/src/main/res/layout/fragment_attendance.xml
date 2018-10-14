@@ -1,15 +1,13 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
 
         <ProgressBar
             android:id="@+id/attendanceProgress"
@@ -42,8 +40,8 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="100dp"
                 android:minWidth="100dp"
+                android:minHeight="100dp"
                 app:srcCompat="@drawable/ic_menu_main_attendance_24dp"
                 app:tint="?android:attr/textColorPrimary"
                 tools:ignore="contentDescription" />
@@ -56,12 +54,14 @@
                 android:text="@string/attendance_no_items"
                 android:textSize="20sp" />
         </LinearLayout>
-    </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:elevation="10dp"
         android:orientation="horizontal">
 
         <Button
@@ -72,7 +72,7 @@
             android:layout_weight="1"
             android:drawablePadding="4dp"
             android:gravity="start|center"
-            android:text="@string/prev"
+            android:text="@string/all_prev"
             android:textAlignment="gravity" />
 
         <TextView
@@ -91,9 +91,7 @@
             android:layout_weight="1"
             android:drawablePadding="4dp"
             android:gravity="end|center"
-            android:text="@string/next"
+            android:text="@string/all_next"
             android:textAlignment="gravity" />
-
     </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>

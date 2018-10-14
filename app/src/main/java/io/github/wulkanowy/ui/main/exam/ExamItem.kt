@@ -13,21 +13,6 @@ import kotlinx.android.synthetic.main.item_exam.*
 
 class ExamItem(header: ExamHeader, val exam: Exam) : AbstractSectionableItem<ExamItem.ViewHolder, ExamHeader>(header) {
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ExamItem
-
-        if (exam != other.exam) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return exam.hashCode()
-    }
-
     override fun getLayoutRes() = R.layout.item_exam
 
     override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
@@ -41,6 +26,21 @@ class ExamItem(header: ExamHeader, val exam: Exam) : AbstractSectionableItem<Exa
             examItemTeacher.text = exam.teacher
             examItemType.text = exam.type
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ExamItem
+
+        if (exam != other.exam) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return exam.hashCode()
     }
 
     class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter),

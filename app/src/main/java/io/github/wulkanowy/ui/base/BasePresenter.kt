@@ -9,15 +9,12 @@ open class BasePresenter<T : BaseView>(private val errorHandler: ErrorHandler) {
 
     var view: T? = null
 
-    val isViewAttached: Boolean
-        get() = view != null
-
-    open fun attachView(view: T) {
+    open fun onAttachView(view: T) {
         this.view = view
         errorHandler.showErrorMessage = { view.showMessage(it) }
     }
 
-    open fun detachView() {
+    open fun onDetachView() {
         view = null
         disposable.clear()
         errorHandler.clear()

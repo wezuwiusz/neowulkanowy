@@ -10,11 +10,12 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable.*
 import javax.inject.Inject
 
-class TimetableFragment : BaseFragment(), TimetableView {
+class TimetableFragment : BaseFragment(), TimetableView, MainView.MenuFragmentView {
 
     @Inject
     lateinit var presenter: TimetablePresenter
@@ -24,6 +25,7 @@ class TimetableFragment : BaseFragment(), TimetableView {
 
     companion object {
         private const val SAVED_DATE_KEY = "CURRENT_DATE"
+
         fun newInstance() = TimetableFragment()
     }
 
@@ -33,25 +35,22 @@ class TimetableFragment : BaseFragment(), TimetableView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.run {
-            attachView(this@TimetableFragment)
-            loadData(date = savedInstanceState?.getLong(SAVED_DATE_KEY))
-        }
+        messageContainer = timetableRecycler
+        presenter.onAttachView(this, savedInstanceState?.getLong(SAVED_DATE_KEY))
     }
 
     override fun initView() {
         timetableAdapter.run {
-            isAutoCollapseOnExpand = true
-            isAutoScrollOnExpand = true
-            setOnItemClickListener { presenter.onTimetableItemSelected(getItem(it))}
+            setOnItemClickListener { presenter.onTimetableItemSelected(getItem(it)) }
         }
+
         timetableRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = timetableAdapter
         }
-        timetableSwipe.setOnRefreshListener { presenter.loadData(date = null, forceRefresh = true) }
-        timetablePreviousButton.setOnClickListener { presenter.loadTimetableForPreviousDay() }
-        timetableNextButton.setOnClickListener { presenter.loadTimetableForNextDay() }
+        timetableSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        timetablePreviousButton.setOnClickListener { presenter.onPreviousDay() }
+        timetableNextButton.setOnClickListener { presenter.onNextDay() }
     }
 
     override fun updateData(data: List<TimetableItem>) {
@@ -68,6 +67,14 @@ class TimetableFragment : BaseFragment(), TimetableView {
 
     override fun isViewEmpty() = timetableAdapter.isEmpty
 
+    override fun hideRefresh() {
+        timetableSwipe.isRefreshing = false
+    }
+
+    override fun onFragmentReselected() {
+        presenter.onViewReselected()
+    }
+
     override fun showEmpty(show: Boolean) {
         timetableEmpty.visibility = if (show) View.VISIBLE else View.GONE
     }
@@ -78,10 +85,6 @@ class TimetableFragment : BaseFragment(), TimetableView {
 
     override fun showContent(show: Boolean) {
         timetableRecycler.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    override fun showRefresh(show: Boolean) {
-        timetableSwipe.isRefreshing = show
     }
 
     override fun showPreButton(show: Boolean) {
@@ -96,13 +99,15 @@ class TimetableFragment : BaseFragment(), TimetableView {
         TimetableDialog.newInstance(lesson).show(fragmentManager, lesson.toString())
     }
 
+    override fun roomString() = getString(R.string.timetable_room)
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putLong(SAVED_DATE_KEY, presenter.currentDate.toEpochDay())
     }
 
     override fun onDestroyView() {
+        presenter.onDetachView()
         super.onDestroyView()
-        presenter.detachView()
     }
 }

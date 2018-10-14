@@ -27,8 +27,9 @@ class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        presenter.attachView(this)
         messageContainer = loginContainer
+
+        presenter.onAttachView(this)
     }
 
     override fun onBackPressed() {
@@ -65,7 +66,7 @@ class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
     override fun currentViewPosition() = loginViewpager.currentItem
 
     public override fun onDestroy() {
-        presenter.detachView()
+        presenter.onDetachView()
         super.onDestroy()
     }
 }

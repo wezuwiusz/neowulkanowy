@@ -19,7 +19,7 @@ fun List<Grade>.calcAverage(): Double {
 fun List<GradeSummary>.calcAverage(): Double {
     return asSequence().mapNotNull {
         if (it.finalGrade.matches("[0-6]".toRegex())) it.finalGrade.toDouble() else null
-    }.average()
+    }.average().let { if (it.isNaN()) 0.0 else it }
 }
 
 inline val Grade.valueColor: Int
@@ -43,6 +43,7 @@ inline val Grade.colorStringId: Int
             "F04C4C" -> R.string.all_red
             "20A4F7" -> R.string.all_blue
             "6ECD07" -> R.string.all_green
+            "B16CF1" -> R.string.all_purple
             else -> R.string.all_empty_color
         }
     }

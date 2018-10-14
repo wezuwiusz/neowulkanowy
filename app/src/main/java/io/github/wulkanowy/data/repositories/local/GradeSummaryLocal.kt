@@ -18,4 +18,8 @@ class GradeSummaryLocal @Inject constructor(private val gradeSummaryDb: GradeSum
     fun saveGradesSummary(gradesSummary: List<GradeSummary>) {
         gradeSummaryDb.insertAll(gradesSummary)
     }
+
+    fun deleteGradesSummary(gradesSummary: List<GradeSummary>) {
+        gradeSummaryDb.deleteAll(gradesSummary)
+    }
 }

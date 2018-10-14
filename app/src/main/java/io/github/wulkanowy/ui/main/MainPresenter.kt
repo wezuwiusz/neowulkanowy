@@ -7,8 +7,8 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(errorHandler: ErrorHandler)
     : BasePresenter<MainView>(errorHandler) {
 
-    override fun attachView(view: MainView) {
-        super.attachView(view)
+    override fun onAttachView(view: MainView) {
+        super.onAttachView(view)
         view.initView()
     }
 
@@ -22,7 +22,6 @@ class MainPresenter @Inject constructor(errorHandler: ErrorHandler)
 
     fun onTabSelected(index: Int, wasSelected: Boolean): Boolean {
         return view?.run {
-            expandActionBar(true)
             if (wasSelected) {
                 notifyMenuViewReselected()
                 false

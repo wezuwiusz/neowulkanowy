@@ -23,7 +23,7 @@ class MainPresenterTest {
         clearInvocations(mainView)
 
         presenter = MainPresenter(errorHandler)
-        presenter.attachView(mainView)
+        presenter.onAttachView(mainView)
     }
 
     @Test

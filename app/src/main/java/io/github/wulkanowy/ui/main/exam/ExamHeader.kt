@@ -12,15 +12,21 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.header_exam.*
 import org.threeten.bp.LocalDate
 
-class ExamHeader : AbstractHeaderItem<ExamHeader.ViewHolder>() {
+class ExamHeader(private val date: LocalDate) : AbstractHeaderItem<ExamHeader.ViewHolder>() {
 
-    lateinit var date: LocalDate
+    override fun getLayoutRes() = R.layout.header_exam
 
     override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ViewHolder {
         return ViewHolder(view, adapter)
     }
 
-    override fun getLayoutRes() = R.layout.header_exam
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder,
+                                position: Int, payloads: MutableList<Any>?) {
+        holder.run {
+            examHeaderDay.text = date.weekDayName.capitalize()
+            examHeaderDate.text = date.toFormattedString()
+        }
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -37,20 +43,8 @@ class ExamHeader : AbstractHeaderItem<ExamHeader.ViewHolder>() {
         return date.hashCode()
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder,
-                                position: Int, payloads: MutableList<Any>?) {
-        holder.run {
-            examHeaderDay.text = date.weekDayName.capitalize()
-            examHeaderDate.text = date.toFormattedString()
-        }
-    }
-
     class ViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?) : ExpandableViewHolder(view, adapter),
             LayoutContainer {
-
-        init {
-            contentView.setOnClickListener(this)
-        }
 
         override val containerView: View
             get() = contentView

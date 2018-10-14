@@ -6,11 +6,10 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.repositories.local.TimetableLocal
 import io.github.wulkanowy.data.repositories.remote.TimetableRemote
-import io.github.wulkanowy.utils.weekFirstDayAlwaysCurrent
+import io.github.wulkanowy.utils.friday
+import io.github.wulkanowy.utils.monday
 import io.reactivex.Single
-import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
-import org.threeten.bp.temporal.TemporalAdjusters
 import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,24 +21,26 @@ class TimetableRepository @Inject constructor(
         private val remote: TimetableRemote
 ) {
 
-    fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false): Single<List<Timetable>> {
-        val start = startDate.weekFirstDayAlwaysCurrent
-        val end = endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY))
-
-        return local.getLessons(semester, start, end).filter { !forceRefresh }
-                .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-                    if (it) remote.getLessons(semester, start, end)
-                    else Single.error(UnknownHostException())
-                }.flatMap { newLessons ->
-                    local.getLessons(semester, start, end).toSingle(emptyList()).map { lessons ->
-                        local.deleteLessons(lessons - newLessons)
-                        local.saveLessons(newLessons - lessons)
-                        newLessons
-                    }
-                }).map { list ->
-                    list.asSequence().filter {
-                        it.date in startDate..endDate
-                    }.toList()
+    fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false)
+            : Single<List<Timetable>> {
+        return Single.fromCallable { startDate.monday to endDate.friday }
+                .flatMap { dates ->
+                    local.getTimetable(semester, dates.first, dates.second).filter { !forceRefresh }
+                            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
+                                    .flatMap {
+                                        if (it) remote.getTimetable(semester, dates.first, dates.second)
+                                        else Single.error(UnknownHostException())
+                                    }.flatMap { newTimetable ->
+                                        local.getTimetable(semester, dates.first, dates.second)
+                                                .toSingle(emptyList())
+                                                .doOnSuccess { oldTimetable ->
+                                                    local.deleteTimetable(oldTimetable - newTimetable)
+                                                    local.saveTimetable(newTimetable - oldTimetable)
+                                                }
+                                    }.flatMap {
+                                        local.getTimetable(semester, dates.first, dates.second)
+                                                .toSingle(emptyList())
+                                    }).map { list -> list.filter { it.date in startDate..endDate } }
                 }
     }
 }

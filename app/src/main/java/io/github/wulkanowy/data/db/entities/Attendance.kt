@@ -9,9 +9,6 @@ import java.io.Serializable
 @Entity(tableName = "Attendance")
 data class Attendance(
 
-        @PrimaryKey(autoGenerate = true)
-        var id: Long = 0,
-
         @ColumnInfo(name = "student_id")
         var studentId: String,
 
@@ -37,4 +34,8 @@ data class Attendance(
         var excused: Boolean = false,
 
         var deleted: Boolean = false
-) : Serializable
+) : Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}

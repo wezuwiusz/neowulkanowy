@@ -1,23 +1,24 @@
 package io.github.wulkanowy.utils
 
 import org.threeten.bp.DayOfWeek.*
+import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatter.ofPattern
-import org.threeten.bp.temporal.TemporalAdjusters
 import org.threeten.bp.temporal.TemporalAdjusters.*
-import java.text.SimpleDateFormat
 import java.util.*
 
-private const val DATE_PATTERN = "yyyy-MM-dd"
+private const val DATE_PATTERN = "dd.MM.yyyy"
 
 fun Date.toLocalDate(): LocalDate {
-    return LocalDate.parse(SimpleDateFormat(DATE_PATTERN, Locale.getDefault()).format(this))
+    return Instant.ofEpochMilli(this.time).atZone(ZoneId.systemDefault()).toLocalDate()
 }
 
-fun Date.toLocalDateTime(): LocalDateTime = LocalDateTime.parse(SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-        Locale.getDefault()).format(this), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+fun Date.toLocalDateTime(): LocalDateTime {
+    return Instant.ofEpochMilli(this.time).atZone(ZoneId.systemDefault()).toLocalDateTime()
+}
 
 fun String.toLocalDate(format: String = DATE_PATTERN): LocalDate {
     return LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
@@ -25,9 +26,9 @@ fun String.toLocalDate(format: String = DATE_PATTERN): LocalDate {
 
 fun LocalDate.toFormattedString(format: String = DATE_PATTERN): String = this.format(ofPattern(format))
 
-fun LocalDateTime.toFormattedString(format: String = DATE_PATTERN): String = this.format(DateTimeFormatter.ofPattern(format))
+fun LocalDateTime.toFormattedString(format: String = DATE_PATTERN): String = this.format(ofPattern(format))
 
-inline val LocalDate.nextWorkDay: LocalDate
+inline val LocalDate.nextSchoolDay: LocalDate
     get() {
         return when (this.dayOfWeek) {
             FRIDAY, SATURDAY, SUNDAY -> this.with(next(MONDAY))
@@ -35,7 +36,7 @@ inline val LocalDate.nextWorkDay: LocalDate
         }
     }
 
-inline val LocalDate.previousWorkDay: LocalDate
+inline val LocalDate.previousSchoolDay: LocalDate
     get() {
         return when (this.dayOfWeek) {
             SATURDAY, SUNDAY, MONDAY -> this.with(previous(FRIDAY))
@@ -43,7 +44,15 @@ inline val LocalDate.previousWorkDay: LocalDate
         }
     }
 
-inline val LocalDate.nearSchoolDayPrevOnWeekEnd: LocalDate
+inline val LocalDate.nextOrSameSchoolDay: LocalDate
+    get() {
+        return when (this.dayOfWeek) {
+            SATURDAY, SUNDAY -> this.with(next(MONDAY))
+            else -> this
+        }
+    }
+
+inline val LocalDate.previousOrSameSchoolDay: LocalDate
     get() {
         return when (this.dayOfWeek) {
             SATURDAY, SUNDAY -> this.with(previous(FRIDAY))
@@ -51,27 +60,14 @@ inline val LocalDate.nearSchoolDayPrevOnWeekEnd: LocalDate
         }
     }
 
-inline val LocalDate.nearSchoolDayNextOnWeekEnd: LocalDate
-    get() {
-        return when (this.dayOfWeek) {
-            SATURDAY, SUNDAY -> this.with(next(MONDAY))
-            else -> this
-        }
-    }
-
 inline val LocalDate.weekDayName: String
     get() = this.format(ofPattern("EEEE", Locale.getDefault()))
 
-inline val LocalDate.weekFirstDayAlwaysCurrent: LocalDate
-    get() = this.with(TemporalAdjusters.previousOrSame(MONDAY))
+inline val LocalDate.monday: LocalDate
+    get() = this.with(MONDAY)
 
-inline val LocalDate.weekFirstDayNextOnWeekEnd: LocalDate
-    get() {
-        return when (this.dayOfWeek) {
-            SATURDAY, SUNDAY -> this.with(next(MONDAY))
-            else -> this.with(previousOrSame(MONDAY))
-        }
-    }
+inline val LocalDate.friday: LocalDate
+    get() = this.with(FRIDAY)
 
 /**
  * [Dz.U. 2016 poz. 1335](http://prawo.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20160001335)

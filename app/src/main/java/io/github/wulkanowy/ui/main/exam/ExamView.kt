@@ -9,19 +9,23 @@ interface ExamView : BaseView {
 
     fun updateData(data: List<ExamItem>)
 
+    fun updateNavigationWeek(date: String)
+
+    fun clearData()
+
+    fun isViewEmpty(): Boolean
+
+    fun hideRefresh()
+
     fun showEmpty(show: Boolean)
 
     fun showProgress(show: Boolean)
 
     fun showContent(show: Boolean)
 
-    fun showRefresh(show: Boolean)
-
     fun showNextButton(show: Boolean)
 
     fun showPreButton(show: Boolean)
 
     fun showExamDialog(exam: Exam)
-
-    fun updateNavigationWeek(date: String)
 }

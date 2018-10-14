@@ -33,7 +33,8 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.attachView(this)
+        messageContainer = gradeSummaryRecycler
+        presenter.onAttachView(this)
     }
 
     override fun initView() {
@@ -81,7 +82,7 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
     }
 
     override fun onParentLoadData(semesterId: String, forceRefresh: Boolean) {
-        presenter.loadData(semesterId, forceRefresh)
+        presenter.onParentViewLoadData(semesterId, forceRefresh)
     }
 
     override fun onParentReselected() {
@@ -89,7 +90,7 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
     }
 
     override fun onParentChangeSemester() {
-        presenter.onParentChangeSemester()
+        presenter.onParentViewChangeSemester()
     }
 
     override fun notifyParentDataLoaded(semesterId: String) {
@@ -106,6 +107,6 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
 
     override fun onDestroyView() {
         super.onDestroyView()
-        presenter.detachView()
+        presenter.onDetachView()
     }
 }

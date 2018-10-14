@@ -31,7 +31,7 @@ class LoginFormPresenterTest {
         MockitoAnnotations.initMocks(this)
         clearInvocations(repository, loginFormView)
         presenter = LoginFormPresenter(TestSchedulers(), errorHandler, repository)
-        presenter.attachView(loginFormView)
+        presenter.onAttachView(loginFormView)
     }
 
     @Test

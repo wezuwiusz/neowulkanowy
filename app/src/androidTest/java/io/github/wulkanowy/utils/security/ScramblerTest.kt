@@ -17,32 +17,32 @@ class ScramblerTest {
 
     @Test
     fun encryptDecryptTest() {
-        assertEquals("TEST", Scrambler.decrypt(Scrambler.encrypt("TEST",
+        assertEquals("TEST", decrypt(encrypt("TEST",
                 InstrumentationRegistry.getTargetContext())))
     }
 
     @Test
     fun emptyTextEncryptTest() {
         assertFailsWith<ScramblerException> {
-            Scrambler.decrypt("")
+            decrypt("")
         }
 
         assertFailsWith<ScramblerException> {
-            Scrambler.encrypt("", InstrumentationRegistry.getTargetContext())
+            encrypt("", InstrumentationRegistry.getTargetContext())
         }
     }
 
     @Test
     @SdkSuppress(minSdkVersion = 18)
     fun emptyKeyStoreTest() {
-        val text = Scrambler.encrypt("test", InstrumentationRegistry.getTargetContext())
+        val text = encrypt("test", InstrumentationRegistry.getTargetContext())
 
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
         keyStore.load(null)
         keyStore.deleteEntry("USER_PASSWORD")
 
         assertFailsWith<ScramblerException> {
-            Scrambler.decrypt(text)
+            decrypt(text)
         }
     }
 }
