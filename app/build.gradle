@@ -26,7 +26,7 @@ android {
         versionCode 16
         versionName "0.5.2"
         multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         playAccountConfig = playAccountConfigs.defaultAccountConfig
         manifestPlaceholders = [
@@ -68,38 +68,39 @@ play {
     uploadImages = true
 }
 
-ext.supportVersion = "28.0.0"
+ext.androidx_version = "1.0.0"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation('com.github.wulkanowy:api:1400211f0d') { exclude module: "threetenbp" }
 
-    implementation "com.android.support:support-v4:$supportVersion"
-    implementation "com.android.support:appcompat-v7:$supportVersion"
-    implementation "com.android.support:design:$supportVersion"
-    implementation "com.android.support:cardview-v7:$supportVersion"
-    implementation "com.android.support:preference-v14:$supportVersion"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "androidx.legacy:legacy-support-v4:$androidx_version"
+    implementation "androidx.appcompat:appcompat:$androidx_version"
+    implementation "androidx.cardview:cardview:$androidx_version"
+    implementation "androidx.legacy:legacy-preference-v14:$androidx_version"
+    implementation "com.google.android.material:material:$androidx_version"
+    implementation 'androidx.multidex:multidex:2.0.0'
 
     implementation "com.google.android.gms:play-services-oss-licenses:16.0.1"
     implementation "com.firebase:firebase-jobdispatcher:0.8.5"
 
-    implementation "com.google.dagger:dagger-android-support:2.17"
-    kapt "com.google.dagger:dagger-compiler:2.17"
-    kapt "com.google.dagger:dagger-android-processor:2.17"
+    //Do not update dagger https://github.com/google/dagger/issues/1245
+    implementation "com.google.dagger:dagger-android-support:2.16"
+    kapt "com.google.dagger:dagger-compiler:2.16"
+    kapt "com.google.dagger:dagger-android-processor:2.16"
 
-    implementation "android.arch.persistence.room:runtime:1.1.1"
-    implementation "android.arch.persistence.room:rxjava2:1.1.1"
-    kapt "android.arch.persistence.room:compiler:1.1.1"
+    implementation "androidx.room:room-runtime:2.1.0-alpha01"
+    implementation "androidx.room:room-rxjava2:2.1.0-alpha01"
+    kapt "androidx.room:room-compiler:2.1.0-alpha01"
 
-    implementation "eu.davidea:flexible-adapter:5.0.6"
-    implementation "eu.davidea:flexible-adapter-ui:1.0.0-b5"
+    implementation "eu.davidea:flexible-adapter:5.1.0"
+    implementation "eu.davidea:flexible-adapter-ui:1.0.0"
     implementation "com.aurelhubert:ahbottomnavigation:2.2.0"
     implementation 'com.ncapdevi:frag-nav:3.0.0-RC3'
 
-    implementation 'com.github.pwittchen:reactivenetwork-rx2:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation "io.reactivex.rxjava2:rxjava:2.2.1"
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.2"
 
     implementation "com.jakewharton.threetenabp:threetenabp:1.1.0"
 
@@ -115,11 +116,13 @@ dependencies {
     debugImplementation "com.amitshekhar.android:debug-db:1.0.4"
 
     testImplementation "junit:junit:4.12"
-    testImplementation "io.mockk:mockk:1.8.8"
-    testImplementation "org.mockito:mockito-inline:2.21.0"
+    testImplementation "io.mockk:mockk:1.8.9"
+    testImplementation "org.mockito:mockito-inline:2.23.0"
     testImplementation 'org.threeten:threetenbp:1.3.7'
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation "org.mockito:mockito-android:2.21.0"
+    androidTestImplementation 'androidx.test:core:1.0.0-beta02'
+    androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
+    androidTestImplementation 'androidx.test.ext:junit:1.0.0-beta02'
+    androidTestImplementation "org.mockito:mockito-android:2.23.0"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }

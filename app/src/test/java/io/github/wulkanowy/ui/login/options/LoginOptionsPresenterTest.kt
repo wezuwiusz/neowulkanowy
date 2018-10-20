@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.login.options
 
 import io.github.wulkanowy.TestSchedulers
-import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.SessionRepository

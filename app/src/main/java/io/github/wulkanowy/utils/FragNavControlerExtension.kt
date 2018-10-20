@@ -1,6 +1,6 @@
 package io.github.wulkanowy.utils
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.ncapdevi.fragnav.FragNavController
 
 inline fun FragNavController.setOnTabTransactionListener(crossinline listener: (index: Int) -> Unit) {

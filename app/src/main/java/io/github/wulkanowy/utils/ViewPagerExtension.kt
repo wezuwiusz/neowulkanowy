@@ -1,6 +1,6 @@
 package io.github.wulkanowy.utils
 
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 
 inline fun ViewPager.setOnSelectPageListener(crossinline selectListener: (position: Int) -> Unit) {
     addOnPageChangeListener(object : ViewPager.OnPageChangeListener {

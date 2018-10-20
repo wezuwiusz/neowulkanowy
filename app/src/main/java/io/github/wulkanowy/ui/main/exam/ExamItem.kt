@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.main.exam
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractSectionableItem
@@ -15,7 +14,7 @@ class ExamItem(header: ExamHeader, val exam: Exam) : AbstractSectionableItem<Exa
 
     override fun getLayoutRes() = R.layout.item_exam
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ViewHolder {
         return ViewHolder(view, adapter)
     }
 

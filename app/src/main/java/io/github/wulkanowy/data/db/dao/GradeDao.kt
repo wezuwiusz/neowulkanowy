@@ -1,6 +1,6 @@
 package io.github.wulkanowy.data.db.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import io.github.wulkanowy.data.db.entities.Grade
 import io.reactivex.Maybe
 

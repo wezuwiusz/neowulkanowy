@@ -1,9 +1,9 @@
 package io.github.wulkanowy.data.db.dao
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.reactivex.Maybe
 import org.threeten.bp.LocalDate

@@ -1,10 +1,10 @@
 package io.github.wulkanowy.ui.main.grade
 
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.view.*
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import androidx.appcompat.app.AlertDialog
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BasePagerAdapter

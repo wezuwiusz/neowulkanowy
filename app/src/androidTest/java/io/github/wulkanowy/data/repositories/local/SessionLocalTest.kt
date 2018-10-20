@@ -1,9 +1,9 @@
 package io.github.wulkanowy.data.repositories.local
 
-import android.arch.persistence.room.Room
 import android.content.Context
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefHelper
 import io.github.wulkanowy.data.db.entities.Student
@@ -24,7 +24,7 @@ class SessionLocalTest {
 
     @Before
     fun createDb() {
-        val context = InstrumentationRegistry.getContext()
+        val context = ApplicationProvider.getApplicationContext<Context>()
         testDb = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
                 .build()
         sharedHelper = SharedPrefHelper(context.getSharedPreferences("TEST", Context.MODE_PRIVATE))

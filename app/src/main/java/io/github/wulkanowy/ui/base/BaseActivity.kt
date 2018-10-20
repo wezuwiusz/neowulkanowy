@@ -1,10 +1,10 @@
 package io.github.wulkanowy.ui.base
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.design.widget.Snackbar.LENGTH_LONG
-import android.support.v7.app.AppCompatDelegate
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import dagger.android.support.DaggerAppCompatActivity
 
 abstract class BaseActivity : DaggerAppCompatActivity(), BaseView {

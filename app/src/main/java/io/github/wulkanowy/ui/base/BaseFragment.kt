@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.base
 
-import android.support.design.widget.Snackbar
-import android.support.design.widget.Snackbar.LENGTH_LONG
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment : DaggerFragment(), BaseView {
