@@ -35,16 +35,16 @@ class TimetableLocalTest {
     @Test
     fun saveAndReadTest() {
         timetableDb.saveTimetable(listOf(
-                Timetable("1", "2", 1, LocalDateTime.now(), LocalDateTime.now(),
+                Timetable(1, 2, 1, LocalDateTime.now(), LocalDateTime.now(),
                         LocalDate.of(2018, 9, 10), "", "", "", "", ""),
-                Timetable("1", "2", 1, LocalDateTime.now(), LocalDateTime.now(),
+                Timetable(1, 2, 1, LocalDateTime.now(), LocalDateTime.now(),
                         LocalDate.of(2018, 9, 14), "", "", "", "", ""),
-                Timetable("1", "2", 1, LocalDateTime.now(), LocalDateTime.now(),
+                Timetable(1, 2, 1, LocalDateTime.now(), LocalDateTime.now(),
                         LocalDate.of(2018, 9, 17), "", "", "", "", "")
         ))
 
         val exams = timetableDb.getTimetable(
-                Semester(0, "1", "2", "3", "", 1),
+                Semester(0, 1, 2, "3", 1, 1),
                 LocalDate.of(2018, 9, 10),
                 LocalDate.of(2018, 9, 14)
         ).blockingGet()

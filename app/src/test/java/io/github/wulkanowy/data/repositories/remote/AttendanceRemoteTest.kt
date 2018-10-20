@@ -36,9 +36,9 @@ class AttendanceRemoteTest {
                 getAttendance("2018-09-17")
         ))
 
-        every { mockApi.diaryId } returns "1"
-        every { semesterMock.studentId } returns "1"
-        every { semesterMock.diaryId } returns "1"
+        every { mockApi.diaryId } returns 1
+        every { semesterMock.studentId } returns 1
+        every { semesterMock.diaryId } returns 1
 
         val attendance = AttendanceRemote(mockApi).getAttendance(semesterMock,
                 LocalDate.of(2018, 9, 10),

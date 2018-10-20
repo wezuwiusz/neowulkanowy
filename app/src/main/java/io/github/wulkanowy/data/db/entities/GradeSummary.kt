@@ -8,10 +8,10 @@ import android.arch.persistence.room.PrimaryKey
 data class GradeSummary(
 
         @ColumnInfo(name = "semester_id")
-        var semesterId: String,
+        var semesterId: Int,
 
         @ColumnInfo(name = "student_id")
-        var studentId: String,
+        var studentId: Int,
 
         var subject: String,
 

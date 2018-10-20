@@ -22,7 +22,7 @@ class SessionRemote @Inject constructor(private val api: Api) {
                                     symbol = it.symbol,
                                     studentId = it.studentId,
                                     studentName = it.studentName,
-                                    schoolId = it.schoolId,
+                                    schoolSymbol = it.schoolSymbol,
                                     schoolName = it.schoolName,
                                     endpoint = endpoint,
                                     loginType = it.loginType.name
@@ -40,7 +40,7 @@ class SessionRemote @Inject constructor(private val api: Api) {
                             studentId = student.studentId,
                             diaryId = it.diaryId,
                             diaryName = it.diaryName,
-                            semesterId = it.semesterId.toString(),
+                            semesterId = it.semesterId,
                             semesterName = it.semesterNumber,
                             current = it.current
                     )
@@ -51,14 +51,14 @@ class SessionRemote @Inject constructor(private val api: Api) {
     }
 
     fun initApi(student: Student, checkInit: Boolean = false) {
-        if (if (checkInit) api.studentId.isEmpty() else true) {
+        if (if (checkInit) 0 == api.studentId else true) {
             api.run {
                 email = student.email
                 password = student.password
                 symbol = student.symbol
                 host = URL(student.endpoint).run { host + ":$port".removeSuffix(":-1") }
                 ssl = student.endpoint.startsWith("https")
-                schoolId = student.schoolId
+                schoolSymbol = student.schoolSymbol
                 studentId = student.studentId
                 loginType = Api.LoginType.valueOf(student.loginType)
                 notifyDataChanged()

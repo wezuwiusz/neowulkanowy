@@ -38,12 +38,12 @@ class SessionLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        sessionLocal.saveStudent(Student(email = "test", password = "test123", schoolId = "23", endpoint = "fakelog.cf", loginType = "AUTO")).blockingAwait()
+        sessionLocal.saveStudent(Student(email = "test", password = "test123", schoolSymbol = "23", endpoint = "fakelog.cf", loginType = "AUTO")).blockingAwait()
         assert(sharedHelper.getLong(SessionLocal.LAST_USER_KEY, 0) == 1L)
 
         assert(sessionLocal.isSessionSaved)
 
         val student = sessionLocal.getLastStudent().blockingGet()
-        assertEquals("23", student.schoolId)
+        assertEquals("23", student.schoolSymbol)
     }
 }

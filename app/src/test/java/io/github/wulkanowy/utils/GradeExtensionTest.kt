@@ -13,19 +13,19 @@ class GradeExtensionTest {
     fun calcWeightedAverage() {
         val localDate = mock(LocalDate::class.java)
         assertEquals(3.47, listOf(
-                Grade("", "", "", "", 5, 0.33
+                Grade(1, 1, "", "", 5, 0.33
                         , "", "", "", "", "",
                         6, localDate, ""),
-                Grade("", "", "", "", 5, -0.33
+                Grade(1, 1, "", "", 5, -0.33
                         , "", "", "", "", "",
                         5, localDate, ""),
-                Grade("", "", "", "", 4, 0.0
+                Grade(1, 1, "", "", 4, 0.0
                         , "", "", "", "", "",
                         1, localDate, ""),
-                Grade("", "", "", "", 1, 0.5
+                Grade(1, 1, "", "", 1, 0.5
                         , "", "", "", "", "",
                         9, localDate, ""),
-                Grade("", "", "", "", 0, 0.0
+                Grade(1, 1, "", "", 0, 0.0
                         , "", "", "", "", "",
                         0, localDate, "")
         ).calcAverage(), 0.005)
@@ -34,10 +34,10 @@ class GradeExtensionTest {
     @Test
     fun calcSummaryAverage() {
         assertEquals(2.5, listOf(
-                GradeSummary("", "", "", "", "5"),
-                GradeSummary("", "", "", "", "-5"),
-                GradeSummary("", "", "", "", "test"),
-                GradeSummary("", "", "", "", "0")
+                GradeSummary(1, 1, "", "", "5"),
+                GradeSummary(1, 1, "", "", "-5"),
+                GradeSummary(1, 1, "", "", "test"),
+                GradeSummary(1, 1, "", "", "0")
         ).calcAverage(), 0.005)
     }
 }

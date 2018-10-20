@@ -17,7 +17,7 @@ class GradeRemote @Inject constructor(private val api: Api) {
                 diaryId = semester.diaryId
                 notifyDataChanged()
             }
-        }).flatMap { api.getGrades(semester.semesterId.toInt()) }
+        }).flatMap { api.getGrades(semester.semesterId) }
                 .map { grades ->
                     grades.map {
                         Grade(

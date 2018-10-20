@@ -25,7 +25,7 @@ class GradeSummaryPresenter @Inject constructor(
         view.initView()
     }
 
-    fun onParentViewLoadData(semesterId: String, forceRefresh: Boolean) {
+    fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
         disposable.add(sessionRepository.getSemesters()
                 .map { semester -> semester.first { it.semesterId == semesterId } }
                 .flatMap {

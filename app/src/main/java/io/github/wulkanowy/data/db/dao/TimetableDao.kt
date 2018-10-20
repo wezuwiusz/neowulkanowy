@@ -18,5 +18,5 @@ interface TimetableDao {
     fun deleteAll(exams: List<Timetable>)
 
     @Query("SELECT * FROM Timetable WHERE diary_id = :diaryId AND student_id = :studentId AND date >= :from AND date <= :end")
-    fun getTimetable(diaryId: String, studentId: String, from: LocalDate, end: LocalDate): Maybe<List<Timetable>>
+    fun getTimetable(diaryId: Int, studentId: Int, from: LocalDate, end: LocalDate): Maybe<List<Timetable>>
 }

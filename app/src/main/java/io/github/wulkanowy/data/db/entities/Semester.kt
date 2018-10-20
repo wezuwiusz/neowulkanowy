@@ -11,16 +11,16 @@ data class Semester(
         var id: Long = 0,
 
         @ColumnInfo(name = "student_id")
-        var studentId: String,
+        var studentId: Int,
 
         @ColumnInfo(name = "diary_id")
-        var diaryId: String,
+        var diaryId: Int,
 
         @ColumnInfo(name = "diary_name")
         var diaryName: String,
 
         @ColumnInfo(name = "semester_id")
-        var semesterId: String,
+        var semesterId: Int,
 
         @ColumnInfo(name = "semester_name")
         var semesterName: Int,

@@ -13,5 +13,5 @@ interface SemesterDao {
     fun insertAll(semester: List<Semester>)
 
     @Query("SELECT * FROM Semesters WHERE student_id = :studentId")
-    fun getSemester(studentId: String): Single<List<Semester>>
+    fun getSemester(studentId: Int): Single<List<Semester>>
 }

@@ -72,7 +72,7 @@ ext.supportVersion = "28.0.0"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation('com.github.wulkanowy:api:a5667f8000') { exclude module: "threetenbp" }
+    implementation('com.github.wulkanowy:api:1400211f0d') { exclude module: "threetenbp" }
 
     implementation "com.android.support:support-v4:$supportVersion"
     implementation "com.android.support:appcompat-v7:$supportVersion"

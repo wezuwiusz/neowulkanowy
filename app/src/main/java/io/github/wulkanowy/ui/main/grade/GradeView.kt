@@ -14,7 +14,7 @@ interface GradeView : BaseView {
 
     fun showSemesterDialog(selectedIndex: Int)
 
-    fun notifyChildLoadData(index: Int, semesterId: String, forceRefresh: Boolean)
+    fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean)
 
     fun notifyChildParentReselected(index: Int)
 
@@ -24,7 +24,7 @@ interface GradeView : BaseView {
 
         fun onParentChangeSemester()
 
-        fun onParentLoadData(semesterId: String, forceRefresh: Boolean)
+        fun onParentLoadData(semesterId: Int, forceRefresh: Boolean)
 
         fun onParentReselected()
     }

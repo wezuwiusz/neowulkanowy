@@ -99,11 +99,11 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MenuFragmentView {
         presenter.onChildViewRefresh()
     }
 
-    fun onChildFragmentLoaded(semesterId: String) {
+    fun onChildFragmentLoaded(semesterId: Int) {
         presenter.onChildViewLoaded(semesterId)
     }
 
-    override fun notifyChildLoadData(index: Int, semesterId: String, forceRefresh: Boolean) {
+    override fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean) {
         (childFragmentManager.fragments[index] as GradeView.GradeChildView).onParentLoadData(semesterId, forceRefresh)
     }
 

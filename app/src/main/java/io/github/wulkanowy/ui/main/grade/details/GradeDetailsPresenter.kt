@@ -22,7 +22,7 @@ class GradeDetailsPresenter @Inject constructor(
         view.initView()
     }
 
-    fun onParentViewLoadData(semesterId: String, forceRefresh: Boolean) {
+    fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
         disposable.add(sessionRepository.getSemesters()
                 .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
                 .map { createGradeItems(it.groupBy { grade -> grade.subject }.toSortedMap()) }

@@ -18,5 +18,5 @@ interface GradeSummaryDao {
     fun deleteAll(gradesSummary: List<GradeSummary>)
 
     @Query("SELECT * FROM grades_summary WHERE student_id = :studentId AND semester_id = :semesterId")
-    fun getGradesSummary(semesterId: String, studentId: String): Maybe<List<GradeSummary>>
+    fun getGradesSummary(semesterId: Int, studentId: Int): Maybe<List<GradeSummary>>
 }

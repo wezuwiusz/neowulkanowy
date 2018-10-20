@@ -10,10 +10,10 @@ import java.io.Serializable
 data class Attendance(
 
         @ColumnInfo(name = "student_id")
-        var studentId: String,
+        var studentId: Int,
 
         @ColumnInfo(name = "diary_id")
-        var diaryId: String,
+        var diaryId: Int,
 
         var date: LocalDate,
 

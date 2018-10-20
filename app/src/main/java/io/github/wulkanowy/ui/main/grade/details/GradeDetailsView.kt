@@ -40,7 +40,7 @@ interface GradeDetailsView : BaseView {
 
     fun weightString(): String
 
-    fun notifyParentDataLoaded(semesterId: String)
+    fun notifyParentDataLoaded(semesterId: Int)
 
     fun notifyParentRefresh()
 }

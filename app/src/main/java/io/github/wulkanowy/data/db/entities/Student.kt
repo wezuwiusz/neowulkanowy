@@ -21,13 +21,13 @@ data class Student(
         var symbol: String = "",
 
         @ColumnInfo(name = "student_id")
-        var studentId: String = "",
+        var studentId: Int = 0,
 
         @ColumnInfo(name = "student_name")
         var studentName: String = "",
 
         @ColumnInfo(name = "school_id")
-        var schoolId: String = "",
+        var schoolSymbol: String = "",
 
         @ColumnInfo(name = "school_name")
         var schoolName: String = ""

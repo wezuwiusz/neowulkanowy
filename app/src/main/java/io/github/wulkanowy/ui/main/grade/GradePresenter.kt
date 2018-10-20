@@ -19,7 +19,7 @@ class GradePresenter @Inject constructor(
 
     private var semesters = emptyList<Semester>()
 
-    private val loadedSemesterId = mutableMapOf<Int, String>()
+    private val loadedSemesterId = mutableMapOf<Int, Int>()
 
     fun onAttachView(view: GradeView, savedIndex: Int?) {
         super.onAttachView(view)
@@ -55,7 +55,7 @@ class GradePresenter @Inject constructor(
         view?.let { loadChild(it.currentPageIndex(), forceRefresh = true) }
     }
 
-    fun onChildViewLoaded(semesterId: String) {
+    fun onChildViewLoaded(semesterId: Int) {
         view?.apply {
             showContent(true)
             showProgress(false)
