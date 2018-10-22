@@ -10,6 +10,7 @@
     <string name="timetable_title">Plan lekcji</string>
     <string name="settings_title">Ustawienia</string>
     <string name="more_title">Więcej</string>
+    <string name="about_title">O aplikacji</string>
 
 
     <!--Login form-->
@@ -92,6 +93,9 @@
     <string name="exam_type">Typ</string>
     <string name="exam_entry_date">Data wpisu</string>
 
+    <!--About-->
+    <string name="about_source_code">Kod źródłowy</string>
+    <string name="about_feedback">Zgłoś błąd</string>
 
     <!--Generic-->
     <string name="all_description">Opis</string>
@@ -130,22 +134,11 @@
     <string name="pref_services_interval">Interwał aktualizacji</string>
     <string name="pref_services_wifi">Tylko WiFi</string>
 
-    <string name="pref_about_description">Informacje o Wulkanowym</string>
-    <string name="pref_about_version">Wersja</string>
-    <string name="pref_about_osl">Licencje open source</string>
-    <string name="pref_about_osl_summary">Szczegóły licencji na oprogramowanie open source</string>
-    <string name="pref_about_support">Kod źródłowy i feedback</string>
-
-    <string name="about_programmer_step1">Nie, nie zostaniesz programistą!</string>
-    <string name="about_programmer_step2">Musisz bardziej się postarać!</string>
-    <string name="about_programmer_step3">Kliknij jeszcze parę razy</string>
-    <string name="about_programmer_description">Odwiedź zakładkę Kod źródłowy i pokaż jaki z ciebie programista!</string>
-
     <string name="pref_restart">Wymagany restart</string>
 
 
     <!--Grade notify-->
-    <string name="notify_grade_chanell">Nowe oceny</string>
+    <string name="notify_grade_chanel">Nowe oceny</string>
     <plurals name="notify_grade_new_items">
         <item quantity="one">Dostałeś %1$d ocenę</item>
         <item quantity="few">"Dostałeś %1$d oceny</item>

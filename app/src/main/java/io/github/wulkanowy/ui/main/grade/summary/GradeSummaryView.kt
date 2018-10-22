@@ -4,6 +4,12 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface GradeSummaryView : BaseView {
 
+    val isViewEmpty: Boolean
+
+    val predictedString: String
+
+    val finalString: String
+
     fun initView()
 
     fun updateDataSet(data: List<GradeSummaryItem>, header: GradeSummaryScrollableHeader)
@@ -12,8 +18,6 @@ interface GradeSummaryView : BaseView {
 
     fun clearView()
 
-    fun isViewEmpty(): Boolean
-
     fun showProgress(show: Boolean)
 
     fun showRefresh(show: Boolean)
@@ -21,10 +25,6 @@ interface GradeSummaryView : BaseView {
     fun showContent(show: Boolean)
 
     fun showEmpty(show: Boolean)
-
-    fun predictedString(): String
-
-    fun finalString(): String
 
     fun notifyParentDataLoaded(semesterId: Int)
 

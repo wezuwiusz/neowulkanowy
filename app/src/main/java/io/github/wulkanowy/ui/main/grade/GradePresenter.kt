@@ -32,7 +32,7 @@ class GradePresenter @Inject constructor(
     }
 
     fun onViewReselected() {
-        view?.run { notifyChildParentReselected(currentPageIndex()) }
+        view?.run { notifyChildParentReselected(currentPageIndex) }
     }
 
     fun onSemesterSwitch(): Boolean {
@@ -46,20 +46,20 @@ class GradePresenter @Inject constructor(
             loadedSemesterId.clear()
             view?.let {
                 notifyChildrenSemesterChange()
-                loadChild(it.currentPageIndex())
+                loadChild(it.currentPageIndex)
             }
         }
     }
 
     fun onChildViewRefresh() {
-        view?.let { loadChild(it.currentPageIndex(), forceRefresh = true) }
+        view?.let { loadChild(it.currentPageIndex, forceRefresh = true) }
     }
 
     fun onChildViewLoaded(semesterId: Int) {
         view?.apply {
             showContent(true)
             showProgress(false)
-            loadedSemesterId[currentPageIndex()] = semesterId
+            loadedSemesterId[currentPageIndex] = semesterId
         }
     }
 
@@ -78,7 +78,7 @@ class GradePresenter @Inject constructor(
                 .subscribeOn(schedulers.backgroundThread())
                 .observeOn(schedulers.mainThread())
                 .subscribe({ _ ->
-                    view?.let { loadChild(it.currentPageIndex()) }
+                    view?.let { loadChild(it.currentPageIndex) }
                 }) { errorHandler.proceed(it) })
     }
 

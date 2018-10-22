@@ -8,19 +8,23 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface GradeDetailsView : BaseView {
 
+    val isViewEmpty: Boolean
+
+    val emptyAverageString: String
+
+    val averageString: String
+
+    val weightString: String
+
     fun initView()
 
     fun updateData(data: List<GradeDetailsHeader>)
 
     fun updateItem(item: AbstractFlexibleItem<*>)
 
-    fun getHeaderOfItem(item: AbstractFlexibleItem<*>): IExpandable<*, out IFlexible<*>>?
-
     fun resetView()
 
     fun clearView()
-
-    fun isViewEmpty(): Boolean
 
     fun showGradeDialog(grade: Grade)
 
@@ -32,15 +36,11 @@ interface GradeDetailsView : BaseView {
 
     fun showRefresh(show: Boolean)
 
-    fun emptyAverageString(): String
-
-    fun averageString(): String
-
-    fun gradeNumberString(number: Int): String
-
-    fun weightString(): String
-
     fun notifyParentDataLoaded(semesterId: Int)
 
     fun notifyParentRefresh()
+
+    fun getGradeNumberString(number: Int): String
+
+    fun getHeaderOfItem(item: AbstractFlexibleItem<*>): IExpandable<*, out IFlexible<*>>?
 }

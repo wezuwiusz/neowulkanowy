@@ -25,7 +25,7 @@ class LoginPresenter @Inject constructor(errorHandler: ErrorHandler)
 
     fun onBackPressed(default: () -> Unit) {
         view?.run {
-            if (currentViewPosition() == 1) {
+            if (currentViewIndex == 1) {
                 switchView(0)
                 hideActionBar()
             } else default()

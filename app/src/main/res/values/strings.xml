@@ -10,6 +10,7 @@
     <string name="timetable_title">Timetable</string>
     <string name="settings_title">Settings</string>
     <string name="more_title">More</string>
+    <string name="about_title">About</string>
 
 
     <!--Login form-->
@@ -87,6 +88,10 @@
     <string name="exam_type">Type</string>
     <string name="exam_entry_date">Entry date</string>
 
+    <!--About-->
+    <string name="about_source_code">Source code</string>
+    <string name="about_feedback">Report a bug</string>
+
 
     <!--Generic-->
     <string name="all_description">Description</string>
@@ -125,22 +130,11 @@
     <string name="pref_services_interval">Updates interval</string>
     <string name="pref_services_wifi">Only WiFi</string>
 
-    <string name="pref_about_description">About Wulkanowy</string>
-    <string name="pref_about_version">Version</string>
-    <string name="pref_about_osl">Open source licences</string>
-    <string name="pref_about_osl_summary">License details for open source software</string>
-    <string name="pref_about_support">Source code &amp; feedback</string>
-
-    <string name="about_programmer_step1">No, you will not become a programmer!</string>
-    <string name="about_programmer_step2">You must try harder!</string>
-    <string name="about_programmer_step3">Click a few more times</string>
-    <string name="about_programmer_description">Visit the Source code tab and show how good a programmer you are!</string>
-
     <string name="pref_restart">Restart required</string>
 
 
     <!--Grade notify-->
-    <string name="notify_grade_chanell">New grades</string>
+    <string name="notify_grade_chanel">New grades</string>
     <plurals name="notify_grade_new_items">
         <item quantity="one">You received %1$d grade</item>
         <item quantity="other">You received %1$d grades</item>

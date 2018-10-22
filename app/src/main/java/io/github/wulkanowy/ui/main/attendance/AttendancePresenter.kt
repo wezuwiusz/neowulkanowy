@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.main.attendance
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.AttendanceRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.*
@@ -17,7 +18,8 @@ class AttendancePresenter @Inject constructor(
         private val errorHandler: ErrorHandler,
         private val schedulers: SchedulersManager,
         private val attendanceRepository: AttendanceRepository,
-        private val sessionRepository: SessionRepository
+        private val sessionRepository: SessionRepository,
+        private val prefRepository: PreferencesRepository
 ) : BasePresenter<AttendanceView>(errorHandler) {
 
     lateinit var currentDate: LocalDate
@@ -61,6 +63,10 @@ class AttendancePresenter @Inject constructor(
                     .delay(200, MILLISECONDS)
                     .map { it.single { semester -> semester.current } }
                     .flatMap { attendanceRepository.getAttendance(it, date, date, forceRefresh) }
+                    .map { list ->
+                        if (prefRepository.showPresent) list
+                        else list.filter { !it.presence }
+                    }
                     .map { items -> items.map { AttendanceItem(it) } }
                     .subscribeOn(schedulers.backgroundThread())
                     .observeOn(schedulers.mainThread())
@@ -77,7 +83,7 @@ class AttendancePresenter @Inject constructor(
                             showContent(it.isNotEmpty())
                         }
                     }) {
-                        view?.run { showEmpty(isViewEmpty()) }
+                        view?.run { showEmpty(isViewEmpty) }
                         errorHandler.proceed(it)
                     }
             )

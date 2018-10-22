@@ -15,7 +15,7 @@ import io.github.wulkanowy.utils.setOnSelectPageListener
 import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
 
-class GradeFragment : BaseFragment(), GradeView, MainView.MenuFragmentView {
+class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: GradePresenter
@@ -28,6 +28,12 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MenuFragmentView {
 
         fun newInstance() = GradeFragment()
     }
+
+    override val titleStringId: Int
+        get() = R.string.grade_title
+
+    override val currentPageIndex: Int
+        get() = gradeViewPager.currentItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,8 +98,6 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MenuFragmentView {
             }
         }
     }
-
-    override fun currentPageIndex() = gradeViewPager.currentItem
 
     fun onChildRefresh() {
         presenter.onChildViewRefresh()

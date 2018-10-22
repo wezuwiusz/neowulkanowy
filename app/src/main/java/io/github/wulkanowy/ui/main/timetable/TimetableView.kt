@@ -5,6 +5,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface TimetableView : BaseView {
 
+    val roomString: String
+
     fun initView()
 
     fun updateData(data: List<TimetableItem>)
@@ -28,6 +30,4 @@ interface TimetableView : BaseView {
     fun showNextButton(show: Boolean)
 
     fun showTimetableDialog(lesson: Timetable)
-
-    fun roomString(): String
 }

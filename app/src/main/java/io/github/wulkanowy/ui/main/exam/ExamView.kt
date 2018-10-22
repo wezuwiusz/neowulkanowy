@@ -5,6 +5,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface ExamView : BaseView {
 
+    val isViewEmpty: Boolean
+
     fun initView()
 
     fun updateData(data: List<ExamItem>)
@@ -12,8 +14,6 @@ interface ExamView : BaseView {
     fun updateNavigationWeek(date: String)
 
     fun clearData()
-
-    fun isViewEmpty(): Boolean
 
     fun hideRefresh()
 

@@ -27,6 +27,15 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
         fun newInstance() = GradeSummaryFragment()
     }
 
+    override val isViewEmpty
+        get() = gradeSummaryAdapter.isEmpty
+
+    override val predictedString
+        get() = getString(R.string.grade_summary_predicted_grade)
+
+    override val finalString
+        get() = getString(R.string.grade_summary_final_grade)
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_grade_summary, container, false)
     }
@@ -63,8 +72,6 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
         gradeSummaryAdapter.smoothScrollToPosition(0)
     }
 
-    override fun isViewEmpty() = gradeSummaryAdapter.isEmpty
-
     override fun showContent(show: Boolean) {
         gradeSummaryRecycler.visibility = if (show) VISIBLE else INVISIBLE
     }
@@ -100,10 +107,6 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
     override fun notifyParentRefresh() {
         (parentFragment as? GradeFragment)?.onChildRefresh()
     }
-
-    override fun predictedString() = getString(R.string.grade_summary_predicted_grade)
-
-    override fun finalString() = getString(R.string.grade_summary_final_grade)
 
     override fun onDestroyView() {
         super.onDestroyView()

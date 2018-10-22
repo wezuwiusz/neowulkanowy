@@ -80,7 +80,7 @@ class ExamPresenter @Inject constructor(
                             showContent(it.isNotEmpty())
                         }
                     }) {
-                        view?.run { showEmpty(isViewEmpty()) }
+                        view?.run { showEmpty(isViewEmpty) }
                         errorHandler.proceed(it)
                     })
         }

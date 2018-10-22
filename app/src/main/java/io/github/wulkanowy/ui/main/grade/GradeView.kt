@@ -4,9 +4,9 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface GradeView : BaseView {
 
-    fun initView()
+    val currentPageIndex: Int
 
-    fun currentPageIndex(): Int
+    fun initView()
 
     fun showContent(show: Boolean)
 

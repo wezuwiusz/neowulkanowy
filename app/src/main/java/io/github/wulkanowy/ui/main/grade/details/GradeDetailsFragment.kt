@@ -31,6 +31,18 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         fun newInstance() = GradeDetailsFragment()
     }
 
+    override val emptyAverageString: String
+        get() = getString(R.string.grade_no_average)
+
+    override val averageString: String
+        get() = getString(R.string.grade_average)
+
+    override val weightString: String
+        get() = getString(R.string.grade_weight)
+
+    override val isViewEmpty
+        get() = gradeDetailsAdapter.isEmpty
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_grade_details, container, false)
     }
@@ -80,7 +92,9 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         return gradeDetailsAdapter.getExpandableOf(item)
     }
 
-    override fun isViewEmpty() = gradeDetailsAdapter.isEmpty
+    override fun getGradeNumberString(number: Int): String {
+        return resources.getQuantityString(R.plurals.grade_number_item, number, number)
+    }
 
     override fun showProgress(show: Boolean) {
         gradeDetailsProgress.visibility = if (show) VISIBLE else GONE
@@ -121,14 +135,6 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     override fun notifyParentRefresh() {
         (parentFragment as? GradeFragment)?.onChildRefresh()
     }
-
-    override fun emptyAverageString(): String = getString(R.string.grade_no_average)
-
-    override fun averageString(): String = getString(R.string.grade_average)
-
-    override fun gradeNumberString(number: Int): String = resources.getQuantityString(R.plurals.grade_number_item, number, number)
-
-    override fun weightString(): String = getString(R.string.grade_weight)
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -77,11 +77,11 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$androidx_version"
     implementation "androidx.appcompat:appcompat:$androidx_version"
     implementation "androidx.cardview:cardview:$androidx_version"
-    implementation "androidx.legacy:legacy-preference-v14:$androidx_version"
     implementation "com.google.android.material:material:$androidx_version"
     implementation 'androidx.multidex:multidex:2.0.0'
 
-    implementation "com.google.android.gms:play-services-oss-licenses:16.0.1"
+    implementation 'com.takisoft.preferencex:preferencex:1.0.0'
+    implementation "com.mikepenz:aboutlibraries:6.2.0"
     implementation "com.firebase:firebase-jobdispatcher:0.8.5"
 
     //Do not update dagger https://github.com/google/dagger/issues/1245

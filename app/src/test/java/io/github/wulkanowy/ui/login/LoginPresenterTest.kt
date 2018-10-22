@@ -21,6 +21,7 @@ class LoginPresenterTest {
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
         clearInvocations(loginView)
+
         presenter = LoginPresenter(errorHandler)
         presenter.onAttachView(loginView)
     }
@@ -49,7 +50,7 @@ class LoginPresenterTest {
     @Test
     fun onBackPressedTest() {
         clearInvocations(loginView)
-        doReturn(1).`when`(loginView).currentViewPosition()
+        doReturn(1).`when`(loginView).currentViewIndex
         presenter.onBackPressed { }
         verify(loginView).switchView(0)
         verify(loginView).hideActionBar()
@@ -58,7 +59,7 @@ class LoginPresenterTest {
     @Test
     fun onBackPressedDefaultTest() {
         var i = 0
-        doReturn(0).`when`(loginView).currentViewPosition()
+        doReturn(0).`when`(loginView).currentViewIndex
         presenter.onBackPressed { i++ }
         assertNotEquals(0, i)
     }

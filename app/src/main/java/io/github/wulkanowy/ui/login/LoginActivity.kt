@@ -24,6 +24,9 @@ class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
         fun getStartIntent(context: Context) = Intent(context, LoginActivity::class.java)
     }
 
+    override val currentViewIndex: Int
+        get() = loginViewpager.currentItem
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -62,8 +65,6 @@ class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
     override fun loadOptionsView(index: Int) {
         (loginAdapter.getItem(index) as LoginOptionsFragment).loadData()
     }
-
-    override fun currentViewPosition() = loginViewpager.currentItem
 
     public override fun onDestroy() {
         presenter.onDetachView()

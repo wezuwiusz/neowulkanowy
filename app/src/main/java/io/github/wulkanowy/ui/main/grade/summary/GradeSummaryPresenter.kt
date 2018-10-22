@@ -61,7 +61,7 @@ class GradeSummaryPresenter @Inject constructor(
                         updateDataSet(it.first, it.second)
                     }
                 }) {
-                    view?.run { showEmpty(isViewEmpty()) }
+                    view?.run { showEmpty(isViewEmpty) }
                     errorHandler.proceed(it)
                 })
     }
@@ -72,7 +72,7 @@ class GradeSummaryPresenter @Inject constructor(
 
     fun onParentViewReselected() {
         view?.run {
-            if (!isViewEmpty()) resetView()
+            if (!isViewEmpty) resetView()
         }
     }
 
@@ -97,11 +97,11 @@ class GradeSummaryPresenter @Inject constructor(
                     ).let {
                         listOf(GradeSummaryItem(
                                 header = it,
-                                title = view?.predictedString().orEmpty(),
+                                title = view?.predictedString.orEmpty(),
                                 grade = gradeSummary.predictedGrade
                         ), GradeSummaryItem(
                                 header = it,
-                                title = view?.finalString().orEmpty(),
+                                title = view?.finalString.orEmpty(),
                                 grade = gradeSummary.finalGrade
                         ))
                     }

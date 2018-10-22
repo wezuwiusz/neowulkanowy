@@ -15,7 +15,7 @@ import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_attendance.*
 import javax.inject.Inject
 
-class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MenuFragmentView {
+class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: AttendancePresenter
@@ -28,6 +28,12 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MenuFragment
 
         fun newInstance() = AttendanceFragment()
     }
+
+    override val titleStringId: Int
+        get() = R.string.attendance_title
+
+    override val isViewEmpty: Boolean
+        get() = attendanceAdapter.isEmpty
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_attendance, container, false)
@@ -64,8 +70,6 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MenuFragment
     override fun clearData() {
         attendanceAdapter.clear()
     }
-
-    override fun isViewEmpty() = attendanceAdapter.isEmpty
 
     override fun onFragmentReselected() {
         presenter.onViewReselected()
@@ -109,4 +113,3 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MenuFragment
         super.onDestroyView()
     }
 }
-

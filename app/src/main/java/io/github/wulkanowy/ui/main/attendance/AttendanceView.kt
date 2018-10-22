@@ -5,6 +5,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface AttendanceView : BaseView {
 
+    val isViewEmpty: Boolean
+
     fun initView()
 
     fun updateData(data: List<AttendanceItem>)
@@ -12,8 +14,6 @@ interface AttendanceView : BaseView {
     fun updateNavigationDay(date: String)
 
     fun clearData()
-
-    fun isViewEmpty(): Boolean
 
     fun hideRefresh()
 

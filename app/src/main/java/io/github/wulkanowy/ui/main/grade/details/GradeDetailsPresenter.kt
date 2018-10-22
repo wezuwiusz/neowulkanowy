@@ -42,7 +42,7 @@ class GradeDetailsPresenter @Inject constructor(
                         updateData(it)
                     }
                 }) {
-                    view?.run { showEmpty(isViewEmpty()) }
+                    view?.run { showEmpty(isViewEmpty) }
                     errorHandler.proceed(it)
                 })
     }
@@ -72,7 +72,7 @@ class GradeDetailsPresenter @Inject constructor(
 
     fun onParentViewReselected() {
         view?.run {
-            if (!isViewEmpty()) resetView()
+            if (!isViewEmpty) resetView()
         }
     }
 
@@ -93,13 +93,13 @@ class GradeDetailsPresenter @Inject constructor(
                 GradeDetailsHeader(
                         subject = it.key,
                         average = formatAverage(average),
-                        number = view?.gradeNumberString(it.value.size).orEmpty(),
+                        number = view?.getGradeNumberString(it.value.size).orEmpty(),
                         newGrades = it.value.filter { grade -> grade.isNew }.size
                 ).apply {
                     subItems = it.value.map { item ->
                         GradeDetailsItem(
                                 grade = item,
-                                weightString = view?.weightString().orEmpty(),
+                                weightString = view?.weightString.orEmpty(),
                                 valueColor = item.valueColor
                         )
                     }
@@ -110,8 +110,8 @@ class GradeDetailsPresenter @Inject constructor(
 
     private fun formatAverage(average: Double): String {
         return view?.run {
-            if (average == 0.0) emptyAverageString()
-            else averageString().format(average)
+            if (average == 0.0) emptyAverageString
+            else averageString.format(average)
         }.orEmpty()
     }
 
