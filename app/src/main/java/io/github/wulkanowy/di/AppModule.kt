@@ -6,8 +6,7 @@ import dagger.Provides
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.WulkanowyApp
-import io.github.wulkanowy.utils.schedulers.SchedulersManager
-import io.github.wulkanowy.utils.schedulers.SchedulersProvider
+import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Singleton
 
 @Module
@@ -19,7 +18,7 @@ internal class AppModule {
 
     @Singleton
     @Provides
-    fun provideSchedulers(): SchedulersManager = SchedulersProvider()
+    fun provideSchedulersProvider() = SchedulersProvider()
 
     @Provides
     fun provideFlexibleAdapter() = FlexibleAdapter<AbstractFlexibleItem<*>>(null, null, true)

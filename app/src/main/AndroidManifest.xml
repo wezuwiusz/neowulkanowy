@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.github.wulkanowy"
     android:installLocation="internalOnly">
 
@@ -15,9 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/WulkanowyTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name=".ui.modules.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/WulkanowyTheme.SplashScreen">
             <intent-filter>
@@ -27,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="ui.modules.login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/login_title"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="ui.modules.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/main_title"
             android:launchMode="singleTop"
