@@ -29,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ui.modules.login.LoginActivity"
+            android:name=".ui.modules.login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/login_title"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="ui.modules.main.MainActivity"
+            android:name=".ui.modules.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/main_title"
             android:launchMode="singleTop"

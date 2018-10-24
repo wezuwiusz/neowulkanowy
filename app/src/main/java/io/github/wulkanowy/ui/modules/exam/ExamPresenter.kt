@@ -101,8 +101,8 @@ class ExamPresenter @Inject constructor(
             clearData()
             showPreButton(!currentDate.minusDays(7).isHolidays)
             showNextButton(!currentDate.plusDays(7).isHolidays)
-            updateNavigationWeek("${currentDate.toFormattedString("dd.MM")} - " +
-                    currentDate.plusDays(4).toFormattedString("dd.MM"))
+            updateNavigationWeek("${currentDate.monday.toFormattedString("dd.MM")} - " +
+                    currentDate.friday.toFormattedString("dd.MM"))
         }
     }
 }
