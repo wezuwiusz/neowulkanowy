@@ -61,6 +61,7 @@ class TimetablePresenter @Inject constructor(
                     .map { it.single { semester -> semester.current } }
                     .flatMap { timetableRepository.getTimetable(it, currentDate, currentDate, forceRefresh) }
                     .map { items -> items.map { TimetableItem(it, view?.roomString.orEmpty()) } }
+                    .map { items -> items.sortedBy { it.lesson.number } }
                     .subscribeOn(schedulers.backgroundThread)
                     .observeOn(schedulers.mainThread)
                     .doFinally {

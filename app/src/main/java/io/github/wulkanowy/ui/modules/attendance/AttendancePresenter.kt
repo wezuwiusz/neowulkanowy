@@ -67,6 +67,7 @@ class AttendancePresenter @Inject constructor(
                         else list.filter { !it.presence }
                     }
                     .map { items -> items.map { AttendanceItem(it) } }
+                    .map { items -> items.sortedBy { it.attendance.number } }
                     .subscribeOn(schedulers.backgroundThread)
                     .observeOn(schedulers.mainThread)
                     .doFinally {
