@@ -12,5 +12,8 @@ class PreferencesRepository @Inject constructor(private val sharedPref: SharedPr
 
     val showPresent: Boolean
         get() = sharedPref.getBoolean("attendance_present", true)
+
+    val currentTheme: Int
+        get() = sharedPref.getString("theme", "1")?.toInt() ?: 1
 }
 

@@ -7,4 +7,6 @@ interface SplashView : BaseView {
     fun openLoginView()
 
     fun openMainView()
+
+    fun setCurrentThemeMode(mode: Int)
 }

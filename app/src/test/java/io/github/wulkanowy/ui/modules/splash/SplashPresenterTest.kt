@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.splash
 
 import io.github.wulkanowy.data.ErrorHandler
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import org.junit.Before
 import org.junit.Test
@@ -20,12 +21,15 @@ class SplashPresenterTest {
     @Mock
     lateinit var errorHandler: ErrorHandler
 
+    @Mock
+    lateinit var preferencesRepository: PreferencesRepository
+
     private lateinit var presenter: SplashPresenter
 
     @Before
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
-        presenter = SplashPresenter(sessionRepository, errorHandler)
+        presenter = SplashPresenter(sessionRepository, preferencesRepository, errorHandler)
     }
 
     @Test
