@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.splash
 
 import android.os.Bundle
+import io.github.wulkanowy.services.notification.GradeNotification
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity

@@ -75,6 +75,4 @@ class GradeDetailsDialog : DialogFragment() {
 
         gradeDialogClose.setOnClickListener { dismiss() }
     }
-
 }
-

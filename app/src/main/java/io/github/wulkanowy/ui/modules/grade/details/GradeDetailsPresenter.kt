@@ -9,6 +9,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calcAverage
 import io.github.wulkanowy.utils.valueColor
+import timber.log.Timber
 import javax.inject.Inject
 
 class GradeDetailsPresenter @Inject constructor(
@@ -51,8 +52,8 @@ class GradeDetailsPresenter @Inject constructor(
         if (item is GradeDetailsItem) {
             view?.apply {
                 showGradeDialog(item.grade)
-                if (item.grade.isNew) {
-                    item.grade.isNew = false
+                if (!item.grade.isRead) {
+                    item.grade.isRead = true
                     updateItem(item)
                     getHeaderOfItem(item)?.let { header ->
                         if (header is GradeDetailsHeader) {
@@ -94,7 +95,7 @@ class GradeDetailsPresenter @Inject constructor(
                         subject = it.key,
                         average = formatAverage(average),
                         number = view?.getGradeNumberString(it.value.size).orEmpty(),
-                        newGrades = it.value.filter { grade -> grade.isNew }.size
+                        newGrades = it.value.filter { grade -> !grade.isRead }.size
                 ).apply {
                     subItems = it.value.map { item ->
                         GradeDetailsItem(
@@ -120,5 +121,6 @@ class GradeDetailsPresenter @Inject constructor(
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .subscribe({}) { error -> errorHandler.proceed(error) })
+        Timber.d("Grade ${grade.id} updated")
     }
 }

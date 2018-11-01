@@ -38,7 +38,7 @@ jobs:
           command: ./gradlew build -x test -x lint -x fabricGenerateResourcesRelease -x packageRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Run FOSSA
-          command: fossa --no-ansi
+          command: fossa --no-ansi || true
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -113,7 +113,7 @@ jobs:
             adb shell input keyevent 82
       - run:
           name: Run instrumented tests
-          command: ./gradlew clean createDebugCoverageReport jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew clean createDebugCoverageReport jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex -PdisableCrashlytics
       - run:
           name: Collect logs from emulator
           command: adb logcat -d > ./app/build/reports/logcat_emulator.txt

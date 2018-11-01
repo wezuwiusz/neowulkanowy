@@ -40,6 +40,14 @@
             android:launchMode="singleTop"
             android:theme="@style/WulkanowyTheme.NoActionBar" />
 
+        <service
+            android:name=".services.job.SyncWorker"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+            </intent-filter>
+        </service>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="${fabricApiKey}" />

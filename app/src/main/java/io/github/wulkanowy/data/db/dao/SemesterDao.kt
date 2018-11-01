@@ -14,4 +14,10 @@ interface SemesterDao {
 
     @Query("SELECT * FROM Semesters WHERE student_id = :studentId")
     fun getSemester(studentId: Int): Single<List<Semester>>
+
+    @Query("UPDATE Semesters SET is_current = 0")
+    fun resetCurrentSemester()
+
+    @Query("UPDATE Semesters SET is_current = 1 WHERE semester_id = :semesterId")
+    fun setCurrentSemester(semesterId: Int)
 }

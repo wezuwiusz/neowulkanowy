@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="services_interval_entries">
-        <item>10 minut</item>
+        <item>15 minut</item>
         <item>30 minut</item>
-        <item>1 godzinę</item>
+        <item>1 godzina</item>
         <item>2 godziny</item>
         <item>6 godzin</item>
         <item>12 godzin</item>

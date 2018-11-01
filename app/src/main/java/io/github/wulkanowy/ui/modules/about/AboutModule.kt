@@ -12,4 +12,3 @@ class AboutModule {
     @Provides
     fun provideLibsFragmentCompat() = LibsFragmentCompat()
 }
-

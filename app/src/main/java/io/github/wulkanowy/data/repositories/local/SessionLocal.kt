@@ -46,4 +46,10 @@ class SessionLocal @Inject constructor(
     fun getSemesters(student: Student): Single<List<Semester>> {
         return semesterDb.getSemester(student.studentId)
     }
+
+    fun setCurrentSemester(semesterId: Int): Completable {
+        return Single.fromCallable { semesterDb.resetCurrentSemester() }.ignoreElement().andThen {
+            semesterDb.setCurrentSemester(semesterId)
+        }
+    }
 }

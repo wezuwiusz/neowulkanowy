@@ -12,37 +12,46 @@ import javax.inject.Singleton
 class SessionRemote @Inject constructor(private val api: Api) {
 
     fun getConnectedStudents(email: String, password: String, symbol: String, endpoint: String): Single<List<Student>> {
-        return Single.just(initApi(Student(email = email, password = password, symbol = symbol, endpoint = endpoint, loginType = "AUTO")))
-                .flatMap { _ ->
-                    api.getPupils().map { students ->
-                        students.map {
-                            Student(
-                                    email = email,
-                                    password = password,
-                                    symbol = it.symbol,
-                                    studentId = it.studentId,
-                                    studentName = it.studentName,
-                                    schoolSymbol = it.schoolSymbol,
-                                    schoolName = it.schoolName,
-                                    endpoint = endpoint,
-                                    loginType = it.loginType.name
-                            )
-                        }
-                    }
+        return Single.just(
+            initApi(
+                Student(
+                    email = email,
+                    password = password,
+                    symbol = symbol,
+                    endpoint = endpoint,
+                    loginType = "AUTO"
+                ), true
+            )
+        ).flatMap {
+            api.getPupils().map { students ->
+                students.map { pupil ->
+                    Student(
+                        email = email,
+                        password = password,
+                        symbol = pupil.symbol,
+                        studentId = pupil.studentId,
+                        studentName = pupil.studentName,
+                        schoolSymbol = pupil.schoolSymbol,
+                        schoolName = pupil.schoolName,
+                        endpoint = endpoint,
+                        loginType = pupil.loginType.name
+                    )
                 }
+            }
+        }
     }
 
     fun getSemesters(student: Student): Single<List<Semester>> {
-        return Single.just(initApi(student)).flatMap { _ ->
+        return Single.just(initApi(student)).flatMap {
             api.getSemesters().map { semesters ->
-                semesters.map {
+                semesters.map { semester ->
                     Semester(
-                            studentId = student.studentId,
-                            diaryId = it.diaryId,
-                            diaryName = it.diaryName,
-                            semesterId = it.semesterId,
-                            semesterName = it.semesterNumber,
-                            current = it.current
+                        studentId = student.studentId,
+                        diaryId = semester.diaryId,
+                        diaryName = semester.diaryName,
+                        semesterId = semester.semesterId,
+                        semesterName = semester.semesterNumber,
+                        current = semester.current
                     )
                 }
 
@@ -50,8 +59,21 @@ class SessionRemote @Inject constructor(private val api: Api) {
         }
     }
 
-    fun initApi(student: Student, checkInit: Boolean = false) {
-        if (if (checkInit) 0 == api.studentId else true) {
+    fun getCurrentSemester(student: Student): Single<Semester> {
+        return api.getCurrentSemester().map {
+            Semester(
+                studentId = student.studentId,
+                diaryId = it.diaryId,
+                diaryName = it.diaryName,
+                semesterId = it.semesterId,
+                semesterName = it.semesterNumber,
+                current = it.current
+            )
+        }
+    }
+
+    fun initApi(student: Student, reInitialize: Boolean = false) {
+        if (if (reInitialize) true else 0 == api.studentId) {
             api.run {
                 email = student.email
                 password = student.password

@@ -14,4 +14,12 @@ class SharedPrefHelper @Inject constructor(private val sharedPref: SharedPrefere
     fun getLong(key: String, defaultValue: Long): Long {
         return sharedPref.getLong(key, defaultValue)
     }
+
+    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
+        return sharedPref.getBoolean(key, defaultValue)
+    }
+
+    fun getString(key: String, defaultValue: String): String {
+        return sharedPref.getString(key, defaultValue) ?: defaultValue
+    }
 }

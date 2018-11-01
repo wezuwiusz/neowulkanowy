@@ -14,6 +14,7 @@ import javax.inject.Singleton
     RepositoryModule::class,
     BuilderModule::class])
 interface AppComponent : AndroidInjector<WulkanowyApp> {
+
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<WulkanowyApp>()
 }

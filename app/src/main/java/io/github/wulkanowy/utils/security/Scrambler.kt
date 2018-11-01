@@ -140,4 +140,3 @@ private fun generateKeyPair(context: Context) {
     }
     Timber.i("A new KeyPair has been generated")
 }
-

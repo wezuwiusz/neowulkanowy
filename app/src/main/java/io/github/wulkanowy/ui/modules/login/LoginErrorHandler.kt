@@ -20,4 +20,3 @@ class LoginErrorHandler(resources: Resources) : ErrorHandler(resources) {
         doOnBadCredentials = {}
     }
 }
-

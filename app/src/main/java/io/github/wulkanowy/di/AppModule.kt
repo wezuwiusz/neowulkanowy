@@ -1,6 +1,8 @@
 package io.github.wulkanowy.di
 
 import android.content.Context
+import com.firebase.jobdispatcher.FirebaseJobDispatcher
+import com.firebase.jobdispatcher.GooglePlayDriver
 import dagger.Module
 import dagger.Provides
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -22,4 +24,10 @@ internal class AppModule {
 
     @Provides
     fun provideFlexibleAdapter() = FlexibleAdapter<AbstractFlexibleItem<*>>(null, null, true)
+
+    @Singleton
+    @Provides
+    fun provideJobDispatcher(context: Context): FirebaseJobDispatcher {
+        return FirebaseJobDispatcher(GooglePlayDriver(context))
+    }
 }

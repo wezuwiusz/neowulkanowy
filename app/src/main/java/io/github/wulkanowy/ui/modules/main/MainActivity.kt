@@ -10,6 +10,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
 import io.github.wulkanowy.R
+import io.github.wulkanowy.services.notification.GradeNotification
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity(), MainView {
     lateinit var navController: FragNavController
 
     companion object {
+        const val EXTRA_CARD_ID_KEY = "cardId"
         fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 
@@ -51,7 +53,7 @@ class MainActivity : BaseActivity(), MainView {
         setSupportActionBar(mainToolbar)
         messageContainer = mainFragmentContainer
 
-        presenter.onAttachView(this)
+        presenter.onAttachView(this, intent.getIntExtra(EXTRA_CARD_ID_KEY, -1))
         navController.initialize(startMenuIndex, savedInstanceState)
     }
 
@@ -66,13 +68,15 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun initView() {
         mainBottomNav.run {
-            addItems(mutableListOf(
+            addItems(
+                mutableListOf(
                     AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_menu_main_grade_26dp, 0),
                     AHBottomNavigationItem(R.string.attendance_title, R.drawable.ic_menu_main_attendance_24dp, 0),
                     AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_menu_main_exam_24dp, 0),
                     AHBottomNavigationItem(R.string.timetable_title, R.drawable.ic_menu_main_timetable_24dp, 0),
                     AHBottomNavigationItem(R.string.more_title, R.drawable.ic_menu_main_more_24dp, 0)
-            ))
+                )
+            )
             accentColor = ContextCompat.getColor(context, R.color.colorPrimary)
             inactiveColor = getThemeAttrColor(android.R.attr.textColorSecondary)
             defaultBackgroundColor = getThemeAttrColor(R.attr.bottomNavBackground)
@@ -89,11 +93,11 @@ class MainActivity : BaseActivity(), MainView {
             setOnViewChangeListener { presenter.onViewStart() }
             fragmentHideStrategy = HIDE
             rootFragments = listOf(
-                    GradeFragment.newInstance(),
-                    AttendanceFragment.newInstance(),
-                    ExamFragment.newInstance(),
-                    TimetableFragment.newInstance(),
-                    MoreFragment.newInstance()
+                GradeFragment.newInstance(),
+                AttendanceFragment.newInstance(),
+                ExamFragment.newInstance(),
+                TimetableFragment.newInstance(),
+                MoreFragment.newInstance()
             )
         }
     }
@@ -124,6 +128,10 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun onBackPressed() {
         presenter.onBackPressed { super.onBackPressed() }
+    }
+
+    override fun cancelNotifications() {
+        GradeNotification(applicationContext).cancelAll()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

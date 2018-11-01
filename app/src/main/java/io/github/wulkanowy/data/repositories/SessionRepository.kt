@@ -14,9 +14,10 @@ import javax.inject.Singleton
 
 @Singleton
 class SessionRepository @Inject constructor(
-        private val local: SessionLocal,
-        private val remote: SessionRemote,
-        private val settings: InternetObservingSettings) {
+    private val local: SessionLocal,
+    private val remote: SessionRemote,
+    private val settings: InternetObservingSettings
+) {
 
     val isSessionSaved
         get() = local.isSessionSaved
@@ -26,24 +27,39 @@ class SessionRepository @Inject constructor(
 
     fun getConnectedStudents(email: String, password: String, symbol: String, endpoint: String): Single<List<Student>> {
         cachedStudents = ReactiveNetwork.checkInternetConnectivity(settings)
-                .flatMap { isConnected ->
-                    if (isConnected) remote.getConnectedStudents(email, password, symbol, endpoint)
-                    else Single.error<List<Student>>(UnknownHostException("No internet connection"))
-                }.doOnSuccess { cachedStudents = Single.just(it) }
+            .flatMap { isConnected ->
+                if (isConnected) remote.getConnectedStudents(email, password, symbol, endpoint)
+                else Single.error<List<Student>>(UnknownHostException("No internet connection"))
+            }.doOnSuccess { cachedStudents = Single.just(it) }
         return cachedStudents
     }
 
-    fun getSemesters(): Single<List<Semester>> {
-        return local.getLastStudent()
-                .flatMapSingle {
-                    remote.initApi(it, true)
-                    local.getSemesters(it)
-                }
+    fun saveStudent(student: Student): Completable {
+        return remote.getSemesters(student)
+            .flatMapCompletable { local.saveSemesters(it) }
+            .concatWith(local.saveStudent(student))
     }
 
-    fun saveStudent(student: Student): Completable {
-        return remote.getSemesters(student).flatMapCompletable { local.saveSemesters(it) }
-                .concatWith(local.saveStudent(student))
+    fun getSemesters(forceRefresh: Boolean = false): Single<List<Semester>> {
+        return local.getLastStudent()
+            .flatMapSingle { student ->
+                remote.initApi(student)
+                local.getSemesters(student).filter { !forceRefresh }
+                    .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
+                        if (it) remote.getCurrentSemester(student)
+                        else Single.error(UnknownHostException())
+                    }.flatMap { current ->
+                        local.getSemesters(student).doOnSuccess { semesters ->
+                            if (semesters.single { it.current }.semesterId != current.semesterId) {
+                                local.saveSemesters(listOf(current)).andThen {
+                                    local.setCurrentSemester(current.semesterId)
+                                }
+                            }
+                        }
+                    }.flatMap {
+                        local.getSemesters(student)
+                    })
+            }
     }
 
     fun clearCache() {

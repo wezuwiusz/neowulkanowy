@@ -15,12 +15,20 @@ class GradeLocal @Inject constructor(private val gradeDb: GradeDao) {
         return gradeDb.getGrades(semester.semesterId, semester.studentId).filter { !it.isEmpty() }
     }
 
+    fun getNewGrades(semester: Semester): Maybe<List<Grade>> {
+        return gradeDb.getNewGrades(semester.semesterId, semester.studentId)
+    }
+
     fun saveGrades(grades: List<Grade>) {
         gradeDb.insertAll(grades)
     }
 
     fun updateGrade(grade: Grade): Completable {
         return Completable.fromCallable { gradeDb.update(grade) }
+    }
+
+    fun updateGrades(grade: List<Grade>): Completable {
+        return Completable.fromCallable { gradeDb.updateAll(grade) }
     }
 
     fun deleteGrades(grades: List<Grade>) {

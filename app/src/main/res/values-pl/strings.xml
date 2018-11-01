@@ -62,6 +62,16 @@
     </plurals>
 
 
+    <!--Grade notify-->
+    <string name="notify_grade_channel">Nowe oceny</string>
+    <plurals name="notify_grade_new_items">
+        <item quantity="one">Dostałeś %1$d ocenę</item>
+        <item quantity="few">"Dostałeś %1$d oceny</item>
+        <item quantity="many">Dostałeś %1$d ocen</item>
+        <item quantity="other">Dostałeś %1$d ocen</item>
+    </plurals>
+
+
     <!--Timetable-->
     <string name="timetable_lesson">Lekcja</string>
     <string name="timetable_room">Sala</string>
@@ -128,23 +138,11 @@
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
 
-    <string name="pref_services_header">Usługi</string>
+    <string name="pref_services_header">Synchronizacja</string>
     <string name="pref_services_switch">Automatyczna aktualizacja</string>
-    <string name="pref_services_suspended">Zawieszone na wakacjach</string>
+    <string name="pref_services_suspended">Zawieszona na wakacjach</string>
     <string name="pref_services_interval">Interwał aktualizacji</string>
     <string name="pref_services_wifi">Tylko WiFi</string>
-
-    <string name="pref_restart">Wymagany restart</string>
-
-
-    <!--Grade notify-->
-    <string name="notify_grade_chanel">Nowe oceny</string>
-    <plurals name="notify_grade_new_items">
-        <item quantity="one">Dostałeś %1$d ocenę</item>
-        <item quantity="few">"Dostałeś %1$d oceny</item>
-        <item quantity="many">Dostałeś %1$d ocen</item>
-        <item quantity="other">Dostałeś %1$d ocen</item>
-    </plurals>
 
 
     <!--Colors-->

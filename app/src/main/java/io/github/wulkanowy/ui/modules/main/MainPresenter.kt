@@ -2,20 +2,26 @@ package io.github.wulkanowy.ui.modules.main
 
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.services.job.ServiceHelper
 import io.github.wulkanowy.ui.base.BasePresenter
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
-        errorHandler: ErrorHandler,
-        private val prefRepository: PreferencesRepository)
-    : BasePresenter<MainView>(errorHandler) {
+    errorHandler: ErrorHandler,
+    private val prefRepository: PreferencesRepository,
+    private val serviceHelper: ServiceHelper
+) : BasePresenter<MainView>(errorHandler) {
 
-    override fun onAttachView(view: MainView) {
+    fun onAttachView(view: MainView, init: Int) {
         super.onAttachView(view)
+
         view.run {
-            startMenuIndex = prefRepository.startMenuIndex
+            cancelNotifications()
+            startMenuIndex = if (init != -1) init else prefRepository.startMenuIndex
             initView()
         }
+
+        serviceHelper.startFullSyncService()
     }
 
     fun onViewStart() {
@@ -32,7 +38,6 @@ class MainPresenter @Inject constructor(
         view?.popView()
         return true
     }
-
 
     fun onBackPressed(default: () -> Unit) {
         view?.run {

@@ -29,4 +29,3 @@ abstract class GradeModule {
     @ContributesAndroidInjector
     abstract fun binGradeSummaryFragment(): GradeSummaryFragment
 }
-

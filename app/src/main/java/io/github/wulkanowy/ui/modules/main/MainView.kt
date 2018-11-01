@@ -24,6 +24,8 @@ interface MainView : BaseView {
 
     fun popView()
 
+    fun cancelNotifications()
+
     interface MainChildView {
 
         fun onFragmentReselected()

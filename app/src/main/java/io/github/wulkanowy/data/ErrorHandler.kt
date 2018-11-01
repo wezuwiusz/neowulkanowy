@@ -14,7 +14,7 @@ open class ErrorHandler @Inject constructor(private val resources: Resources) {
     var showErrorMessage: (String) -> Unit = {}
 
     open fun proceed(error: Throwable) {
-        Timber.i(error, "An exception occurred while the Wulkanowy was running")
+        Timber.e(error, "An exception occurred while the Wulkanowy was running")
 
         showErrorMessage((when (error) {
             is UnknownHostException -> resources.getString(R.string.all_no_internet)

@@ -34,7 +34,7 @@ class GradeDetailsItem(val grade: Grade, private val weightString: String, priva
             gradeItemDescription.text = if (grade.description.isNotBlank()) grade.description else grade.gradeSymbol
             gradeItemDate.text = grade.date.toFormattedString()
             gradeItemWeight.text = "$weightString: ${grade.weight}"
-            gradeItemNote.visibility = if (grade.isNew) VISIBLE else GONE
+            gradeItemNote.visibility = if (!grade.isRead) VISIBLE else GONE
         }
     }
 

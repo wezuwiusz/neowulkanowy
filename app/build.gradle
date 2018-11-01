@@ -7,6 +7,8 @@ apply plugin: 'com.github.triplet.play'
 apply from: 'jacoco.gradle'
 apply from: 'sonarqube.gradle'
 
+def fabricApiKey = System.getenv("FABRIC_API_KEY") ?: "null"
+
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -29,9 +31,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         playAccountConfig = playAccountConfigs.defaultAccountConfig
-        manifestPlaceholders = [
-                fabricApiKey: System.getenv("FABRIC_API_KEY") ?: "null"
-        ]
+        manifestPlaceholders = [ fabricApiKey: fabricApiKey ]
     }
 
     signingConfigs {
@@ -45,17 +45,23 @@ android {
 
     buildTypes {
         release {
+            buildConfigField "boolean", "FABRIC_ENABLED", "true"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
+            buildConfigField "boolean", "FABRIC_ENABLED", fabricApiKey == "null" ? "false" : "true"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
             testCoverageEnabled = true
-            ext.enableCrashlytics = false
+            ext.enableCrashlytics = fabricApiKey != "null" && !project.hasProperty("disableCrashlytics")
             multiDexKeepProguard file('proguard-multidex-rules.pro')
         }
+    }
+
+    lintOptions {
+        disable 'HardwareIds'
     }
 }
 
@@ -72,7 +78,7 @@ ext.androidx_version = "1.0.0"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation('com.github.wulkanowy:api:1400211f0d') { exclude module: "threetenbp" }
+    implementation('com.github.wulkanowy:api:e829b094de') { exclude module: "threetenbp" }
 
     implementation "androidx.legacy:legacy-support-v4:$androidx_version"
     implementation "androidx.appcompat:appcompat:$androidx_version"
@@ -89,12 +95,13 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:2.16"
     kapt "com.google.dagger:dagger-android-processor:2.16"
 
-    implementation "androidx.room:room-runtime:2.1.0-alpha01"
-    implementation "androidx.room:room-rxjava2:2.1.0-alpha01"
-    kapt "androidx.room:room-compiler:2.1.0-alpha01"
+    implementation "androidx.room:room-runtime:2.1.0-alpha02"
+    implementation "androidx.room:room-rxjava2:2.1.0-alpha02"
+    kapt "androidx.room:room-compiler:2.1.0-alpha02"
 
     implementation "eu.davidea:flexible-adapter:5.1.0"
     implementation "eu.davidea:flexible-adapter-ui:1.0.0"
+
     implementation "com.aurelhubert:ahbottomnavigation:2.2.0"
     implementation 'com.ncapdevi:frag-nav:3.0.0-RC3'
 
@@ -120,9 +127,10 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:2.23.0"
     testImplementation 'org.threeten:threetenbp:1.3.7'
 
-    androidTestImplementation 'androidx.test:core:1.0.0-beta02'
-    androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
-    androidTestImplementation 'androidx.test.ext:junit:1.0.0-beta02'
+    androidTestImplementation 'androidx.test:core:1.0.0'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.0.0'
     androidTestImplementation "org.mockito:mockito-android:2.23.0"
+
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }

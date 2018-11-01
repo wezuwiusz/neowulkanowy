@@ -11,7 +11,7 @@ import io.reactivex.Maybe
 @Dao
 interface GradeSummaryDao {
 
-    @Insert(onConflict = REPLACE)
+    @Insert
     fun insertAll(gradesSummary: List<GradeSummary>)
 
     @Delete

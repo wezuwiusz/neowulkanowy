@@ -33,7 +33,6 @@ local.properties
 .idea/vcs.xml
 .idea/workspace.xml
 .idea/caches/
-.idea/codeStyles/
 *.iml
 
 # OS-specific files
@@ -44,7 +43,7 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
-.idea/codeStyles/
 .idea/caches/
 ./app/key.p12
 ./app/upload-key.jks
+*.log
