@@ -12,12 +12,12 @@ class MainPresenter @Inject constructor(
     private val serviceHelper: ServiceHelper
 ) : BasePresenter<MainView>(errorHandler) {
 
-    fun onAttachView(view: MainView, init: Int) {
+    fun onAttachView(view: MainView, initMenuIndex: Int) {
         super.onAttachView(view)
 
         view.run {
             cancelNotifications()
-            startMenuIndex = if (init != -1) init else prefRepository.startMenuIndex
+            startMenuIndex = if (initMenuIndex != -1) initMenuIndex else prefRepository.startMenuIndex
             initView()
         }
 

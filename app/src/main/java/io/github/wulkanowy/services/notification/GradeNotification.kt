@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_CARD_ID_KEY
+import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_START_MENU_INDEX
 import timber.log.Timber
 
 class GradeNotification(context: Context) : BaseNotification(context) {
@@ -41,7 +41,7 @@ class GradeNotification(context: Context) : BaseNotification(context) {
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setContentIntent(
                 PendingIntent.getActivity(context, 0,
-                    MainActivity.getStartIntent(context).putExtra(EXTRA_CARD_ID_KEY, 0),
+                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU_INDEX, 0),
                     FLAG_UPDATE_CURRENT
                 )
             )

@@ -32,7 +32,8 @@ class MainActivity : BaseActivity(), MainView {
     lateinit var navController: FragNavController
 
     companion object {
-        const val EXTRA_CARD_ID_KEY = "cardId"
+        const val EXTRA_START_MENU_INDEX = "extraStartMenuIndex"
+
         fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 
@@ -53,7 +54,7 @@ class MainActivity : BaseActivity(), MainView {
         setSupportActionBar(mainToolbar)
         messageContainer = mainFragmentContainer
 
-        presenter.onAttachView(this, intent.getIntExtra(EXTRA_CARD_ID_KEY, -1))
+        presenter.onAttachView(this, intent.getIntExtra(EXTRA_START_MENU_INDEX, -1))
         navController.initialize(startMenuIndex, savedInstanceState)
     }
 
