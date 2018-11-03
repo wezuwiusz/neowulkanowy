@@ -1,169 +1,163 @@
 <resources>
     <string name="app_name">Wulkanowy</string>
 
-    <!-- Strings related to login -->
-    <string name="title_activity_login">Zaloguj się</string>
-    <string name="login_heading">Zaloguj się za pomocą konta VULCAN</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Hasło</string>
-    <string name="prompt_symbol">Symbol</string>
-    <string name="action_sign_in">Zaloguj</string>
-    <string name="step_connecting">Łączenie z dziennikiem</string>
-    <string name="step_login">Logowanie</string>
-    <string name="step_synchronization">Synchronizacja</string>
-    <string name="error_invalid_email">Ten adres email nie jest poprawny</string>
-    <string name="error_invalid_password">To hasło jest za krótkie</string>
-    <string name="error_incorrect_password">To hasło jest niepoprawne</string>
-    <string name="error_field_required">To pole jest wymagane</string>
-    <string name="error_bad_account_permission">Brak dostępu do dziennika. Sprawdź inny symbol</string>
-    <string name="login_accepted_text">Pomyślnie zalogowano</string>
-    <string name="login_bad_credentials_text">Niepoprawny e-mail lub hasło</string>
-    <string name="login_bad_account_permission_text">Brak uprawnień do otwarcia dziennika. Sprawdź wprowadzoną nazwę powiatu</string>
-    <string name="login_failed_text">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
-    <string name="action_create_account">Nie masz jeszcze konta? Załóż je</string>
-    <string name="action_forgot_password">Zapomniałeś hasła?</string>
+    <!--Activity/Fragment title-->
+    <string name="login_title">Wybierz ucznia</string>
+    <string name="main_title">Wulkanowy</string>
+    <string name="grade_title">Oceny</string>
+    <string name="attendance_title">Frekwencja</string>
+    <string name="exam_title">Sprawdziany</string>
+    <string name="timetable_title">Plan lekcji</string>
+    <string name="settings_title">Ustawienia</string>
+    <string name="more_title">Więcej</string>
+    <string name="about_title">O aplikacji</string>
 
-    <string name="color_black_text">Czarny</string>
-    <string name="color_red_text">Czerwony</string>
-    <string name="color_blue_text">Niebieski</string>
-    <string name="color_green_text">Zielony</string>
-    <string name="noColor_text">Brak koloru</string>
 
-    <string name="activity_dashboard_text">Aktywność dashboard</string>
-    <string name="exams_text">Sprawdziany</string>
-    <string name="grades_text">Oceny</string>
-    <string name="attendance_text">Frekwencja</string>
-    <string name="timetable_text">Plan lekcji</string>
-    <string name="settings_text">Ustawienia</string>
-    <string name="activity_under_construction">Ta część aplikacji jest w budowie</string>
-    <string name="fragment_no_grades">Brak ocen</string>
+    <!--Login form-->
+    <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
+    <string name="login_header_symbol">Podaj symbol dziennika VULCAN</string>
+    <string name="login_nickname_hint">Email lub nick</string>
+    <string name="login_password_hint">Hasło</string>
+    <string name="login_host_hint">Dziennik</string>
+    <string name="login_symbol_hint">Symbol</string>
+    <string name="login_sign_in">Zaloguj</string>
+    <string name="login_progress">Logowanie&#8230;</string>
+    <string name="login_sync">Synchronizacja</string>
+    <string name="login_invalid_password">To hasło jest za krótkie</string>
+    <string name="login_incorrect_password">To hasło jest niepoprawne</string>
+    <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprwadź symbol</string>
+    <string name="login_field_required">To pole jest wymagane</string>
 
-    <string name="noInternet_text">Brak połączenia z internetem</string>
-    <string name="encrypt_failed_text">Szyfrowanie nie powiodło się. Automatyczne logowanie zostało wyłączone</string>
-    <string name="version_text">Wersja %1$s</string>
-    <string name="refresh_error_text">"Podczas odświeżania zawartości wystąpił błąd. "</string>
-    <string name="alert_dialog_blocked_app">Blokada aplikacji</string>
-    <string name="alert_dialog_blocked_app_message">W obawie o bezpieczeństwo przechowywanych danych osobistych na urządzeniu z podwyższonymi uprawnieniami (root), aplikacja Wulkanowy została zablokowana</string>
 
-    <string name="dialog_description_text">Opis</string>
-    <string name="grade_weight_text">Waga</string>
-    <string name="noDescription_text">Brak opisu</string>
-    <string name="dialog_teacher_text">Nauczyciel</string>
-    <string name="dialog_date_text">Data</string>
-    <string name="dialog_color_text">Kolor</string>
-
-    <string name="switch_semester">Zmień semestr</string>
-    <string name="semester_text">Semestr %d</string>
-    <string name="cancel">Anuluj</string>
-
-    <string name="timetable_dialog_lesson">Lekcja</string>
-    <string name="timetable_dialog_room">Sala</string>
-    <string name="timetable_dialog_group">Grupa</string>
-    <string name="timetable_dialog_time">Godziny</string>
-    <string name="timetable_dialog_description">Zmiany</string>
-
-    <string name="sync_completed">Synchronizacja zakończona</string>
-
-    <string name="generic_dialog_details">Szczegóły</string>
-    <string name="generic_dialog_close">Zamknij</string>
-    <string name="generic_dialog_teacher">Nauczyciel</string>
-
-    <string name="generic_app_no_data">Brak danych</string>
-    <string name="generic_timeout_error">Zbyt długie oczekiwanie na połączenie</string>
-
-    <string name="snackbar_no_grades">Brak nowych ocen</string>
-    <string name="snackbar_new_grade">Ilość nowych ocen: %1$d</string>
-
-    <string name="info_average_grades">Średnia: %1$.2f</string>
-    <string name="info_no_average">Brak średniej</string>
-    <string name="info_grades_predicted_rating">Przewidywana: %1$s</string>
-    <string name="info_grades_final_rating">Końcowa: %1$s</string>
-    <string name="info_free_week">Brak lekcji w tym tygodniu</string>
-    <string name="timetable_subitem_room">Sala %s</string>
-
-    <string name="grades_predicted_rating">Przewidywana</string>
-    <string name="grades_final_rating">Końcowa</string>
-
-    <plurals name="numberOfGradesPlurals">
+    <!--Grade-->
+    <string name="grade_header">Ocena</string>
+    <string name="grade_semester">Semestr %d</string>
+    <string name="grade_switch_semester">Zmień semestr</string>
+    <string name="grade_no_items">Brak ocen</string>
+    <string name="grade_weight">Waga</string>
+    <string name="grade_comment">Komentarz</string>
+    <string name="grade_no_new_items">Brak nowych ocen</string>
+    <string name="grade_number_new_items">Ilość nowych ocen: %1$d</string>
+    <string name="grade_average">Średnia: %1$.2f</string>
+    <string name="grade_no_average">Brak średniej</string>
+    <string name="grade_predicted">Przewidywana: %1$s</string>
+    <string name="grade_final">Końcowa: %1$s</string>
+    <string name="grade_summary_final_grade">Ocena końcowa</string>
+    <string name="grade_summary_predicted_grade">Przewidywana ocena</string>
+    <string name="grade_summary_calculated_average">Obliczona średnia</string>
+    <string name="grade_summary_final_average">Końcowa średnia</string>
+    <string name="grade_menu_summary">Podsumowanie</string>
+    <plurals name="grade_number_item">
         <item quantity="one">%d ocena</item>
         <item quantity="few">%d oceny</item>
         <item quantity="many">%d ocen</item>
         <item quantity="other">%d ocen</item>
     </plurals>
 
-    <plurals name="newGradePlurals">
+    <plurals name="grade_new_items">
         <item quantity="one">Nowa ocena</item>
         <item quantity="few">Nowe oceny</item>
         <item quantity="many">Nowych ocen</item>
         <item quantity="other">Nowych ocen</item>
     </plurals>
 
-    <plurals name="receivedNewGradePlurals">
+
+    <!--Grade notify-->
+    <string name="notify_grade_channel">Nowe oceny</string>
+    <plurals name="notify_grade_new_items">
         <item quantity="one">Dostałeś %1$d ocenę</item>
         <item quantity="few">"Dostałeś %1$d oceny</item>
         <item quantity="many">Dostałeś %1$d ocen</item>
         <item quantity="other">Dostałeś %1$d ocen</item>
     </plurals>
 
-    <string name="attendance_absence_for_school_reasons">Nieobecny z przyczyn szkolnych</string>
+
+    <!--Timetable-->
+    <string name="timetable_lesson">Lekcja</string>
+    <string name="timetable_room">Sala</string>
+    <string name="timetable_group">Grupa</string>
+    <string name="timetable_time">Godziny</string>
+    <string name="timetable_changes">Zmiany</string>
+    <string name="timetable_no_items">Brak lekcji w tym dniu</string>
+
+
+    <!--Attendance-->
+    <string name="attendance_absence_school">Nieobecny z przyczyn szkolnych</string>
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
     <string name="attendance_exemption">Zwolniony</string>
     <string name="attendance_excused_lateness">Spóźnienie usprawiedliowione</string>
     <string name="attendance_unexcused_lateness">Spóźnienie nieusprawiedliwione</string>
     <string name="attendance_present">Obecny</string>
-    <string name="attendance_dialog_description">Opis</string>
-    <string name="attendance_dialog_date">Data</string>
-    <string name="attendance_dialog_subject">Przedmiot</string>
-    <string name="attendance_dialog_number">Numer lekcji</string>
-    <string name="attendance_no_entries">Brak wpisów</string>
-    <plurals name="numberOfAbsences">
+    <string name="attendance_number">Numer lekcji</string>
+    <string name="attendance_no_items">Brak wpisów</string>
+    <plurals name="attendance_number_absences">
         <item quantity="one">%1$d nieobecność</item>
         <item quantity="few">%1$d nieobecności</item>
         <item quantity="many">%1$d nieobecności</item>
     </plurals>
 
 
+    <!--Exam-->
+    <string name="exam_no_items">Brak sprawdzianów w tym tygodniu</string>
+    <string name="exam_type">Typ</string>
+    <string name="exam_entry_date">Data wpisu</string>
+
+    <!--About-->
+    <string name="about_source_code">Kod źródłowy</string>
+    <string name="about_feedback">Zgłoś błąd</string>
+
+    <!--Generic-->
+    <string name="all_description">Opis</string>
+    <string name="all_no_description">Brak opisu</string>
+    <string name="all_teacher">Nauczyciel</string>
+    <string name="all_date">Data</string>
+    <string name="all_color">Kolor</string>
+    <string name="all_details">Szczegóły</string>
+    <string name="all_close">Zamknij</string>
+    <string name="all_cancel">Anuluj</string>
+    <string name="all_no_data">Brak danych</string>
+    <string name="all_subject">Przedmiot</string>
+    <string name="all_prev">Poprzedni</string>
+    <string name="all_next">Następny</string>
+
+
+    <!--Timetable Widget-->
+    <string name="widget_timetable_no_items">Brak lekcji</string>
+    <string name="widget_timetable_today">Dziś</string>
+    <string name="widget_timetable_tomorrow">Jutro</string>
+
+
+    <!--Preferences-->
     <string name="pref_view_header">Widok</string>
-    <string name="pref_tab_list">Domyślny widok</string>
-    <string name="pref_grades_summary_line_show">Pokazuj podsumowanie w ocenach</string>
-    <string name="pref_attendance_present_show">Pokazuj obecność we frekwencji</string>
-    <string name="required_restart">Wymagany restart</string>
+    <string name="pref_view_list">Domyślny widok</string>
+    <string name="pref_view_summary">Pokazuj podsumowanie w ocenach</string>
+    <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_theme_dark">Ciemny motyw (Beta)</string>
 
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
 
-    <string name="pref_services_header">Usługi</string>
-    <string name="pref_services_switch">Włącz odświeżanie danych w tle</string>
-    <string name="pref_services_suspended_on_holidays">Zawieszone na wakacjach</string>
-    <string name="pref_services_interval">Interwał między odświeżaniem danych</string>
-    <string name="pref_services_mobile_data">Synchronizacja tylko przez WiFi</string>
+    <string name="pref_services_header">Synchronizacja</string>
+    <string name="pref_services_switch">Automatyczna aktualizacja</string>
+    <string name="pref_services_suspended">Zawieszona na wakacjach</string>
+    <string name="pref_services_interval">Interwał aktualizacji</string>
+    <string name="pref_services_wifi">Tylko WiFi</string>
 
-    <string name="pref_about_header">O aplikacji</string>
-    <string name="pref_about">Informacje o Wulkanowym</string>
-    <string name="pref_about_summary">Wulkanowy to nieoficjalny klient dziennika VULCAN UONET+</string>
-    <string name="pref_about_version">Wersja</string>
-    <string name="pref_about_osl">Licencje open source</string>
-    <string name="pref_about_osl_summary">Szczegóły licencji na oprogramowanie open source</string>
-    <string name="pref_about_support">Kod źródłowy i feedback</string>
-    <string name="about_programmer_step1">Nie, nie zostaniesz programistą!</string>
-    <string name="about_programmer_step2">Musisz bardziej się postarać!</string>
-    <string name="about_programmer_step3">Kliknij jeszcze parę razy</string>
-    <string name="about_programmer">Odwiedź zakładkę Kod źródłowy i pokaż jaki z ciebie programista!</string>
 
-    <string name="notify_grade_channel">Nowe oceny</string>
-    <string name="widget_timetable_no_lesson">Brak lekcji</string>
-    <string name="widget_timetable_today">Dziś</string>
-    <string name="widget_timetable_tomorrow">Jutro</string>
-    <string name="exams_no_entries">Brak sprawdzianów w tym tygodniu</string>
-    <string name="exams_type">Typ</string>
-    <string name="exams_dialog_entry_date">Data wpisu</string>
+    <!--Colors-->
+    <string name="all_black">Czarny</string>
+    <string name="all_red">Czerwony</string>
+    <string name="all_blue">Niebieski</string>
+    <string name="all_green">Zielony</string>
+    <string name="all_purple">Fioletowy</string>
+    <string name="all_empty_color">Brak koloru</string>
 
-    <string name="grades_summary_calculated_average">Obliczona średnia</string>
-    <string name="grades_summary_predicted_average">Szacowana średnia</string>
-    <string name="grades_summary_final_average">Końcowa średnia</string>
-    <string name="action_title_summary">Podsumowanie</string>
-    <string name="action_title_details">Szczegóły</string>
-    <string name="login_sync_error">Podczas synchronizacji wystąpił błąd</string>
+
+    <!--Others-->
+    <string name="all_no_internet">Brak połączenia z internetem</string>
+    <string name="all_sync_finish">Synchronizacja zakończona</string>
+    <string name="all_sync_fail">Podczas synchronizacji wystąpił błąd</string>
+    <string name="all_timeout">Zbyt długie oczekiwanie na połączenie</string>
+    <string name="all_login_failed">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
 </resources>

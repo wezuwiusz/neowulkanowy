@@ -1,165 +1,156 @@
 <resources>
     <string name="app_name">Wulkanowy</string>
 
-    <!-- Strings related to login -->
-    <string name="title_activity_login">Sign in</string>
-    <string name="login_heading">Sign in with VULCAN account</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="prompt_symbol">Symbol</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="step_connecting">Connecting with log</string>
-    <string name="step_login">Login</string>
-    <string name="step_synchronization">Synchronization</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="error_bad_account_permission">No permission to open log. Check another symbol</string>
-    <string name="login_accepted_text">Login is successful</string>
-    <string name="login_bad_credentials_text">Bad e-mail or password</string>
-    <string name="login_bad_account_permission_text">No permission to open log. Check entered symbol</string>
-    <string name="login_failed_text">Login is failed. Try again or restart the app</string>
-    <string name="action_create_account">No account yet? Create one</string>
-    <string name="action_forgot_password">Forgot password?</string>
+    <!--Activity/Fragment title-->
+    <string name="login_title">Select student</string>
+    <string name="main_title">Wulkanowy</string>
+    <string name="grade_title">Grades</string>
+    <string name="attendance_title">Attendance</string>
+    <string name="exam_title">Exams</string>
+    <string name="timetable_title">Timetable</string>
+    <string name="settings_title">Settings</string>
+    <string name="more_title">More</string>
+    <string name="about_title">About</string>
 
-    <string name="color_black_text">Black</string>
-    <string name="color_red_text">Red</string>
-    <string name="color_blue_text">Blue</string>
-    <string name="color_green_text">Green</string>
-    <string name="noColor_text">No color</string>
 
-    <string name="activity_dashboard_text">Dashboard Activity</string>
-    <string name="exams_text">Exams</string>
-    <string name="grades_text">Grades</string>
-    <string name="attendance_text">Attendance</string>
-    <string name="timetable_text">Timetable</string>
-    <string name="settings_text">Settings</string>
-    <string name="activity_under_construction">This section of app is under construction.</string>
-    <string name="fragment_no_grades">No grades</string>
+    <!--Login form-->
+    <string name="login_header_default">Sign in with the student or parent account</string>
+    <string name="login_header_symbol">Enter the VULCAN diary symbol</string>
+    <string name="login_nickname_hint">Email or nick</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_host_hint">Log</string>
+    <string name="login_symbol_hint">Symbol</string>
+    <string name="login_sign_in">Sign in</string>
+    <string name="login_progress">Logging in&#8230;</string>
+    <string name="login_sync">Synchronization&#8230;</string>
+    <string name="login_invalid_password">This password is too short</string>
+    <string name="login_incorrect_password">This password is incorrect</string>
+    <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
+    <string name="login_field_required">This field is required</string>
 
-    <string name="noInternet_text">No internet connection</string>
-    <string name="encrypt_failed_text">Encryption failed. Automatic login has been disabled</string>
-    <string name="version_text">Version %1$s</string>
-    <string name="refresh_error_text">An error occurred while refreshing the content.</string>
-    <string name="alert_dialog_blocked_app">Application lock</string>
-    <string name="alert_dialog_blocked_app_message">For the sake of safety of personal data stored on a device with increased authorization (root), the Wulkanowy application has been blocked.</string>
 
-    <string name="dialog_description_text">Description</string>
-    <string name="grade_weight_text">Weight</string>
-    <string name="noDescription_text">No description</string>
-    <string name="dialog_teacher_text">Teacher</string>
-    <string name="dialog_date_text">Date</string>
-    <string name="dialog_color_text">Color</string>
-
-    <string name="switch_semester">Switch semester</string>
-    <string name="semester_text">Semester %d</string>
-    <string name="cancel">Cancel</string>
-
-    <string name="timetable_dialog_lesson">Lesson</string>
-    <string name="timetable_dialog_room">Room</string>
-    <string name="timetable_dialog_group">Group</string>
-    <string name="timetable_dialog_time">Times</string>
-    <string name="timetable_dialog_description">Changes</string>
-
-    <string name="sync_completed">Synchronization completed</string>
-
-    <string name="generic_dialog_details">Details</string>
-    <string name="generic_dialog_close">Close</string>
-    <string name="generic_dialog_teacher">Teacher</string>
-
-    <string name="generic_app_no_data">No data</string>
-    <string name="generic_timeout_error">Too long wait for connection</string>
-
-    <string name="snackbar_no_grades">No new grades</string>
-    <string name="snackbar_new_grade">Number of new grades: %1$d</string>
-
-    <string name="info_average_grades">Average: %1$.2f</string>
-    <string name="info_no_average">No average</string>
-    <string name="info_grades_predicted_rating">Predicted: %1$s</string>
-    <string name="info_grades_final_rating">Final: %1$s</string>
-    <string name="info_free_week">No lesson in this week</string>
-
-    <string name="grades_predicted_rating">Predicted</string>
-    <string name="grades_final_rating">Final</string>
-
-    <string name="timetable_subitem_room">Room %s</string>
-
-    <plurals name="numberOfGradesPlurals">
+    <!--Grade-->
+    <string name="grade_header">Grade</string>
+    <string name="grade_semester">Semester %d</string>
+    <string name="grade_switch_semester">Change semester</string>
+    <string name="grade_no_items">No grades</string>
+    <string name="grade_weight">Weight</string>
+    <string name="grade_comment">Comment</string>
+    <string name="grade_no_new_items">No new grades</string>
+    <string name="grade_number_new_items">Number of new ratings: %1$d</string>
+    <string name="grade_average">Average: %1$.2f</string>
+    <string name="grade_no_average">No average</string>
+    <string name="grade_predicted">Predicted: %1$s</string>
+    <string name="grade_final">Final: %1$s</string>
+    <string name="grade_summary_final_grade">Final grade</string>
+    <string name="grade_summary_predicted_grade">Predicted grade</string>
+    <string name="grade_summary_calculated_average">Calculated average</string>
+    <string name="grade_summary_final_average">Final average</string>
+    <string name="grade_menu_summary">Summary</string>
+    <plurals name="grade_number_item">
         <item quantity="one">%d grade</item>
         <item quantity="other">%d grades</item>
     </plurals>
 
-    <plurals name="newGradePlurals">
+    <plurals name="grade_new_items">
         <item quantity="one">New grade</item>
         <item quantity="other">New grades</item>
     </plurals>
 
-    <plurals name="receivedNewGradePlurals">
+    <!--Grade notify-->
+    <string name="notify_grade_channel">New grades</string>
+    <plurals name="notify_grade_new_items">
         <item quantity="one">You received %1$d grade</item>
         <item quantity="other">You received %1$d grades</item>
     </plurals>
 
-    <string name="attendance_absence_for_school_reasons">Absence for school reasons</string>
-    <string name="attendance_absence_excused">Absence excused</string>
+
+    <!--Timetable-->
+    <string name="timetable_lesson">Lesson</string>
+    <string name="timetable_room">Room</string>
+    <string name="timetable_group">Group</string>
+    <string name="timetable_time">Hours</string>
+    <string name="timetable_changes">Changes</string>
+    <string name="timetable_no_items">No lesson in this day</string>
+
+
+    <!--Attendance-->
+    <string name="attendance_absence_school">Absent for school reasons</string>
+    <string name="attendance_absence_excused">Excused absence</string>
     <string name="attendance_absence_unexcused">Unexcused absence</string>
     <string name="attendance_exemption">Exemption</string>
     <string name="attendance_excused_lateness">Excused lateness</string>
     <string name="attendance_unexcused_lateness">Unexcused lateness</string>
     <string name="attendance_present">Present</string>
-    <string name="attendance_dialog_description">Description</string>
-    <string name="attendance_dialog_date">Date</string>
-    <string name="attendance_dialog_subject">Subject</string>
-    <string name="attendance_dialog_number">Lesson number</string>
-    <string name="attendance_no_entries">No entries</string>
-    <plurals name="numberOfAbsences">
+    <string name="attendance_number">Number of lesson</string>
+    <string name="attendance_no_items">No entries</string>
+    <plurals name="attendance_number_absences">
         <item quantity="one">%1$d absence</item>
-        <item quantity="few">%1$d absences</item>
-        <item quantity="many">%1$d absences</item>
         <item quantity="other">%1$d absences</item>
     </plurals>
 
-    <string name="pref_view_header">View</string>
-    <string name="pref_tab_list">Default view after startup</string>
-    <string name="pref_grades_summary_line_show">Show summary in grades</string>
-    <string name="pref_attendance_present_show">Show present in attendance</string>
-    <string name="required_restart">Required restart</string>
 
+    <!--Exam-->
+    <string name="exam_no_items">No exams in this week</string>
+    <string name="exam_type">Type</string>
+    <string name="exam_entry_date">Entry date</string>
+
+    <!--About-->
+    <string name="about_source_code">Source code</string>
+    <string name="about_feedback">Report a bug</string>
+
+
+    <!--Generic-->
+    <string name="all_description">Description</string>
+    <string name="all_no_description">No description</string>
+    <string name="all_teacher">Teacher</string>
+    <string name="all_date">Date</string>
+    <string name="all_color">Color</string>
+    <string name="all_details">Details</string>
+    <string name="all_close">Close</string>
+    <string name="all_cancel">Cancel</string>
+    <string name="all_no_data">No data</string>
+    <string name="all_subject">Subject</string>
+    <string name="all_prev">Prev</string>
+    <string name="all_next">Next</string>
+
+
+    <!--Timetable Widget-->
+    <string name="widget_timetable_no_items">No lesson</string>
+    <string name="widget_timetable_today">Today</string>
+    <string name="widget_timetable_tomorrow">Tomorrow</string>
+
+
+    <!--Preferences-->
+    <string name="pref_view_header">View</string>
+    <string name="pref_view_list">Default view</string>
+    <string name="pref_view_summary">Show the summary in the grades</string>
+    <string name="pref_view_present">Show presence in attendance</string>
     <string name="pref_view_theme_dark">Dark theme (Beta)</string>
 
     <string name="pref_notify_header">Notifications</string>
-    <string name="pref_notify_switch">Show the notifications</string>
+    <string name="pref_notify_switch">Show notifications</string>
 
-    <string name="pref_services_header">Services</string>
-    <string name="pref_services_switch">Enable background data refreshing</string>
-    <string name="pref_services_suspended_on_holidays">Suspended on holidays</string>
-    <string name="pref_services_interval">Interval between data refreshing</string>
-    <string name="pref_services_mobile_data">Synchronization via WiFi only</string>
+    <string name="pref_services_header">Synchronization</string>
+    <string name="pref_services_switch">Automatic update</string>
+    <string name="pref_services_suspended">Suspended on holiday</string>
+    <string name="pref_services_interval">Updates interval</string>
+    <string name="pref_services_wifi">Only WiFi</string>
 
-    <string name="pref_about_header">About</string>
-    <string name="pref_about">About Wulkanowy</string>
-    <string name="pref_about_summary">Wulkanowy is an unofficial VULCAN UONET+ log client</string>
-    <string name="pref_about_version">Version</string>
-    <string name="pref_about_osl">Open source licenses</string>
-    <string name="pref_about_osl_summary">License details for open source software</string>
-    <string name="pref_about_support">Source code &amp; feedback</string>
-    <string name="about_programmer_step1">No, you will not become a programmer!</string>
-    <string name="about_programmer_step2">You must try harder!</string>
-    <string name="about_programmer_step3">Click a few more times</string>
-    <string name="about_programmer">Visit the Source code tab and show how good a programmer you are!</string>
 
-    <string name="notify_grade_channel">New grades</string>
-    <string name="widget_timetable_no_lesson">No lessons</string>
-    <string name="widget_timetable_today">Today</string>
-    <string name="widget_timetable_tomorrow">Tomorrow</string>
-    <string name="exams_no_entries">No exams in this week</string>
-    <string name="exams_type">Type</string>
-    <string name="exams_dialog_entry_date">Date of entry</string>
+    <!--Colors-->
+    <string name="all_black">Black</string>
+    <string name="all_red">Red</string>
+    <string name="all_blue">Blue</string>
+    <string name="all_green">Green</string>
+    <string name="all_purple">Purple</string>
+    <string name="all_empty_color">No color</string>
 
-    <string name="grades_summary_calculated_average">Calculated average</string>
-    <string name="grades_summary_predicted_average">Predicted average</string>
-    <string name="grades_summary_final_average">Final average</string>
-    <string name="action_title_summary">Summary</string>
-    <string name="action_title_details">Details</string>
-    <string name="login_sync_error">An error has occurred during synchronization</string>
+
+    <!--Others-->
+    <string name="all_no_internet">No internet connection</string>
+    <string name="all_sync_finish">Synchronization complete</string>
+    <string name="all_sync_fail">There was an error during synchronization</string>
+    <string name="all_timeout">Too long wait for connection</string>
+    <string name="all_login_failed">Login is failed. Try again or restart the app</string>
 </resources>

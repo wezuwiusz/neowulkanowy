@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="300dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:padding="20dp"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:id="@+id/gradeDialogValue"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:background="@color/grade_default"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/grade_text"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="start"
+                android:layout_marginEnd="90dp"
+                android:layout_marginRight="90dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:maxLines="5"
+                android:minHeight="80dp"
+                android:minLines="2"
+                android:text="@string/grade_header"
+                android:textIsSelectable="true"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogSubject"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:text="@string/all_description"
+                android:textIsSelectable="true"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogDescriptionValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogDescription"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/all_no_description"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogDescriptionValue"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/grade_weight"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogWeightValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogWeight"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/grade_weight"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogWeightValue"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/grade_comment"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogCommentValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogComment"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/grade_comment"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogTeacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogCommentValue"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/all_teacher"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogTeacherValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogTeacher"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/all_teacher"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogTeacherValue"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/all_color"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogColorValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogColor"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/all_color"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogColorValue"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/all_date"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/gradeDialogDateValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gradeDialogDate"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/all_date"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/gradeDialogClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/gradeDialogDateValue"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="25dp"
+                android:background="?attr/selectableItemBackground"
+                android:focusable="true"
+                android:text="@string/all_close"
+                android:textAllCaps="true"
+                android:textColor="?android:attr/android:textColorSecondary"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

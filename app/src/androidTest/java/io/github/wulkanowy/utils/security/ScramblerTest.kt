@@ -1,15 +1,14 @@
 package io.github.wulkanowy.utils.security
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.filters.SdkSuppress
-import android.support.test.filters.SmallTest
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SdkSuppress
+import androidx.test.filters.SmallTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.security.KeyStore
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
@@ -17,32 +16,32 @@ class ScramblerTest {
 
     @Test
     fun encryptDecryptTest() {
-        assertEquals("TEST", Scrambler.decrypt(Scrambler.encrypt("TEST",
-                InstrumentationRegistry.getTargetContext())))
+        assertEquals("TEST", decrypt(encrypt("TEST",
+                ApplicationProvider.getApplicationContext())))
     }
 
     @Test
     fun emptyTextEncryptTest() {
         assertFailsWith<ScramblerException> {
-            Scrambler.decrypt("")
+            decrypt("")
         }
 
         assertFailsWith<ScramblerException> {
-            Scrambler.encrypt("", InstrumentationRegistry.getTargetContext())
+            encrypt("", ApplicationProvider.getApplicationContext())
         }
     }
 
     @Test
     @SdkSuppress(minSdkVersion = 18)
     fun emptyKeyStoreTest() {
-        val text = Scrambler.encrypt("test", InstrumentationRegistry.getTargetContext())
+        val text = encrypt("test", ApplicationProvider.getApplicationContext())
 
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
         keyStore.load(null)
         keyStore.deleteEntry("USER_PASSWORD")
 
         assertFailsWith<ScramblerException> {
-            Scrambler.decrypt(text)
+            decrypt(text)
         }
     }
 }

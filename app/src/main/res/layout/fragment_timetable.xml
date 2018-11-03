@@ -1,25 +1,96 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
-    android:id="@+id/timetable_fragment_container">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/timetable_fragment_tab_layout"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/timetableProgress"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:tabMinWidth="125dp"
-            app:tabMode="scrollable"/>
+            android:layout_gravity="center"
+            android:indeterminate="true" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/timetable_fragment_viewpager"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/timetableSwipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/timetableRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/timetableEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/timetable_fragment_tab_layout" />
-    </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:minHeight="100dp"
+                app:srcCompat="@drawable/ic_menu_main_timetable_24dp"
+                app:tint="?android:attr/textColorPrimary"
+                tools:ignore="contentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/timetable_no_items"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        android:elevation="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/timetablePreviousButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="4dp"
+            android:gravity="start|center"
+            android:text="@string/all_prev"
+            android:textAlignment="gravity" />
+
+        <TextView
+            android:id="@+id/timetableNavDate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/app_name" />
+
+        <Button
+            android:id="@+id/timetableNextButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:drawablePadding="4dp"
+            android:gravity="end|center"
+            android:text="@string/all_next"
+            android:textAlignment="gravity" />
+    </LinearLayout>
+</FrameLayout>

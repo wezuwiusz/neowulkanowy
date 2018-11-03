@@ -7,7 +7,7 @@ references:
 
   container_config: &container_config
     docker:
-      - image: circleci/android:api-27-alpha
+      - image: circleci/android:api-28-alpha
     working_directory: *workspace_root
     environment:
       environment:
@@ -38,7 +38,7 @@ jobs:
           command: ./gradlew build -x test -x lint -x fabricGenerateResourcesRelease -x packageRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Run FOSSA
-          command: fossa --no-ansi
+          command: fossa --no-ansi || true
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -89,28 +89,6 @@ jobs:
           paths:
             - "./app/build/jacoco"
 
-  api-test:
-    <<: *container_config
-    steps:
-      - *attach_workspace
-      - restore_cache:
-          <<: *general_cache_key
-      - run:
-          name: Run api tests
-          command: ./gradlew :api:test :api:jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
-      - run:
-          name: Upload code coverage to codecov
-          command: bash <(curl -s https://codecov.io/bash) -F api
-      - store_artifacts:
-          path: ./api/build/reports/
-          destination: reports/
-      - store_test_results:
-          path: ./api/build/test-results
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - "./api/build/jacoco"
-
   instrumented:
     <<: *container_config
     steps:
@@ -135,10 +113,11 @@ jobs:
             adb shell input keyevent 82
       - run:
           name: Run instrumented tests
-          command: ./gradlew clean createDebugCoverageReport jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew clean createDebugCoverageReport jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex -PdisableCrashlytics
       - run:
           name: Collect logs from emulator
           command: adb logcat -d > ./app/build/reports/logcat_emulator.txt
+          when: always
       - run:
           name: Upload code covarage to codecov
           command: bash <(curl -s https://codecov.io/bash) -F instrumented
@@ -201,12 +180,6 @@ workflows:
               only: /.*/
           requires:
             - build
-      - api-test:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build
       - instrumented:
           filters:
             tags:
@@ -221,7 +194,6 @@ workflows:
             - build
             - lint
             - app-test
-            - api-test
             - instrumented
       - deploy:
           requires:
