@@ -4,6 +4,8 @@ import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.reactivex.Single
+import okhttp3.logging.HttpLoggingInterceptor
+import timber.log.Timber
 import java.net.URL
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -75,6 +77,7 @@ class SessionRemote @Inject constructor(private val api: Api) {
     fun initApi(student: Student, reInitialize: Boolean = false) {
         if (if (reInitialize) true else 0 == api.studentId) {
             api.run {
+                logLevel = HttpLoggingInterceptor.Level.NONE
                 email = student.email
                 password = student.password
                 symbol = student.symbol
@@ -84,6 +87,9 @@ class SessionRemote @Inject constructor(private val api: Api) {
                 studentId = student.studentId
                 loginType = Api.LoginType.valueOf(student.loginType)
                 notifyDataChanged()
+                setInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+                    Timber.d(it)
+                }).setLevel(HttpLoggingInterceptor.Level.BASIC))
             }
         }
     }

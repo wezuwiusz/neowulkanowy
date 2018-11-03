@@ -4,6 +4,7 @@ import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.utils.logLogin
 import javax.inject.Inject
 
 class SplashPresenter @Inject constructor(
@@ -16,7 +17,10 @@ class SplashPresenter @Inject constructor(
         super.onAttachView(view)
         view.run {
             setCurrentThemeMode(preferencesRepository.currentTheme)
-            if (sessionRepository.isSessionSaved) openMainView() else openLoginView()
+            if (sessionRepository.isSessionSaved) {
+                logLogin("Open app")
+                openMainView()
+            } else openLoginView()
         }
     }
 }

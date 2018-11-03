@@ -15,6 +15,7 @@ import io.github.wulkanowy.data.db.SharedPrefHelper
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_START_MENU_INDEX
+import io.github.wulkanowy.utils.logEvent
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
@@ -78,16 +79,19 @@ class TimetableWidgetProvider : AppWidgetProvider() {
         AndroidInjection.inject(this, context)
         intent?.let {
             val widgetKey = "timetable_widget_${it.getIntExtra(EXTRA_TOGGLED_WIDGET_ID, 0)}"
-            when (it.getStringExtra(EXTRA_BUTTON_TYPE)) {
-                BUTTON_NEXT -> {
-                    LocalDate.ofEpochDay(sharedPref.getLong(widgetKey, 0)).nextSchoolDay
-                        .let { date -> sharedPref.putLong(widgetKey, date.toEpochDay(), true) }
+            it.getStringExtra(EXTRA_BUTTON_TYPE).let { button ->
+                when (button) {
+                    BUTTON_NEXT -> {
+                        LocalDate.ofEpochDay(sharedPref.getLong(widgetKey, 0)).nextSchoolDay
+                            .let { date -> sharedPref.putLong(widgetKey, date.toEpochDay(), true) }
+                    }
+                    BUTTON_PREV -> {
+                        LocalDate.ofEpochDay(sharedPref.getLong(widgetKey, 0)).previousSchoolDay
+                            .let { date -> sharedPref.putLong(widgetKey, date.toEpochDay(), true) }
+                    }
+                    BUTTON_RESET -> sharedPref.putLong(widgetKey, LocalDate.now().nextOrSameSchoolDay.toEpochDay(), true)
                 }
-                BUTTON_PREV -> {
-                    LocalDate.ofEpochDay(sharedPref.getLong(widgetKey, 0)).previousSchoolDay
-                        .let { date -> sharedPref.putLong(widgetKey, date.toEpochDay(), true) }
-                }
-                BUTTON_RESET -> sharedPref.putLong(widgetKey, LocalDate.now().nextOrSameSchoolDay.toEpochDay(), true)
+                button?.also { btn -> if (btn.isNotBlank()) logEvent("Widget day changed", mapOf("button" to button)) }
             }
         }
         super.onReceive(context, intent)

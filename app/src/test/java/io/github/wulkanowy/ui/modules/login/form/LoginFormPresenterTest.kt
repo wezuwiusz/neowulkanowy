@@ -123,7 +123,7 @@ class LoginFormPresenterTest {
 
     @Test
     fun loginErrorTest() {
-        val testException = RuntimeException()
+        val testException = RuntimeException("test")
         doReturn(Single.error<List<Student>>(testException))
                 .`when`(repository).getConnectedStudents(anyString(), anyString(), anyString(), anyString())
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")

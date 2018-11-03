@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data
 
 import android.content.res.Resources
+import com.akaita.java.rxjava2debug.RxJava2Debug
 import io.github.wulkanowy.R
 import io.github.wulkanowy.api.login.NotLoggedInException
 import timber.log.Timber
@@ -14,7 +15,7 @@ open class ErrorHandler @Inject constructor(private val resources: Resources) {
     var showErrorMessage: (String) -> Unit = {}
 
     open fun proceed(error: Throwable) {
-        Timber.e(error, "An exception occurred while the Wulkanowy was running")
+        Timber.e(RxJava2Debug.getEnhancedStackTrace(error), "An exception occurred while the Wulkanowy was running")
 
         showErrorMessage((when (error) {
             is UnknownHostException -> resources.getString(R.string.all_no_internet)

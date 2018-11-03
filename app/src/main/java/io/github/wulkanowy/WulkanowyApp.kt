@@ -2,6 +2,7 @@ package io.github.wulkanowy
 
 import android.content.Context
 import androidx.multidex.MultiDex
+import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.core.CrashlyticsCore
@@ -29,22 +30,20 @@ class WulkanowyApp : DaggerApplication() {
         AndroidThreeTen.init(this)
         initializeFabric()
         if (DEBUG) enableDebugLog()
+        RxJava2Debug.enableRxJava2AssemblyTracking(arrayOf(BuildConfig.APPLICATION_ID))
     }
 
     private fun enableDebugLog() {
-        Timber.plant(DebugLogTree)
+        Timber.plant(DebugLogTree())
         FlexibleAdapter.enableLogs(Log.Level.DEBUG)
     }
 
     private fun initializeFabric() {
-        Fabric.with(Fabric.Builder(this)
-                .kits(Crashlytics.Builder()
-                        .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG || !BuildConfig.FABRIC_ENABLED).build())
-                        .build(),
-                        Answers())
-                .debuggable(BuildConfig.DEBUG)
-                .build())
-        Timber.plant(CrashlyticsTree)
+        Fabric.with(Fabric.Builder(this).kits(
+            Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG || !BuildConfig.FABRIC_ENABLED).build()).build(),
+            Answers()
+        ).debuggable(BuildConfig.DEBUG).build())
+        Timber.plant(CrashlyticsTree())
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

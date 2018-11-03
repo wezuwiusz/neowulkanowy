@@ -8,15 +8,17 @@ import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calcAverage
+import io.github.wulkanowy.utils.logEvent
 import io.github.wulkanowy.utils.valueColor
 import timber.log.Timber
 import javax.inject.Inject
 
 class GradeDetailsPresenter @Inject constructor(
-        private val errorHandler: ErrorHandler,
-        private val schedulers: SchedulersProvider,
-        private val gradeRepository: GradeRepository,
-        private val sessionRepository: SessionRepository) : BasePresenter<GradeDetailsView>(errorHandler) {
+    private val errorHandler: ErrorHandler,
+    private val schedulers: SchedulersProvider,
+    private val gradeRepository: GradeRepository,
+    private val sessionRepository: SessionRepository
+) : BasePresenter<GradeDetailsView>(errorHandler) {
 
     override fun onAttachView(view: GradeDetailsView) {
         super.onAttachView(view)
@@ -25,27 +27,28 @@ class GradeDetailsPresenter @Inject constructor(
 
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
         disposable.add(sessionRepository.getSemesters()
-                .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
-                .map { createGradeItems(it.groupBy { grade -> grade.subject }.toSortedMap()) }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doFinally {
-                    view?.run {
-                        showRefresh(false)
-                        showProgress(false)
-                        notifyParentDataLoaded(semesterId)
-                    }
+            .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
+            .map { createGradeItems(it.groupBy { grade -> grade.subject }.toSortedMap()) }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .doFinally {
+                view?.run {
+                    showRefresh(false)
+                    showProgress(false)
+                    notifyParentDataLoaded(semesterId)
                 }
-                .subscribe({
-                    view?.run {
-                        showEmpty(it.isEmpty())
-                        showContent(it.isNotEmpty())
-                        updateData(it)
-                    }
-                }) {
-                    view?.run { showEmpty(isViewEmpty) }
-                    errorHandler.proceed(it)
-                })
+            }
+            .subscribe({
+                view?.run {
+                    showEmpty(it.isEmpty())
+                    showContent(it.isNotEmpty())
+                    updateData(it)
+                }
+                logEvent("Grade details load", mapOf("items" to it.size, "forceRefresh" to forceRefresh))
+            }) {
+                view?.run { showEmpty(isViewEmpty) }
+                errorHandler.proceed(it)
+            })
     }
 
     fun onGradeItemSelected(item: AbstractFlexibleItem<*>?) {
@@ -92,16 +95,16 @@ class GradeDetailsPresenter @Inject constructor(
         return items.map {
             it.value.calcAverage().let { average ->
                 GradeDetailsHeader(
-                        subject = it.key,
-                        average = formatAverage(average),
-                        number = view?.getGradeNumberString(it.value.size).orEmpty(),
-                        newGrades = it.value.filter { grade -> !grade.isRead }.size
+                    subject = it.key,
+                    average = formatAverage(average),
+                    number = view?.getGradeNumberString(it.value.size).orEmpty(),
+                    newGrades = it.value.filter { grade -> !grade.isRead }.size
                 ).apply {
                     subItems = it.value.map { item ->
                         GradeDetailsItem(
-                                grade = item,
-                                weightString = view?.weightString.orEmpty(),
-                                valueColor = item.valueColor
+                            grade = item,
+                            weightString = view?.weightString.orEmpty(),
+                            valueColor = item.valueColor
                         )
                     }
                 }
@@ -118,9 +121,9 @@ class GradeDetailsPresenter @Inject constructor(
 
     private fun updateGrade(grade: Grade) {
         disposable.add(gradeRepository.updateGrade(grade)
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .subscribe({}) { error -> errorHandler.proceed(error) })
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .subscribe({}) { error -> errorHandler.proceed(error) })
         Timber.d("Grade ${grade.id} updated")
     }
 }
