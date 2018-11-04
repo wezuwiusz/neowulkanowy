@@ -33,7 +33,6 @@ inline val Grade.valueColor: Int
             1 -> R.color.grade_one
             else -> R.color.grade_default
         }
-
     }
 
 inline val Grade.colorStringId: Int
@@ -47,3 +46,10 @@ inline val Grade.colorStringId: Int
             else -> R.string.all_empty_color
         }
     }
+
+fun Grade.changeModifier(newModifier: Double): Grade {
+    if (modifier != 0.0 && newModifier != 0.0) {
+        modifier = if (modifier > 0) newModifier else -newModifier
+    }
+    return this
+}

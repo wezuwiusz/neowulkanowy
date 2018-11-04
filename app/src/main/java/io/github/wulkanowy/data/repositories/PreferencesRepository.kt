@@ -22,6 +22,9 @@ class PreferencesRepository @Inject constructor(
     val currentTheme: Int
         get() = sharedPref.getString(currentThemeKey, "1")?.toInt() ?: 1
 
+    val gradeModifier: Double
+        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier), "0.0")?.toDouble() ?: 0.0
+
     val serviceEnablesKey: String = context.getString(R.string.pref_key_services_enable)
     val serviceEnabled: Boolean
         get() = sharedPref.getBoolean(serviceEnablesKey, true)

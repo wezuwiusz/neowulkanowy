@@ -25,6 +25,14 @@
             android:key="@string/pref_key_attendance_present"
             android:title="@string/pref_view_present"
             app:iconSpaceReserved="false" />
+        <ListPreference
+            android:defaultValue="0.0"
+            android:entries="@array/grade_modifier_entries"
+            android:entryValues="@array/grade_modifier_value"
+            android:key="@string/pref_key_grade_modifier"
+            android:summary="%s"
+            android:title="@string/pref_view_grade_modifier"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_services_header"

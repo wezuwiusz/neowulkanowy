@@ -15,4 +15,10 @@
         <item>Automatyczny</item>
         <item>Używaj ustawień systemowych</item>
     </string-array>
+    <string-array name="grade_modifier_entries">
+        <item>Domyślna</item>
+        <item>0,25</item>
+        <item>0,33</item>
+        <item>0,5</item>
+    </string-array>
 </resources>

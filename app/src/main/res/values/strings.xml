@@ -127,6 +127,7 @@
     <string name="pref_view_summary">Show the summary in the grades</string>
     <string name="pref_view_present">Show presence in attendance</string>
     <string name="pref_view_theme_dark">Dark theme (Beta)</string>
+    <string name="pref_view_grade_modifier">Value of the plus and minus</string>
 
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show notifications</string>

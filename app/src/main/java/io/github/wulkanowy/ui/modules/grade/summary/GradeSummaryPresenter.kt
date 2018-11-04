@@ -4,10 +4,12 @@ import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.GradeSummaryRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calcAverage
+import io.github.wulkanowy.utils.changeModifier
 import io.github.wulkanowy.utils.logEvent
 import java.lang.String.format
 import java.util.Locale.FRANCE
@@ -18,6 +20,7 @@ class GradeSummaryPresenter @Inject constructor(
     private val gradeSummaryRepository: GradeSummaryRepository,
     private val gradeRepository: GradeRepository,
     private val sessionRepository: SessionRepository,
+    private val preferencesRepository: PreferencesRepository,
     private val schedulers: SchedulersProvider
 ) : BasePresenter<GradeSummaryView>(errorHandler) {
 
@@ -34,7 +37,8 @@ class GradeSummaryPresenter @Inject constructor(
                     .flatMap { gradesSummary ->
                         gradeRepository.getGrades(it, forceRefresh)
                             .map { grades ->
-                                grades.groupBy { grade -> grade.subject }
+                                grades.map { item -> item.changeModifier(preferencesRepository.gradeModifier) }
+                                    .groupBy { grade -> grade.subject }
                                     .mapValues { entry -> entry.value.calcAverage() }
                                     .filterValues { value -> value != 0.0 }
                                     .let { averages ->
