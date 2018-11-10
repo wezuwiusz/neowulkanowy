@@ -1,12 +1,10 @@
 package io.github.wulkanowy.ui.modules.splash
 
 import android.os.Bundle
-import io.github.wulkanowy.services.notification.GradeNotification
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import javax.inject.Inject
-import androidx.appcompat.app.AppCompatDelegate
 
 class SplashActivity : BaseActivity(), SplashView {
 
@@ -26,10 +24,6 @@ class SplashActivity : BaseActivity(), SplashView {
     override fun openMainView() {
         startActivity(MainActivity.getStartIntent(this))
         finish()
-    }
-
-    override fun setCurrentThemeMode(mode: Int) {
-        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
     override fun onDestroy() {
