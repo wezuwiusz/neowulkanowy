@@ -24,7 +24,7 @@ class ServiceHelper @Inject constructor(
     }
 
     fun startFullSyncService(replaceCurrent: Boolean = false) {
-        if (LocalDate.now().isHolidays || !prefRepository.serviceEnabled) {
+        if (LocalDate.now().isHolidays || !prefRepository.isServiceEnabled) {
             Timber.d("Services disabled or it's holidays")
             return
         }
@@ -41,7 +41,7 @@ class ServiceHelper @Inject constructor(
                         (prefRepository.servicesInterval + 10) * 60
                     )
                 )
-                .setConstraints(if (prefRepository.servicesOnlyWifi) ON_UNMETERED_NETWORK else ON_ANY_NETWORK)
+                .setConstraints(if (prefRepository.isServicesOnlyWifi) ON_UNMETERED_NETWORK else ON_ANY_NETWORK)
                 .setReplaceCurrent(replaceCurrent)
                 .setRetryStrategy(DEFAULT_EXPONENTIAL)
                 .build()

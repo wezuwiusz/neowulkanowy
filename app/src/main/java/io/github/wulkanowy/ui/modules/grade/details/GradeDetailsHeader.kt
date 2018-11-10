@@ -12,11 +12,16 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.header_grade_details.*
 
 class GradeDetailsHeader(
-        private val subject: String,
-        private val number: String,
-        private val average: String,
-        var newGrades: Int)
-    : AbstractExpandableItem<GradeDetailsHeader.ViewHolder, GradeDetailsItem>() {
+    private val subject: String,
+    private val number: String,
+    private val average: String,
+    var newGrades: Int,
+    private val isExpandable: Boolean
+) : AbstractExpandableItem<GradeDetailsHeader.ViewHolder, GradeDetailsItem>() {
+
+    init {
+        isExpanded = !isExpandable
+    }
 
     override fun getLayoutRes() = R.layout.header_grade_details
 
@@ -24,16 +29,16 @@ class GradeDetailsHeader(
         return ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder,
-                                position: Int, payloads: MutableList<Any>?) {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
         holder.run {
             gradeHeaderSubject.text = subject
             gradeHeaderAverage.text = average
             gradeHeaderNumber.text = number
             gradeHeaderPredicted.visibility = GONE
             gradeHeaderFinal.visibility = GONE
-
             gradeHeaderNote.visibility = if (newGrades > 0) VISIBLE else GONE
+
+            isViewExpandable = isExpandable
         }
     }
 
@@ -57,15 +62,18 @@ class GradeDetailsHeader(
         return result
     }
 
+    class ViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?) :
+        ExpandableViewHolder(view, adapter), LayoutContainer {
 
-    class ViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?) : ExpandableViewHolder(view, adapter),
-            LayoutContainer {
+        var isViewExpandable = true
 
         init {
             contentView.setOnClickListener(this)
         }
 
-        override fun shouldNotifyParentOnClick() = true
+        override fun isViewCollapsibleOnClick() = isViewExpandable
+
+        override fun isViewExpandableOnClick() = isViewExpandable
 
         override val containerView: View
             get() = contentView

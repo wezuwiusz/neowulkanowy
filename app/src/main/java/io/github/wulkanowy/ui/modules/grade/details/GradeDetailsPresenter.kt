@@ -102,7 +102,8 @@ class GradeDetailsPresenter @Inject constructor(
                     subject = it.key,
                     average = formatAverage(average),
                     number = view?.getGradeNumberString(it.value.size).orEmpty(),
-                    newGrades = it.value.filter { grade -> !grade.isRead }.size
+                    newGrades = it.value.filter { grade -> !grade.isRead }.size,
+                    isExpandable = preferencesRepository.isGradeExpandable
                 ).apply {
                     subItems = it.value.map { item ->
                         GradeDetailsItem(

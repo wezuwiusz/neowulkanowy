@@ -26,7 +26,7 @@ class SettingsPresenter @Inject constructor(
     fun onSharedPreferenceChanged(key: String) {
         when (key) {
             preferencesRepository.serviceEnablesKey -> {
-                if (preferencesRepository.serviceEnabled) serviceHelper.startFullSyncService()
+                if (preferencesRepository.isServiceEnabled) serviceHelper.startFullSyncService()
                 else serviceHelper.stopFullSyncService()
             }
             preferencesRepository.servicesIntervalKey,

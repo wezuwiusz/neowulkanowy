@@ -3,7 +3,9 @@ package io.github.wulkanowy.ui.modules.grade.details
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
@@ -59,8 +61,6 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
             isAutoScrollOnExpand = true
             setOnItemClickListener { presenter.onGradeItemSelected(getItem(it)) }
         }
-
-        gradeDetailsAdapter.getItemCountOfTypes()
 
         gradeDetailsRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)

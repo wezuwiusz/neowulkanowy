@@ -80,7 +80,7 @@ class SyncWorker : SimpleJobService() {
             .subscribe({}, { error = it }))
 
         return if (null === error) {
-            if (prefRepository.notificationsEnable) sendNotifications()
+            if (prefRepository.isNotificationsEnable) sendNotifications()
             Timber.d("Synchronization successful")
             RESULT_SUCCESS
         } else {

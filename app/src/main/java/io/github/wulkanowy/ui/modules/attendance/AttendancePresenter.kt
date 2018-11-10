@@ -71,7 +71,7 @@ class AttendancePresenter @Inject constructor(
                 .map { it.single { semester -> semester.current } }
                 .flatMap { attendanceRepository.getAttendance(it, date, date, forceRefresh) }
                 .map { list ->
-                    if (prefRepository.showPresent) list
+                    if (prefRepository.isShowPresent) list
                     else list.filter { !it.presence }
                 }
                 .map { items -> items.map { AttendanceItem(it) } }

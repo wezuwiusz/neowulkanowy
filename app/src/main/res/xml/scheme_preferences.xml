@@ -25,6 +25,11 @@
             android:key="@string/pref_key_attendance_present"
             android:title="@string/pref_view_present"
             app:iconSpaceReserved="false" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_expand_grade"
+            android:title="@string/pref_view_expand_grade"
+            app:iconSpaceReserved="false" />
         <ListPreference
             android:defaultValue="0.0"
             android:entries="@array/grade_modifier_entries"
