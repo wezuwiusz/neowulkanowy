@@ -11,6 +11,7 @@
     <string name="settings_title">Settings</string>
     <string name="more_title">More</string>
     <string name="about_title">About</string>
+    <string name="note_title">Notes and achievements</string>
 
 
     <!--Login form-->
@@ -64,6 +65,13 @@
         <item quantity="other">You received %1$d grades</item>
     </plurals>
 
+    <!--Note notify-->
+    <string name="notify_note_channel">New notes</string>
+    <plurals name="notify_note_new_items">
+        <item quantity="one">You received %1$d note</item>
+        <item quantity="other">You received %1$d notes</item>
+    </plurals>
+
 
     <!--Timetable-->
     <string name="timetable_lesson">Lesson</string>
@@ -99,6 +107,19 @@
     <string name="about_source_code">Source code</string>
     <string name="about_feedback">Report a bug</string>
 
+    <!--Note-->
+    <string name="note_no_items">No info about notes</string>
+    <string name="note_content">Content</string>
+    <plurals name="note_number_item">
+        <item quantity="one">%d note</item>
+        <item quantity="other">%d notes</item>
+    </plurals>
+
+    <plurals name="note_new_items">
+        <item quantity="one">New note</item>
+        <item quantity="other">New notes</item>
+    </plurals>
+
 
     <!--Generic-->
     <string name="all_description">Description</string>
@@ -107,6 +128,7 @@
     <string name="all_date">Date</string>
     <string name="all_color">Color</string>
     <string name="all_details">Details</string>
+    <string name="all_category">Category</string>
     <string name="all_close">Close</string>
     <string name="all_cancel">Cancel</string>
     <string name="all_no_data">No data</string>

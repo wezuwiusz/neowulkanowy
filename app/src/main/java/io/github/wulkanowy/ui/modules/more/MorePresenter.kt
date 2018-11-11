@@ -5,8 +5,7 @@ import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.ui.base.BasePresenter
 import javax.inject.Inject
 
-class MorePresenter @Inject constructor(errorHandler: ErrorHandler)
-    : BasePresenter<MoreView>(errorHandler) {
+class MorePresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresenter<MoreView>(errorHandler) {
 
     override fun onAttachView(view: MoreView) {
         super.onAttachView(view)
@@ -18,6 +17,7 @@ class MorePresenter @Inject constructor(errorHandler: ErrorHandler)
         if (item is MoreItem) {
             view?.run {
                 when (item.title) {
+                    noteRes?.first -> openNoteView()
                     settingsRes?.first -> openSettingsView()
                     aboutRes?.first -> openAboutView()
                 }
@@ -32,8 +32,10 @@ class MorePresenter @Inject constructor(errorHandler: ErrorHandler)
     private fun loadData() {
         view?.run {
             updateData(listOfNotNull(
-                    settingsRes?.let { MoreItem(it.first, it.second) },
-                    aboutRes?.let { MoreItem(it.first, it.second) }))
+                noteRes?.let { MoreItem(it.first, it.second) },
+                settingsRes?.let { MoreItem(it.first, it.second) },
+                aboutRes?.let { MoreItem(it.first, it.second) })
+            )
         }
     }
 }

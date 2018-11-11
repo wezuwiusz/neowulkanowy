@@ -47,3 +47,4 @@ Thumbs.db
 ./app/key.p12
 ./app/upload-key.jks
 *.log
+.idea/assetWizardSettings.xml

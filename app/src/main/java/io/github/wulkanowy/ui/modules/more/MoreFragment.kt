@@ -14,6 +14,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.AboutFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_more.*
@@ -34,11 +35,18 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
     override val titleStringId: Int
         get() = R.string.more_title
 
+    override val noteRes: Pair<String, Drawable?>?
+        get() {
+            return context?.run {
+                getString(R.string.note_title) to ContextCompat.getDrawable(this, R.drawable.ic_menu_main_note_24dp)
+            }
+        }
+
     override val settingsRes: Pair<String, Drawable?>?
         get() {
             return context?.run {
                 getString(R.string.settings_title) to
-                        ContextCompat.getDrawable(this, R.drawable.ic_more_settings_24dp)
+                    ContextCompat.getDrawable(this, R.drawable.ic_more_settings_24dp)
             }
         }
 
@@ -46,7 +54,7 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
         get() {
             return context?.run {
                 getString(R.string.about_title) to
-                        ContextCompat.getDrawable(this, R.drawable.ic_more_about_24dp)
+                    ContextCompat.getDrawable(this, R.drawable.ic_more_about_24dp)
             }
         }
 
@@ -74,6 +82,10 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
 
     override fun updateData(data: List<MoreItem>) {
         moreAdapter.updateDataSet(data)
+    }
+
+    override fun openNoteView() {
+        (activity as? MainActivity)?.pushView(NoteFragment.newInstance())
     }
 
     override fun openSettingsView() {

@@ -7,10 +7,12 @@ import io.github.wulkanowy.data.repositories.AttendanceRepository
 import io.github.wulkanowy.data.repositories.ExamRepository
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.GradeSummaryRepository
+import io.github.wulkanowy.data.repositories.NoteRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SessionRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.services.notification.GradeNotification
+import io.github.wulkanowy.services.notification.NoteNotification
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.monday
@@ -39,6 +41,9 @@ class SyncWorker : SimpleJobService() {
 
     @Inject
     lateinit var timetable: TimetableRepository
+
+    @Inject
+    lateinit var note: NoteRepository
 
     @Inject
     lateinit var prefRepository: PreferencesRepository
@@ -73,7 +78,8 @@ class SyncWorker : SimpleJobService() {
                         gradesSummary.getGradesSummary(it, true),
                         attendance.getAttendance(it, start, end, true),
                         exam.getExams(it, start, end, true),
-                        timetable.getTimetable(it, start, end, true)
+                        timetable.getTimetable(it, start, end, true),
+                        note.getNotes(it, true, true)
                     )
                 )
             }
@@ -90,7 +96,12 @@ class SyncWorker : SimpleJobService() {
     }
 
     private fun sendNotifications() {
-        disposable.add(session.getSemesters(true)
+        sendGradeNotifications()
+        sendNoteNotification()
+    }
+
+    private fun sendGradeNotifications() {
+        disposable.add(session.getSemesters()
             .map { it.single { semester -> semester.current } }
             .flatMap { gradesDetails.getNewGrades(it) }
             .map { it.filter { grade -> !grade.isNotified } }
@@ -99,6 +110,20 @@ class SyncWorker : SimpleJobService() {
                     Timber.d("Found ${it.size} unread grades")
                     GradeNotification(applicationContext).sendNotification(it)
                     gradesDetails.updateGrades(it.map { grade -> grade.apply { isNotified = true } }).subscribe()
+                }
+            }) { Timber.e("Notifications sending failed") })
+    }
+
+    private fun sendNoteNotification() {
+        disposable.add(session.getSemesters()
+            .map { it.single { semester -> semester.current } }
+            .flatMap { note.getNewNotes(it) }
+            .map { it.filter { note -> !note.isNotified } }
+            .subscribe({
+                if (it.isNotEmpty()) {
+                    Timber.d("Found ${it.size} unread notes")
+                    NoteNotification(applicationContext).sendNotification(it)
+                    note.updateNotes(it.map { note -> note.apply { isNotified = true } }).subscribe()
                 }
             }) { Timber.e("Notifications sending failed") })
     }

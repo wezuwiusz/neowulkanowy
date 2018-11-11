@@ -25,6 +25,7 @@ class MainPresenter @Inject constructor(
         when (initMenuIndex) {
             1 -> logLogin("Grades")
             3 -> logLogin("Timetable")
+            4 -> logLogin("More")
         }
 
         serviceHelper.startFullSyncService()
