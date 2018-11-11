@@ -4,8 +4,7 @@ import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.ui.base.BasePresenter
 import javax.inject.Inject
 
-class LoginPresenter @Inject constructor(errorHandler: ErrorHandler)
-    : BasePresenter<LoginView>(errorHandler) {
+class LoginPresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresenter<LoginView>(errorHandler) {
 
     override fun onAttachView(view: LoginView) {
         super.onAttachView(view)
@@ -16,11 +15,11 @@ class LoginPresenter @Inject constructor(errorHandler: ErrorHandler)
     }
 
     fun onPageSelected(index: Int) {
-        if (index == 1) view?.loadOptionsView(index)
+        if (index == 1) view?.notifyOptionsViewLoadData()
     }
 
-    fun onSwitchFragment(position: Int) {
-        view?.switchView(position)
+    fun onChildViewSwitchOptions() {
+        view?.switchView(1)
     }
 
     fun onBackPressed(default: () -> Unit) {

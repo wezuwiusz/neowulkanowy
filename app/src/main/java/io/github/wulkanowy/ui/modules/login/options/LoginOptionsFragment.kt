@@ -38,28 +38,21 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
         presenter.onAttachView(this)
     }
 
-    override fun initRecycler() {
-        loginAdapter.run {
-            setOnItemClickListener { position ->
-                (getItem(position) as? LoginOptionsItem)?.let {
-                    presenter.onSelectStudent(it.student)
-                }
-            }
-        }
-        loginOptionsRecycler.run {
+    override fun initView() {
+        loginAdapter.apply { setOnItemClickListener { presenter.onSelectItem(getItem(it)) } }
+
+        loginOptionsRecycler.apply {
             adapter = loginAdapter
             layoutManager = SmoothScrollLinearLayoutManager(context)
         }
     }
 
-    fun loadData() {
-        presenter.refreshData()
+    fun onParentLoadData() {
+        presenter.onParentViewLoadData()
     }
 
     override fun updateData(data: List<LoginOptionsItem>) {
-        loginAdapter.run {
-            updateDataSet(data, true)
-        }
+        loginAdapter.updateDataSet(data, true)
     }
 
     override fun openMainView() {
@@ -69,17 +62,20 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
         }
     }
 
-    override fun showLoginProgress(show: Boolean) {
+    override fun showProgress(show: Boolean) {
         loginOptionsProgressContainer.visibility = if (show) VISIBLE else GONE
-        loginOptionsRecycler.visibility = if (show) GONE else VISIBLE
+    }
+
+    override fun showContent(show: Boolean) {
+        loginOptionsRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showActionBar(show: Boolean) {
-        (activity as AppCompatActivity?)?.supportActionBar?.run { if (show) show() else hide() }
+        (activity as? AppCompatActivity)?.supportActionBar?.run { if (show) show() else hide() }
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.onDetachView()
+        super.onDestroyView()
     }
 }

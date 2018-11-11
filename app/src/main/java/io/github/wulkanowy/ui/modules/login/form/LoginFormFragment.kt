@@ -6,11 +6,12 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+import android.view.inputmethod.EditorInfo.IME_NULL
 import android.widget.ArrayAdapter
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.modules.login.LoginSwitchListener
+import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
@@ -34,34 +35,26 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         presenter.onAttachView(this)
     }
 
-    override fun initInputs() {
+    override fun initView() {
         loginSignButton.setOnClickListener {
             presenter.attemptLogin(
-                    loginNicknameEdit.text.toString(),
-                    loginPassEdit.text.toString(),
-                    loginSymbolEdit.text.toString(),
-                    resources.getStringArray(R.array.endpoints_values)[loginHostEdit.selectedItemPosition]
+                loginNicknameEdit.text.toString(),
+                loginPassEdit.text.toString(),
+                loginSymbolEdit.text.toString(),
+                resources.getStringArray(R.array.endpoints_values)[loginHostEdit.selectedItemPosition]
             )
         }
 
         loginPassEdit.setOnEditorActionListener { _, id, _ -> onEditAction(id) }
 
-        loginHostEdit.run {
-            adapter = ArrayAdapter.createFromResource(context, R.array.endpoints_keys, android.R.layout.simple_spinner_item).apply {
-                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            }
+        loginHostEdit.apply {
+            adapter = ArrayAdapter.createFromResource(context, R.array.endpoints_keys, android.R.layout.simple_spinner_item)
+                .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
         }
 
         loginSymbolEdit.run {
             setAdapter(ArrayAdapter(context, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.symbols_values)))
             setOnEditorActionListener { _, id, _ -> onEditAction(id) }
-        }
-    }
-
-    private fun onEditAction(actionId: Int): Boolean {
-        return when (actionId) {
-            EditorInfo.IME_ACTION_DONE, EditorInfo.IME_NULL -> loginSignButton.callOnClick()
-            else -> false
         }
     }
 
@@ -73,8 +66,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         showSoftKeyboard()
     }
 
-    override fun switchNextView() {
-        (activity as LoginSwitchListener?)?.switchFragment(1)
+    override fun switchOptionsView() {
+        (activity as? LoginActivity)?.onChildFragmentSwitchOptions()
     }
 
     override fun setErrorNicknameRequired() {
@@ -132,9 +125,19 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         activity?.hideSoftInput()
     }
 
-    override fun showLoginProgress(show: Boolean) {
-        loginFormContainer.visibility = if (show) GONE else VISIBLE
+    override fun showProgress(show: Boolean) {
         loginFormProgressContainer.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showContent(show: Boolean) {
+        loginFormContainer.visibility = if (show) VISIBLE else GONE
+    }
+
+    private fun onEditAction(actionId: Int): Boolean {
+        return when (actionId) {
+            IME_ACTION_DONE, IME_NULL -> loginSignButton.callOnClick()
+            else -> false
+        }
     }
 
     override fun onDestroyView() {

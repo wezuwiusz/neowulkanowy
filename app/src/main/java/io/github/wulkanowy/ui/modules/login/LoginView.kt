@@ -8,9 +8,9 @@ interface LoginView : BaseView {
 
     fun initAdapter()
 
-    fun loadOptionsView(index: Int)
-
-    fun switchView(position: Int)
-
     fun hideActionBar()
+
+    fun switchView(index: Int)
+
+    fun notifyOptionsViewLoadData()
 }

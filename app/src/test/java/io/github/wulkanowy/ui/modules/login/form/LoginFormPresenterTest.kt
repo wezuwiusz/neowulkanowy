@@ -9,7 +9,11 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.clearInvocations
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.never
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 class LoginFormPresenterTest {
@@ -35,7 +39,7 @@ class LoginFormPresenterTest {
 
     @Test
     fun initViewTest() {
-        verify(loginFormView).initInputs()
+        verify(loginFormView).initView()
     }
 
     @Test
@@ -86,10 +90,11 @@ class LoginFormPresenterTest {
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()
-        verify(loginFormView).showLoginProgress(true)
-        verify(repository).clearCache()
-        verify(loginFormView).showLoginProgress(false)
-        verify(loginFormView).switchNextView()
+        verify(loginFormView).showProgress(true)
+        verify(loginFormView).showProgress(false)
+        verify(loginFormView).showContent(false)
+        verify(loginFormView).showContent(true)
+        verify(loginFormView).switchOptionsView()
     }
 
     @Test
@@ -99,9 +104,10 @@ class LoginFormPresenterTest {
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()
-        verify(loginFormView).showLoginProgress(true)
-        verify(repository).clearCache()
-        verify(loginFormView).showLoginProgress(false)
+        verify(loginFormView).showProgress(true)
+        verify(loginFormView).showProgress(false)
+        verify(loginFormView).showContent(false)
+        verify(loginFormView).showContent(true)
         verify(loginFormView).showSymbolInput()
     }
 
@@ -113,9 +119,10 @@ class LoginFormPresenterTest {
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
 
         verify(loginFormView, times(2)).hideSoftKeyboard()
-        verify(loginFormView, times(2)).showLoginProgress(true)
-        verify(repository, times(2)).clearCache()
-        verify(loginFormView, times(2)).showLoginProgress(false)
+        verify(loginFormView, times(2)).showProgress(true)
+        verify(loginFormView, times(2)).showProgress(false)
+        verify(loginFormView, times(2)).showContent(false)
+        verify(loginFormView, times(2)).showContent(true)
         verify(loginFormView, times(2)).showSymbolInput()
         verify(loginFormView).setErrorSymbolIncorrect()
 
@@ -129,9 +136,10 @@ class LoginFormPresenterTest {
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()
-        verify(loginFormView).showLoginProgress(true)
-        verify(repository).clearCache()
-        verify(loginFormView).showLoginProgress(false)
+        verify(loginFormView).showProgress(true)
+        verify(loginFormView).showProgress(false)
+        verify(loginFormView).showContent(false)
+        verify(loginFormView).showContent(true)
         verify(errorHandler).proceed(testException)
     }
 }

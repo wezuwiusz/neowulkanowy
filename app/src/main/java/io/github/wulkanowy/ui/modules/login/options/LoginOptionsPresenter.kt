@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.options
 
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.SessionRepository
@@ -16,29 +17,31 @@ class LoginOptionsPresenter @Inject constructor(
 
     override fun onAttachView(view: LoginOptionsView) {
         super.onAttachView(view)
-        view.initRecycler()
+        view.initView()
     }
 
-    fun refreshData() {
+    fun onParentViewLoadData() {
         disposable.add(repository.cachedStudents
             .observeOn(schedulers.mainThread)
             .subscribeOn(schedulers.backgroundThread)
             .doOnSubscribe { view?.showActionBar(true) }
-            .doFinally { repository.clearCache() }
-            .subscribe({
-                view?.updateData(it.map { student ->
-                    LoginOptionsItem(student)
-                })
-            }, { errorHandler.proceed(it) }))
+            .subscribe({ view?.updateData(it.map { student -> LoginOptionsItem(student) }) }, { errorHandler.proceed(it) }))
     }
 
-    fun onSelectStudent(student: Student) {
+    fun onSelectItem(item: AbstractFlexibleItem<*>?) {
+        if (item is LoginOptionsItem) {
+            registerStudent(item.student)
+        }
+    }
+
+    private fun registerStudent(student: Student) {
         disposable.add(repository.saveStudent(student)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {
                 view?.run {
-                    showLoginProgress(true)
+                    showProgress(true)
+                    showContent(false)
                     showActionBar(false)
                 }
             }

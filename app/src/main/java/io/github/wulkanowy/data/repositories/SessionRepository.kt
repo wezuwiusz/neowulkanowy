@@ -61,8 +61,4 @@ class SessionRepository @Inject constructor(
                     })
             }
     }
-
-    fun clearCache() {
-        cachedStudents = Single.just(emptyList())
-    }
 }

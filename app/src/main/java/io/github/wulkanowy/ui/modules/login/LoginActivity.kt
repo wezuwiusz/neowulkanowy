@@ -12,7 +12,7 @@ import io.github.wulkanowy.utils.setOnSelectPageListener
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
+class LoginActivity : BaseActivity(), LoginView {
 
     @Inject
     lateinit var presenter: LoginPresenter
@@ -35,35 +35,36 @@ class LoginActivity : BaseActivity(), LoginView, LoginSwitchListener {
         presenter.onAttachView(this)
     }
 
-    override fun onBackPressed() {
-        presenter.onBackPressed { super.onBackPressed() }
-    }
-
     override fun initAdapter() {
         loginAdapter.fragments.putAll(mapOf(
-                "1" to LoginFormFragment.newInstance(),
-                "2" to LoginOptionsFragment.newInstance()
+            "1" to LoginFormFragment.newInstance(),
+            "2" to LoginOptionsFragment.newInstance()
         ))
+
         loginViewpager.run {
             adapter = loginAdapter
             setOnSelectPageListener { presenter.onPageSelected(it) }
         }
     }
 
-    override fun switchFragment(position: Int) {
-        presenter.onSwitchFragment(position)
+    override fun switchView(index: Int) {
+        loginViewpager.setCurrentItem(index, false)
     }
 
-    override fun switchView(position: Int) {
-        loginViewpager.setCurrentItem(position, false)
+    override fun notifyOptionsViewLoadData() {
+        (supportFragmentManager.fragments[1] as? LoginOptionsFragment)?.onParentLoadData()
+    }
+
+    fun onChildFragmentSwitchOptions() {
+        presenter.onChildViewSwitchOptions()
     }
 
     override fun hideActionBar() {
         supportActionBar?.hide()
     }
 
-    override fun loadOptionsView(index: Int) {
-        (loginAdapter.getItem(index) as LoginOptionsFragment).loadData()
+    override fun onBackPressed() {
+        presenter.onBackPressed { super.onBackPressed() }
     }
 
     public override fun onDestroy() {

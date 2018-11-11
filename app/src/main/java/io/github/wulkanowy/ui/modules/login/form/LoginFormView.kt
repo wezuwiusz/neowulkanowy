@@ -4,7 +4,9 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface LoginFormView : BaseView {
 
-    fun initInputs()
+    fun initView()
+
+    fun switchOptionsView()
 
     fun setErrorNicknameRequired()
 
@@ -24,9 +26,9 @@ interface LoginFormView : BaseView {
 
     fun hideSoftKeyboard()
 
-    fun showLoginProgress(show: Boolean)
+    fun showProgress(show: Boolean)
+
+    fun showContent(show: Boolean)
 
     fun showSymbolInput()
-
-    fun switchNextView()
 }

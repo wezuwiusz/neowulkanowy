@@ -4,13 +4,15 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface LoginOptionsView : BaseView {
 
-    fun updateData(data: List<LoginOptionsItem>)
+    fun initView()
 
-    fun initRecycler()
+    fun updateData(data: List<LoginOptionsItem>)
 
     fun openMainView()
 
-    fun showLoginProgress(show: Boolean)
+    fun showProgress(show: Boolean)
+
+    fun showContent(show: Boolean)
 
     fun showActionBar(show: Boolean)
 }

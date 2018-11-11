@@ -9,7 +9,9 @@ import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.clearInvocations
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 class LoginOptionsPresenterTest {
@@ -39,41 +41,40 @@ class LoginOptionsPresenterTest {
 
     @Test
     fun initViewTest() {
-        verify(loginOptionsView).initRecycler()
+        verify(loginOptionsView).initView()
     }
 
     @Test
     fun refreshDataTest() {
         doReturn(Single.just(listOf(testStudent))).`when`(repository).cachedStudents
-        presenter.refreshData()
+        presenter.onParentViewLoadData()
         verify(loginOptionsView).showActionBar(true)
         verify(loginOptionsView).updateData(listOf(LoginOptionsItem(testStudent)))
-        verify(repository).clearCache()
     }
 
     @Test
     fun refreshDataErrorTest() {
         doReturn(Single.error<List<Student>>(testException)).`when`(repository).cachedStudents
-        presenter.refreshData()
+        presenter.onParentViewLoadData()
         verify(loginOptionsView).showActionBar(true)
         verify(errorHandler).proceed(testException)
-        verify(repository).clearCache()
     }
 
     @Test
     fun onSelectedStudentTest() {
         doReturn(Completable.complete()).`when`(repository).saveStudent(testStudent)
-        presenter.onSelectStudent(testStudent)
-        verify(loginOptionsView).showLoginProgress(true)
+        presenter.onSelectItem(LoginOptionsItem(testStudent))
+        verify(loginOptionsView).showContent(false)
+        verify(loginOptionsView).showProgress(true)
         verify(loginOptionsView).openMainView()
-
     }
 
     @Test
     fun onSelectedStudentErrorTest() {
         doReturn(Completable.error(testException)).`when`(repository).saveStudent(testStudent)
-        presenter.onSelectStudent(testStudent)
-        verify(loginOptionsView).showLoginProgress(true)
+        presenter.onSelectItem(LoginOptionsItem(testStudent))
+        verify(loginOptionsView).showContent(false)
+        verify(loginOptionsView).showProgress(true)
         verify(errorHandler).proceed(testException)
     }
 }

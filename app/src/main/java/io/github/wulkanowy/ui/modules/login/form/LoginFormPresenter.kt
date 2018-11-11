@@ -19,27 +19,35 @@ class LoginFormPresenter @Inject constructor(
 
     override fun onAttachView(view: LoginFormView) {
         super.onAttachView(view)
-        view.initInputs()
+        view.run {
+            initView()
+            errorHandler.doOnBadCredentials = {
+                setErrorPassIncorrect()
+                showSoftKeyboard()
+                Timber.i("Entered wrong username or password")
+            }
+        }
     }
 
     fun attemptLogin(email: String, password: String, symbol: String, endpoint: String) {
         if (!validateCredentials(email, password, symbol)) return
+
         disposable.add(sessionRepository.getConnectedStudents(email, password, symbol, endpoint)
-            .observeOn(schedulers.mainThread)
             .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
             .doOnSubscribe {
-                view?.run {
+                view?.apply {
                     hideSoftKeyboard()
-                    showLoginProgress(true)
-                    errorHandler.doOnBadCredentials = {
-                        setErrorPassIncorrect()
-                        showSoftKeyboard()
-                        Timber.i("Entered wrong username or password")
-                    }
+                    showProgress(true)
+                    showContent(false)
                 }
-                sessionRepository.clearCache()
             }
-            .doFinally { view?.showLoginProgress(false) }
+            .doFinally {
+                view?.apply {
+                    showProgress(false)
+                    showContent(true)
+                }
+            }
             .subscribe({
                 view?.run {
                     if (it.isEmpty() && !wasEmpty) {
@@ -50,7 +58,7 @@ class LoginFormPresenter @Inject constructor(
                         setErrorSymbolIncorrect()
                         logRegister("No student found", false, if (symbol.isEmpty()) "nil" else symbol, endpoint)
                     } else {
-                        switchNextView()
+                        switchOptionsView()
                         logEvent("Found students", mapOf("students" to it.size, "symbol" to it.joinToString { student -> student.symbol }, "endpoint" to endpoint))
                     }
                 }

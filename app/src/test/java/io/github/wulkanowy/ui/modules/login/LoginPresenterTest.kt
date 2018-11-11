@@ -4,7 +4,10 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.clearInvocations
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 class LoginPresenterTest {
@@ -35,16 +38,19 @@ class LoginPresenterTest {
     @Test
     fun onPageSelectedTest() {
         presenter.onPageSelected(1)
-        verify(loginView).loadOptionsView(1)
+        verify(loginView).notifyOptionsViewLoadData()
+    }
 
+    @Test
+    fun onPageSelectedNeverTest() {
         presenter.onPageSelected(0)
-        verify(loginView, never()).loadOptionsView(0)
+        verify(loginView, never()).notifyOptionsViewLoadData()
     }
 
     @Test
     fun onSwitchFragmentTest() {
-        presenter.onSwitchFragment(4)
-        verify(loginView).switchView(4)
+        presenter.onChildViewSwitchOptions()
+        verify(loginView).switchView(1)
     }
 
     @Test
