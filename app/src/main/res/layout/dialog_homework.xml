@@ -10,7 +10,7 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/note_dialog_details"
+            android:id="@+id/homework_dialog_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -21,11 +21,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/all_category"
+            android:text="@string/all_subject"
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/noteDialogCategory"
+            android:id="@+id/homeworkDialogSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -41,7 +41,7 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/noteDialogTeacher"
+            android:id="@+id/homeworkDialogTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -57,7 +57,23 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/noteDialogDate"
+            android:id="@+id/homeworkDialogDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/all_no_data"
+            android:textIsSelectable="true"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/all_entry_date"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/homeworkDialogEntryDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -73,7 +89,7 @@
             android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/noteDialogContent"
+            android:id="@+id/homeworkDialogContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -83,7 +99,7 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/noteDialogClose"
+            android:id="@+id/homeworkDialogClose"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

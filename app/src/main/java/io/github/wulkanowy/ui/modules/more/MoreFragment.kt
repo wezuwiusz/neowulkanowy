@@ -12,6 +12,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.AboutFragment
+import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.note.NoteFragment
@@ -34,6 +35,13 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
 
     override val titleStringId: Int
         get() = R.string.more_title
+
+    override val homeworkRes: Pair<String, Drawable?>?
+        get() {
+            return context?.run {
+                getString(R.string.homework_title) to ContextCompat.getDrawable(this, R.drawable.ic_menu_main_homework_24dp)
+            }
+        }
 
     override val noteRes: Pair<String, Drawable?>?
         get() {
@@ -82,6 +90,10 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
 
     override fun updateData(data: List<MoreItem>) {
         moreAdapter.updateDataSet(data)
+    }
+
+    override fun openHomeworkView() {
+        (activity as? MainActivity)?.pushView(HomeworkFragment.newInstance())
     }
 
     override fun openNoteView() {

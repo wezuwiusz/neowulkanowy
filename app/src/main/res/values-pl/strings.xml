@@ -12,6 +12,7 @@
     <string name="more_title">Więcej</string>
     <string name="about_title">O aplikacji</string>
     <string name="note_title">Uwagi i osiągnięcia</string>
+    <string name="homework_title">Zadania domowe</string>
 
 
     <!--Login form-->
@@ -120,7 +121,6 @@
 
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
-    <string name="note_content">Treść</string>
     <plurals name="note_number_item">
         <item quantity="one">%d uwaga</item>
         <item quantity="few">%d uwagi</item>
@@ -136,11 +136,17 @@
     </plurals>
 
 
+    <!--Homework-->
+    <string name="homework_no_items">Brak zadań domowych</string>
+
+
     <!--Generic-->
+    <string name="all_content">Treść</string>
     <string name="all_description">Opis</string>
     <string name="all_no_description">Brak opisu</string>
     <string name="all_teacher">Nauczyciel</string>
     <string name="all_date">Data</string>
+    <string name="all_entry_date">Data wpisu</string>
     <string name="all_color">Kolor</string>
     <string name="all_details">Szczegóły</string>
     <string name="all_category">Kategoria</string>

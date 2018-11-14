@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/homework_subitem_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_all_divider"
+    android:foreground="?attr/selectableItemBackgroundBorderless">
+
+    <TextView
+        android:id="@+id/homeworkItemSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/all_date"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/homeworkItemTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_toEndOf="@id/homeworkItemSubject"
+        android:layout_toRightOf="@id/homeworkItemSubject"
+        android:gravity="end"
+        android:text="@string/all_teacher"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/homeworkItemContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/homeworkItemSubject"
+        android:layout_alignStart="@id/homeworkItemSubject"
+        android:layout_alignLeft="@id/homeworkItemSubject"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:lineSpacingMultiplier="1.2"
+        android:text="@string/all_content"
+        android:textSize="14sp" />
+</RelativeLayout>
