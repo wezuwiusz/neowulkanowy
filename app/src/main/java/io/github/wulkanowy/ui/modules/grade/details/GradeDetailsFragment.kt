@@ -81,11 +81,12 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         gradeDetailsAdapter.clear()
     }
 
-    override fun resetView() {
-        gradeDetailsAdapter.apply {
-            smoothScrollToPosition(0)
-            collapseAll()
-        }
+    override fun collapseAllItems() {
+        gradeDetailsAdapter.collapseAll()
+    }
+
+    override fun scrollToStart() {
+        gradeDetailsAdapter.smoothScrollToPosition(0)
     }
 
     override fun getHeaderOfItem(item: AbstractFlexibleItem<*>): IExpandable<*, out IFlexible<*>>? {

@@ -80,7 +80,10 @@ class GradeDetailsPresenter @Inject constructor(
 
     fun onParentViewReselected() {
         view?.run {
-            if (!isViewEmpty) resetView()
+            if (!isViewEmpty) {
+                if (preferencesRepository.isGradeExpandable) collapseAllItems()
+                scrollToStart()
+            }
         }
     }
 

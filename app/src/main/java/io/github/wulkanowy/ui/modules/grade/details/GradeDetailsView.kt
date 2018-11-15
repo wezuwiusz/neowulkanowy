@@ -22,9 +22,11 @@ interface GradeDetailsView : BaseView {
 
     fun updateItem(item: AbstractFlexibleItem<*>)
 
-    fun resetView()
-
     fun clearView()
+
+    fun scrollToStart()
+
+    fun collapseAllItems()
 
     fun showGradeDialog(grade: Grade)
 
