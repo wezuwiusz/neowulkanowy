@@ -13,7 +13,7 @@ class StartPage(val client: Client) {
     fun getSchools(startPage: Document): MutableList<School> {
         val schoolList = mutableListOf<School>()
 
-        val snpLinks = startPage.select(".panel.linkownia.pracownik.klient a")
+        val snpLinks = startPage.select(".panel.linkownia.pracownik.klient .appLink a")
 
         logger.debug("SnP links: {}", snpLinks.size)
 
