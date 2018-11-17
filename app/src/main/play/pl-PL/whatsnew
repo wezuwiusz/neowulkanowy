@@ -1,5 +1,2 @@
-Wersja 0.5.1:
-- dodano wagę ocen na liście
-- naprawiono błędy podczas logowania
-- zmieniono nasycenie kolorów ocen
-- wyłączenie synchronizacji podczas wakacji
+Wersja 0.5.4:
+- naprawiono błąd logowania

@@ -46,5 +46,5 @@ ehthumbs.db
 Thumbs.db
 .idea/codeStyles/
 .idea/caches/
-./app/key.p12
-./app/upload-key.jks
+app/key.p12
+app/upload-key.jks
