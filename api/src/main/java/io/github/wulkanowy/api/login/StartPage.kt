@@ -5,6 +5,7 @@ import io.github.wulkanowy.api.VulcanException
 import io.github.wulkanowy.api.generic.School
 import org.jsoup.nodes.Document
 import org.slf4j.LoggerFactory
+import java.net.URL
 
 class StartPage(val client: Client) {
 
@@ -13,7 +14,7 @@ class StartPage(val client: Client) {
     fun getSchools(startPage: Document): MutableList<School> {
         val schoolList = mutableListOf<School>()
 
-        val snpLinks = startPage.select(".panel.linkownia.pracownik.klient .appLink a")
+        val snpLinks = startPage.select(".panel.linkownia.pracownik.klient a[href*=\"uonetplus-opiekun\"]")
 
         logger.debug("SnP links: {}", snpLinks.size)
 
@@ -24,7 +25,7 @@ class StartPage(val client: Client) {
         snpLinks.map {
             schoolList.add(School(
                     it.text(),
-                    getExtractedIdFromUrl(it.attr("href")),
+                    getExtractedSchoolSymbolFromUrl(it.attr("href")),
                     it == snpLinks.first()
             ))
         }
@@ -32,10 +33,10 @@ class StartPage(val client: Client) {
         return schoolList
     }
 
-    internal fun getExtractedIdFromUrl(snpPageUrl: String): String {
-        val path = snpPageUrl.split(client.host).getOrNull(1)?.split("/")
+    internal fun getExtractedSchoolSymbolFromUrl(snpPageUrl: String): String {
+        val path = URL(snpPageUrl).path.split("/")
 
-        if (6 != path?.size) {
+        if (6 != path.size) {
             logger.error("Expected snp url, got {}", snpPageUrl)
             throw VulcanException("Na pewno używasz konta z dostępem do Witryny ucznia i rodzica?")
         }

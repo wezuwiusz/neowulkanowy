@@ -51,18 +51,18 @@ class StartPageTest {
     @Test
     fun getExtractedIDStandardTest() {
         assertEquals("123456", StartPage(client)
-                .getExtractedIdFromUrl("https://uonetplus-opiekun.fakelog.cf/powiat/123456/Start/Index/"))
+                .getExtractedSchoolSymbolFromUrl("https://uonetplus-opiekun.fakelog.cf/powiat/123456/Start/Index/"))
     }
 
     @Test
     fun getExtractedIDDemoTest() {
         assertEquals("demo12345", StartPage(client)
-                .getExtractedIdFromUrl("https://uonetplus-opiekun.fakelog.cf/demoupowiat/demo12345/Start/Index/"))
+                .getExtractedSchoolSymbolFromUrl("https://uonetplus-opiekun.fakelog.cf/demoupowiat/demo12345/Start/Index/"))
     }
 
     @Test(expected = VulcanException::class)
     fun getExtractedIDNotLoggedTest() {
         assertEquals("123", StartPage(client)
-                .getExtractedIdFromUrl("https://uonetplus.NOTfakelog.cf/powiat/"))
+                .getExtractedSchoolSymbolFromUrl("https://uonetplus.NOTfakelog.cf/powiat/"))
     }
 }
