@@ -44,7 +44,7 @@ local.properties
 ehthumbs.db
 Thumbs.db
 .idea/caches/
-./app/key.p12
-./app/upload-key.jks
+app/key.p12
+app/upload-key.jks
 *.log
 .idea/assetWizardSettings.xml

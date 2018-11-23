@@ -4,10 +4,10 @@ sonarqube {
 
     //noinspection GroovyAssignabilityCheck
     properties {
-        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-27/android.jar"
+        def libraries = project.android.sdkDirectory.getPath() + "/platforms/android-28/android.jar"
 
-        property "sonar.projectName", GROUP_ID + ":app"
-        property "sonar.projectKey", GROUP_ID + ":app"
+        property "sonar.projectName", "io.github.wulkanowy:app"
+        property "sonar.projectKey", "io.github.wulkanowy:app"
 
         property "sonar.sources", "src/main/java"
         property "sonar.exclusions", "build/**,**/*.png,*.iml, **/*generated*,"
