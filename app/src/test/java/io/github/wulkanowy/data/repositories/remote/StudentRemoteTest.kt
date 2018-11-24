@@ -10,7 +10,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.doReturn
 import org.mockito.MockitoAnnotations
 
-class SessionRemoteTest {
+class StudentRemoteTest {
 
     @Mock
     private lateinit var mockApi: Api
@@ -23,9 +23,9 @@ class SessionRemoteTest {
     @Test
     fun testRemoteAll() {
         doReturn(Single.just(listOf(Pupil("", "", 1, "test", "", "", Api.LoginType.AUTO))))
-                .`when`(mockApi).getPupils()
+            .`when`(mockApi).getPupils()
 
-        val students = SessionRemote(mockApi).getConnectedStudents("", "", "", "http://fakelog.cf").blockingGet()
+        val students = StudentRemote(mockApi).getStudents("", "", "").blockingGet()
         assertEquals(1, students.size)
         assertEquals("test", students.first().studentName)
     }

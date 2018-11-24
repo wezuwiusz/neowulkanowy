@@ -11,22 +11,18 @@ import javax.inject.Singleton
 class GradeSummaryRemote @Inject constructor(private val api: Api) {
 
     fun getGradeSummary(semester: Semester): Single<List<GradeSummary>> {
-        return Single.just(api.run {
-            if (diaryId != semester.diaryId) {
-                diaryId = semester.diaryId
-                notifyDataChanged()
-            }
-        }).flatMap { api.getGradesSummary(semester.semesterId) }
-                .map { gradesSummary ->
-                    gradesSummary.map {
-                        GradeSummary(
-                                semesterId = semester.semesterId,
-                                studentId = semester.studentId,
-                                subject = it.name,
-                                predictedGrade = it.predicted,
-                                finalGrade = it.final
-                        )
-                    }
+        return Single.just(api.apply { diaryId = semester.diaryId })
+            .flatMap { it.getGradesSummary(semester.semesterId) }
+            .map { gradesSummary ->
+                gradesSummary.map {
+                    GradeSummary(
+                        semesterId = semester.semesterId,
+                        studentId = semester.studentId,
+                        subject = it.name,
+                        predictedGrade = it.predicted,
+                        finalGrade = it.final
+                    )
                 }
+            }
     }
 }

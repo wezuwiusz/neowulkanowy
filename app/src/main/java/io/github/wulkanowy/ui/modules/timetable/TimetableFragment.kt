@@ -47,7 +47,7 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
 
     override fun initView() {
         timetableAdapter.run {
-            setOnItemClickListener { presenter.onTimetableItemSelected(getItem(it)) }
+            setOnItemClickListener { presenter.onTimetableItemSelected(it) }
         }
 
         timetableRecycler.run {

@@ -13,9 +13,10 @@
     <string name="about_title">O aplikacji</string>
     <string name="note_title">Uwagi i osiągnięcia</string>
     <string name="homework_title">Zadania domowe</string>
+    <string name="account_title">Wybierz konto</string>
 
 
-    <!--Login form-->
+    <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
     <string name="login_header_symbol">Podaj symbol dziennika VULCAN</string>
     <string name="login_nickname_hint">Email lub nick</string>
@@ -29,6 +30,11 @@
     <string name="login_incorrect_password">To hasło jest niepoprawne</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprwadź symbol</string>
     <string name="login_field_required">To pole jest wymagane</string>
+    <string name="login_duplicate_student">Ten student jest już zalogowany</string>
+
+
+    <!--Main-->
+    <string name="main_account_picker">Menadżer kont</string>
 
 
     <!--Grade-->
@@ -140,6 +146,13 @@
     <string name="homework_no_items">Brak zadań domowych</string>
 
 
+    <!--Account-->
+    <string name="account_add_new">Dodaj konto</string>
+    <string name="account_logout">Wyloguj</string>
+    <string name="account_confirm">Czy chcesz wylogować aktualnego ucznia?</string>
+    <string name="account_logout_student">Wylogowanie ucznia</string>
+
+
     <!--Generic-->
     <string name="all_content">Treść</string>
     <string name="all_description">Opis</string>
@@ -151,7 +164,6 @@
     <string name="all_details">Szczegóły</string>
     <string name="all_category">Kategoria</string>
     <string name="all_close">Zamknij</string>
-    <string name="all_cancel">Anuluj</string>
     <string name="all_no_data">Brak danych</string>
     <string name="all_subject">Przedmiot</string>
     <string name="all_prev">Poprzedni</string>

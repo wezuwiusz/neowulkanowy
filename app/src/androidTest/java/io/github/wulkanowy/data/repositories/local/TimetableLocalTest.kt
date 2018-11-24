@@ -24,7 +24,7 @@ class TimetableLocalTest {
     @Before
     fun createDb() {
         testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java).build()
-        timetableDb = TimetableLocal(testDb.timetableDao())
+        timetableDb = TimetableLocal(testDb.timetableDao)
     }
 
     @After

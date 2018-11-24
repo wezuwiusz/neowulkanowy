@@ -12,11 +12,11 @@ import javax.inject.Singleton
 class GradeLocal @Inject constructor(private val gradeDb: GradeDao) {
 
     fun getGrades(semester: Semester): Maybe<List<Grade>> {
-        return gradeDb.getGrades(semester.semesterId, semester.studentId).filter { !it.isEmpty() }
+        return gradeDb.load(semester.semesterId, semester.studentId).filter { !it.isEmpty() }
     }
 
     fun getNewGrades(semester: Semester): Maybe<List<Grade>> {
-        return gradeDb.getNewGrades(semester.semesterId, semester.studentId)
+        return gradeDb.loadNew(semester.semesterId, semester.studentId)
     }
 
     fun saveGrades(grades: List<Grade>) {

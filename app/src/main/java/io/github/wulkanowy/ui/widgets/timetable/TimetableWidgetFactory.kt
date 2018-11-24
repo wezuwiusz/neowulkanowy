@@ -12,7 +12,8 @@ import android.widget.RemoteViewsService
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefHelper
 import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.data.repositories.SessionRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.disposables.CompositeDisposable
@@ -21,7 +22,8 @@ import timber.log.Timber
 
 class TimetableWidgetFactory(
     private val timetableRepository: TimetableRepository,
-    private val sessionRepository: SessionRepository,
+    private val studentRepository: StudentRepository,
+    private val semesterRepository: SemesterRepository,
     private val sharedPref: SharedPrefHelper,
     private val context: Context,
     private val intent: Intent?
@@ -46,9 +48,9 @@ class TimetableWidgetFactory(
     override fun onDataSetChanged() {
         intent?.action?.let { LocalDate.ofEpochDay(sharedPref.getLong(it, 0)) }
             ?.let { date ->
-                if (sessionRepository.isSessionSaved) {
-                    disposable.add(sessionRepository.getSemesters()
-                        .map { it.single { item -> item.current } }
+                if (studentRepository.isStudentSaved) {
+                    disposable.add(studentRepository.getCurrentStudent()
+                        .flatMap { semesterRepository.getCurrentSemester(it) }
                         .flatMap { timetableRepository.getTimetable(it, date, date) }
                         .map { item -> item.sortedBy { it.number } }
                         .subscribe({ lessons = it })

@@ -1,9 +1,14 @@
 package io.github.wulkanowy.ui.modules.grade
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -55,8 +60,8 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
 
     override fun initView() {
         pagerAdapter.fragments.putAll(mapOf(
-                getString(R.string.all_details) to GradeDetailsFragment.newInstance(),
-                getString(R.string.grade_menu_summary) to GradeSummaryFragment.newInstance()
+            getString(R.string.all_details) to GradeDetailsFragment.newInstance(),
+            getString(R.string.grade_menu_summary) to GradeSummaryFragment.newInstance()
         ))
         gradeViewPager.run {
             adapter = pagerAdapter
@@ -85,16 +90,16 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
 
     override fun showSemesterDialog(selectedIndex: Int) {
         arrayOf(getString(R.string.grade_semester, 1),
-                getString(R.string.grade_semester, 2)).also { array ->
+            getString(R.string.grade_semester, 2)).also { array ->
             context?.let {
                 AlertDialog.Builder(it)
-                        .setSingleChoiceItems(array, selectedIndex) { dialog, which ->
-                            presenter.onSemesterSelected(which)
-                            dialog.dismiss()
-                        }
-                        .setTitle(R.string.grade_switch_semester)
-                        .setNegativeButton(R.string.all_cancel) { dialog, _ -> dialog.dismiss() }
-                        .show()
+                    .setSingleChoiceItems(array, selectedIndex) { dialog, which ->
+                        presenter.onSemesterSelected(which)
+                        dialog.dismiss()
+                    }
+                    .setTitle(R.string.grade_switch_semester)
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
+                    .show()
             }
         }
     }

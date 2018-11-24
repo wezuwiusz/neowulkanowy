@@ -2,7 +2,7 @@ package io.github.wulkanowy.ui.modules.login.form
 
 import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.SessionRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.reactivex.Single
 import org.junit.Before
@@ -22,7 +22,7 @@ class LoginFormPresenterTest {
     lateinit var loginFormView: LoginFormView
 
     @Mock
-    lateinit var repository: SessionRepository
+    lateinit var repository: StudentRepository
 
     @Mock
     lateinit var errorHandler: LoginErrorHandler
@@ -75,7 +75,7 @@ class LoginFormPresenterTest {
     @Test
     fun emptySymbolLoginTest() {
         doReturn(Single.just(emptyList<Student>()))
-                .`when`(repository).getConnectedStudents(anyString(), anyString(), anyString(), anyString())
+            .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
         presenter.attemptLogin("@", "123456", "", "https://fakelog.cf")
         presenter.attemptLogin("@", "123456", "", "https://fakelog.cf")
 
@@ -86,7 +86,7 @@ class LoginFormPresenterTest {
     fun loginTest() {
         val studentTest = Student(email = "test@", password = "123", endpoint = "https://fakelog.cf", loginType = "AUTO")
         doReturn(Single.just(listOf(studentTest)))
-                .`when`(repository).getConnectedStudents(anyString(), anyString(), anyString(), anyString())
+            .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()
@@ -100,7 +100,7 @@ class LoginFormPresenterTest {
     @Test
     fun loginEmptyTest() {
         doReturn(Single.just(emptyList<Student>()))
-                .`when`(repository).getConnectedStudents(anyString(), anyString(), anyString(), anyString())
+            .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()
@@ -114,7 +114,7 @@ class LoginFormPresenterTest {
     @Test
     fun loginEmptyTwiceTest() {
         doReturn(Single.just(emptyList<Student>()))
-                .`when`(repository).getConnectedStudents(anyString(), anyString(), anyString(), anyString())
+            .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
         presenter.attemptLogin("@", "123456", "", "https://fakelog.cf")
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
 
@@ -132,7 +132,7 @@ class LoginFormPresenterTest {
     fun loginErrorTest() {
         val testException = RuntimeException("test")
         doReturn(Single.error<List<Student>>(testException))
-                .`when`(repository).getConnectedStudents(anyString(), anyString(), anyString(), anyString())
+            .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
         presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()

@@ -38,7 +38,6 @@
             android:name=".ui.modules.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/main_title"
-            android:launchMode="singleTop"
             android:theme="@style/WulkanowyTheme.NoActionBar" />
 
         <service

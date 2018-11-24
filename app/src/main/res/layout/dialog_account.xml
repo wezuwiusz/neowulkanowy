@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/accountDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:paddingStart="24dp"
+        android:paddingLeft="24dp"
+        android:paddingEnd="24dp"
+        android:paddingRight="24dp"
+        android:text="@string/account_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:firstBaselineToTopHeight="40dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/accountDialogRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accountDialogTitle"
+        android:overScrollMode="never"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_account" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/accountDialogAdd"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accountDialogRecycler"
+        android:layout_margin="8dp"
+        android:text="@string/account_add_new" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/accountDialogRemove"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accountDialogRecycler"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        android:text="@string/account_logout"
+        android:textColor="@color/colorPrimary" />
+</RelativeLayout>

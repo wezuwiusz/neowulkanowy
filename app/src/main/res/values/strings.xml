@@ -13,9 +13,10 @@
     <string name="about_title">About</string>
     <string name="note_title">Notes and achievements</string>
     <string name="homework_title">Homework</string>
+    <string name="account_title">Choose account</string>
 
 
-    <!--Login form-->
+    <!--Login-->
     <string name="login_header_default">Sign in with the student or parent account</string>
     <string name="login_header_symbol">Enter the VULCAN diary symbol</string>
     <string name="login_nickname_hint">Email or nick</string>
@@ -29,6 +30,11 @@
     <string name="login_incorrect_password">This password is incorrect</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>
+    <string name="login_duplicate_student">This student has already been logged in</string>
+
+
+    <!--Main-->
+    <string name="main_account_picker">Account manager</string>
 
 
     <!--Grade-->
@@ -125,6 +131,13 @@
     <string name="homework_no_items">No info about homework</string>
 
 
+    <!--Account-->
+    <string name="account_add_new">Add account</string>
+    <string name="account_logout">Logout</string>
+    <string name="account_confirm">Do you want to log out of an active student?</string>
+    <string name="account_logout_student">Student logout</string>
+
+
     <!--Generic-->
     <string name="all_content">Content</string>
     <string name="all_description">Description</string>
@@ -136,7 +149,6 @@
     <string name="all_details">Details</string>
     <string name="all_category">Category</string>
     <string name="all_close">Close</string>
-    <string name="all_cancel">Cancel</string>
     <string name="all_no_data">No data</string>
     <string name="all_subject">Subject</string>
     <string name="all_prev">Prev</string>

@@ -44,7 +44,7 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
 
     override fun initView() {
         homeworkAdapter.run {
-            setOnItemClickListener { presenter.onHomeworkItemSelected(getItem(it)) }
+            setOnItemClickListener { presenter.onHomeworkItemSelected(it) }
         }
 
         homeworkRecycler.run {

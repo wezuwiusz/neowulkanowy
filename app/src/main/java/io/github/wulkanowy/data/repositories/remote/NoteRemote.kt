@@ -12,12 +12,8 @@ import javax.inject.Singleton
 class NoteRemote @Inject constructor(private val api: Api) {
 
     fun getNotes(semester: Semester): Single<List<Note>> {
-        return Single.just(api.run {
-            if (diaryId != semester.diaryId) {
-                diaryId = semester.diaryId
-                notifyDataChanged()
-            }
-        }).flatMap { api.getNotes() }
+        return Single.just(api.apply { diaryId = semester.diaryId })
+            .flatMap { it.getNotes() }
             .map { notes ->
                 notes.map {
                     Note(

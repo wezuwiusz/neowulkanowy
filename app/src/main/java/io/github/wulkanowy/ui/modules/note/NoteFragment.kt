@@ -46,7 +46,7 @@ class NoteFragment : BaseFragment(), NoteView, MainView.TitledView {
 
     override fun initView() {
         noteAdapter.run {
-            setOnItemClickListener { presenter.onNoteItemSelected(getItem(it)) }
+            setOnItemClickListener { presenter.onNoteItemSelected(it) }
         }
 
         noteRecycler.run {

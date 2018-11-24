@@ -14,7 +14,6 @@
         <item name="subtitleTextColor">@android:color/primary_text_dark</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="bottomNavBackground">@color/bottom_nav_background_inverse</item>
-        <item name="android:windowAnimationStyle">@null</item>
 
         <!-- AboutLibraries specific values -->
         <item name="about_libraries_window_background">@color/about_libraries_window_background</item>

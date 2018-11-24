@@ -9,6 +9,10 @@ import dagger.Module
 import dagger.Provides
 import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.AppDatabase
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level.BASIC
+import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -18,14 +22,19 @@ internal class RepositoryModule {
     @Provides
     fun provideInternetObservingSettings(): InternetObservingSettings {
         return InternetObservingSettings.builder()
-                .strategy(SocketInternetObservingStrategy())
-                .host("www.google.com")
-                .build()
+            .strategy(SocketInternetObservingStrategy())
+            .host("www.google.com")
+            .build()
     }
 
     @Singleton
     @Provides
-    fun provideApi() = Api()
+    fun provideApi(): Api {
+        return Api().apply {
+            logLevel = NONE
+            setInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { Timber.d(it) }).setLevel(BASIC))
+        }
+    }
 
     @Singleton
     @Provides
@@ -36,43 +45,41 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideSharedPref(context: Context): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-    }
+    fun provideSharedPref(context: Context): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     @Singleton
     @Provides
-    fun provideStudentDao(database: AppDatabase) = database.studentDao()
+    fun provideStudentDao(database: AppDatabase) = database.studentDao
 
     @Singleton
     @Provides
-    fun provideSemesterDao(database: AppDatabase) = database.semesterDao()
+    fun provideSemesterDao(database: AppDatabase) = database.semesterDao
 
     @Singleton
     @Provides
-    fun provideGradeDao(database: AppDatabase) = database.gradeDao()
+    fun provideGradeDao(database: AppDatabase) = database.gradeDao
 
     @Singleton
     @Provides
-    fun provideGradeSummaryDao(database: AppDatabase) = database.gradeSummaryDao()
+    fun provideGradeSummaryDao(database: AppDatabase) = database.gradeSummaryDao
 
     @Singleton
     @Provides
-    fun provideExamDao(database: AppDatabase) = database.examsDao()
+    fun provideExamDao(database: AppDatabase) = database.examsDao
 
     @Singleton
     @Provides
-    fun provideAttendanceDao(database: AppDatabase) = database.attendanceDao()
+    fun provideAttendanceDao(database: AppDatabase) = database.attendanceDao
 
     @Singleton
     @Provides
-    fun provideTimetableDao(database: AppDatabase) = database.timetableDao()
+    fun provideTimetableDao(database: AppDatabase) = database.timetableDao
 
     @Singleton
     @Provides
-    fun provideNoteDao(database: AppDatabase) = database.noteDao()
+    fun provideNoteDao(database: AppDatabase) = database.noteDao
 
     @Singleton
     @Provides
-    fun provideHomeworkDao(database: AppDatabase) = database.homeworkDao()
+    fun provideHomeworkDao(database: AppDatabase) = database.homeworkDao
 }

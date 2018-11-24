@@ -10,8 +10,7 @@ import io.github.wulkanowy.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_more.*
 
-class MoreItem(val title: String, private val drawable: Drawable?)
-    : AbstractFlexibleItem<MoreItem.ViewHolder>() {
+class MoreItem(val title: String, private val drawable: Drawable?) : AbstractFlexibleItem<MoreItem.ViewHolder>() {
 
     override fun getLayoutRes() = R.layout.item_more
 
@@ -19,8 +18,7 @@ class MoreItem(val title: String, private val drawable: Drawable?)
         return ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?,
-                                position: Int, payloads: MutableList<Any>?) {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?, position: Int, payloads: MutableList<Any>?) {
         holder?.apply {
             moreItemTitle.text = title
             moreItemImage.setImageDrawable(drawable)
@@ -42,8 +40,7 @@ class MoreItem(val title: String, private val drawable: Drawable?)
         return title.hashCode()
     }
 
-    class ViewHolder(view: View?, adapter: FlexibleAdapter<*>?)
-        : FlexibleViewHolder(view, adapter), LayoutContainer {
+    class ViewHolder(view: View?, adapter: FlexibleAdapter<*>?) : FlexibleViewHolder(view, adapter), LayoutContainer {
 
         override val containerView: View?
             get() = contentView

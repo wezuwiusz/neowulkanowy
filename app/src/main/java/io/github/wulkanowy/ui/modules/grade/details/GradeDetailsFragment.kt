@@ -59,7 +59,7 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         gradeDetailsAdapter.run {
             isAutoCollapseOnExpand = true
             isAutoScrollOnExpand = true
-            setOnItemClickListener { presenter.onGradeItemSelected(getItem(it)) }
+            setOnItemClickListener { presenter.onGradeItemSelected(it) }
         }
 
         gradeDetailsRecycler.run {

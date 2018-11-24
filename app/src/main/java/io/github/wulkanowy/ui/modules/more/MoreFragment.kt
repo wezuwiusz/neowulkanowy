@@ -76,7 +76,7 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
     }
 
     override fun initView() {
-        moreAdapter.run { setOnItemClickListener { presenter.onItemSelected(getItem(it)) } }
+        moreAdapter.run { setOnItemClickListener { presenter.onItemSelected(it) } }
 
         moreRecycler.apply {
             layoutManager = SmoothScrollLinearLayoutManager(context)

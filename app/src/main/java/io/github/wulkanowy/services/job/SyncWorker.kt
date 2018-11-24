@@ -10,7 +10,8 @@ import io.github.wulkanowy.data.repositories.GradeSummaryRepository
 import io.github.wulkanowy.data.repositories.HomeworkRepository
 import io.github.wulkanowy.data.repositories.NoteRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.SessionRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.services.notification.GradeNotification
 import io.github.wulkanowy.services.notification.NoteNotification
@@ -26,7 +27,10 @@ import javax.inject.Inject
 class SyncWorker : SimpleJobService() {
 
     @Inject
-    lateinit var session: SessionRepository
+    lateinit var student: StudentRepository
+
+    @Inject
+    lateinit var semester: SemesterRepository
 
     @Inject
     lateinit var gradesDetails: GradeRepository
@@ -73,8 +77,8 @@ class SyncWorker : SimpleJobService() {
 
         var error: Throwable? = null
 
-        disposable.add(session.getSemesters(true)
-            .map { it.single { semester -> semester.current } }
+        disposable.add(student.getCurrentStudent()
+            .flatMap { semester.getCurrentSemester(it, true) }
             .flatMapPublisher {
                 Single.merge(
                     listOf(
@@ -107,8 +111,8 @@ class SyncWorker : SimpleJobService() {
     }
 
     private fun sendGradeNotifications() {
-        disposable.add(session.getSemesters()
-            .map { it.single { semester -> semester.current } }
+        disposable.add(student.getCurrentStudent()
+            .flatMap { semester.getCurrentSemester(it, true) }
             .flatMap { gradesDetails.getNewGrades(it) }
             .map { it.filter { grade -> !grade.isNotified } }
             .subscribe({
@@ -121,8 +125,8 @@ class SyncWorker : SimpleJobService() {
     }
 
     private fun sendNoteNotification() {
-        disposable.add(session.getSemesters()
-            .map { it.single { semester -> semester.current } }
+        disposable.add(student.getCurrentStudent()
+            .flatMap { semester.getCurrentSemester(it, true) }
             .flatMap { note.getNewNotes(it) }
             .map { it.filter { note -> !note.isNotified } }
             .subscribe({

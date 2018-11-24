@@ -41,6 +41,11 @@ class MainPresenter @Inject constructor(
         }
     }
 
+    fun onAccountManagerSelected(): Boolean {
+        view?.showAccountPicker()
+        return true
+    }
+
     fun onUpNavigate(): Boolean {
         view?.popView()
         return true

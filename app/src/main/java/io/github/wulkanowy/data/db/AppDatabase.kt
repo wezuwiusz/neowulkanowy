@@ -51,21 +51,21 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun studentDao(): StudentDao
+    abstract val studentDao: StudentDao
 
-    abstract fun semesterDao(): SemesterDao
+    abstract val semesterDao: SemesterDao
 
-    abstract fun examsDao(): ExamDao
+    abstract val examsDao: ExamDao
 
-    abstract fun timetableDao(): TimetableDao
+    abstract val timetableDao: TimetableDao
 
-    abstract fun attendanceDao(): AttendanceDao
+    abstract val attendanceDao: AttendanceDao
 
-    abstract fun gradeDao(): GradeDao
+    abstract val gradeDao: GradeDao
 
-    abstract fun gradeSummaryDao(): GradeSummaryDao
+    abstract val gradeSummaryDao: GradeSummaryDao
 
-    abstract fun noteDao(): NoteDao
+    abstract val noteDao: NoteDao
 
-    abstract fun homeworkDao(): HomeworkDao
+    abstract val homeworkDao: HomeworkDao
 }

@@ -31,7 +31,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         playAccountConfig = playAccountConfigs.defaultAccountConfig
-        manifestPlaceholders = [ fabricApiKey: fabricApiKey ]
+        manifestPlaceholders = [fabricApiKey: fabricApiKey]
     }
 
     signingConfigs {
@@ -74,16 +74,18 @@ play {
     uploadImages = true
 }
 
-ext.androidx_version = "1.0.0"
+configurations.all {
+    resolutionStrategy.force "com.squareup.okhttp3:okhttp-urlconnection:3.11.0"
+}
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation('com.github.wulkanowy:api:a80b8e5') { exclude module: "threetenbp" }
+    implementation('com.github.wulkanowy:api:0ac961607b') { exclude module: "threetenbp" }
 
-    implementation "androidx.legacy:legacy-support-v4:$androidx_version"
-    implementation "androidx.appcompat:appcompat:$androidx_version"
-    implementation "androidx.cardview:cardview:$androidx_version"
-    implementation "com.google.android.material:material:$androidx_version"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "com.google.android.material:material:1.0.0"
     implementation 'androidx.multidex:multidex:2.0.0'
 
     implementation 'com.takisoft.preferencex:preferencex:1.0.0'
@@ -113,7 +115,6 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "at.favre.lib:slf4j-timber:1.0.1"
-    implementation 'com.akaita.java:rxjava2-debug:1.3.0'
     implementation("com.crashlytics.sdk.android:crashlytics:2.9.5@aar") {
         transitive = true
     }
@@ -132,6 +133,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.ext:junit:1.0.0'
     androidTestImplementation "org.mockito:mockito-android:2.23.0"
-
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }

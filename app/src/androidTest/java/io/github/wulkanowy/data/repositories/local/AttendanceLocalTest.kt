@@ -23,7 +23,7 @@ class AttendanceLocalTest {
     @Before
     fun createDb() {
         testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java).build()
-        attendanceLocal = AttendanceLocal(testDb.attendanceDao())
+        attendanceLocal = AttendanceLocal(testDb.attendanceDao)
     }
 
     @After

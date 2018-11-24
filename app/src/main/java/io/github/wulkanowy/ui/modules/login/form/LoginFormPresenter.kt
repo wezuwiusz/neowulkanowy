@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.form
 
-import io.github.wulkanowy.data.repositories.SessionRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class LoginFormPresenter @Inject constructor(
     private val schedulers: SchedulersProvider,
     private val errorHandler: LoginErrorHandler,
-    private val sessionRepository: SessionRepository
+    private val studentRepository: StudentRepository
 ) : BasePresenter<LoginFormView>(errorHandler) {
 
     private var wasEmpty = false
@@ -21,7 +21,7 @@ class LoginFormPresenter @Inject constructor(
         super.onAttachView(view)
         view.run {
             initView()
-            errorHandler.doOnBadCredentials = {
+            errorHandler.onBadCredentials = {
                 setErrorPassIncorrect()
                 showSoftKeyboard()
                 Timber.i("Entered wrong username or password")
@@ -32,7 +32,7 @@ class LoginFormPresenter @Inject constructor(
     fun attemptLogin(email: String, password: String, symbol: String, endpoint: String) {
         if (!validateCredentials(email, password, symbol)) return
 
-        disposable.add(sessionRepository.getConnectedStudents(email, password, symbol, endpoint)
+        disposable.add(studentRepository.getStudents(email, password, symbol, endpoint)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {

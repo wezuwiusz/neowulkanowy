@@ -1,6 +1,10 @@
 package io.github.wulkanowy.data.db.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import io.github.wulkanowy.data.db.entities.Grade
 import io.reactivex.Maybe
 
@@ -20,8 +24,8 @@ interface GradeDao {
     fun deleteAll(grades: List<Grade>)
 
     @Query("SELECT * FROM Grades WHERE semester_id = :semesterId AND student_id = :studentId")
-    fun getGrades(semesterId: Int, studentId: Int): Maybe<List<Grade>>
+    fun load(semesterId: Int, studentId: Int): Maybe<List<Grade>>
 
     @Query("SELECT * FROM Grades WHERE is_read = 0 AND semester_id = :semesterId AND student_id = :studentId")
-    fun getNewGrades(semesterId: Int, studentId: Int): Maybe<List<Grade>>
+    fun loadNew(semesterId: Int, studentId: Int): Maybe<List<Grade>>
 }

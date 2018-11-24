@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.login.options
 
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +41,7 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
     }
 
     override fun initView() {
-        loginAdapter.apply { setOnItemClickListener { presenter.onSelectItem(getItem(it)) } }
+        loginAdapter.apply { setOnItemClickListener { presenter.onItemSelected(it) } }
 
         loginOptionsRecycler.apply {
             adapter = loginAdapter
@@ -57,8 +59,8 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
 
     override fun openMainView() {
         activity?.let {
-            startActivity(MainActivity.getStartIntent(it))
-            it.finish()
+            startActivity(MainActivity.getStartIntent(it)
+                .apply { addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK) })
         }
     }
 

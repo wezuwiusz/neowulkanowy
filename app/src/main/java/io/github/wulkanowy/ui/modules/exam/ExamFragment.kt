@@ -3,7 +3,9 @@ package io.github.wulkanowy.ui.modules.exam
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
@@ -48,7 +50,7 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
 
     override fun initView() {
         examAdapter.run {
-            setOnItemClickListener { presenter.onExamItemSelected(getItem(it)) }
+            setOnItemClickListener { presenter.onExamItemSelected(it) }
         }
         examRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)

@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.SpyK
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -15,8 +16,8 @@ import java.sql.Date
 
 class TimetableRemoteTest {
 
-    @MockK
-    private lateinit var mockApi: Api
+    @SpyK
+    private var mockApi = Api()
 
     @MockK
     private lateinit var semesterMock: Semester
@@ -27,7 +28,7 @@ class TimetableRemoteTest {
     }
 
     @Test
-    fun getExamsTest() {
+    fun getTimetableTest() {
         every { mockApi.getTimetable(
                 LocalDate.of(2018, 9, 10),
                 LocalDate.of(2018, 9, 15)

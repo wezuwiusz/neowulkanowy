@@ -18,5 +18,5 @@ interface HomeworkDao {
     fun deleteAll(homework: List<Homework>)
 
     @Query("SELECT * FROM Homework WHERE semester_id = :semesterId AND student_id = :studentId AND date = :date")
-    fun getHomework(semesterId: Int, studentId: Int, date: LocalDate): Maybe<List<Homework>>
+    fun load(semesterId: Int, studentId: Int, date: LocalDate): Maybe<List<Homework>>
 }

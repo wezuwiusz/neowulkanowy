@@ -12,14 +12,11 @@ import javax.inject.Inject
 class TimetableRemote @Inject constructor(private val api: Api) {
 
     fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate): Single<List<Timetable>> {
-        return Single.just(api.run {
-            if (diaryId != semester.diaryId) {
-                diaryId = semester.diaryId
-                notifyDataChanged()
-            }
-        }).flatMap { api.getTimetable(startDate, endDate) }.map { lessons ->
-            lessons.map {
-                Timetable(
+        return Single.just(api.apply { diaryId = semester.diaryId })
+            .flatMap { it.getTimetable(startDate, endDate) }
+            .map { lessons ->
+                lessons.map {
+                    Timetable(
                         studentId = semester.studentId,
                         diaryId = semester.diaryId,
                         number = it.number,
@@ -33,8 +30,8 @@ class TimetableRemote @Inject constructor(private val api: Api) {
                         info = it.info,
                         changes = it.changes,
                         canceled = it.canceled
-                )
+                    )
+                }
             }
-        }
     }
 }

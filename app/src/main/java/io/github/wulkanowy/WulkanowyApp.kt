@@ -3,7 +3,6 @@ package io.github.wulkanowy
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
-import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.core.CrashlyticsCore
@@ -36,7 +35,6 @@ class WulkanowyApp : DaggerApplication() {
         AndroidThreeTen.init(this)
         initializeFabric()
         if (DEBUG) enableDebugLog()
-        RxJava2Debug.enableRxJava2AssemblyTracking(arrayOf(BuildConfig.APPLICATION_ID))
         AppCompatDelegate.setDefaultNightMode(prefRepository.currentTheme)
     }
 

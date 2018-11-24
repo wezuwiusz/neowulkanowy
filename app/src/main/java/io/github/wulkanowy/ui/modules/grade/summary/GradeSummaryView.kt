@@ -12,7 +12,7 @@ interface GradeSummaryView : BaseView {
 
     fun initView()
 
-    fun updateDataSet(data: List<GradeSummaryItem>, header: GradeSummaryScrollableHeader)
+    fun updateData(data: List<GradeSummaryItem>, header: GradeSummaryScrollableHeader)
 
     fun resetView()
 

@@ -3,7 +3,9 @@ package io.github.wulkanowy.ui.modules.grade.summary
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
@@ -56,7 +58,7 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
         gradeSummarySwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
     }
 
-    override fun updateDataSet(data: List<GradeSummaryItem>, header: GradeSummaryScrollableHeader) {
+    override fun updateData(data: List<GradeSummaryItem>, header: GradeSummaryScrollableHeader) {
         gradeSummaryAdapter.apply {
             updateDataSet(data, true)
             removeAllScrollableHeaders()

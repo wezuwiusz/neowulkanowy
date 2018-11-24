@@ -2,19 +2,21 @@ package io.github.wulkanowy.ui.modules.grade
 
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.repositories.SessionRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.logEvent
 import io.reactivex.Completable
-import timber.log.Timber
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class GradePresenter @Inject constructor(
-        private val errorHandler: ErrorHandler,
-        private val schedulers: SchedulersProvider,
-        private val sessionRepository: SessionRepository) : BasePresenter<GradeView>(errorHandler) {
+    private val errorHandler: ErrorHandler,
+    private val schedulers: SchedulersProvider,
+    private val studentRepository: StudentRepository,
+    private val semesterRepository: SemesterRepository
+) : BasePresenter<GradeView>(errorHandler) {
 
     var selectedIndex = 0
         private set
@@ -26,11 +28,11 @@ class GradePresenter @Inject constructor(
     fun onAttachView(view: GradeView, savedIndex: Int?) {
         super.onAttachView(view)
         disposable.add(Completable.timer(150, MILLISECONDS, schedulers.mainThread)
-                .subscribe {
-                    selectedIndex = savedIndex ?: 0
-                    view.initView()
-                    loadData()
-                })
+            .subscribe {
+                selectedIndex = savedIndex ?: 0
+                view.initView()
+                loadData()
+            })
     }
 
     fun onViewReselected() {
@@ -71,15 +73,16 @@ class GradePresenter @Inject constructor(
     }
 
     private fun loadData() {
-        disposable.add(sessionRepository.getSemesters()
-                .doOnSuccess {
-                    it.first { item -> item.current }.also { current ->
-                        selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
-                        semesters = it.filter { semester -> semester.diaryId == current.diaryId }
-                    }
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { semesterRepository.getSemesters(it) }
+            .doOnSuccess {
+                it.first { item -> item.isCurrent }.also { current ->
+                    selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
+                    semesters = it.filter { semester -> semester.diaryId == current.diaryId }
                 }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
+            }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
             .subscribe({ view?.run { loadChild(currentPageIndex) } }) { errorHandler.proceed(it) })
     }
 

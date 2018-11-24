@@ -10,8 +10,8 @@ import javax.inject.Inject
 class TimetableLocal @Inject constructor(private val timetableDb: TimetableDao) {
 
     fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Timetable>> {
-        return timetableDb.getTimetable(semester.diaryId, semester.studentId, startDate, endDate)
-                .filter { !it.isEmpty() }
+        return timetableDb.load(semester.diaryId, semester.studentId, startDate, endDate)
+            .filter { !it.isEmpty() }
     }
 
     fun saveTimetable(timetables: List<Timetable>) {

@@ -5,7 +5,8 @@ import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.SessionRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calcAverage
@@ -19,7 +20,8 @@ class GradeDetailsPresenter @Inject constructor(
     private val errorHandler: ErrorHandler,
     private val schedulers: SchedulersProvider,
     private val gradeRepository: GradeRepository,
-    private val sessionRepository: SessionRepository,
+    private val studentRepository: StudentRepository,
+    private val semesterRepository: SemesterRepository,
     private val preferencesRepository: PreferencesRepository
 ) : BasePresenter<GradeDetailsView>(errorHandler) {
 
@@ -29,7 +31,8 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
-        disposable.add(sessionRepository.getSemesters()
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { semesterRepository.getSemesters(it) }
             .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
             .map { it.map { item -> item.changeModifier(preferencesRepository.gradeModifier) } }
             .map { createGradeItems(it.groupBy { grade -> grade.subject }.toSortedMap()) }

@@ -12,11 +12,11 @@ import javax.inject.Singleton
 class NoteLocal @Inject constructor(private val noteDb: NoteDao) {
 
     fun getNotes(semester: Semester): Maybe<List<Note>> {
-        return noteDb.getNotes(semester.semesterId, semester.studentId).filter { !it.isEmpty() }
+        return noteDb.load(semester.semesterId, semester.studentId).filter { !it.isEmpty() }
     }
 
     fun getNewNotes(semester: Semester): Maybe<List<Note>> {
-        return noteDb.getNewNotes(semester.semesterId, semester.studentId)
+        return noteDb.loadNew(semester.semesterId, semester.studentId)
     }
 
     fun saveNotes(notes: List<Note>) {

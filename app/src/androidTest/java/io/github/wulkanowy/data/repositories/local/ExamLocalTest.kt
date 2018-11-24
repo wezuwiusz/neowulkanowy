@@ -23,7 +23,7 @@ class ExamLocalTest {
     @Before
     fun createDb() {
         testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java).build()
-        examLocal = ExamLocal(testDb.examsDao())
+        examLocal = ExamLocal(testDb.examsDao)
     }
 
     @After

@@ -4,7 +4,8 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.repositories.ExamRepository
-import io.github.wulkanowy.data.repositories.SessionRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.friday
@@ -23,7 +24,8 @@ class ExamPresenter @Inject constructor(
     private val errorHandler: ErrorHandler,
     private val schedulers: SchedulersProvider,
     private val examRepository: ExamRepository,
-    private val sessionRepository: SessionRepository
+    private val studentRepository: StudentRepository,
+    private val semesterRepository: SemesterRepository
 ) : BasePresenter<ExamView>(errorHandler) {
 
     lateinit var currentDate: LocalDate
@@ -65,9 +67,9 @@ class ExamPresenter @Inject constructor(
         currentDate = date
         disposable.apply {
             clear()
-            add(sessionRepository.getSemesters()
+            add(studentRepository.getCurrentStudent()
                 .delay(200, MILLISECONDS)
-                .map { it.single { semester -> semester.current } }
+                .flatMap { semesterRepository.getCurrentSemester(it) }
                 .flatMap {
                     examRepository.getExams(it, currentDate.monday, currentDate.friday, forceRefresh)
                 }.map { it.groupBy { exam -> exam.date }.toSortedMap() }

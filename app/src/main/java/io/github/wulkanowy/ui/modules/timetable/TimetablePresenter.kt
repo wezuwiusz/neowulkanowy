@@ -2,7 +2,8 @@ package io.github.wulkanowy.ui.modules.timetable
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.ErrorHandler
-import io.github.wulkanowy.data.repositories.SessionRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.SchedulersProvider
@@ -22,7 +23,8 @@ class TimetablePresenter @Inject constructor(
     private val errorHandler: ErrorHandler,
     private val schedulers: SchedulersProvider,
     private val timetableRepository: TimetableRepository,
-    private val sessionRepository: SessionRepository
+    private val studentRepository: StudentRepository,
+    private val semesterRepository: SemesterRepository
 ) : BasePresenter<TimetableView>(errorHandler) {
 
     lateinit var currentDate: LocalDate
@@ -64,9 +66,9 @@ class TimetablePresenter @Inject constructor(
         currentDate = date
         disposable.apply {
             clear()
-            add(sessionRepository.getSemesters()
+            add(studentRepository.getCurrentStudent()
+                .flatMap { semesterRepository.getCurrentSemester(it) }
                 .delay(200, MILLISECONDS)
-                .map { it.single { semester -> semester.current } }
                 .flatMap { timetableRepository.getTimetable(it, currentDate, currentDate, forceRefresh) }
                 .map { items -> items.map { TimetableItem(it, view?.roomString.orEmpty()) } }
                 .map { items -> items.sortedBy { it.lesson.number } }

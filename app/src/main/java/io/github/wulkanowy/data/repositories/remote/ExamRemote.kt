@@ -11,14 +11,10 @@ import javax.inject.Inject
 class ExamRemote @Inject constructor(private val api: Api) {
 
     fun getExams(semester: Semester, startDate: LocalDate, endDate: LocalDate): Single<List<Exam>> {
-        return Single.just(api.run {
-            if (diaryId != semester.diaryId) {
-                diaryId = semester.diaryId
-                notifyDataChanged()
-            }
-        }).flatMap { api.getExams(startDate, endDate) }.map { exams ->
-            exams.map {
-                Exam(
+        return Single.just(api.apply { diaryId = semester.diaryId })
+            .flatMap { it.getExams(startDate, endDate) }.map { exams ->
+                exams.map {
+                    Exam(
                         studentId = semester.studentId,
                         diaryId = semester.diaryId,
                         date = it.date.toLocalDate(),
@@ -29,8 +25,8 @@ class ExamRemote @Inject constructor(private val api: Api) {
                         description = it.description,
                         teacher = it.teacher,
                         teacherSymbol = it.teacherSymbol
-                )
+                    )
+                }
             }
-        }
     }
 }
