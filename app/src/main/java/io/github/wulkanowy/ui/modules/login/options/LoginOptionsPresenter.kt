@@ -20,7 +20,10 @@ class LoginOptionsPresenter @Inject constructor(
 
     override fun onAttachView(view: LoginOptionsView) {
         super.onAttachView(view)
-        view.initView()
+        view.run {
+            initView()
+            errorHandler.onStudentDuplicate = { showMessage(it) }
+        }
     }
 
     fun onParentViewLoadData() {

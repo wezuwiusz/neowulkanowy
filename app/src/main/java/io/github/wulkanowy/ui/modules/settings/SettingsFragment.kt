@@ -3,11 +3,11 @@ package io.github.wulkanowy.ui.modules.settings
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import dagger.android.support.AndroidSupportInjection
 import io.github.wulkanowy.R
+import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import javax.inject.Inject
 
@@ -54,8 +54,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
     }
 
+    override fun showError(text: String, error: Throwable) {
+        (activity as? BaseActivity)?.showError(text, error)
+    }
+
     override fun showMessage(text: String) {
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        (activity as? BaseActivity)?.showMessage(text)
     }
 
     override fun onResume() {

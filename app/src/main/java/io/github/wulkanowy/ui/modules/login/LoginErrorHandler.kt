@@ -10,10 +10,12 @@ class LoginErrorHandler(resources: Resources) : ErrorHandler(resources) {
 
     var onBadCredentials: () -> Unit = {}
 
+    var onStudentDuplicate: (String) -> Unit = {}
+
     override fun proceed(error: Throwable) {
         when (error) {
             is BadCredentialsException -> onBadCredentials()
-            is SQLiteConstraintException -> showErrorMessage(resources.getString(R.string.login_duplicate_student))
+            is SQLiteConstraintException -> onStudentDuplicate(resources.getString(R.string.login_duplicate_student))
             else -> super.proceed(error)
         }
     }
