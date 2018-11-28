@@ -29,7 +29,8 @@ class AccountPresenter @Inject constructor(
     }
 
     fun onLogoutConfirm() {
-        disposable.add(studentRepository.logoutCurrentStudent()
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMapCompletable { studentRepository.logoutStudent(it) }
             .andThen(studentRepository.getSavedStudents())
             .flatMap {
                 if (it.isNotEmpty()) studentRepository.switchStudent(it[0]).toSingle { it }
@@ -40,7 +41,7 @@ class AccountPresenter @Inject constructor(
             .doFinally { view?.dismissView() }
             .subscribe({
                 view?.apply {
-                    if (it.isEmpty()) openLoginView()
+                    if (it.isEmpty()) openClearLoginView()
                     else recreateView()
                 }
             }, { errorHandler.proceed(it) }))

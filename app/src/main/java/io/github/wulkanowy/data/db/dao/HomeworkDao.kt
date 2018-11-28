@@ -7,7 +7,9 @@ import androidx.room.Query
 import io.github.wulkanowy.data.db.entities.Homework
 import io.reactivex.Maybe
 import org.threeten.bp.LocalDate
+import javax.inject.Singleton
 
+@Singleton
 @Dao
 interface HomeworkDao {
 

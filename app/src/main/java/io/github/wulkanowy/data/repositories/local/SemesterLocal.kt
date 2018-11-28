@@ -21,7 +21,7 @@ class SemesterLocal @Inject constructor(private val semesterDb: SemesterDao) {
     fun setCurrentSemester(semester: Semester) {
         semesterDb.run {
             resetCurrent(semester.studentId)
-            update(semester.semesterId, semester.diaryId)
+            updateCurrent(semester.semesterId, semester.diaryId)
         }
     }
 }

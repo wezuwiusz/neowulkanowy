@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.account
 
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -74,6 +76,13 @@ class AccountDialog : DaggerAppCompatDialogFragment(), AccountView {
     override fun openLoginView() {
         activity?.also {
             startActivity(LoginActivity.getStartIntent(it))
+        }
+    }
+
+    override fun openClearLoginView() {
+        activity?.also {
+            startActivity(LoginActivity.getStartIntent(it)
+                .apply { addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK) })
         }
     }
 

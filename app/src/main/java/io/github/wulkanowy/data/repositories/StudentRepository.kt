@@ -44,7 +44,7 @@ class StudentRepository @Inject constructor(
         return local.getCurrentStudent().toSingle()
     }
 
-    fun saveStudent(student: Student): Completable {
+    fun saveStudent(student: Student): Single<Long> {
         return local.saveStudent(student)
     }
 
@@ -52,7 +52,7 @@ class StudentRepository @Inject constructor(
         return local.setCurrentStudent(student)
     }
 
-    fun logoutCurrentStudent(): Completable {
-        return local.logoutCurrentStudent()
+    fun logoutStudent(student: Student): Completable {
+        return local.logoutStudent(student)
     }
 }

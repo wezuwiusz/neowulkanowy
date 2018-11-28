@@ -41,9 +41,11 @@ class LoginOptionsPresenter @Inject constructor(
     }
 
     private fun registerStudent(student: Student) {
-        disposable.add(studentRepository.saveStudent(student.apply { isCurrent = true })
-            .andThen(semesterRepository.getSemesters(student, true))
-            .onErrorResumeNext { studentRepository.logoutCurrentStudent().andThen(Single.error(it)) }
+        disposable.add(studentRepository.saveStudent(student)
+            .map { student.apply { id = it } }
+            .flatMap { semesterRepository.getSemesters(student, true) }
+            .onErrorResumeNext { studentRepository.logoutStudent(student).andThen(Single.error(it)) }
+            .flatMapCompletable { studentRepository.switchStudent(student) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {

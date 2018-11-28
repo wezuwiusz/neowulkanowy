@@ -39,7 +39,7 @@ class StudentLocalTest {
     @Test
     fun saveAndReadTest() {
         studentLocal.saveStudent(Student(email = "test", password = "test123", schoolSymbol = "23", endpoint = "fakelog.cf", loginType = "AUTO", isCurrent = true))
-            .blockingAwait()
+            .blockingGet()
         assert(studentLocal.isStudentSaved)
 
         val student = studentLocal.getCurrentStudent().blockingGet()

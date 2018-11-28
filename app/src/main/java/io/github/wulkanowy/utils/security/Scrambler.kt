@@ -9,9 +9,17 @@ import android.os.Build.VERSION_CODES.JELLY_BEAN_MR2
 import android.os.Build.VERSION_CODES.M
 import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyProperties.*
+import android.security.keystore.KeyProperties.DIGEST_SHA256
+import android.security.keystore.KeyProperties.DIGEST_SHA512
+import android.security.keystore.KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1
+import android.security.keystore.KeyProperties.PURPOSE_DECRYPT
+import android.security.keystore.KeyProperties.PURPOSE_ENCRYPT
+import android.security.keystore.KeyProperties.SIGNATURE_PADDING_RSA_PKCS1
 import android.util.Base64
-import android.util.Base64.*
+import android.util.Base64.DEFAULT
+import android.util.Base64.decode
+import android.util.Base64.encode
+import android.util.Base64.encodeToString
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -20,7 +28,7 @@ import java.nio.charset.Charset
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.PrivateKey
-import java.util.*
+import java.util.Calendar
 import java.util.Calendar.YEAR
 import javax.crypto.Cipher
 import javax.crypto.Cipher.DECRYPT_MODE
@@ -28,7 +36,6 @@ import javax.crypto.Cipher.ENCRYPT_MODE
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.security.auth.x500.X500Principal
-import kotlin.collections.ArrayList
 
 private const val KEY_ALIAS = "USER_PASSWORD"
 
@@ -80,7 +87,6 @@ fun encrypt(plainText: String, context: Context): String {
         Timber.e(exception, "An error occurred while encrypting text")
         String(encode(plainText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
     }
-
 }
 
 fun decrypt(cipherText: String): String {

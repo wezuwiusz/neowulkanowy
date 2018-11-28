@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.RoomDatabase.JournalMode.TRUNCATE
 import androidx.room.TypeConverters
 import io.github.wulkanowy.data.db.dao.AttendanceDao
 import io.github.wulkanowy.data.db.dao.ExamDao
@@ -47,6 +48,7 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         fun newInstance(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, "wulkanowy_database")
+                .setJournalMode(TRUNCATE)
                 .build()
         }
     }

@@ -68,8 +68,9 @@ class LoginOptionsPresenterTest {
 
     @Test
     fun onSelectedStudentTest() {
-        doReturn(Completable.complete()).`when`(studentRepository).saveStudent(testStudent)
+        doReturn(Single.just(1L)).`when`(studentRepository).saveStudent(testStudent)
         doReturn(Single.just(emptyList<Semester>())).`when`(semesterRepository).getSemesters(testStudent, true)
+        doReturn(Completable.complete()).`when`(studentRepository).switchStudent(testStudent)
         presenter.onItemSelected(LoginOptionsItem(testStudent))
         verify(loginOptionsView).showContent(false)
         verify(loginOptionsView).showProgress(true)
@@ -78,9 +79,9 @@ class LoginOptionsPresenterTest {
 
     @Test
     fun onSelectedStudentErrorTest() {
-        doReturn(Completable.error(testException)).`when`(studentRepository).saveStudent(testStudent)
+        doReturn(Single.error<Student>(testException)).`when`(studentRepository).saveStudent(testStudent)
         doReturn(Single.just(emptyList<Semester>())).`when`(semesterRepository).getSemesters(testStudent, true)
-        doReturn(Completable.complete()).`when`(studentRepository).logoutCurrentStudent()
+        doReturn(Completable.complete()).`when`(studentRepository).logoutStudent(testStudent)
         presenter.onItemSelected(LoginOptionsItem(testStudent))
         verify(loginOptionsView).showContent(false)
         verify(loginOptionsView).showProgress(true)
