@@ -21,6 +21,7 @@ class LoginFormPresenter @Inject constructor(
         super.onAttachView(view)
         view.run {
             initView()
+            if (isDebug) showVersion()
             errorHandler.onBadCredentials = {
                 setErrorPassIncorrect()
                 showSoftKeyboard()

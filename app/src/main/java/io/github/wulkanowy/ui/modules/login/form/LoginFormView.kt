@@ -4,6 +4,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface LoginFormView : BaseView {
 
+    val isDebug: Boolean
+
     fun initView()
 
     fun switchOptionsView()
@@ -21,6 +23,8 @@ interface LoginFormView : BaseView {
     fun setErrorSymbolIncorrect()
 
     fun resetViewErrors()
+
+    fun showVersion()
 
     fun showSoftKeyboard()
 

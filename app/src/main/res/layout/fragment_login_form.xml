@@ -8,8 +8,8 @@
         android:id="@+id/loginFormProgressContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
         android:visibility="gone">
@@ -21,8 +21,8 @@
             android:layout_below="@id/loginFormProgressText"
             android:layout_centerHorizontal="true"
             android:indeterminate="true"
-            android:minHeight="30dp"
-            android:minWidth="220dp" />
+            android:minWidth="220dp"
+            android:minHeight="30dp" />
 
         <TextView
             android:id="@+id/loginFormProgressText"
@@ -44,16 +44,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/loginHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="24dp"
                 android:text="@string/login_header_default"
                 android:textSize="16sp" />
 
@@ -126,12 +126,22 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
                 android:text="@string/login_sign_in"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 app:backgroundTint="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/loginVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:text="@string/app_name"
+                android:textColor="@color/second_text"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
