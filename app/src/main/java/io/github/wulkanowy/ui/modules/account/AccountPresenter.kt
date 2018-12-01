@@ -1,15 +1,15 @@
 package io.github.wulkanowy.ui.modules.account
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.modules.main.MainErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Single
 import javax.inject.Inject
 
 class AccountPresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
+    private val errorHandler: MainErrorHandler,
     private val studentRepository: StudentRepository,
     private val schedulers: SchedulersProvider
 ) : BasePresenter<AccountView>(errorHandler) {
@@ -31,7 +31,7 @@ class AccountPresenter @Inject constructor(
     fun onLogoutConfirm() {
         disposable.add(studentRepository.getCurrentStudent()
             .flatMapCompletable { studentRepository.logoutStudent(it) }
-            .andThen(studentRepository.getSavedStudents())
+            .andThen(studentRepository.getSavedStudents(false))
             .flatMap {
                 if (it.isNotEmpty()) studentRepository.switchStudent(it[0]).toSingle { it }
                 else Single.just(it)
@@ -44,7 +44,7 @@ class AccountPresenter @Inject constructor(
                     if (it.isEmpty()) openClearLoginView()
                     else recreateView()
                 }
-            }, { errorHandler.proceed(it) }))
+            }, { errorHandler.dispatch(it) }))
     }
 
     fun onItemSelected(item: AbstractFlexibleItem<*>) {
@@ -55,17 +55,17 @@ class AccountPresenter @Inject constructor(
                 disposable.add(studentRepository.switchStudent(item.student)
                     .subscribeOn(schedulers.backgroundThread)
                     .observeOn(schedulers.mainThread)
-                    .subscribe({ view?.recreateView() }, { errorHandler.proceed(it) }))
+                    .subscribe({ view?.recreateView() }, { errorHandler.dispatch(it) }))
             }
         }
     }
 
     private fun loadData() {
-        disposable.add(studentRepository.getSavedStudents()
+        disposable.add(studentRepository.getSavedStudents(false)
             .map { it.map { item -> AccountItem(item) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .subscribe({ view?.updateData(it) }, { errorHandler.proceed(it) }))
+            .subscribe({ view?.updateData(it) }, { errorHandler.dispatch(it) }))
     }
 }
 

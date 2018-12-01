@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.login
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -20,11 +19,6 @@ internal abstract class LoginModule {
         @PerActivity
         @Provides
         fun provideLoginAdapter(activity: LoginActivity) = BasePagerAdapter(activity.supportFragmentManager)
-
-        @JvmStatic
-        @PerActivity
-        @Provides
-        fun provideLoginErrorHandler(context: Context) = LoginErrorHandler(context.resources)
     }
 
     @PerFragment

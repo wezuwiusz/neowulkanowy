@@ -42,7 +42,7 @@ class StudentLocalTest {
             .blockingGet()
         assert(studentLocal.isStudentSaved)
 
-        val student = studentLocal.getCurrentStudent().blockingGet()
+        val student = studentLocal.getCurrentStudent(true).blockingGet()
         assertEquals("23", student.schoolSymbol)
     }
 }

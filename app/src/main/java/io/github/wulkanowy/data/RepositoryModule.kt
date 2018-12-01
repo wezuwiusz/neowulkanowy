@@ -2,6 +2,7 @@ package io.github.wulkanowy.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
 import androidx.preference.PreferenceManager
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.strategy.SocketInternetObservingStrategy
@@ -40,8 +41,9 @@ internal class RepositoryModule {
     @Provides
     fun provideDatabase(context: Context) = AppDatabase.newInstance(context)
 
+    @Singleton
     @Provides
-    fun provideErrorHandler(context: Context) = ErrorHandler(context.resources)
+    fun provideResources(context: Context): Resources = context.resources
 
     @Singleton
     @Provides

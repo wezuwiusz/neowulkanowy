@@ -20,6 +20,8 @@ interface MainView : BaseView {
 
     fun showAccountPicker()
 
+    fun showExpiredDialog()
+
     fun notifyMenuViewReselected()
 
     fun setViewTitle(title: String)
@@ -27,6 +29,8 @@ interface MainView : BaseView {
     fun popView()
 
     fun cancelNotifications()
+
+    fun openLoginView()
 
     interface MainChildView {
 

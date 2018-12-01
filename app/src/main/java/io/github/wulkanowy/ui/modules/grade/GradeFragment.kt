@@ -88,6 +88,10 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
         gradeProgress.visibility = if (show) VISIBLE else INVISIBLE
     }
 
+    override fun showEmpty() {
+        gradeEmpty.visibility = VISIBLE
+    }
+
     override fun showSemesterDialog(selectedIndex: Int) {
         arrayOf(getString(R.string.grade_semester, 1),
             getString(R.string.grade_semester, 2)).also { array ->

@@ -38,7 +38,7 @@ class ScramblerTest {
 
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
         keyStore.load(null)
-        keyStore.deleteEntry("USER_PASSWORD")
+        keyStore.deleteEntry("wulkanowy_password")
 
         assertFailsWith<ScramblerException> {
             decrypt(text)

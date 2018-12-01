@@ -31,7 +31,7 @@ class LoginOptionsPresenter @Inject constructor(
             .observeOn(schedulers.mainThread)
             .subscribeOn(schedulers.backgroundThread)
             .doOnSubscribe { view?.showActionBar(true) }
-            .subscribe({ view?.updateData(it.map { student -> LoginOptionsItem(student) }) }, { errorHandler.proceed(it) }))
+            .subscribe({ view?.updateData(it.map { student -> LoginOptionsItem(student) }) }, { errorHandler.dispatch(it) }))
     }
 
     fun onItemSelected(item: AbstractFlexibleItem<*>?) {
@@ -59,7 +59,7 @@ class LoginOptionsPresenter @Inject constructor(
                 logRegister("Success", true, student.symbol, student.endpoint)
                 view?.openMainView()
             }, {
-                errorHandler.proceed(it)
+                errorHandler.dispatch(it)
                 view?.apply {
                     showProgress(false)
                     showContent(true)

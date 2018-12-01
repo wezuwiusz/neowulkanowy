@@ -35,6 +35,9 @@
 
     <!--Main-->
     <string name="main_account_picker">Menadżer kont</string>
+    <string name="main_log_in">Zaloguj się</string>
+    <string name="main_session_expired">Sesja wygasła</string>
+    <string name="main_session_relogin">Sesja wygasła, zaloguj się ponownie</string>
 
 
     <!--Grade-->
@@ -211,6 +214,6 @@
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_timeout">Zbyt długie oczekiwanie na połączenie</string>
     <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
-    <string name="error_service_unavaible">Dziennik jest niedostępny. Spróbuj ponownie później</string>
+    <string name="error_service_unavailable">Dziennik jest niedostępny. Spróbuj ponownie później</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
 </resources>

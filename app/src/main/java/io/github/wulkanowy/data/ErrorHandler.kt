@@ -13,14 +13,17 @@ open class ErrorHandler @Inject constructor(protected val resources: Resources) 
 
     var showErrorMessage: (String, Throwable) -> Unit = { _, _ -> }
 
-    open fun proceed(error: Throwable) {
+    fun dispatch(error: Throwable) {
         Timber.e(error, "An exception occurred while the Wulkanowy was running")
+        proceed(error)
+    }
 
+    protected open fun proceed(error: Throwable) {
         showErrorMessage((when (error) {
             is UnknownHostException -> resources.getString(R.string.error_no_internet)
             is SocketTimeoutException -> resources.getString(R.string.error_timeout)
             is NotLoggedInException -> resources.getString(R.string.error_login_failed)
-            is ServiceUnavailableException -> resources.getString(R.string.error_service_unavaible)
+            is ServiceUnavailableException -> resources.getString(R.string.error_service_unavailable)
             else -> resources.getString(R.string.error_unknown)
         }), error)
     }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation.TitleState.ALWAYS_SHOW
@@ -18,6 +19,7 @@ import io.github.wulkanowy.ui.modules.account.AccountDialog
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
+import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -132,6 +134,15 @@ class MainActivity : BaseActivity(), MainView {
         navController.showDialogFragment(AccountDialog.newInstance())
     }
 
+    override fun showExpiredDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.main_session_expired)
+            .setMessage(R.string.main_session_relogin)
+            .setPositiveButton(R.string.main_log_in) { _, _ -> presenter.onLoginSelected() }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
+    }
+
     override fun notifyMenuViewReselected() {
         (navController.currentStack?.get(0) as? MainView.MainChildView)?.onFragmentReselected()
     }
@@ -150,6 +161,11 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun cancelNotifications() {
         GradeNotification(applicationContext).cancelAll()
+    }
+
+    override fun openLoginView() {
+        startActivity(LoginActivity.getStartIntent(this)
+            .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

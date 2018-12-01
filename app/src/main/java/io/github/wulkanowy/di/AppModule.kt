@@ -27,7 +27,5 @@ internal class AppModule {
 
     @Singleton
     @Provides
-    fun provideJobDispatcher(context: Context): FirebaseJobDispatcher {
-        return FirebaseJobDispatcher(GooglePlayDriver(context))
-    }
+    fun provideJobDispatcher(context: Context) = FirebaseJobDispatcher(GooglePlayDriver(context))
 }

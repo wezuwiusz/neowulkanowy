@@ -1,12 +1,12 @@
 package io.github.wulkanowy.ui.modules.attendance
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.AttendanceRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.modules.main.MainErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.logEvent
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class AttendancePresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
+    private val errorHandler: MainErrorHandler,
     private val schedulers: SchedulersProvider,
     private val attendanceRepository: AttendanceRepository,
     private val studentRepository: StudentRepository,
@@ -95,7 +95,7 @@ class AttendancePresenter @Inject constructor(
                     logEvent("Attendance load", mapOf("items" to it.size, "forceRefresh" to forceRefresh, "date" to currentDate.toFormattedString()))
                 }) {
                     view?.run { showEmpty(isViewEmpty) }
-                    errorHandler.proceed(it)
+                    errorHandler.dispatch(it)
                 }
             )
         }

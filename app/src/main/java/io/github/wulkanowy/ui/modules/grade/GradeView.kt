@@ -12,6 +12,8 @@ interface GradeView : BaseView {
 
     fun showProgress(show: Boolean)
 
+    fun showEmpty()
+
     fun showSemesterDialog(selectedIndex: Int)
 
     fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean)

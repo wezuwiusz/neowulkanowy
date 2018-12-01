@@ -64,7 +64,7 @@ class LoginFormPresenter @Inject constructor(
                     }
                 }
             }, {
-                errorHandler.proceed(it)
+                errorHandler.dispatch(it)
                 logRegister(it.localizedMessage, false, if (symbol.isEmpty()) "nil" else symbol, endpoint)
             }))
     }

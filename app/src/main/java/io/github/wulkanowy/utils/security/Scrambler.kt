@@ -11,10 +11,9 @@ import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties.DIGEST_SHA256
 import android.security.keystore.KeyProperties.DIGEST_SHA512
-import android.security.keystore.KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1
+import android.security.keystore.KeyProperties.ENCRYPTION_PADDING_RSA_OAEP
 import android.security.keystore.KeyProperties.PURPOSE_DECRYPT
 import android.security.keystore.KeyProperties.PURPOSE_ENCRYPT
-import android.security.keystore.KeyProperties.SIGNATURE_PADDING_RSA_PKCS1
 import android.util.Base64
 import android.util.Base64.DEFAULT
 import android.util.Base64.decode
@@ -27,7 +26,7 @@ import java.math.BigInteger
 import java.nio.charset.Charset
 import java.security.KeyPairGenerator
 import java.security.KeyStore
-import java.security.PrivateKey
+import java.security.spec.MGF1ParameterSpec.SHA1
 import java.util.Calendar
 import java.util.Calendar.YEAR
 import javax.crypto.Cipher
@@ -35,33 +34,27 @@ import javax.crypto.Cipher.DECRYPT_MODE
 import javax.crypto.Cipher.ENCRYPT_MODE
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
+import javax.crypto.spec.OAEPParameterSpec
+import javax.crypto.spec.PSource.PSpecified
 import javax.security.auth.x500.X500Principal
-
-private const val KEY_ALIAS = "USER_PASSWORD"
-
-private const val ALGORITHM_RSA = "RSA"
 
 private const val KEYSTORE_NAME = "AndroidKeyStore"
 
-private const val KEY_TRANSFORMATION_ALGORITHM = "RSA/ECB/PKCS1Padding"
-
-private const val KEY_CIPHER_JELLY_PROVIDER = "AndroidOpenSSL"
-
-private const val KEY_CIPHER_M_PROVIDER = "AndroidKeyStoreBCWorkaround"
+private const val KEY_ALIAS = "wulkanowy_password"
 
 private val KEY_CHARSET = Charset.forName("UTF-8")
 
 private val isKeyPairExists: Boolean
     get() = keyStore.getKey(KEY_ALIAS, null) != null
 
-private val cipher: Cipher
-    get() {
-        return if (SDK_INT >= M) Cipher.getInstance(KEY_TRANSFORMATION_ALGORITHM, KEY_CIPHER_M_PROVIDER)
-        else Cipher.getInstance(KEY_TRANSFORMATION_ALGORITHM, KEY_CIPHER_JELLY_PROVIDER)
-    }
-
 private val keyStore: KeyStore
     get() = KeyStore.getInstance(KEYSTORE_NAME).apply { load(null) }
+
+private val cipher: Cipher
+    get() {
+        return if (SDK_INT >= M) Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "AndroidKeyStoreBCWorkaround")
+        else Cipher.getInstance("RSA/ECB/PKCS1Padding", "AndroidOpenSSL")
+    }
 
 fun encrypt(plainText: String, context: Context): String {
     if (plainText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
@@ -72,8 +65,13 @@ fun encrypt(plainText: String, context: Context): String {
 
     return try {
         if (!isKeyPairExists) generateKeyPair(context)
+
         cipher.let {
-            it.init(ENCRYPT_MODE, keyStore.getCertificate(KEY_ALIAS).publicKey)
+            if (SDK_INT >= M) {
+                OAEPParameterSpec("SHA-256", "MGF1", SHA1, PSpecified.DEFAULT).let { spec ->
+                    it.init(ENCRYPT_MODE, keyStore.getCertificate(KEY_ALIAS).publicKey, spec)
+                }
+            } else it.init(ENCRYPT_MODE, keyStore.getCertificate(KEY_ALIAS).publicKey)
 
             ByteArrayOutputStream().let { output ->
                 CipherOutputStream(output, it).apply {
@@ -92,15 +90,19 @@ fun encrypt(plainText: String, context: Context): String {
 fun decrypt(cipherText: String): String {
     if (cipherText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
-    if (SDK_INT < JELLY_BEAN_MR2 || cipherText.length < 250) {
-        return String(decode(cipherText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
-    }
-
-    if (!isKeyPairExists) throw ScramblerException("KeyPair doesn't exist")
-
     return try {
+        if (SDK_INT < JELLY_BEAN_MR2 || cipherText.length < 250) {
+            return String(decode(cipherText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
+        }
+
+        if (!isKeyPairExists) throw ScramblerException("KeyPair doesn't exist")
+
         cipher.let {
-            it.init(DECRYPT_MODE, (keyStore.getKey(KEY_ALIAS, null) as PrivateKey))
+            if (SDK_INT >= M) {
+                OAEPParameterSpec("SHA-256", "MGF1", SHA1, PSpecified.DEFAULT).let { spec ->
+                    it.init(DECRYPT_MODE, keyStore.getKey(KEY_ALIAS, null), spec)
+                }
+            } else it.init(DECRYPT_MODE, keyStore.getKey(KEY_ALIAS, null))
 
             CipherInputStream(ByteArrayInputStream(decode(cipherText, DEFAULT)), it).let { input ->
                 val values = ArrayList<Byte>()
@@ -124,22 +126,21 @@ fun decrypt(cipherText: String): String {
 private fun generateKeyPair(context: Context) {
     (if (SDK_INT >= M) {
         KeyGenParameterSpec.Builder(KEY_ALIAS, PURPOSE_DECRYPT or PURPOSE_ENCRYPT)
-                .setDigests(DIGEST_SHA256, DIGEST_SHA512)
-                .setCertificateSubject(X500Principal("CN=Wulkanowy"))
-                .setEncryptionPaddings(ENCRYPTION_PADDING_RSA_PKCS1)
-                .setSignaturePaddings(SIGNATURE_PADDING_RSA_PKCS1)
-                .setCertificateSerialNumber(BigInteger.TEN)
-                .build()
+            .setDigests(DIGEST_SHA256, DIGEST_SHA512)
+            .setEncryptionPaddings(ENCRYPTION_PADDING_RSA_OAEP)
+            .setCertificateSerialNumber(BigInteger.TEN)
+            .setCertificateSubject(X500Principal("CN=Wulkanowy"))
+            .build()
     } else {
         KeyPairGeneratorSpec.Builder(context)
-                .setAlias(KEY_ALIAS)
-                .setSubject(X500Principal("CN=Wulkanowy"))
-                .setSerialNumber(BigInteger.TEN)
-                .setStartDate(Calendar.getInstance().time)
-                .setEndDate(Calendar.getInstance().apply { add(YEAR, 99) }.time)
-                .build()
+            .setAlias(KEY_ALIAS)
+            .setSubject(X500Principal("CN=Wulkanowy"))
+            .setSerialNumber(BigInteger.TEN)
+            .setStartDate(Calendar.getInstance().time)
+            .setEndDate(Calendar.getInstance().apply { add(YEAR, 99) }.time)
+            .build()
     }).let {
-        KeyPairGenerator.getInstance(ALGORITHM_RSA, KEYSTORE_NAME).apply {
+        KeyPairGenerator.getInstance("RSA", KEYSTORE_NAME).apply {
             initialize(it)
             genKeyPair()
         }

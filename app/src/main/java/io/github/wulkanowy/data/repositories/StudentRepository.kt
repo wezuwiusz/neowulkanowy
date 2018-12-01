@@ -36,12 +36,12 @@ class StudentRepository @Inject constructor(
         return cachedStudents
     }
 
-    fun getSavedStudents(): Single<List<Student>> {
-        return local.getStudents().toSingle(emptyList())
+    fun getSavedStudents(decryptPass: Boolean = true): Single<List<Student>> {
+        return local.getStudents(decryptPass).toSingle(emptyList())
     }
 
-    fun getCurrentStudent(): Single<Student> {
-        return local.getCurrentStudent().toSingle()
+    fun getCurrentStudent(decryptPass: Boolean = true): Single<Student> {
+        return local.getCurrentStudent(decryptPass).toSingle()
     }
 
     fun saveStudent(student: Student): Single<Long> {

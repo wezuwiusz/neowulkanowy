@@ -63,7 +63,7 @@ class LoginOptionsPresenterTest {
         doReturn(Single.error<List<Student>>(testException)).`when`(studentRepository).cachedStudents
         presenter.onParentViewLoadData()
         verify(loginOptionsView).showActionBar(true)
-        verify(errorHandler).proceed(testException)
+        verify(errorHandler).dispatch(testException)
     }
 
     @Test
@@ -85,6 +85,6 @@ class LoginOptionsPresenterTest {
         presenter.onItemSelected(LoginOptionsItem(testStudent))
         verify(loginOptionsView).showContent(false)
         verify(loginOptionsView).showProgress(true)
-        verify(errorHandler).proceed(testException)
+        verify(errorHandler).dispatch(testException)
     }
 }

@@ -140,7 +140,7 @@ class LoginFormPresenterTest {
         verify(loginFormView).showProgress(false)
         verify(loginFormView).showContent(false)
         verify(loginFormView).showContent(true)
-        verify(errorHandler).proceed(testException)
+        verify(errorHandler).dispatch(testException)
     }
 }
 

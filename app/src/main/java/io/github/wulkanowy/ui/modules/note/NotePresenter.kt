@@ -1,19 +1,19 @@
 package io.github.wulkanowy.ui.modules.note
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.repositories.NoteRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.modules.main.MainErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.logEvent
 import timber.log.Timber
 import javax.inject.Inject
 
 class NotePresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
+    private val errorHandler: MainErrorHandler,
     private val schedulers: SchedulersProvider,
     private val studentRepository: StudentRepository,
     private val noteRepository: NoteRepository,
@@ -52,7 +52,7 @@ class NotePresenter @Inject constructor(
                 logEvent("Note load", mapOf("items" to it.size, "forceRefresh" to forceRefresh))
             }, {
                 view?.run { showEmpty(isViewEmpty) }
-                errorHandler.proceed(it)
+                errorHandler.dispatch(it)
             })
         )
     }
@@ -76,7 +76,7 @@ class NotePresenter @Inject constructor(
             .observeOn(schedulers.mainThread)
             .subscribe({
                 Timber.d("Note ${note.id} updated")
-            }) { error -> errorHandler.proceed(error) }
+            }) { error -> errorHandler.dispatch(error) }
         )
     }
 }

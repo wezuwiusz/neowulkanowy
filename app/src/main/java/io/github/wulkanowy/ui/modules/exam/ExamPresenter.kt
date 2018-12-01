@@ -1,12 +1,12 @@
 package io.github.wulkanowy.ui.modules.exam
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.repositories.ExamRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.modules.main.MainErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.isHolidays
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class ExamPresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
+    private val errorHandler: MainErrorHandler,
     private val schedulers: SchedulersProvider,
     private val examRepository: ExamRepository,
     private val studentRepository: StudentRepository,
@@ -91,7 +91,7 @@ class ExamPresenter @Inject constructor(
                     logEvent("Exam load", mapOf("items" to it.size, "forceRefresh" to forceRefresh, "date" to currentDate.toFormattedString()))
                 }) {
                     view?.run { showEmpty(isViewEmpty) }
-                    errorHandler.proceed(it)
+                    errorHandler.dispatch(it)
                 })
         }
     }
