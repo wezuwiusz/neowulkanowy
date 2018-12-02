@@ -35,6 +35,9 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     override val roomString: String
         get() = getString(R.string.timetable_room)
 
+    override val isViewEmpty: Boolean
+        get() = timetableAdapter.isEmpty
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_timetable, container, false)
     }
@@ -71,10 +74,12 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
         timetableNavDate.text = date
     }
 
-    override fun isViewEmpty() = timetableAdapter.isEmpty
-
     override fun hideRefresh() {
         timetableSwipe.isRefreshing = false
+    }
+
+    override fun resetView() {
+        timetableAdapter.smoothScrollToPosition(0)
     }
 
     override fun onFragmentReselected() {

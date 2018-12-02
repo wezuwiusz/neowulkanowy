@@ -59,8 +59,13 @@ class ExamPresenter @Inject constructor(
     }
 
     fun onViewReselected() {
-        loadData(now().nextOrSameSchoolDay)
-        reloadView()
+        now().nextOrSameSchoolDay.also {
+            if (currentDate != it) {
+                loadData(it)
+                reloadView()
+                view?.resetView()
+            } else view?.resetView()
+        }
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {

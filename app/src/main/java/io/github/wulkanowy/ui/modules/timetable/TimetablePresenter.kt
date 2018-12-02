@@ -54,8 +54,12 @@ class TimetablePresenter @Inject constructor(
     }
 
     fun onViewReselected() {
-        loadData(now().nextOrSameSchoolDay)
-        reloadView()
+        now().nextOrSameSchoolDay.also {
+            if (currentDate != it) {
+                loadData(it)
+                reloadView()
+            } else view?.resetView()
+        }
     }
 
     fun onTimetableItemSelected(item: AbstractFlexibleItem<*>?) {
@@ -88,7 +92,7 @@ class TimetablePresenter @Inject constructor(
                     }
                     logEvent("Timetable load", mapOf("items" to it.size, "forceRefresh" to forceRefresh, "date" to currentDate.toFormattedString()))
                 }) {
-                    view?.run { showEmpty(isViewEmpty()) }
+                    view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 })
         }

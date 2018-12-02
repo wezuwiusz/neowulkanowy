@@ -7,17 +7,19 @@ interface TimetableView : BaseView {
 
     val roomString: String
 
+    val isViewEmpty: Boolean
+
     fun initView()
 
     fun updateData(data: List<TimetableItem>)
 
     fun updateNavigationDay(date: String)
 
-    fun isViewEmpty(): Boolean
-
     fun clearData()
 
     fun hideRefresh()
+
+    fun resetView()
 
     fun showEmpty(show: Boolean)
 

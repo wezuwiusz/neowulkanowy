@@ -71,6 +71,10 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
         attendanceAdapter.clear()
     }
 
+    override fun resetView() {
+        attendanceAdapter.smoothScrollToPosition(0)
+    }
+
     override fun onFragmentReselected() {
         presenter.onViewReselected()
     }

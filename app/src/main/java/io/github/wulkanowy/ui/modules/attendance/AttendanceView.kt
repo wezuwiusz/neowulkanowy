@@ -17,6 +17,8 @@ interface AttendanceView : BaseView {
 
     fun hideRefresh()
 
+    fun resetView()
+
     fun showEmpty(show: Boolean)
 
     fun showProgress(show: Boolean)
