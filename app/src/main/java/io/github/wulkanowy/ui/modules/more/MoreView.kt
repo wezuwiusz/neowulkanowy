@@ -5,6 +5,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface MoreView : BaseView {
 
+    val messagesRes: Pair<String, Drawable?>?
+
     val homeworkRes: Pair<String, Drawable?>?
 
     val noteRes: Pair<String, Drawable?>?
@@ -22,6 +24,8 @@ interface MoreView : BaseView {
     fun openAboutView()
 
     fun popView()
+
+    fun openMessagesView()
 
     fun openHomeworkView()
 

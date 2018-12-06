@@ -11,6 +11,7 @@
     <string name="settings_title">Ustawienia</string>
     <string name="more_title">Więcej</string>
     <string name="about_title">O aplikacji</string>
+    <string name="message_title">Wiadomości</string>
     <string name="note_title">Uwagi i osiągnięcia</string>
     <string name="homework_title">Zadania domowe</string>
     <string name="account_title">Wybierz konto</string>
@@ -68,8 +69,7 @@
     <plurals name="grade_new_items">
         <item quantity="one">Nowa ocena</item>
         <item quantity="few">Nowe oceny</item>
-        <item quantity="many">Nowych ocen</item>
-        <item quantity="other">Nowych ocen</item>
+        <item quantity="many">Nowe oceny</item>
     </plurals>
 
 
@@ -123,6 +123,38 @@
     <string name="exam_no_items">Brak sprawdzianów w tym tygodniu</string>
     <string name="exam_type">Typ</string>
     <string name="exam_entry_date">Data wpisu</string>
+
+
+    <!--Message-->
+    <string name="message_inbox">Odebrane</string>
+    <string name="message_sent">Wysłane</string>
+    <string name="message_trash">Kosz</string>
+    <string name="message_no_subject">(brak tematu)</string>
+    <string name="message_no_items">Brak wiadomości</string>
+    <string name="message_preview_error">Wystąpił błąd podczas pobierania treści wiadomości</string>
+    <string name="message_from">Od: %s</string>
+    <string name="message_to">Do: %s</string>
+    <string name="message_date">Data: %s</string>
+    <plurals name="message_number_item">
+        <item quantity="one">%d wiadomość</item>
+        <item quantity="few">%d wiadomości</item>
+        <item quantity="many">%d wiadomości</item>
+    </plurals>
+
+    <plurals name="message_new_items">
+        <item quantity="one">Nowa wiadomość</item>
+        <item quantity="few">Nowe wiadomości</item>
+        <item quantity="many">Nowe wiadomości</item>
+    </plurals>
+
+
+    <!--Message notify-->
+    <string name="notify_message_channel">Nowe wiadomości</string>
+    <plurals name="notify_message_new_items">
+        <item quantity="one">Dostałeś %1$d wiadomość</item>
+        <item quantity="few">"Dostałeś %1$d wiadomości</item>
+        <item quantity="many">Dostałeś %1$d wiadomości</item>
+    </plurals>
 
     <!--About-->
     <string name="about_source_code">Kod źródłowy</string>

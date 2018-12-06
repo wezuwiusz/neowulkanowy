@@ -8,12 +8,15 @@ import io.github.wulkanowy.data.repositories.ExamRepository
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.GradeSummaryRepository
 import io.github.wulkanowy.data.repositories.HomeworkRepository
+import io.github.wulkanowy.data.repositories.MessagesRepository
+import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.repositories.NoteRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.services.notification.GradeNotification
+import io.github.wulkanowy.services.notification.MessageNotification
 import io.github.wulkanowy.services.notification.NoteNotification
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.isHolidays
@@ -46,6 +49,9 @@ class SyncWorker : SimpleJobService() {
 
     @Inject
     lateinit var timetable: TimetableRepository
+
+    @Inject
+    lateinit var message: MessagesRepository
 
     @Inject
     lateinit var note: NoteRepository
@@ -87,6 +93,7 @@ class SyncWorker : SimpleJobService() {
                         attendance.getAttendance(it, start, end, true),
                         exam.getExams(it, start, end, true),
                         timetable.getTimetable(it, start, end, true),
+                        message.getMessages(it.studentId, RECEIVED, true, true),
                         note.getNotes(it, true, true),
                         homework.getHomework(it, LocalDate.now(), true),
                         homework.getHomework(it, LocalDate.now().plusDays(1), true)
@@ -107,35 +114,57 @@ class SyncWorker : SimpleJobService() {
 
     private fun sendNotifications() {
         sendGradeNotifications()
+        sendMessageNotification()
         sendNoteNotification()
     }
 
     private fun sendGradeNotifications() {
         disposable.add(student.getCurrentStudent()
-            .flatMap { semester.getCurrentSemester(it, true) }
+            .flatMap { semester.getCurrentSemester(it) }
             .flatMap { gradesDetails.getNewGrades(it) }
             .map { it.filter { grade -> !grade.isNotified } }
-            .subscribe({
+            .doOnSuccess {
                 if (it.isNotEmpty()) {
                     Timber.d("Found ${it.size} unread grades")
                     GradeNotification(applicationContext).sendNotification(it)
-                    gradesDetails.updateGrades(it.map { grade -> grade.apply { isNotified = true } }).subscribe()
                 }
-            }) { Timber.e("Notifications sending failed") })
+            }
+            .map { it.map { grade -> grade.apply { isNotified = true } } }
+            .flatMapCompletable { gradesDetails.updateGrades(it) }
+            .subscribe({}, { Timber.e(it, "Grade notifications sending failed") }))
+    }
+
+    private fun sendMessageNotification() {
+        disposable.add(student.getCurrentStudent()
+            .flatMap { message.getNewMessages(it) }
+            .map { it.filter { message -> !message.isNotified } }
+            .doOnSuccess{
+                if (it.isNotEmpty()) {
+                    Timber.d("Found ${it.size} unread messages")
+                    MessageNotification(applicationContext).sendNotification(it)
+                }
+            }
+            .map { it.map { message -> message.apply { isNotified = true } } }
+            .flatMapCompletable { message.updateMessages(it) }
+            .subscribe({}, { Timber.e(it, "Message notifications sending failed") })
+        )
     }
 
     private fun sendNoteNotification() {
         disposable.add(student.getCurrentStudent()
-            .flatMap { semester.getCurrentSemester(it, true) }
+            .flatMap { semester.getCurrentSemester(it) }
             .flatMap { note.getNewNotes(it) }
             .map { it.filter { note -> !note.isNotified } }
-            .subscribe({
+            .doOnSuccess {
                 if (it.isNotEmpty()) {
                     Timber.d("Found ${it.size} unread notes")
                     NoteNotification(applicationContext).sendNotification(it)
-                    note.updateNotes(it.map { note -> note.apply { isNotified = true } }).subscribe()
                 }
-            }) { Timber.e("Notifications sending failed") })
+            }
+            .map { it.map { note -> note.apply { isNotified = true } } }
+            .flatMapCompletable { note.updateNotes(it) }
+            .subscribe({}, { Timber.e("Notifications sending failed") })
+        )
     }
 
     override fun onDestroy() {

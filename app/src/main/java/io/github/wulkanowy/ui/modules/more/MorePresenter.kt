@@ -17,6 +17,7 @@ class MorePresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresen
         if (item is MoreItem) {
             view?.run {
                 when (item.title) {
+                    messagesRes?.first -> openMessagesView()
                     homeworkRes?.first -> openHomeworkView()
                     noteRes?.first -> openNoteView()
                     settingsRes?.first -> openSettingsView()
@@ -33,6 +34,7 @@ class MorePresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresen
     private fun loadData() {
         view?.run {
             updateData(listOfNotNull(
+                messagesRes?.let { MoreItem(it.first, it.second) },
                 homeworkRes?.let { MoreItem(it.first, it.second) },
                 noteRes?.let { MoreItem(it.first, it.second) },
                 settingsRes?.let { MoreItem(it.first, it.second) },

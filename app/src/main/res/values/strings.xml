@@ -11,6 +11,7 @@
     <string name="settings_title">Settings</string>
     <string name="more_title">More</string>
     <string name="about_title">About</string>
+    <string name="message_title">Messages</string>
     <string name="note_title">Notes and achievements</string>
     <string name="homework_title">Homework</string>
     <string name="account_title">Choose account</string>
@@ -112,6 +113,34 @@
     <string name="exam_no_items">No exams in this week</string>
     <string name="exam_type">Type</string>
     <string name="exam_entry_date">Entry date</string>
+
+
+    <!--Message-->
+    <string name="message_inbox">Inbox</string>
+    <string name="message_sent">Sent</string>
+    <string name="message_trash">Trash</string>
+    <string name="message_no_subject">(no subject)</string>
+    <string name="message_no_items">No messages</string>
+    <string name="message_preview_error">An error occurred while downloading message content</string>
+    <string name="message_from">From: %s</string>
+    <string name="message_to">To: %s</string>
+    <string name="message_date">Date: %s</string>
+    <plurals name="message_number_item">
+        <item quantity="one">%d message</item>
+        <item quantity="other">%d messages</item>
+    </plurals>
+
+    <plurals name="message_new_items">
+        <item quantity="one">New message</item>
+        <item quantity="other">New messages</item>
+    </plurals>
+
+    <!--Message notify-->
+    <string name="notify_message_channel">New messages</string>
+    <plurals name="notify_message_new_items">
+        <item quantity="one">You received %1$d message</item>
+        <item quantity="other">You received %1$d messages</item>
+    </plurals>
 
     <!--About-->
     <string name="about_source_code">Source code</string>

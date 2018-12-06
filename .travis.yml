@@ -52,6 +52,7 @@ script:
   - ./gradlew createDebugCoverageReport --stacktrace -PdisableCrashlytics --daemon
   - ./gradlew jacocoTestReport --stacktrace --daemon
   - if [ "$TRAVIS_PULL_REQUEST" != "false" ] || [ "$TRAVIS_BRANCH" == "master" ]; then
+      git fetch --unshallow;
       ./gradlew sonarqube -x test -x lint -x fabricGenerateResourcesRelease -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} -PdisableCrashlytics --stacktrace --daemon;
     fi
   - |

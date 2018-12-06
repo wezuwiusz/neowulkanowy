@@ -22,7 +22,7 @@ abstract class GradeModule {
     }
 
     @PerChildFragment
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun bindGradeDetailsFragment(): GradeDetailsFragment
 
     @PerChildFragment

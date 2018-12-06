@@ -27,8 +27,8 @@ class GradeLocal @Inject constructor(private val gradeDb: GradeDao) {
         return Completable.fromCallable { gradeDb.update(grade) }
     }
 
-    fun updateGrades(grade: List<Grade>): Completable {
-        return Completable.fromCallable { gradeDb.updateAll(grade) }
+    fun updateGrades(grades: List<Grade>): Completable {
+        return Completable.fromCallable { gradeDb.updateAll(grades) }
     }
 
     fun deleteGrades(grades: List<Grade>) {
