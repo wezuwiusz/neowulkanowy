@@ -217,7 +217,8 @@
     <string name="pref_view_summary">Pokazuj podsumowanie w ocenach</string>
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_theme_dark">Ciemny motyw (Beta)</string>
-    <string name="pref_view_grade_modifier">Wartość plusa i minusa</string>
+    <string name="pref_view_grade_modifier_plus">Wartość plusa</string>
+    <string name="pref_view_grade_modifier_minus">Wartość minusa</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
 
     <string name="pref_notify_header">Powiadomienia</string>

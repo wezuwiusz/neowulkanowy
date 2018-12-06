@@ -40,7 +40,7 @@ class GradeSummaryPresenter @Inject constructor(
                     .flatMap { gradesSummary ->
                         gradeRepository.getGrades(it, forceRefresh)
                             .map { grades ->
-                                grades.map { item -> item.changeModifier(preferencesRepository.gradeModifier) }
+                                grades.map { item -> item.changeModifier(preferencesRepository.gradePlusModifier, preferencesRepository.gradeMinusModifier) }
                                     .groupBy { grade -> grade.subject }
                                     .mapValues { entry -> entry.value.calcAverage() }
                                     .filterValues { value -> value != 0.0 }

@@ -47,9 +47,14 @@ inline val Grade.colorStringId: Int
         }
     }
 
-fun Grade.changeModifier(newModifier: Double): Grade {
-    if (modifier != 0.0 && newModifier != 0.0) {
-        modifier = if (modifier > 0) newModifier else -newModifier
+fun Grade.changeModifier(plusModifier: Double, minusModifier: Double): Grade {
+    if (modifier != 0.0) {
+        if (plusModifier != 0.0 && modifier > 0) {
+            modifier = plusModifier
+        }
+        if (minusModifier != .0 && modifier < 0) {
+            modifier = -minusModifier
+        }
     }
     return this
 }
