@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomDatabase.JournalMode.TRUNCATE
 import androidx.room.TypeConverters
 import io.github.wulkanowy.data.db.dao.AttendanceDao
+import io.github.wulkanowy.data.db.dao.AttendanceSummaryDao
 import io.github.wulkanowy.data.db.dao.ExamDao
 import io.github.wulkanowy.data.db.dao.GradeDao
 import io.github.wulkanowy.data.db.dao.GradeSummaryDao
@@ -15,8 +16,10 @@ import io.github.wulkanowy.data.db.dao.HomeworkDao
 import io.github.wulkanowy.data.db.dao.NoteDao
 import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.dao.StudentDao
+import io.github.wulkanowy.data.db.dao.SubjectDao
 import io.github.wulkanowy.data.db.dao.TimetableDao
 import io.github.wulkanowy.data.db.entities.Attendance
+import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
@@ -25,6 +28,7 @@ import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.db.entities.Timetable
 import javax.inject.Singleton
 
@@ -36,11 +40,13 @@ import javax.inject.Singleton
         Exam::class,
         Timetable::class,
         Attendance::class,
+        AttendanceSummary::class,
         Grade::class,
         GradeSummary::class,
         Message::class,
         Note::class,
-        Homework::class
+        Homework::class,
+        Subject::class
     ],
     version = 1,
     exportSchema = false
@@ -66,6 +72,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract val attendanceDao: AttendanceDao
 
+    abstract val attendanceSummaryDao: AttendanceSummaryDao
+
     abstract val gradeDao: GradeDao
 
     abstract val gradeSummaryDao: GradeSummaryDao
@@ -75,4 +83,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val noteDao: NoteDao
 
     abstract val homeworkDao: HomeworkDao
+
+    abstract val subjectDao: SubjectDao
 }

@@ -13,23 +13,23 @@ import javax.inject.Singleton
 
 @Singleton
 class GradeSummaryRepository @Inject constructor(
-        private val settings: InternetObservingSettings,
-        private val local: GradeSummaryLocal,
-        private val remote: GradeSummaryRemote
+    private val settings: InternetObservingSettings,
+    private val local: GradeSummaryLocal,
+    private val remote: GradeSummaryRemote
 ) {
 
     fun getGradesSummary(semester: Semester, forceRefresh: Boolean = false): Single<List<GradeSummary>> {
         return local.getGradesSummary(semester).filter { !forceRefresh }
-                .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
-                        .flatMap {
-                            if (it) remote.getGradeSummary(semester)
-                            else Single.error(UnknownHostException())
-                        }.flatMap { newGradesSummary ->
-                            local.getGradesSummary(semester).toSingle(emptyList())
-                                    .doOnSuccess { oldGradesSummary ->
-                                        local.deleteGradesSummary(oldGradesSummary - newGradesSummary)
-                                        local.saveGradesSummary(newGradesSummary - oldGradesSummary)
-                                    }
-                        }.flatMap { local.getGradesSummary(semester).toSingle(emptyList()) })
+            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
+                .flatMap {
+                    if (it) remote.getGradeSummary(semester)
+                    else Single.error(UnknownHostException())
+                }.flatMap { newGradesSummary ->
+                    local.getGradesSummary(semester).toSingle(emptyList())
+                        .doOnSuccess { oldGradesSummary ->
+                            local.deleteGradesSummary(oldGradesSummary - newGradesSummary)
+                            local.saveGradesSummary(newGradesSummary - oldGradesSummary)
+                        }
+                }.flatMap { local.getGradesSummary(semester).toSingle(emptyList()) })
     }
 }

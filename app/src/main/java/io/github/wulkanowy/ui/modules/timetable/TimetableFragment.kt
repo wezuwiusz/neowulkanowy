@@ -79,7 +79,7 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     }
 
     override fun resetView() {
-        timetableAdapter.smoothScrollToPosition(0)
+        timetableRecycler.smoothScrollToPosition(0)
     }
 
     override fun onFragmentReselected() {

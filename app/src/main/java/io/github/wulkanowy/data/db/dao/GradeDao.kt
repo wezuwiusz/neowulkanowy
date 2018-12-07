@@ -26,8 +26,8 @@ interface GradeDao {
     fun deleteAll(grades: List<Grade>)
 
     @Query("SELECT * FROM Grades WHERE semester_id = :semesterId AND student_id = :studentId")
-    fun load(semesterId: Int, studentId: Int): Maybe<List<Grade>>
+    fun loadAll(semesterId: Int, studentId: Int): Maybe<List<Grade>>
 
     @Query("SELECT * FROM Grades WHERE is_read = 0 AND semester_id = :semesterId AND student_id = :studentId")
-    fun loadNew(semesterId: Int, studentId: Int): Maybe<List<Grade>>
+    fun loadAllNew(semesterId: Int, studentId: Int): Maybe<List<Grade>>
 }

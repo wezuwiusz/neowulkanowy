@@ -7,6 +7,8 @@ interface AttendanceView : BaseView {
 
     val isViewEmpty: Boolean
 
+    val currentStackSize: Int?
+
     fun initView()
 
     fun updateData(data: List<AttendanceItem>)
@@ -30,4 +32,8 @@ interface AttendanceView : BaseView {
     fun showNextButton(show: Boolean)
 
     fun showAttendanceDialog(lesson: Attendance)
+
+    fun openSummaryView()
+
+    fun popView()
 }

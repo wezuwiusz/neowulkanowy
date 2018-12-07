@@ -118,6 +118,8 @@
         <item quantity="many">%1$d nieobecności</item>
     </plurals>
 
+    <!--Attendance summary-->
+    <string name="attendance_summary_final">Frekwencja</string>
 
     <!--Exam-->
     <string name="exam_no_items">Brak sprawdzianów w tym tygodniu</string>

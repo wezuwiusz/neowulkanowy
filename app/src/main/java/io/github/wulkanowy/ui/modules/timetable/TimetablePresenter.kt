@@ -58,7 +58,7 @@ class TimetablePresenter @Inject constructor(
             if (currentDate != it) {
                 loadData(it)
                 reloadView()
-            } else view?.resetView()
+            } else if (view?.isViewEmpty == false) view?.resetView()
         }
     }
 

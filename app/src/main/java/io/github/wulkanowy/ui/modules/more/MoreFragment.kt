@@ -72,7 +72,7 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
         get() {
             return context?.run {
                 getString(R.string.about_title) to
-                    ContextCompat.getDrawable(this, R.drawable.ic_more_about_24dp)
+                    ContextCompat.getDrawable(this, R.drawable.ic_all_about_24dp)
             }
         }
 

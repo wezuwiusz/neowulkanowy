@@ -2,6 +2,9 @@ package io.github.wulkanowy.ui.modules.attendance
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -10,6 +13,8 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_attendance.*
@@ -35,6 +40,14 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     override val isViewEmpty: Boolean
         get() = attendanceAdapter.isEmpty
 
+    override val currentStackSize: Int?
+        get() = (activity as? MainActivity)?.currentStackSize
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_attendance, container, false)
     }
@@ -59,6 +72,15 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
         attendanceNextButton.setOnClickListener { presenter.onNextDay() }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.action_menu_attendance, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if (item?.itemId == R.id.attendanceMenuSummary) presenter.onSummarySwitchSelected()
+        else false
+    }
+
     override fun updateData(data: List<AttendanceItem>) {
         attendanceAdapter.updateDataSet(data, true)
     }
@@ -72,11 +94,15 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun resetView() {
-        attendanceAdapter.smoothScrollToPosition(0)
+        attendanceRecycler.smoothScrollToPosition(0)
     }
 
     override fun onFragmentReselected() {
         presenter.onViewReselected()
+    }
+
+    override fun popView() {
+        (activity as? MainActivity)?.popView()
     }
 
     override fun showEmpty(show: Boolean) {
@@ -105,6 +131,10 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
 
     override fun showAttendanceDialog(lesson: Attendance) {
         AttendanceDialog.newInstance(lesson).show(fragmentManager, lesson.toString())
+    }
+
+    override fun openSummaryView() {
+        (activity as? MainActivity)?.pushView(AttendanceSummaryFragment.newInstance())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

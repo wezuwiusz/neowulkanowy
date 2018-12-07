@@ -11,7 +11,7 @@ import javax.inject.Singleton
 class GradeSummaryLocal @Inject constructor(private val gradeSummaryDb: GradeSummaryDao) {
 
     fun getGradesSummary(semester: Semester): Maybe<List<GradeSummary>> {
-        return gradeSummaryDb.load(semester.semesterId, semester.studentId)
+        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId)
                 .filter { !it.isEmpty() }
     }
 

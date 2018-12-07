@@ -16,30 +16,30 @@ import javax.inject.Singleton
 
 @Singleton
 class AttendanceRepository @Inject constructor(
-        private val settings: InternetObservingSettings,
-        private val local: AttendanceLocal,
-        private val remote: AttendanceRemote
+    private val settings: InternetObservingSettings,
+    private val local: AttendanceLocal,
+    private val remote: AttendanceRemote
 ) {
 
     fun getAttendance(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean)
-            : Single<List<Attendance>> {
+        : Single<List<Attendance>> {
         return Single.fromCallable { startDate.monday to endDate.friday }
-                .flatMap { dates ->
-                    local.getAttendance(semester, dates.first, dates.second).filter { !forceRefresh }
-                            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-                                if (it) remote.getAttendance(semester, dates.first, dates.second)
-                                else Single.error(UnknownHostException())
-                            }.flatMap { newAttendance ->
-                                local.getAttendance(semester, dates.first, dates.second)
-                                        .toSingle(emptyList())
-                                        .doOnSuccess { oldAttendance ->
-                                            local.deleteAttendance(oldAttendance - newAttendance)
-                                            local.saveAttendance(newAttendance - oldAttendance)
-                                        }
-                            }.flatMap {
-                                local.getAttendance(semester, dates.first, dates.second)
-                                        .toSingle(emptyList())
-                            }).map { list -> list.filter { it.date in startDate..endDate } }
-                }
+            .flatMap { dates ->
+                local.getAttendance(semester, dates.first, dates.second).filter { !forceRefresh }
+                    .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
+                        if (it) remote.getAttendance(semester, dates.first, dates.second)
+                        else Single.error(UnknownHostException())
+                    }.flatMap { newAttendance ->
+                        local.getAttendance(semester, dates.first, dates.second)
+                            .toSingle(emptyList())
+                            .doOnSuccess { oldAttendance ->
+                                local.deleteAttendance(oldAttendance - newAttendance)
+                                local.saveAttendance(newAttendance - oldAttendance)
+                            }
+                    }.flatMap {
+                        local.getAttendance(semester, dates.first, dates.second)
+                            .toSingle(emptyList())
+                    }).map { list -> list.filter { it.date in startDate..endDate } }
+            }
     }
 }

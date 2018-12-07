@@ -1,10 +1,13 @@
 package io.github.wulkanowy.utils
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
-import java.util.*
+import org.threeten.bp.Month.JANUARY
+import java.util.Locale
 
 class TimeExtensionTest {
 
@@ -44,6 +47,14 @@ class TimeExtensionTest {
     }
 
     @Test
+    fun monthNameTest() {
+        Locale.setDefault(Locale.forLanguageTag("PL"))
+        assertEquals("Styczeń", JANUARY.getFormattedName())
+        Locale.setDefault(Locale.forLanguageTag("US"))
+        assertEquals("January", JANUARY.getFormattedName())
+    }
+
+    @Test
     fun weekDayNameTest() {
         Locale.setDefault(Locale.forLanguageTag("PL"))
         assertEquals("poniedziałek", LocalDate.of(2018, 10, 1).weekDayName)
@@ -73,7 +84,6 @@ class TimeExtensionTest {
         assertEquals(LocalDate.of(2018, 10, 4), LocalDate.of(2018, 10, 5).previousSchoolDay)
         assertEquals(LocalDate.of(2018, 10, 3), LocalDate.of(2018, 10, 4).previousSchoolDay)
     }
-
 
     @Test
     fun nextOrSameSchoolDayTest() {

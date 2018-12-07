@@ -56,16 +56,25 @@ class AttendancePresenter @Inject constructor(
     }
 
     fun onViewReselected() {
-        now().previousOrSameSchoolDay.also {
-            if (currentDate != it) {
-                loadData(it)
-                reloadView()
-            } else view?.resetView()
+        view?.also { view ->
+            if (view.currentStackSize == 1) {
+                now().previousOrSameSchoolDay.also {
+                    if (currentDate != it) {
+                        loadData(it)
+                        reloadView()
+                    } else if (!view.isViewEmpty) view.resetView()
+                }
+            } else view.popView()
         }
     }
 
     fun onAttendanceItemSelected(item: AbstractFlexibleItem<*>?) {
         if (item is AttendanceItem) view?.showAttendanceDialog(item.attendance)
+    }
+
+    fun onSummarySwitchSelected(): Boolean {
+        view?.openSummaryView()
+        return true
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {

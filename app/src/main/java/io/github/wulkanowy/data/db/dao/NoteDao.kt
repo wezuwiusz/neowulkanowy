@@ -26,7 +26,7 @@ interface NoteDao {
     fun deleteAll(notes: List<Note>)
 
     @Query("SELECT * FROM Notes WHERE semester_id = :semesterId AND student_id = :studentId")
-    fun load(semesterId: Int, studentId: Int): Maybe<List<Note>>
+    fun loadAll(semesterId: Int, studentId: Int): Maybe<List<Note>>
 
     @Query("SELECT * FROM Notes WHERE is_read = 0 AND semester_id = :semesterId AND student_id = :studentId")
     fun loadNew(semesterId: Int, studentId: Int): Maybe<List<Note>>

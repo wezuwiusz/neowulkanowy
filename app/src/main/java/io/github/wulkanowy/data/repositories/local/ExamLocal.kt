@@ -10,7 +10,7 @@ import javax.inject.Inject
 class ExamLocal @Inject constructor(private val examDb: ExamDao) {
 
     fun getExams(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Exam>> {
-        return examDb.load(semester.diaryId, semester.studentId, startDate, endDate)
+        return examDb.loadAll(semester.diaryId, semester.studentId, startDate, endDate)
                 .filter { !it.isEmpty() }
     }
 

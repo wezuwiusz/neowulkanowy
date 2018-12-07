@@ -5,6 +5,7 @@ import com.crashlytics.android.answers.CustomEvent
 import com.crashlytics.android.answers.LoginEvent
 import com.crashlytics.android.answers.SignUpEvent
 import timber.log.Timber
+import kotlin.math.min
 
 fun logLogin(method: String) {
     try {
@@ -20,7 +21,7 @@ fun logRegister(message: String, result: Boolean, symbol: String, endpoint: Stri
             .putMethod("Login activity")
             .putSuccess(result)
             .putCustomAttribute("symbol", symbol)
-            .putCustomAttribute("message", message)
+            .putCustomAttribute("message", message.substring(0, min(message.length, 100)))
             .putCustomAttribute("endpoint", endpoint)
         )
     } catch (e: Throwable) {

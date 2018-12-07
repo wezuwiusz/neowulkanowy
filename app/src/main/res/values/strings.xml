@@ -108,6 +108,9 @@
         <item quantity="other">%1$d absences</item>
     </plurals>
 
+    <!--Attendance summary-->
+    <string name="attendance_summary_final">Attendance</string>
+
 
     <!--Exam-->
     <string name="exam_no_items">No exams in this week</string>

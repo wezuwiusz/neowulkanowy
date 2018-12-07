@@ -20,5 +20,5 @@ interface ExamDao {
     fun deleteAll(exams: List<Exam>)
 
     @Query("SELECT * FROM Exams WHERE diary_id = :diaryId AND student_id = :studentId AND date >= :from AND date <= :end")
-    fun load(diaryId: Int, studentId: Int, from: LocalDate, end: LocalDate): Maybe<List<Exam>>
+    fun loadAll(diaryId: Int, studentId: Int, from: LocalDate, end: LocalDate): Maybe<List<Exam>>
 }

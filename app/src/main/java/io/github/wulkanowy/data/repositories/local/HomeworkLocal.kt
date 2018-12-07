@@ -12,7 +12,7 @@ import javax.inject.Singleton
 class HomeworkLocal @Inject constructor(private val homeworkDb: HomeworkDao) {
 
     fun getHomework(semester: Semester, date: LocalDate): Maybe<List<Homework>> {
-        return homeworkDb.load(semester.semesterId, semester.studentId, date).filter { !it.isEmpty() }
+        return homeworkDb.loadAll(semester.semesterId, semester.studentId, date).filter { !it.isEmpty() }
     }
 
     fun saveHomework(homework: List<Homework>) {

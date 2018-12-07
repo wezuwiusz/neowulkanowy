@@ -1,8 +1,13 @@
 package io.github.wulkanowy.data.db
 
 import androidx.room.TypeConverter
-import org.threeten.bp.*
-import java.util.*
+import org.threeten.bp.DateTimeUtils
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.Month
+import org.threeten.bp.ZoneOffset
+import java.util.Date
 
 class Converters {
 
@@ -25,4 +30,10 @@ class Converters {
     fun timeToTimestamp(date: LocalDateTime?): Long? {
         return date?.atZone(ZoneOffset.UTC)?.toInstant()?.toEpochMilli()
     }
+
+    @TypeConverter
+    fun monthToInt(month: Month?) = month?.value
+
+    @TypeConverter
+    fun intToMonth(value: Int?) = value?.let { Month.of(it) }
 }

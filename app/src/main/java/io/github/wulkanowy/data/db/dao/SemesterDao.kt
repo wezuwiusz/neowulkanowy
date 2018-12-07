@@ -16,7 +16,7 @@ interface SemesterDao {
     fun insertAll(semester: List<Semester>)
 
     @Query("SELECT * FROM Semesters WHERE student_id = :studentId")
-    fun load(studentId: Int): Maybe<List<Semester>>
+    fun loadAll(studentId: Int): Maybe<List<Semester>>
 
     @Query("UPDATE Semesters SET is_current = 1 WHERE semester_id = :semesterId AND diary_id = :diaryId")
     fun updateCurrent(semesterId: Int, diaryId: Int)

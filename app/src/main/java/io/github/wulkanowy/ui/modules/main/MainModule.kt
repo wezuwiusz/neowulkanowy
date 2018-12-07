@@ -11,6 +11,7 @@ import io.github.wulkanowy.ui.modules.about.AboutFragment
 import io.github.wulkanowy.ui.modules.about.AboutModule
 import io.github.wulkanowy.ui.modules.account.AccountDialog
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
+import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeModule
@@ -40,6 +41,10 @@ abstract class MainModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun bindAttendanceFragment(): AttendanceFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun bindAttendanceSummaryFragment(): AttendanceSummaryFragment
 
     @PerFragment
     @ContributesAndroidInjector

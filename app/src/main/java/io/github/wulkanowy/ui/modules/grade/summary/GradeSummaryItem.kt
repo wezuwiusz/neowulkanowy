@@ -6,11 +6,12 @@ import eu.davidea.flexibleadapter.items.AbstractSectionableItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.GradeSummary
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_grade_summary.*
 
-class GradeSummaryItem(header: GradeSummaryHeader, private val grade: String, private val title: String)
-    : AbstractSectionableItem<GradeSummaryItem.ViewHolder, GradeSummaryHeader>(header) {
+class GradeSummaryItem(header: GradeSummaryHeader, private val grade: String, private val title: String) :
+    AbstractSectionableItem<GradeSummaryItem.ViewHolder, GradeSummaryHeader>(header) {
 
     override fun getLayoutRes() = R.layout.item_grade_summary
 
@@ -18,8 +19,10 @@ class GradeSummaryItem(header: GradeSummaryHeader, private val grade: String, pr
         return ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?,
-                                position: Int, payloads: MutableList<Any>?) {
+    override fun bindViewHolder(
+        adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?,
+        position: Int, payloads: MutableList<Any>?
+    ) {
         holder?.run {
             gradeSummaryItemGrade.text = grade
             gradeSummaryItemTitle.text = title
@@ -46,9 +49,8 @@ class GradeSummaryItem(header: GradeSummaryHeader, private val grade: String, pr
         return result
     }
 
-
-    class ViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?)
-        : FlexibleViewHolder(view, adapter), LayoutContainer {
+    class ViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?) : FlexibleViewHolder(view, adapter),
+        LayoutContainer {
 
         override val containerView: View?
             get() = contentView

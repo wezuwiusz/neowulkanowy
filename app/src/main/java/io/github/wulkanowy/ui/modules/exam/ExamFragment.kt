@@ -78,7 +78,7 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
     }
 
     override fun resetView() {
-        examAdapter.smoothScrollToPosition(0)
+        examRecycler.scrollToPosition(0)
     }
 
     override fun onFragmentReselected() {
