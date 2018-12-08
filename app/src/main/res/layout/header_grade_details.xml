@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     android:background="@drawable/ic_all_divider"
     android:foreground="?attr/selectableItemBackgroundBorderless"
-    android:paddingBottom="10dp"
     android:paddingLeft="16dp"
+    android:paddingTop="10dp"
     android:paddingRight="16dp"
-    android:paddingTop="10dp">
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/gradeHeaderSubject"
@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@id/gradeHeaderNote"
         android:layout_toStartOf="@id/gradeHeaderNote"
+        android:layout_toLeftOf="@id/gradeHeaderNote"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/app_name"
@@ -38,36 +38,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/gradeHeaderSubject"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/gradeHeaderAverage"
         android:layout_toRightOf="@+id/gradeHeaderAverage"
         android:text="@string/app_name"
-        android:textColor="?android:attr/android:textColorSecondary"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/gradeHeaderPredicted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/gradeHeaderAverage"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/grade_predicted"
-        android:textColor="?android:attr/android:textColorSecondary"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/gradeHeaderFinal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/gradeHeaderAverage"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/gradeHeaderPredicted"
-        android:layout_toRightOf="@+id/gradeHeaderPredicted"
-        android:text="@string/grade_final"
         android:textColor="?android:attr/android:textColorSecondary"
         android:textSize="12sp" />
 

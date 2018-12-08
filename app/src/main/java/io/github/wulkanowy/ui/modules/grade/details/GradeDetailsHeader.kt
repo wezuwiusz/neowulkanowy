@@ -31,11 +31,12 @@ class GradeDetailsHeader(
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
         holder.run {
-            gradeHeaderSubject.text = subject
+            gradeHeaderSubject.apply {
+                text = subject
+                maxLines = if (isExpanded) 2 else 1
+            }
             gradeHeaderAverage.text = average
             gradeHeaderNumber.text = number
-            gradeHeaderPredicted.visibility = GONE
-            gradeHeaderFinal.visibility = GONE
             gradeHeaderNote.visibility = if (newGrades > 0) VISIBLE else GONE
 
             isViewExpandable = isExpandable
@@ -71,11 +72,16 @@ class GradeDetailsHeader(
             contentView.setOnClickListener(this)
         }
 
+        override val containerView: View
+            get() = contentView
+
         override fun isViewCollapsibleOnClick() = isViewExpandable
 
         override fun isViewExpandableOnClick() = isViewExpandable
 
-        override val containerView: View
-            get() = contentView
+        override fun onClick(view: View?) {
+            super.onClick(view)
+            mAdapter.getItem(adapterPosition)?.let { mAdapter.updateItem(it) }
+        }
     }
 }
