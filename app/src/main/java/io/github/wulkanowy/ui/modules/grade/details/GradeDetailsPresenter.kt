@@ -25,12 +25,74 @@ class GradeDetailsPresenter @Inject constructor(
     private val preferencesRepository: PreferencesRepository
 ) : BasePresenter<GradeDetailsView>(errorHandler) {
 
+    private var currentSemesterId = 0
+
     override fun onAttachView(view: GradeDetailsView) {
         super.onAttachView(view)
         view.initView()
     }
 
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
+        currentSemesterId = semesterId
+        loadData(semesterId, forceRefresh)
+    }
+
+    fun onGradeItemSelected(item: AbstractFlexibleItem<*>?) {
+        if (item is GradeDetailsItem) {
+            view?.apply {
+                showGradeDialog(item.grade)
+                if (!item.grade.isRead) {
+                    item.grade.isRead = true
+                    updateItem(item)
+                    getHeaderOfItem(item)?.let { header ->
+                        if (header is GradeDetailsHeader) {
+                            header.newGrades--
+                            updateItem(header)
+                        }
+                    }
+                    updateGrade(item.grade)
+                }
+            }
+        }
+    }
+
+    fun onMarkAsReadSelected(): Boolean {
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { semesterRepository.getSemesters(it) }
+            .flatMap { gradeRepository.getNewGrades(it.first { item -> item.semesterId == currentSemesterId }) }
+            .map { it.map { grade -> grade.apply { isRead = true } } }
+            .flatMapCompletable { gradeRepository.updateGrades(it) }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .subscribe({ loadData(currentSemesterId, false) }, { errorHandler.dispatch(it) }))
+        return true
+    }
+
+    fun onSwipeRefresh() {
+        view?.notifyParentRefresh()
+    }
+
+    fun onParentViewReselected() {
+        view?.run {
+            if (!isViewEmpty) {
+                if (preferencesRepository.isGradeExpandable) collapseAllItems()
+                scrollToStart()
+            }
+        }
+    }
+
+    fun onParentViewChangeSemester() {
+        view?.run {
+            showProgress(true)
+            showRefresh(false)
+            showContent(false)
+            showEmpty(false)
+            clearView()
+        }
+        disposable.clear()
+    }
+
+    private fun loadData(semesterId: Int, forceRefresh: Boolean) {
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
             .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
@@ -56,49 +118,6 @@ class GradeDetailsPresenter @Inject constructor(
                 view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)
             })
-    }
-
-    fun onGradeItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is GradeDetailsItem) {
-            view?.apply {
-                showGradeDialog(item.grade)
-                if (!item.grade.isRead) {
-                    item.grade.isRead = true
-                    updateItem(item)
-                    getHeaderOfItem(item)?.let { header ->
-                        if (header is GradeDetailsHeader) {
-                            header.newGrades--
-                            updateItem(header)
-                        }
-                    }
-                    updateGrade(item.grade)
-                }
-            }
-        }
-    }
-
-    fun onSwipeRefresh() {
-        view?.notifyParentRefresh()
-    }
-
-    fun onParentViewReselected() {
-        view?.run {
-            if (!isViewEmpty) {
-                if (preferencesRepository.isGradeExpandable) collapseAllItems()
-                scrollToStart()
-            }
-        }
-    }
-
-    fun onParentViewChangeSemester() {
-        view?.run {
-            showProgress(true)
-            showRefresh(false)
-            showContent(false)
-            showEmpty(false)
-            clearView()
-        }
-        disposable.clear()
     }
 
     private fun createGradeItems(items: Map<String, List<Grade>>): List<GradeDetailsHeader> {

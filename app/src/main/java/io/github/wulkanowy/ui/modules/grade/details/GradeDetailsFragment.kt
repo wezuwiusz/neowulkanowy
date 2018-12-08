@@ -2,6 +2,9 @@ package io.github.wulkanowy.ui.modules.grade.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
@@ -45,6 +48,11 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     override val isViewEmpty
         get() = gradeDetailsAdapter.isEmpty
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_grade_details, container, false)
     }
@@ -53,6 +61,10 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         super.onActivityCreated(savedInstanceState)
         messageContainer = gradeDetailsRecycler
         presenter.onAttachView(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.action_menu_grade_details, menu)
     }
 
     override fun initView() {
@@ -67,6 +79,11 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
             adapter = gradeDetailsAdapter
         }
         gradeDetailsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if (item?.itemId == R.id.gradeDetailsMenuRead) presenter.onMarkAsReadSelected()
+        else false
     }
 
     override fun updateData(data: List<GradeDetailsHeader>) {

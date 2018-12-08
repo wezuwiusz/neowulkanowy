@@ -59,6 +59,7 @@
     <string name="grade_summary_calculated_average">Obliczona średnia</string>
     <string name="grade_summary_final_average">Końcowa średnia</string>
     <string name="grade_menu_summary">Podsumowanie</string>
+    <string name="grade_menu_read">Oznacz jako przeczytane</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d ocena</item>
         <item quantity="few">%d oceny</item>

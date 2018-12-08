@@ -59,6 +59,7 @@
     <string name="grade_summary_calculated_average">Calculated average</string>
     <string name="grade_summary_final_average">Final average</string>
     <string name="grade_menu_summary">Summary</string>
+    <string name="grade_menu_read">Mark as read</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d grade</item>
         <item quantity="other">%d grades</item>
