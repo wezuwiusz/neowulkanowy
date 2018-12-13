@@ -1,14 +1,15 @@
 package io.github.wulkanowy.ui.modules.homework
 
+import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.HomeworkRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.main.MainErrorHandler
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
-import io.github.wulkanowy.utils.logEvent
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
@@ -22,7 +23,8 @@ class HomeworkPresenter @Inject constructor(
     private val schedulers: SchedulersProvider,
     private val homeworkRepository: HomeworkRepository,
     private val studentRepository: StudentRepository,
-    private val semesterRepository: SemesterRepository
+    private val semesterRepository: SemesterRepository,
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<HomeworkView>(errorHandler) {
 
     lateinit var currentDate: LocalDate
@@ -38,13 +40,11 @@ class HomeworkPresenter @Inject constructor(
     fun onPreviousDay() {
         loadData(currentDate.previousSchoolDay)
         reloadView()
-        logEvent("Homework day changed", mapOf("button" to "prev", "date" to currentDate.toFormattedString()))
     }
 
     fun onNextDay() {
         loadData(currentDate.nextSchoolDay)
         reloadView()
-        logEvent("Homework day changed", mapOf("button" to "next", "date" to currentDate.toFormattedString()))
     }
 
     fun onSwipeRefresh() {
@@ -78,7 +78,7 @@ class HomeworkPresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    logEvent("Homework load", mapOf("items" to it.size, "forceRefresh" to forceRefresh, "date" to currentDate.toFormattedString()))
+                    analytics.logEvent("load_homework", mapOf("items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd")))
                 }) {
                     view?.run { showEmpty(isViewEmpty()) }
                     errorHandler.dispatch(it)

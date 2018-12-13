@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.attendance
 
+import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.AttendanceRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
@@ -7,9 +8,9 @@ import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.main.MainErrorHandler
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
-import io.github.wulkanowy.utils.logEvent
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousOrSameSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
@@ -26,7 +27,8 @@ class AttendancePresenter @Inject constructor(
     private val attendanceRepository: AttendanceRepository,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
-    private val prefRepository: PreferencesRepository
+    private val prefRepository: PreferencesRepository,
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<AttendanceView>(errorHandler) {
 
     lateinit var currentDate: LocalDate
@@ -42,13 +44,11 @@ class AttendancePresenter @Inject constructor(
     fun onPreviousDay() {
         loadData(currentDate.previousSchoolDay)
         reloadView()
-        logEvent("Attendance day changed", mapOf("button" to "prev", "date" to currentDate.toFormattedString()))
     }
 
     fun onNextDay() {
         loadData(currentDate.nextSchoolDay)
         reloadView()
-        logEvent("Attendance day changed", mapOf("button" to "next", "date" to currentDate.toFormattedString()))
     }
 
     fun onSwipeRefresh() {
@@ -105,7 +105,7 @@ class AttendancePresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    logEvent("Attendance load", mapOf("items" to it.size, "forceRefresh" to forceRefresh, "date" to currentDate.toFormattedString()))
+                    analytics.logEvent("load_attendance", mapOf("items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd")))
                 }) {
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)

@@ -7,8 +7,8 @@ import io.github.wulkanowy.data.repositories.MessagesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.message.MessageItem
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.logEvent
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,7 +16,8 @@ class MessageTabPresenter @Inject constructor(
     private val errorHandler: ErrorHandler,
     private val schedulers: SchedulersProvider,
     private val messagesRepository: MessagesRepository,
-    private val studentRepository: StudentRepository
+    private val studentRepository: StudentRepository,
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<MessageTabView>(errorHandler) {
 
     lateinit var folder: MessagesRepository.MessageFolder
@@ -52,7 +53,7 @@ class MessageTabPresenter @Inject constructor(
                         showContent(it.isNotEmpty())
                         updateData(it)
                     }
-                    logEvent("Message tab load", mapOf("items" to it.size, "forceRefresh" to forceRefresh))
+                    analytics.logEvent("load_messages", mapOf("items" to it.size, "folder" to folder.name))
                 }) {
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)

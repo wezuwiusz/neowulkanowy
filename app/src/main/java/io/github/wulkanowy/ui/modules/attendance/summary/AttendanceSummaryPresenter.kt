@@ -8,10 +8,10 @@ import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.SubjectRepostory
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.getFormattedName
-import io.github.wulkanowy.utils.logEvent
 import java.lang.String.format
 import java.util.Locale.FRANCE
 import java.util.concurrent.TimeUnit.MILLISECONDS
@@ -23,7 +23,8 @@ class AttendanceSummaryPresenter @Inject constructor(
     private val subjectRepository: SubjectRepostory,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
-    private val schedulers: SchedulersProvider
+    private val schedulers: SchedulersProvider,
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<AttendanceSummaryView>(errorHandler) {
 
     private var subjects = emptyList<Subject>()
@@ -74,7 +75,7 @@ class AttendanceSummaryPresenter @Inject constructor(
                         showContent(it.first.isNotEmpty())
                         updateDataSet(it.first, it.second)
                     }
-                    logEvent("Attendance load", mapOf("forceRefresh" to forceRefresh))
+                    analytics.logEvent("load_attendance_summary", mapOf("items" to it.first.size, "force_refresh" to forceRefresh, "item_id" to subjectId))
                 }) {
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)

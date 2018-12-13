@@ -22,7 +22,7 @@ class StudentRemoteTest {
 
     @Test
     fun testRemoteAll() {
-        doReturn(Single.just(listOf(Pupil("", "", 1, "test", "", "", Api.LoginType.AUTO))))
+        doReturn(Single.just(listOf(Pupil("", "", 1, "test", "", "", "", Api.LoginType.AUTO))))
             .`when`(mockApi).getPupils()
 
         val students = StudentRemote(mockApi).getStudents("", "", "").blockingGet()

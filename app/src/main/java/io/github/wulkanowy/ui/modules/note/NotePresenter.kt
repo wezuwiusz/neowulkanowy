@@ -7,8 +7,8 @@ import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.main.MainErrorHandler
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.logEvent
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,7 +17,8 @@ class NotePresenter @Inject constructor(
     private val schedulers: SchedulersProvider,
     private val studentRepository: StudentRepository,
     private val noteRepository: NoteRepository,
-    private val semesterRepository: SemesterRepository
+    private val semesterRepository: SemesterRepository,
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<NoteView>(errorHandler) {
 
     override fun onAttachView(view: NoteView) {
@@ -49,7 +50,7 @@ class NotePresenter @Inject constructor(
                     showEmpty(it.isEmpty())
                     showContent(it.isNotEmpty())
                 }
-                logEvent("Note load", mapOf("items" to it.size, "forceRefresh" to forceRefresh))
+                analytics.logEvent("load_note", mapOf("items" to it.size, "force_refresh" to forceRefresh))
             }, {
                 view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)

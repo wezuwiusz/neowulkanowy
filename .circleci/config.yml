@@ -113,7 +113,7 @@ jobs:
             adb shell input keyevent 82
       - run:
           name: Run instrumented tests
-          command: ./gradlew clean createDebugCoverageReport jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex -PdisableCrashlytics
+          command: ./gradlew clean createDebugCoverageReport jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Collect logs from emulator
           command: adb logcat -d > ./app/build/reports/logcat_emulator.txt
@@ -153,11 +153,12 @@ jobs:
       - run:
           name: Decrypt keys
           command: |
+            gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/google-services.json.gpg
             openssl aes-256-cbc -d -in ./app/key-encrypted.p12 -k $ENCRYPT_KEY >> ./app/key.p12
             openssl aes-256-cbc -d -in ./app/upload-key-encrypted.jks -k $ENCRYPT_KEY >> ./app/upload-key.jks
       - run:
           name: Publish release
-          command: ./gradlew publishRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew publishRelease --no-daemon --stacktrace --console=plain -PenableCrashlytics -PdisablePreDex
 
 workflows:
   version: 2

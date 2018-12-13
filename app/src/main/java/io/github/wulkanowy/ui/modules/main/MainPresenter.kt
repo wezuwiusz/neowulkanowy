@@ -1,11 +1,13 @@
 package io.github.wulkanowy.ui.modules.main
 
+import com.google.firebase.analytics.FirebaseAnalytics.Event.APP_OPEN
+import com.google.firebase.analytics.FirebaseAnalytics.Param.DESTINATION
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.job.ServiceHelper
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.logLogin
 import io.reactivex.Completable
 import javax.inject.Inject
 
@@ -14,7 +16,8 @@ class MainPresenter @Inject constructor(
     private val studentRepository: StudentRepository,
     private val prefRepository: PreferencesRepository,
     private val schedulers: SchedulersProvider,
-    private val serviceHelper: ServiceHelper
+    private val serviceHelper: ServiceHelper,
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<MainView>(errorHandler) {
 
     fun onAttachView(view: MainView, initMenuIndex: Int) {
@@ -27,11 +30,12 @@ class MainPresenter @Inject constructor(
         }
         serviceHelper.startFullSyncService()
 
-        when (initMenuIndex) {
-            1 -> logLogin("Grades")
-            3 -> logLogin("Timetable")
-            4 -> logLogin("More")
-        }
+        analytics.logEvent(APP_OPEN, mapOf(DESTINATION to when (initMenuIndex) {
+            1 -> "Grades"
+            3 -> "Timetable"
+            4 -> "More"
+            else -> "User action"
+        }))
     }
 
     fun onViewStart() {

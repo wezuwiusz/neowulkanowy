@@ -4,6 +4,7 @@ import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -27,13 +28,16 @@ class LoginFormPresenterTest {
     @Mock
     lateinit var errorHandler: LoginErrorHandler
 
+    @Mock
+    lateinit var analytics: FirebaseAnalyticsHelper
+
     private lateinit var presenter: LoginFormPresenter
 
     @Before
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
         clearInvocations(repository, loginFormView)
-        presenter = LoginFormPresenter(TestSchedulersProvider(), errorHandler, repository)
+        presenter = LoginFormPresenter(TestSchedulersProvider(), errorHandler, repository, analytics)
         presenter.onAttachView(loginFormView)
     }
 
@@ -125,7 +129,6 @@ class LoginFormPresenterTest {
         verify(loginFormView, times(2)).showContent(true)
         verify(loginFormView, times(2)).showSymbolInput()
         verify(loginFormView).setErrorSymbolIncorrect()
-
     }
 
     @Test

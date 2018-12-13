@@ -15,7 +15,7 @@ import io.github.wulkanowy.data.db.SharedPrefHelper
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_START_MENU_INDEX
-import io.github.wulkanowy.utils.logEvent
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
@@ -28,6 +28,9 @@ class TimetableWidgetProvider : AppWidgetProvider() {
 
     @Inject
     lateinit var sharedPref: SharedPrefHelper
+
+    @Inject
+    lateinit var analytics: FirebaseAnalyticsHelper
 
     companion object {
         const val EXTRA_TOGGLED_WIDGET_ID = "extraToggledWidget"
@@ -91,7 +94,11 @@ class TimetableWidgetProvider : AppWidgetProvider() {
                     }
                     BUTTON_RESET -> sharedPref.putLong(widgetKey, LocalDate.now().nextOrSameSchoolDay.toEpochDay(), true)
                 }
-                button?.also { btn -> if (btn.isNotBlank()) logEvent("Widget day changed", mapOf("button" to button)) }
+                button?.also { btn ->
+                    if (btn.isNotBlank()) {
+                        analytics.logEvent("changed_timetable_widget_day", mapOf("button" to button))
+                    }
+                }
             }
         }
         super.onReceive(context, intent)

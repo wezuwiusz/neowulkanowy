@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.junit.Before
@@ -30,6 +31,9 @@ class LoginOptionsPresenterTest {
     @Mock
     lateinit var semesterRepository: SemesterRepository
 
+    @Mock
+    lateinit var analytics: FirebaseAnalyticsHelper
+
     private lateinit var presenter: LoginOptionsPresenter
 
     private val testStudent by lazy { Student(email = "test", password = "test123", endpoint = "https://fakelog.cf", loginType = "AUTO") }
@@ -41,7 +45,7 @@ class LoginOptionsPresenterTest {
         MockitoAnnotations.initMocks(this)
         clearInvocations(studentRepository, loginOptionsView)
         clearInvocations(semesterRepository, loginOptionsView)
-        presenter = LoginOptionsPresenter(errorHandler, studentRepository, semesterRepository, TestSchedulersProvider())
+        presenter = LoginOptionsPresenter(errorHandler, studentRepository, semesterRepository, TestSchedulersProvider(), analytics)
         presenter.onAttachView(loginOptionsView)
     }
 

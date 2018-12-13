@@ -1,18 +1,21 @@
 package io.github.wulkanowy.ui.modules.login.form
 
+import com.google.firebase.analytics.FirebaseAnalytics.Event.SIGN_UP
+import com.google.firebase.analytics.FirebaseAnalytics.Param.GROUP_ID
+import com.google.firebase.analytics.FirebaseAnalytics.Param.SUCCESS
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.logEvent
-import io.github.wulkanowy.utils.logRegister
 import timber.log.Timber
 import javax.inject.Inject
 
 class LoginFormPresenter @Inject constructor(
     private val schedulers: SchedulersProvider,
     private val errorHandler: LoginErrorHandler,
-    private val studentRepository: StudentRepository
+    private val studentRepository: StudentRepository,
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<LoginFormView>(errorHandler) {
 
     private var wasEmpty = false
@@ -57,15 +60,14 @@ class LoginFormPresenter @Inject constructor(
                     } else if (it.isEmpty() && wasEmpty) {
                         showSymbolInput()
                         setErrorSymbolIncorrect()
-                        logRegister("No student found", false, if (symbol.isEmpty()) "nil" else symbol, endpoint)
+                        analytics.logEvent(SIGN_UP, mapOf(SUCCESS to false, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "nil" }))
                     } else {
                         switchOptionsView()
-                        logEvent("Found students", mapOf("students" to it.size, "symbol" to it.joinToString { student -> student.symbol }, "endpoint" to endpoint))
                     }
                 }
             }, {
+                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to true, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "nil" }))
                 errorHandler.dispatch(it)
-                logRegister(it.localizedMessage, false, if (symbol.isEmpty()) "nil" else symbol, endpoint)
             }))
     }
 

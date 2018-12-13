@@ -25,7 +25,7 @@ class GradeRemote @Inject constructor(private val api: Api) {
                         modifier = it.modifier,
                         comment = it.comment,
                         color = it.color,
-                        gradeSymbol = it.symbol,
+                        gradeSymbol = it.symbol ?: "",
                         description = it.description,
                         weight = it.weight,
                         weightValue = it.weightValue,

@@ -4,15 +4,16 @@ import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.services.job.ServiceHelper
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.isHolidays
-import io.github.wulkanowy.utils.logEvent
 import org.threeten.bp.LocalDate.now
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     private val preferencesRepository: PreferencesRepository,
-    private val serviceHelper: ServiceHelper
+    private val serviceHelper: ServiceHelper,
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<SettingsView>(errorHandler) {
 
     override fun onAttachView(view: SettingsView) {
@@ -38,6 +39,6 @@ class SettingsPresenter @Inject constructor(
             }
         }
 
-        logEvent("Setting changed", mapOf("name" to key))
+        analytics.logEvent("setting_changed", mapOf("name" to key))
     }
 }

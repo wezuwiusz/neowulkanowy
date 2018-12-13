@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.core.CrashlyticsCore
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
@@ -45,8 +44,7 @@ class WulkanowyApp : DaggerApplication() {
 
     private fun initializeFabric() {
         Fabric.with(Fabric.Builder(this).kits(
-            Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(!BuildConfig.FABRIC_ENABLED).build()).build(),
-            Answers()
+            Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(!BuildConfig.CRASHLYTICS_ENABLED).build()).build()
         ).debuggable(BuildConfig.DEBUG).build())
         Timber.plant(CrashlyticsTree())
     }
