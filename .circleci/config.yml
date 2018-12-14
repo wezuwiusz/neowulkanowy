@@ -142,6 +142,7 @@ jobs:
           command: ./gradlew jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Run sonarqube runner
+          command: if [ -z ${SONAR_HOST+x} ]; then echo "sonar scan skipped"; else ./gradlew -x test -x lint sonarqube -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$CIRCLE_BRANCH --no-daemon --stacktrace --console=plain -PdisablePreDex; fi
           command: "[[ -v CIRCLE_PR_NUMBER ]] && ./gradlew -x test -x lint sonarqube -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=$CIRCLE_BRANCH --no-daemon --stacktrace --console=plain -PdisablePreDex || true"
 
   deploy:
