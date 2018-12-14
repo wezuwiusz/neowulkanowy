@@ -78,7 +78,7 @@ class TimetableWidgetFactory(
                     setTextViewText(R.id.timetableWidgetItemDescription, it.info.capitalize())
                 } else setViewVisibility(R.id.timetableWidgetItemDescription, GONE)
 
-                if (it.changes) {
+                if (it.canceled) {
                     setInt(R.id.timetableWidgetItemSubject, "setPaintFlags",
                         STRIKE_THRU_TEXT_FLAG or ANTI_ALIAS_FLAG)
                 } else {
