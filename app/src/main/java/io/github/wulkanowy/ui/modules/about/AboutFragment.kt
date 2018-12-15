@@ -32,16 +32,17 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
         presenter.onAttachView(this)
         return Bundle().apply {
             putSerializable("data", LibsBuilder()
-                    .withAboutAppName(getString(R.string.app_name))
-                    .withAboutVersionShown(true)
-                    .withAboutIconShown(true)
-                    .withLicenseShown(true)
-                    .withAboutSpecial1(getString(R.string.about_source_code))
-                    .withAboutSpecial2(getString(R.string.about_feedback))
-                    .withCheckCachedDetection(false)
-                    .withExcludedLibraries("fastadapter", "AndroidIconics", "gson",
-                            "Jsoup", "Retrofit", "okio", "OkHttp")
-                    .withOnExtraListener { presenter.onExtraSelect(it) })
+                .withAboutAppName(getString(R.string.app_name))
+                .withAboutVersionShown(true)
+                .withAboutIconShown(true)
+                .withLicenseShown(true)
+                .withAboutSpecial1(getString(R.string.about_source_code))
+                .withAboutSpecial2(getString(R.string.about_feedback))
+                .withFields(R.string::class.java.fields)
+                .withCheckCachedDetection(false)
+                .withExcludedLibraries("fastadapter", "AndroidIconics", "gson",
+                    "Jsoup", "Retrofit", "okio", "OkHttp")
+                .withOnExtraListener { presenter.onExtraSelect(it) })
         }.let {
             fragmentCompat.onCreateView(inflater.context, inflater, container, savedInstanceState, it)
         }
