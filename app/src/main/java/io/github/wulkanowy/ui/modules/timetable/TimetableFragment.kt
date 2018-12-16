@@ -9,13 +9,13 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable.*
 import javax.inject.Inject
 
-class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView, MainView.TitledView {
+class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: TimetablePresenter

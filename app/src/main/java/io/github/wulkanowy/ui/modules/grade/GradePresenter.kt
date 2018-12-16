@@ -3,8 +3,8 @@ package io.github.wulkanowy.ui.modules.grade
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.ui.base.BasePresenter
-import io.github.wulkanowy.ui.modules.main.MainErrorHandler
+import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
+import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Completable
@@ -12,12 +12,12 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class GradePresenter @Inject constructor(
-    private val errorHandler: MainErrorHandler,
+    private val errorHandler: SessionErrorHandler,
     private val schedulers: SchedulersProvider,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<GradeView>(errorHandler) {
+) : BaseSessionPresenter<GradeView>(errorHandler) {
 
     var selectedIndex = 0
         private set

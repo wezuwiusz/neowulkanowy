@@ -1,13 +1,11 @@
-package io.github.wulkanowy.ui.modules.main
+package io.github.wulkanowy.ui.base.session
 
 import android.content.res.Resources
-import io.github.wulkanowy.data.ErrorHandler
-import io.github.wulkanowy.di.scopes.PerActivity
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.security.ScramblerException
 import javax.inject.Inject
 
-@PerActivity
-class MainErrorHandler @Inject constructor(resources: Resources) : ErrorHandler(resources) {
+class SessionErrorHandler @Inject constructor(resources: Resources) : ErrorHandler(resources) {
 
     var onDecryptionFail: () -> Unit = {}
 

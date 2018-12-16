@@ -6,8 +6,8 @@ import io.github.wulkanowy.data.repositories.AttendanceRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.ui.base.BasePresenter
-import io.github.wulkanowy.ui.modules.main.MainErrorHandler
+import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
+import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
@@ -22,14 +22,14 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class AttendancePresenter @Inject constructor(
-    private val errorHandler: MainErrorHandler,
+    private val errorHandler: SessionErrorHandler,
     private val schedulers: SchedulersProvider,
     private val attendanceRepository: AttendanceRepository,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val prefRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<AttendanceView>(errorHandler) {
+) : BaseSessionPresenter<AttendanceView>(errorHandler) {
 
     lateinit var currentDate: LocalDate
         private set

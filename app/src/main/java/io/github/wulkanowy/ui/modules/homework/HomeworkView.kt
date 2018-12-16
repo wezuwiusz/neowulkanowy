@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.homework
 
 import io.github.wulkanowy.data.db.entities.Homework
-import io.github.wulkanowy.ui.base.BaseView
+import io.github.wulkanowy.ui.base.session.BaseSessionView
 
-interface HomeworkView : BaseView {
+interface HomeworkView : BaseSessionView {
 
     fun initView()
 

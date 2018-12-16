@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data
+package io.github.wulkanowy.ui.base
 
 import android.content.res.Resources
 import io.github.wulkanowy.R

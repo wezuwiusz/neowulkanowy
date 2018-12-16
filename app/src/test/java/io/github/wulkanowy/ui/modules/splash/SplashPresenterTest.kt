@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.splash
 
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.ui.base.ErrorHandler
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

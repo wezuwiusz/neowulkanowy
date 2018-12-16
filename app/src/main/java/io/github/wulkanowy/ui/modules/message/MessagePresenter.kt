@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.message
 
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Completable
 import java.util.concurrent.TimeUnit.MILLISECONDS

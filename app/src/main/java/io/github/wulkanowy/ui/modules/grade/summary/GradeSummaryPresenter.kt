@@ -6,8 +6,8 @@ import io.github.wulkanowy.data.repositories.GradeSummaryRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.ui.base.BasePresenter
-import io.github.wulkanowy.ui.modules.main.MainErrorHandler
+import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
+import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calcAverage
@@ -17,7 +17,7 @@ import java.util.Locale.FRANCE
 import javax.inject.Inject
 
 class GradeSummaryPresenter @Inject constructor(
-    private val errorHandler: MainErrorHandler,
+    private val errorHandler: SessionErrorHandler,
     private val gradeSummaryRepository: GradeSummaryRepository,
     private val gradeRepository: GradeRepository,
     private val studentRepository: StudentRepository,
@@ -25,7 +25,7 @@ class GradeSummaryPresenter @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<GradeSummaryView>(errorHandler) {
+) : BaseSessionPresenter<GradeSummaryView>(errorHandler) {
 
     override fun onAttachView(view: GradeSummaryView) {
         super.onAttachView(view)

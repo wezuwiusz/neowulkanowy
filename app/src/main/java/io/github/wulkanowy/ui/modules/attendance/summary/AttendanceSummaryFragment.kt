@@ -12,13 +12,13 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
-import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import kotlinx.android.synthetic.main.fragment_attendance_summary.*
 import javax.inject.Inject
 
-class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainView.TitledView {
+class AttendanceSummaryFragment : BaseSessionFragment(), AttendanceSummaryView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: AttendanceSummaryPresenter

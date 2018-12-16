@@ -4,8 +4,8 @@ import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.Libs.SpecialButton.SPECIAL1
 import com.mikepenz.aboutlibraries.Libs.SpecialButton.SPECIAL2
 import com.mikepenz.aboutlibraries.Libs.SpecialButton.SPECIAL3
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import timber.log.Timber
 import javax.inject.Inject

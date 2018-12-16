@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.settings
 
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.services.job.ServiceHelper
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.isHolidays
 import org.threeten.bp.LocalDate.now

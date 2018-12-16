@@ -134,7 +134,7 @@ class MainActivity : BaseActivity(), MainView {
         navController.showDialogFragment(AccountDialog.newInstance())
     }
 
-    override fun showExpiredDialog() {
+    fun showExpiredDialog() {
         AlertDialog.Builder(this)
             .setTitle(R.string.main_session_expired)
             .setMessage(R.string.main_session_relogin)

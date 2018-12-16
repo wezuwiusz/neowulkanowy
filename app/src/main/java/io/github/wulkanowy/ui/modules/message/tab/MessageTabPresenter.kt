@@ -1,11 +1,11 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.MessagesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
+import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.ui.modules.message.MessageItem
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
@@ -13,12 +13,12 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MessageTabPresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
+    private val errorHandler: SessionErrorHandler,
     private val schedulers: SchedulersProvider,
     private val messagesRepository: MessagesRepository,
     private val studentRepository: StudentRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<MessageTabView>(errorHandler) {
+) : BaseSessionPresenter<MessageTabView>(errorHandler) {
 
     lateinit var folder: MessagesRepository.MessageFolder
 

@@ -12,7 +12,7 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.repositories.MessagesRepository
-import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.MessageItem
@@ -22,7 +22,7 @@ import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_message_tab.*
 import javax.inject.Inject
 
-class MessageTabFragment : BaseFragment(), MessageTabView, MessageView.MessageChildView {
+class MessageTabFragment : BaseSessionFragment(), MessageTabView, MessageView.MessageChildView {
 
     @Inject
     lateinit var presenter: MessageTabPresenter

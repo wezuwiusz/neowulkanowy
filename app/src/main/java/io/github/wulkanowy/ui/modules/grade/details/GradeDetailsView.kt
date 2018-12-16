@@ -4,9 +4,9 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IExpandable
 import eu.davidea.flexibleadapter.items.IFlexible
 import io.github.wulkanowy.data.db.entities.Grade
-import io.github.wulkanowy.ui.base.BaseView
+import io.github.wulkanowy.ui.base.session.BaseSessionView
 
-interface GradeDetailsView : BaseView {
+interface GradeDetailsView : BaseSessionView {
 
     val isViewEmpty: Boolean
 

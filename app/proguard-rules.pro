@@ -32,5 +32,5 @@
 -dontwarn rx.internal.util.**
 -dontwarn sun.misc.Unsafe
 
-#Confi for API
+#Config for API
 -keep class io.github.wulkanowy.api.** {*;}

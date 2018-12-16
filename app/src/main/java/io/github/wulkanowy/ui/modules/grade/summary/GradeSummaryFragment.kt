@@ -11,13 +11,13 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
-import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import kotlinx.android.synthetic.main.fragment_grade_summary.*
 import javax.inject.Inject
 
-class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeChildView {
+class GradeSummaryFragment : BaseSessionFragment(), GradeSummaryView, GradeView.GradeChildView {
 
     @Inject
     lateinit var presenter: GradeSummaryPresenter

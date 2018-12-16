@@ -1,13 +1,13 @@
 package io.github.wulkanowy.ui.modules.attendance.summary
 
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.repositories.AttendanceSummaryRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.SubjectRepostory
-import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
+import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calculatePercentage
@@ -18,14 +18,14 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class AttendanceSummaryPresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
+    private val errorHandler: SessionErrorHandler,
     private val attendanceSummaryRepository: AttendanceSummaryRepository,
     private val subjectRepository: SubjectRepostory,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<AttendanceSummaryView>(errorHandler) {
+) : BaseSessionPresenter<AttendanceSummaryView>(errorHandler) {
 
     private var subjects = emptyList<Subject>()
 

@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.splash
 
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 
 class SplashPresenter @Inject constructor(

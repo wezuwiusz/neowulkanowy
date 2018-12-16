@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.login
 
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 
 class LoginPresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresenter<LoginView>(errorHandler) {

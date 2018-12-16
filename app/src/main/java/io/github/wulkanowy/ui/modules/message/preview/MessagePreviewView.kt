@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
-import io.github.wulkanowy.ui.base.BaseView
+import io.github.wulkanowy.ui.base.session.BaseSessionView
 
-interface MessagePreviewView : BaseView {
+interface MessagePreviewView : BaseSessionView {
 
     val noSubjectString: String
 

@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.wulkanowy.R
-import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import kotlinx.android.synthetic.main.fragment_message_preview.*
 import javax.inject.Inject
 
-class MessagePreviewFragment : BaseFragment(), MessagePreviewView, MainView.TitledView {
+class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: MessagePreviewPresenter

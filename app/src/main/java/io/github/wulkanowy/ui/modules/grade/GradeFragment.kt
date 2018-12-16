@@ -11,8 +11,8 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import io.github.wulkanowy.R
-import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BasePagerAdapter
+import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainView
@@ -20,7 +20,7 @@ import io.github.wulkanowy.utils.setOnSelectPageListener
 import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
 
-class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainView.TitledView {
+class GradeFragment : BaseSessionFragment(), GradeView, MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: GradePresenter

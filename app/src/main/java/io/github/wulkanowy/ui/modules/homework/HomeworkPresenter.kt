@@ -5,8 +5,8 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.HomeworkRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.ui.base.BasePresenter
-import io.github.wulkanowy.ui.modules.main.MainErrorHandler
+import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
+import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
@@ -19,13 +19,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class HomeworkPresenter @Inject constructor(
-    private val errorHandler: MainErrorHandler,
+    private val errorHandler: SessionErrorHandler,
     private val schedulers: SchedulersProvider,
     private val homeworkRepository: HomeworkRepository,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<HomeworkView>(errorHandler) {
+) : BaseSessionPresenter<HomeworkView>(errorHandler) {
 
     lateinit var currentDate: LocalDate
         private set

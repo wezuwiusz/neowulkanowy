@@ -6,13 +6,14 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.job.ServiceHelper
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Completable
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
-    private val errorHandler: MainErrorHandler,
+    private val errorHandler: ErrorHandler,
     private val studentRepository: StudentRepository,
     private val prefRepository: PreferencesRepository,
     private val schedulers: SchedulersProvider,
@@ -24,7 +25,6 @@ class MainPresenter @Inject constructor(
         super.onAttachView(view)
         view.run {
             cancelNotifications()
-            errorHandler.onDecryptionFail = { showExpiredDialog() }
             startMenuIndex = if (initMenuIndex != -1) initMenuIndex else prefRepository.startMenuIndex
             initView()
         }

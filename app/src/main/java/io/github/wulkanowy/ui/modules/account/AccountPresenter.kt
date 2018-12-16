@@ -3,13 +3,13 @@ package io.github.wulkanowy.ui.modules.account
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
-import io.github.wulkanowy.ui.modules.main.MainErrorHandler
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Single
 import javax.inject.Inject
 
 class AccountPresenter @Inject constructor(
-    private val errorHandler: MainErrorHandler,
+    private val errorHandler: ErrorHandler,
     private val studentRepository: StudentRepository,
     private val schedulers: SchedulersProvider
 ) : BasePresenter<AccountView>(errorHandler) {

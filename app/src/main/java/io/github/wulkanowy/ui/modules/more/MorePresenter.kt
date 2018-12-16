@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.more
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.ErrorHandler
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 
 class MorePresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresenter<MoreView>(errorHandler) {

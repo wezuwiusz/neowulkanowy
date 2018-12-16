@@ -11,13 +11,13 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
-import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 
-class NoteFragment : BaseFragment(), NoteView, MainView.TitledView {
+class NoteFragment : BaseSessionFragment(), NoteView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: NotePresenter

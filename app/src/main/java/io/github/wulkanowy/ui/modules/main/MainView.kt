@@ -20,8 +20,6 @@ interface MainView : BaseView {
 
     fun showAccountPicker()
 
-    fun showExpiredDialog()
-
     fun notifyMenuViewReselected()
 
     fun setViewTitle(title: String)

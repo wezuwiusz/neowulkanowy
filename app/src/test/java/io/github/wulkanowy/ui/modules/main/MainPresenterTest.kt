@@ -4,6 +4,7 @@ import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.job.ServiceHelper
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import org.junit.Before
 import org.junit.Test
@@ -15,7 +16,7 @@ import org.mockito.MockitoAnnotations
 class MainPresenterTest {
 
     @Mock
-    lateinit var errorHandler: MainErrorHandler
+    lateinit var errorHandler: ErrorHandler
 
     @Mock
     lateinit var studentRepository: StudentRepository
