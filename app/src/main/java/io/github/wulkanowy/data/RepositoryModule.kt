@@ -33,6 +33,8 @@ internal class RepositoryModule {
     fun provideApi(): Api {
         return Api().apply {
             logLevel = NONE
+            androidVersion = android.os.Build.VERSION.RELEASE
+            buildTag = android.os.Build.MODEL
             setInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { Timber.d(it) }).setLevel(BASIC))
         }
     }

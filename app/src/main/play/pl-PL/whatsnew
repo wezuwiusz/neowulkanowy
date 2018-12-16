@@ -1,2 +1,16 @@
-Wersja 0.5.4:
-- naprawiono błąd logowania
+Wersja 0.6.0
+
+Aplikacja została całkowicie przepisana!
+Przez wielkie zmian, które w niej zaszły, wymagane jest ponowne logowanie w aplikacji
+oraz ponowne dodanie widgetu planu lekcji do ekranu głównego.
+
+Mamy nową ikonę aplikacji! 🎉
+
+Dodaliśmy nowe funkcje:
+- przeglądanie wiadomości (wysyłanie pojawi się w przyszłości)
+- zadania domowe
+- statystyki frekwencji
+- menadżer kont
+- możliwość zmiany wagi plusów i minusów
+
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.0
