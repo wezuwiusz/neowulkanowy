@@ -60,7 +60,7 @@ class LoginOptionsPresenter @Inject constructor(
                 }
             }
             .subscribe({
-                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to true, "students" to 1, "endpoint" to student.endpoint, GROUP_ID to student.symbol))
+                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to true, "endpoint" to student.endpoint, "message" to "Success", GROUP_ID to student.symbol))
                 view?.openMainView()
             }, {
                 errorHandler.dispatch(it)

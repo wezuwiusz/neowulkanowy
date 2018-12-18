@@ -57,16 +57,18 @@ class LoginFormPresenter @Inject constructor(
                     if (it.isEmpty() && !wasEmpty) {
                         showSymbolInput()
                         wasEmpty = true
+                        analytics.logEvent("sign_up_send", mapOf(SUCCESS to false, "students" to 0, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "null" }))
                     } else if (it.isEmpty() && wasEmpty) {
                         showSymbolInput()
                         setErrorSymbolIncorrect()
-                        analytics.logEvent(SIGN_UP, mapOf(SUCCESS to false, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "nil" }))
+                        analytics.logEvent("sign_up_send", mapOf(SUCCESS to false, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "nil" }))
                     } else {
+                        analytics.logEvent("sign_up_send", mapOf(SUCCESS to true, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol))
                         switchOptionsView()
                     }
                 }
             }, {
-                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to true, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "nil" }))
+                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to false, "endpoint" to endpoint, "message" to it.localizedMessage, GROUP_ID to symbol.ifEmpty { "nil" }))
                 errorHandler.dispatch(it)
             }))
     }
