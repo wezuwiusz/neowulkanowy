@@ -23,8 +23,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 19
-        versionName "0.6.0"
+        versionCode 20
+        versionName "0.6.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -74,7 +74,7 @@ androidExtensions {
 
 play {
     track = 'alpha'
-    uploadImages = true
+    uploadImages = false
 }
 
 configurations.all {
