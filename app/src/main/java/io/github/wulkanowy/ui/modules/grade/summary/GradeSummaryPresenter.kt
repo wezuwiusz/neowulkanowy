@@ -99,23 +99,14 @@ class GradeSummaryPresenter @Inject constructor(
 
     private fun createGradeSummaryItems(gradesSummary: List<GradeSummary>, averages: Map<String, Double>)
         : List<GradeSummaryItem> {
-        return gradesSummary.filter { !checkEmpty(it, averages) }
-            .flatMap { gradeSummary ->
-                GradeSummaryHeader(
-                    name = gradeSummary.subject,
-                    average = formatAverage(averages.getOrElse(gradeSummary.subject) { 0.0 }, "")
-                ).let {
-                    listOf(GradeSummaryItem(
-                        header = it,
-                        title = view?.predictedString.orEmpty(),
-                        grade = gradeSummary.predictedGrade
-                    ), GradeSummaryItem(
-                        header = it,
-                        title = view?.finalString.orEmpty(),
-                        grade = gradeSummary.finalGrade
-                    ))
-                }
-            }
+        return gradesSummary.filter { !checkEmpty(it, averages) }.map { it ->
+            GradeSummaryItem(
+                title = it.subject,
+                average = formatAverage(averages.getOrElse(it.subject) { 0.0 }, ""),
+                predictedGrade = it.predictedGrade,
+                finalGrade = it.finalGrade
+            )
+        }
     }
 
     private fun checkEmpty(gradeSummary: GradeSummary, averages: Map<String, Double>): Boolean {
