@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/attendanceMenuSummary"
-        android:icon="@drawable/ic_all_about_24dp"
+        android:icon="@drawable/ic_menu_main_attendance_summary_24dp"
         android:orderInCategory="1"
-        android:title="@string/grade_switch_semester"
+        android:title="@string/attendance_summary_button"
         app:showAsAction="ifRoom" />
 </menu>

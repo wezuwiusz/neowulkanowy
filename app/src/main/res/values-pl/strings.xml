@@ -104,6 +104,7 @@
 
 
     <!--Attendance-->
+    <string name="attendance_summary_button">Podsumowanie frekwencji</string>
     <string name="attendance_absence_school">Nieobecny z przyczyn szkolnych</string>
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>

@@ -95,6 +95,7 @@
 
 
     <!--Attendance-->
+    <string name="attendance_summary_button">Attendance summary</string>
     <string name="attendance_absence_school">Absent for school reasons</string>
     <string name="attendance_absence_excused">Excused absence</string>
     <string name="attendance_absence_unexcused">Unexcused absence</string>

@@ -84,13 +84,13 @@ configurations.all {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation('io.github.wulkanowy:api:0.6.0') { exclude module: "threetenbp" }
+    implementation('com.github.wulkanowy:api:fe371b2') { exclude module: "threetenbp" }
 
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "com.google.android.material:material:1.0.0"
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'com.takisoft.preferencex:preferencex:1.0.0'
     implementation "com.mikepenz:aboutlibraries:6.2.0"
@@ -120,7 +120,7 @@ dependencies {
     implementation "at.favre.lib:slf4j-timber:1.0.1"
 
     implementation 'com.google.firebase:firebase-core:16.0.6'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.7'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
 
     debugImplementation "com.amitshekhar.android:debug-db:1.0.4"
 
