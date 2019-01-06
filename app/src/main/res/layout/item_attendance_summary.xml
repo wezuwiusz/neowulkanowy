@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -21,16 +22,16 @@
             android:layout_marginEnd="40dp"
             android:layout_marginRight="40dp"
             android:layout_weight="1"
-            android:text="@string/app_name"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            tools:text="January" />
 
         <TextView
             android:id="@+id/attendanceSummaryPercentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="@string/app_name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="75%" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,8 +61,8 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:gravity="end"
-            android:text="@string/app_name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="50" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -91,8 +92,8 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:gravity="end"
-            android:text="@string/app_name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="0" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -122,8 +123,8 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:gravity="end"
-            android:text="@string/app_name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="25" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -153,8 +154,8 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:gravity="end"
-            android:text="@string/app_name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="0" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -184,8 +185,8 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:gravity="end"
-            android:text="@string/app_name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="6" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -215,8 +216,8 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:gravity="end"
-            android:text="@string/app_name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="0" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -246,7 +247,7 @@
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
             android:gravity="end"
-            android:text="@string/app_name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="0" />
     </LinearLayout>
 </LinearLayout>

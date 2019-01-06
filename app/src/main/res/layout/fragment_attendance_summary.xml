@@ -2,22 +2,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.modules.attendance.summary.AttendanceSummaryFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/attendanceSummarySubjects"
+        <LinearLayout
+            android:id="@+id/attendanceSummarySubjectsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:background="?android:attr/windowBackground"
             android:elevation="5dp"
-            android:padding="15dp"
-            android:spinnerMode="dialog" />
+            android:padding="5dp"
+            android:visibility="invisible"
+            tools:listitem="@layout/item_attendance_summary"
+            tools:targetApi="lollipop"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/attendanceSummarySubjects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:entries="@array/endpoints_keys"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp"
+                android:spinnerMode="dialog" />
+        </LinearLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/attendanceSummarySwipe"
@@ -27,7 +45,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/attendanceSummaryRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_attendance_summary" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
