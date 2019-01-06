@@ -97,6 +97,7 @@ class GradeDetailsPresenter @Inject constructor(
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
             .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
+            .map { it.sortedByDescending { grade -> grade.date } }
             .map { it.map { item -> item.changeModifier(preferencesRepository.gradePlusModifier, preferencesRepository.gradeMinusModifier) } }
             .map { createGradeItems(it.groupBy { grade -> grade.subject }.toSortedMap()) }
             .subscribeOn(schedulers.backgroundThread)
