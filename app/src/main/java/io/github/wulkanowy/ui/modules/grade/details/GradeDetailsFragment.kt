@@ -103,7 +103,7 @@ class GradeDetailsFragment : BaseSessionFragment(), GradeDetailsView, GradeView.
     }
 
     override fun scrollToStart() {
-        gradeDetailsAdapter.smoothScrollToPosition(0)
+        gradeDetailsRecycler.scrollToPosition(0)
     }
 
     override fun getHeaderOfItem(item: AbstractFlexibleItem<*>): IExpandable<*, out IFlexible<*>>? {

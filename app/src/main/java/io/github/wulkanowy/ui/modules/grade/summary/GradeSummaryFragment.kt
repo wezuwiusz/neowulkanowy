@@ -71,7 +71,7 @@ class GradeSummaryFragment : BaseSessionFragment(), GradeSummaryView, GradeView.
     }
 
     override fun resetView() {
-        gradeSummaryAdapter.smoothScrollToPosition(0)
+        gradeSummaryRecycler.scrollToPosition(0)
     }
 
     override fun showContent(show: Boolean) {
