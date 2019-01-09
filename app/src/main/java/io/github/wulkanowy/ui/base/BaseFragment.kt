@@ -13,7 +13,7 @@ abstract class BaseFragment : DaggerFragment(), BaseView {
         if (messageContainer == null) (activity as? BaseActivity)?.showError(text, error)
         else messageContainer?.also {
             Snackbar.make(it, text, Snackbar.LENGTH_LONG).setAction(R.string.all_details) {
-                ErrorDialog.newInstance(error).show(fragmentManager, error.toString())
+                ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
             }.show()
         }
     }
