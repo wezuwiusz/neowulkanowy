@@ -10,4 +10,5 @@
     <string name="pref_key_services_interval">services_interval</string>
     <string name="pref_key_services_wifi_only">services_disable_wifi_only</string>
     <string name="pref_key_notifications_enable">notifications_enable</string>
+    <string name="pref_key_debug_chucker_notification">chucker_notification</string>
 </resources>

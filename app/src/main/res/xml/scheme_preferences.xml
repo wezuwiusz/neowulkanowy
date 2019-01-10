@@ -80,5 +80,10 @@
             android:key="@string/pref_key_notifications_enable"
             android:title="@string/pref_notify_switch"
             app:iconSpaceReserved="false" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_debug_chucker_notification"
+            android:title="@string/pref_debug_notify_switch"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

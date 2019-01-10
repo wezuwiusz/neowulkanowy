@@ -11,6 +11,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+branches:
+  only:
+    - master
+
 android:
  licenses:
     - android-sdk-preview-license-.+

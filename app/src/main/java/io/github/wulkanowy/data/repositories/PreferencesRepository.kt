@@ -44,4 +44,8 @@ class PreferencesRepository @Inject constructor(
 
     val isNotificationsEnable: Boolean
         get() = sharedPref.getBoolean(context.getString(R.string.pref_key_notifications_enable), true)
+
+    val isShowChuckerNotificationKey: String = context.getString(R.string.pref_key_debug_chucker_notification)
+    val isShowChuckerNotification: Boolean
+        get() = sharedPref.getBoolean(isShowChuckerNotificationKey, false)
 }

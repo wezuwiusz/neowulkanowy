@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.settings
 
+import com.readystatesoftware.chuck.api.ChuckCollector
+import io.github.wulkanowy.data.RepositoryModule_ProvideChuckCollectorFactory
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.services.job.ServiceHelper
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -13,7 +15,8 @@ class SettingsPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     private val preferencesRepository: PreferencesRepository,
     private val serviceHelper: ServiceHelper,
-    private val analytics: FirebaseAnalyticsHelper
+    private val analytics: FirebaseAnalyticsHelper,
+    private val chuckCollector: ChuckCollector
 ) : BasePresenter<SettingsView>(errorHandler) {
 
     override fun onAttachView(view: SettingsView) {
@@ -36,6 +39,9 @@ class SettingsPresenter @Inject constructor(
             }
             preferencesRepository.currentThemeKey -> {
                 view?.setTheme(preferencesRepository.currentTheme)
+            }
+            preferencesRepository.isShowChuckerNotificationKey -> {
+                chuckCollector.showNotification(preferencesRepository.isShowChuckerNotification)
             }
         }
 

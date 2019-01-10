@@ -210,6 +210,7 @@
 
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show notifications</string>
+    <string name="pref_debug_notify_switch">Show debug notifications</string>
 
     <string name="pref_services_header">Synchronization</string>
     <string name="pref_services_switch">Automatic update</string>
