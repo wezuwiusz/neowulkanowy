@@ -1,10 +1,7 @@
-Wersja 0.6.2
+Wersja 0.6.3
 
-- zmieniono ikonę podsumowania frekwencji
-- naprawiono niepokazującą się strzałkę przy przedmiotach w podsumowaniu frekwencji
-- naprawiono sortowanie ocen
-- naprawiono zepsuty widok podsumowania frekwencji
-- naprawiono przeglądanie skrzynki nadawczej na kontach opiekunów
-- naprawiono logowanie w systemach Resman Rzeszów i podobnych
+- naprawiono problem ze stabilnością przy odczytywaniu ocen
+- poprawiono komunikat o błędzie podczas przerwy technicznej dziennika
+- (ponownie) naprawiono logowanie w systemach Resman Rzeszów i podobnych
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.2
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.3
