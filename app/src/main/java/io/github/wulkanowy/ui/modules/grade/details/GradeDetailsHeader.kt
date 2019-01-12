@@ -52,7 +52,6 @@ class GradeDetailsHeader(
         if (subject != other.subject) return false
         if (number != other.number) return false
         if (average != other.average) return false
-        if (newGrades != other.newGrades) return false
         if (isExpandable != other.isExpandable) return false
 
         return true
@@ -62,7 +61,6 @@ class GradeDetailsHeader(
         var result = subject.hashCode()
         result = 31 * result + number.hashCode()
         result = 31 * result + average.hashCode()
-        result = 31 * result + newGrades
         result = 31 * result + isExpandable.hashCode()
         return result
     }

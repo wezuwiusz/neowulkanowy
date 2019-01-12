@@ -14,8 +14,8 @@ import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_grade_details.*
 
-class GradeDetailsItem(val grade: Grade, private val weightString: String, private val valueColor: Int)
-    : AbstractFlexibleItem<GradeDetailsItem.ViewHolder>() {
+class GradeDetailsItem(val grade: Grade, private val weightString: String, private val valueColor: Int) :
+    AbstractFlexibleItem<GradeDetailsItem.ViewHolder>() {
 
     override fun getLayoutRes() = R.layout.item_grade_details
 
@@ -24,8 +24,10 @@ class GradeDetailsItem(val grade: Grade, private val weightString: String, priva
     }
 
     @SuppressLint("SetTextI18n")
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder,
-                                position: Int, payloads: MutableList<Any>?) {
+    override fun bindViewHolder(
+        adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder,
+        position: Int, payloads: MutableList<Any>?
+    ) {
         holder.run {
             gradeItemValue.run {
                 text = grade.entry
@@ -45,6 +47,7 @@ class GradeDetailsItem(val grade: Grade, private val weightString: String, priva
         other as GradeDetailsItem
 
         if (grade != other.grade) return false
+        if (grade.id != other.grade.id) return false
         if (weightString != other.weightString) return false
         if (valueColor != other.valueColor) return false
 
@@ -53,14 +56,14 @@ class GradeDetailsItem(val grade: Grade, private val weightString: String, priva
 
     override fun hashCode(): Int {
         var result = grade.hashCode()
+        result = 31 * result + grade.id.toInt()
         result = 31 * result + weightString.hashCode()
         result = 31 * result + valueColor
         return result
     }
 
-
     class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter),
-            LayoutContainer {
+        LayoutContainer {
 
         override val containerView: View
             get() = contentView
