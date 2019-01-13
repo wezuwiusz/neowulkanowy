@@ -10,6 +10,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_homework.*
@@ -95,7 +96,7 @@ class HomeworkFragment : BaseSessionFragment(), HomeworkView, MainView.TitledVie
     }
 
     override fun showTimetableDialog(homework: Homework) {
-        HomeworkDialog.newInstance(homework).show(fragmentManager, homework.toString())
+        (activity as? MainActivity)?.showDialogFragment(HomeworkDialog.newInstance(homework))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation.TitleState.ALWAYS_SHOW
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
@@ -145,6 +146,10 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun notifyMenuViewReselected() {
         (navController.currentStack?.get(0) as? MainView.MainChildView)?.onFragmentReselected()
+    }
+
+    fun showDialogFragment(dialog: DialogFragment) {
+        navController.showDialogFragment(dialog)
     }
 
     fun pushView(fragment: Fragment) {

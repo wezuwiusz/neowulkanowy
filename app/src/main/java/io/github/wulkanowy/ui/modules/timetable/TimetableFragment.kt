@@ -10,6 +10,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable.*
@@ -107,7 +108,7 @@ class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChi
     }
 
     override fun showTimetableDialog(lesson: Timetable) {
-        TimetableDialog.newInstance(lesson).show(fragmentManager, lesson.toString())
+        (activity as? MainActivity)?.showDialogFragment(TimetableDialog.newInstance(lesson))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

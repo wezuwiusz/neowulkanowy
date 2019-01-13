@@ -12,6 +12,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_note.*
@@ -57,7 +58,7 @@ class NoteFragment : BaseSessionFragment(), NoteView, MainView.TitledView {
     }
 
     override fun showNoteDialog(note: Note) {
-        NoteDialog.newInstance(note).show(fragmentManager, note.toString())
+        (activity as? MainActivity)?.showDialogFragment(NoteDialog.newInstance(note))
     }
 
     override fun updateData(data: List<NoteItem>) {

@@ -130,7 +130,7 @@ class AttendanceFragment : BaseSessionFragment(), AttendanceView, MainView.MainC
     }
 
     override fun showAttendanceDialog(lesson: Attendance) {
-        AttendanceDialog.newInstance(lesson).show(fragmentManager, lesson.toString())
+        (activity as? MainActivity)?.showDialogFragment(AttendanceDialog.newInstance(lesson))
     }
 
     override fun openSummaryView() {
