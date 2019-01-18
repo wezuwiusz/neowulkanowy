@@ -91,7 +91,7 @@
     <string name="timetable_group">Group</string>
     <string name="timetable_time">Hours</string>
     <string name="timetable_changes">Changes</string>
-    <string name="timetable_no_items">No lessons on this day</string>
+    <string name="timetable_no_items">No lessons this day</string>
 
 
     <!--Attendance-->
@@ -115,7 +115,7 @@
 
 
     <!--Exam-->
-    <string name="exam_no_items">No exams in this week</string>
+    <string name="exam_no_items">No exams this week</string>
     <string name="exam_type">Type</string>
     <string name="exam_entry_date">Entry date</string>
 
