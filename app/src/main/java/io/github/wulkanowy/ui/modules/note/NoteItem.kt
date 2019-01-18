@@ -46,11 +46,14 @@ class NoteItem(val note: Note) : AbstractFlexibleItem<NoteItem.ViewHolder>() {
         other as NoteItem
 
         if (note != other.note) return false
+        if (note.id != other.note.id) return false
         return true
     }
 
     override fun hashCode(): Int {
-        return note.hashCode()
+        var result = note.hashCode()
+        result = 31 * result + note.id.toInt()
+        return result
     }
 
     class ViewHolder(val view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
