@@ -4,6 +4,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Completable
+import timber.log.Timber
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
@@ -14,6 +15,7 @@ class MessagePresenter @Inject constructor(
 
     override fun onAttachView(view: MessageView) {
         super.onAttachView(view)
+        Timber.i("Message view is attached")
         disposable.add(Completable.timer(150, MILLISECONDS, schedulers.mainThread)
             .subscribe {
                 view.initView()
@@ -30,6 +32,7 @@ class MessagePresenter @Inject constructor(
     }
 
     private fun loadChild(index: Int, forceRefresh: Boolean = false) {
+        Timber.i("Load message child view index: $index")
         view?.notifyChildLoadData(index, forceRefresh)
     }
 

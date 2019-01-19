@@ -18,6 +18,7 @@ import io.github.wulkanowy.utils.toFormattedString
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
+import timber.log.Timber
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
@@ -36,6 +37,7 @@ class AttendancePresenter @Inject constructor(
 
     fun onAttachView(view: AttendanceView, date: Long?) {
         super.onAttachView(view)
+        Timber.i("Attendance view is attached")
         view.initView()
         loadData(ofEpochDay(date ?: now().previousOrSameSchoolDay.toEpochDay()))
         reloadView()
@@ -52,10 +54,12 @@ class AttendancePresenter @Inject constructor(
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the attendance")
         loadData(currentDate, true)
     }
 
     fun onViewReselected() {
+        Timber.i("Attendance view is reselected")
         view?.also { view ->
             if (view.currentStackSize == 1) {
                 now().previousOrSameSchoolDay.also {
@@ -69,7 +73,10 @@ class AttendancePresenter @Inject constructor(
     }
 
     fun onAttendanceItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is AttendanceItem) view?.showAttendanceDialog(item.attendance)
+        if (item is AttendanceItem) {
+            Timber.i("Select attendance item ${item.attendance.id}")
+            view?.showAttendanceDialog(item.attendance)
+        }
     }
 
     fun onSummarySwitchSelected(): Boolean {
@@ -78,6 +85,7 @@ class AttendancePresenter @Inject constructor(
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
+        Timber.i("Loading attendance data started")
         currentDate = date
         disposable.apply {
             clear()
@@ -100,6 +108,7 @@ class AttendancePresenter @Inject constructor(
                     }
                 }
                 .subscribe({
+                    Timber.i("Loading attendance result: Success")
                     view?.apply {
                         updateData(it)
                         showEmpty(it.isEmpty())
@@ -107,6 +116,7 @@ class AttendancePresenter @Inject constructor(
                     }
                     analytics.logEvent("load_attendance", mapOf("items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd")))
                 }) {
+                    Timber.i("Loading attendance result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 }
@@ -115,6 +125,7 @@ class AttendancePresenter @Inject constructor(
     }
 
     private fun reloadView() {
+        Timber.i("Reload attendance view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)
             showContent(false)

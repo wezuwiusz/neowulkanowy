@@ -8,6 +8,7 @@ import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Completable
+import timber.log.Timber
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
@@ -28,6 +29,7 @@ class GradePresenter @Inject constructor(
 
     fun onAttachView(view: GradeView, savedIndex: Int?) {
         super.onAttachView(view)
+        Timber.i("Grade view is attached")
         disposable.add(Completable.timer(150, MILLISECONDS, schedulers.mainThread)
             .subscribe {
                 selectedIndex = savedIndex ?: 0
@@ -37,6 +39,7 @@ class GradePresenter @Inject constructor(
     }
 
     fun onViewReselected() {
+        Timber.i("Grade view is reselected")
         view?.run { notifyChildParentReselected(currentPageIndex) }
     }
 
@@ -47,6 +50,7 @@ class GradePresenter @Inject constructor(
 
     fun onSemesterSelected(index: Int) {
         if (selectedIndex != index - 1) {
+            Timber.i("Change semester in grade view to ${index + 1}")
             selectedIndex = index + 1
             loadedSemesterId.clear()
             view?.let {
@@ -74,6 +78,7 @@ class GradePresenter @Inject constructor(
     }
 
     private fun loadData() {
+        Timber.i("Loading grade data started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
             .doOnSuccess {
@@ -84,7 +89,13 @@ class GradePresenter @Inject constructor(
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .subscribe({ view?.run { loadChild(currentPageIndex) } }) {
+            .subscribe({
+                view?.run {
+                    Timber.i("Loading grade result: Attempt load index $currentPageIndex")
+                    loadChild(currentPageIndex)
+                }
+            }) {
+                Timber.i("Loading grade result: An exception occurred")
                 errorHandler.dispatch(it)
                 view?.run {
                     showProgress(false)
@@ -96,6 +107,7 @@ class GradePresenter @Inject constructor(
     private fun loadChild(index: Int, forceRefresh: Boolean = false) {
         semesters.first { it.semesterName == selectedIndex }.semesterId.also {
             if (forceRefresh || loadedSemesterId[index] != it) {
+                Timber.i("Load grade child view index: $index")
                 view?.notifyChildLoadData(index, it, forceRefresh)
             }
         }

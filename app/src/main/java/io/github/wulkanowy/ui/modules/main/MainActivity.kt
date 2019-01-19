@@ -71,7 +71,7 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun onStart() {
         super.onStart()
-        presenter.onViewStart()
+        presenter.onViewChange()
     }
 
     override fun initView() {
@@ -98,7 +98,7 @@ class MainActivity : BaseActivity(), MainView {
         }
 
         navController.run {
-            setOnViewChangeListener { presenter.onViewStart() }
+            setOnViewChangeListener { presenter.onViewChange() }
             fragmentHideStrategy = HIDE
             rootFragments = listOf(
                 GradeFragment.newInstance(),

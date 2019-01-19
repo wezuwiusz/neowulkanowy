@@ -12,6 +12,7 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calcAverage
 import io.github.wulkanowy.utils.changeModifier
+import timber.log.Timber
 import java.lang.String.format
 import java.util.Locale.FRANCE
 import javax.inject.Inject
@@ -33,6 +34,7 @@ class GradeSummaryPresenter @Inject constructor(
     }
 
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
+        Timber.i("Loading grade summary data started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
             .map { semester -> semester.first { it.semesterId == semesterId } }
@@ -64,6 +66,7 @@ class GradeSummaryPresenter @Inject constructor(
                     notifyParentDataLoaded(semesterId)
                 }
             }.subscribe({
+                Timber.i("Loading grade summary result: Success")
                 view?.run {
                     showEmpty(it.first.isEmpty())
                     showContent(it.first.isNotEmpty())
@@ -71,12 +74,14 @@ class GradeSummaryPresenter @Inject constructor(
                 }
                 analytics.logEvent("load_grade_summary", mapOf("items" to it.first.size, "force_refresh" to forceRefresh))
             }) {
+                Timber.i("Loading grade summary result: An exception occurred")
                 view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)
             })
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the grade summary")
         view?.notifyParentRefresh()
     }
 

@@ -12,6 +12,7 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.getFormattedName
+import timber.log.Timber
 import java.lang.String.format
 import java.util.Locale.FRANCE
 import java.util.concurrent.TimeUnit.MILLISECONDS
@@ -34,25 +35,31 @@ class AttendanceSummaryPresenter @Inject constructor(
 
     fun onAttachView(view: AttendanceSummaryView, subjectId: Int?) {
         super.onAttachView(view)
+        Timber.i("Attendance summary view is attached with subject id ${subjectId ?: -1}")
         view.initView()
         loadData(subjectId ?: -1)
         loadSubjects()
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the attendance summary")
         loadData(currentSubjectId, true)
     }
 
     fun onSubjectSelected(name: String) {
+        Timber.i("Select attendance summary subject $name")
         view?.run {
             showContent(false)
             showProgress(true)
             clearView()
         }
-        loadData(subjects.singleOrNull { it.name == name }?.realId ?: -1)
+        (subjects.singleOrNull { it.name == name }?.realId ?: -1).let {
+            if (it != currentSubjectId) loadData(it)
+        }
     }
 
     private fun loadData(subjectId: Int, forceRefresh: Boolean = false) {
+        Timber.i("Loading attendance summary data started")
         currentSubjectId = subjectId
         disposable.apply {
             clear()
@@ -70,6 +77,7 @@ class AttendanceSummaryPresenter @Inject constructor(
                     }
                 }
                 .subscribe({
+                    Timber.i("Loading attendance summary result: Success")
                     view?.apply {
                         showEmpty(it.first.isEmpty())
                         showContent(it.first.isNotEmpty())
@@ -77,6 +85,7 @@ class AttendanceSummaryPresenter @Inject constructor(
                     }
                     analytics.logEvent("load_attendance_summary", mapOf("items" to it.first.size, "force_refresh" to forceRefresh, "item_id" to subjectId))
                 }) {
+                    Timber.i("Loading attendance summary result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 }
@@ -85,6 +94,7 @@ class AttendanceSummaryPresenter @Inject constructor(
     }
 
     private fun loadSubjects() {
+        Timber.i("Loading attendance summary subjects started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getCurrentSemester(it) }
             .flatMap { subjectRepository.getSubjects(it) }
@@ -93,11 +103,15 @@ class AttendanceSummaryPresenter @Inject constructor(
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({
+                Timber.i("Loading attendance summary subjects result: Success")
                 view?.run {
                     view?.updateSubjects(it)
                     showSubjects(true)
                 }
-            }, { errorHandler.dispatch(it) })
+            }, {
+                Timber.i("Loading attendance summary subjects result: An exception occurred")
+                errorHandler.dispatch(it)
+            })
         )
     }
 

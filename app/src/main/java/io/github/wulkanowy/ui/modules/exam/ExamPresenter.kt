@@ -18,6 +18,7 @@ import io.github.wulkanowy.utils.toFormattedString
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
+import timber.log.Timber
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
@@ -35,6 +36,7 @@ class ExamPresenter @Inject constructor(
 
     fun onAttachView(view: ExamView, date: Long?) {
         super.onAttachView(view)
+        Timber.i("Exam view is attached")
         view.initView()
         loadData(ofEpochDay(date ?: now().nextOrSameSchoolDay.toEpochDay()))
         reloadView()
@@ -51,14 +53,19 @@ class ExamPresenter @Inject constructor(
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the exam")
         loadData(currentDate, true)
     }
 
     fun onExamItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is ExamItem) view?.showExamDialog(item.exam)
+        if (item is ExamItem) {
+            Timber.i("Select exam item ${item.exam.id}")
+            view?.showExamDialog(item.exam)
+        }
     }
 
     fun onViewReselected() {
+        Timber.i("Exam view is reselected")
         now().nextOrSameSchoolDay.also {
             if (currentDate != it) {
                 loadData(it)
@@ -68,6 +75,7 @@ class ExamPresenter @Inject constructor(
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
+        Timber.i("Loading exam data started")
         currentDate = date
         disposable.apply {
             clear()
@@ -87,6 +95,7 @@ class ExamPresenter @Inject constructor(
                     }
                 }
                 .subscribe({
+                    Timber.i("Loading exam result: Success")
                     view?.apply {
                         updateData(it)
                         showEmpty(it.isEmpty())
@@ -94,6 +103,7 @@ class ExamPresenter @Inject constructor(
                     }
                     analytics.logEvent("load_exam", mapOf("items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd")))
                 }) {
+                    Timber.i("Loading exam result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 })
@@ -109,6 +119,7 @@ class ExamPresenter @Inject constructor(
     }
 
     private fun reloadView() {
+        Timber.i("Reload exam view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)
             showContent(false)

@@ -17,6 +17,7 @@ import io.github.wulkanowy.utils.toFormattedString
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
+import timber.log.Timber
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
@@ -34,6 +35,7 @@ class TimetablePresenter @Inject constructor(
 
     fun onAttachView(view: TimetableView, date: Long?) {
         super.onAttachView(view)
+        Timber.i("Timetable is attached")
         view.initView()
         loadData(ofEpochDay(date ?: now().nextOrSameSchoolDay.toEpochDay()))
         reloadView()
@@ -50,10 +52,12 @@ class TimetablePresenter @Inject constructor(
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the timetable")
         loadData(currentDate, true)
     }
 
     fun onViewReselected() {
+        Timber.i("Exam view is reselected")
         now().nextOrSameSchoolDay.also {
             if (currentDate != it) {
                 loadData(it)
@@ -63,10 +67,14 @@ class TimetablePresenter @Inject constructor(
     }
 
     fun onTimetableItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is TimetableItem) view?.showTimetableDialog(item.lesson)
+        if (item is TimetableItem) {
+            Timber.i("Select exam item ${item.lesson.id}")
+            view?.showTimetableDialog(item.lesson)
+        }
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
+        Timber.i("Loading timetable data started")
         currentDate = date
         disposable.apply {
             clear()
@@ -85,13 +93,15 @@ class TimetablePresenter @Inject constructor(
                     }
                 }
                 .subscribe({
+                    Timber.i("Loading timetable result: Success")
                     view?.apply {
                         updateData(it)
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_attendance", mapOf("items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd")))
+                    analytics.logEvent("load_timetable", mapOf("items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd")))
                 }) {
+                    Timber.i("Loading timetable result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 })
@@ -99,6 +109,7 @@ class TimetablePresenter @Inject constructor(
     }
 
     private fun reloadView() {
+        Timber.i("Reload timetable view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)
             showContent(false)

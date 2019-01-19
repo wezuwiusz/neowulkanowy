@@ -8,6 +8,7 @@ import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.toFormattedString
+import timber.log.Timber
 import javax.inject.Inject
 
 class MessagePreviewPresenter @Inject constructor(
@@ -26,6 +27,7 @@ class MessagePreviewPresenter @Inject constructor(
     }
 
     private fun loadData(id: Int) {
+        Timber.i("Loading message $id preview started")
         messageId = id
         disposable.apply {
             clear()
@@ -35,6 +37,7 @@ class MessagePreviewPresenter @Inject constructor(
                 .observeOn(schedulers.mainThread)
                 .doFinally { view?.showProgress(false) }
                 .subscribe({ message ->
+                    Timber.i("Loading message $id preview result: Success ")
                     view?.run {
                         message.let {
                             setSubject(if (it.subject.isNotBlank()) it.subject else noSubjectString)
@@ -45,8 +48,9 @@ class MessagePreviewPresenter @Inject constructor(
                             else setSender(it.sender)
                         }
                     }
-                    analytics.logEvent("load_attendance", mapOf(START_DATE to message.date?.toFormattedString("yyyy.MM.dd"), "lenght" to message.content?.length))
+                    analytics.logEvent("load_message_preview", mapOf(START_DATE to message.date?.toFormattedString("yyyy.MM.dd"), "lenght" to message.content?.length))
                 }) {
+                    Timber.i("Loading message $id preview result: An excception occurred ")
                     view?.showMessageError()
                     errorHandler.dispatch(it)
                 })

@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.login
 
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import timber.log.Timber
 import javax.inject.Inject
 
 class LoginPresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresenter<LoginView>(errorHandler) {
@@ -12,6 +13,7 @@ class LoginPresenter @Inject constructor(errorHandler: ErrorHandler) : BasePrese
             initAdapter()
             hideActionBar()
         }
+        Timber.i("Login view is attached")
     }
 
     fun onPageSelected(index: Int) {
@@ -23,6 +25,7 @@ class LoginPresenter @Inject constructor(errorHandler: ErrorHandler) : BasePrese
     }
 
     fun onBackPressed(default: () -> Unit) {
+        Timber.i("Back pressed in login view")
         view?.run {
             if (currentViewIndex == 1) {
                 switchView(0)

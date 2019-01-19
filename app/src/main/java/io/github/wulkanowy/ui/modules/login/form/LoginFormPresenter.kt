@@ -45,6 +45,7 @@ class LoginFormPresenter @Inject constructor(
                     showProgress(true)
                     showContent(false)
                 }
+                Timber.i("Login started")
             }
             .doFinally {
                 view?.apply {
@@ -58,17 +59,21 @@ class LoginFormPresenter @Inject constructor(
                         showSymbolInput()
                         wasEmpty = true
                         analytics.logEvent("sign_up_send", mapOf(SUCCESS to false, "students" to 0, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "null" }))
+                        Timber.i("Login result: Empty student list")
                     } else if (it.isEmpty() && wasEmpty) {
                         showSymbolInput()
                         setErrorSymbolIncorrect()
-                        analytics.logEvent("sign_up_send", mapOf(SUCCESS to false, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "nil" }))
+                        analytics.logEvent("sign_up_send", mapOf(SUCCESS to false, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "null" }))
+                        Timber.i("Login result: Wrong symbol")
                     } else {
                         analytics.logEvent("sign_up_send", mapOf(SUCCESS to true, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol))
+                        Timber.i("Login result: Success")
                         switchOptionsView()
                     }
                 }
             }, {
-                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to false, "endpoint" to endpoint, "message" to it.localizedMessage, GROUP_ID to symbol.ifEmpty { "nil" }))
+                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to false, "endpoint" to endpoint, "message" to it.localizedMessage, GROUP_ID to symbol.ifEmpty { "null" }))
+                Timber.i("Login result: An exception occurred")
                 errorHandler.dispatch(it)
             }))
     }

@@ -15,6 +15,7 @@ import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
 import org.threeten.bp.LocalDate
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -32,6 +33,7 @@ class HomeworkPresenter @Inject constructor(
 
     fun onAttachView(view: HomeworkView, date: Long?) {
         super.onAttachView(view)
+        Timber.i("Homework view is attached")
         view.initView()
         loadData(LocalDate.ofEpochDay(date ?: LocalDate.now().nextOrSameSchoolDay.toEpochDay()))
         reloadView()
@@ -48,14 +50,19 @@ class HomeworkPresenter @Inject constructor(
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the homework")
         loadData(currentDate, true)
     }
 
     fun onHomeworkItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is HomeworkItem) view?.showTimetableDialog(item.homework)
+        if (item is HomeworkItem) {
+            Timber.i("Select homework item ${item.homework.id}")
+            view?.showTimetableDialog(item.homework)
+        }
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
+        Timber.i("Loading homework data started")
         currentDate = date
         disposable.apply {
             clear()
@@ -73,6 +80,7 @@ class HomeworkPresenter @Inject constructor(
                     }
                 }
                 .subscribe({
+                    Timber.i("Loading homework result: Success")
                     view?.apply {
                         updateData(it)
                         showEmpty(it.isEmpty())
@@ -80,6 +88,7 @@ class HomeworkPresenter @Inject constructor(
                     }
                     analytics.logEvent("load_homework", mapOf("items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd")))
                 }) {
+                    Timber.i("Loading homework result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty()) }
                     errorHandler.dispatch(it)
                 })
@@ -87,6 +96,7 @@ class HomeworkPresenter @Inject constructor(
     }
 
     private fun reloadView() {
+        Timber.i("Reload homework view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)
             showContent(false)

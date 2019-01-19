@@ -23,15 +23,18 @@ class NotePresenter @Inject constructor(
 
     override fun onAttachView(view: NoteView) {
         super.onAttachView(view)
+        Timber.i("Note view is attached")
         view.initView()
         loadData()
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the note")
         loadData(true)
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading note data started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getCurrentSemester(it) }
             .flatMap { noteRepository.getNotes(it, forceRefresh) }
@@ -45,6 +48,7 @@ class NotePresenter @Inject constructor(
                     showProgress(false)
                 }
             }.subscribe({
+                Timber.i("Loading note result: Success")
                 view?.apply {
                     updateData(it)
                     showEmpty(it.isEmpty())
@@ -52,6 +56,7 @@ class NotePresenter @Inject constructor(
                 }
                 analytics.logEvent("load_note", mapOf("items" to it.size, "force_refresh" to forceRefresh))
             }, {
+                Timber.i("Loading note result: An exception occurred")
                 view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)
             })
@@ -60,6 +65,7 @@ class NotePresenter @Inject constructor(
 
     fun onNoteItemSelected(item: AbstractFlexibleItem<*>?) {
         if (item is NoteItem) {
+            Timber.i("Select note item ${item.note.id}")
             view?.run {
                 showNoteDialog(item.note)
                 if (!item.note.isRead) {
@@ -72,12 +78,14 @@ class NotePresenter @Inject constructor(
     }
 
     private fun updateNote(note: Note) {
+        Timber.i("Attempt to update note ${note.id}")
         disposable.add(noteRepository.updateNote(note)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .subscribe({
-                Timber.d("Note ${note.id} updated")
-            }) { error -> errorHandler.dispatch(error) }
-        )
+            .subscribe({ Timber.i("Update note result: Success") })
+            { error ->
+                Timber.i("Update note result: An exception occurred")
+                errorHandler.dispatch(error)
+            })
     }
 }

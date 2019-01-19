@@ -10,6 +10,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Completable
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
@@ -23,6 +24,7 @@ class MainPresenter @Inject constructor(
 
     fun onAttachView(view: MainView, initMenuIndex: Int) {
         super.onAttachView(view)
+        Timber.i("Main view is attached with $initMenuIndex menu index")
         view.run {
             cancelNotifications()
             startMenuIndex = if (initMenuIndex != -1) initMenuIndex else prefRepository.startMenuIndex
@@ -38,7 +40,7 @@ class MainPresenter @Inject constructor(
         }))
     }
 
-    fun onViewStart() {
+    fun onViewChange() {
         view?.apply {
             currentViewTitle?.let { setViewTitle(it) }
             currentStackSize?.let {
@@ -49,16 +51,19 @@ class MainPresenter @Inject constructor(
     }
 
     fun onAccountManagerSelected(): Boolean {
+        Timber.i("Select account manager")
         view?.showAccountPicker()
         return true
     }
 
     fun onUpNavigate(): Boolean {
+        Timber.i("Up navigate pressed")
         view?.popView()
         return true
     }
 
     fun onBackPressed(default: () -> Unit) {
+        Timber.i("Back pressed in main view")
         view?.run {
             if (isRootView) default()
             else popView()
@@ -67,6 +72,7 @@ class MainPresenter @Inject constructor(
 
     fun onTabSelected(index: Int, wasSelected: Boolean): Boolean {
         return view?.run {
+            Timber.i("Switch main tab index: $index, reselected: $wasSelected")
             if (wasSelected) {
                 notifyMenuViewReselected()
                 false
@@ -78,15 +84,25 @@ class MainPresenter @Inject constructor(
     }
 
     fun onLoginSelected() {
+        Timber.i("Attempt to switch the student after the session expires")
         disposable.add(studentRepository.getCurrentStudent(false)
             .flatMapCompletable { studentRepository.logoutStudent(it) }
             .andThen(studentRepository.getSavedStudents(false))
             .flatMapCompletable {
-                if (it.isNotEmpty()) studentRepository.switchStudent(it[0])
+                if (it.isNotEmpty()) {
+                    Timber.i("Switching current student")
+                    studentRepository.switchStudent(it[0])
+                }
                 else Completable.complete()
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .subscribe({ view?.openLoginView() }, { errorHandler.dispatch(it) }))
+            .subscribe({
+                Timber.i("Switch student result: Open login view")
+                view?.openLoginView()
+            }, {
+                Timber.i("Switch student result: An exception occurred")
+                errorHandler.dispatch(it)
+            }))
     }
 }

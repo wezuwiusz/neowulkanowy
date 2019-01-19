@@ -40,6 +40,7 @@ class GradeDetailsPresenter @Inject constructor(
 
     fun onGradeItemSelected(item: AbstractFlexibleItem<*>?) {
         if (item is GradeDetailsItem) {
+            Timber.i("Select grade item ${item.grade.id}")
             view?.apply {
                 showGradeDialog(item.grade)
                 if (!item.grade.isRead) {
@@ -58,18 +59,29 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     fun onMarkAsReadSelected(): Boolean {
+        Timber.i("Select mark grades as read")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
             .flatMap { gradeRepository.getNewGrades(it.first { item -> item.semesterId == currentSemesterId }) }
             .map { it.map { grade -> grade.apply { isRead = true } } }
-            .flatMapCompletable { gradeRepository.updateGrades(it) }
+            .flatMapCompletable {
+                Timber.i("Mark as read ${it.size} grades")
+                gradeRepository.updateGrades(it)
+            }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .subscribe({ loadData(currentSemesterId, false) }, { errorHandler.dispatch(it) }))
+            .subscribe({
+                Timber.i("Mark as read result: Success")
+                loadData(currentSemesterId, false)
+            }, {
+                Timber.i("Mark as read result: An exception occurred")
+                errorHandler.dispatch(it)
+            }))
         return true
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the grade details")
         view?.notifyParentRefresh()
     }
 
@@ -94,6 +106,7 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     private fun loadData(semesterId: Int, forceRefresh: Boolean) {
+        Timber.i("Loading grade details data started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
             .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
@@ -110,6 +123,7 @@ class GradeDetailsPresenter @Inject constructor(
                 }
             }
             .subscribe({
+                Timber.i("Loading grade details result: Success")
                 view?.run {
                     showEmpty(it.isEmpty())
                     showContent(it.isNotEmpty())
@@ -117,6 +131,7 @@ class GradeDetailsPresenter @Inject constructor(
                 }
                 analytics.logEvent("load_grade_details", mapOf("items" to it.size, "force_refresh" to forceRefresh))
             }) {
+                Timber.i("Loading grade details result: An exception occurred")
                 view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)
             })
@@ -152,10 +167,14 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     private fun updateGrade(grade: Grade) {
+        Timber.i("Attempt to update grade ${grade.id}")
         disposable.add(gradeRepository.updateGrade(grade)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .subscribe({}) { error -> errorHandler.dispatch(error) })
-        Timber.d("Grade ${grade.id} updated")
+            .subscribe({ Timber.i("Update grade result: Success") })
+            { error ->
+                Timber.i("Update grade result: An exception occurred")
+                errorHandler.dispatch(error)
+            })
     }
 }

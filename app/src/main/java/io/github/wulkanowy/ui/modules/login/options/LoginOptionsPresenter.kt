@@ -12,6 +12,7 @@ import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Single
+import timber.log.Timber
 import javax.inject.Inject
 
 class LoginOptionsPresenter @Inject constructor(
@@ -26,7 +27,10 @@ class LoginOptionsPresenter @Inject constructor(
         super.onAttachView(view)
         view.run {
             initView()
-            errorHandler.onStudentDuplicate = { showMessage(it) }
+            errorHandler.onStudentDuplicate = {
+                showMessage(it)
+                Timber.i("The student already registered in the app was selected")
+            }
         }
     }
 
@@ -58,11 +62,14 @@ class LoginOptionsPresenter @Inject constructor(
                     showContent(false)
                     showActionBar(false)
                 }
+                Timber.i("Registration started")
             }
             .subscribe({
                 analytics.logEvent(SIGN_UP, mapOf(SUCCESS to true, "endpoint" to student.endpoint, "message" to "Success", GROUP_ID to student.symbol))
+                Timber.i("Registration result: Success")
                 view?.openMainView()
             }, {
+                Timber.i("Registration result: An exception occurred ")
                 errorHandler.dispatch(it)
                 view?.apply {
                     showProgress(false)

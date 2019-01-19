@@ -29,10 +29,12 @@ class MessageTabPresenter @Inject constructor(
     }
 
     fun onSwipeRefresh() {
+        Timber.i("Force refreshing the $folder message")
         onParentViewLoadData(true)
     }
 
     fun onParentViewLoadData(forceRefresh: Boolean) {
+        Timber.i("Loading $folder message data started")
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
@@ -48,6 +50,7 @@ class MessageTabPresenter @Inject constructor(
                     }
                 }
                 .subscribe({
+                    Timber.i("Loading $folder message result: Success")
                     view?.run {
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
@@ -55,6 +58,7 @@ class MessageTabPresenter @Inject constructor(
                     }
                     analytics.logEvent("load_messages", mapOf("items" to it.size, "folder" to folder.name))
                 }) {
+                    Timber.i("Loading $folder message result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 })
@@ -63,6 +67,7 @@ class MessageTabPresenter @Inject constructor(
 
     fun onMessageItemSelected(item: AbstractFlexibleItem<*>) {
         if (item is MessageItem) {
+            Timber.i("Select message ${item.message.realId} item")
             view?.run {
                 openMessage(item.message.realId)
                 if (item.message.unread == true) {
@@ -75,12 +80,14 @@ class MessageTabPresenter @Inject constructor(
     }
 
     private fun updateMessage(message: Message) {
+        Timber.i("Attempt to update message ${message.realId}")
         disposable.add(messagesRepository.updateMessage(message)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .subscribe({
-                Timber.d("Message ${message.realId} updated")
-            }) { error -> errorHandler.dispatch(error) }
-        )
+            .subscribe({ Timber.d("Update message ${message.realId} result: Success") })
+            { error ->
+                Timber.i("Update message ${message.realId} result: An exception occurred")
+                errorHandler.dispatch(error)
+            })
     }
 }

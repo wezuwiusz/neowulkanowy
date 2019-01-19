@@ -15,6 +15,11 @@ class AboutPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<AboutView>(errorHandler) {
 
+    override fun onAttachView(view: AboutView) {
+        super.onAttachView(view)
+        Timber.i("About view is attached")
+    }
+
     fun onExtraSelect(type: Libs.SpecialButton?) {
         view?.run {
             when (type) {
