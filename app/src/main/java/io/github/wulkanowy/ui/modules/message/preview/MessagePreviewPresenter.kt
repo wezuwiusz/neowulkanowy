@@ -32,7 +32,7 @@ class MessagePreviewPresenter @Inject constructor(
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
-                .flatMap { messagesRepository.getMessage(it.studentId, messageId, true) }
+                .flatMap { messagesRepository.getMessage(it, messageId, true) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally { view?.showProgress(false) }
