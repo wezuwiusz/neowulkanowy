@@ -23,8 +23,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 23
-        versionName "0.6.4"
+        versionCode 24
+        versionName "0.6.5"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true

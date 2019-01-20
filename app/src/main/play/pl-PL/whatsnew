@@ -1,10 +1,6 @@
-Wersja 0.6.4
+Wersja 0.6.5
 
-- naprawiono problemy ze stabilnością podczas logowania na urządzeniach marki Meizu
-- naprawiono problemy ze stabilnością w uwagach
-- naprawiono błąd pobierania podglądu wiadomości, gdy otworzono aplikację z powiadomienia
-- zoptymalizowano pobieranie wiadomości wysłanych
-- poprawiono wyświetlanie odbiorców wiadomości wysłanych
-- naprawiono problem z liczeniem średniej z ocen zawierających minus
+- zmieniono ikonę zmiany semestru w ocenach
+- naprawiono wyświetlanie szczegółowych informacji o błędach
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.4
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.5
