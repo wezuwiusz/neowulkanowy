@@ -5,6 +5,7 @@
 -dontskipnonpubliclibraryclasses
 -dontskipnonpubliclibraryclassmembers
 -dontpreverify
+-dontobfuscate
 -allowaccessmodification
 -repackageclasses ''
 -verbose
