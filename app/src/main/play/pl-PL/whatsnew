@@ -1,7 +1,10 @@
-Wersja 0.6.3
+Wersja 0.6.4
 
-- naprawiono problem ze stabilnością przy odczytywaniu ocen
-- poprawiono komunikat o błędzie podczas przerwy technicznej dziennika
-- (ponownie) naprawiono logowanie w systemach Resman Rzeszów i podobnych
+- naprawiono problemy ze stabilnością podczas logowania na urządzeniach marki Meizu
+- naprawiono problemy ze stabilnością w uwagach
+- naprawiono błąd pobierania podglądu wiadomości, gdy otworzono aplikację z powiadomienia
+- zoptymalizowano pobieranie wiadomości wysłanych
+- poprawiono wyświetlanie odbiorców wiadomości wysłanych
+- naprawiono problem z liczeniem średniej z ocen zawierających minus
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.3
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.4
