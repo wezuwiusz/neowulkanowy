@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.local.StudentLocal
 import io.github.wulkanowy.data.repositories.remote.StudentRemote
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -41,7 +42,9 @@ class StudentRepository @Inject constructor(
     }
 
     fun getCurrentStudent(decryptPass: Boolean = true): Single<Student> {
-        return local.getCurrentStudent(decryptPass).toSingle()
+        return local.getCurrentStudent(decryptPass)
+            .switchIfEmpty(Maybe.error(NoSuchElementException("No current student")))
+            .toSingle()
     }
 
     fun saveStudent(student: Student): Single<Long> {
