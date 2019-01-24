@@ -84,18 +84,20 @@ class SyncWorker : SimpleJobService() {
 
         var error: Throwable? = null
 
+        val notify = prefRepository.isNotificationsEnable
+
         disposable.add(student.getCurrentStudent()
             .flatMap { semester.getCurrentSemester(it, true).map { semester -> semester to it } }
             .flatMapPublisher {
                 Single.merge(
                     listOf(
-                        gradesDetails.getGrades(it.first, true, true),
+                        gradesDetails.getGrades(it.first, true, notify),
                         gradesSummary.getGradesSummary(it.first, true),
                         attendance.getAttendance(it.first, start, end, true),
                         exam.getExams(it.first, start, end, true),
                         timetable.getTimetable(it.first, start, end, true),
-                        message.getMessages(it.second, RECEIVED, true, true),
-                        note.getNotes(it.first, true, true),
+                        message.getMessages(it.second, RECEIVED, true, notify),
+                        note.getNotes(it.first, true, notify),
                         homework.getHomework(it.first, LocalDate.now(), true),
                         homework.getHomework(it.first, LocalDate.now().plusDays(1), true)
                     )
@@ -104,7 +106,7 @@ class SyncWorker : SimpleJobService() {
             .subscribe({}, { error = it }))
 
         return if (null === error) {
-            if (prefRepository.isNotificationsEnable) sendNotifications()
+            if (notify) sendNotifications()
             Timber.d("Synchronization successful")
             RESULT_SUCCESS
         } else {
