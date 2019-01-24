@@ -11,7 +11,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import io.github.wulkanowy.R
-import io.github.wulkanowy.ui.base.BasePagerAdapter
+import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
@@ -26,7 +26,7 @@ class GradeFragment : BaseSessionFragment(), GradeView, MainView.MainChildView, 
     lateinit var presenter: GradePresenter
 
     @Inject
-    lateinit var pagerAdapter: BasePagerAdapter
+    lateinit var pagerAdapter: BaseFragmentPagerAdapter
 
     companion object {
         private const val SAVED_SEMESTER_KEY = "CURRENT_SEMESTER"
@@ -59,10 +59,11 @@ class GradeFragment : BaseSessionFragment(), GradeView, MainView.MainChildView, 
     }
 
     override fun initView() {
-        pagerAdapter.fragments.putAll(mapOf(
-            getString(R.string.all_details) to GradeDetailsFragment.newInstance(),
-            getString(R.string.grade_menu_summary) to GradeSummaryFragment.newInstance()
+        pagerAdapter.addFragmentsWithTitle(mapOf(
+            GradeDetailsFragment.newInstance() to getString(R.string.all_details),
+            GradeSummaryFragment.newInstance() to getString(R.string.grade_menu_summary)
         ))
+
         gradeViewPager.run {
             adapter = pagerAdapter
             setOnSelectPageListener { presenter.onPageSelected(it) }
@@ -117,15 +118,15 @@ class GradeFragment : BaseSessionFragment(), GradeView, MainView.MainChildView, 
     }
 
     override fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean) {
-        (childFragmentManager.fragments[index] as GradeView.GradeChildView).onParentLoadData(semesterId, forceRefresh)
+        (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentLoadData(semesterId, forceRefresh)
     }
 
     override fun notifyChildParentReselected(index: Int) {
-        (pagerAdapter.registeredFragments[index] as? GradeView.GradeChildView)?.onParentReselected()
+        (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentReselected()
     }
 
     override fun notifyChildSemesterChange(index: Int) {
-        (pagerAdapter.registeredFragments[index] as? GradeView.GradeChildView)?.onParentChangeSemester()
+        (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentChangeSemester()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

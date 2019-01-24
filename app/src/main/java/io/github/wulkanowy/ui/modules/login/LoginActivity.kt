@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
-import io.github.wulkanowy.ui.base.BasePagerAdapter
+import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.login.form.LoginFormFragment
 import io.github.wulkanowy.ui.modules.login.options.LoginOptionsFragment
 import io.github.wulkanowy.utils.setOnSelectPageListener
@@ -18,7 +18,7 @@ class LoginActivity : BaseActivity(), LoginView {
     lateinit var presenter: LoginPresenter
 
     @Inject
-    lateinit var loginAdapter: BasePagerAdapter
+    lateinit var loginAdapter: BaseFragmentPagerAdapter
 
     companion object {
         fun getStartIntent(context: Context) = Intent(context, LoginActivity::class.java)
@@ -36,9 +36,9 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun initAdapter() {
-        loginAdapter.fragments.putAll(mapOf(
-            "1" to LoginFormFragment.newInstance(),
-            "2" to LoginOptionsFragment.newInstance()
+        loginAdapter.addFragments(listOf(
+            LoginFormFragment.newInstance(),
+            LoginOptionsFragment.newInstance()
         ))
 
         loginViewpager.run {
@@ -52,7 +52,7 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun notifyOptionsViewLoadData() {
-        (supportFragmentManager.fragments[1] as? LoginOptionsFragment)?.onParentLoadData()
+        (loginAdapter.getFragmentInstance(1) as? LoginOptionsFragment)?.onParentLoadData()
     }
 
     fun onChildFragmentSwitchOptions() {

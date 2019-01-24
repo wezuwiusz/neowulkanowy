@@ -11,7 +11,7 @@ import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.RE
 import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.SENT
 import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.TRASHED
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.base.BasePagerAdapter
+import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.tab.MessageTabFragment
 import io.github.wulkanowy.utils.setOnSelectPageListener
@@ -24,7 +24,7 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
     lateinit var presenter: MessagePresenter
 
     @Inject
-    lateinit var pagerAdapter: BasePagerAdapter
+    lateinit var pagerAdapter: BaseFragmentPagerAdapter
 
     companion object {
         fun newInstance() = MessageFragment()
@@ -46,11 +46,12 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
     }
 
     override fun initView() {
-        pagerAdapter.fragments.putAll(mapOf(
-            getString(R.string.message_inbox) to MessageTabFragment.newInstance(RECEIVED),
-            getString(R.string.message_sent) to MessageTabFragment.newInstance(SENT),
-            getString(R.string.message_trash) to MessageTabFragment.newInstance(TRASHED)
+        pagerAdapter.addFragmentsWithTitle(mapOf(
+            MessageTabFragment.newInstance(RECEIVED) to getString(R.string.message_inbox),
+            MessageTabFragment.newInstance(SENT) to getString(R.string.message_sent),
+            MessageTabFragment.newInstance(TRASHED) to getString(R.string.message_trash)
         ))
+
         messageViewPager.run {
             adapter = pagerAdapter
             offscreenPageLimit = 2
@@ -73,7 +74,7 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
     }
 
     override fun notifyChildLoadData(index: Int, forceRefresh: Boolean) {
-        (childFragmentManager.fragments[index] as MessageView.MessageChildView).onParentLoadData(forceRefresh)
+        (pagerAdapter.getFragmentInstance(index) as? MessageView.MessageChildView)?.onParentLoadData(forceRefresh)
     }
 
     override fun onDestroyView() {

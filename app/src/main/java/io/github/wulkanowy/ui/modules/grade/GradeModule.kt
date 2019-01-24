@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.wulkanowy.di.scopes.PerChildFragment
 import io.github.wulkanowy.di.scopes.PerFragment
-import io.github.wulkanowy.ui.base.BasePagerAdapter
+import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
 
@@ -18,7 +18,7 @@ abstract class GradeModule {
         @JvmStatic
         @PerFragment
         @Provides
-        fun provideGradePagerAdapter(fragment: GradeFragment) = BasePagerAdapter(fragment.childFragmentManager)
+        fun provideGradeAdapter(fragment: GradeFragment) = BaseFragmentPagerAdapter(fragment.childFragmentManager)
     }
 
     @PerChildFragment
