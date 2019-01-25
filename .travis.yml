@@ -41,7 +41,7 @@ before_script:
     - "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | sudo bash"
 
 script:
-  - ./gradlew build -x test -x lint -x fabricGenerateResourcesRelease -x packageRelease --stacktrace --daemon
+  - ./gradlew dependencies --stacktrace --daemon
   - fossa --no-ansi || true
   - ./gradlew lint -x fabricGenerateResourcesRelease --stacktrace --daemon
   - ./gradlew test -x fabricGenerateResourcesRelease --stacktrace --daemon

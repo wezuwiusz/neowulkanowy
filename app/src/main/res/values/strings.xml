@@ -167,6 +167,15 @@
     <!--Homework-->
     <string name="homework_no_items">No info about homework</string>
 
+    <!--Lucky number-->
+    <string name="lucky_number_title">Lucky number</string>
+    <string name="lucky_number_header">Today\'s lucky number is</string>
+    <string name="lucky_number_empty">No info about the lucky number</string>
+
+    <!--Lucky number notify-->
+    <string name="notify_lucky_number_channel">New lucky numbers</string>
+    <string name="notify_lucky_number_new_item_title">Lucky number for today</string>
+    <string name="notify_lucky_number_new_item">Today\'s lucky number is: %d</string>
 
     <!--Account-->
     <string name="account_add_new">Add account</string>

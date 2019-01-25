@@ -184,6 +184,15 @@
     <!--Homework-->
     <string name="homework_no_items">Brak zadań domowych</string>
 
+    <!--Lucky number-->
+    <string name="lucky_number_title">Szczęśliwy numerek</string>
+    <string name="lucky_number_header">Dzisiejszym szczęśliwym numerkiem jest</string>
+    <string name="lucky_number_empty">Brak informacji o szczęśliwym numerku</string>
+
+    <!--Lucky number notify-->
+    <string name="notify_lucky_number_channel">Nowe szczęśliwe numerki</string>
+    <string name="notify_lucky_number_new_item_title">Szczęśliwy numerek na dzisiaj</string>
+    <string name="notify_lucky_number_new_item">Dziś szczęśliwym numerkiem jest: %d</string>
 
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>

@@ -8,6 +8,7 @@ import io.github.wulkanowy.data.repositories.ExamRepository
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.GradeSummaryRepository
 import io.github.wulkanowy.data.repositories.HomeworkRepository
+import io.github.wulkanowy.data.repositories.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.MessagesRepository
 import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.repositories.NoteRepository
@@ -16,12 +17,13 @@ import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.services.notification.GradeNotification
+import io.github.wulkanowy.services.notification.LuckyNumberNotification
 import io.github.wulkanowy.services.notification.MessageNotification
 import io.github.wulkanowy.services.notification.NoteNotification
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.monday
-import io.reactivex.Single
+import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import org.threeten.bp.LocalDate
 import timber.log.Timber
@@ -60,6 +62,9 @@ class SyncWorker : SimpleJobService() {
     lateinit var homework: HomeworkRepository
 
     @Inject
+    lateinit var luckyNumber: LuckyNumberRepository
+
+    @Inject
     lateinit var prefRepository: PreferencesRepository
 
     private val disposable = CompositeDisposable()
@@ -88,18 +93,19 @@ class SyncWorker : SimpleJobService() {
 
         disposable.add(student.getCurrentStudent()
             .flatMap { semester.getCurrentSemester(it, true).map { semester -> semester to it } }
-            .flatMapPublisher {
-                Single.merge(
+            .flatMapCompletable {
+                Completable.merge(
                     listOf(
-                        gradesDetails.getGrades(it.first, true, notify),
-                        gradesSummary.getGradesSummary(it.first, true),
-                        attendance.getAttendance(it.first, start, end, true),
-                        exam.getExams(it.first, start, end, true),
-                        timetable.getTimetable(it.first, start, end, true),
-                        message.getMessages(it.second, RECEIVED, true, notify),
-                        note.getNotes(it.first, true, notify),
-                        homework.getHomework(it.first, LocalDate.now(), true),
-                        homework.getHomework(it.first, LocalDate.now().plusDays(1), true)
+                        gradesDetails.getGrades(it.first, true, notify).ignoreElement(),
+                        gradesSummary.getGradesSummary(it.first, true).ignoreElement(),
+                        attendance.getAttendance(it.first, start, end, true).ignoreElement(),
+                        exam.getExams(it.first, start, end, true).ignoreElement(),
+                        timetable.getTimetable(it.first, start, end, true).ignoreElement(),
+                        message.getMessages(it.second, RECEIVED, true, notify).ignoreElement(),
+                        note.getNotes(it.first, true, notify).ignoreElement(),
+                        homework.getHomework(it.first, LocalDate.now(), true).ignoreElement(),
+                        homework.getHomework(it.first, LocalDate.now().plusDays(1), true).ignoreElement(),
+                        luckyNumber.getLuckyNumber(it.first, true, notify).ignoreElement()
                     )
                 )
             }
@@ -119,6 +125,7 @@ class SyncWorker : SimpleJobService() {
         sendGradeNotifications()
         sendMessageNotification()
         sendNoteNotification()
+        sendLuckyNumberNotification()
     }
 
     private fun sendGradeNotifications() {
@@ -168,6 +175,19 @@ class SyncWorker : SimpleJobService() {
             .flatMapCompletable { note.updateNotes(it) }
             .subscribe({}, { Timber.e("Notifications sending failed") })
         )
+    }
+
+    private fun sendLuckyNumberNotification() {
+        disposable.add(student.getCurrentStudent()
+            .flatMap { semester.getCurrentSemester(it) }
+            .flatMapMaybe { luckyNumber.getLuckyNumber(it) }
+            .filter { !it.isNotified }
+            .doOnSuccess {
+                LuckyNumberNotification(applicationContext).sendNotification(it)
+            }
+            .map { it.apply { isNotified = true } }
+            .flatMapCompletable { luckyNumber.updateLuckyNumber(it) }
+            .subscribe({}, { Timber.e("Lucky number notification sending failed") }))
     }
 
     override fun onDestroy() {

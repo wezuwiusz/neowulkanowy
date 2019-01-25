@@ -113,4 +113,8 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideSubjectDao(database: AppDatabase) = database.subjectDao
+
+    @Singleton
+    @Provides
+    fun provideLuckyNumberDao(database: AppDatabase) = database.luckyNumberDao
 }
