@@ -11,24 +11,16 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
-    playAccountConfigs {
-        defaultAccountConfig {
-            serviceAccountEmail = System.getenv("PLAY_SERVICE_ACCOUNT_EMAIL")
-            pk12File = file('key.p12')
-        }
-    }
-
     defaultConfig {
         applicationId "io.github.wulkanowy"
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 24
-        versionName "0.6.5"
+        versionCode 25
+        versionName "0.6.6"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        playAccountConfig = playAccountConfigs.defaultAccountConfig
         manifestPlaceholders = [
                 fabric_api_key: System.getenv("FABRIC_API_KEY") ?: "null",
                 crashlytics_enabled: project.hasProperty("enableCrashlytics")
@@ -72,14 +64,16 @@ androidExtensions {
 }
 
 play {
+    serviceAccountEmail = System.getenv("PLAY_SERVICE_ACCOUNT_EMAIL") ?: "jan@fakelog.cf"
+    serviceAccountCredentials = file('key.p12')
+    defaultToAppBundles = true
     track = 'alpha'
-    uploadImages = false
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation('io.github.wulkanowy:api:0.6.4') { exclude module: "threetenbp" }
+    implementation('io.github.wulkanowy:api:0.6.6') { exclude module: "threetenbp" }
 
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.appcompat:appcompat:1.0.2"

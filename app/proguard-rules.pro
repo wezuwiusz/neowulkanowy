@@ -14,7 +14,6 @@
 #Config for anallitycs
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
--renamesourcefileattribute SourceFile
 -keep class com.crashlytics.** {*;}
 -keep public class * extends java.lang.Exception
 -dontwarn com.crashlytics.**

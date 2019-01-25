@@ -11,6 +11,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+#branches:
+#  only:
+#  - master
+
 android:
  licenses:
     - android-sdk-preview-license-.+
@@ -56,7 +60,7 @@ script:
       gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/google-services.json.gpg;
       gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg;
       gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg;
-      ./gradlew publishRelease -PenableCrashlytics --stacktrace;
+      ./gradlew publish -PenableCrashlytics --stacktrace;
     fi
 
 after_success:

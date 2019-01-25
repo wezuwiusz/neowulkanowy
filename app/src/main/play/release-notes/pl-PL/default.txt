@@ -1,0 +1,7 @@
+Wersja 0.6.6
+
+- poprawiono problemy ze stabilnością w widoku ocen i wiadomości
+- naprawiono wyświetlanie powiadomień po ich ponownym włączeniu po długim czasie
+- ograniczono ilość zbędnych informacji na widżecie planu lekcji
+
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.6
