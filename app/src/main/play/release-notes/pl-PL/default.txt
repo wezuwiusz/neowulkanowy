@@ -1,6 +1,7 @@
-Wersja 0.6.5
+Wersja 0.6.6
 
-- zmieniono ikonę zmiany semestru w ocenach
-- naprawiono wyświetlanie szczegółowych informacji o błędach
+- poprawiono problemy ze stabilnością w widoku ocen i wiadomości
+- naprawiono wyświetlanie powiadomień po ich ponownym włączeniu po długim czasie
+- ograniczono ilość zbędnych informacji na widżecie planu lekcji
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.5
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.6
