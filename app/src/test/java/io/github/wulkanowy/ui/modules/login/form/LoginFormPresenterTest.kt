@@ -37,7 +37,7 @@ class LoginFormPresenterTest {
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
         clearInvocations(repository, loginFormView)
-        presenter = LoginFormPresenter(TestSchedulersProvider(), errorHandler, repository, analytics)
+        presenter = LoginFormPresenter(TestSchedulersProvider(), errorHandler, repository, analytics, false)
         presenter.onAttachView(loginFormView)
     }
 
@@ -48,42 +48,29 @@ class LoginFormPresenterTest {
 
     @Test
     fun emptyNicknameLoginTest() {
-        presenter.attemptLogin("", "test123", "test", "https://fakelog.cf")
+        presenter.attemptLogin("", "test123", "https://fakelog.cf")
 
-        verify(loginFormView).setErrorNicknameRequired()
+        verify(loginFormView).setErrorNameRequired()
         verify(loginFormView, never()).setErrorPassRequired(false)
-        verify(loginFormView, never()).setErrorSymbolRequire()
         verify(loginFormView, never()).setErrorPassInvalid(false)
     }
 
     @Test
     fun emptyPassLoginTest() {
-        presenter.attemptLogin("@", "", "test", "https://fakelog.cf")
+        presenter.attemptLogin("@", "", "https://fakelog.cf")
 
-        verify(loginFormView, never()).setErrorNicknameRequired()
+        verify(loginFormView, never()).setErrorNameRequired()
         verify(loginFormView).setErrorPassRequired(true)
-        verify(loginFormView, never()).setErrorSymbolRequire()
         verify(loginFormView, never()).setErrorPassInvalid(false)
     }
 
     @Test
     fun invalidPassLoginTest() {
-        presenter.attemptLogin("@", "123", "test", "https://fakelog.cf")
+        presenter.attemptLogin("@", "123", "https://fakelog.cf")
 
-        verify(loginFormView, never()).setErrorNicknameRequired()
+        verify(loginFormView, never()).setErrorNameRequired()
         verify(loginFormView, never()).setErrorPassRequired(true)
-        verify(loginFormView, never()).setErrorSymbolRequire()
         verify(loginFormView).setErrorPassInvalid(true)
-    }
-
-    @Test
-    fun emptySymbolLoginTest() {
-        doReturn(Single.just(emptyList<Student>()))
-            .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
-        presenter.attemptLogin("@", "123456", "", "https://fakelog.cf")
-        presenter.attemptLogin("@", "123456", "", "https://fakelog.cf")
-
-        verify(loginFormView).setErrorSymbolRequire()
     }
 
     @Test
@@ -91,44 +78,40 @@ class LoginFormPresenterTest {
         val studentTest = Student(email = "test@", password = "123", endpoint = "https://fakelog.cf", loginType = "AUTO")
         doReturn(Single.just(listOf(studentTest)))
             .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
-        presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
+        presenter.attemptLogin("@", "123456", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()
         verify(loginFormView).showProgress(true)
         verify(loginFormView).showProgress(false)
         verify(loginFormView).showContent(false)
         verify(loginFormView).showContent(true)
-        verify(loginFormView).switchOptionsView()
     }
 
     @Test
     fun loginEmptyTest() {
         doReturn(Single.just(emptyList<Student>()))
             .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
-        presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
+        presenter.attemptLogin("@", "123456", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()
         verify(loginFormView).showProgress(true)
         verify(loginFormView).showProgress(false)
         verify(loginFormView).showContent(false)
         verify(loginFormView).showContent(true)
-        verify(loginFormView).showSymbolInput()
     }
 
     @Test
     fun loginEmptyTwiceTest() {
         doReturn(Single.just(emptyList<Student>()))
             .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
-        presenter.attemptLogin("@", "123456", "", "https://fakelog.cf")
-        presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
+        presenter.attemptLogin("@", "123456", "https://fakelog.cf")
+        presenter.attemptLogin("@", "123456", "https://fakelog.cf")
 
         verify(loginFormView, times(2)).hideSoftKeyboard()
         verify(loginFormView, times(2)).showProgress(true)
         verify(loginFormView, times(2)).showProgress(false)
         verify(loginFormView, times(2)).showContent(false)
         verify(loginFormView, times(2)).showContent(true)
-        verify(loginFormView, times(2)).showSymbolInput()
-        verify(loginFormView).setErrorSymbolIncorrect()
     }
 
     @Test
@@ -136,7 +119,7 @@ class LoginFormPresenterTest {
         val testException = RuntimeException("test")
         doReturn(Single.error<List<Student>>(testException))
             .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
-        presenter.attemptLogin("@", "123456", "test", "https://fakelog.cf")
+        presenter.attemptLogin("@", "123456", "https://fakelog.cf")
 
         verify(loginFormView).hideSoftKeyboard()
         verify(loginFormView).showProgress(true)

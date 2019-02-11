@@ -6,7 +6,6 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.clearInvocations
 import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
@@ -32,25 +31,7 @@ class LoginPresenterTest {
     @Test
     fun initViewTest() {
         verify(loginView).initAdapter()
-        verify(loginView).hideActionBar()
-    }
-
-    @Test
-    fun onPageSelectedTest() {
-        presenter.onPageSelected(1)
-        verify(loginView).notifyOptionsViewLoadData()
-    }
-
-    @Test
-    fun onPageSelectedNeverTest() {
-        presenter.onPageSelected(0)
-        verify(loginView, never()).notifyOptionsViewLoadData()
-    }
-
-    @Test
-    fun onSwitchFragmentTest() {
-        presenter.onChildViewSwitchOptions()
-        verify(loginView).switchView(1)
+        verify(loginView).showActionBar(false)
     }
 
     @Test
@@ -59,7 +40,6 @@ class LoginPresenterTest {
         doReturn(1).`when`(loginView).currentViewIndex
         presenter.onBackPressed { }
         verify(loginView).switchView(0)
-        verify(loginView).hideActionBar()
     }
 
     @Test

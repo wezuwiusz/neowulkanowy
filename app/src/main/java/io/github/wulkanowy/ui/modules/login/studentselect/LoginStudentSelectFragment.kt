@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.login.options
+package io.github.wulkanowy.ui.modules.login.studentselect
 
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -13,31 +13,35 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.utils.setOnItemClickListener
-import kotlinx.android.synthetic.main.fragment_login_options.*
+import kotlinx.android.synthetic.main.fragment_login_student_select.*
+import java.io.Serializable
 import javax.inject.Inject
 
-class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
+class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
 
     @Inject
-    lateinit var presenter: LoginOptionsPresenter
+    lateinit var presenter: LoginStudentSelectPresenter
 
     @Inject
     lateinit var loginAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
 
     companion object {
-        fun newInstance() = LoginOptionsFragment()
+        const val SAVED_STUDENTS = "STUDENTS"
+
+        fun newInstance() = LoginStudentSelectFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_login_options, container, false)
+        return inflater.inflate(R.layout.fragment_login_student_select, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.onAttachView(this)
+        presenter.onAttachView(this, savedInstanceState?.getSerializable(SAVED_STUDENTS))
     }
 
     override fun initView() {
@@ -49,11 +53,7 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
         }
     }
 
-    fun onParentLoadData() {
-        presenter.onParentViewLoadData()
-    }
-
-    override fun updateData(data: List<LoginOptionsItem>) {
+    override fun updateData(data: List<LoginStudentSelectItem>) {
         loginAdapter.updateDataSet(data, true)
     }
 
@@ -74,6 +74,15 @@ class LoginOptionsFragment : BaseFragment(), LoginOptionsView {
 
     override fun showActionBar(show: Boolean) {
         (activity as? AppCompatActivity)?.supportActionBar?.run { if (show) show() else hide() }
+    }
+
+    fun onParentInitStudentSelectFragment(students: List<Student>) {
+        presenter.onParentInitStudentSelectView(students)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable(SAVED_STUDENTS, presenter.students as Serializable)
     }
 
     override fun onDestroyView() {

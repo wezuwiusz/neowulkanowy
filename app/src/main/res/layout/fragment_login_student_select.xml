@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -18,8 +19,8 @@
             android:layout_below="@id/loginOptionsProgressText"
             android:layout_centerHorizontal="true"
             android:indeterminate="true"
-            android:minHeight="30dp"
-            android:minWidth="220dp" />
+            android:minWidth="220dp"
+            android:minHeight="30dp" />
 
         <TextView
             android:id="@+id/loginOptionsProgressText"
@@ -33,5 +34,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/loginOptionsRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_login_options" />
 </LinearLayout>

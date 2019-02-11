@@ -46,6 +46,6 @@ class SettingsPresenter @Inject constructor(
                 chuckCollector.showNotification(preferencesRepository.isShowChuckerNotification)
             }
         }
-        analytics.logEvent("setting_changed", mapOf("name" to key))
+        analytics.logEvent("setting_changed", "name" to key)
     }
 }

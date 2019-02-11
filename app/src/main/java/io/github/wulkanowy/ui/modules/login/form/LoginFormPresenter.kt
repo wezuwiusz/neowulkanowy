@@ -1,7 +1,5 @@
 package io.github.wulkanowy.ui.modules.login.form
 
-import com.google.firebase.analytics.FirebaseAnalytics.Event.SIGN_UP
-import com.google.firebase.analytics.FirebaseAnalytics.Param.GROUP_ID
 import com.google.firebase.analytics.FirebaseAnalytics.Param.SUCCESS
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -10,15 +8,15 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 class LoginFormPresenter @Inject constructor(
     private val schedulers: SchedulersProvider,
     private val errorHandler: LoginErrorHandler,
     private val studentRepository: StudentRepository,
-    private val analytics: FirebaseAnalyticsHelper
+    private val analytics: FirebaseAnalyticsHelper,
+    @param:Named("isDebug") private val isDebug: Boolean
 ) : BasePresenter<LoginFormView>(errorHandler) {
-
-    private var wasEmpty = false
 
     override fun onAttachView(view: LoginFormView) {
         super.onAttachView(view)
@@ -33,10 +31,10 @@ class LoginFormPresenter @Inject constructor(
         }
     }
 
-    fun attemptLogin(email: String, password: String, symbol: String, endpoint: String) {
-        if (!validateCredentials(email, password, symbol)) return
+    fun attemptLogin(email: String, password: String, endpoint: String) {
+        if (!validateCredentials(email, password)) return
 
-        disposable.add(studentRepository.getStudents(email, password, symbol, endpoint)
+        disposable.add(studentRepository.getStudents(email, password, endpoint)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {
@@ -54,45 +52,26 @@ class LoginFormPresenter @Inject constructor(
                 }
             }
             .subscribe({
-                view?.run {
-                    if (it.isEmpty() && !wasEmpty) {
-                        showSymbolInput()
-                        wasEmpty = true
-                        analytics.logEvent("sign_up_send", mapOf(SUCCESS to false, "students" to 0, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "null" }))
-                        Timber.i("Login result: Empty student list")
-                    } else if (it.isEmpty() && wasEmpty) {
-                        showSymbolInput()
-                        setErrorSymbolIncorrect()
-                        analytics.logEvent("sign_up_send", mapOf(SUCCESS to false, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol.ifEmpty { "null" }))
-                        Timber.i("Login result: Wrong symbol")
-                    } else {
-                        analytics.logEvent("sign_up_send", mapOf(SUCCESS to true, "students" to it.size, "endpoint" to endpoint, GROUP_ID to symbol))
-                        Timber.i("Login result: Success")
-                        switchOptionsView()
-                    }
-                }
+                Timber.i("Login result: Success")
+                analytics.logEvent("registration_form", SUCCESS to true, "students" to it.size, "endpoint" to endpoint, "error" to "No error")
+                view?.notifyParentAccountLogged(it)
             }, {
-                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to false, "endpoint" to endpoint, "message" to it.localizedMessage, GROUP_ID to symbol.ifEmpty { "null" }))
                 Timber.i("Login result: An exception occurred")
+                analytics.logEvent("registration_form", SUCCESS to false, "students" to -1, "endpoint" to endpoint, "error" to it.localizedMessage)
                 errorHandler.dispatch(it)
             }))
     }
 
-    private fun validateCredentials(login: String, password: String, symbol: String): Boolean {
+    private fun validateCredentials(login: String, password: String): Boolean {
         var isCorrect = true
 
         if (login.isEmpty()) {
-            view?.setErrorNicknameRequired()
+            view?.setErrorNameRequired()
             isCorrect = false
         }
 
         if (password.isEmpty()) {
             view?.setErrorPassRequired(focus = isCorrect)
-            isCorrect = false
-        }
-
-        if (symbol.isEmpty() && wasEmpty) {
-            view?.setErrorSymbolRequire()
             isCorrect = false
         }
 

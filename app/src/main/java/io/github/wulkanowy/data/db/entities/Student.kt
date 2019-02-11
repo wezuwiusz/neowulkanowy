@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "Students", indices = [Index(value = ["email", "symbol", "student_id", "school_id"], unique = true)])
 data class Student(
@@ -35,4 +36,4 @@ data class Student(
 
     @ColumnInfo(name = "is_current")
     var isCurrent: Boolean = false
-)
+) : Serializable

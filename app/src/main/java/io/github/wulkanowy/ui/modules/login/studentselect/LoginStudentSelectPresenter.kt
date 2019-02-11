@@ -1,7 +1,5 @@
-package io.github.wulkanowy.ui.modules.login.options
+package io.github.wulkanowy.ui.modules.login.studentselect
 
-import com.google.firebase.analytics.FirebaseAnalytics.Event.SIGN_UP
-import com.google.firebase.analytics.FirebaseAnalytics.Param.GROUP_ID
 import com.google.firebase.analytics.FirebaseAnalytics.Param.SUCCESS
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Student
@@ -13,17 +11,20 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Single
 import timber.log.Timber
+import java.io.Serializable
 import javax.inject.Inject
 
-class LoginOptionsPresenter @Inject constructor(
+class LoginStudentSelectPresenter @Inject constructor(
     private val errorHandler: LoginErrorHandler,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LoginOptionsView>(errorHandler) {
+) : BasePresenter<LoginStudentSelectView>(errorHandler) {
 
-    override fun onAttachView(view: LoginOptionsView) {
+    var students = emptyList<Student>()
+
+    fun onAttachView(view: LoginStudentSelectView, students: Serializable?) {
         super.onAttachView(view)
         view.run {
             initView()
@@ -32,19 +33,26 @@ class LoginOptionsPresenter @Inject constructor(
                 Timber.i("The student already registered in the app was selected")
             }
         }
+
+        if (students is List<*> && students.isNotEmpty()) {
+            loadData(students.filterIsInstance<Student>())
+        }
     }
 
-    fun onParentViewLoadData() {
-        disposable.add(studentRepository.cachedStudents
-            .observeOn(schedulers.mainThread)
-            .subscribeOn(schedulers.backgroundThread)
-            .doOnSubscribe { view?.showActionBar(true) }
-            .subscribe({ view?.updateData(it.map { student -> LoginOptionsItem(student) }) }, { errorHandler.dispatch(it) }))
+    fun onParentInitStudentSelectView(students: List<Student>) {
+        loadData(students)
     }
 
     fun onItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is LoginOptionsItem) {
+        if (item is LoginStudentSelectItem) {
             registerStudent(item.student)
+        }
+    }
+
+    private fun loadData(students: List<Student>) {
+        this.students = students
+        view?.apply {
+            updateData(students.map { LoginStudentSelectItem(it) })
         }
     }
 
@@ -65,10 +73,11 @@ class LoginOptionsPresenter @Inject constructor(
                 Timber.i("Registration started")
             }
             .subscribe({
-                analytics.logEvent(SIGN_UP, mapOf(SUCCESS to true, "endpoint" to student.endpoint, "message" to "Success", GROUP_ID to student.symbol))
+                analytics.logEvent("registration_student_select", SUCCESS to true, "endpoint" to student.endpoint, "symbol" to student.symbol, "error" to "No error")
                 Timber.i("Registration result: Success")
                 view?.openMainView()
             }, {
+                analytics.logEvent("registration_student_select", SUCCESS to false, "endpoint" to student.endpoint, "symbol" to student.symbol, "error" to it.localizedMessage)
                 Timber.i("Registration result: An exception occurred ")
                 errorHandler.dispatch(it)
                 view?.apply {

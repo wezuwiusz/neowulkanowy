@@ -7,7 +7,6 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.reactivex.MaybeSource
 import javax.inject.Inject
 
 class LuckyNumberPresenter @Inject constructor(
@@ -45,7 +44,7 @@ class LuckyNumberPresenter @Inject constructor(
                         showContent(true)
                         showEmpty(false)
                     }
-                    analytics.logEvent("load_lucky_number", mapOf("lucky_number" to it.luckyNumber, "force_refresh" to forceRefresh))
+                    analytics.logEvent("load_lucky_number", "lucky_number" to it.luckyNumber, "force_refresh" to forceRefresh)
                 }, {
                     view?.run { showEmpty(isViewEmpty()) }
                     errorHandler.dispatch(it)

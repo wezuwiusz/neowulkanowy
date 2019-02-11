@@ -32,12 +32,12 @@ class MainPresenter @Inject constructor(
         }
         serviceHelper.startFullSyncService()
 
-        analytics.logEvent(APP_OPEN, mapOf(DESTINATION to when (initMenuIndex) {
+        analytics.logEvent(APP_OPEN, DESTINATION to when (initMenuIndex) {
             1 -> "Grades"
             3 -> "Timetable"
             4 -> "More"
             else -> "User action"
-        }))
+        })
     }
 
     fun onViewChange() {

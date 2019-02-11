@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.login.options
+package io.github.wulkanowy.ui.modules.login.studentselect
 
 import android.view.View
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -10,7 +10,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_login_options.view.*
 
-class LoginOptionsItem(val student: Student) : AbstractFlexibleItem<LoginOptionsItem.ItemViewHolder>() {
+class LoginStudentSelectItem(val student: Student) : AbstractFlexibleItem<LoginStudentSelectItem.ItemViewHolder>() {
 
     override fun getLayoutRes(): Int = R.layout.item_login_options
 
@@ -27,7 +27,7 @@ class LoginOptionsItem(val student: Student) : AbstractFlexibleItem<LoginOptions
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as LoginOptionsItem
+        other as LoginStudentSelectItem
 
         if (student != other.student) return false
 

@@ -8,9 +8,11 @@ import dagger.Module
 import dagger.Provides
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import io.github.wulkanowy.BuildConfig.DEBUG
 import io.github.wulkanowy.WulkanowyApp
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -34,4 +36,9 @@ internal class AppModule {
     @Singleton
     @Provides
     fun provideFirebaseAnalyticsHelper(context: Context) = FirebaseAnalyticsHelper(FirebaseAnalytics.getInstance(context))
+
+    @Singleton
+    @Named("isDebug")
+    @Provides
+    fun provideIsDebug() = DEBUG
 }

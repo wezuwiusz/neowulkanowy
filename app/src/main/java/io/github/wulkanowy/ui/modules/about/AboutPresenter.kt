@@ -25,12 +25,12 @@ class AboutPresenter @Inject constructor(
             when (type) {
                 SPECIAL1 -> {
                     Timber.i("Opening github page")
-                    analytics.logEvent("open_page", mapOf("name" to "github"))
+                    analytics.logEvent("open_page", "name" to "github")
                     openSourceWebView()
                 }
                 SPECIAL2 -> {
                     Timber.i("Opening issues page")
-                    analytics.logEvent("open_page", mapOf("name" to "issues"))
+                    analytics.logEvent("open_page", "name" to "issues")
                     openIssuesWebView()
                 }
                 SPECIAL3 -> {

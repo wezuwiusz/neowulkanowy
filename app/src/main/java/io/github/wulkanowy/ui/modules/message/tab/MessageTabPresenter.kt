@@ -56,7 +56,7 @@ class MessageTabPresenter @Inject constructor(
                         showContent(it.isNotEmpty())
                         updateData(it)
                     }
-                    analytics.logEvent("load_messages", mapOf("items" to it.size, "folder" to folder.name))
+                    analytics.logEvent("load_messages", "items" to it.size, "folder" to folder.name)
                 }) {
                     Timber.i("Loading $folder message result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }

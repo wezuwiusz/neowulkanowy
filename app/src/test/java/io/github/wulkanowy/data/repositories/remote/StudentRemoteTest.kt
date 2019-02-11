@@ -1,7 +1,7 @@
 package io.github.wulkanowy.data.repositories.remote
 
 import io.github.wulkanowy.api.Api
-import io.github.wulkanowy.api.register.Pupil
+import io.github.wulkanowy.api.register.Student
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -22,8 +22,8 @@ class StudentRemoteTest {
 
     @Test
     fun testRemoteAll() {
-        doReturn(Single.just(listOf(Pupil("", "", 1, "test", "", "", "", Api.LoginType.AUTO))))
-            .`when`(mockApi).getPupils()
+        doReturn(Single.just(listOf(Student("", "", 1, "test", "", "", Api.LoginType.AUTO))))
+            .`when`(mockApi).getStudents()
 
         val students = StudentRemote(mockApi).getStudents("", "", "").blockingGet()
         assertEquals(1, students.size)

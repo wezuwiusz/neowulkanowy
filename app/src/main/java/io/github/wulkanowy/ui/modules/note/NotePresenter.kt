@@ -54,7 +54,7 @@ class NotePresenter @Inject constructor(
                     showEmpty(it.isEmpty())
                     showContent(it.isNotEmpty())
                 }
-                analytics.logEvent("load_note", mapOf("items" to it.size, "force_refresh" to forceRefresh))
+                analytics.logEvent("load_note", "items" to it.size, "force_refresh" to forceRefresh)
             }, {
                 Timber.i("Loading note result: An exception occurred")
                 view?.run { showEmpty(isViewEmpty) }

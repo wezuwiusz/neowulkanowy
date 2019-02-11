@@ -57,7 +57,7 @@ class GradePresenter @Inject constructor(
                 notifyChildrenSemesterChange()
                 loadChild(it.currentPageIndex)
             }
-            analytics.logEvent("changed_semester", mapOf("number" to index + 1))
+            analytics.logEvent("changed_semester", "number" to index + 1)
         }
     }
 

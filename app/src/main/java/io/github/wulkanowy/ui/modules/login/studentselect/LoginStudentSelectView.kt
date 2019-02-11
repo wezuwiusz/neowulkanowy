@@ -1,12 +1,12 @@
-package io.github.wulkanowy.ui.modules.login.options
+package io.github.wulkanowy.ui.modules.login.studentselect
 
 import io.github.wulkanowy.ui.base.BaseView
 
-interface LoginOptionsView : BaseView {
+interface LoginStudentSelectView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<LoginOptionsItem>)
+    fun updateData(data: List<LoginStudentSelectItem>)
 
     fun openMainView()
 

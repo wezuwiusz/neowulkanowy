@@ -72,7 +72,7 @@ class GradeSummaryPresenter @Inject constructor(
                     showContent(it.first.isNotEmpty())
                     updateData(it.first, it.second)
                 }
-                analytics.logEvent("load_grade_summary", mapOf("items" to it.first.size, "force_refresh" to forceRefresh))
+                analytics.logEvent("load_grade_summary", "items" to it.first.size, "force_refresh" to forceRefresh)
             }) {
                 Timber.i("Loading grade summary result: An exception occurred")
                 view?.run { showEmpty(isViewEmpty) }

@@ -99,7 +99,7 @@ class TimetablePresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_timetable", mapOf("items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd")))
+                    analytics.logEvent("load_timetable", "items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd"))
                 }) {
                     Timber.i("Loading timetable result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }

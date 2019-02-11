@@ -83,7 +83,7 @@ class AttendanceSummaryPresenter @Inject constructor(
                         showContent(it.first.isNotEmpty())
                         updateDataSet(it.first, it.second)
                     }
-                    analytics.logEvent("load_attendance_summary", mapOf("items" to it.first.size, "force_refresh" to forceRefresh, "item_id" to subjectId))
+                    analytics.logEvent("load_attendance_summary", "items" to it.first.size, "force_refresh" to forceRefresh, "item_id" to subjectId)
                 }) {
                     Timber.i("Loading attendance summary result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }
