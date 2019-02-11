@@ -38,11 +38,14 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun initAdapter() {
-        loginAdapter.addFragments(listOf(
-            LoginFormFragment.newInstance(),
-            LoginSymbolFragment.newInstance(),
-            LoginStudentSelectFragment.newInstance()
-        ))
+        loginAdapter.apply {
+            containerId = loginViewpager.id
+            addFragments(listOf(
+                LoginFormFragment.newInstance(),
+                LoginSymbolFragment.newInstance(),
+                LoginStudentSelectFragment.newInstance()
+            ))
+        }
 
         loginViewpager.run {
             offscreenPageLimit = 2

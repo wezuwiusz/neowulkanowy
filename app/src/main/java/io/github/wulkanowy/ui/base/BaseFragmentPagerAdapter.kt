@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.base
 
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -9,9 +8,10 @@ class BaseFragmentPagerAdapter(private val fragmentManager: FragmentManager) : F
 
     private val pages = mutableMapOf<Fragment, String?>()
 
-    private var containerId = 0
+    var containerId = 0
 
     fun getFragmentInstance(position: Int): Fragment? {
+        if (containerId == 0) throw IllegalArgumentException("Container id is 0")
         return fragmentManager.findFragmentByTag("android:switcher:$containerId:$position")
     }
 
@@ -21,11 +21,6 @@ class BaseFragmentPagerAdapter(private val fragmentManager: FragmentManager) : F
 
     fun addFragmentsWithTitle(pages: Map<Fragment, String>) {
         this.pages.putAll(pages)
-    }
-
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        containerId = container.id
-        return super.instantiateItem(container, position)
     }
 
     override fun getItem(position: Int) = pages.keys.elementAt(position)
