@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberLocal
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

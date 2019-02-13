@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.login.form
 
 import com.google.firebase.analytics.FirebaseAnalytics.Param.SUCCESS
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper

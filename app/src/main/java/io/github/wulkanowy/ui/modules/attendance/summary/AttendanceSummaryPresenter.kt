@@ -2,10 +2,10 @@ package io.github.wulkanowy.ui.modules.attendance.summary
 
 import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.Subject
-import io.github.wulkanowy.data.repositories.AttendanceSummaryRepository
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.data.repositories.SubjectRepostory
+import io.github.wulkanowy.data.repositories.attendancesummary.AttendanceSummaryRepository
+import io.github.wulkanowy.data.repositories.semester.SemesterRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.subject.SubjectRepostory
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper

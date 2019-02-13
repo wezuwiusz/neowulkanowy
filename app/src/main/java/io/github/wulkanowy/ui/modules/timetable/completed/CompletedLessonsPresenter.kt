@@ -2,9 +2,9 @@ package io.github.wulkanowy.ui.modules.timetable.completed
 
 import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.repositories.CompletedLessonsRepository
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.completedlessons.CompletedLessonsRepository
+import io.github.wulkanowy.data.repositories.semester.SemesterRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider

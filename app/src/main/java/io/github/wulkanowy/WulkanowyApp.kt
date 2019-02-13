@@ -12,7 +12,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.utils.Log
 import io.fabric.sdk.android.Fabric
 import io.github.wulkanowy.BuildConfig.DEBUG
-import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.di.DaggerAppComponent
 import io.github.wulkanowy.utils.CrashlyticsTree
 import io.github.wulkanowy.utils.DebugLogTree

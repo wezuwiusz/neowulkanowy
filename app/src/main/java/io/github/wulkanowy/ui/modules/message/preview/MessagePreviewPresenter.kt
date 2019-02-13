@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
 import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
-import io.github.wulkanowy.data.repositories.MessagesRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.message.MessageRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MessagePreviewPresenter @Inject constructor(
     private val errorHandler: SessionErrorHandler,
     private val schedulers: SchedulersProvider,
-    private val messagesRepository: MessagesRepository,
+    private val messageRepository: MessageRepository,
     private val studentRepository: StudentRepository,
     private val analytics: FirebaseAnalyticsHelper
 ) : BaseSessionPresenter<MessagePreviewView>(errorHandler) {
@@ -32,7 +32,7 @@ class MessagePreviewPresenter @Inject constructor(
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
-                .flatMap { messagesRepository.getMessage(it, messageId, true) }
+                .flatMap { messageRepository.getMessage(it, messageId, true) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally { view?.showProgress(false) }

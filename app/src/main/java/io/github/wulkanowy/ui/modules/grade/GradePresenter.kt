@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.grade
 
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.semester.SemesterRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper

@@ -1,11 +1,11 @@
 package io.github.wulkanowy.ui.modules.grade.summary
 
 import io.github.wulkanowy.data.db.entities.GradeSummary
-import io.github.wulkanowy.data.repositories.GradeRepository
-import io.github.wulkanowy.data.repositories.GradeSummaryRepository
-import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.grade.GradeRepository
+import io.github.wulkanowy.data.repositories.gradessummary.GradeSummaryRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
+import io.github.wulkanowy.data.repositories.semester.SemesterRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper

@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.splash
 
 import io.github.wulkanowy.TestSchedulersProvider
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.reactivex.Single
 import org.junit.Before

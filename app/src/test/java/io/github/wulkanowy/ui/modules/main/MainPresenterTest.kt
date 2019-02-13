@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.main
 
 import io.github.wulkanowy.TestSchedulersProvider
-import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.job.ServiceHelper
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper

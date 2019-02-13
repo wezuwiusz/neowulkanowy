@@ -2,6 +2,7 @@ package io.github.wulkanowy.data.repositories.remote
 
 import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRemote
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

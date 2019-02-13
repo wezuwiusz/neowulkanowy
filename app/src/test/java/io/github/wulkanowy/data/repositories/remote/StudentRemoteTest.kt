@@ -2,6 +2,7 @@ package io.github.wulkanowy.data.repositories.remote
 
 import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.api.register.Student
+import io.github.wulkanowy.data.repositories.student.StudentRemote
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before

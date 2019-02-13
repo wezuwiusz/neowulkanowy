@@ -6,7 +6,7 @@ import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.Lifetime.FOREVER
 import com.firebase.jobdispatcher.RetryStrategy.DEFAULT_EXPONENTIAL
 import com.firebase.jobdispatcher.Trigger.executionWindow
-import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.utils.isHolidays
 import org.threeten.bp.LocalDate
 import timber.log.Timber

@@ -2,8 +2,8 @@ package io.github.wulkanowy.ui.modules.main
 
 import com.google.firebase.analytics.FirebaseAnalytics.Event.APP_OPEN
 import com.google.firebase.analytics.FirebaseAnalytics.Param.DESTINATION
-import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.job.ServiceHelper
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler

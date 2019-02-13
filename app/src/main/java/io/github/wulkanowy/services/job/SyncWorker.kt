@@ -3,20 +3,20 @@ package io.github.wulkanowy.services.job
 import com.firebase.jobdispatcher.JobParameters
 import com.firebase.jobdispatcher.SimpleJobService
 import dagger.android.AndroidInjection
-import io.github.wulkanowy.data.repositories.AttendanceRepository
-import io.github.wulkanowy.data.repositories.CompletedLessonsRepository
-import io.github.wulkanowy.data.repositories.ExamRepository
-import io.github.wulkanowy.data.repositories.GradeRepository
-import io.github.wulkanowy.data.repositories.GradeSummaryRepository
-import io.github.wulkanowy.data.repositories.HomeworkRepository
-import io.github.wulkanowy.data.repositories.LuckyNumberRepository
-import io.github.wulkanowy.data.repositories.MessagesRepository
-import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.RECEIVED
-import io.github.wulkanowy.data.repositories.NoteRepository
-import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.data.repositories.TimetableRepository
+import io.github.wulkanowy.data.repositories.attendance.AttendanceRepository
+import io.github.wulkanowy.data.repositories.completedlessons.CompletedLessonsRepository
+import io.github.wulkanowy.data.repositories.exam.ExamRepository
+import io.github.wulkanowy.data.repositories.grade.GradeRepository
+import io.github.wulkanowy.data.repositories.gradessummary.GradeSummaryRepository
+import io.github.wulkanowy.data.repositories.homework.HomeworkRepository
+import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
+import io.github.wulkanowy.data.repositories.message.MessageRepository
+import io.github.wulkanowy.data.repositories.message.MessageRepository.MessageFolder.RECEIVED
+import io.github.wulkanowy.data.repositories.note.NoteRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
+import io.github.wulkanowy.data.repositories.semester.SemesterRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
 import io.github.wulkanowy.services.notification.GradeNotification
 import io.github.wulkanowy.services.notification.LuckyNumberNotification
 import io.github.wulkanowy.services.notification.MessageNotification
@@ -55,7 +55,7 @@ class SyncWorker : SimpleJobService() {
     lateinit var timetable: TimetableRepository
 
     @Inject
-    lateinit var message: MessagesRepository
+    lateinit var message: MessageRepository
 
     @Inject
     lateinit var note: NoteRepository

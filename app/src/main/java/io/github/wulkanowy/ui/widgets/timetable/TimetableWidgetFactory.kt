@@ -12,9 +12,9 @@ import android.widget.RemoteViewsService
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefHelper
 import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.data.repositories.TimetableRepository
+import io.github.wulkanowy.data.repositories.semester.SemesterRepository
+import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable

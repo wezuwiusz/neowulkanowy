@@ -7,9 +7,9 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.RECEIVED
-import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.SENT
-import io.github.wulkanowy.data.repositories.MessagesRepository.MessageFolder.TRASHED
+import io.github.wulkanowy.data.repositories.message.MessageRepository.MessageFolder.RECEIVED
+import io.github.wulkanowy.data.repositories.message.MessageRepository.MessageFolder.SENT
+import io.github.wulkanowy.data.repositories.message.MessageRepository.MessageFolder.TRASHED
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.main.MainView

@@ -13,7 +13,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.AppDatabase
-import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BASIC
 import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
