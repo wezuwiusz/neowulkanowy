@@ -19,14 +19,6 @@ class SharedPrefHelper @Inject constructor(private val sharedPref: SharedPrefere
         return sharedPref.getLong(key, defaultValue)
     }
 
-    fun putBoolean(key: String, value: Boolean) {
-        sharedPref.edit().putBoolean(key, value).apply()
-    }
-
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
-        return sharedPref.getBoolean(key, defaultValue)
-    }
-
     fun delete(key: String) {
         sharedPref.edit().remove(key).apply()
     }

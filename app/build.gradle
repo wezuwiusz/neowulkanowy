@@ -73,7 +73,7 @@ play {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation('com.github.wulkanowy:api:0bbd246778') { exclude module: "threetenbp" }
+    implementation('com.github.wulkanowy:api:0a4317f651') { exclude module: "threetenbp" }
 
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.appcompat:appcompat:1.0.2"

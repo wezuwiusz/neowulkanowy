@@ -3,18 +3,25 @@ package io.github.wulkanowy.ui.modules.splash
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Inject
 
 class SplashPresenter @Inject constructor(
     private val studentRepository: StudentRepository,
-    errorHandler: ErrorHandler
+    private val errorHandler: ErrorHandler,
+    private val schedulers: SchedulersProvider
 ) : BasePresenter<SplashView>(errorHandler) {
 
     override fun onAttachView(view: SplashView) {
         super.onAttachView(view)
-        view.run {
-            if (studentRepository.isStudentSaved) openMainView()
-            else openLoginView()
-        }
+        disposable.add(studentRepository.isStudentSaved()
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .subscribe({
+                view.apply {
+                    if (it) openMainView()
+                    else openLoginView()
+                }
+            }, { errorHandler.dispatch(it) }))
     }
 }

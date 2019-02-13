@@ -28,7 +28,7 @@ class StudentLocalTest {
         testDb = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
             .build()
         sharedHelper = SharedPrefHelper(context.getSharedPreferences("TEST", Context.MODE_PRIVATE))
-        studentLocal = StudentLocal(testDb.studentDao, sharedHelper, context)
+        studentLocal = StudentLocal(testDb.studentDao, context)
     }
 
     @After
@@ -40,7 +40,6 @@ class StudentLocalTest {
     fun saveAndReadTest() {
         studentLocal.saveStudent(Student(email = "test", password = "test123", schoolSymbol = "23", endpoint = "fakelog.cf", loginType = "AUTO", isCurrent = true))
             .blockingGet()
-        assert(studentLocal.isStudentSaved)
 
         val student = studentLocal.getCurrentStudent(true).blockingGet()
         assertEquals("23", student.schoolSymbol)

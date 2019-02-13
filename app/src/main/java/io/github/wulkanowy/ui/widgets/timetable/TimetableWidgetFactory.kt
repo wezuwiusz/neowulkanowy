@@ -16,6 +16,7 @@ import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.utils.toFormattedString
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import org.threeten.bp.LocalDate
 import timber.log.Timber
@@ -48,14 +49,15 @@ class TimetableWidgetFactory(
     override fun onDataSetChanged() {
         intent?.action?.let { LocalDate.ofEpochDay(sharedPref.getLong(it, 0)) }
             ?.let { date ->
-                if (studentRepository.isStudentSaved) {
-                    disposable.add(studentRepository.getCurrentStudent()
-                        .flatMap { semesterRepository.getCurrentSemester(it) }
-                        .flatMap { timetableRepository.getTimetable(it, date, date) }
-                        .map { item -> item.sortedBy { it.number } }
-                        .subscribe({ lessons = it })
-                        { Timber.e(it, "An error has occurred while downloading data for the widget") })
-                }
+                disposable.add(studentRepository.isStudentSaved()
+                    .flatMap {
+                        if (it) studentRepository.getCurrentStudent()
+                        else Single.error(IllegalArgumentException("No saved students"))
+                    }.flatMap { semesterRepository.getCurrentSemester(it) }
+                    .flatMap { timetableRepository.getTimetable(it, date, date) }
+                    .map { item -> item.sortedBy { it.number } }
+                    .subscribe({ lessons = it })
+                    { Timber.e(it, "An error has occurred while downloading data for the widget") })
             }
     }
 

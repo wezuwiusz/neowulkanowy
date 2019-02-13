@@ -1,7 +1,9 @@
 package io.github.wulkanowy.ui.modules.splash
 
+import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -25,19 +27,19 @@ class SplashPresenterTest {
     @Before
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
-        presenter = SplashPresenter(studentRepository, errorHandler)
+        presenter = SplashPresenter(studentRepository, errorHandler, TestSchedulersProvider())
     }
 
     @Test
     fun testOpenLoginView() {
-        doReturn(false).`when`(studentRepository).isStudentSaved
+        doReturn(Single.just(false)).`when`(studentRepository).isStudentSaved()
         presenter.onAttachView(splashView)
         verify(splashView).openLoginView()
     }
 
     @Test
     fun testMainMainView() {
-        doReturn(true).`when`(studentRepository).isStudentSaved
+        doReturn(Single.just(true)).`when`(studentRepository).isStudentSaved()
         presenter.onAttachView(splashView)
         verify(splashView).openMainView()
     }

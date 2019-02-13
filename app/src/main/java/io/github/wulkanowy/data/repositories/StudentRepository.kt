@@ -21,8 +21,7 @@ class StudentRepository @Inject constructor(
     private val apiHelper: ApiHelper
 ) {
 
-    val isStudentSaved
-        get() = local.isStudentSaved
+    fun isStudentSaved(): Single<Boolean> = local.getStudents(false).isEmpty.map { !it }
 
     fun getStudents(email: String, password: String, endpoint: String, symbol: String = ""): Single<List<Student>> {
         return ReactiveNetwork.checkInternetConnectivity(settings)
