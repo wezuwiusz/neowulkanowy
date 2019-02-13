@@ -61,4 +61,9 @@ class LuckyNumberFragment : BaseSessionFragment(), LuckyNumberView, MainView.Tit
     override fun isViewEmpty(): Boolean {
         return luckyNumberText.text.isBlank()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        presenter.onDetachView()
+    }
 }
