@@ -4,6 +4,7 @@ import com.firebase.jobdispatcher.JobParameters
 import com.firebase.jobdispatcher.SimpleJobService
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.data.repositories.AttendanceRepository
+import io.github.wulkanowy.data.repositories.CompletedLessonsRepository
 import io.github.wulkanowy.data.repositories.ExamRepository
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.GradeSummaryRepository
@@ -65,6 +66,9 @@ class SyncWorker : SimpleJobService() {
     lateinit var luckyNumber: LuckyNumberRepository
 
     @Inject
+    lateinit var completedLessons: CompletedLessonsRepository
+
+    @Inject
     lateinit var prefRepository: PreferencesRepository
 
     private val disposable = CompositeDisposable()
@@ -105,7 +109,8 @@ class SyncWorker : SimpleJobService() {
                         note.getNotes(it.first, true, notify).ignoreElement(),
                         homework.getHomework(it.first, LocalDate.now(), true).ignoreElement(),
                         homework.getHomework(it.first, LocalDate.now().plusDays(1), true).ignoreElement(),
-                        luckyNumber.getLuckyNumber(it.first, true, notify).ignoreElement()
+                        luckyNumber.getLuckyNumber(it.first, true, notify).ignoreElement(),
+                        completedLessons.getCompletedLessons(it.first, start, end, true).ignoreElement()
                     )
                 )
             }

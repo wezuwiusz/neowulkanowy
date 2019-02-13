@@ -8,7 +8,10 @@ import io.github.wulkanowy.api.login.BadCredentialsException
 import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 
-class LoginErrorHandler @Inject constructor(resources: Resources, chuckCollector: ChuckCollector) : ErrorHandler(resources, chuckCollector) {
+class LoginErrorHandler @Inject constructor(
+    resources: Resources,
+    chuckCollector: ChuckCollector
+) : ErrorHandler(resources, chuckCollector) {
 
     var onBadCredentials: () -> Unit = {}
 

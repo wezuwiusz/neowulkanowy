@@ -102,6 +102,13 @@
     <string name="timetable_changes">Zmiany</string>
     <string name="timetable_no_items">Brak lekcji w tym dniu</string>
 
+    <!--CompletedLesson-->
+    <string name="completed_lessons_title">Lekcje zrealizowane</string>
+    <string name="completed_lessons_button">Zobacz lekcje zrealizowane</string>
+    <string name="completed_lessons_no_items">Brak informacji o lekcjach zrealizowanych</string>
+    <string name="completed_lessons_topic">Temat</string>
+    <string name="completed_lessons_absence">Nieobecność</string>
+    <string name="completed_lessons_resources">Zasoby</string>
 
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
@@ -263,4 +270,5 @@
     <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
     <string name="error_service_unavailable">Dziennik jest niedostępny. Spróbuj ponownie później</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
+    <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
 </resources>

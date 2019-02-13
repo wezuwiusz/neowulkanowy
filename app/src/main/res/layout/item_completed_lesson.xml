@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/completedLesson_subitem_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_all_divider"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:paddingStart="12dp"
+    android:paddingLeft="12dp"
+    android:paddingTop="7dp"
+    android:paddingEnd="12dp"
+    android:paddingRight="12dp"
+    android:paddingBottom="7dp"
+    tools:context=".ui.modules.timetable.completed.CompletedLessonItem">
+
+    <TextView
+        android:id="@+id/completedLessonItemNumber"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:maxLength="2"
+        android:textSize="32sp"
+        tools:ignore="all"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/completedLessonItemSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_toEndOf="@+id/completedLessonItemNumber"
+        android:layout_toRightOf="@+id/completedLessonItemNumber"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="17sp"
+        tools:ignore="RelativeOverlap"
+        tools:text="@tools:sample/lorem" />
+
+    <TextView
+        android:id="@+id/completedLessonItemTopic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/completedLessonItemSubject"
+        android:layout_alignLeft="@id/completedLessonItemSubject"
+        android:layout_alignEnd="@+id/completedLessonItemAlert"
+        android:layout_alignRight="@+id/completedLessonItemAlert"
+        android:layout_alignBottom="@+id/completedLessonItemNumber"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?android:attr/android:textColorSecondary"
+        android:textSize="12sp"
+        tools:text="@tools:sample/lorem" />
+
+    <ImageView
+        android:id="@+id/completedLessonItemAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/ic_timetable_swap_30dp"
+        tools:ignore="contentDescription" />
+
+</RelativeLayout>

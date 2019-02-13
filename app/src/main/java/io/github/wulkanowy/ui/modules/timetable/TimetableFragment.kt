@@ -2,6 +2,9 @@ package io.github.wulkanowy.ui.modules.timetable
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -12,6 +15,7 @@ import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable.*
 import javax.inject.Inject
@@ -39,6 +43,14 @@ class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChi
     override val isViewEmpty: Boolean
         get() = timetableAdapter.isEmpty
 
+    override val currentStackSize: Int?
+        get() = (activity as? MainActivity)?.currentStackSize
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_timetable, container, false)
     }
@@ -61,6 +73,15 @@ class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChi
         timetableSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         timetablePreviousButton.setOnClickListener { presenter.onPreviousDay() }
         timetableNextButton.setOnClickListener { presenter.onNextDay() }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.action_menu_timetable, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if (item?.itemId == R.id.timetableMenuCompletedLessons) presenter.onCompletedLessonsSwitchSelected()
+        else false
     }
 
     override fun updateData(data: List<TimetableItem>) {
@@ -87,6 +108,10 @@ class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChi
         presenter.onViewReselected()
     }
 
+    override fun popView() {
+        (activity as? MainActivity)?.popView()
+    }
+
     override fun showEmpty(show: Boolean) {
         timetableEmpty.visibility = if (show) View.VISIBLE else View.GONE
     }
@@ -109,6 +134,10 @@ class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChi
 
     override fun showTimetableDialog(lesson: Timetable) {
         (activity as? MainActivity)?.showDialogFragment(TimetableDialog.newInstance(lesson))
+    }
+
+    override fun openCompletedLessonsView() {
+        (activity as? MainActivity)?.pushView(CompletedLessonsFragment.newInstance())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

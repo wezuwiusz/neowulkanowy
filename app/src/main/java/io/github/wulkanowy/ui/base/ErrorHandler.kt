@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.base
 import android.content.res.Resources
 import com.readystatesoftware.chuck.api.ChuckCollector
 import io.github.wulkanowy.R
+import io.github.wulkanowy.api.interceptor.FeatureDisabledException
 import io.github.wulkanowy.api.interceptor.ServiceUnavailableException
 import io.github.wulkanowy.api.login.NotLoggedInException
 import timber.log.Timber
@@ -26,6 +27,7 @@ open class ErrorHandler @Inject constructor(protected val resources: Resources, 
             is SocketTimeoutException -> resources.getString(R.string.error_timeout)
             is NotLoggedInException -> resources.getString(R.string.error_login_failed)
             is ServiceUnavailableException -> resources.getString(R.string.error_service_unavailable)
+            is FeatureDisabledException -> resources.getString(R.string.error_feature_disabled)
             else -> resources.getString(R.string.error_unknown)
         }), error)
     }

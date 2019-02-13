@@ -93,6 +93,13 @@
     <string name="timetable_changes">Changes</string>
     <string name="timetable_no_items">No lessons this day</string>
 
+    <!--Completed lessons-->
+    <string name="completed_lessons_title">Completed lessons</string>
+    <string name="completed_lessons_button">Show completed lessons</string>
+    <string name="completed_lessons_no_items">No info about completed lessons</string>
+    <string name="completed_lessons_topic">Topic</string>
+    <string name="completed_lessons_absence">Absence</string>
+    <string name="completed_lessons_resources">Resources</string>
 
     <!--Attendance-->
     <string name="attendance_summary_button">Attendance summary</string>
@@ -246,4 +253,5 @@
     <string name="error_login_failed">Login is failed. Try again or restart the app</string>
     <string name="error_service_unavailable">The log is not available. Try again later</string>
     <string name="error_unknown">An unexpected error occurred</string>
+    <string name="error_feature_disabled">Feature disabled by your school</string>
 </resources>

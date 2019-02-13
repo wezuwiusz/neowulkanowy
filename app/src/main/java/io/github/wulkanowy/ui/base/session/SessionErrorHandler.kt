@@ -6,7 +6,10 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.security.ScramblerException
 import javax.inject.Inject
 
-class SessionErrorHandler @Inject constructor(resources: Resources, chuckCollector: ChuckCollector) : ErrorHandler(resources, chuckCollector) {
+open class SessionErrorHandler @Inject constructor(
+    resources: Resources,
+    chuckCollector: ChuckCollector
+) : ErrorHandler(resources, chuckCollector) {
 
     var onDecryptionFail: () -> Unit = {}
 
