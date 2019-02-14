@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
@@ -51,6 +52,10 @@ class HomeworkFragment : BaseSessionFragment(), HomeworkView, MainView.TitledVie
         homeworkRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = homeworkAdapter
+            addItemDecoration(FlexibleItemDecoration(context)
+                .withDefaultDivider()
+                .withDrawDividerOnLastItem(false)
+            )
         }
         homeworkSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         homeworkPreviousButton.setOnClickListener { presenter.onPreviousDay() }

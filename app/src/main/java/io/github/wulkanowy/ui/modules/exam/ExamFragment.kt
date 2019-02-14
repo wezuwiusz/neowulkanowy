@@ -8,6 +8,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
@@ -56,6 +57,10 @@ class ExamFragment : BaseSessionFragment(), ExamView, MainView.MainChildView, Ma
         examRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = examAdapter
+            addItemDecoration(FlexibleItemDecoration(context)
+                .withDefaultDivider(R.layout.item_exam)
+                .withDrawDividerOnLastItem(false)
+            )
         }
         examSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         examPreviousButton.setOnClickListener { presenter.onPreviousWeek() }

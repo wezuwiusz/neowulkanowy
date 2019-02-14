@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
@@ -53,6 +54,10 @@ class NoteFragment : BaseSessionFragment(), NoteView, MainView.TitledView {
         noteRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = noteAdapter
+            addItemDecoration(FlexibleItemDecoration(context)
+                .withDefaultDivider()
+                .withDrawDividerOnLastItem(false)
+            )
         }
         noteSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
     }

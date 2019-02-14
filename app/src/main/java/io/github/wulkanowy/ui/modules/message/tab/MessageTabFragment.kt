@@ -8,6 +8,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
@@ -66,6 +67,10 @@ class MessageTabFragment : BaseSessionFragment(), MessageTabView, MessageView.Me
         messageTabRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = tabAdapter
+            addItemDecoration(FlexibleItemDecoration(context)
+                .withDefaultDivider()
+                .withDrawDividerOnLastItem(false)
+            )
         }
         messageTabSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
     }

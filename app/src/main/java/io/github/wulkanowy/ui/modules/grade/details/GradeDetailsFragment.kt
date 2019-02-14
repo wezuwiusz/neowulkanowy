@@ -78,6 +78,9 @@ class GradeDetailsFragment : BaseSessionFragment(), GradeDetailsView, GradeView.
         gradeDetailsRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = gradeDetailsAdapter
+            addItemDecoration(GradeDetailsHeaderItemDecoration(context)
+                .withDefaultDivider(R.layout.header_grade_details)
+            )
         }
         gradeDetailsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
     }

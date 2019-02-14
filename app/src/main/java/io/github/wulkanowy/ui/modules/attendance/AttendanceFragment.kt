@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
@@ -66,6 +67,10 @@ class AttendanceFragment : BaseSessionFragment(), AttendanceView, MainView.MainC
         attendanceRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = attendanceAdapter
+            addItemDecoration(FlexibleItemDecoration(context)
+                .withDefaultDivider()
+                .withDrawDividerOnLastItem(false)
+            )
         }
         attendanceSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         attendancePreviousButton.setOnClickListener { presenter.onPreviousDay() }
