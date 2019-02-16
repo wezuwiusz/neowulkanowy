@@ -15,6 +15,10 @@ interface LoginFormView : BaseView {
 
     fun setErrorPassIncorrect()
 
+    fun clearNameError()
+
+    fun clearPassError()
+
     fun showSoftKeyboard()
 
     fun hideSoftKeyboard()

@@ -31,6 +31,21 @@ class LoginFormPresenter @Inject constructor(
         }
     }
 
+    fun onHostSelected() {
+        view?.apply {
+            clearPassError()
+            clearNameError()
+        }
+    }
+
+    fun onPassTextChanged() {
+        view?.clearPassError()
+    }
+
+    fun onNameTextChanged() {
+        view?.clearNameError()
+    }
+
     fun attemptLogin(email: String, password: String, endpoint: String) {
         if (!validateCredentials(email, password)) return
 

@@ -32,6 +32,7 @@
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprwadź symbol</string>
     <string name="login_field_required">To pole jest wymagane</string>
     <string name="login_duplicate_student">Ten student jest już zalogowany</string>
+    <string name="login_symbol_helper">Symbol znajduje się na stronie dziennika w zakładce Dostęp Mobilny</string>
 
 
     <!--Main-->

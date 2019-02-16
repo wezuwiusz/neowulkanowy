@@ -14,6 +14,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.setOnTextChangedListener
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_symbol.*
 import javax.inject.Inject
@@ -29,6 +30,9 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
         fun newInstance() = LoginSymbolFragment()
     }
 
+    override val symbolNameError: CharSequence?
+        get() = loginSymbolNameLayout.error
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_symbol, container, false)
     }
@@ -40,6 +44,8 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
 
     override fun initView() {
         loginSymbolSignIn.setOnClickListener { presenter.attemptLogin(loginSymbolName.text.toString()) }
+
+        loginSymbolName.setOnTextChangedListener { presenter.onSymbolTextChanged() }
 
         loginSymbolName.apply {
             setOnEditorActionListener { _, id, _ ->
@@ -54,22 +60,26 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
     }
 
     override fun setErrorSymbolIncorrect() {
-        loginSymbolName.apply {
+        loginSymbolNameLayout.apply {
             requestFocus()
             error = getString(R.string.login_incorrect_symbol)
         }
     }
 
     override fun setErrorSymbolRequire() {
-        loginSymbolName.apply {
+        loginSymbolNameLayout.apply {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
+    override fun clearSymbolError() {
+        loginSymbolNameLayout.error = null
+    }
+
     override fun clearAndFocusSymbol() {
-        loginSymbolName.apply {
-            text = null
+        loginSymbolNameLayout.apply {
+            editText?.text = null
             requestFocus()
         }
     }

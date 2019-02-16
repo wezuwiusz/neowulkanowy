@@ -16,6 +16,8 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.setOnItemSelectedListener
+import io.github.wulkanowy.utils.setOnTextChangedListener
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
 import javax.inject.Inject
@@ -47,9 +49,14 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
             )
         }
 
+        loginFormName.setOnTextChangedListener { presenter.onNameTextChanged() }
+        loginFormPass.setOnTextChangedListener { presenter.onPassTextChanged() }
+
         loginFormPass.setOnEditorActionListener { _, id, _ ->
             if (id == IME_ACTION_DONE || id == IME_NULL) loginFormSignIn.callOnClick() else false
         }
+
+        loginFormHost.setOnItemSelectedListener { presenter.onHostSelected() }
 
         context?.let {
             loginFormHost.adapter = ArrayAdapter.createFromResource(it, R.array.endpoints_keys, android.R.layout.simple_spinner_item)
@@ -58,31 +65,39 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun setErrorNameRequired() {
-        loginFormName.run {
+        loginFormNameLayout.run {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassRequired(focus: Boolean) {
-        loginFormPass.run {
+        loginFormPassLayout.run {
             if (focus) requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassInvalid(focus: Boolean) {
-        loginFormPass.run {
+        loginFormPassLayout.run {
             if (focus) requestFocus()
             error = getString(R.string.login_invalid_password)
         }
     }
 
     override fun setErrorPassIncorrect() {
-        loginFormPass.run {
+        loginFormPassLayout.run {
             requestFocus()
             error = getString(R.string.login_incorrect_password)
         }
+    }
+
+    override fun clearNameError() {
+        loginFormNameLayout.error = null
+    }
+
+    override fun clearPassError() {
+        loginFormPassLayout.error = null
     }
 
     override fun showSoftKeyboard() {

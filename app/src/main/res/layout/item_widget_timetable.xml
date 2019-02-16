@@ -32,7 +32,7 @@
         android:layout_toEndOf="@id/timetableWidgetItemNumber"
         android:layout_toRightOf="@id/timetableWidgetItemNumber"
         android:text="@string/app_name"
-        android:textColor="@color/second_text"
+        android:textColor="@android:color/secondary_text_light"
         android:textSize="13sp" />
 
     <TextView
@@ -47,7 +47,7 @@
         android:layout_toEndOf="@id/timetableWidgetItemTime"
         android:layout_toRightOf="@id/timetableWidgetItemTime"
         android:text="@string/app_name"
-        android:textColor="@color/second_text"
+        android:textColor="@android:color/secondary_text_light"
         android:textSize="13sp" />
 
     <TextView
@@ -79,6 +79,6 @@
         android:layout_toEndOf="@id/timetableWidgetItemNumber"
         android:layout_toRightOf="@id/timetableWidgetItemNumber"
         android:text="@string/app_name"
-        android:textColor="@color/second_text"
+        android:textColor="@android:color/secondary_text_light"
         android:textSize="12sp" />
 </RelativeLayout>

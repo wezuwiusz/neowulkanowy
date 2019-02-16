@@ -22,7 +22,7 @@
     <string name="login_header_symbol">Enter the VULCAN diary symbol</string>
     <string name="login_nickname_hint">Email or nick</string>
     <string name="login_password_hint">Password</string>
-    <string name="login_host_hint">Log</string>
+    <string name="login_host_hint">Register</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_progress">Logging in&#8230;</string>
@@ -32,6 +32,7 @@
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>
     <string name="login_duplicate_student">This student has already been logged in</string>
+    <string name="login_symbol_helper">The symbol is located on the register page in the Mobile Access tab</string>
 
 
     <!--Main-->
