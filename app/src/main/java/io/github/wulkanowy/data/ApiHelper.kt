@@ -22,6 +22,12 @@ class ApiHelper @Inject constructor(private val api: Api) {
     }
 
     fun initApi(email: String, password: String, symbol: String, endpoint: String) {
-        initApi(Student(email = email, password = password, symbol = symbol, endpoint = endpoint, loginType = "AUTO"))
+        api.apply {
+            this.email = email
+            this.password = password
+            this.symbol = symbol
+            host = URL(endpoint).run { host + ":$port".removeSuffix(":-1") }
+            ssl = endpoint.startsWith("https")
+        }
     }
 }

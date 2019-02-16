@@ -5,6 +5,7 @@ import io.github.wulkanowy.api.messages.Folder
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.utils.toLocalDateTime
 import io.reactivex.Single
+import org.threeten.bp.LocalDateTime.now
 import javax.inject.Inject
 import javax.inject.Singleton
 import io.github.wulkanowy.api.messages.Message as ApiMessage
@@ -17,18 +18,18 @@ class MessageRemote @Inject constructor(private val api: Api) {
             messages.map {
                 Message(
                     studentId = studentId,
-                    realId = it.id,
-                    messageId = it.messageId,
-                    sender = it.sender,
-                    senderId = it.senderId,
-                    recipient = it.recipient,
+                    realId = it.id ?: 0,
+                    messageId = it.messageId ?: 0,
+                    sender = it.sender.orEmpty(),
+                    senderId = it.senderId ?: 0,
+                    recipient = it.recipient.orEmpty(),
                     recipientId = it.recipientId,
                     subject = it.subject.trim(),
-                    date = it.date?.toLocalDateTime(),
+                    date = it.date?.toLocalDateTime() ?: now(),
                     folderId = it.folderId,
-                    unread = it.unread,
-                    unreadBy = it.unreadBy,
-                    readBy = it.readBy,
+                    unread = it.unread ?: false,
+                    unreadBy = it.unreadBy ?: 0,
+                    readBy = it.readBy ?: 0,
                     removed = it.removed
                 )
             }
@@ -36,6 +37,6 @@ class MessageRemote @Inject constructor(private val api: Api) {
     }
 
     fun getMessagesContent(message: Message, markAsRead: Boolean = false): Single<String> {
-        return api.getMessageContent(message.messageId ?: 0, message.folderId, markAsRead, message.realId ?: 0)
+        return api.getMessageContent(message.messageId, message.folderId, markAsRead, message.realId)
     }
 }

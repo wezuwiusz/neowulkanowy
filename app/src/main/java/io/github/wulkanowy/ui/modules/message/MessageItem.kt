@@ -27,10 +27,10 @@ class MessageItem(val message: Message, private val noSubjectString: String) :
         position: Int, payloads: MutableList<Any>?
     ) {
         holder.apply {
-            val style = if (message.unread == true) BOLD else NORMAL
+            val style = if (message.unread) BOLD else NORMAL
 
             messageItemAuthor.run {
-                text = if (message.recipient?.isNotBlank() == true) message.recipient else message.sender
+                text = if (message.recipient.isNotBlank()) message.recipient else message.sender
                 setTypeface(null, style)
             }
             messageItemSubject.run {
@@ -38,7 +38,7 @@ class MessageItem(val message: Message, private val noSubjectString: String) :
                 setTypeface(null, style)
             }
             messageItemDate.run {
-                text = message.date?.toFormattedString()
+                text = message.date.toFormattedString()
                 setTypeface(null, style)
             }
         }

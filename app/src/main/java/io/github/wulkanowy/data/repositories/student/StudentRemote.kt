@@ -21,7 +21,8 @@ class StudentRemote @Inject constructor(private val api: Api) {
                     schoolSymbol = student.schoolSymbol,
                     schoolName = student.schoolName,
                     endpoint = endpoint,
-                    loginType = student.loginType.name
+                    loginType = student.loginType.name,
+                    isCurrent = false
                 )
             }
         }

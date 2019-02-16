@@ -10,13 +10,13 @@ import java.io.Serializable
 data class AttendanceSummary(
 
     @ColumnInfo(name = "student_id")
-    var studentId: Int,
+    val studentId: Int,
 
     @ColumnInfo(name = "diary_id")
-    var diaryId: Int,
+    val diaryId: Int,
 
     @ColumnInfo(name = "subject_id")
-    var subjectId: Int = 0,
+    val subjectId: Int,
 
     val month: Month,
 

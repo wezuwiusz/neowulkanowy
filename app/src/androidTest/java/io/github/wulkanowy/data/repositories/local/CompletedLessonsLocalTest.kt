@@ -42,7 +42,7 @@ class CompletedLessonsLocalTest {
         ))
 
         val completed = completedLessonsLocal
-            .getCompletedLessons(Semester(1, 1, 2, "", 3, 1),
+            .getCompletedLessons(Semester(1, 2, "", 1, 3, true),
                 LocalDate.of(2018, 9, 10),
                 LocalDate.of(2018, 9, 14)
             )

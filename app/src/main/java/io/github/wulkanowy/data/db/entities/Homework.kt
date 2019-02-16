@@ -10,24 +10,24 @@ import java.io.Serializable
 data class Homework(
 
     @ColumnInfo(name = "semester_id")
-    var semesterId: Int,
+    val semesterId: Int,
 
     @ColumnInfo(name = "student_id")
-    var studentId: Int,
+    val studentId: Int,
 
-    var date: LocalDate,
+    val date: LocalDate,
 
     @ColumnInfo(name = "entry_date")
-    var entryDate: LocalDate,
+    val entryDate: LocalDate,
 
-    var subject: String,
+    val subject: String,
 
-    var content: String,
+    val content: String,
 
-    var teacher: String,
+    val teacher: String,
 
     @ColumnInfo(name = "teacher_symbol")
-    var teacherSymbol: String
+    val teacherSymbol: String
 
 ) : Serializable {
 

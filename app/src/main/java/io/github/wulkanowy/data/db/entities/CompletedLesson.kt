@@ -10,29 +10,29 @@ import java.io.Serializable
 data class CompletedLesson(
 
     @ColumnInfo(name = "student_id")
-    var studentId: Int,
+    val studentId: Int,
 
     @ColumnInfo(name = "diary_id")
-    var diaryId: Int,
+    val diaryId: Int,
 
-    var date: LocalDate,
+    val date: LocalDate,
 
-    var number: Int,
+    val number: Int,
 
-    var subject: String,
+    val subject: String,
 
-    var topic: String,
+    val topic: String,
 
-    var teacher: String,
+    val teacher: String,
 
     @ColumnInfo(name = "teacher_symbol")
-    var teacherSymbol: String,
+    val teacherSymbol: String,
 
-    var substitution: String,
+    val substitution: String,
 
-    var absence: String,
+    val absence: String,
 
-    var resources: String
+    val resources: String
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

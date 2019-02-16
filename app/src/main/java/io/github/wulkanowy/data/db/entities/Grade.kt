@@ -10,35 +10,35 @@ import java.io.Serializable
 data class Grade(
 
     @ColumnInfo(name = "semester_id")
-    var semesterId: Int,
+    val semesterId: Int,
 
     @ColumnInfo(name = "student_id")
-    var studentId: Int,
+    val studentId: Int,
 
-    var subject: String,
+    val subject: String,
 
-    var entry: String,
+    val entry: String,
 
-    var value: Int,
+    val value: Int,
 
-    var modifier: Double,
+    val modifier: Double,
 
-    var comment: String,
+    val comment: String,
 
-    var color: String,
+    val color: String,
 
     @ColumnInfo(name = "grade_symbol")
-    var gradeSymbol: String,
+    val gradeSymbol: String,
 
-    var description: String,
+    val description: String,
 
-    var weight: String,
+    val weight: String,
 
-    var weightValue: Int,
+    val weightValue: Int,
 
-    var date: LocalDate,
+    val date: LocalDate,
 
-    var teacher: String
+    val teacher: String
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

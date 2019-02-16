@@ -10,30 +10,30 @@ import java.io.Serializable
 data class Attendance(
 
     @ColumnInfo(name = "student_id")
-    var studentId: Int,
+    val studentId: Int,
 
     @ColumnInfo(name = "diary_id")
-    var diaryId: Int,
+    val diaryId: Int,
 
-    var date: LocalDate,
+    val date: LocalDate,
 
-    var number: Int,
+    val number: Int,
 
-    var subject: String,
+    val subject: String,
 
-    var name: String,
+    val name: String,
 
-    var presence: Boolean = false,
+    val presence: Boolean,
 
-    var absence: Boolean = false,
+    val absence: Boolean,
 
-    var exemption: Boolean = false,
+    val exemption: Boolean,
 
-    var lateness: Boolean = false,
+    val lateness: Boolean,
 
-    var excused: Boolean = false,
+    val excused: Boolean,
 
-    var deleted: Boolean = false
+    val deleted: Boolean
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

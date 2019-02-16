@@ -10,12 +10,12 @@ import java.io.Serializable
 data class LuckyNumber (
 
     @ColumnInfo(name = "student_id")
-    var studentId: Int,
+    val studentId: Int,
 
-    var date: LocalDate,
+    val date: LocalDate,
 
     @ColumnInfo(name = "lucky_number")
-    var luckyNumber: Int
+    val luckyNumber: Int
 
 ) : Serializable {
 
@@ -24,5 +24,4 @@ data class LuckyNumber (
 
     @ColumnInfo(name = "is_notified")
     var isNotified: Boolean = true
-
 }

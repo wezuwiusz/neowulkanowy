@@ -7,19 +7,18 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Grades_Summary")
 data class GradeSummary(
 
-        @ColumnInfo(name = "semester_id")
-        var semesterId: Int,
+    @ColumnInfo(name = "semester_id")
+    val semesterId: Int,
 
-        @ColumnInfo(name = "student_id")
-        var studentId: Int,
+    @ColumnInfo(name = "student_id")
+    val studentId: Int,
 
-        var subject: String,
+    val subject: String,
 
-        var predictedGrade: String,
+    val predictedGrade: String,
 
-        var finalGrade: String
+    val finalGrade: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
-
 }
