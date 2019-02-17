@@ -8,6 +8,7 @@ import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
 import io.github.wulkanowy.ui.widgets.timetable.TimetableWidgetFactory
+import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Inject
 
 class TimetableWidgetService : RemoteViewsService() {
@@ -24,8 +25,11 @@ class TimetableWidgetService : RemoteViewsService() {
     @Inject
     lateinit var sharedPref: SharedPrefHelper
 
+    @Inject
+    lateinit var schedulers: SchedulersProvider
+
     override fun onGetViewFactory(intent: Intent?): RemoteViewsFactory {
         AndroidInjection.inject(this)
-        return TimetableWidgetFactory(timetableRepo, studentRepo, semesterRepo, sharedPref, applicationContext, intent)
+        return TimetableWidgetFactory(timetableRepo, studentRepo, semesterRepo, sharedPref, schedulers, applicationContext, intent)
     }
 }
