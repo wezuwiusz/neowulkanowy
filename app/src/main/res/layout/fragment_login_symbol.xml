@@ -39,17 +39,17 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/loginSymbolContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/loginSymbolHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
                 android:text="@string/login_header_symbol"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,11 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
                 android:hint="@string/login_symbol_hint"
                 app:helperText="@string/login_symbol_helper"
                 app:helperTextEnabled="true"
@@ -69,8 +73,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginSymbolHeader">
 
-                <AutoCompleteTextView
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/loginSymbolName"
+                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeActionLabel="@string/login_sign_in"
@@ -86,7 +91,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="48dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"
                 android:text="@string/login_sign_in"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@android:color/white"
