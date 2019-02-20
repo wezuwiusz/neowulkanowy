@@ -12,6 +12,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.threeten.bp.LocalDateTime.now
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -39,7 +40,7 @@ class StudentLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        studentLocal.saveStudent(Student(email = "test", password = "test123", schoolSymbol = "23", endpoint = "fakelog.cf", loginType = "AUTO", isCurrent = true, studentName = "", schoolName = "", studentId = 0, symbol = ""))
+        studentLocal.saveStudent(Student(email = "test", password = "test123", schoolSymbol = "23", endpoint = "fakelog.cf", loginType = "AUTO", isCurrent = true, studentName = "", schoolName = "", studentId = 0, symbol = "", registrationDate = now()))
             .blockingGet()
 
         val student = studentLocal.getCurrentStudent(true).blockingGet()

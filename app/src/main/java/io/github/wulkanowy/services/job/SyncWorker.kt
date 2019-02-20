@@ -101,13 +101,13 @@ class SyncWorker : SimpleJobService() {
             .flatMapCompletable {
                 Completable.merge(
                     listOf(
-                        gradesDetails.getGrades(it.first, true, notify).ignoreElement(),
+                        gradesDetails.getGrades(it.second, it.first, true, notify).ignoreElement(),
                         gradesSummary.getGradesSummary(it.first, true).ignoreElement(),
                         attendance.getAttendance(it.first, start, end, true).ignoreElement(),
                         exam.getExams(it.first, start, end, true).ignoreElement(),
                         timetable.getTimetable(it.first, start, end, true).ignoreElement(),
                         message.getMessages(it.second, RECEIVED, true, notify).ignoreElement(),
-                        note.getNotes(it.first, true, notify).ignoreElement(),
+                        note.getNotes(it.second, it.first, true, notify).ignoreElement(),
                         homework.getHomework(it.first, LocalDate.now(), true).ignoreElement(),
                         homework.getHomework(it.first, LocalDate.now().plusDays(1), true).ignoreElement(),
                         luckyNumber.getLuckyNumber(it.first, true, notify).ignoreElement(),
@@ -168,7 +168,6 @@ class SyncWorker : SimpleJobService() {
 
     private fun sendNoteNotification() {
         disposable.add(student.getCurrentStudent()
-            .flatMap { semester.getCurrentSemester(it) }
             .flatMap { note.getNewNotes(it) }
             .map { it.filter { note -> !note.isNotified } }
             .doOnSuccess {

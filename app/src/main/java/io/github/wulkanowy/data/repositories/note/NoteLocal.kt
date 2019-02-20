@@ -2,7 +2,7 @@ package io.github.wulkanowy.data.repositories.note
 
 import io.github.wulkanowy.data.db.dao.NoteDao
 import io.github.wulkanowy.data.db.entities.Note
-import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import javax.inject.Inject
@@ -11,12 +11,12 @@ import javax.inject.Singleton
 @Singleton
 class NoteLocal @Inject constructor(private val noteDb: NoteDao) {
 
-    fun getNotes(semester: Semester): Maybe<List<Note>> {
-        return noteDb.loadAll(semester.semesterId, semester.studentId).filter { !it.isEmpty() }
+    fun getNotes(student: Student): Maybe<List<Note>> {
+        return noteDb.loadAll(student.studentId).filter { !it.isEmpty() }
     }
 
-    fun getNewNotes(semester: Semester): Maybe<List<Note>> {
-        return noteDb.loadNew(semester.semesterId, semester.studentId)
+    fun getNewNotes(student: Student): Maybe<List<Note>> {
+        return noteDb.loadNew(student.studentId)
     }
 
     fun saveNotes(notes: List<Note>) {

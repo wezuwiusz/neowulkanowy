@@ -36,12 +36,12 @@ class GradeSummaryPresenter @Inject constructor(
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
         Timber.i("Loading grade summary data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it) }
-            .map { semester -> semester.first { it.semesterId == semesterId } }
+            .flatMap { semesterRepository.getSemesters(it).map { semester -> semester to it } }
+            .map { pair -> pair.first.first { it.semesterId == semesterId } to pair.second }
             .flatMap {
-                gradeSummaryRepository.getGradesSummary(it, forceRefresh)
+                gradeSummaryRepository.getGradesSummary(it.first, forceRefresh)
                     .flatMap { gradesSummary ->
-                        gradeRepository.getGrades(it, forceRefresh)
+                        gradeRepository.getGrades(it.second, it.first, forceRefresh)
                             .map { grades ->
                                 grades.map { item -> item.changeModifier(preferencesRepository.gradePlusModifier, preferencesRepository.gradeMinusModifier) }
                                     .groupBy { grade -> grade.subject }

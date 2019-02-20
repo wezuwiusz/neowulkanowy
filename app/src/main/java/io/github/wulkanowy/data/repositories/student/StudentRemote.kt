@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.student
 import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.entities.Student
 import io.reactivex.Single
+import org.threeten.bp.LocalDateTime.now
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,7 +23,8 @@ class StudentRemote @Inject constructor(private val api: Api) {
                     schoolName = student.schoolName,
                     endpoint = endpoint,
                     loginType = student.loginType.name,
-                    isCurrent = false
+                    isCurrent = false,
+                    registrationDate = now()
                 )
             }
         }

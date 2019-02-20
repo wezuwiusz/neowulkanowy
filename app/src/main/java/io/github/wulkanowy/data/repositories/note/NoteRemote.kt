@@ -17,7 +17,6 @@ class NoteRemote @Inject constructor(private val api: Api) {
             .map { notes ->
                 notes.map {
                     Note(
-                        semesterId = semester.semesterId,
                         studentId = semester.studentId,
                         date = it.date.toLocalDate(),
                         teacher = it.teacher,

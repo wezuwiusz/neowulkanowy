@@ -36,8 +36,8 @@ class NotePresenter @Inject constructor(
     private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading note data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .flatMap { noteRepository.getNotes(it, forceRefresh) }
+            .flatMap { semesterRepository.getCurrentSemester(it).map { semester -> semester to it } }
+            .flatMap { noteRepository.getNotes(it.second, it.first, forceRefresh) }
             .map { items -> items.map { NoteItem(it) } }
             .map { items -> items.sortedByDescending { it.note.date } }
             .subscribeOn(schedulers.backgroundThread)

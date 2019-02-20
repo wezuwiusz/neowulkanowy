@@ -108,8 +108,8 @@ class GradeDetailsPresenter @Inject constructor(
     private fun loadData(semesterId: Int, forceRefresh: Boolean) {
         Timber.i("Loading grade details data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it) }
-            .flatMap { gradeRepository.getGrades(it.first { item -> item.semesterId == semesterId }, forceRefresh) }
+            .flatMap { semesterRepository.getSemesters(it).map { semester -> semester to it } }
+            .flatMap { gradeRepository.getGrades(it.second, it.first.first { item -> item.semesterId == semesterId }, forceRefresh) }
             .map { it.sortedByDescending { grade -> grade.date } }
             .map { it.map { item -> item.changeModifier(preferencesRepository.gradePlusModifier, preferencesRepository.gradeMinusModifier) } }
             .map { createGradeItems(it.groupBy { grade -> grade.subject }.toSortedMap()) }
