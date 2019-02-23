@@ -7,7 +7,6 @@
         <item>EduNet Miasta Tarnowa</item>
         <item>ResMan Rzeszów</item>
         <item>Fakelog</item>
-        <item>Fakelog lokalnie</item>
     </string-array>
     <string-array name="endpoints_values">
         <item>https://vulcan.net.pl</item>
@@ -16,6 +15,5 @@
         <item>https://umt.tarnow.pl</item>
         <item>https://resman.pl</item>
         <item>https://fakelog.cf</item>
-        <item>http://fakelog.localhost:3000</item>
     </string-array>
 </resources>

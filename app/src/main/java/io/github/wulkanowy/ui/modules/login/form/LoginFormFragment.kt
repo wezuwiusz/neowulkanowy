@@ -31,6 +31,15 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         fun newInstance() = LoginFormFragment()
     }
 
+    override val formNameValue: String
+        get() = loginFormName.text.toString()
+
+    override val formPassValue: String
+        get() = loginFormPass.text.toString()
+
+    override val formHostValue: String?
+        get() = resources.getStringArray(R.array.endpoints_values)[loginFormHost.selectedItemPosition]
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_form, container, false)
     }
@@ -41,27 +50,24 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun initView() {
-        loginFormSignIn.setOnClickListener {
-            presenter.attemptLogin(
-                loginFormName.text.toString(),
-                loginFormPass.text.toString(),
-                resources.getStringArray(R.array.endpoints_values)[loginFormHost.selectedItemPosition]
-            )
-        }
-
         loginFormName.setOnTextChangedListener { presenter.onNameTextChanged() }
         loginFormPass.setOnTextChangedListener { presenter.onPassTextChanged() }
+        loginFormHost.setOnItemSelectedListener { presenter.onHostSelected() }
+        loginFormSignIn.setOnClickListener { presenter.attemptLogin() }
 
         loginFormPass.setOnEditorActionListener { _, id, _ ->
             if (id == IME_ACTION_DONE || id == IME_NULL) loginFormSignIn.callOnClick() else false
         }
 
-        loginFormHost.setOnItemSelectedListener { presenter.onHostSelected() }
-
         context?.let {
             loginFormHost.adapter = ArrayAdapter.createFromResource(it, R.array.endpoints_keys, android.R.layout.simple_spinner_item)
                 .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
         }
+    }
+
+    override fun setDefaultCredentials(name: String, pass: String) {
+        loginFormName.setText(name)
+        loginFormPass.setText(pass)
     }
 
     override fun setErrorNameRequired() {
