@@ -28,8 +28,8 @@ class SendMessagePresenter @Inject constructor(
     private lateinit var reportingUnit: ReportingUnit
 
     override fun onAttachView(view: SendMessageView) {
-        Timber.i("Send message view is attached")
         super.onAttachView(view)
+        Timber.i("Send message view is attached")
         view.run {
             initView()
             showBottomNav(false)
@@ -60,13 +60,13 @@ class SendMessagePresenter @Inject constructor(
                 }
             }
             .subscribe({
+                Timber.i("Loading recipients result: Success, fetched %s recipients", it.size.toString())
                 view?.apply {
                     setReportingUnit(reportingUnit)
                     setRecipients(it)
                     refreshRecipientsAdapter()
                     showContent(true)
                 }
-                Timber.i("Loading recipients result: Success, fetched %s recipients", it.size.toString())
             }, {
                 Timber.i("Loading recipients result: An exception occurred")
                 view?.showContent(true)
