@@ -14,6 +14,8 @@ interface MessageView : BaseView {
 
     fun notifyChildLoadData(index: Int, forceRefresh: Boolean)
 
+    fun openSendMessage()
+
     interface MessageChildView {
 
         fun onParentLoadData(forceRefresh: Boolean)

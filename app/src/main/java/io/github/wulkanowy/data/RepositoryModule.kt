@@ -121,4 +121,12 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideCompletedLessonsDao(database: AppDatabase) = database.completedLessonsDao
+
+    @Singleton
+    @Provides
+    fun provideReportingUnitDao(database: AppDatabase) = database.reportingUnitDao
+
+    @Singleton
+    @Provides
+    fun provideRecipientDao(database: AppDatabase) = database.recipientDao
 }

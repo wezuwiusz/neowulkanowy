@@ -24,7 +24,13 @@ data class Semester(
     val semesterName: Int,
 
     @ColumnInfo(name = "is_current")
-    val isCurrent: Boolean
+    val isCurrent: Boolean,
+
+    @ColumnInfo(name = "class_id")
+    val classId: Int,
+
+    @ColumnInfo(name = "unit_id")
+    val unitId: Int
 ) {
 
     @PrimaryKey(autoGenerate = true)

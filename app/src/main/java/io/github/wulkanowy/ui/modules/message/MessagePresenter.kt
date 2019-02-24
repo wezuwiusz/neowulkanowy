@@ -42,4 +42,8 @@ class MessagePresenter @Inject constructor(
             showProgress(false)
         }
     }
+
+    fun onSendMessageButtonClicked() {
+        view?.openSendMessage()
+    }
 }

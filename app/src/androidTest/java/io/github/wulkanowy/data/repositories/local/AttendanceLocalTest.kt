@@ -41,7 +41,7 @@ class AttendanceLocalTest {
         ))
 
         val attendance = attendanceLocal
-                .getAttendance(Semester(1, 2, "", 1, 3, true),
+            .getAttendance(Semester(1, 2, "", 1, 3, true, 1, 1),
                         LocalDate.of(2018, 9, 10),
                         LocalDate.of(2018, 9, 14)
                 )

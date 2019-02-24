@@ -14,6 +14,8 @@ import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.message.MessageRepository.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.repositories.note.NoteRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
+import io.github.wulkanowy.data.repositories.recipient.RecipientRepository
+import io.github.wulkanowy.data.repositories.reportingunit.ReportingUnitRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
@@ -26,6 +28,7 @@ import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.monday
 import io.reactivex.Completable
 import io.reactivex.Maybe
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import org.threeten.bp.LocalDate
 import timber.log.Timber
@@ -70,6 +73,12 @@ class SyncWorker : SimpleJobService() {
     lateinit var completedLessons: CompletedLessonsRepository
 
     @Inject
+    lateinit var reportingUnitRepository: ReportingUnitRepository
+
+    @Inject
+    lateinit var recipientRepository: RecipientRepository
+
+    @Inject
     lateinit var prefRepository: PreferencesRepository
 
     private val disposable = CompositeDisposable()
@@ -98,21 +107,24 @@ class SyncWorker : SimpleJobService() {
         disposable.add(student.isStudentSaved()
             .flatMapMaybe { if (it) student.getCurrentStudent().toMaybe() else Maybe.empty() }
             .flatMap { semester.getCurrentSemester(it, true).map { semester -> semester to it }.toMaybe() }
-            .flatMapCompletable {
+            .flatMapCompletable { c ->
                 Completable.merge(
                     listOf(
-                        gradesDetails.getGrades(it.second, it.first, true, notify).ignoreElement(),
-                        gradesSummary.getGradesSummary(it.first, true).ignoreElement(),
-                        attendance.getAttendance(it.first, start, end, true).ignoreElement(),
-                        exam.getExams(it.first, start, end, true).ignoreElement(),
-                        timetable.getTimetable(it.first, start, end, true).ignoreElement(),
-                        message.getMessages(it.second, RECEIVED, true, notify).ignoreElement(),
-                        note.getNotes(it.second, it.first, true, notify).ignoreElement(),
-                        homework.getHomework(it.first, LocalDate.now(), true).ignoreElement(),
-                        homework.getHomework(it.first, LocalDate.now().plusDays(1), true).ignoreElement(),
-                        luckyNumber.getLuckyNumber(it.first, true, notify).ignoreElement(),
-                        completedLessons.getCompletedLessons(it.first, start, end, true).ignoreElement()
-                    )
+                        gradesDetails.getGrades(c.second, c.first, true, notify).ignoreElement(),
+                        gradesSummary.getGradesSummary(c.first, true).ignoreElement(),
+                        attendance.getAttendance(c.first, start, end, true).ignoreElement(),
+                        exam.getExams(c.first, start, end, true).ignoreElement(),
+                        timetable.getTimetable(c.first, start, end, true).ignoreElement(),
+                        message.getMessages(c.second, RECEIVED, true, notify).ignoreElement(),
+                        note.getNotes(c.second, c.first, true, notify).ignoreElement(),
+                        homework.getHomework(c.first, LocalDate.now(), true).ignoreElement(),
+                        homework.getHomework(c.first, LocalDate.now().plusDays(1), true).ignoreElement(),
+                        luckyNumber.getLuckyNumber(c.first, true, notify).ignoreElement(),
+                        completedLessons.getCompletedLessons(c.first, start, end, true).ignoreElement()
+                    ) + reportingUnitRepository.getReportingUnits(c.second, true)
+                        .flatMapPublisher { reportingUnits ->
+                            Single.merge(reportingUnits.map { recipientRepository.getRecipients(c.second, 2, it, true) })
+                        }.ignoreElements()
                 )
             }
             .subscribe({}, { error = it }))
