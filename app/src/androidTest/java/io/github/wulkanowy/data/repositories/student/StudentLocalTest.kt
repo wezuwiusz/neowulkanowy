@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data.repositories.local
+package io.github.wulkanowy.data.repositories.student
 
 import android.content.Context
 import androidx.room.Room
@@ -7,7 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefHelper
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.student.StudentLocal
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

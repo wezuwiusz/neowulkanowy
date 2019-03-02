@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data.repositories.local
+package io.github.wulkanowy.data.repositories.exam
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -6,7 +6,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.repositories.exam.ExamLocal
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
