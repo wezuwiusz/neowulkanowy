@@ -28,7 +28,7 @@
     <string name="login_progress">Logging in&#8230;</string>
     <string name="login_sync">Synchronization&#8230;</string>
     <string name="login_invalid_password">This password is too short</string>
-    <string name="login_incorrect_password">This password is incorrect</string>
+    <string name="login_incorrect_password">Login details are incorrect</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>
     <string name="login_duplicate_student">This student has already been logged in</string>
