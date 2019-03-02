@@ -226,7 +226,7 @@
 
 
     <!--Preferences-->
-    <string name="pref_view_header">View</string>
+    <string name="pref_view_header">Appearance</string>
     <string name="pref_view_list">Default view</string>
     <string name="pref_view_summary">Show the summary in the grades</string>
     <string name="pref_view_present">Show presence in attendance</string>

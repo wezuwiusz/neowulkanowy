@@ -243,7 +243,7 @@
 
 
     <!--Preferences-->
-    <string name="pref_view_header">Widok</string>
+    <string name="pref_view_header">Wygląd</string>
     <string name="pref_view_list">Domyślny widok</string>
     <string name="pref_view_summary">Pokazuj podsumowanie w ocenach</string>
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
