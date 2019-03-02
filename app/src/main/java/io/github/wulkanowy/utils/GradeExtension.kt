@@ -22,7 +22,7 @@ fun List<GradeSummary>.calcAverage(): Double {
     }.average().let { if (it.isNaN()) 0.0 else it }
 }
 
-inline val Grade.valueColor: Int
+inline val Grade.valueBgColor: Int
     get() {
         return when (value) {
             6 -> R.color.grade_six

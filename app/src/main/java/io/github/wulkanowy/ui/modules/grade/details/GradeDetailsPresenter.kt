@@ -12,7 +12,7 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calcAverage
 import io.github.wulkanowy.utils.changeModifier
-import io.github.wulkanowy.utils.valueColor
+import io.github.wulkanowy.utils.valueBgColor
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -151,7 +151,7 @@ class GradeDetailsPresenter @Inject constructor(
                         GradeDetailsItem(
                             grade = item,
                             weightString = view?.weightString.orEmpty(),
-                            valueColor = item.valueColor
+                            valueBgColor = item.valueBgColor
                         )
                     }
                 }
