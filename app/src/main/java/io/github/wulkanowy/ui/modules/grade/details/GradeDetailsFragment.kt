@@ -134,8 +134,8 @@ class GradeDetailsFragment : BaseSessionFragment(), GradeDetailsView, GradeView.
         gradeDetailsSwipe.isRefreshing = show
     }
 
-    override fun showGradeDialog(grade: Grade) {
-        (activity as? MainActivity)?.showDialogFragment(GradeDetailsDialog.newInstance(grade))
+    override fun showGradeDialog(grade: Grade, colorScheme: String) {
+        (activity as? MainActivity)?.showDialogFragment(GradeDetailsDialog.newInstance(grade, colorScheme))
     }
 
     override fun onParentLoadData(semesterId: Int, forceRefresh: Boolean) {

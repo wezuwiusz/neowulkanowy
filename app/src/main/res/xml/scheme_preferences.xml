@@ -31,6 +31,14 @@
             android:title="@string/pref_view_expand_grade"
             app:iconSpaceReserved="false" />
         <ListPreference
+            android:defaultValue="vulcan"
+            android:entries="@array/grade_color_scheme_entries"
+            android:entryValues="@array/grade_color_scheme_values"
+            android:key="@string/pref_key_grade_color_scheme"
+            android:summary="%s"
+            android:title="@string/pref_grade_color_scheme"
+            app:iconSpaceReserved="false" />
+        <ListPreference
             android:defaultValue="0.0"
             android:entries="@array/grade_modifier_entries"
             android:entryValues="@array/grade_modifier_value"

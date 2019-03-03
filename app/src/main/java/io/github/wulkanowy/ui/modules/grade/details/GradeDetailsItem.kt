@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.core.content.ContextCompat
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible

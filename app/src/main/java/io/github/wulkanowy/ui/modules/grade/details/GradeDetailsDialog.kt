@@ -5,26 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.utils.colorStringId
+import io.github.wulkanowy.utils.getBackgroundColor
 import io.github.wulkanowy.utils.toFormattedString
-import io.github.wulkanowy.utils.valueBgColor
 import kotlinx.android.synthetic.main.dialog_grade.*
-
 
 class GradeDetailsDialog : DialogFragment() {
 
     private lateinit var grade: Grade
 
+    private lateinit var colorScheme: String
+
     companion object {
         private const val ARGUMENT_KEY = "Item"
+        private const val COLOR_SCHEME_KEY = "Scheme"
 
-        fun newInstance(grade: Grade): GradeDetailsDialog {
+        fun newInstance(grade: Grade, colorScheme: String): GradeDetailsDialog {
             return GradeDetailsDialog().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, grade) }
+                arguments = Bundle().apply {
+                    putSerializable(ARGUMENT_KEY, grade)
+                    putString(COLOR_SCHEME_KEY, colorScheme)
+                }
             }
         }
     }
@@ -34,6 +38,7 @@ class GradeDetailsDialog : DialogFragment() {
         setStyle(STYLE_NO_TITLE, 0)
         arguments?.run {
             grade = getSerializable(ARGUMENT_KEY) as Grade
+            colorScheme = getString(COLOR_SCHEME_KEY) ?: "default"
         }
     }
 
@@ -58,7 +63,7 @@ class GradeDetailsDialog : DialogFragment() {
 
         gradeDialogValue.run {
             text = grade.entry
-            setBackgroundResource(grade.valueBgColor)
+            setBackgroundResource(grade.getBackgroundColor(colorScheme))
         }
 
         gradeDialogTeacherValue.text = if (grade.teacher.isBlank()) {

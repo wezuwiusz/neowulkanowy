@@ -28,7 +28,7 @@ interface GradeDetailsView : BaseSessionView {
 
     fun collapseAllItems()
 
-    fun showGradeDialog(grade: Grade)
+    fun showGradeDialog(grade: Grade, colorScheme: String)
 
     fun showContent(show: Boolean)
 

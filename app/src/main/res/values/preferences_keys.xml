@@ -5,6 +5,7 @@
     <string name="pref_key_theme">theme</string>
     <string name="pref_key_grade_modifier_plus">grade_modifier_plus</string>
     <string name="pref_key_grade_modifier_minus">grade_modifier_minus</string>
+    <string name="pref_key_grade_color_scheme">grade_color_scheme</string>
     <string name="pref_key_expand_grade">expand_grade</string>
     <string name="pref_key_services_enable">services_enable</string>
     <string name="pref_key_services_interval">services_interval</string>

@@ -1,6 +1,8 @@
 package io.github.wulkanowy.data.db
 
 import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.threeten.bp.DateTimeUtils
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
@@ -8,8 +10,6 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Month
 import org.threeten.bp.ZoneOffset
 import java.util.Date
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class Converters {
 

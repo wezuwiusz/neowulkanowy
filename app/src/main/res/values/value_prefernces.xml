@@ -57,4 +57,15 @@
         <item>0.33</item>
         <item>0.5</item>
     </string-array>
+
+    <string-array name="grade_color_scheme_entries">
+        <item>Dzienniczek+</item>
+        <item>Wulkanowy</item>
+        <item>Grade colors in register</item>
+    </string-array>
+    <string-array name="grade_color_scheme_values" translatable="false">
+        <item>vulcan</item>
+        <item>material</item>
+        <item>grade_color</item>
+    </string-array>
 </resources>

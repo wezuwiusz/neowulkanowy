@@ -251,6 +251,7 @@
     <string name="pref_view_grade_modifier_plus">Wartość plusa</string>
     <string name="pref_view_grade_modifier_minus">Wartość minusa</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
+    <string name="pref_grade_color_scheme">Schemat kolorów ocen</string>
 
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>

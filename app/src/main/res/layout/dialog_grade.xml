@@ -26,9 +26,9 @@
                 android:layout_gravity="end"
                 android:background="@color/grade_default"
                 android:gravity="center"
-                android:text="@string/app_name"
                 android:textColor="@color/grade_text"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                tools:text="6" />
 
             <TextView
                 android:id="@+id/gradeDialogSubject"
