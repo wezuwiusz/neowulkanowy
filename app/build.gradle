@@ -97,6 +97,9 @@ dependencies {
     implementation "com.aurelhubert:ahbottomnavigation:2.3.4"
     implementation 'com.ncapdevi:frag-nav:3.1.0'
 
+    implementation "com.hootsuite.android:nachos:1.1.1"
+    implementation 'com.github.PhilJay:MPAndroidChart:971640b29d'
+
     implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.2'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation "io.reactivex.rxjava2:rxjava:2.2.5"
@@ -125,8 +128,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'org.mockito:mockito-android:2.23.4'
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-
-    implementation "com.hootsuite.android:nachos:1.1.1"
 }
 
 apply plugin: 'com.google.gms.google-services'

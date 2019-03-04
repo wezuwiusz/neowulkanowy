@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SubjectRepostory @Inject constructor(
+class SubjectRepository @Inject constructor(
     private val settings: InternetObservingSettings,
     private val local: SubjectLocal,
     private val remote: SubjectRemote

@@ -114,6 +114,6 @@ class GradePresenter @Inject constructor(
     }
 
     private fun notifyChildrenSemesterChange() {
-        for (i in 0..1) view?.notifyChildSemesterChange(i)
+        for (i in 0..2) view?.notifyChildSemesterChange(i)
     }
 }

@@ -7,6 +7,7 @@ import io.github.wulkanowy.di.scopes.PerChildFragment
 import io.github.wulkanowy.di.scopes.PerFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
+import io.github.wulkanowy.ui.modules.grade.statistics.GradeStatisticsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
 
 @Module
@@ -28,4 +29,8 @@ abstract class GradeModule {
     @PerChildFragment
     @ContributesAndroidInjector
     abstract fun binGradeSummaryFragment(): GradeSummaryFragment
+
+    @PerChildFragment
+    @ContributesAndroidInjector
+    abstract fun binGradeStatisticsFragment(): GradeStatisticsFragment
 }

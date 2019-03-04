@@ -5,7 +5,7 @@ import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.repositories.attendancesummary.AttendanceSummaryRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.data.repositories.subject.SubjectRepostory
+import io.github.wulkanowy.data.repositories.subject.SubjectRepository
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class AttendanceSummaryPresenter @Inject constructor(
     private val errorHandler: SessionErrorHandler,
     private val attendanceSummaryRepository: AttendanceSummaryRepository,
-    private val subjectRepository: SubjectRepostory,
+    private val subjectRepository: SubjectRepository,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val schedulers: SchedulersProvider,

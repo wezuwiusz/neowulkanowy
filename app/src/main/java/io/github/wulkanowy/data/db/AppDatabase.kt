@@ -11,6 +11,7 @@ import io.github.wulkanowy.data.db.dao.AttendanceSummaryDao
 import io.github.wulkanowy.data.db.dao.CompletedLessonsDao
 import io.github.wulkanowy.data.db.dao.ExamDao
 import io.github.wulkanowy.data.db.dao.GradeDao
+import io.github.wulkanowy.data.db.dao.GradeStatisticsDao
 import io.github.wulkanowy.data.db.dao.GradeSummaryDao
 import io.github.wulkanowy.data.db.dao.HomeworkDao
 import io.github.wulkanowy.data.db.dao.LuckyNumberDao
@@ -27,6 +28,7 @@ import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.db.entities.LuckyNumber
@@ -43,6 +45,7 @@ import io.github.wulkanowy.data.db.migrations.Migration3
 import io.github.wulkanowy.data.db.migrations.Migration4
 import io.github.wulkanowy.data.db.migrations.Migration5
 import io.github.wulkanowy.data.db.migrations.Migration6
+import io.github.wulkanowy.data.db.migrations.Migration7
 import javax.inject.Singleton
 
 @Singleton
@@ -56,6 +59,7 @@ import javax.inject.Singleton
         AttendanceSummary::class,
         Grade::class,
         GradeSummary::class,
+        GradeStatistics::class,
         Message::class,
         Note::class,
         Homework::class,
@@ -72,7 +76,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 6
+        const val VERSION_SCHEMA = 7
 
         fun newInstance(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, "wulkanowy_database")
@@ -84,7 +88,8 @@ abstract class AppDatabase : RoomDatabase() {
                     Migration3(),
                     Migration4(),
                     Migration5(),
-                    Migration6()
+                    Migration6(),
+                    Migration7()
                 )
                 .build()
         }
@@ -105,6 +110,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val gradeDao: GradeDao
 
     abstract val gradeSummaryDao: GradeSummaryDao
+
+    abstract val gradeStatistics: GradeStatisticsDao
 
     abstract val messagesDao: MessagesDao
 

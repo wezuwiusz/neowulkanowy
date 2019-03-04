@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.modules.grade.statistics.GradeStatisticsFragment">
+
+    <LinearLayout
+        android:id="@+id/gradeStatisticsSubjectsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        android:elevation="5dp"
+        android:padding="5dp"
+        android:visibility="invisible"
+        tools:listitem="@layout/item_attendance_summary"
+        tools:targetApi="lollipop"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/gradeStatisticsSubjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:entries="@array/endpoints_keys"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="10dp"
+            android:spinnerMode="dialog" />
+    </LinearLayout>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/gradeStatisticsSwipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/gradeStatisticsTypeSwitch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+                    <RadioButton
+                        android:id="@+id/gradeStatisticsTypePartial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:tag="partial"
+                        android:text="@string/grade_statistics_partial" />
+
+                    <RadioButton
+                        android:id="@+id/gradeStatisticsTypeSemester"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="annual"
+                        android:text="@string/grade_statistics_semester" />
+                </RadioGroup>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/gradeStatisticsChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/windowBackground"
+                        android:minHeight="400dp"
+                        android:visibility="gone"
+                        android:layout_margin="10dp"
+                        tools:visibility="visible" />
+
+                    <ProgressBar
+                        android:id="@+id/gradeStatisticsProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:indeterminate="true"
+                        tools:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/gradeStatisticsEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="100dp"
+                            android:minHeight="100dp"
+                            app:srcCompat="@drawable/ic_menu_main_grade_26dp"
+                            app:tint="?android:attr/textColorPrimary"
+                            tools:ignore="contentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:text="@string/grade_no_items"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

@@ -14,6 +14,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
+import io.github.wulkanowy.ui.modules.grade.statistics.GradeStatisticsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnSelectPageListener
@@ -63,12 +64,14 @@ class GradeFragment : BaseSessionFragment(), GradeView, MainView.MainChildView, 
             containerId = gradeViewPager.id
             addFragmentsWithTitle(mapOf(
                 GradeDetailsFragment.newInstance() to getString(R.string.all_details),
-                GradeSummaryFragment.newInstance() to getString(R.string.grade_menu_summary)
+                GradeSummaryFragment.newInstance() to getString(R.string.grade_menu_summary),
+                GradeStatisticsFragment.newInstance() to getString(R.string.grade_menu_statistics)
             ))
         }
 
         gradeViewPager.run {
             adapter = pagerAdapter
+            offscreenPageLimit = 3
             setOnSelectPageListener { presenter.onPageSelected(it) }
         }
         gradeTabLayout.setupWithViewPager(gradeViewPager)

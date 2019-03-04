@@ -32,5 +32,8 @@
 -dontwarn rx.internal.util.**
 -dontwarn sun.misc.Unsafe
 
+#Config for MPAndroidChart
+-keep class com.github.mikephil.charting.** { *; }
+
 #Config for API
 -keep class io.github.wulkanowy.api.** {*;}
