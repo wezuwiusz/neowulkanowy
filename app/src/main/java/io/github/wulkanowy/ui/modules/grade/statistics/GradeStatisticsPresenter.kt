@@ -74,6 +74,7 @@ class GradeStatisticsPresenter @Inject constructor(
 
     fun onTypeChange(isSemester: Boolean) {
         Timber.i("Select attendance stats semester: $isSemester")
+        disposable.clear()
         view?.run {
             showContent(false)
             showProgress(true)

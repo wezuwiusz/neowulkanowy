@@ -56,7 +56,9 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingTop="5dp">
+                    android:paddingTop="5dp"
+                    android:visibility="invisible"
+                    tools:visibility="visible">
 
                     <RadioButton
                         android:id="@+id/gradeStatisticsTypePartial"
@@ -82,10 +84,10 @@
                         android:id="@+id/gradeStatisticsChart"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="10dp"
                         android:background="?android:attr/windowBackground"
                         android:minHeight="400dp"
                         android:visibility="gone"
-                        android:layout_margin="10dp"
                         tools:visibility="visible" />
 
                     <ProgressBar
