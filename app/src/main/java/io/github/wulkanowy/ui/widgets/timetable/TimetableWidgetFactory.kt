@@ -64,7 +64,7 @@ class TimetableWidgetFactory(
     }
 
     override fun getViewAt(position: Int): RemoteViews? {
-        if (position == INVALID_POSITION || lessons.getOrNull(position) == null) return null
+        if (position == INVALID_POSITION || lessons.getOrNull(position) === null) return null
 
         return RemoteViews(context.packageName, R.layout.item_widget_timetable).apply {
             lessons[position].let {

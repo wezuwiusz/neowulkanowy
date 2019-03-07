@@ -1,5 +1,6 @@
 package io.github.wulkanowy.di
 
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
@@ -36,6 +37,10 @@ internal class AppModule {
     @Singleton
     @Provides
     fun provideFirebaseAnalyticsHelper(context: Context) = FirebaseAnalyticsHelper(FirebaseAnalytics.getInstance(context))
+
+    @Singleton
+    @Provides
+    fun provideAppWidgetManager(context: Context) = AppWidgetManager.getInstance(context)
 
     @Singleton
     @Named("isDebug")
