@@ -5,13 +5,12 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.db.entities.Timetable
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalDateTime.of
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -23,7 +22,8 @@ class TimetableLocalTest {
 
     @Before
     fun createDb() {
-        testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java).build()
+        testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java)
+            .build()
         timetableDb = TimetableLocal(testDb.timetableDao)
     }
 
@@ -35,19 +35,17 @@ class TimetableLocalTest {
     @Test
     fun saveAndReadTest() {
         timetableDb.saveTimetable(listOf(
-                Timetable(1, 2, 1, LocalDateTime.now(), LocalDateTime.now(),
-                        LocalDate.of(2018, 9, 10), "", "", "", "", "", false, false),
-                Timetable(1, 2, 1, LocalDateTime.now(), LocalDateTime.now(),
-                        LocalDate.of(2018, 9, 14), "", "", "", "", "", false, false),
-                Timetable(1, 2, 1, LocalDateTime.now(), LocalDateTime.now(),
-                        LocalDate.of(2018, 9, 17), "", "", "", "", "", false, false)
+            createTimetableLocal(1, of(2018, 9, 10, 0, 0, 0)),
+            createTimetableLocal(1, of(2018, 9, 14, 0, 0, 0)),
+            createTimetableLocal(1, of(2018, 9, 17, 0, 0, 0))
         ))
 
         val exams = timetableDb.getTimetable(
             Semester(1, 2, "", 1, 1, true, 1, 1),
-                LocalDate.of(2018, 9, 10),
-                LocalDate.of(2018, 9, 14)
+            LocalDate.of(2018, 9, 10),
+            LocalDate.of(2018, 9, 14)
         ).blockingGet()
+
         assertEquals(2, exams.size)
         assertEquals(exams[0].date, LocalDate.of(2018, 9, 10))
         assertEquals(exams[1].date, LocalDate.of(2018, 9, 14))
