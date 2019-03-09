@@ -249,7 +249,7 @@
 
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
-    <string name="pref_debug_notify_switch">Pokazuj powiadomienia debugowania</string>
+    <string name="pref_notify_debug_switch">Pokazuj powiadomienia debugowania</string>
 
     <string name="pref_services_header">Synchronizacja</string>
     <string name="pref_services_switch">Automatyczna aktualizacja</string>
@@ -260,6 +260,7 @@
 
     <!--Notification Channels-->
     <string name="channel_new_entries">Nowe wpisy w dzienniku</string>
+    <string name="channel_debug">Debugowanie</string>
 
 
     <!--Colors-->

@@ -50,7 +50,7 @@ internal class RepositoryModule {
     @Provides
     fun provideChuckCollector(context: Context, prefRepository: PreferencesRepository): ChuckCollector {
         return ChuckCollector(context)
-            .showNotification(prefRepository.isShowChuckerNotification)
+            .showNotification(prefRepository.isDebugNotificationEnable)
             .retentionManager(RetentionManager(context, ChuckCollector.Period.ONE_HOUR))
     }
 

@@ -90,8 +90,8 @@
             app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="false"
-            android:key="@string/pref_key_debug_chucker_notification"
-            android:title="@string/pref_debug_notify_switch"
+            android:key="@string/pref_key_notification_debug"
+            android:title="@string/pref_notify_debug_switch"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>
