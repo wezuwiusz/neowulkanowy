@@ -105,6 +105,7 @@ class AttendancePresenter @Inject constructor(
                     view?.run {
                         hideRefresh()
                         showProgress(false)
+                        enableSwipe(true)
                     }
                 }
                 .subscribe({
@@ -128,6 +129,7 @@ class AttendancePresenter @Inject constructor(
         Timber.i("Reload attendance view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)
+            enableSwipe(false)
             showContent(false)
             showEmpty(false)
             clearData()

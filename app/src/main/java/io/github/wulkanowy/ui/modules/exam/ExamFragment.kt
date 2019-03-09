@@ -99,6 +99,10 @@ class ExamFragment : BaseSessionFragment(), ExamView, MainView.MainChildView, Ma
         examProgress.visibility = if (show) VISIBLE else GONE
     }
 
+    override fun enableSwipe(enable: Boolean) {
+        examSwipe.isEnabled = enable
+    }
+
     override fun showContent(show: Boolean) {
         examRecycler.visibility = if (show) VISIBLE else GONE
     }

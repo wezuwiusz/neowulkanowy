@@ -27,6 +27,8 @@ interface TimetableView : BaseSessionView {
 
     fun showProgress(show: Boolean)
 
+    fun enableSwipe(enable: Boolean)
+
     fun showContent(show: Boolean)
 
     fun showPreButton(show: Boolean)

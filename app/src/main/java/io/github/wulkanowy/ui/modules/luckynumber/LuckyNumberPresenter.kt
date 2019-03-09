@@ -39,6 +39,7 @@ class LuckyNumberPresenter @Inject constructor(
                     view?.run {
                         hideRefresh()
                         showProgress(false)
+                        enableSwipe(true)
                     }
                 }
                 .subscribe({

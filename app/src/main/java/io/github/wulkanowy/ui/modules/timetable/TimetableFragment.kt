@@ -125,6 +125,10 @@ class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChi
         timetableProgress.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    override fun enableSwipe(enable: Boolean) {
+        timetableSwipe.isEnabled = enable
+    }
+
     override fun showContent(show: Boolean) {
         timetableRecycler.visibility = if (show) View.VISIBLE else View.GONE
     }

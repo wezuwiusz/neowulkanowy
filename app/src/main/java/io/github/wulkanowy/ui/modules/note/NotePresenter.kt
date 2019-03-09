@@ -46,6 +46,7 @@ class NotePresenter @Inject constructor(
                 view?.run {
                     hideRefresh()
                     showProgress(false)
+                    enableSwipe(true)
                 }
             }.subscribe({
                 Timber.i("Loading note result: Success")

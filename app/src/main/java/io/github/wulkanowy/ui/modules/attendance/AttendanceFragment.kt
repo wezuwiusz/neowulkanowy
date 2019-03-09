@@ -118,6 +118,10 @@ class AttendanceFragment : BaseSessionFragment(), AttendanceView, MainView.MainC
         attendanceProgress.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    override fun enableSwipe(enable: Boolean) {
+        attendanceSwipe.isEnabled = enable
+    }
+
     override fun showContent(show: Boolean) {
         attendanceRecycler.visibility = if (show) View.VISIBLE else View.GONE
     }

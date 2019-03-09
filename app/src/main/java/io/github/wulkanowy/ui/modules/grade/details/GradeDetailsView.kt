@@ -38,6 +38,8 @@ interface GradeDetailsView : BaseSessionView {
 
     fun showProgress(show: Boolean)
 
+    fun enableSwipe(enable: Boolean)
+
     fun showRefresh(show: Boolean)
 
     fun notifyParentDataLoaded(semesterId: Int)

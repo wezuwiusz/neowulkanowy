@@ -47,6 +47,7 @@ class MessageTabPresenter @Inject constructor(
                     view?.run {
                         showRefresh(false)
                         showProgress(false)
+                        enableSwipe(true)
                         notifyParentDataLoaded()
                     }
                 }

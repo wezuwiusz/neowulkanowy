@@ -77,6 +77,7 @@ class HomeworkPresenter @Inject constructor(
                     view?.run {
                         hideRefresh()
                         showProgress(false)
+                        enableSwipe(true)
                     }
                 }
                 .subscribe({
@@ -99,6 +100,7 @@ class HomeworkPresenter @Inject constructor(
         Timber.i("Reload homework view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)
+            enableSwipe(false)
             showContent(false)
             showEmpty(false)
             clearData()

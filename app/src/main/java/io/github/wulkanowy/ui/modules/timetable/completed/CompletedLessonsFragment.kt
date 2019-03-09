@@ -92,6 +92,10 @@ class CompletedLessonsFragment : BaseSessionFragment(), CompletedLessonsView, Ma
         completedLessonsProgress.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    override fun enableSwipe(enable: Boolean) {
+        completedLessonsSwipe.isEnabled = enable
+    }
+
     override fun showContent(show: Boolean) {
         completedLessonsRecycler.visibility = if (show) View.VISIBLE else View.GONE
     }

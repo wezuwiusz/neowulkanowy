@@ -63,6 +63,7 @@ class GradeSummaryPresenter @Inject constructor(
                 view?.run {
                     showRefresh(false)
                     showProgress(false)
+                    enableSwipe(true)
                     notifyParentDataLoaded(semesterId)
                 }
             }.subscribe({
@@ -94,6 +95,7 @@ class GradeSummaryPresenter @Inject constructor(
     fun onParentViewChangeSemester() {
         view?.run {
             showProgress(true)
+            enableSwipe(false)
             showRefresh(false)
             showContent(false)
             showEmpty(false)

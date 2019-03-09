@@ -149,6 +149,10 @@ class GradeStatisticsFragment : BaseSessionFragment(), GradeStatisticsView, Grad
         gradeStatisticsProgress.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    override fun enableSwipe(enable: Boolean) {
+        gradeStatisticsSwipe.isEnabled = enable
+    }
+
     override fun showRefresh(show: Boolean) {
         gradeStatisticsSwipe.isRefreshing = show
     }

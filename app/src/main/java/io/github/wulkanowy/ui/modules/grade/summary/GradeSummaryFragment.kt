@@ -86,6 +86,10 @@ class GradeSummaryFragment : BaseSessionFragment(), GradeSummaryView, GradeView.
         gradeSummaryProgress.visibility = if (show) VISIBLE else GONE
     }
 
+    override fun enableSwipe(enable: Boolean) {
+        gradeSummarySwipe.isEnabled = enable
+    }
+
     override fun showRefresh(show: Boolean) {
         gradeSummarySwipe.isRefreshing = show
     }

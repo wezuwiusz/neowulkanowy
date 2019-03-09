@@ -99,6 +99,7 @@ class TimetablePresenter @Inject constructor(
                     view?.run {
                         hideRefresh()
                         showProgress(false)
+                        enableSwipe(true)
                     }
                 }
                 .subscribe({
@@ -121,6 +122,7 @@ class TimetablePresenter @Inject constructor(
         Timber.i("Reload timetable view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)
+            enableSwipe(false)
             showContent(false)
             showEmpty(false)
             clearData()

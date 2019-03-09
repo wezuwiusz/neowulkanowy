@@ -97,6 +97,7 @@ class GradeDetailsPresenter @Inject constructor(
     fun onParentViewChangeSemester() {
         view?.run {
             showProgress(true)
+            enableSwipe(false)
             showRefresh(false)
             showContent(false)
             showEmpty(false)
@@ -119,6 +120,7 @@ class GradeDetailsPresenter @Inject constructor(
                 view?.run {
                     showRefresh(false)
                     showProgress(false)
+                    enableSwipe(true)
                     notifyParentDataLoaded(semesterId)
                 }
             }

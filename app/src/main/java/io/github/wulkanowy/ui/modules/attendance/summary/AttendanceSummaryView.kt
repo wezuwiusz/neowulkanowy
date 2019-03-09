@@ -14,6 +14,8 @@ interface AttendanceSummaryView : BaseSessionView {
 
     fun showProgress(show: Boolean)
 
+    fun enableSwipe(enable: Boolean)
+
     fun showEmpty(show: Boolean)
 
     fun updateDataSet(data: List<AttendanceSummaryItem>, header: AttendanceSummaryScrollableHeader)

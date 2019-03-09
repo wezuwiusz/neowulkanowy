@@ -20,6 +20,8 @@ interface MessageTabView : BaseSessionView {
 
     fun showProgress(show: Boolean)
 
+    fun enableSwipe(enable: Boolean)
+
     fun showContent(show: Boolean)
 
     fun showEmpty(show: Boolean)
