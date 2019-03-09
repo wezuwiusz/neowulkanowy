@@ -3,6 +3,8 @@ package io.github.wulkanowy
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
+import androidx.work.Configuration
+import androidx.work.WorkManager
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -14,6 +16,7 @@ import io.fabric.sdk.android.Fabric
 import io.github.wulkanowy.BuildConfig.DEBUG
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.di.DaggerAppComponent
+import io.github.wulkanowy.services.sync.SyncWorkerFactory
 import io.github.wulkanowy.utils.CrashlyticsTree
 import io.github.wulkanowy.utils.DebugLogTree
 import timber.log.Timber
@@ -23,6 +26,9 @@ class WulkanowyApp : DaggerApplication() {
 
     @Inject
     lateinit var prefRepository: PreferencesRepository
+
+    @Inject
+    lateinit var workerFactory: SyncWorkerFactory
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
@@ -35,6 +41,7 @@ class WulkanowyApp : DaggerApplication() {
         initializeFabric()
         if (DEBUG) enableDebugLog()
         AppCompatDelegate.setDefaultNightMode(prefRepository.currentTheme)
+        WorkManager.initialize(this, Configuration.Builder().setWorkerFactory(workerFactory).build())
     }
 
     private fun enableDebugLog() {

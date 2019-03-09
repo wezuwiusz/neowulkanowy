@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.message.tab
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
@@ -20,9 +21,9 @@ class MessageTabPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BaseSessionPresenter<MessageTabView>(errorHandler) {
 
-    lateinit var folder: MessageRepository.MessageFolder
+    lateinit var folder: MessageFolder
 
-    fun onAttachView(view: MessageTabView, folder: MessageRepository.MessageFolder) {
+    fun onAttachView(view: MessageTabView, folder: MessageFolder) {
         super.onAttachView(view)
         view.initView()
         this.folder = folder

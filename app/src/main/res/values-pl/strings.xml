@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Wulkanowy</string>
 
+
     <!--Activity/Fragment title-->
     <string name="login_title">Wybierz ucznia</string>
     <string name="main_title">Wulkanowy</string>
@@ -70,31 +71,16 @@
         <item quantity="many">%d ocen</item>
         <item quantity="other">%d ocen</item>
     </plurals>
-
     <plurals name="grade_new_items">
         <item quantity="one">Nowa ocena</item>
         <item quantity="few">Nowe oceny</item>
         <item quantity="many">Nowe oceny</item>
     </plurals>
-
-
-    <!--Grade notify-->
-    <string name="notify_grade_channel">Nowe oceny</string>
-    <plurals name="notify_grade_new_items">
+    <plurals name="grade_notify_new_items">
         <item quantity="one">Dostałeś %1$d ocenę</item>
         <item quantity="few">"Dostałeś %1$d oceny</item>
         <item quantity="many">Dostałeś %1$d ocen</item>
         <item quantity="other">Dostałeś %1$d ocen</item>
-    </plurals>
-
-
-    <!--Note notify-->
-    <string name="notify_note_channel">Nowe uwagi</string>
-    <plurals name="notify_note_new_items">
-        <item quantity="one">Dostałeś %1$d uwagę</item>
-        <item quantity="few">"Dostałeś %1$d uwagi</item>
-        <item quantity="many">Dostałeś %1$d uwag</item>
-        <item quantity="other">Dostałeś %1$d uwag</item>
     </plurals>
 
 
@@ -106,6 +92,7 @@
     <string name="timetable_changes">Zmiany</string>
     <string name="timetable_no_items">Brak lekcji w tym dniu</string>
 
+
     <!--CompletedLesson-->
     <string name="completed_lessons_title">Lekcje zrealizowane</string>
     <string name="completed_lessons_button">Zobacz lekcje zrealizowane</string>
@@ -113,6 +100,7 @@
     <string name="completed_lessons_topic">Temat</string>
     <string name="completed_lessons_absence">Nieobecność</string>
     <string name="completed_lessons_resources">Zasoby</string>
+
 
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
@@ -131,8 +119,10 @@
         <item quantity="many">%1$d nieobecności</item>
     </plurals>
 
+
     <!--Attendance summary-->
     <string name="attendance_summary_final">Frekwencja</string>
+
 
     <!--Exam-->
     <string name="exam_no_items">Brak sprawdzianów w tym tygodniu</string>
@@ -155,17 +145,12 @@
         <item quantity="few">%d wiadomości</item>
         <item quantity="many">%d wiadomości</item>
     </plurals>
-
     <plurals name="message_new_items">
         <item quantity="one">Nowa wiadomość</item>
         <item quantity="few">Nowe wiadomości</item>
         <item quantity="many">Nowe wiadomości</item>
     </plurals>
-
-
-    <!--Message notify-->
-    <string name="notify_message_channel">Nowe wiadomości</string>
-    <plurals name="notify_message_new_items">
+    <plurals name="message_notify_new_items">
         <item quantity="one">Dostałeś %1$d wiadomość</item>
         <item quantity="few">"Dostałeś %1$d wiadomości</item>
         <item quantity="many">Dostałeś %1$d wiadomości</item>
@@ -181,9 +166,6 @@
     <string name="send_message_required_recipients">Musisz wybrać co najmniej 1 adresata</string>
     <string name="send_message_content_min_length">Treść wiadomości musi zawierać co najmniej 3 znaki</string>
 
-    <!--About-->
-    <string name="about_source_code">Kod źródłowy</string>
-    <string name="about_feedback">Zgłoś błąd</string>
 
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
@@ -193,33 +175,42 @@
         <item quantity="many">%d uwag</item>
         <item quantity="other">%d uwag</item>
     </plurals>
-
     <plurals name="note_new_items">
         <item quantity="one">Nowa uwaga</item>
         <item quantity="few">Nowe uwagi</item>
         <item quantity="many">Nowych uwag</item>
         <item quantity="other">Nowych uwag</item>
     </plurals>
+    <plurals name="note_notify_new_items">
+        <item quantity="one">Dostałeś %1$d uwagę</item>
+        <item quantity="few">"Dostałeś %1$d uwagi</item>
+        <item quantity="many">Dostałeś %1$d uwag</item>
+        <item quantity="other">Dostałeś %1$d uwag</item>
+    </plurals>
 
 
     <!--Homework-->
     <string name="homework_no_items">Brak zadań domowych</string>
 
+
     <!--Lucky number-->
     <string name="lucky_number_title">Szczęśliwy numerek</string>
     <string name="lucky_number_header">Dzisiejszym szczęśliwym numerkiem jest</string>
     <string name="lucky_number_empty">Brak informacji o szczęśliwym numerku</string>
+    <string name="lucky_number_notify_new_item_title">Szczęśliwy numerek na dzisiaj</string>
+    <string name="lucky_number_notify_new_item">Dziś szczęśliwym numerkiem jest: %d</string>
 
-    <!--Lucky number notify-->
-    <string name="notify_lucky_number_channel">Nowe szczęśliwe numerki</string>
-    <string name="notify_lucky_number_new_item_title">Szczęśliwy numerek na dzisiaj</string>
-    <string name="notify_lucky_number_new_item">Dziś szczęśliwym numerkiem jest: %d</string>
 
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>
     <string name="account_logout">Wyloguj</string>
     <string name="account_confirm">Czy chcesz wylogować aktualnego ucznia?</string>
     <string name="account_logout_student">Wylogowanie ucznia</string>
+
+
+    <!--About-->
+    <string name="about_source_code">Kod źródłowy</string>
+    <string name="about_feedback">Zgłoś błąd</string>
 
 
     <!--Generic-->
@@ -267,6 +258,10 @@
     <string name="pref_services_wifi">Tylko WiFi</string>
 
 
+    <!--Notification Channels-->
+    <string name="channel_new_entries">Nowe wpisy w dzienniku</string>
+
+
     <!--Colors-->
     <string name="all_black">Czarny</string>
     <string name="all_red">Czerwony</string>
@@ -278,6 +273,7 @@
 
     <!--Others-->
     <string name="all_copied">Skopiowano</string>
+
 
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>

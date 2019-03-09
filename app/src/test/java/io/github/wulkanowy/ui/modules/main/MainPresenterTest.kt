@@ -3,7 +3,7 @@ package io.github.wulkanowy.ui.modules.main
 import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.services.job.ServiceHelper
+import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import org.junit.Before
@@ -25,7 +25,7 @@ class MainPresenterTest {
     lateinit var prefRepository: PreferencesRepository
 
     @Mock
-    lateinit var serviceHelper: ServiceHelper
+    lateinit var syncManager: SyncManager
 
     @Mock
     lateinit var mainView: MainView
@@ -40,7 +40,7 @@ class MainPresenterTest {
         MockitoAnnotations.initMocks(this)
         clearInvocations(mainView)
 
-        presenter = MainPresenter(errorHandler, studentRepository, prefRepository, TestSchedulersProvider(), serviceHelper, analytics)
+        presenter = MainPresenter(errorHandler, studentRepository, prefRepository, syncManager, TestSchedulersProvider(), analytics)
         presenter.onAttachView(mainView, -1)
     }
 

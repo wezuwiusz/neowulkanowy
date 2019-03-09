@@ -16,7 +16,7 @@ class AttendanceSummaryRepository @Inject constructor(
     private val remote: AttendanceSummaryRemote
 ) {
 
-    fun getAttendanceSummary(semester: Semester, subjectId: Int, forceRefresh: Boolean = false): Single<List<AttendanceSummary>>? {
+    fun getAttendanceSummary(semester: Semester, subjectId: Int, forceRefresh: Boolean = false): Single<List<AttendanceSummary>> {
         return local.getAttendanceSummary(semester, subjectId).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Wulkanowy</string>
 
+
     <!--Activity/Fragment title-->
     <string name="login_title">Select student</string>
     <string name="main_title">Wulkanowy</string>
@@ -68,24 +69,13 @@
         <item quantity="one">%d grade</item>
         <item quantity="other">%d grades</item>
     </plurals>
-
     <plurals name="grade_new_items">
         <item quantity="one">New grade</item>
         <item quantity="other">New grades</item>
     </plurals>
-
-    <!--Grade notify-->
-    <string name="notify_grade_channel">New grades</string>
-    <plurals name="notify_grade_new_items">
+    <plurals name="grade_notify_new_items">
         <item quantity="one">You received %1$d grade</item>
         <item quantity="other">You received %1$d grades</item>
-    </plurals>
-
-    <!--Note notify-->
-    <string name="notify_note_channel">New notes</string>
-    <plurals name="notify_note_new_items">
-        <item quantity="one">You received %1$d note</item>
-        <item quantity="other">You received %1$d notes</item>
     </plurals>
 
 
@@ -97,6 +87,7 @@
     <string name="timetable_changes">Changes</string>
     <string name="timetable_no_items">No lessons this day</string>
 
+
     <!--Completed lessons-->
     <string name="completed_lessons_title">Completed lessons</string>
     <string name="completed_lessons_button">Show completed lessons</string>
@@ -104,6 +95,7 @@
     <string name="completed_lessons_topic">Topic</string>
     <string name="completed_lessons_absence">Absence</string>
     <string name="completed_lessons_resources">Resources</string>
+
 
     <!--Attendance-->
     <string name="attendance_summary_button">Attendance summary</string>
@@ -120,6 +112,7 @@
         <item quantity="one">%1$d absence</item>
         <item quantity="other">%1$d absences</item>
     </plurals>
+
 
     <!--Attendance summary-->
     <string name="attendance_summary_final">Attendance</string>
@@ -145,15 +138,11 @@
         <item quantity="one">%d message</item>
         <item quantity="other">%d messages</item>
     </plurals>
-
     <plurals name="message_new_items">
         <item quantity="one">New message</item>
         <item quantity="other">New messages</item>
     </plurals>
-
-    <!--Message notify-->
-    <string name="notify_message_channel">New messages</string>
-    <plurals name="notify_message_new_items">
+    <plurals name="message_notify_new_items">
         <item quantity="one">You received %1$d message</item>
         <item quantity="other">You received %1$d messages</item>
     </plurals>
@@ -168,9 +157,6 @@
     <string name="send_message_required_recipients">You need to choose at least 1 recipient</string>
     <string name="send_message_content_min_length">The message content must be at least 3 characters</string>
 
-    <!--About-->
-    <string name="about_source_code">Source code</string>
-    <string name="about_feedback">Report a bug</string>
 
     <!--Note-->
     <string name="note_no_items">No info about notes</string>
@@ -178,31 +164,38 @@
         <item quantity="one">%d note</item>
         <item quantity="other">%d notes</item>
     </plurals>
-
     <plurals name="note_new_items">
         <item quantity="one">New note</item>
         <item quantity="other">New notes</item>
+    </plurals>
+    <plurals name="note_notify_new_items">
+        <item quantity="one">You received %1$d note</item>
+        <item quantity="other">You received %1$d notes</item>
     </plurals>
 
 
     <!--Homework-->
     <string name="homework_no_items">No info about homework</string>
 
+
     <!--Lucky number-->
     <string name="lucky_number_title">Lucky number</string>
     <string name="lucky_number_header">Today\'s lucky number is</string>
     <string name="lucky_number_empty">No info about the lucky number</string>
+    <string name="lucky_number_notify_new_item_title">Lucky number for today</string>
+    <string name="lucky_number_notify_new_item">Today\'s lucky number is: %d</string>
 
-    <!--Lucky number notify-->
-    <string name="notify_lucky_number_channel">New lucky numbers</string>
-    <string name="notify_lucky_number_new_item_title">Lucky number for today</string>
-    <string name="notify_lucky_number_new_item">Today\'s lucky number is: %d</string>
 
     <!--Account-->
     <string name="account_add_new">Add account</string>
     <string name="account_logout">Logout</string>
     <string name="account_confirm">Do you want to log out of an active student?</string>
     <string name="account_logout_student">Student logout</string>
+
+
+    <!--About-->
+    <string name="about_source_code">Source code</string>
+    <string name="about_feedback">Report a bug</string>
 
 
     <!--Generic-->
@@ -250,6 +243,10 @@
     <string name="pref_services_wifi">Wi-Fi only</string>
 
 
+    <!--Notification Channels-->
+    <string name="channel_new_entries">New entries in register</string>
+
+
     <!--Colors-->
     <string name="all_black">Black</string>
     <string name="all_red">Red</string>
@@ -261,6 +258,7 @@
 
     <!--Others-->
     <string name="all_copied">Copied</string>
+
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>

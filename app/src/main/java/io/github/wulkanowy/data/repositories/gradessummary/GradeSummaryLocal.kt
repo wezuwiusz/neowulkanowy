@@ -10,16 +10,15 @@ import javax.inject.Singleton
 @Singleton
 class GradeSummaryLocal @Inject constructor(private val gradeSummaryDb: GradeSummaryDao) {
 
-    fun getGradesSummary(semester: Semester): Maybe<List<GradeSummary>> {
-        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId)
-                .filter { !it.isEmpty() }
-    }
-
     fun saveGradesSummary(gradesSummary: List<GradeSummary>) {
         gradeSummaryDb.insertAll(gradesSummary)
     }
 
     fun deleteGradesSummary(gradesSummary: List<GradeSummary>) {
         gradeSummaryDb.deleteAll(gradesSummary)
+    }
+
+    fun getGradesSummary(semester: Semester): Maybe<List<GradeSummary>> {
+        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId).filter { it.isNotEmpty() }
     }
 }

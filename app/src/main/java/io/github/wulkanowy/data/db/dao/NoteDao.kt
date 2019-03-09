@@ -17,9 +17,6 @@ interface NoteDao {
     fun insertAll(notes: List<Note>)
 
     @Update
-    fun update(note: Note)
-
-    @Update
     fun updateAll(notes: List<Note>)
 
     @Delete
@@ -28,6 +25,4 @@ interface NoteDao {
     @Query("SELECT * FROM Notes WHERE student_id = :studentId")
     fun loadAll(studentId: Int): Maybe<List<Note>>
 
-    @Query("SELECT * FROM Notes WHERE is_read = 0 AND student_id = :studentId")
-    fun loadNew(studentId: Int): Maybe<List<Note>>
 }

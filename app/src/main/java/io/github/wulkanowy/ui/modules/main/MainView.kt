@@ -26,8 +26,6 @@ interface MainView : BaseView {
 
     fun popView()
 
-    fun cancelNotifications()
-
     fun openLoginView()
 
     interface MainChildView {

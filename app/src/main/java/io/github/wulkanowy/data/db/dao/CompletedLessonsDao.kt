@@ -14,7 +14,7 @@ import javax.inject.Singleton
 interface CompletedLessonsDao {
 
     @Insert
-    fun insertAll(exams: List<CompletedLesson>): List<Long>
+    fun insertAll(exams: List<CompletedLesson>)
 
     @Delete
     fun deleteAll(exams: List<CompletedLesson>)

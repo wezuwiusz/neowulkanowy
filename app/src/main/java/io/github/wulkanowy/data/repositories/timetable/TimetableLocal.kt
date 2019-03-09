@@ -11,16 +11,15 @@ import javax.inject.Singleton
 @Singleton
 class TimetableLocal @Inject constructor(private val timetableDb: TimetableDao) {
 
-    fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Timetable>> {
-        return timetableDb.loadAll(semester.diaryId, semester.studentId, startDate, endDate)
-            .filter { !it.isEmpty() }
-    }
-
     fun saveTimetable(timetables: List<Timetable>) {
         timetableDb.insertAll(timetables)
     }
 
     fun deleteTimetable(timetables: List<Timetable>) {
         timetableDb.deleteAll(timetables)
+    }
+
+    fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Timetable>> {
+        return timetableDb.loadAll(semester.diaryId, semester.studentId, startDate, endDate).filter { it.isNotEmpty() }
     }
 }

@@ -19,6 +19,7 @@
       <option name="CONTINUATION_INDENT_IN_SUPERTYPE_LISTS" value="false" />
       <option name="CONTINUATION_INDENT_IN_IF_CONDITIONS" value="false" />
       <option name="CONTINUATION_INDENT_IN_ELVIS" value="false" />
+      <option name="WRAP_ELVIS_EXPRESSIONS" value="0" />
     </JetCodeStyleSettings>
     <Objective-C-extensions>
       <file>

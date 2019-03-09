@@ -11,16 +11,15 @@ import javax.inject.Singleton
 @Singleton
 class AttendanceLocal @Inject constructor(private val attendanceDb: AttendanceDao) {
 
-    fun getAttendance(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Attendance>> {
-        return attendanceDb.loadAll(semester.diaryId, semester.studentId, startDate, endDate)
-                .filter { !it.isEmpty() }
-    }
-
     fun saveAttendance(attendance: List<Attendance>) {
         attendanceDb.insertAll(attendance)
     }
 
     fun deleteAttendance(attendance: List<Attendance>) {
         attendanceDb.deleteAll(attendance)
+    }
+
+    fun getAttendance(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Attendance>> {
+        return attendanceDb.loadAll(semester.diaryId, semester.studentId, startDate, endDate).filter { it.isNotEmpty() }
     }
 }

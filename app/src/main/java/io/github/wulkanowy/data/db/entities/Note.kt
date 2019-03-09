@@ -25,7 +25,7 @@ data class Note(
     var id: Long = 0
 
     @ColumnInfo(name = "is_read")
-    var isRead: Boolean = false
+    var isRead: Boolean = true
 
     @ColumnInfo(name = "is_notified")
     var isNotified: Boolean = true

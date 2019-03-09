@@ -30,24 +30,24 @@ class NoteRepository @Inject constructor(
                             local.deleteNotes(old - new)
                             local.saveNotes((new - old)
                                 .onEach {
-                                    if (student.registrationDate <= it.date.atStartOfDay()) {
-                                        if (notify) it.isNotified = false
-                                        it.isRead = false
+                                    if (it.date >= student.registrationDate.toLocalDate()) it.apply {
+                                        isRead = false
+                                        if (notify) isNotified = false
                                     }
                                 })
                         }
                 }.flatMap { local.getNotes(student).toSingle(emptyList()) })
     }
 
-    fun getNewNotes(student: Student): Single<List<Note>> {
-        return local.getNewNotes(student).toSingle(emptyList())
+    fun getNotNotifiedNotes(student: Student): Single<List<Note>> {
+        return local.getNotes(student).map { it.filter { note -> !note.isNotified } }.toSingle(emptyList())
     }
 
     fun updateNote(note: Note): Completable {
-        return local.updateNote(note)
+        return Completable.fromCallable { local.updateNotes(listOf(note)) }
     }
 
     fun updateNotes(notes: List<Note>): Completable {
-        return local.updateNotes(notes)
+        return Completable.fromCallable { local.updateNotes(notes) }
     }
 }

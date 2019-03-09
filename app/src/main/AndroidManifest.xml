@@ -43,13 +43,6 @@
             android:theme="@style/WulkanowyTheme.NoActionBar" />
 
         <service
-            android:name=".services.job.SyncWorker"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
-            </intent-filter>
-        </service>
-        <service
             android:name=".services.widgets.TimetableWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
@@ -63,6 +56,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/provider_widget_timetable" />
         </receiver>
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            android:exported="false"
+            tools:node="remove" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

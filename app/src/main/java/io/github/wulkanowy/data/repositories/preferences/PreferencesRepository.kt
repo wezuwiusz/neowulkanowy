@@ -12,7 +12,7 @@ class PreferencesRepository @Inject constructor(
     val context: Context
 ) {
     val startMenuIndex: Int
-        get() = sharedPref.getString(context.getString(R.string.pref_key_start_menu), "0")?.toInt() ?: 0
+        get() = sharedPref.getString(context.getString(R.string.pref_key_start_menu), "0")?.toIntOrNull() ?: 0
 
     val isShowPresent: Boolean
         get() = sharedPref.getBoolean(context.getString(R.string.pref_key_attendance_present), true)
@@ -22,25 +22,24 @@ class PreferencesRepository @Inject constructor(
 
     val currentThemeKey: String = context.getString(R.string.pref_key_theme)
     val currentTheme: Int
-        get() = sharedPref.getString(currentThemeKey, "1")?.toInt() ?: 1
+        get() = sharedPref.getString(currentThemeKey, "1")?.toIntOrNull() ?: 1
 
     val gradePlusModifier: Double
-        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_plus), "0.0")?.toDouble() ?: 0.0
+        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_plus), "0.0")?.toDoubleOrNull() ?: 0.0
 
     val gradeMinusModifier: Double
-        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_minus), "0.0")?.toDouble() ?: 0.0
+        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_minus), "0.0")?.toDoubleOrNull() ?: 0.0
 
     val gradeColorTheme: String
         get() = sharedPref.getString(context.getString(R.string.pref_key_grade_color_scheme), "vulcan") ?: "vulcan"
 
-
-    val serviceEnablesKey: String = context.getString(R.string.pref_key_services_enable)
+    val serviceEnableKey: String = context.getString(R.string.pref_key_services_enable)
     val isServiceEnabled: Boolean
-        get() = sharedPref.getBoolean(serviceEnablesKey, true)
+        get() = sharedPref.getBoolean(serviceEnableKey, true)
 
     val servicesIntervalKey: String = context.getString(R.string.pref_key_services_interval)
-    val servicesInterval: Int
-        get() = sharedPref.getString(servicesIntervalKey, "60")?.toInt() ?: 60
+    val servicesInterval: Long
+        get() = sharedPref.getString(servicesIntervalKey, "60")?.toLongOrNull() ?: 60
 
     val servicesOnlyWifiKey: String = context.getString(R.string.pref_key_services_wifi_only)
     val isServicesOnlyWifi: Boolean

@@ -11,15 +11,15 @@ import javax.inject.Singleton
 @Singleton
 class CompletedLessonsLocal @Inject constructor(private val completedLessonsDb: CompletedLessonsDao) {
 
-    fun getCompletedLessons(semester: Semester, start: LocalDate, end: LocalDate): Maybe<List<CompletedLesson>> {
-        return completedLessonsDb.loadAll(semester.diaryId, semester.studentId, start, end).filter { !it.isEmpty() }
-    }
-
     fun saveCompletedLessons(completedLessons: List<CompletedLesson>) {
         completedLessonsDb.insertAll(completedLessons)
     }
 
     fun deleteCompleteLessons(completedLessons: List<CompletedLesson>) {
         completedLessonsDb.deleteAll(completedLessons)
+    }
+
+    fun getCompletedLessons(semester: Semester, start: LocalDate, end: LocalDate): Maybe<List<CompletedLesson>> {
+        return completedLessonsDb.loadAll(semester.diaryId, semester.studentId, start, end).filter { it.isNotEmpty() }
     }
 }

@@ -17,9 +17,6 @@ interface GradeDao {
     fun insertAll(grades: List<Grade>)
 
     @Update
-    fun update(grade: Grade)
-
-    @Update
     fun updateAll(grade: List<Grade>)
 
     @Delete
@@ -28,6 +25,4 @@ interface GradeDao {
     @Query("SELECT * FROM Grades WHERE semester_id = :semesterId AND student_id = :studentId")
     fun loadAll(semesterId: Int, studentId: Int): Maybe<List<Grade>>
 
-    @Query("SELECT * FROM Grades WHERE is_read = 0 AND semester_id = :semesterId AND student_id = :studentId")
-    fun loadAllNew(semesterId: Int, studentId: Int): Maybe<List<Grade>>
 }

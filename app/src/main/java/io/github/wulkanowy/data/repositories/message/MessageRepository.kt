@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.ApiHelper
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.repositories.message.MessageFolder.RECEIVED
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.net.UnknownHostException
@@ -21,22 +22,16 @@ class MessageRepository @Inject constructor(
     private val apiHelper: ApiHelper
 ) {
 
-    enum class MessageFolder(val id: Int = 1) {
-        RECEIVED(1),
-        SENT(2),
-        TRASHED(3)
-    }
-
     fun getMessages(student: Student, folder: MessageFolder, forceRefresh: Boolean = false, notify: Boolean = false): Single<List<Message>> {
         return Single.just(apiHelper.initApi(student))
             .flatMap { _ ->
-                local.getMessages(student.studentId, folder).filter { !forceRefresh }
+                local.getMessages(student, folder).filter { !forceRefresh }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
                             if (it) remote.getMessages(student.studentId, folder)
                             else Single.error(UnknownHostException())
                         }.flatMap { new ->
-                            local.getMessages(student.studentId, folder).toSingle(emptyList())
+                            local.getMessages(student, folder).toSingle(emptyList())
                                 .doOnSuccess { old ->
                                     local.deleteMessages(old - new)
                                     local.saveMessages((new - old)
@@ -44,7 +39,7 @@ class MessageRepository @Inject constructor(
                                             it.isNotified = !notify
                                         })
                                 }
-                        }.flatMap { local.getMessages(student.studentId, folder).toSingle(emptyList()) }
+                        }.flatMap { local.getMessages(student, folder).toSingle(emptyList()) }
                     )
             }
     }
@@ -52,33 +47,35 @@ class MessageRepository @Inject constructor(
     fun getMessage(student: Student, messageId: Int, markAsRead: Boolean = false): Single<Message> {
         return Single.just(apiHelper.initApi(student))
             .flatMap { _ ->
-                local.getMessage(student.studentId, messageId)
+                local.getMessage(student, messageId)
                     .filter { !it.content.isNullOrEmpty() }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
-                            if (it) local.getMessage(student.studentId, messageId).toSingle()
+                            if (it) local.getMessage(student, messageId).toSingle()
                             else Single.error(UnknownHostException())
                         }
                         .flatMap { dbMessage ->
                             remote.getMessagesContent(dbMessage, markAsRead).doOnSuccess {
-                                local.updateMessage(dbMessage.copy(unread = false).apply {
+                                local.updateMessages(listOf(dbMessage.copy(unread = false).apply {
                                     id = dbMessage.id
                                     content = it
-                                })
+                                }))
                             }
                         }.flatMap {
-                            local.getMessage(student.studentId, messageId).toSingle()
+                            local.getMessage(student, messageId).toSingle()
                         }
                     )
             }
     }
 
-    fun getNewMessages(student: Student): Single<List<Message>> {
-        return local.getNewMessages(student).toSingle(emptyList())
+    fun getNotNotifiedMessages(student: Student): Single<List<Message>> {
+        return local.getMessages(student, RECEIVED)
+            .map { it.filter { message -> !message.isNotified && message.unread } }
+            .toSingle(emptyList())
     }
 
     fun updateMessage(message: Message): Completable {
-        return Completable.fromCallable { local.updateMessage(message) }
+        return Completable.fromCallable { local.updateMessages(listOf(message)) }
     }
 
     fun updateMessages(messages: List<Message>): Completable {
