@@ -46,6 +46,9 @@ class GradeDetailsFragment : BaseSessionFragment(), GradeDetailsView, GradeView.
     override val weightString: String
         get() = getString(R.string.grade_weight)
 
+    override val noDescriptionString: String
+        get() = getString(R.string.all_no_description)
+
     override val isViewEmpty
         get() = gradeDetailsAdapter.isEmpty
 

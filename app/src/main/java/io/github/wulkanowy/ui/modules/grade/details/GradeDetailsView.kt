@@ -16,6 +16,8 @@ interface GradeDetailsView : BaseSessionView {
 
     val weightString: String
 
+    val noDescriptionString: String
+
     fun initView()
 
     fun updateData(data: List<GradeDetailsHeader>)

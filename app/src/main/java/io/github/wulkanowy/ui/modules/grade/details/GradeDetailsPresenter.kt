@@ -150,8 +150,9 @@ class GradeDetailsPresenter @Inject constructor(
                     subItems = it.value.map { item ->
                         GradeDetailsItem(
                             grade = item,
+                            valueBgColor = item.getBackgroundColor(preferencesRepository.gradeColorTheme),
                             weightString = view?.weightString.orEmpty(),
-                            valueBgColor = item.getBackgroundColor(preferencesRepository.gradeColorTheme)
+                            noDescriptionString = view?.noDescriptionString.orEmpty()
                         )
                     }
                 }
