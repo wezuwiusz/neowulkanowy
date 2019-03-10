@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.modules.login.studentselect
 import com.google.firebase.analytics.FirebaseAnalytics.Param.SUCCESS
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -17,7 +16,6 @@ import javax.inject.Inject
 class LoginStudentSelectPresenter @Inject constructor(
     private val errorHandler: LoginErrorHandler,
     private val studentRepository: StudentRepository,
-    private val semesterRepository: SemesterRepository,
     private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<LoginStudentSelectView>(errorHandler) {
@@ -59,7 +57,6 @@ class LoginStudentSelectPresenter @Inject constructor(
     private fun registerStudent(student: Student) {
         disposable.add(studentRepository.saveStudent(student)
             .map { student.apply { id = it } }
-            .flatMap { semesterRepository.getSemesters(student, true) }
             .onErrorResumeNext { studentRepository.logoutStudent(student).andThen(Single.error(it)) }
             .flatMapCompletable { studentRepository.switchStudent(student) }
             .subscribeOn(schedulers.backgroundThread)

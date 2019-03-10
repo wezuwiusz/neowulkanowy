@@ -35,6 +35,12 @@ class LuckyNumberPresenter @Inject constructor(
                 .flatMapMaybe { luckyNumberRepository.getLuckyNumber(it, forceRefresh) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
+                .doOnSubscribe {
+                    view?.run {
+                        showContent(false)
+                        enableSwipe(false)
+                    }
+                }
                 .doFinally {
                     view?.run {
                         hideRefresh()

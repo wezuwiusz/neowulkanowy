@@ -1,9 +1,7 @@
 package io.github.wulkanowy.ui.modules.login.studentselect
 
 import io.github.wulkanowy.TestSchedulersProvider
-import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
@@ -30,9 +28,6 @@ class LoginStudentSelectPresenterTest {
     lateinit var studentRepository: StudentRepository
 
     @Mock
-    lateinit var semesterRepository: SemesterRepository
-
-    @Mock
     lateinit var analytics: FirebaseAnalyticsHelper
 
     private lateinit var presenter: LoginStudentSelectPresenter
@@ -45,8 +40,7 @@ class LoginStudentSelectPresenterTest {
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
         clearInvocations(studentRepository, loginStudentSelectView)
-        clearInvocations(semesterRepository, loginStudentSelectView)
-        presenter = LoginStudentSelectPresenter(errorHandler, studentRepository, semesterRepository, TestSchedulersProvider(), analytics)
+        presenter = LoginStudentSelectPresenter(errorHandler, studentRepository, TestSchedulersProvider(), analytics)
         presenter.onAttachView(loginStudentSelectView, null)
     }
 
@@ -58,7 +52,6 @@ class LoginStudentSelectPresenterTest {
     @Test
     fun onSelectedStudentTest() {
         doReturn(Single.just(1L)).`when`(studentRepository).saveStudent(testStudent)
-        doReturn(Single.just(emptyList<Semester>())).`when`(semesterRepository).getSemesters(testStudent, true)
         doReturn(Completable.complete()).`when`(studentRepository).switchStudent(testStudent)
         presenter.onItemSelected(LoginStudentSelectItem(testStudent))
         verify(loginStudentSelectView).showContent(false)
@@ -69,7 +62,6 @@ class LoginStudentSelectPresenterTest {
     @Test
     fun onSelectedStudentErrorTest() {
         doReturn(Single.error<Student>(testException)).`when`(studentRepository).saveStudent(testStudent)
-        doReturn(Single.just(emptyList<Semester>())).`when`(semesterRepository).getSemesters(testStudent, true)
         doReturn(Completable.complete()).`when`(studentRepository).logoutStudent(testStudent)
         presenter.onItemSelected(LoginStudentSelectItem(testStudent))
         verify(loginStudentSelectView).showContent(false)

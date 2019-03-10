@@ -4,31 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/loginFormProgressContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone">
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/loginFormProgressTitle"
-            android:layout_centerHorizontal="true"
-            android:indeterminate="true"
-            android:minWidth="220dp"
-            android:minHeight="30dp" />
-
-        <TextView
-            android:id="@+id/loginFormProgressTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
-            android:text="@string/login_progress" />
-    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/loginFormProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"

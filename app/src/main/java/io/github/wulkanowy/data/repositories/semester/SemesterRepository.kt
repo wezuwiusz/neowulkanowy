@@ -37,4 +37,3 @@ class SemesterRepository @Inject constructor(
         return getSemesters(student, forceRefresh).map { item -> item.single { it.isCurrent } }
     }
 }
-

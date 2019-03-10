@@ -8,11 +8,11 @@ import eu.davidea.viewholders.FlexibleViewHolder
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_login_options.view.*
+import kotlinx.android.synthetic.main.item_login_student_select.view.*
 
 class LoginStudentSelectItem(val student: Student) : AbstractFlexibleItem<LoginStudentSelectItem.ItemViewHolder>() {
 
-    override fun getLayoutRes(): Int = R.layout.item_login_options
+    override fun getLayoutRes(): Int = R.layout.item_login_student_select
 
     override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ItemViewHolder {
         return ItemViewHolder(view, adapter)

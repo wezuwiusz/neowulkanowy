@@ -115,7 +115,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun showProgress(show: Boolean) {
-        loginFormProgressContainer.visibility = if (show) VISIBLE else GONE
+        loginFormProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showContent(show: Boolean) {

@@ -93,7 +93,7 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
     }
 
     override fun showProgress(show: Boolean) {
-        loginSymbolProgressContainer.visibility = if (show) VISIBLE else GONE
+        loginSymbolProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showContent(show: Boolean) {

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
-        android:visibility="gone" />
+        tools:visibility="invisible" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/luckyNumberSwipe"
@@ -36,8 +36,8 @@
                 android:id="@+id/luckyNumberText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="14"
-                android:textSize="52sp" />
+                android:textSize="52sp"
+                tools:text="14" />
 
         </LinearLayout>
 

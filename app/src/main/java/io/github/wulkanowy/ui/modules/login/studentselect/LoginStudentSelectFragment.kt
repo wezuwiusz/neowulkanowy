@@ -47,7 +47,7 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     override fun initView() {
         loginAdapter.apply { setOnItemClickListener { presenter.onItemSelected(it) } }
 
-        loginOptionsRecycler.apply {
+        loginStudentSelectRecycler.apply {
             adapter = loginAdapter
             layoutManager = SmoothScrollLinearLayoutManager(context)
         }
@@ -65,11 +65,11 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     }
 
     override fun showProgress(show: Boolean) {
-        loginOptionsProgressContainer.visibility = if (show) VISIBLE else GONE
+        loginStudentSelectProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showContent(show: Boolean) {
-        loginOptionsRecycler.visibility = if (show) VISIBLE else GONE
+        loginStudentSelectRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showActionBar(show: Boolean) {
