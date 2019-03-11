@@ -26,11 +26,17 @@ data class Timetable(
 
     val subject: String,
 
+    val subjectOld: String,
+
     val group: String,
 
     val room: String,
 
+    val roomOld: String,
+
     val teacher: String,
+
+    val teacherOld: String,
 
     val info: String,
 

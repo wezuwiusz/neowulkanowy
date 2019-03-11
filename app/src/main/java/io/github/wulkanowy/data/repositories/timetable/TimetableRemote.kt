@@ -26,9 +26,12 @@ class TimetableRemote @Inject constructor(private val api: Api) {
                         end = it.end.toLocalDateTime(),
                         date = it.date.toLocalDate(),
                         subject = it.subject,
+                        subjectOld = it.subjectOld,
                         group = it.group,
                         room = it.room,
+                        roomOld = it.roomOld,
                         teacher = it.teacher,
+                        teacherOld = it.teacherOld,
                         info = it.info,
                         changes = it.changes,
                         canceled = it.canceled

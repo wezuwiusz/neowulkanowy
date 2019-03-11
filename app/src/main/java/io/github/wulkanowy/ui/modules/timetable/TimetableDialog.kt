@@ -1,16 +1,19 @@
 package io.github.wulkanowy.ui.modules.timetable
 
 import android.annotation.SuppressLint
+import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.android.synthetic.main.dialog_timetable.*
+import org.threeten.bp.LocalDateTime
 
 class TimetableDialog : DialogFragment() {
 
@@ -38,41 +41,110 @@ class TimetableDialog : DialogFragment() {
         return inflater.inflate(R.layout.dialog_timetable, container, false)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        timetableDialogSubject.text = lesson.subject
-        timetableDialogTime.text = "${lesson.start.toFormattedString("HH:mm")} - ${lesson.end.toFormattedString("HH:mm")}"
-
-        lesson.group.let {
-            if (it.isBlank()) {
-                timetableDialogGroupTitle.visibility = GONE
-                timetableDialogGroup.visibility = GONE
-            } else timetableDialogGroup.text = it
-        }
-
-        lesson.room.let {
-            if (it.isBlank()) {
-                timetableDialogRoomTitle.visibility = GONE
-                timetableDialogRoom.visibility = GONE
-            } else timetableDialogRoom.text = it
-        }
-
-        lesson.teacher.let {
-            if (it.isBlank()) {
-                timetableDialogTeacherTitle.visibility = GONE
-                timetableDialogTeacher.visibility = GONE
-            } else timetableDialogTeacher.text = it
-        }
-
-        lesson.info.let {
-            if (it.isBlank()) {
-                timetableDialogChangesTitle.visibility = GONE
-                timetableDialogChanges.visibility = GONE
-            } else timetableDialogChanges.text = it
+        lesson.run {
+            setInfo(info, teacher, canceled, changes)
+            setSubject(subject, subjectOld)
+            setTeacher(teacher, teacherOld)
+            setGroup(group)
+            setRoom(room, roomOld)
+            setTime(start, end)
         }
 
         timetableDialogClose.setOnClickListener { dismiss() }
+    }
+
+    private fun setSubject(subject: String, subjectOld: String) {
+        timetableDialogSubject.text = subject
+        if (subjectOld.isNotBlank() && subjectOld != subject) {
+            timetableDialogSubject.run {
+                paintFlags = paintFlags or STRIKE_THRU_TEXT_FLAG
+                text = subjectOld
+            }
+            timetableDialogSubjectNew.run {
+                visibility = VISIBLE
+                text = subject
+            }
+        }
+    }
+
+    private fun setInfo(info: String, teacher: String, canceled: Boolean, changes: Boolean) {
+        when {
+            info.isNotBlank() -> timetableDialogChanges.text = when {
+                canceled && !changes -> "Lekcja odwołana: $info"
+                changes && teacher.isNotBlank() -> "Zastępstwo: $teacher"
+                changes && teacher.isBlank() -> "Zastępstwo, ${info.decapitalize()}"
+                else -> info.capitalize()
+            }
+            else -> {
+                timetableDialogChangesTitle.visibility = GONE
+                timetableDialogChanges.visibility = GONE
+            }
+        }
+    }
+
+    private fun setTeacher(teacher: String, teacherOld: String) {
+        when {
+            teacherOld.isNotBlank() && teacherOld != teacher -> {
+                timetableDialogTeacher.run {
+                    visibility = VISIBLE
+                    paintFlags = paintFlags or STRIKE_THRU_TEXT_FLAG
+                    text = teacherOld
+                }
+                if (teacher.isNotBlank()) {
+                    timetableDialogTeacherNew.run {
+                        visibility = VISIBLE
+                        text = teacher
+                    }
+                }
+            }
+            teacher.isNotBlank() -> timetableDialogTeacher.text = teacher
+            else -> {
+                timetableDialogTeacherTitle.visibility = GONE
+                timetableDialogTeacher.visibility = GONE
+            }
+        }
+    }
+
+    private fun setGroup(group: String) {
+        group.let {
+            when {
+                it.isNotBlank() -> timetableDialogGroup.text = it
+                else -> {
+                    timetableDialogGroupTitle.visibility = GONE
+                    timetableDialogGroup.visibility = GONE
+                }
+            }
+        }
+    }
+
+    private fun setRoom(room: String, roomOld: String) {
+        when {
+            roomOld.isNotBlank() && roomOld != room -> {
+                timetableDialogRoom.run {
+                    visibility = VISIBLE
+                    paintFlags = paintFlags or STRIKE_THRU_TEXT_FLAG
+                    text = roomOld
+                }
+                if (room.isNotBlank()) {
+                    timetableDialogRoomNew.run {
+                        visibility = VISIBLE
+                        text = room
+                    }
+                }
+            }
+            room.isNotBlank() -> timetableDialogRoom.text = room
+            else -> {
+                timetableDialogRoomTitle.visibility = GONE
+                timetableDialogRoom.visibility = GONE
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setTime(start: LocalDateTime, end: LocalDateTime) {
+        timetableDialogTime.text = "${start.toFormattedString("HH:mm")} - ${end.toFormattedString("HH:mm")}"
     }
 }

@@ -52,6 +52,17 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/timetableDialogSubjectNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/all_no_data"
+            android:textColor="@color/colorPrimary"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/timetableDialogTeacherTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,6 +78,17 @@
             android:text="@string/all_no_data"
             android:textIsSelectable="true"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/timetableDialogTeacherNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/all_no_data"
+            android:textColor="@color/colorPrimary"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/timetableDialogGroupTitle"
@@ -101,6 +123,17 @@
             android:text="@string/all_no_data"
             android:textIsSelectable="true"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/timetableDialogRoomNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@string/all_no_data"
+            android:textColor="@color/colorPrimary"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"

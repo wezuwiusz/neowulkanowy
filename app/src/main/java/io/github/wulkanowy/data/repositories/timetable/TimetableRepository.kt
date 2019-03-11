@@ -19,33 +19,31 @@ class TimetableRepository @Inject constructor(
     private val remote: TimetableRemote
 ) {
 
-    fun getTimetable(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false)
-        : Single<List<Timetable>> {
-        return Single.fromCallable { startDate.monday to endDate.friday }
-            .flatMap { dates ->
-                local.getTimetable(semester, dates.first, dates.second).filter { !forceRefresh }
-                    .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
-                        .flatMap {
-                            if (it) remote.getTimetable(semester, dates.first, dates.second)
-                            else Single.error(UnknownHostException())
-                        }.flatMap { newTimetable ->
-                            local.getTimetable(semester, dates.first, dates.second)
-                                .toSingle(emptyList())
-                                .doOnSuccess { oldTimetable ->
-                                    local.deleteTimetable(oldTimetable - newTimetable)
-                                    local.saveTimetable((newTimetable - oldTimetable).map { item ->
-                                        item.apply {
-                                            if (room.isEmpty()) {
-                                                oldTimetable.singleOrNull { it.start == this.start && it.room.isNotEmpty() }
-                                                    ?.let { return@map copy(room = it.room) }
-                                            }
-                                        }
-                                    })
+    fun getTimetable(semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): Single<List<Timetable>> {
+        return Single.fromCallable { start.monday to end.friday }.flatMap { (monday, friday) ->
+            local.getTimetable(semester, monday, friday).filter { !forceRefresh }
+                .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
+                    if (it) remote.getTimetable(semester, monday, friday)
+                    else Single.error(UnknownHostException())
+                }.flatMap { newTimetable ->
+                    local.getTimetable(semester, monday, friday)
+                        .toSingle(emptyList())
+                        .doOnSuccess { oldTimetable ->
+                            local.deleteTimetable(oldTimetable - newTimetable)
+                            local.saveTimetable((newTimetable - oldTimetable).map { item ->
+                                item.apply {
+                                    oldTimetable.singleOrNull { this.start == it.start }?.let {
+                                        return@map copy(
+                                            room = if (room.isEmpty()) it.room else room,
+                                            teacher = if (teacher.isEmpty()) it.teacher else teacher
+                                        )
+                                    }
                                 }
-                        }.flatMap {
-                            local.getTimetable(semester, dates.first, dates.second)
-                                .toSingle(emptyList())
-                        }).map { list -> list.filter { it.date in startDate..endDate } }
-            }
+                            })
+                        }
+                }.flatMap {
+                    local.getTimetable(semester, monday, friday).toSingle(emptyList())
+                }).map { list -> list.filter { it.date in start..end } }
+        }
     }
 }

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:context=".ui.widgets.timetable.TimetableWidgetProvider">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +20,8 @@
             android:layout_marginLeft="5dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:contentDescription="@string/all_prev"
-            android:src="@drawable/ic_widget_chevron_24dp" />
+            android:src="@drawable/ic_widget_chevron_24dp"
+            tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/timetableWidgetDay"
@@ -32,9 +35,9 @@
             android:layout_toRightOf="@id/timetableWidgetPrev"
             android:gravity="center_horizontal"
             android:maxLines="1"
-            android:text="@string/app_name"
             android:textColor="@android:color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="Poniedziałek" />
 
         <TextView
             android:id="@+id/timetableWidgetDate"
@@ -49,9 +52,9 @@
             android:layout_toRightOf="@id/timetableWidgetPrev"
             android:gravity="center_horizontal"
             android:maxLines="1"
-            android:text="@string/app_name"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="12.03.2019" />
 
         <ImageButton
             android:id="@+id/timetableWidgetNext"
@@ -65,7 +68,8 @@
             android:backgroundTint="@color/colorPrimaryDark"
             android:contentDescription="@string/all_next"
             android:rotation="180"
-            android:src="@drawable/ic_widget_chevron_24dp" />
+            android:src="@drawable/ic_widget_chevron_24dp"
+            tools:targetApi="lollipop" />
 
     </RelativeLayout>
 
@@ -73,7 +77,8 @@
         android:id="@+id/timetableWidgetList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/timetable_widget_bar_height" />
+        android:layout_marginTop="@dimen/timetable_widget_bar_height"
+        tools:listitem="@layout/item_widget_timetable" />
 
     <TextView
         android:id="@+id/timetableWidgetEmpty"
@@ -82,5 +87,6 @@
         android:layout_gravity="center"
         android:text="@string/widget_timetable_no_items"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:visibility="invisible" />
 </FrameLayout>
