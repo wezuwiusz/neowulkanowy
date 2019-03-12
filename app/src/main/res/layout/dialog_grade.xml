@@ -25,7 +25,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="end"
-                android:background="@color/grade_default"
+                android:background="@color/grade_material_default"
                 android:gravity="center"
                 android:textColor="@color/grade_text"
                 android:textSize="30sp"

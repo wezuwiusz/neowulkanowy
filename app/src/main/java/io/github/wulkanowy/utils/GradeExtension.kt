@@ -30,7 +30,7 @@ fun Grade.getBackgroundColor(theme: String): Int {
             "20A4F7" -> R.color.grade_blue
             "6ECD07" -> R.color.grade_green
             "B16CF1" -> R.color.grade_purple
-            else -> R.color.grade_default
+            else -> R.color.grade_material_default
         }
         "material" -> when (value) {
             6 -> R.color.grade_material_six
@@ -39,7 +39,7 @@ fun Grade.getBackgroundColor(theme: String): Int {
             3 -> R.color.grade_material_three
             2 -> R.color.grade_material_two
             1 -> R.color.grade_material_one
-            else -> R.color.grade_default
+            else -> R.color.grade_material_default
         }
         else -> when (value) {
             6 -> R.color.grade_vulcan_six
@@ -48,7 +48,7 @@ fun Grade.getBackgroundColor(theme: String): Int {
             3 -> R.color.grade_vulcan_three
             2 -> R.color.grade_vulcan_two
             1 -> R.color.grade_vulcan_one
-            else -> R.color.grade_default
+            else -> R.color.grade_vulcan_default
         }
     }
 }

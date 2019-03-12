@@ -40,7 +40,18 @@ class GradeStatisticsFragment : BaseSessionFragment(), GradeStatisticsView, Grad
     override val isViewEmpty
         get() = gradeStatisticsChart.isEmpty
 
-    private val gradeColors = listOf(
+    private lateinit var gradeColors: List<Pair<Int, Int>>
+
+    private val vulcanGradeColors = listOf(
+        6 to R.color.grade_vulcan_six,
+        5 to R.color.grade_vulcan_five,
+        4 to R.color.grade_vulcan_four,
+        3 to R.color.grade_vulcan_three,
+        2 to R.color.grade_vulcan_two,
+        1 to R.color.grade_vulcan_one
+    )
+
+    private val materialGradeColors = listOf(
         6 to R.color.grade_material_six,
         5 to R.color.grade_material_five,
         4 to R.color.grade_material_four,
@@ -72,13 +83,6 @@ class GradeStatisticsFragment : BaseSessionFragment(), GradeStatisticsView, Grad
             minAngleForSlices = 25f
             legend.apply {
                 textColor = context.getThemeAttrColor(android.R.attr.textColorPrimary)
-                setCustom(gradeLabels.mapIndexed { i, it ->
-                    LegendEntry().apply {
-                        label = it
-                        formColor = ContextCompat.getColor(context, gradeColors[i].second)
-                        form = Legend.LegendForm.SQUARE
-                    }
-                })
             }
         }
 
@@ -103,7 +107,12 @@ class GradeStatisticsFragment : BaseSessionFragment(), GradeStatisticsView, Grad
         }
     }
 
-    override fun updateData(items: List<GradeStatistics>) {
+    override fun updateData(items: List<GradeStatistics>, theme: String) {
+        gradeColors = when (theme) {
+            "vulcan" -> vulcanGradeColors
+            else -> materialGradeColors
+        }
+
         gradeStatisticsChart.run {
             data = PieData(PieDataSet(items.map {
                 PieEntry(it.amount.toFloat(), it.grade.toString())
@@ -123,6 +132,15 @@ class GradeStatisticsFragment : BaseSessionFragment(), GradeStatisticsView, Grad
                 })
                 centerText = items.fold(0) { acc, it -> acc + it.amount }
                     .let { resources.getQuantityString(R.plurals.grade_number_item, it, it) }
+            }
+            legend.apply {
+                setCustom(gradeLabels.mapIndexed { i, it ->
+                    LegendEntry().apply {
+                        label = it
+                        formColor = ContextCompat.getColor(context, gradeColors[i].second)
+                        form = Legend.LegendForm.SQUARE
+                    }
+                })
             }
             invalidate()
         }

@@ -18,7 +18,7 @@
         android:layout_width="45dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:background="@color/grade_default"
+        android:background="@color/grade_material_default"
         android:gravity="center"
         android:maxLength="5"
         android:textColor="@color/grade_text"

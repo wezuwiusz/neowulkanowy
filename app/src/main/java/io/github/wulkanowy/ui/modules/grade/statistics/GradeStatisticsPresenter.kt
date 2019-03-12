@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.grade.statistics
 
 import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.repositories.gradestatistics.GradeStatisticsRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.subject.SubjectRepository
@@ -18,6 +19,7 @@ class GradeStatisticsPresenter @Inject constructor(
     private val subjectRepository: SubjectRepository,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
+    private val preferencesRepository: PreferencesRepository,
     private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
 ) : BaseSessionPresenter<GradeStatisticsView>(errorHandler) {
@@ -133,7 +135,7 @@ class GradeStatisticsPresenter @Inject constructor(
                 view?.run {
                     showEmpty(it.isEmpty())
                     showContent(it.isNotEmpty())
-                    updateData(it)
+                    updateData(it, preferencesRepository.gradeColorTheme)
                 }
                 analytics.logEvent("load_grade_statistics", "items" to it.size, "force_refresh" to forceRefresh)
             }) {

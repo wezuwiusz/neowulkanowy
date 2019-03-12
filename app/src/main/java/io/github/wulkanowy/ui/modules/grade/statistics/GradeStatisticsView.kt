@@ -11,7 +11,7 @@ interface GradeStatisticsView : BaseSessionView {
 
     fun updateSubjects(data: ArrayList<String>)
 
-    fun updateData(items: List<GradeStatistics>)
+    fun updateData(items: List<GradeStatistics>, theme: String)
 
     fun showSubjects(show: Boolean)
 
