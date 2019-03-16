@@ -24,17 +24,19 @@ class AboutPresenter @Inject constructor(
         view?.run {
             when (type) {
                 SPECIAL1 -> {
-                    Timber.i("Opening github page")
-                    analytics.logEvent("open_page", "name" to "github")
-                    openSourceWebView()
+                    Timber.i("Opening discord invide page")
+                    analytics.logEvent("open_page", "name" to "discord")
+                    openDiscordInviteView()
                 }
                 SPECIAL2 -> {
-                    Timber.i("Opening issues page")
-                    analytics.logEvent("open_page", "name" to "issues")
-                    openIssuesWebView()
+                    Timber.i("Opening home page")
+                    analytics.logEvent("open_page", "name" to "home")
+                    openHomepageWebView()
                 }
                 SPECIAL3 -> {
-                    //empty for now
+                    Timber.i("Opening email client")
+                    analytics.logEvent("open_page", "name" to "email")
+                    openEmailClientView()
                 }
             }
         }

@@ -1,12 +1,14 @@
 package io.github.wulkanowy.ui.modules.about
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.LibsFragmentCompat
+import io.github.wulkanowy.BuildConfig
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
@@ -36,12 +38,12 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
                 .withAboutVersionShown(true)
                 .withAboutIconShown(true)
                 .withLicenseShown(true)
-                .withAboutSpecial1(getString(R.string.about_source_code))
-                .withAboutSpecial2(getString(R.string.about_feedback))
+                .withAboutSpecial1(getString(R.string.about_discord_invite))
+                .withAboutSpecial2(getString(R.string.about_homepage))
+                .withAboutSpecial3(getString(R.string.about_feedback))
                 .withFields(R.string::class.java.fields)
                 .withCheckCachedDetection(false)
-                .withExcludedLibraries("fastadapter", "AndroidIconics", "gson",
-                    "Jsoup", "Retrofit", "okio", "OkHttp")
+                .withExcludedLibraries("fastadapter", "AndroidIconics", "gson", "Jsoup", "Retrofit", "okio", "OkHttp")
                 .withOnExtraListener { presenter.onExtraSelect(it) })
         }.let {
             fragmentCompat.onCreateView(inflater.context, inflater, container, savedInstanceState, it)
@@ -53,12 +55,33 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
         fragmentCompat.onViewCreated(view, savedInstanceState)
     }
 
-    override fun openSourceWebView() {
-        startActivity(Intent.parseUri("https://github.com/wulkanowy/wulkanowy", 0))
+    override fun openDiscordInviteView() {
+        startActivity(Intent.parseUri("https://discord.gg/vccAQBr", 0))
     }
 
-    override fun openIssuesWebView() {
-        startActivity(Intent.parseUri("https://github.com/wulkanowy/wulkanowy/issues", 0))
+    override fun openHomepageWebView() {
+        startActivity(Intent.parseUri("https://wulkanowy.github.io/", 0))
+    }
+
+    override fun openEmailClientView() {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, Array(1) { "wulkanowyinc@gmail.com" })
+            putExtra(Intent.EXTRA_SUBJECT, "Zgłoszenie błędu")
+            putExtra(Intent.EXTRA_TEXT,"Tu umieść treść zgłoszenia\n\n" + "-".repeat(40) + "\n" + """
+                Build: ${BuildConfig.VERSION_CODE}
+                SDK: ${android.os.Build.VERSION.SDK_INT}
+                Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}
+            """.trimIndent())
+        }
+
+        context?.let {
+            if (intent.resolveActivity(it.packageManager) != null) {
+                startActivity(Intent.createChooser(intent, getString(R.string.about_feedback)))
+            } else {
+                startActivity(Intent.parseUri("https://github.com/wulkanowy/wulkanowy/issues", 0))
+            }
+        }
     }
 
     override fun onDestroyView() {

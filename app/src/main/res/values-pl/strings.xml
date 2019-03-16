@@ -207,8 +207,9 @@
 
 
     <!--About-->
-    <string name="about_source_code">Kod źródłowy</string>
+    <string name="about_discord_invite">Discord</string>
     <string name="about_feedback">Zgłoś błąd</string>
+    <string name="about_homepage">Strona domowa</string>
 
 
     <!--Generic-->

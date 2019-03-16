@@ -192,8 +192,9 @@
 
 
     <!--About-->
-    <string name="about_source_code">Source code</string>
+    <string name="about_discord_invite">Discord</string>
     <string name="about_feedback">Report a bug</string>
+    <string name="about_homepage">Homepage</string>
 
 
     <!--Generic-->
