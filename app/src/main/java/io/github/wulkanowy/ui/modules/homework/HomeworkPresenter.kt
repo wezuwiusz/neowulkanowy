@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.homework
 
 import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.repositories.homework.HomeworkRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -9,10 +10,10 @@ import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.isHolidays
+import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
-import io.github.wulkanowy.utils.nextSchoolDay
-import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
 import org.threeten.bp.LocalDate
 import timber.log.Timber
@@ -40,12 +41,12 @@ class HomeworkPresenter @Inject constructor(
     }
 
     fun onPreviousDay() {
-        loadData(currentDate.previousSchoolDay)
+        loadData(currentDate.minusDays(7))
         reloadView()
     }
 
     fun onNextDay() {
-        loadData(currentDate.nextSchoolDay)
+        loadData(currentDate.plusDays(7))
         reloadView()
     }
 
@@ -69,8 +70,9 @@ class HomeworkPresenter @Inject constructor(
             add(studentRepository.getCurrentStudent()
                 .delay(200, TimeUnit.MILLISECONDS)
                 .flatMap { semesterRepository.getCurrentSemester(it) }
-                .flatMap { homeworkRepository.getHomework(it, currentDate, forceRefresh) }
-                .map { items -> items.map { HomeworkItem(it) } }
+                .flatMap { homeworkRepository.getHomework(it, currentDate, currentDate, forceRefresh) }
+                .map { it.groupBy { homework -> homework.date }.toSortedMap() }
+                .map { createHomeworkItem(it) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally {
@@ -96,6 +98,14 @@ class HomeworkPresenter @Inject constructor(
         }
     }
 
+    private fun createHomeworkItem(items: Map<LocalDate, List<Homework>>): List<HomeworkItem> {
+        return items.flatMap {
+            HomeworkHeader(it.key).let { header ->
+                it.value.reversed().map { item -> HomeworkItem(header, item) }
+            }
+        }
+    }
+
     private fun reloadView() {
         Timber.i("Reload homework view with the date ${currentDate.toFormattedString()}")
         view?.apply {
@@ -104,9 +114,10 @@ class HomeworkPresenter @Inject constructor(
             showContent(false)
             showEmpty(false)
             clearData()
-            showNextButton(!currentDate.plusDays(1).isHolidays)
-            showPreButton(!currentDate.minusDays(1).isHolidays)
-            updateNavigationDay(currentDate.toFormattedString("EEEE \n dd.MM.YYYY").capitalize())
+            showNextButton(!currentDate.plusDays(7).isHolidays)
+            showPreButton(!currentDate.minusDays(7).isHolidays)
+            updateNavigationWeek("${currentDate.monday.toFormattedString("dd.MM")} - " +
+                currentDate.friday.toFormattedString("dd.MM"))
         }
     }
 }

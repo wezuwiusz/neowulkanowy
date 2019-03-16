@@ -70,7 +70,7 @@ class HomeworkFragment : BaseSessionFragment(), HomeworkView, MainView.TitledVie
         homeworkAdapter.clear()
     }
 
-    override fun updateNavigationDay(date: String) {
+    override fun updateNavigationWeek(date: String) {
         homeworkNavDate.text = date
     }
 

@@ -12,9 +12,9 @@ import javax.inject.Singleton
 @Singleton
 class HomeworkRemote @Inject constructor(private val api: Api) {
 
-    fun getHomework(semester: Semester, date: LocalDate): Single<List<Homework>> {
+    fun getHomework(semester: Semester, startDate: LocalDate, endDate: LocalDate): Single<List<Homework>> {
         return Single.just(api.apply { diaryId = semester.diaryId })
-            .flatMap { it.getHomework(date, date) }
+            .flatMap { it.getHomework(startDate, endDate) }
             .map { homework ->
                 homework.map {
                     Homework(

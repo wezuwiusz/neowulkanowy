@@ -16,4 +16,3 @@ class TimetableWork @Inject constructor(private val timetableRepository: Timetab
             .ignoreElement()
     }
 }
-
