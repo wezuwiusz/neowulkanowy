@@ -28,16 +28,21 @@
                 android:id="@+id/loginFormHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:gravity="center_horizontal"
                 android:text="@string/login_header_default"
                 android:textSize="16sp"
+                app:fontFamily="sans-serif-light"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormNameLayout"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -47,12 +52,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:hint="@string/login_nickname_hint"
                 app:errorEnabled="true"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormPassLayout"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormHeader">
 
@@ -63,6 +70,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
+                <requestFocus />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -77,7 +85,9 @@
                 android:layout_marginRight="24dp"
                 android:hint="@string/login_password_hint"
                 app:errorEnabled="true"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormHostLayout"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormNameLayout"
                 app:passwordToggleEnabled="true">
@@ -105,7 +115,9 @@
                 android:layout_marginRight="24dp"
                 android:background="@drawable/ic_login_outlined_border"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormSignIn"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormPassLayout">
 
@@ -141,7 +153,7 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="48dp"
                 android:text="@string/login_sign_in"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@android:color/white"
