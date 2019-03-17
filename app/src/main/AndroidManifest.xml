@@ -39,7 +39,18 @@
             android:name=".ui.modules.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/main_title"
+            android:launchMode="singleTop"
             android:theme="@style/WulkanowyTheme.NoActionBar" />
+        <activity
+            android:name=".ui.modules.message.send.SendMessageActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/send_message_title"
+            android:parentActivityName=".ui.modules.main.MainActivity"
+            android:theme="@style/WulkanowyTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.modules.main.MainActivity" />
+        </activity>
 
         <service
             android:name=".services.widgets.TimetableWidgetService"

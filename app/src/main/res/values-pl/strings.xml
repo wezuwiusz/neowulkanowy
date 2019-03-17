@@ -13,6 +13,7 @@
     <string name="more_title">Więcej</string>
     <string name="about_title">O aplikacji</string>
     <string name="message_title">Wiadomości</string>
+    <string name="send_message_title">Nowa wiadomość</string>
     <string name="note_title">Uwagi i osiągnięcia</string>
     <string name="homework_title">Zadania domowe</string>
     <string name="account_title">Wybierz konto</string>
@@ -135,9 +136,15 @@
     <string name="message_no_subject">(brak tematu)</string>
     <string name="message_no_items">Brak wiadomości</string>
     <string name="message_preview_error">Wystąpił błąd podczas pobierania treści wiadomości</string>
-    <string name="message_from">Od: %s</string>
-    <string name="message_to">Do: %s</string>
+    <string name="message_from">Od:</string>
+    <string name="message_to">Do:</string>
     <string name="message_date">Data: %s</string>
+    <string name="message_reply">Odpowiedz</string>
+    <string name="message_subject">Temat</string>
+    <string name="message_content">Treść</string>
+    <string name="message_send_successful">Wiadomość wysłana pomyślnie</string>
+    <string name="message_required_recipients">Musisz wybrać co najmniej 1 adresata</string>
+    <string name="message_content_min_length">Treść wiadomości musi zawierać co najmniej 3 znaki</string>
     <plurals name="message_number_item">
         <item quantity="one">%d wiadomość</item>
         <item quantity="few">%d wiadomości</item>
@@ -153,16 +160,6 @@
         <item quantity="few">"Dostałeś %1$d wiadomości</item>
         <item quantity="many">Dostałeś %1$d wiadomości</item>
     </plurals>
-
-    <!--Send message-->
-    <string name="send_message_title">Wyślij</string>
-    <string name="send_message_from">Od:</string>
-    <string name="send_message_to">Do:</string>
-    <string name="send_message_subject">Temat</string>
-    <string name="send_message_content">Treść</string>
-    <string name="send_message_successful">Wiadomość wysłana pomyślnie</string>
-    <string name="send_message_required_recipients">Musisz wybrać co najmniej 1 adresata</string>
-    <string name="send_message_content_min_length">Treść wiadomości musi zawierać co najmniej 3 znaki</string>
 
 
     <!--Note-->
@@ -241,8 +238,6 @@
     <string name="pref_view_summary">Pokazuj podsumowanie w ocenach</string>
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_theme_dark">Ciemny motyw (Beta)</string>
-    <string name="pref_view_grade_modifier_plus">Wartość plusa</string>
-    <string name="pref_view_grade_modifier_minus">Wartość minusa</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
     <string name="pref_grade_color_scheme">Schemat kolorów ocen</string>
 
@@ -255,6 +250,11 @@
     <string name="pref_services_suspended">Zawieszona na wakacjach</string>
     <string name="pref_services_interval">Interwał aktualizacji</string>
     <string name="pref_services_wifi">Tylko WiFi</string>
+
+    <string name="pref_other_header">Inne</string>
+    <string name="pref_other_grade_modifier_plus">Wartość plusa</string>
+    <string name="pref_other_grade_modifier_minus">Wartość minusa</string>
+    <string name="pref_other_fill_message_content">Odpowiadaj z historią wiadomości</string>
 
 
     <!--Notification Channels-->

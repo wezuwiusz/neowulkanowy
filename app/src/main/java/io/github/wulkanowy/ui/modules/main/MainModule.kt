@@ -20,7 +20,6 @@ import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.MessageModule
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
-import io.github.wulkanowy.ui.modules.message.send.SendMessageFragment
 import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
@@ -96,10 +95,6 @@ abstract class MainModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun bindCompletedLessonsFragment(): CompletedLessonsFragment
-
-    @PerFragment
-    @ContributesAndroidInjector
-    abstract fun bindSendMessageFragment(): SendMessageFragment
 
     @PerFragment
     @ContributesAndroidInjector

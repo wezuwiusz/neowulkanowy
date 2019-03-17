@@ -24,12 +24,6 @@ class PreferencesRepository @Inject constructor(
     val currentTheme: Int
         get() = sharedPref.getString(currentThemeKey, "1")?.toIntOrNull() ?: 1
 
-    val gradePlusModifier: Double
-        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_plus), "0.0")?.toDoubleOrNull() ?: 0.0
-
-    val gradeMinusModifier: Double
-        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_minus), "0.0")?.toDoubleOrNull() ?: 0.0
-
     val gradeColorTheme: String
         get() = sharedPref.getString(context.getString(R.string.pref_key_grade_color_scheme), "vulcan") ?: "vulcan"
 
@@ -51,4 +45,14 @@ class PreferencesRepository @Inject constructor(
     val isDebugNotificationEnableKey: String = context.getString(R.string.pref_key_notification_debug)
     val isDebugNotificationEnable: Boolean
         get() = sharedPref.getBoolean(isDebugNotificationEnableKey, false)
+
+    val gradePlusModifier: Double
+        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_plus), "0.0")?.toDouble() ?: 0.0
+
+    val gradeMinusModifier: Double
+        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_minus), "0.0")?.toDouble()
+            ?: 0.0
+
+    val fillMessageContent: Boolean
+        get() = sharedPref.getBoolean(context.getString(R.string.pref_key_fill_message_content), true)
 }

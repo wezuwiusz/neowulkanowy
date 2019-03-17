@@ -26,7 +26,6 @@ class MessageRemote @Inject constructor(private val api: Api) {
                     sender = it.sender.orEmpty(),
                     senderId = it.senderId ?: 0,
                     recipient = it.recipient.orEmpty(),
-                    recipientId = 0,
                     subject = it.subject.trim(),
                     date = it.date?.toLocalDateTime() ?: now(),
                     folderId = it.folderId,

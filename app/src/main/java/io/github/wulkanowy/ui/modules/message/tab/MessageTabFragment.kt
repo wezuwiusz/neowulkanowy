@@ -57,7 +57,7 @@ class MessageTabFragment : BaseSessionFragment(), MessageTabView, MessageView.Me
         super.onActivityCreated(savedInstanceState)
         messageContainer = messageTabRecycler
         presenter.onAttachView(this, MessageFolder.valueOf(
-            (savedInstanceState ?: arguments)?.getString(MessageTabFragment.MESSAGE_TAB_FOLDER_ID) ?: ""
+            (savedInstanceState ?: arguments)?.getString(MessageTabFragment.MESSAGE_TAB_FOLDER_ID).orEmpty()
         ))
     }
 

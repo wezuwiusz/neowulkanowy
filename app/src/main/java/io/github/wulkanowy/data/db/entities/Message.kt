@@ -24,9 +24,6 @@ data class Message(
     @ColumnInfo(name = "sender_id")
     val senderId: Int,
 
-    @ColumnInfo(name = "recipient_id")
-    val recipientId: Int,
-
     @ColumnInfo(name = "recipient_name")
     val recipient: String,
 
@@ -39,8 +36,10 @@ data class Message(
 
     var unread: Boolean,
 
+    @ColumnInfo(name = "unread_by")
     val unreadBy: Int,
 
+    @ColumnInfo(name = "read_by")
     val readBy: Int,
 
     val removed: Boolean

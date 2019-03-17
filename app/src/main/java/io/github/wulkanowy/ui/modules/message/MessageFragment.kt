@@ -12,9 +12,8 @@ import io.github.wulkanowy.data.repositories.message.MessageFolder.SENT
 import io.github.wulkanowy.data.repositories.message.MessageFolder.TRASHED
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
-import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
-import io.github.wulkanowy.ui.modules.message.send.SendMessageFragment
+import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
 import io.github.wulkanowy.ui.modules.message.tab.MessageTabFragment
 import io.github.wulkanowy.utils.setOnSelectPageListener
 import kotlinx.android.synthetic.main.fragment_message.*
@@ -85,7 +84,7 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
     }
 
     override fun openSendMessage() {
-        (activity as? MainActivity)?.pushView(SendMessageFragment.newInstance())
+        context?.let { it.startActivity(SendMessageActivity.getStartIntent(it)) }
     }
 
     override fun onDestroyView() {

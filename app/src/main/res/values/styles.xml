@@ -14,9 +14,8 @@
         <item name="subtitleTextColor">@android:color/primary_text_dark</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="bottomNavBackground">@color/bottom_nav_background_inverse</item>
-        <item name="chipBackgroundColor">@color/chip_material_background</item>
-        <item name="chipTextColor">@color/chip_default_text_color</item>
         <item name="dividerColor">@color/divider</item>
+        <item name="chip_detailed_backgroundColor">@color/chip_detailed_backgroundColor</item>
 
         <!-- AboutLibraries specific values -->
         <item name="about_libraries_window_background">@color/about_libraries_window_background</item>

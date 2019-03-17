@@ -21,7 +21,8 @@ class GradeLocalTest {
 
     @Before
     fun createDb() {
-        testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java).build()
+        testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java)
+            .build()
         gradeLocal = GradeLocal(testDb.gradeDao)
     }
 

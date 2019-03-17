@@ -3,13 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/sendMessageContainer"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/sendMessageAppBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/WulkanowyTheme.ActionBar"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/sendMessageToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/sendMessageContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/sendMessageAppBarContainer"
         android:orientation="vertical">
 
         <LinearLayout
@@ -22,14 +37,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/send_message_from"
+                android:text="@string/message_from"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/sendMessageFromTextView"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="30dp"
                 android:background="@android:color/transparent"
                 android:enabled="false"
                 android:textColor="?android:attr/textColorPrimaryNoDisable"
@@ -43,32 +58,32 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="58dp"
             android:paddingStart="14dp"
             android:paddingLeft="14dp"
-            android:paddingTop="14dp"
-            android:paddingEnd="0dp"
-            android:paddingRight="0dp"
-            android:paddingBottom="14dp">
+            tools:ignore="RtlSymmetry">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/send_message_to"
+                android:text="@string/message_to"
+                android:textAlignment="center"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp" />
 
-            <com.hootsuite.nachos.NachoTextView
-                android:id="@+id/sendMessageRecipientInput"
+            <com.pchmn.materialchips.ChipsInput
+                android:id="@+id/sendMessageRecipientsInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@android:color/transparent"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textColor="?attr/chipTextColor"
-                app:chipBackground="?attr/chipBackgroundColor" />
+                app:horizontalScroll="true"
+                tools:layout_height="30dp">
+
+            </com.pchmn.materialchips.ChipsInput>
         </LinearLayout>
 
         <View
@@ -79,9 +94,9 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/sendMessageSubjectInput"
             android:layout_width="match_parent"
-            android:layout_height="66dp"
+            android:layout_height="58dp"
             android:background="@android:color/transparent"
-            android:hint="@string/send_message_subject"
+            android:hint="@string/message_subject"
             android:inputType="text"
             android:maxLines="1"
             android:padding="14dp" />
@@ -97,7 +112,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:gravity="top|start"
-            android:hint="@string/send_message_content"
+            android:hint="@string/message_content"
             android:inputType="textMultiLine"
             android:paddingStart="14dp"
             android:paddingLeft="14dp"
@@ -107,9 +122,10 @@
             android:singleLine="false" />
     </LinearLayout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/sendMessageAppBarContainer">
 
         <LinearLayout
             android:id="@+id/sendMessageEmpty"
@@ -141,5 +157,5 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="gone" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </FrameLayout>
 </RelativeLayout>

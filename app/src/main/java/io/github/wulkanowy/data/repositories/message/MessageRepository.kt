@@ -83,6 +83,10 @@ class MessageRepository @Inject constructor(
     }
 
     fun sendMessage(subject: String, content: String, recipients: List<Recipient>): Single<SentMessage> {
-        return remote.sendMessage(subject, content, recipients)
+        return ReactiveNetwork.checkInternetConnectivity(settings)
+            .flatMap {
+                if (it) remote.sendMessage(subject, content, recipients)
+                else Single.error(UnknownHostException())
+            }
     }
 }

@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.recipient
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.ApiHelper
+import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.data.db.entities.Student
@@ -37,6 +38,15 @@ class RecipientRepository @Inject constructor(
                             local.getRecipients(student, role, unit).toSingle(emptyList())
                         }
                     )
+            }
+    }
+
+    fun getMessageRecipients(student: Student, message: Message): Single<List<Recipient>> {
+        return Single.just(apiHelper.initApi(student))
+            .flatMap { ReactiveNetwork.checkInternetConnectivity(settings) }
+            .flatMap {
+                if (it) remote.getMessageRecipients(message)
+                else Single.error(UnknownHostException())
             }
     }
 }

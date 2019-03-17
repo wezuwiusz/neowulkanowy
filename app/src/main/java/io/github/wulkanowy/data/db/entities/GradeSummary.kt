@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Grades_Summary")
+@Entity(tableName = "GradesSummary")
 data class GradeSummary(
 
     @ColumnInfo(name = "semester_id")

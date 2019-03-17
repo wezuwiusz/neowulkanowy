@@ -13,6 +13,7 @@
     <string name="more_title">More</string>
     <string name="about_title">About</string>
     <string name="message_title">Messages</string>
+    <string name="send_message_title">New message</string>
     <string name="note_title">Notes and achievements</string>
     <string name="homework_title">Homework</string>
     <string name="account_title">Choose account</string>
@@ -129,9 +130,15 @@
     <string name="message_no_subject">(no subject)</string>
     <string name="message_no_items">No messages</string>
     <string name="message_preview_error">An error occurred while downloading message content</string>
-    <string name="message_from">From: %s</string>
-    <string name="message_to">To: %s</string>
+    <string name="message_from">From:</string>
+    <string name="message_to">To:</string>
     <string name="message_date">Date: %s</string>
+    <string name="message_reply">Reply</string>
+    <string name="message_subject">Subject</string>
+    <string name="message_content">Content</string>
+    <string name="message_send_successful">Message sent successfully</string>
+    <string name="message_required_recipients">You need to choose at least 1 recipient</string>
+    <string name="message_content_min_length">The message content must be at least 3 characters</string>
     <plurals name="message_number_item">
         <item quantity="one">%d message</item>
         <item quantity="other">%d messages</item>
@@ -144,16 +151,6 @@
         <item quantity="one">You received %1$d message</item>
         <item quantity="other">You received %1$d messages</item>
     </plurals>
-
-    <!--Send message-->
-    <string name="send_message_title">Send</string>
-    <string name="send_message_from">From:</string>
-    <string name="send_message_to">To:</string>
-    <string name="send_message_subject">Subject</string>
-    <string name="send_message_content">Content</string>
-    <string name="send_message_successful">Message sent successfully</string>
-    <string name="send_message_required_recipients">You need to choose at least 1 recipient</string>
-    <string name="send_message_content_min_length">The message content must be at least 3 characters</string>
 
 
     <!--Note-->
@@ -226,8 +223,6 @@
     <string name="pref_view_summary">Show the summary in the grades</string>
     <string name="pref_view_present">Show presence in attendance</string>
     <string name="pref_view_theme_dark">Dark theme (Beta)</string>
-    <string name="pref_view_grade_modifier_plus">Value of the plus</string>
-    <string name="pref_view_grade_modifier_minus">Value of the minus</string>
     <string name="pref_view_expand_grade">Expand grades</string>
     <string name="pref_grade_color_scheme">Grades color scheme</string>
 
@@ -240,6 +235,11 @@
     <string name="pref_services_suspended">Suspended on holiday</string>
     <string name="pref_services_interval">Updates interval</string>
     <string name="pref_services_wifi">Wi-Fi only</string>
+
+    <string name="pref_other_header">Other</string>
+    <string name="pref_other_grade_modifier_plus">Value of the plus</string>
+    <string name="pref_other_grade_modifier_minus">Value of the minus</string>
+    <string name="pref_other_fill_message_content">Reply with message history</string>
 
 
     <!--Notification Channels-->

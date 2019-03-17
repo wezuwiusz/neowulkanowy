@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
 import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
+import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
@@ -21,6 +22,8 @@ class MessagePreviewPresenter @Inject constructor(
 
     var messageId: Int = 0
 
+    private var replyMessage: Message? = null
+
     fun onAttachView(view: MessagePreviewView, id: Int) {
         super.onAttachView(view)
         loadData(id)
@@ -38,11 +41,13 @@ class MessagePreviewPresenter @Inject constructor(
                 .doFinally { view?.showProgress(false) }
                 .subscribe({ message ->
                     Timber.i("Loading message $id preview result: Success ")
+                    replyMessage = message
                     view?.run {
                         message.let {
                             setSubject(if (it.subject.isNotBlank()) it.subject else noSubjectString)
                             setDate(it.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
-                            setContent(it.content)
+                            setContent(it.content.orEmpty())
+                            showReplyButton(true)
 
                             if (it.recipient.isNotBlank()) setRecipient(it.recipient)
                             else setSender(it.sender)
@@ -55,5 +60,16 @@ class MessagePreviewPresenter @Inject constructor(
                     errorHandler.dispatch(it)
                 })
         }
+    }
+
+    fun onReply(): Boolean {
+        return if (replyMessage != null) {
+            view?.openMessageReply(replyMessage)
+            true
+        } else false
+    }
+
+    fun onCreateOptionsMenu() {
+        view?.showReplyButton(replyMessage != null)
     }
 }

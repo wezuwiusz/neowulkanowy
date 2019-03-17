@@ -1,22 +1,22 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/messagePreviewContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/messageSubject"
+                android:id="@+id/messagePreviewSubject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -25,7 +25,7 @@
                 tools:text="@tools:sample/lorem" />
 
             <TextView
-                android:id="@+id/messageAuthor"
+                android:id="@+id/messagePreviewAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
@@ -34,7 +34,7 @@
                 tools:text="@tools:sample/full_names" />
 
             <TextView
-                android:id="@+id/messageDate"
+                android:id="@+id/messagePreviewDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -43,7 +43,7 @@
                 tools:text="@tools:sample/date/ddmmyy" />
 
             <TextView
-                android:id="@+id/messageContent"
+                android:id="@+id/messagePreviewContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -51,11 +51,10 @@
                 android:textIsSelectable="true"
                 tools:text="@tools:sample/lorem" />
         </LinearLayout>
-
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/messageError"
+        android:id="@+id/messagePreviewError"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -82,7 +81,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/messageProgress"
+        android:id="@+id/messagePreviewProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

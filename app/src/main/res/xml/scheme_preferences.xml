@@ -38,22 +38,6 @@
             android:summary="%s"
             android:title="@string/pref_grade_color_scheme"
             app:iconSpaceReserved="false" />
-        <ListPreference
-            android:defaultValue="0.0"
-            android:entries="@array/grade_modifier_entries"
-            android:entryValues="@array/grade_modifier_value"
-            android:key="@string/pref_key_grade_modifier_plus"
-            android:summary="%s"
-            android:title="@string/pref_view_grade_modifier_plus"
-            app:iconSpaceReserved="false" />
-        <ListPreference
-            android:defaultValue="0.0"
-            android:entries="@array/grade_modifier_entries"
-            android:entryValues="@array/grade_modifier_value"
-            android:key="@string/pref_key_grade_modifier_minus"
-            android:summary="%s"
-            android:title="@string/pref_view_grade_modifier_minus"
-            app:iconSpaceReserved="false" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_services_header"
@@ -92,6 +76,31 @@
             android:defaultValue="false"
             android:key="@string/pref_key_notification_debug"
             android:title="@string/pref_notify_debug_switch"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_other_header"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:defaultValue="0.0"
+            android:entries="@array/grade_modifier_entries"
+            android:entryValues="@array/grade_modifier_value"
+            android:key="@string/pref_key_grade_modifier_plus"
+            android:summary="%s"
+            android:title="@string/pref_other_grade_modifier_plus"
+            app:iconSpaceReserved="false" />
+        <ListPreference
+            android:defaultValue="0.0"
+            android:entries="@array/grade_modifier_entries"
+            android:entryValues="@array/grade_modifier_value"
+            android:key="@string/pref_key_grade_modifier_minus"
+            android:summary="%s"
+            android:title="@string/pref_other_grade_modifier_minus"
+            app:iconSpaceReserved="false" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_fill_message_content"
+            android:title="@string/pref_other_fill_message_content"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

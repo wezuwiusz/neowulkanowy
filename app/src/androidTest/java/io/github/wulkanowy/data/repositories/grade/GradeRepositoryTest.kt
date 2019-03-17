@@ -7,9 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.api.Api
-import io.github.wulkanowy.api.toDate
 import io.github.wulkanowy.data.db.AppDatabase
-import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.TestInternetObservingStrategy
@@ -22,7 +20,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.of
 import org.threeten.bp.LocalDateTime
 import kotlin.test.assertFalse

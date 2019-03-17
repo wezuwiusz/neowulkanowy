@@ -7,9 +7,12 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="bottomNavBackground">@color/bottom_nav_background</item>
         <item name="android:navigationBarColor" tools:targetApi="21">@color/bottom_nav_background</item>
-        <item name="chipBackgroundColor">@color/chip_material_background_inverse</item>
-        <item name="chipTextColor">@color/chip_default_text_color_inverse</item>
         <item name="dividerColor">@color/divider_inverse</item>
+        <item name="chip_backgroundColor">@color/chip_backgroundColor_inverse</item>
+        <item name="chip_labelColor">@color/chip_labelColor_inverse</item>
+        <item name="chip_detailed_backgroundColor">@color/chip_backgroundColor_inverse</item>
+        <item name="filterable_list_backgroundColor">@color/filterable_list_backgroundColor_inverse</item>
+        <item name="filterable_list_textColor">@color/filterable_list_textColor_inverse</item>
 
         <!--AboutLibraries specific values-->
         <item name="about_libraries_window_background">@color/about_libraries_window_background_dark</item>
