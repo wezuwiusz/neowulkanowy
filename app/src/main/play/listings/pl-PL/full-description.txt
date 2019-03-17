@@ -1,13 +1,14 @@
 Aplikacja jest we wczesnej fazie rozwoju, ciągle pracujemy nad kolejnymi funkcjami.
 
 Wyróżnione cechy i funkcje:
-- brak reklam,
-- tryb offline,
-- powiadomienia,
 - obliczanie średniej ważonej,
 - procentowy podgląd frekwencji,
+- szczęśliwy numerek,
+- podgląd lekcji zrealizowanych,
 - ciemny motyw.
+- brak reklam,
+- tryb offline,
+- powiadomienia.
 
 GitHub: https://github.com/wulkanowy/wulkanowy
 Discord: https://discord.gg/vccAQBr
-Trello: https://trello.com/b/A97NUM1s/wulkanowy

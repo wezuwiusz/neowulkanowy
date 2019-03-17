@@ -1,7 +1,20 @@
-Wersja 0.6.6
+Wersja 0.7.0
 
-- poprawiono problemy ze stabilnością w widoku ocen i wiadomości
-- naprawiono wyświetlanie powiadomień po ich ponownym włączeniu po długim czasie
-- ograniczono ilość zbędnych informacji na widżecie planu lekcji
+Dodaliśmy:
+- szczęśliwy numerek
+- lekcje zrealizowane
+- wysyłanie wiadomości
+- ucznia na tle klasy
+- opcję zmiany kolorów ocen
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.6.6
+Zmieniliśmy:
+- wygląd ekranu logowania
+- sposób wyświetlania zastępstw
+- widok zadań domowych na tygodniowy
+
+Naprawiliśmy:
+- automatyczne przełączanie widżetu na nowy dzień
+- wyświetlanie powiadomień o starych ocenach
+- znikające numery sal w planie lekcji
+
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.7.0

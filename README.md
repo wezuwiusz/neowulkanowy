@@ -6,12 +6,12 @@
 [![Codecov](https://img.shields.io/codecov/c/github/wulkanowy/wulkanowy/master.svg?style=flat-square)](https://codecov.io/gh/wulkanowy/wulkanowy)
 [![BCH compliance](https://bettercodehub.com/edge/badge/wulkanowy/wulkanowy?branch=master)](https://bettercodehub.com/)
 [![Sonarcloud](https://sonarcloud.io/api/project_badges/measure?project=io.github.wulkanowy%3Aapp&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=io.github.wulkanowy%3Aapp)
-[![FOSSA Status](https://app.fossa.io/api/projects/custom%2B5644%2Fgit%40github.com%3Awulkanowy%2Fwulkanowy.git.svg?type=shield)](https://app.fossa.io/projects/custom%2B5644%2Fgit%40github.com%3Awulkanowy%2Fwulkanowy.git?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B5644%2Fgithub.com%2Fwulkanowy%2Fwulkanowy.svg?type=shield)](https://app.fossa.com/projects/custom%2B5644%2Fgithub.com%2Fwulkanowy%2Fwulkanowy?ref=badge_shield)
 [![Discord](https://img.shields.io/discord/390889354199040011.svg?style=flat-square)](https://discord.gg/vccAQBr)
 
 [Pobierz wersję beta z Google Play](https://play.google.com/store/apps/details?id=io.github.wulkanowy&amp;utm_source=vcs)
 
-[Pobierz wersję DEV](https://bitrise-redirector.herokuapp.com/v0.1/apps/daeff1893f3c8128/builds/master/artifacts/0)
+[Pobierz wersję DEV](https://bitrise-redirector.herokuapp.com/v0.1/apps/f841f20d8f8b1dc8/builds/master/artifacts/0)
 [(Więcej wersji DEV)](https://wulkanowy.github.io/dev.html)
 
 Androidowy klient dziennika VULCAN UONET+.
@@ -19,4 +19,4 @@ Androidowy klient dziennika VULCAN UONET+.
 
 ## License
 
-[![FOSSA Status](https://app.fossa.io/api/projects/custom%2B5644%2Fgit%40github.com%3Awulkanowy%2Fwulkanowy.git.svg?type=large)](https://app.fossa.io/projects/custom%2B5644%2Fgit%40github.com%3Awulkanowy%2Fwulkanowy.git?ref=badge_large)
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B5644%2Fgithub.com%2Fwulkanowy%2Fwulkanowy.svg?type=large)](https://app.fossa.com/projects/custom%2B5644%2Fgithub.com%2Fwulkanowy%2Fwulkanowy?ref=badge_large)
