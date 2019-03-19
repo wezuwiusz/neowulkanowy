@@ -71,10 +71,10 @@ class GradeRepositoryTest {
     @Test
     fun markOlderThanRegisterDateAsRead() {
         every { mockApi.getGrades(1) } returns Single.just(listOf(
-            createGradeApi(5, 4, of(2019, 2, 25), "Ocena pojawiła się"),
-            createGradeApi(5, 4, of(2019, 2, 26), "przed zalogowanie w aplikacji"),
-            createGradeApi(5, 4, of(2019, 2, 27), "Ocena z dnia logowania"),
-            createGradeApi(5, 4, of(2019, 2, 28), "Ocena jeszcze nowsza")
+            createGradeApi(5, 4.0, of(2019, 2, 25), "Ocena pojawiła się"),
+            createGradeApi(5, 4.0, of(2019, 2, 26), "przed zalogowanie w aplikacji"),
+            createGradeApi(5, 4.0, of(2019, 2, 27), "Ocena z dnia logowania"),
+            createGradeApi(5, 4.0, of(2019, 2, 28), "Ocena jeszcze nowsza")
         ))
 
         val grades = GradeRepository(settings, gradeLocal, gradeRemote)
@@ -89,16 +89,16 @@ class GradeRepositoryTest {
     @Test
     fun mitigateOldGradesNotifications() {
         gradeLocal.saveGrades(listOf(
-            createGradeLocal(5, 3, of(2019, 2, 25), "Jedna ocena"),
-            createGradeLocal(4, 4, of(2019, 2, 26), "Druga"),
-            createGradeLocal(3, 5, of(2019, 2, 27), "Trzecia")
+            createGradeLocal(5, 3.0, of(2019, 2, 25), "Jedna ocena"),
+            createGradeLocal(4, 4.0, of(2019, 2, 26), "Druga"),
+            createGradeLocal(3, 5.0, of(2019, 2, 27), "Trzecia")
         ))
 
         every { mockApi.getGrades(1) } returns Single.just(listOf(
-            createGradeApi(5, 2, of(2019, 2, 25), "Ocena ma datę, jest inna, ale nie zostanie powiadomiona"),
-            createGradeApi(4, 3, of(2019, 2, 26), "starszą niż ostatnia lokalnie"),
-            createGradeApi(3, 4, of(2019, 2, 27), "Ta jest z tego samego dnia co ostatnia lokalnie"),
-            createGradeApi(2, 5, of(2019, 2, 28), "Ta jest już w ogóle nowa")
+            createGradeApi(5, 2.0, of(2019, 2, 25), "Ocena ma datę, jest inna, ale nie zostanie powiadomiona"),
+            createGradeApi(4, 3.0, of(2019, 2, 26), "starszą niż ostatnia lokalnie"),
+            createGradeApi(3, 4.0, of(2019, 2, 27), "Ta jest z tego samego dnia co ostatnia lokalnie"),
+            createGradeApi(2, 5.0, of(2019, 2, 28), "Ta jest już w ogóle nowa")
         ))
 
         val grades = GradeRepository(settings, gradeLocal, gradeRemote)

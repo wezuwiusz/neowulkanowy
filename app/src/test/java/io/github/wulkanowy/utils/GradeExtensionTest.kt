@@ -22,11 +22,11 @@ class GradeExtensionTest {
     @Test
     fun calcWeightedAverage() {
         assertEquals(3.47, listOf(
-            createGrade(5, 6, 0.33),
-            createGrade(5, 5, -0.33),
-            createGrade(4, 1, 0.0),
-            createGrade(1, 9, 0.5),
-            createGrade(0, 0, 0.0)
+            createGrade(5, 6.0, 0.33),
+            createGrade(5, 5.0, -0.33),
+            createGrade(4, 1.0, 0.0),
+            createGrade(1, 9.0, 0.5),
+            createGrade(0, .0, 0.0)
         ).calcAverage(), 0.005)
     }
 
@@ -42,23 +42,23 @@ class GradeExtensionTest {
 
     @Test
     fun changeModifier_default() {
-        assertEquals(.33, createGrade(5, 0, .33).changeModifier(.0, .0).modifier, .0)
-        assertEquals(-.33, createGrade(5, 0, -.33).changeModifier(.0, .0).modifier, .0)
+        assertEquals(.33, createGrade(5, .0, .33).changeModifier(.0, .0).modifier, .0)
+        assertEquals(-.33, createGrade(5, .0, -.33).changeModifier(.0, .0).modifier, .0)
     }
 
     @Test
     fun changeModifier_plus() {
-        assertEquals(.33, createGrade(5, 0, .25).changeModifier(.33, .50).modifier, .0)
-        assertEquals(.25, createGrade(5, 0, .33).changeModifier(.25, .0).modifier, .0)
+        assertEquals(.33, createGrade(5, .0, .25).changeModifier(.33, .50).modifier, .0)
+        assertEquals(.25, createGrade(5, .0, .33).changeModifier(.25, .0).modifier, .0)
     }
 
     @Test
     fun changeModifier_minus() {
-        assertEquals(-.33, createGrade(5, 0, -.25).changeModifier(.25, .33).modifier, .0)
-        assertEquals(-.25, createGrade(5, 0, -.33).changeModifier(.0, .25).modifier, .0)
+        assertEquals(-.33, createGrade(5, .0, -.25).changeModifier(.25, .33).modifier, .0)
+        assertEquals(-.25, createGrade(5, .0, -.33).changeModifier(.0, .25).modifier, .0)
     }
 
-    private fun createGrade(value: Int, weightValue: Int = 0, modifier: Double = 0.25): Grade {
+    private fun createGrade(value: Int, weightValue: Double = .0, modifier: Double = 0.25): Grade {
         return Grade(
             semesterId = 1,
             studentId = 1,

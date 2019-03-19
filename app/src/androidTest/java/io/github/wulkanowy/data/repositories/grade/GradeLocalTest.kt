@@ -34,9 +34,9 @@ class GradeLocalTest {
     @Test
     fun saveAndReadTest() {
         gradeLocal.saveGrades(listOf(
-            createGradeLocal(5, 3, LocalDate.of(2018, 9, 10), "", 1),
-            createGradeLocal(4, 4, LocalDate.of(2019, 2, 27), "", 2),
-            createGradeLocal(3, 5, LocalDate.of(2019, 2, 28), "", 2)
+            createGradeLocal(5, 3.0, LocalDate.of(2018, 9, 10), "", 1),
+            createGradeLocal(4, 4.0, LocalDate.of(2019, 2, 27), "", 2),
+            createGradeLocal(3, 5.0, LocalDate.of(2019, 2, 28), "", 2)
         ))
 
         val grades = gradeLocal

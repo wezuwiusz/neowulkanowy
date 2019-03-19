@@ -34,7 +34,7 @@ data class Grade(
 
     val weight: String,
 
-    val weightValue: Int,
+    val weightValue: Double,
 
     val date: LocalDate,
 
