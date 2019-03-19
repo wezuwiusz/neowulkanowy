@@ -72,6 +72,10 @@ class SendMessageActivity : BaseActivity(), SendMessageView {
         else false
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return presenter.onUpNavigate()
+    }
+
     override fun setReportingUnit(unit: ReportingUnit) {
         sendMessageFromTextView.setText(unit.senderName)
     }

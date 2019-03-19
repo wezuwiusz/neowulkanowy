@@ -47,6 +47,11 @@ class SendMessagePresenter @Inject constructor(
         }
     }
 
+    fun onUpNavigate(): Boolean {
+        view?.popView()
+        return true
+    }
+
     private fun loadData(message: Message?) {
         var reportingUnit: ReportingUnit? = null
         var recipients: List<Recipient> = emptyList()
