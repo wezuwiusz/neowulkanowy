@@ -33,9 +33,16 @@ class GradePresenter @Inject constructor(
         disposable.add(Completable.timer(150, MILLISECONDS, schedulers.mainThread)
             .subscribe {
                 selectedIndex = savedIndex ?: 0
-                view.initView()
+                view.run {
+                    initView()
+                    enableSwipe(false)
+                }
                 loadData()
             })
+    }
+
+    fun onCreateMenu() {
+        if (semesters.isEmpty()) view?.showSemesterSwitch(false)
     }
 
     fun onViewReselected() {
@@ -69,12 +76,17 @@ class GradePresenter @Inject constructor(
         view?.apply {
             showContent(true)
             showProgress(false)
+            showEmpty(false)
             loadedSemesterId[currentPageIndex] = semesterId
         }
     }
 
     fun onPageSelected(index: Int) {
         loadChild(index)
+    }
+
+    fun onSwipeRefresh() {
+        loadData()
     }
 
     private fun loadData() {
@@ -89,17 +101,21 @@ class GradePresenter @Inject constructor(
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
+            .doFinally { view?.showRefresh(false) }
             .subscribe({
                 view?.run {
                     Timber.i("Loading grade result: Attempt load index $currentPageIndex")
                     loadChild(currentPageIndex)
+                    enableSwipe(false)
+                    showSemesterSwitch(true)
                 }
             }) {
                 Timber.i("Loading grade result: An exception occurred")
                 errorHandler.dispatch(it)
                 view?.run {
                     showProgress(false)
-                    showEmpty()
+                    showEmpty(true)
+                    enableSwipe(true)
                 }
             })
     }

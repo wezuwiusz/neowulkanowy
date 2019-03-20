@@ -17,13 +17,19 @@
         app:tabTextColor="@android:color/white"
         tools:visibility="visible" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/gradeViewPager"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/gradeSwipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="48dp"
-        android:visibility="invisible"
-        tools:visibility="visible" />
+        android:layout_marginTop="48dp">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/gradeViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/gradeProgress"

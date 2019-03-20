@@ -12,9 +12,15 @@ interface GradeView : BaseSessionView {
 
     fun showProgress(show: Boolean)
 
-    fun showEmpty()
+    fun showEmpty(show: Boolean)
+
+    fun showRefresh(show: Boolean)
+
+    fun showSemesterSwitch(show: Boolean)
 
     fun showSemesterDialog(selectedIndex: Int)
+
+    fun enableSwipe(enable: Boolean)
 
     fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean)
 
