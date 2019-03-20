@@ -1,5 +1,3 @@
-Wersja 0.7.0
-
 Dodaliśmy:
 - szczęśliwy numerek
 - lekcje zrealizowane
