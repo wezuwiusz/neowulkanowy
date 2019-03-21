@@ -22,7 +22,7 @@ class MessagePreviewPresenter @Inject constructor(
 
     var messageId: Int = 0
 
-    private var replyMessage: Message? = null
+    private var message: Message? = null
 
     fun onAttachView(view: MessagePreviewView, id: Int) {
         super.onAttachView(view)
@@ -41,13 +41,13 @@ class MessagePreviewPresenter @Inject constructor(
                 .doFinally { view?.showProgress(false) }
                 .subscribe({ message ->
                     Timber.i("Loading message $id preview result: Success ")
-                    replyMessage = message
+                    this@MessagePreviewPresenter.message = message
                     view?.run {
                         message.let {
                             setSubject(if (it.subject.isNotBlank()) it.subject else noSubjectString)
                             setDate(it.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
                             setContent(it.content.orEmpty())
-                            showReplyButton(true)
+                            showOptions(true)
 
                             if (it.recipient.isNotBlank()) setRecipient(it.recipient)
                             else setSender(it.sender)
@@ -63,13 +63,20 @@ class MessagePreviewPresenter @Inject constructor(
     }
 
     fun onReply(): Boolean {
-        return if (replyMessage != null) {
-            view?.openMessageReply(replyMessage)
+        return if (message != null) {
+            view?.openMessageReply(message)
+            true
+        } else false
+    }
+
+    fun onForward(): Boolean {
+        return if (message != null) {
+            view?.openMessageForward(message)
             true
         } else false
     }
 
     fun onCreateOptionsMenu() {
-        view?.showReplyButton(replyMessage != null)
+        view?.showOptions(message != null)
     }
 }

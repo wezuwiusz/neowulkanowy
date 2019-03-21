@@ -26,11 +26,14 @@ class SendMessageActivity : BaseActivity(), SendMessageView {
 
     companion object {
         private const val EXTRA_MESSAGE = "EXTRA_MESSAGE"
+        private const val EXTRA_REPLY = "EXTRA_REPLY"
 
         fun getStartIntent(context: Context) = Intent(context, SendMessageActivity::class.java)
 
-        fun getStartIntent(context: Context, message: Message?): Intent {
-            return getStartIntent(context).putExtra(EXTRA_MESSAGE, message)
+        fun getStartIntent(context: Context, message: Message?, reply: Boolean = false): Intent {
+            return getStartIntent(context)
+                .putExtra(EXTRA_MESSAGE, message)
+                .putExtra(EXTRA_REPLY, reply)
         }
     }
 
@@ -59,7 +62,7 @@ class SendMessageActivity : BaseActivity(), SendMessageView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         messageContainer = sendMessageContainer
 
-        presenter.onAttachView(this, intent.getSerializableExtra(EXTRA_MESSAGE) as? Message)
+        presenter.onAttachView(this, intent.getSerializableExtra(EXTRA_MESSAGE) as? Message, intent.getSerializableExtra(EXTRA_REPLY) as Boolean)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

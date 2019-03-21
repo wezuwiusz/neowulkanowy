@@ -25,6 +25,7 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
     lateinit var presenter: MessagePreviewPresenter
 
     private var menuReplyButton: MenuItem? = null
+    private var menuForwardButton: MenuItem? = null
 
     override val titleStringId: Int
         get() = R.string.message_title
@@ -60,12 +61,16 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.action_menu_message_preview, menu)
         menuReplyButton = menu?.findItem(R.id.messagePreviewMenuReply)
+        menuForwardButton = menu?.findItem(R.id.messagePreviewMenuForward)
         presenter.onCreateOptionsMenu()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.messagePreviewMenuReply) presenter.onReply()
-        else false
+        return when (item?.itemId) {
+            R.id.messagePreviewMenuReply -> presenter.onReply()
+            R.id.messagePreviewMenuForward -> presenter.onForward()
+            else -> false
+        }
     }
 
     override fun setSubject(subject: String) {
@@ -92,8 +97,9 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
         messagePreviewProgress.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun showReplyButton(show: Boolean) {
+    override fun showOptions(show: Boolean) {
         menuReplyButton?.isVisible = show
+        menuForwardButton?.isVisible = show
     }
 
     override fun showMessageError() {
@@ -101,6 +107,10 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
     }
 
     override fun openMessageReply(message: Message?) {
+        context?.let { it.startActivity(SendMessageActivity.getStartIntent(it, message, true)) }
+    }
+
+    override fun openMessageForward(message: Message?) {
         context?.let { it.startActivity(SendMessageActivity.getStartIntent(it, message)) }
     }
 

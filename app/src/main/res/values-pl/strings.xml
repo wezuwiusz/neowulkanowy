@@ -140,6 +140,7 @@
     <string name="message_to">Do:</string>
     <string name="message_date">Data: %s</string>
     <string name="message_reply">Odpowiedz</string>
+    <string name="message_forward">Prześlij dalej</string>
     <string name="message_subject">Temat</string>
     <string name="message_content">Treść</string>
     <string name="message_send_successful">Wiadomość wysłana pomyślnie</string>

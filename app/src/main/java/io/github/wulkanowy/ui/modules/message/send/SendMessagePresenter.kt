@@ -30,18 +30,25 @@ class SendMessagePresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<SendMessageView>(errorHandler) {
 
-    fun onAttachView(view: SendMessageView, message: Message?) {
+    fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean) {
         super.onAttachView(view)
         Timber.i("Send message view is attached")
-        loadData(message)
+        loadData(message, reply)
         view.apply {
             message?.let {
-                setSubject("RE: ${message.subject}")
-                if (preferencesRepository.fillMessageContent) {
-                    setContent(when (message.sender.isNotEmpty()) {
-                        true -> "\n\nOd: ${message.sender}\n"
-                        false -> "\n\nDo: ${message.recipient}\n"
-                    } + "Data: ${message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")}\n\n${message.content}")
+                setSubject(when (reply) {
+                    true -> "RE: "
+                    false -> "FE: "
+                } + message.subject)
+                if (preferencesRepository.fillMessageContent || !reply) {
+                    setContent(
+                        when (reply) {
+                            true -> "\n\n"
+                            false -> ""
+                        } + when (message.sender.isNotEmpty()) {
+                            true -> "Od: ${message.sender}\n"
+                            false -> "Do: ${message.recipient}\n"
+                        } + "Data: ${message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")}\n\n${message.content}")
                 }
             }
         }
@@ -52,7 +59,7 @@ class SendMessagePresenter @Inject constructor(
         return true
     }
 
-    private fun loadData(message: Message?) {
+    private fun loadData(message: Message?, reply: Boolean) {
         var reportingUnit: ReportingUnit? = null
         var recipients: List<Recipient> = emptyList()
         var selectedRecipient: List<Recipient> = emptyList()
@@ -69,7 +76,7 @@ class SendMessagePresenter @Inject constructor(
                         recipients = it
                     }
                     .flatMapCompletable {
-                        if (message == null) Completable.complete()
+                        if (message == null || !reply) Completable.complete()
                         else recipientRepository.getMessageRecipients(student, message)
                             .doOnSuccess {
                                 Timber.i("Loaded message recipients to reply result: Success, fetched %d recipients", it.size)

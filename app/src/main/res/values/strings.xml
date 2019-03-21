@@ -134,6 +134,7 @@
     <string name="message_to">To:</string>
     <string name="message_date">Date: %s</string>
     <string name="message_reply">Reply</string>
+    <string name="message_forward">Forward</string>
     <string name="message_subject">Subject</string>
     <string name="message_content">Content</string>
     <string name="message_send_successful">Message sent successfully</string>
