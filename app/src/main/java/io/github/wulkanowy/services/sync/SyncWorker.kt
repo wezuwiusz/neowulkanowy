@@ -34,12 +34,17 @@ class SyncWorker @AssistedInject constructor(
 ) : RxWorker(appContext, workerParameters) {
 
     override fun createWork(): Single<Result> {
-        return studentRepository.getCurrentStudent()
-            .flatMapCompletable { student ->
-                semesterRepository.getCurrentSemester(student, true)
-                    .flatMapCompletable { semester ->
-                        Completable.mergeDelayError(works.map { it.create(student, semester) })
-                    }
+        return studentRepository.isStudentSaved()
+            .flatMapCompletable { isSaved ->
+                if (isSaved) {
+                    studentRepository.getCurrentStudent()
+                        .flatMapCompletable { student ->
+                            semesterRepository.getCurrentSemester(student)
+                                .flatMapCompletable { semester ->
+                                    Completable.mergeDelayError(works.map { it.create(student, semester) })
+                                }
+                        }
+                } else Completable.complete()
             }
             .toSingleDefault(Result.success())
             .onErrorReturn {
