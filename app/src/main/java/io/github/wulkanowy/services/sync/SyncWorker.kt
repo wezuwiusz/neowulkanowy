@@ -11,6 +11,7 @@ import androidx.work.WorkerParameters
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import io.github.wulkanowy.R
+import io.github.wulkanowy.api.interceptor.FeatureDisabledException
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -43,7 +44,8 @@ class SyncWorker @AssistedInject constructor(
             .toSingleDefault(Result.success())
             .onErrorReturn {
                 Timber.e(it, "There was an error during synchronization")
-                Result.retry()
+                if (it is FeatureDisabledException) Result.success()
+                else Result.retry()
             }
             .doOnSuccess { if (preferencesRepository.isDebugNotificationEnable) notify(it) }
     }
