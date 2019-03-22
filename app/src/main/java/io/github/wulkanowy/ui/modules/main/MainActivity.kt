@@ -2,6 +2,8 @@ package io.github.wulkanowy.ui.modules.main
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -165,7 +167,7 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun openLoginView() {
         startActivity(LoginActivity.getStartIntent(this)
-            .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })
+            .apply { addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK) })
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

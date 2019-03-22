@@ -77,7 +77,7 @@ class GradePresenter @Inject constructor(
     }
 
     fun onPageSelected(index: Int) {
-        loadChild(index)
+        if (semesters.isNotEmpty()) loadChild(index)
     }
 
     fun onSwipeRefresh() {

@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.wulkanowy.R
-import io.github.wulkanowy.di.scopes.PerActivity
 import io.github.wulkanowy.di.scopes.PerFragment
 import io.github.wulkanowy.ui.modules.about.AboutFragment
 import io.github.wulkanowy.ui.modules.about.AboutModule
@@ -33,7 +32,6 @@ abstract class MainModule {
     companion object {
 
         @JvmStatic
-        @PerActivity
         @Provides
         fun provideFragNavController(activity: MainActivity): FragNavController {
             return FragNavController(activity.supportFragmentManager, R.id.mainFragmentContainer)
