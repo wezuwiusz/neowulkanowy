@@ -52,6 +52,7 @@
 
         <receiver
             android:name=".ui.widgets.timetable.TimetableWidgetProvider"
+            android:exported="true"
             android:label="@string/timetable_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
