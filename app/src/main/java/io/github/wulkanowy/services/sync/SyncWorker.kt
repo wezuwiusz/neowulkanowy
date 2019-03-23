@@ -19,6 +19,7 @@ import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.works.Work
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
 import timber.log.Timber
 import kotlin.random.Random
@@ -41,7 +42,7 @@ class SyncWorker @AssistedInject constructor(
                         .flatMapCompletable { student ->
                             semesterRepository.getCurrentSemester(student)
                                 .flatMapCompletable { semester ->
-                                    Completable.mergeDelayError(works.map { it.create(student, semester) })
+                                    Completable.mergeDelayError(Flowable.fromIterable(works.map { it.create(student, semester) }), 3)
                                 }
                         }
                 } else Completable.complete()
