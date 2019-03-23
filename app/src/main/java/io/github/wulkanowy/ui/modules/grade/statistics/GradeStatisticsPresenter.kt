@@ -63,7 +63,7 @@ class GradeStatisticsPresenter @Inject constructor(
     }
 
     fun onSubjectSelected(name: String) {
-        Timber.i("Select attendance stats subject $name")
+        Timber.i("Select grade stats subject $name")
         view?.run {
             showContent(false)
             showProgress(true)
@@ -77,7 +77,7 @@ class GradeStatisticsPresenter @Inject constructor(
     }
 
     fun onTypeChange(isSemester: Boolean) {
-        Timber.i("Select attendance stats semester: $isSemester")
+        Timber.i("Select grade stats semester: $isSemester")
         disposable.clear()
         view?.run {
             showContent(false)

@@ -3,7 +3,6 @@ package io.github.wulkanowy.di
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.wulkanowy.di.scopes.PerActivity
-import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginModule
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -29,9 +28,6 @@ internal abstract class BuilderModule {
 
     @ContributesAndroidInjector
     abstract fun bindMessageSendActivity(): SendMessageActivity
-
-    @ContributesAndroidInjector
-    abstract fun bindTimetableWidgetService(): TimetableWidgetService
 
     @ContributesAndroidInjector
     abstract fun bindTimetableWidgetProvider(): TimetableWidgetProvider

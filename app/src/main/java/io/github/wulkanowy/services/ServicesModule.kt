@@ -9,6 +9,7 @@ import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoSet
 import io.github.wulkanowy.services.sync.works.AttendanceSummaryWork
 import io.github.wulkanowy.services.sync.works.AttendanceWork
@@ -24,6 +25,7 @@ import io.github.wulkanowy.services.sync.works.NoteWork
 import io.github.wulkanowy.services.sync.works.RecipientWork
 import io.github.wulkanowy.services.sync.works.TimetableWork
 import io.github.wulkanowy.services.sync.works.Work
+import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import javax.inject.Singleton
 
 @AssistedModule
@@ -47,6 +49,9 @@ abstract class ServicesModule {
         @Provides
         fun provideNotificationManager(context: Context) = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
+
+    @ContributesAndroidInjector
+    abstract fun bindTimetableWidgetService(): TimetableWidgetService
 
     @Binds
     @IntoSet
