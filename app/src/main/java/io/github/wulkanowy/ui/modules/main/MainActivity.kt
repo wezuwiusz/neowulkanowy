@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -146,7 +147,9 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun notifyMenuViewReselected() {
-        (navController.currentStack?.get(0) as? MainView.MainChildView)?.onFragmentReselected()
+        Handler().postDelayed({
+            (navController.currentStack?.get(0) as? MainView.MainChildView)?.onFragmentReselected()
+        }, 250)
     }
 
     fun showDialogFragment(dialog: DialogFragment) {
