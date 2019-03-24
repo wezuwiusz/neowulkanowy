@@ -28,10 +28,7 @@ class GradeDetailsItem(
     }
 
     @SuppressLint("SetTextI18n")
-    override fun bindViewHolder(
-        adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder,
-        position: Int, payloads: MutableList<Any>?
-    ) {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
         holder.run {
             gradeItemValue.run {
                 text = grade.entry
@@ -70,9 +67,7 @@ class GradeDetailsItem(
         return result
     }
 
-    class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter),
-        LayoutContainer {
-
+    class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
         override val containerView: View
             get() = contentView
     }

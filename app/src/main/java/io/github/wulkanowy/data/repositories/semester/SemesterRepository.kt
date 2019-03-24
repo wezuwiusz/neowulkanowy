@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.reactivex.Maybe
 import io.reactivex.Single
+import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,10 +26,17 @@ class SemesterRepository @Inject constructor(
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
                     if (it) remote.getSemesters(student) else Single.error(UnknownHostException())
-                }.map { newSemesters ->
-                    local.apply {
-                        saveSemesters(newSemesters)
-                        setCurrentSemester(newSemesters.single { it.isCurrent })
+                }.flatMap { new ->
+                    val currentSemesters = new.filter { it.isCurrent }
+                    if (currentSemesters.size == 1) {
+                        local.getSemesters(student).toSingle(emptyList())
+                            .doOnSuccess { old ->
+                                local.deleteSemesters(old - new)
+                                local.saveSemesters(new - old)
+                            }
+                    } else {
+                        Timber.i("Current semesters list:\n${currentSemesters.joinToString(separator = "\n")}")
+                        throw IllegalArgumentException("Current semester can be only one.")
                     }
                 }.flatMap { local.getSemesters(student).toSingle(emptyList()) })
     }

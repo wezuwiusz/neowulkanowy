@@ -18,8 +18,7 @@ class ExamItem(header: ExamHeader, val exam: Exam) : AbstractSectionableItem<Exa
         return ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder,
-                                position: Int, payloads: MutableList<Any>?) {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
         holder.run {
             examItemSubject.text = exam.subject
             examItemTeacher.text = exam.teacher
@@ -39,12 +38,12 @@ class ExamItem(header: ExamHeader, val exam: Exam) : AbstractSectionableItem<Exa
     }
 
     override fun hashCode(): Int {
-        return exam.hashCode()
+        var result = exam.hashCode()
+        result = 31 * result + exam.id.toInt()
+        return result
     }
 
-    class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter),
-            LayoutContainer {
-
+    class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
         override val containerView: View
             get() = contentView
     }

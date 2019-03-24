@@ -22,7 +22,11 @@ class LuckyNumberPresenter @Inject constructor(
     override fun onAttachView(view: LuckyNumberView) {
         super.onAttachView(view)
         Timber.i("Lucky number view is attached")
-        view.initView()
+        view.run {
+            initView()
+            showContent(false)
+            enableSwipe(false)
+        }
         loadData()
     }
 
@@ -35,12 +39,6 @@ class LuckyNumberPresenter @Inject constructor(
                 .flatMapMaybe { luckyNumberRepository.getLuckyNumber(it, forceRefresh) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
-                .doOnSubscribe {
-                    view?.run {
-                        showContent(false)
-                        enableSwipe(false)
-                    }
-                }
                 .doFinally {
                     view?.run {
                         hideRefresh()

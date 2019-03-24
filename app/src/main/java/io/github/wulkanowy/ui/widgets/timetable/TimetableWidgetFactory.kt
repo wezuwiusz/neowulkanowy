@@ -17,6 +17,7 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.toFormattedString
+import io.reactivex.Single
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
@@ -51,9 +52,13 @@ class TimetableWidgetFactory(
             ?.let { date ->
                 try {
                     lessons = studentRepository.isStudentSaved()
-                        .flatMap { studentRepository.getCurrentStudent() }
-                        .flatMap { semesterRepository.getCurrentSemester(it) }
-                        .flatMap { timetableRepository.getTimetable(it, date, date) }
+                        .flatMap { isSaved ->
+                            if (isSaved) {
+                                studentRepository.getCurrentStudent()
+                                    .flatMap { semesterRepository.getCurrentSemester(it) }
+                                    .flatMap { timetableRepository.getTimetable(it, date, date) }
+                            } else Single.just(emptyList())
+                        }
                         .map { item -> item.sortedBy { it.number } }
                         .subscribeOn(schedulers.backgroundThread)
                         .blockingGet()

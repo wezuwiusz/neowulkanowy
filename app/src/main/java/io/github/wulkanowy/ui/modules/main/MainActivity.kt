@@ -2,7 +2,10 @@ package io.github.wulkanowy.ui.modules.main
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -66,11 +69,6 @@ class MainActivity : BaseActivity(), MainView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.action_menu_main, menu)
         return true
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.onViewChange()
     }
 
     override fun initView() {
@@ -144,7 +142,9 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun notifyMenuViewReselected() {
-        (navController.currentStack?.get(0) as? MainView.MainChildView)?.onFragmentReselected()
+        Handler().postDelayed({
+            (navController.currentStack?.get(0) as? MainView.MainChildView)?.onFragmentReselected()
+        }, 250)
     }
 
     fun showDialogFragment(dialog: DialogFragment) {
@@ -165,7 +165,7 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun openLoginView() {
         startActivity(LoginActivity.getStartIntent(this)
-            .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) })
+            .apply { addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK) })
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

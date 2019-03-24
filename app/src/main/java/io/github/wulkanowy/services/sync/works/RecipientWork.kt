@@ -13,10 +13,10 @@ class RecipientWork @Inject constructor(
 ) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return reportingUnitRepository.getReportingUnits(student)
+        return reportingUnitRepository.getReportingUnits(student, true)
             .flatMapCompletable { units ->
                 Completable.mergeDelayError(units.map {
-                    recipientRepository.getRecipients(student, 2, it).ignoreElement()
+                    recipientRepository.getRecipients(student, 2, it, true).ignoreElement()
                 })
             }
     }

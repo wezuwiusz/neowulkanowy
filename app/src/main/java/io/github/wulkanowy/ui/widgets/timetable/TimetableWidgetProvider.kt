@@ -62,7 +62,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
 
     private fun onUpdate(context: Context, intent: Intent) {
         if (intent.getStringExtra(EXTRA_BUTTON_TYPE) === null) {
-            intent.getIntArrayExtra(EXTRA_APPWIDGET_IDS).forEach { appWidgetId ->
+            intent.getIntArrayExtra(EXTRA_APPWIDGET_IDS)?.forEach { appWidgetId ->
                 updateWidget(context, appWidgetId, now().nextOrSameSchoolDay)
             }
         } else {
@@ -95,7 +95,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
                 .apply { action = createWidgetKey(appWidgetId) })
             setOnClickPendingIntent(R.id.timetableWidgetNext, createNavIntent(context, appWidgetId, appWidgetId, BUTTON_NEXT))
             setOnClickPendingIntent(R.id.timetableWidgetPrev, createNavIntent(context, -appWidgetId, appWidgetId, BUTTON_PREV))
-            createNavIntent(context, Int.MAX_VALUE, appWidgetId, BUTTON_RESET).also {
+            createNavIntent(context, Int.MAX_VALUE - appWidgetId, appWidgetId, BUTTON_RESET).also {
                 setOnClickPendingIntent(R.id.timetableWidgetDate, it)
                 setOnClickPendingIntent(R.id.timetableWidgetDay, it)
             }

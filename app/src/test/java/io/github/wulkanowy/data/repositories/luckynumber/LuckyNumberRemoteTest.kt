@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data.repositories.remote
+package io.github.wulkanowy.data.repositories.luckynumber
 
 import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.entities.Semester

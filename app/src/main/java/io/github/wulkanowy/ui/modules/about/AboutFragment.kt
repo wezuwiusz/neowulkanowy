@@ -43,7 +43,8 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
                 .withAboutSpecial3(getString(R.string.about_feedback))
                 .withFields(R.string::class.java.fields)
                 .withCheckCachedDetection(false)
-                .withExcludedLibraries("fastadapter", "AndroidIconics", "gson", "Jsoup", "Retrofit", "okio", "OkHttp")
+                .withExcludedLibraries("fastadapter", "AndroidIconics", "Jsoup", "Retrofit", "okio",
+                    "OkHttp", "Butterknife", "CircleImageView")
                 .withOnExtraListener { presenter.onExtraSelect(it) })
         }.let {
             fragmentCompat.onCreateView(inflater.context, inflater, container, savedInstanceState, it)
@@ -68,7 +69,7 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
             data = Uri.parse("mailto:")
             putExtra(Intent.EXTRA_EMAIL, Array(1) { "wulkanowyinc@gmail.com" })
             putExtra(Intent.EXTRA_SUBJECT, "Zgłoszenie błędu")
-            putExtra(Intent.EXTRA_TEXT,"Tu umieść treść zgłoszenia\n\n" + "-".repeat(40) + "\n" + """
+            putExtra(Intent.EXTRA_TEXT, "Tu umieść treść zgłoszenia\n\n" + "-".repeat(40) + "\n" + """
                 Build: ${BuildConfig.VERSION_CODE}
                 SDK: ${android.os.Build.VERSION.SDK_INT}
                 Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}

@@ -8,19 +8,21 @@ import eu.davidea.viewholders.FlexibleViewHolder
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_login_student_select.view.*
+import kotlinx.android.synthetic.main.item_login_student_select.*
 
 class LoginStudentSelectItem(val student: Student) : AbstractFlexibleItem<LoginStudentSelectItem.ItemViewHolder>() {
 
     override fun getLayoutRes(): Int = R.layout.item_login_student_select
 
-    override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ItemViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ItemViewHolder {
         return ItemViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ItemViewHolder?,
-                                position: Int, payloads: MutableList<Any>?) {
-        holder?.bind(student)
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ItemViewHolder, position: Int, payloads: MutableList<Any>?) {
+        holder.run {
+            loginItemName.text = student.studentName
+            loginItemSchool.text = student.schoolName
+        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -38,17 +40,8 @@ class LoginStudentSelectItem(val student: Student) : AbstractFlexibleItem<LoginS
         return student.hashCode()
     }
 
-    class ItemViewHolder(view: View?, adapter: FlexibleAdapter<*>?)
-        : FlexibleViewHolder(view, adapter), LayoutContainer {
-
-        override val containerView: View?
+    class ItemViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
+        override val containerView: View
             get() = itemView
-
-        fun bind(item: Student) {
-            itemView.run {
-                loginItemName.text = item.studentName
-                loginItemSchool.text = item.schoolName
-            }
-        }
     }
 }

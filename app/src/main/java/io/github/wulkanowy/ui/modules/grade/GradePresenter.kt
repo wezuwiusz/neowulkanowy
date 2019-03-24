@@ -7,9 +7,7 @@ import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.reactivex.Completable
 import timber.log.Timber
-import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class GradePresenter @Inject constructor(
@@ -30,15 +28,12 @@ class GradePresenter @Inject constructor(
     fun onAttachView(view: GradeView, savedIndex: Int?) {
         super.onAttachView(view)
         Timber.i("Grade view is attached")
-        disposable.add(Completable.timer(150, MILLISECONDS, schedulers.mainThread)
-            .subscribe {
-                selectedIndex = savedIndex ?: 0
-                view.run {
-                    initView()
-                    enableSwipe(false)
-                }
-                loadData()
-            })
+        selectedIndex = savedIndex ?: 0
+        view.run {
+            initView()
+            enableSwipe(false)
+        }
+        loadData()
     }
 
     fun onCreateMenu() {
@@ -82,7 +77,7 @@ class GradePresenter @Inject constructor(
     }
 
     fun onPageSelected(index: Int) {
-        loadChild(index)
+        if (semesters.isNotEmpty()) loadChild(index)
     }
 
     fun onSwipeRefresh() {

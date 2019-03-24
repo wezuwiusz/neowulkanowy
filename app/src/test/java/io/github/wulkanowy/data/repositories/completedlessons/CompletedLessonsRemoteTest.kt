@@ -1,9 +1,8 @@
-package io.github.wulkanowy.data.repositories.remote
+package io.github.wulkanowy.data.repositories.completedlessons
 
 import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.api.timetable.CompletedLesson
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.repositories.completedlessons.CompletedLessonsRemote
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
