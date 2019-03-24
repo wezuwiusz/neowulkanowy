@@ -11,17 +11,14 @@ import javax.inject.Singleton
 class SemesterLocal @Inject constructor(private val semesterDb: SemesterDao) {
 
     fun saveSemesters(semesters: List<Semester>) {
-        return semesterDb.insertAll(semesters)
+        semesterDb.insertAll(semesters)
+    }
+
+    fun deleteSemesters(semesters: List<Semester>) {
+        semesterDb.deleteAll(semesters)
     }
 
     fun getSemesters(student: Student): Maybe<List<Semester>> {
         return semesterDb.loadAll(student.studentId).filter { !it.isEmpty() }
-    }
-
-    fun setCurrentSemester(semester: Semester) {
-        semesterDb.run {
-            resetCurrent(semester.studentId)
-            updateCurrent(semester.semesterId, semester.diaryId)
-        }
     }
 }
