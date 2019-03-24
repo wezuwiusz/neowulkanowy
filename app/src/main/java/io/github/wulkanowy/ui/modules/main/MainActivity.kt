@@ -71,11 +71,6 @@ class MainActivity : BaseActivity(), MainView {
         return true
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.onViewChange()
-    }
-
     override fun initView() {
         mainBottomNav.run {
             addItems(
