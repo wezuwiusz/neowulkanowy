@@ -1,18 +1,6 @@
-Dodaliśmy:
-- szczęśliwy numerek
-- lekcje zrealizowane
-- wysyłanie wiadomości
-- ucznia na tle klasy
-- opcję zmiany kolorów ocen
-
-Zmieniliśmy:
-- wygląd ekranu logowania
-- sposób wyświetlania zastępstw
-- widok zadań domowych na tygodniowy
-
 Naprawiliśmy:
-- automatyczne przełączanie widżetu na nowy dzień
-- wyświetlanie powiadomień o starych ocenach
-- znikające numery sal w planie lekcji
+- problemy ze stabilnością podczas przełączania zakładek
+- nierówność w nawigacji między dniami w planie lekcji i frekwencji
+- zły wygląd odświeżania w szczęśliwym numerku
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.7.0
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.7.2
