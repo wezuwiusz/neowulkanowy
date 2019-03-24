@@ -23,12 +23,12 @@ class AttendanceSummaryItem(
 
     override fun getLayoutRes() = R.layout.item_attendance_summary
 
-    override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ViewHolder {
         return ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?, position: Int, payloads: MutableList<Any>?) {
-        holder?.apply {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
+        holder.apply {
             attendanceSummaryMonth.text = month
             attendanceSummaryPercentage.text = percentage
             attendanceSummaryPresent.text = present
@@ -73,10 +73,8 @@ class AttendanceSummaryItem(
         return result
     }
 
-    class ViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?) : FlexibleViewHolder(view, adapter),
-        LayoutContainer {
-
-        override val containerView: View?
+    class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
+        override val containerView: View
             get() = contentView
     }
 }

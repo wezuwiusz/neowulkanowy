@@ -18,15 +18,12 @@ class GradeSummaryItem(
 
     override fun getLayoutRes() = R.layout.item_grade_summary
 
-    override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ViewHolder {
         return ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(
-        adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?,
-        position: Int, payloads: MutableList<Any>?
-    ) {
-        holder?.run {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
+        holder.run {
             gradeSummaryItemTitle.text = title
             gradeSummaryItemAverage.text = average
             gradeSummaryItemPredicted.text = predictedGrade
@@ -56,10 +53,8 @@ class GradeSummaryItem(
         return result
     }
 
-    class ViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?) : FlexibleViewHolder(view, adapter),
-        LayoutContainer {
-
-        override val containerView: View?
+    class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
+        override val containerView: View
             get() = contentView
     }
 }

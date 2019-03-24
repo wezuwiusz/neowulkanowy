@@ -15,18 +15,17 @@ import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_timetable.*
 
-class TimetableItem(val lesson: Timetable, private val roomText: String)
-    : AbstractFlexibleItem<TimetableItem.ViewHolder>() {
+class TimetableItem(val lesson: Timetable, private val roomText: String) :
+    AbstractFlexibleItem<TimetableItem.ViewHolder>() {
 
-    override fun getLayoutRes(): Int = R.layout.item_timetable
+    override fun getLayoutRes() = R.layout.item_timetable
 
     override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ViewHolder {
         return ViewHolder(view, adapter)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder,
-                                position: Int, payloads: MutableList<Any>?) {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
         holder.apply {
             timetableItemNumber.text = lesson.number.toString()
             timetableItemSubject.text = lesson.subject
@@ -34,8 +33,8 @@ class TimetableItem(val lesson: Timetable, private val roomText: String)
             timetableItemTime.text = "${lesson.start.toFormattedString("HH:mm")} - ${lesson.end.toFormattedString("HH:mm")}"
             timetableItemAlert.visibility = if (lesson.changes || lesson.canceled) VISIBLE else GONE
             timetableItemSubject.paintFlags =
-                    if (lesson.canceled) timetableItemSubject.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    else timetableItemSubject.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                if (lesson.canceled) timetableItemSubject.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                else timetableItemSubject.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
 
@@ -50,12 +49,12 @@ class TimetableItem(val lesson: Timetable, private val roomText: String)
     }
 
     override fun hashCode(): Int {
-        return lesson.hashCode()
+        var result = lesson.hashCode()
+        result = 31 * result + lesson.id.toInt()
+        return result
     }
 
-    class ViewHolder(val view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter),
-            LayoutContainer {
-
+    class ViewHolder(val view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
         override val containerView: View
             get() = contentView
     }

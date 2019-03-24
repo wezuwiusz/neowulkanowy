@@ -14,12 +14,12 @@ class MoreItem(val title: String, private val drawable: Drawable?) : AbstractFle
 
     override fun getLayoutRes() = R.layout.item_more
 
-    override fun createViewHolder(view: View?, adapter: FlexibleAdapter<IFlexible<*>>?): ViewHolder {
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ViewHolder {
         return ViewHolder(view, adapter)
     }
 
-    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>?, holder: ViewHolder?, position: Int, payloads: MutableList<Any>?) {
-        holder?.apply {
+    override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
+        holder.apply {
             moreItemTitle.text = title
             moreItemImage.setImageDrawable(drawable)
         }
@@ -40,9 +40,8 @@ class MoreItem(val title: String, private val drawable: Drawable?) : AbstractFle
         return title.hashCode()
     }
 
-    class ViewHolder(view: View?, adapter: FlexibleAdapter<*>?) : FlexibleViewHolder(view, adapter), LayoutContainer {
-
-        override val containerView: View?
+    class ViewHolder(view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
+        override val containerView: View
             get() = contentView
     }
 }
