@@ -1,6 +1,6 @@
-Naprawiliśmy:
-- problemy ze stabilnością podczas przełączania zakładek
-- nierówność w nawigacji między dniami w planie lekcji i frekwencji
-- zły wygląd odświeżania w szczęśliwym numerku
+Wersja 0.7.3
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.7.2
+Naprawiliśmy:
+- naprawiono problemy ze stabilnością podczas odświeżania danych
+
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.7.3

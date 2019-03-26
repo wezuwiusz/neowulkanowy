@@ -19,7 +19,11 @@ import io.github.wulkanowy.di.DaggerAppComponent
 import io.github.wulkanowy.services.sync.SyncWorkerFactory
 import io.github.wulkanowy.utils.CrashlyticsTree
 import io.github.wulkanowy.utils.DebugLogTree
+import io.reactivex.exceptions.UndeliverableException
+import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
+import java.io.IOException
+import java.lang.Exception
 import javax.inject.Inject
 
 class WulkanowyApp : DaggerApplication() {
@@ -42,6 +46,7 @@ class WulkanowyApp : DaggerApplication() {
         if (DEBUG) enableDebugLog()
         AppCompatDelegate.setDefaultNightMode(prefRepository.currentTheme)
         WorkManager.initialize(this, Configuration.Builder().setWorkerFactory(workerFactory).build())
+        RxJavaPlugins.setErrorHandler(::onError)
     }
 
     private fun enableDebugLog() {
@@ -54,6 +59,12 @@ class WulkanowyApp : DaggerApplication() {
             Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(!BuildConfig.CRASHLYTICS_ENABLED).build()).build()
         ).debuggable(BuildConfig.DEBUG).build())
         Timber.plant(CrashlyticsTree())
+    }
+
+    private fun onError(t: Throwable) {
+        if (t is UndeliverableException && t.cause is IOException || t.cause is InterruptedException) {
+            Timber.e(t.cause, "An undeliverable error occurred")
+        } else throw t
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
