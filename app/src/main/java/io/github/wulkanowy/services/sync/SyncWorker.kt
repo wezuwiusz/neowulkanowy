@@ -19,7 +19,6 @@ import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.works.Work
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Single
 import timber.log.Timber
 import kotlin.random.Random
@@ -42,12 +41,12 @@ class SyncWorker @AssistedInject constructor(
             .flatMapCompletable { student ->
                 semesterRepository.getCurrentSemester(student, true)
                     .flatMapCompletable { semester ->
-                        Completable.mergeDelayError(Flowable.fromIterable(works.map { work ->
+                        Completable.mergeDelayError(works.map { work ->
                             work.create(student, semester)
                                 .doOnSubscribe { Timber.i("${work::class.java.simpleName} is starting") }
                                 .doOnError { Timber.i("${work::class.java.simpleName} result: An exception occurred") }
                                 .doOnComplete { Timber.i("${work::class.java.simpleName} result: Success") }
-                        }), 3)
+                        })
                     }
             }
             .toSingleDefault(Result.success())
