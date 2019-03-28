@@ -25,8 +25,8 @@ interface StudentDao {
     @Query("SELECT * FROM Students")
     fun loadAll(): Maybe<List<Student>>
 
-    @Query("UPDATE Students SET is_current = 1 WHERE student_id = :studentId")
-    fun updateCurrent(studentId: Int)
+    @Query("UPDATE Students SET is_current = 1 WHERE id = :id")
+    fun updateCurrent(id: Long)
 
     @Query("UPDATE Students SET is_current = 0")
     fun resetCurrent()
