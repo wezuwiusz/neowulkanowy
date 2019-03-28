@@ -40,7 +40,7 @@ class SyncManager @Inject constructor(
     fun startSyncWorker(restart: Boolean = false) {
         if (preferencesRepository.isServiceEnabled && !now().isHolidays) {
             workManager.enqueueUniquePeriodicWork(SyncWorker::class.java.simpleName, if (restart) REPLACE else KEEP,
-                PeriodicWorkRequest.Builder(SyncWorker::class.java, preferencesRepository.servicesInterval, MINUTES)
+                PeriodicWorkRequest.Builder(SyncWorker::class.java, preferencesRepository.servicesInterval, MINUTES, 10, MINUTES)
                     .setBackoffCriteria(EXPONENTIAL, 30, MINUTES)
                     .setConstraints(Constraints.Builder()
                         .setRequiredNetworkType(if (preferencesRepository.isServicesOnlyWifi) METERED else UNMETERED)
