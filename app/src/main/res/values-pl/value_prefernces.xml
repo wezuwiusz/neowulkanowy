@@ -22,6 +22,7 @@
         <item>0,25</item>
         <item>0,33</item>
         <item>0,5</item>
+        <item>0,75</item>
     </string-array>
 
     <string-array name="grade_color_scheme_entries">
