@@ -1,6 +1,11 @@
-Wersja 0.7.3
+Wersja 0.7.4
 
 Naprawiliśmy:
-- naprawiono problemy ze stabilnością podczas odświeżania danych
+- problem ze stabilnością na androidach 4 i 5
+- problem z przełączaniem kont, jeśli zalogowany był jednocześnie uczeń i rodzic
+- problem z odświeżaniem danych, jeśli uczeń przeniósł się z klasy do klasy w bieżącym roku szkolnym
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.7.3
+Dodaliśmy:
+- nową opcję zmiany wartości plusa i minusa na 0.75
+
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.7.4

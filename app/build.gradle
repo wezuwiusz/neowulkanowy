@@ -16,8 +16,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 29
-        versionName "0.7.3"
+        versionCode 30
+        versionName "0.7.4"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -86,7 +86,7 @@ play {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation('com.github.wulkanowy:api:f1152ae') { exclude module: "threetenbp" }
+    implementation('io.github.wulkanowy:api:0.7.4') { exclude module: "threetenbp" }
 
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.appcompat:appcompat:1.0.2"
