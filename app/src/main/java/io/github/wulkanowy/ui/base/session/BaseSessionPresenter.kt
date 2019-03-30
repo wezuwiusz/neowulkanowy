@@ -7,6 +7,9 @@ open class BaseSessionPresenter<T : BaseSessionView>(private val errorHandler: S
 
     override fun onAttachView(view: T) {
         super.onAttachView(view)
-        errorHandler.onDecryptionFail = { view.showExpiredDialog() }
+        errorHandler.apply {
+            onDecryptionFail = { view.showExpiredDialog() }
+            onNoCurrentStudent = { view.openLoginView() }
+        }
     }
 }
