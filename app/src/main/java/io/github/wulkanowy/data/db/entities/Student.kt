@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import org.threeten.bp.LocalDateTime
 import java.io.Serializable
 
-@Entity(tableName = "Students", indices = [Index(value = ["email", "symbol", "student_id", "school_id"], unique = true)])
+@Entity(tableName = "Students", indices = [Index(value = ["email", "symbol", "student_id", "school_id", "class_id"], unique = true)])
 data class Student(
 
     val endpoint: String,
@@ -31,6 +31,9 @@ data class Student(
 
     @ColumnInfo(name = "school_name")
     val schoolName: String,
+
+    @ColumnInfo(name = "class_id")
+    val classId: Int,
 
     @ColumnInfo(name = "is_current")
     val isCurrent: Boolean,

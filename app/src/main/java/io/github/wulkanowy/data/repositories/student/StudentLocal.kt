@@ -35,7 +35,7 @@ class StudentLocal @Inject constructor(
         return Completable.fromCallable {
             studentDb.run {
                 resetCurrent()
-                updateCurrent(student.studentId)
+                updateCurrent(student.id)
             }
         }
     }

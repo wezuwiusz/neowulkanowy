@@ -42,6 +42,7 @@ import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.migrations.Migration10
 import io.github.wulkanowy.data.db.migrations.Migration11
+import io.github.wulkanowy.data.db.migrations.Migration12
 import io.github.wulkanowy.data.db.migrations.Migration2
 import io.github.wulkanowy.data.db.migrations.Migration3
 import io.github.wulkanowy.data.db.migrations.Migration4
@@ -74,13 +75,13 @@ import javax.inject.Singleton
         Recipient::class
     ],
     version = AppDatabase.VERSION_SCHEMA,
-    exportSchema = false
+    exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 11
+        const val VERSION_SCHEMA = 12
 
         fun newInstance(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, "wulkanowy_database")
@@ -97,7 +98,8 @@ abstract class AppDatabase : RoomDatabase() {
                     Migration8(),
                     Migration9(),
                     Migration10(),
-                    Migration11()
+                    Migration11(),
+                    Migration12()
                 )
                 .build()
         }

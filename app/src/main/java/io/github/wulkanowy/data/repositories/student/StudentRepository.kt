@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.ApiHelper
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -36,7 +37,7 @@ class StudentRepository @Inject constructor(
 
     fun getCurrentStudent(decryptPass: Boolean = true): Single<Student> {
         return local.getCurrentStudent(decryptPass)
-            .switchIfEmpty(Maybe.error(NoSuchElementException("No current student")))
+            .switchIfEmpty(Maybe.error(NoCurrentStudentException()))
             .toSingle()
     }
 
