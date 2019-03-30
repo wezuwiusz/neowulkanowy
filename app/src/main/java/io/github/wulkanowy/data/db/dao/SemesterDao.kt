@@ -18,6 +18,6 @@ interface SemesterDao {
     @Delete
     fun deleteAll(semester: List<Semester>)
 
-    @Query("SELECT * FROM Semesters WHERE student_id = :studentId")
-    fun loadAll(studentId: Int): Maybe<List<Semester>>
+    @Query("SELECT * FROM Semesters WHERE student_id = :studentId AND class_id = :classId")
+    fun loadAll(studentId: Int, classId: Int): Maybe<List<Semester>>
 }
