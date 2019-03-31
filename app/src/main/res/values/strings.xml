@@ -135,6 +135,10 @@
     <string name="message_date">Date: %s</string>
     <string name="message_reply">Reply</string>
     <string name="message_forward">Forward</string>
+    <string name="message_delete">Delete</string>
+    <string name="message_move_to_bin">Move to trash</string>
+    <string name="message_delete_forever">Delete permanently</string>
+    <string name="message_delete_success">Message deleted successfully</string>
     <string name="message_subject">Subject</string>
     <string name="message_content">Content</string>
     <string name="message_send_successful">Message sent successfully</string>

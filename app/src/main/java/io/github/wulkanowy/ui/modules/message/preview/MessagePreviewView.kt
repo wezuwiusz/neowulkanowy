@@ -7,6 +7,8 @@ interface MessagePreviewView : BaseSessionView {
 
     val noSubjectString: String
 
+    val deleteMessageSuccessString: String
+
     fun setSubject(subject: String)
 
     fun setRecipient(recipient: String)
@@ -19,11 +21,21 @@ interface MessagePreviewView : BaseSessionView {
 
     fun showProgress(show: Boolean)
 
+    fun showContent(show: Boolean)
+
     fun showOptions(show: Boolean)
+
+    fun setDeletedOptionsLabels()
+
+    fun setNotDeletedOptionsLabels()
 
     fun showMessageError()
 
     fun openMessageReply(message: Message?)
 
     fun openMessageForward(message: Message?)
+
+    fun popView()
+
+    fun notifyParentMessageDeleted(message: Message)
 }

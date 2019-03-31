@@ -17,13 +17,12 @@ import io.github.wulkanowy.ui.base.session.BaseSessionFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.MessageItem
-import io.github.wulkanowy.ui.modules.message.MessageView
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_message_tab.*
 import javax.inject.Inject
 
-class MessageTabFragment : BaseSessionFragment(), MessageTabView, MessageView.MessageChildView {
+class MessageTabFragment : BaseSessionFragment(), MessageTabView {
 
     @Inject
     lateinit var presenter: MessageTabPresenter
@@ -115,8 +114,12 @@ class MessageTabFragment : BaseSessionFragment(), MessageTabView, MessageView.Me
         (parentFragment as? MessageFragment)?.onChildFragmentLoaded()
     }
 
-    override fun onParentLoadData(forceRefresh: Boolean) {
+    fun onParentLoadData(forceRefresh: Boolean) {
         presenter.onParentViewLoadData(forceRefresh)
+    }
+
+    fun onParentDeleteMessage() {
+        presenter.onDeleteMessage()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

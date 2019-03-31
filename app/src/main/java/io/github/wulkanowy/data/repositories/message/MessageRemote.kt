@@ -58,4 +58,8 @@ class MessageRemote @Inject constructor(private val api: Api) {
             }
         )
     }
+
+    fun deleteMessage(message: Message): Single<Boolean> {
+        return api.deleteMessages(listOf(Pair(message.realId, message.folderId)))
+    }
 }

@@ -47,7 +47,7 @@ class MessagePreviewPresenter @Inject constructor(
                             setSubject(if (it.subject.isNotBlank()) it.subject else noSubjectString)
                             setDate(it.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
                             setContent(it.content.orEmpty())
-                            showOptions(true)
+                            initOptions()
 
                             if (it.recipient.isNotBlank()) setRecipient(it.recipient)
                             else setSender(it.sender)
@@ -76,7 +76,56 @@ class MessagePreviewPresenter @Inject constructor(
         } else false
     }
 
+    private fun deleteMessage() {
+        message?.let { message ->
+            disposable.add(messageRepository.deleteMessage(message)
+                .subscribeOn(schedulers.backgroundThread)
+                .observeOn(schedulers.mainThread)
+                .doOnSubscribe {
+                    view?.run {
+                        showContent(false)
+                        showProgress(true)
+                        showOptions(false)
+                    }
+                }
+                .doFinally {
+                    view?.showProgress(false)
+                }
+                .subscribe({
+                    view?.run {
+                        notifyParentMessageDeleted(message)
+                        showMessage(deleteMessageSuccessString)
+                        popView()
+                    }
+                }, { error ->
+                    view?.showMessageError()
+                    errorHandler.dispatch(error)
+                }, {
+                    view?.showMessageError()
+                })
+            )
+        }
+    }
+
+    fun onMessageDelete(): Boolean {
+        deleteMessage()
+        return true
+    }
+
+    private fun initOptions() {
+        view?.apply {
+            showOptions(message != null)
+            message?.let {
+                when (it.removed) {
+                    true -> setDeletedOptionsLabels()
+                    false -> setNotDeletedOptionsLabels()
+                }
+            }
+
+        }
+    }
+
     fun onCreateOptionsMenu() {
-        view?.showOptions(message != null)
+        initOptions()
     }
 }

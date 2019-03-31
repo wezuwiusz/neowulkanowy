@@ -34,7 +34,29 @@ class MessageTabPresenter @Inject constructor(
         onParentViewLoadData(true)
     }
 
+    fun onDeleteMessage() {
+        loadData(false)
+    }
+
     fun onParentViewLoadData(forceRefresh: Boolean) {
+        loadData(forceRefresh)
+    }
+
+    fun onMessageItemSelected(item: AbstractFlexibleItem<*>) {
+        if (item is MessageItem) {
+            Timber.i("Select message ${item.message.realId} item")
+            view?.run {
+                openMessage(item.message.realId)
+                if (item.message.unread) {
+                    item.message.unread = false
+                    updateItem(item)
+                    updateMessage(item.message)
+                }
+            }
+        }
+    }
+
+    private fun loadData(forceRefresh: Boolean) {
         Timber.i("Loading $folder message data started")
         disposable.apply {
             clear()
@@ -64,20 +86,6 @@ class MessageTabPresenter @Inject constructor(
                     view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 })
-        }
-    }
-
-    fun onMessageItemSelected(item: AbstractFlexibleItem<*>) {
-        if (item is MessageItem) {
-            Timber.i("Select message ${item.message.realId} item")
-            view?.run {
-                openMessage(item.message.realId)
-                if (item.message.unread) {
-                    item.message.unread = false
-                    updateItem(item)
-                    updateMessage(item.message)
-                }
-            }
         }
     }
 

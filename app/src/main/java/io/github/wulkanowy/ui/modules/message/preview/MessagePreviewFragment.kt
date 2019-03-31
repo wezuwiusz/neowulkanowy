@@ -13,7 +13,9 @@ import android.view.ViewGroup
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
 import kotlinx.android.synthetic.main.fragment_message_preview.*
 import javax.inject.Inject
@@ -26,12 +28,16 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
 
     private var menuReplyButton: MenuItem? = null
     private var menuForwardButton: MenuItem? = null
+    private var menuDeleteButton: MenuItem? = null
 
     override val titleStringId: Int
         get() = R.string.message_title
 
     override val noSubjectString: String
         get() = getString(R.string.message_no_subject)
+
+    override val deleteMessageSuccessString: String
+        get() = getString(R.string.message_delete_success)
 
     companion object {
         const val MESSAGE_ID_KEY = "message_id"
@@ -62,6 +68,7 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
         inflater?.inflate(R.menu.action_menu_message_preview, menu)
         menuReplyButton = menu?.findItem(R.id.messagePreviewMenuReply)
         menuForwardButton = menu?.findItem(R.id.messagePreviewMenuForward)
+        menuDeleteButton = menu?.findItem(R.id.messagePreviewMenuDelete)
         presenter.onCreateOptionsMenu()
     }
 
@@ -69,6 +76,7 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
         return when (item?.itemId) {
             R.id.messagePreviewMenuReply -> presenter.onReply()
             R.id.messagePreviewMenuForward -> presenter.onForward()
+            R.id.messagePreviewMenuDelete -> presenter.onMessageDelete()
             else -> false
         }
     }
@@ -97,9 +105,22 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
         messagePreviewProgress.visibility = if (show) VISIBLE else GONE
     }
 
+    override fun showContent(show: Boolean) {
+        messagePreviewContentContainer.visibility = if (show) VISIBLE else GONE
+    }
+
     override fun showOptions(show: Boolean) {
         menuReplyButton?.isVisible = show
         menuForwardButton?.isVisible = show
+        menuDeleteButton?.isVisible = show
+    }
+
+    override fun setDeletedOptionsLabels() {
+        menuDeleteButton?.setTitle(R.string.message_delete_forever)
+    }
+
+    override fun setNotDeletedOptionsLabels() {
+        menuDeleteButton?.setTitle(R.string.message_move_to_bin)
     }
 
     override fun showMessageError() {
@@ -112,6 +133,14 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
 
     override fun openMessageForward(message: Message?) {
         context?.let { it.startActivity(SendMessageActivity.getStartIntent(it, message)) }
+    }
+
+    override fun popView() {
+        (activity as MainActivity).popView()
+    }
+
+    override fun notifyParentMessageDeleted(message: Message) {
+        fragmentManager?.fragments?.forEach { if (it is MessageFragment) it.onDeleteMessage(message) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

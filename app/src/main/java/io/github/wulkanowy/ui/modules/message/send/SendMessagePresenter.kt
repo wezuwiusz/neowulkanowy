@@ -30,7 +30,7 @@ class SendMessagePresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<SendMessageView>(errorHandler) {
 
-    fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean) {
+    fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean?) {
         super.onAttachView(view)
         Timber.i("Send message view is attached")
         loadData(message, reply)
@@ -38,13 +38,13 @@ class SendMessagePresenter @Inject constructor(
             message?.let {
                 setSubject(when (reply) {
                     true -> "RE: "
-                    false -> "FE: "
+                    else -> "FW: "
                 } + message.subject)
-                if (preferencesRepository.fillMessageContent || !reply) {
+                if (preferencesRepository.fillMessageContent || reply != true) {
                     setContent(
                         when (reply) {
                             true -> "\n\n"
-                            false -> ""
+                            else -> ""
                         } + when (message.sender.isNotEmpty()) {
                             true -> "Od: ${message.sender}\n"
                             false -> "Do: ${message.recipient}\n"
@@ -59,7 +59,7 @@ class SendMessagePresenter @Inject constructor(
         return true
     }
 
-    private fun loadData(message: Message?, reply: Boolean) {
+    private fun loadData(message: Message?, reply: Boolean?) {
         var reportingUnit: ReportingUnit? = null
         var recipients: List<Recipient> = emptyList()
         var selectedRecipient: List<Recipient> = emptyList()
@@ -76,7 +76,7 @@ class SendMessagePresenter @Inject constructor(
                         recipients = it
                     }
                     .flatMapCompletable {
-                        if (message == null || !reply) Completable.complete()
+                        if (message == null || reply != true) Completable.complete()
                         else recipientRepository.getMessageRecipients(student, message)
                             .doOnSuccess {
                                 Timber.i("Loaded message recipients to reply result: Success, fetched %d recipients", it.size)

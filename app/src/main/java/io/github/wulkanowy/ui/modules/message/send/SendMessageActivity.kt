@@ -62,7 +62,7 @@ class SendMessageActivity : BaseActivity(), SendMessageView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         messageContainer = sendMessageContainer
 
-        presenter.onAttachView(this, intent.getSerializableExtra(EXTRA_MESSAGE) as? Message, intent.getSerializableExtra(EXTRA_REPLY) as Boolean)
+        presenter.onAttachView(this, intent.getSerializableExtra(EXTRA_MESSAGE) as? Message, intent.getSerializableExtra(EXTRA_REPLY) as? Boolean)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -13,4 +13,10 @@
         android:orderInCategory="1"
         android:title="@string/message_forward"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/messagePreviewMenuDelete"
+        android:icon="@drawable/ic_message_delete_24dp"
+        android:orderInCategory="1"
+        android:title="@string/message_delete"
+        app:showAsAction="ifRoom" />
 </menu>
