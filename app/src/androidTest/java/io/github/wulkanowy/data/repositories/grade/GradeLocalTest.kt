@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDate.now
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -39,8 +40,10 @@ class GradeLocalTest {
             createGradeLocal(3, 5.0, LocalDate.of(2019, 2, 28), "", 2)
         ))
 
+        val semester = Semester(1, 2, "", 2019, 2, 1, true, now(), now(), 1, 1)
+
         val grades = gradeLocal
-            .getGrades(Semester(1, 2, "", 2, 3, true, 1, 1))
+            .getGrades(semester)
             .blockingGet()
 
         assertEquals(2, grades.size)

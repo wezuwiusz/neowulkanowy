@@ -17,9 +17,12 @@ class SemesterRemote @Inject constructor(private val api: Api) {
                     studentId = student.studentId,
                     diaryId = semester.diaryId,
                     diaryName = semester.diaryName,
+                    schoolYear = semester.schoolYear,
                     semesterId = semester.semesterId,
                     semesterName = semester.semesterNumber,
                     isCurrent = semester.current,
+                    start = semester.start,
+                    end = semester.end,
                     classId = semester.classId,
                     unitId = semester.unitId
                 )

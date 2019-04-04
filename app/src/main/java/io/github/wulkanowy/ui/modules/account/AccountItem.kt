@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.account
 
+import android.annotation.SuppressLint
 import android.view.View
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
@@ -18,9 +19,10 @@ class AccountItem(val student: Student) : AbstractFlexibleItem<AccountItem.ViewH
         return ViewHolder(view, adapter)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder, position: Int, payloads: MutableList<Any>?) {
         holder.apply {
-            accountItemName.text = student.studentName
+            accountItemName.text = "${student.studentName} ${student.className}"
             accountItemSchool.text = student.schoolName
             accountItemImage.setBackgroundResource(if (student.isCurrent) R.drawable.ic_account_circular_border else 0)
         }
