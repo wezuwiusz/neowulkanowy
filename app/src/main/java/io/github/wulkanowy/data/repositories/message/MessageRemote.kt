@@ -5,6 +5,7 @@ import io.github.wulkanowy.api.messages.Folder
 import io.github.wulkanowy.api.messages.SentMessage
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.toLocalDateTime
 import io.reactivex.Single
 import org.threeten.bp.LocalDateTime.now
@@ -16,11 +17,11 @@ import io.github.wulkanowy.api.messages.Recipient as ApiRecipient
 @Singleton
 class MessageRemote @Inject constructor(private val api: Api) {
 
-    fun getMessages(studentId: Int, folder: MessageFolder): Single<List<Message>> {
+    fun getMessages(student: Student, folder: MessageFolder): Single<List<Message>> {
         return api.getMessages(Folder.valueOf(folder.name)).map { messages ->
             messages.map {
                 Message(
-                    studentId = studentId,
+                    studentId = student.id.toInt(),
                     realId = it.id ?: 0,
                     messageId = it.messageId ?: 0,
                     sender = it.sender.orEmpty(),

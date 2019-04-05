@@ -9,6 +9,7 @@ class Migration13 : Migration(12, 13) {
         addClassNameToStudents(database, getStudentsIds(database))
         updateSemestersTable(database)
         markAtLeastAndOnlyOneSemesterAtCurrent(database, getStudentsAndClassIds(database))
+        clearMessagesTable(database)
     }
 
     private fun addClassNameToStudents(database: SupportSQLiteDatabase, students: List<Pair<Int, String>>) {
@@ -55,5 +56,9 @@ class Migration13 : Migration(12, 13) {
             database.execSQL("UPDATE Semesters SET is_current = 0 WHERE student_id = '$studentId' AND class_id = '$classId'")
             database.execSQL("UPDATE Semesters SET is_current = 1 WHERE id = (SELECT id FROM Semesters WHERE student_id = '$studentId' AND class_id = '$classId' ORDER BY semester_id DESC)")
         }
+    }
+
+    private fun clearMessagesTable(database: SupportSQLiteDatabase) {
+        database.execSQL("DELETE FROM Messages")
     }
 }
