@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import org.threeten.bp.LocalDate
 
 @Entity(tableName = "Semesters", indices = [Index(value = ["student_id", "diary_id", "semester_id"], unique = true)])
 data class Semester(
@@ -17,6 +18,9 @@ data class Semester(
     @ColumnInfo(name = "diary_name")
     val diaryName: String,
 
+    @ColumnInfo(name = "school_year")
+    val schoolYear: Int,
+
     @ColumnInfo(name = "semester_id")
     val semesterId: Int,
 
@@ -25,6 +29,10 @@ data class Semester(
 
     @ColumnInfo(name = "is_current")
     val isCurrent: Boolean,
+
+    val start: LocalDate,
+
+    val end: LocalDate,
 
     @ColumnInfo(name = "class_id")
     val classId: Int,

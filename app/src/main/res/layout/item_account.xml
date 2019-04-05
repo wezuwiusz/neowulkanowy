@@ -30,8 +30,10 @@
         android:layout_marginLeft="20dp"
         android:layout_toEndOf="@id/accountItemImage"
         android:layout_toRightOf="@id/accountItemImage"
-        android:text="@string/app_name"
-        android:textSize="16sp" />
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="16sp"
+        tools:text="@tools:sample/lorem/random" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/accountItemSchool"
@@ -45,6 +47,6 @@
         android:layout_toRightOf="@id/accountItemImage"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/app_name"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="@tools:sample/lorem/random" />
 </RelativeLayout>

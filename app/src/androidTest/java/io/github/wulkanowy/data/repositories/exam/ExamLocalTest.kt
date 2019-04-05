@@ -40,7 +40,7 @@ class ExamLocalTest {
         ))
 
         val exams = examLocal
-            .getExams(Semester(1, 2, "", 1, 3, true, 1, 1),
+            .getExams(Semester(1, 2, "", 1, 3, 2019, true, LocalDate.now(), LocalDate.now(), 1, 1),
                         LocalDate.of(2018, 9, 10),
                         LocalDate.of(2018, 9, 14)
                 )

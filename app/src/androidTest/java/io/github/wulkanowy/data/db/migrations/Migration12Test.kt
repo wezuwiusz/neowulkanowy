@@ -2,33 +2,17 @@ package io.github.wulkanowy.data.db.migrations
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase.CONFLICT_FAIL
-import androidx.room.Room
-import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import io.github.wulkanowy.data.db.AppDatabase
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
-class Migration12Test {
-
-    private val dbName = "migration-test"
-
-    @get:Rule
-    val helper: MigrationTestHelper = MigrationTestHelper(
-        InstrumentationRegistry.getInstrumentation(),
-        AppDatabase::class.java.canonicalName,
-        FrameworkSQLiteOpenHelperFactory()
-    )
+class Migration12Test : AbstractMigrationTest() {
 
     @Test
-    fun migrate11To12_twoNotRelatedStudents() {
+    fun twoNotRelatedStudents() {
         helper.createDatabase(dbName, 11).apply {
             // user 1
             createStudent(this, 1, true)
@@ -61,7 +45,7 @@ class Migration12Test {
     }
 
     @Test
-    fun migrate11To12_removeStudentsWithoutClassId() {
+    fun removeStudentsWithoutClassId() {
         helper.createDatabase(dbName, 11).apply {
             // user 1
             createStudent(this, 1, true)
@@ -85,7 +69,7 @@ class Migration12Test {
     }
 
     @Test
-    fun migrate11To12_ensureThereIsOnlyOneCurrentStudent() {
+    fun ensureThereIsOnlyOneCurrentStudent() {
         helper.createDatabase(dbName, 11).apply {
             // user 1
             createStudent(this, 1, true)
@@ -145,15 +129,5 @@ class Migration12Test {
             put("class_id", classId)
             put("unit_id", "99")
         })
-    }
-
-    private fun getMigratedRoomDatabase(): AppDatabase {
-        val database = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
-            AppDatabase::class.java, dbName)
-            .addMigrations(Migration12())
-            .build()
-        // close the database and release any stream resources when the test finishes
-        helper.closeWhenFinished(database)
-        return database
     }
 }

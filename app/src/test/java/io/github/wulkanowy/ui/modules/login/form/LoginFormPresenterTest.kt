@@ -86,7 +86,7 @@ class LoginFormPresenterTest {
 
     @Test
     fun loginTest() {
-        val studentTest = Student(email = "test@", password = "123", endpoint = "https://fakelog.cf", loginType = "AUTO", studentName = "", schoolSymbol = "", schoolName = "", studentId = 0, classId = 1, isCurrent = false, symbol = "", registrationDate = now())
+        val studentTest = Student(email = "test@", password = "123", endpoint = "https://fakelog.cf", loginType = "AUTO", studentName = "", schoolSymbol = "", schoolName = "", studentId = 0, classId = 1, isCurrent = false, symbol = "", registrationDate = now(), className = "")
         doReturn(Single.just(listOf(studentTest)))
             .`when`(repository).getStudents(anyString(), anyString(), anyString(), anyString())
 

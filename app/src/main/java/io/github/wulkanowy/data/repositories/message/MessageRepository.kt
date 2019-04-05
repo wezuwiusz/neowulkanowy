@@ -29,7 +29,7 @@ class MessageRepository @Inject constructor(
                 local.getMessages(student, folder).filter { !forceRefresh }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
-                            if (it) remote.getMessages(student.studentId, folder)
+                            if (it) remote.getMessages(student, folder)
                             else Single.error(UnknownHostException())
                         }.flatMap { new ->
                             local.getMessages(student, folder).toSingle(emptyList())

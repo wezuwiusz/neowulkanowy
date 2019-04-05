@@ -41,7 +41,7 @@ class TimetableLocalTest {
         ))
 
         val exams = timetableDb.getTimetable(
-            Semester(1, 2, "", 1, 1, true, 1, 1),
+            Semester(1, 2, "", 1, 1, 2019, true, LocalDate.now(), LocalDate.now(), 1, 1),
             LocalDate.of(2018, 9, 10),
             LocalDate.of(2018, 9, 14)
         ).blockingGet()
