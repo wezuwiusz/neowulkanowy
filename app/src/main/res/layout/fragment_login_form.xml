@@ -124,7 +124,8 @@
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/loginFormHost"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp" />
+                    android:layout_height="56dp"
+                    android:entries="@array/endpoints_keys" />
             </LinearLayout>
 
             <TextView
@@ -143,6 +144,15 @@
                 app:layout_constraintEnd_toEndOf="@+id/loginFormHostLayout"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/loginFormHostLayout" />
+
+            <TextView
+                android:id="@+id/loginFormPrivacyPolicyLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/login_privacy_policy"
+                app:layout_constraintStart_toStartOf="@+id/loginFormHostLayout"
+                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginFormSignIn"
