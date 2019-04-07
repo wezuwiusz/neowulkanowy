@@ -1,5 +1,6 @@
-package io.github.wulkanowy.ui.widgets.timetable
+package io.github.wulkanowy.ui.modules.timetablewidget
 
+import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint.ANTI_ALIAS_FLAG
@@ -15,9 +16,11 @@ import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getDateWidgetKey
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.toFormattedString
-import io.reactivex.Single
+import io.reactivex.Maybe
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
@@ -48,28 +51,37 @@ class TimetableWidgetFactory(
     override fun onDestroy() {}
 
     override fun onDataSetChanged() {
-        intent?.action?.let { LocalDate.ofEpochDay(sharedPref.getLong(it, 0)) }
-            ?.let { date ->
-                try {
-                    lessons = studentRepository.isStudentSaved()
-                        .flatMap { isSaved ->
-                            if (isSaved) {
-                                studentRepository.getCurrentStudent()
-                                    .flatMap { semesterRepository.getCurrentSemester(it) }
-                                    .flatMap { timetableRepository.getTimetable(it, date, date) }
-                            } else Single.just(emptyList())
-                        }
-                        .map { item -> item.sortedBy { it.number } }
-                        .subscribeOn(schedulers.backgroundThread)
-                        .blockingGet()
-                } catch (e: Exception) {
-                    Timber.e(e, "An error has occurred while downloading data for the widget")
-                }
+        intent?.extras?.getInt(EXTRA_APPWIDGET_ID)?.let { appWidgetId ->
+            val date = LocalDate.ofEpochDay(sharedPref.getLong(getDateWidgetKey(appWidgetId), 0))
+            val studentId = sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0)
+
+            lessons = try {
+                studentRepository.isStudentSaved()
+                    .filter { true }
+                    .flatMap { studentRepository.getSavedStudents().toMaybe() }
+                    .flatMap {
+                        if (studentId == 0L) throw IllegalArgumentException("Student id is 0")
+
+                        it.singleOrNull { student -> student.id == studentId }
+                            .let { student ->
+                                if (student != null) Maybe.just(student)
+                                else Maybe.empty()
+                            }
+                    }
+                    .flatMap { semesterRepository.getCurrentSemester(it).toMaybe() }
+                    .flatMap { timetableRepository.getTimetable(it, date, date).toMaybe() }
+                    .map { item -> item.sortedBy { it.number } }
+                    .subscribeOn(schedulers.backgroundThread)
+                    .blockingGet(emptyList())
+            } catch (e: Exception) {
+                Timber.e(e, "An error has occurred in timetable widget factory")
+                emptyList()
             }
+        }
     }
 
     override fun getViewAt(position: Int): RemoteViews? {
-        if (position == INVALID_POSITION || lessons.getOrNull(position) === null) return null
+        if (position == INVALID_POSITION || lessons.getOrNull(position) == null) return null
 
         return RemoteViews(context.packageName, R.layout.item_widget_timetable).apply {
             lessons[position].let {

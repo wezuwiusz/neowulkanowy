@@ -7,7 +7,7 @@ import io.github.wulkanowy.data.db.SharedPrefHelper
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
-import io.github.wulkanowy.ui.widgets.timetable.TimetableWidgetFactory
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetFactory
 import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Inject
 

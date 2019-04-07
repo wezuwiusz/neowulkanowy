@@ -99,6 +99,9 @@ inline val LocalDate.previousOrSameSchoolDay: LocalDate
 inline val LocalDate.weekDayName: String
     get() = this.format(ofPattern("EEEE", Locale.getDefault()))
 
+inline val LocalDate.shortcutWeekDayName: String
+    get() = this.format(ofPattern("EEE", Locale.getDefault()))
+
 inline val LocalDate.monday: LocalDate
     get() = this.with(MONDAY)
 

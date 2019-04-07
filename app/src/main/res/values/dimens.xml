@@ -2,7 +2,4 @@
     <!--BottomNav-->
     <dimen name="bottom_navigation_margin_top_active" tools:override="true">8dp</dimen>
     <dimen name="bottom_navigation_margin_top_inactive" tools:override="true">8dp</dimen>
-
-    <!--Timetable Widget-->
-    <dimen name="timetable_widget_bar_height">60dp</dimen>
 </resources>

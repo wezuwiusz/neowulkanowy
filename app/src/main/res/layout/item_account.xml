@@ -33,7 +33,8 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="16sp"
-        tools:text="@tools:sample/lorem/random" />
+        tools:text="@tools:sample/lorem/random"
+        android:textColor="?android:textColorSecondary"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/accountItemSchool"
@@ -47,6 +48,7 @@
         android:layout_toRightOf="@id/accountItemImage"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
         tools:text="@tools:sample/lorem/random" />
 </RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/timetableWidgetConfigureTitle"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:paddingStart="24dp"
+        android:paddingLeft="24dp"
+        android:paddingEnd="24dp"
+        android:paddingRight="24dp"
+        android:text="@string/account_title"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:firstBaselineToTopHeight="40dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/timetableWidgetConfigureRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timetableWidgetConfigureTitle"
+        android:layout_marginBottom="16dp"
+        android:overScrollMode="never"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_account" />
+</RelativeLayout>

@@ -218,8 +218,6 @@
 
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">No lessons</string>
-    <string name="widget_timetable_today">Today</string>
-    <string name="widget_timetable_tomorrow">Tomorrow</string>
 
 
     <!--Preferences-->

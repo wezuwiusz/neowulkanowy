@@ -7,7 +7,7 @@
     android:background="@drawable/ic_all_divider"
     android:minHeight="45dp"
     android:orientation="horizontal"
-    tools:context=".ui.widgets.timetable.TimetableWidgetFactory">
+    tools:context=".ui.modules.timetablewidget.TimetableWidgetFactory">
 
     <TextView
         android:id="@+id/timetableWidgetItemNumber"
