@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.login.form
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -53,6 +54,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormName.setOnTextChangedListener { presenter.onNameTextChanged() }
         loginFormPass.setOnTextChangedListener { presenter.onPassTextChanged() }
         loginFormHost.setOnItemSelectedListener { presenter.onHostSelected() }
+        loginFormPrivacyPolicyLink.movementMethod = LinkMovementMethod.getInstance()
         loginFormSignIn.setOnClickListener { presenter.attemptLogin() }
 
         loginFormPass.setOnEditorActionListener { _, id, _ ->

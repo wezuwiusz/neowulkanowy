@@ -26,6 +26,7 @@
     <string name="login_password_hint">Hasło</string>
     <string name="login_host_hint">Dziennik</string>
     <string name="login_symbol_hint">Symbol</string>
+    <string name="login_privacy_policy"><a href="https://wulkanowy.github.io/polityka-prywatnosci.html">Polityka prywatności</a></string>
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
     <string name="login_incorrect_password">Dane logowania są niepoprawne</string>

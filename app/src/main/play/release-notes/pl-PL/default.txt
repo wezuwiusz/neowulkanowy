@@ -1,7 +1,9 @@
 Wersja 0.7.5
 
+Uwaga! Jeżeli w aplikacji przestały wyświetlać się oceny, prosimy o wylogowanie i zalogowanie się ponownie!
+
 Naprawiliśmy:
-- problem z brakiem aktywnego semestru (jeśli doświadczysz jakichś problemów - wyloguj i zaloguj się ponownie)
+- problem z brakiem aktywnego semestru
 - logowanie w niestandardowych dziennikach na vulcan.net.pl
 - oznaczanie lekcji w planie jako odwołanej, jeśli brak opisu tej zmiany
 - ładowanie wiadomości, jeśli byli zalogowani jednocześnie uczeń i rodzic
