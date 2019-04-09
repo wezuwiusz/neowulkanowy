@@ -22,13 +22,18 @@ class LoginFormPresenter @Inject constructor(
         super.onAttachView(view)
         view.run {
             initView()
-            if (isDebug) showVersion()
+            if (isDebug) showVersion() else showPrivacyPolicy()
+
             errorHandler.onBadCredentials = {
                 setErrorPassIncorrect()
                 showSoftKeyboard()
                 Timber.i("Entered wrong username or password")
             }
         }
+    }
+
+    fun onPrivacyLinkClick() {
+        view?.openPrivacyPolicyPage()
     }
 
     fun onHostSelected() {
@@ -47,7 +52,7 @@ class LoginFormPresenter @Inject constructor(
         view?.clearNameError()
     }
 
-    fun attemptLogin() {
+    fun onSignInClick() {
         val email = view?.formNameValue.orEmpty()
         val password = view?.formPassValue.orEmpty()
         val endpoint = view?.formHostValue.orEmpty()

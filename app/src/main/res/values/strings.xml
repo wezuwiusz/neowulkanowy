@@ -26,7 +26,6 @@
     <string name="login_password_hint">Password</string>
     <string name="login_host_hint">Register</string>
     <string name="login_symbol_hint">Symbol</string>
-    <string name="login_privacy_policy"><a href="https://wulkanowy.github.io/polityka-prywatnosci.html">Privacy policy</a></string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_invalid_password">This password is too short</string>
     <string name="login_incorrect_password">Login details are incorrect</string>
@@ -34,6 +33,7 @@
     <string name="login_field_required">This field is required</string>
     <string name="login_duplicate_student">This student has already been logged in</string>
     <string name="login_symbol_helper">The symbol is located on the register page in the Mobile Access tab</string>
+    <string name="login_privacy_policy">Privacy policy</string>
 
 
     <!--Main-->

@@ -37,5 +37,9 @@ interface LoginFormView : BaseView {
 
     fun showVersion()
 
+    fun showPrivacyPolicy()
+
     fun notifyParentAccountLogged(students: List<Student>)
+
+    fun openPrivacyPolicyPage()
 }

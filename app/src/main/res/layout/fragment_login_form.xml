@@ -39,7 +39,6 @@
                 app:fontFamily="sans-serif-light"
                 app:layout_constraintBottom_toTopOf="@+id/loginFormNameLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
@@ -59,7 +58,6 @@
                 app:errorEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/loginFormPassLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormHeader">
 
@@ -87,7 +85,6 @@
                 app:errorEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/loginFormHostLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormNameLayout"
                 app:passwordToggleEnabled="true">
@@ -117,7 +114,6 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/loginFormSignIn"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormPassLayout">
 
@@ -145,15 +141,6 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/loginFormHostLayout" />
 
-            <TextView
-                android:id="@+id/loginFormPrivacyPolicyLink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/login_privacy_policy"
-                app:layout_constraintStart_toStartOf="@+id/loginFormHostLayout"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginFormSignIn"
                 style="@style/Widget.MaterialComponents.Button"
@@ -171,14 +158,12 @@
                 app:backgroundTint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout" />
 
             <TextView
                 android:id="@+id/loginFormVersion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginEnd="16dp"
@@ -186,11 +171,31 @@
                 android:maxLines="2"
                 android:textColor="?android:textColorSecondary"
                 android:textSize="12sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/loginFormSignIn"
                 app:layout_constraintEnd_toStartOf="@+id/loginFormSignIn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/loginFormSignIn"
                 tools:text="Version 1.0.0" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginFormPrivacyLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/login_privacy_policy"
+                android:textAppearance="?android:textAppearance"
+                android:textColor="@color/colorPrimary"
+                android:visibility="invisible"
+                app:backgroundTint="?android:windowBackground"
+                app:fontFamily="sans-serif-medium"
+                app:layout_constraintBottom_toBottomOf="@id/loginFormSignIn"
+                app:layout_constraintEnd_toStartOf="@+id/loginFormSignIn"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/loginFormHostLayout"
+                app:layout_constraintTop_toTopOf="@+id/loginFormSignIn"
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>
