@@ -239,11 +239,11 @@
     <!--Preferences-->
     <string name="pref_view_header">Wygląd</string>
     <string name="pref_view_list">Domyślny widok</string>
-    <string name="pref_view_summary">Pokazuj podsumowanie w ocenach</string>
+    <string name="pref_view_grade_average_mode">Obliczanie średniej końcoworocznej</string>
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_theme_dark">Ciemny motyw (Beta)</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
-    <string name="pref_grade_color_scheme">Schemat kolorów ocen</string>
+    <string name="pref_view_grade_color_scheme">Schemat kolorów ocen</string>
 
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>

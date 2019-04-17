@@ -36,7 +36,7 @@
             android:entryValues="@array/grade_color_scheme_values"
             android:key="@string/pref_key_grade_color_scheme"
             android:summary="%s"
-            android:title="@string/pref_grade_color_scheme"
+            android:title="@string/pref_view_grade_color_scheme"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
     <PreferenceCategory
@@ -96,6 +96,14 @@
             android:key="@string/pref_key_grade_modifier_minus"
             android:summary="%s"
             android:title="@string/pref_other_grade_modifier_minus"
+            app:iconSpaceReserved="false" />
+        <ListPreference
+            android:defaultValue="only_one_semester"
+            android:entries="@array/grade_average_mode_entries"
+            android:entryValues="@array/grade_average_mode_values"
+            android:key="@string/pref_key_grade_average_mode"
+            android:summary="%s"
+            android:title="@string/pref_view_grade_average_mode"
             app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="true"

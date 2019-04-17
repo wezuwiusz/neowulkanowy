@@ -1,17 +1,15 @@
 package io.github.wulkanowy.ui.modules.grade.summary
 
 import io.github.wulkanowy.data.db.entities.GradeSummary
-import io.github.wulkanowy.data.repositories.grade.GradeRepository
 import io.github.wulkanowy.data.repositories.gradessummary.GradeSummaryRepository
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
 import io.github.wulkanowy.ui.base.session.SessionErrorHandler
+import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calcAverage
-import io.github.wulkanowy.utils.changeModifier
 import timber.log.Timber
 import java.lang.String.format
 import java.util.Locale.FRANCE
@@ -20,10 +18,9 @@ import javax.inject.Inject
 class GradeSummaryPresenter @Inject constructor(
     private val errorHandler: SessionErrorHandler,
     private val gradeSummaryRepository: GradeSummaryRepository,
-    private val gradeRepository: GradeRepository,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
-    private val preferencesRepository: PreferencesRepository,
+    private val averageProvider: GradeAverageProvider,
     private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
 ) : BaseSessionPresenter<GradeSummaryView>(errorHandler) {
@@ -36,25 +33,12 @@ class GradeSummaryPresenter @Inject constructor(
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
         Timber.i("Loading grade summary data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it).map { semester -> semester to it } }
-            .map { pair -> pair.first.first { it.semesterId == semesterId } to pair.second }
-            .flatMap {
-                gradeSummaryRepository.getGradesSummary(it.first, forceRefresh)
+            .flatMap { semesterRepository.getSemesters(it).map { semesters -> it to semesters } }
+            .flatMap { (student, semesters) ->
+                gradeSummaryRepository.getGradesSummary(semesters.first { it.semesterId == semesterId }, forceRefresh)
                     .flatMap { gradesSummary ->
-                        gradeRepository.getGrades(it.second, it.first, forceRefresh)
-                            .map { grades ->
-                                grades.map { item -> item.changeModifier(preferencesRepository.gradePlusModifier, preferencesRepository.gradeMinusModifier) }
-                                    .groupBy { grade -> grade.subject }
-                                    .mapValues { entry -> entry.value.calcAverage() }
-                                    .filterValues { value -> value != 0.0 }
-                                    .let { averages ->
-                                        createGradeSummaryItems(gradesSummary, averages) to
-                                            GradeSummaryScrollableHeader(
-                                                formatAverage(gradesSummary.calcAverage()),
-                                                formatAverage(averages.values.average())
-                                            )
-                                    }
-                            }
+                        averageProvider.getGradeAverage(student, semesters, semesterId, forceRefresh)
+                            .map { averages -> createGradeSummaryItemsAndHeader(gradesSummary, averages) }
                     }
             }
             .subscribeOn(schedulers.backgroundThread)
@@ -66,14 +50,14 @@ class GradeSummaryPresenter @Inject constructor(
                     enableSwipe(true)
                     notifyParentDataLoaded(semesterId)
                 }
-            }.subscribe({
+            }.subscribe({ (gradeSummaryItems, gradeSummaryHeader) ->
                 Timber.i("Loading grade summary result: Success")
                 view?.run {
-                    showEmpty(it.first.isEmpty())
-                    showContent(it.first.isNotEmpty())
-                    updateData(it.first, it.second)
+                    showEmpty(gradeSummaryItems.isEmpty())
+                    showContent(gradeSummaryItems.isNotEmpty())
+                    updateData(gradeSummaryItems, gradeSummaryHeader)
                 }
-                analytics.logEvent("load_grade_summary", "items" to it.first.size, "force_refresh" to forceRefresh)
+                analytics.logEvent("load_grade_summary", "items" to gradeSummaryItems.size, "force_refresh" to forceRefresh)
             }) {
                 Timber.i("Loading grade summary result: An exception occurred")
                 view?.run { showEmpty(isViewEmpty) }
@@ -104,16 +88,24 @@ class GradeSummaryPresenter @Inject constructor(
         disposable.clear()
     }
 
-    private fun createGradeSummaryItems(gradesSummary: List<GradeSummary>, averages: Map<String, Double>)
-        : List<GradeSummaryItem> {
-        return gradesSummary.filter { !checkEmpty(it, averages) }.map { it ->
-            GradeSummaryItem(
-                title = it.subject,
-                average = formatAverage(averages.getOrElse(it.subject) { 0.0 }, ""),
-                predictedGrade = it.predictedGrade,
-                finalGrade = it.finalGrade
-            )
-        }
+    private fun createGradeSummaryItemsAndHeader(gradesSummary: List<GradeSummary>, averages: Map<String, Double>)
+        : Pair<List<GradeSummaryItem>, GradeSummaryScrollableHeader> {
+        return averages.filterValues { value -> value != 0.0 }
+            .let { filteredAverages ->
+                gradesSummary.filter { !checkEmpty(it, filteredAverages) }
+                    .map {
+                        GradeSummaryItem(
+                            title = it.subject,
+                            average = formatAverage(filteredAverages.getOrElse(it.subject) { 0.0 }, ""),
+                            predictedGrade = it.predictedGrade,
+                            finalGrade = it.finalGrade
+                        )
+                    }.let {
+                        it to GradeSummaryScrollableHeader(
+                            formatAverage(gradesSummary.calcAverage()),
+                            formatAverage(filteredAverages.values.average()))
+                    }
+            }
     }
 
     private fun checkEmpty(gradeSummary: GradeSummary, averages: Map<String, Double>): Boolean {

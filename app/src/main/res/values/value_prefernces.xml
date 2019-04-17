@@ -70,4 +70,13 @@
         <item>material</item>
         <item>grade_color</item>
     </string-array>
+
+    <string-array name="grade_average_mode_entries">
+        <item>Average grades from the 2nd semester</item>
+        <item>Average of grades from the whole year</item>
+    </string-array>
+    <string-array name="grade_average_mode_values" translatable="false">
+        <item>only_one_semester</item>
+        <item>all_year</item>
+    </string-array>
 </resources>
