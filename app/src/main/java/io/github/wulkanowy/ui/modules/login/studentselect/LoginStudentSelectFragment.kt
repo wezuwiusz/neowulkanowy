@@ -8,7 +8,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
@@ -45,6 +44,7 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     }
 
     override fun initView() {
+        loginStudentSelectSignIn.setOnClickListener { presenter.onSignIn() }
         loginAdapter.apply { setOnItemClickListener { presenter.onItemSelected(it) } }
 
         loginStudentSelectRecycler.apply {
@@ -54,7 +54,7 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     }
 
     override fun updateData(data: List<LoginStudentSelectItem>) {
-        loginAdapter.updateDataSet(data, true)
+        loginAdapter.updateDataSet(data)
     }
 
     override fun openMainView() {
@@ -69,11 +69,11 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     }
 
     override fun showContent(show: Boolean) {
-        loginStudentSelectRecycler.visibility = if (show) VISIBLE else GONE
+        loginStudentSelectContent.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun showActionBar(show: Boolean) {
-        (activity as? AppCompatActivity)?.supportActionBar?.run { if (show) show() else hide() }
+    override fun enableSignIn(enable: Boolean) {
+        loginStudentSelectSignIn.isEnabled = enable
     }
 
     fun onParentInitStudentSelectFragment(students: List<Student>) {

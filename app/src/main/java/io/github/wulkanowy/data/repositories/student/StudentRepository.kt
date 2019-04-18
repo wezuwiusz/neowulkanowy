@@ -41,8 +41,8 @@ class StudentRepository @Inject constructor(
             .toSingle()
     }
 
-    fun saveStudent(student: Student): Single<Long> {
-        return local.saveStudent(student)
+    fun saveStudents(students: List<Student>): Single<List<Long>> {
+        return local.saveStudents(students)
     }
 
     fun switchStudent(student: Student): Completable {

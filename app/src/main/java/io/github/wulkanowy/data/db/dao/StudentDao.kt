@@ -14,7 +14,7 @@ import javax.inject.Singleton
 interface StudentDao {
 
     @Insert(onConflict = ABORT)
-    fun insert(student: Student): Long
+    fun insertAll(student: List<Student>): List<Long>
 
     @Delete
     fun delete(student: Student)

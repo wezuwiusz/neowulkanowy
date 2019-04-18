@@ -8,7 +8,6 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.reactivex.Single
 import timber.log.Timber
 import java.io.Serializable
 import javax.inject.Inject
@@ -22,10 +21,13 @@ class LoginStudentSelectPresenter @Inject constructor(
 
     var students = emptyList<Student>()
 
+    var selectedStudents = mutableListOf<Student>()
+
     fun onAttachView(view: LoginStudentSelectView, students: Serializable?) {
         super.onAttachView(view)
         view.run {
             initView()
+            enableSignIn(false)
             errorHandler.onStudentDuplicate = {
                 showMessage(it)
                 Timber.i("The student already registered in the app was selected")
@@ -37,13 +39,21 @@ class LoginStudentSelectPresenter @Inject constructor(
         }
     }
 
+    fun onSignIn() {
+        registerStudents(selectedStudents)
+    }
+
     fun onParentInitStudentSelectView(students: List<Student>) {
         loadData(students)
+        if (students.size == 1) registerStudents(students)
     }
 
     fun onItemSelected(item: AbstractFlexibleItem<*>?) {
         if (item is LoginStudentSelectItem) {
-            registerStudent(item.student)
+            selectedStudents.removeAll { it == item.student }
+                .let { if (!it) selectedStudents.add(item.student) }
+
+            view?.enableSignIn(selectedStudents.isNotEmpty())
         }
     }
 
@@ -54,33 +64,30 @@ class LoginStudentSelectPresenter @Inject constructor(
         }
     }
 
-    private fun registerStudent(student: Student) {
-        disposable.add(studentRepository.saveStudent(student)
-            .map { student.apply { id = it } }
-            .onErrorResumeNext { studentRepository.logoutStudent(student).andThen(Single.error(it)) }
-            .flatMapCompletable { studentRepository.switchStudent(student) }
+    private fun registerStudents(students: List<Student>) {
+        disposable.add(studentRepository.saveStudents(students)
+            .map { students.first().apply { id = it.first() } }
+            .flatMapCompletable { studentRepository.switchStudent(it) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {
                 view?.apply {
                     showProgress(true)
                     showContent(false)
-                    showActionBar(false)
                 }
                 Timber.i("Registration started")
             }
             .subscribe({
-                analytics.logEvent("registration_student_select", SUCCESS to true, "endpoint" to student.endpoint, "symbol" to student.symbol, "error" to "No error")
+                students.forEach { analytics.logEvent("registration_student_select", SUCCESS to true, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to "No error") }
                 Timber.i("Registration result: Success")
                 view?.openMainView()
-            }, {
-                analytics.logEvent("registration_student_select", SUCCESS to false, "endpoint" to student.endpoint, "symbol" to student.symbol, "error" to it.localizedMessage)
+            }, { error ->
+                students.forEach { analytics.logEvent("registration_student_select", SUCCESS to false, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to error.localizedMessage) }
                 Timber.i("Registration result: An exception occurred ")
-                errorHandler.dispatch(it)
+                errorHandler.dispatch(error)
                 view?.apply {
                     showProgress(false)
                     showContent(true)
-                    showActionBar(true)
                 }
             }))
     }
