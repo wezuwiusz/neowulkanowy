@@ -23,7 +23,6 @@ import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
 import java.io.IOException
-import java.lang.Exception
 import javax.inject.Inject
 
 class WulkanowyApp : DaggerApplication() {
@@ -57,7 +56,7 @@ class WulkanowyApp : DaggerApplication() {
     private fun initializeFabric() {
         Fabric.with(Fabric.Builder(this).kits(
             Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(!BuildConfig.CRASHLYTICS_ENABLED).build()).build()
-        ).debuggable(BuildConfig.DEBUG).build())
+        ).debuggable(DEBUG).build())
         Timber.plant(CrashlyticsTree())
     }
 
@@ -68,6 +67,6 @@ class WulkanowyApp : DaggerApplication() {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.builder().create(this)
+        return DaggerAppComponent.factory().create(this)
     }
 }
