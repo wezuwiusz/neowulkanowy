@@ -40,4 +40,6 @@
 
     <color name="divider">#cccccc</color>
     <color name="divider_inverse">#777777</color>
+
+    <color name="spinner_stroke">#61000000</color>
 </resources>

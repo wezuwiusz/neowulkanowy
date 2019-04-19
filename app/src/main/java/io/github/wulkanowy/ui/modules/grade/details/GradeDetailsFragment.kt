@@ -67,8 +67,8 @@ class GradeDetailsFragment : BaseSessionFragment(), GradeDetailsView, GradeView.
         presenter.onAttachView(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.action_menu_grade_details, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_menu_grade_details, menu)
     }
 
     override fun initView() {
@@ -88,8 +88,8 @@ class GradeDetailsFragment : BaseSessionFragment(), GradeDetailsView, GradeView.
         gradeDetailsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.gradeDetailsMenuRead) presenter.onMarkAsReadSelected()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.gradeDetailsMenuRead) presenter.onMarkAsReadSelected()
         else false
     }
 

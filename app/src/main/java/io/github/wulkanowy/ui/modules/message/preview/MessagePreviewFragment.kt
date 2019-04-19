@@ -64,16 +64,16 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
         presenter.onAttachView(this, (savedInstanceState ?: arguments)?.getInt(MESSAGE_ID_KEY) ?: 0)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.action_menu_message_preview, menu)
-        menuReplyButton = menu?.findItem(R.id.messagePreviewMenuReply)
-        menuForwardButton = menu?.findItem(R.id.messagePreviewMenuForward)
-        menuDeleteButton = menu?.findItem(R.id.messagePreviewMenuDelete)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_menu_message_preview, menu)
+        menuReplyButton = menu.findItem(R.id.messagePreviewMenuReply)
+        menuForwardButton = menu.findItem(R.id.messagePreviewMenuForward)
+        menuDeleteButton = menu.findItem(R.id.messagePreviewMenuDelete)
         presenter.onCreateOptionsMenu()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.messagePreviewMenuReply -> presenter.onReply()
             R.id.messagePreviewMenuForward -> presenter.onForward()
             R.id.messagePreviewMenuDelete -> presenter.onMessageDelete()

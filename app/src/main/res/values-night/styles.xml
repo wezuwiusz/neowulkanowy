@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="WulkanowyTheme" parent="@style/Theme.AppCompat.DayNight">
+    <style name="WulkanowyTheme" parent="@style/Theme.MaterialComponents.Bridge">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
@@ -9,6 +9,7 @@
         <item name="android:navigationBarColor" tools:targetApi="21">@color/bottom_nav_background</item>
         <item name="dividerColor">@color/divider_inverse</item>
         <item name="chip_backgroundColor">@color/chip_backgroundColor_inverse</item>
+        <item name="android:textColorTertiary">?android:textColorPrimary</item>
         <item name="chip_labelColor">@color/chip_labelColor_inverse</item>
         <item name="chip_detailed_backgroundColor">@color/chip_backgroundColor_inverse</item>
         <item name="filterable_list_backgroundColor">@color/filterable_list_backgroundColor_inverse</item>
@@ -23,5 +24,11 @@
         <item name="about_libraries_special_button_openSource">@color/about_libraries_special_button_openSource_dark</item>
         <item name="about_libraries_dividerDark_openSource">@color/about_libraries_dividerDark_openSource_dark</item>
         <item name="about_libraries_dividerLight_openSource">@color/about_libraries_dividerLight_openSource_dark</item>
+    </style>
+
+    <style name="WulkanowyTheme.Black" parent="WulkanowyTheme.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">@android:color/black</item>
+        <item name="bottomNavBackground">@android:color/black</item>
     </style>
 </resources>

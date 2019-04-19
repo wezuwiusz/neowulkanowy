@@ -23,9 +23,9 @@ class PreferencesRepository @Inject constructor(
     val isGradeExpandable: Boolean
         get() = !sharedPref.getBoolean(context.getString(R.string.pref_key_expand_grade), false)
 
-    val currentThemeKey: String = context.getString(R.string.pref_key_theme)
-    val currentTheme: Int
-        get() = sharedPref.getString(currentThemeKey, "1")?.toIntOrNull() ?: 1
+    val appThemeKey: String = context.getString(R.string.pref_key_app_theme)
+    val appTheme: String
+        get() = sharedPref.getString(appThemeKey, "light") ?: "light"
 
     val gradeColorTheme: String
         get() = sharedPref.getString(context.getString(R.string.pref_key_grade_color_scheme), "vulcan") ?: "vulcan"

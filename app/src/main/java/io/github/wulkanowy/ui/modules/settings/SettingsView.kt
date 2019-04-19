@@ -4,7 +4,7 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface SettingsView : BaseView {
 
-    fun setTheme(theme: Int)
+    fun recreateView()
 
     fun setServicesSuspended(serviceEnablesKey: String, isHolidays: Boolean)
 }

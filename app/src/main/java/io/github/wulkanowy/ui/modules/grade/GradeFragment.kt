@@ -57,9 +57,9 @@ class GradeFragment : BaseSessionFragment(), GradeView, MainView.MainChildView, 
         presenter.onAttachView(this, savedInstanceState?.getInt(SAVED_SEMESTER_KEY))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.action_menu_grade, menu)
-        semesterSwitchMenu = menu?.findItem(R.id.gradeMenuSemester)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_menu_grade, menu)
+        semesterSwitchMenu = menu.findItem(R.id.gradeMenuSemester)
         presenter.onCreateMenu()
     }
 
@@ -82,8 +82,8 @@ class GradeFragment : BaseSessionFragment(), GradeView, MainView.MainChildView, 
         gradeSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.gradeMenuSemester) presenter.onSemesterSwitch()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.gradeMenuSemester) presenter.onSemesterSwitch()
         else false
     }
 

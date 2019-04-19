@@ -1,7 +1,6 @@
 package io.github.wulkanowy
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import androidx.work.Configuration
 import androidx.work.WorkManager
@@ -13,8 +12,8 @@ import dagger.android.support.DaggerApplication
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.utils.Log
 import io.fabric.sdk.android.Fabric
+import io.github.wulkanowy.BuildConfig.CRASHLYTICS_ENABLED
 import io.github.wulkanowy.BuildConfig.DEBUG
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.di.DaggerAppComponent
 import io.github.wulkanowy.services.sync.SyncWorkerFactory
 import io.github.wulkanowy.utils.CrashlyticsTree
@@ -28,9 +27,6 @@ import javax.inject.Inject
 class WulkanowyApp : DaggerApplication() {
 
     @Inject
-    lateinit var prefRepository: PreferencesRepository
-
-    @Inject
     lateinit var workerFactory: SyncWorkerFactory
 
     override fun attachBaseContext(base: Context?) {
@@ -41,29 +37,32 @@ class WulkanowyApp : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         AndroidThreeTen.init(this)
-        initializeFabric()
-        if (DEBUG) enableDebugLog()
-        AppCompatDelegate.setDefaultNightMode(prefRepository.currentTheme)
         WorkManager.initialize(this, Configuration.Builder().setWorkerFactory(workerFactory).build())
         RxJavaPlugins.setErrorHandler(::onError)
+
+        initCrashlytics()
+        initLogging()
     }
 
-    private fun enableDebugLog() {
-        Timber.plant(DebugLogTree())
-        FlexibleAdapter.enableLogs(Log.Level.DEBUG)
+    private fun initLogging() {
+        if (DEBUG) {
+            Timber.plant(DebugLogTree())
+            FlexibleAdapter.enableLogs(Log.Level.DEBUG)
+        } else {
+            Timber.plant(CrashlyticsTree())
+        }
     }
 
-    private fun initializeFabric() {
+    private fun initCrashlytics() {
         Fabric.with(Fabric.Builder(this).kits(
-            Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(!BuildConfig.CRASHLYTICS_ENABLED).build()).build()
+            Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(!CRASHLYTICS_ENABLED).build()).build()
         ).debuggable(DEBUG).build())
-        Timber.plant(CrashlyticsTree())
     }
 
-    private fun onError(t: Throwable) {
-        if (t is UndeliverableException && t.cause is IOException || t.cause is InterruptedException) {
-            Timber.e(t.cause, "An undeliverable error occurred")
-        } else throw t
+    private fun onError(error: Throwable) {
+        if (error is UndeliverableException && error.cause is IOException || error.cause is InterruptedException) {
+            Timber.e(error.cause, "An undeliverable error occurred")
+        } else throw error
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

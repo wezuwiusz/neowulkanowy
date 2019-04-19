@@ -48,8 +48,8 @@ class MessageWork @Inject constructor(
             .setPriority(PRIORITY_HIGH)
             .setColor(context.getCompatColor(R.color.colorPrimary))
             .setContentIntent(
-                PendingIntent.getActivity(context, 0,
-                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU_INDEX, 4), FLAG_UPDATE_CURRENT)
+                PendingIntent.getActivity(context, 0, MainActivity.getStartIntent(context)
+                    .putExtra(EXTRA_START_MENU_INDEX, 4), FLAG_UPDATE_CURRENT)
             )
             .setStyle(NotificationCompat.InboxStyle().run {
                 setSummaryText(context.resources.getQuantityString(R.plurals.message_number_item, messages.size, messages.size))

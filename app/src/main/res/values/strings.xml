@@ -227,7 +227,7 @@
     <string name="pref_view_list">Default view</string>
     <string name="pref_view_grade_average_mode">Calculation of the end-of-year average</string>
     <string name="pref_view_present">Show presence in attendance</string>
-    <string name="pref_view_theme_dark">Dark theme (Beta)</string>
+    <string name="pref_view_app_theme">Application theme</string>
     <string name="pref_view_expand_grade">Expand grades</string>
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>
 

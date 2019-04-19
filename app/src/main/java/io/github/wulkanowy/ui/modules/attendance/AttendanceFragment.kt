@@ -77,12 +77,12 @@ class AttendanceFragment : BaseSessionFragment(), AttendanceView, MainView.MainC
         attendanceNextButton.setOnClickListener { presenter.onNextDay() }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.action_menu_attendance, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_menu_attendance, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.attendanceMenuSummary) presenter.onSummarySwitchSelected()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.attendanceMenuSummary) presenter.onSummarySwitchSelected()
         else false
     }
 

@@ -80,12 +80,12 @@ class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChi
         timetableNextButton.setOnClickListener { presenter.onNextDay() }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.action_menu_timetable, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_menu_timetable, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.timetableMenuCompletedLessons) presenter.onCompletedLessonsSwitchSelected()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.timetableMenuCompletedLessons) presenter.onCompletedLessonsSwitchSelected()
         else false
     }
 

@@ -34,7 +34,7 @@ internal class AppModule {
 
     @Singleton
     @Provides
-    fun provideAppWidgetManager(context: Context) = AppWidgetManager.getInstance(context)
+    fun provideAppWidgetManager(context: Context): AppWidgetManager = AppWidgetManager.getInstance(context)
 
     @Singleton
     @Named("isDebug")

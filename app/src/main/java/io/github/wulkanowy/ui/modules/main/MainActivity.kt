@@ -168,7 +168,7 @@ class MainActivity : BaseActivity(), MainView {
             .apply { addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK) })
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         navController.onSaveInstanceState(outState)
     }

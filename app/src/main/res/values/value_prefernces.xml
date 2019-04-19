@@ -13,17 +13,15 @@
         <item>3</item>
     </string-array>
 
-    <string-array name="theme_entries">
-        <item>Off</item>
-        <item>On</item>
-        <item>Auto</item>
-        <item>Follow system settings</item>
+    <string-array name="app_theme_entries">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Black (AMOLED)</item>
     </string-array>
-    <string-array name="theme_values" translatable="false">
-        <item>1</item>
-        <item>2</item>
-        <item>0</item>
-        <item>-1</item>
+    <string-array name="app_theme_values" translatable="false">
+        <item>light</item>
+        <item>dark</item>
+        <item>black</item>
     </string-array>
 
     <string-array name="services_interval_entries">

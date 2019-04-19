@@ -2,7 +2,7 @@
     <solid android:color="@null" />
     <stroke
         android:width="1dip"
-        android:color="#61000000" />
+        android:color="@color/spinner_stroke" />
     <corners android:radius="4dip" />
     <padding
         android:bottom="0dip"

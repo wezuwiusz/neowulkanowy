@@ -13,12 +13,12 @@
             android:title="@string/pref_view_list"
             app:iconSpaceReserved="false" />
         <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/theme_entries"
-            android:entryValues="@array/theme_values"
-            android:key="theme"
+            android:defaultValue="light"
+            android:entries="@array/app_theme_entries"
+            android:entryValues="@array/app_theme_values"
+            android:key="@string/pref_key_app_theme"
             android:summary="%s"
-            android:title="@string/pref_view_theme_dark"
+            android:title="@string/pref_view_app_theme"
             app:iconSpaceReserved="false" />
         <SwitchPreference
             android:defaultValue="true"

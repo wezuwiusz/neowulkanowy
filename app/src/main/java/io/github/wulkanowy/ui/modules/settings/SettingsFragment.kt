@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.modules.settings
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import dagger.android.support.AndroidSupportInjection
 import io.github.wulkanowy.BuildConfig.DEBUG
@@ -44,8 +43,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         presenter.onSharedPreferenceChanged(key)
     }
 
-    override fun setTheme(theme: Int) {
-        AppCompatDelegate.setDefaultNightMode(theme)
+    override fun recreateView() {
         activity?.recreate()
     }
 

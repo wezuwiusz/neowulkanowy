@@ -10,11 +10,10 @@
         <item>24 godzin</item>
     </string-array>
 
-    <string-array name="theme_entries">
-        <item>Wyłączony</item>
-        <item>Włączony</item>
-        <item>Automatyczny</item>
-        <item>Używaj ustawień systemowych</item>
+    <string-array name="app_theme_entries">
+        <item>Jasny</item>
+        <item>Ciemny</item>
+        <item>Czarny (AMOLED)</item>
     </string-array>
 
     <string-array name="grade_modifier_entries">

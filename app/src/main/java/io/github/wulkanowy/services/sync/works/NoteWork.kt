@@ -48,8 +48,7 @@ class NoteWork @Inject constructor(
             .setColor(context.getCompatColor(R.color.colorPrimary))
             .setContentIntent(
                 PendingIntent.getActivity(context, 0,
-                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU_INDEX, 4), FLAG_UPDATE_CURRENT)
-            )
+                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU_INDEX, 4), FLAG_UPDATE_CURRENT))
             .setStyle(NotificationCompat.InboxStyle().run {
                 setSummaryText(context.resources.getQuantityString(R.plurals.note_number_item, notes.size, notes.size))
                 notes.forEach { addLine("${it.teacher}: ${it.category}") }

@@ -130,7 +130,7 @@
                 android:layout_marginStart="7dp"
                 android:layout_marginLeft="7dp"
                 android:layout_marginBottom="48dp"
-                android:background="?android:colorBackground"
+                android:background="?android:windowBackground"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:text="@string/login_host_hint"
