@@ -36,6 +36,7 @@ class GradeSummaryPresenter @Inject constructor(
             .flatMap { semesterRepository.getSemesters(it).map { semesters -> it to semesters } }
             .flatMap { (student, semesters) ->
                 gradeSummaryRepository.getGradesSummary(semesters.first { it.semesterId == semesterId }, forceRefresh)
+                    .map { it.sortedBy { subject -> subject.subject } }
                     .flatMap { gradesSummary ->
                         averageProvider.getGradeAverage(student, semesters, semesterId, forceRefresh)
                             .map { averages -> createGradeSummaryItemsAndHeader(gradesSummary, averages) }
