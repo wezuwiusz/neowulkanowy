@@ -75,7 +75,7 @@ class MessageTabFragment : BaseSessionFragment(), MessageTabView {
     }
 
     override fun updateData(data: List<MessageItem>) {
-        tabAdapter.updateDataSet(data, true)
+        tabAdapter.updateDataSet(data)
     }
 
     override fun updateItem(item: AbstractFlexibleItem<*>) {
