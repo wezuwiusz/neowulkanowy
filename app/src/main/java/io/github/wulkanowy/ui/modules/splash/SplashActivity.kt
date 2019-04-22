@@ -3,12 +3,12 @@ package io.github.wulkanowy.ui.modules.splash
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import dagger.android.support.DaggerAppCompatActivity
+import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import javax.inject.Inject
 
-class SplashActivity : DaggerAppCompatActivity(), SplashView {
+class SplashActivity : BaseActivity(), SplashView {
 
     @Inject
     lateinit var presenter: SplashPresenter
@@ -29,10 +29,6 @@ class SplashActivity : DaggerAppCompatActivity(), SplashView {
     }
 
     override fun showError(text: String, error: Throwable) {
-        showMessage(text)
-    }
-
-    override fun showMessage(text: String) {
         Toast.makeText(this, text, LENGTH_LONG).show()
     }
 
