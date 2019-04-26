@@ -27,12 +27,12 @@ class GradePresenter @Inject constructor(
 
     fun onAttachView(view: GradeView, savedIndex: Int?) {
         super.onAttachView(view)
-        Timber.i("Grade view is attached")
         selectedIndex = savedIndex ?: 0
         view.run {
             initView()
             enableSwipe(false)
         }
+        Timber.i("Grade view was initialized with $selectedIndex index")
         loadData()
     }
 

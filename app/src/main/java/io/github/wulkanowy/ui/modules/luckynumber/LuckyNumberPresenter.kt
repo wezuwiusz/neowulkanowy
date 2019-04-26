@@ -21,12 +21,12 @@ class LuckyNumberPresenter @Inject constructor(
 
     override fun onAttachView(view: LuckyNumberView) {
         super.onAttachView(view)
-        Timber.i("Lucky number view is attached")
         view.run {
             initView()
             showContent(false)
             enableSwipe(false)
         }
+        Timber.i("Lucky number view was initialized")
         loadData()
     }
 

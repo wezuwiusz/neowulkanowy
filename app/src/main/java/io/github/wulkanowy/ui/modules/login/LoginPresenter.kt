@@ -14,7 +14,7 @@ class LoginPresenter @Inject constructor(errorHandler: ErrorHandler) : BasePrese
             initAdapter()
             showActionBar(false)
         }
-        Timber.i("Login view is attached")
+        Timber.i("Login view was initialized")
     }
 
     fun onFormViewAccountLogged(students: List<Student>, loginData: Triple<String, String, String>) {

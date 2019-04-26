@@ -21,7 +21,7 @@ class SettingsPresenter @Inject constructor(
 
     override fun onAttachView(view: SettingsView) {
         super.onAttachView(view)
-        Timber.i("Settings view is attached")
+        Timber.i("Settings view was initialized")
         view.setServicesSuspended(preferencesRepository.serviceEnableKey, now().isHolidays)
     }
 

@@ -32,7 +32,7 @@ class SendMessagePresenter @Inject constructor(
 
     fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean?) {
         super.onAttachView(view)
-        Timber.i("Send message view is attached")
+        Timber.i("Send message view was initialized")
         loadData(message, reply)
         view.apply {
             message?.let {

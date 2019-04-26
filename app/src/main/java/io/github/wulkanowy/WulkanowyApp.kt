@@ -16,6 +16,7 @@ import io.github.wulkanowy.BuildConfig.CRASHLYTICS_ENABLED
 import io.github.wulkanowy.BuildConfig.DEBUG
 import io.github.wulkanowy.di.DaggerAppComponent
 import io.github.wulkanowy.services.sync.SyncWorkerFactory
+import io.github.wulkanowy.utils.ActivityLifecycleLogger
 import io.github.wulkanowy.utils.CrashlyticsTree
 import io.github.wulkanowy.utils.DebugLogTree
 import io.reactivex.exceptions.UndeliverableException
@@ -51,6 +52,7 @@ class WulkanowyApp : DaggerApplication() {
         } else {
             Timber.plant(CrashlyticsTree())
         }
+        registerActivityLifecycleCallbacks(ActivityLifecycleLogger())
     }
 
     private fun initCrashlytics() {

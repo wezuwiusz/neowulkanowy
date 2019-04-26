@@ -26,8 +26,8 @@ class MainPresenter @Inject constructor(
         super.onAttachView(view)
         view.run {
             startMenuIndex = if (initMenuIndex != -1) initMenuIndex else prefRepository.startMenuIndex
-            Timber.i("Main view is attached with $startMenuIndex menu index")
             initView()
+            Timber.i("Main view was initialized with $startMenuIndex menu index")
         }
 
         syncManager.startSyncWorker()

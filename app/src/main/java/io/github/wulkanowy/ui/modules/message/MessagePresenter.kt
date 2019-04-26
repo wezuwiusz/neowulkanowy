@@ -16,10 +16,10 @@ class MessagePresenter @Inject constructor(
 
     override fun onAttachView(view: MessageView) {
         super.onAttachView(view)
-        Timber.i("Message view is attached")
         disposable.add(Completable.timer(150, MILLISECONDS, schedulers.mainThread)
             .subscribe {
                 view.initView()
+                Timber.i("Message view was initialized")
                 loadData()
             })
     }

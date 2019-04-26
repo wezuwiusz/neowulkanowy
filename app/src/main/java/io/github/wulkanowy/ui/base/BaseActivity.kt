@@ -11,12 +11,16 @@ import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import io.github.wulkanowy.R
+import io.github.wulkanowy.utils.FragmentLifecycleLogger
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), BaseView, HasSupportFragmentInjector {
 
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var fragmentLifecycleLogger: FragmentLifecycleLogger
 
     @Inject
     lateinit var themeManager: ThemeManager
@@ -27,6 +31,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView, HasSupportFragmentI
         AndroidInjection.inject(this)
         themeManager.applyTheme(this)
         super.onCreate(savedInstanceState)
+        supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleLogger, true)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
     }
 

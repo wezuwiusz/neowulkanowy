@@ -10,8 +10,8 @@ class MorePresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresen
 
     override fun onAttachView(view: MoreView) {
         super.onAttachView(view)
-        Timber.i("More view is attached")
         view.initView()
+        Timber.i("More view was initialized")
         loadData()
     }
 

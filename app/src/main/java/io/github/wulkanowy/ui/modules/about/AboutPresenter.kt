@@ -17,7 +17,7 @@ class AboutPresenter @Inject constructor(
 
     override fun onAttachView(view: AboutView) {
         super.onAttachView(view)
-        Timber.i("About view is attached")
+        Timber.i("About view was initialized")
     }
 
     fun onExtraSelect(type: Libs.SpecialButton?) {

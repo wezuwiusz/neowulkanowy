@@ -19,8 +19,8 @@ class AccountPresenter @Inject constructor(
 
     override fun onAttachView(view: AccountView) {
         super.onAttachView(view)
-        Timber.i("Account dialog is attached")
         view.initView()
+        Timber.i("Account dialog view was initialized")
         loadData()
     }
 

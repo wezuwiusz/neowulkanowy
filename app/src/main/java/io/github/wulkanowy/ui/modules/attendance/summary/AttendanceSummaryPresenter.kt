@@ -35,8 +35,8 @@ class AttendanceSummaryPresenter @Inject constructor(
 
     fun onAttachView(view: AttendanceSummaryView, subjectId: Int?) {
         super.onAttachView(view)
-        Timber.i("Attendance summary view is attached with subject id ${subjectId ?: -1}")
         view.initView()
+        Timber.i("Attendance summary view was initialized with subject id ${subjectId ?: -1}")
         loadData(subjectId ?: -1)
         loadSubjects()
     }

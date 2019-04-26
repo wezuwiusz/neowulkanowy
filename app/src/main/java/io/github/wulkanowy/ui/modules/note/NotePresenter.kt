@@ -23,8 +23,8 @@ class NotePresenter @Inject constructor(
 
     override fun onAttachView(view: NoteView) {
         super.onAttachView(view)
-        Timber.i("Note view is attached")
         view.initView()
+        Timber.i("Note view was initialized")
         loadData()
     }
 

@@ -44,7 +44,7 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
                 .withFields(R.string::class.java.fields)
                 .withCheckCachedDetection(false)
                 .withExcludedLibraries("fastadapter", "AndroidIconics", "Jsoup", "Retrofit", "okio",
-                    "OkHttp", "Butterknife", "CircleImageView")
+                    "Butterknife", "CircleImageView")
                 .withOnExtraListener { presenter.onExtraSelect(it) })
         }.let {
             fragmentCompat.onCreateView(inflater.context, inflater, container, savedInstanceState, it)

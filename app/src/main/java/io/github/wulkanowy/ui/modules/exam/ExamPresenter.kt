@@ -36,8 +36,8 @@ class ExamPresenter @Inject constructor(
 
     fun onAttachView(view: ExamView, date: Long?) {
         super.onAttachView(view)
-        Timber.i("Exam view is attached")
         view.initView()
+        Timber.i("Exam view was initialized")
         loadData(ofEpochDay(date ?: now().nextOrSameSchoolDay.toEpochDay()))
         reloadView()
     }

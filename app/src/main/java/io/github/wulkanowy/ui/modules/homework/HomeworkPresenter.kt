@@ -34,8 +34,8 @@ class HomeworkPresenter @Inject constructor(
 
     fun onAttachView(view: HomeworkView, date: Long?) {
         super.onAttachView(view)
-        Timber.i("Homework view is attached")
         view.initView()
+        Timber.i("Homework view was initialized")
         loadData(LocalDate.ofEpochDay(date ?: LocalDate.now().nextOrSameSchoolDay.toEpochDay()))
         reloadView()
     }

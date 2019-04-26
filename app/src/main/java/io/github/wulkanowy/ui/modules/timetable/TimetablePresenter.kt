@@ -35,8 +35,8 @@ class TimetablePresenter @Inject constructor(
 
     fun onAttachView(view: TimetableView, date: Long?) {
         super.onAttachView(view)
-        Timber.i("Timetable is attached")
         view.initView()
+        Timber.i("Timetable was initialized")
         loadData(ofEpochDay(date ?: now().nextOrSameSchoolDay.toEpochDay()))
         reloadView()
     }
