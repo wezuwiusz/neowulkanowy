@@ -22,22 +22,19 @@ class MainPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<MainView>(errorHandler) {
 
-    fun onAttachView(view: MainView, initMenuIndex: Int) {
+    fun onAttachView(view: MainView, initMenu: MainView.MenuView?) {
         super.onAttachView(view)
-        view.run {
-            startMenuIndex = if (initMenuIndex != -1) initMenuIndex else prefRepository.startMenuIndex
+        view.apply {
+            getProperViewIndexes(initMenu).let { (main, more) ->
+                startMenuIndex = main
+                startMenuMoreIndex = more
+            }
             initView()
-            Timber.i("Main view was initialized with $startMenuIndex menu index")
+            Timber.i("Main view was initialized with $startMenuIndex menu index and $startMenuMoreIndex more index")
         }
 
         syncManager.startSyncWorker()
-
-        analytics.logEvent(APP_OPEN, DESTINATION to when (initMenuIndex) {
-            1 -> "Grades"
-            3 -> "Timetable"
-            4 -> "More"
-            else -> "User action"
-        })
+        analytics.logEvent(APP_OPEN, DESTINATION to initMenu?.name)
     }
 
     fun onViewChange() {
@@ -103,5 +100,13 @@ class MainPresenter @Inject constructor(
                 Timber.i("Switch student result: An exception occurred")
                 errorHandler.dispatch(it)
             }))
+    }
+
+    private fun getProperViewIndexes(initMenu: MainView.MenuView?): Pair<Int, Int> {
+        return when {
+            initMenu?.id in 0..3 -> initMenu!!.id to -1
+            (initMenu?.id ?: 0) > 3 -> 4 to initMenu!!.id - 4
+            else -> prefRepository.startMenuIndex to -1
+        }
     }
 }

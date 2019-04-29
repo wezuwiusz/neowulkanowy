@@ -6,6 +6,8 @@ interface MainView : BaseView {
 
     var startMenuIndex: Int
 
+    var startMenuMoreIndex: Int
+
     val isRootView: Boolean
 
     val currentViewTitle: String?
@@ -36,5 +38,16 @@ interface MainView : BaseView {
     interface TitledView {
 
         val titleStringId: Int
+    }
+
+    enum class MenuView(val id: Int) {
+        GRADE(0),
+        ATTENDANCE(1),
+        EXAM(2),
+        TIMETABLE(3),
+        MESSAGE(4),
+        HOMEWORK(5),
+        NOTE(6),
+        LUCKY_NUMBER(7),
     }
 }

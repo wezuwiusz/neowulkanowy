@@ -15,7 +15,8 @@ import io.github.wulkanowy.data.repositories.note.NoteRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_START_MENU_INDEX
+import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_START_MENU
+import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -47,8 +48,9 @@ class NoteWork @Inject constructor(
             .setPriority(PRIORITY_HIGH)
             .setColor(context.getCompatColor(R.color.colorPrimary))
             .setContentIntent(
-                PendingIntent.getActivity(context, 0,
-                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU_INDEX, 4), FLAG_UPDATE_CURRENT))
+                PendingIntent.getActivity(context, MainView.MenuView.NOTE.id,
+                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU, MainView.MenuView.NOTE)
+                    , FLAG_UPDATE_CURRENT))
             .setStyle(NotificationCompat.InboxStyle().run {
                 setSummaryText(context.resources.getQuantityString(R.plurals.note_number_item, notes.size, notes.size))
                 notes.forEach { addLine("${it.teacher}: ${it.category}") }

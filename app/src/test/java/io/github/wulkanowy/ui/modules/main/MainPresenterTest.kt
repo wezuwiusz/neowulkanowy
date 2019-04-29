@@ -41,7 +41,7 @@ class MainPresenterTest {
         clearInvocations(mainView)
 
         presenter = MainPresenter(errorHandler, studentRepository, prefRepository, syncManager, TestSchedulersProvider(), analytics)
-        presenter.onAttachView(mainView, -1)
+        presenter.onAttachView(mainView, null)
     }
 
     @Test

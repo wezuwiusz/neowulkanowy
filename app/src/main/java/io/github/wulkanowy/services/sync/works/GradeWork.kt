@@ -15,7 +15,8 @@ import io.github.wulkanowy.data.repositories.grade.GradeRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_START_MENU_INDEX
+import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_START_MENU
+import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -48,7 +49,7 @@ class GradeWork @Inject constructor(
             .setColor(context.getCompatColor(R.color.colorPrimary))
             .setContentIntent(
                 PendingIntent.getActivity(context, 0,
-                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU_INDEX, 0), FLAG_UPDATE_CURRENT))
+                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU, MainView.MenuView.GRADE), FLAG_UPDATE_CURRENT))
             .setStyle(NotificationCompat.InboxStyle().run {
                 setSummaryText(context.resources.getQuantityString(R.plurals.grade_number_item, grades.size, grades.size))
                 grades.forEach { addLine("${it.subject}: ${it.entry}") }
