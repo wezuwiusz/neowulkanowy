@@ -16,8 +16,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 32
-        versionName "0.7.6"
+        versionCode 33
+        versionName "0.8.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -85,7 +85,7 @@ play {
 }
 
 dependencies {
-    implementation 'com.github.wulkanowy:api:3335bd6'
+    implementation 'io.github.wulkanowy:api:0.8.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
@@ -101,9 +101,9 @@ dependencies {
     implementation "androidx.work:work-runtime:2.0.1"
     implementation "androidx.work:work-rxjava2:2.0.1"
 
-    implementation "androidx.room:room-runtime:2.1.0-alpha06"
-    implementation "androidx.room:room-rxjava2:2.1.0-alpha06"
-    kapt "androidx.room:room-compiler:2.1.0-alpha06"
+    implementation "androidx.room:room-runtime:2.1.0-alpha07"
+    implementation "androidx.room:room-rxjava2:2.1.0-alpha07"
+    kapt "androidx.room:room-compiler:2.1.0-alpha07"
 
     implementation "com.google.dagger:dagger-android-support:2.22.1"
     kapt "com.google.dagger:dagger-compiler:2.22.1"
@@ -147,7 +147,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation "io.mockk:mockk-android:1.9.2"
     androidTestImplementation 'org.mockito:mockito-android:2.27.0'
-    androidTestImplementation "androidx.room:room-testing:2.1.0-alpha06"
+    androidTestImplementation "androidx.room:room-testing:2.1.0-alpha07"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 

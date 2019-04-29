@@ -11,7 +11,7 @@ references:
     working_directory: *workspace_root
     environment:
       environment:
-        _JAVA_OPTS: -Xmx2048m
+        _JAVA_OPTS: -Xmx3072m
 
   attach_workspace: &attach_workspace
     attach_workspace:

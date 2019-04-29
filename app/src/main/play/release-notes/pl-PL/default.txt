@@ -1,11 +1,13 @@
-Wersja 0.7.5
+Wersja 0.8.0
 
-Uwaga! Jeżeli w aplikacji przestały wyświetlać się oceny, prosimy o wylogowanie i zalogowanie się ponownie!
+Uwaga! Po tej aktualizacji wymagane jest ponowne przypięcie widżetu planu lekcji!
 
-Naprawiliśmy:
-- problem z brakiem aktywnego semestru
-- logowanie w niestandardowych dziennikach na vulcan.net.pl
-- oznaczanie lekcji w planie jako odwołanej, jeśli brak opisu tej zmiany
-- ładowanie wiadomości, jeśli byli zalogowani jednocześnie uczeń i rodzic
+Dodaliśmy:
+- możliwość przesyłania dalej i usuwania wiadomości
+- możliwość zmiany ucznia w widżecie
+- opcję liczenia średniej ocen z całego roku
+- tryb AMOLED
+- logowanie wielu uczniów jednocześnie
+- widżet szczęśliwego numerka
 
-Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.7.5
+Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases/tag/0.8.0

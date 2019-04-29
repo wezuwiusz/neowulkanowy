@@ -31,17 +31,17 @@ task jacocoTestReport(type: JacocoReport) {
                     '**/*_Provide*Factory*.*',
                     '**/*_Factory.*']
 
-    classDirectories = fileTree(
+    classDirectories.setFrom(fileTree(
             dir: "$buildDir/intermediates/classes/debug",
             excludes: excludes
     ) + fileTree(
             dir: "$buildDir/tmp/kotlin-classes/debug",
             excludes: excludes
-    )
+    ))
 
-    sourceDirectories = files("$project.projectDir/src/main/java")
-    executionData = fileTree(
+    sourceDirectories.setFrom(files("$project.projectDir/src/main/java"))
+    executionData.setFrom(fileTree(
             dir: project.projectDir,
             includes: ["**/*.exec", "**/*.ec"]
-    )
+    ))
 }
