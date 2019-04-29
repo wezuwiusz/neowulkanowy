@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.timetablewidget
+package io.github.wulkanowy.ui.modules.luckynumberwidget
 
 import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
@@ -6,25 +6,23 @@ import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
-import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.EXTRA_FROM_PROVIDER
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.activity_widget_configure.*
 import javax.inject.Inject
 
-class TimetableWidgetConfigureActivity : BaseActivity(), TimetableWidgetConfigureView {
+class LuckyNumberWidgetConfigureActivity : BaseActivity(), LuckyNumberWidgetConfigureView {
 
     @Inject
     lateinit var configureAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
 
     @Inject
-    lateinit var presenter: TimetableWidgetConfigurePresenter
+    lateinit var presenter: LuckyNumberWidgetConfigurePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +30,7 @@ class TimetableWidgetConfigureActivity : BaseActivity(), TimetableWidgetConfigur
         setContentView(R.layout.activity_widget_configure)
 
         intent.extras.let {
-            presenter.onAttachView(this, it?.getInt(EXTRA_APPWIDGET_ID), it?.getBoolean(EXTRA_FROM_PROVIDER))
+            presenter.onAttachView(this, it?.getInt(EXTRA_APPWIDGET_ID))
         }
     }
 
@@ -44,12 +42,12 @@ class TimetableWidgetConfigureActivity : BaseActivity(), TimetableWidgetConfigur
         configureAdapter.setOnItemClickListener { presenter.onItemSelect(it) }
     }
 
-    override fun updateData(data: List<TimetableWidgetConfigureItem>) {
+    override fun updateData(data: List<LuckyNumberWidgetConfigureItem>) {
         configureAdapter.updateDataSet(data)
     }
 
-    override fun updateTimetableWidget(widgetId: Int) {
-        sendBroadcast(Intent(this, TimetableWidgetProvider::class.java)
+    override fun updateLuckyNumberWidget(widgetId: Int) {
+        sendBroadcast(Intent(this, LuckyNumberWidgetProvider::class.java)
             .apply {
                 action = ACTION_APPWIDGET_UPDATE
                 putExtra(EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
@@ -61,7 +59,7 @@ class TimetableWidgetConfigureActivity : BaseActivity(), TimetableWidgetConfigur
     }
 
     override fun showError(text: String, error: Throwable) {
-        Toast.makeText(this, text, LENGTH_LONG).show()
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
     override fun finishView() {

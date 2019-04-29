@@ -5,10 +5,12 @@ import dagger.android.ContributesAndroidInjector
 import io.github.wulkanowy.di.scopes.PerActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginModule
+import io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetConfigureActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainModule
 import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
 import io.github.wulkanowy.ui.modules.splash.SplashActivity
+import io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetProvider
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetConfigureActivity
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider
 
@@ -35,4 +37,10 @@ internal abstract class BuilderModule {
 
     @ContributesAndroidInjector
     abstract fun bindTimetableWidgetProvider(): TimetableWidgetProvider
+
+    @ContributesAndroidInjector
+    abstract fun bindLuckyNumberWidgetAccountActivity(): LuckyNumberWidgetConfigureActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindLuckyNumberWidgetProvider(): LuckyNumberWidgetProvider
 }

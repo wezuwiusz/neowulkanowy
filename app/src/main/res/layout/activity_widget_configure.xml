@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/timetableWidgetConfigureTitle"
+        android:id="@+id/widgetConfigureTitle"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:paddingStart="24dp"
@@ -20,10 +20,10 @@
         app:firstBaselineToTopHeight="40dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/timetableWidgetConfigureRecycler"
+        android:id="@+id/widgetConfigureRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timetableWidgetConfigureTitle"
+        android:layout_below="@id/widgetConfigureTitle"
         android:layout_marginBottom="16dp"
         android:overScrollMode="never"
         tools:itemCount="3"
