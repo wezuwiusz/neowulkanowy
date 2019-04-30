@@ -46,7 +46,13 @@ class MainActivity : BaseActivity(), MainView {
     companion object {
         const val EXTRA_START_MENU = "extraStartMenu"
 
-        fun getStartIntent(context: Context) = Intent(context, MainActivity::class.java)
+        fun getStartIntent(context: Context, startMenu: MainView.MenuView? = null, clear: Boolean = false): Intent {
+            return Intent(context, MainActivity::class.java)
+                .apply {
+                    if (clear) flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+                    startMenu?.let { putExtra(EXTRA_START_MENU, it) }
+                }
+        }
     }
 
     override val isRootView: Boolean
@@ -91,7 +97,7 @@ class MainActivity : BaseActivity(), MainView {
     override fun initView() {
         mainBottomNav.run {
             addItems(
-                mutableListOf(
+                listOf(
                     AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_menu_main_grade_26dp, 0),
                     AHBottomNavigationItem(R.string.attendance_title, R.drawable.ic_menu_main_attendance_24dp, 0),
                     AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_menu_main_exam_24dp, 0),
@@ -188,6 +194,7 @@ class MainActivity : BaseActivity(), MainView {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         navController.onSaveInstanceState(outState)
+        intent.removeExtra(EXTRA_START_MENU)
     }
 
     override fun onDestroy() {

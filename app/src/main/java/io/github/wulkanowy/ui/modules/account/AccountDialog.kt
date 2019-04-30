@@ -15,7 +15,6 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.modules.login.LoginActivity
-import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.dialog_account.*
 import javax.inject.Inject
@@ -97,11 +96,8 @@ class AccountDialog : DaggerAppCompatDialogFragment(), AccountView {
         }
     }
 
-    override fun recreateView() {
-        activity?.also {
-            startActivity(MainActivity.getStartIntent(it))
-            it.finish()
-        }
+    override fun recreateMainView() {
+        activity?.recreate()
     }
 
     override fun onDestroy() {

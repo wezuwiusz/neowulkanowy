@@ -16,6 +16,6 @@ interface AccountView : BaseView {
 
     fun openClearLoginView()
 
-    fun recreateView()
+    fun recreateMainView()
 }
 

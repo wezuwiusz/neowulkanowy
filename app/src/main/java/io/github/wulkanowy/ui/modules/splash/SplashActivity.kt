@@ -25,7 +25,6 @@ class SplashActivity : BaseActivity(), SplashView {
 
     override fun openMainView() {
         startActivity(MainActivity.getStartIntent(this))
-        finish()
     }
 
     override fun showError(text: String, error: Throwable) {

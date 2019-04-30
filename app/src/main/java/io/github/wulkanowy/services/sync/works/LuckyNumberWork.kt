@@ -15,8 +15,7 @@ import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainActivity.Companion.EXTRA_START_MENU
-import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.main.MainView.MenuView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -48,9 +47,8 @@ class LuckyNumberWork @Inject constructor(
             .setPriority(PRIORITY_HIGH)
             .setColor(context.getCompatColor(R.color.colorPrimary))
             .setContentIntent(
-                PendingIntent.getActivity(context, MainView.MenuView.MESSAGE.id,
-                    MainActivity.getStartIntent(context).putExtra(EXTRA_START_MENU, MainView.MenuView.LUCKY_NUMBER)
-                    , FLAG_UPDATE_CURRENT))
+                PendingIntent.getActivity(context, MenuView.MESSAGE.id,
+                    MainActivity.getStartIntent(context, MenuView.LUCKY_NUMBER, true), FLAG_UPDATE_CURRENT))
             .build())
     }
 }

@@ -54,7 +54,7 @@ class AccountPresenter @Inject constructor(
                         openClearLoginView()
                     } else {
                         Timber.i("Logout result: Switch to another student")
-                        recreateView()
+                        recreateMainView()
                     }
                 }
             }, {
@@ -73,9 +73,10 @@ class AccountPresenter @Inject constructor(
                 disposable.add(studentRepository.switchStudent(item.student)
                     .subscribeOn(schedulers.backgroundThread)
                     .observeOn(schedulers.mainThread)
+                    .doFinally { view?.dismissView() }
                     .subscribe({
                         Timber.i("Change a student result: Success")
-                        view?.recreateView()
+                        view?.recreateMainView()
                     }, {
                         Timber.i("Change a student result: An exception occurred")
                         errorHandler.dispatch(it)

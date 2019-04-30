@@ -48,8 +48,8 @@
             android:theme="@style/WulkanowyTheme.NoActionBar" />
         <activity
             android:name=".ui.modules.timetablewidget.TimetableWidgetConfigureActivity"
-            android:noHistory="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
             android:theme="@style/WulkanowyTheme.WidgetAccountSwitcher">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -57,8 +57,8 @@
         </activity>
         <activity
             android:name=".ui.modules.luckynumberwidget.LuckyNumberWidgetConfigureActivity"
-            android:noHistory="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
             android:theme="@style/WulkanowyTheme.WidgetAccountSwitcher">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
