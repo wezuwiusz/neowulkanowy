@@ -27,7 +27,7 @@ class ThemeManager @Inject constructor(private val preferencesRepository: Prefer
 
     private fun isThemeApplicable(activity: AppCompatActivity): Boolean {
         return activity.packageManager.getPackageInfo(activity.packageName, GET_ACTIVITIES)
-            .activities.singleOrNull { it.name == activity.localClassName }?.theme
+            .activities.singleOrNull { it.name == activity::class.java.canonicalName }?.theme
             .let { it == R.style.WulkanowyTheme_Black || it == R.style.WulkanowyTheme_NoActionBar }
     }
 }
