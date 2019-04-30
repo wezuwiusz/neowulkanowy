@@ -8,6 +8,7 @@ import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.message.MessageFolder.RECEIVED
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -34,8 +35,8 @@ class MessageRepository @Inject constructor(
                         }.flatMap { new ->
                             local.getMessages(student, folder).toSingle(emptyList())
                                 .doOnSuccess { old ->
-                                    local.deleteMessages(old - new)
-                                    local.saveMessages((new - old)
+                                    local.deleteMessages(old.uniqueSubtract(new))
+                                    local.saveMessages(new.uniqueSubtract(old)
                                         .onEach {
                                             it.isNotified = !notify
                                         })

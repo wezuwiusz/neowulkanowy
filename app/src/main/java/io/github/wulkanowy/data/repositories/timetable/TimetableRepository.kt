@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 import java.net.UnknownHostException
@@ -25,14 +26,14 @@ class TimetableRepository @Inject constructor(
                 .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
                     if (it) remote.getTimetable(semester, monday, friday)
                     else Single.error(UnknownHostException())
-                }.flatMap { newTimetable ->
+                }.flatMap { new ->
                     local.getTimetable(semester, monday, friday)
                         .toSingle(emptyList())
-                        .doOnSuccess { oldTimetable ->
-                            local.deleteTimetable(oldTimetable - newTimetable)
-                            local.saveTimetable((newTimetable - oldTimetable).map { item ->
+                        .doOnSuccess { old ->
+                            local.deleteTimetable(old.uniqueSubtract(new))
+                            local.saveTimetable(new.uniqueSubtract(old).map { item ->
                                 item.apply {
-                                    oldTimetable.singleOrNull { this.start == it.start }?.let {
+                                    old.singleOrNull { this.start == it.start }?.let {
                                         return@map copy(
                                             room = if (room.isEmpty()) it.room else room,
                                             teacher = if (teacher.isEmpty()) it.teacher else teacher

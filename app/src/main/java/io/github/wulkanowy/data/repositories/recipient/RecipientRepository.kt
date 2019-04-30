@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -31,8 +32,8 @@ class RecipientRepository @Inject constructor(
                         }.flatMap { new ->
                             local.getRecipients(student, role, unit).toSingle(emptyList())
                                 .doOnSuccess { old ->
-                                    local.deleteRecipients(old - new)
-                                    local.saveRecipients(new - old)
+                                    local.deleteRecipients(old.uniqueSubtract(new))
+                                    local.saveRecipients(new.uniqueSubtract(old))
                                 }
                         }.flatMap {
                             local.getRecipients(student, role, unit).toSingle(emptyList())

@@ -5,6 +5,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.net.UnknownHostException
@@ -24,13 +25,12 @@ class GradeRepository @Inject constructor(
                 .flatMap {
                     if (it) remote.getGrades(semester)
                     else Single.error(UnknownHostException())
-                }.flatMap { newGrades ->
+                }.flatMap { new ->
                     local.getGrades(semester).toSingle(emptyList())
-                        .doOnSuccess { oldGrades ->
-                            val notifyBreakDate = oldGrades.maxBy { it.date }?.date
-                                ?: student.registrationDate.toLocalDate()
-                            local.deleteGrades(oldGrades - newGrades)
-                            local.saveGrades((newGrades - oldGrades)
+                        .doOnSuccess { old ->
+                            val notifyBreakDate = old.maxBy { it.date }?.date ?: student.registrationDate.toLocalDate()
+                            local.deleteGrades(old.uniqueSubtract(new))
+                            local.saveGrades(new.uniqueSubtract(old)
                                 .onEach {
                                     if (it.date >= notifyBreakDate) it.apply {
                                         isRead = false

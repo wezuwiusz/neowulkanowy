@@ -5,6 +5,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.ApiHelper
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Maybe
 import io.reactivex.Single
 import timber.log.Timber
@@ -31,8 +32,8 @@ class SemesterRepository @Inject constructor(
                     if (currentSemesters.size == 1) {
                         local.getSemesters(student).toSingle(emptyList())
                             .doOnSuccess { old ->
-                                local.deleteSemesters(old - new)
-                                local.saveSemesters(new - old)
+                                local.deleteSemesters(old.uniqueSubtract(new))
+                                local.saveSemesters(new.uniqueSubtract(old))
                             }
                     } else {
                         Timber.i("Current semesters list:\n${currentSemesters.joinToString(separator = "\n")}")

@@ -5,6 +5,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.ApiHelper
 import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Maybe
 import io.reactivex.Single
 import java.net.UnknownHostException
@@ -30,8 +31,8 @@ class ReportingUnitRepository @Inject constructor(
                         }.flatMap { new ->
                             local.getReportingUnits(student).toSingle(emptyList())
                                 .doOnSuccess { old ->
-                                    local.deleteReportingUnits(old - new)
-                                    local.saveReportingUnits(new - old)
+                                    local.deleteReportingUnits(old.uniqueSubtract(new))
+                                    local.saveReportingUnits(new.uniqueSubtract(old))
                                 }
                         }.flatMap { local.getReportingUnits(student).toSingle(emptyList()) }
                     )

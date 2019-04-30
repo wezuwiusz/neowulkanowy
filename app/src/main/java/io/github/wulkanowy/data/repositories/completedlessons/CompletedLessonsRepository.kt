@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 import java.net.UnknownHostException
@@ -31,8 +32,8 @@ class CompletedLessonsRepository @Inject constructor(
                             local.getCompletedLessons(semester, dates.first, dates.second)
                                 .toSingle(emptyList())
                                 .doOnSuccess { old ->
-                                    local.deleteCompleteLessons(old - new)
-                                    local.saveCompletedLessons(new - old)
+                                    local.deleteCompleteLessons(old.uniqueSubtract(new))
+                                    local.saveCompletedLessons(new.uniqueSubtract(old))
                                 }
                         }.flatMap {
                             local.getCompletedLessons(semester, dates.first, dates.second)

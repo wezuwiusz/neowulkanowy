@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Subject
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -26,8 +27,8 @@ class SubjectRepository @Inject constructor(
                     local.getSubjects(semester)
                         .toSingle(emptyList())
                         .doOnSuccess { old ->
-                            local.deleteSubjects(old - new)
-                            local.saveSubjects(new - old)
+                            local.deleteSubjects(old.uniqueSubtract(new))
+                            local.saveSubjects(new.uniqueSubtract(old))
                         }
                 }.flatMap {
                     local.getSubjects(semester).toSingle(emptyList())

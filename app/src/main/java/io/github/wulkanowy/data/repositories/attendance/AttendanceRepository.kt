@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 import java.net.UnknownHostException
@@ -31,8 +32,8 @@ class AttendanceRepository @Inject constructor(
                         local.getAttendance(semester, dates.first, dates.second)
                             .toSingle(emptyList())
                             .doOnSuccess { oldAttendance ->
-                                local.deleteAttendance(oldAttendance - newAttendance)
-                                local.saveAttendance(newAttendance - oldAttendance)
+                                local.deleteAttendance(oldAttendance.uniqueSubtract(newAttendance))
+                                local.saveAttendance(newAttendance.uniqueSubtract(oldAttendance))
                             }
                     }.flatMap {
                         local.getAttendance(semester, dates.first, dates.second)

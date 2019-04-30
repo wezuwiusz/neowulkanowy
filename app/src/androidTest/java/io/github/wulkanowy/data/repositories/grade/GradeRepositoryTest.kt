@@ -22,6 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.threeten.bp.LocalDate.of
 import org.threeten.bp.LocalDateTime
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import io.github.wulkanowy.api.grades.Grade as GradeApi
@@ -108,5 +109,74 @@ class GradeRepositoryTest {
         assertFalse { grades[1].isRead }
         assertTrue { grades[2].isRead }
         assertTrue { grades[3].isRead }
+    }
+
+    @Test
+    fun subtractLocaleDuplicateGrades() {
+        gradeLocal.saveGrades(listOf(
+            createGradeLocal(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeLocal(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeLocal(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
+        ))
+
+        every { mockApi.getGrades(1) } returns Single.just(listOf(
+            createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeApi(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
+        ))
+
+        val grades = GradeRepository(settings, gradeLocal, gradeRemote)
+            .getGrades(studentMock, semesterMock, true).blockingGet()
+
+        assertEquals(2, grades.size)
+    }
+
+    @Test
+    fun subtractRemoteDuplicateGrades() {
+        gradeLocal.saveGrades(listOf(
+            createGradeLocal(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeLocal(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
+        ))
+
+        every { mockApi.getGrades(1) } returns Single.just(listOf(
+            createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeApi(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
+        ))
+
+        val grades = GradeRepository(settings, gradeLocal, gradeRemote)
+            .getGrades(studentMock, semesterMock, true).blockingGet()
+
+        assertEquals(3, grades.size)
+    }
+
+    @Test
+    fun emptyLocal() {
+        gradeLocal.saveGrades(listOf())
+
+        every { mockApi.getGrades(1) } returns Single.just(listOf(
+            createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeApi(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
+        ))
+
+        val grades = GradeRepository(settings, gradeLocal, gradeRemote)
+            .getGrades(studentMock, semesterMock, true).blockingGet()
+
+        assertEquals(3, grades.size)
+    }
+
+    @Test
+    fun emptyRemote() {
+        gradeLocal.saveGrades(listOf(
+            createGradeLocal(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
+            createGradeLocal(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
+        ))
+
+        every { mockApi.getGrades(1) } returns Single.just(listOf())
+
+        val grades = GradeRepository(settings, gradeLocal, gradeRemote)
+            .getGrades(studentMock, semesterMock, true).blockingGet()
+
+        assertEquals(0, grades.size)
     }
 }

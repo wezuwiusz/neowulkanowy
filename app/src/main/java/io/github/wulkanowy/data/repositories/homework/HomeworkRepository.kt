@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 import java.net.UnknownHostException
@@ -26,11 +27,11 @@ class HomeworkRepository @Inject constructor(
                     .flatMap {
                         if (it) remote.getHomework(semester, monday, friday)
                         else Single.error(UnknownHostException())
-                    }.flatMap { newGrades ->
+                    }.flatMap { new ->
                         local.getHomework(semester, monday, friday).toSingle(emptyList())
-                            .doOnSuccess { oldGrades ->
-                                local.deleteHomework(oldGrades - newGrades)
-                                local.saveHomework(newGrades - oldGrades)
+                            .doOnSuccess { old ->
+                                local.deleteHomework(old.uniqueSubtract(new))
+                                local.saveHomework(new.uniqueSubtract(old))
                             }
                     }.flatMap { local.getHomework(semester, monday, friday).toSingle(emptyList()) })
         }

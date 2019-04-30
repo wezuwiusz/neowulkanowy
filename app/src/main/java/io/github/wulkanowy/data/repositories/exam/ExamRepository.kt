@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 import java.net.UnknownHostException
@@ -27,12 +28,12 @@ class ExamRepository @Inject constructor(
                         .flatMap {
                             if (it) remote.getExams(semester, dates.first, dates.second)
                             else Single.error(UnknownHostException())
-                        }.flatMap { newExams ->
+                        }.flatMap { new ->
                             local.getExams(semester, dates.first, dates.second)
                                 .toSingle(emptyList())
-                                .doOnSuccess { oldExams ->
-                                    local.deleteExams(oldExams - newExams)
-                                    local.saveExams(newExams - oldExams)
+                                .doOnSuccess { old ->
+                                    local.deleteExams(old.uniqueSubtract(new))
+                                    local.saveExams(new.uniqueSubtract(old))
                                 }
                         }.flatMap {
                             local.getExams(semester, dates.first, dates.second)

@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -22,11 +23,11 @@ class GradeSummaryRepository @Inject constructor(
                 .flatMap {
                     if (it) remote.getGradeSummary(semester)
                     else Single.error(UnknownHostException())
-                }.flatMap { newGradesSummary ->
+                }.flatMap { new ->
                     local.getGradesSummary(semester).toSingle(emptyList())
-                        .doOnSuccess { oldGradesSummary ->
-                            local.deleteGradesSummary(oldGradesSummary - newGradesSummary)
-                            local.saveGradesSummary(newGradesSummary - oldGradesSummary)
+                        .doOnSuccess { old ->
+                            local.deleteGradesSummary(old.uniqueSubtract(new))
+                            local.saveGradesSummary(new.uniqueSubtract(old))
                         }
                 }.flatMap { local.getGradesSummary(semester).toSingle(emptyList()) })
     }

@@ -5,6 +5,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.net.UnknownHostException
@@ -27,8 +28,8 @@ class NoteRepository @Inject constructor(
                 }.flatMap { new ->
                     local.getNotes(student).toSingle(emptyList())
                         .doOnSuccess { old ->
-                            local.deleteNotes(old - new)
-                            local.saveNotes((new - old)
+                            local.deleteNotes(old.uniqueSubtract(new))
+                            local.saveNotes(new.uniqueSubtract(old)
                                 .onEach {
                                     if (it.date >= student.registrationDate.toLocalDate()) it.apply {
                                         isRead = false
