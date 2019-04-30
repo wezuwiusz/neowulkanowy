@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:windowBackground">@color/bottom_nav_background</item>
         <item name="bottomNavBackground">@color/bottom_nav_background</item>
         <item name="android:navigationBarColor" tools:targetApi="21">@color/bottom_nav_background</item>
         <item name="dividerColor">@color/divider_inverse</item>
