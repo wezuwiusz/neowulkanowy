@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.base
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -25,7 +26,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView, HasSupportFragmentI
     @Inject
     lateinit var themeManager: ThemeManager
 
-    protected lateinit var messageContainer: View
+    protected var messageContainer: View? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -36,13 +37,18 @@ abstract class BaseActivity : AppCompatActivity(), BaseView, HasSupportFragmentI
     }
 
     override fun showError(text: String, error: Throwable) {
-        Snackbar.make(messageContainer, text, LENGTH_LONG).setAction(R.string.all_details) {
-            ErrorDialog.newInstance(error).show(supportFragmentManager, error.toString())
-        }.show()
+        if (messageContainer != null) {
+            Snackbar.make(messageContainer!!, text, LENGTH_LONG)
+                .setAction(R.string.all_details) {
+                    ErrorDialog.newInstance(error).show(supportFragmentManager, error.toString())
+                }
+                .show()
+        } else showMessage(text)
     }
 
     override fun showMessage(text: String) {
-        Snackbar.make(messageContainer, text, LENGTH_LONG).show()
+        if (messageContainer != null) Snackbar.make(messageContainer!!, text, LENGTH_LONG).show()
+        else Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {
