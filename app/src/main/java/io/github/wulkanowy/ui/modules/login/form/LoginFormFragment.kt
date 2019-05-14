@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.form
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +16,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import io.github.wulkanowy.utils.setOnTextChangedListener
 import io.github.wulkanowy.utils.showSoftInput
@@ -145,7 +145,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun openPrivacyPolicyPage() {
-        startActivity(Intent.parseUri("https://wulkanowy.github.io/polityka-prywatnosci.html", 0))
+        context?.openInternetBrowser("https://wulkanowy.github.io/polityka-prywatnosci.html", ::showMessage)
     }
 
     override fun onDestroyView() {

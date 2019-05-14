@@ -12,6 +12,7 @@ import io.github.wulkanowy.BuildConfig
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.withOnExtraListener
 import javax.inject.Inject
 
@@ -57,11 +58,11 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
     }
 
     override fun openDiscordInviteView() {
-        startActivity(Intent.parseUri("https://discord.gg/vccAQBr", 0))
+        context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
     }
 
     override fun openHomepageWebView() {
-        startActivity(Intent.parseUri("https://wulkanowy.github.io/", 0))
+        context?.openInternetBrowser("https://wulkanowy.github.io/", ::showMessage)
     }
 
     override fun openEmailClientView() {
@@ -80,7 +81,7 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
             if (intent.resolveActivity(it.packageManager) != null) {
                 startActivity(Intent.createChooser(intent, getString(R.string.about_feedback)))
             } else {
-                startActivity(Intent.parseUri("https://github.com/wulkanowy/wulkanowy/issues", 0))
+                it.openInternetBrowser("https://github.com/wulkanowy/wulkanowy/issues", ::showMessage)
             }
         }
     }
