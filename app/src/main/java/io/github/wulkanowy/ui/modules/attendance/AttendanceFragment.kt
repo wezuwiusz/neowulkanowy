@@ -103,7 +103,7 @@ class AttendanceFragment : BaseSessionFragment(), AttendanceView, MainView.MainC
     }
 
     override fun onFragmentReselected() {
-        presenter.onViewReselected()
+        if (::presenter.isInitialized) presenter.onViewReselected()
     }
 
     override fun popView() {

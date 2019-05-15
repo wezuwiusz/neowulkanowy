@@ -88,7 +88,7 @@ class ExamFragment : BaseSessionFragment(), ExamView, MainView.MainChildView, Ma
     }
 
     override fun onFragmentReselected() {
-        presenter.onViewReselected()
+        if (::presenter.isInitialized) presenter.onViewReselected()
     }
 
     override fun showEmpty(show: Boolean) {

@@ -88,7 +88,7 @@ class GradeFragment : BaseSessionFragment(), GradeView, MainView.MainChildView, 
     }
 
     override fun onFragmentReselected() {
-        presenter.onViewReselected()
+        if (::presenter.isInitialized) presenter.onViewReselected()
     }
 
     override fun showContent(show: Boolean) {

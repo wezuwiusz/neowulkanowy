@@ -110,7 +110,7 @@ class TimetableFragment : BaseSessionFragment(), TimetableView, MainView.MainChi
     }
 
     override fun onFragmentReselected() {
-        presenter.onViewReselected()
+        if (::presenter.isInitialized) presenter.onViewReselected()
     }
 
     override fun popView() {
