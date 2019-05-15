@@ -16,8 +16,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 34
-        versionName "0.8.1"
+        versionCode 35
+        versionName "0.8.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -80,12 +80,12 @@ androidExtensions {
 play {
     serviceAccountEmail = System.getenv("PLAY_SERVICE_ACCOUNT_EMAIL") ?: "jan@fakelog.cf"
     serviceAccountCredentials = file('key.p12')
-    defaultToAppBundles = true
+    defaultToAppBundles = false
     track = 'alpha'
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:api:0.8.1'
+    implementation 'io.github.wulkanowy:api:0.8.2'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"

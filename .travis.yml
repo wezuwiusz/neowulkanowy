@@ -11,10 +11,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-branches:
-  only:
-    - master
-    - 0.7.x
+#branches:
+#  only:
+#    - master
+#    - 0.8.x
 
 android:
  licenses:
