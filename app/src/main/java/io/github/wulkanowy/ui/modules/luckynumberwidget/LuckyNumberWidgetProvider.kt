@@ -104,7 +104,7 @@ class LuckyNumberWidgetProvider : BroadcastReceiver() {
                                         .toMaybe()
                                         .doOnSuccess { sharedPref.putLong(getStudentWidgetKey(appWidgetId), it.id) }
                                 }
-                                else -> null
+                                else -> Maybe.empty()
                             }
                         }
                 }
