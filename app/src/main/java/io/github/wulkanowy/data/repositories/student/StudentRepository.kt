@@ -22,6 +22,8 @@ class StudentRepository @Inject constructor(
 
     fun isStudentSaved(): Single<Boolean> = local.getStudents(false).isEmpty.map { !it }
 
+    fun isCurrentStudentSet(): Single<Boolean> = local.getCurrentStudent(false).isEmpty.map { !it }
+
     fun getStudents(email: String, password: String, endpoint: String, symbol: String = ""): Single<List<Student>> {
         return ReactiveNetwork.checkInternetConnectivity(settings)
             .flatMap {

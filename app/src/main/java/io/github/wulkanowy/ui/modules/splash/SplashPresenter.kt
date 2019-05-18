@@ -14,7 +14,7 @@ class SplashPresenter @Inject constructor(
 
     override fun onAttachView(view: SplashView) {
         super.onAttachView(view)
-        disposable.add(studentRepository.isStudentSaved()
+        disposable.add(studentRepository.isCurrentStudentSet()
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({

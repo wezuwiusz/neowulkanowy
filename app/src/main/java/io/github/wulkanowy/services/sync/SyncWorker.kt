@@ -35,7 +35,7 @@ class SyncWorker @AssistedInject constructor(
 
     override fun createWork(): Single<Result> {
         Timber.i("SyncWorker is starting")
-        return studentRepository.isStudentSaved()
+        return studentRepository.isCurrentStudentSet()
             .filter { true }
             .flatMap { studentRepository.getCurrentStudent().toMaybe() }
             .flatMapCompletable { student ->

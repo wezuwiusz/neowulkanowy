@@ -32,14 +32,14 @@ class SplashPresenterTest {
 
     @Test
     fun testOpenLoginView() {
-        doReturn(Single.just(false)).`when`(studentRepository).isStudentSaved()
+        doReturn(Single.just(false)).`when`(studentRepository).isCurrentStudentSet()
         presenter.onAttachView(splashView)
         verify(splashView).openLoginView()
     }
 
     @Test
     fun testMainMainView() {
-        doReturn(Single.just(true)).`when`(studentRepository).isStudentSaved()
+        doReturn(Single.just(true)).`when`(studentRepository).isCurrentStudentSet()
         presenter.onAttachView(splashView)
         verify(splashView).openMainView()
     }
