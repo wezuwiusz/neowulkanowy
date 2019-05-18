@@ -35,8 +35,7 @@ class TimetableRepository @Inject constructor(
                                 item.apply {
                                     old.singleOrNull { this.start == it.start }?.let {
                                         return@map copy(
-                                            room = if (room.isEmpty()) it.room else room,
-                                            teacher = if (teacher.isEmpty()) it.teacher else teacher
+                                            room = if (room.isEmpty()) it.room else room
                                         )
                                     }
                                 }
