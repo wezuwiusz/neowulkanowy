@@ -44,9 +44,9 @@ class MessageTabPresenter @Inject constructor(
 
     fun onMessageItemSelected(item: AbstractFlexibleItem<*>) {
         if (item is MessageItem) {
-            Timber.i("Select message ${item.message.realId} item")
+            Timber.i("Select message ${item.message.id} item")
             view?.run {
-                openMessage(item.message.realId)
+                openMessage(item.message.id)
                 if (item.message.unread) {
                     item.message.unread = false
                     updateItem(item)
@@ -90,13 +90,13 @@ class MessageTabPresenter @Inject constructor(
     }
 
     private fun updateMessage(message: Message) {
-        Timber.i("Attempt to update message ${message.realId}")
+        Timber.i("Attempt to update message ${message.id}")
         disposable.add(messageRepository.updateMessage(message)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .subscribe({ Timber.d("Update message ${message.realId} result: Success") })
+            .subscribe({ Timber.d("Update message ${message.id} result: Success") })
             { error ->
-                Timber.i("Update message ${message.realId} result: An exception occurred")
+                Timber.i("Update message ${message.id} result: An exception occurred")
                 errorHandler.dispatch(error)
             })
     }

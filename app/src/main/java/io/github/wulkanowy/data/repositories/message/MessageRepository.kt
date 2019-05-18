@@ -46,14 +46,14 @@ class MessageRepository @Inject constructor(
             }
     }
 
-    fun getMessage(student: Student, messageId: Int, markAsRead: Boolean = false): Single<Message> {
+    fun getMessage(student: Student, messageDbId: Long, markAsRead: Boolean = false): Single<Message> {
         return Single.just(apiHelper.initApi(student))
             .flatMap { _ ->
-                local.getMessage(student, messageId)
+                local.getMessage(messageDbId)
                     .filter { !it.content.isNullOrEmpty() }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
-                            if (it) local.getMessage(student, messageId).toSingle()
+                            if (it) local.getMessage(messageDbId).toSingle()
                             else Single.error(UnknownHostException())
                         }
                         .flatMap { dbMessage ->
@@ -64,7 +64,7 @@ class MessageRepository @Inject constructor(
                                 }))
                             }
                         }.flatMap {
-                            local.getMessage(student, messageId).toSingle()
+                            local.getMessage(messageDbId).toSingle()
                         }
                     )
             }

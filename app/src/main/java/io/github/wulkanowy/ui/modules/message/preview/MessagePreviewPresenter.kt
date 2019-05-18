@@ -20,16 +20,16 @@ class MessagePreviewPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BaseSessionPresenter<MessagePreviewView>(errorHandler) {
 
-    var messageId: Int = 0
+    var messageId = 0L
 
     private var message: Message? = null
 
-    fun onAttachView(view: MessagePreviewView, id: Int) {
+    fun onAttachView(view: MessagePreviewView, id: Long) {
         super.onAttachView(view)
         loadData(id)
     }
 
-    private fun loadData(id: Int) {
+    private fun loadData(id: Long) {
         Timber.i("Loading message $id preview started")
         messageId = id
         disposable.apply {

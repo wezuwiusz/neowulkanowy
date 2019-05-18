@@ -23,8 +23,8 @@ class MessageLocal @Inject constructor(private val messagesDb: MessagesDao) {
         messagesDb.deleteAll(messages)
     }
 
-    fun getMessage(student: Student, id: Int): Maybe<Message> {
-        return messagesDb.load(student.id.toInt(), id)
+    fun getMessage(id: Long): Maybe<Message> {
+        return messagesDb.load(id)
     }
 
     fun getMessages(student: Student, folder: MessageFolder): Maybe<List<Message>> {

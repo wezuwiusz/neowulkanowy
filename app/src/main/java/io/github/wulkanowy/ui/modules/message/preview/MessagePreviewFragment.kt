@@ -27,7 +27,9 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
     lateinit var presenter: MessagePreviewPresenter
 
     private var menuReplyButton: MenuItem? = null
+
     private var menuForwardButton: MenuItem? = null
+
     private var menuDeleteButton: MenuItem? = null
 
     override val titleStringId: Int
@@ -42,9 +44,9 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
     companion object {
         const val MESSAGE_ID_KEY = "message_id"
 
-        fun newInstance(messageId: Int?): MessagePreviewFragment {
+        fun newInstance(messageId: Long): MessagePreviewFragment {
             return MessagePreviewFragment().apply {
-                arguments = Bundle().apply { putInt(MESSAGE_ID_KEY, messageId ?: 0) }
+                arguments = Bundle().apply { putLong(MESSAGE_ID_KEY, messageId) }
             }
         }
     }
@@ -61,7 +63,7 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         messageContainer = messagePreviewContainer
-        presenter.onAttachView(this, (savedInstanceState ?: arguments)?.getInt(MESSAGE_ID_KEY) ?: 0)
+        presenter.onAttachView(this, (savedInstanceState ?: arguments)?.getLong(MESSAGE_ID_KEY) ?: 0L)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -145,7 +147,7 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(MESSAGE_ID_KEY, presenter.messageId)
+        outState.putLong(MESSAGE_ID_KEY, presenter.messageId)
     }
 
     override fun onDestroyView() {

@@ -23,8 +23,8 @@ interface MessagesDao {
     @Query("SELECT * FROM Messages WHERE student_id = :studentId AND folder_id = :folder AND removed = 0 ORDER BY date DESC")
     fun loadAll(studentId: Int, folder: Int): Maybe<List<Message>>
 
-    @Query("SELECT * FROM Messages WHERE student_id = :studentId AND real_id = :id")
-    fun load(studentId: Int, id: Int): Maybe<Message>
+    @Query("SELECT * FROM Messages WHERE id = :id")
+    fun load(id: Long): Maybe<Message>
 
     @Query("SELECT * FROM Messages WHERE student_id = :studentId AND removed = 1 ORDER BY date DESC")
     fun loadDeleted(studentId: Int): Maybe<List<Message>>
