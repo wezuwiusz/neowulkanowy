@@ -21,7 +21,7 @@
 
     <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
-    <string name="login_header_symbol">Podaj symbol dziennika VULCAN</string>
+    <string name="login_header_symbol">Podaj symbol</string>
     <string name="login_nickname_hint">Email lub nick</string>
     <string name="login_password_hint">Hasło</string>
     <string name="login_host_hint">Dziennik</string>
@@ -32,7 +32,7 @@
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź symbol</string>
     <string name="login_field_required">To pole jest wymagane</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
-    <string name="login_symbol_helper">Symbol znajduje się na stronie dziennika w zakładce Dostęp Mobilny</string>
+    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
 
