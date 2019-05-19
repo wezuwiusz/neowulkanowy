@@ -1,7 +1,10 @@
-Wersja 0.8.2
+Wersja 0.8.3
 
 Naprawiliśmy:
-- rzadkie problemy ze stabilnością w aplikacji
-- częste problemy ze stabilnością w widżecie szczęśliwego numerka
+- rzadkie problemy z wczytywaniem treści wiadomości
+- rzadkie problemy z wyświetlaniem poprawnego nauczyciela przy zastępstwach
+
+Zmieniliśmy:
+- tekst wskazówki przy wprowadzaniu symbolu w formularzu logowania
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
