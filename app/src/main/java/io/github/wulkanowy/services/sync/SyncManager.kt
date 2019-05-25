@@ -6,7 +6,7 @@ import androidx.work.BackoffPolicy.EXPONENTIAL
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
-import androidx.work.NetworkType.METERED
+import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.UNMETERED
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
@@ -43,7 +43,7 @@ class SyncManager @Inject constructor(
                 PeriodicWorkRequest.Builder(SyncWorker::class.java, preferencesRepository.servicesInterval, MINUTES, 10, MINUTES)
                     .setBackoffCriteria(EXPONENTIAL, 30, MINUTES)
                     .setConstraints(Constraints.Builder()
-                        .setRequiredNetworkType(if (preferencesRepository.isServicesOnlyWifi) METERED else UNMETERED)
+                        .setRequiredNetworkType(if (preferencesRepository.isServicesOnlyWifi) UNMETERED else CONNECTED)
                         .build())
                     .build())
         }
