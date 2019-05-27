@@ -1,10 +1,6 @@
-Wersja 0.8.3
+Wersja 0.8.4
 
 Naprawiliśmy:
-- rzadkie problemy z wczytywaniem treści wiadomości
-- rzadkie problemy z wyświetlaniem poprawnego nauczyciela przy zastępstwach
-
-Zmieniliśmy:
-- tekst wskazówki przy wprowadzaniu symbolu w formularzu logowania
+- synchronizację w tle dla użytkowników używających danych pakietowych
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
