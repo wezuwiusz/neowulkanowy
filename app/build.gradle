@@ -139,8 +139,11 @@ dependencies {
 
     testImplementation "junit:junit:4.12"
     testImplementation "io.mockk:mockk:1.9.2"
-    testImplementation "org.mockito:mockito-inline:2.27.0"
     testImplementation 'org.threeten:threetenbp:1.4.0'
+    testImplementation "org.mockito:mockito-core:2.27.2"
+    testImplementation("org.mockito:mockito-inline:2.27.5") {
+        exclude group: 'org.mockito', module: 'mockito-core'
+    }
 
     androidTestImplementation 'androidx.test:core:1.1.0'
     androidTestImplementation 'androidx.test:runner:1.1.1'
