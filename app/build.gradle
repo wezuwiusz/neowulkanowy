@@ -149,7 +149,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation "io.mockk:mockk-android:1.9.2"
-    androidTestImplementation "androidx.room:room-testing:2.1.0-beta01"
+    androidTestImplementation "androidx.room:room-testing:2.1.0-rc01"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     androidTestImplementation "org.mockito:mockito-core:2.28.2"
     androidTestImplementation('org.mockito:mockito-android:2.28.2') {
