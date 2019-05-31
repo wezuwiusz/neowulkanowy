@@ -24,7 +24,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="1"
             android:textSize="17sp"
-            tools:text="@tools:sample/lorem" />
+            tools:text="Fizyka" />
 
         <TextView
             android:id="@+id/gradeSummaryItemAverage"
@@ -32,7 +32,39 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:textSize="12sp"
-            tools:text="@string/aboutlibrary_lib_version" />
+            tools:text="4.74" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gradeSummaryItemPointsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_all_divider"
+        android:minHeight="35dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:text="@string/grade_summary_points"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/gradeSummaryItemPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:gravity="end"
+            android:textSize="12sp"
+            tools:text="123/150" />
     </LinearLayout>
 
     <LinearLayout
@@ -63,7 +95,7 @@
             android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
-            tools:text="@string/aboutlibrary_lib_version" />
+            tools:text="dobry" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,6 +126,6 @@
             android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
-            tools:text="@string/aboutlibrary_lib_version" />
+            tools:text="bardzo dobry" />
     </LinearLayout>
 </LinearLayout>

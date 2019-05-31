@@ -57,6 +57,7 @@
     <string name="grade_no_average">Brak średniej</string>
     <string name="grade_predicted">Przewidywana: %1$s</string>
     <string name="grade_final">Końcowa: %1$s</string>
+    <string name="grade_summary_points">Suma punktów</string>
     <string name="grade_summary_final_grade">Ocena końcowa</string>
     <string name="grade_summary_predicted_grade">Przewidywana ocena</string>
     <string name="grade_summary_calculated_average">Obliczona średnia</string>

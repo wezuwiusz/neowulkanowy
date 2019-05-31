@@ -96,10 +96,8 @@ class GradeSummaryPresenter @Inject constructor(
                 gradesSummary.filter { !checkEmpty(it, filteredAverages) }
                     .map {
                         GradeSummaryItem(
-                            title = it.subject,
-                            average = formatAverage(filteredAverages.getOrElse(it.subject) { 0.0 }, ""),
-                            predictedGrade = it.predictedGrade,
-                            finalGrade = it.finalGrade
+                            summary = it,
+                            average = formatAverage(filteredAverages.getOrElse(it.subject) { 0.0 }, "")
                         )
                     }.let {
                         it to GradeSummaryScrollableHeader(

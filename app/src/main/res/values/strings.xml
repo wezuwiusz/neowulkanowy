@@ -57,6 +57,7 @@
     <string name="grade_no_average">No average</string>
     <string name="grade_predicted">Predicted: %1$s</string>
     <string name="grade_final">Final: %1$s</string>
+    <string name="grade_summary_points">Total points</string>
     <string name="grade_summary_final_grade">Final grade</string>
     <string name="grade_summary_predicted_grade">Predicted grade</string>
     <string name="grade_summary_calculated_average">Calculated average</string>
