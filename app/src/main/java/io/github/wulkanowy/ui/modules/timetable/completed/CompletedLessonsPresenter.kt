@@ -5,7 +5,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.completedlessons.CompletedLessonsRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
+import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
@@ -21,13 +21,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CompletedLessonsPresenter @Inject constructor(
-    private val schedulers: SchedulersProvider,
-    private val errorHandler: CompletedLessonsErrorHandler,
-    private val studentRepository: StudentRepository,
+    schedulers: SchedulersProvider,
+    studentRepository: StudentRepository,
+    private val completedLessonsErrorHandler: CompletedLessonsErrorHandler,
     private val semesterRepository: SemesterRepository,
     private val completedLessonsRepository: CompletedLessonsRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BaseSessionPresenter<CompletedLessonsView>(errorHandler) {
+) : BasePresenter<CompletedLessonsView>(completedLessonsErrorHandler, studentRepository, schedulers) {
 
     lateinit var currentDate: LocalDate
         private set
@@ -38,7 +38,7 @@ class CompletedLessonsPresenter @Inject constructor(
         view.initView()
         loadData(ofEpochDay(date ?: now().nextOrSameSchoolDay.toEpochDay()))
         reloadView()
-        errorHandler.onFeatureDisabled = {
+        completedLessonsErrorHandler.onFeatureDisabled = {
             this.view?.showFeatureDisabled()
             Timber.i("Completed lessons feature disabled by school")
         }
@@ -97,7 +97,7 @@ class CompletedLessonsPresenter @Inject constructor(
                 }) {
                     Timber.i("Loading completed lessons result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }
-                    errorHandler.dispatch(it)
+                    completedLessonsErrorHandler.dispatch(it)
                 })
         }
     }

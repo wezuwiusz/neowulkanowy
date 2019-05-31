@@ -9,18 +9,17 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.reactivex.Completable
 import timber.log.Timber
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
-    private val studentRepository: StudentRepository,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val prefRepository: PreferencesRepository,
     private val syncManager: SyncManager,
-    private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<MainView>(errorHandler) {
+) : BasePresenter<MainView>(errorHandler, studentRepository, schedulers) {
 
     fun onAttachView(view: MainView, initMenu: MainView.MenuView?) {
         super.onAttachView(view)
@@ -78,28 +77,6 @@ class MainPresenter @Inject constructor(
                 true
             }
         } == true
-    }
-
-    fun onLoginSelected() {
-        Timber.i("Attempt to switch the student after the session expires")
-        disposable.add(studentRepository.getCurrentStudent(false)
-            .flatMapCompletable { studentRepository.logoutStudent(it) }
-            .andThen(studentRepository.getSavedStudents(false))
-            .flatMapCompletable {
-                if (it.isNotEmpty()) {
-                    Timber.i("Switching current student")
-                    studentRepository.switchStudent(it[0])
-                } else Completable.complete()
-            }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .subscribe({
-                Timber.i("Switch student result: Open login view")
-                view?.openLoginView()
-            }, {
-                Timber.i("Switch student result: An exception occurred")
-                errorHandler.dispatch(it)
-            }))
     }
 
     private fun getProperViewIndexes(initMenu: MainView.MenuView?): Pair<Int, Int> {

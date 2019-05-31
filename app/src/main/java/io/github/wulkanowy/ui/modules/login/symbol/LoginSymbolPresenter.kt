@@ -12,11 +12,11 @@ import java.io.Serializable
 import javax.inject.Inject
 
 class LoginSymbolPresenter @Inject constructor(
-    private val studentRepository: StudentRepository,
-    private val errorHandler: LoginErrorHandler,
-    private val schedulers: SchedulersProvider,
+    studentRepository: StudentRepository,
+    schedulers: SchedulersProvider,
+    private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LoginSymbolView>(errorHandler) {
+) : BasePresenter<LoginSymbolView>(loginErrorHandler, studentRepository, schedulers) {
 
     var loginData: Triple<String, String, String>? = null
 
@@ -72,7 +72,7 @@ class LoginSymbolPresenter @Inject constructor(
                 }, {
                     Timber.i("Login with symbol result: An exception occurred")
                     analytics.logEvent("registration_symbol", SUCCESS to false, "students" to -1, "endpoint" to loginData?.third, "symbol" to symbol, "error" to it.localizedMessage)
-                    errorHandler.dispatch(it)
+                    loginErrorHandler.dispatch(it)
                 }))
     }
 

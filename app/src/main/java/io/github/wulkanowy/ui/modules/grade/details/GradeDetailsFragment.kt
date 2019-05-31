@@ -17,7 +17,7 @@ import eu.davidea.flexibleadapter.items.IExpandable
 import eu.davidea.flexibleadapter.items.IFlexible
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
-import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -25,7 +25,7 @@ import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_grade_details.*
 import javax.inject.Inject
 
-class GradeDetailsFragment : BaseSessionFragment(), GradeDetailsView, GradeView.GradeChildView {
+class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeChildView {
 
     @Inject
     lateinit var presenter: GradeDetailsPresenter

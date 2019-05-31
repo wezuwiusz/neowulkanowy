@@ -6,23 +6,23 @@ import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.subject.SubjectRepository
-import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
-import io.github.wulkanowy.ui.base.session.SessionErrorHandler
+import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class GradeStatisticsPresenter @Inject constructor(
-    private val errorHandler: SessionErrorHandler,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val gradeStatisticsRepository: GradeStatisticsRepository,
     private val subjectRepository: SubjectRepository,
-    private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val preferencesRepository: PreferencesRepository,
-    private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
-) : BaseSessionPresenter<GradeStatisticsView>(errorHandler) {
+) : BasePresenter<GradeStatisticsView>(errorHandler, studentRepository, schedulers) {
 
     private var subjects = emptyList<Subject>()
 

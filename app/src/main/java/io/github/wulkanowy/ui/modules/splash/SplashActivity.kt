@@ -8,10 +8,10 @@ import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import javax.inject.Inject
 
-class SplashActivity : BaseActivity(), SplashView {
+class SplashActivity : BaseActivity<SplashPresenter>(), SplashView {
 
     @Inject
-    lateinit var presenter: SplashPresenter
+    override lateinit var presenter: SplashPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +30,5 @@ class SplashActivity : BaseActivity(), SplashView {
 
     override fun showError(text: String, error: Throwable) {
         Toast.makeText(this, text, LENGTH_LONG).show()
-    }
-
-    override fun onDestroy() {
-        presenter.onDetachView()
-        super.onDestroy()
     }
 }

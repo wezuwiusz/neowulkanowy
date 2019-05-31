@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.grade.summary
 
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 
-interface GradeSummaryView : BaseSessionView {
+interface GradeSummaryView : BaseView {
 
     val isViewEmpty: Boolean
 

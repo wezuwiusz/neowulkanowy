@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.LuckyNumber
-import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import kotlinx.android.synthetic.main.fragment_lucky_number.*
 import javax.inject.Inject
 
-class LuckyNumberFragment : BaseSessionFragment(), LuckyNumberView, MainView.TitledView {
+class LuckyNumberFragment : BaseFragment(), LuckyNumberView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: LuckyNumberPresenter

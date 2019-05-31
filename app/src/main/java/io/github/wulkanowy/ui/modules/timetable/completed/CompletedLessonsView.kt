@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.timetable.completed
 
 import io.github.wulkanowy.data.db.entities.CompletedLesson
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 
-interface CompletedLessonsView : BaseSessionView {
+interface CompletedLessonsView : BaseView {
 
     val isViewEmpty: Boolean
 

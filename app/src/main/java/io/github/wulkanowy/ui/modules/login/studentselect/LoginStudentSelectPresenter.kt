@@ -13,11 +13,11 @@ import java.io.Serializable
 import javax.inject.Inject
 
 class LoginStudentSelectPresenter @Inject constructor(
-    private val errorHandler: LoginErrorHandler,
-    private val studentRepository: StudentRepository,
-    private val schedulers: SchedulersProvider,
+    schedulers: SchedulersProvider,
+    studentRepository: StudentRepository,
+    private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LoginStudentSelectView>(errorHandler) {
+) : BasePresenter<LoginStudentSelectView>(loginErrorHandler, studentRepository, schedulers) {
 
     var students = emptyList<Student>()
 
@@ -28,7 +28,7 @@ class LoginStudentSelectPresenter @Inject constructor(
         view.run {
             initView()
             enableSignIn(false)
-            errorHandler.onStudentDuplicate = {
+            loginErrorHandler.onStudentDuplicate = {
                 showMessage(it)
                 Timber.i("The student already registered in the app was selected")
             }
@@ -84,7 +84,7 @@ class LoginStudentSelectPresenter @Inject constructor(
             }, { error ->
                 students.forEach { analytics.logEvent("registration_student_select", SUCCESS to false, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to error.localizedMessage) }
                 Timber.i("Registration result: An exception occurred ")
-                errorHandler.dispatch(error)
+                loginErrorHandler.dispatch(error)
                 view?.apply {
                     showProgress(false)
                     showContent(true)

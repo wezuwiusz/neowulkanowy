@@ -19,16 +19,16 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SendMessagePresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
-    private val schedulers: SchedulersProvider,
-    private val studentRepository: StudentRepository,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val messageRepository: MessageRepository,
     private val reportingUnitRepository: ReportingUnitRepository,
     private val recipientRepository: RecipientRepository,
     private val preferencesRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<SendMessageView>(errorHandler) {
+) : BasePresenter<SendMessageView>(errorHandler, studentRepository, schedulers) {
 
     fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean?) {
         super.onAttachView(view)

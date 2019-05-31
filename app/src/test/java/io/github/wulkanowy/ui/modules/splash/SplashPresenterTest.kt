@@ -27,7 +27,7 @@ class SplashPresenterTest {
     @Before
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
-        presenter = SplashPresenter(studentRepository, errorHandler, TestSchedulersProvider())
+        presenter = SplashPresenter(TestSchedulersProvider(), errorHandler, studentRepository)
     }
 
     @Test

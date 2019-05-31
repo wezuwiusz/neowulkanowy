@@ -2,9 +2,9 @@ package io.github.wulkanowy.ui.modules.note
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Note
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 
-interface NoteView : BaseSessionView {
+interface NoteView : BaseView {
 
     val isViewEmpty: Boolean
 

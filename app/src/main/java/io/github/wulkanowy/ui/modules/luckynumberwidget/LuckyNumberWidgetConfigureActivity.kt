@@ -16,13 +16,14 @@ import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.activity_widget_configure.*
 import javax.inject.Inject
 
-class LuckyNumberWidgetConfigureActivity : BaseActivity(), LuckyNumberWidgetConfigureView {
+class LuckyNumberWidgetConfigureActivity : BaseActivity<LuckyNumberWidgetConfigurePresenter>(),
+    LuckyNumberWidgetConfigureView {
 
     @Inject
     lateinit var configureAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
 
     @Inject
-    lateinit var presenter: LuckyNumberWidgetConfigurePresenter
+    override lateinit var presenter: LuckyNumberWidgetConfigurePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +69,5 @@ class LuckyNumberWidgetConfigureActivity : BaseActivity(), LuckyNumberWidgetConf
 
     override fun openLoginView() {
         startActivity(LoginActivity.getStartIntent(this))
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onDetachView()
     }
 }

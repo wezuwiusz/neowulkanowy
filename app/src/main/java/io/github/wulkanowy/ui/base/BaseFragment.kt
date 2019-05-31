@@ -18,7 +18,7 @@ abstract class BaseFragment : DaggerFragment(), BaseView {
                 }
                 .show()
         } else {
-            (activity as? BaseActivity)?.showError(text, error)
+            (activity as? BaseActivity<*>)?.showError(text, error)
         }
     }
 
@@ -26,7 +26,15 @@ abstract class BaseFragment : DaggerFragment(), BaseView {
         if (messageContainer != null) {
             Snackbar.make(messageContainer!!, text, LENGTH_LONG).show()
         } else {
-            (activity as? BaseActivity)?.showMessage(text)
+            (activity as? BaseActivity<*>)?.showMessage(text)
         }
+    }
+
+    override fun showExpiredDialog() {
+        (activity as? BaseActivity<*>)?.showExpiredDialog()
+    }
+
+    override fun openClearLoginView() {
+        (activity as? BaseActivity<*>)?.openClearLoginView()
     }
 }

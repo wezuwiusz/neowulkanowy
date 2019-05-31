@@ -10,14 +10,14 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.CompletedLesson
-import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable_completed.*
 import javax.inject.Inject
 
-class CompletedLessonsFragment : BaseSessionFragment(), CompletedLessonsView, MainView.TitledView {
+class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: CompletedLessonsPresenter

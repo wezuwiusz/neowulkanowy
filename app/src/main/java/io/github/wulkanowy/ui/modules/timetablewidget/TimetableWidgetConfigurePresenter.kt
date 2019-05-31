@@ -11,11 +11,11 @@ import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Inject
 
 class TimetableWidgetConfigurePresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
-    private val schedulers: SchedulersProvider,
-    private val studentRepository: StudentRepository,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val sharedPref: SharedPrefHelper
-) : BasePresenter<TimetableWidgetConfigureView>(errorHandler) {
+) : BasePresenter<TimetableWidgetConfigureView>(errorHandler, studentRepository, schedulers) {
 
     private var appWidgetId: Int? = null
 
