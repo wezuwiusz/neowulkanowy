@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobileDevice_subitem_container"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    tools:context=".ui.modules.mobiledevice.MobileDeviceItem">
+
+    <TextView
+        android:id="@+id/mobileDeviceItemName"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toStartOf="@id/mobileDeviceItemUnregister"
+        android:layout_toLeftOf="@id/mobileDeviceItemUnregister"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:textSize="16sp"
+        tools:text="@tools:sample/lorem/random" />
+
+    <TextView
+        android:id="@+id/mobileDeviceItemDate"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@id/mobileDeviceItemName"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toStartOf="@id/mobileDeviceItemUnregister"
+        android:layout_toLeftOf="@id/mobileDeviceItemUnregister"
+        android:gravity="bottom"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="14sp"
+        tools:text="@tools:sample/date/ddmmyy" />
+
+    <ImageButton
+        android:id="@+id/mobileDeviceItemUnregister"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/mobile_devices_unregister"
+        app:srcCompat="@drawable/ic_message_delete_24dp"
+        app:tint="?android:textColorSecondary" />
+</RelativeLayout>

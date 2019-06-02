@@ -7,7 +7,7 @@ references:
 
   container_config: &container_config
     docker:
-      - image: circleci/android:api-28
+      - image: circleci/android@sha256:5cdc8626cc6f13efe5ed982cdcdb432b0472f8740fed8743a6461e025ad6cdfc
     working_directory: *workspace_root
     environment:
       environment:
@@ -93,6 +93,9 @@ jobs:
     <<: *container_config
     steps:
       - *attach_workspace
+      - run:
+          name: Accept licenses
+          command: yes | sdkmanager --licenses && yes | sdkmanager --update
       - run:
           name: Setup emulator
           command: sdkmanager "system-images;android-19;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-19;default;armeabi-v7a"

@@ -204,6 +204,17 @@
     <string name="lucky_number_notify_new_item">Dziś szczęśliwym numerkiem jest: %d</string>
 
 
+    <!--Mobile devices-->
+    <string name="mobile_devices_title">Dostęp mobilny</string>
+    <string name="mobile_devices_no_items">Brak urządzeń</string>
+    <string name="mobile_devices_unregister">Wyrejestruj</string>
+    <string name="mobile_device_removed">Urządzenie usunięte</string>
+    <string name="mobile_device_qr">Kod QR</string>
+    <string name="mobile_device_token">Token</string>
+    <string name="mobile_device_symbol">Symbol</string>
+    <string name="mobile_device_pin">PIN</string>
+
+
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>
     <string name="account_logout">Wyloguj</string>
@@ -279,6 +290,7 @@
 
     <!--Others-->
     <string name="all_copied">Skopiowano</string>
+    <string name="all_undo">Cofnij</string>
 
 
     <!--Errors-->
