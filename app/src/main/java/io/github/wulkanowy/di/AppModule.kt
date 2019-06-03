@@ -2,7 +2,6 @@ package io.github.wulkanowy.di
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.Module
 import dagger.Provides
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -26,10 +25,6 @@ internal class AppModule {
 
     @Provides
     fun provideFlexibleAdapter() = FlexibleAdapter<AbstractFlexibleItem<*>>(null, null, true)
-
-    @Singleton
-    @Provides
-    fun provideFirebaseAnalytics(context: Context) = FirebaseAnalytics.getInstance(context)
 
     @Singleton
     @Provides

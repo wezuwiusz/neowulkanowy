@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.homework
 
-import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.repositories.homework.HomeworkRepository
@@ -89,7 +88,7 @@ class HomeworkPresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_homework", "items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd"))
+                    analytics.logEvent("load_homework", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading homework result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty()) }

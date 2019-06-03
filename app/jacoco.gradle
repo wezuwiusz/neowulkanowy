@@ -35,11 +35,14 @@ task jacocoTestReport(type: JacocoReport) {
             dir: "$buildDir/intermediates/classes/debug",
             excludes: excludes
     ) + fileTree(
-            dir: "$buildDir/tmp/kotlin-classes/debug",
+            dir: "$buildDir/tmp/kotlin-classes/playDebug",
             excludes: excludes
     ))
 
-    sourceDirectories.setFrom(files("$project.projectDir/src/main/java"))
+    sourceDirectories.setFrom(files([
+            "src/main/java",
+            "src/play/java"
+    ]))
     executionData.setFrom(fileTree(
             dir: project.projectDir,
             includes: ["**/*.exec", "**/*.ec"]

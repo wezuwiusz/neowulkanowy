@@ -63,6 +63,18 @@ android {
         }
     }
 
+    flavorDimensions "platform"
+    productFlavors {
+        play {
+            dimension "platform"
+        }
+
+        fdroid {
+            buildConfigField "boolean", "CRASHLYTICS_ENABLED", "false"
+            dimension "platform"
+        }
+    }
+
     lintOptions {
         disable 'HardwareIds'
     }
@@ -129,8 +141,8 @@ dependencies {
     implementation "com.mikepenz:aboutlibraries:6.2.3"
     implementation 'com.takisoft.preferencex:preferencex:1.0.0'
 
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    playImplementation 'com.google.firebase:firebase-core:16.0.9'
+    playImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     releaseImplementation 'fr.o80.chucker:library-no-op:2.0.4'
 

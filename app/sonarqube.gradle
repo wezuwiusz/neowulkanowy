@@ -29,5 +29,6 @@ sonarqube {
         property "sonar.java.coveragePlugin", "jacoco"
         property "sonar.android.lint.report", "build/reports/lint-results.xml"
         property "sonar.jacoco.reportPaths", fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacocoTestReport/jacocoTestReport.xml"
     }
 }

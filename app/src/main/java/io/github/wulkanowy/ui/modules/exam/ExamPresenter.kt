@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.exam
 
-import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.repositories.exam.ExamRepository
@@ -102,7 +101,7 @@ class ExamPresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_exam", "items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd"))
+                    analytics.logEvent("load_exam", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading exam result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }

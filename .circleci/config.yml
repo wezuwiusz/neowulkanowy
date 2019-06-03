@@ -35,7 +35,7 @@ jobs:
           command: ./gradlew dependencies --no-daemon --stacktrace --console=plain -PdisablePreDex || true
       - run:
           name: Initial build
-          command: ./gradlew build -x test -x lint -x fabricGenerateResourcesRelease -x packageRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew build -x test -x lint -x fabricGenerateResourcesFdroidRelease -x fabricGenerateResourcesPlayRelease -x packageRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Run FOSSA
           command: fossa --no-ansi || true
@@ -56,7 +56,7 @@ jobs:
           <<: *general_cache_key
       - run:
           name: Run lint
-          command: ./gradlew lint -x fabricGenerateResourcesRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew lint -x fabricGenerateResourcesFdroidRelease -x fabricGenerateResourcesPlayRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - store_artifacts:
           path: ./app/build/reports/
           destination: lint_reports/app/
@@ -75,7 +75,7 @@ jobs:
           <<: *general_cache_key
       - run:
           name: Run app tests
-          command: ./gradlew :app:test :app:jacocoTestReport -x fabricGenerateResourcesRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew :app:test :app:jacocoTestReport -x fabricGenerateResourcesFdroidRelease -x fabricGenerateResourcesPlayRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Upload unit code coverage to codecov
           command: bash <(curl -s https://codecov.io/bash) -F app
@@ -116,7 +116,7 @@ jobs:
             adb shell input keyevent 82
       - run:
           name: Run instrumented tests
-          command: ./gradlew clean createDebugCoverageReport jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
+          command: ./gradlew clean createPlayDebugCoverageReport jacocoTestReport --no-daemon --stacktrace --console=plain -PdisablePreDex
       - run:
           name: Collect logs from emulator
           command: adb logcat -d > ./app/build/reports/logcat_emulator.txt
@@ -162,7 +162,7 @@ jobs:
             openssl aes-256-cbc -d -in ./app/upload-key-encrypted.jks -k $ENCRYPT_KEY >> ./app/upload-key.jks
       - run:
           name: Publish release
-          command: ./gradlew publish --no-daemon --stacktrace --console=plain -PenableCrashlytics -PdisablePreDex
+          command: ./gradlew publishPlayRelease --no-daemon --stacktrace --console=plain -PenableCrashlytics -PdisablePreDex
 
 workflows:
   version: 2

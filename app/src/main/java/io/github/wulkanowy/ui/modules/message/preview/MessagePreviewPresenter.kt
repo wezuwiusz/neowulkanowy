@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
-import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -53,7 +52,7 @@ class MessagePreviewPresenter @Inject constructor(
                             else setSender(it.sender)
                         }
                     }
-                    analytics.logEvent("load_message_preview", START_DATE to message.date.toFormattedString("yyyy.MM.dd"), "length" to message.content?.length)
+                    analytics.logEvent("load_message_preview", "length" to message.content?.length)
                 }) {
                     Timber.i("Loading message $id preview result: An exception occurred ")
                     view?.showMessageError()

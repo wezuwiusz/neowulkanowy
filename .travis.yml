@@ -47,20 +47,20 @@ before_script:
 script:
   - ./gradlew dependencies --stacktrace --daemon
   - fossa --no-ansi || true
-  #- ./gradlew lint -x fabricGenerateResourcesRelease --stacktrace --daemon
-  - ./gradlew test -x fabricGenerateResourcesRelease --stacktrace --daemon
-  - ./gradlew createDebugCoverageReport --stacktrace --daemon
+  #- ./gradlew lintPlayRelease -x fabricGenerateResourcesPlayRelease --stacktrace --daemon
+  - ./gradlew testPlayDebugUnitTest -x fabricGenerateResourcesPlay --stacktrace --daemon
+  - ./gradlew createPlayDebugCoverageReport --stacktrace --daemon
   - ./gradlew jacocoTestReport --stacktrace --daemon
   - if [ -z ${SONAR_HOST+x} ]; then echo "sonar scan skipped"; else
       git fetch --unshallow;
-      ./gradlew sonarqube -x test -x lint -x fabricGenerateResourcesRelease -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} --stacktrace --daemon;
+      ./gradlew sonarqube -x test -x lint -x fabricGenerateResourcesPlayRelease -x fabricGenerateResourcesFdroidRelease -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} --stacktrace --daemon;
     fi
   - |
     if [ $TRAVIS_TAG ]; then
       gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/google-services.json.gpg;
       gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg;
       gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg;
-      ./gradlew publish -PenableCrashlytics --stacktrace;
+      ./gradlew publishPlayRelease -PenableCrashlytics --stacktrace;
     fi
 
 after_success:

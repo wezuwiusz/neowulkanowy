@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.timetable.completed
 
-import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.completedlessons.CompletedLessonsRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -93,7 +92,7 @@ class CompletedLessonsPresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_completed_lessons", "items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd"))
+                    analytics.logEvent("load_completed_lessons", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading completed lessons result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }

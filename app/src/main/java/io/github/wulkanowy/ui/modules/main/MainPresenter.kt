@@ -1,7 +1,5 @@
 package io.github.wulkanowy.ui.modules.main
 
-import com.google.firebase.analytics.FirebaseAnalytics.Event.APP_OPEN
-import com.google.firebase.analytics.FirebaseAnalytics.Param.DESTINATION
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
@@ -33,7 +31,7 @@ class MainPresenter @Inject constructor(
         }
 
         syncManager.startSyncWorker()
-        analytics.logEvent(APP_OPEN, DESTINATION to initMenu?.name)
+        analytics.logEvent("app_open", "destination" to initMenu?.name)
     }
 
     fun onViewChange() {
