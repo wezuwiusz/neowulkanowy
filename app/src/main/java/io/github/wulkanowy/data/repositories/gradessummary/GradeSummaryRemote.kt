@@ -18,9 +18,14 @@ class GradeSummaryRemote @Inject constructor(private val api: Api) {
                     GradeSummary(
                         semesterId = semester.semesterId,
                         studentId = semester.studentId,
+                        position = it.order,
                         subject = it.name,
                         predictedGrade = it.predicted,
-                        finalGrade = it.final
+                        finalGrade = it.final,
+                        pointsSum = it.pointsSum,
+                        proposedPoints = it.proposedPoints,
+                        finalPoints = it.finalPoints,
+                        average = it.average
                     )
                 }
             }

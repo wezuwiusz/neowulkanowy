@@ -1,10 +1,10 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.message.MessageItem
 
-interface MessageTabView : BaseSessionView {
+interface MessageTabView : BaseView {
 
     val noSubjectString: String
 

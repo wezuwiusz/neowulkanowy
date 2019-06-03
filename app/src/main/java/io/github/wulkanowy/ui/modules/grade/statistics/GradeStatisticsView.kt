@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.grade.statistics
 
 import io.github.wulkanowy.data.db.entities.GradeStatistics
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 
-interface GradeStatisticsView : BaseSessionView {
+interface GradeStatisticsView : BaseView {
 
     val isViewEmpty: Boolean
 

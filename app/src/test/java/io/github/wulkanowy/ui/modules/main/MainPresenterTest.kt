@@ -40,7 +40,7 @@ class MainPresenterTest {
         MockitoAnnotations.initMocks(this)
         clearInvocations(mainView)
 
-        presenter = MainPresenter(errorHandler, studentRepository, prefRepository, syncManager, TestSchedulersProvider(), analytics)
+        presenter = MainPresenter(TestSchedulersProvider(), errorHandler, studentRepository, prefRepository, syncManager, analytics)
         presenter.onAttachView(mainView, null)
     }
 

@@ -13,14 +13,14 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
-import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_exam.*
 import javax.inject.Inject
 
-class ExamFragment : BaseSessionFragment(), ExamView, MainView.MainChildView, MainView.TitledView {
+class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: ExamPresenter

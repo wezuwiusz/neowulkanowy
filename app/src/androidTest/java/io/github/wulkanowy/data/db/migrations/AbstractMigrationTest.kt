@@ -22,7 +22,12 @@ abstract class AbstractMigrationTest {
     fun getMigratedRoomDatabase(): AppDatabase {
         val database = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
             AppDatabase::class.java, dbName)
-            .addMigrations(Migration12(), Migration13())
+            .addMigrations(
+                Migration12(),
+                Migration13(),
+                Migration14(),
+                Migration15()
+            )
             .build()
         // close the database and release any stream resources when the test finishes
         helper.closeWhenFinished(database)

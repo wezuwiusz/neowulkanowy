@@ -13,6 +13,8 @@ interface MoreView : BaseView {
 
     val luckyNumberRes: Pair<String, Drawable?>?
 
+    val mobileDevicesRes: Pair<String, Drawable?>?
+
     val settingsRes: Pair<String, Drawable?>?
 
     val aboutRes: Pair<String, Drawable?>?
@@ -34,4 +36,6 @@ interface MoreView : BaseView {
     fun openNoteView()
 
     fun openLuckyNumberView()
+
+    fun openMobileDevicesView()
 }

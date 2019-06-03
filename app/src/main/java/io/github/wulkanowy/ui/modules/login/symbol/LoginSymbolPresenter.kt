@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.login.symbol
 
-import com.google.firebase.analytics.FirebaseAnalytics.Param.SUCCESS
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -12,11 +11,11 @@ import java.io.Serializable
 import javax.inject.Inject
 
 class LoginSymbolPresenter @Inject constructor(
-    private val studentRepository: StudentRepository,
-    private val errorHandler: LoginErrorHandler,
-    private val schedulers: SchedulersProvider,
+    studentRepository: StudentRepository,
+    schedulers: SchedulersProvider,
+    private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LoginSymbolView>(errorHandler) {
+) : BasePresenter<LoginSymbolView>(loginErrorHandler, studentRepository, schedulers) {
 
     var loginData: Triple<String, String, String>? = null
 
@@ -59,7 +58,7 @@ class LoginSymbolPresenter @Inject constructor(
                     }
                 }
                 .subscribe({
-                    analytics.logEvent("registration_symbol", SUCCESS to true, "students" to it.size, "endpoint" to loginData?.third, "symbol" to symbol, "error" to "No error")
+                    analytics.logEvent("registration_symbol", "success" to true, "students" to it.size, "endpoint" to loginData?.third, "symbol" to symbol, "error" to "No error")
                     view?.apply {
                         if (it.isEmpty()) {
                             Timber.i("Login with symbol result: Empty student list")
@@ -71,8 +70,8 @@ class LoginSymbolPresenter @Inject constructor(
                     }
                 }, {
                     Timber.i("Login with symbol result: An exception occurred")
-                    analytics.logEvent("registration_symbol", SUCCESS to false, "students" to -1, "endpoint" to loginData?.third, "symbol" to symbol, "error" to it.localizedMessage)
-                    errorHandler.dispatch(it)
+                    analytics.logEvent("registration_symbol", "success" to false, "students" to -1, "endpoint" to loginData?.third, "symbol" to symbol, "error" to it.localizedMessage.ifEmpty { "No message" })
+                    loginErrorHandler.dispatch(it)
                 }))
     }
 

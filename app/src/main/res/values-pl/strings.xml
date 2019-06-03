@@ -57,6 +57,7 @@
     <string name="grade_no_average">Brak średniej</string>
     <string name="grade_predicted">Przewidywana: %1$s</string>
     <string name="grade_final">Końcowa: %1$s</string>
+    <string name="grade_summary_points">Suma punktów</string>
     <string name="grade_summary_final_grade">Ocena końcowa</string>
     <string name="grade_summary_predicted_grade">Przewidywana ocena</string>
     <string name="grade_summary_calculated_average">Obliczona średnia</string>
@@ -203,6 +204,17 @@
     <string name="lucky_number_notify_new_item">Dziś szczęśliwym numerkiem jest: %d</string>
 
 
+    <!--Mobile devices-->
+    <string name="mobile_devices_title">Dostęp mobilny</string>
+    <string name="mobile_devices_no_items">Brak urządzeń</string>
+    <string name="mobile_devices_unregister">Wyrejestruj</string>
+    <string name="mobile_device_removed">Urządzenie usunięte</string>
+    <string name="mobile_device_qr">Kod QR</string>
+    <string name="mobile_device_token">Token</string>
+    <string name="mobile_device_symbol">Symbol</string>
+    <string name="mobile_device_pin">PIN</string>
+
+
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>
     <string name="account_logout">Wyloguj</string>
@@ -278,11 +290,12 @@
 
     <!--Others-->
     <string name="all_copied">Skopiowano</string>
+    <string name="all_undo">Cofnij</string>
 
 
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
-    <string name="error_timeout">Zbyt długie oczekiwanie na połączenie</string>
+    <string name="error_timeout">Zbyt długie oczekiwanie na połączenie z dziennikiem</string>
     <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
     <string name="error_service_unavailable">Dziennik jest niedostępny. Spróbuj ponownie później</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>

@@ -1,12 +1,15 @@
 package io.github.wulkanowy.utils
 
+import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FirebaseAnalyticsHelper @Inject constructor(private val analytics: FirebaseAnalytics) {
+class FirebaseAnalyticsHelper @Inject constructor(private val context: Context) {
+
+    private val analytics by lazy { FirebaseAnalytics.getInstance(context) }
 
     fun logEvent(name: String, vararg params: Pair<String, Any?>) {
         Bundle().apply {

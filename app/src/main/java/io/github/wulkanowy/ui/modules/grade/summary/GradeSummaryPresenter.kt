@@ -4,8 +4,8 @@ import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.repositories.gradessummary.GradeSummaryRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
-import io.github.wulkanowy.ui.base.session.SessionErrorHandler
+import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
@@ -16,14 +16,14 @@ import java.util.Locale.FRANCE
 import javax.inject.Inject
 
 class GradeSummaryPresenter @Inject constructor(
-    private val errorHandler: SessionErrorHandler,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val gradeSummaryRepository: GradeSummaryRepository,
-    private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val averageProvider: GradeAverageProvider,
-    private val schedulers: SchedulersProvider,
     private val analytics: FirebaseAnalyticsHelper
-) : BaseSessionPresenter<GradeSummaryView>(errorHandler) {
+) : BasePresenter<GradeSummaryView>(errorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: GradeSummaryView) {
         super.onAttachView(view)
@@ -96,10 +96,8 @@ class GradeSummaryPresenter @Inject constructor(
                 gradesSummary.filter { !checkEmpty(it, filteredAverages) }
                     .map {
                         GradeSummaryItem(
-                            title = it.subject,
-                            average = formatAverage(filteredAverages.getOrElse(it.subject) { 0.0 }, ""),
-                            predictedGrade = it.predictedGrade,
-                            finalGrade = it.finalGrade
+                            summary = it,
+                            average = formatAverage(filteredAverages.getOrElse(it.subject) { 0.0 }, "")
                         )
                     }.let {
                         it to GradeSummaryScrollableHeader(

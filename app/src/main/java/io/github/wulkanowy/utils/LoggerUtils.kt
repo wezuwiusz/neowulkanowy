@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.crashlytics.android.Crashlytics
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,17 +15,6 @@ class DebugLogTree : Timber.DebugTree() {
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         super.log(priority, "Wulkanowy", message, t)
-    }
-}
-
-class CrashlyticsTree : Timber.Tree() {
-
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        Crashlytics.setInt("priority", priority)
-        Crashlytics.setString("tag", tag)
-
-        if (t == null) Crashlytics.log(message)
-        else Crashlytics.logException(t)
     }
 }
 

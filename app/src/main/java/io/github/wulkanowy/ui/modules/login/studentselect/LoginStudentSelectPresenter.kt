@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.login.studentselect
 
-import com.google.firebase.analytics.FirebaseAnalytics.Param.SUCCESS
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -13,22 +12,22 @@ import java.io.Serializable
 import javax.inject.Inject
 
 class LoginStudentSelectPresenter @Inject constructor(
-    private val errorHandler: LoginErrorHandler,
-    private val studentRepository: StudentRepository,
-    private val schedulers: SchedulersProvider,
+    schedulers: SchedulersProvider,
+    studentRepository: StudentRepository,
+    private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LoginStudentSelectView>(errorHandler) {
+) : BasePresenter<LoginStudentSelectView>(loginErrorHandler, studentRepository, schedulers) {
 
     var students = emptyList<Student>()
 
-    var selectedStudents = mutableListOf<Student>()
+    private var selectedStudents = mutableListOf<Student>()
 
     fun onAttachView(view: LoginStudentSelectView, students: Serializable?) {
         super.onAttachView(view)
         view.run {
             initView()
             enableSignIn(false)
-            errorHandler.onStudentDuplicate = {
+            loginErrorHandler.onStudentDuplicate = {
                 showMessage(it)
                 Timber.i("The student already registered in the app was selected")
             }
@@ -78,13 +77,13 @@ class LoginStudentSelectPresenter @Inject constructor(
                 Timber.i("Registration started")
             }
             .subscribe({
-                students.forEach { analytics.logEvent("registration_student_select", SUCCESS to true, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to "No error") }
+                students.forEach { analytics.logEvent("registration_student_select", "success" to true, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to "No error") }
                 Timber.i("Registration result: Success")
                 view?.openMainView()
             }, { error ->
-                students.forEach { analytics.logEvent("registration_student_select", SUCCESS to false, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to error.localizedMessage) }
+                students.forEach { analytics.logEvent("registration_student_select", "success" to false, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to error.localizedMessage.ifEmpty { "No message" }) }
                 Timber.i("Registration result: An exception occurred ")
-                errorHandler.dispatch(error)
+                loginErrorHandler.dispatch(error)
                 view?.apply {
                     showProgress(false)
                     showContent(true)

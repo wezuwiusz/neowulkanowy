@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.luckynumber
 
 import io.github.wulkanowy.data.db.entities.LuckyNumber
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 
-interface LuckyNumberView : BaseSessionView {
+interface LuckyNumberView : BaseView {
 
     fun initView()
 

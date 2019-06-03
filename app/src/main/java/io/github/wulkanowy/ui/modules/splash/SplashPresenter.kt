@@ -7,10 +7,10 @@ import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Inject
 
 class SplashPresenter @Inject constructor(
-    private val studentRepository: StudentRepository,
-    private val errorHandler: ErrorHandler,
-    private val schedulers: SchedulersProvider
-) : BasePresenter<SplashView>(errorHandler) {
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository
+) : BasePresenter<SplashView>(errorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: SplashView) {
         super.onAttachView(view)

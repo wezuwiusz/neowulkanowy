@@ -11,11 +11,11 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AccountPresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
-    private val studentRepository: StudentRepository,
-    private val syncManager: SyncManager,
-    private val schedulers: SchedulersProvider
-) : BasePresenter<AccountView>(errorHandler) {
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
+    private val syncManager: SyncManager
+) : BasePresenter<AccountView>(errorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: AccountView) {
         super.onAttachView(view)

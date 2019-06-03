@@ -1,12 +1,18 @@
 package io.github.wulkanowy.ui.modules.more
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
 import javax.inject.Inject
 
-class MorePresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresenter<MoreView>(errorHandler) {
+class MorePresenter @Inject constructor(
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository
+) : BasePresenter<MoreView>(errorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: MoreView) {
         super.onAttachView(view)
@@ -24,6 +30,7 @@ class MorePresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresen
                     homeworkRes?.first -> openHomeworkView()
                     noteRes?.first -> openNoteView()
                     luckyNumberRes?.first -> openLuckyNumberView()
+                    mobileDevicesRes?.first -> openMobileDevicesView()
                     settingsRes?.first -> openSettingsView()
                     aboutRes?.first -> openAboutView()
                 }
@@ -44,6 +51,7 @@ class MorePresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresen
                 homeworkRes?.let { MoreItem(it.first, it.second) },
                 noteRes?.let { MoreItem(it.first, it.second) },
                 luckyNumberRes?.let { MoreItem(it.first, it.second) },
+                mobileDevicesRes?.let { MoreItem(it.first, it.second) },
                 settingsRes?.let { MoreItem(it.first, it.second) },
                 aboutRes?.let { MoreItem(it.first, it.second) })
             )

@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.exam
 
 import io.github.wulkanowy.data.db.entities.Exam
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 
-interface ExamView : BaseSessionView {
+interface ExamView : BaseView {
 
     val isViewEmpty: Boolean
 

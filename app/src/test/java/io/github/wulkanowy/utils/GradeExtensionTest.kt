@@ -33,10 +33,10 @@ class GradeExtensionTest {
     @Test
     fun calcSummaryAverage() {
         assertEquals(2.5, listOf(
-            GradeSummary(1, 1, "", "", "5"),
-            GradeSummary(1, 1, "", "", "-5"),
-            GradeSummary(1, 1, "", "", "test"),
-            GradeSummary(1, 1, "", "", "0")
+            createGradeSummary("5"),
+            createGradeSummary("-5"),
+            createGradeSummary("test"),
+            createGradeSummary("0")
         ).calcAverage(), 0.005)
     }
 
@@ -74,6 +74,21 @@ class GradeExtensionTest {
             weightValue = weightValue,
             date = date,
             teacher = ""
+        )
+    }
+
+    private fun createGradeSummary(finalGrade: String): GradeSummary {
+        return GradeSummary(
+            semesterId = 1,
+            studentId = 1,
+            position = 0,
+            subject = "",
+            predictedGrade = "",
+            finalGrade = finalGrade,
+            proposedPoints = "",
+            finalPoints = "",
+            pointsSum = "",
+            average = .0
         )
     }
 }

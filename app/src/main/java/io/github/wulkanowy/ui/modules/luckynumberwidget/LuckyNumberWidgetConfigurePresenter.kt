@@ -11,11 +11,11 @@ import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Inject
 
 class LuckyNumberWidgetConfigurePresenter @Inject constructor(
-    private val errorHandler: ErrorHandler,
-    private val schedulers: SchedulersProvider,
-    private val studentRepository: StudentRepository,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val sharedPref: SharedPrefHelper
-) : BasePresenter<LuckyNumberWidgetConfigureView>(errorHandler) {
+) : BasePresenter<LuckyNumberWidgetConfigureView>(errorHandler, studentRepository, schedulers) {
 
     private var appWidgetId: Int? = null
 

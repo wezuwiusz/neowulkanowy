@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.grade
 
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 
-interface GradeView : BaseSessionView {
+interface GradeView : BaseView {
 
     val currentPageIndex: Int
 

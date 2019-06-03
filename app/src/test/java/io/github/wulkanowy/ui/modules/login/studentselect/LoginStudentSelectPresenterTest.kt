@@ -40,7 +40,7 @@ class LoginStudentSelectPresenterTest {
     fun initPresenter() {
         MockitoAnnotations.initMocks(this)
         clearInvocations(studentRepository, loginStudentSelectView)
-        presenter = LoginStudentSelectPresenter(errorHandler, studentRepository, TestSchedulersProvider(), analytics)
+        presenter = LoginStudentSelectPresenter(TestSchedulersProvider(), studentRepository, errorHandler, analytics)
         presenter.onAttachView(loginStudentSelectView, null)
     }
 

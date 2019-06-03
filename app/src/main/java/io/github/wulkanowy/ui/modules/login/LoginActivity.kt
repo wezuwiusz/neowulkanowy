@@ -14,10 +14,10 @@ import io.github.wulkanowy.utils.setOnSelectPageListener
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity(), LoginView {
+class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 
     @Inject
-    lateinit var presenter: LoginPresenter
+    override lateinit var presenter: LoginPresenter
 
     @Inject
     lateinit var loginAdapter: BaseFragmentPagerAdapter
@@ -80,10 +80,5 @@ class LoginActivity : BaseActivity(), LoginView {
 
     fun onSymbolFragmentAccountLogged(students: List<Student>) {
         presenter.onSymbolViewAccountLogged(students)
-    }
-
-    public override fun onDestroy() {
-        presenter.onDetachView()
-        super.onDestroy()
     }
 }

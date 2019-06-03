@@ -11,9 +11,9 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.google.gms:google-services:4.2.0'
-        classpath "io.fabric.tools:gradle:1.28.1"
-        classpath "com.github.triplet.gradle:play-publisher:2.2.0"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
+        classpath "io.fabric.tools:gradle:1.29.0"
+        classpath "com.github.triplet.gradle:play-publisher:2.2.1"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1"
     }
 }
 
@@ -35,6 +35,7 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven { url "https://kotlin.bintray.com/kotlinx/" }
+        maven { url "https://dl.bintray.com/mockito/maven" }
     }
 }
 

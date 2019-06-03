@@ -1,13 +1,12 @@
 package io.github.wulkanowy.ui.modules.homework
 
-import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.repositories.homework.HomeworkRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
-import io.github.wulkanowy.ui.base.session.SessionErrorHandler
+import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.friday
@@ -21,13 +20,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class HomeworkPresenter @Inject constructor(
-    private val errorHandler: SessionErrorHandler,
-    private val schedulers: SchedulersProvider,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val homeworkRepository: HomeworkRepository,
-    private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BaseSessionPresenter<HomeworkView>(errorHandler) {
+) : BasePresenter<HomeworkView>(errorHandler, studentRepository, schedulers) {
 
     lateinit var currentDate: LocalDate
         private set
@@ -89,7 +88,7 @@ class HomeworkPresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_homework", "items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd"))
+                    analytics.logEvent("load_homework", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading homework result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty()) }

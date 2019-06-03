@@ -12,7 +12,7 @@ build:
   script:
     - ./gradlew --no-daemon --stacktrace dependencies || true
     - ./gradlew --no-daemon --stacktrace assembleDebug
-    - mv app/build/outputs/apk/debug/app-debug.apk .
+    - mv app/build/outputs/apk/fdroid/debug/app-fdroid-debug.apk .
   artifacts:
     name: "${CI_PROJECT_NAME}_${CI_BUILD_REF_NAME}-${CI_BUILD_ID}"
     paths:
@@ -26,7 +26,7 @@ tests:
      - .gradle
     policy: pull
   script:
-    - ./gradlew --no-daemon --stacktrace -x fabricGenerateResourcesRelease test
+    - ./gradlew --no-daemon --stacktrace -x fabricGenerateResourcesFdroidRelease -x fabricGenerateResourcesPlayRelease test
   artifacts:
     paths:
     - app/build/reports/tests
@@ -39,7 +39,7 @@ lint:
      - .gradle
     policy: pull
   script:
-    - ./gradlew --no-daemon --stacktrace -x fabricGenerateResourcesRelease lint
+    - ./gradlew --no-daemon --stacktrace -x fabricGenerateResourcesFdroidRelease -x fabricGenerateResourcesPlayRelease lint
   artifacts:
     paths:
     - app/build/reports

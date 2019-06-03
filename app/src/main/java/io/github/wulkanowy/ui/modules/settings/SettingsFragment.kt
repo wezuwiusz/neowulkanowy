@@ -55,11 +55,19 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun showError(text: String, error: Throwable) {
-        (activity as? BaseActivity)?.showError(text, error)
+        (activity as? BaseActivity<*>)?.showError(text, error)
     }
 
     override fun showMessage(text: String) {
-        (activity as? BaseActivity)?.showMessage(text)
+        (activity as? BaseActivity<*>)?.showMessage(text)
+    }
+
+    override fun showExpiredDialog() {
+        (activity as? BaseActivity<*>)?.showExpiredDialog()
+    }
+
+    override fun openClearLoginView() {
+        (activity as? BaseActivity<*>)?.openClearLoginView()
     }
 
     override fun onResume() {

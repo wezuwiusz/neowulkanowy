@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.login
 
+import io.github.wulkanowy.TestSchedulersProvider
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
@@ -17,6 +19,9 @@ class LoginPresenterTest {
     @Mock
     lateinit var errorHandler: LoginErrorHandler
 
+    @Mock
+    lateinit var studentRepository: StudentRepository
+
     private lateinit var presenter: LoginPresenter
 
     @Before
@@ -24,7 +29,7 @@ class LoginPresenterTest {
         MockitoAnnotations.initMocks(this)
         clearInvocations(loginView)
 
-        presenter = LoginPresenter(errorHandler)
+        presenter = LoginPresenter(TestSchedulersProvider(), errorHandler, studentRepository)
         presenter.onAttachView(loginView)
     }
 

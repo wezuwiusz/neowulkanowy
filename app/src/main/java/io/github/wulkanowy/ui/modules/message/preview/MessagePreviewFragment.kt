@@ -12,7 +12,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
-import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.MessageFragment
@@ -20,8 +20,7 @@ import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
 import kotlinx.android.synthetic.main.fragment_message_preview.*
 import javax.inject.Inject
 
-@SuppressLint("SetTextI18n")
-class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainView.TitledView {
+class MessagePreviewFragment : BaseFragment(), MessagePreviewView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: MessagePreviewPresenter
@@ -87,10 +86,12 @@ class MessagePreviewFragment : BaseSessionFragment(), MessagePreviewView, MainVi
         messagePreviewSubject.text = subject
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setRecipient(recipient: String) {
         messagePreviewAuthor.text = "${getString(R.string.message_to)} $recipient"
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setSender(sender: String) {
         messagePreviewAuthor.text = "${getString(R.string.message_from)} $sender"
     }

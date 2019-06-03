@@ -16,7 +16,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.GradeStatistics
-import io.github.wulkanowy.ui.base.session.BaseSessionFragment
+import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -24,7 +24,7 @@ import io.github.wulkanowy.utils.setOnItemSelectedListener
 import kotlinx.android.synthetic.main.fragment_grade_statistics.*
 import javax.inject.Inject
 
-class GradeStatisticsFragment : BaseSessionFragment(), GradeStatisticsView, GradeView.GradeChildView {
+class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.GradeChildView {
 
     @Inject
     lateinit var presenter: GradeStatisticsPresenter

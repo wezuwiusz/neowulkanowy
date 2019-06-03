@@ -1,20 +1,14 @@
 package io.github.wulkanowy.ui.modules.attendance
 
-import com.google.firebase.analytics.FirebaseAnalytics.Param.START_DATE
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.attendance.AttendanceRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
-import io.github.wulkanowy.ui.base.session.SessionErrorHandler
+import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.isHolidays
-import io.github.wulkanowy.utils.nextSchoolDay
-import io.github.wulkanowy.utils.previousOrSameSchoolDay
-import io.github.wulkanowy.utils.previousSchoolDay
-import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
@@ -23,14 +17,14 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class AttendancePresenter @Inject constructor(
-    private val errorHandler: SessionErrorHandler,
-    private val schedulers: SchedulersProvider,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val attendanceRepository: AttendanceRepository,
-    private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val prefRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BaseSessionPresenter<AttendanceView>(errorHandler) {
+) : BasePresenter<AttendanceView>(errorHandler, studentRepository, schedulers) {
 
     lateinit var currentDate: LocalDate
         private set
@@ -115,7 +109,7 @@ class AttendancePresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_attendance", "items" to it.size, "force_refresh" to forceRefresh, START_DATE to currentDate.toFormattedString("yyyy-MM-dd"))
+                    analytics.logEvent("load_attendance", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading attendance result: An exception occurred")
                     view?.run { showEmpty(isViewEmpty) }

@@ -13,11 +13,26 @@ data class GradeSummary(
     @ColumnInfo(name = "student_id")
     val studentId: Int,
 
+    val position: Int,
+
     val subject: String,
 
+    @ColumnInfo(name = "predicted_grade")
     val predictedGrade: String,
 
-    val finalGrade: String
+    @ColumnInfo(name = "final_grade")
+    val finalGrade: String,
+
+    @ColumnInfo(name = "proposed_points")
+    val proposedPoints: String,
+
+    @ColumnInfo(name = "final_points")
+    val finalPoints: String,
+
+    @ColumnInfo(name = "points_sum")
+    val pointsSum: String,
+
+    val average: Double
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

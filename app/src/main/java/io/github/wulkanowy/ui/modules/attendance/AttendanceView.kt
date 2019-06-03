@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.attendance
 
 import io.github.wulkanowy.data.db.entities.Attendance
-import io.github.wulkanowy.ui.base.session.BaseSessionView
+import io.github.wulkanowy.ui.base.BaseView
 
-interface AttendanceView : BaseSessionView {
+interface AttendanceView : BaseView {
 
     val isViewEmpty: Boolean
 

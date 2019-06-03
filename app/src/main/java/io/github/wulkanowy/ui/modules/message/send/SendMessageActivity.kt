@@ -19,13 +19,14 @@ import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.activity_send_message.*
 import javax.inject.Inject
 
-class SendMessageActivity : BaseActivity(), SendMessageView {
+class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageView {
 
     @Inject
-    lateinit var presenter: SendMessagePresenter
+    override lateinit var presenter: SendMessagePresenter
 
     companion object {
         private const val EXTRA_MESSAGE = "EXTRA_MESSAGE"
+
         private const val EXTRA_REPLY = "EXTRA_REPLY"
 
         fun getStartIntent(context: Context) = Intent(context, SendMessageActivity::class.java)
@@ -125,10 +126,5 @@ class SendMessageActivity : BaseActivity(), SendMessageView {
 
     override fun popView() {
         onBackPressed()
-    }
-
-    override fun onDestroy() {
-        presenter.onDetachView()
-        super.onDestroy()
     }
 }

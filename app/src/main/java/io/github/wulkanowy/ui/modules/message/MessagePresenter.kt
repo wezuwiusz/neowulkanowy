@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.message
 
 import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
@@ -10,9 +11,10 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class MessagePresenter @Inject constructor(
+    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
-    private val schedulers: SchedulersProvider
-) : BasePresenter<MessageView>(errorHandler) {
+    studentRepository: StudentRepository
+) : BasePresenter<MessageView>(errorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: MessageView) {
         super.onAttachView(view)

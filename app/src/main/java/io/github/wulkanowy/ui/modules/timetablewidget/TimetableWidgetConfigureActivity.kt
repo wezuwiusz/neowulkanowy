@@ -18,13 +18,14 @@ import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.activity_widget_configure.*
 import javax.inject.Inject
 
-class TimetableWidgetConfigureActivity : BaseActivity(), TimetableWidgetConfigureView {
+class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePresenter>(),
+    TimetableWidgetConfigureView {
 
     @Inject
     lateinit var configureAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
 
     @Inject
-    lateinit var presenter: TimetableWidgetConfigurePresenter
+    override lateinit var presenter: TimetableWidgetConfigurePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,10 +71,5 @@ class TimetableWidgetConfigureActivity : BaseActivity(), TimetableWidgetConfigur
 
     override fun openLoginView() {
         startActivity(LoginActivity.getStartIntent(this))
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onDetachView()
     }
 }

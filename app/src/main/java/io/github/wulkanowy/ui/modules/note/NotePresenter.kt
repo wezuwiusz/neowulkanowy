@@ -5,21 +5,21 @@ import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.repositories.note.NoteRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.ui.base.session.BaseSessionPresenter
-import io.github.wulkanowy.ui.base.session.SessionErrorHandler
+import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class NotePresenter @Inject constructor(
-    private val errorHandler: SessionErrorHandler,
-    private val schedulers: SchedulersProvider,
-    private val studentRepository: StudentRepository,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val noteRepository: NoteRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BaseSessionPresenter<NoteView>(errorHandler) {
+) : BasePresenter<NoteView>(errorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: NoteView) {
         super.onAttachView(view)

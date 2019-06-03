@@ -4,20 +4,20 @@ import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
-import io.github.wulkanowy.ui.base.session.SessionErrorHandler
+import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class LuckyNumberPresenter @Inject constructor(
-    private val errorHandler: SessionErrorHandler,
-    private val schedulers: SchedulersProvider,
+    schedulers: SchedulersProvider,
+    errorHandler: ErrorHandler,
+    studentRepository: StudentRepository,
     private val luckyNumberRepository: LuckyNumberRepository,
-    private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LuckyNumberView>(errorHandler) {
+) : BasePresenter<LuckyNumberView>(errorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: LuckyNumberView) {
         super.onAttachView(view)

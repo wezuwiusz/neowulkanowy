@@ -57,6 +57,7 @@
     <string name="grade_no_average">No average</string>
     <string name="grade_predicted">Predicted: %1$s</string>
     <string name="grade_final">Final: %1$s</string>
+    <string name="grade_summary_points">Total points</string>
     <string name="grade_summary_final_grade">Final grade</string>
     <string name="grade_summary_predicted_grade">Predicted grade</string>
     <string name="grade_summary_calculated_average">Calculated average</string>
@@ -187,6 +188,16 @@
     <string name="lucky_number_notify_new_item_title">Lucky number for today</string>
     <string name="lucky_number_notify_new_item">Today\'s lucky number is: %d</string>
 
+    <!--Mobile devices-->
+    <string name="mobile_devices_title">Mobile devices</string>
+    <string name="mobile_devices_no_items">No devices</string>
+    <string name="mobile_devices_unregister">Unregister</string>
+    <string name="mobile_device_removed">Device removed</string>
+    <string name="mobile_device_qr">QR code</string>
+    <string name="mobile_device_token">Token</string>
+    <string name="mobile_device_symbol">Symbol</string>
+    <string name="mobile_device_pin">PIN</string>
+
 
     <!--Account-->
     <string name="account_add_new">Add account</string>
@@ -263,11 +274,12 @@
 
     <!--Others-->
     <string name="all_copied">Copied</string>
+    <string name="all_undo">Undo</string>
 
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>
-    <string name="error_timeout">Too long wait for connection</string>
+    <string name="error_timeout">Too long waiting time for connection to the register</string>
     <string name="error_login_failed">Login is failed. Try again or restart the app</string>
     <string name="error_service_unavailable">The log is not available. Try again later</string>
     <string name="error_unknown">An unexpected error occurred</string>
