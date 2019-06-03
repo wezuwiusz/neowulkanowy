@@ -6,6 +6,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
 apply from: 'jacoco.gradle'
 apply from: 'sonarqube.gradle'
+apply from: 'hooks.gradle'
 
 android {
     compileSdkVersion 28

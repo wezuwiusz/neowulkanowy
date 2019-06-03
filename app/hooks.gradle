@@ -1,0 +1,10 @@
+apply plugin: "com.star-zero.gradle.githook"
+
+githook {
+    failOnMissingHooksDir = false
+    hooks {
+        "pre-push" {
+            shell = "./app/play-publish-lint.sh"
+        }
+    }
+}

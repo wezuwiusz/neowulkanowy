@@ -2,7 +2,7 @@ Wersja 0.9.0
 
 Dodaliśmy:
 - zarządzanie dostępem mobilnym do dziennika
-- wyświetlanie sumy punktów (jeśli dziennik obsługuje)
+- wyświetlanie sumy punktów
 - wyświetlanie informacji o wygasłej sesji, gdy zostanie zmienione hasło
 
 Naprawiliśmy:
