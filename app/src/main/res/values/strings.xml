@@ -279,7 +279,7 @@
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>
-    <string name="error_timeout">Too long wait for connection</string>
+    <string name="error_timeout">Too long waiting time for connection to the register</string>
     <string name="error_login_failed">Login is failed. Try again or restart the app</string>
     <string name="error_service_unavailable">The log is not available. Try again later</string>
     <string name="error_unknown">An unexpected error occurred</string>
