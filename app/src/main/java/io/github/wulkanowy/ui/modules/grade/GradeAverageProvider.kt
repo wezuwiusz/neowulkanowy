@@ -67,6 +67,6 @@ class GradeAverageProvider @Inject constructor(
                 if (it.any { summary -> summary.average != .0 }) {
                     Maybe.just(it.map { summary -> summary.subject to summary.average }.toMap())
                 } else Maybe.empty()
-            }
+            }.filter { !preferencesRepository.gradeAverageForceCalc }
     }
 }
