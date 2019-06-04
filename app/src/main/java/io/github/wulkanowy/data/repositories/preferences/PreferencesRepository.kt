@@ -20,6 +20,9 @@ class PreferencesRepository @Inject constructor(
     val gradeAverageMode: String
         get() = sharedPref.getString(context.getString(R.string.pref_key_grade_average_mode), "only_one_semester") ?: "only_one_semester"
 
+    val gradeAverageForceCalc: Boolean
+        get() = sharedPref.getBoolean(context.getString(R.string.pref_key_grade_average_force_calc), false)
+
     val isGradeExpandable: Boolean
         get() = !sharedPref.getBoolean(context.getString(R.string.pref_key_expand_grade), false)
 

@@ -59,6 +59,7 @@ class GradeAverageProviderTest {
 
         doReturn(.33).`when`(preferencesRepository).gradeMinusModifier
         doReturn(.33).`when`(preferencesRepository).gradePlusModifier
+        doReturn(false).`when`(preferencesRepository).gradeAverageForceCalc
 
         doReturn(Single.just(firstGrades)).`when`(gradeRepository).getGrades(student, semesters[1], true)
         doReturn(Single.just(secondGrade)).`when`(gradeRepository).getGrades(student, semesters[2], true)
@@ -126,6 +127,24 @@ class GradeAverageProviderTest {
         assertEquals(2, averages.size)
         assertEquals(3.1, averages["Matematyka"])
         assertEquals(3.26, averages["Fizyka"])
+    }
+
+    @Test
+    fun onlyOneSemester_averageFromSummary_forceCalc() {
+        doReturn(true).`when`(preferencesRepository).gradeAverageForceCalc
+        doReturn("all_year").`when`(preferencesRepository).gradeAverageMode
+        doReturn(Single.just(firstGrades)).`when`(gradeRepository).getGrades(student, semesters[1], false)
+        doReturn(Single.just(listOf(
+            getSummary(22, "Matematyka", 3.1),
+            getSummary(22, "Fizyka", 3.26)
+        ))).`when`(gradeSummaryRepository).getGradesSummary(semesters[2], true)
+
+        val averages = gradeAverageProvider.getGradeAverage(student, semesters, semesters[2].semesterId, true)
+            .blockingGet()
+
+        assertEquals(2, averages.size)
+        assertEquals(3.0, averages["Matematyka"])
+        assertEquals(3.25, averages["Fizyka"])
     }
 
     private fun getGrade(semesterId: Int, subject: String, value: Int): Grade {
