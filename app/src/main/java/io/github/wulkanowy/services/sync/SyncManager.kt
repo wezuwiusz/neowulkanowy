@@ -10,30 +10,46 @@ import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.UNMETERED
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import io.github.wulkanowy.data.db.SharedPrefHelper
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.isHolidays
 import org.threeten.bp.LocalDate.now
 import timber.log.Timber
 import java.util.concurrent.TimeUnit.MINUTES
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
 class SyncManager @Inject constructor(
     private val workManager: WorkManager,
     private val preferencesRepository: PreferencesRepository,
+    sharedPrefHelper: SharedPrefHelper,
     newEntriesChannel: NewEntriesChannel,
     debugChannel: DebugChannel,
-    @Named("isDebug") isDebug: Boolean
+    appInfo: AppInfo
 ) {
 
+    companion object {
+
+        private const val APP_VERSION_CODE_KEY = "app_version_code"
+    }
+
     init {
-        if (SDK_INT >= O) newEntriesChannel.create()
-        if (SDK_INT >= O && isDebug) debugChannel.create()
         if (now().isHolidays) stopSyncWorker()
+
+        if (SDK_INT > O) {
+            newEntriesChannel.create()
+            if (appInfo.isDebug) debugChannel.create()
+        }
+
+        if (sharedPrefHelper.getLong(APP_VERSION_CODE_KEY, -1L) != appInfo.versionCode.toLong()) {
+            startSyncWorker(true)
+            sharedPrefHelper.putLong(APP_VERSION_CODE_KEY, appInfo.versionCode.toLong(), true)
+        }
+
         Timber.i("SyncManager was initialized")
     }
 

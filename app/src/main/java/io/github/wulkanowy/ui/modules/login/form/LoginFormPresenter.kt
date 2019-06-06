@@ -3,25 +3,25 @@ package io.github.wulkanowy.ui.modules.login.form
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Named
 
 class LoginFormPresenter @Inject constructor(
     schedulers: SchedulersProvider,
     studentRepository: StudentRepository,
     private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper,
-    @param:Named("isDebug") private val isDebug: Boolean
+    private val appInfo: AppInfo
 ) : BasePresenter<LoginFormView>(loginErrorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: LoginFormView) {
         super.onAttachView(view)
         view.run {
             initView()
-            if (isDebug) showVersion() else showPrivacyPolicy()
+            if (appInfo.isDebug) showVersion() else showPrivacyPolicy()
 
             loginErrorHandler.onBadCredentials = {
                 setErrorPassIncorrect()

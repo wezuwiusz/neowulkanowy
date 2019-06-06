@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.LibsFragmentCompat
-import io.github.wulkanowy.BuildConfig
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.withOnExtraListener
 import javax.inject.Inject
@@ -23,6 +23,9 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
 
     @Inject
     lateinit var fragmentCompat: LibsFragmentCompat
+
+    @Inject
+    lateinit var appInfo: AppInfo
 
     companion object {
         fun newInstance() = AboutFragment()
@@ -71,9 +74,9 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
             putExtra(Intent.EXTRA_EMAIL, Array(1) { "wulkanowyinc@gmail.com" })
             putExtra(Intent.EXTRA_SUBJECT, "Zgłoszenie błędu")
             putExtra(Intent.EXTRA_TEXT, "Tu umieść treść zgłoszenia\n\n" + "-".repeat(40) + "\n" + """
-                Build: ${BuildConfig.VERSION_CODE}
-                SDK: ${android.os.Build.VERSION.SDK_INT}
-                Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}
+                Build: ${appInfo.versionCode}
+                SDK: ${appInfo.systemVersion}
+                Device: ${appInfo.systemManufacturer} ${appInfo.systemModel}
             """.trimIndent())
         }
 
