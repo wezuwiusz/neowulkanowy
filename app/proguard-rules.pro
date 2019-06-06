@@ -37,3 +37,6 @@
 
 #Config for API
 -keep class io.github.wulkanowy.api.** {*;}
+
+#Config for Material Components
+-keep class com.google.android.material.tabs.** {*;}
