@@ -66,8 +66,10 @@ class WulkanowyApp : DaggerApplication() {
     }
 
     private fun onError(error: Throwable) {
-        if (error is UndeliverableException && error.cause is IOException || error.cause is InterruptedException) {
-            Timber.e(error.cause, "An undeliverable error occurred")
+        //RxJava's too deep stack traces may cause SOE on older android devices
+        val cause = error.cause
+        if (error is UndeliverableException && cause is IOException || cause is InterruptedException || cause is StackOverflowError) {
+            Timber.e(cause, "An undeliverable error occurred")
         } else throw error
     }
 
