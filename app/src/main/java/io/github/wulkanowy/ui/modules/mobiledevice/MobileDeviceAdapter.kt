@@ -6,5 +6,5 @@ import io.github.wulkanowy.data.db.entities.MobileDevice
 
 class MobileDeviceAdapter<T : IFlexible<*>> : FlexibleAdapter<T>(null, null, true) {
 
-    var onDeviceUnregisterListener: (MobileDevice, position: Int) -> Unit = {  _, _ -> }
+    var onDeviceUnregisterListener: (device: MobileDevice, position: Int) -> Unit = { _, _ -> }
 }
