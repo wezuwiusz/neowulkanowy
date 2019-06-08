@@ -1,14 +1,9 @@
-Wersja 0.9.0
-
-Dodaliśmy:
-- zarządzanie dostępem mobilnym do dziennika
-- wyświetlanie sumy punktów
-- wyświetlanie informacji o wygasłej sesji, gdy zostanie zmienione hasło
+Wersja 0.9.2
 
 Naprawiliśmy:
-- wykrywanie uczniów przy logowaniu, jeśli symbol zawiera cyfry
-- błędne wyświetlanie średniej
-- synchronizację w tle na danych komórkowych przy domyślnych ustawieniach
-- rzadkie błędy podczas ładowania szczęśliwego numerka
+- ustawienia synchronizacji w tle
+- ręczne odświeżanie ocen jeśli średnia była pobierana z dziennika
+- wygląd ładowania w widoku Dostęp Mobilny
+- sporadyczne awarie aplikacji na starszych urządzeniach
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
