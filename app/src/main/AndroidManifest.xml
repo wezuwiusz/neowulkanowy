@@ -80,7 +80,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/provider_widget_timetable" />
         </receiver>
-
         <receiver
             android:name=".ui.modules.luckynumberwidget.LuckyNumberWidgetProvider"
             android:label="@string/lucky_number_title">

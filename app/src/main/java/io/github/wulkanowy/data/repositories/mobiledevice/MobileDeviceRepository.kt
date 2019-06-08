@@ -35,10 +35,18 @@ class MobileDeviceRepository @Inject constructor(
     }
 
     fun unregisterDevice(semester: Semester, device: MobileDevice): Single<Boolean> {
-        return remote.unregisterDevice(semester, device)
+        return ReactiveNetwork.checkInternetConnectivity(settings)
+            .flatMap {
+                if (it) remote.unregisterDevice(semester, device)
+                else Single.error(UnknownHostException())
+            }
     }
 
     fun getToken(semester: Semester): Single<MobileDeviceToken> {
-        return remote.getToken(semester)
+        return ReactiveNetwork.checkInternetConnectivity(settings)
+            .flatMap {
+                if (it) remote.getToken(semester)
+                else Single.error(UnknownHostException())
+            }
     }
 }

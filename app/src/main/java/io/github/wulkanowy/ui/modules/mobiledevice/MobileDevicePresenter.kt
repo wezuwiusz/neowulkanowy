@@ -50,6 +50,7 @@ class MobileDevicePresenter @Inject constructor(
                 view?.run {
                     updateData(it)
                     showContent(it.isNotEmpty())
+                    showEmpty(it.isEmpty())
                 }
                 analytics.logEvent("load_devices", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
@@ -62,13 +63,27 @@ class MobileDevicePresenter @Inject constructor(
         view?.showTokenDialog()
     }
 
-    fun onUnregister(device: MobileDevice) {
+    fun onUnregisterDevice(device: MobileDevice, position: Int) {
+        view?.run {
+            showUndo(position, device)
+            showEmpty(isViewEmpty)
+        }
+    }
+
+    fun onUnregisterCancelled() {
+        view?.run {
+            restoreDeleteItem()
+            showEmpty(isViewEmpty)
+        }
+    }
+
+    fun onUnregisterConfirmed(device: MobileDevice) {
         Timber.i("Unregister device started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getCurrentSemester(it) }
             .flatMap { semester ->
                 mobileDeviceRepository.unregisterDevice(semester, device)
-                .flatMap { mobileDeviceRepository.getDevices(semester, it) }
+                    .flatMap { mobileDeviceRepository.getDevices(semester, it) }
             }
             .map { items -> items.map { MobileDeviceItem(it) } }
             .subscribeOn(schedulers.backgroundThread)
@@ -84,6 +99,7 @@ class MobileDevicePresenter @Inject constructor(
                 view?.run {
                     updateData(it)
                     showContent(it.isNotEmpty())
+                    showEmpty(it.isEmpty())
                 }
             }) {
                 Timber.i("Unregister device result: An exception occurred")

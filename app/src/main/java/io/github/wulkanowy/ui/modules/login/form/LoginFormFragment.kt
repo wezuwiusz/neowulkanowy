@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.IME_NULL
 import android.widget.ArrayAdapter
-import io.github.wulkanowy.BuildConfig.VERSION_NAME
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.setOnItemSelectedListener
@@ -27,6 +27,9 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     @Inject
     lateinit var presenter: LoginFormPresenter
+
+    @Inject
+    lateinit var appInfo: AppInfo
 
     companion object {
         fun newInstance() = LoginFormFragment()
@@ -128,7 +131,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     override fun showVersion() {
         loginFormVersion.apply {
             visibility = VISIBLE
-            text = "${getString(R.string.app_name)} $VERSION_NAME"
+            text = "${getString(R.string.app_name)} ${appInfo.versionName}"
         }
     }
 

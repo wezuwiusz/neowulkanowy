@@ -113,7 +113,7 @@ class GradeDetailsPresenter @Inject constructor(
             .flatMap { (student, semesters) ->
                 averageProvider.getGradeAverage(student, semesters, semesterId, forceRefresh)
                     .flatMap { averages ->
-                        gradeRepository.getGrades(student, semesters.first { semester -> semester.semesterId == semesterId })
+                        gradeRepository.getGrades(student, semesters.first { it.semesterId == semesterId }, forceRefresh)
                             .map { it.sortedByDescending { grade -> grade.date } }
                             .map { it.groupBy { grade -> grade.subject }.toSortedMap() }
                             .map { createGradeItems(it, averages) }

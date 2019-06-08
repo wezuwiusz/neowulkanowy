@@ -11,9 +11,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-#branches:
-# only:
-#   - develop
+branches:
+  only:
+    - develop
+    - 0.9.2
 
 android:
  licenses:

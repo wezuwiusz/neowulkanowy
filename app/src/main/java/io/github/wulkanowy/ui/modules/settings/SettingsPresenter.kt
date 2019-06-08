@@ -33,7 +33,7 @@ class SettingsPresenter @Inject constructor(
         Timber.i("Change settings $key")
         preferencesRepository.apply {
             when (key) {
-                serviceEnableKey -> syncManager.run { if (isServiceEnabled) startSyncWorker() else stopSyncWorker() }
+                serviceEnableKey -> with(syncManager) { if (isServiceEnabled) startSyncWorker() else stopSyncWorker() }
                 servicesIntervalKey, servicesOnlyWifiKey -> syncManager.startSyncWorker(true)
                 isDebugNotificationEnableKey -> chuckCollector.showNotification(isDebugNotificationEnable)
                 appThemeKey -> view?.recreateView()
