@@ -120,7 +120,7 @@ dependencies {
     implementation "androidx.work:work-rxjava2:2.0.1"
 
     implementation "androidx.room:room-runtime:2.1.0"
-    implementation "androidx.room:room-rxjava2:2.1.0-rc01"
+    implementation "androidx.room:room-rxjava2:2.1.0"
     kapt "androidx.room:room-compiler:2.1.0-rc01"
 
     implementation "com.google.dagger:dagger-android-support:2.23.1"
