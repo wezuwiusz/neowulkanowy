@@ -5,6 +5,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.ifNullOrBlank
 import io.reactivex.Single
 import timber.log.Timber
 import java.io.Serializable
@@ -70,7 +71,7 @@ class LoginSymbolPresenter @Inject constructor(
                     }
                 }, {
                     Timber.i("Login with symbol result: An exception occurred")
-                    analytics.logEvent("registration_symbol", "success" to false, "students" to -1, "endpoint" to loginData?.third, "symbol" to symbol, "error" to it.localizedMessage.ifEmpty { "No message" })
+                    analytics.logEvent("registration_symbol", "success" to false, "students" to -1, "endpoint" to loginData?.third, "symbol" to symbol, "error" to it.message.ifNullOrBlank { "No message" })
                     loginErrorHandler.dispatch(it)
                 }))
     }
