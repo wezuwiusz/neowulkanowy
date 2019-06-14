@@ -7,6 +7,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.ifNullOrBlank
 import timber.log.Timber
 import java.io.Serializable
 import javax.inject.Inject
@@ -81,7 +82,7 @@ class LoginStudentSelectPresenter @Inject constructor(
                 Timber.i("Registration result: Success")
                 view?.openMainView()
             }, { error ->
-                students.forEach { analytics.logEvent("registration_student_select", "success" to false, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to error.localizedMessage.ifEmpty { "No message" }) }
+                students.forEach { analytics.logEvent("registration_student_select", "success" to false, "endpoint" to it.endpoint, "symbol" to it.symbol, "error" to error.message.ifNullOrBlank { "No message" }) }
                 Timber.i("Registration result: An exception occurred ")
                 loginErrorHandler.dispatch(error)
                 view?.apply {

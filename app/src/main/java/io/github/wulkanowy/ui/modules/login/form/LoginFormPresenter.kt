@@ -6,6 +6,7 @@ import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.ifNullOrBlank
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -81,7 +82,7 @@ class LoginFormPresenter @Inject constructor(
                 view?.notifyParentAccountLogged(it)
             }, {
                 Timber.i("Login result: An exception occurred")
-                analytics.logEvent("registration_form", "success" to false, "students" to -1, "endpoint" to endpoint, "error" to it.localizedMessage.ifEmpty { "No message" })
+                analytics.logEvent("registration_form", "success" to false, "students" to -1, "endpoint" to endpoint, "error" to it.message.ifNullOrBlank { "No message" })
                 loginErrorHandler.dispatch(it)
             }))
     }
