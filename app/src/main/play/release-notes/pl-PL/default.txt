@@ -1,9 +1,8 @@
-Wersja 0.9.2
+Wersja 0.9.3
 
 Naprawiliśmy:
-- ustawienia synchronizacji w tle
-- ręczne odświeżanie ocen jeśli średnia była pobierana z dziennika
-- wygląd ładowania w widoku Dostęp Mobilny
-- sporadyczne awarie aplikacji na starszych urządzeniach
+- problemy z logowaniem jeśli symbol zawierał cyfry
+- bardzo rzadkie problemy z ładowaniem ocen
+- jeszcze rzadsze problemy ze stabilnością podczas logowania
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
