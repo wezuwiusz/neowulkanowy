@@ -123,7 +123,7 @@ dependencies {
     implementation "androidx.room:room-rxjava2:2.1.0"
     kapt "androidx.room:room-compiler:2.1.0"
 
-    implementation "com.google.dagger:dagger-android-support:2.23.1"
+    implementation "com.google.dagger:dagger-android-support:2.23.2"
     kapt "com.google.dagger:dagger-compiler:2.23.2"
     kapt "com.google.dagger:dagger-android-processor:2.23.2"
     implementation "com.squareup.inject:assisted-inject-annotations-dagger2:0.4.0"
