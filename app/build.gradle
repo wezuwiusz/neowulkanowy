@@ -97,6 +97,15 @@ play {
     track = 'alpha'
 }
 
+ext {
+    work_manager = "2.0.1"
+    room = "2.1.0"
+    dagger = "2.23.2"
+    chucker = "2.0.4"
+    mockk = "1.9.2"
+    mockito_core = "3.0.1"
+}
+
 dependencies {
     implementation "io.github.wulkanowy:api:0.9.3"
 
@@ -116,16 +125,16 @@ dependencies {
     implementation "com.github.wulkanowy:MaterialChipsInput:b72fd0ee6f"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
 
-    implementation "androidx.work:work-runtime:2.0.1"
-    implementation "androidx.work:work-rxjava2:2.0.1"
+    implementation "androidx.work:work-runtime:$work_manager"
+    implementation "androidx.work:work-rxjava2:$work_manager"
 
-    implementation "androidx.room:room-runtime:2.1.0"
-    implementation "androidx.room:room-rxjava2:2.1.0"
-    kapt "androidx.room:room-compiler:2.1.0"
+    implementation "androidx.room:room-runtime:$room"
+    implementation "androidx.room:room-rxjava2:$room"
+    kapt "androidx.room:room-compiler:$room"
 
-    implementation "com.google.dagger:dagger-android-support:2.23.2"
-    kapt "com.google.dagger:dagger-compiler:2.23.2"
-    kapt "com.google.dagger:dagger-android-processor:2.23.2"
+    implementation "com.google.dagger:dagger-android-support:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+    kapt "com.google.dagger:dagger-android-processor:$dagger"
     implementation "com.squareup.inject:assisted-inject-annotations-dagger2:0.4.0"
     kapt "com.squareup.inject:assisted-inject-processor-dagger2:0.4.0"
 
@@ -150,15 +159,15 @@ dependencies {
     playImplementation "com.google.firebase:firebase-core:17.0.0"
     playImplementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
-    releaseImplementation "fr.o80.chucker:library-no-op:2.0.4"
+    releaseImplementation "fr.o80.chucker:library-no-op:$chucker"
 
-    debugImplementation "fr.o80.chucker:library:2.0.4"
+    debugImplementation "fr.o80.chucker:library:$chucker"
     debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 
     testImplementation "junit:junit:4.12"
-    testImplementation "io.mockk:mockk:1.9.2"
+    testImplementation "io.mockk:mockk:$mockk"
     testImplementation "org.threeten:threetenbp:1.4.0"
-    testImplementation "org.mockito:mockito-core:3.0.1"
+    testImplementation "org.mockito:mockito-core:$mockito_core"
     testImplementation("org.mockito:mockito-inline:3.0.1") {
         exclude group: "org.mockito", module: "mockito-core"
     }
@@ -166,10 +175,10 @@ dependencies {
     androidTestImplementation "androidx.test:core:1.2.0"
     androidTestImplementation "androidx.test:runner:1.2.0"
     androidTestImplementation "androidx.test.ext:junit:1.1.1"
-    androidTestImplementation "io.mockk:mockk-android:1.9.2"
-    androidTestImplementation "androidx.room:room-testing:2.1.0"
+    androidTestImplementation "io.mockk:mockk-android:$mockk"
+    androidTestImplementation "androidx.room:room-testing:$room"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    androidTestImplementation "org.mockito:mockito-core:2.28.2"
+    androidTestImplementation "org.mockito:mockito-core:$mockito_core"
     androidTestImplementation("org.mockito:mockito-android:3.0.1") {
         exclude group: 'org.mockito', module: 'mockito-core'
     }
