@@ -21,6 +21,9 @@
       <option name="CONTINUATION_INDENT_IN_ELVIS" value="false" />
       <option name="WRAP_ELVIS_EXPRESSIONS" value="0" />
     </JetCodeStyleSettings>
+    <MarkdownNavigatorCodeStyleSettings>
+      <option name="RIGHT_MARGIN" value="72" />
+    </MarkdownNavigatorCodeStyleSettings>
     <XML>
       <option name="XML_KEEP_LINE_BREAKS" value="false" />
       <option name="XML_ALIGN_ATTRIBUTES" value="false" />
