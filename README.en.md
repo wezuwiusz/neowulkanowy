@@ -1,4 +1,4 @@
-[English version of README](README.en.md)
+[Polska wersja README](README.md)
 
 # Wulkanowy
 [![Travis](https://img.shields.io/travis/com/wulkanowy/wulkanowy/master.svg?style=flat-square)](https://travis-ci.com/wulkanowy/wulkanowy)
@@ -7,45 +7,44 @@
 [![F-Droid](https://img.shields.io/f-droid/v/io.github.wulkanowy.svg)](https://f-droid.org/packages/io.github.wulkanowy/)
 [![Last release](https://img.shields.io/github/release/wulkanowy/wulkanowy.svg?logo=github)](https://github.com/wulkanowy/wulkanowy/releases)
 
-Nieoficjalny klient dziennika VULCAN UONET+ dla ucznia i rodzica
+Unofficial android VULCAN UONET+ register client for student and parent
 
-## Funkcje
+## Features
 
-* logowanie za pomocą e-maila i hasła
-* funkcje ze strony internetowej dziennika:
-    * oceny
-    * statystyki ocen
-    * frekwencja
-    * procent frekwencji
-    * sprawdziany
-    * plan lekcji
-    * lekcje zrealizowane
-    * wiadomości
-    * zadania domowe
-    * uwagi
-    * szczęśliwy numerek
-* obliczanie średniej
-* powiadomienia np. o nowej ocenie
-* ciemny i czarny (AMOLED) motyw
-* tryb offilne
-* brak reklam
+* logging in using the email and password
+* functions from the register website:
+    * grades
+    * grade statistics
+    * attendance
+    * percentage of attendance
+    * exams
+    * timetable
+    * completed lessons
+    * messages
+    * homework
+    * notes
+    * lucky number
+* calculation of the average
+* notifications, e.g. about a new grade
+* dark and black (AMOLED) theme
+* offline mode
+* no ads
 
-## Pobierz
+## Download
 
-Aktualną wersję beta możesz pobrać ze sklepu Google Play lub Fdroid
+You can download the current beta from the Google Play or Fdroid store
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-      alt="Pobierz z Google Play"
+      alt="Get it on Google Play"
       height="80">](https://play.google.com/store/apps/details?id=io.github.wulkanowy)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-    alt="Pobierz z Fdroid"
+    alt="Get it on Fdroid"
     height="80">](https://f-droid.org/packages/io.github.wulkanowy/)
+    
+You can also download a [development version](https://wulkanowy.github.io/#download) that includes new features prepared for the next release
 
+## Built With
 
-Możesz także pobrać [wersję rozwojową](https://wulkanowy.github.io/#download), która zawiera nowe funkcje przygotowywane do następnego wydania
-
-
-## Zbudowana za pomocą
 
 * [Wulkanowy API](https://github.com/wulkanowy/api)
 * [RxJava 2](https://github.com/ReactiveX/RxJava)
@@ -53,10 +52,10 @@ Możesz także pobrać [wersję rozwojową](https://wulkanowy.github.io/#downloa
 * [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) 
 
-## Współpraca
+## Contributing
 
-Wnieś swój wkład w projekt, tworząc PR lub wysyłając issue na GitHub.
+Please contribute to the project either by creating a PR or submitting an issue on GitHub.
 
-## Licencja
+## License
 
-Ten projekt jest licencjonowany w ramach Apache License 2.0 - szczegóły w pliku [LICENSE](LICENSE)
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details

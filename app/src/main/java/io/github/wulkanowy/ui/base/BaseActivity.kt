@@ -8,22 +8,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.FragmentLifecycleLogger
 import javax.inject.Inject
 
-abstract class BaseActivity<T : BasePresenter<out BaseView>> : AppCompatActivity(), BaseView,
-    HasSupportFragmentInjector {
+abstract class BaseActivity<T : BasePresenter<out BaseView>> : AppCompatActivity(), BaseView, HasAndroidInjector {
 
     @Inject
-    lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var fragmentLifecycleLogger: FragmentLifecycleLogger
@@ -78,5 +76,5 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>> : AppCompatActivity
         presenter.onDetachView()
     }
 
-    override fun supportFragmentInjector() = supportFragmentInjector
+    override fun androidInjector() = androidInjector
 }

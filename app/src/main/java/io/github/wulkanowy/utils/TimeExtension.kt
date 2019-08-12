@@ -6,11 +6,11 @@ import org.threeten.bp.DayOfWeek.MONDAY
 import org.threeten.bp.DayOfWeek.SATURDAY
 import org.threeten.bp.DayOfWeek.SUNDAY
 import org.threeten.bp.Instant
+import org.threeten.bp.Instant.ofEpochMilli
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Month
 import org.threeten.bp.ZoneId
-import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatter.ofPattern
 import org.threeten.bp.format.TextStyle.FULL_STANDALONE
 import org.threeten.bp.temporal.TemporalAdjusters.firstInMonth
@@ -21,21 +21,15 @@ import java.util.Locale
 
 private const val DATE_PATTERN = "dd.MM.yyyy"
 
-fun Date.toLocalDate(): LocalDate {
-    return Instant.ofEpochMilli(this.time).atZone(ZoneId.systemDefault()).toLocalDate()
-}
+fun Date.toLocalDate(): LocalDate = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDate()
 
-fun Date.toLocalDateTime(): LocalDateTime {
-    return Instant.ofEpochMilli(this.time).atZone(ZoneId.systemDefault()).toLocalDateTime()
-}
+fun Date.toLocalDateTime(): LocalDateTime = ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDateTime()
 
-fun String.toLocalDate(format: String = DATE_PATTERN): LocalDate {
-    return LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
-}
+fun String.toLocalDate(format: String = DATE_PATTERN): LocalDate = LocalDate.parse(this, ofPattern(format))
 
-fun LocalDate.toFormattedString(format: String = DATE_PATTERN): String = this.format(ofPattern(format))
+fun LocalDate.toFormattedString(format: String = DATE_PATTERN): String = format(ofPattern(format))
 
-fun LocalDateTime.toFormattedString(format: String = DATE_PATTERN): String = this.format(ofPattern(format))
+fun LocalDateTime.toFormattedString(format: String = DATE_PATTERN): String = format(ofPattern(format))
 
 fun LocalDateTime.toDate(): Date = DateTimeUtils.toDate(atZone(ZoneId.systemDefault()).toInstant())
 
@@ -66,62 +60,81 @@ fun Month.getFormattedName(): String {
 
 inline val LocalDate.nextSchoolDay: LocalDate
     get() {
-        return when (this.dayOfWeek) {
-            FRIDAY, SATURDAY, SUNDAY -> this.with(next(MONDAY))
-            else -> this.plusDays(1)
+        return when (dayOfWeek) {
+            FRIDAY, SATURDAY, SUNDAY -> with(next(MONDAY))
+            else -> plusDays(1)
         }
     }
 
 inline val LocalDate.previousSchoolDay: LocalDate
     get() {
-        return when (this.dayOfWeek) {
-            SATURDAY, SUNDAY, MONDAY -> this.with(previous(FRIDAY))
-            else -> this.minusDays(1)
+        return when (dayOfWeek) {
+            SATURDAY, SUNDAY, MONDAY -> with(previous(FRIDAY))
+            else -> minusDays(1)
         }
     }
 
 inline val LocalDate.nextOrSameSchoolDay: LocalDate
     get() {
-        return when (this.dayOfWeek) {
-            SATURDAY, SUNDAY -> this.with(next(MONDAY))
+        return when (dayOfWeek) {
+            SATURDAY, SUNDAY -> with(next(MONDAY))
             else -> this
         }
     }
 
 inline val LocalDate.previousOrSameSchoolDay: LocalDate
     get() {
-        return when (this.dayOfWeek) {
-            SATURDAY, SUNDAY -> this.with(previous(FRIDAY))
+        return when (dayOfWeek) {
+            SATURDAY, SUNDAY -> with(previous(FRIDAY))
             else -> this
         }
     }
 
 inline val LocalDate.weekDayName: String
-    get() = this.format(ofPattern("EEEE", Locale.getDefault()))
+    get() = format(ofPattern("EEEE", Locale.getDefault()))
 
 inline val LocalDate.shortcutWeekDayName: String
-    get() = this.format(ofPattern("EEE", Locale.getDefault()))
+    get() = format(ofPattern("EEE", Locale.getDefault()))
 
 inline val LocalDate.monday: LocalDate
-    get() = this.with(MONDAY)
+    get() = with(MONDAY)
 
 inline val LocalDate.friday: LocalDate
-    get() = this.with(FRIDAY)
+    get() = with(FRIDAY)
 
 /**
  * [Dz.U. 2016 poz. 1335](http://prawo.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20160001335)
  */
 
 inline val LocalDate.isHolidays: Boolean
-    get() {
-        return LocalDate.of(this.year, 9, 1).run {
-            when (dayOfWeek) {
-                FRIDAY, SATURDAY, SUNDAY -> with(firstInMonth(MONDAY))
-                else -> this
-            }
-        }.let { firstSchoolDay ->
-            LocalDate.of(this.year, 6, 20)
-                .with(next(FRIDAY))
-                .let { lastSchoolDay -> this.isBefore(firstSchoolDay) && this.isAfter(lastSchoolDay) }
+    get() = isBefore(firstSchoolDay) && isAfter(lastSchoolDay)
+
+inline val LocalDate.firstSchoolDay: LocalDate
+    get() = LocalDate.of(year, 9, 1).run {
+        when (dayOfWeek) {
+            FRIDAY, SATURDAY, SUNDAY -> with(firstInMonth(MONDAY))
+            else -> this
         }
     }
+
+inline val LocalDate.lastSchoolDay: LocalDate
+    get() = LocalDate.of(year, 6, 20)
+        .with(next(FRIDAY))
+
+
+private fun Int.getSchoolYearByMonth(monthValue: Int): Int {
+    return when (monthValue) {
+        in 9..12 -> this
+        else -> this + 1
+    }
+}
+
+fun LocalDate.getLastSchoolDayIfHoliday(schoolYear: Int): LocalDate {
+    val date = LocalDate.of(schoolYear.getSchoolYearByMonth(monthValue), monthValue, dayOfMonth)
+
+    if (date.isHolidays) {
+        return date.lastSchoolDay
+    }
+
+    return date
+}
