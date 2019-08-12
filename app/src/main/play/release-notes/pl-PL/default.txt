@@ -1,8 +1,6 @@
-Wersja 0.9.3
+Wersja 0.9.4
 
-Naprawiliśmy:
-- problemy z logowaniem jeśli symbol zawierał cyfry
-- bardzo rzadkie problemy z ładowaniem ocen
-- jeszcze rzadsze problemy ze stabilnością podczas logowania
+- naprawienie nawigacji we frekwencji, sprawdzianach, planie lekcji na wakacjach
+- wyświetlanie szczęśliwego numerka po ostatniej aktualizacji dziennika VULCAN (19.06)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

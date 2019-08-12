@@ -17,8 +17,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 41
-        versionName "0.9.3"
+        versionCode 42
+        versionName "0.9.4"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -107,7 +107,7 @@ ext {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:api:0.9.3"
+    implementation "io.github.wulkanowy:api:0.9.4"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.core:core:1.0.2"
