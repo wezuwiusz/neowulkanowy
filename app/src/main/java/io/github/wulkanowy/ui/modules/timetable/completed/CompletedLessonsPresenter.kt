@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
@@ -28,6 +29,8 @@ class CompletedLessonsPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<CompletedLessonsView>(completedLessonsErrorHandler, studentRepository, schedulers) {
 
+    private var baseDate: LocalDate = now().nextOrSameSchoolDay
+
     lateinit var currentDate: LocalDate
         private set
 
@@ -35,7 +38,8 @@ class CompletedLessonsPresenter @Inject constructor(
         super.onAttachView(view)
         Timber.i("Completed lessons is attached")
         view.initView()
-        loadData(ofEpochDay(date ?: now().nextOrSameSchoolDay.toEpochDay()))
+        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        if (currentDate.isHolidays) setBaseDateOnHolidays()
         reloadView()
         completedLessonsErrorHandler.onFeatureDisabled = {
             this.view?.showFeatureDisabled()
@@ -63,6 +67,20 @@ class CompletedLessonsPresenter @Inject constructor(
             Timber.i("Select completed lessons item ${item.completedLesson.id}")
             view?.showCompletedLessonDialog(item.completedLesson)
         }
+    }
+
+    private fun setBaseDateOnHolidays() {
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { semesterRepository.getCurrentSemester(it) }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .subscribe({
+                baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
+                currentDate = baseDate
+                reloadNavigation()
+            }) {
+                Timber.i("Loading semester result: An exception occurred")
+            })
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
@@ -109,8 +127,14 @@ class CompletedLessonsPresenter @Inject constructor(
             showContent(false)
             showEmpty(false)
             clearData()
-            showNextButton(!currentDate.plusDays(1).isHolidays)
+            reloadNavigation()
+        }
+    }
+
+    private fun reloadNavigation() {
+        view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
+            showNextButton(!currentDate.plusDays(1).isHolidays)
             updateNavigationDay(currentDate.toFormattedString("EEEE\ndd.MM.YYYY").capitalize())
         }
     }

@@ -10,6 +10,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.friday
+import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
@@ -30,6 +31,8 @@ class ExamPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<ExamView>(errorHandler, studentRepository, schedulers) {
 
+    private var baseDate: LocalDate = now().nextOrSameSchoolDay
+
     lateinit var currentDate: LocalDate
         private set
 
@@ -37,7 +40,8 @@ class ExamPresenter @Inject constructor(
         super.onAttachView(view)
         view.initView()
         Timber.i("Exam view was initialized")
-        loadData(ofEpochDay(date ?: now().nextOrSameSchoolDay.toEpochDay()))
+        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        if (currentDate.isHolidays) setBaseDateOnHolidays()
         reloadView()
     }
 
@@ -65,12 +69,26 @@ class ExamPresenter @Inject constructor(
 
     fun onViewReselected() {
         Timber.i("Exam view is reselected")
-        now().nextOrSameSchoolDay.also {
+        baseDate.also {
             if (currentDate != it) {
                 loadData(it)
                 reloadView()
             } else if (view?.isViewEmpty == false) view?.resetView()
         }
+    }
+
+    private fun setBaseDateOnHolidays() {
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { semesterRepository.getCurrentSemester(it) }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .subscribe({
+                baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
+                currentDate = baseDate
+                reloadNavigation()
+            }) {
+                Timber.i("Loading semester result: An exception occurred")
+            })
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
@@ -81,9 +99,8 @@ class ExamPresenter @Inject constructor(
             add(studentRepository.getCurrentStudent()
                 .delay(200, MILLISECONDS)
                 .flatMap { semesterRepository.getCurrentSemester(it) }
-                .flatMap {
-                    examRepository.getExams(it, currentDate.monday, currentDate.friday, forceRefresh)
-                }.map { it.groupBy { exam -> exam.date }.toSortedMap() }
+                .flatMap { examRepository.getExams(it, currentDate.monday, currentDate.friday, forceRefresh) }
+                .map { it.groupBy { exam -> exam.date }.toSortedMap() }
                 .map { createExamItems(it) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
@@ -126,6 +143,12 @@ class ExamPresenter @Inject constructor(
             showContent(false)
             showEmpty(false)
             clearData()
+            reloadNavigation()
+        }
+    }
+
+    private fun reloadNavigation() {
+        view?.apply {
             showPreButton(!currentDate.minusDays(7).isHolidays)
             showNextButton(!currentDate.plusDays(7).isHolidays)
             updateNavigationWeek("${currentDate.monday.toFormattedString("dd.MM")} - " +

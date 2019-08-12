@@ -8,7 +8,13 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
+import io.github.wulkanowy.utils.isHolidays
+import io.github.wulkanowy.utils.nextSchoolDay
+import io.github.wulkanowy.utils.previousOrSameSchoolDay
+import io.github.wulkanowy.utils.previousSchoolDay
+import io.github.wulkanowy.utils.toFormattedString
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
@@ -26,6 +32,8 @@ class AttendancePresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<AttendanceView>(errorHandler, studentRepository, schedulers) {
 
+    private var baseDate: LocalDate = now().previousOrSameSchoolDay
+
     lateinit var currentDate: LocalDate
         private set
 
@@ -33,7 +41,8 @@ class AttendancePresenter @Inject constructor(
         super.onAttachView(view)
         view.initView()
         Timber.i("Attendance view was initialized")
-        loadData(ofEpochDay(date ?: now().previousOrSameSchoolDay.toEpochDay()))
+        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        if (currentDate.isHolidays) setBaseDateOnHolidays()
         reloadView()
     }
 
@@ -56,7 +65,7 @@ class AttendancePresenter @Inject constructor(
         Timber.i("Attendance view is reselected")
         view?.also { view ->
             if (view.currentStackSize == 1) {
-                now().previousOrSameSchoolDay.also {
+                baseDate.also {
                     if (currentDate != it) {
                         loadData(it)
                         reloadView()
@@ -76,6 +85,20 @@ class AttendancePresenter @Inject constructor(
     fun onSummarySwitchSelected(): Boolean {
         view?.openSummaryView()
         return true
+    }
+
+    private fun setBaseDateOnHolidays() {
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { semesterRepository.getCurrentSemester(it) }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .subscribe({
+                baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
+                currentDate = baseDate
+                reloadNavigation()
+            }) {
+                Timber.i("Loading semester result: An exception occurred")
+            })
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
@@ -127,8 +150,14 @@ class AttendancePresenter @Inject constructor(
             showContent(false)
             showEmpty(false)
             clearData()
-            showNextButton(!currentDate.plusDays(1).isHolidays)
+            reloadNavigation()
+        }
+    }
+
+    private fun reloadNavigation() {
+        view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
+            showNextButton(!currentDate.plusDays(1).isHolidays)
             updateNavigationDay(currentDate.toFormattedString("EEEE\ndd.MM.YYYY").capitalize())
         }
     }
