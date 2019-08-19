@@ -103,7 +103,7 @@ ext {
     dagger = "2.24"
     chucker = "2.0.4"
     mockk = "1.9.2"
-    mockito_core = "3.0.4"
+    mockito_core = "3.0.5"
 }
 
 dependencies {
