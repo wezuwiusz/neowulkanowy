@@ -179,7 +179,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$room"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_core"
-    androidTestImplementation("org.mockito:mockito-android:3.0.4") {
+    androidTestImplementation("org.mockito:mockito-android:3.0.5") {
         exclude group: 'org.mockito', module: 'mockito-core'
     }
 }
