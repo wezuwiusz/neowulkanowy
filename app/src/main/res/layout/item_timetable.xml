@@ -50,7 +50,7 @@
         android:layout_alignBottom="@+id/timetableItemNumber"
         android:maxLines="1"
         android:text="@string/app_name"
-        android:textColor="?android:attr/android:textColorSecondary"
+        android:textColor="?android:textColorSecondary"
         android:textSize="12sp" />
 
     <TextView
@@ -66,7 +66,7 @@
         android:layout_toRightOf="@+id/timetableItemTime"
         android:maxLines="1"
         android:text="@string/app_name"
-        android:textColor="?android:attr/android:textColorSecondary"
+        android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
         tools:ignore="RelativeOverlap" />
 

@@ -201,7 +201,7 @@
                 android:focusable="true"
                 android:text="@string/all_close"
                 android:textAllCaps="true"
-                android:textColor="?android:attr/android:textColorSecondary"
+                android:textColor="?android:textColorSecondary"
                 android:textSize="15sp" />
 
         </RelativeLayout>
