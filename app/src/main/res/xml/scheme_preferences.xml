@@ -1,119 +1,118 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidElementNotAllowed -->
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
-        android:title="@string/pref_view_header"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_view_header">
         <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/startup_tab_entries"
-            android:entryValues="@array/startup_tab_value"
-            android:key="@string/pref_key_start_menu"
-            android:summary="%s"
-            android:title="@string/pref_view_list"
-            app:iconSpaceReserved="false" />
+            app:defaultValue="0"
+            app:entries="@array/startup_tab_entries"
+            app:entryValues="@array/startup_tab_value"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_start_menu"
+            app:title="@string/pref_view_list"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:defaultValue="light"
-            android:entries="@array/app_theme_entries"
-            android:entryValues="@array/app_theme_values"
-            android:key="@string/pref_key_app_theme"
-            android:summary="%s"
-            android:title="@string/pref_view_app_theme"
-            app:iconSpaceReserved="false" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/pref_key_attendance_present"
-            android:title="@string/pref_view_present"
-            app:iconSpaceReserved="false" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_key_expand_grade"
-            android:title="@string/pref_view_expand_grade"
-            app:iconSpaceReserved="false" />
+            app:defaultValue="light"
+            app:entries="@array/app_theme_entries"
+            app:entryValues="@array/app_theme_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_app_theme"
+            app:title="@string/pref_view_app_theme"
+            app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_attendance_present"
+            app:title="@string/pref_view_present" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_expand_grade"
+            app:title="@string/pref_view_expand_grade" />
         <ListPreference
-            android:defaultValue="vulcan"
-            android:entries="@array/grade_color_scheme_entries"
-            android:entryValues="@array/grade_color_scheme_values"
-            android:key="@string/pref_key_grade_color_scheme"
-            android:summary="%s"
-            android:title="@string/pref_view_grade_color_scheme"
-            app:iconSpaceReserved="false" />
+            app:defaultValue="vulcan"
+            app:entries="@array/grade_color_scheme_entries"
+            app:entryValues="@array/grade_color_scheme_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_color_scheme"
+            app:title="@string/pref_view_grade_color_scheme"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/pref_services_header"
-        app:iconSpaceReserved="false">
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/pref_key_services_enable"
-            android:title="@string/pref_services_switch"
-            app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_services_header">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_services_enable"
+            app:title="@string/pref_services_switch" />
         <ListPreference
-            android:defaultValue="60"
-            android:dependency="services_enable"
-            android:entries="@array/services_interval_entries"
-            android:entryValues="@array/services_interval_value"
-            android:key="@string/pref_key_services_interval"
-            android:summary="%s"
-            android:title="@string/pref_services_interval"
-            app:iconSpaceReserved="false" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:dependency="services_enable"
-            android:key="@string/pref_key_services_wifi_only"
-            android:title="@string/pref_services_wifi"
-            app:iconSpaceReserved="false" />
+            app:defaultValue="60"
+            app:dependency="services_enable"
+            app:entries="@array/services_interval_entries"
+            app:entryValues="@array/services_interval_value"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_services_interval"
+            app:title="@string/pref_services_interval"
+            app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:dependency="services_enable"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_services_wifi_only"
+            app:title="@string/pref_services_wifi" />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/pref_notify_header"
-        app:iconSpaceReserved="false">
-        <SwitchPreference
-            android:defaultValue="true"
-            android:dependency="services_enable"
-            android:key="@string/pref_key_notifications_enable"
-            android:title="@string/pref_notify_switch"
-            app:iconSpaceReserved="false" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_key_notification_debug"
-            android:title="@string/pref_notify_debug_switch"
-            app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_notify_header">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:dependency="services_enable"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_notifications_enable"
+            app:title="@string/pref_notify_switch" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_notification_debug"
+            app:title="@string/pref_notify_debug_switch" />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/pref_other_header"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_other_header">
         <ListPreference
-            android:defaultValue="0.0"
-            android:entries="@array/grade_modifier_entries"
-            android:entryValues="@array/grade_modifier_value"
-            android:key="@string/pref_key_grade_modifier_plus"
-            android:summary="%s"
-            android:title="@string/pref_other_grade_modifier_plus"
-            app:iconSpaceReserved="false" />
+            app:defaultValue="0.0"
+            app:entries="@array/grade_modifier_entries"
+            app:entryValues="@array/grade_modifier_value"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_modifier_plus"
+            app:title="@string/pref_other_grade_modifier_plus"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:defaultValue="0.0"
-            android:entries="@array/grade_modifier_entries"
-            android:entryValues="@array/grade_modifier_value"
-            android:key="@string/pref_key_grade_modifier_minus"
-            android:summary="%s"
-            android:title="@string/pref_other_grade_modifier_minus"
-            app:iconSpaceReserved="false" />
+            app:defaultValue="0.0"
+            app:entries="@array/grade_modifier_entries"
+            app:entryValues="@array/grade_modifier_value"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_modifier_minus"
+            app:title="@string/pref_other_grade_modifier_minus"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
-            android:defaultValue="only_one_semester"
-            android:entries="@array/grade_average_mode_entries"
-            android:entryValues="@array/grade_average_mode_values"
-            android:key="@string/pref_key_grade_average_mode"
-            android:summary="%s"
-            android:title="@string/pref_view_grade_average_mode"
+            app:defaultValue="only_one_semester"
+            app:entries="@array/grade_average_mode_entries"
+            app:entryValues="@array/grade_average_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_average_mode"
+            app:title="@string/pref_view_grade_average_mode"
+            app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="@string/pref_key_grade_average_force_calc"
+            app:title="@string/pref_view_grade_average_force_calc"
             app:iconSpaceReserved="false" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_key_grade_average_force_calc"
-            android:title="@string/pref_view_grade_average_force_calc"
-            app:iconSpaceReserved="false" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/pref_key_fill_message_content"
-            android:title="@string/pref_other_fill_message_content"
-            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_fill_message_content"
+            app:title="@string/pref_other_fill_message_content" />
     </PreferenceCategory>
 </PreferenceScreen>

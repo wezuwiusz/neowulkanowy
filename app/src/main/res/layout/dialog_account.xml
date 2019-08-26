@@ -5,7 +5,7 @@
     android:layout_width="280dp"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/accountDialogTitle"
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -27,24 +27,24 @@
         tools:itemCount="3"
         tools:listitem="@layout/item_account" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/accountDialogAdd"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/accountDialogRecycler"
         android:layout_margin="8dp"
-        android:text="@string/account_add_new" />
+        android:text="@string/account_add_new"
+        android:textColor="?android:textColorPrimary" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/accountDialogRemove"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/accountDialogRecycler"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
-        android:text="@string/account_logout"
-        android:textColor="@color/colorPrimary" />
+        android:text="@string/account_logout" />
 </RelativeLayout>

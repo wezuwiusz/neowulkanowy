@@ -32,6 +32,7 @@ class SendMessagePresenter @Inject constructor(
 
     fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean?) {
         super.onAttachView(view)
+        view.initView()
         Timber.i("Send message view was initialized")
         loadData(message, reply)
         view.apply {
@@ -54,15 +55,47 @@ class SendMessagePresenter @Inject constructor(
         }
     }
 
+    fun onTouchScroll(): Boolean {
+        return view?.run {
+            if (isDropdownListVisible) {
+                hideDropdownList()
+                true
+            } else false
+        } == true
+    }
+
+    fun onRecipientsTextChange(text: String) {
+        if (text.isBlank()) return
+        view?.scrollToRecipients()
+    }
+
     fun onUpNavigate(): Boolean {
         view?.popView()
         return true
     }
 
+    fun onSend(): Boolean {
+        view?.run {
+            when {
+                formRecipientsData.isEmpty() -> showMessage(messageRequiredRecipients)
+                formContentValue.length < 3 -> showMessage(messageContentMinLength)
+                else -> {
+                    sendMessage(
+                        subject = formSubjectValue,
+                        content = formContentValue,
+                        recipients = formRecipientsData.map { it.recipient }
+                    )
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
     private fun loadData(message: Message?, reply: Boolean?) {
         var reportingUnit: ReportingUnit? = null
-        var recipients: List<Recipient> = emptyList()
-        var selectedRecipient: List<Recipient> = emptyList()
+        var recipientChips: List<RecipientChipItem> = emptyList()
+        var selectedRecipientChips: List<RecipientChipItem> = emptyList()
 
         Timber.i("Loading recipients started")
         disposable.add(studentRepository.getCurrentStudent()
@@ -73,14 +106,14 @@ class SendMessagePresenter @Inject constructor(
                     .flatMap { recipientRepository.getRecipients(student, 2, it).toMaybe() }
                     .doOnSuccess {
                         Timber.i("Loading recipients result: Success, fetched %d recipients", it.size)
-                        recipients = it
+                        recipientChips = createChips(it)
                     }
                     .flatMapCompletable {
                         if (message == null || reply != true) Completable.complete()
                         else recipientRepository.getMessageRecipients(student, message)
                             .doOnSuccess {
                                 Timber.i("Loaded message recipients to reply result: Success, fetched %d recipients", it.size)
-                                selectedRecipient = it
+                                selectedRecipientChips = createChips(it)
                             }
                             .ignoreElement()
                     }
@@ -95,11 +128,11 @@ class SendMessagePresenter @Inject constructor(
             }
             .doFinally { view?.run { showProgress(false) } }
             .subscribe({
-                view?.apply {
+                view?.run {
                     if (reportingUnit !== null) {
                         reportingUnit?.let { setReportingUnit(it) }
-                        setRecipients(recipients)
-                        if (selectedRecipient.isNotEmpty()) setSelectedRecipients(selectedRecipient)
+                        setRecipients(recipientChips)
+                        if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(selectedRecipientChips)
                         showContent(true)
                     } else {
                         Timber.e("Loading recipients result: Can't find the reporting unit")
@@ -145,21 +178,29 @@ class SendMessagePresenter @Inject constructor(
         )
     }
 
-    fun onSend(): Boolean {
-        view?.run {
-            when {
-                formRecipientsData.isEmpty() -> showMessage(messageRequiredRecipients)
-                formContentValue.length < 3 -> showMessage(messageContentMinLength)
-                else -> {
-                    sendMessage(
-                        subject = formSubjectValue,
-                        content = formContentValue,
-                        recipients = formRecipientsData
-                    )
-                    return true
+    private fun createChips(recipients: List<Recipient>): List<RecipientChipItem> {
+        fun generateCorrectSummary(recipientRealName: String): String {
+            val substring = recipientRealName.substringBeforeLast("-")
+            return when {
+                substring == recipientRealName -> recipientRealName
+                substring.indexOf("(") != -1 -> {
+                    recipientRealName.indexOf("(")
+                        .let { recipientRealName.substring(if (it != -1) it else 0) }
                 }
-            }
+                substring.indexOf("[") != -1 -> {
+                    recipientRealName.indexOf("[")
+                        .let { recipientRealName.substring(if (it != -1) it else 0) }
+                }
+                else -> recipientRealName.substringAfter("-")
+            }.trim()
         }
-        return false
+
+        return recipients.map {
+            RecipientChipItem(
+                title = it.name,
+                summary = generateCorrectSummary(it.realName),
+                recipient = it
+            )
+        }
     }
 }

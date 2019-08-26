@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="18sp"
-        tools:text="@tools:sample/date/day_of_week" />
+        tools:text="Monday" />
 
     <TextView
         android:id="@+id/homeworkHeaderDate"
@@ -28,6 +28,5 @@
         android:layout_marginLeft="10dp"
         android:gravity="end"
         android:textSize="13sp"
-        tools:text="@tools:sample/date/ddmmyy" />
-
+        tools:text="22.02.2022" />
 </LinearLayout>

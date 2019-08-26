@@ -15,8 +15,9 @@
             android:layout_height="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/messageTabProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,15 +29,14 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        tools:ignore="UseCompoundDrawables">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="100dp"
-            android:minHeight="100dp"
-            app:srcCompat="@drawable/ic_more_messages_24dp"
-            app:tint="?android:attr/textColorPrimary"
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/ic_more_messages"
+            app:tint="?colorOnBackground"
             tools:ignore="contentDescription" />
 
         <TextView

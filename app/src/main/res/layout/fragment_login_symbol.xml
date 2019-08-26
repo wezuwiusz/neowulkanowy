@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/loginSymbolProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -62,7 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginSymbolHeader">
 
-                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                <AutoCompleteTextView
                     android:id="@+id/loginSymbolName"
                     style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
@@ -76,7 +77,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginSymbolSignIn"
-                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
@@ -84,10 +84,6 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/login_sign_in"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                app:backgroundTint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginSymbolNameLayout" />

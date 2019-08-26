@@ -81,9 +81,7 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
             setCenterTextColor(context.getThemeAttrColor(android.R.attr.textColorPrimary))
             animateXY(1000, 1000)
             minAngleForSlices = 25f
-            legend.apply {
-                textColor = context.getThemeAttrColor(android.R.attr.textColorPrimary)
-            }
+            legend.textColor = context.getThemeAttrColor(android.R.attr.textColorPrimary)
         }
 
         context?.let {

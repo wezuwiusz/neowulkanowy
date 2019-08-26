@@ -75,7 +75,7 @@ class TimetablePresenter @Inject constructor(
 
     fun onTimetableItemSelected(item: AbstractFlexibleItem<*>?) {
         if (item is TimetableItem) {
-            Timber.i("Select exam item ${item.lesson.id}")
+            Timber.i("Select timetable item ${item.lesson.id}")
             view?.showTimetableDialog(item.lesson)
         }
     }

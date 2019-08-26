@@ -63,7 +63,7 @@
             android:layout_marginLeft="10dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:contentDescription="@string/all_prev"
-            android:src="@drawable/ic_widget_chevron_24dp"
+            android:src="@drawable/ic_widget_chevron"
             tools:targetApi="lollipop" />
 
         <ImageButton
@@ -76,7 +76,7 @@
             android:backgroundTint="@color/colorPrimaryDark"
             android:contentDescription="@string/all_next"
             android:rotation="180"
-            android:src="@drawable/ic_widget_chevron_24dp"
+            android:src="@drawable/ic_widget_chevron"
             tools:targetApi="lollipop" />
     </RelativeLayout>
 

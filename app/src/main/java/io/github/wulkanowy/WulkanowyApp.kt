@@ -13,6 +13,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.utils.Log
 import io.github.wulkanowy.di.DaggerAppComponent
 import io.github.wulkanowy.services.sync.SyncWorkerFactory
+import io.github.wulkanowy.ui.base.ThemeManager
 import io.github.wulkanowy.utils.ActivityLifecycleLogger
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.CrashlyticsTree
@@ -30,6 +31,9 @@ class WulkanowyApp : DaggerApplication() {
     lateinit var workerFactory: SyncWorkerFactory
 
     @Inject
+    lateinit var themeManager: ThemeManager
+
+    @Inject
     lateinit var appInfo: AppInfo
 
     override fun attachBaseContext(base: Context?) {
@@ -41,6 +45,7 @@ class WulkanowyApp : DaggerApplication() {
         super.onCreate()
         AndroidThreeTen.init(this)
         RxJavaPlugins.setErrorHandler(::onError)
+        themeManager.applyDefaultTheme()
 
         initWorkManager()
         initLogging()

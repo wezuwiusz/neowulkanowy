@@ -60,9 +60,7 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun initView() {
-        attendanceAdapter.apply {
-            setOnItemClickListener { presenter.onAttendanceItemSelected(it) }
-        }
+        attendanceAdapter.setOnItemClickListener { presenter.onAttendanceItemSelected(it) }
 
         attendanceRecycler.run {
             layoutManager = SmoothScrollLinearLayoutManager(context)

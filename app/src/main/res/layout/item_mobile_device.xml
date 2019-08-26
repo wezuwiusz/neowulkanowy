@@ -47,6 +47,6 @@
         android:layout_marginRight="4dp"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/mobile_devices_unregister"
-        app:srcCompat="@drawable/ic_message_delete_24dp"
-        app:tint="?android:textColorSecondary" />
+        app:srcCompat="@drawable/ic_menu_message_delete"
+        app:tint="?colorOnBackground" />
 </RelativeLayout>

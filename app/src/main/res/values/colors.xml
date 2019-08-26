@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#d32f2f</color>
+    <color name="colorPrimaryLight">#e57373</color>
     <color name="colorPrimaryDark">#9a0007</color>
-    <color name="colorPrimaryLight">#ff6659</color>
-    <color name="colorBackgroundBottomNav">#f0f0f0</color>
+    <color name="colorError">#ff5722</color>
+    <color name="colorErrorLight">#e84853</color>
 
-    <color name="grade_text">#ffffff</color>
+    <color name="colorDivider">#1f000000</color>
+    <color name="colorDividerInverse">#1fffffff</color>
 
     <color name="grade_black">#424242</color>
     <color name="grade_red">#F44336</color>
@@ -29,17 +31,9 @@
     <color name="grade_vulcan_one">#d65757</color>
     <color name="grade_vulcan_default">#3d5f9c</color>
 
-    <color name="bottom_nav_background">#303030</color>
-    <color name="bottom_nav_background_inverse">#ffffff</color>
-
     <color name="chip_backgroundColor_inverse">#595959</color>
     <color name="chip_labelColor_inverse">#fefefe</color>
     <color name="chip_detailed_backgroundColor">#fefefe</color>
     <color name="filterable_list_backgroundColor_inverse">#393939</color>
     <color name="filterable_list_textColor_inverse">#fefefe</color>
-
-    <color name="divider">#cccccc</color>
-    <color name="divider_inverse">#777777</color>
-
-    <color name="spinner_stroke">#61000000</color>
 </resources>

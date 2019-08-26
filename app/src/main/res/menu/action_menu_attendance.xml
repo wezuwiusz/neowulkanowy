@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/attendanceMenuSummary"
-        android:icon="@drawable/ic_menu_main_attendance_summary_24dp"
+        android:icon="@drawable/ic_menu_attendance_summary"
         android:orderInCategory="1"
         android:title="@string/attendance_summary_button"
+        app:iconTint="@color/mtrl_on_surface_emphasis_medium"
         app:showAsAction="ifRoom" />
 </menu>

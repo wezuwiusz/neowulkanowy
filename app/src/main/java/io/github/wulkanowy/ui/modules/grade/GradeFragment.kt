@@ -78,6 +78,7 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
             offscreenPageLimit = 3
             setOnSelectPageListener { presenter.onPageSelected(it) }
         }
+
         gradeTabLayout.setupWithViewPager(gradeViewPager)
         gradeSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
     }

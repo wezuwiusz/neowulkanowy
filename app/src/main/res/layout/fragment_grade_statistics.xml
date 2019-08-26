@@ -6,24 +6,23 @@
     android:orientation="vertical"
     tools:context=".ui.modules.grade.statistics.GradeStatisticsFragment">
 
-    <LinearLayout
+    <io.github.wulkanowy.ui.widgets.MaterialLinearLayout
         android:id="@+id/gradeStatisticsSubjectsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        android:elevation="5dp"
+        android:background="?android:windowBackground"
+        android:elevation="1dp"
         android:padding="5dp"
         android:visibility="invisible"
+        tools:ignore="UnusedAttribute"
         tools:listitem="@layout/item_attendance_summary"
-        tools:targetApi="lollipop"
         tools:visibility="visible">
 
-        <androidx.appcompat.widget.AppCompatSpinner
+        <Spinner
             android:id="@+id/gradeStatisticsSubjects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
-            android:entries="@array/endpoints_keys"
             android:paddingStart="10dp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
@@ -31,7 +30,7 @@
             android:paddingRight="30dp"
             android:paddingBottom="10dp"
             android:spinnerMode="dialog" />
-    </LinearLayout>
+    </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -39,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -60,7 +59,7 @@
                     android:visibility="invisible"
                     tools:visibility="visible">
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/gradeStatisticsTypePartial"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -68,7 +67,7 @@
                         android:tag="partial"
                         android:text="@string/grade_statistics_partial" />
 
-                    <RadioButton
+                    <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/gradeStatisticsTypeSemester"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -85,13 +84,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
-                        android:background="?android:attr/windowBackground"
+                        android:background="?android:windowBackground"
                         android:minHeight="400dp"
                         android:visibility="gone"
                         tools:visibility="visible" />
 
-                    <ProgressBar
+                    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                         android:id="@+id/gradeStatisticsProgress"
+                        style="@style/Widget.MaterialProgressBar.ProgressBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -104,15 +104,14 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:visibility="invisible">
+                        android:visibility="invisible"
+                        tools:ignore="UseCompoundDrawables">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="100dp"
-                            android:minHeight="100dp"
-                            app:srcCompat="@drawable/ic_menu_main_grade_26dp"
-                            app:tint="?android:attr/textColorPrimary"
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            app:srcCompat="@drawable/ic_main_grade"
+                            app:tint="?colorOnBackground"
                             tools:ignore="contentDescription" />
 
                         <TextView
@@ -125,6 +124,6 @@
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

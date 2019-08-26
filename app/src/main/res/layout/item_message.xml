@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="?selectableItemBackground"
     android:paddingLeft="16dp"
     android:paddingTop="10dp"
     android:paddingRight="16dp"
@@ -33,7 +33,7 @@
         android:layout_toRightOf="@id/messageItemAuthor"
         android:gravity="end"
         android:textSize="13sp"
-        tools:text="@tools:sample/date/mmddyy" />
+        tools:text="@tools:sample/date/ddmmyy" />
 
     <TextView
         android:id="@+id/messageItemSubject"
@@ -47,6 +47,5 @@
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
-        tools:text="@tools:sample/lorem" />
-
+        tools:text="@tools:sample/lorem/random" />
 </RelativeLayout>

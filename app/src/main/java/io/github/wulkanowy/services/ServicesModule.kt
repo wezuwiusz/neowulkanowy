@@ -28,6 +28,7 @@ import io.github.wulkanowy.services.sync.works.Work
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import javax.inject.Singleton
 
+@Suppress("unused")
 @AssistedModule
 @Module(includes = [AssistedInject_ServicesModule::class])
 abstract class ServicesModule {

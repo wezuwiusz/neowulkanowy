@@ -3,10 +3,9 @@
     android:id="@+id/loginItemContainer"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="?selectableItemBackground"
-    android:orientation="horizontal">
+    android:background="?selectableItemBackground">
 
-    <CheckBox
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/loginItemCheck"
         android:layout_width="32dp"
         android:layout_height="24dp"
@@ -15,18 +14,20 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="28dp"
         android:layout_marginRight="28dp"
-        android:layout_marginBottom="24dp"
+        android:background="@android:color/transparent"
         tools:text=" " />
 
     <TextView
         android:id="@+id/loginItemName"
         android:layout_width="wrap_content"
-        android:layout_height="34dp"
+        android:layout_height="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_toEndOf="@id/loginItemCheck"
         android:layout_toRightOf="@id/loginItemCheck"
+        android:ellipsize="end"
         android:gravity="bottom"
+        android:maxLines="1"
         android:textSize="16sp"
         tools:text="@tools:sample/full_names" />
 
@@ -43,6 +44,6 @@
         android:gravity="bottom"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
-        android:textSize="12sp"
+        android:textSize="14sp"
         tools:text="@tools:sample/lorem/random" />
 </RelativeLayout>

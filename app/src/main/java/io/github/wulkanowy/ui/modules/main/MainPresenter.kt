@@ -5,6 +5,8 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.ui.modules.main.MainView.Section.GRADE
+import io.github.wulkanowy.ui.modules.main.MainView.Section.MESSAGE
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
@@ -19,7 +21,7 @@ class MainPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<MainView>(errorHandler, studentRepository, schedulers) {
 
-    fun onAttachView(view: MainView, initMenu: MainView.MenuView?) {
+    fun onAttachView(view: MainView, initMenu: MainView.Section?) {
         super.onAttachView(view)
         view.apply {
             getProperViewIndexes(initMenu).let { (main, more) ->
@@ -34,8 +36,9 @@ class MainPresenter @Inject constructor(
         analytics.logEvent("app_open", "destination" to initMenu?.name)
     }
 
-    fun onViewChange() {
+    fun onViewChange(section: MainView.Section?) {
         view?.apply {
+            showActionBarElevation(section != GRADE && section != MESSAGE)
             currentViewTitle?.let { setViewTitle(it) }
             currentStackSize?.let {
                 if (it > 1) showHomeArrow(true)
@@ -77,10 +80,10 @@ class MainPresenter @Inject constructor(
         } == true
     }
 
-    private fun getProperViewIndexes(initMenu: MainView.MenuView?): Pair<Int, Int> {
-        return when {
-            initMenu?.id in 0..3 -> initMenu!!.id to -1
-            (initMenu?.id ?: 0) > 3 -> 4 to initMenu!!.id - 4
+    private fun getProperViewIndexes(initMenu: MainView.Section?): Pair<Int, Int> {
+        return when (initMenu?.id) {
+            in 0..3 -> initMenu!!.id to -1
+            in 4..10 -> 4 to initMenu!!.id
             else -> prefRepository.startMenuIndex to -1
         }
     }

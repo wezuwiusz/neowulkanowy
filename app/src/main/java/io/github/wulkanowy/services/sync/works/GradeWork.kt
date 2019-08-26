@@ -15,7 +15,7 @@ import io.github.wulkanowy.data.repositories.grade.GradeRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainView.MenuView
+import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -41,14 +41,14 @@ class GradeWork @Inject constructor(
         notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewEntriesChannel.CHANNEL_ID)
             .setContentTitle(context.resources.getQuantityString(R.plurals.grade_new_items, grades.size, grades.size))
             .setContentText(context.resources.getQuantityString(R.plurals.grade_notify_new_items, grades.size, grades.size))
-            .setSmallIcon(R.drawable.ic_stat_notify_grade)
+            .setSmallIcon(R.drawable.ic_stat_grade)
             .setAutoCancel(true)
             .setPriority(PRIORITY_HIGH)
             .setDefaults(DEFAULT_ALL)
             .setColor(context.getCompatColor(R.color.colorPrimary))
             .setContentIntent(
-                PendingIntent.getActivity(context, MenuView.GRADE.id,
-                    MainActivity.getStartIntent(context, MenuView.GRADE, true), FLAG_UPDATE_CURRENT))
+                PendingIntent.getActivity(context, MainView.Section.GRADE.id,
+                    MainActivity.getStartIntent(context, MainView.Section.GRADE, true), FLAG_UPDATE_CURRENT))
             .setStyle(NotificationCompat.InboxStyle().run {
                 setSummaryText(context.resources.getQuantityString(R.plurals.grade_number_item, grades.size, grades.size))
                 grades.forEach { addLine("${it.subject}: ${it.entry}") }

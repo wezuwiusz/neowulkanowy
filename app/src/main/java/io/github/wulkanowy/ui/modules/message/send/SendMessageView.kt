@@ -1,12 +1,13 @@
 package io.github.wulkanowy.ui.modules.message.send
 
-import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.ui.base.BaseView
 
 interface SendMessageView : BaseView {
 
-    val formRecipientsData: List<Recipient>
+    val isDropdownListVisible: Boolean
+
+    val formRecipientsData: List<RecipientChipItem>
 
     val formSubjectValue: String
 
@@ -18,11 +19,13 @@ interface SendMessageView : BaseView {
 
     val messageSuccess: String
 
+    fun initView()
+
     fun setReportingUnit(unit: ReportingUnit)
 
-    fun setRecipients(recipients: List<Recipient>)
+    fun setRecipients(recipients: List<RecipientChipItem>)
 
-    fun setSelectedRecipients(recipients: List<Recipient>)
+    fun setSelectedRecipients(recipients: List<RecipientChipItem>)
 
     fun showProgress(show: Boolean)
 
@@ -37,6 +40,10 @@ interface SendMessageView : BaseView {
     fun setContent(content: String)
 
     fun showSoftInput(show: Boolean)
+
+    fun hideDropdownList()
+
+    fun scrollToRecipients()
 
     fun popView()
 }

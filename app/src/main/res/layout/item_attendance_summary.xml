@@ -65,7 +65,7 @@
             tools:text="50" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_all_divider"
@@ -96,7 +96,7 @@
             tools:text="0" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_all_divider"
@@ -127,7 +127,7 @@
             tools:text="25" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_all_divider"
@@ -158,7 +158,7 @@
             tools:text="0" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_all_divider"
@@ -189,7 +189,7 @@
             tools:text="6" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_all_divider"
@@ -220,7 +220,7 @@
             tools:text="0" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_all_divider"

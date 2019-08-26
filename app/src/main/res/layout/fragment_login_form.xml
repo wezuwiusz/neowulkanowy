@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/loginFormProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -61,12 +62,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormHeader">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginFormName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="emailAddress"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    tools:targetApi="o" />
 
                 <requestFocus />
             </com.google.android.material.textfield.TextInputLayout>
@@ -89,20 +92,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/loginFormNameLayout"
                 app:passwordToggleEnabled="true">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginFormPass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints="password"
                     android:imeActionLabel="@string/login_sign_in"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    app:fontFamily="sans-serif" />
+                    app:fontFamily="sans-serif"
+                    tools:targetApi="o" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginFormHostLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -110,40 +116,22 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/ic_login_outlined_border"
+                android:hint="@string/login_host_hint"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/loginFormSignIn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormPassLayout">
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <AutoCompleteTextView
                     android:id="@+id/loginFormHost"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:entries="@array/endpoints_keys" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginBottom="48dp"
-                android:background="?android:windowBackground"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:text="@string/login_host_hint"
-                android:textColor="?android:textColorHint"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/loginFormHostLayout"
-                app:layout_constraintEnd_toEndOf="@+id/loginFormHostLayout"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/loginFormHostLayout" />
+                    android:layout_height="wrap_content"
+                    tools:ignore="LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginFormSignIn"
-                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -152,10 +140,6 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/login_sign_in"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                app:backgroundTint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout" />
@@ -180,15 +164,13 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginFormPrivacyLink"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="@string/login_privacy_policy"
-                android:textAppearance="?android:textAppearance"
-                android:textColor="@color/colorPrimary"
                 android:visibility="invisible"
-                app:backgroundTint="?android:windowBackground"
                 app:fontFamily="sans-serif-medium"
                 app:layout_constraintBottom_toBottomOf="@id/loginFormSignIn"
                 app:layout_constraintEnd_toStartOf="@+id/loginFormSignIn"

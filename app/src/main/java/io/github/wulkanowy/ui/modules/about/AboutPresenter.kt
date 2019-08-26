@@ -1,9 +1,6 @@
 package io.github.wulkanowy.ui.modules.about
 
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.Libs.SpecialButton.SPECIAL1
-import com.mikepenz.aboutlibraries.Libs.SpecialButton.SPECIAL2
-import com.mikepenz.aboutlibraries.Libs.SpecialButton.SPECIAL3
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -21,28 +18,53 @@ class AboutPresenter @Inject constructor(
 
     override fun onAttachView(view: AboutView) {
         super.onAttachView(view)
+        view.initView()
         Timber.i("About view was initialized")
+        loadData()
     }
 
-    fun onExtraSelect(type: Libs.SpecialButton?) {
+    fun onItemSelected(item: AbstractFlexibleItem<*>) {
+        if (item !is AboutItem) return
         view?.run {
-            when (type) {
-                SPECIAL1 -> {
-                    Timber.i("Opening discord invide page")
-                    analytics.logEvent("open_page", "name" to "discord")
-                    openDiscordInviteView()
+            when (item.title) {
+                feedbackRes?.first -> {
+                    Timber.i("Opening email client ")
+                    openEmailClient()
+                    analytics.logEvent("about_open", "name" to "feedback")
                 }
-                SPECIAL2 -> {
-                    Timber.i("Opening home page")
-                    analytics.logEvent("open_page", "name" to "home")
-                    openHomepageWebView()
+                discordRes?.first -> {
+                    Timber.i("Opening discord")
+                    openDiscordInvite()
+                    analytics.logEvent("about_open", "name" to "discord")
                 }
-                SPECIAL3 -> {
-                    Timber.i("Opening email client")
-                    analytics.logEvent("open_page", "name" to "email")
-                    openEmailClientView()
+                homepageRes?.first -> {
+                    Timber.i("Opening homepage")
+                    openHomepage()
+                    analytics.logEvent("about_open", "name" to "homepage")
+                }
+                licensesRes?.first -> {
+                    Timber.i("Opening licenses view")
+                    openLicenses()
+                    analytics.logEvent("about_open", "name" to "licenses")
+                }
+                privacyRes?.first -> {
+                    Timber.i("Opening privacy page ")
+                    openPrivacyPolicy()
+                    analytics.logEvent("about_open", "name" to "privacy")
                 }
             }
+        }
+    }
+
+    private fun loadData() {
+        view?.run {
+            updateData(AboutScrollableHeader(), listOfNotNull(
+                versionRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
+                feedbackRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
+                discordRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
+                homepageRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
+                licensesRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
+                privacyRes?.let { (title, summary, image) -> AboutItem(title, summary, image) }))
         }
     }
 }

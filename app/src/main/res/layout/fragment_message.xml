@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,14 +9,17 @@
         android:id="@+id/messageTabLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/colorPrimary"
-        android:elevation="5dp"
+        android:background="?colorSurface"
+        android:elevation="4dp"
         android:visibility="invisible"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@android:color/white"
+        app:tabIndicatorColor="?colorPrimary"
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
-        app:tabTextColor="@android:color/white" />
+        app:tabSelectedTextColor="?colorPrimary"
+        app:tabTextColor="@color/mtrl_on_surface_emphasis_medium"
+        tools:ignore="UnusedAttribute"
+        tools:visibility="visible" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/messageViewPager"
@@ -32,14 +36,14 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/ic_send_message_24dp" />
+        android:tint="?colorOnSecondary"
+        app:srcCompat="@drawable/ic_menu_message_write" />
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/messageProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

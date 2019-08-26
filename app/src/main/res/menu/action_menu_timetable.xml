@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/timetableMenuCompletedLessons"
-        android:icon="@drawable/ic_menu_main_lessons_completed_24dp"
+        android:icon="@drawable/ic_menu_timetable_lessons_completed"
         android:orderInCategory="1"
         android:title="@string/completed_lessons_button"
+        app:iconTint="@color/mtrl_on_surface_emphasis_medium"
         app:showAsAction="ifRoom" />
 </menu>

@@ -4,7 +4,7 @@
     android:id="@+id/gradeHeaderContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="?selectableItemBackground"
     android:paddingLeft="16dp"
     android:paddingTop="10dp"
     android:paddingRight="16dp"
@@ -21,8 +21,8 @@
         android:layout_toLeftOf="@id/gradeHeaderNote"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/app_name"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        tools:text="Fizyka" />
 
     <TextView
         android:id="@+id/gradeHeaderAverage"
@@ -30,9 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/gradeHeaderSubject"
         android:layout_marginTop="5dp"
-        android:text="@string/app_name"
         android:textColor="?android:textColorSecondary"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="Average: 6,00" />
 
     <TextView
         android:id="@+id/gradeHeaderNumber"
@@ -44,17 +44,18 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/gradeHeaderAverage"
         android:layout_toRightOf="@+id/gradeHeaderAverage"
-        android:text="@string/app_name"
         android:textColor="?android:textColorSecondary"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="12 grades" />
 
-    <ImageView
+    <TextView
         android:id="@+id/gradeHeaderNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/ic_all_round_note_24dp"
+        app:srcCompat="@drawable/ic_all_round_mark"
+        app:tint="?colorPrimary"
         tools:ignore="contentDescription" />
 </RelativeLayout>

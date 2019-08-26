@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
@@ -13,6 +12,7 @@ import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable_completed.*
 import javax.inject.Inject
@@ -84,7 +84,7 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     override fun showFeatureDisabled() {
         context?.let {
             completedLessonsInfo.text = getString(R.string.error_feature_disabled)
-            completedLessonsInfoImage.setImageDrawable(ContextCompat.getDrawable(it, R.drawable.ic_all_close_circle_24dp))
+            completedLessonsInfoImage.setImageDrawable(it.getCompatDrawable(R.drawable.ic_all_close_circle))
         }
     }
 

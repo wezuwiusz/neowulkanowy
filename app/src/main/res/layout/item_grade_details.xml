@@ -4,7 +4,7 @@
     android:id="@+id/grade_subitem_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="?selectableItemBackground"
     android:paddingStart="12dp"
     android:paddingLeft="12dp"
     android:paddingTop="7dp"
@@ -21,7 +21,7 @@
         android:background="@color/grade_material_default"
         android:gravity="center"
         android:maxLength="5"
-        android:textColor="@color/grade_text"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
         tools:text="6" />
 
@@ -40,8 +40,8 @@
         android:layout_toRightOf="@+id/gradeItemValue"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/all_description"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:text="@tools:sample/lorem" />
 
     <TextView
         android:id="@+id/gradeItemDate"
@@ -50,8 +50,8 @@
         android:layout_alignStart="@+id/gradeItemDescription"
         android:layout_alignLeft="@+id/gradeItemDescription"
         android:layout_alignBottom="@+id/gradeItemValue"
-        android:text="@string/all_date"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="@tools:sample/lorem" />
 
     <TextView
         android:id="@+id/gradeItemWeight"
@@ -66,8 +66,8 @@
         android:layout_toLeftOf="@id/gradeItemNote"
         android:layout_toEndOf="@+id/gradeItemDate"
         android:layout_toRightOf="@+id/gradeItemDate"
-        android:text="@string/grade_weight"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="@tools:sample/lorem" />
 
     <ImageView
         android:id="@+id/gradeItemNote"
@@ -76,6 +76,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/ic_all_round_note_24dp"
+        app:srcCompat="@drawable/ic_all_round_mark"
+        app:tint="?colorPrimary"
         tools:ignore="contentDescription" />
 </RelativeLayout>

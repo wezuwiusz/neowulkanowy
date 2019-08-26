@@ -15,7 +15,7 @@ import io.github.wulkanowy.data.repositories.note.NoteRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainView.MenuView
+import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -41,14 +41,14 @@ class NoteWork @Inject constructor(
         notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewEntriesChannel.CHANNEL_ID)
             .setContentTitle(context.resources.getQuantityString(R.plurals.note_new_items, notes.size, notes.size))
             .setContentText(context.resources.getQuantityString(R.plurals.note_notify_new_items, notes.size, notes.size))
-            .setSmallIcon(R.drawable.ic_stat_notify_note)
+            .setSmallIcon(R.drawable.ic_stat_note)
             .setAutoCancel(true)
             .setDefaults(DEFAULT_ALL)
             .setPriority(PRIORITY_HIGH)
             .setColor(context.getCompatColor(R.color.colorPrimary))
             .setContentIntent(
-                PendingIntent.getActivity(context, MenuView.NOTE.id,
-                    MainActivity.getStartIntent(context, MenuView.NOTE, true), FLAG_UPDATE_CURRENT))
+                PendingIntent.getActivity(context, MainView.Section.NOTE.id,
+                    MainActivity.getStartIntent(context, MainView.Section.NOTE, true), FLAG_UPDATE_CURRENT))
             .setStyle(NotificationCompat.InboxStyle().run {
                 setSummaryText(context.resources.getQuantityString(R.plurals.note_number_item, notes.size, notes.size))
                 notes.forEach { addLine("${it.teacher}: ${it.category}") }

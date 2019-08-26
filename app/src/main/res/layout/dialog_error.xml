@@ -11,11 +11,10 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:overScrollMode="ifContentScrolls"
-            tools:ignore="UselessParent">
+            android:overScrollMode="ifContentScrolls">
 
             <HorizontalScrollView
                 android:layout_width="350dp"
@@ -28,11 +27,12 @@
                     android:id="@+id/errorDialogContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scrollHorizontally="true"
+                    android:gravity="start"
                     android:textIsSelectable="true"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="@tools:sample/lorem/random" />
             </HorizontalScrollView>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
     <LinearLayout
@@ -43,28 +43,24 @@
         android:minHeight="52dp"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/errorDialogCancel"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:gravity="center"
-            android:text="@android:string/cancel"
-            android:textColor="@color/colorPrimary" />
+            android:text="@android:string/cancel" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/errorDialogCopy"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:gravity="center"
-            android:text="@android:string/copy"
-            android:textColor="@color/colorPrimary" />
+            android:text="@android:string/copy" />
     </LinearLayout>
 </LinearLayout>

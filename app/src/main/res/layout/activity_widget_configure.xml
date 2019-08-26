@@ -5,7 +5,7 @@
     android:layout_width="280dp"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/widgetConfigureTitle"
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -14,7 +14,6 @@
         android:paddingEnd="24dp"
         android:paddingRight="24dp"
         android:text="@string/account_title"
-        android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
         app:firstBaselineToTopHeight="40dp" />

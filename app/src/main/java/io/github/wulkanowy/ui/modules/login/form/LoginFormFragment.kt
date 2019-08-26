@@ -17,7 +17,6 @@ import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.openInternetBrowser
-import io.github.wulkanowy.utils.setOnItemSelectedListener
 import io.github.wulkanowy.utils.setOnTextChangedListener
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
@@ -42,7 +41,11 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         get() = loginFormPass.text.toString()
 
     override val formHostValue: String?
-        get() = resources.getStringArray(R.array.endpoints_values)[loginFormHost.selectedItemPosition]
+        get() = hostValues.getOrNull(hostKeys.indexOf(loginFormHost.text.toString()))
+
+    private lateinit var hostKeys: Array<String>
+
+    private lateinit var hostValues: Array<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_form, container, false)
@@ -54,9 +57,12 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun initView() {
+        hostKeys = resources.getStringArray(R.array.endpoints_keys)
+        hostValues = resources.getStringArray(R.array.endpoints_values)
+
         loginFormName.setOnTextChangedListener { presenter.onNameTextChanged() }
         loginFormPass.setOnTextChangedListener { presenter.onPassTextChanged() }
-        loginFormHost.setOnItemSelectedListener { presenter.onHostSelected() }
+        loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
         loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
 
@@ -64,13 +70,14 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
             if (id == IME_ACTION_DONE || id == IME_NULL) loginFormSignIn.callOnClick() else false
         }
 
-        context?.let {
-            loginFormHost.adapter = ArrayAdapter.createFromResource(it, R.array.endpoints_keys, android.R.layout.simple_spinner_item)
-                .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+        with(loginFormHost) {
+            setText(hostKeys.getOrElse(0) { "" })
+            setAdapter(ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
+            keyListener = null
         }
     }
 
-    override fun setDefaultCredentials(name: String, pass: String) {
+    override fun setCredentials(name: String, pass: String) {
         loginFormName.setText(name)
         loginFormPass.setText(pass)
     }
@@ -143,7 +150,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         (activity as? LoginActivity)?.onFormFragmentAccountLogged(students, Triple(
             loginFormName.text.toString(),
             loginFormPass.text.toString(),
-            resources.getStringArray(R.array.endpoints_values)[loginFormHost.selectedItemPosition]
+            resources.getStringArray(R.array.endpoints_values)[1]
         ))
     }
 

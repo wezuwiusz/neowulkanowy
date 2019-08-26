@@ -13,7 +13,7 @@ interface LoginFormView : BaseView {
 
     val formHostValue: String?
 
-    fun setDefaultCredentials(name: String, pass: String)
+    fun setCredentials(name: String, pass: String)
 
     fun setErrorNameRequired()
 
