@@ -28,7 +28,8 @@ android {
         ]
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString(),
+                             "room.incremental"   : "true"]
             }
         }
     }
@@ -86,6 +87,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     packagingOptions {
         exclude 'META-INF/library_release.kotlin_module'
         exclude 'META-INF/library-core_release.kotlin_module'
@@ -105,7 +110,7 @@ play {
 
 ext {
     work_manager = "2.2.0"
-    room = "2.1.0"
+    room = "2.2.0-beta01"
     dagger = "2.24"
     chucker = "2.0.4"
     mockk = "1.9.2"
@@ -114,35 +119,38 @@ ext {
 
 configurations.all {
     resolutionStrategy.force "androidx.constraintlayout:constraintlayout:1.1.3"
-    resolutionStrategy.force "com.google.android.material:material:1.1.0-alpha07"
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:api:0.9.4"
+    implementation "io.github.wulkanowy:api:4b50c79"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.core:core:1.0.2"
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "androidx.fragment:fragment:1.0.0"
+    implementation "androidx.core:core-ktx:1.1.0-rc03"
+    implementation "androidx.activity:activity-ktx:1.0.0-rc01"
+    implementation "androidx.appcompat:appcompat:1.1.0-rc01"
+    implementation "androidx.appcompat:appcompat-resources:1.1.0-rc01"
+    implementation "androidx.fragment:fragment-ktx:1.1.0-rc04"
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.multidex:multidex:2.0.1"
 
-    implementation "androidx.preference:preference:1.1.0-rc01"
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.preference:preference-ktx:1.1.0-rc01"
+    implementation "androidx.recyclerview:recyclerview:1.1.0-beta03"
     implementation "androidx.viewpager:viewpager:1.0.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
-    implementation "androidx.coordinatorlayout:coordinatorlayout:1.0.0"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0-beta01"
     implementation "com.google.android.material:material:1.1.0-alpha07"
     implementation "com.github.wulkanowy:material-chips-input:2.0.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
     implementation "me.zhanghai.android.materialprogressbar:library:1.6.1"
 
-    implementation "androidx.work:work-runtime:$work_manager"
+    implementation "androidx.work:work-runtime-ktx:$work_manager"
     implementation "androidx.work:work-rxjava2:$work_manager"
+    implementation "androidx.work:work-gcm:$work_manager"
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-rxjava2:$room"
+    implementation "androidx.room:room-ktx:$room"
     kapt "androidx.room:room-compiler:$room"
 
     implementation "com.google.dagger:dagger-android-support:$dagger"

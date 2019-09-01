@@ -14,7 +14,7 @@ import javax.inject.Singleton
     AppModule::class,
     RepositoryModule::class,
     ServicesModule::class,
-    BuilderModule::class])
+    BindingModule::class])
 interface AppComponent : AndroidInjector<WulkanowyApp> {
 
     @Component.Factory

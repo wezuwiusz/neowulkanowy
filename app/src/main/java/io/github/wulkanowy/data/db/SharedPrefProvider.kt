@@ -1,18 +1,15 @@
 package io.github.wulkanowy.data.db
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-@SuppressLint("ApplySharedPref")
-class SharedPrefHelper @Inject constructor(private val sharedPref: SharedPreferences) {
+class SharedPrefProvider @Inject constructor(private val sharedPref: SharedPreferences) {
 
     fun putLong(key: String, value: Long, sync: Boolean = false) {
-        sharedPref.edit().putLong(key, value).apply {
-            if (sync) commit() else apply()
-        }
+        sharedPref.edit(sync) { putLong(key, value) }
     }
 
     fun getLong(key: String, defaultValue: Long) = sharedPref.getLong(key, defaultValue)

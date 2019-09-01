@@ -7,8 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.text.HtmlCompat
-import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+import androidx.core.text.parseAsHtml
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import dagger.Lazy
@@ -69,7 +68,7 @@ class LicenseFragment : BaseFragment(), LicenseView, MainView.TitledView {
         context?.let {
             AlertDialog.Builder(it).apply {
                 setTitle(R.string.license_dialog_title)
-                setMessage(HtmlCompat.fromHtml(licenseHtml, FROM_HTML_MODE_LEGACY))
+                setMessage(licenseHtml.parseAsHtml())
                 setPositiveButton(android.R.string.ok) { _, _ -> }
                 show()
             }

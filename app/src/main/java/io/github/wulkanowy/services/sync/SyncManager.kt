@@ -8,9 +8,9 @@ import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.UNMETERED
-import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import io.github.wulkanowy.data.db.SharedPrefHelper
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
@@ -26,14 +26,13 @@ import javax.inject.Singleton
 class SyncManager @Inject constructor(
     private val workManager: WorkManager,
     private val preferencesRepository: PreferencesRepository,
-    sharedPrefHelper: SharedPrefHelper,
+    sharedPrefProvider: SharedPrefProvider,
     newEntriesChannel: NewEntriesChannel,
     debugChannel: DebugChannel,
     appInfo: AppInfo
 ) {
 
     companion object {
-
         private const val APP_VERSION_CODE_KEY = "app_version_code"
     }
 
@@ -45,18 +44,18 @@ class SyncManager @Inject constructor(
             if (appInfo.isDebug) debugChannel.create()
         }
 
-        if (sharedPrefHelper.getLong(APP_VERSION_CODE_KEY, -1L) != appInfo.versionCode.toLong()) {
+        if (sharedPrefProvider.getLong(APP_VERSION_CODE_KEY, -1L) != appInfo.versionCode.toLong()) {
             startSyncWorker(true)
-            sharedPrefHelper.putLong(APP_VERSION_CODE_KEY, appInfo.versionCode.toLong(), true)
+            sharedPrefProvider.putLong(APP_VERSION_CODE_KEY, appInfo.versionCode.toLong(), true)
         }
-
         Timber.i("SyncManager was initialized")
     }
 
     fun startSyncWorker(restart: Boolean = false) {
         if (preferencesRepository.isServiceEnabled && !now().isHolidays) {
             workManager.enqueueUniquePeriodicWork(SyncWorker::class.java.simpleName, if (restart) REPLACE else KEEP,
-                PeriodicWorkRequest.Builder(SyncWorker::class.java, preferencesRepository.servicesInterval, MINUTES, 10, MINUTES)
+                PeriodicWorkRequestBuilder<SyncWorker>(preferencesRepository.servicesInterval, MINUTES)
+                    .setInitialDelay(10, MINUTES)
                     .setBackoffCriteria(EXPONENTIAL, 30, MINUTES)
                     .setConstraints(Constraints.Builder()
                         .setRequiredNetworkType(if (preferencesRepository.isServicesOnlyWifi) UNMETERED else CONNECTED)

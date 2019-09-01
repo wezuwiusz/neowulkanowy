@@ -16,7 +16,7 @@ import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider
 
 @Suppress("unused")
 @Module
-internal abstract class BuilderModule {
+internal abstract class BindingModule {
 
     @PerActivity
     @ContributesAndroidInjector

@@ -21,7 +21,7 @@ import android.view.View.VISIBLE
 import android.widget.RemoteViews
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.SharedPrefHelper
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -51,7 +51,7 @@ class LuckyNumberWidgetProvider : BroadcastReceiver() {
     lateinit var appWidgetManager: AppWidgetManager
 
     @Inject
-    lateinit var sharedPref: SharedPrefHelper
+    lateinit var sharedPref: SharedPrefProvider
 
     companion object {
         fun getStudentWidgetKey(appWidgetId: Int) = "lucky_number_widget_student_$appWidgetId"

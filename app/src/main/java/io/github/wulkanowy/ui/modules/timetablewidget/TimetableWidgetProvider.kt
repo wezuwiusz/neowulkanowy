@@ -15,7 +15,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.widget.RemoteViews
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.SharedPrefHelper
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
@@ -43,7 +43,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
     lateinit var studentRepository: StudentRepository
 
     @Inject
-    lateinit var sharedPref: SharedPrefHelper
+    lateinit var sharedPref: SharedPrefProvider
 
     @Inject
     lateinit var schedulers: SchedulersProvider
