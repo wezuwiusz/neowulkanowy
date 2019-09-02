@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.timetablewidget
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.appwidget.AppWidgetManager
@@ -17,6 +18,7 @@ import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -110,6 +112,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun updateWidget(context: Context, appWidgetId: Int, date: LocalDate, student: Student?) {
         RemoteViews(context.packageName, R.layout.widget_timetable).apply {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
@@ -173,7 +176,9 @@ class TimetableWidgetProvider : BroadcastReceiver() {
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet()
         } catch (e: Exception) {
-            Timber.e(e, "An error has occurred in timetable widget provider")
+            if (e.cause !is NoCurrentStudentException) {
+                Timber.e(e, "An error has occurred in timetable widget provider")
+            }
             null
         }
     }

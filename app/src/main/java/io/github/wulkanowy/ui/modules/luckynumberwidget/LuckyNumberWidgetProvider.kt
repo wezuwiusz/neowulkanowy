@@ -23,6 +23,7 @@ import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.LuckyNumber
+import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -114,7 +115,9 @@ class LuckyNumberWidgetProvider : BroadcastReceiver() {
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet()
         } catch (e: Exception) {
-            Timber.e(e, "An error has occurred in lucky number provider")
+            if (e.cause !is NoCurrentStudentException) {
+                Timber.e(e, "An error has occurred in lucky number provider")
+            }
             null
         }
     }

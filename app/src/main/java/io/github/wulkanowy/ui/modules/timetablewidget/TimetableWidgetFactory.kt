@@ -60,8 +60,6 @@ class TimetableWidgetFactory(
                     .filter { true }
                     .flatMap { studentRepository.getSavedStudents().toMaybe() }
                     .flatMap {
-                        if (studentId == 0L) throw IllegalArgumentException("Student id is 0")
-
                         it.singleOrNull { student -> student.id == studentId }
                             .let { student ->
                                 if (student != null) Maybe.just(student)
