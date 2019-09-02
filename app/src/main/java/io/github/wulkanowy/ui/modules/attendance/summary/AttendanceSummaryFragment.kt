@@ -15,6 +15,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import kotlinx.android.synthetic.main.fragment_attendance_summary.*
 import javax.inject.Inject
@@ -35,11 +36,9 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
         fun newInstance() = AttendanceSummaryFragment()
     }
 
-    override val titleStringId: Int
-        get() = R.string.attendance_title
+    override val titleStringId get() = R.string.attendance_title
 
-    override val isViewEmpty
-        get() = attendanceSummaryAdapter.isEmpty
+    override val isViewEmpty get() = attendanceSummaryAdapter.isEmpty
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_attendance_summary, container, false)
@@ -52,25 +51,26 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
     }
 
     override fun initView() {
-        attendanceSummaryRecycler.run {
+        with(attendanceSummaryRecycler) {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = attendanceSummaryAdapter
         }
-        attendanceSummarySwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
 
-        context?.let {
-            subjectsAdapter = ArrayAdapter(it, android.R.layout.simple_spinner_item, ArrayList<String>())
-            subjectsAdapter.setDropDownViewResource(R.layout.item_attendance_summary_subject)
-        }
+        attendanceSummarySwipe.setOnRefreshListener(presenter::onSwipeRefresh)
 
-        attendanceSummarySubjects.run {
+        subjectsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())
+        subjectsAdapter.setDropDownViewResource(R.layout.item_attendance_summary_subject)
+
+        with(attendanceSummarySubjects) {
             adapter = subjectsAdapter
-            setOnItemSelectedListener { presenter.onSubjectSelected((it as TextView).text.toString()) }
+            setOnItemSelectedListener<TextView> { presenter.onSubjectSelected(it?.text?.toString()) }
         }
+
+        attendanceSummarySubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
     }
 
     override fun updateSubjects(data: ArrayList<String>) {
-        subjectsAdapter.run {
+        with(subjectsAdapter) {
             clear()
             addAll(data)
             notifyDataSetChanged()
@@ -78,9 +78,9 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
     }
 
     override fun updateDataSet(data: List<AttendanceSummaryItem>, header: AttendanceSummaryScrollableHeader) {
-        attendanceSummaryAdapter.apply {
+        with(attendanceSummaryAdapter) {
             updateDataSet(data, true)
-            removeAllScrollableHeaders()
+            removeAllScrollableFooters()
             addScrollableHeader(header)
         }
     }

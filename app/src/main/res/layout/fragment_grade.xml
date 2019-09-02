@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <io.github.wulkanowy.ui.modules.grade.CustomTabLayout
+    <io.github.wulkanowy.ui.widgets.FittedScrollableTabLayout
         android:id="@+id/gradeTabLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="?colorSurface"
-        android:elevation="4dp"
         android:visibility="invisible"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="?colorPrimary"

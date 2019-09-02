@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
+    <io.github.wulkanowy.ui.widgets.MaterialTabLayout
         android:id="@+id/messageTabLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="?colorSurface"
-        android:elevation="4dp"
         android:visibility="invisible"
         app:tabGravity="fill"
         app:tabIndicatorColor="?colorPrimary"

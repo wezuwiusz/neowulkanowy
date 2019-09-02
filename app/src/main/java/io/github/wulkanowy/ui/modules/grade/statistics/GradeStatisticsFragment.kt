@@ -19,6 +19,7 @@ import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import kotlinx.android.synthetic.main.fragment_grade_statistics.*
@@ -37,8 +38,7 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
         fun newInstance() = GradeStatisticsFragment()
     }
 
-    override val isViewEmpty
-        get() = gradeStatisticsChart.isEmpty
+    override val isViewEmpty get() = gradeStatisticsChart.isEmpty
 
     private lateinit var gradeColors: List<Pair<Int, Int>>
 
@@ -75,7 +75,7 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
     }
 
     override fun initView() {
-        gradeStatisticsChart.run {
+        with(gradeStatisticsChart) {
             description.isEnabled = false
             setHoleColor(context.getThemeAttrColor(android.R.attr.windowBackground))
             setCenterTextColor(context.getThemeAttrColor(android.R.attr.textColorPrimary))
@@ -84,21 +84,21 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
             legend.textColor = context.getThemeAttrColor(android.R.attr.textColorPrimary)
         }
 
-        context?.let {
-            subjectsAdapter = ArrayAdapter(it, android.R.layout.simple_spinner_item, ArrayList<String>())
-            subjectsAdapter.setDropDownViewResource(R.layout.item_attendance_summary_subject)
-        }
+        subjectsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())
+        subjectsAdapter.setDropDownViewResource(R.layout.item_attendance_summary_subject)
 
-        gradeStatisticsSubjects.run {
+        with(gradeStatisticsSubjects) {
             adapter = subjectsAdapter
-            setOnItemSelectedListener { presenter.onSubjectSelected((it as TextView).text.toString()) }
+            setOnItemSelectedListener<TextView> { presenter.onSubjectSelected(it?.text?.toString()) }
         }
 
-        gradeStatisticsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        gradeStatisticsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+
+        gradeStatisticsSubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
     }
 
     override fun updateSubjects(data: ArrayList<String>) {
-        subjectsAdapter.run {
+        with(subjectsAdapter) {
             clear()
             addAll(data)
             notifyDataSetChanged()
@@ -202,7 +202,7 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(GradeStatisticsFragment.SAVED_CHART_TYPE, presenter.currentIsSemester)
+        outState.putBoolean(SAVED_CHART_TYPE, presenter.currentIsSemester)
     }
 
     override fun onDestroyView() {

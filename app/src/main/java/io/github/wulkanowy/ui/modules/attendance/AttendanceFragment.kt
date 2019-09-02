@@ -17,11 +17,13 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_attendance.*
 import javax.inject.Inject
 
-class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildView, MainView.TitledView {
+class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildView,
+    MainView.TitledView {
 
     @Inject
     lateinit var presenter: AttendancePresenter
@@ -35,14 +37,11 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
         fun newInstance() = AttendanceFragment()
     }
 
-    override val titleStringId: Int
-        get() = R.string.attendance_title
+    override val titleStringId get() = R.string.attendance_title
 
-    override val isViewEmpty: Boolean
-        get() = attendanceAdapter.isEmpty
+    override val isViewEmpty get() = attendanceAdapter.isEmpty
 
-    override val currentStackSize: Int?
-        get() = (activity as? MainActivity)?.currentStackSize
+    override val currentStackSize get() = (activity as? MainActivity)?.currentStackSize
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,19 +59,21 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun initView() {
-        attendanceAdapter.setOnItemClickListener { presenter.onAttendanceItemSelected(it) }
+        attendanceAdapter.setOnItemClickListener(presenter::onAttendanceItemSelected)
 
-        attendanceRecycler.run {
+        with(attendanceRecycler) {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = attendanceAdapter
             addItemDecoration(FlexibleItemDecoration(context)
                 .withDefaultDivider()
-                .withDrawDividerOnLastItem(false)
-            )
+                .withDrawDividerOnLastItem(false))
         }
-        attendanceSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+
+        attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
         attendancePreviousButton.setOnClickListener { presenter.onPreviousDay() }
         attendanceNextButton.setOnClickListener { presenter.onNextDay() }
+
+        attendanceNavContainer.setElevationCompat(requireContext().dpToPx(8f))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

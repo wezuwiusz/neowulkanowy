@@ -17,6 +17,7 @@ import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
 import io.github.wulkanowy.ui.modules.grade.statistics.GradeStatisticsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnSelectPageListener
 import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
@@ -37,11 +38,9 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
         fun newInstance() = GradeFragment()
     }
 
-    override val titleStringId: Int
-        get() = R.string.grade_title
+    override val titleStringId get() = R.string.grade_title
 
-    override val currentPageIndex: Int
-        get() = gradeViewPager.currentItem
+    override val currentPageIndex get() = gradeViewPager.currentItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +63,7 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
     }
 
     override fun initView() {
-        pagerAdapter.apply {
+        with(pagerAdapter) {
             containerId = gradeViewPager.id
             addFragmentsWithTitle(mapOf(
                 GradeDetailsFragment.newInstance() to getString(R.string.all_details),
@@ -73,14 +72,18 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
             ))
         }
 
-        gradeViewPager.run {
+        with(gradeViewPager) {
             adapter = pagerAdapter
             offscreenPageLimit = 3
-            setOnSelectPageListener { presenter.onPageSelected(it) }
+            setOnSelectPageListener(presenter::onPageSelected)
         }
 
-        gradeTabLayout.setupWithViewPager(gradeViewPager)
-        gradeSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        with(gradeTabLayout) {
+            setupWithViewPager(gradeViewPager)
+            setElevationCompat(context.dpToPx(4f))
+        }
+
+        gradeSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -118,19 +121,19 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
     }
 
     override fun showSemesterDialog(selectedIndex: Int) {
-        arrayOf(getString(R.string.grade_semester, 1),
-            getString(R.string.grade_semester, 2)).also { array ->
-            context?.let {
-                AlertDialog.Builder(it)
-                    .setSingleChoiceItems(array, selectedIndex) { dialog, which ->
-                        presenter.onSemesterSelected(which)
-                        dialog.dismiss()
-                    }
-                    .setTitle(R.string.grade_switch_semester)
-                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
-                    .show()
+        val choices = arrayOf(
+            getString(R.string.grade_semester, 1),
+            getString(R.string.grade_semester, 2)
+        )
+
+        AlertDialog.Builder(requireContext())
+            .setSingleChoiceItems(choices, selectedIndex) { dialog, which ->
+                presenter.onSemesterSelected(which)
+                dialog.dismiss()
             }
-        }
+            .setTitle(R.string.grade_switch_semester)
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
     }
 
     fun onChildRefresh() {

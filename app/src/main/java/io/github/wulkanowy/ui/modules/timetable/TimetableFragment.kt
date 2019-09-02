@@ -17,11 +17,13 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable.*
 import javax.inject.Inject
 
-class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView, MainView.TitledView {
+class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
+    MainView.TitledView {
 
     @Inject
     lateinit var presenter: TimetablePresenter
@@ -35,17 +37,13 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
         fun newInstance() = TimetableFragment()
     }
 
-    override val titleStringId: Int
-        get() = R.string.timetable_title
+    override val titleStringId get() = R.string.timetable_title
 
-    override val roomString: String
-        get() = getString(R.string.timetable_room)
+    override val roomString get() = getString(R.string.timetable_room)
 
-    override val isViewEmpty: Boolean
-        get() = timetableAdapter.isEmpty
+    override val isViewEmpty get() = timetableAdapter.isEmpty
 
-    override val currentStackSize: Int?
-        get() = (activity as? MainActivity)?.currentStackSize
+    override val currentStackSize get() = (activity as? MainActivity)?.currentStackSize
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,11 +61,9 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     }
 
     override fun initView() {
-        timetableAdapter.run {
-            setOnItemClickListener { presenter.onTimetableItemSelected(it) }
-        }
+        timetableAdapter.setOnItemClickListener(presenter::onTimetableItemSelected)
 
-        timetableRecycler.run {
+        with(timetableRecycler) {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = timetableAdapter
             addItemDecoration(FlexibleItemDecoration(context)
@@ -75,9 +71,12 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
                 .withDrawDividerOnLastItem(false)
             )
         }
-        timetableSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+
+        timetableSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
         timetablePreviousButton.setOnClickListener { presenter.onPreviousDay() }
         timetableNextButton.setOnClickListener { presenter.onNextDay() }
+
+        timetableNavContainer.setElevationCompat(requireContext().dpToPx(8f))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
