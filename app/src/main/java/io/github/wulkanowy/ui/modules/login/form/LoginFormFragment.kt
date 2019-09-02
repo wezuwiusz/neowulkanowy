@@ -34,13 +34,11 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         fun newInstance() = LoginFormFragment()
     }
 
-    override val formNameValue: String
-        get() = loginFormName.text.toString()
+    override val formNameValue get() = loginFormName.text.toString()
 
-    override val formPassValue: String
-        get() = loginFormPass.text.toString()
+    override val formPassValue get() = loginFormPass.text.toString()
 
-    override val formHostValue: String?
+    override val formHostValue
         get() = hostValues.getOrNull(hostKeys.indexOf(loginFormHost.text.toString()))
 
     private lateinit var hostKeys: Array<String>
@@ -71,6 +69,9 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         }
 
         with(loginFormHost) {
+            //Bug with filter in ExposedDropdownMenu on restoring state
+            isSaveEnabled = false
+
             setText(hostKeys.getOrElse(0) { "" })
             setAdapter(ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
             keyListener = null
@@ -83,28 +84,28 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun setErrorNameRequired() {
-        loginFormNameLayout.run {
+        with(loginFormNameLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassRequired(focus: Boolean) {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             if (focus) requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassInvalid(focus: Boolean) {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             if (focus) requestFocus()
             error = getString(R.string.login_invalid_password)
         }
     }
 
     override fun setErrorPassIncorrect() {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             requestFocus()
             error = getString(R.string.login_incorrect_password)
         }
@@ -136,7 +137,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     @SuppressLint("SetTextI18n")
     override fun showVersion() {
-        loginFormVersion.apply {
+        with(loginFormVersion) {
             visibility = VISIBLE
             text = "${getString(R.string.app_name)} ${appInfo.versionName}"
         }
@@ -147,11 +148,12 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun notifyParentAccountLogged(students: List<Student>) {
-        (activity as? LoginActivity)?.onFormFragmentAccountLogged(students, Triple(
-            loginFormName.text.toString(),
-            loginFormPass.text.toString(),
-            resources.getStringArray(R.array.endpoints_values)[1]
-        ))
+        (activity as? LoginActivity)?.onFormFragmentAccountLogged(students,
+            Triple(
+                loginFormName.text.toString(),
+                loginFormPass.text.toString(),
+                resources.getStringArray(R.array.endpoints_values)[1]
+            ))
     }
 
     override fun openPrivacyPolicyPage() {
