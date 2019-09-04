@@ -1,8 +1,7 @@
 <resources>
 
     <style name="WulkanowyTheme" parent="BaseWulkanowyTheme">
-        <item name="android:statusBarColor">@android:color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/darker_gray</item>
         <item name="android:navigationBarColor">@android:color/white</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
@@ -10,7 +9,6 @@
     <style name="WulkanowyTheme.SplashScreen" parent="WulkanowyTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/layer_splash_background</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-        <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowLightNavigationBar">false</item>
     </style>
