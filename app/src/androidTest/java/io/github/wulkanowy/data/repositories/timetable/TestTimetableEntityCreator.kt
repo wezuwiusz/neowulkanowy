@@ -7,7 +7,7 @@ import org.threeten.bp.LocalDateTime.now
 import io.github.wulkanowy.api.timetable.Timetable as TimetableRemote
 import io.github.wulkanowy.data.db.entities.Timetable as TimetableLocal
 
-fun createTimetableLocal(number: Int, start: LocalDateTime, room: String = "", subject: String = "", teacher: String = ""): TimetableLocal {
+fun createTimetableLocal(number: Int, start: LocalDateTime, room: String = "", subject: String = "", teacher: String = "", changes: Boolean = false): TimetableLocal {
     return TimetableLocal(
         studentId = 1,
         diaryId = 2,
@@ -23,12 +23,12 @@ fun createTimetableLocal(number: Int, start: LocalDateTime, room: String = "", s
         teacher = teacher,
         teacherOld = "",
         info = "",
-        changes = false,
+        changes = changes,
         canceled = false
     )
 }
 
-fun createTimetableRemote(number: Int, start: LocalDateTime, room: String, subject: String = "", teacher: String = ""): TimetableRemote {
+fun createTimetableRemote(number: Int, start: LocalDateTime, room: String, subject: String = "", teacher: String = "", changes: Boolean = false): TimetableRemote {
     return TimetableRemote(
         number = number,
         start = start.toDate(),
@@ -39,7 +39,7 @@ fun createTimetableRemote(number: Int, start: LocalDateTime, room: String, subje
         room = room,
         teacher = teacher,
         info = "",
-        changes = false,
+        changes = changes,
         canceled = false
     )
 }

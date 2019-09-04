@@ -32,10 +32,11 @@ class TimetableRepository @Inject constructor(
                         .doOnSuccess { old ->
                             local.deleteTimetable(old.uniqueSubtract(new))
                             local.saveTimetable(new.uniqueSubtract(old).map { item ->
-                                item.apply {
-                                    old.singleOrNull { this.start == it.start }?.let {
-                                        return@map copy(
-                                            room = if (room.isEmpty()) it.room else room
+                                item.also { new ->
+                                    old.singleOrNull { new.start == it.start }?.let { old ->
+                                        return@map new.copy(
+                                            room = if (new.room.isEmpty()) old.room else new.room,
+                                            teacher = if (new.teacher.isEmpty() && !new.changes) old.teacher else new.teacher
                                         )
                                     }
                                 }
