@@ -17,10 +17,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/ic_account_circular_border"
         app:srcCompat="@drawable/ic_all_account"
-        app:tint="#7E7E7E"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:tint="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/accountItemName"
