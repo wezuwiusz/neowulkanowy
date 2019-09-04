@@ -1,6 +1,7 @@
-Wersja 0.9.4
+Wersja 0.10.0
 
-- naprawienie nawigacji we frekwencji, sprawdzianach, planie lekcji na wakacjach
-- wyświetlanie szczęśliwego numerka po ostatniej aktualizacji dziennika VULCAN (19.06)
+- odświeżyliśmy wygląd aplikacji
+- poprawiliśmy wyświetlanie nauczycieli w planie lekcji
+- naprawiliśmy szczęsliwy numerek
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

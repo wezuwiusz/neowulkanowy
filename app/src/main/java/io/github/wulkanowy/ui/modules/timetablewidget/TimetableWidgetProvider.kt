@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.timetablewidget
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.appwidget.AppWidgetManager
@@ -15,12 +16,13 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.widget.RemoteViews
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.SharedPrefHelper
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainView.MenuView
+import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
@@ -43,7 +45,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
     lateinit var studentRepository: StudentRepository
 
     @Inject
-    lateinit var sharedPref: SharedPrefHelper
+    lateinit var sharedPref: SharedPrefProvider
 
     @Inject
     lateinit var schedulers: SchedulersProvider
@@ -110,6 +112,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun updateWidget(context: Context, appWidgetId: Int, date: LocalDate, student: Student?) {
         RemoteViews(context.packageName, R.layout.widget_timetable).apply {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
@@ -130,8 +133,8 @@ class TimetableWidgetProvider : BroadcastReceiver() {
                     putExtra(EXTRA_FROM_PROVIDER, true)
                 }, FLAG_UPDATE_CURRENT))
             setPendingIntentTemplate(R.id.timetableWidgetList,
-                PendingIntent.getActivity(context, MenuView.TIMETABLE.id,
-                    MainActivity.getStartIntent(context, MenuView.TIMETABLE, true), FLAG_UPDATE_CURRENT))
+                PendingIntent.getActivity(context, MainView.Section.TIMETABLE.id,
+                    MainActivity.getStartIntent(context, MainView.Section.TIMETABLE, true), FLAG_UPDATE_CURRENT))
         }.also {
             sharedPref.putLong(getDateWidgetKey(appWidgetId), date.toEpochDay(), true)
             appWidgetManager.apply {
@@ -173,7 +176,9 @@ class TimetableWidgetProvider : BroadcastReceiver() {
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet()
         } catch (e: Exception) {
-            Timber.e(e, "An error has occurred in timetable widget provider")
+            if (e.cause !is NoCurrentStudentException) {
+                Timber.e(e, "An error has occurred in timetable widget provider")
+            }
             null
         }
     }

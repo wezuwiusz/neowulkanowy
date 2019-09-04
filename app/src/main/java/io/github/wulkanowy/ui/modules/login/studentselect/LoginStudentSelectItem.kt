@@ -48,7 +48,7 @@ class LoginStudentSelectItem(val student: Student) : AbstractFlexibleItem<LoginS
             get() = itemView
 
         init {
-            loginItemCheck.setOnClickListener { super.onClick(loginItemContainer) }
+            loginItemCheck.keyListener = null
         }
 
         override fun onClick(view: View?) {

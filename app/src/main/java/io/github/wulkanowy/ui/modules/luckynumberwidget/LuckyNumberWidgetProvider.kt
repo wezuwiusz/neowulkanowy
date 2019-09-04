@@ -21,13 +21,14 @@ import android.view.View.VISIBLE
 import android.widget.RemoteViews
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.SharedPrefHelper
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.LuckyNumber
+import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainView.MenuView
+import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Maybe
 import timber.log.Timber
@@ -51,7 +52,7 @@ class LuckyNumberWidgetProvider : BroadcastReceiver() {
     lateinit var appWidgetManager: AppWidgetManager
 
     @Inject
-    lateinit var sharedPref: SharedPrefHelper
+    lateinit var sharedPref: SharedPrefProvider
 
     companion object {
         fun getStudentWidgetKey(appWidgetId: Int) = "lucky_number_widget_student_$appWidgetId"
@@ -74,8 +75,8 @@ class LuckyNumberWidgetProvider : BroadcastReceiver() {
                     getLuckyNumber(sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0), appWidgetId)?.luckyNumber?.toString() ?: "#"
                 )
                 setOnClickPendingIntent(R.id.luckyNumberWidgetContainer,
-                    PendingIntent.getActivity(context, MenuView.LUCKY_NUMBER.id,
-                        MainActivity.getStartIntent(context, MenuView.LUCKY_NUMBER, true), FLAG_UPDATE_CURRENT))
+                    PendingIntent.getActivity(context, MainView.Section.LUCKY_NUMBER.id,
+                        MainActivity.getStartIntent(context, MainView.Section.LUCKY_NUMBER, true), FLAG_UPDATE_CURRENT))
             }.also {
                 setStyles(it, intent)
                 appWidgetManager.updateAppWidget(appWidgetId, it)
@@ -114,7 +115,9 @@ class LuckyNumberWidgetProvider : BroadcastReceiver() {
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet()
         } catch (e: Exception) {
-            Timber.e(e, "An error has occurred in lucky number provider")
+            if (e.cause !is NoCurrentStudentException) {
+                Timber.e(e, "An error has occurred in lucky number provider")
+            }
             null
         }
     }

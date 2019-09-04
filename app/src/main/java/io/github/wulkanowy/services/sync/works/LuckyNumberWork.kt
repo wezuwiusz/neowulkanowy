@@ -15,7 +15,7 @@ import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainView.MenuView
+import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -41,14 +41,14 @@ class LuckyNumberWork @Inject constructor(
         notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewEntriesChannel.CHANNEL_ID)
             .setContentTitle(context.getString(R.string.lucky_number_notify_new_item_title))
             .setContentText(context.getString(R.string.lucky_number_notify_new_item, luckyNumber.luckyNumber))
-            .setSmallIcon(R.drawable.ic_stat_notify_lucky_number)
+            .setSmallIcon(R.drawable.ic_stat_luckynumber)
             .setAutoCancel(true)
             .setDefaults(DEFAULT_ALL)
             .setPriority(PRIORITY_HIGH)
             .setColor(context.getCompatColor(R.color.colorPrimary))
             .setContentIntent(
-                PendingIntent.getActivity(context, MenuView.MESSAGE.id,
-                    MainActivity.getStartIntent(context, MenuView.LUCKY_NUMBER, true), FLAG_UPDATE_CURRENT))
+                PendingIntent.getActivity(context, MainView.Section.MESSAGE.id,
+                    MainActivity.getStartIntent(context, MainView.Section.LUCKY_NUMBER, true), FLAG_UPDATE_CURRENT))
             .build())
     }
 }

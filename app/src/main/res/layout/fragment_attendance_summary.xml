@@ -10,19 +10,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <io.github.wulkanowy.ui.widgets.MaterialLinearLayout
             android:id="@+id/attendanceSummarySubjectsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
-            android:elevation="5dp"
+            android:background="?android:windowBackground"
             android:padding="5dp"
             android:visibility="invisible"
+            tools:ignore="UnusedAttribute"
             tools:listitem="@layout/item_attendance_summary"
-            tools:targetApi="lollipop"
             tools:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatSpinner
+            <Spinner
                 android:id="@+id/attendanceSummarySubjects"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +34,7 @@
                 android:paddingRight="30dp"
                 android:paddingBottom="10dp"
                 android:spinnerMode="dialog" />
-        </LinearLayout>
+        </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/attendanceSummarySwipe"
@@ -50,12 +49,14 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/attendanceSummaryProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        tools:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/attendanceSummaryEmpty"
@@ -63,15 +64,14 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        tools:ignore="UseCompoundDrawables">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="100dp"
-            android:minHeight="100dp"
-            app:srcCompat="@drawable/ic_menu_main_attendance_24dp"
-            app:tint="?android:attr/textColorPrimary"
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/ic_main_attendance"
+            app:tint="?colorOnBackground"
             tools:ignore="contentDescription" />
 
         <TextView

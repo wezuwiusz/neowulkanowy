@@ -1,8 +1,6 @@
 package io.github.wulkanowy.services
 
-import android.app.NotificationManager
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.WorkManager
 import com.squareup.inject.assisted.dagger2.AssistedModule
@@ -28,6 +26,7 @@ import io.github.wulkanowy.services.sync.works.Work
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import javax.inject.Singleton
 
+@Suppress("unused")
 @AssistedModule
 @Module(includes = [AssistedInject_ServicesModule::class])
 abstract class ServicesModule {
@@ -37,17 +36,12 @@ abstract class ServicesModule {
 
         @JvmStatic
         @Provides
-        fun provideWorkManager() = WorkManager.getInstance()
+        fun provideWorkManager(context: Context) = WorkManager.getInstance(context)
 
         @JvmStatic
         @Singleton
         @Provides
-        fun provideNotificationManagerCompat(context: Context) = NotificationManagerCompat.from(context)
-
-        @JvmStatic
-        @Singleton
-        @Provides
-        fun provideNotificationManager(context: Context) = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        fun provideNotificationManager(context: Context) = NotificationManagerCompat.from(context)
     }
 
     @ContributesAndroidInjector

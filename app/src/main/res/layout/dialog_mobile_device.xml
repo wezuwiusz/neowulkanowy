@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,10 +23,11 @@
                 android:id="@+id/mobileDeviceQr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
                 android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/mobile_device_qr"
-                android:layout_marginBottom="12dp" />
+                tools:src="@tools:sample/avatars" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,24 +76,23 @@
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/mobileDeviceDialogClose"
-                style="@style/Widget.AppCompat.Button.Borderless"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="15dp"
-                android:text="@string/all_close"
-                android:textAllCaps="true"
-                android:textSize="15sp" />
+                android:text="@string/all_close" />
         </LinearLayout>
 
-        <ProgressBar
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/mobileDeviceDialogProgress"
+            style="@style/Widget.MaterialProgressBar.ProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
             tools:visibility="invisible" />
     </FrameLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

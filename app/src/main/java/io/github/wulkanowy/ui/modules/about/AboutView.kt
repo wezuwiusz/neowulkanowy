@@ -1,12 +1,33 @@
 package io.github.wulkanowy.ui.modules.about
 
+import android.graphics.drawable.Drawable
 import io.github.wulkanowy.ui.base.BaseView
 
 interface AboutView : BaseView {
 
-    fun openDiscordInviteView()
+    val versionRes: Triple<String, String, Drawable?>?
 
-    fun openEmailClientView()
+    val feedbackRes: Triple<String, String, Drawable?>?
 
-    fun openHomepageWebView()
+    val discordRes: Triple<String, String, Drawable?>?
+
+    val homepageRes: Triple<String, String, Drawable?>?
+
+    val licensesRes: Triple<String, String, Drawable?>?
+
+    val privacyRes: Triple<String, String, Drawable?>?
+
+    fun initView()
+
+    fun updateData(header: AboutScrollableHeader, items: List<AboutItem>)
+
+    fun openDiscordInvite()
+
+    fun openEmailClient()
+
+    fun openHomepage()
+
+    fun openLicenses()
+
+    fun openPrivacyPolicy()
 }

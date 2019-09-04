@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.modules.mobiledevice.MobileDeviceFragment">
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/mobileDevicesProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -20,7 +21,8 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +37,7 @@
             android:layout_height="wrap_content"
             android:minWidth="100dp"
             android:minHeight="100dp"
-            app:srcCompat="@drawable/ic_menu_main_mobile_devices_24dp"
+            app:srcCompat="@drawable/ic_more_mobile_devices"
             app:tint="?android:attr/textColorPrimary"
             tools:ignore="contentDescription" />
     </LinearLayout>
@@ -58,8 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:tint="#FFFFFF"
-        app:srcCompat="@drawable/ic_all_add_24dp" />
+        android:tint="?colorOnSecondary"
+        app:srcCompat="@drawable/ic_all_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

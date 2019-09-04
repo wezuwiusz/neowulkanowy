@@ -2,19 +2,20 @@ package io.github.wulkanowy.utils
 
 import androidx.fragment.app.Fragment
 import com.ncapdevi.fragnav.FragNavController
+import io.github.wulkanowy.ui.modules.main.MainView
 
-inline fun FragNavController.setOnViewChangeListener(crossinline listener: (fragment: Fragment?) -> Unit) {
+inline fun FragNavController.setOnViewChangeListener(crossinline listener: (section: MainView.Section?) -> Unit) {
     transactionListener = object : FragNavController.TransactionListener {
         override fun onFragmentTransaction(fragment: Fragment?, transactionType: FragNavController.TransactionType) {
-            listener(fragment)
+            listener(fragment?.toSection())
         }
 
         override fun onTabTransaction(fragment: Fragment?, index: Int) {
-            listener(fragment)
+            listener(fragment?.toSection())
         }
     }
 }
 
-fun FragNavController.safelyPopFragment() {
-    if (!isRootFragment) popFragment()
+fun FragNavController.safelyPopFragments(depth: Int) {
+    if (!isRootFragment) popFragments(depth)
 }

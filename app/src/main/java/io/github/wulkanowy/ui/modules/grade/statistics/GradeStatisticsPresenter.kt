@@ -62,7 +62,7 @@ class GradeStatisticsPresenter @Inject constructor(
         view?.notifyParentRefresh()
     }
 
-    fun onSubjectSelected(name: String) {
+    fun onSubjectSelected(name: String?) {
         Timber.i("Select grade stats subject $name")
         view?.run {
             showContent(false)
@@ -71,8 +71,8 @@ class GradeStatisticsPresenter @Inject constructor(
             showEmpty(false)
             clearView()
         }
-        (subjects.singleOrNull { it.name == name }?.name).let {
-            if (it != currentSubjectName) loadData(currentSemesterId, name, currentIsSemester)
+        (subjects.singleOrNull { it.name == name }?.name)?.let {
+            if (it != currentSubjectName) loadData(currentSemesterId, it, currentIsSemester)
         }
     }
 

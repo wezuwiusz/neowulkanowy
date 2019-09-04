@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.IME_NULL
 import android.widget.ArrayAdapter
+import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.hideSoftInput
-import io.github.wulkanowy.utils.setOnTextChangedListener
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_symbol.*
 import javax.inject.Inject
@@ -45,7 +45,7 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
     override fun initView() {
         loginSymbolSignIn.setOnClickListener { presenter.attemptLogin(loginSymbolName.text.toString()) }
 
-        loginSymbolName.setOnTextChangedListener { presenter.onSymbolTextChanged() }
+        loginSymbolName.doOnTextChanged { _, _, _, _ -> presenter.onSymbolTextChanged() }
 
         loginSymbolName.apply {
             setOnEditorActionListener { _, id, _ ->

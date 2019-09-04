@@ -17,8 +17,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 42
-        versionName "0.9.4"
+        versionCode 43
+        versionName "0.10.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -28,7 +28,8 @@ android {
         ]
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString(),
+                             "room.incremental"   : "true"]
             }
         }
     }
@@ -65,6 +66,7 @@ android {
     }
 
     flavorDimensions "platform"
+
     productFlavors {
         play {
             dimension "platform"
@@ -84,6 +86,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/library_release.kotlin_module'
+        exclude 'META-INF/library-core_release.kotlin_module'
+    }
 }
 
 androidExtensions {
@@ -98,38 +109,49 @@ play {
 }
 
 ext {
-    work_manager = "2.1.0"
-    room = "2.1.0"
+    work_manager = "2.2.0"
+    room = "2.2.0-beta01"
     dagger = "2.24"
     chucker = "2.0.4"
     mockk = "1.9.2"
-    mockito_core = "3.0.4"
+    mockito_core = "3.0.6"
+}
+
+configurations.all {
+    resolutionStrategy.force "androidx.constraintlayout:constraintlayout:1.1.3"
+    resolutionStrategy.force "com.google.android.material:material:1.1.0-alpha07"
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:api:0.9.4"
+    implementation "io.github.wulkanowy:api:0.10.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.core:core:1.0.2"
-    implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "androidx.fragment:fragment:1.0.0"
+    implementation "androidx.core:core-ktx:1.1.0-rc03"
+    implementation "androidx.activity:activity-ktx:1.0.0-rc01"
+    implementation "androidx.appcompat:appcompat:1.1.0-rc01"
+    implementation "androidx.appcompat:appcompat-resources:1.1.0-rc01"
+    implementation "androidx.fragment:fragment-ktx:1.1.0-rc04"
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.multidex:multidex:2.0.1"
 
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.preference:preference-ktx:1.1.0-rc01"
+    implementation "androidx.recyclerview:recyclerview:1.1.0-beta03"
     implementation "androidx.viewpager:viewpager:1.0.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
-    implementation "androidx.coordinatorlayout:coordinatorlayout:1.0.0"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0-beta01"
     implementation "com.google.android.material:material:1.1.0-alpha07"
-    implementation "com.github.wulkanowy:MaterialChipsInput:b72fd0ee6f"
+    implementation "com.github.wulkanowy:material-chips-input:2.0.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
+    implementation "me.zhanghai.android.materialprogressbar:library:1.6.1"
 
-    implementation "androidx.work:work-runtime:$work_manager"
+    implementation "androidx.work:work-runtime-ktx:$work_manager"
     implementation "androidx.work:work-rxjava2:$work_manager"
+    implementation "androidx.work:work-gcm:$work_manager"
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-rxjava2:$room"
+    implementation "androidx.room:room-ktx:$room"
     kapt "androidx.room:room-compiler:$room"
 
     implementation "com.google.dagger:dagger-android-support:$dagger"
@@ -143,20 +165,18 @@ dependencies {
     implementation "com.aurelhubert:ahbottomnavigation:2.3.4"
     implementation "com.ncapdevi:frag-nav:3.3.0"
 
-    implementation "com.github.pwittchen:reactivenetwork-rx2:3.0.4"
+    implementation "com.github.pwittchen:reactivenetwork-rx2:3.0.6"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
-    implementation "io.reactivex.rxjava2:rxjava:2.2.11"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.12"
 
     implementation "com.google.code.gson:gson:2.8.5"
     implementation "com.jakewharton.threetenabp:threetenabp:1.2.1"
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "at.favre.lib:slf4j-timber:1.0.1"
     implementation "com.squareup.okhttp3:logging-interceptor:3.12.3"
+    implementation "com.mikepenz:aboutlibraries:7.0.3"
 
-    implementation "com.mikepenz:aboutlibraries:6.2.3"
-    implementation "com.takisoft.preferencex:preferencex:1.0.0"
-
-    playImplementation "com.google.firebase:firebase-core:17.0.1"
+    playImplementation "com.google.firebase:firebase-core:17.2.0"
     playImplementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
     releaseImplementation "fr.o80.chucker:library-no-op:$chucker"
@@ -168,7 +188,7 @@ dependencies {
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation "org.threeten:threetenbp:1.4.0"
     testImplementation "org.mockito:mockito-core:$mockito_core"
-    testImplementation("org.mockito:mockito-inline:3.0.4") {
+    testImplementation("org.mockito:mockito-inline:3.0.6") {
         exclude group: "org.mockito", module: "mockito-core"
     }
 
@@ -179,7 +199,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$room"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_core"
-    androidTestImplementation("org.mockito:mockito-android:3.0.4") {
+    androidTestImplementation("org.mockito:mockito-android:3.0.6") {
         exclude group: 'org.mockito', module: 'mockito-core'
     }
 }

@@ -22,11 +22,13 @@ interface MainView : BaseView {
 
     fun showAccountPicker()
 
+    fun showActionBarElevation(show: Boolean)
+
     fun notifyMenuViewReselected()
 
     fun setViewTitle(title: String)
 
-    fun popView()
+    fun popView(depth: Int = 1)
 
     interface MainChildView {
 
@@ -38,14 +40,17 @@ interface MainView : BaseView {
         val titleStringId: Int
     }
 
-    enum class MenuView(val id: Int) {
+    enum class Section(val id: Int) {
         GRADE(0),
         ATTENDANCE(1),
         EXAM(2),
         TIMETABLE(3),
-        MESSAGE(4),
-        HOMEWORK(5),
-        NOTE(6),
-        LUCKY_NUMBER(7),
+        MORE(4),
+        MESSAGE(5),
+        HOMEWORK(6),
+        NOTE(7),
+        LUCKY_NUMBER(8),
+        SETTINGS(9),
+        ABOUT(10)
     }
 }

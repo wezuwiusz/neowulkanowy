@@ -9,8 +9,9 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp">
 
-        <ProgressBar
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/examProgress"
+            style="@style/Widget.MaterialProgressBar.ProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -34,15 +35,14 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:ignore="UseCompoundDrawables">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="100dp"
-                android:minHeight="100dp"
-                app:srcCompat="@drawable/ic_menu_main_exam_24dp"
-                app:tint="?android:attr/textColorPrimary"
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/ic_main_exam"
+                app:tint="?colorOnBackground"
                 tools:ignore="contentDescription" />
 
             <TextView
@@ -55,24 +55,24 @@
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <LinearLayout
+    <io.github.wulkanowy.ui.widgets.MaterialLinearLayout
+        android:id="@+id/examNavContainer"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        android:elevation="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UnusedAttribute">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/examPreviousButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawablePadding="4dp"
-            android:gravity="start|center"
+            android:gravity="start|center_vertical"
+            android:insetLeft="8dp"
             android:text="@string/all_prev"
-            android:textAlignment="gravity" />
+            android:textColor="?android:textColorPrimary" />
 
         <TextView
             android:id="@+id/examNavDate"
@@ -81,16 +81,16 @@
             android:gravity="center"
             android:text="@string/app_name" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/examNextButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_weight="1"
-            android:drawablePadding="4dp"
-            android:gravity="end|center"
+            android:gravity="end|center_vertical"
+            android:insetLeft="8dp"
             android:text="@string/all_next"
-            android:textAlignment="gravity" />
-    </LinearLayout>
+            android:textColor="?android:textColorPrimary" />
+    </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 </FrameLayout>

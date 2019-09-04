@@ -4,14 +4,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-class BaseFragmentPagerAdapter(private val fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class BaseFragmentPagerAdapter(private val fragmentManager: FragmentManager) :
+    FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val pages = mutableMapOf<Fragment, String?>()
 
     var containerId = 0
 
     fun getFragmentInstance(position: Int): Fragment? {
-        if (containerId == 0) throw IllegalArgumentException("Container id is 0")
+        require(containerId != 0) { "Container id is 0" }
         return fragmentManager.findFragmentByTag("android:switcher:$containerId:$position")
     }
 

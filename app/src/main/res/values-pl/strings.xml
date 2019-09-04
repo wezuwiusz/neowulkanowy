@@ -12,6 +12,7 @@
     <string name="settings_title">Ustawienia</string>
     <string name="more_title">Więcej</string>
     <string name="about_title">O aplikacji</string>
+    <string name="license_title">Licencje</string>
     <string name="message_title">Wiadomości</string>
     <string name="send_message_title">Nowa wiadomość</string>
     <string name="note_title">Uwagi i osiągnięcia</string>
@@ -223,9 +224,21 @@
 
 
     <!--About-->
-    <string name="about_discord_invite">Discord</string>
+    <string name="about_version">Wersja aplikacji</string>
     <string name="about_feedback">Zgłoś błąd</string>
+    <string name="about_feedback_summary">Wyślij zgłoszenie o błedzię poprzez e-maila</string>
+    <string name="about_discord">Serwer discord</string>
+    <string name="about_discord_summary">Dołącz do społeczności wulkanowego</string>
+    <string name="about_privacy">Polityka prywatności</string>
+    <string name="about_privacy_summary">Zasady zbierania danych osobowych</string>
     <string name="about_homepage">Strona domowa</string>
+    <string name="about_homepage_summary">Odwiedź stronę i pomóż rozwijać aplikację</string>
+    <string name="about_licenses">Licencje</string>
+    <string name="about_licenses_summary">Licencje użytych bibliotek w aplikacji</string>
+
+
+    <!--Licenses-->
+    <string name="license_dialog_title">Licencja</string>
 
 
     <!--Generic-->

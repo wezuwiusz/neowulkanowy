@@ -1,161 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/sendMessageContainer"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/sendMessageAppBarContainer"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/sendMessageToolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/WulkanowyTheme.ActionBar"
-        app:elevation="0dp">
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@id/sendMessageScroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="lollipop" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/sendMessageToolbar"
+    <io.github.wulkanowy.materialchipsinput.ConsumedNestedScrollView
+        android:id="@+id/sendMessageScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sendMessageToolbar">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
-    </com.google.android.material.appbar.AppBarLayout>
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sendMessageContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/sendMessageFromHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="58dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/message_from"
+                    android:textColor="?android:textColorHint"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@id/sendMessageFrom"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/sendMessageFrom"
+                    android:layout_width="0dp"
+                    android:layout_height="58dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center_vertical"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sendMessageFromHint"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Jan Kowalski" />
+
+                <View
+                    android:id="@+id/sendMessageFromDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?colorDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sendMessageFrom" />
+
+                <TextView
+                    android:id="@+id/sendMessageToHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="58dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/message_to"
+                    android:textColor="?android:textColorHint"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sendMessageFromDivider" />
+
+                <io.github.wulkanowy.materialchipsinput.MaterialChipInput
+                    android:id="@+id/sendMessageTo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sendMessageToHint"
+                    app:layout_constraintTop_toBottomOf="@id/sendMessageFromDivider" />
+
+                <View
+                    android:id="@+id/sendMessageToDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?colorDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sendMessageTo" />
+
+                <EditText
+                    android:id="@+id/sendMessageSubject"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="@string/message_subject"
+                    android:imeOptions="flagNoExtractUi"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sendMessageToDivider"
+                    tools:targetApi="o" />
+
+                <View
+                    android:id="@+id/sendMessageSubjectDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?colorDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sendMessageSubject" />
+
+                <EditText
+                    android:id="@+id/sendMessageMessageContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="start"
+                    android:hint="@string/message_content"
+                    android:imeOptions="flagNoExtractUi"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:minHeight="58dp"
+                    android:paddingStart="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingRight="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sendMessageSubjectDivider"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:targetApi="o" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+    </io.github.wulkanowy.materialchipsinput.ConsumedNestedScrollView>
 
     <LinearLayout
-        android:id="@+id/sendMessageContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/sendMessageAppBarContainer"
-        android:orientation="vertical">
+        android:id="@+id/sendMessageEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sendMessageToolbar"
+        tools:ignore="UseCompoundDrawables">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/ic_more_messages"
+            app:tint="?colorOnBackground"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="14dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:text="@string/message_from"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/sendMessageFromTextView"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:enabled="false"
-                android:textColor="?android:attr/textColorPrimaryNoDisable"
-                tools:text="Jan Kowalski" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?attr/dividerColor" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:paddingStart="14dp"
-            android:paddingLeft="14dp"
-            tools:ignore="RtlSymmetry">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:text="@string/message_to"
-                android:textAlignment="center"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
-
-            <com.pchmn.materialchips.ChipsInput
-                android:id="@+id/sendMessageRecipientsInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                app:horizontalScroll="true"
-                tools:layout_height="30dp">
-
-            </com.pchmn.materialchips.ChipsInput>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?attr/dividerColor" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/sendMessageSubjectInput"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/message_subject"
-            android:inputType="text"
-            android:maxLines="1"
-            android:padding="14dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?attr/dividerColor" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/sendMessageContentInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:gravity="top|start"
-            android:hint="@string/message_content"
-            android:inputType="textMultiLine"
-            android:paddingStart="14dp"
-            android:paddingLeft="14dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="14dp"
-            android:paddingRight="14dp"
-            android:singleLine="false" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/error_unknown"
+            android:textSize="20sp"
+            tools:text="No messages" />
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/sendMessageAppBarContainer">
-
-        <LinearLayout
-            android:id="@+id/sendMessageEmpty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:minWidth="100dp"
-                android:minHeight="100dp"
-                app:srcCompat="@drawable/ic_more_messages_24dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/error_unknown"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/sendMessageProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-    </FrameLayout>
-</RelativeLayout>
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/sendMessageProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sendMessageToolbar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

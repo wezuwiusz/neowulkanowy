@@ -4,7 +4,7 @@
     android:id="@+id/luckyNumberWidgetContainer"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background_rounded_corner"
+    android:background="@drawable/backgorund_luckynumber_widget"
     android:gravity="center"
     android:padding="10dp"
     tools:context=".ui.modules.luckynumberwidget.LuckyNumberWidgetProvider">
@@ -18,7 +18,7 @@
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/lucky_number_title"
         android:gravity="center"
-        android:src="@drawable/ic_widget_clover_24dp"
+        android:src="@drawable/ic_widget_clover"
         android:visibility="gone"
         tools:visibility="visible" />
 
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/luckyNumberWidgetNumber"
         android:contentDescription="@string/lucky_number_title"
-        android:src="@drawable/ic_widget_clover_24dp"
+        android:src="@drawable/ic_widget_clover"
         android:visibility="gone"
         tools:visibility="visible" />
 

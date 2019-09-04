@@ -12,6 +12,7 @@
     <string name="settings_title">Settings</string>
     <string name="more_title">More</string>
     <string name="about_title">About</string>
+    <string name="license_title">Licenses</string>
     <string name="message_title">Messages</string>
     <string name="send_message_title">New message</string>
     <string name="note_title">Notes and achievements</string>
@@ -207,9 +208,21 @@
 
 
     <!--About-->
-    <string name="about_discord_invite">Discord</string>
+    <string name="about_version">App version</string>
     <string name="about_feedback">Report a bug</string>
+    <string name="about_feedback_summary">Send a bug report via e-mail</string>
+    <string name="about_discord">Discord server</string>
+    <string name="about_discord_summary">Join the wulkanowy community</string>
+    <string name="about_privacy">Privacy policy</string>
+    <string name="about_privacy_summary">Rules for collecting personal data</string>
     <string name="about_homepage">Homepage</string>
+    <string name="about_homepage_summary">Visit the website and help develop the application</string>
+    <string name="about_licenses">Licenses</string>
+    <string name="about_licenses_summary">Licenses of libraries used in the application</string>
+
+
+    <!--Licenses-->
+    <string name="license_dialog_title">License</string>
 
 
     <!--Generic-->

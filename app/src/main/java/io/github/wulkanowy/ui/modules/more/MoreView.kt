@@ -27,7 +27,7 @@ interface MoreView : BaseView {
 
     fun openAboutView()
 
-    fun popView()
+    fun popView(depth: Int)
 
     fun openMessagesView()
 

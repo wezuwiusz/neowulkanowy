@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
@@ -13,6 +12,8 @@ import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable_completed.*
 import javax.inject.Inject
@@ -31,11 +32,9 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
         fun newInstance() = CompletedLessonsFragment()
     }
 
-    override val titleStringId: Int
-        get() = R.string.completed_lessons_title
+    override val titleStringId get() = R.string.completed_lessons_title
 
-    override val isViewEmpty
-        get() = completedLessonsAdapter.isEmpty
+    override val isViewEmpty get() = completedLessonsAdapter.isEmpty
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_timetable_completed, container, false)
@@ -48,17 +47,18 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun initView() {
-        completedLessonsAdapter.run {
-            setOnItemClickListener { presenter.onCompletedLessonsItemSelected(it) }
-        }
+        completedLessonsAdapter.setOnItemClickListener(presenter::onCompletedLessonsItemSelected)
 
-        completedLessonsRecycler.run {
+        with(completedLessonsRecycler) {
             layoutManager = SmoothScrollLinearLayoutManager(context)
             adapter = completedLessonsAdapter
         }
-        completedLessonsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+
+        completedLessonsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
         completedLessonsPreviousButton.setOnClickListener { presenter.onPreviousDay() }
         completedLessonsNextButton.setOnClickListener { presenter.onNextDay() }
+
+        completedLessonsNavContainer.setElevationCompat(requireContext().dpToPx(8f))
     }
 
     override fun updateData(data: List<CompletedLessonItem>) {
@@ -82,10 +82,8 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun showFeatureDisabled() {
-        context?.let {
-            completedLessonsInfo.text = getString(R.string.error_feature_disabled)
-            completedLessonsInfoImage.setImageDrawable(ContextCompat.getDrawable(it, R.drawable.ic_all_close_circle_24dp))
-        }
+        completedLessonsInfo.text = getString(R.string.error_feature_disabled)
+        completedLessonsInfoImage.setImageDrawable(requireContext().getCompatDrawable(R.drawable.ic_all_close_circle))
     }
 
     override fun showProgress(show: Boolean) {
@@ -114,7 +112,7 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putLong(CompletedLessonsFragment.SAVED_DATE_KEY, presenter.currentDate.toEpochDay())
+        outState.putLong(SAVED_DATE_KEY, presenter.currentDate.toEpochDay())
     }
 
     override fun onDestroyView() {

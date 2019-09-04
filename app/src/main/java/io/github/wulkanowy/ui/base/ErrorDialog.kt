@@ -2,13 +2,13 @@ package io.github.wulkanowy.ui.base
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.core.content.getSystemService
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import kotlinx.android.synthetic.main.dialog_error.*
@@ -49,7 +49,7 @@ class ErrorDialog : DialogFragment() {
             errorDialogContent.text = writer.toString()
             errorDialogCopy.setOnClickListener {
                 ClipData.newPlainText("wulkanowyError", writer.toString()).let { clip ->
-                    (activity?.getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager)?.primaryClip = clip
+                    activity?.getSystemService<ClipboardManager>()?.primaryClip = clip
                 }
                 Toast.makeText(context, R.string.all_copied, LENGTH_LONG).show()
             }

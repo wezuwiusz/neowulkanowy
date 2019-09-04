@@ -8,6 +8,7 @@ import io.github.wulkanowy.di.scopes.PerFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.message.tab.MessageTabFragment
 
+@Suppress("unused")
 @Module
 abstract class MessageModule {
 

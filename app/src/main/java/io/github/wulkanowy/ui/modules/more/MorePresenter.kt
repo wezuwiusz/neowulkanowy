@@ -22,25 +22,24 @@ class MorePresenter @Inject constructor(
     }
 
     fun onItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is MoreItem) {
-            Timber.i("Select more item \"${item.title}\"")
-            view?.run {
-                when (item.title) {
-                    messagesRes?.first -> openMessagesView()
-                    homeworkRes?.first -> openHomeworkView()
-                    noteRes?.first -> openNoteView()
-                    luckyNumberRes?.first -> openLuckyNumberView()
-                    mobileDevicesRes?.first -> openMobileDevicesView()
-                    settingsRes?.first -> openSettingsView()
-                    aboutRes?.first -> openAboutView()
-                }
+        if (item !is MoreItem) return
+        Timber.i("Select more item \"${item.title}\"")
+        view?.run {
+            when (item.title) {
+                messagesRes?.first -> openMessagesView()
+                homeworkRes?.first -> openHomeworkView()
+                noteRes?.first -> openNoteView()
+                luckyNumberRes?.first -> openLuckyNumberView()
+                mobileDevicesRes?.first -> openMobileDevicesView()
+                settingsRes?.first -> openSettingsView()
+                aboutRes?.first -> openAboutView()
             }
         }
     }
 
     fun onViewReselected() {
         Timber.i("More view is reselected")
-        view?.popView()
+        view?.popView(2)
     }
 
     private fun loadData() {

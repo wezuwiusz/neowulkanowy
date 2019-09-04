@@ -11,6 +11,10 @@
 -verbose
 
 
+#Keep all wulkanowy files
+-keep class io.github.wulkanowy.** {*;}
+
+
 #Config for anallitycs
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
@@ -32,11 +36,10 @@
 -dontwarn rx.internal.util.**
 -dontwarn sun.misc.Unsafe
 
+
 #Config for MPAndroidChart
 -keep class com.github.mikephil.charting.** { *; }
 
-#Config for API
--keep class io.github.wulkanowy.api.** {*;}
 
 #Config for Material Components
--keep class com.google.android.material.tabs.** {*;}
+-keep class com.google.android.material.tabs.**

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="?selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/aboutItemImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:tint="?colorOnBackground"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_all_about" />
+
+    <TextView
+        android:id="@+id/aboutItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@id/aboutItemImage"
+        android:layout_toRightOf="@id/aboutItemImage"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:textSize="16sp"
+        tools:text="@tools:sample/lorem" />
+
+    <TextView
+        android:id="@+id/aboutItemSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/aboutItemTitle"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@id/aboutItemImage"
+        android:layout_toRightOf="@id/aboutItemImage"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="14sp"
+        tools:text="@tools:sample/lorem" />
+</RelativeLayout>

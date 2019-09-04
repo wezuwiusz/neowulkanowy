@@ -31,12 +31,14 @@ class SettingsPresenter @Inject constructor(
 
     fun onSharedPreferenceChanged(key: String) {
         Timber.i("Change settings $key")
-        preferencesRepository.apply {
+
+        with(preferencesRepository) {
             when (key) {
                 serviceEnableKey -> with(syncManager) { if (isServiceEnabled) startSyncWorker() else stopSyncWorker() }
                 servicesIntervalKey, servicesOnlyWifiKey -> syncManager.startSyncWorker(true)
                 isDebugNotificationEnableKey -> chuckCollector.showNotification(isDebugNotificationEnable)
                 appThemeKey -> view?.recreateView()
+                else -> Unit
             }
         }
         analytics.logEvent("setting_changed", "name" to key)

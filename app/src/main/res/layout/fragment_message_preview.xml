@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:textColor="?android:attr/textColorSecondary"
+                android:textColor="?android:textColorSecondary"
                 android:textSize="15sp"
                 tools:text="@tools:sample/full_names" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:textColor="?android:attr/textColorSecondary"
+                android:textColor="?android:textColorSecondary"
                 android:textSize="15sp"
                 tools:text="@tools:sample/date/ddmmyy" />
 
@@ -61,15 +61,14 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        tools:ignore="UseCompoundDrawables">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="100dp"
-            android:minHeight="100dp"
-            app:srcCompat="@drawable/ic_more_messages_24dp"
-            app:tint="?android:attr/textColorPrimary"
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/ic_more_messages"
+            app:tint="?colorOnBackground"
             tools:ignore="contentDescription" />
 
         <TextView
@@ -81,8 +80,9 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/messagePreviewProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

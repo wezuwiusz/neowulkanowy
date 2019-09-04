@@ -11,7 +11,7 @@ import android.widget.AdapterView.INVALID_POSITION
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.SharedPrefHelper
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -28,7 +28,7 @@ class TimetableWidgetFactory(
     private val timetableRepository: TimetableRepository,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
-    private val sharedPref: SharedPrefHelper,
+    private val sharedPref: SharedPrefProvider,
     private val schedulers: SchedulersProvider,
     private val context: Context,
     private val intent: Intent?
@@ -60,8 +60,6 @@ class TimetableWidgetFactory(
                     .filter { true }
                     .flatMap { studentRepository.getSavedStudents().toMaybe() }
                     .flatMap {
-                        if (studentId == 0L) throw IllegalArgumentException("Student id is 0")
-
                         it.singleOrNull { student -> student.id == studentId }
                             .let { student ->
                                 if (student != null) Maybe.just(student)

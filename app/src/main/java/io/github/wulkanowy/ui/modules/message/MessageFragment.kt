@@ -16,6 +16,7 @@ import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
 import io.github.wulkanowy.ui.modules.message.tab.MessageTabFragment
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnSelectPageListener
 import kotlinx.android.synthetic.main.fragment_message.*
 import javax.inject.Inject
@@ -32,11 +33,9 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
         fun newInstance() = MessageFragment()
     }
 
-    override val titleStringId: Int
-        get() = R.string.message_title
+    override val titleStringId get() = R.string.message_title
 
-    override val currentPageIndex: Int
-        get() = messageViewPager.currentItem
+    override val currentPageIndex get() = messageViewPager.currentItem
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_message, container, false)
@@ -48,7 +47,7 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
     }
 
     override fun initView() {
-        pagerAdapter.apply {
+        with(pagerAdapter) {
             containerId = messageViewPager.id
             addFragmentsWithTitle(mapOf(
                 MessageTabFragment.newInstance(RECEIVED) to getString(R.string.message_inbox),
@@ -57,12 +56,16 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
             ))
         }
 
-        messageViewPager.run {
+        with(messageViewPager) {
             adapter = pagerAdapter
             offscreenPageLimit = 2
-            setOnSelectPageListener { presenter.onPageSelected(it) }
+            setOnSelectPageListener(presenter::onPageSelected)
         }
-        messageTabLayout.setupWithViewPager(messageViewPager)
+
+        with(messageTabLayout) {
+            setupWithViewPager(messageViewPager)
+            setElevationCompat(context.dpToPx(4f))
+        }
 
         openSendMessageButton.setOnClickListener { presenter.onSendMessageButtonClicked() }
     }

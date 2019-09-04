@@ -40,7 +40,7 @@ class LoginFormPresenter @Inject constructor(
         view?.apply {
             clearPassError()
             clearNameError()
-            if (formHostValue?.contains("fakelog") == true) setDefaultCredentials("jan@fakelog.cf", "jan123")
+            if (formHostValue?.contains("fakelog") == true) setCredentials("jan@fakelog.cf", "jan123")
         }
     }
 

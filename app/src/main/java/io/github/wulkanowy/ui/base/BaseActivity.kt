@@ -1,5 +1,8 @@
 package io.github.wulkanowy.ui.base
 
+import android.app.ActivityManager
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
@@ -16,6 +19,7 @@ import dagger.android.HasAndroidInjector
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.FragmentLifecycleLogger
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 abstract class BaseActivity<T : BasePresenter<out BaseView>> : AppCompatActivity(), BaseView, HasAndroidInjector {
@@ -35,10 +39,15 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>> : AppCompatActivity
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
-        themeManager.applyTheme(this)
+        themeManager.applyActivityTheme(this)
         super.onCreate(savedInstanceState)
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleLogger, true)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
+        if (SDK_INT >= LOLLIPOP) {
+            @Suppress("DEPRECATION")
+            setTaskDescription(ActivityManager.TaskDescription(null, null, getThemeAttrColor(R.attr.colorSurface)))
+        }
     }
 
     override fun showError(text: String, error: Throwable) {

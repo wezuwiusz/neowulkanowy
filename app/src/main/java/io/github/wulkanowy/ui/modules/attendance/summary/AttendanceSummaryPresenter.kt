@@ -46,7 +46,7 @@ class AttendanceSummaryPresenter @Inject constructor(
         loadData(currentSubjectId, true)
     }
 
-    fun onSubjectSelected(name: String) {
+    fun onSubjectSelected(name: String?) {
         Timber.i("Select attendance summary subject $name")
         view?.run {
             showContent(false)

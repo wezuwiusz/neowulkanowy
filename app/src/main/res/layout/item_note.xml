@@ -3,7 +3,7 @@
     android:id="@+id/note_subitem_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="?selectableItemBackground"
     tools:context=".ui.modules.note.NoteItem">
 
     <TextView
@@ -13,8 +13,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:text="@string/all_date"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        tools:text="@tools:sample/date/ddmmyy" />
 
     <TextView
         android:id="@+id/noteItemTeacher"
@@ -30,8 +30,8 @@
         android:layout_toEndOf="@id/noteItemDate"
         android:layout_toRightOf="@id/noteItemDate"
         android:gravity="end"
-        android:text="@string/all_teacher"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        tools:text="@tools:sample/full_names" />
 
     <TextView
         android:id="@+id/noteItemType"
@@ -42,8 +42,8 @@
         android:layout_alignLeft="@id/noteItemDate"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:text="@string/exam_type"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        tools:text="@tools:sample/lorem" />
 
     <TextView
         android:id="@+id/noteItemContent"
@@ -56,6 +56,6 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
         android:lineSpacingMultiplier="1.2"
-        android:text="@string/all_description"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:text="@tools:sample/lorem/random" />
 </RelativeLayout>

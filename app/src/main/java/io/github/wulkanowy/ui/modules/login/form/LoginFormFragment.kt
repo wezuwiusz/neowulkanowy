@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.IME_NULL
 import android.widget.ArrayAdapter
+import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -17,8 +18,6 @@ import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.openInternetBrowser
-import io.github.wulkanowy.utils.setOnItemSelectedListener
-import io.github.wulkanowy.utils.setOnTextChangedListener
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
 import javax.inject.Inject
@@ -35,14 +34,16 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         fun newInstance() = LoginFormFragment()
     }
 
-    override val formNameValue: String
-        get() = loginFormName.text.toString()
+    override val formNameValue get() = loginFormName.text.toString()
 
-    override val formPassValue: String
-        get() = loginFormPass.text.toString()
+    override val formPassValue get() = loginFormPass.text.toString()
 
-    override val formHostValue: String?
-        get() = resources.getStringArray(R.array.endpoints_values)[loginFormHost.selectedItemPosition]
+    override val formHostValue
+        get() = hostValues.getOrNull(hostKeys.indexOf(loginFormHost.text.toString()))
+
+    private lateinit var hostKeys: Array<String>
+
+    private lateinit var hostValues: Array<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_form, container, false)
@@ -54,9 +55,12 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun initView() {
-        loginFormName.setOnTextChangedListener { presenter.onNameTextChanged() }
-        loginFormPass.setOnTextChangedListener { presenter.onPassTextChanged() }
-        loginFormHost.setOnItemSelectedListener { presenter.onHostSelected() }
+        hostKeys = resources.getStringArray(R.array.endpoints_keys)
+        hostValues = resources.getStringArray(R.array.endpoints_values)
+
+        loginFormName.doOnTextChanged { _, _, _, _ -> presenter.onNameTextChanged() }
+        loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
+        loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
         loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
 
@@ -64,40 +68,44 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
             if (id == IME_ACTION_DONE || id == IME_NULL) loginFormSignIn.callOnClick() else false
         }
 
-        context?.let {
-            loginFormHost.adapter = ArrayAdapter.createFromResource(it, R.array.endpoints_keys, android.R.layout.simple_spinner_item)
-                .apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+        with(loginFormHost) {
+            //Bug with filter in ExposedDropdownMenu on restoring state
+            isSaveEnabled = false
+
+            setText(hostKeys.getOrElse(0) { "" })
+            setAdapter(ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
+            keyListener = null
         }
     }
 
-    override fun setDefaultCredentials(name: String, pass: String) {
+    override fun setCredentials(name: String, pass: String) {
         loginFormName.setText(name)
         loginFormPass.setText(pass)
     }
 
     override fun setErrorNameRequired() {
-        loginFormNameLayout.run {
+        with(loginFormNameLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassRequired(focus: Boolean) {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             if (focus) requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassInvalid(focus: Boolean) {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             if (focus) requestFocus()
             error = getString(R.string.login_invalid_password)
         }
     }
 
     override fun setErrorPassIncorrect() {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             requestFocus()
             error = getString(R.string.login_incorrect_password)
         }
@@ -129,7 +137,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     @SuppressLint("SetTextI18n")
     override fun showVersion() {
-        loginFormVersion.apply {
+        with(loginFormVersion) {
             visibility = VISIBLE
             text = "${getString(R.string.app_name)} ${appInfo.versionName}"
         }
@@ -140,11 +148,12 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun notifyParentAccountLogged(students: List<Student>) {
-        (activity as? LoginActivity)?.onFormFragmentAccountLogged(students, Triple(
-            loginFormName.text.toString(),
-            loginFormPass.text.toString(),
-            resources.getStringArray(R.array.endpoints_values)[loginFormHost.selectedItemPosition]
-        ))
+        (activity as? LoginActivity)?.onFormFragmentAccountLogged(students,
+            Triple(
+                loginFormName.text.toString(),
+                loginFormPass.text.toString(),
+                resources.getStringArray(R.array.endpoints_values)[1]
+            ))
     }
 
     override fun openPrivacyPolicyPage() {

@@ -4,16 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation.TitleState.ALWAYS_SHOW
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
+import com.google.android.material.elevation.ElevationOverlayProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
+import dagger.Lazy
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.account.AccountDialog
@@ -26,8 +31,9 @@ import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
-import io.github.wulkanowy.utils.safelyPopFragment
+import io.github.wulkanowy.utils.safelyPopFragments
 import io.github.wulkanowy.utils.setOnViewChangeListener
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -40,10 +46,13 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
     @Inject
     lateinit var navController: FragNavController
 
+    @Inject
+    lateinit var overlayProvider: Lazy<ElevationOverlayProvider>
+
     companion object {
         const val EXTRA_START_MENU = "extraStartMenu"
 
-        fun getStartIntent(context: Context, startMenu: MainView.MenuView? = null, clear: Boolean = false): Intent {
+        fun getStartIntent(context: Context, startMenu: MainView.Section? = null, clear: Boolean = false): Intent {
             return Intent(context, MainActivity::class.java)
                 .apply {
                     if (clear) flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
@@ -52,24 +61,21 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
         }
     }
 
-    override val isRootView: Boolean
-        get() = navController.isRootFragment
+    override val isRootView get() = navController.isRootFragment
 
-    override val currentViewTitle: String?
-        get() = (navController.currentFrag as? MainView.TitledView)?.titleStringId?.let { getString(it) }
+    override val currentStackSize get() = navController.currentStack?.size
 
-    override val currentStackSize: Int?
-        get() = navController.currentStack?.size
+    override val currentViewTitle get() = (navController.currentFrag as? MainView.TitledView)?.titleStringId?.let { getString(it) }
 
     override var startMenuIndex = 0
 
     override var startMenuMoreIndex = -1
 
-    private val moreMenuFragments = listOf<Fragment>(
-        MessageFragment.newInstance(),
-        HomeworkFragment.newInstance(),
-        NoteFragment.newInstance(),
-        LuckyNumberFragment.newInstance()
+    private val moreMenuFragments = mapOf<Int, Fragment>(
+        MainView.Section.MESSAGE.id to MessageFragment.newInstance(),
+        MainView.Section.HOMEWORK.id to HomeworkFragment.newInstance(),
+        MainView.Section.NOTE.id to NoteFragment.newInstance(),
+        MainView.Section.LUCKY_NUMBER.id to LuckyNumberFragment.newInstance()
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,11 +84,11 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
         setSupportActionBar(mainToolbar)
         messageContainer = mainFragmentContainer
 
-        presenter.onAttachView(this, intent.getSerializableExtra(EXTRA_START_MENU) as? MainView.MenuView)
+        presenter.onAttachView(this, intent.getSerializableExtra(EXTRA_START_MENU) as? MainView.Section)
 
-        navController.run {
+        with(navController) {
             initialize(startMenuIndex, savedInstanceState)
-            pushFragment(moreMenuFragments.getOrNull(startMenuMoreIndex))
+            pushFragment(moreMenuFragments[startMenuMoreIndex])
         }
     }
 
@@ -92,30 +98,31 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
     }
 
     override fun initView() {
-        mainBottomNav.run {
-            addItems(
-                listOf(
-                    AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_menu_main_grade_26dp, 0),
-                    AHBottomNavigationItem(R.string.attendance_title, R.drawable.ic_menu_main_attendance_24dp, 0),
-                    AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_menu_main_exam_24dp, 0),
-                    AHBottomNavigationItem(R.string.timetable_title, R.drawable.ic_menu_main_timetable_24dp, 0),
-                    AHBottomNavigationItem(R.string.more_title, R.drawable.ic_menu_main_more_24dp, 0)
-                )
-            )
-            accentColor = ContextCompat.getColor(context, R.color.colorPrimary)
-            inactiveColor = getThemeAttrColor(android.R.attr.textColorSecondary)
-            defaultBackgroundColor = getThemeAttrColor(R.attr.bottomNavBackground)
+        with(mainToolbar) {
+            if (SDK_INT >= LOLLIPOP) stateListAnimator = null
+            setBackgroundColor(overlayProvider.get().getSurfaceColorWithOverlayIfNeeded(dpToPx(4f)))
+        }
+
+        with(mainBottomNav) {
+            addItems(listOf(
+                AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_main_grade, 0),
+                AHBottomNavigationItem(R.string.attendance_title, R.drawable.ic_main_attendance, 0),
+                AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_main_exam, 0),
+                AHBottomNavigationItem(R.string.timetable_title, R.drawable.ic_main_timetable, 0),
+                AHBottomNavigationItem(R.string.more_title, R.drawable.ic_main_more, 0)
+            ))
+            accentColor = getThemeAttrColor(R.attr.colorPrimary)
+            inactiveColor = ColorUtils.setAlphaComponent(getThemeAttrColor(R.attr.colorOnSurface), 153)
+            defaultBackgroundColor = overlayProvider.get().getSurfaceColorWithOverlayIfNeeded(dpToPx(8f))
             titleState = ALWAYS_SHOW
             currentItem = startMenuIndex
             isBehaviorTranslationEnabled = false
             setTitleTextSizeInSp(10f, 10f)
-            setOnTabSelectedListener { position, wasSelected ->
-                presenter.onTabSelected(position, wasSelected)
-            }
+            setOnTabSelectedListener(presenter::onTabSelected)
         }
 
-        navController.run {
-            setOnViewChangeListener { presenter.onViewChange() }
+        with(navController) {
+            setOnViewChangeListener(presenter::onViewChange)
             fragmentHideStrategy = HIDE
             rootFragments = listOf(
                 GradeFragment.newInstance(),
@@ -152,6 +159,10 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
         navController.showDialogFragment(AccountDialog.newInstance())
     }
 
+    override fun showActionBarElevation(show: Boolean) {
+        ViewCompat.setElevation(mainToolbar, if (show) dpToPx(4f) else 0f)
+    }
+
     override fun notifyMenuViewReselected() {
         (navController.currentStack?.getOrNull(0) as? MainView.MainChildView)?.onFragmentReselected()
     }
@@ -164,8 +175,8 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
         navController.pushFragment(fragment)
     }
 
-    override fun popView() {
-        navController.safelyPopFragment()
+    override fun popView(depth: Int) {
+        navController.safelyPopFragments(depth)
     }
 
     override fun onBackPressed() {

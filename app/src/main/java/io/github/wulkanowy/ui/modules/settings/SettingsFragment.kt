@@ -3,7 +3,8 @@ package io.github.wulkanowy.ui.modules.settings
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import com.takisoft.preferencex.PreferenceFragmentCompat
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import dagger.android.support.AndroidSupportInjection
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
@@ -24,8 +25,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         fun newInstance() = SettingsFragment()
     }
 
-    override val titleStringId: Int
-        get() = R.string.settings_title
+    override val titleStringId get() = R.string.settings_title
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -37,9 +37,9 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         presenter.onAttachView(this)
     }
 
-    override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
-        addPreferencesFromResource(R.xml.scheme_preferences)
-        findPreference(getString(R.string.pref_key_notification_debug)).isVisible = appInfo.isDebug
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.scheme_preferences, rootKey)
+        findPreference<Preference>(getString(R.string.pref_key_notification_debug))?.isVisible = appInfo.isDebug
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
@@ -51,7 +51,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun setServicesSuspended(serviceEnablesKey: String, isHolidays: Boolean) {
-        findPreference(serviceEnablesKey).run {
+        findPreference<Preference>(serviceEnablesKey)?.apply {
             summary = if (isHolidays) getString(R.string.pref_services_suspended) else ""
             isEnabled = !isHolidays
         }

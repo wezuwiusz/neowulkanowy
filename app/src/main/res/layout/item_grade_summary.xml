@@ -24,7 +24,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="1"
             android:textSize="17sp"
-            tools:text="Fizyka" />
+            tools:text="@tools:sample/lorem" />
 
         <TextView
             android:id="@+id/gradeSummaryItemAverage"
@@ -95,7 +95,7 @@
             android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
-            tools:text="dobry" />
+            tools:text="5" />
     </LinearLayout>
 
     <LinearLayout
@@ -126,6 +126,6 @@
             android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
-            tools:text="bardzo dobry" />
+            tools:text="5" />
     </LinearLayout>
 </LinearLayout>

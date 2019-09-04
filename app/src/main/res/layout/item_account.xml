@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="?attr/selectableItemBackground"
+    android:background="?selectableItemBackground"
     android:orientation="horizontal"
     android:paddingStart="24dp"
     android:paddingLeft="24dp"
@@ -12,16 +12,16 @@
     android:paddingRight="24dp"
     tools:context=".ui.modules.account.AccountItem">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/accountItemImage"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/ic_account_circular_border"
-        android:tint="#7E7E7E"
-        app:srcCompat="@drawable/ic_all_account_24dp" />
+        app:srcCompat="@drawable/ic_all_account"
+        tools:ignore="ContentDescription"
+        tools:tint="@color/colorPrimary" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/accountItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,10 +33,9 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="16sp"
-        tools:text="@tools:sample/lorem/random"
-        android:textColor="?android:textColorSecondary"/>
+        tools:text="@tools:sample/full_names" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/accountItemSchool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

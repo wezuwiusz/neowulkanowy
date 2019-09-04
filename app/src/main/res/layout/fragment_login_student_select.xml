@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/loginStudentSelectProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -54,7 +55,6 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/loginStudentSelectSignIn"
-            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -62,9 +62,6 @@
             android:layout_marginRight="24dp"
             android:layout_marginBottom="32dp"
             android:text="@string/login_sign_in"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginStudentSelectRecycler" />

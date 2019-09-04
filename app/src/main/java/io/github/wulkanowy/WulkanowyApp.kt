@@ -5,7 +5,6 @@ import android.util.Log.INFO
 import android.util.Log.VERBOSE
 import androidx.multidex.MultiDex
 import androidx.work.Configuration
-import androidx.work.WorkManager
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -13,6 +12,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.utils.Log
 import io.github.wulkanowy.di.DaggerAppComponent
 import io.github.wulkanowy.services.sync.SyncWorkerFactory
+import io.github.wulkanowy.ui.base.ThemeManager
 import io.github.wulkanowy.utils.ActivityLifecycleLogger
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.CrashlyticsTree
@@ -24,10 +24,13 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
-class WulkanowyApp : DaggerApplication() {
+class WulkanowyApp : DaggerApplication(), Configuration.Provider {
 
     @Inject
     lateinit var workerFactory: SyncWorkerFactory
+
+    @Inject
+    lateinit var themeManager: ThemeManager
 
     @Inject
     lateinit var appInfo: AppInfo
@@ -41,18 +44,10 @@ class WulkanowyApp : DaggerApplication() {
         super.onCreate()
         AndroidThreeTen.init(this)
         RxJavaPlugins.setErrorHandler(::onError)
+        themeManager.applyDefaultTheme()
 
-        initWorkManager()
         initLogging()
         initCrashlytics(this, appInfo)
-    }
-
-    private fun initWorkManager() {
-        WorkManager.initialize(this,
-            Configuration.Builder()
-                .setWorkerFactory(workerFactory)
-                .setMinimumLoggingLevel(if (appInfo.isDebug) VERBOSE else INFO)
-                .build())
     }
 
     private fun initLogging() {
@@ -76,4 +71,9 @@ class WulkanowyApp : DaggerApplication() {
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent.factory().create(this)
     }
+
+    override fun getWorkManagerConfiguration() = Configuration.Builder()
+        .setWorkerFactory(workerFactory)
+        .setMinimumLoggingLevel(if (appInfo.isDebug) VERBOSE else INFO)
+        .build()
 }

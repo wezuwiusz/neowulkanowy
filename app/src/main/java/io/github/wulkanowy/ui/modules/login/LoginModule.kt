@@ -10,6 +10,7 @@ import io.github.wulkanowy.ui.modules.login.form.LoginFormFragment
 import io.github.wulkanowy.ui.modules.login.studentselect.LoginStudentSelectFragment
 import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
 
+@Suppress("unused")
 @Module
 internal abstract class LoginModule {
 

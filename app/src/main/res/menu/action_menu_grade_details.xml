@@ -5,5 +5,6 @@
         android:id="@+id/gradeDetailsMenuRead"
         android:orderInCategory="100"
         android:title="@string/grade_menu_read"
+        app:iconTint="@color/mtrl_on_surface_emphasis_medium"
         app:showAsAction="never" />
 </menu>

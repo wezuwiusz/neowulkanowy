@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.luckynumberwidget
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.db.SharedPrefHelper
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -14,7 +14,7 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
     schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
-    private val sharedPref: SharedPrefHelper
+    private val sharedPref: SharedPrefProvider
 ) : BasePresenter<LuckyNumberWidgetConfigureView>(errorHandler, studentRepository, schedulers) {
 
     private var appWidgetId: Int? = null
