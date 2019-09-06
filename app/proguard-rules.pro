@@ -42,4 +42,4 @@
 
 
 #Config for Material Components
--keep class com.google.android.material.tabs.**
+-keep class com.google.android.material.tabs.** { *; }
