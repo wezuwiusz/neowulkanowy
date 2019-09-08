@@ -7,9 +7,11 @@
     android:background="?selectableItemBackground"
     android:paddingLeft="16dp"
     android:paddingTop="10dp"
-    android:paddingRight="16dp"
+    android:paddingRight="12dp"
     android:paddingBottom="10dp"
-    tools:context=".ui.modules.grade.details.GradeDetailsHeader">
+    tools:context=".ui.modules.grade.details.GradeDetailsHeader"
+    android:paddingEnd="12dp"
+    android:paddingStart="16dp">
 
     <TextView
         android:id="@+id/gradeHeaderSubject"
@@ -48,7 +50,7 @@
         android:textSize="12sp"
         tools:text="12 grades" />
 
-    <TextView
+    <ImageView
         android:id="@+id/gradeHeaderNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
