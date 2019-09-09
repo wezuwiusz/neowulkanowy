@@ -11,7 +11,7 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.android.tools.build:gradle:3.5.0'
-        classpath 'com.google.gms:google-services:4.3.1'
+        classpath 'com.google.gms:google-services:4.3.2'
         classpath "io.fabric.tools:gradle:1.31.0"
         classpath "com.github.Triple-T:gradle-play-publisher:cdaeb61a87fedd1874e15e94eab7c6b80fda6727"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1"
