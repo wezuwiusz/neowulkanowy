@@ -188,7 +188,7 @@ dependencies {
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation "org.threeten:threetenbp:1.4.0"
     testImplementation "org.mockito:mockito-core:$mockito_core"
-    testImplementation("org.mockito:mockito-inline:3.0.6") {
+    testImplementation("org.mockito:mockito-inline:3.0.7") {
         exclude group: "org.mockito", module: "mockito-core"
     }
 
