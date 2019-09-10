@@ -28,5 +28,6 @@ class LoginErrorHandler @Inject constructor(
     override fun clear() {
         super.clear()
         onBadCredentials = {}
+        onStudentDuplicate = {}
     }
 }
