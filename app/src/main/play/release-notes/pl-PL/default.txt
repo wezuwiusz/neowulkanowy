@@ -1,4 +1,4 @@
-Wersja 0.10.0
+Wersja 0.10
 
 - odświeżyliśmy wygląd aplikacji
 - poprawiliśmy wyświetlanie nauczycieli w planie lekcji
