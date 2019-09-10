@@ -38,8 +38,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override val formPassValue get() = loginFormPass.text.toString()
 
-    override val formHostValue
-        get() = hostValues.getOrNull(hostKeys.indexOf(loginFormHost.text.toString()))
+    override val formHostValue get() = hostValues[(hostKeys.indexOf(loginFormHost.text.toString()))]
 
     private lateinit var hostKeys: Array<String>
 
@@ -152,7 +151,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
             Triple(
                 loginFormName.text.toString(),
                 loginFormPass.text.toString(),
-                resources.getStringArray(R.array.endpoints_values)[1]
+                formHostValue
             ))
     }
 
