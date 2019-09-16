@@ -11,7 +11,7 @@ interface LoginFormView : BaseView {
 
     val formPassValue: String
 
-    val formHostValue: String
+    val formHostValue: String?
 
     fun setCredentials(name: String, pass: String)
 
@@ -39,7 +39,7 @@ interface LoginFormView : BaseView {
 
     fun showPrivacyPolicy()
 
-    fun notifyParentAccountLogged(students: List<Student>)
+    fun notifyParentAccountLogged(students: List<Student>, loginData: Triple<String, String, String>)
 
     fun openPrivacyPolicyPage()
 }

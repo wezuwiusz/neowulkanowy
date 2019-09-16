@@ -40,7 +40,9 @@ class LoginFormPresenter @Inject constructor(
         view?.apply {
             clearPassError()
             clearNameError()
-            if (formHostValue.contains("fakelog")) setCredentials("jan@fakelog.cf", "jan123")
+            if (formHostValue?.contains("fakelog") == true) {
+                setCredentials("jan@fakelog.cf", "jan123")
+            }
         }
     }
 
@@ -79,7 +81,7 @@ class LoginFormPresenter @Inject constructor(
             .subscribe({
                 Timber.i("Login result: Success")
                 analytics.logEvent("registration_form", "success" to true, "students" to it.size, "endpoint" to endpoint, "error" to "No error")
-                view?.notifyParentAccountLogged(it)
+                view?.notifyParentAccountLogged(it, Triple(email, password, endpoint))
             }, {
                 Timber.i("Login result: An exception occurred")
                 analytics.logEvent("registration_form", "success" to false, "students" to -1, "endpoint" to endpoint, "error" to it.message.ifNullOrBlank { "No message" })
