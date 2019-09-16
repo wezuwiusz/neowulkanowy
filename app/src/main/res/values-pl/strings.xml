@@ -111,7 +111,7 @@
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
     <string name="attendance_exemption">Zwolniony</string>
-    <string name="attendance_excused_lateness">Spóźnienie usprawiedliowione</string>
+    <string name="attendance_excused_lateness">Spóźnienie usprawiedliwione</string>
     <string name="attendance_unexcused_lateness">Spóźnienie nieusprawiedliwione</string>
     <string name="attendance_present">Obecny</string>
     <string name="attendance_number">Numer lekcji</string>
