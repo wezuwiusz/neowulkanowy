@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.timetablewidget
 
+import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.content.Context
 import android.content.Intent
@@ -18,6 +19,7 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getDateWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getThemeWidgetKey
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Maybe
@@ -35,6 +37,8 @@ class TimetableWidgetFactory(
 ) : RemoteViewsService.RemoteViewsFactory {
 
     private var lessons = emptyList<Timetable>()
+
+    private var layoutId: Int? = null
 
     override fun getLoadingView() = null
 
@@ -55,16 +59,18 @@ class TimetableWidgetFactory(
             val date = LocalDate.ofEpochDay(sharedPref.getLong(getDateWidgetKey(appWidgetId), 0))
             val studentId = sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0)
 
+            val savedTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
+            layoutId = if (savedTheme == 0L) R.layout.item_widget_timetable else R.layout.item_widget_timetable_dark
+
             lessons = try {
                 studentRepository.isStudentSaved()
                     .filter { true }
                     .flatMap { studentRepository.getSavedStudents().toMaybe() }
                     .flatMap {
-                        it.singleOrNull { student -> student.id == studentId }
-                            .let { student ->
-                                if (student != null) Maybe.just(student)
-                                else Maybe.empty()
-                            }
+                        val student = it.singleOrNull { student -> student.id == studentId }
+
+                        if (student != null) Maybe.just(student)
+                        else Maybe.empty()
                     }
                     .flatMap { semesterRepository.getCurrentSemester(it).toMaybe() }
                     .flatMap { timetableRepository.getTimetable(it, date, date).toMaybe() }
@@ -78,39 +84,42 @@ class TimetableWidgetFactory(
         }
     }
 
+    @SuppressLint("DefaultLocale")
     override fun getViewAt(position: Int): RemoteViews? {
         if (position == INVALID_POSITION || lessons.getOrNull(position) == null) return null
 
-        return RemoteViews(context.packageName, R.layout.item_widget_timetable).apply {
-            lessons[position].let {
-                setTextViewText(R.id.timetableWidgetItemSubject, it.subject)
-                setTextViewText(R.id.timetableWidgetItemNumber, it.number.toString())
-                setTextViewText(R.id.timetableWidgetItemTime, it.start.toFormattedString("HH:mm") +
-                    " - ${it.end.toFormattedString("HH:mm")}")
+        return RemoteViews(context.packageName, layoutId!!).apply {
+            val lesson = lessons[position]
 
-                if (it.room.isNotBlank()) {
-                    setTextViewText(R.id.timetableWidgetItemRoom, "${context.getString(R.string.timetable_room)} ${it.room}")
-                } else setTextViewText(R.id.timetableWidgetItemRoom, "")
+            setTextViewText(R.id.timetableWidgetItemSubject, lesson.subject)
+            setTextViewText(R.id.timetableWidgetItemNumber, lesson.number.toString())
+            setTextViewText(R.id.timetableWidgetItemTime, lesson.start.toFormattedString("HH:mm") +
+                " - ${lesson.end.toFormattedString("HH:mm")}")
 
-                if (it.info.isNotBlank()) {
-                    setViewVisibility(R.id.timetableWidgetItemDescription, VISIBLE)
-                    setTextViewText(R.id.timetableWidgetItemDescription, it.run {
+            if (lesson.room.isNotBlank()) {
+                setTextViewText(R.id.timetableWidgetItemRoom, "${context.getString(R.string.timetable_room)} ${lesson.room}")
+            } else setTextViewText(R.id.timetableWidgetItemRoom, "")
+
+            if (lesson.info.isNotBlank()) {
+                setViewVisibility(R.id.timetableWidgetItemDescription, VISIBLE)
+                setTextViewText(R.id.timetableWidgetItemDescription,
+                    with(lesson) {
                         when (true) {
-                            canceled && !changes -> "Lekcja odwołana: $info"
-                            changes && teacher.isNotBlank() -> "Zastępstwo: $teacher"
-                            changes && teacher.isBlank() -> "Zastępstwo, ${info.decapitalize()}"
-                            else -> it.info.capitalize()
+                            canceled && !changes -> "Lekcja odwołana: ${lesson.info}"
+                            changes && teacher.isNotBlank() -> "Zastępstwo: ${lesson.teacher}"
+                            changes && teacher.isBlank() -> "Zastępstwo, ${lesson.info.decapitalize()}"
+                            else -> info.capitalize()
                         }
                     })
-                } else setViewVisibility(R.id.timetableWidgetItemDescription, GONE)
+            } else setViewVisibility(R.id.timetableWidgetItemDescription, GONE)
 
-                if (it.canceled) {
-                    setInt(R.id.timetableWidgetItemSubject, "setPaintFlags",
-                        STRIKE_THRU_TEXT_FLAG or ANTI_ALIAS_FLAG)
-                } else {
-                    setInt(R.id.timetableWidgetItemSubject, "setPaintFlags", ANTI_ALIAS_FLAG)
-                }
+            if (lesson.canceled) {
+                setInt(R.id.timetableWidgetItemSubject, "setPaintFlags",
+                    STRIKE_THRU_TEXT_FLAG or ANTI_ALIAS_FLAG)
+            } else {
+                setInt(R.id.timetableWidgetItemSubject, "setPaintFlags", ANTI_ALIAS_FLAG)
             }
+
             setOnClickFillInIntent(R.id.timetableWidgetItemContainer, Intent())
         }
     }

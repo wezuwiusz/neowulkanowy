@@ -244,6 +244,9 @@
 
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">No lessons</string>
+    <string name="widget_timetable_theme_title">Choose theme</string>
+    <string name="widget_timetable_theme_light">Light</string>
+    <string name="widget_timetable_theme_dark">Dark</string>
 
 
     <!--Preferences-->

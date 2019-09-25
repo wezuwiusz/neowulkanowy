@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getThemeWidgetKey
 import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Inject
 
@@ -21,6 +22,8 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
 
     private var isFromProvider = false
 
+    private var selectedStudent: Student? = null
+
     fun onAttachView(view: TimetableWidgetConfigureView, appWidgetId: Int?, isFromProvider: Boolean?) {
         super.onAttachView(view)
         this.appWidgetId = appWidgetId
@@ -31,8 +34,22 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
 
     fun onItemSelect(item: AbstractFlexibleItem<*>) {
         if (item is TimetableWidgetConfigureItem) {
-            registerStudent(item.student)
+            selectedStudent = item.student
+
+            if (isFromProvider) registerStudent(selectedStudent)
+            else view?.showThemeDialog()
         }
+    }
+
+    fun onThemeSelect(index: Int) {
+        appWidgetId?.let {
+            sharedPref.putLong(getThemeWidgetKey(it), index.toLong())
+        }
+        registerStudent(selectedStudent)
+    }
+
+    fun onDismissThemeView(){
+        view?.finishView()
     }
 
     private fun loadData() {
@@ -46,18 +63,23 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
             .subscribe({
                 when {
                     it.isEmpty() -> view?.openLoginView()
-                    it.size == 1 && !isFromProvider -> registerStudent(it.single().student)
+                    it.size == 1 && !isFromProvider -> {
+                        selectedStudent = it.single().student
+                        view?.showThemeDialog()
+                    }
                     else -> view?.updateData(it)
                 }
             }, { errorHandler.dispatch(it) }))
     }
 
-    private fun registerStudent(student: Student) {
-        appWidgetId?.also {
-            sharedPref.putLong(getStudentWidgetKey(it), student.id)
-            view?.apply {
-                updateTimetableWidget(it)
-                setSuccessResult(it)
+    private fun registerStudent(student: Student?) {
+        requireNotNull(student)
+
+        appWidgetId?.let { id ->
+            sharedPref.putLong(getStudentWidgetKey(id), student.id)
+            view?.run {
+                updateTimetableWidget(id)
+                setSuccessResult(id)
             }
         }
         view?.finishView()

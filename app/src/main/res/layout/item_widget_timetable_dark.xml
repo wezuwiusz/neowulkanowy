@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@color/colorWidgetBackground">
 
         <TextView
             android:id="@+id/timetableWidgetItemNumber"
@@ -22,7 +22,7 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="25sp"
             tools:text="1" />
 
@@ -36,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/timetableWidgetItemNumber"
             android:layout_toRightOf="@id/timetableWidgetItemNumber"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="13sp"
             tools:text="08:00 - 08:45" />
 
@@ -51,7 +51,7 @@
             android:layout_marginRight="25dp"
             android:layout_toEndOf="@id/timetableWidgetItemTime"
             android:layout_toRightOf="@id/timetableWidgetItemTime"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="13sp"
             tools:text="@tools:sample/lorem" />
 
@@ -68,7 +68,7 @@
             android:layout_marginBottom="5dp"
             android:layout_toEndOf="@id/timetableWidgetItemTime"
             android:layout_toRightOf="@id/timetableWidgetItemTime"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimaryLight"
             android:textSize="12sp"
             tools:text="Lekcja odwołana: uczniowie zwolnieni do domu" />
 
@@ -83,7 +83,7 @@
             android:layout_marginBottom="5dp"
             android:layout_toEndOf="@id/timetableWidgetItemNumber"
             android:layout_toRightOf="@id/timetableWidgetItemNumber"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="12sp"
             tools:text="Sala 25" />
     </RelativeLayout>
@@ -91,5 +91,5 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorDivider" />
+        android:background="@color/colorDividerInverse" />
 </LinearLayout>

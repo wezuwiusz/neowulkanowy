@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetProvider.Companion.getStudentWidgetKey
+import io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetProvider.Companion.getThemeWidgetKey
 import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Inject
 
@@ -19,6 +20,8 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
 
     private var appWidgetId: Int? = null
 
+    private var selectedStudent: Student? = null
+
     fun onAttachView(view: LuckyNumberWidgetConfigureView, appWidgetId: Int?) {
         super.onAttachView(view)
         this.appWidgetId = appWidgetId
@@ -28,8 +31,20 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
 
     fun onItemSelect(item: AbstractFlexibleItem<*>) {
         if (item is LuckyNumberWidgetConfigureItem) {
-            registerStudent(item.student)
+            selectedStudent = item.student
+            view?.showThemeDialog()
         }
+    }
+
+    fun onThemeSelect(index: Int) {
+        appWidgetId?.let {
+            sharedPref.putLong(getThemeWidgetKey(it), index.toLong())
+        }
+        registerStudent(selectedStudent)
+    }
+
+    fun onDismissThemeView(){
+        view?.finishView()
     }
 
     private fun loadData() {
@@ -49,12 +64,14 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
             }, { errorHandler.dispatch(it) }))
     }
 
-    private fun registerStudent(student: Student) {
-        appWidgetId?.also {
-            sharedPref.putLong(getStudentWidgetKey(it), student.id)
-            view?.apply {
-                updateLuckyNumberWidget(it)
-                setSuccessResult(it)
+    private fun registerStudent(student: Student?) {
+        requireNotNull(student)
+
+        appWidgetId?.let { id ->
+            sharedPref.putLong(getStudentWidgetKey(id), student.id)
+            view?.run {
+                updateLuckyNumberWidget(id)
+                setSuccessResult(id)
             }
         }
         view?.finishView()

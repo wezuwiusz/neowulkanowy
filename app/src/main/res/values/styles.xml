@@ -23,6 +23,7 @@
 
     <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">?android:textColorPrimary</item>
