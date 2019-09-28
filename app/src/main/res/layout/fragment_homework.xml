@@ -58,39 +58,49 @@
     <io.github.wulkanowy.ui.widgets.MaterialLinearLayout
         android:id="@+id/homeworkNavContainer"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
+        android:gravity="center"
         tools:ignore="UnusedAttribute">
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/homeworkPreviousButton"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="start|center_vertical"
-            android:insetLeft="8dp"
-            android:text="@string/all_prev"
-            android:textColor="?android:textColorPrimary" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="8dp"
+            android:scaleType="fitStart"
+            android:tint="?colorPrimary"
+            app:srcCompat="@drawable/ic_chevron_left"
+            android:contentDescription="@string/all_prev"/>
 
         <TextView
             android:id="@+id/homeworkNavDate"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="@string/app_name" />
+            android:text="@string/app_name"
+            android:textSize="16sp" />
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/homeworkNextButton"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:layout_weight="1"
-            android:gravity="end|center_vertical"
-            android:insetRight="8dp"
-            android:text="@string/all_next"
-            android:textColor="?android:textColorPrimary" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="8dp"
+            android:scaleType="fitEnd"
+            android:tint="?colorPrimary"
+            app:srcCompat="@drawable/ic_chevron_right"
+            android:contentDescription="@string/all_next" />
     </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 </FrameLayout>

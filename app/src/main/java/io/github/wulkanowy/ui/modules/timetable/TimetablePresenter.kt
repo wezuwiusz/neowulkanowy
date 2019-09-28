@@ -151,7 +151,7 @@ class TimetablePresenter @Inject constructor(
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
             showNextButton(!currentDate.plusDays(1).isHolidays)
-            updateNavigationDay(currentDate.toFormattedString("EEEE\ndd.MM.YYYY").capitalize())
+            updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalize())
         }
     }
 }
