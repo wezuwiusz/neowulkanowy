@@ -136,4 +136,8 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideMobileDevicesDao(database: AppDatabase) = database.mobileDeviceDao
+
+    @Singleton
+    @Provides
+    fun provideTeacherDao(database: AppDatabase) = database.teacherDao
 }

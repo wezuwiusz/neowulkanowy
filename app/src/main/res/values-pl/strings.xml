@@ -216,6 +216,12 @@
     <string name="mobile_device_pin">PIN</string>
 
 
+    <!--Teacher-->
+    <string name="teachers_title">Nauczyciele</string>
+    <string name="teacher_no_items">Brak informacji o nauczycielach</string>
+    <string name="teacher_no_subject">Brak przedmiotu</string>
+
+
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>
     <string name="account_logout">Wyloguj</string>

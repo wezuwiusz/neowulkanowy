@@ -200,6 +200,12 @@
     <string name="mobile_device_pin">PIN</string>
 
 
+    <!--Teacher-->
+    <string name="teachers_title">Teachers</string>
+    <string name="teacher_no_items">No info about teachers</string>
+    <string name="teacher_no_subject">No subject</string>
+
+
     <!--Account-->
     <string name="account_add_new">Add account</string>
     <string name="account_logout">Logout</string>
