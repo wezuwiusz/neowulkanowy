@@ -50,7 +50,7 @@ script:
   - fossa --no-ansi || true
   #- ./gradlew lintPlayRelease -x fabricGenerateResourcesPlayRelease --stacktrace --daemon
   - ./gradlew testPlayDebugUnitTest -x fabricGenerateResourcesPlay --stacktrace --daemon
-  - ./gradlew createPlayDebugCoverageReport --stacktrace --daemon
+  - ./gradlew createFdroidDebugCoverageReport --stacktrace --daemon
   - ./gradlew jacocoTestReport --stacktrace --daemon
   - if [ -z ${SONAR_HOST+x} ]; then echo "sonar scan skipped"; else
       git fetch --unshallow;

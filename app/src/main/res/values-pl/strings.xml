@@ -66,8 +66,9 @@
     <string name="grade_menu_summary">Podsumowanie</string>
     <string name="grade_menu_statistics">Klasa</string>
     <string name="grade_menu_read">Oznacz jako przeczytane</string>
-    <string name="grade_statistics_partial">Oceny cząstkowe</string>
-    <string name="grade_statistics_semester">Oceny semestralne</string>
+    <string name="grade_statistics_partial">Cząstkowe</string>
+    <string name="grade_statistics_semester">Semestralne</string>
+    <string name="grade_statistics_points">Punkty</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d ocena</item>
         <item quantity="few">%d oceny</item>

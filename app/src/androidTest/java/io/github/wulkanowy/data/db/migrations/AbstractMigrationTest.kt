@@ -27,7 +27,8 @@ abstract class AbstractMigrationTest {
                 Migration13(),
                 Migration14(),
                 Migration15(),
-                Migration16()
+                Migration16(),
+                Migration17()
             )
             .build()
         // close the database and release any stream resources when the test finishes

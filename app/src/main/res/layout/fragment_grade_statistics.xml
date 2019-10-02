@@ -72,6 +72,13 @@
                         android:layout_height="wrap_content"
                         android:tag="annual"
                         android:text="@string/grade_statistics_semester" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/gradeStatisticsTypePoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="points"
+                        android:text="@string/grade_statistics_points" />
                 </RadioGroup>
 
                 <FrameLayout
@@ -80,6 +87,16 @@
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/gradeStatisticsChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:background="?android:windowBackground"
+                        android:minHeight="400dp"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/gradeStatisticsChartPoints"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
