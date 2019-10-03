@@ -140,7 +140,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
 
         val remoteView = RemoteViews(context.packageName, layoutId).apply {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
-            setTextViewText(R.id.timetableWidgetDate, "${date.shortcutWeekDayName.capitalize()} ${date.toFormattedString()}")
+            setTextViewText(R.id.timetableWidgetDate, date.toFormattedString("EEEE, dd.MM").capitalize())
             setTextViewText(R.id.timetableWidgetName, student?.studentName ?: context.getString(R.string.all_no_data))
             setRemoteAdapter(R.id.timetableWidgetList, adapterIntent)
             setOnClickPendingIntent(R.id.timetableWidgetNext, nextNavIntent)
