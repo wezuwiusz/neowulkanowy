@@ -116,7 +116,6 @@ ext {
     dagger = "2.24"
     chucker = "2.0.4"
     mockk = "1.9.2"
-    mockito_core = "3.0.11"
 }
 
 configurations.all {
@@ -189,10 +188,7 @@ dependencies {
     testImplementation "junit:junit:4.12"
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation "org.threeten:threetenbp:1.4.0"
-    testImplementation "org.mockito:mockito-core:$mockito_core"
-    testImplementation("org.mockito:mockito-inline:3.0.11") {
-        exclude group: "org.mockito", module: "mockito-core"
-    }
+    testImplementation "org.mockito:mockito-inline:3.1.0"
 
     androidTestImplementation "androidx.test:core:1.2.0"
     androidTestImplementation "androidx.test:runner:1.2.0"
@@ -200,10 +196,7 @@ dependencies {
     androidTestImplementation "io.mockk:mockk-android:$mockk"
     androidTestImplementation "androidx.room:room-testing:$room"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    androidTestImplementation "org.mockito:mockito-core:$mockito_core"
-    androidTestImplementation("org.mockito:mockito-android:3.0.11") {
-        exclude group: 'org.mockito', module: 'mockito-core'
-    }
+    androidTestImplementation "org.mockito:mockito-android:3.1.0"
 }
 
 apply plugin: 'com.google.gms.google-services'
