@@ -21,6 +21,7 @@ import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Co
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getThemeWidgetKey
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Maybe
 import org.threeten.bp.LocalDate
@@ -39,6 +40,12 @@ class TimetableWidgetFactory(
     private var lessons = emptyList<Timetable>()
 
     private var layoutId: Int? = null
+
+    private var primaryColor: Int? = null
+
+    private var textColor: Int? = null
+
+    private var timetableChangeColor: Int? = null
 
     override fun getLoadingView() = null
 
@@ -59,28 +66,40 @@ class TimetableWidgetFactory(
             val date = LocalDate.ofEpochDay(sharedPref.getLong(getDateWidgetKey(appWidgetId), 0))
             val studentId = sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0)
 
-            val savedTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
-            layoutId = if (savedTheme == 0L) R.layout.item_widget_timetable else R.layout.item_widget_timetable_dark
+            updateTheme(appWidgetId)
 
-            lessons = try {
-                studentRepository.isStudentSaved()
-                    .filter { true }
-                    .flatMap { studentRepository.getSavedStudents().toMaybe() }
-                    .flatMap {
-                        val student = it.singleOrNull { student -> student.id == studentId }
+            updateLessons(date, studentId)
+        }
+    }
 
-                        if (student != null) Maybe.just(student)
-                        else Maybe.empty()
-                    }
-                    .flatMap { semesterRepository.getCurrentSemester(it).toMaybe() }
-                    .flatMap { timetableRepository.getTimetable(it, date, date).toMaybe() }
-                    .map { item -> item.sortedBy { it.number } }
-                    .subscribeOn(schedulers.backgroundThread)
-                    .blockingGet(emptyList())
-            } catch (e: Exception) {
-                Timber.e(e, "An error has occurred in timetable widget factory")
-                emptyList()
-            }
+    private fun updateTheme(appWidgetId: Int) {
+        val savedTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
+        layoutId = if (savedTheme == 0L) R.layout.item_widget_timetable else R.layout.item_widget_timetable_dark
+
+        primaryColor = if (savedTheme == 0L) R.color.colorPrimary else R.color.colorPrimaryLight
+        textColor = if (savedTheme == 0L) android.R.color.black else android.R.color.white
+        timetableChangeColor = if (savedTheme == 0L) R.color.timetable_change_dark else R.color.timetable_change_light
+    }
+
+    private fun updateLessons(date: LocalDate, studentId: Long) {
+        lessons = try {
+            studentRepository.isStudentSaved()
+                .filter { true }
+                .flatMap { studentRepository.getSavedStudents().toMaybe() }
+                .flatMap {
+                    val student = it.singleOrNull { student -> student.id == studentId }
+
+                    if (student != null) Maybe.just(student)
+                    else Maybe.empty()
+                }
+                .flatMap { semesterRepository.getCurrentSemester(it).toMaybe() }
+                .flatMap { timetableRepository.getTimetable(it, date, date).toMaybe() }
+                .map { item -> item.sortedBy { it.number } }
+                .subscribeOn(schedulers.backgroundThread)
+                .blockingGet(emptyList())
+        } catch (e: Exception) {
+            Timber.e(e, "An error has occurred in timetable widget factory")
+            emptyList()
         }
     }
 
@@ -93,34 +112,95 @@ class TimetableWidgetFactory(
 
             setTextViewText(R.id.timetableWidgetItemSubject, lesson.subject)
             setTextViewText(R.id.timetableWidgetItemNumber, lesson.number.toString())
-            setTextViewText(R.id.timetableWidgetItemTime, lesson.start.toFormattedString("HH:mm") +
-                " - ${lesson.end.toFormattedString("HH:mm")}")
+            setTextViewText(R.id.timetableWidgetItemTimeStart, lesson.start.toFormattedString("HH:mm"))
+            setTextViewText(R.id.timetableWidgetItemTimeFinish, lesson.end.toFormattedString("HH:mm"))
 
-            if (lesson.room.isNotBlank()) {
-                setTextViewText(R.id.timetableWidgetItemRoom, "${context.getString(R.string.timetable_room)} ${lesson.room}")
-            } else setTextViewText(R.id.timetableWidgetItemRoom, "")
-
-            if (lesson.info.isNotBlank()) {
-                setViewVisibility(R.id.timetableWidgetItemDescription, VISIBLE)
-                setTextViewText(R.id.timetableWidgetItemDescription,
-                    with(lesson) {
-                        when (true) {
-                            canceled && !changes -> "Lekcja odwołana: ${lesson.info}"
-                            changes && teacher.isNotBlank() -> "Zastępstwo: ${lesson.teacher}"
-                            changes && teacher.isBlank() -> "Zastępstwo, ${lesson.info.decapitalize()}"
-                            else -> info.capitalize()
-                        }
-                    })
-            } else setViewVisibility(R.id.timetableWidgetItemDescription, GONE)
+            updateDescription(this, lesson)
 
             if (lesson.canceled) {
-                setInt(R.id.timetableWidgetItemSubject, "setPaintFlags",
-                    STRIKE_THRU_TEXT_FLAG or ANTI_ALIAS_FLAG)
+                updateStylesCanceled(this)
             } else {
-                setInt(R.id.timetableWidgetItemSubject, "setPaintFlags", ANTI_ALIAS_FLAG)
+                updateStylesNotCanceled(this, lesson)
             }
 
             setOnClickFillInIntent(R.id.timetableWidgetItemContainer, Intent())
         }
+    }
+
+    private fun updateDescription(remoteViews: RemoteViews, lesson: Timetable) {
+        with(remoteViews) {
+            if (lesson.info.isNotBlank() && !lesson.changes) {
+                setTextViewText(R.id.timetableWidgetItemDescription, lesson.info)
+                setViewVisibility(R.id.timetableWidgetItemDescription, VISIBLE)
+                setViewVisibility(R.id.timetableWidgetItemRoom, GONE)
+                setViewVisibility(R.id.timetableWidgetItemTeacher, GONE)
+            } else {
+                setViewVisibility(R.id.timetableWidgetItemDescription, GONE)
+                setViewVisibility(R.id.timetableWidgetItemRoom, VISIBLE)
+                setViewVisibility(R.id.timetableWidgetItemTeacher, VISIBLE)
+            }
+        }
+    }
+
+    private fun updateStylesCanceled(remoteViews: RemoteViews) {
+        with(remoteViews) {
+            setInt(R.id.timetableWidgetItemSubject, "setPaintFlags",
+                STRIKE_THRU_TEXT_FLAG or ANTI_ALIAS_FLAG)
+            setTextColor(R.id.timetableWidgetItemNumber, context.getCompatColor(primaryColor!!))
+            setTextColor(R.id.timetableWidgetItemSubject, context.getCompatColor(primaryColor!!))
+            setTextColor(R.id.timetableWidgetItemDescription, context.getCompatColor(primaryColor!!))
+        }
+    }
+
+    private fun updateStylesNotCanceled(remoteViews: RemoteViews, lesson: Timetable) {
+        with(remoteViews) {
+            setInt(R.id.timetableWidgetItemSubject, "setPaintFlags", ANTI_ALIAS_FLAG)
+            setTextColor(R.id.timetableWidgetItemSubject, context.getCompatColor(textColor!!))
+            setTextColor(R.id.timetableWidgetItemDescription, context.getCompatColor(timetableChangeColor!!))
+
+            updateNotCanceledLessonNumberColor(this, lesson)
+            updateNotCanceledSubjectColor(this, lesson)
+
+            val teacherChange = lesson.teacherOld.isNotBlank() && lesson.teacher != lesson.teacherOld
+            updateNotCanceledRoom(this, lesson, teacherChange)
+            updateNotCanceledTeacher(this, lesson, teacherChange)
+        }
+    }
+
+    private fun updateNotCanceledLessonNumberColor(remoteViews: RemoteViews, lesson: Timetable) {
+        remoteViews.setTextColor(R.id.timetableWidgetItemNumber, context.getCompatColor(
+            if (lesson.changes || (lesson.info.isNotBlank() && !lesson.canceled)) timetableChangeColor!!
+            else textColor!!
+        ))
+    }
+
+    private fun updateNotCanceledSubjectColor(remoteViews: RemoteViews, lesson: Timetable) {
+        remoteViews.setTextColor(R.id.timetableWidgetItemSubject, context.getCompatColor(
+            if (lesson.subjectOld.isNotBlank() && lesson.subject != lesson.subjectOld) timetableChangeColor!!
+            else textColor!!
+        ))
+    }
+
+    private fun updateNotCanceledRoom(remoteViews: RemoteViews, lesson: Timetable, teacherChange: Boolean) {
+        with(remoteViews) {
+            if (lesson.room.isNotBlank()) {
+                setTextViewText(R.id.timetableWidgetItemRoom,
+                    if (teacherChange) lesson.room
+                    else "${context.getString(R.string.timetable_room)} ${lesson.room}"
+                )
+
+                setTextColor(R.id.timetableWidgetItemRoom, context.getCompatColor(
+                    if (lesson.roomOld.isNotBlank() && lesson.room != lesson.roomOld) timetableChangeColor!!
+                    else textColor!!
+                ))
+            } else setTextViewText(R.id.timetableWidgetItemRoom, "")
+        }
+    }
+
+    private fun updateNotCanceledTeacher(remoteViews: RemoteViews, lesson: Timetable, teacherChange: Boolean) {
+        remoteViews.setTextViewText(R.id.timetableWidgetItemTeacher,
+            if (teacherChange) lesson.teacher
+            else ""
+        )
     }
 }

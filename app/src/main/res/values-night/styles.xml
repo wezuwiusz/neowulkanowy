@@ -3,6 +3,7 @@
     <style name="WulkanowyTheme" parent="@style/Theme.MaterialComponents">
         <item name="colorPrimary">@color/colorPrimaryLight</item>
         <item name="colorSecondary">@color/colorPrimaryLight</item>
+        <item name="colorTimetableChange">@color/timetable_change_light</item>
         <item name="colorError">@color/colorErrorLight</item>
         <item name="colorDivider">@color/colorDividerInverse</item>
         <item name="android:windowBackground">?colorSurface</item>

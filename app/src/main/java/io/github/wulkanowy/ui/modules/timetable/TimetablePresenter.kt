@@ -109,7 +109,7 @@ class TimetablePresenter @Inject constructor(
                 .flatMap { semesterRepository.getCurrentSemester(it) }
                 .delay(200, MILLISECONDS)
                 .flatMap { timetableRepository.getTimetable(it, currentDate, currentDate, forceRefresh) }
-                .map { items -> items.map { TimetableItem(it, view?.roomString.orEmpty()) } }
+                .map { items -> items.map { TimetableItem(it) } }
                 .map { items -> items.sortedBy { it.lesson.number } }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)

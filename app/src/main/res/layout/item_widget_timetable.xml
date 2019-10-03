@@ -11,81 +11,120 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="6dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="12dp"
+        android:paddingRight="12dp">
 
         <TextView
             android:id="@+id/timetableWidgetItemNumber"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:gravity="center"
-            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:maxLength="2"
+            android:textSize="28sp"
             android:textColor="@android:color/black"
-            android:textSize="25sp"
-            tools:text="1" />
-
-        <TextView
-            android:id="@+id/timetableWidgetItemTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@id/timetableWidgetItemNumber"
-            android:layout_toRightOf="@id/timetableWidgetItemNumber"
-            android:textColor="@android:color/black"
-            android:textSize="13sp"
-            tools:text="08:00 - 08:45" />
+            tools:text="5" />
 
         <TextView
             android:id="@+id/timetableWidgetItemSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_toEndOf="@id/timetableWidgetItemTime"
-            android:layout_toRightOf="@id/timetableWidgetItemTime"
+            android:layout_alignTop="@id/timetableWidgetItemNumber"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
+            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
-            android:textSize="13sp"
             tools:text="@tools:sample/lorem" />
 
         <TextView
-            android:id="@+id/timetableWidgetItemDescription"
+            android:id="@+id/timetableWidgetItemTimeStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/timetableWidgetItemSubject"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@id/timetableWidgetItemTime"
-            android:layout_toRightOf="@id/timetableWidgetItemTime"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="12sp"
-            tools:text="Lekcja odwołana: uczniowie zwolnieni do domu" />
+            android:layout_toEndOf="@id/timetableWidgetItemNumber"
+            android:layout_toRightOf="@id/timetableWidgetItemNumber"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
+            android:layout_alignTop="@id/timetableWidgetItemNumber"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="13sp"
+            tools:text="11:11" />
+
+        <TextView
+            android:id="@+id/timetableWidgetItemTimeFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/timetableWidgetItemNumber"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_toEndOf="@id/timetableWidgetItemNumber"
+            android:layout_toRightOf="@id/timetableWidgetItemNumber"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="13sp"
+            tools:text="12:00" />
 
         <TextView
             android:id="@+id/timetableWidgetItemRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/timetableWidgetItemTime"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@id/timetableWidgetItemNumber"
-            android:layout_toRightOf="@id/timetableWidgetItemNumber"
+            android:layout_alignBottom="@+id/timetableWidgetItemNumber"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
+            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
+            android:maxLines="1"
             android:textColor="@android:color/black"
-            android:textSize="12sp"
-            tools:text="Sala 25" />
+            android:textSize="13sp"
+            tools:text="22"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/timetableWidgetItemTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/timetableWidgetItemNumber"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toEndOf="@id/timetableWidgetItemRoom"
+            android:layout_toRightOf="@id/timetableWidgetItemRoom"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/timetable_change_dark"
+            android:textSize="13sp"
+            android:visibility="gone"
+            tools:text="Agata Kowalska - Błaszczyk"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/timetableWidgetItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/timetableWidgetItemTimeFinish"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
+            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
+            android:textColor="@color/timetable_change_dark"
+            android:textSize="13sp"
+            tools:text="Lekcja odwołana: uczniowie zwolnieni do domu"
+            tools:visibility="gone"/>
     </RelativeLayout>
 
     <FrameLayout

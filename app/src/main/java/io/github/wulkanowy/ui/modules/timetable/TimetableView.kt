@@ -5,8 +5,6 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface TimetableView : BaseView {
 
-    val roomString: String
-
     val isViewEmpty: Boolean
 
     val currentStackSize: Int?

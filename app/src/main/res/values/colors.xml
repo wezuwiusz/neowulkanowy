@@ -6,6 +6,9 @@
     <color name="colorError">#ff5722</color>
     <color name="colorErrorLight">#e84853</color>
 
+    <color name="timetable_change_light">#ffd54f</color>
+    <color name="timetable_change_dark">#ff8f00</color>
+
     <color name="colorDivider">#1f000000</color>
     <color name="colorDividerInverse">#1fffffff</color>
 

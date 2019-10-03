@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.android.synthetic.main.dialog_timetable.*
 import org.threeten.bp.LocalDateTime
@@ -72,13 +73,22 @@ class TimetableDialog : DialogFragment() {
 
     private fun setInfo(info: String, teacher: String, canceled: Boolean, changes: Boolean) {
         when {
-            info.isNotBlank() -> timetableDialogChanges.text = when {
-                canceled && !changes -> "Lekcja odwołana: $info"
-                changes && teacher.isNotBlank() -> "Zastępstwo: $teacher"
-                changes && teacher.isBlank() -> "Zastępstwo, ${info.decapitalize()}"
-                else -> info.capitalize()
-            }
-            else -> {
+            info.isNotBlank() -> {
+                if (canceled) {
+                    timetableDialogChangesTitle.setTextColor(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+                    timetableDialogChanges.setTextColor(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+                } else {
+                    timetableDialogChangesTitle.setTextColor(requireContext().getThemeAttrColor(R.attr.colorTimetableChange))
+                    timetableDialogChanges.setTextColor(requireContext().getThemeAttrColor(R.attr.colorTimetableChange))
+                }
+
+                timetableDialogChanges.text = when {
+                    canceled && !changes -> "Lekcja odwołana: $info"
+                    changes && teacher.isNotBlank() -> "Zastępstwo: $teacher"
+                    changes && teacher.isBlank() -> "Zastępstwo, ${info.decapitalize()}"
+                    else -> info.capitalize()
+                }
+            } else -> {
                 timetableDialogChangesTitle.visibility = GONE
                 timetableDialogChanges.visibility = GONE
             }
