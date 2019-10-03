@@ -3,10 +3,14 @@ package io.github.wulkanowy.data.db.migrations
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import io.github.wulkanowy.data.db.Converters
+import io.github.wulkanowy.data.db.entities.Semester
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.of
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class Migration13Test : AbstractMigrationTest() {
@@ -97,11 +101,9 @@ class Migration13Test : AbstractMigrationTest() {
             close()
         }
 
-        helper.runMigrationsAndValidate(dbName, 13, true, Migration13())
+        val db = helper.runMigrationsAndValidate(dbName, 13, true, Migration13())
 
-        val db = getMigratedRoomDatabase()
-
-        val semesters1 = db.semesterDao.loadAll(1, 5).blockingGet()
+        val semesters1 = getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 1 AND class_id = 5")
         assertTrue { semesters1.single { it.isCurrent }.isCurrent }
         semesters1[0].run {
             assertFalse(isCurrent)
@@ -119,7 +121,7 @@ class Migration13Test : AbstractMigrationTest() {
             assertEquals(2, diaryId)
         }
 
-        db.semesterDao.loadAll(2, 5).blockingGet().let {
+        getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 2 AND class_id = 5").let {
             assertTrue { it.single { it.isCurrent }.isCurrent }
             assertEquals(1970, it[0].schoolYear)
             assertEquals(of(1970, 1, 1), it[0].end)
@@ -130,13 +132,37 @@ class Migration13Test : AbstractMigrationTest() {
             assertTrue(it[3].isCurrent)
         }
 
-        db.semesterDao.loadAll(2, 5).blockingGet().let {
+        getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 2 AND class_id = 5").let {
             assertTrue { it.single { it.isCurrent }.isCurrent }
             assertFalse(it[0].isCurrent)
             assertFalse(it[1].isCurrent)
             assertFalse(it[2].isCurrent)
             assertTrue(it[3].isCurrent)
         }
+    }
+
+    private fun getSemesters(db: SupportSQLiteDatabase, query: String): List<Semester> {
+        val semesters = mutableListOf<Semester>()
+
+        val cursor = db.query(query)
+        if (cursor.moveToFirst()) {
+            do {
+                semesters.add(Semester(
+                    studentId = cursor.getInt(1),
+                    diaryId = cursor.getInt(2),
+                    diaryName = cursor.getString(3),
+                    semesterId = cursor.getInt(4),
+                    semesterName = cursor.getInt(5),
+                    isCurrent = cursor.getInt(6) == 1,
+                    classId = cursor.getInt(7),
+                    unitId = cursor.getInt(8),
+                    schoolYear = cursor.getInt(9),
+                    start = Converters().timestampToDate(cursor.getLong(10))!!,
+                    end = Converters().timestampToDate(cursor.getLong(11))!!
+                ))
+            } while (cursor.moveToNext())
+        }
+        return semesters.toList()
     }
 
     private fun createStudent(db: SupportSQLiteDatabase, studentId: Int, schoolName: String = "", classId: Int = -1, schoolId: Int = 123) {

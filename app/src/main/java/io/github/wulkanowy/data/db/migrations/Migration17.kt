@@ -6,6 +6,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 class Migration17 : Migration(16, 17) {
 
     override fun migrate(database: SupportSQLiteDatabase) {
+        createGradesPointsStatisticsTable(database)
+        truncateSemestersTable(database)
+    }
+
+    private fun createGradesPointsStatisticsTable(database: SupportSQLiteDatabase) {
         database.execSQL("""
             CREATE TABLE IF NOT EXISTS GradesPointsStatistics(
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -16,5 +21,9 @@ class Migration17 : Migration(16, 17) {
                 student REAL NOT NULL
             )
         """)
+    }
+
+    private fun truncateSemestersTable(database: SupportSQLiteDatabase) {
+        database.execSQL("DELETE FROM Semesters")
     }
 }
