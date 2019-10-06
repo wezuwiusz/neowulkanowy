@@ -16,8 +16,8 @@ class LoginPresenter @Inject constructor(
 
     override fun onAttachView(view: LoginView) {
         super.onAttachView(view)
-        view.run {
-            initAdapter()
+        with(view) {
+            initView()
             showActionBar(false)
         }
         Timber.i("Login view was initialized")
@@ -48,8 +48,8 @@ class LoginPresenter @Inject constructor(
     fun onViewSelected(index: Int) {
         view?.apply {
             when (index) {
-                0, 1 -> showActionBar(false)
-                2 -> showActionBar(true)
+                0 -> showActionBar(false)
+                1, 2 -> showActionBar(true)
             }
         }
     }

@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseActivity
@@ -23,22 +24,28 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     lateinit var loginAdapter: BaseFragmentPagerAdapter
 
     companion object {
+
         fun getStartIntent(context: Context) = Intent(context, LoginActivity::class.java)
     }
 
-    override val currentViewIndex: Int
-        get() = loginViewpager.currentItem
+    override val currentViewIndex get() = loginViewpager.currentItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        setSupportActionBar(loginToolbar)
         messageContainer = loginContainer
 
         presenter.onAttachView(this)
     }
 
-    override fun initAdapter() {
-        loginAdapter.apply {
+    override fun initView() {
+        with(requireNotNull(supportActionBar)) {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(false)
+        }
+
+        with(loginAdapter) {
             containerId = loginViewpager.id
             addFragments(listOf(
                 LoginFormFragment.newInstance(),
@@ -47,11 +54,16 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
             ))
         }
 
-        loginViewpager.run {
+        with(loginViewpager) {
             offscreenPageLimit = 2
             adapter = loginAdapter
-            setOnSelectPageListener { presenter.onViewSelected(it) }
+            setOnSelectPageListener(presenter::onViewSelected)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) onBackPressed()
+        return true
     }
 
     override fun switchView(index: Int) {
@@ -59,7 +71,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun showActionBar(show: Boolean) {
-        supportActionBar?.apply { if (show) show() else hide() }
+        supportActionBar?.run { if (show) show() else hide() }
     }
 
     override fun onBackPressed() {
