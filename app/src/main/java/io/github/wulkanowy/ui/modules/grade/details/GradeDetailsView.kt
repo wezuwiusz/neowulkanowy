@@ -46,6 +46,8 @@ interface GradeDetailsView : BaseView {
 
     fun notifyParentRefresh()
 
+    fun enableMarkAsDoneButton(enable: Boolean)
+
     fun getGradeNumberString(number: Int): String
 
     fun getHeaderOfItem(item: AbstractFlexibleItem<*>): IExpandable<*, out IFlexible<*>>?
