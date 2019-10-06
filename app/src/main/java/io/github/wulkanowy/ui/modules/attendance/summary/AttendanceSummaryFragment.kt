@@ -80,7 +80,7 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
     override fun updateDataSet(data: List<AttendanceSummaryItem>, header: AttendanceSummaryScrollableHeader) {
         with(attendanceSummaryAdapter) {
             updateDataSet(data, true)
-            removeAllScrollableFooters()
+            removeAllScrollableHeaders()
             addScrollableHeader(header)
         }
     }
