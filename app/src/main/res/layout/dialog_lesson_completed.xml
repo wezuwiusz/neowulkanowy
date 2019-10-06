@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/timetable_changes"
-            android:textColor="?colorPrimary"
+            android:textColor="?colorTimetableChange"
             android:textSize="17sp" />
 
         <TextView
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:text="@string/all_no_data"
-            android:textColor="?colorPrimary"
+            android:textColor="?colorTimetableChange"
             android:textIsSelectable="true"
             android:textSize="12sp" />
 

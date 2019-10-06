@@ -39,8 +39,6 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
 
     override val titleStringId get() = R.string.timetable_title
 
-    override val roomString get() = getString(R.string.timetable_room)
-
     override val isViewEmpty get() = timetableAdapter.isEmpty
 
     override val currentStackSize get() = (activity as? MainActivity)?.currentStackSize

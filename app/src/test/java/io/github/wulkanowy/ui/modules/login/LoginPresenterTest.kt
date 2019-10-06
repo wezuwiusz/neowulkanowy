@@ -35,7 +35,7 @@ class LoginPresenterTest {
 
     @Test
     fun initViewTest() {
-        verify(loginView).initAdapter()
+        verify(loginView).initView()
         verify(loginView).showActionBar(false)
     }
 

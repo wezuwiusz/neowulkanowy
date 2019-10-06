@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.timetable
 
+import android.annotation.SuppressLint
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -108,7 +109,7 @@ class TimetablePresenter @Inject constructor(
                 .flatMap { semesterRepository.getCurrentSemester(it) }
                 .delay(200, MILLISECONDS)
                 .flatMap { timetableRepository.getTimetable(it, currentDate, currentDate, forceRefresh) }
-                .map { items -> items.map { TimetableItem(it, view?.roomString.orEmpty()) } }
+                .map { items -> items.map { TimetableItem(it) } }
                 .map { items -> items.sortedBy { it.lesson.number } }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
@@ -147,11 +148,12 @@ class TimetablePresenter @Inject constructor(
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun reloadNavigation() {
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
             showNextButton(!currentDate.plusDays(1).isHolidays)
-            updateNavigationDay(currentDate.toFormattedString("EEEE\ndd.MM.YYYY").capitalize())
+            updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalize())
         }
     }
 }

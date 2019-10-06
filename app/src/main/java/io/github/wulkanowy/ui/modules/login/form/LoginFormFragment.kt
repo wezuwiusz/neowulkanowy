@@ -38,7 +38,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override val formPassValue get() = loginFormPass.text.toString()
 
-    override val formHostValue get() = hostValues[(hostKeys.indexOf(loginFormHost.text.toString()))]
+    override val formHostValue get() = hostValues.getOrNull(hostKeys.indexOf(loginFormHost.text.toString()))
 
     private lateinit var hostKeys: Array<String>
 
@@ -146,13 +146,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormPrivacyLink.visibility = VISIBLE
     }
 
-    override fun notifyParentAccountLogged(students: List<Student>) {
-        (activity as? LoginActivity)?.onFormFragmentAccountLogged(students,
-            Triple(
-                loginFormName.text.toString(),
-                loginFormPass.text.toString(),
-                formHostValue
-            ))
+    override fun notifyParentAccountLogged(students: List<Student>, loginData: Triple<String, String, String>) {
+        (activity as? LoginActivity)?.onFormFragmentAccountLogged(students, loginData)
     }
 
     override fun openPrivacyPolicyPage() {

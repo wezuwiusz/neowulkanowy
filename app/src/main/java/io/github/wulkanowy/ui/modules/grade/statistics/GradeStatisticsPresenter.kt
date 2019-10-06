@@ -30,19 +30,19 @@ class GradeStatisticsPresenter @Inject constructor(
 
     private var currentSubjectName: String = "Wszystkie"
 
-    var currentIsSemester = false
+    var currentType: ViewType = ViewType.PARTIAL
         private set
 
-    fun onAttachView(view: GradeStatisticsView, isSemester: Boolean?) {
+    fun onAttachView(view: GradeStatisticsView, type: ViewType?) {
         super.onAttachView(view)
-        currentIsSemester = isSemester ?: false
+        currentType = type ?: ViewType.PARTIAL
         view.initView()
     }
 
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
         currentSemesterId = semesterId
         loadSubjects()
-        loadData(semesterId, currentSubjectName, currentIsSemester, forceRefresh)
+        loadDataByType(semesterId, currentSubjectName, currentType, forceRefresh)
     }
 
     fun onParentViewChangeSemester() {
@@ -50,7 +50,7 @@ class GradeStatisticsPresenter @Inject constructor(
             showProgress(true)
             enableSwipe(false)
             showRefresh(false)
-            showContent(false)
+            showBarContent(false)
             showEmpty(false)
             clearView()
         }
@@ -65,28 +65,30 @@ class GradeStatisticsPresenter @Inject constructor(
     fun onSubjectSelected(name: String?) {
         Timber.i("Select grade stats subject $name")
         view?.run {
-            showContent(false)
+            showBarContent(false)
+            showPieContent(false)
             showProgress(true)
             enableSwipe(false)
             showEmpty(false)
             clearView()
         }
         (subjects.singleOrNull { it.name == name }?.name)?.let {
-            if (it != currentSubjectName) loadData(currentSemesterId, it, currentIsSemester)
+            if (it != currentSubjectName) loadDataByType(currentSemesterId, it, currentType)
         }
     }
 
-    fun onTypeChange(isSemester: Boolean) {
-        Timber.i("Select grade stats semester: $isSemester")
+    fun onTypeChange(type: ViewType) {
+        Timber.i("Select grade stats semester: $type")
         disposable.clear()
         view?.run {
-            showContent(false)
+            showBarContent(false)
+            showPieContent(false)
             showProgress(true)
             enableSwipe(false)
             showEmpty(false)
             clearView()
         }
-        loadData(currentSemesterId, currentSubjectName, isSemester)
+        loadDataByType(currentSemesterId, currentSubjectName, type)
     }
 
     private fun loadSubjects() {
@@ -111,10 +113,18 @@ class GradeStatisticsPresenter @Inject constructor(
         )
     }
 
+    private fun loadDataByType(semesterId: Int, subjectName: String, type: ViewType, forceRefresh: Boolean = false) {
+        currentSubjectName = subjectName
+        currentType = type
+        when (type) {
+            ViewType.SEMESTER -> loadData(semesterId, subjectName, true, forceRefresh)
+            ViewType.PARTIAL -> loadData(semesterId, subjectName, false, forceRefresh)
+            ViewType.POINTS -> loadPointsData(semesterId, subjectName, forceRefresh)
+        }
+    }
+
     private fun loadData(semesterId: Int, subjectName: String, isSemester: Boolean, forceRefresh: Boolean = false) {
         Timber.i("Loading grade stats data started")
-        currentSubjectName = subjectName
-        currentIsSemester = isSemester
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
             .flatMap { gradeStatisticsRepository.getGradesStatistics(it.first { item -> item.semesterId == semesterId }, subjectName, isSemester, forceRefresh) }
@@ -134,14 +144,53 @@ class GradeStatisticsPresenter @Inject constructor(
                 Timber.i("Loading grade stats result: Success")
                 view?.run {
                     showEmpty(it.isEmpty())
-                    showContent(it.isNotEmpty())
-                    updateData(it, preferencesRepository.gradeColorTheme)
+                    showBarContent(false)
+                    showPieContent(it.isNotEmpty())
+                    updatePieData(it, preferencesRepository.gradeColorTheme)
                 }
                 analytics.logEvent("load_grade_statistics", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
                 Timber.e("Loading grade stats result: An exception occurred")
-                view?.run { showEmpty(isViewEmpty) }
+                view?.run { showEmpty(isPieViewEmpty) }
                 errorHandler.dispatch(it)
             })
+    }
+
+    private fun loadPointsData(semesterId: Int, subjectName: String, forceRefresh: Boolean = false) {
+        Timber.i("Loading grade points stats data started")
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { semesterRepository.getSemesters(it) }
+            .flatMapMaybe { gradeStatisticsRepository.getGradesPointsStatistics(it.first { item -> item.semesterId == semesterId }, subjectName, forceRefresh) }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .doFinally {
+                view?.run {
+                    showRefresh(false)
+                    showProgress(false)
+                    enableSwipe(true)
+                    notifyParentDataLoaded(semesterId)
+                }
+            }
+            .subscribe({
+                Timber.i("Loading grade points stats result: Success")
+                view?.run {
+                    showEmpty(false)
+                    showPieContent(false)
+                    showBarContent(true)
+                    updateBarData(it)
+                }
+                analytics.logEvent("load_grade_points_statistics", "force_refresh" to forceRefresh)
+            }, {
+                Timber.e("Loading grade points stats result: An exception occurred")
+                view?.run { showEmpty(isBarViewEmpty) }
+                errorHandler.dispatch(it)
+            }, {
+                Timber.d("Loading grade points stats result: No point stats found")
+                view?.run {
+                    showBarContent(false)
+                    showEmpty(true)
+                }
+            })
+        )
     }
 }

@@ -43,16 +43,17 @@ class ErrorDialog : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        StringWriter().let { writer ->
-            error.printStackTrace(PrintWriter(writer))
 
-            errorDialogContent.text = writer.toString()
-            errorDialogCopy.setOnClickListener {
-                ClipData.newPlainText("wulkanowyError", writer.toString()).let { clip ->
-                    activity?.getSystemService<ClipboardManager>()?.primaryClip = clip
-                }
-                Toast.makeText(context, R.string.all_copied, LENGTH_LONG).show()
-            }
+        val stringWriter = StringWriter().apply {
+            error.printStackTrace(PrintWriter(this))
+        }
+
+        errorDialogContent.text = stringWriter.toString()
+        errorDialogCopy.setOnClickListener {
+            val clip = ClipData.newPlainText("wulkanowy", stringWriter.toString())
+            activity?.getSystemService<ClipboardManager>()?.setPrimaryClip(clip)
+
+            Toast.makeText(context, R.string.all_copied, LENGTH_LONG).show()
         }
         errorDialogCancel.setOnClickListener { dismiss() }
     }

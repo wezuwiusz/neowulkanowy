@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.mobiledevice.token
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -9,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.getSystemService
 import dagger.android.support.DaggerDialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
@@ -45,9 +48,18 @@ class MobileDeviceTokenDialog : DaggerDialogFragment(), MobileDeviceTokenVIew {
     }
 
     override fun updateData(token: MobileDeviceToken) {
-        mobileDeviceDialogToken.text = token.token
-        mobileDeviceDialogSymbol.text = token.symbol
-        mobileDeviceDialogPin.text = token.pin
+        with(mobileDeviceDialogToken) {
+            text = token.token
+            setOnClickListener { clickCopy(token.token) }
+        }
+        with(mobileDeviceDialogSymbol) {
+            text = token.symbol
+            setOnClickListener { clickCopy(token.symbol) }
+        }
+        with(mobileDeviceDialogPin) {
+            text = token.pin
+            setOnClickListener { clickCopy(token.pin) }
+        }
 
         mobileDeviceQr.setImageBitmap(Base64.decode(token.qr, Base64.DEFAULT).let {
             BitmapFactory.decodeByteArray(it, 0, it.size)
@@ -85,5 +97,11 @@ class MobileDeviceTokenDialog : DaggerDialogFragment(), MobileDeviceTokenVIew {
     override fun onDestroyView() {
         presenter.onDetachView()
         super.onDestroyView()
+    }
+
+    fun clickCopy(text: String) {
+        val clip = ClipData.newPlainText("wulkanowy", text)
+        activity?.getSystemService<ClipboardManager>()?.setPrimaryClip(clip)
+        Toast.makeText(context, R.string.all_copied, Toast.LENGTH_LONG).show()
     }
 }

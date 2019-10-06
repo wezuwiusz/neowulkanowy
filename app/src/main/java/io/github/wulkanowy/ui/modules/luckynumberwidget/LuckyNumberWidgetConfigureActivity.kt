@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
@@ -25,6 +26,8 @@ class LuckyNumberWidgetConfigureActivity : BaseActivity<LuckyNumberWidgetConfigu
     @Inject
     override lateinit var presenter: LuckyNumberWidgetConfigurePresenter
 
+    private var dialog: AlertDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setResult(RESULT_CANCELED)
@@ -36,11 +39,27 @@ class LuckyNumberWidgetConfigureActivity : BaseActivity<LuckyNumberWidgetConfigu
     }
 
     override fun initView() {
-        widgetConfigureRecycler.apply {
+        with(widgetConfigureRecycler) {
             adapter = configureAdapter
             layoutManager = SmoothScrollLinearLayoutManager(context)
         }
-        configureAdapter.setOnItemClickListener { presenter.onItemSelect(it) }
+
+        configureAdapter.setOnItemClickListener(presenter::onItemSelect)
+    }
+
+    override fun showThemeDialog() {
+        val items = arrayOf(
+            getString(R.string.widget_timetable_theme_light),
+            getString(R.string.widget_timetable_theme_dark)
+        )
+
+       dialog =  AlertDialog.Builder(this, R.style.WulkanowyTheme_WidgetAccountSwitcher)
+            .setTitle(R.string.widget_timetable_theme_title)
+           .setOnDismissListener { presenter.onDismissThemeView() }
+            .setSingleChoiceItems(items, -1) { _, which ->
+                presenter.onThemeSelect(which)
+            }
+            .show()
     }
 
     override fun updateData(data: List<LuckyNumberWidgetConfigureItem>) {
@@ -69,5 +88,10 @@ class LuckyNumberWidgetConfigureActivity : BaseActivity<LuckyNumberWidgetConfigu
 
     override fun openLoginView() {
         startActivity(LoginActivity.getStartIntent(this))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dialog?.dismiss()
     }
 }

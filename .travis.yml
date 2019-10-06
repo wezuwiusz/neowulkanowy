@@ -3,8 +3,8 @@ jdk: oraclejdk8
 
 env:
  global:
-    - ANDROID_API_LEVEL=28
-    - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+    - ANDROID_API_LEVEL=29
+    - ANDROID_BUILD_TOOLS_VERSION=29.0.2
 
 cache:
   directories:
@@ -14,7 +14,7 @@ cache:
 branches:
   only:
     - develop
-    - 0.10.2
+    - 0.11.0
 
 android:
  licenses:
@@ -34,12 +34,12 @@ android:
     - extra-android-m2repository
     - addon-google_apis-google-$ANDROID_API_LEVEL
     # Android emulator
-    - android-19
-    - sys-img-armeabi-v7a-android-19
+    - android-22
+    - sys-img-armeabi-v7a-android-22
 
 before_script:
     # Launch emulator before the execution
-    - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+    - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
     - emulator -avd test -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
@@ -50,7 +50,7 @@ script:
   - fossa --no-ansi || true
   #- ./gradlew lintPlayRelease -x fabricGenerateResourcesPlayRelease --stacktrace --daemon
   - ./gradlew testPlayDebugUnitTest -x fabricGenerateResourcesPlay --stacktrace --daemon
-  - ./gradlew createPlayDebugCoverageReport --stacktrace --daemon
+  - ./gradlew createFdroidDebugCoverageReport --stacktrace --daemon
   - ./gradlew jacocoTestReport --stacktrace --daemon
   - if [ -z ${SONAR_HOST+x} ]; then echo "sonar scan skipped"; else
       git fetch --unshallow;

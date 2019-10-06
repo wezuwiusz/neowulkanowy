@@ -7,7 +7,7 @@ interface LoginView : BaseView {
 
     val currentViewIndex: Int
 
-    fun initAdapter()
+    fun initView()
 
     fun switchView(index: Int)
 

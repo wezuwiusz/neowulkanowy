@@ -66,8 +66,9 @@
     <string name="grade_menu_summary">Summary</string>
     <string name="grade_menu_statistics">Class</string>
     <string name="grade_menu_read">Mark as read</string>
-    <string name="grade_statistics_partial">Partial grades</string>
-    <string name="grade_statistics_semester">Semester grades</string>
+    <string name="grade_statistics_partial">Partial</string>
+    <string name="grade_statistics_semester">Semester</string>
+    <string name="grade_statistics_points">Points</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d grade</item>
         <item quantity="other">%d grades</item>
@@ -200,6 +201,12 @@
     <string name="mobile_device_pin">PIN</string>
 
 
+    <!--Teacher-->
+    <string name="teachers_title">Teachers</string>
+    <string name="teacher_no_items">No info about teachers</string>
+    <string name="teacher_no_subject">No subject</string>
+
+
     <!--Account-->
     <string name="account_add_new">Add account</string>
     <string name="account_logout">Logout</string>
@@ -244,6 +251,9 @@
 
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">No lessons</string>
+    <string name="widget_timetable_theme_title">Choose theme</string>
+    <string name="widget_timetable_theme_light">Light</string>
+    <string name="widget_timetable_theme_dark">Dark</string>
 
 
     <!--Preferences-->

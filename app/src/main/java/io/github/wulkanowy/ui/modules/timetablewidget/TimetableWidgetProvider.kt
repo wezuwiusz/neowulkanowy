@@ -54,21 +54,24 @@ class TimetableWidgetProvider : BroadcastReceiver() {
     lateinit var analytics: FirebaseAnalyticsHelper
 
     companion object {
+
+        private const val EXTRA_TOGGLED_WIDGET_ID = "extraToggledWidget"
+
+        private const val EXTRA_BUTTON_TYPE = "extraButtonType"
+
+        private const val BUTTON_NEXT = "buttonNext"
+
+        private const val BUTTON_PREV = "buttonPrev"
+
+        private const val BUTTON_RESET = "buttonReset"
+
         const val EXTRA_FROM_PROVIDER = "extraFromProvider"
-
-        const val EXTRA_TOGGLED_WIDGET_ID = "extraToggledWidget"
-
-        const val EXTRA_BUTTON_TYPE = "extraButtonType"
-
-        const val BUTTON_NEXT = "buttonNext"
-
-        const val BUTTON_PREV = "buttonPrev"
-
-        const val BUTTON_RESET = "buttonReset"
 
         fun getDateWidgetKey(appWidgetId: Int) = "timetable_widget_date_$appWidgetId"
 
         fun getStudentWidgetKey(appWidgetId: Int) = "timetable_widget_student_$appWidgetId"
+
+        fun getThemeWidgetKey(appWidgetId: Int) = "timetable_widget_theme_$appWidgetId"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -102,45 +105,56 @@ class TimetableWidgetProvider : BroadcastReceiver() {
     }
 
     private fun onDelete(intent: Intent) {
-        intent.getIntExtra(EXTRA_APPWIDGET_ID, 0).let {
-            if (it != 0) {
-                sharedPref.apply {
-                    delete(getStudentWidgetKey(it))
-                    delete(getDateWidgetKey(it))
-                }
+        val appWidgetId = intent.getIntExtra(EXTRA_APPWIDGET_ID, 0)
+
+        if (appWidgetId != 0) {
+            with(sharedPref) {
+                delete(getStudentWidgetKey(appWidgetId))
+                delete(getDateWidgetKey(appWidgetId))
             }
         }
     }
 
     @SuppressLint("DefaultLocale")
     private fun updateWidget(context: Context, appWidgetId: Int, date: LocalDate, student: Student?) {
-        RemoteViews(context.packageName, R.layout.widget_timetable).apply {
+        val savedTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
+        val layoutId = if (savedTheme == 0L) R.layout.widget_timetable else R.layout.widget_timetable_dark
+
+        val nextNavIntent = createNavIntent(context, appWidgetId, appWidgetId, BUTTON_NEXT)
+        val prevNavIntent = createNavIntent(context, -appWidgetId, appWidgetId, BUTTON_PREV)
+        val resetNavIntent = createNavIntent(context, Int.MAX_VALUE - appWidgetId, appWidgetId, BUTTON_RESET)
+        val adapterIntent = Intent(context, TimetableWidgetService::class.java)
+            .apply {
+                putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
+                //make Intent unique
+                action = appWidgetId.toString()
+            }
+        val accountIntent = PendingIntent.getActivity(context, -Int.MAX_VALUE + appWidgetId,
+            Intent(context, TimetableWidgetConfigureActivity::class.java).apply {
+                addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
+                putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
+                putExtra(EXTRA_FROM_PROVIDER, true)
+            }, FLAG_UPDATE_CURRENT)
+        val appIntent = PendingIntent.getActivity(context, MainView.Section.TIMETABLE.id,
+            MainActivity.getStartIntent(context, MainView.Section.TIMETABLE, true), FLAG_UPDATE_CURRENT)
+
+        val remoteView = RemoteViews(context.packageName, layoutId).apply {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
-            setTextViewText(R.id.timetableWidgetDate, "${date.shortcutWeekDayName.capitalize()} ${date.toFormattedString()}")
+            setTextViewText(R.id.timetableWidgetDate, date.toFormattedString("EEEE, dd.MM").capitalize())
             setTextViewText(R.id.timetableWidgetName, student?.studentName ?: context.getString(R.string.all_no_data))
-            setRemoteAdapter(R.id.timetableWidgetList, Intent(context, TimetableWidgetService::class.java)
-                .apply { putExtra(EXTRA_APPWIDGET_ID, appWidgetId) })
-            setOnClickPendingIntent(R.id.timetableWidgetNext, createNavIntent(context, appWidgetId, appWidgetId, BUTTON_NEXT))
-            setOnClickPendingIntent(R.id.timetableWidgetPrev, createNavIntent(context, -appWidgetId, appWidgetId, BUTTON_PREV))
-            createNavIntent(context, Int.MAX_VALUE - appWidgetId, appWidgetId, BUTTON_RESET).let {
-                setOnClickPendingIntent(R.id.timetableWidgetDate, it)
-                setOnClickPendingIntent(R.id.timetableWidgetName, it)
-            }
-            setOnClickPendingIntent(R.id.timetableWidgetAccount, PendingIntent.getActivity(context, -Int.MAX_VALUE + appWidgetId,
-                Intent(context, TimetableWidgetConfigureActivity::class.java).apply {
-                    addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
-                    putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
-                    putExtra(EXTRA_FROM_PROVIDER, true)
-                }, FLAG_UPDATE_CURRENT))
-            setPendingIntentTemplate(R.id.timetableWidgetList,
-                PendingIntent.getActivity(context, MainView.Section.TIMETABLE.id,
-                    MainActivity.getStartIntent(context, MainView.Section.TIMETABLE, true), FLAG_UPDATE_CURRENT))
-        }.also {
-            sharedPref.putLong(getDateWidgetKey(appWidgetId), date.toEpochDay(), true)
-            appWidgetManager.apply {
-                notifyAppWidgetViewDataChanged(appWidgetId, R.id.timetableWidgetList)
-                updateAppWidget(appWidgetId, it)
-            }
+            setRemoteAdapter(R.id.timetableWidgetList, adapterIntent)
+            setOnClickPendingIntent(R.id.timetableWidgetNext, nextNavIntent)
+            setOnClickPendingIntent(R.id.timetableWidgetPrev, prevNavIntent)
+            setOnClickPendingIntent(R.id.timetableWidgetDate, resetNavIntent)
+            setOnClickPendingIntent(R.id.timetableWidgetName, resetNavIntent)
+            setOnClickPendingIntent(R.id.timetableWidgetAccount, accountIntent)
+            setPendingIntentTemplate(R.id.timetableWidgetList, appIntent)
+        }
+
+        sharedPref.putLong(getDateWidgetKey(appWidgetId), date.toEpochDay(), true)
+        with(appWidgetManager) {
+            notifyAppWidgetViewDataChanged(appWidgetId, R.id.timetableWidgetList)
+            updateAppWidget(appWidgetId, remoteView)
         }
     }
 
@@ -159,19 +173,17 @@ class TimetableWidgetProvider : BroadcastReceiver() {
                 .filter { true }
                 .flatMap { studentRepository.getSavedStudents(false).toMaybe() }
                 .flatMap { students ->
-                    students.singleOrNull { student -> student.id == studentId }
-                        .let { student ->
-                            when {
-                                student != null -> Maybe.just(student)
-                                studentId != 0L -> {
-                                    studentRepository.isCurrentStudentSet()
-                                        .filter { true }
-                                        .flatMap { studentRepository.getCurrentStudent(false).toMaybe() }
-                                        .doOnSuccess { sharedPref.putLong(getStudentWidgetKey(appWidgetId), it.id) }
-                                }
-                                else -> Maybe.empty()
-                            }
+                    val student = students.singleOrNull { student -> student.id == studentId }
+                    when {
+                        student != null -> Maybe.just(student)
+                        studentId != 0L -> {
+                            studentRepository.isCurrentStudentSet()
+                                .filter { true }
+                                .flatMap { studentRepository.getCurrentStudent(false).toMaybe() }
+                                .doOnSuccess { sharedPref.putLong(getStudentWidgetKey(appWidgetId), it.id) }
                         }
+                        else -> Maybe.empty()
+                    }
                 }
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet()

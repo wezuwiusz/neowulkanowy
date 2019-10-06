@@ -66,8 +66,9 @@
     <string name="grade_menu_summary">Podsumowanie</string>
     <string name="grade_menu_statistics">Klasa</string>
     <string name="grade_menu_read">Oznacz jako przeczytane</string>
-    <string name="grade_statistics_partial">Oceny cząstkowe</string>
-    <string name="grade_statistics_semester">Oceny semestralne</string>
+    <string name="grade_statistics_partial">Cząstkowe</string>
+    <string name="grade_statistics_semester">Semestralne</string>
+    <string name="grade_statistics_points">Punkty</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d ocena</item>
         <item quantity="few">%d oceny</item>
@@ -111,7 +112,7 @@
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
     <string name="attendance_exemption">Zwolniony</string>
-    <string name="attendance_excused_lateness">Spóźnienie usprawiedliowione</string>
+    <string name="attendance_excused_lateness">Spóźnienie usprawiedliwione</string>
     <string name="attendance_unexcused_lateness">Spóźnienie nieusprawiedliwione</string>
     <string name="attendance_present">Obecny</string>
     <string name="attendance_number">Numer lekcji</string>
@@ -216,6 +217,12 @@
     <string name="mobile_device_pin">PIN</string>
 
 
+    <!--Teacher-->
+    <string name="teachers_title">Nauczyciele</string>
+    <string name="teacher_no_items">Brak informacji o nauczycielach</string>
+    <string name="teacher_no_subject">Brak przedmiotu</string>
+
+
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>
     <string name="account_logout">Wyloguj</string>
@@ -260,6 +267,9 @@
 
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
+    <string name="widget_timetable_theme_title">Wybierz motyw</string>
+    <string name="widget_timetable_theme_light">Jasny</string>
+    <string name="widget_timetable_theme_dark">Ciemny</string>
 
 
     <!--Preferences-->

@@ -33,6 +33,8 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     @Inject
     lateinit var gradeDetailsAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
 
+    private var gradeDetailsMenu: Menu? = null
+
     companion object {
         fun newInstance() = GradeDetailsFragment()
     }
@@ -69,6 +71,8 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_menu_grade_details, menu)
+        gradeDetailsMenu = menu
+        presenter.updateMarkAsDoneButton()
     }
 
     override fun initView() {
@@ -163,6 +167,10 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
 
     override fun notifyParentRefresh() {
         (parentFragment as? GradeFragment)?.onChildRefresh()
+    }
+
+    override fun enableMarkAsDoneButton(enable: Boolean) {
+        gradeDetailsMenu?.findItem(R.id.gradeDetailsMenuRead)?.isEnabled = enable
     }
 
     override fun onDestroyView() {
