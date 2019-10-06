@@ -1,7 +1,10 @@
-Wersja 0.10
+Wersja 0.11.0
 
-- odświeżyliśmy wygląd aplikacji
-- poprawiliśmy wyświetlanie nauczycieli w planie lekcji
-- naprawiliśmy szczęsliwy numerek
+- ciemny motyw dla widżetów
+- lista nauczycieli
+- statystyka ocen punktowych ucznia na tle klasy i lepsze wyświetlanie punktów na liście ocen
+- ładniejsza nawigacja między datami w planie lekcji i nie tylko
+- naprawiony szczęśliwy numerek
+- naprawione logowanie do dziennika Resman
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
