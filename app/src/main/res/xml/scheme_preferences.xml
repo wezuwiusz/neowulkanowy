@@ -4,7 +4,7 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref_view_header">
         <ListPreference
-            app:defaultValue="0"
+            app:defaultValue="@string/pref_default_startup"
             app:entries="@array/startup_tab_entries"
             app:entryValues="@array/startup_tab_value"
             app:iconSpaceReserved="false"
@@ -12,7 +12,7 @@
             app:title="@string/pref_view_list"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            app:defaultValue="light"
+            app:defaultValue="@string/pref_default_app_theme"
             app:entries="@array/app_theme_entries"
             app:entryValues="@array/app_theme_values"
             app:iconSpaceReserved="false"
@@ -20,17 +20,17 @@
             app:title="@string/pref_view_app_theme"
             app:useSimpleSummaryProvider="true" />
         <SwitchPreferenceCompat
-            app:defaultValue="true"
+            app:defaultValue="@bool/pref_default_attendance_present"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_attendance_present"
             app:title="@string/pref_view_present" />
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="@bool/pref_default_expand_grade"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_expand_grade"
             app:title="@string/pref_view_expand_grade" />
         <ListPreference
-            app:defaultValue="vulcan"
+            app:defaultValue="@string/pref_default_grade_color_scheme"
             app:entries="@array/grade_color_scheme_entries"
             app:entryValues="@array/grade_color_scheme_values"
             app:iconSpaceReserved="false"
@@ -42,12 +42,12 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref_services_header">
         <SwitchPreferenceCompat
-            app:defaultValue="true"
+            app:defaultValue="@bool/pref_default_services_enable"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_services_enable"
             app:title="@string/pref_services_switch" />
         <ListPreference
-            app:defaultValue="60"
+            app:defaultValue="@string/pref_default_services_interval"
             app:dependency="services_enable"
             app:entries="@array/services_interval_entries"
             app:entryValues="@array/services_interval_value"
@@ -56,7 +56,7 @@
             app:title="@string/pref_services_interval"
             app:useSimpleSummaryProvider="true" />
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="@bool/pref_default_services_wifi_only"
             app:dependency="services_enable"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_services_wifi_only"
@@ -66,13 +66,13 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref_notify_header">
         <SwitchPreferenceCompat
-            app:defaultValue="true"
+            app:defaultValue="@bool/pref_default_notifications_enable"
             app:dependency="services_enable"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notifications_enable"
             app:title="@string/pref_notify_switch" />
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="@bool/pref_default_notification_debug"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notification_debug"
             app:title="@string/pref_notify_debug_switch" />
@@ -81,7 +81,7 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref_other_header">
         <ListPreference
-            app:defaultValue="0.0"
+            app:defaultValue="@string/pref_default_grade_modifier_plus"
             app:entries="@array/grade_modifier_entries"
             app:entryValues="@array/grade_modifier_value"
             app:iconSpaceReserved="false"
@@ -89,7 +89,7 @@
             app:title="@string/pref_other_grade_modifier_plus"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            app:defaultValue="0.0"
+            app:defaultValue="@string/pref_default_grade_modifier_minus"
             app:entries="@array/grade_modifier_entries"
             app:entryValues="@array/grade_modifier_value"
             app:iconSpaceReserved="false"
@@ -97,7 +97,7 @@
             app:title="@string/pref_other_grade_modifier_minus"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            app:defaultValue="only_one_semester"
+            app:defaultValue="@string/pref_default_grade_average_mode"
             app:entries="@array/grade_average_mode_entries"
             app:entryValues="@array/grade_average_mode_values"
             app:iconSpaceReserved="false"
@@ -105,12 +105,12 @@
             app:title="@string/pref_view_grade_average_mode"
             app:useSimpleSummaryProvider="true" />
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="@bool/pref_default_grade_average_force_calc"
             app:key="@string/pref_key_grade_average_force_calc"
             app:title="@string/pref_view_grade_average_force_calc"
             app:iconSpaceReserved="false" />
         <SwitchPreferenceCompat
-            app:defaultValue="true"
+            app:defaultValue="@bool/pref_default_fill_message_content"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_fill_message_content"
             app:title="@string/pref_other_fill_message_content" />
