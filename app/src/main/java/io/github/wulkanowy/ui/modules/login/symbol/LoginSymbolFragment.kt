@@ -14,7 +14,10 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.openEmail
+import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_symbol.*
 import javax.inject.Inject
@@ -23,6 +26,9 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
 
     @Inject
     lateinit var presenter: LoginSymbolPresenter
+
+    @Inject
+    lateinit var appInfo: AppInfo
 
     companion object {
         private const val SAVED_LOGIN_DATA = "LOGIN_DATA"
@@ -44,6 +50,8 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
 
     override fun initView() {
         loginSymbolSignIn.setOnClickListener { presenter.attemptLogin(loginSymbolName.text.toString()) }
+        loginSymbolContactDiscord.setOnClickListener { presenter.onDiscordClick() }
+        loginSymbolContactEmail.setOnClickListener { presenter.onEmailClick() }
 
         loginSymbolName.doOnTextChanged { _, _, _, _ -> presenter.onSymbolTextChanged() }
 
@@ -109,8 +117,25 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
         outState.putSerializable(SAVED_LOGIN_DATA, presenter.loginData)
     }
 
+    override fun showContact(show: Boolean) {
+        loginSymbolContact.visibility = if (show) VISIBLE else GONE
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.onDetachView()
+    }
+
+    override fun openDiscordInvite() {
+        context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
+    }
+
+    override fun openEmail() {
+        context?.openEmail(
+            requireContext().getString(R.string.login_email_intent_title),
+            "wulkanowyinc@gmail.com",
+            requireContext().getString(R.string.login_email_subject),
+            requireContext().getString(R.string.login_email_text, appInfo.systemModel, appInfo.systemVersion.toString(), appInfo.versionName)
+        )
     }
 }

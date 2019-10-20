@@ -13,6 +13,9 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.utils.AppInfo
+import io.github.wulkanowy.utils.openEmail
+import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_login_student_select.*
 import java.io.Serializable
@@ -25,6 +28,9 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
 
     @Inject
     lateinit var loginAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+
+    @Inject
+    lateinit var appInfo: AppInfo
 
     companion object {
         const val SAVED_STUDENTS = "STUDENTS"
@@ -44,6 +50,8 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     override fun initView() {
         loginStudentSelectSignIn.setOnClickListener { presenter.onSignIn() }
         loginAdapter.apply { setOnItemClickListener { presenter.onItemSelected(it) } }
+        loginStudentSelectContactDiscord.setOnClickListener { presenter.onDiscordClick() }
+        loginStudentSelectContactEmail.setOnClickListener { presenter.onEmailClick() }
 
         loginStudentSelectRecycler.apply {
             adapter = loginAdapter
@@ -80,8 +88,25 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
         outState.putSerializable(SAVED_STUDENTS, presenter.students as Serializable)
     }
 
+    override fun showContact(show: Boolean) {
+        loginStudentSelectContact.visibility = if (show) VISIBLE else GONE
+    }
+
     override fun onDestroyView() {
         presenter.onDetachView()
         super.onDestroyView()
+    }
+
+    override fun openDiscordInvite() {
+        context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
+    }
+
+    override fun openEmail() {
+        context?.openEmail(
+            requireContext().getString(R.string.login_email_intent_title),
+            "wulkanowyinc@gmail.com",
+            requireContext().getString(R.string.login_email_subject),
+            requireContext().getString(R.string.login_email_text, appInfo.systemModel, appInfo.systemVersion.toString(), appInfo.versionName)
+        )
     }
 }

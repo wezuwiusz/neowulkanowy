@@ -21,6 +21,7 @@ import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
 import javax.inject.Inject
+import io.github.wulkanowy.utils.openEmail
 
 class LoginFormFragment : BaseFragment(), LoginFormView {
 
@@ -62,6 +63,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
         loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
+        loginFormContactDiscord.setOnClickListener { presenter.onDiscordClick() }
+        loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
 
         loginFormPass.setOnEditorActionListener { _, id, _ ->
             if (id == IME_ACTION_DONE || id == IME_NULL) loginFormSignIn.callOnClick() else false
@@ -154,8 +157,25 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         context?.openInternetBrowser("https://wulkanowy.github.io/polityka-prywatnosci.html", ::showMessage)
     }
 
+    override fun showContact(show: Boolean) {
+        loginFormContact.visibility = if (show) VISIBLE else GONE
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.onDetachView()
+    }
+
+    override fun openDiscordInvite() {
+        context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
+    }
+
+    override fun openEmail() {
+        context?.openEmail(
+            requireContext().getString(R.string.login_email_intent_title),
+            "wulkanowyinc@gmail.com",
+            requireContext().getString(R.string.login_email_subject),
+            requireContext().getString(R.string.login_email_text, appInfo.systemModel, appInfo.systemVersion.toString(), appInfo.versionName)
+        )
     }
 }
