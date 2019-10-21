@@ -18,8 +18,9 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.mobiledevice.MobileDeviceFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
+import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
-import io.github.wulkanowy.ui.modules.teacher.TeacherFragment
+import io.github.wulkanowy.ui.modules.schoolandteachers.teacher.TeacherFragment
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_more.*
@@ -55,8 +56,8 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
     override val mobileDevicesRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.mobile_devices_title) to getCompatDrawable(R.drawable.ic_more_mobile_devices) }
 
-    override val teachersRes: Pair<String, Drawable?>?
-        get() = context?.run {  getString(R.string.teachers_title) to getCompatDrawable((R.drawable.ic_more_teacher)) }
+    override val schoolAndTeachersRes: Pair<String, Drawable?>?
+        get() = context?.run { getString(R.string.schoolandteachers_title) to getCompatDrawable((R.drawable.ic_more_schoolandteachers)) }
 
     override val settingsRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.settings_title) to getCompatDrawable(R.drawable.ic_more_settings) }
@@ -110,8 +111,8 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
         (activity as? MainActivity)?.pushView(MobileDeviceFragment.newInstance())
     }
 
-    override fun openTeachersView() {
-        (activity as? MainActivity)?.pushView(TeacherFragment.newInstance())
+    override fun openSchoolAndTeachersView() {
+        (activity as? MainActivity)?.pushView(SchoolAndTeachersFragment.newInstance())
     }
 
     override fun openSettingsView() {

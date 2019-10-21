@@ -26,8 +26,10 @@ import io.github.wulkanowy.ui.modules.mobiledevice.MobileDeviceModule
 import io.github.wulkanowy.ui.modules.mobiledevice.token.MobileDeviceTokenDialog
 import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
+import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
+import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersModule
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
-import io.github.wulkanowy.ui.modules.teacher.TeacherFragment
+import io.github.wulkanowy.ui.modules.schoolandteachers.teacher.TeacherFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
 
@@ -123,6 +125,6 @@ abstract class MainModule {
     abstract fun bindLicenseFragment(): LicenseFragment
 
     @PerFragment
-    @ContributesAndroidInjector
-    abstract fun bindTeacherFragment(): TeacherFragment
+    @ContributesAndroidInjector(modules = [SchoolAndTeachersModule::class])
+    abstract fun bindSchoolAndTeachersFragment(): SchoolAndTeachersFragment
 }

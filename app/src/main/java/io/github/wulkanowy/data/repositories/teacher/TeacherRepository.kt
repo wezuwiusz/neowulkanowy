@@ -16,6 +16,7 @@ class TeacherRepository @Inject constructor(
     private val local: TeacherLocal,
     private val remote: TeacherRemote
 ) {
+
     fun getTeachers(semester: Semester, forceRefresh: Boolean = false): Single<List<Teacher>> {
         return local.getTeachers(semester).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)

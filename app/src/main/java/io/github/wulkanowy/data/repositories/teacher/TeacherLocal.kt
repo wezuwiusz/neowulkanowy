@@ -6,7 +6,8 @@ import io.github.wulkanowy.data.db.entities.Teacher
 import io.reactivex.Maybe
 import javax.inject.Inject
 
-class TeacherLocal @Inject constructor(private val teacherDb: TeacherDao)  {
+class TeacherLocal @Inject constructor(private val teacherDb: TeacherDao) {
+
     fun saveTeachers(teachers: List<Teacher>) {
         teacherDb.insertAll(teachers)
     }

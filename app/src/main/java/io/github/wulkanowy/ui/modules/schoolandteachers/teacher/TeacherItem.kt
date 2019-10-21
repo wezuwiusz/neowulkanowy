@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.teacher
+package io.github.wulkanowy.ui.modules.schoolandteachers.teacher
 
 import android.annotation.SuppressLint
 import android.view.View

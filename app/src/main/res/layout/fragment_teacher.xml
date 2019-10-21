@@ -18,6 +18,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
+            tools:listitem="@layout/item_teacher"
             android:id="@+id/teacherRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -36,7 +37,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/ic_more_teacher"
+            app:srcCompat="@drawable/ic_more_schoolandteachers"
             app:tint="?colorOnBackground"
             tools:ignore="contentDescription" />
 

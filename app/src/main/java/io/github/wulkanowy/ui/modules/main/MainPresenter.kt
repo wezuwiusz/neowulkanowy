@@ -7,6 +7,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.main.MainView.Section.GRADE
 import io.github.wulkanowy.ui.modules.main.MainView.Section.MESSAGE
+import io.github.wulkanowy.ui.modules.main.MainView.Section.SCHOOL
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
@@ -38,7 +39,7 @@ class MainPresenter @Inject constructor(
 
     fun onViewChange(section: MainView.Section?) {
         view?.apply {
-            showActionBarElevation(section != GRADE && section != MESSAGE)
+            showActionBarElevation(section != GRADE && section != MESSAGE && section != SCHOOL)
             currentViewTitle?.let { setViewTitle(it) }
             currentStackSize?.let {
                 if (it > 1) showHomeArrow(true)

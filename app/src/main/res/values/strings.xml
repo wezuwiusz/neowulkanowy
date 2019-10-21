@@ -207,6 +207,19 @@
     <string name="mobile_device_pin">PIN</string>
 
 
+    <!--School and teachers-->
+    <string name="schoolandteachers_title">School and teachers</string>
+
+
+    <!--School-->
+    <string name="school_title">School</string>
+    <string name="school_name">School name</string>
+    <string name="school_address">School address</string>
+    <string name="school_telephone">Telephone</string>
+    <string name="school_headmaster">Name of headmaster</string>
+    <string name="school_pedagogue">Name of pedagogue</string>
+
+
     <!--Teacher-->
     <string name="teachers_title">Teachers</string>
     <string name="teacher_no_items">No info about teachers</string>

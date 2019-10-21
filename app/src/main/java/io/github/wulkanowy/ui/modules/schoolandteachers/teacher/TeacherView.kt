@@ -1,9 +1,10 @@
-package io.github.wulkanowy.ui.modules.teacher
+package io.github.wulkanowy.ui.modules.schoolandteachers.teacher
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.ui.base.BaseView
+import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersChildView
 
-interface TeacherView : BaseView {
+interface TeacherView : BaseView, SchoolAndTeachersChildView {
 
     val isViewEmpty: Boolean
 
