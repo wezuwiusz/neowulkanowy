@@ -29,25 +29,22 @@ import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersModule
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
-import io.github.wulkanowy.ui.modules.schoolandteachers.teacher.TeacherFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
 
 @Suppress("unused")
-@Module
+@Module(includes = [MainModule.Static::class])
 abstract class MainModule {
 
     @Module
-    companion object {
+    object Static {
 
-        @JvmStatic
         @Provides
         fun provideFragNavController(activity: MainActivity): FragNavController {
             return FragNavController(activity.supportFragmentManager, R.id.mainFragmentContainer)
         }
 
         //In activities must be injected as Lazy
-        @JvmStatic
         @Provides
         fun provideElevationOverlayProvider(activity: MainActivity) = ElevationOverlayProvider(activity)
     }

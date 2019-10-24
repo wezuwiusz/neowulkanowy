@@ -29,17 +29,15 @@ import javax.inject.Singleton
 
 @Suppress("unused")
 @AssistedModule
-@Module(includes = [AssistedInject_ServicesModule::class])
+@Module(includes = [AssistedInject_ServicesModule::class, ServicesModule.Static::class])
 abstract class ServicesModule {
 
     @Module
-    companion object {
+    object Static {
 
-        @JvmStatic
         @Provides
         fun provideWorkManager(context: Context) = WorkManager.getInstance(context)
 
-        @JvmStatic
         @Singleton
         @Provides
         fun provideNotificationManager(context: Context) = NotificationManagerCompat.from(context)

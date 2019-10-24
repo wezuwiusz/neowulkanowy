@@ -11,13 +11,12 @@ import io.github.wulkanowy.ui.modules.grade.statistics.GradeStatisticsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
 
 @Suppress("unused")
-@Module
+@Module(includes = [GradeModule.Static::class])
 abstract class GradeModule {
 
     @Module
-    companion object {
+    object Static {
 
-        @JvmStatic
         @PerFragment
         @Provides
         fun provideGradeAdapter(fragment: GradeFragment) = BaseFragmentPagerAdapter(fragment.childFragmentManager)

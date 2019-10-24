@@ -10,13 +10,12 @@ import io.github.wulkanowy.ui.modules.schoolandteachers.school.SchoolFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.teacher.TeacherFragment
 
 @Suppress("unused")
-@Module
+@Module(includes = [SchoolAndTeachersModule.Static::class])
 abstract class SchoolAndTeachersModule {
 
     @Module
-    companion object {
+    object Static {
 
-        @JvmStatic
         @PerFragment
         @Provides
         fun provideSchoolAndTeachersAdapter(fragment: SchoolAndTeachersFragment) = BaseFragmentPagerAdapter(fragment.childFragmentManager)
