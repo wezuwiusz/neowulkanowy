@@ -143,7 +143,7 @@ class MessagePreviewFragment : BaseFragment(), MessagePreviewView, MainView.Titl
     }
 
     override fun notifyParentMessageDeleted(message: Message) {
-        fragmentManager?.fragments?.forEach { if (it is MessageFragment) it.onDeleteMessage(message) }
+        parentFragmentManager.fragments.forEach { if (it is MessageFragment) it.onDeleteMessage(message) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

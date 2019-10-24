@@ -30,10 +30,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"
                 tools:visibility="visible">
 
                 <TextView
@@ -42,9 +42,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginLeft="32dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:gravity="center_horizontal"
                     android:text="@string/login_contact_header"
@@ -55,28 +55,29 @@
                     android:id="@+id/loginFormContactButtons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp">
+                    android:layout_marginRight="16dp"
+                    android:orientation="horizontal">
+
                     <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:id="@+id/loginFormContactEmail"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
                         android:text="@string/login_contact_email"
                         app:icon="@drawable/ic_more_messages" />
 
                     <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:id="@+id/loginFormContactDiscord"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
                         android:text="@string/login_contact_discord"
                         app:icon="@drawable/ic_about_discord" />
                 </LinearLayout>
@@ -95,9 +96,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginLeft="32dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginRight="32dp"
-                android:layout_marginTop="48dp"
                 android:gravity="center_horizontal"
                 android:text="@string/login_header_default"
                 android:textSize="16sp"
@@ -191,7 +192,8 @@
                     android:id="@+id/loginFormHost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:ignore="LabelFor" />
+                    android:editable="false"
+                    tools:ignore="Deprecated,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton

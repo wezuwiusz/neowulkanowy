@@ -9,7 +9,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.IME_NULL
-import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
@@ -17,11 +16,11 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.openEmail
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
 import javax.inject.Inject
-import io.github.wulkanowy.utils.openEmail
 
 class LoginFormFragment : BaseFragment(), LoginFormView {
 
@@ -71,12 +70,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         }
 
         with(loginFormHost) {
-            //Bug with filter in ExposedDropdownMenu on restoring state
-            isSaveEnabled = false
-
             setText(hostKeys.getOrElse(0) { "" })
-            setAdapter(ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
-            keyListener = null
+            setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
         }
     }
 
