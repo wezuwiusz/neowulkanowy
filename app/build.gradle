@@ -130,7 +130,7 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.1.0-rc01"
     implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "androidx.appcompat:appcompat-resources:1.1.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.0-beta02"
+    implementation "androidx.fragment:fragment-ktx:1.2.0-rc01"
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.multidex:multidex:2.0.1"
 
