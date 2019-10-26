@@ -19,4 +19,8 @@ interface SchoolView : BaseView, SchoolAndTeachersChildView {
     fun showContent(show: Boolean)
 
     fun hideRefresh()
+
+    fun openMapsLocation(location: String)
+
+    fun dialPhone(phone: String)
 }

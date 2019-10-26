@@ -19,6 +19,10 @@ class SchoolPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<SchoolView>(errorHandler, studentRepository, schedulers) {
 
+    private var address: String? = null
+
+    private var contact: String? = null
+
     override fun onAttachView(view: SchoolView) {
         super.onAttachView(view)
         view.initView()
@@ -32,6 +36,14 @@ class SchoolPresenter @Inject constructor(
 
     fun onParentViewLoadData(forceRefresh: Boolean) {
         loadData(forceRefresh)
+    }
+
+    fun onAddressSelected() {
+        address?.let{ view?.openMapsLocation(it) }
+    }
+
+    fun onTelephoneSelected() {
+        contact?.let { view?.dialPhone(it) }
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
@@ -51,6 +63,8 @@ class SchoolPresenter @Inject constructor(
             }.subscribe({
                 Timber.i("Loading teachers result: Success")
                 view?.run {
+                    address = it.address.ifBlank { null }
+                    contact = it.contact.ifBlank { null }
                     updateData(it)
                     showContent(true)
                     showEmpty(false)

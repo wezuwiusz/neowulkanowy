@@ -10,6 +10,8 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersChildView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
+import io.github.wulkanowy.utils.dialPhone
+import io.github.wulkanowy.utils.openMapLocation
 import kotlinx.android.synthetic.main.fragment_school.*
 import javax.inject.Inject
 
@@ -35,12 +37,17 @@ class SchoolFragment : BaseFragment(), SchoolView, MainView.TitledView, SchoolAn
 
     override fun initView() {
         schoolSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+
+        schoolAddressButton.setOnClickListener { presenter.onAddressSelected() }
+        schoolTelephoneButton.setOnClickListener { presenter.onTelephoneSelected() }
     }
 
     override fun updateData(data: School) {
         schoolName.text = data.name
         schoolAddress.text = data.address.ifBlank { "-" }
+        schoolAddressButton.visibility = if (data.address.isNotBlank()) View.VISIBLE else View.GONE
         schoolTelephone.text = data.contact.ifBlank { "-" }
+        schoolTelephoneButton.visibility = if (data.contact.isNotBlank()) View.VISIBLE else View.GONE
         schoolHeadmaster.text = data.headmaster
         schoolPedagogue.text = data.pedagogue
     }
@@ -76,5 +83,13 @@ class SchoolFragment : BaseFragment(), SchoolView, MainView.TitledView, SchoolAn
     override fun onDestroyView() {
         presenter.onDetachView()
         super.onDestroyView()
+    }
+
+    override fun openMapsLocation(location: String) {
+        context?.openMapLocation(location)
+    }
+
+    override fun dialPhone(phone: String) {
+        context?.dialPhone(phone)
     }
 }

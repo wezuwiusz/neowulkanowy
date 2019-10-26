@@ -232,6 +232,8 @@
     <string name="school_telephone">Telefon</string>
     <string name="school_headmaster">Imię i nazwisko dyrektora</string>
     <string name="school_pedagogue">Imię i nazwisko pedagoga</string>
+    <string name="school_address_button">Pokaż na mpaie</string>
+    <string name="school_telephone_button">Zadzwoń</string>
 
 
     <!--Teacher-->

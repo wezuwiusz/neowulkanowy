@@ -218,6 +218,8 @@
     <string name="school_telephone">Telephone</string>
     <string name="school_headmaster">Name of headmaster</string>
     <string name="school_pedagogue">Name of pedagogue</string>
+    <string name="school_address_button">Show on map</string>
+    <string name="school_telephone_button">Call</string>
 
 
     <!--Teacher-->

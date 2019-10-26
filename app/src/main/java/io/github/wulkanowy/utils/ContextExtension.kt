@@ -9,7 +9,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import io.github.wulkanowy.R
 
 @ColorInt
 fun Context.getThemeAttrColor(@AttrRes colorAttr: Int): Int {
@@ -39,6 +38,20 @@ fun Context.openEmail(chooserTitle: String, email: String, subject: String?, bod
     if (subject != null) emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
     if (body != null) emailIntent.putExtra(Intent.EXTRA_TEXT, body)
     startActivity(Intent.createChooser(emailIntent, chooserTitle))
+}
+
+fun Context.openMapLocation(location: String) {
+    val intentUri = Uri.parse("geo:0,0?q=${Uri.encode(location)}")
+    val intent = Intent(Intent.ACTION_VIEW, intentUri)
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}
+
+fun Context.dialPhone(phone: String) {
+    val intentUri = Uri.parse("tel:$phone")
+    val intent = Intent(Intent.ACTION_DIAL, intentUri)
+    startActivity(intent)
 }
 
 fun Context.dpToPx(dp: Float) = dp * resources.displayMetrics.densityDpi / DENSITY_DEFAULT
