@@ -54,8 +54,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun initView() {
-        hostKeys = resources.getStringArray(R.array.endpoints_keys)
-        hostValues = resources.getStringArray(R.array.endpoints_values)
+        hostKeys = resources.getStringArray(R.array.hosts_keys)
+        hostValues = resources.getStringArray(R.array.hosts_values)
 
         loginFormName.doOnTextChanged { _, _, _, _ -> presenter.onNameTextChanged() }
         loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
