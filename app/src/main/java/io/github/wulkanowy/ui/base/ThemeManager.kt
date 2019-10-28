@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.base
 import android.content.pm.PackageManager.GET_ACTIVITIES
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import io.github.wulkanowy.R
@@ -22,8 +23,12 @@ class ThemeManager @Inject constructor(private val preferencesRepository: Prefer
 
     fun applyDefaultTheme() {
         AppCompatDelegate.setDefaultNightMode(
-            if (preferencesRepository.appTheme == "light") MODE_NIGHT_NO
-            else MODE_NIGHT_YES
+            when (val theme = preferencesRepository.appTheme) {
+                "light" -> MODE_NIGHT_NO
+                "dark", "black" -> MODE_NIGHT_YES
+                "system" -> MODE_NIGHT_FOLLOW_SYSTEM
+                else -> throw IllegalArgumentException("Wrong theme: $theme")
+            }
         )
     }
 

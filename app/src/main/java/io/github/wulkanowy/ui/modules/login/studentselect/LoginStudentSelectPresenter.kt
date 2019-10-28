@@ -27,6 +27,7 @@ class LoginStudentSelectPresenter @Inject constructor(
         super.onAttachView(view)
         view.run {
             initView()
+            showContact(false)
             enableSignIn(false)
             loginErrorHandler.onStudentDuplicate = {
                 showMessage(it)
@@ -88,7 +89,16 @@ class LoginStudentSelectPresenter @Inject constructor(
                 view?.apply {
                     showProgress(false)
                     showContent(true)
+                    showContact(true)
                 }
             }))
+    }
+
+    fun onDiscordClick() {
+        view?.openDiscordInvite()
+    }
+
+    fun onEmailClick() {
+        view?.openEmail()
     }
 }

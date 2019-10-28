@@ -36,6 +36,10 @@
     <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
+    <string name="login_contact_header">Problemy z logowaniem? Napisz do nas!</string>
+    <string name="login_contact_email">Email</string>
+    <string name="login_contact_discord">Discord</string>
+    <string name="login_email_intent_title">Wyślij email</string>
 
 
     <!--Main-->
@@ -215,6 +219,21 @@
     <string name="mobile_device_token">Token</string>
     <string name="mobile_device_symbol">Symbol</string>
     <string name="mobile_device_pin">PIN</string>
+
+
+    <!--School and teachers-->
+    <string name="schoolandteachers_title">Szkoła i nauczyciele</string>
+
+
+    <!--School-->
+    <string name="school_title">Szkoła</string>
+    <string name="school_name">Nazwa szkoły</string>
+    <string name="school_address">Adres szkoły</string>
+    <string name="school_telephone">Telefon</string>
+    <string name="school_headmaster">Imię i nazwisko dyrektora</string>
+    <string name="school_pedagogue">Imię i nazwisko pedagoga</string>
+    <string name="school_address_button">Pokaż na mpaie</string>
+    <string name="school_telephone_button">Zadzwoń</string>
 
 
     <!--Teacher-->

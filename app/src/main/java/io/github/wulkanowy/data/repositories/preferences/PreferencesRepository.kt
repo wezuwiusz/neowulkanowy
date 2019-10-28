@@ -12,52 +12,60 @@ class PreferencesRepository @Inject constructor(
     val context: Context
 ) {
     val startMenuIndex: Int
-        get() = sharedPref.getString(context.getString(R.string.pref_key_start_menu), "0")?.toIntOrNull() ?: 0
+        get() = getString(R.string.pref_key_start_menu, R.string.pref_default_startup).toInt()
 
     val isShowPresent: Boolean
-        get() = sharedPref.getBoolean(context.getString(R.string.pref_key_attendance_present), true)
+        get() = getBoolean(R.string.pref_key_attendance_present, R.bool.pref_default_attendance_present)
 
     val gradeAverageMode: String
-        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_average_mode), "only_one_semester") ?: "only_one_semester"
+        get() = getString(R.string.pref_key_grade_average_mode, R.string.pref_default_grade_average_mode)
 
     val gradeAverageForceCalc: Boolean
-        get() = sharedPref.getBoolean(context.getString(R.string.pref_key_grade_average_force_calc), false)
+        get() = getBoolean(R.string.pref_key_grade_average_force_calc, R.bool.pref_default_grade_average_force_calc)
 
     val isGradeExpandable: Boolean
-        get() = !sharedPref.getBoolean(context.getString(R.string.pref_key_expand_grade), false)
+        get() = !getBoolean(R.string.pref_key_expand_grade, R.bool.pref_default_expand_grade)
 
-    val appThemeKey: String = context.getString(R.string.pref_key_app_theme)
+    val appThemeKey = context.getString(R.string.pref_key_app_theme)
     val appTheme: String
-        get() = sharedPref.getString(appThemeKey, "light") ?: "light"
+        get() = getString(appThemeKey, R.string.pref_default_app_theme)
 
     val gradeColorTheme: String
-        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_color_scheme), "vulcan") ?: "vulcan"
+        get() = getString(R.string.pref_key_grade_color_scheme, R.string.pref_default_grade_color_scheme)
 
-    val serviceEnableKey: String = context.getString(R.string.pref_key_services_enable)
+    val serviceEnableKey = context.getString(R.string.pref_key_services_enable)
     val isServiceEnabled: Boolean
-        get() = sharedPref.getBoolean(serviceEnableKey, true)
+        get() = getBoolean(serviceEnableKey, R.bool.pref_default_services_enable)
 
-    val servicesIntervalKey: String = context.getString(R.string.pref_key_services_interval)
+    val servicesIntervalKey = context.getString(R.string.pref_key_services_interval)
     val servicesInterval: Long
-        get() = sharedPref.getString(servicesIntervalKey, "60")?.toLongOrNull() ?: 60
+        get() = getString(servicesIntervalKey, R.string.pref_default_services_interval).toLong()
 
-    val servicesOnlyWifiKey: String = context.getString(R.string.pref_key_services_wifi_only)
+    val servicesOnlyWifiKey = context.getString(R.string.pref_key_services_wifi_only)
     val isServicesOnlyWifi: Boolean
-        get() = sharedPref.getBoolean(servicesOnlyWifiKey, false)
+        get() = getBoolean(servicesOnlyWifiKey, R.bool.pref_default_services_wifi_only)
 
     val isNotificationsEnable: Boolean
-        get() = sharedPref.getBoolean(context.getString(R.string.pref_key_notifications_enable), true)
+        get() = getBoolean(R.string.pref_key_notifications_enable, R.bool.pref_default_notifications_enable)
 
-    val isDebugNotificationEnableKey: String = context.getString(R.string.pref_key_notification_debug)
+    val isDebugNotificationEnableKey = context.getString(R.string.pref_key_notification_debug)
     val isDebugNotificationEnable: Boolean
-        get() = sharedPref.getBoolean(isDebugNotificationEnableKey, false)
+        get() = getBoolean(isDebugNotificationEnableKey, R.bool.pref_default_notification_debug)
 
     val gradePlusModifier: Double
-        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_plus), "0.0")?.toDouble() ?: 0.0
+        get() = getString(R.string.pref_key_grade_modifier_plus, R.string.pref_default_grade_modifier_plus).toDouble()
 
     val gradeMinusModifier: Double
-        get() = sharedPref.getString(context.getString(R.string.pref_key_grade_modifier_minus), "0.0")?.toDouble() ?: 0.0
+        get() = getString(R.string.pref_key_grade_modifier_minus, R.string.pref_default_grade_modifier_minus).toDouble()
 
     val fillMessageContent: Boolean
-        get() = sharedPref.getBoolean(context.getString(R.string.pref_key_fill_message_content), true)
+        get() = getBoolean(R.string.pref_key_fill_message_content, R.bool.pref_default_fill_message_content)
+
+    private fun getString(id: Int, default: Int) = getString(context.getString(id), default)
+
+    private fun getString(id: String, default: Int) = sharedPref.getString(id, context.getString(default)) ?: context.getString(default)
+
+    private fun getBoolean(id: Int, default: Int) = getBoolean(context.getString(id), default)
+
+    private fun getBoolean(id: String, default: Int) = sharedPref.getBoolean(id, context.resources.getBoolean(default))
 }

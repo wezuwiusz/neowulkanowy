@@ -36,6 +36,12 @@
     <string name="login_symbol_helper">The symbol can be found on the register page in Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Select students to log in to the application</string>
     <string name="login_privacy_policy">Privacy policy</string>
+    <string name="login_contact_header">Trouble signing in? Contact us!</string>
+    <string name="login_contact_email">Email</string>
+    <string name="login_contact_discord">Discord</string>
+    <string name="login_email_intent_title">Send email</string>
+    <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
+    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\n\nOpis problemu:</string>
 
 
     <!--Main-->
@@ -199,6 +205,21 @@
     <string name="mobile_device_token">Token</string>
     <string name="mobile_device_symbol">Symbol</string>
     <string name="mobile_device_pin">PIN</string>
+
+
+    <!--School and teachers-->
+    <string name="schoolandteachers_title">School and teachers</string>
+
+
+    <!--School-->
+    <string name="school_title">School</string>
+    <string name="school_name">School name</string>
+    <string name="school_address">School address</string>
+    <string name="school_telephone">Telephone</string>
+    <string name="school_headmaster">Name of headmaster</string>
+    <string name="school_pedagogue">Name of pedagogue</string>
+    <string name="school_address_button">Show on map</string>
+    <string name="school_telephone_button">Call</string>
 
 
     <!--Teacher-->

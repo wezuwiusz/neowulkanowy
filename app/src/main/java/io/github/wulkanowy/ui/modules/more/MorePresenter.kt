@@ -31,7 +31,7 @@ class MorePresenter @Inject constructor(
                 noteRes?.first -> openNoteView()
                 luckyNumberRes?.first -> openLuckyNumberView()
                 mobileDevicesRes?.first -> openMobileDevicesView()
-                teachersRes?.first -> openTeachersView()
+                schoolAndTeachersRes?.first -> openSchoolAndTeachersView()
                 settingsRes?.first -> openSettingsView()
                 aboutRes?.first -> openAboutView()
             }
@@ -52,7 +52,7 @@ class MorePresenter @Inject constructor(
                 noteRes?.let { MoreItem(it.first, it.second) },
                 luckyNumberRes?.let { MoreItem(it.first, it.second) },
                 mobileDevicesRes?.let { MoreItem(it.first, it.second) },
-                teachersRes?.let { MoreItem(it.first, it.second) },
+                schoolAndTeachersRes?.let { MoreItem(it.first, it.second) },
                 settingsRes?.let { MoreItem(it.first, it.second) },
                 aboutRes?.let { MoreItem(it.first, it.second) })
             )

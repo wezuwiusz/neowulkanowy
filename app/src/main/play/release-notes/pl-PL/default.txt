@@ -1,10 +1,9 @@
-Wersja 0.11.0
+Wersja 0.12.0
 
-- ciemny motyw dla widżetów
-- lista nauczycieli
-- statystyka ocen punktowych ucznia na tle klasy i lepsze wyświetlanie punktów na liście ocen
-- ładniejsza nawigacja między datami w planie lekcji i nie tylko
-- naprawiony szczęśliwy numerek
-- naprawione logowanie do dziennika Resman
+- wsparcie dla dziennika Lubelskiego Portalu Oświatowego
+- naprawa problemów z wyświetlaniem ocen punktowych
+- automatyczne przełączanie motywu na androidzie 10
+- wyświetlanie pomocy przy problemach z logowaniem
+- wyświetlanie informacji o szkole
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

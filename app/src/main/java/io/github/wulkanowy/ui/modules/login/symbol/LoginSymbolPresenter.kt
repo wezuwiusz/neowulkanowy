@@ -23,7 +23,10 @@ class LoginSymbolPresenter @Inject constructor(
     @Suppress("UNCHECKED_CAST")
     fun onAttachView(view: LoginSymbolView, savedLoginData: Serializable?) {
         super.onAttachView(view)
-        view.initView()
+        view.run {
+            initView()
+            showContact(false)
+        }
         if (savedLoginData is Triple<*, *, *>) {
             loginData = savedLoginData as Triple<String, String, String>
         }
@@ -64,6 +67,7 @@ class LoginSymbolPresenter @Inject constructor(
                         if (it.isEmpty()) {
                             Timber.i("Login with symbol result: Empty student list")
                             setErrorSymbolIncorrect()
+                            view?.showContact(true)
                         } else {
                             Timber.i("Login with symbol result: Success")
                             notifyParentAccountLogged(it)
@@ -73,6 +77,7 @@ class LoginSymbolPresenter @Inject constructor(
                     Timber.i("Login with symbol result: An exception occurred")
                     analytics.logEvent("registration_symbol", "success" to false, "students" to -1, "endpoint" to loginData?.third, "symbol" to symbol, "error" to it.message.ifNullOrBlank { "No message" })
                     loginErrorHandler.dispatch(it)
+                    view?.showContact(true)
                 }))
     }
 
@@ -82,5 +87,13 @@ class LoginSymbolPresenter @Inject constructor(
             clearAndFocusSymbol()
             showSoftKeyboard()
         }
+    }
+
+    fun onDiscordClick() {
+        view?.openDiscordInvite()
+    }
+
+    fun onEmailClick() {
+        view?.openEmail()
     }
 }

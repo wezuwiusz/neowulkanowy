@@ -9,7 +9,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.IME_NULL
-import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
@@ -17,6 +16,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.openEmail
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
@@ -54,26 +54,24 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun initView() {
-        hostKeys = resources.getStringArray(R.array.endpoints_keys)
-        hostValues = resources.getStringArray(R.array.endpoints_values)
+        hostKeys = resources.getStringArray(R.array.hosts_keys)
+        hostValues = resources.getStringArray(R.array.hosts_values)
 
         loginFormName.doOnTextChanged { _, _, _, _ -> presenter.onNameTextChanged() }
         loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
         loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
         loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
+        loginFormContactDiscord.setOnClickListener { presenter.onDiscordClick() }
+        loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
 
         loginFormPass.setOnEditorActionListener { _, id, _ ->
             if (id == IME_ACTION_DONE || id == IME_NULL) loginFormSignIn.callOnClick() else false
         }
 
         with(loginFormHost) {
-            //Bug with filter in ExposedDropdownMenu on restoring state
-            isSaveEnabled = false
-
             setText(hostKeys.getOrElse(0) { "" })
-            setAdapter(ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
-            keyListener = null
+            setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
         }
     }
 
@@ -154,8 +152,25 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         context?.openInternetBrowser("https://wulkanowy.github.io/polityka-prywatnosci.html", ::showMessage)
     }
 
+    override fun showContact(show: Boolean) {
+        loginFormContact.visibility = if (show) VISIBLE else GONE
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.onDetachView()
+    }
+
+    override fun openDiscordInvite() {
+        context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
+    }
+
+    override fun openEmail() {
+        context?.openEmail(
+            requireContext().getString(R.string.login_email_intent_title),
+            "wulkanowyinc@gmail.com",
+            requireContext().getString(R.string.login_email_subject),
+            requireContext().getString(R.string.login_email_text, appInfo.systemModel, appInfo.systemVersion.toString(), appInfo.versionName)
+        )
     }
 }
