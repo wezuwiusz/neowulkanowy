@@ -33,6 +33,10 @@ class PreferencesRepository @Inject constructor(
     val gradeColorTheme: String
         get() = getString(R.string.pref_key_grade_color_scheme, R.string.pref_default_grade_color_scheme)
 
+    val appLanguageKey = context.getString(R.string.pref_key_app_language)
+    val appLanguage
+        get() = getString(appLanguageKey, R.string.pref_default_app_language)
+
     val serviceEnableKey = context.getString(R.string.pref_key_services_enable)
     val isServiceEnabled: Boolean
         get() = getBoolean(serviceEnableKey, R.bool.pref_default_services_enable)

@@ -10,8 +10,8 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersChildView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
-import io.github.wulkanowy.utils.dialPhone
-import io.github.wulkanowy.utils.openMapLocation
+import io.github.wulkanowy.utils.openDialer
+import io.github.wulkanowy.utils.openNavigation
 import kotlinx.android.synthetic.main.fragment_school.*
 import javax.inject.Inject
 
@@ -86,10 +86,10 @@ class SchoolFragment : BaseFragment(), SchoolView, MainView.TitledView, SchoolAn
     }
 
     override fun openMapsLocation(location: String) {
-        context?.openMapLocation(location)
+        context?.openNavigation(location)
     }
 
     override fun dialPhone(phone: String) {
-        context?.dialPhone(phone)
+        context?.openDialer(phone)
     }
 }

@@ -7,6 +7,7 @@
     <string name="pref_key_expand_grade">expand_grade</string>
     <string name="pref_key_grade_average_mode">grade_average_mode</string>
     <string name="pref_key_grade_average_force_calc">grade_average_always_calc</string>
+    <string name="pref_key_app_language">app_language</string>
     <string name="pref_key_services_enable">services_enable</string>
     <string name="pref_key_services_interval">services_interval</string>
     <string name="pref_key_services_wifi_only">services_disable_wifi_only</string>

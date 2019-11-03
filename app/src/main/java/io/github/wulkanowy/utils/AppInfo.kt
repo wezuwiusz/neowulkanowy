@@ -1,5 +1,6 @@
 package io.github.wulkanowy.utils
 
+import android.content.res.Resources
 import android.os.Build.MANUFACTURER
 import android.os.Build.MODEL
 import android.os.Build.VERSION.SDK_INT
@@ -25,4 +26,8 @@ open class AppInfo {
     open val systemManufacturer: String get() = MANUFACTURER
 
     open val systemModel: String get() = MODEL
+
+    @Suppress("DEPRECATION")
+    open val systemLanguage: String
+        get() = Resources.getSystem().configuration.locale.language
 }

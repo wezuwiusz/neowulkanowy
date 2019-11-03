@@ -7,6 +7,7 @@
     <bool name="pref_default_expand_grade">false</bool>
     <string name="pref_default_app_theme">light</string>
     <string name="pref_default_grade_color_scheme">vulcan</string>
+    <string name="pref_default_app_language">system</string>
     <bool name="pref_default_services_enable">true</bool>
     <string name="pref_default_services_interval">60</string>
     <bool name="pref_default_services_wifi_only">false</bool>

@@ -24,6 +24,17 @@
         <item>black</item>
     </string-array>
 
+    <string-array name="app_language_entries">
+        <item>System language</item>
+        <item>Polski</item>
+        <item>English</item>
+    </string-array>
+    <string-array name="app_language_values" translatable="false">
+        <item>system</item>
+        <item>pl</item>
+        <item>en</item>
+    </string-array>
+
     <string-array name="services_interval_entries">
         <item>15 minutes</item>
         <item>30 minutes</item>

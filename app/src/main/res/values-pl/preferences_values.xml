@@ -16,6 +16,12 @@
         <item>Czarny (AMOLED)</item>
     </string-array>
 
+    <string-array name="app_language_entries">
+        <item>Język systemu</item>
+        <item>Polski</item>
+        <item>English</item>
+    </string-array>
+
     <string-array name="grade_modifier_entries">
         <item>Domyślna</item>
         <item>0,25</item>

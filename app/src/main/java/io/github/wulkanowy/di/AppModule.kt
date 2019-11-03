@@ -2,6 +2,7 @@ package io.github.wulkanowy.di
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
+import com.yariksoffice.lingver.Lingver
 import dagger.Module
 import dagger.Provides
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -32,4 +33,8 @@ internal class AppModule {
     @Singleton
     @Provides
     fun provideAppInfo() = AppInfo()
+
+    @Singleton
+    @Provides
+    fun provideLingver() = Lingver.getInstance()
 }

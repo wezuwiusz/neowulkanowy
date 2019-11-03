@@ -16,7 +16,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
-import io.github.wulkanowy.utils.openEmail
+import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_symbol.*
@@ -131,7 +131,7 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
     }
 
     override fun openEmail() {
-        context?.openEmail(
+        context?.openEmailClient(
             requireContext().getString(R.string.login_email_intent_title),
             "wulkanowyinc@gmail.com",
             requireContext().getString(R.string.login_email_subject),
