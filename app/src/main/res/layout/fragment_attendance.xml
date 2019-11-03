@@ -60,8 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         tools:ignore="UnusedAttribute">
 
         <ImageButton
@@ -70,19 +70,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/all_prev"
             android:paddingLeft="12dp"
             android:paddingTop="8dp"
             android:paddingRight="12dp"
             android:paddingBottom="8dp"
             android:scaleType="fitStart"
             android:tint="?colorPrimary"
-            app:srcCompat="@drawable/ic_chevron_left"
-            android:contentDescription="@string/all_prev"/>
+            app:srcCompat="@drawable/ic_chevron_left" />
 
         <TextView
             android:id="@+id/attendanceNavDate"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="?selectableItemBackgroundBorderless"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="@string/app_name"
@@ -94,13 +95,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/all_next"
             android:paddingLeft="12dp"
             android:paddingTop="8dp"
             android:paddingRight="12dp"
             android:paddingBottom="8dp"
             android:scaleType="fitEnd"
             android:tint="?colorPrimary"
-            app:srcCompat="@drawable/ic_chevron_right"
-            android:contentDescription="@string/all_next" />
+            app:srcCompat="@drawable/ic_chevron_right" />
     </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 </FrameLayout>

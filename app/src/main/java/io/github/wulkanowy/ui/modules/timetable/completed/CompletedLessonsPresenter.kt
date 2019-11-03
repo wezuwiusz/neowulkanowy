@@ -57,6 +57,15 @@ class CompletedLessonsPresenter @Inject constructor(
         reloadView()
     }
 
+    fun onPickDate() {
+        view?.showDatePickerDialog(currentDate)
+    }
+
+    fun onDateSet(year: Int, month: Int, day: Int) {
+        loadData(LocalDate.of(year, month, day))
+        reloadView()
+    }
+
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the completed lessons")
         loadData(currentDate, true)

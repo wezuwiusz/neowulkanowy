@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
@@ -17,9 +18,11 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_attendance.*
+import org.threeten.bp.LocalDate
 import javax.inject.Inject
 
 class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildView,
@@ -71,6 +74,7 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
 
         attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
         attendancePreviousButton.setOnClickListener { presenter.onPreviousDay() }
+        attendanceNavDate.setOnClickListener { presenter.onPickDate() }
         attendanceNextButton.setOnClickListener { presenter.onNextDay() }
 
         attendanceNavContainer.setElevationCompat(requireContext().dpToPx(8f))
@@ -139,6 +143,21 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
 
     override fun showAttendanceDialog(lesson: Attendance) {
         (activity as? MainActivity)?.showDialogFragment(AttendanceDialog.newInstance(lesson))
+    }
+
+    override fun showDatePickerDialog(currentDate: LocalDate) {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            presenter.onDateSet(year, month + 1, dayOfMonth)
+        }
+        val datePickerDialog = DatePickerDialog.newInstance(dateSetListener,
+            currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth)
+
+        with(datePickerDialog) {
+            setDateRangeLimiter(SchooldaysRangeLimiter())
+            version = DatePickerDialog.Version.VERSION_2
+            scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
+            show(this@AttendanceFragment.parentFragmentManager, null)
+        }
     }
 
     override fun openSummaryView() {

@@ -17,6 +17,7 @@ import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
+import org.threeten.bp.LocalDate.of
 import org.threeten.bp.LocalDate.ofEpochDay
 import timber.log.Timber
 import java.util.concurrent.TimeUnit.MILLISECONDS
@@ -52,6 +53,15 @@ class TimetablePresenter @Inject constructor(
 
     fun onNextDay() {
         loadData(currentDate.nextSchoolDay)
+        reloadView()
+    }
+
+    fun onPickDate() {
+        view?.showDatePickerDialog(currentDate)
+    }
+
+    fun onDateSet(year: Int, month: Int, day: Int) {
+        loadData(of(year, month, day))
         reloadView()
     }
 

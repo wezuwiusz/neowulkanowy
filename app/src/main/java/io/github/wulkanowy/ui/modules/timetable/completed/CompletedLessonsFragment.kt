@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
@@ -12,10 +13,12 @@ import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable_completed.*
+import org.threeten.bp.LocalDate
 import javax.inject.Inject
 
 class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.TitledView {
@@ -56,6 +59,7 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
 
         completedLessonsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
         completedLessonsPreviousButton.setOnClickListener { presenter.onPreviousDay() }
+        completedLessonsNavDate.setOnClickListener { presenter.onPickDate() }
         completedLessonsNextButton.setOnClickListener { presenter.onNextDay() }
 
         completedLessonsNavContainer.setElevationCompat(requireContext().dpToPx(8f))
@@ -108,6 +112,21 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
 
     override fun showCompletedLessonDialog(completedLesson: CompletedLesson) {
         (activity as? MainActivity)?.showDialogFragment(CompletedLessonDialog.newInstance(completedLesson))
+    }
+
+    override fun showDatePickerDialog(currentDate: LocalDate) {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            presenter.onDateSet(year, month + 1, dayOfMonth)
+        }
+        val datePickerDialog = DatePickerDialog.newInstance(dateSetListener,
+            currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth)
+
+        with(datePickerDialog) {
+            setDateRangeLimiter(SchooldaysRangeLimiter())
+            version = DatePickerDialog.Version.VERSION_2
+            scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
+            show(this@CompletedLessonsFragment.parentFragmentManager, null)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
