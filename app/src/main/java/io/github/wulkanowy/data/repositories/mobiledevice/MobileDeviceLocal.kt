@@ -3,7 +3,6 @@ package io.github.wulkanowy.data.repositories.mobiledevice
 import io.github.wulkanowy.data.db.dao.MobileDeviceDao
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.db.entities.Student
 import io.reactivex.Maybe
 import javax.inject.Inject
 import javax.inject.Singleton

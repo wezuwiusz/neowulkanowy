@@ -11,7 +11,6 @@ import io.reactivex.Single
 import org.threeten.bp.LocalDateTime.now
 import javax.inject.Inject
 import javax.inject.Singleton
-import io.github.wulkanowy.api.messages.Message as ApiMessage
 import io.github.wulkanowy.api.messages.Recipient as ApiRecipient
 
 @Singleton

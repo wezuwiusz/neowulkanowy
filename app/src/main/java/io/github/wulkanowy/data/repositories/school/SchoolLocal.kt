@@ -9,11 +9,11 @@ import javax.inject.Inject
 class SchoolLocal @Inject constructor(private val schoolDb: SchoolDao) {
 
     fun saveSchool(school: School) {
-        schoolDb.insert(school)
+        schoolDb.insertAll(listOf(school))
     }
 
     fun deleteSchool(school: School) {
-        schoolDb.delete(school)
+        schoolDb.deleteAll(listOf(school))
     }
 
     fun getSchool(semester: Semester): Maybe<School> {
