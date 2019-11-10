@@ -16,7 +16,7 @@
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="?colorPrimary"
-        app:tabTextColor="@color/mtrl_on_surface_emphasis_medium"
+        app:tabTextColor="@color/material_on_surface_emphasis_medium"
         tools:ignore="UnusedAttribute"
         tools:visibility="visible" />
 
@@ -35,8 +35,8 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:tint="?colorOnSecondary"
         android:text="@string/send_message_title"
+        android:tint="?colorOnSecondary"
         app:icon="@drawable/ic_menu_message_write" />
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar

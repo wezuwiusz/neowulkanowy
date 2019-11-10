@@ -6,6 +6,6 @@
         android:icon="@drawable/ic_all_account"
         android:orderInCategory="2"
         android:title="@string/main_account_picker"
-        app:iconTint="@color/mtrl_on_surface_emphasis_medium"
+        app:iconTint="@color/material_on_surface_emphasis_medium"
         app:showAsAction="always" />
 </menu>

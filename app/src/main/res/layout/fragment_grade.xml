@@ -13,7 +13,7 @@
         android:visibility="invisible"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="?colorPrimary"
-        app:tabTextColor="@color/mtrl_on_surface_emphasis_medium"
+        app:tabTextColor="@color/material_on_surface_emphasis_medium"
         tools:ignore="UnusedAttribute"
         tools:visibility="visible" />
 
