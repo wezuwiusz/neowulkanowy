@@ -52,6 +52,11 @@ class SchoolFragment : BaseFragment(), SchoolView, MainView.TitledView, SchoolAn
         schoolPedagogue.text = data.pedagogue
     }
 
+
+    override fun isViewEmpty(): Boolean {
+        return schoolName.text.isBlank()
+    }
+
     override fun showEmpty(show: Boolean) {
         schoolEmpty.visibility = if (show) View.VISIBLE else View.GONE
     }

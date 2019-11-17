@@ -229,7 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="@string/teacher_no_items"
+            android:text="@string/school_no_info"
             android:textSize="20sp" />
     </LinearLayout>
 </FrameLayout>

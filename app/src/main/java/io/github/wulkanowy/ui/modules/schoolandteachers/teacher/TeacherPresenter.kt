@@ -60,6 +60,7 @@ class TeacherPresenter @Inject constructor(
                 analytics.logEvent("load_teachers", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
                 Timber.i("Loading teachers result: An exception occurred")
+                view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)
             })
     }

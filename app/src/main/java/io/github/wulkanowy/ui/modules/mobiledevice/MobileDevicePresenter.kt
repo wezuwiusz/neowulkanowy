@@ -55,6 +55,7 @@ class MobileDevicePresenter @Inject constructor(
                 analytics.logEvent("load_devices", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
                 Timber.i("Loading mobile devices result: An exception occurred")
+                view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)
             })
     }

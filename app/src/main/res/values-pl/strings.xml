@@ -227,6 +227,7 @@
 
     <!--School-->
     <string name="school_title">Szkoła</string>
+    <string name="school_no_info">Brak informacji o szkole</string>
     <string name="school_name">Nazwa szkoły</string>
     <string name="school_address">Adres szkoły</string>
     <string name="school_telephone">Telefon</string>

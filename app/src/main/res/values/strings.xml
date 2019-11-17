@@ -213,6 +213,7 @@
 
     <!--School-->
     <string name="school_title">School</string>
+    <string name="school_no_info">No info about school</string>
     <string name="school_name">School name</string>
     <string name="school_address">School address</string>
     <string name="school_telephone">Telephone</string>

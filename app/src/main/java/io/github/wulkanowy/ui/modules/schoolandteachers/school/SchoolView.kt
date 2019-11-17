@@ -10,6 +10,8 @@ interface SchoolView : BaseView, SchoolAndTeachersChildView {
 
     fun updateData(data: School)
 
+    fun isViewEmpty(): Boolean
+
     fun showEmpty(show: Boolean)
 
     fun showProgress(show: Boolean)

@@ -52,6 +52,7 @@ class AttendanceSummaryPresenter @Inject constructor(
             showContent(false)
             showProgress(true)
             enableSwipe(false)
+            showEmpty(false)
             clearView()
         }
         (subjects.singleOrNull { it.name == name }?.realId ?: -1).let {
