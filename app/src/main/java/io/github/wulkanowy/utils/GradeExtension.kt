@@ -67,8 +67,8 @@ inline val Grade.colorStringId: Int
 
 fun Grade.changeModifier(plusModifier: Double, minusModifier: Double): Grade {
     return when {
-        modifier != .0 && plusModifier != .0 && modifier > 0 -> copy(modifier = plusModifier)
-        modifier != .0 && minusModifier != .0 && modifier < 0 -> copy(modifier = -minusModifier)
+        modifier > 0 -> copy(modifier = plusModifier)
+        modifier < 0 -> copy(modifier = -minusModifier)
         else -> this
     }
 }
