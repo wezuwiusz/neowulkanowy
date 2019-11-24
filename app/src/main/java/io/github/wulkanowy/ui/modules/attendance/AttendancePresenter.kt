@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.attendance
 
+import android.annotation.SuppressLint
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.attendance.AttendanceRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
@@ -37,10 +38,13 @@ class AttendancePresenter @Inject constructor(
     lateinit var currentDate: LocalDate
         private set
 
+    private lateinit var lastError: Throwable
+
     fun onAttachView(view: AttendanceView, date: Long?) {
         super.onAttachView(view)
         view.initView()
         Timber.i("Attendance view was initialized")
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
         if (currentDate.isHolidays) setBaseDateOnHolidays()
         reloadView()
@@ -68,6 +72,18 @@ class AttendancePresenter @Inject constructor(
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the attendance")
         loadData(currentDate, true)
+    }
+
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(currentDate, true)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     fun onViewReselected() {
@@ -139,15 +155,26 @@ class AttendancePresenter @Inject constructor(
                     view?.apply {
                         updateData(it)
                         showEmpty(it.isEmpty())
+                        showErrorView(false)
                         showContent(it.isNotEmpty())
                     }
                     analytics.logEvent("load_attendance", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading attendance result: An exception occurred")
-                    view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 }
             )
+        }
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
         }
     }
 
@@ -158,11 +185,13 @@ class AttendancePresenter @Inject constructor(
             enableSwipe(false)
             showContent(false)
             showEmpty(false)
+            showErrorView(false)
             clearData()
             reloadNavigation()
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun reloadNavigation() {
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)

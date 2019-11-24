@@ -270,6 +270,7 @@
 
     <!--Generic-->
     <string name="all_content">Treść</string>
+    <string name="all_retry">Ponów</string>
     <string name="all_description">Opis</string>
     <string name="all_no_description">Brak opisu</string>
     <string name="all_teacher">Nauczyciel</string>

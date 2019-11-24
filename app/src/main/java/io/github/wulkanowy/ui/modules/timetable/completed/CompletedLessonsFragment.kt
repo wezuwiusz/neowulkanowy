@@ -3,6 +3,9 @@ package io.github.wulkanowy.ui.modules.timetable.completed
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -58,6 +61,9 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
         }
 
         completedLessonsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+        completedLessonErrorRetry.setOnClickListener { presenter.onRetry() }
+        completedLessonErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+
         completedLessonsPreviousButton.setOnClickListener { presenter.onPreviousDay() }
         completedLessonsNavDate.setOnClickListener { presenter.onPickDate() }
         completedLessonsNextButton.setOnClickListener { presenter.onNextDay() }
@@ -82,7 +88,15 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun showEmpty(show: Boolean) {
-        completedLessonsEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        completedLessonsEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        completedLessonError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        completedLessonErrorMessage.text = message
     }
 
     override fun showFeatureDisabled() {
@@ -91,7 +105,7 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun showProgress(show: Boolean) {
-        completedLessonsProgress.visibility = if (show) View.VISIBLE else View.GONE
+        completedLessonsProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
@@ -99,15 +113,15 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun showContent(show: Boolean) {
-        completedLessonsRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        completedLessonsRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showPreButton(show: Boolean) {
-        completedLessonsPreviousButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        completedLessonsPreviousButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        completedLessonsNextButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        completedLessonsNextButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showCompletedLessonDialog(completedLesson: CompletedLesson) {

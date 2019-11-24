@@ -13,13 +13,15 @@ abstract class BaseFragment : DaggerFragment(), BaseView {
     override fun showError(text: String, error: Throwable) {
         if (messageContainer != null) {
             Snackbar.make(messageContainer!!, text, LENGTH_LONG)
-                .setAction(R.string.all_details) {
-                    if (isAdded) ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
-                }
+                .setAction(R.string.all_details) { if (isAdded) showErrorDetailsDialog(error) }
                 .show()
         } else {
             (activity as? BaseActivity<*>)?.showError(text, error)
         }
+    }
+
+    override fun showErrorDetailsDialog(error: Throwable) {
+        ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
     }
 
     override fun showMessage(text: String) {

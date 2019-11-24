@@ -256,6 +256,7 @@
 
     <!--Generic-->
     <string name="all_content">Content</string>
+    <string name="all_retry">Retry</string>
     <string name="all_description">Description</string>
     <string name="all_no_description">No description</string>
     <string name="all_teacher">Teacher</string>

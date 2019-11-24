@@ -6,6 +6,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -73,6 +76,9 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
         }
 
         attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+        attendanceErrorRetry.setOnClickListener { presenter.onRetry() }
+        attendanceErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+
         attendancePreviousButton.setOnClickListener { presenter.onPreviousDay() }
         attendanceNavDate.setOnClickListener { presenter.onPickDate() }
         attendanceNextButton.setOnClickListener { presenter.onNextDay() }
@@ -114,11 +120,19 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun showEmpty(show: Boolean) {
-        attendanceEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        attendanceEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        attendanceError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        attendanceErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        attendanceProgress.visibility = if (show) View.VISIBLE else View.GONE
+        attendanceProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
@@ -126,7 +140,7 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun showContent(show: Boolean) {
-        attendanceRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        attendanceRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun hideRefresh() {
@@ -134,11 +148,11 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun showPreButton(show: Boolean) {
-        attendancePreviousButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        attendancePreviousButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        attendanceNextButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        attendanceNextButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showAttendanceDialog(lesson: Attendance) {

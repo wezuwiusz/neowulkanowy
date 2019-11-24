@@ -18,6 +18,7 @@ import eu.davidea.flexibleadapter.items.IFlexible
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -90,6 +91,8 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
             )
         }
         gradeDetailsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        gradeDetailsErrorRetry.setOnClickListener { presenter.onRetry() }
+        gradeDetailsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -139,6 +142,14 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
 
     override fun showEmpty(show: Boolean) {
         gradeDetailsEmpty.visibility = if (show) VISIBLE else INVISIBLE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        gradeDetailsError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        gradeDetailsErrorMessage.text = message
     }
 
     override fun showRefresh(show: Boolean) {

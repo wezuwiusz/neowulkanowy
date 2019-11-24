@@ -12,15 +12,13 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.getSystemService
-import dagger.android.support.DaggerDialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
-import io.github.wulkanowy.data.repositories.mobiledevice.MobileDeviceRemote
-import io.github.wulkanowy.ui.base.BaseActivity
+import io.github.wulkanowy.ui.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.dialog_mobile_device.*
 import javax.inject.Inject
 
-class MobileDeviceTokenDialog : DaggerDialogFragment(), MobileDeviceTokenVIew {
+class MobileDeviceTokenDialog : BaseDialogFragment(), MobileDeviceTokenVIew {
 
     @Inject
     lateinit var presenter: MobileDeviceTokenPresenter
@@ -66,6 +64,12 @@ class MobileDeviceTokenDialog : DaggerDialogFragment(), MobileDeviceTokenVIew {
         })
     }
 
+    private fun clickCopy(text: String) {
+        val clip = ClipData.newPlainText("wulkanowy", text)
+        activity?.getSystemService<ClipboardManager>()?.setPrimaryClip(clip)
+        Toast.makeText(context, R.string.all_copied, Toast.LENGTH_LONG).show()
+    }
+
     override fun hideLoading() {
         mobileDeviceDialogProgress.visibility = GONE
     }
@@ -78,30 +82,8 @@ class MobileDeviceTokenDialog : DaggerDialogFragment(), MobileDeviceTokenVIew {
         dismiss()
     }
 
-    override fun showError(text: String, error: Throwable) {
-        showMessage(text)
-    }
-
-    override fun showMessage(text: String) {
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-    }
-
-    override fun showExpiredDialog() {
-        (activity as? BaseActivity<*>)?.showExpiredDialog()
-    }
-
-    override fun openClearLoginView() {
-        (activity as? BaseActivity<*>)?.openClearLoginView()
-    }
-
     override fun onDestroyView() {
         presenter.onDetachView()
         super.onDestroyView()
-    }
-
-    fun clickCopy(text: String) {
-        val clip = ClipData.newPlainText("wulkanowy", text)
-        activity?.getSystemService<ClipboardManager>()?.setPrimaryClip(clip)
-        Toast.makeText(context, R.string.all_copied, Toast.LENGTH_LONG).show()
     }
 }

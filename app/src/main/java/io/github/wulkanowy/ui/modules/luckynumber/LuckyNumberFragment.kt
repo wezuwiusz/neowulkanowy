@@ -3,6 +3,8 @@ package io.github.wulkanowy.ui.modules.luckynumber
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.LuckyNumber
@@ -23,17 +25,22 @@ class LuckyNumberFragment : BaseFragment(), LuckyNumberView, MainView.TitledView
     override val titleStringId: Int
         get() = R.string.lucky_number_title
 
+    override val isViewEmpty get() = luckyNumberText.text.isBlank()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lucky_number, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        messageContainer = luckyNumberSwipe
         presenter.onAttachView(this)
     }
 
     override fun initView() {
         luckyNumberSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        luckyNumberErrorRetry.setOnClickListener { presenter.onRetry() }
+        luckyNumberErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
     override fun updateData(data: LuckyNumber) {
@@ -45,11 +52,19 @@ class LuckyNumberFragment : BaseFragment(), LuckyNumberView, MainView.TitledView
     }
 
     override fun showEmpty(show: Boolean) {
-        luckyNumberEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        luckyNumberEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        luckyNumberError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        luckyNumberErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        luckyNumberProgress.visibility = if (show) View.VISIBLE else View.GONE
+        luckyNumberProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
@@ -57,11 +72,7 @@ class LuckyNumberFragment : BaseFragment(), LuckyNumberView, MainView.TitledView
     }
 
     override fun showContent(show: Boolean) {
-        luckyNumberContent.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    override fun isViewEmpty(): Boolean {
-        return luckyNumberText.text.isBlank()
+        luckyNumberContent.visibility = if (show) VISIBLE else GONE
     }
 
     override fun onDestroyView() {

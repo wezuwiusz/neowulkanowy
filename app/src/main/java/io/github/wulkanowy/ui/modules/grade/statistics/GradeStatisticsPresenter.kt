@@ -30,6 +30,8 @@ class GradeStatisticsPresenter @Inject constructor(
 
     private var currentSubjectName: String = "Wszystkie"
 
+    private lateinit var lastError: Throwable
+
     var currentType: ViewType = ViewType.PARTIAL
         private set
 
@@ -37,6 +39,7 @@ class GradeStatisticsPresenter @Inject constructor(
         super.onAttachView(view)
         currentType = type ?: ViewType.PARTIAL
         view.initView()
+        errorHandler.showErrorMessage = ::showErrorViewOnError
     }
 
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
@@ -51,6 +54,7 @@ class GradeStatisticsPresenter @Inject constructor(
             enableSwipe(false)
             showRefresh(false)
             showBarContent(false)
+            showErrorView(false)
             showEmpty(false)
             clearView()
         }
@@ -62,6 +66,18 @@ class GradeStatisticsPresenter @Inject constructor(
         view?.notifyParentRefresh()
     }
 
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        view?.notifyParentRefresh()
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
+    }
+
     fun onSubjectSelected(name: String?) {
         Timber.i("Select grade stats subject $name")
         view?.run {
@@ -70,6 +86,7 @@ class GradeStatisticsPresenter @Inject constructor(
             showProgress(true)
             enableSwipe(false)
             showEmpty(false)
+            showErrorView(false)
             clearView()
         }
         (subjects.singleOrNull { it.name == name }?.name)?.let {
@@ -86,6 +103,7 @@ class GradeStatisticsPresenter @Inject constructor(
             showProgress(true)
             enableSwipe(false)
             showEmpty(false)
+            showErrorView(false)
             clearView()
         }
         loadDataByType(currentSemesterId, currentSubjectName, type)
@@ -146,12 +164,12 @@ class GradeStatisticsPresenter @Inject constructor(
                     showEmpty(it.isEmpty())
                     showBarContent(false)
                     showPieContent(it.isNotEmpty())
+                    showErrorView(false)
                     updatePieData(it, preferencesRepository.gradeColorTheme)
                 }
                 analytics.logEvent("load_grade_statistics", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
                 Timber.e("Loading grade stats result: An exception occurred")
-                view?.run { showEmpty(isPieViewEmpty) }
                 errorHandler.dispatch(it)
             })
     }
@@ -177,12 +195,12 @@ class GradeStatisticsPresenter @Inject constructor(
                     showEmpty(false)
                     showPieContent(false)
                     showBarContent(true)
+                    showErrorView(false)
                     updateBarData(it)
                 }
                 analytics.logEvent("load_grade_points_statistics", "force_refresh" to forceRefresh)
             }, {
                 Timber.e("Loading grade points stats result: An exception occurred")
-                view?.run { showEmpty(isBarViewEmpty) }
                 errorHandler.dispatch(it)
             }, {
                 Timber.d("Loading grade points stats result: No point stats found")
@@ -192,5 +210,16 @@ class GradeStatisticsPresenter @Inject constructor(
                 }
             })
         )
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isBarViewEmpty || isPieViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
+        }
     }
 }

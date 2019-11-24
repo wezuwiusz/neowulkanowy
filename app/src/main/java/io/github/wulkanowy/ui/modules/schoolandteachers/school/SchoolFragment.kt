@@ -3,6 +3,8 @@ package io.github.wulkanowy.ui.modules.schoolandteachers.school
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.School
@@ -22,6 +24,8 @@ class SchoolFragment : BaseFragment(), SchoolView, MainView.TitledView, SchoolAn
 
     override val titleStringId get() = R.string.school_title
 
+    override val isViewEmpty get() = schoolName.text.isBlank()
+
     companion object {
         fun newInstance() = SchoolFragment()
     }
@@ -37,6 +41,8 @@ class SchoolFragment : BaseFragment(), SchoolView, MainView.TitledView, SchoolAn
 
     override fun initView() {
         schoolSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        schoolErrorRetry.setOnClickListener { presenter.onRetry() }
+        schoolErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
         schoolAddressButton.setOnClickListener { presenter.onAddressSelected() }
         schoolTelephoneButton.setOnClickListener { presenter.onTelephoneSelected() }
@@ -45,24 +51,27 @@ class SchoolFragment : BaseFragment(), SchoolView, MainView.TitledView, SchoolAn
     override fun updateData(data: School) {
         schoolName.text = data.name
         schoolAddress.text = data.address.ifBlank { "-" }
-        schoolAddressButton.visibility = if (data.address.isNotBlank()) View.VISIBLE else View.GONE
+        schoolAddressButton.visibility = if (data.address.isNotBlank()) VISIBLE else GONE
         schoolTelephone.text = data.contact.ifBlank { "-" }
-        schoolTelephoneButton.visibility = if (data.contact.isNotBlank()) View.VISIBLE else View.GONE
+        schoolTelephoneButton.visibility = if (data.contact.isNotBlank()) VISIBLE else GONE
         schoolHeadmaster.text = data.headmaster
         schoolPedagogue.text = data.pedagogue
     }
 
-
-    override fun isViewEmpty(): Boolean {
-        return schoolName.text.isBlank()
+    override fun showEmpty(show: Boolean) {
+        schoolEmpty.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun showEmpty(show: Boolean) {
-        schoolEmpty.visibility = if (show) View.VISIBLE else View.GONE
+    override fun showErrorView(show: Boolean) {
+        schoolError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        schoolErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        schoolProgress.visibility = if (show) View.VISIBLE else View.GONE
+        schoolProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
@@ -70,7 +79,7 @@ class SchoolFragment : BaseFragment(), SchoolView, MainView.TitledView, SchoolAn
     }
 
     override fun showContent(show: Boolean) {
-        schoolContent.visibility = if (show) View.VISIBLE else View.GONE
+        schoolContent.visibility = if (show) VISIBLE else GONE
     }
 
     override fun hideRefresh() {

@@ -21,16 +21,31 @@ class NotePresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<NoteView>(errorHandler, studentRepository, schedulers) {
 
+    private lateinit var lastError: Throwable
+
     override fun onAttachView(view: NoteView) {
         super.onAttachView(view)
         view.initView()
         Timber.i("Note view was initialized")
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData()
     }
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the note")
         loadData(true)
+    }
+
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(true)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
@@ -53,15 +68,26 @@ class NotePresenter @Inject constructor(
                 view?.apply {
                     updateData(it)
                     showEmpty(it.isEmpty())
+                    showErrorView(false)
                     showContent(it.isNotEmpty())
                 }
                 analytics.logEvent("load_note", "items" to it.size, "force_refresh" to forceRefresh)
             }, {
                 Timber.i("Loading note result: An exception occurred")
-                view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)
             })
         )
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
+        }
     }
 
     fun onNoteItemSelected(item: AbstractFlexibleItem<*>?) {

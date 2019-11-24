@@ -9,6 +9,8 @@ interface MessagePreviewView : BaseView {
 
     val deleteMessageSuccessString: String
 
+    fun initView()
+
     fun setSubject(subject: String)
 
     fun setRecipient(recipient: String)
@@ -23,19 +25,23 @@ interface MessagePreviewView : BaseView {
 
     fun showContent(show: Boolean)
 
+    fun notifyParentMessageDeleted(message: Message)
+
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
+
+    fun setErrorRetryCallback(callback: () -> Unit)
+
     fun showOptions(show: Boolean)
 
     fun setDeletedOptionsLabels()
 
     fun setNotDeletedOptionsLabels()
 
-    fun showMessageError()
-
     fun openMessageReply(message: Message?)
 
     fun openMessageForward(message: Message?)
 
     fun popView()
-
-    fun notifyParentMessageDeleted(message: Message)
 }

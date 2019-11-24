@@ -24,6 +24,10 @@ interface TimetableView : BaseView {
 
     fun showEmpty(show: Boolean)
 
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
+
     fun showProgress(show: Boolean)
 
     fun enableSwipe(enable: Boolean)

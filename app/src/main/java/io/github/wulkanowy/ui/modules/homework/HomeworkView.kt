@@ -5,6 +5,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface HomeworkView : BaseView {
 
+    val isViewEmpty: Boolean
+
     fun initView()
 
     fun updateData(data: List<HomeworkItem>)
@@ -13,11 +15,13 @@ interface HomeworkView : BaseView {
 
     fun updateNavigationWeek(date: String)
 
-    fun isViewEmpty(): Boolean
-
     fun hideRefresh()
 
     fun showEmpty(show: Boolean)
+
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
 
     fun showProgress(show: Boolean)
 

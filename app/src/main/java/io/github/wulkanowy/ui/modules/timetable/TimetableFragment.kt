@@ -6,6 +6,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -74,8 +76,11 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
         }
 
         timetableSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+        timetableErrorRetry.setOnClickListener { presenter.onRetry() }
+        timetableErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+
         timetablePreviousButton.setOnClickListener { presenter.onPreviousDay() }
-        timetableNavDate.setOnClickListener {presenter.onPickDate() }
+        timetableNavDate.setOnClickListener { presenter.onPickDate() }
         timetableNextButton.setOnClickListener { presenter.onNextDay() }
 
         timetableNavContainer.setElevationCompat(requireContext().dpToPx(8f))
@@ -119,11 +124,19 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     }
 
     override fun showEmpty(show: Boolean) {
-        timetableEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        timetableEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        timetableError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        timetableErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        timetableProgress.visibility = if (show) View.VISIBLE else View.GONE
+        timetableProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
@@ -131,15 +144,15 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     }
 
     override fun showContent(show: Boolean) {
-        timetableRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        timetableRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showPreButton(show: Boolean) {
-        timetablePreviousButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        timetablePreviousButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        timetableNextButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        timetableNextButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
     override fun showTimetableDialog(lesson: Timetable) {

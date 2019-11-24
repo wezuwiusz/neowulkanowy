@@ -23,15 +23,30 @@ class MessageTabPresenter @Inject constructor(
 
     lateinit var folder: MessageFolder
 
+    private lateinit var lastError: Throwable
+
     fun onAttachView(view: MessageTabView, folder: MessageFolder) {
         super.onAttachView(view)
         view.initView()
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         this.folder = folder
     }
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the $folder message")
         onParentViewLoadData(true)
+    }
+
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(true)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     fun onDeleteMessage() {
@@ -78,14 +93,25 @@ class MessageTabPresenter @Inject constructor(
                     view?.run {
                         showEmpty(it.isEmpty())
                         showContent(it.isNotEmpty())
+                        showErrorView(false)
                         updateData(it)
                     }
                     analytics.logEvent("load_messages", "items" to it.size, "folder" to folder.name)
                 }) {
                     Timber.i("Loading $folder message result: An exception occurred")
-                    view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 })
+        }
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
         }
     }
 

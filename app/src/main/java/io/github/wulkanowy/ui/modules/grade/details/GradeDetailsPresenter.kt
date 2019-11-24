@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.grade.details
 
-import android.widget.Toast
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.repositories.grade.GradeRepository
@@ -31,9 +30,12 @@ class GradeDetailsPresenter @Inject constructor(
 
     private var currentSemesterId = 0
 
+    private lateinit var lastError: Throwable
+
     override fun onAttachView(view: GradeDetailsView) {
         super.onAttachView(view)
         view.initView()
+        errorHandler.showErrorMessage = ::showErrorViewOnError
     }
 
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
@@ -90,6 +92,18 @@ class GradeDetailsPresenter @Inject constructor(
         view?.notifyParentRefresh()
     }
 
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        view?.notifyParentRefresh()
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
+    }
+
     fun onParentViewReselected() {
         view?.run {
             if (!isViewEmpty) {
@@ -140,19 +154,30 @@ class GradeDetailsPresenter @Inject constructor(
             }
             .subscribe({
                 Timber.i("Loading grade details result: Success")
-                newGradesAmount  = it.sumBy { gradeDetailsHeader -> gradeDetailsHeader.newGrades }
+                newGradesAmount = it.sumBy { gradeDetailsHeader -> gradeDetailsHeader.newGrades }
                 updateMarkAsDoneButton()
                 view?.run {
                     showEmpty(it.isEmpty())
+                    showErrorView(false)
                     showContent(it.isNotEmpty())
                     updateData(it)
                 }
                 analytics.logEvent("load_grade_details", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
                 Timber.i("Loading grade details result: An exception occurred")
-                view?.run { showEmpty(isViewEmpty) }
                 errorHandler.dispatch(it)
             })
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
+        }
     }
 
     private fun createGradeItems(items: Map<String, List<Grade>>, averages: Map<String, Double>): List<GradeDetailsHeader> {

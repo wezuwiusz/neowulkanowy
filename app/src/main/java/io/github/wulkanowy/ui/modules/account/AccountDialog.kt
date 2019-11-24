@@ -7,18 +7,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
-import dagger.android.support.DaggerAppCompatDialogFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
-import io.github.wulkanowy.ui.base.BaseActivity
+import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.dialog_account.*
 import javax.inject.Inject
 
-class AccountDialog : DaggerAppCompatDialogFragment(), AccountView {
+class AccountDialog : BaseDialogFragment(), AccountView {
 
     @Inject
     lateinit var presenter: AccountPresenter
@@ -77,14 +76,6 @@ class AccountDialog : DaggerAppCompatDialogFragment(), AccountView {
         }
     }
 
-    override fun showExpiredDialog() {
-        (activity as? BaseActivity<*>)?.showExpiredDialog()
-    }
-
-    override fun openClearLoginView() {
-        (activity as? BaseActivity<*>)?.openClearLoginView()
-    }
-
     override fun showConfirmDialog() {
         context?.let {
             AlertDialog.Builder(it)
@@ -105,4 +96,3 @@ class AccountDialog : DaggerAppCompatDialogFragment(), AccountView {
         super.onDestroy()
     }
 }
-

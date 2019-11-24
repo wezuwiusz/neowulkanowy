@@ -37,10 +37,13 @@ class TimetablePresenter @Inject constructor(
     lateinit var currentDate: LocalDate
         private set
 
+    private lateinit var lastError: Throwable
+
     fun onAttachView(view: TimetableView, date: Long?) {
         super.onAttachView(view)
         view.initView()
         Timber.i("Timetable was initialized")
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
         if (currentDate.isHolidays) setBaseDateOnHolidays()
         reloadView()
@@ -68,6 +71,18 @@ class TimetablePresenter @Inject constructor(
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the timetable")
         loadData(currentDate, true)
+    }
+
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(currentDate, true)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     fun onViewReselected() {
@@ -135,14 +150,25 @@ class TimetablePresenter @Inject constructor(
                     view?.apply {
                         updateData(it)
                         showEmpty(it.isEmpty())
+                        showErrorView(false)
                         showContent(it.isNotEmpty())
                     }
                     analytics.logEvent("load_timetable", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading timetable result: An exception occurred")
-                    view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 })
+        }
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
         }
     }
 
@@ -153,6 +179,7 @@ class TimetablePresenter @Inject constructor(
             enableSwipe(false)
             showContent(false)
             showEmpty(false)
+            showErrorView(false)
             clearData()
             reloadNavigation()
         }

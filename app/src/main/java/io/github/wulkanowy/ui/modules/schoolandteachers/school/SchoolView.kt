@@ -6,13 +6,17 @@ import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersChildVi
 
 interface SchoolView : BaseView, SchoolAndTeachersChildView {
 
+    val isViewEmpty: Boolean
+
     fun initView()
 
     fun updateData(data: School)
 
-    fun isViewEmpty(): Boolean
-
     fun showEmpty(show: Boolean)
+
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
 
     fun showProgress(show: Boolean)
 

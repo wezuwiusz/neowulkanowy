@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.timetable.completed
 
+import android.annotation.SuppressLint
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.completedlessons.CompletedLessonsRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -34,17 +35,20 @@ class CompletedLessonsPresenter @Inject constructor(
     lateinit var currentDate: LocalDate
         private set
 
+    private lateinit var lastError: Throwable
+
     fun onAttachView(view: CompletedLessonsView, date: Long?) {
         super.onAttachView(view)
         Timber.i("Completed lessons is attached")
         view.initView()
-        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
-        if (currentDate.isHolidays) setBaseDateOnHolidays()
-        reloadView()
+        completedLessonsErrorHandler.showErrorMessage = ::showErrorViewOnError
         completedLessonsErrorHandler.onFeatureDisabled = {
             this.view?.showFeatureDisabled()
             Timber.i("Completed lessons feature disabled by school")
         }
+        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        if (currentDate.isHolidays) setBaseDateOnHolidays()
+        reloadView()
     }
 
     fun onPreviousDay() {
@@ -69,6 +73,18 @@ class CompletedLessonsPresenter @Inject constructor(
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the completed lessons")
         loadData(currentDate, true)
+    }
+
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(currentDate, true)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     fun onCompletedLessonsItemSelected(item: AbstractFlexibleItem<*>?) {
@@ -117,14 +133,25 @@ class CompletedLessonsPresenter @Inject constructor(
                     view?.apply {
                         updateData(it)
                         showEmpty(it.isEmpty())
+                        showErrorView(false)
                         showContent(it.isNotEmpty())
                     }
                     analytics.logEvent("load_completed_lessons", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading completed lessons result: An exception occurred")
-                    view?.run { showEmpty(isViewEmpty) }
                     completedLessonsErrorHandler.dispatch(it)
                 })
+        }
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
         }
     }
 
@@ -135,11 +162,13 @@ class CompletedLessonsPresenter @Inject constructor(
             enableSwipe(false)
             showContent(false)
             showEmpty(false)
+            showErrorView(false)
             clearData()
             reloadNavigation()
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun reloadNavigation() {
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)

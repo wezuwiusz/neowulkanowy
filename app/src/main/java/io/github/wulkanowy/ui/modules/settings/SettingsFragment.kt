@@ -9,6 +9,7 @@ import com.yariksoffice.lingver.Lingver
 import dagger.android.support.AndroidSupportInjection
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
+import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
@@ -80,6 +81,10 @@ class SettingsFragment : PreferenceFragmentCompat(),
 
     override fun openClearLoginView() {
         (activity as? BaseActivity<*>)?.openClearLoginView()
+    }
+
+    override fun showErrorDetailsDialog(error: Throwable) {
+        ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
     }
 
     override fun onResume() {
