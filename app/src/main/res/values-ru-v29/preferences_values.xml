@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
+        <item>Тема системы</item>
+        <item>Светлая</item>
+        <item>Тёмная</item>
+        <item>Тёмная (AMOLED)</item>
+    </string-array>
+</resources>

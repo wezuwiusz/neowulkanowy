@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="services_interval_entries">
-        <item>15 minut</item>
-        <item>30 minut</item>
-        <item>1 godzina</item>
-        <item>2 godziny</item>
-        <item>6 godzin</item>
-        <item>12 godzin</item>
-        <item>24 godziny</item>
+        <item>15 минут</item>
+        <item>30 минут</item>
+        <item>1 час</item>
+        <item>2 часа</item>
+        <item>6 часов</item>
+        <item>12 часов</item>
+        <item>24 часа</item>
     </string-array>
-
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
-        <item>Jasny</item>
-        <item>Ciemny</item>
-        <item>Czarny (AMOLED)</item>
+        <item>Светлая</item>
+        <item>Тёмная</item>
+        <item>Тёмная (AMOLED)</item>
     </string-array>
-
     <string-array name="app_language_entries">
-        <item>Język systemu</item>
+        <item>Язык системы</item>
         <item>Polski</item>
         <item>English</item>
         <item>Pусский</item>
     </string-array>
-
     <string-array name="grade_modifier_entries">
         <item>0,0</item>
         <item>0,25</item>
@@ -30,15 +27,13 @@
         <item>0,5</item>
         <item>0,75</item>
     </string-array>
-
     <string-array name="grade_color_scheme_entries">
         <item>Dzienniczek+</item>
         <item>Wulkanowy</item>
-        <item>Kolory ocen w dzienniku</item>
+        <item>Цвета оценок в дневнике</item>
     </string-array>
-
     <string-array name="grade_average_mode_entries">
-        <item>Średnia ocen z 2 semestru</item>
-        <item>Średnia ocen z całego roku</item>
+        <item>Средняя оценка со 2 семестра</item>
+        <item>Средняя оценка с целого года</item>
     </string-array>
 </resources>

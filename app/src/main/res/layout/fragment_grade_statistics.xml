@@ -47,39 +47,45 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RadioGroup
-                    android:id="@+id/gradeStatisticsTypeSwitch"
-                    android:layout_width="fill_parent"
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp"
-                    android:visibility="invisible"
-                    tools:visibility="visible">
+                    android:layout_gravity="center">
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/gradeStatisticsTypePartial"
+                    <RadioGroup
+                        android:id="@+id/gradeStatisticsTypeSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:tag="partial"
-                        android:text="@string/grade_statistics_partial" />
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="16dp"
+                        android:visibility="invisible"
+                        tools:visibility="visible">
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/gradeStatisticsTypeSemester"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tag="annual"
-                        android:text="@string/grade_statistics_semester" />
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/gradeStatisticsTypePartial"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:tag="partial"
+                            android:text="@string/grade_statistics_partial" />
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/gradeStatisticsTypePoints"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tag="points"
-                        android:text="@string/grade_statistics_points" />
-                </RadioGroup>
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/gradeStatisticsTypeSemester"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tag="annual"
+                            android:text="@string/grade_statistics_semester" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/gradeStatisticsTypePoints"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tag="points"
+                            android:text="@string/grade_statistics_points" />
+                    </RadioGroup>
+                </HorizontalScrollView>
 
                 <FrameLayout
                     android:layout_width="match_parent"

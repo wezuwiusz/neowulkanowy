@@ -83,6 +83,7 @@
         <item quantity="one">Nowa ocena</item>
         <item quantity="few">Nowe oceny</item>
         <item quantity="many">Nowe oceny</item>
+        <item quantity="other">Nowe oceny</item>
     </plurals>
     <plurals name="grade_notify_new_items">
         <item quantity="one">Dostałeś %1$d ocenę</item>
@@ -125,6 +126,7 @@
         <item quantity="one">%1$d nieobecność</item>
         <item quantity="few">%1$d nieobecności</item>
         <item quantity="many">%1$d nieobecności</item>
+        <item quantity="other">%1$d nieobecności</item>
     </plurals>
 
 
@@ -163,16 +165,19 @@
         <item quantity="one">%d wiadomość</item>
         <item quantity="few">%d wiadomości</item>
         <item quantity="many">%d wiadomości</item>
+        <item quantity="other">%d wiadomości</item>
     </plurals>
     <plurals name="message_new_items">
         <item quantity="one">Nowa wiadomość</item>
         <item quantity="few">Nowe wiadomości</item>
         <item quantity="many">Nowe wiadomości</item>
+        <item quantity="other">Nowe wiadomości</item>
     </plurals>
     <plurals name="message_notify_new_items">
         <item quantity="one">Dostałeś %1$d wiadomość</item>
         <item quantity="few">"Dostałeś %1$d wiadomości</item>
         <item quantity="many">Dostałeś %1$d wiadomości</item>
+        <item quantity="other">Dostałeś %1$d wiadomości</item>
     </plurals>
 
 
@@ -187,8 +192,8 @@
     <plurals name="note_new_items">
         <item quantity="one">Nowa uwaga</item>
         <item quantity="few">Nowe uwagi</item>
-        <item quantity="many">Nowych uwag</item>
-        <item quantity="other">Nowych uwag</item>
+        <item quantity="many">Nowe uwagi</item>
+        <item quantity="other">Nowe uwagi</item>
     </plurals>
     <plurals name="note_notify_new_items">
         <item quantity="one">Dostałeś %1$d uwagę</item>
