@@ -1,9 +1,9 @@
-Wersja 0.12.0
+Wersja 0.13.0
 
-- wsparcie dla dziennika Lubelskiego Portalu Oświatowego
-- naprawa problemów z wyświetlaniem ocen punktowych
-- automatyczne przełączanie motywu na androidzie 10
-- wyświetlanie pomocy przy problemach z logowaniem
-- wyświetlanie informacji o szkole
+- naprawiony plan lekcji po ostatniej aktualizacji VULCANa (19.11)
+- naprawiona opcja wyboru motywu dla widżetu ze szczęśliwym numerkiem
+- nowa opcja zmiany języka i język rosyjski
+- możliwość łatwego nawigowania między dniami w planie lekcji przez kalendarz
+- opcja ustawienia modyfikatora oceny na wartość 0,0
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
