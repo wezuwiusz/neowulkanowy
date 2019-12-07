@@ -1,4 +1,4 @@
-Aplikacja jest we wczesnej fazie rozwoju, ciągle pracujemy nad kolejnymi funkcjami.
+Aplikacja jest przeznaczona dla użytkowników dziennika VULCAN UONET+.
 
 Wyróżnione cechy i funkcje:
 - obliczanie średniej ważonej,
