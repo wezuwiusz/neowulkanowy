@@ -28,9 +28,14 @@ class AboutPresenter @Inject constructor(
         view?.run {
             when (item.title) {
                 feedbackRes?.first -> {
-                    Timber.i("Opening email client ")
+                    Timber.i("Opening email client")
                     openEmailClient()
                     analytics.logEvent("about_open", "name" to "feedback")
+                }
+                faqRes?.first -> {
+                    Timber.i("Opening faq page")
+                    openFaqPage()
+                    analytics.logEvent("about_open", "name" to "faq")
                 }
                 discordRes?.first -> {
                     Timber.i("Opening discord")
@@ -61,6 +66,7 @@ class AboutPresenter @Inject constructor(
             updateData(AboutScrollableHeader(), listOfNotNull(
                 versionRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
                 feedbackRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
+                faqRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
                 discordRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
                 homepageRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
                 licensesRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },

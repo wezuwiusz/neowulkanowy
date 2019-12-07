@@ -50,7 +50,7 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
 
     override fun initView() {
         loginSymbolSignIn.setOnClickListener { presenter.attemptLogin(loginSymbolName.text.toString()) }
-        loginSymbolContactDiscord.setOnClickListener { presenter.onDiscordClick() }
+        loginSymbolFaq.setOnClickListener { presenter.onFaqClick() }
         loginSymbolContactEmail.setOnClickListener { presenter.onEmailClick() }
 
         loginSymbolName.doOnTextChanged { _, _, _, _ -> presenter.onSymbolTextChanged() }
@@ -126,8 +126,8 @@ class LoginSymbolFragment : BaseFragment(), LoginSymbolView {
         presenter.onDetachView()
     }
 
-    override fun openDiscordInvite() {
-        context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
+    override fun openFaqPage() {
+        context?.openInternetBrowser("https://wulkanowy.github.io/czesto-zadawane-pytania/co-to-jest-symbol", ::showMessage)
     }
 
     override fun openEmail() {

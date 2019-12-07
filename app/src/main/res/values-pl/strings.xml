@@ -259,6 +259,8 @@
     <string name="about_version">Wersja aplikacji</string>
     <string name="about_feedback">Zgłoś błąd</string>
     <string name="about_feedback_summary">Wyślij zgłoszenie o błędzie poprzez e-maila</string>
+    <string name="about_faq">FAQ</string>
+    <string name="about_faq_summary">Zobacz Najczęściej Zadawane Pytania</string>
     <string name="about_discord">Serwer discord</string>
     <string name="about_discord_summary">Dołącz do społeczności wulkanowego</string>
     <string name="about_privacy">Polityka prywatności</string>

@@ -9,6 +9,8 @@ interface AboutView : BaseView {
 
     val feedbackRes: Triple<String, String, Drawable?>?
 
+    val faqRes: Triple<String, String, Drawable?>?
+
     val discordRes: Triple<String, String, Drawable?>?
 
     val homepageRes: Triple<String, String, Drawable?>?
@@ -24,6 +26,8 @@ interface AboutView : BaseView {
     fun openDiscordInvite()
 
     fun openEmailClient()
+
+    fun openFaqPage()
 
     fun openHomepage()
 
