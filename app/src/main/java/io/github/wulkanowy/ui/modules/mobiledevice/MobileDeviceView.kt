@@ -25,6 +25,10 @@ interface MobileDeviceView : BaseView {
 
     fun showEmpty(show: Boolean)
 
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
+
     fun showUndo(position: Int, device: MobileDevice)
 
     fun showTokenDialog()

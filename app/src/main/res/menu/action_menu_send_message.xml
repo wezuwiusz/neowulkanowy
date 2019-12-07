@@ -6,6 +6,6 @@
         android:icon="@drawable/ic_menu_message_send"
         android:orderInCategory="1"
         android:title="@string/send_message_title"
-        app:iconTint="@color/mtrl_on_surface_emphasis_medium"
+        app:iconTint="@color/material_on_surface_emphasis_medium"
         app:showAsAction="ifRoom" />
 </menu>

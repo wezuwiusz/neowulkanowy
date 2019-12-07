@@ -3,6 +3,8 @@ package io.github.wulkanowy.ui.modules.schoolandteachers.teacher
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
@@ -16,7 +18,8 @@ import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragmen
 import kotlinx.android.synthetic.main.fragment_teacher.*
 import javax.inject.Inject
 
-class TeacherFragment : BaseFragment(), TeacherView, MainView.TitledView, SchoolAndTeachersChildView {
+class TeacherFragment : BaseFragment(), TeacherView, MainView.TitledView,
+    SchoolAndTeachersChildView {
 
     @Inject
     lateinit var presenter: TeacherPresenter
@@ -55,6 +58,8 @@ class TeacherFragment : BaseFragment(), TeacherView, MainView.TitledView, School
             )
         }
         teacherSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        teacherErrorRetry.setOnClickListener { presenter.onRetry() }
+        teacherErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
     override fun updateData(data: List<TeacherItem>) {
@@ -70,11 +75,19 @@ class TeacherFragment : BaseFragment(), TeacherView, MainView.TitledView, School
     }
 
     override fun showEmpty(show: Boolean) {
-        teacherEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        teacherEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        teacherError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        teacherErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        teacherProgress.visibility = if (show) View.VISIBLE else View.GONE
+        teacherProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
@@ -82,7 +95,7 @@ class TeacherFragment : BaseFragment(), TeacherView, MainView.TitledView, School
     }
 
     override fun showContent(show: Boolean) {
-        teacherRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        teacherRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun hideRefresh() {

@@ -47,39 +47,45 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RadioGroup
-                    android:id="@+id/gradeStatisticsTypeSwitch"
-                    android:layout_width="fill_parent"
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp"
-                    android:visibility="invisible"
-                    tools:visibility="visible">
+                    android:layout_gravity="center">
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/gradeStatisticsTypePartial"
+                    <RadioGroup
+                        android:id="@+id/gradeStatisticsTypeSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:tag="partial"
-                        android:text="@string/grade_statistics_partial" />
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="16dp"
+                        android:visibility="invisible"
+                        tools:visibility="visible">
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/gradeStatisticsTypeSemester"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tag="annual"
-                        android:text="@string/grade_statistics_semester" />
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/gradeStatisticsTypePartial"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:tag="partial"
+                            android:text="@string/grade_statistics_partial" />
 
-                    <com.google.android.material.radiobutton.MaterialRadioButton
-                        android:id="@+id/gradeStatisticsTypePoints"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tag="points"
-                        android:text="@string/grade_statistics_points" />
-                </RadioGroup>
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/gradeStatisticsTypeSemester"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tag="annual"
+                            android:text="@string/grade_statistics_semester" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:id="@+id/gradeStatisticsTypePoints"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tag="points"
+                            android:text="@string/grade_statistics_points" />
+                    </RadioGroup>
+                </HorizontalScrollView>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -137,6 +143,58 @@
                             android:gravity="center"
                             android:text="@string/grade_no_items"
                             android:textSize="20sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/gradeStatisticsError"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="invisible"
+                        tools:ignore="UseCompoundDrawables"
+                        tools:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            app:srcCompat="@drawable/ic_error"
+                            app:tint="?colorOnBackground"
+                            tools:ignore="contentDescription" />
+
+                        <TextView
+                            android:id="@+id/gradeStatisticsErrorMessage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/error_unknown"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/gradeStatisticsErrorDetails"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:text="@string/all_details" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/gradeStatisticsErrorRetry"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/all_retry" />
+                        </LinearLayout>
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>

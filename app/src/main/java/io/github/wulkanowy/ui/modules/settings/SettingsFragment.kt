@@ -5,14 +5,17 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.yariksoffice.lingver.Lingver
 import dagger.android.support.AndroidSupportInjection
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
+import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
 
-class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener,
+class SettingsFragment : PreferenceFragmentCompat(),
+    SharedPreferences.OnSharedPreferenceChangeListener,
     MainView.TitledView, SettingsView {
 
     @Inject
@@ -20,6 +23,9 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     @Inject
     lateinit var appInfo: AppInfo
+
+    @Inject
+    lateinit var lingver: Lingver
 
     companion object {
         fun newInstance() = SettingsFragment()
@@ -50,6 +56,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         activity?.recreate()
     }
 
+    override fun updateLanguage(langCode: String) {
+        lingver.setLocale(requireContext(), langCode)
+    }
+
     override fun setServicesSuspended(serviceEnablesKey: String, isHolidays: Boolean) {
         findPreference<Preference>(serviceEnablesKey)?.apply {
             summary = if (isHolidays) getString(R.string.pref_services_suspended) else ""
@@ -71,6 +81,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun openClearLoginView() {
         (activity as? BaseActivity<*>)?.openClearLoginView()
+    }
+
+    override fun showErrorDetailsDialog(error: Throwable) {
+        ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
     }
 
     override fun onResume() {

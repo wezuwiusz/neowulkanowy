@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.modules.login.form.LoginFormFragment">
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/loginFormProgress"
@@ -71,15 +72,15 @@
                         app:icon="@drawable/ic_more_messages" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/loginFormContactDiscord"
+                        android:id="@+id/loginFormFaq"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_weight="1"
-                        android:text="@string/login_contact_discord"
-                        app:icon="@drawable/ic_about_discord" />
+                        android:text="@string/about_faq"
+                        app:icon="@drawable/ic_about_faq" />
                 </LinearLayout>
 
                 <View

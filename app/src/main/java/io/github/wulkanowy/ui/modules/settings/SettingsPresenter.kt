@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
@@ -20,7 +21,8 @@ class SettingsPresenter @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper,
     private val syncManager: SyncManager,
-    private val chuckCollector: ChuckCollector
+    private val chuckCollector: ChuckCollector,
+    private val appInfo: AppInfo
 ) : BasePresenter<SettingsView>(errorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: SettingsView) {
@@ -38,6 +40,10 @@ class SettingsPresenter @Inject constructor(
                 servicesIntervalKey, servicesOnlyWifiKey -> syncManager.startSyncWorker(true)
                 isDebugNotificationEnableKey -> chuckCollector.showNotification(isDebugNotificationEnable)
                 appThemeKey -> view?.recreateView()
+                appLanguageKey -> view?.run {
+                    updateLanguage(if (appLanguage == "system") appInfo.systemLanguage else appLanguage)
+                    recreateView()
+                }
                 else -> Unit
             }
         }

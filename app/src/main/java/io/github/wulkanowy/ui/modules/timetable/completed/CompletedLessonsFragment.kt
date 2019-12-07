@@ -3,7 +3,11 @@ package io.github.wulkanowy.ui.modules.timetable.completed
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
@@ -12,10 +16,12 @@ import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable_completed.*
+import org.threeten.bp.LocalDate
 import javax.inject.Inject
 
 class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.TitledView {
@@ -55,7 +61,11 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
         }
 
         completedLessonsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+        completedLessonErrorRetry.setOnClickListener { presenter.onRetry() }
+        completedLessonErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+
         completedLessonsPreviousButton.setOnClickListener { presenter.onPreviousDay() }
+        completedLessonsNavDate.setOnClickListener { presenter.onPickDate() }
         completedLessonsNextButton.setOnClickListener { presenter.onNextDay() }
 
         completedLessonsNavContainer.setElevationCompat(requireContext().dpToPx(8f))
@@ -78,7 +88,15 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun showEmpty(show: Boolean) {
-        completedLessonsEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        completedLessonsEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        completedLessonError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        completedLessonErrorMessage.text = message
     }
 
     override fun showFeatureDisabled() {
@@ -87,7 +105,7 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun showProgress(show: Boolean) {
-        completedLessonsProgress.visibility = if (show) View.VISIBLE else View.GONE
+        completedLessonsProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
@@ -95,19 +113,34 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun showContent(show: Boolean) {
-        completedLessonsRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        completedLessonsRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showPreButton(show: Boolean) {
-        completedLessonsPreviousButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        completedLessonsPreviousButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        completedLessonsNextButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        completedLessonsNextButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showCompletedLessonDialog(completedLesson: CompletedLesson) {
         (activity as? MainActivity)?.showDialogFragment(CompletedLessonDialog.newInstance(completedLesson))
+    }
+
+    override fun showDatePickerDialog(currentDate: LocalDate) {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            presenter.onDateSet(year, month + 1, dayOfMonth)
+        }
+        val datePickerDialog = DatePickerDialog.newInstance(dateSetListener,
+            currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth)
+
+        with(datePickerDialog) {
+            setDateRangeLimiter(SchooldaysRangeLimiter())
+            version = DatePickerDialog.Version.VERSION_2
+            scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
+            show(this@CompletedLessonsFragment.parentFragmentManager, null)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

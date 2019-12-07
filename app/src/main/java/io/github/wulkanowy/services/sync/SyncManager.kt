@@ -11,6 +11,7 @@ import androidx.work.NetworkType.UNMETERED
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import io.github.wulkanowy.data.db.SharedPrefProvider
+import io.github.wulkanowy.data.db.SharedPrefProvider.Companion.APP_VERSION_CODE_KEY
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
@@ -31,10 +32,6 @@ class SyncManager @Inject constructor(
     debugChannel: DebugChannel,
     appInfo: AppInfo
 ) {
-
-    companion object {
-        private const val APP_VERSION_CODE_KEY = "app_version_code"
-    }
 
     init {
         if (now().isHolidays) stopSyncWorker()

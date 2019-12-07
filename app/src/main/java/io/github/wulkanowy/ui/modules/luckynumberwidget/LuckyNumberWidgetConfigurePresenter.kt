@@ -58,7 +58,10 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
             .subscribe({
                 when {
                     it.isEmpty() -> view?.openLoginView()
-                    it.size == 1 -> registerStudent(it.single().student)
+                    it.size == 1 -> {
+                        selectedStudent = it.single().student
+                        view?.showThemeDialog()
+                    }
                     else -> view?.updateData(it)
                 }
             }, { errorHandler.dispatch(it) }))

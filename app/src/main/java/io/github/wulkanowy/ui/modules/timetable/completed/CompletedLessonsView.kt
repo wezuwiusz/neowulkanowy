@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.timetable.completed
 
 import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.ui.base.BaseView
+import org.threeten.bp.LocalDate
 
 interface CompletedLessonsView : BaseView {
 
@@ -19,6 +20,10 @@ interface CompletedLessonsView : BaseView {
 
     fun showEmpty(show: Boolean)
 
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
+
     fun showFeatureDisabled()
 
     fun showProgress(show: Boolean)
@@ -32,4 +37,6 @@ interface CompletedLessonsView : BaseView {
     fun showNextButton(show: Boolean)
 
     fun showCompletedLessonDialog(completedLesson: CompletedLesson)
+
+    fun showDatePickerDialog(currentDate: LocalDate)
 }

@@ -41,9 +41,9 @@ class GradeExtensionTest {
     }
 
     @Test
-    fun changeModifier_default() {
-        assertEquals(.33, createGrade(5, .0, .33).changeModifier(.0, .0).modifier, .0)
-        assertEquals(-.33, createGrade(5, .0, -.33).changeModifier(.0, .0).modifier, .0)
+    fun changeModifier_zero() {
+        assertEquals(.0, createGrade(5, .0, .5).changeModifier(.0, .0).modifier, .0)
+        assertEquals(.0, createGrade(5, .0, -.5).changeModifier(.0, .0).modifier, .0)
     }
 
     @Test

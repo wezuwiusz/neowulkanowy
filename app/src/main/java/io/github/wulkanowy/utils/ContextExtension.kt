@@ -32,7 +32,7 @@ fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -
     }
 }
 
-fun Context.openEmail(chooserTitle: String, email: String, subject: String?, body: String?) {
+fun Context.openEmailClient(chooserTitle: String, email: String, subject: String?, body: String?) {
     val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null))
     emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
     if (subject != null) emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
@@ -40,7 +40,7 @@ fun Context.openEmail(chooserTitle: String, email: String, subject: String?, bod
     startActivity(Intent.createChooser(emailIntent, chooserTitle))
 }
 
-fun Context.openMapLocation(location: String) {
+fun Context.openNavigation(location: String) {
     val intentUri = Uri.parse("geo:0,0?q=${Uri.encode(location)}")
     val intent = Intent(Intent.ACTION_VIEW, intentUri)
     if (intent.resolveActivity(packageManager) != null) {
@@ -48,7 +48,7 @@ fun Context.openMapLocation(location: String) {
     }
 }
 
-fun Context.dialPhone(phone: String) {
+fun Context.openDialer(phone: String) {
     val intentUri = Uri.parse("tel:$phone")
     val intent = Intent(Intent.ACTION_DIAL, intentUri)
     startActivity(intent)

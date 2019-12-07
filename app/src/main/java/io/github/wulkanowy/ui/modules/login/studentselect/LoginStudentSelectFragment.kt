@@ -14,7 +14,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.openEmail
+import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_login_student_select.*
@@ -102,7 +102,7 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     }
 
     override fun openEmail() {
-        context?.openEmail(
+        context?.openEmailClient(
             requireContext().getString(R.string.login_email_intent_title),
             "wulkanowyinc@gmail.com",
             requireContext().getString(R.string.login_email_subject),

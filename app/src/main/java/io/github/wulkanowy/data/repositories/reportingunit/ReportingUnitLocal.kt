@@ -18,7 +18,7 @@ class ReportingUnitLocal @Inject constructor(private val reportingUnitDb: Report
         return reportingUnitDb.loadOne(student.studentId, unitId)
     }
 
-    fun saveReportingUnits(reportingUnits: List<ReportingUnit>) {
+    fun saveReportingUnits(reportingUnits: List<ReportingUnit>): List<Long> {
         return reportingUnitDb.insertAll(reportingUnits)
     }
 

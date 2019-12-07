@@ -111,9 +111,11 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
             setOnItemSelectedListener<TextView> { presenter.onSubjectSelected(it?.text?.toString()) }
         }
 
-        gradeStatisticsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
-
         gradeStatisticsSubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
+
+        gradeStatisticsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+        gradeStatisticsErrorRetry.setOnClickListener { presenter.onRetry() }
+        gradeStatisticsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
     override fun updateSubjects(data: ArrayList<String>) {
@@ -226,6 +228,14 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
 
     override fun showEmpty(show: Boolean) {
         gradeStatisticsEmpty.visibility = if (show) View.VISIBLE else View.INVISIBLE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        gradeStatisticsError.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        gradeStatisticsErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {

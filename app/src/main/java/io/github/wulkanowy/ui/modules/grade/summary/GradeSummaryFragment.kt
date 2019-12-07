@@ -56,6 +56,8 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
             adapter = gradeSummaryAdapter
         }
         gradeSummarySwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        gradeSummaryErrorRetry.setOnClickListener { presenter.onRetry() }
+        gradeSummaryErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
     override fun updateData(data: List<GradeSummaryItem>, header: GradeSummaryScrollableHeader) {
@@ -80,6 +82,14 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
 
     override fun showEmpty(show: Boolean) {
         gradeSummaryEmpty.visibility = if (show) VISIBLE else INVISIBLE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        gradeSummaryError.visibility = if (show) VISIBLE else INVISIBLE
+    }
+
+    override fun setErrorDetails(message: String) {
+        gradeSummaryErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {

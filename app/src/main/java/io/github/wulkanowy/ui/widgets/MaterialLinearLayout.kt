@@ -33,7 +33,7 @@ class MaterialLinearLayout : LinearLayout {
         if (SDK_INT >= LOLLIPOP) {
             setElevation(elevation)
         } else {
-            setBackgroundColor(ElevationOverlayProvider(context).getSurfaceColorWithOverlayIfNeeded(elevation))
+            setBackgroundColor(ElevationOverlayProvider(context).compositeOverlayWithThemeSurfaceColorIfNeeded(elevation))
         }
     }
 }

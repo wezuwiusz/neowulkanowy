@@ -47,6 +47,11 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
             Triple(getString(R.string.about_feedback), getString(R.string.about_feedback_summary), getCompatDrawable(R.drawable.ic_about_feedback))
         }
 
+    override val faqRes: Triple<String, String, Drawable?>?
+        get() = context?.run {
+            Triple(getString(R.string.about_faq), getString(R.string.about_faq_summary), getCompatDrawable(R.drawable.ic_about_faq))
+        }
+
     override val discordRes: Triple<String, String, Drawable?>?
         get() = context?.run {
             Triple(getString(R.string.about_discord), getString(R.string.about_discord_summary), getCompatDrawable(R.drawable.ic_about_discord))
@@ -128,6 +133,10 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
                 it.openInternetBrowser("https://github.com/wulkanowy/wulkanowy/issues", ::showMessage)
             }
         }
+    }
+
+    override fun openFaqPage() {
+        context?.openInternetBrowser("https://wulkanowy.github.io/czesto-zadawane-pytania", ::showMessage)
     }
 
     override fun openLicenses() {

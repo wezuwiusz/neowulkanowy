@@ -36,10 +36,13 @@ class ExamPresenter @Inject constructor(
     lateinit var currentDate: LocalDate
         private set
 
+    private lateinit var lastError: Throwable
+
     fun onAttachView(view: ExamView, date: Long?) {
         super.onAttachView(view)
         view.initView()
         Timber.i("Exam view was initialized")
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
         if (currentDate.isHolidays) setBaseDateOnHolidays()
         reloadView()
@@ -58,6 +61,18 @@ class ExamPresenter @Inject constructor(
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the exam")
         loadData(currentDate, true)
+    }
+
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(currentDate, true)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     fun onExamItemSelected(item: AbstractFlexibleItem<*>?) {
@@ -116,14 +131,25 @@ class ExamPresenter @Inject constructor(
                     view?.apply {
                         updateData(it)
                         showEmpty(it.isEmpty())
+                        showErrorView(false)
                         showContent(it.isNotEmpty())
                     }
                     analytics.logEvent("load_exam", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
                     Timber.i("Loading exam result: An exception occurred")
-                    view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 })
+        }
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
         }
     }
 
@@ -142,6 +168,7 @@ class ExamPresenter @Inject constructor(
             enableSwipe(false)
             showContent(false)
             showEmpty(false)
+            showErrorView(false)
             clearData()
             reloadNavigation()
         }

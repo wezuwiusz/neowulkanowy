@@ -16,7 +16,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
-import io.github.wulkanowy.utils.openEmail
+import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_form.*
@@ -62,7 +62,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
         loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
-        loginFormContactDiscord.setOnClickListener { presenter.onDiscordClick() }
+        loginFormFaq.setOnClickListener { presenter.onFaqClick() }
         loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
 
         loginFormPass.setOnEditorActionListener { _, id, _ ->
@@ -161,12 +161,12 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         presenter.onDetachView()
     }
 
-    override fun openDiscordInvite() {
-        context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
+    override fun openFaqPage() {
+        context?.openInternetBrowser("https://wulkanowy.github.io/czesto-zadawane-pytania/dlaczego-nie-moge-sie-zalogowac", ::showMessage)
     }
 
     override fun openEmail() {
-        context?.openEmail(
+        context?.openEmailClient(
             requireContext().getString(R.string.login_email_intent_title),
             "wulkanowyinc@gmail.com",
             requireContext().getString(R.string.login_email_subject),

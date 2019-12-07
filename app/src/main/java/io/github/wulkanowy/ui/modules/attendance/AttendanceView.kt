@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.attendance
 
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.ui.base.BaseView
+import org.threeten.bp.LocalDate
 
 interface AttendanceView : BaseView {
 
@@ -23,6 +24,10 @@ interface AttendanceView : BaseView {
 
     fun showEmpty(show: Boolean)
 
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
+
     fun showProgress(show: Boolean)
 
     fun enableSwipe(enable: Boolean)
@@ -34,6 +39,8 @@ interface AttendanceView : BaseView {
     fun showNextButton(show: Boolean)
 
     fun showAttendanceDialog(lesson: Attendance)
+
+    fun showDatePickerDialog(currentDate: LocalDate)
 
     fun openSummaryView()
 

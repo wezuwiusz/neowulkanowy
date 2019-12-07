@@ -6,6 +6,6 @@
         android:enabled="false"
         android:orderInCategory="100"
         android:title="@string/grade_menu_read"
-        app:iconTint="@color/mtrl_on_surface_emphasis_medium"
+        app:iconTint="@color/material_on_surface_emphasis_medium"
         app:showAsAction="never" />
 </menu>

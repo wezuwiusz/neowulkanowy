@@ -18,6 +18,10 @@ interface AttendanceSummaryView : BaseView {
 
     fun showEmpty(show: Boolean)
 
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
+
     fun updateDataSet(data: List<AttendanceSummaryItem>, header: AttendanceSummaryScrollableHeader)
 
     fun updateSubjects(data: ArrayList<String>)

@@ -65,6 +65,10 @@ class MessagePreviewFragment : BaseFragment(), MessagePreviewView, MainView.Titl
         presenter.onAttachView(this, (savedInstanceState ?: arguments)?.getLong(MESSAGE_ID_KEY) ?: 0L)
     }
 
+    override fun initView() {
+        messagePreviewErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_menu_message_preview, menu)
         menuReplyButton = menu.findItem(R.id.messagePreviewMenuReply)
@@ -126,8 +130,16 @@ class MessagePreviewFragment : BaseFragment(), MessagePreviewView, MainView.Titl
         menuDeleteButton?.setTitle(R.string.message_move_to_bin)
     }
 
-    override fun showMessageError() {
-        messagePreviewError.visibility = VISIBLE
+    override fun showErrorView(show: Boolean) {
+        messagePreviewError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        messagePreviewErrorMessage.text = message
+    }
+
+    override fun setErrorRetryCallback(callback: () -> Unit) {
+        messagePreviewErrorRetry.setOnClickListener { callback() }
     }
 
     override fun openMessageReply(message: Message?) {

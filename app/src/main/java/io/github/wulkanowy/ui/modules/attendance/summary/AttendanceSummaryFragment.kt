@@ -57,6 +57,8 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
         }
 
         attendanceSummarySwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+        attendanceSummaryErrorRetry.setOnClickListener { presenter.onRetry() }
+        attendanceSummaryErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
         subjectsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())
         subjectsAdapter.setDropDownViewResource(R.layout.item_attendance_summary_subject)
@@ -91,6 +93,14 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
 
     override fun showEmpty(show: Boolean) {
         attendanceSummaryEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        attendanceSummaryError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        attendanceSummaryErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {

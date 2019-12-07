@@ -38,6 +38,10 @@ interface GradeDetailsView : BaseView {
 
     fun showProgress(show: Boolean)
 
+    fun showErrorView(show: Boolean)
+
+    fun setErrorDetails(message: String)
+
     fun enableSwipe(enable: Boolean)
 
     fun showRefresh(show: Boolean)

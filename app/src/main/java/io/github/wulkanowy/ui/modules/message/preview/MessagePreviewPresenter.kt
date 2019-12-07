@@ -23,9 +23,27 @@ class MessagePreviewPresenter @Inject constructor(
 
     private var message: Message? = null
 
+    private lateinit var lastError: Throwable
+
+    private var retryCallback: () -> Unit = {}
+
     fun onAttachView(view: MessagePreviewView, id: Long) {
         super.onAttachView(view)
+        view.initView()
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData(id)
+    }
+
+    private fun onMessageLoadRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(messageId)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     private fun loadData(id: Long) {
@@ -55,7 +73,7 @@ class MessagePreviewPresenter @Inject constructor(
                     analytics.logEvent("load_message_preview", "length" to message.content?.length)
                 }) {
                     Timber.i("Loading message $id preview result: An exception occurred ")
-                    view?.showMessageError()
+                    retryCallback = { onMessageLoadRetry() }
                     errorHandler.dispatch(it)
                 })
         }
@@ -85,6 +103,7 @@ class MessagePreviewPresenter @Inject constructor(
                         showContent(false)
                         showProgress(true)
                         showOptions(false)
+                        showErrorView(false)
                     }
                 }
                 .doFinally {
@@ -97,12 +116,21 @@ class MessagePreviewPresenter @Inject constructor(
                         popView()
                     }
                 }, { error ->
-                    view?.showMessageError()
+                    retryCallback = { onMessageDelete() }
                     errorHandler.dispatch(error)
                 }, {
-                    view?.showMessageError()
+                    view?.showErrorView(true)
                 })
             )
+        }
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            lastError = error
+            setErrorDetails(message)
+            showErrorView(true)
+            setErrorRetryCallback { retryCallback() }
         }
     }
 

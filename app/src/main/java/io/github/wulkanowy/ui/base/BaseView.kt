@@ -9,4 +9,6 @@ interface BaseView {
     fun showExpiredDialog()
 
     fun openClearLoginView()
+
+    fun showErrorDetailsDialog(error: Throwable)
 }

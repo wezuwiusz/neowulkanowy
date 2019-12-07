@@ -16,7 +16,7 @@
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="?colorPrimary"
-        app:tabTextColor="@color/mtrl_on_surface_emphasis_medium"
+        app:tabTextColor="@color/material_on_surface_emphasis_medium"
         tools:ignore="UnusedAttribute"
         tools:visibility="visible" />
 

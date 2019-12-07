@@ -61,6 +61,8 @@ class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledVi
             onDeviceUnregisterListener = presenter::onUnregisterDevice
         }
         mobileDevicesSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+        mobileDevicesErrorRetry.setOnClickListener { presenter.onRetry() }
+        mobileDevicesErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         mobileDeviceAddButton.setOnClickListener { presenter.onRegisterDevice() }
     }
 
@@ -103,6 +105,14 @@ class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledVi
 
     override fun showEmpty(show: Boolean) {
         mobileDevicesEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        mobileDevicesError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        mobileDevicesErrorMessage.text = message
     }
 
     override fun enableSwipe(enable: Boolean) {

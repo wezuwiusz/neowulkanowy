@@ -6,7 +6,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
@@ -17,9 +20,11 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
+import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable.*
+import org.threeten.bp.LocalDate
 import javax.inject.Inject
 
 class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
@@ -71,7 +76,11 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
         }
 
         timetableSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+        timetableErrorRetry.setOnClickListener { presenter.onRetry() }
+        timetableErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+
         timetablePreviousButton.setOnClickListener { presenter.onPreviousDay() }
+        timetableNavDate.setOnClickListener { presenter.onPickDate() }
         timetableNextButton.setOnClickListener { presenter.onNextDay() }
 
         timetableNavContainer.setElevationCompat(requireContext().dpToPx(8f))
@@ -115,11 +124,19 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     }
 
     override fun showEmpty(show: Boolean) {
-        timetableEmpty.visibility = if (show) View.VISIBLE else View.GONE
+        timetableEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showErrorView(show: Boolean) {
+        timetableError.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        timetableErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        timetableProgress.visibility = if (show) View.VISIBLE else View.GONE
+        timetableProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
@@ -127,19 +144,34 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     }
 
     override fun showContent(show: Boolean) {
-        timetableRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        timetableRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showPreButton(show: Boolean) {
-        timetablePreviousButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        timetablePreviousButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        timetableNextButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        timetableNextButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
     override fun showTimetableDialog(lesson: Timetable) {
         (activity as? MainActivity)?.showDialogFragment(TimetableDialog.newInstance(lesson))
+    }
+
+    override fun showDatePickerDialog(currentDate: LocalDate) {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            presenter.onDateSet(year, month + 1, dayOfMonth)
+        }
+        val datePickerDialog = DatePickerDialog.newInstance(dateSetListener,
+            currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth)
+
+        with(datePickerDialog) {
+            setDateRangeLimiter(SchooldaysRangeLimiter())
+            version = DatePickerDialog.Version.VERSION_2
+            scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
+            show(this@TimetableFragment.parentFragmentManager, null)
+        }
     }
 
     override fun openCompletedLessonsView() {

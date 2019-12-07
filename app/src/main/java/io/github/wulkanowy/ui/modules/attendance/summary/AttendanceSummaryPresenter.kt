@@ -33,10 +33,13 @@ class AttendanceSummaryPresenter @Inject constructor(
     var currentSubjectId = -1
         private set
 
+    private lateinit var lastError: Throwable
+
     fun onAttachView(view: AttendanceSummaryView, subjectId: Int?) {
         super.onAttachView(view)
         view.initView()
         Timber.i("Attendance summary view was initialized with subject id ${subjectId ?: -1}")
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData(subjectId ?: -1)
         loadSubjects()
     }
@@ -46,12 +49,26 @@ class AttendanceSummaryPresenter @Inject constructor(
         loadData(currentSubjectId, true)
     }
 
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(currentSubjectId, true)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
+    }
+
     fun onSubjectSelected(name: String?) {
         Timber.i("Select attendance summary subject $name")
         view?.run {
             showContent(false)
             showProgress(true)
             enableSwipe(false)
+            showEmpty(false)
+            showErrorView(false)
             clearView()
         }
         (subjects.singleOrNull { it.name == name }?.realId ?: -1).let {
@@ -88,10 +105,20 @@ class AttendanceSummaryPresenter @Inject constructor(
                     analytics.logEvent("load_attendance_summary", "items" to it.first.size, "force_refresh" to forceRefresh, "item_id" to subjectId)
                 }) {
                     Timber.i("Loading attendance summary result: An exception occurred")
-                    view?.run { showEmpty(isViewEmpty) }
                     errorHandler.dispatch(it)
                 }
             )
+        }
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+            } else showError(message, error)
         }
     }
 

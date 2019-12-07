@@ -23,10 +23,13 @@ class SchoolPresenter @Inject constructor(
 
     private var contact: String? = null
 
+    private lateinit var lastError: Throwable
+
     override fun onAttachView(view: SchoolView) {
         super.onAttachView(view)
         view.initView()
         Timber.i("School view was initialized")
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData()
     }
 
@@ -34,12 +37,24 @@ class SchoolPresenter @Inject constructor(
         loadData(true)
     }
 
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(true)
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
+    }
+
     fun onParentViewLoadData(forceRefresh: Boolean) {
         loadData(forceRefresh)
     }
 
     fun onAddressSelected() {
-        address?.let{ view?.openMapsLocation(it) }
+        address?.let { view?.openMapsLocation(it) }
     }
 
     fun onTelephoneSelected() {
@@ -68,6 +83,7 @@ class SchoolPresenter @Inject constructor(
                     updateData(it)
                     showContent(true)
                     showEmpty(false)
+                    showErrorView(false)
                 }
                 analytics.logEvent("load_school", "force_refresh" to forceRefresh)
             }, {
@@ -76,9 +92,22 @@ class SchoolPresenter @Inject constructor(
             }, {
                 Timber.i("Loading school result: No school info found")
                 view?.run {
-                    showContent(false)
-                    showEmpty(true)
+                    showContent(!isViewEmpty)
+                    showEmpty(isViewEmpty)
+                    showErrorView(false)
                 }
             }))
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showEmpty(false)
+                showContent(false)
+            } else showError(message, error)
+        }
     }
 }

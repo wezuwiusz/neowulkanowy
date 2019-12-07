@@ -6,10 +6,13 @@ import android.util.Log.VERBOSE
 import androidx.multidex.MultiDex
 import androidx.work.Configuration
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.yariksoffice.lingver.Lingver
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.utils.Log
+import io.github.wulkanowy.data.db.SharedPrefProvider
+import io.github.wulkanowy.data.db.SharedPrefProvider.Companion.APP_VERSION_CODE_KEY
 import io.github.wulkanowy.di.DaggerAppComponent
 import io.github.wulkanowy.services.sync.SyncWorkerFactory
 import io.github.wulkanowy.ui.base.ThemeManager
@@ -33,6 +36,9 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
     lateinit var themeManager: ThemeManager
 
     @Inject
+    lateinit var sharedPrefProvider: SharedPrefProvider
+
+    @Inject
     lateinit var appInfo: AppInfo
 
     override fun attachBaseContext(base: Context?) {
@@ -44,7 +50,9 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
         super.onCreate()
         AndroidThreeTen.init(this)
         RxJavaPlugins.setErrorHandler(::onError)
+        Lingver.init(this)
         themeManager.applyDefaultTheme()
+        migrateSharedPreferences()
 
         initLogging()
         initCrashlytics(this, appInfo)
@@ -58,6 +66,13 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
             Timber.plant(CrashlyticsTree())
         }
         registerActivityLifecycleCallbacks(ActivityLifecycleLogger())
+    }
+
+    private fun migrateSharedPreferences() {
+        if (sharedPrefProvider.getLong(APP_VERSION_CODE_KEY, -1) < 48) { // #596
+            sharedPrefProvider.delete(getString(R.string.pref_key_grade_modifier_plus))
+            sharedPrefProvider.delete(getString(R.string.pref_key_grade_modifier_minus))
+        }
     }
 
     private fun onError(error: Throwable) {

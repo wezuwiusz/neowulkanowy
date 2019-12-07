@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name">Wulkanowy</string>
+
+
+    <!--Activity/Fragment title-->
+    <string name="login_title">Авторизация</string>
+    <string name="main_title">Wulkanowy</string>
+    <string name="grade_title">Оценки</string>
+    <string name="attendance_title">Посещаемость</string>
+    <string name="exam_title">Тесты</string>
+    <string name="timetable_title">Расписание</string>
+    <string name="settings_title">Настройки</string>
+    <string name="more_title">Ещё</string>
+    <string name="about_title">О приложении</string>
+    <string name="license_title">Лицензии</string>
+    <string name="message_title">Сообщения</string>
+    <string name="send_message_title">Новое сообщение</string>
+    <string name="note_title">Предупреждения и свершения</string>
+    <string name="homework_title">Домашние задания</string>
+    <string name="account_title">Выберите аккаунт</string>
+
+
+    <!--Login-->
+    <string name="login_header_default">Авторизируйтесь при помощи аккаунта ученика или родителя</string>
+    <string name="login_header_symbol">Впишите \"symbol\"</string>
+    <string name="login_nickname_hint">Электронная почта или имя пользователя</string>
+    <string name="login_password_hint">Пароль</string>
+    <string name="login_host_hint">Дневник</string>
+    <string name="login_symbol_hint">Symbol</string>
+    <string name="login_sign_in">Войти</string>
+    <string name="login_invalid_password">Слишком короткий пароль</string>
+    <string name="login_incorrect_password">Указаны неверные данные</string>
+    <string name="login_incorrect_symbol">Не удалось найти ученика. Пожалуйста, проверьте \"symbol\"</string>
+    <string name="login_field_required">Это поле обязательно</string>
+    <string name="login_duplicate_student">Данный ученик уже авторизован</string>
+    <string name="login_symbol_helper">Вы можете найти \"symbol\" в Uczeń -&gt; Dostęp Mobilny -&gt; Zarejestruj urządzenie mobilne</string>
+    <string name="login_select_student">Выберите учеников для авторизации в приложении</string>
+    <string name="login_privacy_policy">Политика приватности</string>
+    <string name="login_contact_header">Проблемы с авторизацией? Свяжитесь с нами!</string>
+    <string name="login_contact_email">Электронная почта</string>
+    <string name="login_contact_discord">Discord</string>
+    <string name="login_email_intent_title">Отправить письмо</string>
+
+
+    <!--Main-->
+    <string name="main_account_picker">Менеджер аккаунтов</string>
+    <string name="main_log_in">Войти</string>
+    <string name="main_session_expired">Сеанс истёк</string>
+    <string name="main_session_relogin">Сеанс истёк, пожалуйста, авторизируйтесь ещё раз</string>
+
+
+    <!--Grade-->
+    <string name="grade_header">Оценка</string>
+    <string name="grade_semester">Семестр %d</string>
+    <string name="grade_switch_semester">Сменить семестр</string>
+    <string name="grade_no_items">Оценки отсутствуют</string>
+    <string name="grade_weight">Вес</string>
+    <string name="grade_comment">Комментарий</string>
+    <string name="grade_no_new_items">Новые оценки отсутствуют</string>
+    <string name="grade_number_new_items">Количество новых оценок: %1$d</string>
+    <string name="grade_average">Средняя оценка: %1$.2f</string>
+    <string name="grade_no_average">Средняя оценка отсутствует</string>
+    <string name="grade_predicted">Ожидаемая оценка: %1$s</string>
+    <string name="grade_final">Итоговая оценка: %1$s</string>
+    <string name="grade_summary_points">Сумма очков</string>
+    <string name="grade_summary_final_grade">Итоговая оценка</string>
+    <string name="grade_summary_predicted_grade">Ожидаемая оценка</string>
+    <string name="grade_summary_calculated_average">Рассчитанная средняя оценка</string>
+    <string name="grade_summary_final_average">Итоговая средняя оценка</string>
+    <string name="grade_menu_summary">Итоги</string>
+    <string name="grade_menu_statistics">Класс</string>
+    <string name="grade_menu_read">Пометить как \"прочитанное*</string>
+    <string name="grade_statistics_partial">Частичные</string>
+    <string name="grade_statistics_semester">Семестровые</string>
+    <string name="grade_statistics_points">Очки</string>
+    <plurals name="grade_number_item">
+        <item quantity="one">%d оценка</item>
+        <item quantity="few">%d оценки</item>
+        <item quantity="many">%d оценок</item>
+        <item quantity="other">%d оценок</item>
+    </plurals>
+    <plurals name="grade_new_items">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Новая оценка</item>
+        <item quantity="few">Новые оценки</item>
+        <item quantity="many">Новые оценки</item>
+        <item quantity="other">Новые оценки</item>
+    </plurals>
+    <plurals name="grade_notify_new_items">
+        <item quantity="one">Вы получили %1$d оценку</item>
+        <item quantity="few">Вы получили %1$d оценки</item>
+        <item quantity="many">Вы получили %1$d оценок</item>
+        <item quantity="other">Вы получили %1$d оценок</item>
+    </plurals>
+
+
+    <!--Timetable-->
+    <string name="timetable_lesson">Урок</string>
+    <string name="timetable_room">Аудитория</string>
+    <string name="timetable_group">Группа</string>
+    <string name="timetable_time">Часы</string>
+    <string name="timetable_changes">Изменения</string>
+    <string name="timetable_no_items">Нету уроков в данный день</string>
+
+
+    <!--CompletedLesson-->
+    <string name="completed_lessons_title">Проведённые уроки</string>
+    <string name="completed_lessons_button">Просмотреть проведённые уроки</string>
+    <string name="completed_lessons_no_items">Нет информации о проведённых уроках</string>
+    <string name="completed_lessons_topic">Тема</string>
+    <string name="completed_lessons_absence">Отсутствие</string>
+    <string name="completed_lessons_resources">Ресурсы</string>
+
+
+    <!--Attendance-->
+    <string name="attendance_summary_button">Итоговая посещаемость</string>
+    <string name="attendance_absence_school">Отсутствие по школьным причинам</string>
+    <string name="attendance_absence_excused">Оправданное отсутствие</string>
+    <string name="attendance_absence_unexcused">Неоправданное отсутствие</string>
+    <string name="attendance_exemption">Освобождение</string>
+    <string name="attendance_excused_lateness">Оправданное опоздание</string>
+    <string name="attendance_unexcused_lateness">Неоправданное опоздание</string>
+    <string name="attendance_present">Присутствие</string>
+    <string name="attendance_number">Урок №</string>
+    <string name="attendance_no_items">Данные не найдены</string>
+    <plurals name="attendance_number_absences">
+        <item quantity="one">%1$d отсутствие</item>
+        <item quantity="few">%1$d отсутствия</item>
+        <item quantity="many">%1$d отсутствий</item>
+        <item quantity="other">%1$d отсутствий</item>
+    </plurals>
+
+
+    <!--Attendance summary-->
+    <string name="attendance_summary_final">Посещаемость</string>
+
+
+    <!--Exam-->
+    <string name="exam_no_items">Тесты на этой неделе не запланированы</string>
+    <string name="exam_type">Тип</string>
+    <string name="exam_entry_date">Дата записи</string>
+
+
+    <!--Message-->
+    <string name="message_inbox">Полученные</string>
+    <string name="message_sent">Отправленные</string>
+    <string name="message_trash">Корзина</string>
+    <string name="message_no_subject">(нету темы)</string>
+    <string name="message_no_items">Нет сообщений</string>
+    <string name="message_preview_error">Произошла ошибка во время получения текста сообщения</string>
+    <string name="message_from">От:</string>
+    <string name="message_to">Кому:</string>
+    <string name="message_date">Дата: %s</string>
+    <string name="message_reply">Ответ</string>
+    <string name="message_forward">Переслать</string>
+    <string name="message_delete">Удалить</string>
+    <string name="message_move_to_bin">Перенести в корзину</string>
+    <string name="message_delete_forever">Удалить навсегда</string>
+    <string name="message_delete_success">Сообщение успешно удалено</string>
+    <string name="message_subject">Тема</string>
+    <string name="message_content">Текст</string>
+    <string name="message_send_successful">Сообщение успешно отправлено</string>
+    <string name="message_required_recipients">Вы должны выбрать как минимум одного получателя</string>
+    <string name="message_content_min_length">Текст сообщения должен содержать как минимум 3 знака</string>
+    <plurals name="message_number_item">
+        <item quantity="one">%d сообщение</item>
+        <item quantity="few">%d сообщения</item>
+        <item quantity="many">%d сообщений</item>
+        <item quantity="other">%d сообщений</item>
+    </plurals>
+    <plurals name="message_new_items">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Новое сообщение</item>
+        <item quantity="few">Новые сообщения</item>
+        <item quantity="many">Новые сообщения</item>
+        <item quantity="other">Новые сообщения</item>
+    </plurals>
+    <plurals name="message_notify_new_items">
+        <item quantity="one">Вы получили %1$d новое сообщение</item>
+        <item quantity="few">Вы получили %1$d новых сообщения</item>
+        <item quantity="many">Вы получили %1$d новых сообщений</item>
+        <item quantity="other">Вы получили %1$d новых сообщений</item>
+    </plurals>
+
+
+    <!--Note-->
+    <string name="note_no_items">Нет данных о предупреждениях</string>
+    <plurals name="note_number_item">
+        <item quantity="one">%d предупреждение</item>
+        <item quantity="few">%d предупреждения</item>
+        <item quantity="many">%d предупреждений</item>
+        <item quantity="other">%d предупреждений</item>
+    </plurals>
+    <plurals name="note_new_items">
+        <item quantity="one" tools:ignore="ImpliedQuantity">Новое предупреждение</item>
+        <item quantity="few">Новые предупреждения</item>
+        <item quantity="many">Новых предупреждений</item>
+        <item quantity="other">Новых предупреждений</item>
+    </plurals>
+    <plurals name="note_notify_new_items">
+        <item quantity="one">Вы получили %1$d предупреждение</item>
+        <item quantity="few">Вы получили %1$d предупреждения</item>
+        <item quantity="many">Вы получили %1$d предупреждений</item>
+        <item quantity="other">Вы получили %1$d предупреждений</item>
+    </plurals>
+
+
+    <!--Homework-->
+    <string name="homework_no_items">Нет домашних заданий</string>
+
+
+    <!--Lucky number-->
+    <string name="lucky_number_title">Счастливый номер</string>
+    <string name="lucky_number_header">Сегодняшний счастливый номер</string>
+    <string name="lucky_number_empty">Нет данных о счастливом номере</string>
+    <string name="lucky_number_notify_new_item_title">Сегодняшний счастливый номер</string>
+    <string name="lucky_number_notify_new_item">Сегодняшний счастливый номер: %d</string>
+
+
+    <!--Mobile devices-->
+    <string name="mobile_devices_title">Мобильные устройства</string>
+    <string name="mobile_devices_no_items">Нет устройств</string>
+    <string name="mobile_devices_unregister">Удалить</string>
+    <string name="mobile_device_removed">Устройство удалено</string>
+    <string name="mobile_device_qr">QR-код</string>
+    <string name="mobile_device_token">Token</string>
+    <string name="mobile_device_symbol">Symbol</string>
+    <string name="mobile_device_pin">PIN</string>
+
+
+    <!--School and teachers-->
+    <string name="schoolandteachers_title">Школа и учителя</string>
+
+
+    <!--School-->
+    <string name="school_title">Школа</string>
+    <string name="school_no_info">Нет информации о школе</string>
+    <string name="school_name">Название школы</string>
+    <string name="school_address">Адрес школы</string>
+    <string name="school_telephone">Телефон</string>
+    <string name="school_headmaster">Директор</string>
+    <string name="school_pedagogue">Педагог</string>
+    <string name="school_address_button">Показать на карте</string>
+    <string name="school_telephone_button">Позвонить</string>
+
+
+    <!--Teacher-->
+    <string name="teachers_title">Учителя</string>
+    <string name="teacher_no_items">Нет информации о учителях</string>
+    <string name="teacher_no_subject">Нет предмета</string>
+
+
+    <!--Account-->
+    <string name="account_add_new">Добавить аккаунт</string>
+    <string name="account_logout">Выйти</string>
+    <string name="account_confirm">Вы точно хотите выйти из данного аккаунта?</string>
+    <string name="account_logout_student">Выйти</string>
+
+
+    <!--About-->
+    <string name="about_version">Версия приложения</string>
+    <string name="about_feedback">Сообщить о ошибке</string>
+    <string name="about_feedback_summary">Отправить сообщение о ошибке через электронную почту</string>
+    <string name="about_discord">Сервер Discord</string>
+    <string name="about_discord_summary">Присоединиться к сообществу приложения</string>
+    <string name="about_privacy">Политика приватности</string>
+    <string name="about_privacy_summary">Правила сбора личных данных</string>
+    <string name="about_homepage">Домашняя страница</string>
+    <string name="about_homepage_summary">Посетить страницу и помочь в развитии приложения</string>
+    <string name="about_licenses">Лицензии</string>
+    <string name="about_licenses_summary">Лицензии использованных в приложении библиотек</string>
+
+
+    <!--Licenses-->
+    <string name="license_dialog_title">Лицензия</string>
+
+
+    <!--Generic-->
+    <string name="all_content">Содержание</string>
+    <string name="all_description">Описание</string>
+    <string name="all_no_description">Нет описания</string>
+    <string name="all_teacher">Учитель</string>
+    <string name="all_date">Дата</string>
+    <string name="all_entry_date">Дата записи</string>
+    <string name="all_color">Цвет</string>
+    <string name="all_details">Детали</string>
+    <string name="all_category">Категория</string>
+    <string name="all_close">Закрыть</string>
+    <string name="all_no_data">Нет данных</string>
+    <string name="all_subject">Предмет</string>
+    <string name="all_prev">Предыдущий</string>
+    <string name="all_next">Следующий</string>
+
+
+    <!--Timetable Widget-->
+    <string name="widget_timetable_no_items">Нет уроков</string>
+    <string name="widget_timetable_theme_title">Выбрать тему</string>
+    <string name="widget_timetable_theme_light">Светлая</string>
+    <string name="widget_timetable_theme_dark">Тёмная</string>
+
+
+    <!--Preferences-->
+    <string name="pref_view_header">Внешний вид</string>
+    <string name="pref_view_list">При входе открывать</string>
+    <string name="pref_view_grade_average_mode">Рассчитывание средней годовой оценки</string>
+    <string name="pref_view_grade_average_force_calc">Принудительно высчитать среднюю оценку через приложение</string>
+    <string name="pref_view_present">Показывать присутствия в посещаемости</string>
+    <string name="pref_view_app_theme">Тема приложения</string>
+    <string name="pref_view_expand_grade">Больше оценок</string>
+    <string name="pref_view_grade_color_scheme">Схема цветов оценок</string>
+    <string name="pref_view_app_language">Язык приложения</string>
+    <string name="pref_notify_header">Уведомления</string>
+    <string name="pref_notify_switch">Показывать уведомления</string>
+    <string name="pref_notify_debug_switch">Показывать дебаг-уведомления</string>
+    <string name="pref_services_header">Синхронизация</string>
+    <string name="pref_services_switch">Автоматическая синхронизация</string>
+    <string name="pref_services_suspended">Приостановить синхронизации во время каникул</string>
+    <string name="pref_services_interval">Интервал синхронизации</string>
+    <string name="pref_services_wifi">Только через Wi-Fi</string>
+    <string name="pref_other_header">Другие</string>
+    <string name="pref_other_grade_modifier_plus">Вес плюса</string>
+    <string name="pref_other_grade_modifier_minus">Вес минуса</string>
+    <string name="pref_other_fill_message_content">Ответить с историей сообщений</string>
+
+
+    <!--Notification Channels-->
+    <string name="channel_new_entries">Новые данные в дневнике</string>
+    <string name="channel_debug">Дебаг</string>
+
+
+    <!--Colors-->
+    <string name="all_black">Чёрный</string>
+    <string name="all_red">Красный</string>
+    <string name="all_blue">Голубой</string>
+    <string name="all_green">Зелёный</string>
+    <string name="all_purple">Фиолетовый</string>
+    <string name="all_empty_color">Нет цвета</string>
+
+
+    <!--Others-->
+    <string name="all_copied">Скопировано</string>
+    <string name="all_undo">Отменить</string>
+
+
+    <!--Errors-->
+    <string name="error_no_internet">Нет интернет-подключения</string>
+    <string name="error_timeout">Слишком долгое ожидание соединения с дневником</string>
+    <string name="error_login_failed">Авторизация не удалась. Пожалуйста, попробуйте ещё раз или перезапустите дневник</string>
+    <string name="error_service_unavailable">Дневник недоступен. Попробуйте позже</string>
+    <string name="error_unknown">Произошла неожиданная ошибка</string>
+    <string name="error_feature_disabled">Функция была выключена школой</string>
+
+</resources>

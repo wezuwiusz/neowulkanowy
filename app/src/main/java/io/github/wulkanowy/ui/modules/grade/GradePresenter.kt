@@ -25,14 +25,14 @@ class GradePresenter @Inject constructor(
 
     private val loadedSemesterId = mutableMapOf<Int, Int>()
 
+    private lateinit var lastError: Throwable
+
     fun onAttachView(view: GradeView, savedIndex: Int?) {
         super.onAttachView(view)
         selectedIndex = savedIndex ?: 0
-        view.run {
-            initView()
-            enableSwipe(false)
-        }
+        view.initView()
         Timber.i("Grade view was initialized with $selectedIndex index")
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData()
     }
 
@@ -71,7 +71,7 @@ class GradePresenter @Inject constructor(
         view?.apply {
             showContent(true)
             showProgress(false)
-            showEmpty(false)
+            showErrorView(false)
             loadedSemesterId[currentPageIndex] = semesterId
         }
     }
@@ -80,8 +80,16 @@ class GradePresenter @Inject constructor(
         if (semesters.isNotEmpty()) loadChild(index)
     }
 
-    fun onSwipeRefresh() {
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
         loadData()
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     private fun loadData() {
@@ -96,23 +104,26 @@ class GradePresenter @Inject constructor(
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .doFinally { view?.showRefresh(false) }
+            .doFinally { view?.showProgress(false) }
             .subscribe({
                 view?.run {
                     Timber.i("Loading grade result: Attempt load index $currentPageIndex")
                     loadChild(currentPageIndex)
-                    enableSwipe(false)
+                    showErrorView(false)
                     showSemesterSwitch(true)
                 }
             }) {
                 Timber.i("Loading grade result: An exception occurred")
                 errorHandler.dispatch(it)
-                view?.run {
-                    showProgress(false)
-                    showEmpty(true)
-                    enableSwipe(true)
-                }
             })
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        lastError = error
+        view?.run {
+            showErrorView(true)
+            setErrorDetails(message)
+        }
     }
 
     private fun loadChild(index: Int, forceRefresh: Boolean = false) {
