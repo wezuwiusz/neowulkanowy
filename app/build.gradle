@@ -196,7 +196,7 @@ dependencies {
     androidTestImplementation "io.mockk:mockk-android:$mockk"
     androidTestImplementation "androidx.room:room-testing:$room"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    androidTestImplementation "org.mockito:mockito-android:3.2.0"
+    androidTestImplementation "org.mockito:mockito-android:3.2.4"
 }
 
 apply plugin: 'com.google.gms.google-services'
