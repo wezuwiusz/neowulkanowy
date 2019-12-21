@@ -18,7 +18,6 @@ import eu.davidea.flexibleadapter.items.IFlexible
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.ui.modules.main.MainActivity

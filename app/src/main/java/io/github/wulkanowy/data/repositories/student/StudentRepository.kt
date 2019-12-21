@@ -2,7 +2,6 @@ package io.github.wulkanowy.data.repositories.student
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.ApiHelper
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.reactivex.Completable
@@ -16,21 +15,32 @@ import javax.inject.Singleton
 class StudentRepository @Inject constructor(
     private val local: StudentLocal,
     private val remote: StudentRemote,
-    private val settings: InternetObservingSettings,
-    private val apiHelper: ApiHelper
+    private val settings: InternetObservingSettings
 ) {
 
     fun isStudentSaved(): Single<Boolean> = local.getStudents(false).isEmpty.map { !it }
 
     fun isCurrentStudentSet(): Single<Boolean> = local.getCurrentStudent(false).isEmpty.map { !it }
 
-    fun getStudents(email: String, password: String, endpoint: String, symbol: String = ""): Single<List<Student>> {
-        return ReactiveNetwork.checkInternetConnectivity(settings)
-            .flatMap {
-                apiHelper.initApi(email, password, symbol, endpoint)
-                if (it) remote.getStudents(email, password, endpoint)
-                else Single.error(UnknownHostException("No internet connection"))
-            }
+    fun getStudentsApi(pin: String, symbol: String, token: String): Single<List<Student>> {
+        return ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
+            if (it) remote.getStudentsMobileApi(token, pin, symbol)
+            else Single.error(UnknownHostException("No internet connection"))
+        }
+    }
+
+    fun getStudentsScrapper(email: String, password: String, endpoint: String, symbol: String = ""): Single<List<Student>> {
+        return ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
+            if (it) remote.getStudentsScrapper(email, password, endpoint, symbol)
+            else Single.error(UnknownHostException("No internet connection"))
+        }
+    }
+
+    fun getStudentsHybrid(email: String, password: String, endpoint: String, symbol: String): Single<List<Student>> {
+        return ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
+            if (it) remote.getStudentsHybrid(email, password, endpoint, symbol)
+            else Single.error(UnknownHostException("No internet connection"))
+        }
     }
 
     fun getSavedStudents(decryptPass: Boolean = true): Single<List<Student>> {

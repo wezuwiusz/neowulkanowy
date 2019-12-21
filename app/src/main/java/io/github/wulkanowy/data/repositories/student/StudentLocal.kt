@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.student
 import android.content.Context
 import io.github.wulkanowy.data.db.dao.StudentDao
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.security.decrypt
 import io.github.wulkanowy.utils.security.encrypt
 import io.reactivex.Completable
@@ -18,7 +19,12 @@ class StudentLocal @Inject constructor(
 ) {
 
     fun saveStudents(students: List<Student>): Single<List<Long>> {
-        return Single.fromCallable { studentDb.insertAll(students.map { it.copy(password = encrypt(it.password, context)) }) }
+        return Single.fromCallable {
+            studentDb.insertAll(students.map {
+                if (Sdk.Mode.valueOf(it.loginMode) != Sdk.Mode.API) it.copy(password = encrypt(it.password, context))
+                else it
+            })
+        }
     }
 
     fun getStudents(decryptPass: Boolean): Maybe<List<Student>> {
@@ -28,7 +34,11 @@ class StudentLocal @Inject constructor(
     }
 
     fun getCurrentStudent(decryptPass: Boolean): Maybe<Student> {
-        return studentDb.loadCurrent().map { it.apply { if (decryptPass) password = decrypt(password) } }
+        return studentDb.loadCurrent().map {
+            it.apply {
+                if (decryptPass && Sdk.Mode.valueOf(loginMode) != Sdk.Mode.API) password = decrypt(password)
+            }
+        }
     }
 
     fun setCurrentStudent(student: Student): Completable {

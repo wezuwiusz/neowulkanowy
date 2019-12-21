@@ -1,7 +1,7 @@
 package io.github.wulkanowy.data.repositories.semester
 
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.ApiHelper
+import io.github.wulkanowy.data.SdkHelper
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.UnitTestInternetObservingStrategy
@@ -24,7 +24,7 @@ class SemesterRepositoryTest {
     private lateinit var semesterLocal: SemesterLocal
 
     @Mock
-    private lateinit var apiHelper: ApiHelper
+    private lateinit var sdkHelper: SdkHelper
 
     @Mock
     private lateinit var student: Student
@@ -38,7 +38,7 @@ class SemesterRepositoryTest {
     @Before
     fun initTest() {
         MockitoAnnotations.initMocks(this)
-        semesterRepository = SemesterRepository(semesterRemote, semesterLocal, settings, apiHelper)
+        semesterRepository = SemesterRepository(semesterRemote, semesterLocal, settings, sdkHelper)
     }
 
     @Test
@@ -48,7 +48,7 @@ class SemesterRepositoryTest {
             createSemesterEntity(true)
         )
 
-        doNothing().`when`(apiHelper).initApi(student)
+        doNothing().`when`(sdkHelper).init(student)
         doReturn(Maybe.empty<Semester>()).`when`(semesterLocal).getSemesters(student)
         doReturn(Single.just(semesters)).`when`(semesterRemote).getSemesters(student)
 
@@ -65,7 +65,7 @@ class SemesterRepositoryTest {
             createSemesterEntity(true)
         )
 
-        doNothing().`when`(apiHelper).initApi(student)
+        doNothing().`when`(sdkHelper).init(student)
         doReturn(Maybe.empty<Semester>()).`when`(semesterLocal).getSemesters(student)
         doReturn(Single.just(semesters)).`when`(semesterRemote).getSemesters(student)
 

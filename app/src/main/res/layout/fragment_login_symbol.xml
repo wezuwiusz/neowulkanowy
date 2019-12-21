@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:imeActionLabel="@string/login_sign_in"
                     android:imeOptions="actionDone"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textAutoComplete|textNoSuggestions"
                     android:maxLines="1"
                     tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>

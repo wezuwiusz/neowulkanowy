@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.grade.GradeRepository
 import io.github.wulkanowy.data.repositories.gradessummary.GradeSummaryRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
+import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.calcAverage
 import io.github.wulkanowy.utils.changeModifier
 import io.reactivex.Maybe
@@ -40,7 +41,7 @@ class GradeAverageProvider @Inject constructor(
                             .map { secondGrades -> secondGrades + firstGrades }
                     }
                 }.map { grades ->
-                    grades.map { it.changeModifier(plusModifier, minusModifier) }
+                    grades.map { if (student.loginMode == Sdk.Mode.SCRAPPER.name) it.changeModifier(plusModifier, minusModifier) else it }
                         .groupBy { it.subject }
                         .mapValues { it.value.calcAverage() }
                 })
@@ -54,7 +55,7 @@ class GradeAverageProvider @Inject constructor(
         return getAverageFromGradeSummary(selectedSemester, forceRefresh)
             .switchIfEmpty(gradeRepository.getGrades(student, selectedSemester, forceRefresh)
                 .map { grades ->
-                    grades.map { it.changeModifier(plusModifier, minusModifier) }
+                    grades.map { if (student.loginMode == Sdk.Mode.SCRAPPER.name) it.changeModifier(plusModifier, minusModifier) else it }
                         .groupBy { it.subject }
                         .mapValues { it.value.calcAverage() }
                 })

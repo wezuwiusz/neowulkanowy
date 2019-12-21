@@ -19,7 +19,7 @@ data class Grade(
 
     val entry: String,
 
-    val value: Int,
+    val value: Double,
 
     val modifier: Double,
 

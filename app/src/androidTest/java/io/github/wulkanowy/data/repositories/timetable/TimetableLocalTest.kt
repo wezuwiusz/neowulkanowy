@@ -35,9 +35,9 @@ class TimetableLocalTest {
     @Test
     fun saveAndReadTest() {
         timetableDb.saveTimetable(listOf(
-            createTimetableLocal(1, of(2018, 9, 10, 0, 0, 0)),
-            createTimetableLocal(1, of(2018, 9, 14, 0, 0, 0)),
-            createTimetableLocal(1, of(2018, 9, 17, 0, 0, 0))
+            createTimetableLocal(of(2018, 9, 10, 0, 0, 0), 1),
+            createTimetableLocal(of(2018, 9, 14, 0, 0, 0), 1),
+            createTimetableLocal(of(2018, 9, 17, 0, 0, 0), 1)
         ))
 
         val exams = timetableDb.getTimetable(

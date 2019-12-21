@@ -45,6 +45,10 @@ class LoginPresenter @Inject constructor(
         }
     }
 
+    fun onAdvancedLoginClick() {
+        view?.switchView(3)
+    }
+
     fun onViewSelected(index: Int) {
         view?.apply {
             when (index) {
@@ -58,7 +62,7 @@ class LoginPresenter @Inject constructor(
         Timber.i("Back pressed in login view")
         view?.apply {
             when (currentViewIndex) {
-                1, 2 -> switchView(0)
+                1, 2, 3 -> switchView(0)
                 else -> default()
             }
         }

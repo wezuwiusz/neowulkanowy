@@ -1,25 +1,23 @@
 package io.github.wulkanowy.data.repositories.mobiledevice
 
-import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
-import io.github.wulkanowy.utils.toLocalDateTime
+import io.github.wulkanowy.sdk.Sdk
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MobileDeviceRemote @Inject constructor(private val api: Api) {
+class MobileDeviceRemote @Inject constructor(private val sdk: Sdk) {
 
     fun getDevices(semester: Semester): Single<List<MobileDevice>> {
-        return Single.just(api.apply { diaryId = semester.diaryId })
-            .flatMap { api.getRegisteredDevices() }
+        return sdk.switchDiary(semester.diaryId, semester.schoolYear).getRegisteredDevices()
             .map { devices ->
                 devices.map {
                     MobileDevice(
                         studentId = semester.studentId,
-                        date = it.date.toLocalDateTime(),
+                        date = it.date,
                         deviceId = it.id,
                         name = it.name
                     )
@@ -28,13 +26,11 @@ class MobileDeviceRemote @Inject constructor(private val api: Api) {
     }
 
     fun unregisterDevice(semester: Semester, device: MobileDevice): Single<Boolean> {
-        return Single.just(api.apply { diaryId = semester.diaryId })
-            .flatMap { api.unregisterDevice(device.deviceId) }
+        return sdk.switchDiary(semester.diaryId, semester.schoolYear).unregisterDevice(device.deviceId)
     }
 
     fun getToken(semester: Semester): Single<MobileDeviceToken> {
-        return Single.just(api.apply { diaryId = semester.diaryId })
-            .flatMap { api.getToken() }
+        return sdk.switchDiary(semester.diaryId, semester.schoolYear).getToken()
             .map {
                 MobileDeviceToken(
                     token = it.token,

@@ -10,9 +10,26 @@ import java.io.Serializable
 @Entity(tableName = "Students", indices = [Index(value = ["email", "symbol", "student_id", "school_id", "class_id"], unique = true)])
 data class Student(
 
-    val endpoint: String,
+    @ColumnInfo(name = "scrapper_base_url")
+    val scrapperBaseUrl: String,
 
+    @ColumnInfo(name = "mobile_base_url")
+    val mobileBaseUrl: String,
+
+    @ColumnInfo(name = "login_type")
     val loginType: String,
+
+    @ColumnInfo(name = "login_mode")
+    val loginMode: String,
+
+    @ColumnInfo(name = "certificate_key")
+    val certificateKey: String,
+
+    @ColumnInfo(name = "private_key")
+    val privateKey: String,
+
+    @ColumnInfo(name = "is_parent")
+    val isParent: Boolean,
 
     val email: String,
 
@@ -22,6 +39,9 @@ data class Student(
 
     @ColumnInfo(name = "student_id")
     val studentId: Int,
+
+    @ColumnInfo(name = "user_login_id")
+    val userLoginId: Int,
 
     @ColumnInfo(name = "student_name")
     val studentName: String,

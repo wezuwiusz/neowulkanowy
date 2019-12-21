@@ -29,6 +29,8 @@ data class Message(
 
     val subject: String,
 
+    var content: String,
+
     val date: LocalDateTime,
 
     @ColumnInfo(name = "folder_id")
@@ -50,6 +52,4 @@ data class Message(
 
     @ColumnInfo(name = "is_notified")
     var isNotified: Boolean = true
-
-    var content: String? = null
 }

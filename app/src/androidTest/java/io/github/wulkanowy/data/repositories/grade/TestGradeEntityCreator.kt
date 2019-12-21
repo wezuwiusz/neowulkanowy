@@ -1,8 +1,7 @@
 package io.github.wulkanowy.data.repositories.grade
 
-import io.github.wulkanowy.api.toDate
 import org.threeten.bp.LocalDate
-import io.github.wulkanowy.api.grades.Grade as GradeRemote
+import io.github.wulkanowy.sdk.pojo.Grade as GradeRemote
 import io.github.wulkanowy.data.db.entities.Grade as GradeLocal
 
 fun createGradeLocal(value: Int, weight: Double, date: LocalDate, desc: String, semesterId: Int = 1): GradeLocal {
@@ -18,17 +17,25 @@ fun createGradeLocal(value: Int, weight: Double, date: LocalDate, desc: String, 
         description = desc,
         entry = "",
         gradeSymbol = "",
-        value = value,
+        value = value.toDouble(),
         weight = "",
         weightValue = weight
     )
 }
 
 fun createGradeApi(value: Int, weight: Double, date: LocalDate, desc: String): GradeRemote {
-    return GradeRemote().apply {
-        this.value = value
-        this.weightValue = weight
-        this.date = date.toDate()
-        this.description = desc
-    }
+    return GradeRemote(
+        subject = "",
+        color = "",
+        comment = "",
+        date = date,
+        description = desc,
+        entry = "",
+        modifier = .0,
+        symbol = "",
+        teacher = "",
+        value = value.toDouble(),
+        weight = weight.toString(),
+        weightValue = weight
+    )
 }

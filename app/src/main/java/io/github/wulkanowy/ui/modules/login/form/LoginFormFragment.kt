@@ -61,6 +61,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
         loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
+        loginFormAdvancedButton.setOnClickListener { presenter.onAdvancedLoginClick() }
         loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
         loginFormFaq.setOnClickListener { presenter.onFaqClick() }
         loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
@@ -134,14 +135,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     @SuppressLint("SetTextI18n")
     override fun showVersion() {
-        with(loginFormVersion) {
-            visibility = VISIBLE
-            text = "${getString(R.string.app_name)} ${appInfo.versionName}"
-        }
-    }
-
-    override fun showPrivacyPolicy() {
-        loginFormPrivacyLink.visibility = VISIBLE
+        loginFormVersion.text = "v${appInfo.versionName}"
     }
 
     override fun notifyParentAccountLogged(students: List<Student>, loginData: Triple<String, String, String>) {
@@ -154,6 +148,10 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override fun showContact(show: Boolean) {
         loginFormContact.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun openAdvancedLogin() {
+        (activity as? LoginActivity)?.onAdvancedLoginClick()
     }
 
     override fun onDestroyView() {

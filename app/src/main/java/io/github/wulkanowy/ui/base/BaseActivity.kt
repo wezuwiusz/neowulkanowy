@@ -1,10 +1,10 @@
 package io.github.wulkanowy.ui.base
 
 import android.app.ActivityManager
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast

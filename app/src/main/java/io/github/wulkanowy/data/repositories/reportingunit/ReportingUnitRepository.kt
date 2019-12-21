@@ -2,7 +2,7 @@ package io.github.wulkanowy.data.repositories.reportingunit
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.ApiHelper
+import io.github.wulkanowy.data.SdkHelper
 import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.uniqueSubtract
@@ -17,11 +17,11 @@ class ReportingUnitRepository @Inject constructor(
     private val settings: InternetObservingSettings,
     private val local: ReportingUnitLocal,
     private val remote: ReportingUnitRemote,
-    private val apiHelper: ApiHelper
+    private val sdkHelper: SdkHelper
 ) {
 
     fun getReportingUnits(student: Student, forceRefresh: Boolean = false): Single<List<ReportingUnit>> {
-        return Single.just(apiHelper.initApi(student))
+        return Single.just(sdkHelper.init(student))
             .flatMap { _ ->
                 local.getReportingUnits(student).filter { !forceRefresh }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
@@ -40,7 +40,7 @@ class ReportingUnitRepository @Inject constructor(
     }
 
     fun getReportingUnit(student: Student, unitId: Int): Maybe<ReportingUnit> {
-        return Maybe.just(apiHelper.initApi(student))
+        return Maybe.just(sdkHelper.init(student))
             .flatMap { _ ->
                 local.getReportingUnit(student, unitId)
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)

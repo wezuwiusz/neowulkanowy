@@ -6,14 +6,17 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.api.Api
+import io.github.wulkanowy.data.SdkHelper
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.TestInternetObservingStrategy
+import io.github.wulkanowy.sdk.Sdk
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
+import io.mockk.just
+import io.mockk.runs
 import io.reactivex.Single
 import org.junit.After
 import org.junit.Before
@@ -27,8 +30,8 @@ import kotlin.test.assertEquals
 @RunWith(AndroidJUnit4::class)
 class TimetableRepositoryTest {
 
-    @SpyK
-    private var mockApi = Api()
+    @MockK
+    private lateinit var mockSdk: Sdk
 
     private val settings = InternetObservingSettings.builder()
         .strategy(TestInternetObservingStrategy())
@@ -48,10 +51,13 @@ class TimetableRepositoryTest {
         MockKAnnotations.init(this)
         testDb = Room.inMemoryDatabaseBuilder(getApplicationContext(), AppDatabase::class.java).build()
         timetableLocal = TimetableLocal(testDb.timetableDao)
-        timetableRemote = TimetableRemote(mockApi)
+        timetableRemote = TimetableRemote(mockSdk)
 
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 2
+        every { semesterMock.schoolYear } returns 2019
+        every { semesterMock.semesterId } returns 1
+        every { mockSdk.switchDiary(any(), any()) } returns mockSdk
     }
 
     @After
@@ -62,17 +68,17 @@ class TimetableRepositoryTest {
     @Test
     fun copyRoomToCompletedFromPrevious() {
         timetableLocal.saveTimetable(listOf(
-            createTimetableLocal(1, of(2019, 3, 5, 8, 0), "123", "Przyroda"),
-            createTimetableLocal(2, of(2019, 3, 5, 8, 50), "321", "Religia"),
-            createTimetableLocal(3, of(2019, 3, 5, 9, 40), "213", "W-F"),
-            createTimetableLocal(4, of(2019, 3, 5, 10, 30), "213", "W-F", "Jan Kowalski")
+            createTimetableLocal(of(2019, 3, 5, 8, 0), 1, "123", "Przyroda"),
+            createTimetableLocal(of(2019, 3, 5, 8, 50), 2, "321", "Religia"),
+            createTimetableLocal(of(2019, 3, 5, 9, 40), 3, "213", "W-F"),
+            createTimetableLocal(of(2019, 3, 5, 10, 30),3, "213", "W-F", "Jan Kowalski")
         ))
 
-        every { mockApi.getTimetable(any(), any()) } returns Single.just(listOf(
-            createTimetableRemote(1, of(2019, 3, 5, 8, 0), "", "Przyroda"),
-            createTimetableRemote(2, of(2019, 3, 5, 8, 50), "", "Religia"),
-            createTimetableRemote(3, of(2019, 3, 5, 9, 40), "", "W-F"),
-            createTimetableRemote(4, of(2019, 3, 5, 10, 30), "", "W-F")
+        every { mockSdk.getTimetable(any(), any()) } returns Single.just(listOf(
+            createTimetableRemote(of(2019, 3, 5, 8, 0), 1, "", "Przyroda"),
+            createTimetableRemote(of(2019, 3, 5, 8, 50), 2, "", "Religia"),
+            createTimetableRemote(of(2019, 3, 5, 9, 40), 3, "", "W-F"),
+            createTimetableRemote(of(2019, 3, 5, 10, 30), 4, "", "W-F")
         ))
 
         val lessons = TimetableRepository(settings, timetableLocal, timetableRemote)
@@ -88,17 +94,17 @@ class TimetableRepositoryTest {
     @Test
     fun copyTeacherToCompletedFromPrevious() {
         timetableLocal.saveTimetable(listOf(
-            createTimetableLocal(1, of(2019, 3, 5, 8, 0), "123", "Przyroda", "Jan Garnkiewicz", false),
-            createTimetableLocal(2, of(2019, 3, 5, 8, 50), "321", "Religia", "Paweł Jumper", false),
-            createTimetableLocal(3, of(2019, 3, 5, 9, 40), "213", "W-F", "", true),
-            createTimetableLocal(4, of(2019, 3, 5, 10, 30), "213", "W-F", "", false)
+            createTimetableLocal(of(2019, 3, 5, 8, 0), 1, "123", "Przyroda", "Jan Garnkiewicz", false),
+            createTimetableLocal(of(2019, 3, 5, 8, 50), 2, "321", "Religia", "Paweł Jumper", false),
+            createTimetableLocal(of(2019, 3, 5, 9, 40), 3, "213", "W-F", "", true),
+            createTimetableLocal(of(2019, 3, 5, 10, 30), 4, "213", "W-F", "", false)
         ))
 
-        every { mockApi.getTimetable(any(), any()) } returns Single.just(listOf(
-            createTimetableRemote(1, of(2019, 3, 5, 8, 0), "", "Przyroda", "", true), // should override local
-            createTimetableRemote(2, of(2019, 3, 5, 8, 50), "", "Religia", "", false),
-            createTimetableRemote(3, of(2019, 3, 5, 9, 40), "", "W-F", "Jan Garnkiewicz", false),
-            createTimetableRemote(4, of(2019, 3, 5, 10, 30), "", "W-F", "Paweł Jumper", false)
+        every { mockSdk.getTimetable(any(), any()) } returns Single.just(listOf(
+            createTimetableRemote(of(2019, 3, 5, 8, 0), 1, "", "Przyroda", "", true), // should override local
+            createTimetableRemote(of(2019, 3, 5, 8, 50), 2, "", "Religia", "", false),
+            createTimetableRemote(of(2019, 3, 5, 9, 40), 3, "", "W-F", "Jan Garnkiewicz", false),
+            createTimetableRemote(of(2019, 3, 5, 10, 30), 4, "", "W-F", "Paweł Jumper", false)
         ))
 
         val lessons = TimetableRepository(settings, timetableLocal, timetableRemote)

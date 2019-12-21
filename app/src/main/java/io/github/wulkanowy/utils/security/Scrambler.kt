@@ -14,7 +14,6 @@ import android.security.keystore.KeyProperties.DIGEST_SHA512
 import android.security.keystore.KeyProperties.ENCRYPTION_PADDING_RSA_OAEP
 import android.security.keystore.KeyProperties.PURPOSE_DECRYPT
 import android.security.keystore.KeyProperties.PURPOSE_ENCRYPT
-import android.util.Base64
 import android.util.Base64.DEFAULT
 import android.util.Base64.decode
 import android.util.Base64.encode
@@ -60,7 +59,7 @@ fun encrypt(plainText: String, context: Context): String {
     if (plainText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
     if (SDK_INT < JELLY_BEAN_MR2) {
-        return String(Base64.encode(plainText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
+        return String(encode(plainText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
     }
 
     return try {

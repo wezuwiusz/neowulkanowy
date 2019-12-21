@@ -4,6 +4,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.data.repositories.message.MessageRepository
+import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -18,6 +19,7 @@ class MessageTabPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
+    private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<MessageTabView>(errorHandler, studentRepository, schedulers) {
 
@@ -76,8 +78,11 @@ class MessageTabPresenter @Inject constructor(
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
-                .flatMap { messageRepository.getMessages(it, folder, forceRefresh) }
-                .map { items -> items.map { MessageItem(it, view?.noSubjectString.orEmpty()) } }
+                .flatMap { student ->
+                    semesterRepository.getCurrentSemester(student)
+                        .flatMap { messageRepository.getMessages(student, it, folder, forceRefresh) }
+                        .map { items -> items.map { MessageItem(it, view?.noSubjectString.orEmpty()) } }
+                }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally {
