@@ -4,7 +4,7 @@ import android.content.res.Resources
 import android.database.sqlite.SQLiteConstraintException
 import com.readystatesoftware.chuck.api.ChuckCollector
 import io.github.wulkanowy.R
-import io.github.wulkanowy.api.login.BadCredentialsException
+import io.github.wulkanowy.sdk.exception.BadCredentialsException
 import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 

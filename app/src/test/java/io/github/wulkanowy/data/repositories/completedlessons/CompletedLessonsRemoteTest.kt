@@ -1,23 +1,22 @@
 package io.github.wulkanowy.data.repositories.completedlessons
 
-import io.github.wulkanowy.api.Api
-import io.github.wulkanowy.api.timetable.CompletedLesson
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.sdk.pojo.CompletedLesson
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.reactivex.Single
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalDate
-import java.sql.Date
+import org.threeten.bp.LocalDate.of
 
 class CompletedLessonsRemoteTest {
 
-    @SpyK
-    private var mockApi = Api()
+    @MockK
+    private lateinit var mockSdk: Sdk
 
     @MockK
     private lateinit var semesterMock: Semester
@@ -30,27 +29,39 @@ class CompletedLessonsRemoteTest {
     @Test
     fun getCompletedLessonsTest() {
         every {
-            mockApi.getCompletedLessons(
-                LocalDate.of(2018, 9, 10),
-                LocalDate.of(2018, 9, 15)
+            mockSdk.getCompletedLessons(
+                of(2018, 9, 10),
+                of(2018, 9, 15)
             )
         } returns Single.just(listOf(
-            getCompletedLesson("2018-09-10"),
-            getCompletedLesson("2018-09-17")
+            getCompletedLesson(of(2018, 9, 10)),
+            getCompletedLesson(of(2018, 9, 17))
         ))
 
-        every { mockApi.diaryId } returns 1
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 1
+        every { semesterMock.schoolYear } returns 2019
+        every { semesterMock.semesterId } returns 1
+        every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val completed = CompletedLessonsRemote(mockApi).getCompletedLessons(semesterMock,
-            LocalDate.of(2018, 9, 10),
-            LocalDate.of(2018, 9, 15)
+        val completed = CompletedLessonsRemote(mockSdk).getCompletedLessons(semesterMock,
+            of(2018, 9, 10),
+            of(2018, 9, 15)
         ).blockingGet()
         Assert.assertEquals(2, completed.size)
     }
 
-    private fun getCompletedLesson(dateString: String): CompletedLesson {
-        return CompletedLesson().apply { date = Date.valueOf(dateString) }
+    private fun getCompletedLesson(date: LocalDate): CompletedLesson {
+        return CompletedLesson(
+            date = date,
+            subject = "",
+            absence = "",
+            resources = "",
+            substitution = "",
+            teacherSymbol = "",
+            teacher = "",
+            topic = "",
+            number = 1
+        )
     }
 }

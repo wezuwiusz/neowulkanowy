@@ -47,7 +47,7 @@ Możesz także pobrać [wersję rozwojową](https://wulkanowy.github.io/#downloa
 
 ## Zbudowana za pomocą
 
-* [Wulkanowy API](https://github.com/wulkanowy/api)
+* [Wulkanowy SDK](https://github.com/wulkanowy/SDK)
 * [RxJava 2](https://github.com/ReactiveX/RxJava)
 * [Dagger 2](https://github.com/google/dagger)
 * [Room](https://developer.android.com/topic/libraries/architecture/room)

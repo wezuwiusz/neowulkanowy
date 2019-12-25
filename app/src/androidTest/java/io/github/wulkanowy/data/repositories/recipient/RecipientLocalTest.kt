@@ -42,7 +42,7 @@ class RecipientLocalTest {
         ))
 
         val recipients = recipientLocal.getRecipients(
-            Student("fakelog.cf", "AUTO", "", "", "", 1, "", "", "", "", 1, true, LocalDateTime.now()),
+            Student("fakelog.cf", "AUTO", "", "", "", "", false, "", "", "", 1, 0, "", "", "", "", 1, true, LocalDateTime.now()),
             2,
             ReportingUnit(1, 4, "", 0, "", emptyList())
         ).blockingGet()

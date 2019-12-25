@@ -39,7 +39,7 @@ class StudentLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        studentLocal.saveStudents(listOf(Student(email = "test", password = "test123", schoolSymbol = "23", endpoint = "fakelog.cf", loginType = "AUTO", isCurrent = true, studentName = "", schoolName = "", studentId = 0, classId = 1, symbol = "", registrationDate = now(), className = "")))
+        studentLocal.saveStudents(listOf(Student(email = "test", password = "test123", schoolSymbol = "23", scrapperBaseUrl = "fakelog.cf", loginType = "AUTO", isCurrent = true, studentName = "", schoolName = "", studentId = 0, classId = 1, symbol = "", registrationDate = now(), className = "", loginMode = "API", certificateKey = "", privateKey = "", mobileBaseUrl = "", userLoginId = 0, isParent = false)))
             .blockingGet()
 
         val student = studentLocal.getCurrentStudent(true).blockingGet()

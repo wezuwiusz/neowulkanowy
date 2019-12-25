@@ -28,7 +28,6 @@ import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
-import io.github.wulkanowy.utils.shortcutWeekDayName
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Maybe
 import org.threeten.bp.LocalDate

@@ -13,7 +13,6 @@ import androidx.appcompat.app.AlertDialog
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
-import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
 import io.github.wulkanowy.ui.modules.grade.statistics.GradeStatisticsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment

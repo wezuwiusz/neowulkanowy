@@ -1,23 +1,22 @@
 package io.github.wulkanowy.data.repositories.exam
 
-import io.github.wulkanowy.api.Api
-import io.github.wulkanowy.api.exams.Exam
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.sdk.pojo.Exam
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.threeten.bp.LocalDate
-import java.sql.Date
+import org.threeten.bp.LocalDate.of
 
 class ExamRemoteTest {
 
-    @SpyK
-    private var mockApi = Api()
+    @MockK
+    private lateinit var mockSdk: Sdk
 
     @MockK
     private lateinit var semesterMock: Semester
@@ -29,35 +28,41 @@ class ExamRemoteTest {
 
     @Test
     fun getExamsTest() {
-        every { mockApi.getExams(
-                LocalDate.of(2018, 9, 10),
-                LocalDate.of(2018, 9, 15)
-        ) } returns Single.just(listOf(
-                getExam("2018-09-10"),
-                getExam("2018-09-17")
+        every {
+            mockSdk.getExams(
+                of(2018, 9, 10),
+                of(2018, 9, 15),
+                1
+            )
+        } returns Single.just(listOf(
+            getExam(of(2018, 9, 10)),
+            getExam(of(2018, 9, 17))
         ))
 
-        every { mockApi.diaryId } returns 1
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 1
+        every { semesterMock.schoolYear } returns 2019
+        every { semesterMock.semesterId } returns 1
+        every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val exams = ExamRemote(mockApi).getExams(semesterMock,
-                LocalDate.of(2018, 9, 10),
-                LocalDate.of(2018, 9, 15)
-        ).blockingGet()
+        val exams = ExamRemote(mockSdk)
+            .getExams(semesterMock,
+                of(2018, 9, 10),
+                of(2018, 9, 15)
+            ).blockingGet()
         assertEquals(2, exams.size)
     }
 
-    private fun getExam(dateString: String): Exam {
-        return Exam().apply {
-            subject = ""
-            group = ""
-            type = ""
-            description = ""
-            teacher = ""
-            teacherSymbol = ""
-            date = Date.valueOf(dateString)
-            entryDate = Date.valueOf(dateString)
-        }
+    private fun getExam(date: LocalDate): Exam {
+        return Exam(
+            subject = "",
+            group = "",
+            type = "",
+            description = "",
+            teacher = "",
+            teacherSymbol = "",
+            date = date,
+            entryDate = date
+        )
     }
 }

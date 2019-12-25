@@ -2,12 +2,13 @@ package io.github.wulkanowy.data.repositories.message
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.api.messages.SentMessage
-import io.github.wulkanowy.data.ApiHelper
+import io.github.wulkanowy.data.SdkHelper
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
+import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.message.MessageFolder.RECEIVED
+import io.github.wulkanowy.sdk.pojo.SentMessage
 import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -21,16 +22,16 @@ class MessageRepository @Inject constructor(
     private val settings: InternetObservingSettings,
     private val local: MessageLocal,
     private val remote: MessageRemote,
-    private val apiHelper: ApiHelper
+    private val sdkHelper: SdkHelper
 ) {
 
-    fun getMessages(student: Student, folder: MessageFolder, forceRefresh: Boolean = false, notify: Boolean = false): Single<List<Message>> {
-        return Single.just(apiHelper.initApi(student))
+    fun getMessages(student: Student, semester: Semester, folder: MessageFolder, forceRefresh: Boolean = false, notify: Boolean = false): Single<List<Message>> {
+        return Single.just(sdkHelper.init(student))
             .flatMap { _ ->
                 local.getMessages(student, folder).filter { !forceRefresh }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
-                            if (it) remote.getMessages(student, folder)
+                            if (it) remote.getMessages(student, semester, folder)
                             else Single.error(UnknownHostException())
                         }.flatMap { new ->
                             local.getMessages(student, folder).toSingle(emptyList())
@@ -47,10 +48,10 @@ class MessageRepository @Inject constructor(
     }
 
     fun getMessage(student: Student, messageDbId: Long, markAsRead: Boolean = false): Single<Message> {
-        return Single.just(apiHelper.initApi(student))
+        return Single.just(sdkHelper.init(student))
             .flatMap { _ ->
                 local.getMessage(messageDbId)
-                    .filter { !it.content.isNullOrEmpty() }
+                    .filter { it.content.isNotEmpty() }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
                             if (it) local.getMessage(messageDbId).toSingle()
@@ -60,7 +61,7 @@ class MessageRepository @Inject constructor(
                             remote.getMessagesContent(dbMessage, markAsRead).doOnSuccess {
                                 local.updateMessages(listOf(dbMessage.copy(unread = false).apply {
                                     id = dbMessage.id
-                                    content = it
+                                    content = content.ifBlank { it }
                                 }))
                             }
                         }.flatMap {

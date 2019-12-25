@@ -1,34 +1,34 @@
 package io.github.wulkanowy.data.repositories.recipient
 
-import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.ReportingUnit
+import io.github.wulkanowy.sdk.Sdk
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
-import io.github.wulkanowy.api.messages.Recipient as ApiRecipient
+import io.github.wulkanowy.sdk.pojo.Recipient as SdkRecipient
 
 @Singleton
-class RecipientRemote @Inject constructor(private val api: Api) {
+class RecipientRemote @Inject constructor(private val sdk: Sdk) {
 
     fun getRecipients(role: Int, unit: ReportingUnit): Single<List<Recipient>> {
-        return api.getRecipients(unit.realId, role)
+        return sdk.getRecipients(unit.realId, role)
             .map { recipients ->
                 recipients.map { it.toRecipient() }
             }
     }
 
     fun getMessageRecipients(message: Message): Single<List<Recipient>> {
-        return api.getMessageRecipients(message.messageId, message.senderId)
+        return sdk.getMessageRecipients(message.messageId, message.senderId)
             .map { recipients ->
                 recipients.map { it.toRecipient() }
             }
     }
 
-    private fun ApiRecipient.toRecipient(): Recipient {
+    private fun SdkRecipient.toRecipient(): Recipient {
         return Recipient(
-            studentId = api.studentId,
+            studentId = sdk.studentId,
             realId = id,
             realName = name,
             name = shortName,

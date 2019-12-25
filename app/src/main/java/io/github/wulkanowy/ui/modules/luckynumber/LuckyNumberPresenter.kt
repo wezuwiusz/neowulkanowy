@@ -66,7 +66,7 @@ class LuckyNumberPresenter @Inject constructor(
                     view?.run {
                         showContent(false)
                         showEmpty(true)
-                        showEmpty(false)
+                        showErrorView(false)
                     }
                 })
             )

@@ -20,7 +20,6 @@ import io.github.wulkanowy.ui.modules.mobiledevice.MobileDeviceFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
-import io.github.wulkanowy.ui.modules.schoolandteachers.teacher.TeacherFragment
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_more.*

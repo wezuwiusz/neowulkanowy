@@ -2,7 +2,7 @@ package io.github.wulkanowy.data.repositories.recipient
 
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.ApiHelper
+import io.github.wulkanowy.data.SdkHelper
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.ReportingUnit
@@ -18,11 +18,11 @@ class RecipientRepository @Inject constructor(
     private val settings: InternetObservingSettings,
     private val local: RecipientLocal,
     private val remote: RecipientRemote,
-    private val apiHelper: ApiHelper
+    private val sdkHelper: SdkHelper
 ) {
 
     fun getRecipients(student: Student, role: Int, unit: ReportingUnit, forceRefresh: Boolean = false): Single<List<Recipient>> {
-        return Single.just(apiHelper.initApi(student))
+        return Single.just(sdkHelper.init(student))
             .flatMap { _ ->
                 local.getRecipients(student, role, unit).filter { !forceRefresh }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
@@ -43,7 +43,7 @@ class RecipientRepository @Inject constructor(
     }
 
     fun getMessageRecipients(student: Student, message: Message): Single<List<Recipient>> {
-        return Single.just(apiHelper.initApi(student))
+        return Single.just(sdkHelper.init(student))
             .flatMap { ReactiveNetwork.checkInternetConnectivity(settings) }
             .flatMap {
                 if (it) remote.getMessageRecipients(message)

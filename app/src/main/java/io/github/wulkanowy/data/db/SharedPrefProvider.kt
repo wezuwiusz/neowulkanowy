@@ -18,6 +18,12 @@ class SharedPrefProvider @Inject constructor(private val sharedPref: SharedPrefe
 
     fun getLong(key: String, defaultValue: Long) = sharedPref.getLong(key, defaultValue)
 
+    fun getString(key: String, defaultValue: String): String = sharedPref.getString(key, defaultValue) ?: defaultValue
+
+    fun putString(key: String, value: String, sync: Boolean = false) {
+        sharedPref.edit(sync) { putString(key, value) }
+    }
+
     fun delete(key: String) {
         sharedPref.edit().remove(key).apply()
     }

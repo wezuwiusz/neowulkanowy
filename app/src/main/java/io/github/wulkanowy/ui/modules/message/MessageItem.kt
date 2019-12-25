@@ -9,6 +9,7 @@ import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_message.*
@@ -27,7 +28,7 @@ class MessageItem(val message: Message, private val noSubjectString: String) :
             val style = if (message.unread) BOLD else NORMAL
 
             messageItemAuthor.run {
-                text = if (message.recipient.isNotBlank()) message.recipient else message.sender
+                text = if (message.folderId == MessageFolder.SENT.id) message.recipient else message.sender
                 setTypeface(null, style)
             }
             messageItemSubject.run {

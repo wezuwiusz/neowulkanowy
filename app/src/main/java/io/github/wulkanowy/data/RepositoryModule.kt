@@ -11,12 +11,10 @@ import com.readystatesoftware.chuck.api.ChuckInterceptor
 import com.readystatesoftware.chuck.api.RetentionManager
 import dagger.Module
 import dagger.Provides
-import io.github.wulkanowy.api.Api
 import io.github.wulkanowy.data.db.AppDatabase
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level.BASIC
-import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
+import io.github.wulkanowy.sdk.Sdk
 import timber.log.Timber
 import javax.inject.Singleton
 
@@ -33,15 +31,14 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideApi(chuckCollector: ChuckCollector, context: Context): Api {
-        return Api().apply {
-            logLevel = NONE
+    fun provideSdk(chuckCollector: ChuckCollector, context: Context): Sdk {
+        return Sdk().apply {
             androidVersion = android.os.Build.VERSION.RELEASE
             buildTag = android.os.Build.MODEL
-            setInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { Timber.d(it) }).setLevel(BASIC))
+            setSimpleHttpLogger { Timber.d(it) }
 
             // for debug only
-            setInterceptor(ChuckInterceptor(context, chuckCollector).maxContentLength(250000L), true, 0)
+            addInterceptor(ChuckInterceptor(context, chuckCollector).maxContentLength(250000L), true)
         }
     }
 
@@ -55,7 +52,7 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(context: Context) = AppDatabase.newInstance(context)
+    fun provideDatabase(context: Context, sharedPrefProvider: SharedPrefProvider) = AppDatabase.newInstance(context, sharedPrefProvider)
 
     @Singleton
     @Provides

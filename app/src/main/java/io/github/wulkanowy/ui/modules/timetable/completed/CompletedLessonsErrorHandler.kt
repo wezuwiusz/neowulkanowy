@@ -2,7 +2,7 @@ package io.github.wulkanowy.ui.modules.timetable.completed
 
 import android.content.res.Resources
 import com.readystatesoftware.chuck.api.ChuckCollector
-import io.github.wulkanowy.api.interceptor.FeatureDisabledException
+import io.github.wulkanowy.sdk.exception.FeatureDisabledException
 import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 

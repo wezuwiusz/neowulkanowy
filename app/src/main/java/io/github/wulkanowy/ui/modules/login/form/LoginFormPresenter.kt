@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.modules.login.form
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
-import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.ifNullOrBlank
@@ -14,8 +13,7 @@ class LoginFormPresenter @Inject constructor(
     schedulers: SchedulersProvider,
     studentRepository: StudentRepository,
     private val loginErrorHandler: LoginErrorHandler,
-    private val analytics: FirebaseAnalyticsHelper,
-    private val appInfo: AppInfo
+    private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<LoginFormView>(loginErrorHandler, studentRepository, schedulers) {
 
     override fun onAttachView(view: LoginFormView) {
@@ -23,7 +21,7 @@ class LoginFormPresenter @Inject constructor(
         view.run {
             initView()
             showContact(false)
-            if (appInfo.isDebug) showVersion() else showPrivacyPolicy()
+            showVersion()
 
             loginErrorHandler.onBadCredentials = {
                 setErrorPassIncorrect()
@@ -35,6 +33,10 @@ class LoginFormPresenter @Inject constructor(
 
     fun onPrivacyLinkClick() {
         view?.openPrivacyPolicyPage()
+    }
+
+    fun onAdvancedLoginClick() {
+        view?.openAdvancedLogin()
     }
 
     fun onHostSelected() {
@@ -56,13 +58,13 @@ class LoginFormPresenter @Inject constructor(
     }
 
     fun onSignInClick() {
-        val email = view?.formNameValue.orEmpty()
-        val password = view?.formPassValue.orEmpty()
-        val endpoint = view?.formHostValue.orEmpty()
+        val email = view?.formNameValue.orEmpty().trim()
+        val password = view?.formPassValue.orEmpty().trim()
+        val endpoint = view?.formHostValue.orEmpty().trim()
 
         if (!validateCredentials(email, password)) return
 
-        disposable.add(studentRepository.getStudents(email, password, endpoint)
+        disposable.add(studentRepository.getStudentsScrapper(email, password, endpoint)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {
@@ -81,11 +83,11 @@ class LoginFormPresenter @Inject constructor(
             }
             .subscribe({
                 Timber.i("Login result: Success")
-                analytics.logEvent("registration_form", "success" to true, "students" to it.size, "endpoint" to endpoint, "error" to "No error")
+                analytics.logEvent("registration_form", "success" to true, "students" to it.size, "scrapperBaseUrl" to endpoint, "error" to "No error")
                 view?.notifyParentAccountLogged(it, Triple(email, password, endpoint))
             }, {
                 Timber.i("Login result: An exception occurred")
-                analytics.logEvent("registration_form", "success" to false, "students" to -1, "endpoint" to endpoint, "error" to it.message.ifNullOrBlank { "No message" })
+                analytics.logEvent("registration_form", "success" to false, "students" to -1, "scrapperBaseUrl" to endpoint, "error" to it.message.ifNullOrBlank { "No message" })
                 loginErrorHandler.dispatch(it)
                 view?.showContact(true)
             }))

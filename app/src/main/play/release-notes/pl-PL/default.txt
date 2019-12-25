@@ -1,9 +1,7 @@
-Wersja 0.13.0
+Wersja 0.14.0
 
-- naprawiony plan lekcji po ostatniej aktualizacji VULCANa (19.11)
-- naprawiona opcja wyboru motywu dla widżetu ze szczęśliwym numerkiem
-- nowa opcja zmiany języka i język rosyjski
-- możliwość łatwego nawigowania między dniami w planie lekcji przez kalendarz
-- opcja ustawienia modyfikatora oceny na wartość 0,0
+- dodane zostały nowe opcje logowania, m.in. logowanie przez token
+- naprawione zostało wyświetlanie nauczyciela, kiedy zastępstwo zostanie usunięte z danej lekcji
+- naprawiony został biały ekran w szczęśliwym numerku
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

@@ -27,6 +27,12 @@
     <string name="login_password_hint">Hasło</string>
     <string name="login_host_hint">Dziennik</string>
     <string name="login_symbol_hint">Symbol</string>
+    <string name="login_type_api">Mobilne API</string>
+    <string name="login_type_scrapper">Scrapper</string>
+    <string name="login_type_hybrid">Hybrydowe</string>
+    <string name="login_token_hint">Token</string>
+    <string name="login_pin_hint">PIN</string>
+    <string name="login_api_key_hint">Klucz API</string>
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
     <string name="login_incorrect_password">Dane logowania są niepoprawne</string>
@@ -35,6 +41,7 @@
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
     <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
+    <string name="login_advanced">Inne opcje</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
     <string name="login_contact_header">Problemy z logowaniem? Napisz do nas!</string>
     <string name="login_contact_email">Email</string>
@@ -261,8 +268,8 @@
     <string name="about_feedback_summary">Wyślij zgłoszenie o błędzie poprzez e-maila</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Zobacz Najczęściej Zadawane Pytania</string>
-    <string name="about_discord">Serwer discord</string>
-    <string name="about_discord_summary">Dołącz do społeczności wulkanowego</string>
+    <string name="about_discord">Serwer Discord</string>
+    <string name="about_discord_summary">Dołącz do społeczności Wulkanowego</string>
     <string name="about_privacy">Polityka prywatności</string>
     <string name="about_privacy_summary">Zasady zbierania danych osobowych</string>
     <string name="about_homepage">Strona domowa</string>
@@ -353,4 +360,5 @@
     <string name="error_service_unavailable">Dziennik jest niedostępny. Spróbuj ponownie później</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
+    <string name="error_feature_not_available">Funkcja niedostępna w tym trybie</string>
 </resources>
