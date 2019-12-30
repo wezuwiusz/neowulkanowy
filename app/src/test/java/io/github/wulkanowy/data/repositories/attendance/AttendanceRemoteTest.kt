@@ -57,6 +57,7 @@ class AttendanceRemoteTest {
             subject = "Fizyka",
             name = "Obecność",
             date = date,
+            timeId = 0,
             number = 0,
             deleted = false,
             excusable = false,
@@ -65,7 +66,8 @@ class AttendanceRemoteTest {
             lateness = false,
             presence = false,
             categoryId = 1,
-            absence = false
+            absence = false,
+            excuseStatus = null
         )
     }
 }

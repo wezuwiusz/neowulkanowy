@@ -94,7 +94,8 @@ class GradeStatisticsPresenter @Inject constructor(
         }
     }
 
-    fun onTypeChange(type: ViewType) {
+    fun onTypeChange() {
+        val type = view?.let { it.currentType } ?: ViewType.POINTS
         Timber.i("Select grade stats semester: $type")
         disposable.clear()
         view?.run {
@@ -214,7 +215,7 @@ class GradeStatisticsPresenter @Inject constructor(
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
         view?.run {
-            if (isBarViewEmpty || isPieViewEmpty) {
+            if ((isBarViewEmpty && currentType == ViewType.POINTS) || (isPieViewEmpty) && currentType != ViewType.POINTS) {
                 lastError = error
                 setErrorDetails(message)
                 showErrorView(true)
