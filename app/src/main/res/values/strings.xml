@@ -36,6 +36,10 @@
     <string name="login_sign_in">Sign in</string>
     <string name="login_invalid_password">This password is too short</string>
     <string name="login_incorrect_password">Login details are incorrect</string>
+    <string name="login_invalid_pin">Invalid PIN</string>
+    <string name="login_invalid_token">Invalid token</string>
+    <string name="login_expired_token">Token expired</string>
+    <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>
     <string name="login_duplicate_student">The selected student is already logged in</string>

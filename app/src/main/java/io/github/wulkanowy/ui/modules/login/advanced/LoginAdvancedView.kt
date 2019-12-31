@@ -53,9 +53,15 @@ interface LoginAdvancedView : BaseView {
 
     fun setErrorPinRequired()
 
+    fun setErrorPinInvalid(message: String)
+
     fun setErrorSymbolRequired()
 
+    fun setErrorSymbolInvalid(message: String)
+
     fun setErrorTokenRequired()
+
+    fun setErrorTokenInvalid(message: String)
 
     fun showOnlyHybridModeInputs()
 
