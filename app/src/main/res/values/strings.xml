@@ -27,14 +27,14 @@
     <string name="login_password_hint">Password</string>
     <string name="login_host_hint">Register</string>
     <string name="login_type_api">Mobile API</string>
-    <string name="login_type_scrapper">Scrapper</string>
+    <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrid</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
     <string name="login_api_key_hint">API key</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Sign in</string>
-    <string name="login_invalid_password">This password is too short</string>
+    <string name="login_invalid_password">Password too short</string>
     <string name="login_incorrect_password">Login details are incorrect</string>
     <string name="login_invalid_pin">Invalid PIN</string>
     <string name="login_invalid_token">Invalid token</string>
@@ -42,7 +42,7 @@
     <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>
-    <string name="login_duplicate_student">The selected student is already logged in</string>
+    <string name="login_duplicate_student">Selected student is already logged in</string>
     <string name="login_symbol_helper">The symbol can be found on the register page in Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Select students to log in to the application</string>
     <string name="login_advanced">Other options</string>
@@ -210,7 +210,7 @@
     <!--Mobile devices-->
     <string name="mobile_devices_title">Mobile devices</string>
     <string name="mobile_devices_no_items">No devices</string>
-    <string name="mobile_devices_unregister">Unregister</string>
+    <string name="mobile_devices_unregister">Deregister</string>
     <string name="mobile_device_removed">Device removed</string>
     <string name="mobile_device_qr">QR code</string>
     <string name="mobile_device_token">Token</string>
@@ -243,7 +243,7 @@
     <!--Account-->
     <string name="account_add_new">Add account</string>
     <string name="account_logout">Logout</string>
-    <string name="account_confirm">Do you want to log out of an active student?</string>
+    <string name="account_confirm">Do you want to log out of this student account?</string>
     <string name="account_logout_student">Student logout</string>
 
 
@@ -309,7 +309,7 @@
 
     <string name="pref_services_header">Synchronization</string>
     <string name="pref_services_switch">Automatic update</string>
-    <string name="pref_services_suspended">Suspended on holiday</string>
+    <string name="pref_services_suspended">Suspended on holidays</string>
     <string name="pref_services_interval">Updates interval</string>
     <string name="pref_services_wifi">Wi-Fi only</string>
 
@@ -340,9 +340,9 @@
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>
-    <string name="error_timeout">Too long waiting time for connection to the register</string>
-    <string name="error_login_failed">Login is failed. Try again or restart the app</string>
-    <string name="error_service_unavailable">The log is not available. Try again later</string>
+    <string name="error_timeout">Connection to the register timed out</string>
+    <string name="error_login_failed">Login failed. Restart the app and try again</string>
+    <string name="error_service_unavailable">The service is not available. Try again later</string>
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available in this mode</string>
