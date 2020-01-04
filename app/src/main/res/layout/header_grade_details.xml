@@ -7,7 +7,7 @@
     android:background="?selectableItemBackground"
     android:paddingLeft="16dp"
     android:paddingTop="10dp"
-    android:paddingRight="12dp"
+    android:paddingRight="14dp"
     android:paddingBottom="10dp"
     tools:context=".ui.modules.grade.details.GradeDetailsHeader"
     android:paddingEnd="12dp"
@@ -50,14 +50,19 @@
         android:textSize="12sp"
         tools:text="12 grades" />
 
-    <ImageView
+    <TextView
         android:id="@+id/gradeHeaderNote"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:minWidth="20dp"
+        android:layout_height="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:gravity="center"
         android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/ic_all_round_mark"
-        app:tint="?colorPrimary"
-        tools:ignore="contentDescription" />
+        android:background="@drawable/background_header_note"
+        android:textColor="?colorOnPrimary"
+        android:textSize="14sp"
+        tools:text="255" />
 </RelativeLayout>
