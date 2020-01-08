@@ -173,7 +173,7 @@ dependencies {
     implementation "com.jakewharton.threetenabp:threetenabp:1.2.1"
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "at.favre.lib:slf4j-timber:1.0.1"
-    implementation "com.squareup.okhttp3:logging-interceptor:3.12.6"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.7"
     implementation "com.mikepenz:aboutlibraries-core:7.1.0"
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
