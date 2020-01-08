@@ -28,7 +28,7 @@
     <string name="login_host_hint">Dziennik</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_type_api">Mobilne API</string>
-    <string name="login_type_scrapper">Scrapper</string>
+    <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrydowe</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
@@ -360,7 +360,7 @@
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_timeout">Upłynął limit czasu na połączenie z dziennikiem</string>
-    <string name="error_login_failed">Logowanie nie powiodło się. Zrestartuj aplikację i spróbuj ponownie</string>
+    <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
     <string name="error_service_unavailable">Dziennik jest niedostępny. Spróbuj ponownie później</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
