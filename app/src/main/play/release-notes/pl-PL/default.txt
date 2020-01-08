@@ -1,7 +1,8 @@
-Wersja 0.14.0
+Wersja 0.14.1
 
-- dodane zostały nowe opcje logowania, m.in. logowanie przez token
-- naprawione zostało wyświetlanie nauczyciela, kiedy zastępstwo zostanie usunięte z danej lekcji
-- naprawiony został biały ekran w szczęśliwym numerku
+- naprawiliśmy logowanie użytkownikom, którzy mieli przypisanych do konta uczniów ze szkół z wyłączonymi dziennikami
+- naprawiliśmy problemy z wysyłaniem wiadomości i odświeżaniem ocen spowodowanych ostatnią aktualizacją
+- dodaliśmy informację o liczbie nieprzeczytanych ocen w nagłówku przedmiotu
+- ulepszyliśmy informacje o błędach przy logowaniu w trybie mobilnym
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
