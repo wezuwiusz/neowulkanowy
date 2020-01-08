@@ -10,6 +10,8 @@ interface GradeStatisticsView : BaseView {
 
     val isBarViewEmpty: Boolean
 
+    val currentType: ViewType
+
     fun initView()
 
     fun updateSubjects(data: ArrayList<String>)

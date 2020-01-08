@@ -188,8 +188,6 @@
                     android:id="@+id/loginFormToken"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeActionLabel="@string/login_sign_in"
-                    android:imeOptions="actionDone"
                     android:inputType="textCapCharacters"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>

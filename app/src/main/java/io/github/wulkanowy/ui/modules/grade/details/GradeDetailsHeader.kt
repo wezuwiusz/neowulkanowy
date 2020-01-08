@@ -38,6 +38,7 @@ class GradeDetailsHeader(
             gradeHeaderAverage.text = average
             gradeHeaderNumber.text = number
             gradeHeaderNote.visibility = if (newGrades > 0) VISIBLE else GONE
+            if (newGrades > 0) gradeHeaderNote.text = newGrades.toString(10)
             gradeHeaderContainer.isEnabled = isExpandable
 
             isViewExpandable = isExpandable

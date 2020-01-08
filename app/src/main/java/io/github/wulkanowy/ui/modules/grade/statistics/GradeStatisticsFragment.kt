@@ -47,6 +47,13 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
 
     override val isBarViewEmpty get() = gradeStatisticsChartPoints.isEmpty
 
+    override val currentType
+        get() = when (gradeStatisticsTypeSwitch.checkedRadioButtonId) {
+            R.id.gradeStatisticsTypeSemester -> ViewType.SEMESTER
+            R.id.gradeStatisticsTypePartial -> ViewType.PARTIAL
+            else -> ViewType.POINTS
+        }
+
     private lateinit var gradeColors: List<Pair<Int, Int>>
 
     private val vulcanGradeColors = listOf(
@@ -272,13 +279,7 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
 
     override fun onResume() {
         super.onResume()
-        gradeStatisticsTypeSwitch.setOnCheckedChangeListener { _, checkedId ->
-            presenter.onTypeChange(when (checkedId) {
-                R.id.gradeStatisticsTypeSemester -> ViewType.SEMESTER
-                R.id.gradeStatisticsTypePartial -> ViewType.PARTIAL
-                else -> ViewType.POINTS
-            })
-        }
+        gradeStatisticsTypeSwitch.setOnCheckedChangeListener { _, _ -> presenter.onTypeChange() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

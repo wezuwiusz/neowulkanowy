@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
@@ -84,11 +86,20 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
             })
         }
 
+        loginFormPin.setOnEditorDoneSignIn()
+        loginFormPass.setOnEditorDoneSignIn()
+
         loginFormSymbol.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.symbols_values)))
 
         with(loginFormHost) {
             setText(hostKeys.getOrElse(0) { "" })
             setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
+        }
+    }
+
+    private fun AppCompatEditText.setOnEditorDoneSignIn() {
+        setOnEditorActionListener { _, id, _ ->
+            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) loginFormSignIn.callOnClick() else false
         }
     }
 
@@ -101,51 +112,72 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
     }
 
     override fun setErrorNameRequired() {
-        loginFormNameLayout.run {
+        with(loginFormNameLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassRequired(focus: Boolean) {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             if (focus) requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassInvalid(focus: Boolean) {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             if (focus) requestFocus()
             error = getString(R.string.login_invalid_password)
         }
     }
 
     override fun setErrorPassIncorrect() {
-        loginFormPassLayout.run {
+        with(loginFormPassLayout) {
             requestFocus()
             error = getString(R.string.login_incorrect_password)
         }
     }
 
     override fun setErrorPinRequired() {
-        loginFormPinLayout.run {
+        with(loginFormPinLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
+        }
+    }
+
+    override fun setErrorPinInvalid(message: String) {
+        with(loginFormPinLayout) {
+            requestFocus()
+            error = message
         }
     }
 
     override fun setErrorSymbolRequired() {
-        loginFormSymbolLayout.run {
+        with(loginFormSymbolLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
+    override fun setErrorSymbolInvalid(message: String) {
+        with(loginFormSymbolLayout) {
+            requestFocus()
+            error = message
+        }
+    }
+
     override fun setErrorTokenRequired() {
-        loginFormTokenLayout.run {
+        with(loginFormTokenLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
+        }
+    }
+
+    override fun setErrorTokenInvalid(message: String) {
+        with(loginFormTokenLayout) {
+            requestFocus()
+            error = message
         }
     }
 

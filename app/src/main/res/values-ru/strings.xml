@@ -28,15 +28,26 @@
     <string name="login_nickname_hint">Электронная почта или имя пользователя</string>
     <string name="login_password_hint">Пароль</string>
     <string name="login_host_hint">Дневник</string>
+    <string name="login_type_api">Мобильный API</string>
+    <string name="login_type_scrapper">Scraper</string>
+    <string name="login_type_hybrid">Гибрид</string>
+    <string name="login_token_hint">Token</string>
+    <string name="login_pin_hint">PIN</string>
+    <string name="login_api_key_hint">клавиша API</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Войти</string>
     <string name="login_invalid_password">Слишком короткий пароль</string>
     <string name="login_incorrect_password">Указаны неверные данные</string>
+    <string name="login_invalid_pin">Недействительный PIN</string>
+    <string name="login_invalid_token">Недействительный token</string>
+    <string name="login_expired_token">Токен просрочен</string>
+    <string name="login_invalid_symbol">Недействительный symbol</string>
     <string name="login_incorrect_symbol">Не удалось найти ученика. Пожалуйста, проверьте \"symbol\"</string>
     <string name="login_field_required">Это поле обязательно</string>
     <string name="login_duplicate_student">Данный ученик уже авторизован</string>
     <string name="login_symbol_helper">Вы можете найти \"symbol\" в Uczeń -&gt; Dostęp Mobilny -&gt; Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Выберите учеников для авторизации в приложении</string>
+    <string name="login_advanced">Другие варианты</string>
     <string name="login_privacy_policy">Политика приватности</string>
     <string name="login_contact_header">Проблемы с авторизацией? Свяжитесь с нами!</string>
     <string name="login_contact_email">Электронная почта</string>
@@ -261,6 +272,8 @@
     <string name="about_version">Версия приложения</string>
     <string name="about_feedback">Сообщить о ошибке</string>
     <string name="about_feedback_summary">Отправить сообщение о ошибке через электронную почту</string>
+    <string name="about_faq">FAQ</string>
+    <string name="about_faq_summary">Читайте часто задаваемые вопросы</string>
     <string name="about_discord">Сервер Discord</string>
     <string name="about_discord_summary">Присоединиться к сообществу приложения</string>
     <string name="about_privacy">Политика приватности</string>
@@ -277,6 +290,7 @@
 
     <!--Generic-->
     <string name="all_content">Содержание</string>
+    <string name="all_retry">Снова</string>
     <string name="all_description">Описание</string>
     <string name="all_no_description">Нет описания</string>
     <string name="all_teacher">Учитель</string>
@@ -349,5 +363,6 @@
     <string name="error_service_unavailable">Дневник недоступен. Попробуйте позже</string>
     <string name="error_unknown">Произошла неожиданная ошибка</string>
     <string name="error_feature_disabled">Функция была выключена школой</string>
+    <string name="error_feature_not_available">Функция не доступна в этом режиме</string>
 
 </resources>

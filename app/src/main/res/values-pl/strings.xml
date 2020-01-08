@@ -28,7 +28,7 @@
     <string name="login_host_hint">Dziennik</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_type_api">Mobilne API</string>
-    <string name="login_type_scrapper">Scrapper</string>
+    <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrydowe</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
@@ -36,6 +36,10 @@
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
     <string name="login_incorrect_password">Dane logowania są niepoprawne</string>
+    <string name="login_invalid_pin">Nieprawidłowy PIN</string>
+    <string name="login_invalid_token">Nieprawidłowy token</string>
+    <string name="login_expired_token">Token stracił ważność</string>
+    <string name="login_invalid_symbol">Niepoprawny symbol</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź symbol</string>
     <string name="login_field_required">To pole jest wymagane</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
@@ -355,7 +359,7 @@
 
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
-    <string name="error_timeout">Zbyt długie oczekiwanie na połączenie z dziennikiem</string>
+    <string name="error_timeout">Upłynął limit czasu na połączenie z dziennikiem</string>
     <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
     <string name="error_service_unavailable">Dziennik jest niedostępny. Spróbuj ponownie później</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
