@@ -185,7 +185,7 @@ dependencies {
     debugImplementation "fr.o80.chucker:library:$chucker"
     debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 
-    testImplementation "junit:junit:4.12"
+    testImplementation "junit:junit:4.13"
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation "org.threeten:threetenbp:1.4.0"
     testImplementation "org.mockito:mockito-inline:3.2.4"
