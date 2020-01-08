@@ -110,7 +110,7 @@ play {
 }
 
 ext {
-    work_manager = "2.3.0-beta02"
+    work_manager = "2.3.0-rc01"
     room = "2.2.3"
     dagger = "2.25.4"
     chucker = "2.0.4"
