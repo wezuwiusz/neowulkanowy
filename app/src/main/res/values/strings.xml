@@ -342,7 +342,7 @@
     <string name="error_no_internet">No internet connection</string>
     <string name="error_timeout">Connection to the register timed out</string>
     <string name="error_login_failed">Login failed. Try again or restart the app</string>
-    <string name="error_service_unavailable">The register is not available. Try again later</string>
+    <string name="error_service_unavailable">Maintenance underway UONET + register. Try again later</string>
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available in this mode</string>
