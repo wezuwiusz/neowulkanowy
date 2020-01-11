@@ -1,8 +1,6 @@
-Wersja 0.14.1
+Wersja 0.14.2
 
-- naprawiliśmy logowanie użytkownikom, którzy mieli przypisanych do konta uczniów ze szkół z wyłączonymi dziennikami
-- naprawiliśmy problemy z wysyłaniem wiadomości i odświeżaniem ocen spowodowanych ostatnią aktualizacją
-- dodaliśmy informację o liczbie nieprzeczytanych ocen w nagłówku przedmiotu
-- ulepszyliśmy informacje o błędach przy logowaniu w trybie mobilnym
+- naprawiliśmy błąd powodujący zatrzymanie aplikacji na urządzeniach z Androidem poniżej 5.0
+- zmieniliśmy mało mówiący komunikat o niedostępnym dzienniku na taki mówiący o przerwie technicznej dziennika
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
