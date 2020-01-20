@@ -41,4 +41,10 @@
         <item>Średnia ocen z 2 semestru</item>
         <item>Średnia ocen z całego roku</item>
     </string-array>
+
+    <string-array name="timetable_show_whole_class_entries">
+        <item>Nie pokazuj</item>
+        <item>Pokazuj wszystkie</item>
+        <item>Pokazuj pomniejszone</item>
+    </string-array>
 </resources>

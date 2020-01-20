@@ -21,6 +21,7 @@ fun createTimetableLocal(start: LocalDateTime, number: Int, room: String = "", s
         teacher = teacher,
         teacherOld = "",
         info = "",
+        studentPlan = true,
         changes = changes,
         canceled = false
     )

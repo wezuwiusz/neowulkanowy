@@ -36,7 +36,7 @@ class SemesterRepository @Inject constructor(
                                 local.saveSemesters(new.uniqueSubtract(old))
                             }
                     } else {
-                        Timber.i("Current semesters list:\n${currentSemesters.joinToString(separator = "\n")}")
+                        Timber.i("Current semesters list:\n${new.joinToString(separator = "\n")}")
                         throw IllegalArgumentException("Current semester can be only one.")
                     }
                 }.flatMap { local.getSemesters(student).toSingle(emptyList()) })

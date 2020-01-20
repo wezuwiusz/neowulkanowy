@@ -30,6 +30,7 @@ class TimetableRemote @Inject constructor(private val sdk: Sdk) {
                         teacher = it.teacher,
                         teacherOld = it.teacherOld,
                         info = it.info,
+                        studentPlan = it.studentPlan,
                         changes = it.changes,
                         canceled = it.canceled
                     )

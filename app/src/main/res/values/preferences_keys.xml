@@ -16,4 +16,5 @@
     <string name="pref_key_grade_modifier_plus">grade_modifier_plus</string>
     <string name="pref_key_grade_modifier_minus">grade_modifier_minus</string>
     <string name="pref_key_fill_message_content">fill_message_content</string>
+    <string name="pref_key_timetable_show_whole_class">show_whole_class_plan</string>
 </resources>
