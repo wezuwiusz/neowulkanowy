@@ -176,7 +176,7 @@ dependencies {
     implementation "com.mikepenz:aboutlibraries-core:7.1.0"
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
-    playImplementation "com.google.firebase:firebase-core:17.2.1"
+    playImplementation "com.google.firebase:firebase-core:17.2.2"
     playImplementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
     releaseImplementation "fr.o80.chucker:library-no-op:$chucker"
