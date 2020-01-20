@@ -101,7 +101,7 @@
                     android:id="@+id/loginFormName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="emailAddress"
+                    android:autofillHints="username|emailAddress"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     tools:targetApi="o" />
@@ -218,6 +218,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="textAutoComplete|textNoSuggestions"
                     android:maxLines="1"
+                    android:importantForAutofill="no"
                     tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
