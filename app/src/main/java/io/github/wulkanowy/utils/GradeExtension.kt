@@ -24,14 +24,7 @@ fun List<GradeSummary>.calcAverage(): Double {
 
 fun Grade.getBackgroundColor(theme: String): Int {
     return when (theme) {
-        "grade_color" -> when (color) {
-            "000000" -> R.color.grade_black
-            "F04C4C" -> R.color.grade_red
-            "20A4F7" -> R.color.grade_blue
-            "6ECD07" -> R.color.grade_green
-            "B16CF1" -> R.color.grade_purple
-            else -> R.color.grade_material_default
-        }
+        "grade_color" -> getGradeColor()
         "material" -> when (value.toInt()) {
             6 -> R.color.grade_material_six
             5 -> R.color.grade_material_five
@@ -50,6 +43,17 @@ fun Grade.getBackgroundColor(theme: String): Int {
             1 -> R.color.grade_vulcan_one
             else -> R.color.grade_vulcan_default
         }
+    }
+}
+
+fun Grade.getGradeColor(): Int {
+    return when (color) {
+        "000000" -> R.color.grade_black
+        "F04C4C" -> R.color.grade_red
+        "20A4F7" -> R.color.grade_blue
+        "6ECD07" -> R.color.grade_green
+        "B16CF1" -> R.color.grade_purple
+        else -> R.color.grade_material_default
     }
 }
 

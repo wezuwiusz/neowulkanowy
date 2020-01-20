@@ -68,6 +68,7 @@
     <string name="grade_switch_semester">Change semester</string>
     <string name="grade_no_items">No grades</string>
     <string name="grade_weight">Weight</string>
+    <string name="grade_weight_value">Weight: %s</string>
     <string name="grade_comment">Comment</string>
     <string name="grade_no_new_items">No new grades</string>
     <string name="grade_number_new_items">Number of new ratings: %1$d</string>

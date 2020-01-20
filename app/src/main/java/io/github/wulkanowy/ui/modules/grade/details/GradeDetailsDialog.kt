@@ -10,6 +10,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.utils.colorStringId
 import io.github.wulkanowy.utils.getBackgroundColor
+import io.github.wulkanowy.utils.getGradeColor
 import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.android.synthetic.main.dialog_grade.*
 
@@ -50,7 +51,12 @@ class GradeDetailsDialog : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         gradeDialogSubject.text = grade.subject
-        gradeDialogWeightValue.text = grade.weight
+
+        gradeDialogColorAndWeightValue.run {
+            text = context.getString(R.string.grade_weight_value, grade.weight)
+            setBackgroundResource(grade.getGradeColor())
+        }
+
         gradeDialogDateValue.text = grade.date.toFormattedString()
         gradeDialogColorValue.text = getString(grade.colorStringId)
 

@@ -66,6 +66,7 @@
     <string name="grade_switch_semester">Zmień semestr</string>
     <string name="grade_no_items">Brak ocen</string>
     <string name="grade_weight">Waga</string>
+    <string name="grade_weight_value">Waga: %s</string>
     <string name="grade_comment">Komentarz</string>
     <string name="grade_no_new_items">Brak nowych ocen</string>
     <string name="grade_number_new_items">Ilość nowych ocen: %1$d</string>
