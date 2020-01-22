@@ -12,6 +12,7 @@
     <string name="settings_title">Settings</string>
     <string name="more_title">More</string>
     <string name="about_title">About</string>
+    <string name="creators_title">Creators</string>
     <string name="license_title">Licenses</string>
     <string name="message_title">Messages</string>
     <string name="send_message_title">New message</string>
@@ -250,6 +251,8 @@
 
     <!--About-->
     <string name="about_version">App version</string>
+    <string name="about_creator">Creators</string>
+    <string name="about_creator_summary">List of Wulkanowy developers</string>
     <string name="about_feedback">Report a bug</string>
     <string name="about_feedback_summary">Send a bug report via e-mail</string>
     <string name="about_faq">FAQ</string>
@@ -266,6 +269,11 @@
 
     <!--Licenses-->
     <string name="license_dialog_title">License</string>
+
+
+    <!--Creators-->
+    <string name="creator_avatar_description">Avatar</string>
+    <string name="creator_see_more">See more on GitHub</string>
 
 
     <!--Generic-->

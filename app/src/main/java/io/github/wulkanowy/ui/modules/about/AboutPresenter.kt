@@ -52,6 +52,11 @@ class AboutPresenter @Inject constructor(
                     openLicenses()
                     analytics.logEvent("about_open", "name" to "licenses")
                 }
+                creatorsRes?.first -> {
+                    Timber.i("Opening creators view")
+                    openCreators()
+                    analytics.logEvent("about_open", "name" to "creators")
+                }
                 privacyRes?.first -> {
                     Timber.i("Opening privacy page ")
                     openPrivacyPolicy()
@@ -65,6 +70,7 @@ class AboutPresenter @Inject constructor(
         view?.run {
             updateData(AboutScrollableHeader(), listOfNotNull(
                 versionRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
+                creatorsRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
                 feedbackRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
                 faqRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
                 discordRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },

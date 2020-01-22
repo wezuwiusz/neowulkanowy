@@ -7,6 +7,8 @@ interface AboutView : BaseView {
 
     val versionRes: Triple<String, String, Drawable?>?
 
+    val creatorsRes: Triple<String, String, Drawable?>?
+
     val feedbackRes: Triple<String, String, Drawable?>?
 
     val faqRes: Triple<String, String, Drawable?>?
@@ -32,6 +34,8 @@ interface AboutView : BaseView {
     fun openHomepage()
 
     fun openLicenses()
+
+    fun openCreators()
 
     fun openPrivacyPolicy()
 }

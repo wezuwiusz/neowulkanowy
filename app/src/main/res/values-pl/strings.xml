@@ -12,6 +12,7 @@
     <string name="settings_title">Ustawienia</string>
     <string name="more_title">Więcej</string>
     <string name="about_title">O aplikacji</string>
+    <string name="creators_title">Twórcy</string>
     <string name="license_title">Licencje</string>
     <string name="message_title">Wiadomości</string>
     <string name="send_message_title">Nowa wiadomość</string>
@@ -269,6 +270,8 @@
 
     <!--About-->
     <string name="about_version">Wersja aplikacji</string>
+    <string name="about_creator">Twórcy</string>
+    <string name="about_creator_summary">Lista programistów Wulkanowego</string>
     <string name="about_feedback">Zgłoś błąd</string>
     <string name="about_feedback_summary">Wyślij zgłoszenie o błędzie poprzez e-maila</string>
     <string name="about_faq">FAQ</string>
@@ -285,6 +288,11 @@
 
     <!--Licenses-->
     <string name="license_dialog_title">Licencja</string>
+
+
+    <!--Creators-->
+    <string name="creator_avatar_description">Awatar</string>
+    <string name="creator_see_more">Zobacz więcej na GitHub</string>
 
 
     <!--Generic-->
