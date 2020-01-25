@@ -2,8 +2,8 @@ package io.github.wulkanowy.data.repositories.timetable
 
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalDateTime.now
-import io.github.wulkanowy.sdk.pojo.Timetable as TimetableRemote
 import io.github.wulkanowy.data.db.entities.Timetable as TimetableLocal
+import io.github.wulkanowy.sdk.pojo.Timetable as TimetableRemote
 
 fun createTimetableLocal(start: LocalDateTime, number: Int, room: String = "", subject: String = "", teacher: String = "", changes: Boolean = false): TimetableLocal {
     return TimetableLocal(

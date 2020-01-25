@@ -135,6 +135,11 @@
         <item quantity="one">%1$d absence</item>
         <item quantity="other">%1$d absences</item>
     </plurals>
+    <string name="attendance_excuse_dialog_reason">Absence reason (optional)</string>
+    <string name="attendance_excuse_dialog_submit">Send</string>
+    <string name="attendance_excuse_success">Absence excused successfully!</string>
+    <string name="attendance_excuse_no_selection">You must select at least one absence!</string>
+    <string name="attendance_excuse_title">Excuse</string>
 
 
     <!--Attendance summary-->

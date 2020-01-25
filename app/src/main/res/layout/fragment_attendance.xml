@@ -56,6 +56,20 @@
                 android:textSize="20sp" />
         </LinearLayout>
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/attendanceExcuseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:tint="?colorOnSecondary"
+            android:visibility="gone"
+            android:text="@string/attendance_excuse_title"
+            app:icon="@drawable/ic_all_done_all"
+            tools:visibility="visible" />
+
         <LinearLayout
             android:id="@+id/attendanceError"
             android:layout_width="match_parent"

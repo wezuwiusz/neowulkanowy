@@ -41,4 +41,8 @@ class AttendanceRepository @Inject constructor(
                     }).map { list -> list.filter { it.date in startDate..endDate } }
             }
     }
+
+    fun excuseForAbsence(semester: Semester, attendanceList: List<Attendance>, reason: String? = null): Single<Boolean> {
+        return remote.excuseAbsence(semester, attendanceList, reason)
+    }
 }

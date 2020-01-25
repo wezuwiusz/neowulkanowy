@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.attendance
 
 import android.annotation.SuppressLint
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.repositories.attendance.AttendanceRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -40,6 +41,8 @@ class AttendancePresenter @Inject constructor(
 
     private lateinit var lastError: Throwable
 
+    private val attendanceToExcuseList = mutableListOf<Attendance>()
+
     fun onAttachView(view: AttendanceView, date: Long?) {
         super.onAttachView(view)
         view.initView()
@@ -51,11 +54,15 @@ class AttendancePresenter @Inject constructor(
     }
 
     fun onPreviousDay() {
+        view?.finishActionMode()
+        attendanceToExcuseList.clear()
         loadData(currentDate.previousSchoolDay)
         reloadView()
     }
 
     fun onNextDay() {
+        view?.finishActionMode()
+        attendanceToExcuseList.clear()
         loadData(currentDate.nextSchoolDay)
         reloadView()
     }
@@ -100,10 +107,59 @@ class AttendancePresenter @Inject constructor(
         }
     }
 
+    fun onMainViewChanged() {
+        view?.finishActionMode()
+    }
+
     fun onAttendanceItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is AttendanceItem) {
-            Timber.i("Select attendance item ${item.attendance.id}")
-            view?.showAttendanceDialog(item.attendance)
+        view?.apply {
+            if (item is AttendanceItem && !excuseActionMode) {
+                Timber.i("Select attendance item ${item.attendance.id}")
+                showAttendanceDialog(item.attendance)
+            }
+        }
+    }
+
+    fun onExcuseButtonClick() {
+        view?.startActionMode()
+    }
+
+    fun onExcuseCheckboxSelect(attendanceItem: Attendance, checked: Boolean) {
+        if (checked) attendanceToExcuseList.add(attendanceItem)
+        else attendanceToExcuseList.remove(attendanceItem)
+    }
+
+    fun onExcuseSubmitButtonClick(): Boolean {
+        view?.apply {
+            return if (attendanceToExcuseList.isNotEmpty()) {
+                showExcuseDialog()
+                true
+            } else {
+                showMessage(excuseNoSelectionString)
+                false
+            }
+        }
+        return false
+    }
+
+    fun onExcuseDialogSubmit(reason: String) {
+        view?.finishActionMode()
+        excuseAbsence(if (reason != "") reason else null, attendanceToExcuseList.toList())
+    }
+
+    fun onPrepareActionMode(): Boolean {
+        view?.apply {
+            showExcuseCheckboxes(true)
+            showExcuseButton(false)
+        }
+        attendanceToExcuseList.clear()
+        return true
+    }
+
+    fun onDestroyActionMode() {
+        view?.apply {
+            showExcuseCheckboxes(false)
+            showExcuseButton(true)
         }
     }
 
@@ -157,6 +213,7 @@ class AttendancePresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showErrorView(false)
                         showContent(it.isNotEmpty())
+                        showExcuseButton(it.any { item -> item.attendance.excusable })
                     }
                     analytics.logEvent("load_attendance", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
@@ -164,6 +221,39 @@ class AttendancePresenter @Inject constructor(
                     errorHandler.dispatch(it)
                 }
             )
+        }
+    }
+
+    private fun excuseAbsence(reason: String?, toExcuseList: List<Attendance>) {
+        Timber.i("Excusing absence started")
+        disposable.apply {
+            add(studentRepository.getCurrentStudent()
+                .delay(200, MILLISECONDS)
+                .flatMap { semesterRepository.getCurrentSemester(it) }
+                .flatMap { attendanceRepository.excuseForAbsence(it, toExcuseList, reason) }
+                .subscribeOn(schedulers.backgroundThread)
+                .observeOn(schedulers.mainThread)
+                .doOnSubscribe {
+                    view?.apply {
+                        showProgress(true)
+                        showContent(false)
+                        showExcuseButton(false)
+                    }
+                }
+                .subscribe({
+                    Timber.i("Excusing for absence result: Success")
+                    analytics.logEvent("excuse_absence", "items" to attendanceToExcuseList.size)
+                    attendanceToExcuseList.clear()
+                    view?.apply {
+                        showExcuseButton(false)
+                        showMessage(excuseSuccessString)
+                    }
+                    loadData(currentDate, true)
+                }) {
+                    Timber.i("Excusing for absence result: An exception occurred")
+                    view?.showProgress(false)
+                    errorHandler.dispatch(it)
+                })
         }
     }
 

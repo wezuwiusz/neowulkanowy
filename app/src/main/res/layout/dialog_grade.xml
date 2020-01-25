@@ -40,16 +40,16 @@
                 <TextView
                     android:id="@+id/gradeDialogColorAndWeightValue"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:minHeight="32dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:layout_marginTop="2dp"
                     android:background="@color/grade_black"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:textIsSelectable="true"
                     android:maxLines="2"
+                    android:minHeight="32dp"
+                    android:textColor="@android:color/white"
+                    android:textIsSelectable="true"
+                    android:textSize="14sp"
                     tools:text="Waga: 1.00" />
             </LinearLayout>
 
@@ -57,16 +57,17 @@
                 android:id="@+id/gradeDialogHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="120dp"
-                android:gravity="center_vertical"
-                android:layout_toLeftOf="@+id/gradeDialogValueLayout"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_toStartOf="@+id/gradeDialogValueLayout"
+                android:layout_toLeftOf="@+id/gradeDialogValueLayout"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="12dp"
-                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical"
+                android:minHeight="120dp"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/gradeDialogSubject"
                     android:layout_width="wrap_content"

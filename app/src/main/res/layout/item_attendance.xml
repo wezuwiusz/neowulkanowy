@@ -13,16 +13,40 @@
     android:paddingBottom="7dp"
     tools:context=".ui.modules.attendance.AttendanceItem">
 
-    <TextView
-        android:id="@+id/attendanceItemNumber"
+    <LinearLayout
+        android:id="@+id/attendanceItemNumberContainer"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_centerVertical="true"
         android:gravity="center"
-        android:includeFontPadding="false"
-        android:maxLength="2"
-        android:textSize="32sp"
-        tools:text="5" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/attendanceItemNumber"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxLength="2"
+            android:textSize="32sp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="5" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/attendanceItemExcuseCheckbox"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="@null"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/attendanceItemExcuseInfo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_excuse_waiting"
+            app:tint="?attr/colorOnSurface" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/attendanceItemSubject"
@@ -35,8 +59,8 @@
         android:layout_marginRight="40dp"
         android:layout_toStartOf="@id/attendanceItemAlert"
         android:layout_toLeftOf="@id/attendanceItemAlert"
-        android:layout_toEndOf="@+id/attendanceItemNumber"
-        android:layout_toRightOf="@+id/attendanceItemNumber"
+        android:layout_toEndOf="@+id/attendanceItemNumberContainer"
+        android:layout_toRightOf="@+id/attendanceItemNumberContainer"
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="17sp"
@@ -48,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/attendanceItemSubject"
         android:layout_alignLeft="@id/attendanceItemSubject"
-        android:layout_alignBottom="@+id/attendanceItemNumber"
+        android:layout_alignBottom="@+id/attendanceItemNumberContainer"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
