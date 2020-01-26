@@ -95,7 +95,7 @@ class GradeStatisticsPresenter @Inject constructor(
     }
 
     fun onTypeChange() {
-        val type = view?.let { it.currentType } ?: ViewType.POINTS
+        val type = view?.currentType ?: ViewType.POINTS
         Timber.i("Select grade stats semester: $type")
         disposable.clear()
         view?.run {

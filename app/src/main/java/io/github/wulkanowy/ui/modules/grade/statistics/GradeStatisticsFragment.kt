@@ -108,6 +108,17 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
 
             animateXY(1000, 1000)
             legend.textColor = context.getThemeAttrColor(android.R.attr.textColorPrimary)
+
+            with(axisLeft) {
+                axisMinimum = 0f
+                axisMaximum = 100f
+                labelCount = 11
+            }
+            with(axisRight) {
+                axisMinimum = 0f
+                axisMaximum = 100f
+                labelCount = 11
+            }
         }
 
         subjectsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())

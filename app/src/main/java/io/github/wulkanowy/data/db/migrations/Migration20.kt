@@ -6,6 +6,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 class Migration20 : Migration(19, 20) {
 
     override fun migrate(database: SupportSQLiteDatabase) {
+        migrateTimetable(database)
+        truncateSubjects(database)
+    }
+
+    private fun migrateTimetable(database: SupportSQLiteDatabase) {
         database.execSQL("DROP TABLE Timetable")
         database.execSQL("""
             CREATE TABLE IF NOT EXISTS `Timetable` (
@@ -29,5 +34,9 @@ class Migration20 : Migration(19, 20) {
                 `canceled` INTEGER NOT NULL
             )
         """)
+    }
+
+    private fun truncateSubjects(database: SupportSQLiteDatabase) {
+        database.execSQL("DELETE FROM Subjects")
     }
 }
