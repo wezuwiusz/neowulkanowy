@@ -12,6 +12,7 @@
     <string name="settings_title">Ustawienia</string>
     <string name="more_title">Więcej</string>
     <string name="about_title">O aplikacji</string>
+    <string name="creators_title">Twórcy</string>
     <string name="license_title">Licencje</string>
     <string name="message_title">Wiadomości</string>
     <string name="send_message_title">Nowa wiadomość</string>
@@ -66,10 +67,12 @@
     <string name="grade_switch_semester">Zmień semestr</string>
     <string name="grade_no_items">Brak ocen</string>
     <string name="grade_weight">Waga</string>
+    <string name="grade_weight_value">Waga: %s</string>
     <string name="grade_comment">Komentarz</string>
     <string name="grade_no_new_items">Brak nowych ocen</string>
     <string name="grade_number_new_items">Ilość nowych ocen: %1$d</string>
     <string name="grade_average">Średnia: %1$.2f</string>
+    <string name="grade_points_sum">Punkty: %s</string>
     <string name="grade_no_average">Brak średniej</string>
     <string name="grade_predicted">Przewidywana: %1$s</string>
     <string name="grade_final">Końcowa: %1$s</string>
@@ -139,6 +142,11 @@
         <item quantity="many">%1$d nieobecności</item>
         <item quantity="other">%1$d nieobecności</item>
     </plurals>
+    <string name="attendance_excuse_dialog_reason">Powód nieobecności (opcjonalny)</string>
+    <string name="attendance_excuse_dialog_submit">Wyślij</string>
+    <string name="attendance_excuse_success">Usprawiedliwiono pomyślnie!</string>
+    <string name="attendance_excuse_no_selection">Musisz wybrać co najmniej jedną nieobecność!</string>
+    <string name="attendance_excuse_title">Usprawiedliw</string>
 
 
     <!--Attendance summary-->
@@ -268,6 +276,8 @@
 
     <!--About-->
     <string name="about_version">Wersja aplikacji</string>
+    <string name="about_creator">Twórcy</string>
+    <string name="about_creator_summary">Lista programistów Wulkanowego</string>
     <string name="about_feedback">Zgłoś błąd</string>
     <string name="about_feedback_summary">Wyślij zgłoszenie o błędzie poprzez e-maila</string>
     <string name="about_faq">FAQ</string>
@@ -284,6 +294,11 @@
 
     <!--Licenses-->
     <string name="license_dialog_title">Licencja</string>
+
+
+    <!--Creators-->
+    <string name="creator_avatar_description">Awatar</string>
+    <string name="creator_see_more">Zobacz więcej na GitHub</string>
 
 
     <!--Generic-->
@@ -365,4 +380,5 @@
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna w tym trybie</string>
+    <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
 </resources>

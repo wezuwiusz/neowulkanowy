@@ -15,6 +15,7 @@ class GradeDetailsHeader(
     private val subject: String,
     private val number: String,
     private val average: String,
+    private val pointsSum: String,
     var newGrades: Int,
     private val isExpandable: Boolean
 ) : AbstractExpandableItem<GradeDetailsHeader.ViewHolder, GradeDetailsItem>() {
@@ -36,6 +37,8 @@ class GradeDetailsHeader(
                 maxLines = if (isExpanded) 2 else 1
             }
             gradeHeaderAverage.text = average
+            gradeHeaderPointsSum.text = pointsSum
+            gradeHeaderPointsSum.visibility = if (pointsSum.isNotEmpty()) VISIBLE else GONE
             gradeHeaderNumber.text = number
             gradeHeaderNote.visibility = if (newGrades > 0) VISIBLE else GONE
             if (newGrades > 0) gradeHeaderNote.text = newGrades.toString(10)

@@ -40,6 +40,9 @@ data class Timetable(
 
     val info: String,
 
+    @ColumnInfo(name = "student_plan")
+    val studentPlan: Boolean,
+
     val changes: Boolean,
 
     val canceled: Boolean

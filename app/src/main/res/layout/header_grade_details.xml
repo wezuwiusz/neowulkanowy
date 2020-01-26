@@ -1,17 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/gradeHeaderContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
+    android:paddingStart="16dp"
     android:paddingLeft="16dp"
     android:paddingTop="10dp"
+    android:paddingEnd="12dp"
     android:paddingRight="14dp"
     android:paddingBottom="10dp"
-    tools:context=".ui.modules.grade.details.GradeDetailsHeader"
-    android:paddingEnd="12dp"
-    android:paddingStart="16dp">
+    tools:context=".ui.modules.grade.details.GradeDetailsHeader">
 
     <TextView
         android:id="@+id/gradeHeaderSubject"
@@ -37,10 +36,10 @@
         tools:text="Average: 6,00" />
 
     <TextView
-        android:id="@+id/gradeHeaderNumber"
+        android:id="@+id/gradeHeaderPointsSum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gradeHeaderSubject"
+        android:layout_below="@+id/gradeHeaderSubject"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
@@ -48,20 +47,34 @@
         android:layout_toRightOf="@+id/gradeHeaderAverage"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
+        tools:text="Points: 123/200 (61,5%)" />
+
+    <TextView
+        android:id="@+id/gradeHeaderNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gradeHeaderSubject"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/gradeHeaderPointsSum"
+        android:layout_toRightOf="@+id/gradeHeaderPointsSum"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp"
         tools:text="12 grades" />
 
     <TextView
         android:id="@+id/gradeHeaderNote"
         android:layout_width="wrap_content"
-        android:minWidth="20dp"
         android:layout_height="20dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/background_header_note"
+        android:gravity="center"
+        android:minWidth="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:textColor="?colorOnPrimary"
         android:textSize="14sp"
         tools:text="255" />

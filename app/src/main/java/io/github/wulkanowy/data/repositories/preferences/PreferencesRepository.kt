@@ -65,6 +65,9 @@ class PreferencesRepository @Inject constructor(
     val fillMessageContent: Boolean
         get() = getBoolean(R.string.pref_key_fill_message_content, R.bool.pref_default_fill_message_content)
 
+    val showWholeClassPlan: String
+        get() = getString(R.string.pref_key_timetable_show_whole_class, R.string.pref_default_timetable_show_whole_class)
+
     private fun getString(id: Int, default: Int) = getString(context.getString(id), default)
 
     private fun getString(id: String, default: Int) = sharedPref.getString(id, context.getString(default)) ?: context.getString(default)

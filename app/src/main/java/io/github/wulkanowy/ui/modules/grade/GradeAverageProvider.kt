@@ -18,7 +18,11 @@ class GradeAverageProvider @Inject constructor(
     private val gradeSummaryRepository: GradeSummaryRepository
 ) {
 
-    fun getGradeAverage(student: Student, semesters: List<Semester>, selectedSemesterId: Int, forceRefresh: Boolean): Single<Map<String, Double>> {
+    private val plusModifier = preferencesRepository.gradePlusModifier
+
+    private val minusModifier = preferencesRepository.gradeMinusModifier
+
+    fun getGradeAverage(student: Student, semesters: List<Semester>, selectedSemesterId: Int, forceRefresh: Boolean): Single<List<Triple<String, Double, String>>> {
         return when (preferencesRepository.gradeAverageMode) {
             "all_year" -> getAllYearAverage(student, semesters, selectedSemesterId, forceRefresh)
             "only_one_semester" -> getOnlyOneSemesterAverage(student, semesters, selectedSemesterId, forceRefresh)
@@ -26,11 +30,9 @@ class GradeAverageProvider @Inject constructor(
         }
     }
 
-    private fun getAllYearAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Single<Map<String, Double>> {
+    private fun getAllYearAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Single<List<Triple<String, Double, String>>> {
         val selectedSemester = semesters.single { it.semesterId == semesterId }
         val firstSemester = semesters.single { it.diaryId == selectedSemester.diaryId && it.semesterName == 1 }
-        val plusModifier = preferencesRepository.gradePlusModifier
-        val minusModifier = preferencesRepository.gradeMinusModifier
 
         return getAverageFromGradeSummary(selectedSemester, forceRefresh)
             .switchIfEmpty(gradeRepository.getGrades(student, selectedSemester, forceRefresh)
@@ -43,30 +45,28 @@ class GradeAverageProvider @Inject constructor(
                 }.map { grades ->
                     grades.map { if (student.loginMode == Sdk.Mode.SCRAPPER.name) it.changeModifier(plusModifier, minusModifier) else it }
                         .groupBy { it.subject }
-                        .mapValues { it.value.calcAverage() }
+                        .map { Triple(it.key, it.value.calcAverage(), "") }
                 })
     }
 
-    private fun getOnlyOneSemesterAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Single<Map<String, Double>> {
+    private fun getOnlyOneSemesterAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Single<List<Triple<String, Double, String>>> {
         val selectedSemester = semesters.single { it.semesterId == semesterId }
-        val plusModifier = preferencesRepository.gradePlusModifier
-        val minusModifier = preferencesRepository.gradeMinusModifier
 
         return getAverageFromGradeSummary(selectedSemester, forceRefresh)
             .switchIfEmpty(gradeRepository.getGrades(student, selectedSemester, forceRefresh)
                 .map { grades ->
                     grades.map { if (student.loginMode == Sdk.Mode.SCRAPPER.name) it.changeModifier(plusModifier, minusModifier) else it }
                         .groupBy { it.subject }
-                        .mapValues { it.value.calcAverage() }
+                        .map { Triple(it.key, it.value.calcAverage(), "") }
                 })
     }
 
-    private fun getAverageFromGradeSummary(selectedSemester: Semester, forceRefresh: Boolean): Maybe<Map<String, Double>> {
+    private fun getAverageFromGradeSummary(selectedSemester: Semester, forceRefresh: Boolean): Maybe<List<Triple<String, Double, String>>> {
         return gradeSummaryRepository.getGradesSummary(selectedSemester, forceRefresh)
             .toMaybe()
             .flatMap {
                 if (it.any { summary -> summary.average != .0 }) {
-                    Maybe.just(it.map { summary -> summary.subject to summary.average }.toMap())
+                    Maybe.just(it.map { summary -> Triple(summary.subject, summary.average, summary.pointsSum) })
                 } else Maybe.empty()
             }.filter { !preferencesRepository.gradeAverageForceCalc }
     }

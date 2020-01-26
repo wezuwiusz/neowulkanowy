@@ -45,6 +45,9 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     override val averageString: String
         get() = getString(R.string.grade_average)
 
+    override val pointsSumString: String
+        get() = getString(R.string.grade_points_sum)
+
     override val weightString: String
         get() = getString(R.string.grade_weight)
 

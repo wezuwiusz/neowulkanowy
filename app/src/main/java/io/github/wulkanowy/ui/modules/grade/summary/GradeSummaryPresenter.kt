@@ -115,27 +115,26 @@ class GradeSummaryPresenter @Inject constructor(
         disposable.clear()
     }
 
-    private fun createGradeSummaryItemsAndHeader(gradesSummary: List<GradeSummary>, averages: Map<String, Double>)
-        : Pair<List<GradeSummaryItem>, GradeSummaryScrollableHeader> {
-        return averages.filterValues { value -> value != 0.0 }
+    private fun createGradeSummaryItemsAndHeader(gradesSummary: List<GradeSummary>, averages: List<Triple<String, Double, String>>): Pair<List<GradeSummaryItem>, GradeSummaryScrollableHeader> {
+        return averages.filter { value -> value.second != 0.0 }
             .let { filteredAverages ->
                 gradesSummary.filter { !checkEmpty(it, filteredAverages) }
-                    .map {
+                    .map { gradeSummary ->
                         GradeSummaryItem(
-                            summary = it,
-                            average = formatAverage(filteredAverages.getOrElse(it.subject) { 0.0 }, "")
+                            summary = gradeSummary,
+                            average = formatAverage(filteredAverages.singleOrNull { gradeSummary.subject == it.first }?.second ?: .0, "")
                         )
                     }.let {
                         it to GradeSummaryScrollableHeader(
                             formatAverage(gradesSummary.calcAverage()),
-                            formatAverage(filteredAverages.values.average()))
+                            formatAverage(filteredAverages.map { values -> values.second }.average()))
                     }
             }
     }
 
-    private fun checkEmpty(gradeSummary: GradeSummary, averages: Map<String, Double>): Boolean {
+    private fun checkEmpty(gradeSummary: GradeSummary, averages: List<Triple<String, Double, String>>): Boolean {
         return gradeSummary.run {
-            finalGrade.isBlank() && predictedGrade.isBlank() && averages[subject] == null
+            finalGrade.isBlank() && predictedGrade.isBlank() && averages.singleOrNull { it.first == subject } == null
         }
     }
 

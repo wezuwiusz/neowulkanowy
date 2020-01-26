@@ -12,6 +12,7 @@
     <string name="settings_title">Settings</string>
     <string name="more_title">More</string>
     <string name="about_title">About</string>
+    <string name="creators_title">Creators</string>
     <string name="license_title">Licenses</string>
     <string name="message_title">Messages</string>
     <string name="send_message_title">New message</string>
@@ -68,10 +69,12 @@
     <string name="grade_switch_semester">Change semester</string>
     <string name="grade_no_items">No grades</string>
     <string name="grade_weight">Weight</string>
+    <string name="grade_weight_value">Weight: %s</string>
     <string name="grade_comment">Comment</string>
     <string name="grade_no_new_items">No new grades</string>
     <string name="grade_number_new_items">Number of new ratings: %1$d</string>
     <string name="grade_average">Average: %1$.2f</string>
+    <string name="grade_points_sum">Points: %s</string>
     <string name="grade_no_average">No average</string>
     <string name="grade_predicted">Predicted: %1$s</string>
     <string name="grade_final">Final: %1$s</string>
@@ -133,6 +136,11 @@
         <item quantity="one">%1$d absence</item>
         <item quantity="other">%1$d absences</item>
     </plurals>
+    <string name="attendance_excuse_dialog_reason">Absence reason (optional)</string>
+    <string name="attendance_excuse_dialog_submit">Send</string>
+    <string name="attendance_excuse_success">Absence excused successfully!</string>
+    <string name="attendance_excuse_no_selection">You must select at least one absence!</string>
+    <string name="attendance_excuse_title">Excuse</string>
 
 
     <!--Attendance summary-->
@@ -249,6 +257,8 @@
 
     <!--About-->
     <string name="about_version">App version</string>
+    <string name="about_creator">Creators</string>
+    <string name="about_creator_summary">List of Wulkanowy developers</string>
     <string name="about_feedback">Report a bug</string>
     <string name="about_feedback_summary">Send a bug report via e-mail</string>
     <string name="about_faq">FAQ</string>
@@ -265,6 +275,11 @@
 
     <!--Licenses-->
     <string name="license_dialog_title">License</string>
+
+
+    <!--Creators-->
+    <string name="creator_avatar_description">Avatar</string>
+    <string name="creator_see_more">See more on GitHub</string>
 
 
     <!--Generic-->
@@ -300,6 +315,7 @@
     <string name="pref_view_present">Show presence in attendance</string>
     <string name="pref_view_app_theme">Application theme</string>
     <string name="pref_view_expand_grade">Expand grades</string>
+    <string name="pref_view_timetable_show_whole_class">Show whole class lessons</string>
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>
     <string name="pref_view_app_language">App language</string>
 

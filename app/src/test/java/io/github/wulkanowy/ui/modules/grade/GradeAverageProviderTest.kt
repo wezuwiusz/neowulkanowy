@@ -80,8 +80,8 @@ class GradeAverageProviderTest {
             .blockingGet()
 
         assertEquals(2, averages.size)
-        assertEquals(2.5, averages["Matematyka"])
-        assertEquals(3.0, averages["Fizyka"])
+        assertEquals(2.5, averages.single { it.first == "Matematyka" }.second, .0)
+        assertEquals(3.0, averages.single { it.first == "Fizyka" }.second, .0)
     }
 
     @Test
@@ -93,7 +93,7 @@ class GradeAverageProviderTest {
         val averages = gradeAverageProvider.getGradeAverage(student, semesters, semesters[2].semesterId, true)
             .blockingGet()
 
-        assertEquals(3.5, averages["Język polski"])
+        assertEquals(3.5, averages.single { it.first == "Język polski" }.second, .0)
     }
 
     @Test
@@ -105,7 +105,7 @@ class GradeAverageProviderTest {
         val averages = gradeAverageProvider.getGradeAverage(student.copy(loginMode = Sdk.Mode.API.name), semesters, semesters[2].semesterId, true)
             .blockingGet()
 
-        assertEquals(3.375, averages["Język polski"])
+        assertEquals(3.375, averages.single { it.first == "Język polski" }.second, .0)
     }
 
     @Test
@@ -117,7 +117,7 @@ class GradeAverageProviderTest {
         val averages = gradeAverageProvider.getGradeAverage(student.copy(loginMode = Sdk.Mode.SCRAPPER.name), semesters, semesters[2].semesterId, true)
             .blockingGet()
 
-        assertEquals(3.5, averages["Język polski"])
+        assertEquals(3.5, averages.single { it.first == "Język polski" }.second, .0)
     }
 
     @Test
@@ -129,7 +129,7 @@ class GradeAverageProviderTest {
         val averages = gradeAverageProvider.getGradeAverage(student.copy(loginMode = Sdk.Mode.HYBRID.name), semesters, semesters[2].semesterId, true)
             .blockingGet()
 
-        assertEquals(3.375, averages["Język polski"])
+        assertEquals(3.375, averages.single { it.first == "Język polski" }.second, .0)
     }
 
     @Test
@@ -141,8 +141,8 @@ class GradeAverageProviderTest {
             .blockingGet()
 
         assertEquals(2, averages.size)
-        assertEquals(3.5, averages["Matematyka"])
-        assertEquals(3.5, averages["Fizyka"])
+        assertEquals(3.5, averages.single { it.first == "Matematyka" }.second, .0)
+        assertEquals(3.5, averages.single { it.first == "Fizyka" }.second, .0)
     }
 
     @Test
@@ -155,8 +155,8 @@ class GradeAverageProviderTest {
             .blockingGet()
 
         assertEquals(2, averages.size)
-        assertEquals(3.0, averages["Matematyka"])
-        assertEquals(3.25, averages["Fizyka"])
+        assertEquals(3.0, averages.single { it.first == "Matematyka" }.second, .0)
+        assertEquals(3.25, averages.single { it.first == "Fizyka" }.second, .0)
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -179,8 +179,8 @@ class GradeAverageProviderTest {
             .blockingGet()
 
         assertEquals(2, averages.size)
-        assertEquals(3.1, averages["Matematyka"])
-        assertEquals(3.26, averages["Fizyka"])
+        assertEquals(3.1, averages.single { it.first == "Matematyka" }.second, .0)
+        assertEquals(3.26, averages.single { it.first == "Fizyka" }.second, .0)
     }
 
     @Test
@@ -197,8 +197,8 @@ class GradeAverageProviderTest {
             .blockingGet()
 
         assertEquals(2, averages.size)
-        assertEquals(3.0, averages["Matematyka"])
-        assertEquals(3.25, averages["Fizyka"])
+        assertEquals(3.0, averages.single { it.first == "Matematyka" }.second, .0)
+        assertEquals(3.25, averages.single { it.first == "Fizyka" }.second, .0)
     }
 
     private fun getGrade(semesterId: Int, subject: String, value: Double, modifier: Double = 0.0): Grade {

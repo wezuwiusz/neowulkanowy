@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.db.dao.GradeStatisticsDao
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.utils.roundToDecimalPlaces
 import io.reactivex.Maybe
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,9 +41,9 @@ class GradeStatisticsLocal @Inject constructor(
             "Wszystkie" -> gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId).flatMap { list ->
                 if (list.isEmpty()) return@flatMap Maybe.empty<GradePointsStatistics>()
                 Maybe.just(GradePointsStatistics(semester.studentId, semester.semesterId, subjectName,
-                    list.fold(.0) { acc, e -> acc + e.others },
-                    list.fold(.0) { acc, e -> acc + e.student })
-                )
+                    (list.fold(.0) { acc, e -> acc + e.others } / list.size).roundToDecimalPlaces(2),
+                    (list.fold(.0) { acc, e -> acc + e.student } / list.size).roundToDecimalPlaces(2)
+                ))
             }
             else -> gradePointsStatisticsDb.loadSubject(semester.semesterId, semester.studentId, subjectName)
         }

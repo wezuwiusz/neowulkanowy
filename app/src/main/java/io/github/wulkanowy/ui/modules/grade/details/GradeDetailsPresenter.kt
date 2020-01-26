@@ -180,22 +180,24 @@ class GradeDetailsPresenter @Inject constructor(
         }
     }
 
-    private fun createGradeItems(items: Map<String, List<Grade>>, averages: Map<String, Double>): List<GradeDetailsHeader> {
+    private fun createGradeItems(items: Map<String, List<Grade>>, averages: List<Triple<String, Double, String>>): List<GradeDetailsHeader> {
         val isGradeExpandable = preferencesRepository.isGradeExpandable
         val gradeColorTheme = preferencesRepository.gradeColorTheme
 
         val noDescriptionString = view?.noDescriptionString.orEmpty()
         val weightString = view?.weightString.orEmpty()
+        val pointsSumString = view?.pointsSumString.orEmpty()
 
-        return items.map {
+        return items.map { subject ->
             GradeDetailsHeader(
-                subject = it.key,
-                average = formatAverage(averages[it.key]),
-                number = view?.getGradeNumberString(it.value.size).orEmpty(),
-                newGrades = it.value.filter { grade -> !grade.isRead }.size,
+                subject = subject.key,
+                average = formatAverage(averages.singleOrNull { subject.key == it.first }?.second),
+                pointsSum = averages.singleOrNull { subject.key == it.first }?.takeIf { it.third.isNotEmpty() }?.let { pointsSumString.format(it.third) }.orEmpty(),
+                number = view?.getGradeNumberString(subject.value.size).orEmpty(),
+                newGrades = subject.value.filter { grade -> !grade.isRead }.size,
                 isExpandable = isGradeExpandable
             ).apply {
-                subItems = it.value.map { item ->
+                subItems = subject.value.map { item ->
                     GradeDetailsItem(
                         grade = item,
                         valueBgColor = item.getBackgroundColor(gradeColorTheme),

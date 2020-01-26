@@ -133,7 +133,7 @@
                     android:id="@+id/loginFormName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="emailAddress"
+                    android:autofillHints="username|emailAddress"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     tools:targetApi="o" />
@@ -153,6 +153,7 @@
                 android:layout_marginRight="24dp"
                 android:hint="@string/login_password_hint"
                 app:errorEnabled="true"
+                app:errorIconDrawable="@null"
                 app:layout_constraintBottom_toTopOf="@+id/loginFormHostLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

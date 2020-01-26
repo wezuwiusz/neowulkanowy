@@ -1,6 +1,8 @@
-Wersja 0.14.2
+Wersja 0.15.0
 
-- naprawiliśmy błąd powodujący zatrzymanie aplikacji na urządzeniach z Androidem poniżej 5.0
-- zmieniliśmy mało mówiący komunikat o niedostępnym dzienniku na taki mówiący o przerwie technicznej dziennika
+- dodaliśmy funkcję usprawiedliwiania nieobecności
+- w trybie hybrydowym i mobilnym pokazują się teraz domyślnie tylko lekcje grupy ucznia
+- odświezyliśmy wygląd okienka ze szczegółami oceny
+- dokonaliśmy kilku poprawek dla systemu punktowego: suma punktów wyświetla się teraz w szczegółach ocen, a w widoku ucznia na tle klasy wykres jest w końcu poprawnie skalowany
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

@@ -15,6 +15,9 @@ data class Attendance(
     @ColumnInfo(name = "diary_id")
     val diaryId: Int,
 
+    @ColumnInfo(name = "time_id")
+    val timeId: Int,
+
     val date: LocalDate,
 
     val number: Int,
@@ -33,7 +36,13 @@ data class Attendance(
 
     val excused: Boolean,
 
-    val deleted: Boolean
+    val deleted: Boolean,
+
+    val excusable: Boolean,
+
+    @ColumnInfo(name = "excuse_status")
+    val excuseStatus: String?
+
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)
