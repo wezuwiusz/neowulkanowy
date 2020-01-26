@@ -14,6 +14,8 @@ interface GradeDetailsView : BaseView {
 
     val averageString: String
 
+    val pointsSumString: String
+
     val weightString: String
 
     val noDescriptionString: String

@@ -72,6 +72,7 @@
     <string name="grade_no_new_items">Brak nowych ocen</string>
     <string name="grade_number_new_items">Ilość nowych ocen: %1$d</string>
     <string name="grade_average">Średnia: %1$.2f</string>
+    <string name="grade_points_sum">Punkty: %s</string>
     <string name="grade_no_average">Brak średniej</string>
     <string name="grade_predicted">Przewidywana: %1$s</string>
     <string name="grade_final">Końcowa: %1$s</string>

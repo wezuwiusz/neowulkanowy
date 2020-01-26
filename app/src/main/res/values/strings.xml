@@ -74,6 +74,7 @@
     <string name="grade_no_new_items">No new grades</string>
     <string name="grade_number_new_items">Number of new ratings: %1$d</string>
     <string name="grade_average">Average: %1$.2f</string>
+    <string name="grade_points_sum">Points: %s</string>
     <string name="grade_no_average">No average</string>
     <string name="grade_predicted">Predicted: %1$s</string>
     <string name="grade_final">Final: %1$s</string>
