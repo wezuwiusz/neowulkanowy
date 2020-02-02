@@ -12,11 +12,10 @@ import io.github.wulkanowy.ui.modules.login.studentselect.LoginStudentSelectFrag
 import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
 
 @Suppress("unused")
-@Module(includes = [LoginModule.Static::class])
+@Module
 internal abstract class LoginModule {
 
-    @Module
-    object Static {
+    companion object {
 
         @PerActivity
         @Provides

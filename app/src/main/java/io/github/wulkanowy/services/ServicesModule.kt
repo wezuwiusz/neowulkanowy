@@ -29,11 +29,10 @@ import javax.inject.Singleton
 
 @Suppress("unused")
 @AssistedModule
-@Module(includes = [AssistedInject_ServicesModule::class, ServicesModule.Static::class])
+@Module(includes = [AssistedInject_ServicesModule::class])
 abstract class ServicesModule {
 
-    @Module
-    object Static {
+    companion object {
 
         @Provides
         fun provideWorkManager(context: Context) = WorkManager.getInstance(context)

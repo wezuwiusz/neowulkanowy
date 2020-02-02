@@ -35,16 +35,14 @@ import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
 
 @Suppress("unused")
-@Module(includes = [MainModule.Static::class])
+@Module
 abstract class MainModule {
 
-    @Module
-    object Static {
+    companion object {
 
         @Provides
-        fun provideFragNavController(activity: MainActivity): FragNavController {
-            return FragNavController(activity.supportFragmentManager, R.id.mainFragmentContainer)
-        }
+        fun provideFragNavController(activity: MainActivity) =
+            FragNavController(activity.supportFragmentManager, R.id.mainFragmentContainer)
 
         //In activities must be injected as Lazy
         @Provides
