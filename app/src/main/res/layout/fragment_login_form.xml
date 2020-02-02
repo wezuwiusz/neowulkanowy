@@ -208,7 +208,6 @@
                 android:layout_marginRight="16dp"
                 android:text="@string/login_advanced"
                 android:textAppearance="?android:textAppearance"
-                android:textColor="@color/colorPrimary"
                 app:backgroundTint="?android:windowBackground"
                 app:fontFamily="sans-serif-medium"
                 app:layout_constraintBottom_toBottomOf="@id/loginFormSignIn"
