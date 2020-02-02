@@ -145,6 +145,7 @@
 
     <!--Attendance summary-->
     <string name="attendance_summary_final">Attendance</string>
+    <string name="attendance_summary_total">Total</string>
 
 
     <!--Exam-->

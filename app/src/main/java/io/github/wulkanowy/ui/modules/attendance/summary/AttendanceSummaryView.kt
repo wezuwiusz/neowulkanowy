@@ -4,6 +4,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface AttendanceSummaryView : BaseView {
 
+    val totalString: String
+
     val isViewEmpty: Boolean
 
     fun initView()

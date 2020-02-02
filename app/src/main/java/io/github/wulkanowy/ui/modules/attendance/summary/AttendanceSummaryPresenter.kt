@@ -144,8 +144,22 @@ class AttendanceSummaryPresenter @Inject constructor(
         )
     }
 
+    private fun createAttendanceSummaryTotalItem(attendanceSummary: List<AttendanceSummary>): AttendanceSummaryItem {
+        return AttendanceSummaryItem(
+            month = view?.totalString.orEmpty(),
+            percentage = formatPercentage(attendanceSummary.calculatePercentage()),
+            present = attendanceSummary.sumBy { it.presence }.toString(),
+            absence = attendanceSummary.sumBy { it.absence }.toString(),
+            excusedAbsence = attendanceSummary.sumBy { it.absenceExcused }.toString(),
+            schoolAbsence = attendanceSummary.sumBy { it.absenceForSchoolReasons }.toString(),
+            exemption = attendanceSummary.sumBy { it.exemption }.toString(),
+            lateness = attendanceSummary.sumBy { it.lateness }.toString(),
+            excusedLateness = attendanceSummary.sumBy { it.latenessExcused }.toString()
+        )
+    }
+
     private fun createAttendanceSummaryItems(attendanceSummary: List<AttendanceSummary>): List<AttendanceSummaryItem> {
-        return attendanceSummary.sortedByDescending { it.id }.map {
+        return listOf(createAttendanceSummaryTotalItem(attendanceSummary)) + attendanceSummary.sortedByDescending { it.id }.map {
             AttendanceSummaryItem(
                 month = it.month.getFormattedName(),
                 percentage = formatPercentage(it.calculatePercentage()),

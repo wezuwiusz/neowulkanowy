@@ -146,6 +146,7 @@
 
     <!--Attendance summary-->
     <string name="attendance_summary_final">Посещаемость</string>
+    <string name="attendance_summary_total">вместе</string>
 
 
     <!--Exam-->

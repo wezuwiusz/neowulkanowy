@@ -151,6 +151,7 @@
 
     <!--Attendance summary-->
     <string name="attendance_summary_final">Frekwencja</string>
+    <string name="attendance_summary_total">Razem</string>
 
 
     <!--Exam-->
