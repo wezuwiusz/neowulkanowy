@@ -12,6 +12,7 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.getFormattedName
+import org.threeten.bp.Month
 import timber.log.Timber
 import java.lang.String.format
 import java.util.Locale.FRANCE
@@ -159,7 +160,10 @@ class AttendanceSummaryPresenter @Inject constructor(
     }
 
     private fun createAttendanceSummaryItems(attendanceSummary: List<AttendanceSummary>): List<AttendanceSummaryItem> {
-        return listOf(createAttendanceSummaryTotalItem(attendanceSummary)) + attendanceSummary.sortedByDescending { it.id }.map {
+        if (attendanceSummary.isEmpty()) return emptyList()
+        return listOf(createAttendanceSummaryTotalItem(attendanceSummary)) + attendanceSummary.sortedByDescending {
+            if (it.month.value <= Month.JUNE.value) it.month.value + 12 else it.month.value
+        }.map {
             AttendanceSummaryItem(
                 month = it.month.getFormattedName(),
                 percentage = formatPercentage(it.calculatePercentage()),
