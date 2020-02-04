@@ -53,6 +53,7 @@
     <string name="login_contact_email">Электронная почта</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Отправить письмо</string>
+    <string name="login_signed_in">Студент уже вошел в систему</string>
 
 
     <!--Main-->

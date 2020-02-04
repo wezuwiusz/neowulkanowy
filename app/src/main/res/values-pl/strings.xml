@@ -52,6 +52,7 @@
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Wyślij email</string>
+    <string name="login_signed_in">Uczeń jest już zalogowany</string>
 
 
     <!--Main-->

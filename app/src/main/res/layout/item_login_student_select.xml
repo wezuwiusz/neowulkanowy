@@ -2,8 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loginItemContainer"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:background="?selectableItemBackground">
+    android:layout_height="wrap_content"
+    android:minHeight="72dp"
+    android:background="?selectableItemBackground"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/loginItemCheck"
@@ -11,16 +14,16 @@
         android:layout_height="24dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="28dp"
         android:layout_marginRight="28dp"
         android:background="@android:color/transparent"
+        android:layout_centerVertical="true"
         tools:text=" " />
 
     <TextView
         android:id="@+id/loginItemName"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_toEndOf="@id/loginItemCheck"
@@ -34,8 +37,24 @@
     <TextView
         android:id="@+id/loginItemSchool"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/loginItemName"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@id/loginItemCheck"
+        android:layout_toRightOf="@id/loginItemCheck"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:maxLines="2"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="14sp"
+        tools:text="@tools:sample/lorem/random" />
+
+    <TextView
+        android:id="@+id/loginItemSignedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/loginItemSchool"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_toEndOf="@id/loginItemCheck"
@@ -45,5 +64,8 @@
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="14sp"
-        tools:text="@tools:sample/lorem/random" />
+        android:text="@string/login_signed_in"
+        android:enabled="false"
+        android:visibility="gone"
+        tools:visibility="visible" />
 </RelativeLayout>
