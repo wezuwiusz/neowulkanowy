@@ -5,11 +5,11 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface LoginAdvancedView : BaseView {
 
-    val formNameValue: String
+    val formUsernameValue: String
 
     val formPassValue: String
 
-    val formHostValue: String?
+    val formHostValue: String
 
     val formLoginType: String
 
@@ -19,11 +19,17 @@ interface LoginAdvancedView : BaseView {
 
     val formTokenValue: String
 
+    val nicknameLabel: String
+
+    val emailLabel: String
+
     fun initView()
 
-    fun setDefaultCredentials(name: String, pass: String, symbol: String, token: String, pin: String)
+    fun setDefaultCredentials(username: String, pass: String, symbol: String, token: String, pin: String)
 
-    fun setErrorNameRequired()
+    fun setUsernameLabel(label: String)
+
+    fun setErrorUsernameRequired()
 
     fun setErrorPassRequired(focus: Boolean)
 
@@ -31,7 +37,7 @@ interface LoginAdvancedView : BaseView {
 
     fun setErrorPassIncorrect()
 
-    fun clearNameError()
+    fun clearUsernameError()
 
     fun clearPassError()
 

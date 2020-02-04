@@ -105,7 +105,7 @@
                 android:text="@string/login_header_default"
                 android:textSize="16sp"
                 app:fontFamily="sans-serif-light"
-                app:layout_constraintBottom_toTopOf="@+id/loginFormNameLayout"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormUsernameLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormContact"
@@ -113,7 +113,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/loginFormNameLayout"
+                android:id="@+id/loginFormUsernameLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/loginFormHeader">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/loginFormName"
+                    android:id="@+id/loginFormUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="username|emailAddress"
@@ -157,7 +157,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/loginFormHostLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormNameLayout"
+                app:layout_constraintTop_toBottomOf="@+id/loginFormUsernameLayout"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText

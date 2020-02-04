@@ -65,13 +65,20 @@ class LoginAdvancedPresenter @Inject constructor(
         }
     }
 
+    fun updateUsernameLabel() {
+        view?.apply {
+            setUsernameLabel(if ("vulcan" in formHostValue || "fakelog" in formHostValue) emailLabel else nicknameLabel)
+        }
+    }
+
     fun onHostSelected() {
         view?.apply {
             clearPassError()
-            clearNameError()
-            if (formHostValue?.contains("fakelog") == true) {
+            clearUsernameError()
+            if (formHostValue.contains("fakelog")) {
                 setDefaultCredentials("jan@fakelog.cf", "jan123", "powiatwulkanowy", "FK100000", "999999")
             }
+            updateUsernameLabel()
         }
     }
 
@@ -89,8 +96,8 @@ class LoginAdvancedPresenter @Inject constructor(
         view?.clearPassError()
     }
 
-    fun onNameTextChanged() {
-        view?.clearNameError()
+    fun onUsernameTextChanged() {
+        view?.clearUsernameError()
     }
 
     fun onPinTextChanged() {
@@ -137,7 +144,7 @@ class LoginAdvancedPresenter @Inject constructor(
     }
 
     private fun getStudentsAppropriatesToLoginType(): Single<List<Student>> {
-        val email = view?.formNameValue.orEmpty()
+        val email = view?.formUsernameValue.orEmpty()
         val password = view?.formPassValue.orEmpty()
         val endpoint = view?.formHostValue.orEmpty()
 
@@ -153,7 +160,7 @@ class LoginAdvancedPresenter @Inject constructor(
     }
 
     private fun validateCredentials(): Boolean {
-        val login = view?.formNameValue.orEmpty()
+        val login = view?.formUsernameValue.orEmpty()
         val password = view?.formPassValue.orEmpty()
 
         val pin = view?.formPinValue.orEmpty()
@@ -181,7 +188,7 @@ class LoginAdvancedPresenter @Inject constructor(
             }
             Sdk.Mode.SCRAPPER -> {
                 if (login.isEmpty()) {
-                    view?.setErrorNameRequired()
+                    view?.setErrorUsernameRequired()
                     isCorrect = false
                 }
 
@@ -197,7 +204,7 @@ class LoginAdvancedPresenter @Inject constructor(
             }
             Sdk.Mode.HYBRID -> {
                 if (login.isEmpty()) {
-                    view?.setErrorNameRequired()
+                    view?.setErrorUsernameRequired()
                     isCorrect = false
                 }
 

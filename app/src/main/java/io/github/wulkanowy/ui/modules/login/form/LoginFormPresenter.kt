@@ -42,10 +42,17 @@ class LoginFormPresenter @Inject constructor(
     fun onHostSelected() {
         view?.apply {
             clearPassError()
-            clearNameError()
-            if (formHostValue?.contains("fakelog") == true) {
+            clearUsernameError()
+            if (formHostValue.contains("fakelog")) {
                 setCredentials("jan@fakelog.cf", "jan123")
             }
+            updateUsernameLabel()
+        }
+    }
+
+    fun updateUsernameLabel() {
+        view?.apply {
+            setUsernameLabel(if ("vulcan" in formHostValue || "fakelog" in formHostValue) emailLabel else nicknameLabel)
         }
     }
 
@@ -53,12 +60,12 @@ class LoginFormPresenter @Inject constructor(
         view?.clearPassError()
     }
 
-    fun onNameTextChanged() {
-        view?.clearNameError()
+    fun onUsernameTextChanged() {
+        view?.clearUsernameError()
     }
 
     fun onSignInClick() {
-        val email = view?.formNameValue.orEmpty().trim()
+        val email = view?.formUsernameValue.orEmpty().trim()
         val password = view?.formPassValue.orEmpty().trim()
         val endpoint = view?.formHostValue.orEmpty().trim()
 
@@ -105,7 +112,7 @@ class LoginFormPresenter @Inject constructor(
         var isCorrect = true
 
         if (login.isEmpty()) {
-            view?.setErrorNameRequired()
+            view?.setErrorUsernameRequired()
             isCorrect = false
         }
 

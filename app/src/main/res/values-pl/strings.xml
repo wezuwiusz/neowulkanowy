@@ -24,7 +24,8 @@
     <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
     <string name="login_header_symbol">Podaj symbol</string>
-    <string name="login_nickname_hint">Email lub nick</string>
+    <string name="login_nickname_hint">Nazwa użytkownika</string>
+    <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Hasło</string>
     <string name="login_host_hint">Dziennik</string>
     <string name="login_symbol_hint">Symbol</string>

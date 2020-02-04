@@ -25,7 +25,8 @@
     <!--Login-->
     <string name="login_header_default">Авторизируйтесь при помощи аккаунта ученика или родителя</string>
     <string name="login_header_symbol">Впишите \"symbol\"</string>
-    <string name="login_nickname_hint">Электронная почта или имя пользователя</string>
+    <string name="login_nickname_hint">Имя пользователя</string>
+    <string name="login_email_hint">Электронная почта</string>
     <string name="login_password_hint">Пароль</string>
     <string name="login_host_hint">Дневник</string>
     <string name="login_type_api">Мобильный API</string>

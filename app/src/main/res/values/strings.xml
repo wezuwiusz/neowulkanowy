@@ -24,7 +24,8 @@
     <!--Login-->
     <string name="login_header_default">Sign in with the student or parent account</string>
     <string name="login_header_symbol">Enter the symbol</string>
-    <string name="login_nickname_hint">Email or nick</string>
+    <string name="login_nickname_hint">Username</string>
+    <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="login_host_hint">Register</string>
     <string name="login_type_api">Mobile API</string>

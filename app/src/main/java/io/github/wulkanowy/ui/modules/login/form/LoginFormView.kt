@@ -7,15 +7,21 @@ interface LoginFormView : BaseView {
 
     fun initView()
 
-    val formNameValue: String
+    val formUsernameValue: String
 
     val formPassValue: String
 
-    val formHostValue: String?
+    val formHostValue: String
 
-    fun setCredentials(name: String, pass: String)
+    val nicknameLabel: String
 
-    fun setErrorNameRequired()
+    val emailLabel: String
+
+    fun setCredentials(username: String, pass: String)
+
+    fun setUsernameLabel(label: String)
+
+    fun setErrorUsernameRequired()
 
     fun setErrorPassRequired(focus: Boolean)
 
@@ -23,7 +29,7 @@ interface LoginFormView : BaseView {
 
     fun setErrorPassIncorrect()
 
-    fun clearNameError()
+    fun clearUsernameError()
 
     fun clearPassError()
 
