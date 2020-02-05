@@ -176,7 +176,7 @@ dependencies {
     implementation "com.mikepenz:aboutlibraries-core:7.1.0"
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
-    implementation("io.coil-kt:coil:0.9.2")
+    implementation("io.coil-kt:coil:0.9.4")
 
     playImplementation "com.google.firebase:firebase-core:17.2.2"
     playImplementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
