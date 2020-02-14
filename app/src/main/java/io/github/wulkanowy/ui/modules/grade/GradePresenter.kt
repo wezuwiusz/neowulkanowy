@@ -21,6 +21,8 @@ class GradePresenter @Inject constructor(
     var selectedIndex = 0
         private set
 
+    private var schoolYear = 0
+
     private var semesters = emptyList<Semester>()
 
     private val loadedSemesterId = mutableMapOf<Int, Int>()
@@ -56,6 +58,7 @@ class GradePresenter @Inject constructor(
             selectedIndex = index + 1
             loadedSemesterId.clear()
             view?.let {
+                it.setCurrentSemesterName(index + 1, schoolYear)
                 notifyChildrenSemesterChange()
                 loadChild(it.currentPageIndex)
             }
@@ -96,16 +99,17 @@ class GradePresenter @Inject constructor(
         Timber.i("Loading grade data started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
-            .doOnSuccess {
-                it.first { item -> item.isCurrent }.also { current ->
-                    selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
-                    semesters = it.filter { semester -> semester.diaryId == current.diaryId }
-                }
-            }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally { view?.showProgress(false) }
             .subscribe({
+                it.first { item -> item.isCurrent }.also { current ->
+                    selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
+                    schoolYear = current.schoolYear
+                    semesters = it.filter { semester -> semester.diaryId == current.diaryId }
+                    view?.setCurrentSemesterName(current.semesterName, schoolYear)
+                }
+
                 view?.run {
                     Timber.i("Loading grade result: Attempt load index $currentPageIndex")
                     loadChild(currentPageIndex)

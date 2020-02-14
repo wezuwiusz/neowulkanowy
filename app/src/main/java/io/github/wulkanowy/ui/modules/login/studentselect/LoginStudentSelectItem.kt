@@ -12,7 +12,6 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_login_student_select.*
-import timber.log.Timber
 
 class LoginStudentSelectItem(val student: Student, val alreadySaved: Boolean) :
     AbstractFlexibleItem<LoginStudentSelectItem.ItemViewHolder>() {
@@ -20,8 +19,6 @@ class LoginStudentSelectItem(val student: Student, val alreadySaved: Boolean) :
     override fun getLayoutRes() = R.layout.item_login_student_select
 
     override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>): ItemViewHolder {
-        Timber.i("createViewHolder()")
-        Timber.i(alreadySaved.toString())
         return ItemViewHolder(view, adapter)
     }
 

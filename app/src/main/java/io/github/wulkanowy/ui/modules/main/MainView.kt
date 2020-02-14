@@ -12,6 +12,8 @@ interface MainView : BaseView {
 
     val currentViewTitle: String?
 
+    val currentViewSubtitle: String?
+
     val currentStackSize: Int?
 
     fun initView()
@@ -30,6 +32,8 @@ interface MainView : BaseView {
 
     fun setViewTitle(title: String)
 
+    fun setViewSubTitle(subtitle: String?)
+
     fun popView(depth: Int = 1)
 
     interface MainChildView {
@@ -42,6 +46,10 @@ interface MainView : BaseView {
     interface TitledView {
 
         val titleStringId: Int
+
+        var subtitleString: String
+            get() = ""
+            set(_) {}
     }
 
     enum class Section(val id: Int) {

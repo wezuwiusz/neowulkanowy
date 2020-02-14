@@ -20,6 +20,9 @@
     <string name="homework_title">Homework</string>
     <string name="account_title">Choose account</string>
 
+    <!--Subtitles-->
+    <string name="grade_subtitle">Semester %d, %d/%d</string>
+
 
     <!--Login-->
     <string name="login_header_default">Sign in with the student or parent account</string>

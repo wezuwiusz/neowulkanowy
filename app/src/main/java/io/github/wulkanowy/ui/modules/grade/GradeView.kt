@@ -20,6 +20,8 @@ interface GradeView : BaseView {
 
     fun showSemesterDialog(selectedIndex: Int)
 
+    fun setCurrentSemesterName(semester: Int, schoolYear: Int)
+
     fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean)
 
     fun notifyChildParentReselected(index: Int)
