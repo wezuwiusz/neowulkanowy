@@ -295,6 +295,16 @@
     <string name="license_dialog_title">Лицензия</string>
 
 
+    <!--Creators-->
+    <string name="creator_avatar_description">аватар</string>
+    <string name="creator_see_more">Смотрите больше на GitHub</string>
+
+    <!--Log viewer-->
+    <string name="logviewer_title">Просмотр журнала</string>
+    <string name="logviewer_share">Share logs</string>
+    <string name="logviewer_refresh">Обновление</string>
+
+
     <!--Generic-->
     <string name="all_content">Содержание</string>
     <string name="all_retry">Снова</string>

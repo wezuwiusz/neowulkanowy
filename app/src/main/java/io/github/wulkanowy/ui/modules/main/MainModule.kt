@@ -11,6 +11,7 @@ import io.github.wulkanowy.ui.modules.about.AboutFragment
 import io.github.wulkanowy.ui.modules.about.creator.CreatorFragment
 import io.github.wulkanowy.ui.modules.about.license.LicenseFragment
 import io.github.wulkanowy.ui.modules.about.license.LicenseModule
+import io.github.wulkanowy.ui.modules.about.logviewer.LogViewerFragment
 import io.github.wulkanowy.ui.modules.account.AccountDialog
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.modules.attendance.AttendanceModule
@@ -120,6 +121,10 @@ abstract class MainModule {
     @PerFragment
     @ContributesAndroidInjector(modules = [LicenseModule::class])
     abstract fun bindLicenseFragment(): LicenseFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun bindLogViewerFragment(): LogViewerFragment
 
     @PerFragment
     @ContributesAndroidInjector()

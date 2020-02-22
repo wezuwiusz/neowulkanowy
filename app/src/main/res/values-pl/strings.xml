@@ -306,6 +306,11 @@
     <string name="creator_avatar_description">Awatar</string>
     <string name="creator_see_more">Zobacz więcej na GitHub</string>
 
+    <!--Log viewer-->
+    <string name="logviewer_title">Przeglądarka logów</string>
+    <string name="logviewer_share">Share logs</string>
+    <string name="logviewer_refresh">Odśwież</string>
+
 
     <!--Generic-->
     <string name="all_content">Treść</string>

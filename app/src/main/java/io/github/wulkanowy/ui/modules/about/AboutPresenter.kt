@@ -27,6 +27,11 @@ class AboutPresenter @Inject constructor(
         if (item !is AboutItem) return
         view?.run {
             when (item.title) {
+                versionRes?.first -> {
+                    Timber.i("Opening log viewer")
+                    openLogViewer()
+                    analytics.logEvent("about_open", "name" to "log_viewer")
+                }
                 feedbackRes?.first -> {
                     Timber.i("Opening email client")
                     openEmailClient()

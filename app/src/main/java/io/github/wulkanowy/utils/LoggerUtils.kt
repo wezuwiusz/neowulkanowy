@@ -18,6 +18,8 @@ class DebugLogTree : Timber.DebugTree() {
     }
 }
 
+private fun Bundle?.checkSavedState() = if (this == null) "(STATE IS NULL)" else ""
+
 class ActivityLifecycleLogger : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityPaused(activity: Activity?) {
@@ -45,7 +47,7 @@ class ActivityLifecycleLogger : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-        activity?.let { Timber.d("${it::class.java.simpleName} CREATED ${checkSavedState(savedInstanceState)}") }
+        activity?.let { Timber.d("${it::class.java.simpleName} CREATED ${savedInstanceState.checkSavedState()}") }
     }
 }
 
@@ -53,7 +55,7 @@ class ActivityLifecycleLogger : Application.ActivityLifecycleCallbacks {
 class FragmentLifecycleLogger @Inject constructor() : FragmentManager.FragmentLifecycleCallbacks() {
 
     override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
-        Timber.d("${f::class.java.simpleName} VIEW CREATED ${checkSavedState(savedInstanceState)}")
+        Timber.d("${f::class.java.simpleName} VIEW CREATED ${savedInstanceState.checkSavedState()}")
     }
 
     override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
@@ -61,7 +63,7 @@ class FragmentLifecycleLogger @Inject constructor() : FragmentManager.FragmentLi
     }
 
     override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-        Timber.d("${f::class.java.simpleName} CREATED ${checkSavedState(savedInstanceState)}")
+        Timber.d("${f::class.java.simpleName} CREATED ${savedInstanceState.checkSavedState()}")
     }
 
     override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
@@ -89,7 +91,7 @@ class FragmentLifecycleLogger @Inject constructor() : FragmentManager.FragmentLi
     }
 
     override fun onFragmentActivityCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-        Timber.d("${f::class.java.simpleName} ACTIVITY CREATED ${checkSavedState(savedInstanceState)}")
+        Timber.d("${f::class.java.simpleName} ACTIVITY CREATED ${savedInstanceState.checkSavedState()}")
     }
 
     override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
@@ -100,5 +102,3 @@ class FragmentLifecycleLogger @Inject constructor() : FragmentManager.FragmentLi
         Timber.d("${f::class.java.simpleName} DETACHED")
     }
 }
-
-private fun checkSavedState(savedInstanceState: Bundle?) = if (savedInstanceState == null) "(STATE IS NULL)" else ""

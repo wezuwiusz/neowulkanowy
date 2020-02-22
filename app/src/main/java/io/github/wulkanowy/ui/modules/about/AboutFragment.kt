@@ -18,6 +18,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.creator.CreatorFragment
 import io.github.wulkanowy.ui.modules.about.license.LicenseFragment
+import io.github.wulkanowy.ui.modules.about.logviewer.LogViewerFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
@@ -108,6 +109,10 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
             addScrollableHeader(header)
             updateDataSet(items)
         }
+    }
+
+    override fun openLogViewer() {
+        if (appInfo.isDebug) (activity as? MainActivity)?.pushView(LogViewerFragment.newInstance())
     }
 
     override fun openDiscordInvite() {
