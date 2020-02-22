@@ -21,7 +21,7 @@ class TimetableItem(val lesson: Timetable, private val showWholeClassPlan: Strin
     AbstractFlexibleItem<TimetableItem.ViewHolder>() {
 
     override fun getLayoutRes() = when {
-        showWholeClassPlan == "small" && !lesson.studentPlan -> R.layout.item_timetable_small
+        showWholeClassPlan == "small" && !lesson.isStudentPlan -> R.layout.item_timetable_small
         else -> R.layout.item_timetable
     }
 

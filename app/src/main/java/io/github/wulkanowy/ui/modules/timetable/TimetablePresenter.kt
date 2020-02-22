@@ -177,7 +177,7 @@ class TimetablePresenter @Inject constructor(
 
     private fun createTimetableItems(items: List<Timetable>): List<TimetableItem> {
         return items
-            .filter { if (prefRepository.showWholeClassPlan == "no") it.studentPlan else true }
+            .filter { if (prefRepository.showWholeClassPlan == "no") it.isStudentPlan else true }
             .map { TimetableItem(it, prefRepository.showWholeClassPlan) }
     }
 
