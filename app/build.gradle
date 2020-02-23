@@ -122,10 +122,10 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:0.15.0"
+    implementation "io.github.wulkanowy:sdk:7e89883"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.2.0-rc01"
+    implementation "androidx.core:core-ktx:1.2.0"
     implementation "androidx.activity:activity-ktx:1.1.0"
     implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "androidx.appcompat:appcompat-resources:1.1.0"

@@ -36,7 +36,7 @@ class LuckyNumberLocalTest {
     fun saveAndReadTest() {
         luckyNumberLocal.saveLuckyNumber(LuckyNumber(1, LocalDate.of(2019, 1, 20), 14))
 
-        val luckyNumber = luckyNumberLocal.getLuckyNumber(Semester(1, 1, "", 1, 3, 2019, true, LocalDate.now(), LocalDate.now(), 1, 1),
+        val luckyNumber = luckyNumberLocal.getLuckyNumber(Semester(1, 1, "", 1, 3, 2019, LocalDate.now(), LocalDate.now(), 1, 1),
             LocalDate.of(2019, 1, 20)
         ).blockingGet()
 

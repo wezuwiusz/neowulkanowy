@@ -20,7 +20,6 @@ class SemesterRemote @Inject constructor(private val sdk: Sdk) {
                     schoolYear = it.schoolYear,
                     semesterId = it.semesterId,
                     semesterName = it.semesterNumber,
-                    isCurrent = it.current,
                     start = it.start,
                     end = it.end,
                     classId = it.classId,

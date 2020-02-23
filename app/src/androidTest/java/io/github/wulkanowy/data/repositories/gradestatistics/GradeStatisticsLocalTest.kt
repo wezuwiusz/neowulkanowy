@@ -11,7 +11,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDate.now
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -40,10 +40,7 @@ class GradeStatisticsLocalTest {
             getGradeStatistics("Fizyka", 1, 2)
         ))
 
-        val stats = gradeStatisticsLocal.getGradesStatistics(
-            Semester(2, 2, "", 2019, 1, 2, true, LocalDate.now(), LocalDate.now(), 1, 1), false,
-            "Matematyka"
-        ).blockingGet()
+        val stats = gradeStatisticsLocal.getGradesStatistics(getSemester(), false, "Matematyka").blockingGet()
         assertEquals(1, stats.size)
         assertEquals(stats[0].subject, "Matematyka")
     }
@@ -56,10 +53,7 @@ class GradeStatisticsLocalTest {
             getGradeStatistics("Fizyka", 1, 2)
         ))
 
-        val stats = gradeStatisticsLocal.getGradesStatistics(
-            Semester(2, 2, "", 2019, 1, 2, true, LocalDate.now(), LocalDate.now(), 1, 1), false,
-            "Wszystkie"
-        ).blockingGet()
+        val stats = gradeStatisticsLocal.getGradesStatistics(getSemester(), false, "Wszystkie").blockingGet()
         assertEquals(1, stats.size)
         assertEquals(stats[0].subject, "Wszystkie")
     }
@@ -72,10 +66,7 @@ class GradeStatisticsLocalTest {
             getGradePointsStatistics("Fizyka", 1, 2)
         ))
 
-        val stats = gradeStatisticsLocal.getGradesPointsStatistics(
-            Semester(2, 2, "", 2019, 1, 2, true, LocalDate.now(), LocalDate.now(), 1, 1),
-            "Matematyka"
-        ).blockingGet()
+        val stats = gradeStatisticsLocal.getGradesPointsStatistics(getSemester(), "Matematyka").blockingGet()
         with(stats) {
             assertEquals(subject, "Matematyka")
             assertEquals(others, 5.0)
@@ -87,10 +78,7 @@ class GradeStatisticsLocalTest {
     fun saveAndRead_subjectEmpty() {
         gradeStatisticsLocal.saveGradesPointsStatistics(listOf())
 
-        val stats = gradeStatisticsLocal.getGradesPointsStatistics(
-            Semester(2, 2, "", 2019, 1, 2, true, LocalDate.now(), LocalDate.now(), 1, 1),
-            "Matematyka"
-        ).blockingGet()
+        val stats = gradeStatisticsLocal.getGradesPointsStatistics(getSemester(), "Matematyka").blockingGet()
         assertEquals(null, stats)
     }
 
@@ -98,11 +86,12 @@ class GradeStatisticsLocalTest {
     fun saveAndRead_allEmpty() {
         gradeStatisticsLocal.saveGradesPointsStatistics(listOf())
 
-        val stats = gradeStatisticsLocal.getGradesPointsStatistics(
-            Semester(2, 2, "", 2019, 1, 2, true, LocalDate.now(), LocalDate.now(), 1, 1),
-            "Wszystkie"
-        ).blockingGet()
+        val stats = gradeStatisticsLocal.getGradesPointsStatistics(getSemester(), "Wszystkie").blockingGet()
         assertEquals(null, stats)
+    }
+
+    private fun getSemester(): Semester {
+        return Semester(2, 2, "", 2019, 1, 2, now(), now(), 1, 1)
     }
 
     private fun getGradeStatistics(subject: String, studentId: Int, semesterId: Int): GradeStatistics {

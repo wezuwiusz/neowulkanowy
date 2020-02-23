@@ -31,7 +31,6 @@
             android:spinnerMode="dialog" />
     </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/gradeStatisticsSwipe"
         android:layout_width="match_parent"
