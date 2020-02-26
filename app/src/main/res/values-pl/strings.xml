@@ -29,9 +29,11 @@
     <string name="login_header_symbol">Podaj symbol</string>
     <string name="login_nickname_hint">Nazwa użytkownika</string>
     <string name="login_email_hint">Email</string>
+    <string name="login_login_pesel_email_hint">Login, PESEL lub e-mail</string>
     <string name="login_password_hint">Hasło</string>
     <string name="login_host_hint">Dziennik</string>
     <string name="login_symbol_hint">Symbol</string>
+    <string name="login_symbol_hint_optional">Symbol (opcjonalnie)</string>
     <string name="login_type_api">Mobilne API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrydowe</string>
@@ -44,11 +46,12 @@
     <string name="login_invalid_pin">Nieprawidłowy PIN</string>
     <string name="login_invalid_token">Nieprawidłowy token</string>
     <string name="login_expired_token">Token stracił ważność</string>
+    <string name="login_invalid_email">Niepoprawny adres email</string>
     <string name="login_invalid_symbol">Niepoprawny symbol</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź symbol</string>
     <string name="login_field_required">To pole jest wymagane</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
-    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
+    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_advanced">Inne opcje</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
@@ -56,6 +59,9 @@
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Wyślij email</string>
+    <string name="login_recover_button">Nie pamiętam hasła</string>
+    <string name="login_recover_title">Przywróć swoje konto</string>
+    <string name="login_recover">Przywróć</string>
     <string name="login_signed_in">Uczeń jest już zalogowany</string>
 
 

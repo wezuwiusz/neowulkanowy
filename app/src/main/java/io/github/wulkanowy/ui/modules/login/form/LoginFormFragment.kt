@@ -74,14 +74,15 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
         loginFormFaq.setOnClickListener { presenter.onFaqClick() }
         loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
-
+        loginFormRecoverLink.setOnClickListener { presenter.onRecoverClick() }
         loginFormPass.setOnEditorActionListener { _, id, _ ->
             if (id == IME_ACTION_DONE || id == IME_NULL) loginFormSignIn.callOnClick() else false
         }
 
         with(loginFormHost) {
-            setText(hostKeys.getOrElse(0) { "" })
+            setText(hostKeys.getOrNull(0).orEmpty())
             setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
+            setOnClickListener { if (loginFormContainer.visibility == GONE) dismissDropDown() }
         }
     }
 
@@ -165,6 +166,10 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override fun openAdvancedLogin() {
         (activity as? LoginActivity)?.onAdvancedLoginClick()
+    }
+
+    override fun onRecoverClick() {
+        (activity as? LoginActivity)?.onRecoverClick()
     }
 
     override fun onDestroyView() {

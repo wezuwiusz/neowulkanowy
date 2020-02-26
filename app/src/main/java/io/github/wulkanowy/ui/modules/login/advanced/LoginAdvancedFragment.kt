@@ -3,6 +3,8 @@ package io.github.wulkanowy.ui.modules.login.advanced
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
@@ -98,8 +100,9 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
         loginFormSymbol.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.symbols_values)))
 
         with(loginFormHost) {
-            setText(hostKeys.getOrElse(0) { "" })
+            setText(hostKeys.getOrNull(0).orEmpty())
             setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
+            setOnClickListener { if (loginFormContainer.visibility == GONE) dismissDropDown() }
         }
     }
 
@@ -212,30 +215,30 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
     }
 
     override fun showOnlyHybridModeInputs() {
-        loginFormUsernameLayout.visibility = View.VISIBLE
-        loginFormPassLayout.visibility = View.VISIBLE
-        loginFormHostLayout.visibility = View.VISIBLE
-        loginFormPinLayout.visibility = View.GONE
-        loginFormSymbolLayout.visibility = View.VISIBLE
-        loginFormTokenLayout.visibility = View.GONE
+        loginFormUsernameLayout.visibility = VISIBLE
+        loginFormPassLayout.visibility = VISIBLE
+        loginFormHostLayout.visibility = VISIBLE
+        loginFormPinLayout.visibility = GONE
+        loginFormSymbolLayout.visibility = VISIBLE
+        loginFormTokenLayout.visibility = GONE
     }
 
     override fun showOnlyScrapperModeInputs() {
-        loginFormUsernameLayout.visibility = View.VISIBLE
-        loginFormPassLayout.visibility = View.VISIBLE
-        loginFormHostLayout.visibility = View.VISIBLE
-        loginFormPinLayout.visibility = View.GONE
-        loginFormSymbolLayout.visibility = View.VISIBLE
-        loginFormTokenLayout.visibility = View.GONE
+        loginFormUsernameLayout.visibility = VISIBLE
+        loginFormPassLayout.visibility = VISIBLE
+        loginFormHostLayout.visibility = VISIBLE
+        loginFormPinLayout.visibility = GONE
+        loginFormSymbolLayout.visibility = VISIBLE
+        loginFormTokenLayout.visibility = GONE
     }
 
     override fun showOnlyMobileApiModeInputs() {
-        loginFormUsernameLayout.visibility = View.GONE
-        loginFormPassLayout.visibility = View.GONE
-        loginFormHostLayout.visibility = View.GONE
-        loginFormPinLayout.visibility = View.VISIBLE
-        loginFormSymbolLayout.visibility = View.VISIBLE
-        loginFormTokenLayout.visibility = View.VISIBLE
+        loginFormUsernameLayout.visibility = GONE
+        loginFormPassLayout.visibility = GONE
+        loginFormHostLayout.visibility = GONE
+        loginFormPinLayout.visibility = VISIBLE
+        loginFormSymbolLayout.visibility = VISIBLE
+        loginFormTokenLayout.visibility = VISIBLE
     }
 
     override fun showSoftKeyboard() {
@@ -247,11 +250,11 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
     }
 
     override fun showProgress(show: Boolean) {
-        loginFormProgress.visibility = if (show) View.VISIBLE else View.GONE
+        loginFormProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showContent(show: Boolean) {
-        loginFormContainer.visibility = if (show) View.VISIBLE else View.GONE
+        loginFormContainer.visibility = if (show) VISIBLE else GONE
     }
 
     override fun notifyParentAccountLogged(students: List<Student>) {

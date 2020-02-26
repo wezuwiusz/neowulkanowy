@@ -49,11 +49,15 @@ class LoginPresenter @Inject constructor(
         view?.switchView(3)
     }
 
+    fun onRecoverClick() {
+        view?.switchView(4)
+    }
+
     fun onViewSelected(index: Int) {
         view?.apply {
             when (index) {
                 0 -> showActionBar(false)
-                1, 2 -> showActionBar(true)
+                1, 2, 3, 4 -> showActionBar(true)
             }
         }
     }
@@ -62,7 +66,7 @@ class LoginPresenter @Inject constructor(
         Timber.i("Back pressed in login view")
         view?.apply {
             when (currentViewIndex) {
-                1, 2, 3 -> switchView(0)
+                1, 2, 3, 4 -> switchView(0)
                 else -> default()
             }
         }

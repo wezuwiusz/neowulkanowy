@@ -30,6 +30,7 @@
     <string name="login_header_symbol">Enter the symbol</string>
     <string name="login_nickname_hint">Username</string>
     <string name="login_email_hint">Email</string>
+    <string name="login_login_pesel_email_hint">Login, PESEL or e-mail</string>
     <string name="login_password_hint">Password</string>
     <string name="login_host_hint">Register</string>
     <string name="login_type_api">Mobile API</string>
@@ -39,12 +40,14 @@
     <string name="login_pin_hint">PIN</string>
     <string name="login_api_key_hint">API key</string>
     <string name="login_symbol_hint">Symbol</string>
+    <string name="login_symbol_hint_optional">Symbol (optional)</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_invalid_password">Password too short</string>
     <string name="login_incorrect_password">Login details are incorrect</string>
     <string name="login_invalid_pin">Invalid PIN</string>
     <string name="login_invalid_token">Invalid token</string>
     <string name="login_expired_token">Token expired</string>
+    <string name="login_invalid_email">Invalid email</string>
     <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>
@@ -59,6 +62,9 @@
     <string name="login_email_intent_title">Send email</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
     <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\n\nOpis problemu:</string>
+    <string name="login_recover_button">I forgot my password</string>
+    <string name="login_recover_title">Recover your account</string>
+    <string name="login_recover">Recover</string>
     <string name="login_signed_in">Student is already signed in</string>
 
 

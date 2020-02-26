@@ -10,6 +10,7 @@ import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.login.advanced.LoginAdvancedFragment
 import io.github.wulkanowy.ui.modules.login.form.LoginFormFragment
+import io.github.wulkanowy.ui.modules.login.recover.LoginRecoverFragment
 import io.github.wulkanowy.ui.modules.login.studentselect.LoginStudentSelectFragment
 import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
 import io.github.wulkanowy.utils.setOnSelectPageListener
@@ -52,7 +53,8 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
                 LoginFormFragment.newInstance(),
                 LoginSymbolFragment.newInstance(),
                 LoginStudentSelectFragment.newInstance(),
-                LoginAdvancedFragment.newInstance()
+                LoginAdvancedFragment.newInstance(),
+                LoginRecoverFragment.newInstance()
             ))
         }
 
@@ -98,5 +100,9 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
 
     fun onAdvancedLoginClick() {
         presenter.onAdvancedLoginClick()
+    }
+
+    fun onRecoverClick() {
+        presenter.onRecoverClick()
     }
 }

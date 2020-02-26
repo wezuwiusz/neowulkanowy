@@ -30,6 +30,7 @@
     <string name="login_header_symbol">Впишите \"symbol\"</string>
     <string name="login_nickname_hint">Имя пользователя</string>
     <string name="login_email_hint">Электронная почта</string>
+    <string name="login_login_pesel_email_hint">Логин, PESEL или электронная почта</string>
     <string name="login_password_hint">Пароль</string>
     <string name="login_host_hint">Дневник</string>
     <string name="login_type_api">Мобильный API</string>
@@ -39,12 +40,14 @@
     <string name="login_pin_hint">PIN</string>
     <string name="login_api_key_hint">клавиша API</string>
     <string name="login_symbol_hint">Symbol</string>
+    <string name="login_symbol_hint_optional">Символ (необязательно)</string>
     <string name="login_sign_in">Войти</string>
     <string name="login_invalid_password">Слишком короткий пароль</string>
     <string name="login_incorrect_password">Указаны неверные данные</string>
     <string name="login_invalid_pin">Недействительный PIN</string>
     <string name="login_invalid_token">Недействительный token</string>
     <string name="login_expired_token">Токен просрочен</string>
+    <string name="login_invalid_email">Неверный адрес электронной почты</string>
     <string name="login_invalid_symbol">Недействительный symbol</string>
     <string name="login_incorrect_symbol">Не удалось найти ученика. Пожалуйста, проверьте \"symbol\"</string>
     <string name="login_field_required">Это поле обязательно</string>
@@ -57,6 +60,9 @@
     <string name="login_contact_email">Электронная почта</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Отправить письмо</string>
+    <string name="login_recover">восстановление</string>
+    <string name="login_recover_button">Я не помню пароль</string>
+    <string name="login_recover_title">Восстановите свой аккаунт</string>
     <string name="login_signed_in">Студент уже вошел в систему</string>
 
 
