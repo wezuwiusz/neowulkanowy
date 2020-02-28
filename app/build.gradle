@@ -179,7 +179,7 @@ dependencies {
 
     implementation("io.coil-kt:coil:0.9.5")
 
-    playImplementation "com.google.firebase:firebase-core:17.2.2"
+    playImplementation "com.google.firebase:firebase-core:17.2.3"
     playImplementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
     releaseImplementation "fr.o80.chucker:library-no-op:$chucker"
