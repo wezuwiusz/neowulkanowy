@@ -11,7 +11,7 @@ import javax.inject.Singleton
 interface GradePointsStatisticsDao : BaseDao<GradePointsStatistics> {
 
     @Query("SELECT * FROM GradesPointsStatistics WHERE student_id = :studentId AND semester_id = :semesterId AND subject = :subjectName")
-    fun loadSubject(semesterId: Int, studentId: Int, subjectName: String): Maybe<GradePointsStatistics>
+    fun loadSubject(semesterId: Int, studentId: Int, subjectName: String): Maybe<List<GradePointsStatistics>>
 
     @Query("SELECT * FROM GradesPointsStatistics WHERE student_id = :studentId AND semester_id = :semesterId")
     fun loadAll(semesterId: Int, studentId: Int): Maybe<List<GradePointsStatistics>>

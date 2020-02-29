@@ -54,8 +54,10 @@ class GradeStatisticsLocalTest {
         ))
 
         val stats = gradeStatisticsLocal.getGradesStatistics(getSemester(), false, "Wszystkie").blockingGet()
-        assertEquals(1, stats.size)
+        assertEquals(3, stats.size)
         assertEquals(stats[0].subject, "Wszystkie")
+        assertEquals(stats[1].subject, "Matematyka")
+        assertEquals(stats[2].subject, "Chemia")
     }
 
     @Test
@@ -67,7 +69,7 @@ class GradeStatisticsLocalTest {
         ))
 
         val stats = gradeStatisticsLocal.getGradesPointsStatistics(getSemester(), "Matematyka").blockingGet()
-        with(stats) {
+        with(stats[0]) {
             assertEquals(subject, "Matematyka")
             assertEquals(others, 5.0)
             assertEquals(student, 5.0)

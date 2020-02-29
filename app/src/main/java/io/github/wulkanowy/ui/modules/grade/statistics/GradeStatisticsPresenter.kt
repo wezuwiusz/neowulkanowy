@@ -48,12 +48,19 @@ class GradeStatisticsPresenter @Inject constructor(
         loadDataByType(semesterId, currentSubjectName, currentType, forceRefresh)
     }
 
+
+    fun onParentViewReselected() {
+        view?.run {
+            if (!isViewEmpty) resetView()
+        }
+    }
+
     fun onParentViewChangeSemester() {
         view?.run {
             showProgress(true)
             enableSwipe(false)
             showRefresh(false)
-            showBarContent(false)
+            showContent(false)
             showErrorView(false)
             showEmpty(false)
             clearView()
@@ -81,8 +88,7 @@ class GradeStatisticsPresenter @Inject constructor(
     fun onSubjectSelected(name: String?) {
         Timber.i("Select grade stats subject $name")
         view?.run {
-            showBarContent(false)
-            showPieContent(false)
+            showContent(false)
             showProgress(true)
             enableSwipe(false)
             showEmpty(false)
@@ -99,8 +105,7 @@ class GradeStatisticsPresenter @Inject constructor(
         Timber.i("Select grade stats semester: $type")
         disposable.clear()
         view?.run {
-            showBarContent(false)
-            showPieContent(false)
+            showContent(false)
             showProgress(true)
             enableSwipe(false)
             showEmpty(false)
@@ -135,20 +140,22 @@ class GradeStatisticsPresenter @Inject constructor(
     private fun loadDataByType(semesterId: Int, subjectName: String, type: ViewType, forceRefresh: Boolean = false) {
         currentSubjectName = subjectName
         currentType = type
-        when (type) {
-            ViewType.SEMESTER -> loadData(semesterId, subjectName, true, forceRefresh)
-            ViewType.PARTIAL -> loadData(semesterId, subjectName, false, forceRefresh)
-            ViewType.POINTS -> loadPointsData(semesterId, subjectName, forceRefresh)
-        }
+        loadData(semesterId, subjectName, type, forceRefresh)
     }
 
-    private fun loadData(semesterId: Int, subjectName: String, isSemester: Boolean, forceRefresh: Boolean = false) {
+    private fun loadData(semesterId: Int, subjectName: String, type: ViewType, forceRefresh: Boolean) {
         Timber.i("Loading grade stats data started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getSemesters(it) }
-            .flatMap { gradeStatisticsRepository.getGradesStatistics(it.first { item -> item.semesterId == semesterId }, subjectName, isSemester, forceRefresh) }
-            .map { list -> list.sortedByDescending { it.grade } }
-            .map { list -> list.filter { it.amount != 0 } }
+            .flatMap {
+                val semester = it.first { item -> item.semesterId == semesterId }
+
+                when (type) {
+                    ViewType.SEMESTER -> gradeStatisticsRepository.getGradesStatistics(semester, subjectName, true, forceRefresh)
+                    ViewType.PARTIAL -> gradeStatisticsRepository.getGradesStatistics(semester, subjectName, false, forceRefresh)
+                    ViewType.POINTS -> gradeStatisticsRepository.getGradesPointsStatistics(semester, subjectName, forceRefresh)
+                }
+            }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally {
@@ -163,10 +170,9 @@ class GradeStatisticsPresenter @Inject constructor(
                 Timber.i("Loading grade stats result: Success")
                 view?.run {
                     showEmpty(it.isEmpty())
-                    showBarContent(false)
-                    showPieContent(it.isNotEmpty())
+                    showContent(it.isNotEmpty())
                     showErrorView(false)
-                    updatePieData(it, preferencesRepository.gradeColorTheme)
+                    updateData(it, preferencesRepository.gradeColorTheme)
                 }
                 analytics.logEvent("load_grade_statistics", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
@@ -175,47 +181,9 @@ class GradeStatisticsPresenter @Inject constructor(
             })
     }
 
-    private fun loadPointsData(semesterId: Int, subjectName: String, forceRefresh: Boolean = false) {
-        Timber.i("Loading grade points stats data started")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it) }
-            .flatMapMaybe { gradeStatisticsRepository.getGradesPointsStatistics(it.first { item -> item.semesterId == semesterId }, subjectName, forceRefresh) }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .doFinally {
-                view?.run {
-                    showRefresh(false)
-                    showProgress(false)
-                    enableSwipe(true)
-                    notifyParentDataLoaded(semesterId)
-                }
-            }
-            .subscribe({
-                Timber.i("Loading grade points stats result: Success")
-                view?.run {
-                    showEmpty(false)
-                    showPieContent(false)
-                    showBarContent(true)
-                    showErrorView(false)
-                    updateBarData(it)
-                }
-                analytics.logEvent("load_grade_points_statistics", "force_refresh" to forceRefresh)
-            }, {
-                Timber.e("Loading grade points stats result: An exception occurred")
-                errorHandler.dispatch(it)
-            }, {
-                Timber.d("Loading grade points stats result: No point stats found")
-                view?.run {
-                    showBarContent(false)
-                    showEmpty(true)
-                }
-            })
-        )
-    }
-
     private fun showErrorViewOnError(message: String, error: Throwable) {
         view?.run {
-            if ((isBarViewEmpty && currentType == ViewType.POINTS) || (isPieViewEmpty) && currentType != ViewType.POINTS) {
+            if (isViewEmpty) {
                 lastError = error
                 setErrorDetails(message)
                 showErrorView(true)

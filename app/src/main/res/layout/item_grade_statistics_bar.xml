@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/gradeStatisticsBarTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorControlHighlight"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:textSize="18sp"
+        tools:text="Matematyka" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/gradeStatisticsBar"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="10dp"
+        android:background="?android:windowBackground"
+        tools:context=".ui.modules.grade.statistics.GradeStatisticsAdapter" />
+
+</LinearLayout>
