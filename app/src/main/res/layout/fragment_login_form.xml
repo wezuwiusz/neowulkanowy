@@ -202,7 +202,7 @@
                 android:layout_marginRight="24dp"
                 android:hint="@string/login_host_hint"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/loginFormSignIn"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormSymbolLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormRecoverLink">
@@ -213,6 +213,36 @@
                     android:layout_height="wrap_content"
                     android:editable="false"
                     tools:ignore="Deprecated,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loginFormSymbolLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:hint="@string/login_symbol_hint"
+                app:errorEnabled="true"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormSignIn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/loginFormSymbol"
+                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeActionLabel="@string/login_sign_in"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:inputType="textAutoComplete|textNoSuggestions"
+                    android:maxLines="1"
+                    tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -229,7 +259,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/loginFormSignIn"
                 app:layout_constraintEnd_toStartOf="@+id/loginFormSignIn"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/loginFormHostLayout"
+                app:layout_constraintStart_toStartOf="@id/loginFormSymbolLayout"
                 app:layout_constraintTop_toTopOf="@+id/loginFormSignIn" />
 
             <com.google.android.material.button.MaterialButton
@@ -244,7 +274,7 @@
                 android:text="@string/login_sign_in"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/loginFormSymbolLayout" />
 
             <TextView
                 android:id="@+id/loginFormPrivacyLink"

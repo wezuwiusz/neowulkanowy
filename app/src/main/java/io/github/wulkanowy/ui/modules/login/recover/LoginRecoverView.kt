@@ -18,9 +18,11 @@ interface LoginRecoverView : BaseView {
 
     fun initView()
 
-    fun setDefaultCredentials(username: String, symbol: String)
+    fun setDefaultCredentials(username: String)
 
     fun clearUsernameError()
+
+    fun clearSymbolError()
 
     fun showSymbol(show: Boolean)
 
@@ -29,6 +31,8 @@ interface LoginRecoverView : BaseView {
     fun setUsernameHint(hint: String)
 
     fun setUsernameError(message: String)
+
+    fun setSymbolError(focus: Boolean)
 
     fun showSoftKeyboard()
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string-array name="hosts_keys">
-        <item>Vulcan</item>
+        <item>Vulcan - standardowy</item>
+        <item>Vulcan - niestandardowy</item>
         <item>Opolska eSzkoła</item>
         <item>Gdańska Platforma Edukacyjna</item>
         <item>Lubelski Portal Oświatowy</item>
@@ -10,12 +11,23 @@
         <item>Fakelog</item>
     </string-array>
     <string-array name="hosts_values">
-        <item>https://vulcan.net.pl</item>
+        <item>https://vulcan.net.pl/?standard</item>
+        <item>https://vulcan.net.pl/?adfs</item>
         <item>https://eszkola.opolskie.pl</item>
         <item>https://edu.gdansk.pl</item>
         <item>https://edu.lublin.eu</item>
         <item>https://umt.tarnow.pl</item>
         <item>https://resman.pl</item>
-        <item>http://fakelog.cf</item>
+        <item>http://fakelog.cf/?standard</item>
+    </string-array>
+    <string-array name="hosts_symbols">
+        <item>Default</item>
+        <item />
+        <item>opole</item>
+        <item>gdansk</item>
+        <item>lublin</item>
+        <item>tarnow</item>
+        <item>rzeszow</item>
+        <item>Default</item>
     </string-array>
 </resources>

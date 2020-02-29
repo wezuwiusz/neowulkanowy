@@ -29,7 +29,7 @@ class StudentRepository @Inject constructor(
         }
     }
 
-    fun getStudentsScrapper(email: String, password: String, endpoint: String, symbol: String = ""): Single<List<Student>> {
+    fun getStudentsScrapper(email: String, password: String, endpoint: String, symbol: String): Single<List<Student>> {
         return ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
             if (it) remote.getStudentsScrapper(email, password, endpoint, symbol)
             else Single.error(UnknownHostException("No internet connection"))

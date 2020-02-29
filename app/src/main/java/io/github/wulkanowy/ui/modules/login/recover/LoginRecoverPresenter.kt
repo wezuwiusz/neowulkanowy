@@ -34,9 +34,13 @@ class LoginRecoverPresenter @Inject constructor(
         view?.clearUsernameError()
     }
 
+    fun onSymbolTextChanged() {
+        view?.clearSymbolError()
+    }
+
     fun onHostSelected() {
         view?.run {
-            if ("fakelog" in recoverHostValue) setDefaultCredentials("jan@fakelog.cf", "Default")
+            if ("fakelog" in recoverHostValue) setDefaultCredentials("jan@fakelog.cf")
             clearUsernameError()
             updateFields()
         }
@@ -44,32 +48,19 @@ class LoginRecoverPresenter @Inject constructor(
 
     fun updateFields() {
         view?.run {
-            if ("fakelog" in recoverHostValue || "vulcan" in recoverHostValue) {
-                showSymbol(true)
-                setUsernameHint(emailHintString)
-            } else {
-                showSymbol(false)
-                setUsernameHint(loginPeselEmailHintString)
-            }
+            showSymbol("adfs" in recoverHostValue)
+            setUsernameHint(if ("standard" in recoverHostValue) emailHintString else loginPeselEmailHintString)
         }
     }
 
     fun onRecoverClick() {
         val username = view?.recoverNameValue.orEmpty()
         val host = view?.recoverHostValue.orEmpty()
-        val symbol = view?.recoverSymbolValue.ifNullOrBlank { "Default" }
+        val symbol = view?.recoverSymbolValue.orEmpty()
 
-        if (username.isEmpty()) {
-            view?.setErrorNameRequired()
-            return
-        }
+        if (!validateInput(username, host, symbol)) return
 
-        if (("fakelog" in host || "vulcan" in host) && "@" !in username) {
-            view?.setUsernameError(view?.invalidEmailString.orEmpty())
-            return
-        }
-
-        disposable.add(recoverRepository.getReCaptchaSiteKey(host, symbol)
+        disposable.add(recoverRepository.getReCaptchaSiteKey(host, symbol.ifBlank { "Default" })
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {
@@ -87,6 +78,27 @@ class LoginRecoverPresenter @Inject constructor(
                 Timber.e("Obtain captcha site key result: An exception occurred")
                 errorHandler.dispatch(it)
             })
+    }
+
+    private fun validateInput(username: String, host: String, symbol: String): Boolean {
+        var isCorrect = true
+
+        if (username.isEmpty()) {
+            view?.setErrorNameRequired()
+            isCorrect = false
+        }
+
+        if ("standard" in host && "@" !in username) {
+            view?.setUsernameError(view?.invalidEmailString.orEmpty())
+            isCorrect = false
+        }
+
+        if ("adfs" in host && symbol.isBlank()) {
+            view?.setSymbolError(focus = isCorrect)
+            isCorrect = false
+        }
+
+        return isCorrect
     }
 
     fun onReCaptchaVerified(reCaptchaResponse: String) {

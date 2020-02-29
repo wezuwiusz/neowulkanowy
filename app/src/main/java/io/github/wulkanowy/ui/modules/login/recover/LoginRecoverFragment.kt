@@ -68,6 +68,7 @@ class LoginRecoverFragment : BaseFragment(), LoginRecoverView {
         hostValues = resources.getStringArray(R.array.hosts_values)
 
         loginRecoverName.doOnTextChanged { _, _, _, _ -> presenter.onNameTextChanged() }
+        loginRecoverSymbol.doOnTextChanged { _, _, _, _ -> presenter.onSymbolTextChanged() }
         loginRecoverHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginRecoverButton.setOnClickListener { presenter.onRecoverClick() }
         loginRecoverErrorRetry.setOnClickListener { presenter.onRecoverClick() }
@@ -83,9 +84,8 @@ class LoginRecoverFragment : BaseFragment(), LoginRecoverView {
         }
     }
 
-    override fun setDefaultCredentials(username: String, symbol: String) {
+    override fun setDefaultCredentials(username: String) {
         loginRecoverName.setText(username)
-        loginRecoverSymbol.setText(symbol)
     }
 
     override fun setErrorNameRequired() {
@@ -106,8 +106,19 @@ class LoginRecoverFragment : BaseFragment(), LoginRecoverView {
         }
     }
 
+    override fun setSymbolError(focus: Boolean) {
+        with(loginRecoverSymbolLayout) {
+            if (focus) requestFocus()
+            error = getString(R.string.login_field_required)
+        }
+    }
+
     override fun clearUsernameError() {
         loginRecoverNameLayout.error = null
+    }
+
+    override fun clearSymbolError() {
+        loginRecoverSymbolLayout.error = null
     }
 
     override fun showSymbol(show: Boolean) {

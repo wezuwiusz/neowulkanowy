@@ -31,9 +31,8 @@
     <string name="login_email_hint">Email</string>
     <string name="login_login_pesel_email_hint">Login, PESEL lub e-mail</string>
     <string name="login_password_hint">Hasło</string>
-    <string name="login_host_hint">Dziennik</string>
+    <string name="login_host_hint">Dziennik UONET+</string>
     <string name="login_symbol_hint">Symbol</string>
-    <string name="login_symbol_hint_optional">Symbol (opcjonalnie)</string>
     <string name="login_type_api">Mobilne API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrydowe</string>

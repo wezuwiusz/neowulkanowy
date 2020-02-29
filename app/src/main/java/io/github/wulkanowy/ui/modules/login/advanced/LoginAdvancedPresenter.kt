@@ -78,6 +78,7 @@ class LoginAdvancedPresenter @Inject constructor(
             if (formHostValue.contains("fakelog")) {
                 setDefaultCredentials("jan@fakelog.cf", "jan123", "powiatwulkanowy", "FK100000", "999999")
             }
+            setSymbol(formHostSymbol)
             updateUsernameLabel()
         }
     }

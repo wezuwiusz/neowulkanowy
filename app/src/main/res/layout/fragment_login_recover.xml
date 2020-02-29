@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/loginRecoverFormContainer"
@@ -113,7 +113,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:hint="@string/login_symbol_hint_optional"
+                android:hint="@string/login_symbol_hint"
                 app:errorEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/loginRecoverButton"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -220,7 +220,7 @@
         android:fillViewport="true"
         android:scrollbars="none"
         android:visibility="invisible"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
         <LinearLayout
             android:layout_width="match_parent"

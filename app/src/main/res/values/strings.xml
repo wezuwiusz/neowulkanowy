@@ -32,7 +32,7 @@
     <string name="login_email_hint">Email</string>
     <string name="login_login_pesel_email_hint">Login, PESEL or e-mail</string>
     <string name="login_password_hint">Password</string>
-    <string name="login_host_hint">Register</string>
+    <string name="login_host_hint">UONET+ Register</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrid</string>
@@ -40,7 +40,6 @@
     <string name="login_pin_hint">PIN</string>
     <string name="login_api_key_hint">API key</string>
     <string name="login_symbol_hint">Symbol</string>
-    <string name="login_symbol_hint_optional">Symbol (optional)</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_invalid_password">Password too short</string>
     <string name="login_incorrect_password">Login details are incorrect</string>
