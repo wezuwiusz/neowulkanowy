@@ -61,7 +61,7 @@ android {
             buildConfigField "boolean", "CRASHLYTICS_ENABLED", project.hasProperty("enableCrashlytics") ? "true" : "false"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            testCoverageEnabled = true
+            testCoverageEnabled = project.hasProperty('coverage')
             ext.enableCrashlytics = project.hasProperty("enableCrashlytics")
         }
     }

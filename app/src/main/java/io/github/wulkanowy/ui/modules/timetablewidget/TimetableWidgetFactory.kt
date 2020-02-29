@@ -109,7 +109,7 @@ class TimetableWidgetFactory(
                 }
                 .flatMap { semesterRepository.getCurrentSemester(it).toMaybe() }
                 .flatMap { timetableRepository.getTimetable(it, date, date).toMaybe() }
-                .map { item -> item.sortedBy { it.number } }
+                .map { items -> items.sortedWith(compareBy({ it.number }, { !it.isStudentPlan })) }
                 .map { lessons -> lessons.filter { if (prefRepository.showWholeClassPlan == "no") it.isStudentPlan else true } }
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet(emptyList())
