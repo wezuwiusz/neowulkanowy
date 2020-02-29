@@ -13,7 +13,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
+import io.github.wulkanowy.services.sync.channels.LuckyNumberChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
@@ -38,7 +38,7 @@ class LuckyNumberWork @Inject constructor(
     }
 
     private fun notify(luckyNumber: LuckyNumber) {
-        notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewEntriesChannel.CHANNEL_ID)
+        notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, LuckyNumberChannel.CHANNEL_ID)
             .setContentTitle(context.getString(R.string.lucky_number_notify_new_item_title))
             .setContentText(context.getString(R.string.lucky_number_notify_new_item, luckyNumber.luckyNumber))
             .setSmallIcon(R.drawable.ic_stat_luckynumber)

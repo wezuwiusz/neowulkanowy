@@ -9,6 +9,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoSet
+import io.github.wulkanowy.services.sync.channels.Channel
+import io.github.wulkanowy.services.sync.channels.DebugChannel
+import io.github.wulkanowy.services.sync.channels.LuckyNumberChannel
+import io.github.wulkanowy.services.sync.channels.NewGradesChannel
+import io.github.wulkanowy.services.sync.channels.NewMessagesChannel
+import io.github.wulkanowy.services.sync.channels.NewNotesChannel
 import io.github.wulkanowy.services.sync.works.AttendanceSummaryWork
 import io.github.wulkanowy.services.sync.works.AttendanceWork
 import io.github.wulkanowy.services.sync.works.CompletedLessonWork
@@ -100,4 +106,24 @@ abstract class ServicesModule {
     @Binds
     @IntoSet
     abstract fun provideGradeStatistics(work: GradeStatisticsWork): Work
+
+    @Binds
+    @IntoSet
+    abstract fun provideDebugChannel(channel: DebugChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideLuckyNumberChannel(channel: LuckyNumberChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideNewGradesChannel(channel: NewGradesChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideNewMessageChannel(channel: NewMessagesChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideNewNotesChannel(channel: NewNotesChannel): Channel
 }

@@ -13,7 +13,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.note.NoteRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
+import io.github.wulkanowy.services.sync.channels.NewNotesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
@@ -38,7 +38,7 @@ class NoteWork @Inject constructor(
     }
 
     private fun notify(notes: List<Note>) {
-        notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewEntriesChannel.CHANNEL_ID)
+        notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewNotesChannel.CHANNEL_ID)
             .setContentTitle(context.resources.getQuantityString(R.plurals.note_new_items, notes.size, notes.size))
             .setContentText(context.resources.getQuantityString(R.plurals.note_notify_new_items, notes.size, notes.size))
             .setSmallIcon(R.drawable.ic_stat_note)

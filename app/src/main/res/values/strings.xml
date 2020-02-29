@@ -354,6 +354,10 @@
 
     <!--Notification Channels-->
     <string name="channel_new_entries">New entries in register</string>
+    <string name="channel_new_grades">New grades</string>
+    <string name="channel_lucky_number">Lucky number</string>
+    <string name="channel_new_message">New messages</string>
+    <string name="channel_new_notes">New notes</string>
     <string name="channel_debug">Debug</string>
 
 

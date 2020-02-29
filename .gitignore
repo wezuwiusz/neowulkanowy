@@ -63,6 +63,7 @@ captures/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 .idea/runConfigurations.xml
+.idea/discord.xml
 
 # Keystore files
 *.jks

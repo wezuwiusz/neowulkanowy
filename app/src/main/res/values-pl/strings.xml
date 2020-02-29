@@ -398,4 +398,8 @@
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna w tym trybie</string>
     <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
+    <string name="channel_lucky_number">Szczęśliwy numerek</string>
+    <string name="channel_new_grades">Nowe oceny</string>
+    <string name="channel_new_message">Nowe wiadomości</string>
+    <string name="channel_new_notes">Nowe uwagi</string>
 </resources>

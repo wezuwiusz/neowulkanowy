@@ -1,32 +1,31 @@
 package io.github.wulkanowy.services.sync.channels
 
 import android.annotation.TargetApi
-import android.app.Notification.VISIBILITY_PUBLIC
+import android.app.Notification
 import android.app.NotificationChannel
-import android.app.NotificationManager.IMPORTANCE_DEFAULT
+import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import io.github.wulkanowy.R
-import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
 
 @TargetApi(26)
-class DebugChannel @Inject constructor(
+class NewNotesChannel @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
-    private val context: Context,
-    private val appInfo: AppInfo
+    private val context: Context
 ) : Channel {
 
     companion object {
-        const val CHANNEL_ID = "debug_channel"
+        const val CHANNEL_ID = "new_notes_channel"
     }
 
     override fun create() {
-        if (appInfo.isDebug) return
         notificationManager.createNotificationChannel(
-            NotificationChannel(CHANNEL_ID, context.getString(R.string.channel_debug), IMPORTANCE_DEFAULT)
+            NotificationChannel(CHANNEL_ID, context.getString(R.string.channel_new_notes), NotificationManager.IMPORTANCE_HIGH)
                 .apply {
-                    lockscreenVisibility = VISIBILITY_PUBLIC
+                    enableLights(true)
+                    enableVibration(true)
+                    lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                 })
     }
 }
