@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Wulkanowy</string>
 
 
@@ -12,6 +14,7 @@
     <string name="settings_title">Ustawienia</string>
     <string name="more_title">Więcej</string>
     <string name="about_title">O aplikacji</string>
+    <string name="logviewer_title">Przeglądarka logów</string>
     <string name="creators_title">Twórcy</string>
     <string name="license_title">Licencje</string>
     <string name="message_title">Wiadomości</string>
@@ -312,8 +315,7 @@
     <string name="creator_see_more">Zobacz więcej na GitHub</string>
 
     <!--Log viewer-->
-    <string name="logviewer_title">Przeglądarka logów</string>
-    <string name="logviewer_share">Share logs</string>
+    <string name="logviewer_share">Udostępnij logi</string>
     <string name="logviewer_refresh">Odśwież</string>
 
 
@@ -350,6 +352,7 @@
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_app_theme">Motyw aplikacji</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
+    <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
     <string name="pref_view_grade_color_scheme">Schemat kolorów ocen</string>
     <string name="pref_view_app_language">Język aplikacji</string>
 
@@ -371,6 +374,10 @@
 
     <!--Notification Channels-->
     <string name="channel_new_entries">Nowe wpisy w dzienniku</string>
+    <string name="channel_lucky_number">Szczęśliwy numerek</string>
+    <string name="channel_new_grades">Nowe oceny</string>
+    <string name="channel_new_message">Nowe wiadomości</string>
+    <string name="channel_new_notes">Nowe uwagi</string>
     <string name="channel_debug">Debugowanie</string>
 
 
@@ -396,9 +403,4 @@
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna w tym trybie</string>
-    <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
-    <string name="channel_lucky_number">Szczęśliwy numerek</string>
-    <string name="channel_new_grades">Nowe oceny</string>
-    <string name="channel_new_message">Nowe wiadomości</string>
-    <string name="channel_new_notes">Nowe uwagi</string>
 </resources>

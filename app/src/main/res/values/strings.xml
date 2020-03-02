@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Wulkanowy</string>
 
 
@@ -20,6 +22,7 @@
     <string name="note_title">Notes and achievements</string>
     <string name="homework_title">Homework</string>
     <string name="account_title">Choose account</string>
+
 
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %d, %d/%d</string>
@@ -382,5 +385,4 @@
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available in this mode</string>
-
 </resources>

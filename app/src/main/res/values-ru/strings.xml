@@ -14,6 +14,8 @@
     <string name="settings_title">Настройки</string>
     <string name="more_title">Ещё</string>
     <string name="about_title">О приложении</string>
+    <string name="logviewer_title">Просмотр журнала</string>
+    <string name="creators_title">Творцы</string>
     <string name="license_title">Лицензии</string>
     <string name="message_title">Сообщения</string>
     <string name="send_message_title">Новое сообщение</string>
@@ -78,6 +80,7 @@
     <string name="grade_switch_semester">Сменить семестр</string>
     <string name="grade_no_items">Оценки отсутствуют</string>
     <string name="grade_weight">Вес</string>
+    <string name="grade_weight_value">Bес: %s</string>
     <string name="grade_comment">Комментарий</string>
     <string name="grade_no_new_items">Новые оценки отсутствуют</string>
     <string name="grade_number_new_items">Количество новых оценок: %1$d</string>
@@ -152,6 +155,11 @@
         <item quantity="many">%1$d отсутствий</item>
         <item quantity="other">%1$d отсутствий</item>
     </plurals>
+    <string name="attendance_excuse_dialog_reason">Причина отсутствия (необязательно)</string>
+    <string name="attendance_excuse_dialog_submit">Послать</string>
+    <string name="attendance_excuse_success">Отсутствие оправдано успешно!</string>
+    <string name="attendance_excuse_no_selection">Вы должны выбрать хотя бы одно отсутствие!</string>
+    <string name="attendance_excuse_title">Oбосновывать</string>
 
 
     <!--Attendance summary-->
@@ -282,6 +290,8 @@
 
     <!--About-->
     <string name="about_version">Версия приложения</string>
+    <string name="about_creator">Творцы</string>
+    <string name="about_creator_summary">Список Wulkanowy программистов</string>
     <string name="about_feedback">Сообщить о ошибке</string>
     <string name="about_feedback_summary">Отправить сообщение о ошибке через электронную почту</string>
     <string name="about_faq">FAQ</string>
@@ -301,11 +311,11 @@
 
 
     <!--Creators-->
-    <string name="creator_avatar_description">аватар</string>
+    <string name="creator_avatar_description">Aватар</string>
     <string name="creator_see_more">Смотрите больше на GitHub</string>
 
+
     <!--Log viewer-->
-    <string name="logviewer_title">Просмотр журнала</string>
     <string name="logviewer_share">Share logs</string>
     <string name="logviewer_refresh">Обновление</string>
 
@@ -343,16 +353,20 @@
     <string name="pref_view_present">Показывать присутствия в посещаемости</string>
     <string name="pref_view_app_theme">Тема приложения</string>
     <string name="pref_view_expand_grade">Больше оценок</string>
+    <string name="pref_view_timetable_show_whole_class">Показать уроки всего класса</string>
     <string name="pref_view_grade_color_scheme">Схема цветов оценок</string>
     <string name="pref_view_app_language">Язык приложения</string>
+
     <string name="pref_notify_header">Уведомления</string>
     <string name="pref_notify_switch">Показывать уведомления</string>
     <string name="pref_notify_debug_switch">Показывать дебаг-уведомления</string>
+
     <string name="pref_services_header">Синхронизация</string>
     <string name="pref_services_switch">Автоматическая синхронизация</string>
     <string name="pref_services_suspended">Приостановить синхронизации во время каникул</string>
     <string name="pref_services_interval">Интервал синхронизации</string>
     <string name="pref_services_wifi">Только через Wi-Fi</string>
+
     <string name="pref_other_header">Другие</string>
     <string name="pref_other_grade_modifier_plus">Вес плюса</string>
     <string name="pref_other_grade_modifier_minus">Вес минуса</string>
@@ -361,6 +375,10 @@
 
     <!--Notification Channels-->
     <string name="channel_new_entries">Новые данные в дневнике</string>
+    <string name="channel_new_grades">Новые оценки</string>
+    <string name="channel_lucky_number">Счастливый номер</string>
+    <string name="channel_new_message">Новые сообщения</string>
+    <string name="channel_new_notes">Новые заметки</string>
     <string name="channel_debug">Дебаг</string>
 
 
@@ -386,10 +404,4 @@
     <string name="error_unknown">Произошла неожиданная ошибка</string>
     <string name="error_feature_disabled">Функция была выключена школой</string>
     <string name="error_feature_not_available">Функция не доступна в этом режиме</string>
-    <string name="pref_view_timetable_show_whole_class">Показать уроки всего класса</string>
-    <string name="channel_new_grades">Новые оценки</string>
-    <string name="channel_lucky_number">Счастливый номер</string>
-    <string name="channel_new_message">Новые сообщения</string>
-    <string name="channel_new_notes">Новые заметки</string>
-
 </resources>

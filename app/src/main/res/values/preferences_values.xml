@@ -29,12 +29,14 @@
         <item>Polski</item>
         <item>English</item>
         <item>Pусский</item>
+        <item>Українська</item>
     </string-array>
     <string-array name="app_language_values" translatable="false">
         <item>system</item>
         <item>pl</item>
         <item>en</item>
         <item>ru</item>
+        <item>uk</item>
     </string-array>
 
     <string-array name="services_interval_entries">

@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="services_interval_entries">
-        <item>15 minut</item>
-        <item>30 minut</item>
-        <item>1 godzina</item>
-        <item>2 godziny</item>
-        <item>6 godzin</item>
-        <item>12 godzin</item>
-        <item>24 godziny</item>
+        <item>15 хвилин</item>
+        <item>30 хвилин</item>
+        <item>1 година</item>
+        <item>2 години</item>
+        <item>6 годин</item>
+        <item>12 годин</item>
+        <item>24 години</item>
     </string-array>
-
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
-        <item>Jasny</item>
-        <item>Ciemny</item>
-        <item>Czarny (AMOLED)</item>
+        <item>Світла</item>
+        <item>Темна</item>
+        <item>Темна (AMOLED)</item>
     </string-array>
-
     <string-array name="app_language_entries">
-        <item>Język systemu</item>
+        <item>Мова системи</item>
         <item>Polski</item>
         <item>English</item>
         <item>Pусский</item>
         <item>Українська</item>
     </string-array>
-
     <string-array name="grade_modifier_entries">
         <item>0,0</item>
         <item>0,25</item>
@@ -31,21 +28,19 @@
         <item>0,5</item>
         <item>0,75</item>
     </string-array>
-
     <string-array name="grade_color_scheme_entries">
         <item>Dzienniczek+</item>
         <item>Wulkanowy</item>
-        <item>Kolory ocen w dzienniku</item>
+        <item>Кольори оцінок в щоденнику</item>
     </string-array>
-
     <string-array name="grade_average_mode_entries">
-        <item>Średnia ocen z 2 semestru</item>
-        <item>Średnia ocen z całego roku</item>
+        <item>Середня оцінка з 2 семестру</item>
+        <item>Середня оцінка за весь рік</item>
     </string-array>
 
     <string-array name="timetable_show_whole_class_entries">
-        <item>Nie pokazuj</item>
-        <item>Pokazuj wszystkie</item>
-        <item>Pokazuj pomniejszone</item>
+        <item>Не показувати</item>
+        <item>Показати все</item>
+        <item>Показати менше</item>
     </string-array>
 </resources>
