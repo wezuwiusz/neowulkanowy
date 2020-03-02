@@ -19,7 +19,7 @@
     <string name="license_title">Ліцензії</string>
     <string name="message_title">Повідомлення</string>
     <string name="send_message_title">Нове повідомлення</string>
-    <string name="note_title">Примітки та досягнення</string>
+    <string name="note_title">Нотатки та досягнення</string>
     <string name="homework_title">Домашні завдання</string>
     <string name="account_title">Виберіть акаунт</string>
 
@@ -33,7 +33,7 @@
     <string name="login_header_symbol">Впишіть \"symbol\"</string>
     <string name="login_nickname_hint">Ім\'я користувача</string>
     <string name="login_email_hint">Електронна пошта</string>
-    <string name="login_login_pesel_email_hint">Логин, PESEL или электронная почта</string>
+    <string name="login_login_pesel_email_hint">Логін, PESEL або електронна пошта</string>
     <string name="login_password_hint">Пароль</string>
     <string name="login_host_hint">Щоденник</string>
     <string name="login_type_api">Мобільний API</string>
@@ -41,15 +41,15 @@
     <string name="login_type_hybrid">Гібрид</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
-    <string name="login_api_key_hint">клавіша API</string>
+    <string name="login_api_key_hint">Ключ API</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Ввійти</string>
     <string name="login_invalid_password">Дуже короткий пароль</string>
-    <string name="login_incorrect_password">Вказані неправільні дані</string>
+    <string name="login_incorrect_password">Вказані неправильні дані</string>
     <string name="login_invalid_pin">Недійсний PIN</string>
     <string name="login_invalid_token">Недійсний token</string>
-    <string name="login_invalid_email">Недійсний адрес электронной почты</string>
-    <string name="login_expired_token">Токен прострочений</string>
+    <string name="login_invalid_email">Недійсна адреса електронної пошти</string>
+    <string name="login_expired_token">Токен протермінований</string>
     <string name="login_invalid_symbol">Недійсний symbol</string>
     <string name="login_incorrect_symbol">Не вдалося знайти учня. Будь ласка, перевірте \"symbol\"</string>
     <string name="login_field_required">Це поле обов\'язкове</string>
@@ -58,12 +58,12 @@
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_privacy_policy">Політика приватності</string>
-    <string name="login_contact_header">Проблеми з авторизацією? Звяжіться з нами!</string>
+    <string name="login_contact_header">Проблеми з авторизацією? Зв\'яжіться з нами!</string>
     <string name="login_contact_email">Електронна пошта</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Відправити листа</string>
-    <string name="login_recover_button">I forgot my password</string>
-    <string name="login_recover_title">Відновіть свій рахунок</string>
+    <string name="login_recover_button">Я забув свій пароль</string>
+    <string name="login_recover_title">Відновіть свій акаунт</string>
     <string name="login_recover">Відновити</string>
     <string name="login_signed_in">Учень вже ввійшов в систему</string>
 
@@ -82,7 +82,7 @@
     <string name="grade_no_items">Оцінки відсутні</string>
     <string name="grade_weight">Вага</string>
     <string name="grade_weight_value">Вага: %s</string>
-    <string name="grade_comment">Коментарій</string>
+    <string name="grade_comment">Коментар</string>
     <string name="grade_no_new_items">Нові оцінки відсутні</string>
     <string name="grade_number_new_items">Кількість нових оцінок: %1$d</string>
     <string name="grade_average">Середня оцінка: %1$.2f</string>
@@ -158,14 +158,14 @@
     </plurals>
     <string name="attendance_excuse_dialog_reason">Причина відсутності (необов’язково)</string>
     <string name="attendance_excuse_dialog_submit">Надіслати</string>
-    <string name="attendance_excuse_success">Виправдано успішно!</string>
+    <string name="attendance_excuse_success">Відсутність виправдана успішно!</string>
     <string name="attendance_excuse_no_selection">Ви повинні вибрати хоча б одну відсутність!</string>
     <string name="attendance_excuse_title">Oбґрунтовувати</string>
 
 
     <!--Attendance summary-->
     <string name="attendance_summary_final">Відвідуваність</string>
-    <string name="attendance_summary_total">разом</string>
+    <string name="attendance_summary_total">Загальна</string>
 
 
     <!--Exam-->
@@ -191,7 +191,7 @@
     <string name="message_delete_forever">Видалити назавжди</string>
     <string name="message_delete_success">Повідомлення успішно видалено</string>
     <string name="message_subject">Тема</string>
-    <string name="message_content">Тукст</string>
+    <string name="message_content">Зміст</string>
     <string name="message_send_successful">Повідомлення успішно відправлено</string>
     <string name="message_required_recipients">Ви повинні вибрати щонайменше одного отримувача</string>
     <string name="message_content_min_length">Текст повідомлення повинен містити щонайменше 3 знаки</string>
@@ -216,24 +216,24 @@
 
 
     <!--Note-->
-    <string name="note_no_items">Немає даних про попередження</string>
+    <string name="note_no_items">Немає даних про нотатки</string>
     <plurals name="note_number_item">
-        <item quantity="one">%d попередження</item>
-        <item quantity="few">%d попередження</item>
-        <item quantity="many">%d попереджень</item>
-        <item quantity="other">%d попереджень</item>
+        <item quantity="one">%d нотатка</item>
+        <item quantity="few">%d нотатки</item>
+        <item quantity="many">%d нотаток</item>
+        <item quantity="other">%d нотатки</item>
     </plurals>
     <plurals name="note_new_items">
-        <item quantity="one" tools:ignore="ImpliedQuantity">Нове попередження</item>
-        <item quantity="few">Нові попередження</item>
-        <item quantity="many">Нових попереджень</item>
-        <item quantity="other">Нових попереджень</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">Нова нотатка</item>
+        <item quantity="few">Нові нотатки</item>
+        <item quantity="many">Нових нотаток</item>
+        <item quantity="other">Нових нотаток</item>
     </plurals>
     <plurals name="note_notify_new_items">
-        <item quantity="one">Ви отримали %1$d попередження</item>
-        <item quantity="few">Ви отримали %1$d попередження</item>
-        <item quantity="many">Ви отримали %1$d попереджень</item>
-        <item quantity="other">Ви отримали %1$d попереджень</item>
+        <item quantity="one">Ви отримали %1$d нотатку</item>
+        <item quantity="few">Ви отримали %1$d нотатки</item>
+        <item quantity="many">Ви отримали %1$d нотаток</item>
+        <item quantity="other">Ви отримали %1$d нотаток</item>
     </plurals>
 
 
@@ -243,10 +243,10 @@
 
     <!--Lucky number-->
     <string name="lucky_number_title">Щасливий номер</string>
-    <string name="lucky_number_header">Сьогоднішній щасливий номер</string>
+    <string name="lucky_number_header">Сьогодні щасливий номер</string>
     <string name="lucky_number_empty">Немає даних про щасливий номер</string>
-    <string name="lucky_number_notify_new_item_title">Сьогоднішній щасливий номер</string>
-    <string name="lucky_number_notify_new_item">Сьогоднішній щасливий номер: %d</string>
+    <string name="lucky_number_notify_new_item_title">Сьогодні щасливий номер</string>
+    <string name="lucky_number_notify_new_item">Сьогодні щасливий номер: %d</string>
 
 
     <!--Mobile devices-->
@@ -296,7 +296,7 @@
     <string name="about_feedback">Повідомити про помилку</string>
     <string name="about_feedback_summary">Відправити повідомлення про помилку електронною поштою</string>
     <string name="about_faq">FAQ</string>
-    <string name="about_faq_summary">Читайте питання, які часто задають</string>
+    <string name="about_faq_summary">Читайте запитання, які часто задають</string>
     <string name="about_discord">Сервер Discord</string>
     <string name="about_discord_summary">Приєднатися до спільноти додатка</string>
     <string name="about_privacy">Політика приватності</string>
@@ -355,7 +355,7 @@
     <string name="pref_view_app_theme">Тема додатку</string>
     <string name="pref_view_expand_grade">Більше оцінок</string>
     <string name="pref_view_timetable_show_whole_class">Показати уроки всього класу</string>
-    <string name="pref_view_grade_color_scheme">Схема кольорів оцінок</string>
+    <string name="pref_view_grade_color_scheme">Колірна гама оцінок</string>
     <string name="pref_view_app_language">Мова додатку</string>
 
     <string name="pref_notify_header">Повідомлення</string>
@@ -376,10 +376,10 @@
 
     <!--Notification Channels-->
     <string name="channel_new_entries">Нові дані в щоденнику</string>
-    <string name="channel_lucky_number">Вдалий номер</string>
+    <string name="channel_lucky_number">Щасливий номер</string>
     <string name="channel_new_grades">Нові оцінки</string>
     <string name="channel_new_message">Нові повідомлення</string>
-    <string name="channel_new_notes">Нові зауваження</string>
+    <string name="channel_new_notes">Нові нотатки</string>
     <string name="channel_debug">Дебаг</string>
 
 
