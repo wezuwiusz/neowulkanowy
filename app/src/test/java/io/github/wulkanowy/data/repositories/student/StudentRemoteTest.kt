@@ -1,15 +1,12 @@
 package io.github.wulkanowy.data.repositories.student
 
-import io.github.wulkanowy.data.SdkHelper
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Student
-import io.mockk.impl.annotations.SpyK
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.anyString
 import org.mockito.Mockito.doReturn
 import org.mockito.MockitoAnnotations
