@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/timetableWidgetItemNumber"
             android:layout_width="40dp"
@@ -46,8 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@android:color/black"
@@ -72,19 +71,26 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="15sp"
-            tools:text="Agata Kowalska - Błaszczyk" />
-
+            tools:text="Agata" />
         <TextView
             android:id="@+id/timetableWidgetItemDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:visibility="visible"
+            tools:text="@tools:sample/lorem/random" />
     </LinearLayout>
 
     <FrameLayout
