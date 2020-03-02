@@ -1,6 +1,6 @@
 package io.github.wulkanowy.data.repositories.luckynumber
 
-import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -18,7 +18,7 @@ class LuckyNumberRemoteTest {
     private var mockSdk = Sdk()
 
     @MockK
-    private lateinit var semesterMock: Semester
+    private lateinit var studentMock: Student
 
     @Before
     fun initApi() {
@@ -27,18 +27,18 @@ class LuckyNumberRemoteTest {
 
     @Test
     fun getLuckyNumberTest() {
-        every { mockSdk.getLuckyNumber() } returns Maybe.just(14)
+        every { mockSdk.getLuckyNumber("test") } returns Maybe.just(14)
 
         every { mockSdk.diaryId } returns 1
-        every { semesterMock.studentId } returns 1
-        every { semesterMock.diaryId } returns 1
+        every { studentMock.studentId } returns 1
+        every { studentMock.schoolShortName } returns "test"
 
         val luckyNumber = LuckyNumberRemote(mockSdk)
-            .getLuckyNumber(semesterMock)
+            .getLuckyNumber(studentMock)
             .blockingGet()
 
         assertEquals(14, luckyNumber.luckyNumber)
         assertEquals(LocalDate.now(), luckyNumber.date)
-        assertEquals(semesterMock.studentId, luckyNumber.studentId)
+        assertEquals(studentMock.studentId, luckyNumber.studentId)
     }
 }

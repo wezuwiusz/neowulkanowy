@@ -3,7 +3,7 @@ package io.github.wulkanowy.data.repositories.luckynumber
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.LuckyNumber
-import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import org.threeten.bp.LocalDate
@@ -18,14 +18,14 @@ class LuckyNumberRepository @Inject constructor(
     private val remote: LuckyNumberRemote
 ) {
 
-    fun getLuckyNumber(semester: Semester, forceRefresh: Boolean = false, notify: Boolean = false): Maybe<LuckyNumber> {
-        return local.getLuckyNumber(semester, LocalDate.now()).filter { !forceRefresh }
+    fun getLuckyNumber(student: Student, forceRefresh: Boolean = false, notify: Boolean = false): Maybe<LuckyNumber> {
+        return local.getLuckyNumber(student, LocalDate.now()).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMapMaybe {
-                    if (it) remote.getLuckyNumber(semester)
+                    if (it) remote.getLuckyNumber(student)
                     else Maybe.error(UnknownHostException())
                 }.flatMap { new ->
-                    local.getLuckyNumber(semester, LocalDate.now())
+                    local.getLuckyNumber(student, LocalDate.now())
                         .doOnSuccess { old ->
                             if (new != old) {
                                 local.deleteLuckyNumber(old)
@@ -39,13 +39,13 @@ class LuckyNumberRepository @Inject constructor(
                                 if (notify) isNotified = false
                             })
                         }
-                }.flatMap({ local.getLuckyNumber(semester, LocalDate.now()) }, { Maybe.error(it) },
-                    { local.getLuckyNumber(semester, LocalDate.now()) })
+                }.flatMap({ local.getLuckyNumber(student, LocalDate.now()) }, { Maybe.error(it) },
+                    { local.getLuckyNumber(student, LocalDate.now()) })
             )
     }
 
-    fun getNotNotifiedLuckyNumber(semester: Semester): Maybe<LuckyNumber> {
-        return local.getLuckyNumber(semester, LocalDate.now()).filter { !it.isNotified }
+    fun getNotNotifiedLuckyNumber(student: Student): Maybe<LuckyNumber> {
+        return local.getLuckyNumber(student, LocalDate.now()).filter { !it.isNotified }
     }
 
     fun updateLuckyNumber(luckyNumber: LuckyNumber): Completable {

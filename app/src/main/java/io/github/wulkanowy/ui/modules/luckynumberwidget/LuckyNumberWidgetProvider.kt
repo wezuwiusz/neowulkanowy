@@ -18,7 +18,6 @@ import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
@@ -31,9 +30,6 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
 
     @Inject
     lateinit var studentRepository: StudentRepository
-
-    @Inject
-    lateinit var semesterRepository: SemesterRepository
 
     @Inject
     lateinit var luckyNumberRepository: LuckyNumberRepository
@@ -156,7 +152,6 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
                         else -> Maybe.empty()
                     }
                 }
-                .flatMap { semesterRepository.getCurrentSemester(it).toMaybe() }
                 .flatMap { luckyNumberRepository.getLuckyNumber(it) }
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet()

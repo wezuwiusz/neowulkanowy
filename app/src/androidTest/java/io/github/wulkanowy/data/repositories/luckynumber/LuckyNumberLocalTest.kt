@@ -6,11 +6,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime.now
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -36,7 +38,7 @@ class LuckyNumberLocalTest {
     fun saveAndReadTest() {
         luckyNumberLocal.saveLuckyNumber(LuckyNumber(1, LocalDate.of(2019, 1, 20), 14))
 
-        val luckyNumber = luckyNumberLocal.getLuckyNumber(Semester(1, 1, "", 1, 3, 2019, LocalDate.now(), LocalDate.now(), 1, 1),
+        val luckyNumber = luckyNumberLocal.getLuckyNumber(Student("", "", "", "", "", "", false, "", "", "", 1, 1, "", "", "", "", "", 1, false, now()),
             LocalDate.of(2019, 1, 20)
         ).blockingGet()
 

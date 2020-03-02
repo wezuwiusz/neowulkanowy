@@ -41,6 +41,7 @@ class StudentRemoteTest {
             userLoginId = 0,
             studentName = name,
             schoolSymbol = "",
+            schoolShortName = "",
             schoolName = "",
             className = "",
             classId = 0,

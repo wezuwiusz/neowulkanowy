@@ -2,7 +2,7 @@ package io.github.wulkanowy.data.repositories.luckynumber
 
 import io.github.wulkanowy.data.db.dao.LuckyNumberDao
 import io.github.wulkanowy.data.db.entities.LuckyNumber
-import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.reactivex.Maybe
 import org.threeten.bp.LocalDate
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class LuckyNumberLocal @Inject constructor(private val luckyNumberDb: LuckyNumbe
         luckyNumberDb.deleteAll(listOf(luckyNumber))
     }
 
-    fun getLuckyNumber(semester: Semester, date: LocalDate): Maybe<LuckyNumber> {
-        return luckyNumberDb.load(semester.studentId, date)
+    fun getLuckyNumber(student: Student, date: LocalDate): Maybe<LuckyNumber> {
+        return luckyNumberDb.load(student.studentId, date)
     }
 }
