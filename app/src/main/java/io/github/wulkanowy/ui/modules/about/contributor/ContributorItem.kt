@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.about.creator
+package io.github.wulkanowy.ui.modules.about.contributor
 
 import android.view.View
 import coil.api.load
@@ -12,7 +12,8 @@ import io.github.wulkanowy.data.pojos.AppCreator
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_creator.*
 
-class CreatorItem(val creator: AppCreator) : AbstractFlexibleItem<CreatorItem.ViewHolder>() {
+class ContributorItem(val creator: AppCreator) :
+    AbstractFlexibleItem<ContributorItem.ViewHolder>() {
 
     override fun getLayoutRes() = R.layout.item_creator
 
@@ -33,7 +34,7 @@ class CreatorItem(val creator: AppCreator) : AbstractFlexibleItem<CreatorItem.Vi
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as CreatorItem
+        other as ContributorItem
 
         if (creator != other.creator) return false
 

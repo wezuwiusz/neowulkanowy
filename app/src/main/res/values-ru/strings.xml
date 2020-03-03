@@ -15,7 +15,7 @@
     <string name="more_title">Ещё</string>
     <string name="about_title">О приложении</string>
     <string name="logviewer_title">Просмотр журнала</string>
-    <string name="creators_title">Творцы</string>
+    <string name="contributors_title">Творцы</string>
     <string name="license_title">Лицензии</string>
     <string name="message_title">Сообщения</string>
     <string name="send_message_title">Новое сообщение</string>

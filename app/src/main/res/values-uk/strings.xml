@@ -14,8 +14,8 @@
     <string name="settings_title">Налаштування</string>
     <string name="more_title">Ще</string>
     <string name="about_title">Про додаток</string>
-    <string name="logviewer_title">Log viewer</string>
-    <string name="creators_title">Creators</string>
+    <string name="logviewer_title">Переглядач журналів</string>
+    <string name="contributors_title">Творці</string>
     <string name="license_title">Ліцензії</string>
     <string name="message_title">Повідомлення</string>
     <string name="send_message_title">Нове повідомлення</string>
