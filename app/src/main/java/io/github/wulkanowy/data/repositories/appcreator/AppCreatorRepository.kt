@@ -12,7 +12,7 @@ class AppCreatorRepository @Inject constructor(private val assets: AssetManager)
     fun getAppCreators(): Single<List<AppCreator>> {
         return Single.fromCallable<List<AppCreator>> {
             Gson().fromJson(
-                assets.open("creators.json").bufferedReader().use { it.readText() },
+                assets.open("contributors.json").bufferedReader().use { it.readText() },
                 Array<AppCreator>::class.java
             ).toList()
         }
