@@ -272,8 +272,8 @@
 
     <!--About-->
     <string name="about_version">App version</string>
-    <string name="about_creator">Contributors</string>
-    <string name="about_creator_summary">List of Wulkanowy developers</string>
+    <string name="about_contributor">Contributors</string>
+    <string name="about_contributor_summary">List of Wulkanowy developers</string>
     <string name="about_feedback">Report a bug</string>
     <string name="about_feedback_summary">Send a bug report via e-mail</string>
     <string name="about_faq">FAQ</string>
@@ -292,9 +292,9 @@
     <string name="license_dialog_title">License</string>
 
 
-    <!--Creators-->
-    <string name="creator_avatar_description">Avatar</string>
-    <string name="creator_see_more">See more on GitHub</string>
+    <!--Contributor-->
+    <string name="contributor_avatar_description">Avatar</string>
+    <string name="contributor_see_more">See more on GitHub</string>
 
 
     <!--Log viewer-->

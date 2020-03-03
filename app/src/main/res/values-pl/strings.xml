@@ -271,7 +271,7 @@
     <string name="school_telephone">Telefon</string>
     <string name="school_headmaster">Imię i nazwisko dyrektora</string>
     <string name="school_pedagogue">Imię i nazwisko pedagoga</string>
-    <string name="school_address_button">Pokaż na mpaie</string>
+    <string name="school_address_button">Pokaż na mapie</string>
     <string name="school_telephone_button">Zadzwoń</string>
 
 
@@ -290,8 +290,8 @@
 
     <!--About-->
     <string name="about_version">Wersja aplikacji</string>
-    <string name="about_creator">Twórcy</string>
-    <string name="about_creator_summary">Lista programistów Wulkanowego</string>
+    <string name="about_contributor">Twórcy</string>
+    <string name="about_contributor_summary">Lista programistów Wulkanowego</string>
     <string name="about_feedback">Zgłoś błąd</string>
     <string name="about_feedback_summary">Wyślij zgłoszenie o błędzie poprzez e-maila</string>
     <string name="about_faq">FAQ</string>
@@ -311,8 +311,8 @@
 
 
     <!--Creators-->
-    <string name="creator_avatar_description">Awatar</string>
-    <string name="creator_see_more">Zobacz więcej na GitHub</string>
+    <string name="contributor_avatar_description">Awatar</string>
+    <string name="contributor_see_more">Zobacz więcej na GitHub</string>
 
     <!--Log viewer-->
     <string name="logviewer_share">Udostępnij logi</string>

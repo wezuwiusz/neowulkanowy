@@ -291,8 +291,8 @@
 
     <!--About-->
     <string name="about_version">Версія додатку</string>
-    <string name="about_creator">Tворці</string>
-    <string name="about_creator_summary">Список Wulkanowy програмістів</string>
+    <string name="about_contributor">Tворці</string>
+    <string name="about_contributor_summary">Список Wulkanowy програмістів</string>
     <string name="about_feedback">Повідомити про помилку</string>
     <string name="about_feedback_summary">Відправити повідомлення про помилку електронною поштою</string>
     <string name="about_faq">FAQ</string>
@@ -312,8 +312,8 @@
 
 
     <!--Creators-->
-    <string name="creator_avatar_description">Аватар</string>
-    <string name="creator_see_more">Дивіться більше на GitHub</string>
+    <string name="contributor_avatar_description">Аватар</string>
+    <string name="contributor_see_more">Дивіться більше на GitHub</string>
 
 
     <!--Log viewer-->

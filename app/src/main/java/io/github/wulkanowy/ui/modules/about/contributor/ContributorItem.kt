@@ -10,12 +10,12 @@ import eu.davidea.viewholders.FlexibleViewHolder
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.AppCreator
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_creator.*
+import kotlinx.android.synthetic.main.item_contributor.*
 
 class ContributorItem(val creator: AppCreator) :
     AbstractFlexibleItem<ContributorItem.ViewHolder>() {
 
-    override fun getLayoutRes() = R.layout.item_creator
+    override fun getLayoutRes() = R.layout.item_contributor
 
     override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<*>>) = ViewHolder(view, adapter)
 
