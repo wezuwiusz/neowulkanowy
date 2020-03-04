@@ -42,12 +42,27 @@
                 android:text="@string/login_recover_title"
                 android:textSize="16sp"
                 app:fontFamily="sans-serif-light"
-                app:layout_constraintBottom_toTopOf="@+id/loginRecoverNameLayout"
+                app:layout_constraintBottom_toTopOf="@+id/loginRecoverInfoMessage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/loginRecoverInfoMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="32dp"
+                android:gravity="center_horizontal"
+                android:text="@string/login_recover_warning"
+                android:textColor="?colorTimetableChange"
+                app:layout_constraintBottom_toTopOf="@id/loginRecoverNameLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginFormHeader" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginRecoverNameLayout"
@@ -64,7 +79,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/loginRecoverHostLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormHeader">
+                app:layout_constraintTop_toBottomOf="@+id/loginRecoverInfoMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginRecoverName"

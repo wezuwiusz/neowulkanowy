@@ -27,6 +27,12 @@ interface LoginAdvancedView : BaseView {
 
     fun initView()
 
+    fun showMobileApiWarningMessage()
+
+    fun showScraperWarningMessage()
+
+    fun showHybridWarningMessage()
+
     fun setDefaultCredentials(username: String, pass: String, symbol: String, token: String, pin: String)
 
     fun setUsernameLabel(label: String)

@@ -86,9 +86,18 @@ class LoginAdvancedPresenter @Inject constructor(
     fun onLoginModeSelected(type: Sdk.Mode) {
         view?.run {
             when (type) {
-                Sdk.Mode.API -> showOnlyMobileApiModeInputs()
-                Sdk.Mode.SCRAPPER -> showOnlyScrapperModeInputs()
-                Sdk.Mode.HYBRID -> showOnlyHybridModeInputs()
+                Sdk.Mode.API -> {
+                    showOnlyMobileApiModeInputs()
+                    showMobileApiWarningMessage()
+                }
+                Sdk.Mode.SCRAPPER -> {
+                    showOnlyScrapperModeInputs()
+                    showScraperWarningMessage()
+                }
+                Sdk.Mode.HYBRID -> {
+                    showOnlyHybridModeInputs()
+                    showHybridWarningMessage()
+                }
             }
         }
     }

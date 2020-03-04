@@ -124,7 +124,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     override fun setErrorSymbolRequired(focus: Boolean) {
         with(loginFormSymbolLayout) {
             if (focus) requestFocus()
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.login_symbol_helper)
         }
     }
 

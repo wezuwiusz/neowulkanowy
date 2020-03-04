@@ -111,6 +111,18 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
         }
     }
 
+    override fun showMobileApiWarningMessage() {
+        loginFormAdvancedWarningInfo.text = getString(R.string.login_advanced_warning_mobile_api)
+    }
+
+    override fun showScraperWarningMessage() {
+        loginFormAdvancedWarningInfo.text = getString(R.string.login_advanced_warning_scraper)
+    }
+
+    override fun showHybridWarningMessage() {
+        loginFormAdvancedWarningInfo.text = getString(R.string.login_advanced_warning_hybrid)
+    }
+
     override fun setDefaultCredentials(username: String, pass: String, symbol: String, token: String, pin: String) {
         loginFormUsername.setText(username)
         loginFormPass.setText(pass)
