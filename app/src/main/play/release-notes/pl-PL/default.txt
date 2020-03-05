@@ -1,8 +1,10 @@
-Wersja 0.15.0
+Wersja 0.16.0
 
-- dodaliśmy funkcję usprawiedliwiania nieobecności
-- w trybie hybrydowym i mobilnym pokazują się teraz domyślnie tylko lekcje grupy ucznia
-- odświezyliśmy wygląd okienka ze szczegółami oceny
-- dokonaliśmy kilku poprawek dla systemu punktowego: suma punktów wyświetla się teraz w szczegółach ocen, a w widoku ucznia na tle klasy wykres jest w końcu poprawnie skalowany
+- oceny zapisane w nawiasach nie są już liczone do średniej
+- naprawiliśmy wyświetlanie szczęśliwych numerków na kontach rodziców (może być potrzebne zalogowanie się ponownie)
+- dodaliśmy opcję przywracania hasła, ulepszyliśmy formularz logowania
+- dodaliśmy język ukraiński i niemiecki
+- dodaliśmy informację na górnym pasku o bieżącym semestrze w widoku ocen
+- ulepszyliśmy przełączanie aplikacji na nowy semestr
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
