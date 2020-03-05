@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Wulkanowy</string>
 
 
@@ -12,7 +14,8 @@
     <string name="settings_title">Ustawienia</string>
     <string name="more_title">Więcej</string>
     <string name="about_title">O aplikacji</string>
-    <string name="creators_title">Twórcy</string>
+    <string name="logviewer_title">Przeglądarka logów</string>
+    <string name="contributors_title">Twórcy</string>
     <string name="license_title">Licencje</string>
     <string name="message_title">Wiadomości</string>
     <string name="send_message_title">Nowa wiadomość</string>
@@ -20,13 +23,18 @@
     <string name="homework_title">Zadania domowe</string>
     <string name="account_title">Wybierz konto</string>
 
+    <!--Subtitles-->
+    <string name="grade_subtitle">Semestr %d, %d/%d</string>
+
 
     <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
     <string name="login_header_symbol">Podaj symbol</string>
-    <string name="login_nickname_hint">Email lub nick</string>
+    <string name="login_nickname_hint">Nazwa użytkownika</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_login_pesel_email_hint">Login, PESEL lub e-mail</string>
     <string name="login_password_hint">Hasło</string>
-    <string name="login_host_hint">Dziennik</string>
+    <string name="login_host_hint">Dziennik UONET+</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_type_api">Mobilne API</string>
     <string name="login_type_scrapper">Scraper</string>
@@ -36,22 +44,31 @@
     <string name="login_api_key_hint">Klucz API</string>
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
-    <string name="login_incorrect_password">Dane logowania są niepoprawne</string>
+    <string name="login_incorrect_password">Dane logowania są niepoprawne. Upewnij się, że został wybrany odpowiedni dziennik UONET+</string>
     <string name="login_invalid_pin">Nieprawidłowy PIN</string>
     <string name="login_invalid_token">Nieprawidłowy token</string>
     <string name="login_expired_token">Token stracił ważność</string>
+    <string name="login_invalid_email">Niepoprawny adres email</string>
     <string name="login_invalid_symbol">Niepoprawny symbol</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź symbol</string>
     <string name="login_field_required">To pole jest wymagane</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
-    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
+    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_advanced">Inne opcje</string>
+    <string name="login_advanced_warning_mobile_api">W tym trybie nie działa szczęśliwy numerek, uczeń na tle klasy, podsumowanie frekwencji, usprawiedliwianie nieobecności, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń</string>
+    <string name="login_advanced_warning_scraper">Tryb ten wyświetla te same dane, które widoczne są na stronie internetowej dziennika</string>
+    <string name="login_advanced_warning_hybrid">Połączenie najlepszych cech dwóch pozostałych trybów. Działa szybciej niż scraper i zapewnia funkcje niedostępne w trybie Mobilne API. Jest w fazie eksperymentalnej</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
     <string name="login_contact_header">Problemy z logowaniem? Napisz do nas!</string>
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Wyślij email</string>
+    <string name="login_recover_warning">Upewnij się, że został wybrany odpowiedni dziennik UONET+!</string>
+    <string name="login_recover_button">Nie pamiętam hasła</string>
+    <string name="login_recover_title">Przywróć swoje konto</string>
+    <string name="login_recover">Przywróć</string>
+    <string name="login_signed_in">Uczeń jest już zalogowany</string>
 
 
     <!--Main-->
@@ -151,6 +168,7 @@
 
     <!--Attendance summary-->
     <string name="attendance_summary_final">Frekwencja</string>
+    <string name="attendance_summary_total">Razem</string>
 
 
     <!--Exam-->
@@ -257,7 +275,7 @@
     <string name="school_telephone">Telefon</string>
     <string name="school_headmaster">Imię i nazwisko dyrektora</string>
     <string name="school_pedagogue">Imię i nazwisko pedagoga</string>
-    <string name="school_address_button">Pokaż na mpaie</string>
+    <string name="school_address_button">Pokaż na mapie</string>
     <string name="school_telephone_button">Zadzwoń</string>
 
 
@@ -276,8 +294,8 @@
 
     <!--About-->
     <string name="about_version">Wersja aplikacji</string>
-    <string name="about_creator">Twórcy</string>
-    <string name="about_creator_summary">Lista programistów Wulkanowego</string>
+    <string name="about_contributor">Twórcy</string>
+    <string name="about_contributor_summary">Lista programistów Wulkanowego</string>
     <string name="about_feedback">Zgłoś błąd</string>
     <string name="about_feedback_summary">Wyślij zgłoszenie o błędzie poprzez e-maila</string>
     <string name="about_faq">FAQ</string>
@@ -297,8 +315,12 @@
 
 
     <!--Creators-->
-    <string name="creator_avatar_description">Awatar</string>
-    <string name="creator_see_more">Zobacz więcej na GitHub</string>
+    <string name="contributor_avatar_description">Awatar</string>
+    <string name="contributor_see_more">Zobacz więcej na GitHub</string>
+
+    <!--Log viewer-->
+    <string name="logviewer_share">Udostępnij logi</string>
+    <string name="logviewer_refresh">Odśwież</string>
 
 
     <!--Generic-->
@@ -334,6 +356,7 @@
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_app_theme">Motyw aplikacji</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
+    <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
     <string name="pref_view_grade_color_scheme">Schemat kolorów ocen</string>
     <string name="pref_view_app_language">Język aplikacji</string>
 
@@ -355,6 +378,10 @@
 
     <!--Notification Channels-->
     <string name="channel_new_entries">Nowe wpisy w dzienniku</string>
+    <string name="channel_lucky_number">Szczęśliwy numerek</string>
+    <string name="channel_new_grades">Nowe oceny</string>
+    <string name="channel_new_message">Nowe wiadomości</string>
+    <string name="channel_new_notes">Nowe uwagi</string>
     <string name="channel_debug">Debugowanie</string>
 
 
@@ -379,6 +406,5 @@
     <string name="error_service_unavailable">Trwa przerwa techniczna dziennika UONET+. Spróbuj ponownie później</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
-    <string name="error_feature_not_available">Funkcja niedostępna w tym trybie</string>
-    <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
+    <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w innym trybie niż Mobilne API</string>
 </resources>

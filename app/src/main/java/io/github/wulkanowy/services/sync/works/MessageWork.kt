@@ -14,7 +14,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.message.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.services.sync.channels.NewEntriesChannel
+import io.github.wulkanowy.services.sync.channels.NewMessagesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
@@ -39,7 +39,7 @@ class MessageWork @Inject constructor(
     }
 
     private fun notify(messages: List<Message>) {
-        notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewEntriesChannel.CHANNEL_ID)
+        notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewMessagesChannel.CHANNEL_ID)
             .setContentTitle(context.resources.getQuantityString(R.plurals.message_new_items, messages.size, messages.size))
             .setContentText(context.resources.getQuantityString(R.plurals.message_notify_new_items, messages.size, messages.size))
             .setSmallIcon(R.drawable.ic_stat_message)

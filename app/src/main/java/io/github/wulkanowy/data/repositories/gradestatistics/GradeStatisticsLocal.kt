@@ -5,7 +5,6 @@ import io.github.wulkanowy.data.db.dao.GradeStatisticsDao
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.utils.roundToDecimalPlaces
 import io.reactivex.Maybe
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,23 +29,17 @@ class GradeStatisticsLocal @Inject constructor(
                 list.groupBy { it.grade }.map {
                     GradeStatistics(semester.studentId, semester.semesterId, subjectName, it.key,
                         it.value.fold(0) { acc, e -> acc + e.amount }, false)
-                }
+                } + list
             }
             else -> gradeStatisticsDb.loadSubject(semester.semesterId, semester.studentId, subjectName, isSemester)
         }.filter { it.isNotEmpty() }
     }
 
-    fun getGradesPointsStatistics(semester: Semester, subjectName: String): Maybe<GradePointsStatistics> {
+    fun getGradesPointsStatistics(semester: Semester, subjectName: String): Maybe<List<GradePointsStatistics>> {
         return when (subjectName) {
-            "Wszystkie" -> gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId).flatMap { list ->
-                if (list.isEmpty()) return@flatMap Maybe.empty<GradePointsStatistics>()
-                Maybe.just(GradePointsStatistics(semester.studentId, semester.semesterId, subjectName,
-                    (list.fold(.0) { acc, e -> acc + e.others } / list.size).roundToDecimalPlaces(2),
-                    (list.fold(.0) { acc, e -> acc + e.student } / list.size).roundToDecimalPlaces(2)
-                ))
-            }
+            "Wszystkie" -> gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId)
             else -> gradePointsStatisticsDb.loadSubject(semester.semesterId, semester.studentId, subjectName)
-        }
+        }.filter { it.isNotEmpty() }
     }
 
     fun saveGradesStatistics(gradesStatistics: List<GradeStatistics>) {

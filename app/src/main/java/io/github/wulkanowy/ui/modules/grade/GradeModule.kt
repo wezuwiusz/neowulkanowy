@@ -11,11 +11,10 @@ import io.github.wulkanowy.ui.modules.grade.statistics.GradeStatisticsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
 
 @Suppress("unused")
-@Module(includes = [GradeModule.Static::class])
+@Module
 abstract class GradeModule {
 
-    @Module
-    object Static {
+    companion object {
 
         @PerFragment
         @Provides

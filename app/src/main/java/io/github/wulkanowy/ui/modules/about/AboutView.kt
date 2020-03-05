@@ -25,6 +25,8 @@ interface AboutView : BaseView {
 
     fun updateData(header: AboutScrollableHeader, items: List<AboutItem>)
 
+    fun openLogViewer()
+
     fun openDiscordInvite()
 
     fun openEmailClient()

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.widget.RemoteViewsService
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.data.db.SharedPrefProvider
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
@@ -23,6 +24,9 @@ class TimetableWidgetService : RemoteViewsService() {
     lateinit var semesterRepo: SemesterRepository
 
     @Inject
+    lateinit var prefRepository: PreferencesRepository
+
+    @Inject
     lateinit var sharedPref: SharedPrefProvider
 
     @Inject
@@ -30,6 +34,6 @@ class TimetableWidgetService : RemoteViewsService() {
 
     override fun onGetViewFactory(intent: Intent?): RemoteViewsFactory {
         AndroidInjection.inject(this)
-        return TimetableWidgetFactory(timetableRepo, studentRepo, semesterRepo, sharedPref, schedulers, applicationContext, intent)
+        return TimetableWidgetFactory(timetableRepo, studentRepo, semesterRepo, prefRepository, sharedPref, schedulers, applicationContext, intent)
     }
 }

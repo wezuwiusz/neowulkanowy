@@ -7,19 +7,22 @@ import android.app.NotificationManager.IMPORTANCE_DEFAULT
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import io.github.wulkanowy.R
+import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
 
 @TargetApi(26)
 class DebugChannel @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
-    private val context: Context
-) {
+    private val context: Context,
+    private val appInfo: AppInfo
+) : Channel {
 
     companion object {
         const val CHANNEL_ID = "debug_channel"
     }
 
-    fun create() {
+    override fun create() {
+        if (appInfo.isDebug) return
         notificationManager.createNotificationChannel(
             NotificationChannel(CHANNEL_ID, context.getString(R.string.channel_debug), IMPORTANCE_DEFAULT)
                 .apply {

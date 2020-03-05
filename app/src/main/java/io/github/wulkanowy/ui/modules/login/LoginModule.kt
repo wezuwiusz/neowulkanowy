@@ -8,15 +8,15 @@ import io.github.wulkanowy.di.scopes.PerFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.login.advanced.LoginAdvancedFragment
 import io.github.wulkanowy.ui.modules.login.form.LoginFormFragment
+import io.github.wulkanowy.ui.modules.login.recover.LoginRecoverFragment
 import io.github.wulkanowy.ui.modules.login.studentselect.LoginStudentSelectFragment
 import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
 
 @Suppress("unused")
-@Module(includes = [LoginModule.Static::class])
+@Module
 internal abstract class LoginModule {
 
-    @Module
-    object Static {
+    companion object {
 
         @PerActivity
         @Provides
@@ -38,4 +38,8 @@ internal abstract class LoginModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun bindLoginSelectStudentFragment(): LoginStudentSelectFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun bindLoginRecoverFragment(): LoginRecoverFragment
 }

@@ -4,7 +4,7 @@ jdk: oraclejdk8
 env:
  global:
     - ANDROID_API_LEVEL=29
-    - ANDROID_BUILD_TOOLS_VERSION=29.0.2
+    - ANDROID_BUILD_TOOLS_VERSION=29.0.3
 
 cache:
   directories:
@@ -14,7 +14,7 @@ cache:
 branches:
   only:
     - develop
-    - 0.15.0
+    - 0.16.0
 
 android:
  licenses:
@@ -49,9 +49,9 @@ script:
   - ./gradlew dependencies --stacktrace --daemon
   - fossa --no-ansi || true
   #- ./gradlew lintPlayRelease -x fabricGenerateResourcesPlayRelease --stacktrace --daemon
-  - ./gradlew testPlayDebugUnitTest -x fabricGenerateResourcesPlay --stacktrace --daemon
-  - ./gradlew createFdroidDebugCoverageReport --stacktrace --daemon
-  - ./gradlew jacocoTestReport --stacktrace --daemon
+  - ./gradlew -Pcoverage testPlayDebugUnitTest -x fabricGenerateResourcesPlay --stacktrace --daemon
+  - ./gradlew -Pcoverage createFdroidDebugCoverageReport --stacktrace --daemon
+  - ./gradlew -Pcoverage jacocoTestReport --stacktrace --daemon
   - if [ -z ${SONAR_HOST+x} ]; then echo "sonar scan skipped"; else
       git fetch --unshallow;
       ./gradlew sonarqube -x test -x lint -x fabricGenerateResourcesPlayRelease -x fabricGenerateResourcesFdroidRelease -Dsonar.host.url=$SONAR_HOST -Dsonar.organization=$SONAR_ORG -Dsonar.login=$SONAR_KEY -Dsonar.branch.name=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} --stacktrace --daemon;

@@ -43,5 +43,8 @@ class LoginErrorHandler @Inject constructor(
         super.clear()
         onBadCredentials = {}
         onStudentDuplicate = {}
+        onInvalidToken = {}
+        onInvalidPin = {}
+        onInvalidSymbol = {}
     }
 }

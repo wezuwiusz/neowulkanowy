@@ -36,6 +36,8 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
         fun newInstance() = AttendanceSummaryFragment()
     }
 
+    override val totalString get() = getString(R.string.attendance_summary_total)
+
     override val titleStringId get() = R.string.attendance_title
 
     override val isViewEmpty get() = attendanceSummaryAdapter.isEmpty

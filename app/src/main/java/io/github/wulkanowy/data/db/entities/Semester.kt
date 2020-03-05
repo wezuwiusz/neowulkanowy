@@ -27,9 +27,6 @@ data class Semester(
     @ColumnInfo(name = "semester_name")
     val semesterName: Int,
 
-    @ColumnInfo(name = "is_current")
-    val isCurrent: Boolean,
-
     val start: LocalDate,
 
     val end: LocalDate,
@@ -43,4 +40,8 @@ data class Semester(
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+
+    @ColumnInfo(name = "is_current")
+    var current: Boolean = false
 }

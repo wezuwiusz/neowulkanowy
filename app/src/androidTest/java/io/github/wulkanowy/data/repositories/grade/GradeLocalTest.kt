@@ -40,7 +40,7 @@ class GradeLocalTest {
             createGradeLocal(3, 5.0, LocalDate.of(2019, 2, 28), "", 2)
         ))
 
-        val semester = Semester(1, 2, "", 2019, 2, 1, true, now(), now(), 1, 1)
+        val semester = Semester(1, 2, "", 2019, 2, 1, now(), now(), 1, 1)
 
         val grades = gradeLocal
             .getGrades(semester)

@@ -1,29 +1,20 @@
 package io.github.wulkanowy.utils
 
-import org.threeten.bp.DateTimeUtils
 import org.threeten.bp.DayOfWeek.FRIDAY
 import org.threeten.bp.DayOfWeek.MONDAY
 import org.threeten.bp.DayOfWeek.SATURDAY
 import org.threeten.bp.DayOfWeek.SUNDAY
-import org.threeten.bp.Instant
-import org.threeten.bp.Instant.ofEpochMilli
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.Month
-import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter.ofPattern
 import org.threeten.bp.format.TextStyle.FULL_STANDALONE
 import org.threeten.bp.temporal.TemporalAdjusters.firstInMonth
 import org.threeten.bp.temporal.TemporalAdjusters.next
 import org.threeten.bp.temporal.TemporalAdjusters.previous
-import java.util.Date
 import java.util.Locale
 
 private const val DATE_PATTERN = "dd.MM.yyyy"
-
-fun Date.toLocalDate(): LocalDate = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDate()
-
-fun Date.toLocalDateTime(): LocalDateTime = ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDateTime()
 
 fun String.toLocalDate(format: String = DATE_PATTERN): LocalDate = LocalDate.parse(this, ofPattern(format))
 
@@ -31,12 +22,9 @@ fun LocalDate.toFormattedString(format: String = DATE_PATTERN): String = format(
 
 fun LocalDateTime.toFormattedString(format: String = DATE_PATTERN): String = format(ofPattern(format))
 
-fun LocalDateTime.toDate(): Date = DateTimeUtils.toDate(atZone(ZoneId.systemDefault()).toInstant())
-
 /**
  * https://github.com/ThreeTen/threetenbp/issues/55
  */
-
 fun Month.getFormattedName(): String {
     return getDisplayName(FULL_STANDALONE, Locale.getDefault())
         .let {
@@ -93,9 +81,6 @@ inline val LocalDate.previousOrSameSchoolDay: LocalDate
 inline val LocalDate.weekDayName: String
     get() = format(ofPattern("EEEE", Locale.getDefault()))
 
-inline val LocalDate.shortcutWeekDayName: String
-    get() = format(ofPattern("EEE", Locale.getDefault()))
-
 inline val LocalDate.monday: LocalDate
     get() = with(MONDAY)
 
@@ -105,7 +90,6 @@ inline val LocalDate.friday: LocalDate
 /**
  * [Dz.U. 2016 poz. 1335](http://prawo.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20160001335)
  */
-
 inline val LocalDate.isHolidays: Boolean
     get() = isBefore(firstSchoolDay) && isAfter(lastSchoolDay)
 
@@ -120,7 +104,6 @@ inline val LocalDate.firstSchoolDay: LocalDate
 inline val LocalDate.lastSchoolDay: LocalDate
     get() = LocalDate.of(year, 6, 20)
         .with(next(FRIDAY))
-
 
 private fun Int.getSchoolYearByMonth(monthValue: Int): Int {
     return when (monthValue) {

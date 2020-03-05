@@ -40,6 +40,8 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
 
     override val titleStringId get() = R.string.grade_title
 
+    override var subtitleString = ""
+
     override val currentPageIndex get() = gradeViewPager.currentItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -131,6 +133,11 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
             .setTitle(R.string.grade_switch_semester)
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()
+    }
+
+    override fun setCurrentSemesterName(semester: Int, schoolYear: Int) {
+        subtitleString = getString(R.string.grade_subtitle, semester, schoolYear, schoolYear + 1)
+        (activity as MainView).setViewSubTitle(subtitleString)
     }
 
     fun onChildRefresh() {

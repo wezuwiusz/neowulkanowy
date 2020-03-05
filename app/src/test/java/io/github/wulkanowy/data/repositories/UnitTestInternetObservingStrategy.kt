@@ -5,14 +5,14 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.error
 import io.reactivex.Observable
 import io.reactivex.Single
 
-class UnitTestInternetObservingStrategy : InternetObservingStrategy {
+class UnitTestInternetObservingStrategy(var isInternetConnection: Boolean = true) : InternetObservingStrategy {
 
     override fun checkInternetConnectivity(host: String?, port: Int, timeoutInMs: Int, httpResponse: Int, errorHandler: ErrorHandler?): Single<Boolean> {
-        return Single.just(true)
+        return Single.just(isInternetConnection)
     }
 
     override fun observeInternetConnectivity(initialIntervalInMs: Int, intervalInMs: Int, host: String?, port: Int, timeoutInMs: Int, httpResponse: Int, errorHandler: ErrorHandler?): Observable<Boolean> {
-        return Observable.just(true)
+        return Observable.just(isInternetConnection)
     }
 
     override fun getDefaultPingHost() = "localhost"

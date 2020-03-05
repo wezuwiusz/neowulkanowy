@@ -16,8 +16,9 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.modules.about.creator.CreatorFragment
+import io.github.wulkanowy.ui.modules.about.contributor.ContributorFragment
 import io.github.wulkanowy.ui.modules.about.license.LicenseFragment
+import io.github.wulkanowy.ui.modules.about.logviewer.LogViewerFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
@@ -45,7 +46,7 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
 
     override val creatorsRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_creator), getString(R.string.about_creator_summary), getCompatDrawable(R.drawable.ic_about_creator))
+            Triple(getString(R.string.about_contributor), getString(R.string.about_contributor_summary), getCompatDrawable(R.drawable.ic_about_creator))
         }
 
     override val feedbackRes: Triple<String, String, Drawable?>?
@@ -110,6 +111,10 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
         }
     }
 
+    override fun openLogViewer() {
+        if (appInfo.isDebug) (activity as? MainActivity)?.pushView(LogViewerFragment.newInstance())
+    }
+
     override fun openDiscordInvite() {
         context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
     }
@@ -150,7 +155,7 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
     }
 
     override fun openCreators() {
-        (activity as? MainActivity)?.pushView(CreatorFragment.newInstance())
+        (activity as? MainActivity)?.pushView(ContributorFragment.newInstance())
     }
 
     override fun openPrivacyPolicy() {

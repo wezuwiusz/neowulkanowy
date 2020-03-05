@@ -24,11 +24,11 @@
         android:layout_alignTop="@id/timetableSmallItemNumber"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="1dp"
         android:layout_toEndOf="@id/timetableSmallItemNumber"
         android:layout_toRightOf="@id/timetableSmallItemNumber"
-        android:maxLines="1"
         android:textColor="?android:textColorSecondary"
-        android:textSize="15sp"
+        android:textSize="13sp"
         tools:text="11:11" />
 
     <TextView
@@ -38,8 +38,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:layout_toEndOf="@+id/timetableSmallItemTimeStart"
         android:layout_toRightOf="@+id/timetableSmallItemTimeStart"
         android:ellipsize="end"
@@ -48,18 +46,18 @@
         android:textSize="15sp"
         tools:text="Sieci komputerowe" />
 
-
     <TextView
         android:id="@+id/timetableSmallItemRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="1dp"
         android:layout_toEndOf="@+id/timetableSmallItemSubject"
         android:layout_toRightOf="@+id/timetableSmallItemSubject"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
-        android:textSize="15sp"
+        android:textSize="13sp"
         tools:text="22" />
 
     <TextView
@@ -68,14 +66,30 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="1dp"
         android:layout_toEndOf="@id/timetableSmallItemRoom"
         android:layout_toRightOf="@id/timetableSmallItemRoom"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
-        android:textSize="15sp"
-        tools:text="Agata Kowalska - Błaszczyk" />
+        android:textSize="13sp"
+        tools:text="Agata" />
+
+    <TextView
+        android:id="@+id/timetableSmallItemDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@id/timetableSmallItemTeacher"
+        android:layout_toRightOf="@id/timetableSmallItemTeacher"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="13sp"
+        tools:text="zastępstwo jakieś tam gdzieś tam" />
 
 </RelativeLayout>

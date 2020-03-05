@@ -49,6 +49,9 @@ data class Student(
     @ColumnInfo(name = "school_id")
     val schoolSymbol: String,
 
+    @ColumnInfo(name ="school_short")
+    val schoolShortName: String,
+
     @ColumnInfo(name = "school_name")
     val schoolName: String,
 

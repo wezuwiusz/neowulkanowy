@@ -1,10 +1,12 @@
 package io.github.wulkanowy.utils
 
 import android.content.Context
+import android.util.Log
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
+import fr.bipi.tressence.crash.CrashlyticsLogExceptionTree
+import fr.bipi.tressence.crash.CrashlyticsLogTree
 import io.fabric.sdk.android.Fabric
-import timber.log.Timber
 
 fun initCrashlytics(context: Context, appInfo: AppInfo) {
     Fabric.with(Fabric.Builder(context)
@@ -19,13 +21,6 @@ fun initCrashlytics(context: Context, appInfo: AppInfo) {
         .build())
 }
 
-class CrashlyticsTree : Timber.Tree() {
+class CrashlyticsTree : CrashlyticsLogTree(Log.VERBOSE)
 
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        Crashlytics.setInt("priority", priority)
-        Crashlytics.setString("tag", tag)
-
-        if (t == null) Crashlytics.log(message)
-        else Crashlytics.logException(t)
-    }
-}
+class CrashlyticsExceptionTree : CrashlyticsLogExceptionTree()

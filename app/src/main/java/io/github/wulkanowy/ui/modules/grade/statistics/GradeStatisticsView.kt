@@ -1,14 +1,11 @@
 package io.github.wulkanowy.ui.modules.grade.statistics
 
-import io.github.wulkanowy.data.db.entities.GradePointsStatistics
-import io.github.wulkanowy.data.db.entities.GradeStatistics
+import io.github.wulkanowy.data.pojos.GradeStatisticsItem
 import io.github.wulkanowy.ui.base.BaseView
 
 interface GradeStatisticsView : BaseView {
 
-    val isPieViewEmpty: Boolean
-
-    val isBarViewEmpty: Boolean
+    val isViewEmpty: Boolean
 
     val currentType: ViewType
 
@@ -16,9 +13,7 @@ interface GradeStatisticsView : BaseView {
 
     fun updateSubjects(data: ArrayList<String>)
 
-    fun updatePieData(items: List<GradeStatistics>, theme: String)
-
-    fun updateBarData(item: GradePointsStatistics)
+    fun updateData(items: List<GradeStatisticsItem>, theme: String)
 
     fun showSubjects(show: Boolean)
 
@@ -28,9 +23,9 @@ interface GradeStatisticsView : BaseView {
 
     fun clearView()
 
-    fun showPieContent(show: Boolean)
+    fun resetView()
 
-    fun showBarContent(show: Boolean)
+    fun showContent(show: Boolean)
 
     fun showEmpty(show: Boolean)
 

@@ -13,6 +13,7 @@ import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
+import timber.log.Timber
 import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -51,21 +52,26 @@ class MessageRepository @Inject constructor(
         return Single.just(sdkHelper.init(student))
             .flatMap { _ ->
                 local.getMessage(messageDbId)
-                    .filter { it.content.isNotEmpty() }
+                    .filter {
+                        it.content.isNotEmpty().also { status ->
+                            Timber.d("Message content in db empty: ${!status}")
+                        }
+                    }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
-                            if (it) local.getMessage(messageDbId).toSingle()
+                            if (it) local.getMessage(messageDbId)
                             else Single.error(UnknownHostException())
                         }
                         .flatMap { dbMessage ->
                             remote.getMessagesContent(dbMessage, markAsRead).doOnSuccess {
-                                local.updateMessages(listOf(dbMessage.copy(unread = false).apply {
+                                local.updateMessages(listOf(dbMessage.copy(unread = !markAsRead).apply {
                                     id = dbMessage.id
                                     content = content.ifBlank { it }
                                 }))
+                                Timber.d("Message $messageDbId with blank content: ${dbMessage.content.isBlank()}, marked as read")
                             }
                         }.flatMap {
-                            local.getMessage(messageDbId).toSingle()
+                            local.getMessage(messageDbId)
                         }
                     )
             }

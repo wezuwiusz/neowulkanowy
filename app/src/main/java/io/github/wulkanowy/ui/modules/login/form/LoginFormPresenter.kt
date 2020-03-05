@@ -42,10 +42,25 @@ class LoginFormPresenter @Inject constructor(
     fun onHostSelected() {
         view?.apply {
             clearPassError()
-            clearNameError()
-            if (formHostValue?.contains("fakelog") == true) {
+            clearUsernameError()
+            if (formHostValue.contains("fakelog")) {
                 setCredentials("jan@fakelog.cf", "jan123")
             }
+            setSymbol(formHostSymbol)
+            updateUsernameLabel()
+            updateSymbolInputVisibility()
+        }
+    }
+
+    fun updateUsernameLabel() {
+        view?.run {
+            setUsernameLabel(if ("standard" in formHostValue) emailLabel else nicknameLabel)
+        }
+    }
+
+    fun updateSymbolInputVisibility() {
+        view?.run {
+            showSymbol("adfs" in formHostValue)
         }
     }
 
@@ -53,18 +68,23 @@ class LoginFormPresenter @Inject constructor(
         view?.clearPassError()
     }
 
-    fun onNameTextChanged() {
-        view?.clearNameError()
+    fun onUsernameTextChanged() {
+        view?.clearUsernameError()
+    }
+
+    fun onSymbolTextChanged() {
+        view?.clearSymbolError()
     }
 
     fun onSignInClick() {
-        val email = view?.formNameValue.orEmpty().trim()
+        val email = view?.formUsernameValue.orEmpty().trim()
         val password = view?.formPassValue.orEmpty().trim()
-        val endpoint = view?.formHostValue.orEmpty().trim()
+        val host = view?.formHostValue.orEmpty().trim()
+        val symbol = view?.formSymbolValue.orEmpty().trim()
 
-        if (!validateCredentials(email, password)) return
+        if (!validateCredentials(email, password, host, symbol)) return
 
-        disposable.add(studentRepository.getStudentsScrapper(email, password, endpoint)
+        disposable.add(studentRepository.getStudentsScrapper(email, password, host, symbol)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {
@@ -83,11 +103,11 @@ class LoginFormPresenter @Inject constructor(
             }
             .subscribe({
                 Timber.i("Login result: Success")
-                analytics.logEvent("registration_form", "success" to true, "students" to it.size, "scrapperBaseUrl" to endpoint, "error" to "No error")
-                view?.notifyParentAccountLogged(it, Triple(email, password, endpoint))
+                analytics.logEvent("registration_form", "success" to true, "students" to it.size, "scrapperBaseUrl" to host, "error" to "No error")
+                view?.notifyParentAccountLogged(it, Triple(email, password, host))
             }, {
                 Timber.i("Login result: An exception occurred")
-                analytics.logEvent("registration_form", "success" to false, "students" to -1, "scrapperBaseUrl" to endpoint, "error" to it.message.ifNullOrBlank { "No message" })
+                analytics.logEvent("registration_form", "success" to false, "students" to -1, "scrapperBaseUrl" to host, "error" to it.message.ifNullOrBlank { "No message" })
                 loginErrorHandler.dispatch(it)
                 view?.showContact(true)
             }))
@@ -101,11 +121,15 @@ class LoginFormPresenter @Inject constructor(
         view?.openEmail()
     }
 
-    private fun validateCredentials(login: String, password: String): Boolean {
+    fun onRecoverClick() {
+        view?.onRecoverClick()
+    }
+
+    private fun validateCredentials(login: String, password: String, host: String, symbol: String): Boolean {
         var isCorrect = true
 
         if (login.isEmpty()) {
-            view?.setErrorNameRequired()
+            view?.setErrorUsernameRequired()
             isCorrect = false
         }
 
@@ -118,6 +142,12 @@ class LoginFormPresenter @Inject constructor(
             view?.setErrorPassInvalid(focus = isCorrect)
             isCorrect = false
         }
+
+        if ("standard" !in host && symbol.isBlank()) {
+            view?.setErrorSymbolRequired(focus = isCorrect)
+            isCorrect = false
+        }
+
         return isCorrect
     }
 }

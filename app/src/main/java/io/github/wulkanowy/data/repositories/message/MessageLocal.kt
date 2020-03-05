@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.message.MessageFolder.TRASHED
 import io.reactivex.Maybe
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,7 +24,7 @@ class MessageLocal @Inject constructor(private val messagesDb: MessagesDao) {
         messagesDb.deleteAll(messages)
     }
 
-    fun getMessage(id: Long): Maybe<Message> {
+    fun getMessage(id: Long): Single<Message> {
         return messagesDb.load(id)
     }
 

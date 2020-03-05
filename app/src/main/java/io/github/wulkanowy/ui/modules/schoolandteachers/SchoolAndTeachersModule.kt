@@ -10,11 +10,10 @@ import io.github.wulkanowy.ui.modules.schoolandteachers.school.SchoolFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.teacher.TeacherFragment
 
 @Suppress("unused")
-@Module(includes = [SchoolAndTeachersModule.Static::class])
+@Module
 abstract class SchoolAndTeachersModule {
 
-    @Module
-    object Static {
+    companion object {
 
         @PerFragment
         @Provides

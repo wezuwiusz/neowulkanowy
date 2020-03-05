@@ -19,6 +19,6 @@ class SemesterLocal @Inject constructor(private val semesterDb: SemesterDao) {
     }
 
     fun getSemesters(student: Student): Maybe<List<Semester>> {
-        return semesterDb.loadAll(student.studentId, student.classId).filter { !it.isEmpty() }
+        return semesterDb.loadAll(student.studentId, student.classId).filter { it.isNotEmpty() }
     }
 }

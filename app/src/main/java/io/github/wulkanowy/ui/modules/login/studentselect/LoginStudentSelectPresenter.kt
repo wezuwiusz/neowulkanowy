@@ -8,6 +8,7 @@ import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.ifNullOrBlank
+import io.reactivex.Single
 import timber.log.Timber
 import java.io.Serializable
 import javax.inject.Inject
@@ -50,7 +51,7 @@ class LoginStudentSelectPresenter @Inject constructor(
     }
 
     fun onItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is LoginStudentSelectItem) {
+        if (item is LoginStudentSelectItem && !item.alreadySaved) {
             selectedStudents.removeAll { it == item.student }
                 .let { if (!it) selectedStudents.add(item.student) }
 
@@ -58,11 +59,33 @@ class LoginStudentSelectPresenter @Inject constructor(
         }
     }
 
+    private fun compareStudents(a: Student, b: Student): Boolean {
+        return a.email == b.email
+            && a.symbol == b.symbol
+            && a.studentId == b.studentId
+            && a.schoolSymbol == b.schoolSymbol
+            && a.classId == b.classId
+    }
+
     private fun loadData(students: List<Student>) {
         this.students = students
-        view?.apply {
-            updateData(students.map { LoginStudentSelectItem(it) })
-        }
+        disposable.add(studentRepository.getSavedStudents()
+            .map { savedStudents ->
+                students.map { student ->
+                    Pair(student, savedStudents.any { compareStudents(student, it) })
+                }
+            }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .subscribe({
+                view?.updateData(it.map { studentPair ->
+                    LoginStudentSelectItem(studentPair.first, studentPair.second)
+                })
+            }, {
+                errorHandler.dispatch(it)
+                view?.updateData(students.map { student -> LoginStudentSelectItem(student, false) })
+            })
+        )
     }
 
     private fun registerStudents(students: List<Student>) {

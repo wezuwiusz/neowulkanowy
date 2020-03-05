@@ -5,13 +5,12 @@ package io.github.wulkanowy.utils
 import android.content.Context
 import timber.log.Timber
 
-fun initCrashlytics(context: Context, appInfo: AppInfo) {
-    // do nothing
+fun initCrashlytics(context: Context, appInfo: AppInfo) {}
+
+open class TimberTreeNoOp : Timber.Tree() {
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {}
 }
 
-class CrashlyticsTree : Timber.Tree() {
+class CrashlyticsTree : TimberTreeNoOp()
 
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        // do nothing
-    }
-}
+class CrashlyticsExceptionTree : TimberTreeNoOp()

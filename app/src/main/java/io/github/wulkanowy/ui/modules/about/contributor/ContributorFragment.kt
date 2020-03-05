@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.about.creator
+package io.github.wulkanowy.ui.modules.about.contributor
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,18 +18,18 @@ import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_creator.*
 import javax.inject.Inject
 
-class CreatorFragment : BaseFragment(), CreatorView, MainView.TitledView {
+class ContributorFragment : BaseFragment(), ContributorView, MainView.TitledView {
 
     @Inject
-    lateinit var presenter: CreatorPresenter
+    lateinit var presenter: ContributorPresenter
 
     @Inject
     lateinit var creatorsAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
 
-    override val titleStringId get() = R.string.creators_title
+    override val titleStringId get() = R.string.contributors_title
 
     companion object {
-        fun newInstance() = CreatorFragment()
+        fun newInstance() = ContributorFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,7 +53,7 @@ class CreatorFragment : BaseFragment(), CreatorView, MainView.TitledView {
         creatorSeeMore.setOnClickListener { presenter.onSeeMoreClick() }
     }
 
-    override fun updateData(data: List<CreatorItem>) {
+    override fun updateData(data: List<ContributorItem>) {
         creatorsAdapter.updateDataSet(data)
     }
 

@@ -3,10 +3,10 @@ package io.github.wulkanowy.ui.modules.login.advanced
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
@@ -15,6 +15,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.form.LoginSymbolAdapter
 import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.setOnEditorDoneSignIn
 import io.github.wulkanowy.utils.showSoftInput
 import kotlinx.android.synthetic.main.fragment_login_advanced.*
 import javax.inject.Inject
@@ -35,8 +36,8 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
             else -> "HYBRID"
         }
 
-    override val formNameValue: String
-        get() = loginFormName.text.toString().trim()
+    override val formUsernameValue: String
+        get() = loginFormUsername.text.toString().trim()
 
     override val formPassValue: String
         get() = loginFormPass.text.toString().trim()
@@ -45,8 +46,13 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
 
     private lateinit var hostValues: Array<String>
 
-    override val formHostValue: String?
-        get() = hostValues.getOrNull(hostKeys.indexOf(loginFormHost.text.toString()))
+    private lateinit var hostSymbols: Array<String>
+
+    override val formHostValue: String
+        get() = hostValues.getOrNull(hostKeys.indexOf(loginFormHost.text.toString())).orEmpty()
+
+    override val formHostSymbol: String
+        get() = hostSymbols.getOrNull(hostKeys.indexOf(loginFormHost.text.toString())).orEmpty()
 
     override val formPinValue: String
         get() = loginFormPin.text.toString().trim()
@@ -56,6 +62,12 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
 
     override val formTokenValue: String
         get() = loginFormToken.text.toString().trim()
+
+    override val nicknameLabel: String
+        get() = getString(R.string.login_nickname_hint)
+
+    override val emailLabel: String
+        get() = getString(R.string.login_email_hint)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_advanced, container, false)
@@ -69,8 +81,9 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
     override fun initView() {
         hostKeys = resources.getStringArray(R.array.hosts_keys)
         hostValues = resources.getStringArray(R.array.hosts_values)
+        hostSymbols = resources.getStringArray(R.array.hosts_symbols)
 
-        loginFormName.doOnTextChanged { _, _, _, _ -> presenter.onNameTextChanged() }
+        loginFormUsername.doOnTextChanged { _, _, _, _ -> presenter.onUsernameTextChanged() }
         loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
         loginFormPin.doOnTextChanged { _, _, _, _ -> presenter.onPinTextChanged() }
         loginFormSymbol.doOnTextChanged { _, _, _, _ -> presenter.onSymbolTextChanged() }
@@ -86,33 +99,48 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
             })
         }
 
-        loginFormPin.setOnEditorDoneSignIn()
-        loginFormPass.setOnEditorDoneSignIn()
+        loginFormPin.setOnEditorDoneSignIn { loginFormSignIn.callOnClick() }
+        loginFormPass.setOnEditorDoneSignIn { loginFormSignIn.callOnClick() }
 
         loginFormSymbol.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.symbols_values)))
 
         with(loginFormHost) {
-            setText(hostKeys.getOrElse(0) { "" })
+            setText(hostKeys.getOrNull(0).orEmpty())
             setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
+            setOnClickListener { if (loginFormContainer.visibility == GONE) dismissDropDown() }
         }
     }
 
-    private fun AppCompatEditText.setOnEditorDoneSignIn() {
-        setOnEditorActionListener { _, id, _ ->
-            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) loginFormSignIn.callOnClick() else false
-        }
+    override fun showMobileApiWarningMessage() {
+        loginFormAdvancedWarningInfo.text = getString(R.string.login_advanced_warning_mobile_api)
     }
 
-    override fun setDefaultCredentials(name: String, pass: String, symbol: String, token: String, pin: String) {
-        loginFormName.setText(name)
+    override fun showScraperWarningMessage() {
+        loginFormAdvancedWarningInfo.text = getString(R.string.login_advanced_warning_scraper)
+    }
+
+    override fun showHybridWarningMessage() {
+        loginFormAdvancedWarningInfo.text = getString(R.string.login_advanced_warning_hybrid)
+    }
+
+    override fun setDefaultCredentials(username: String, pass: String, symbol: String, token: String, pin: String) {
+        loginFormUsername.setText(username)
         loginFormPass.setText(pass)
         loginFormToken.setText(token)
         loginFormSymbol.setText(symbol)
         loginFormPin.setText(pin)
     }
 
-    override fun setErrorNameRequired() {
-        with(loginFormNameLayout) {
+    override fun setUsernameLabel(label: String) {
+        loginFormUsernameLayout.hint = label
+    }
+
+    override fun setSymbol(symbol: String) {
+        loginFormSymbol.setText(symbol)
+    }
+
+    override fun setErrorUsernameRequired() {
+        with(loginFormUsernameLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
@@ -181,8 +209,8 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
         }
     }
 
-    override fun clearNameError() {
-        loginFormNameLayout.error = null
+    override fun clearUsernameError() {
+        loginFormUsernameLayout.error = null
     }
 
     override fun clearPassError() {
@@ -202,30 +230,30 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
     }
 
     override fun showOnlyHybridModeInputs() {
-        loginFormNameLayout.visibility = View.VISIBLE
-        loginFormPassLayout.visibility = View.VISIBLE
-        loginFormHostLayout.visibility = View.VISIBLE
-        loginFormPinLayout.visibility = View.GONE
-        loginFormSymbolLayout.visibility = View.VISIBLE
-        loginFormTokenLayout.visibility = View.GONE
+        loginFormUsernameLayout.visibility = VISIBLE
+        loginFormPassLayout.visibility = VISIBLE
+        loginFormHostLayout.visibility = VISIBLE
+        loginFormPinLayout.visibility = GONE
+        loginFormSymbolLayout.visibility = VISIBLE
+        loginFormTokenLayout.visibility = GONE
     }
 
     override fun showOnlyScrapperModeInputs() {
-        loginFormNameLayout.visibility = View.VISIBLE
-        loginFormPassLayout.visibility = View.VISIBLE
-        loginFormHostLayout.visibility = View.VISIBLE
-        loginFormPinLayout.visibility = View.GONE
-        loginFormSymbolLayout.visibility = View.VISIBLE
-        loginFormTokenLayout.visibility = View.GONE
+        loginFormUsernameLayout.visibility = VISIBLE
+        loginFormPassLayout.visibility = VISIBLE
+        loginFormHostLayout.visibility = VISIBLE
+        loginFormPinLayout.visibility = GONE
+        loginFormSymbolLayout.visibility = VISIBLE
+        loginFormTokenLayout.visibility = GONE
     }
 
     override fun showOnlyMobileApiModeInputs() {
-        loginFormNameLayout.visibility = View.GONE
-        loginFormPassLayout.visibility = View.GONE
-        loginFormHostLayout.visibility = View.GONE
-        loginFormPinLayout.visibility = View.VISIBLE
-        loginFormSymbolLayout.visibility = View.VISIBLE
-        loginFormTokenLayout.visibility = View.VISIBLE
+        loginFormUsernameLayout.visibility = GONE
+        loginFormPassLayout.visibility = GONE
+        loginFormHostLayout.visibility = GONE
+        loginFormPinLayout.visibility = VISIBLE
+        loginFormSymbolLayout.visibility = VISIBLE
+        loginFormTokenLayout.visibility = VISIBLE
     }
 
     override fun showSoftKeyboard() {
@@ -237,19 +265,24 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
     }
 
     override fun showProgress(show: Boolean) {
-        loginFormProgress.visibility = if (show) View.VISIBLE else View.GONE
+        loginFormProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showContent(show: Boolean) {
-        loginFormContainer.visibility = if (show) View.VISIBLE else View.GONE
+        loginFormContainer.visibility = if (show) VISIBLE else GONE
     }
 
     override fun notifyParentAccountLogged(students: List<Student>) {
         (activity as? LoginActivity)?.onFormFragmentAccountLogged(students, Triple(
-            loginFormName.text.toString(),
+            loginFormUsername.text.toString(),
             loginFormPass.text.toString(),
             resources.getStringArray(R.array.hosts_values)[1]
         ))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.updateUsernameLabel()
     }
 
     override fun onDestroyView() {

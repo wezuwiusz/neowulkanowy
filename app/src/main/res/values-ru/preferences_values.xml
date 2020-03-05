@@ -19,6 +19,8 @@
         <item>Polski</item>
         <item>English</item>
         <item>Pусский</item>
+        <item>Українська</item>
+        <item>Deutsch</item>
     </string-array>
     <string-array name="grade_modifier_entries">
         <item>0,0</item>

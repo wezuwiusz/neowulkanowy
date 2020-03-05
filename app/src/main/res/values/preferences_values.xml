@@ -29,12 +29,16 @@
         <item>Polski</item>
         <item>English</item>
         <item>Pусский</item>
+        <item>Українська</item>
+        <item>Deutsch</item>
     </string-array>
     <string-array name="app_language_values" translatable="false">
         <item>system</item>
         <item>pl</item>
         <item>en</item>
         <item>ru</item>
+        <item>uk</item>
+        <item>de</item>
     </string-array>
 
     <string-array name="services_interval_entries">
@@ -92,7 +96,7 @@
     </string-array>
 
     <string-array name="timetable_show_whole_class_entries">
-        <item>No show</item>
+        <item>Don\'t show</item>
         <item>Show all</item>
         <item>Show smaller</item>
     </string-array>

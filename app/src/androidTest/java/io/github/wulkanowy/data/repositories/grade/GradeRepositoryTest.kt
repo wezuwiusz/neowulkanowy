@@ -6,7 +6,6 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.SdkHelper
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
@@ -15,9 +14,6 @@ import io.github.wulkanowy.sdk.Sdk
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
-import io.mockk.just
-import io.mockk.runs
 import io.reactivex.Single
 import org.junit.After
 import org.junit.Before

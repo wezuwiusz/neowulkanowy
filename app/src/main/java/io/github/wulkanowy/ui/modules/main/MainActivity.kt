@@ -68,6 +68,8 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
 
     override val currentViewTitle get() = (navController.currentFrag as? MainView.TitledView)?.titleStringId?.let { getString(it) }
 
+    override val currentViewSubtitle get() = (navController.currentFrag as? MainView.TitledView)?.subtitleString
+
     override var startMenuIndex = 0
 
     override var startMenuMoreIndex = -1
@@ -150,6 +152,10 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
 
     override fun setViewTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    override fun setViewSubTitle(subtitle: String?) {
+        supportActionBar?.subtitle = subtitle
     }
 
     override fun showHomeArrow(show: Boolean) {

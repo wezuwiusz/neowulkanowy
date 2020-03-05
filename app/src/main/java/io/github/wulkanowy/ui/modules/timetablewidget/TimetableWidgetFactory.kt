@@ -14,6 +14,7 @@ import android.widget.RemoteViewsService
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
@@ -31,6 +32,7 @@ class TimetableWidgetFactory(
     private val timetableRepository: TimetableRepository,
     private val studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
+    private val prefRepository: PreferencesRepository,
     private val sharedPref: SharedPrefProvider,
     private val schedulers: SchedulersProvider,
     private val context: Context,
@@ -38,6 +40,8 @@ class TimetableWidgetFactory(
 ) : RemoteViewsService.RemoteViewsFactory {
 
     private var lessons = emptyList<Timetable>()
+
+    private var savedTheme: Long? = null
 
     private var layoutId: Int? = null
 
@@ -53,7 +57,7 @@ class TimetableWidgetFactory(
 
     override fun getCount() = lessons.size
 
-    override fun getViewTypeCount() = 1
+    override fun getViewTypeCount() = 2
 
     override fun getItemId(position: Int) = position.toLong()
 
@@ -73,12 +77,23 @@ class TimetableWidgetFactory(
     }
 
     private fun updateTheme(appWidgetId: Int) {
-        val savedTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
+        savedTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
         layoutId = if (savedTheme == 0L) R.layout.item_widget_timetable else R.layout.item_widget_timetable_dark
 
         primaryColor = if (savedTheme == 0L) R.color.colorPrimary else R.color.colorPrimaryLight
         textColor = if (savedTheme == 0L) android.R.color.black else android.R.color.white
         timetableChangeColor = if (savedTheme == 0L) R.color.timetable_change_dark else R.color.timetable_change_light
+    }
+
+    private fun getItemLayout(lesson: Timetable): Int {
+        return when {
+            prefRepository.showWholeClassPlan == "small" && !lesson.isStudentPlan -> {
+                if (savedTheme == 0L) R.layout.item_widget_timetable_small
+                else R.layout.item_widget_timetable_small_dark
+            }
+            savedTheme == 0L -> R.layout.item_widget_timetable
+            else -> R.layout.item_widget_timetable_dark
+        }
     }
 
     private fun updateLessons(date: LocalDate, studentId: Long) {
@@ -94,7 +109,8 @@ class TimetableWidgetFactory(
                 }
                 .flatMap { semesterRepository.getCurrentSemester(it).toMaybe() }
                 .flatMap { timetableRepository.getTimetable(it, date, date).toMaybe() }
-                .map { item -> item.sortedBy { it.number } }
+                .map { items -> items.sortedWith(compareBy({ it.number }, { !it.isStudentPlan })) }
+                .map { lessons -> lessons.filter { if (prefRepository.showWholeClassPlan == "no") it.isStudentPlan else true } }
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet(emptyList())
         } catch (e: Exception) {
@@ -107,9 +123,8 @@ class TimetableWidgetFactory(
     override fun getViewAt(position: Int): RemoteViews? {
         if (position == INVALID_POSITION || lessons.getOrNull(position) == null) return null
 
-        return RemoteViews(context.packageName, layoutId!!).apply {
-            val lesson = lessons[position]
-
+        val lesson = lessons[position]
+        return RemoteViews(context.packageName, getItemLayout(lesson)).apply {
             setTextViewText(R.id.timetableWidgetItemSubject, lesson.subject)
             setTextViewText(R.id.timetableWidgetItemNumber, lesson.number.toString())
             setTextViewText(R.id.timetableWidgetItemTimeStart, lesson.start.toFormattedString("HH:mm"))

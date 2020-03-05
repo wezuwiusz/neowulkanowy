@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="services_interval_entries">
+        <item>15 Minuten</item>
+        <item>30 Minuten</item>
+        <item>1 Stunde</item>
+        <item>2 Stunden</item>
+        <item>6 Stunden</item>
+        <item>12 Stunden</item>
+        <item>24 Stunden</item>
+    </string-array>
+
+    <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
+        <item>Licht</item>
+        <item>Dunkel</item>
+        <item>Schwarz (AMOLED)</item>
+    </string-array>
+
+    <string-array name="app_language_entries">
+        <item>System Sprache</item>
+        <item>Polski</item>
+        <item>English</item>
+        <item>Pусский</item>
+        <item>Українська</item>
+        <item>Deutsch</item>
+    </string-array>
+
+    <string-array name="grade_modifier_entries">
+        <item>0,0</item>
+        <item>0,25</item>
+        <item>0,33</item>
+        <item>0,5</item>
+        <item>0,75</item>
+    </string-array>
+
+    <string-array name="grade_color_scheme_entries">
+        <item>Dzienniczek+</item>
+        <item>Wulkanowy</item>
+        <item>Farben der Bewertungen im Logbuch</item>
+    </string-array>
+
+    <string-array name="grade_average_mode_entries">
+        <item>Durchschnittsnote für das 2. Semester</item>
+        <item>Durchschnitt der Bewertungen für das ganze Jahr</item>
+    </string-array>
+
+    <string-array name="timetable_show_whole_class_entries">
+        <item>Nicht zeigen</item>
+        <item>Alle zeigen</item>
+        <item>Zeigen die reduzierte</item>
+    </string-array>
+</resources>

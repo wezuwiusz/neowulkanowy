@@ -8,7 +8,6 @@ import io.github.wulkanowy.data.db.entities.Semester
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.of
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -104,45 +103,45 @@ class Migration13Test : AbstractMigrationTest() {
         val db = helper.runMigrationsAndValidate(dbName, 13, true, Migration13())
 
         val semesters1 = getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 1 AND class_id = 5")
-        assertTrue { semesters1.single { it.isCurrent }.isCurrent }
+        assertTrue { semesters1.single { it.second }.second }
         semesters1[0].run {
-            assertFalse(isCurrent)
-            assertEquals(1, semesterId)
-            assertEquals(1, diaryId)
+            assertFalse(second)
+            assertEquals(1, first.semesterId)
+            assertEquals(1, first.diaryId)
         }
         semesters1[2].run {
-            assertFalse(isCurrent)
-            assertEquals(3, semesterId)
-            assertEquals(2, diaryId)
+            assertFalse(second)
+            assertEquals(3, first.semesterId)
+            assertEquals(2, first.diaryId)
         }
         semesters1[3].run {
-            assertTrue(isCurrent)
-            assertEquals(4, semesterId)
-            assertEquals(2, diaryId)
+            assertTrue(second)
+            assertEquals(4, first.semesterId)
+            assertEquals(2, first.diaryId)
         }
 
         getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 2 AND class_id = 5").let {
-            assertTrue { it.single { it.isCurrent }.isCurrent }
-            assertEquals(1970, it[0].schoolYear)
-            assertEquals(of(1970, 1, 1), it[0].end)
-            assertEquals(of(1970, 1, 1), it[0].start)
-            assertFalse(it[0].isCurrent)
-            assertFalse(it[1].isCurrent)
-            assertFalse(it[2].isCurrent)
-            assertTrue(it[3].isCurrent)
+            assertTrue { it.single { it.second }.second }
+            assertEquals(1970, it[0].first.schoolYear)
+            assertEquals(of(1970, 1, 1), it[0].first.end)
+            assertEquals(of(1970, 1, 1), it[0].first.start)
+            assertFalse(it[0].second)
+            assertFalse(it[1].second)
+            assertFalse(it[2].second)
+            assertTrue(it[3].second)
         }
 
         getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 2 AND class_id = 5").let {
-            assertTrue { it.single { it.isCurrent }.isCurrent }
-            assertFalse(it[0].isCurrent)
-            assertFalse(it[1].isCurrent)
-            assertFalse(it[2].isCurrent)
-            assertTrue(it[3].isCurrent)
+            assertTrue { it.single { it.second }.second }
+            assertFalse(it[0].second)
+            assertFalse(it[1].second)
+            assertFalse(it[2].second)
+            assertTrue(it[3].second)
         }
     }
 
-    private fun getSemesters(db: SupportSQLiteDatabase, query: String): List<Semester> {
-        val semesters = mutableListOf<Semester>()
+    private fun getSemesters(db: SupportSQLiteDatabase, query: String): List<Pair<Semester, Boolean>> {
+        val semesters = mutableListOf<Pair<Semester, Boolean>>()
 
         val cursor = db.query(query)
         if (cursor.moveToFirst()) {
@@ -153,13 +152,12 @@ class Migration13Test : AbstractMigrationTest() {
                     diaryName = cursor.getString(3),
                     semesterId = cursor.getInt(4),
                     semesterName = cursor.getInt(5),
-                    isCurrent = cursor.getInt(6) == 1,
                     classId = cursor.getInt(7),
                     unitId = cursor.getInt(8),
                     schoolYear = cursor.getInt(9),
                     start = Converters().timestampToDate(cursor.getLong(10))!!,
                     end = Converters().timestampToDate(cursor.getLong(11))!!
-                ))
+                ) to (cursor.getInt(6) == 1))
             } while (cursor.moveToNext())
         }
         return semesters.toList()

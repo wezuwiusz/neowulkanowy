@@ -31,13 +31,13 @@
             android:spinnerMode="dialog" />
     </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/gradeStatisticsSwipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/gradeStatisticsScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -91,25 +91,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/gradeStatisticsChart"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gradeStatisticsRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:background="?android:windowBackground"
-                        android:minHeight="400dp"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
-
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/gradeStatisticsChartPoints"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:background="?android:windowBackground"
-                        android:minHeight="400dp"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
+                        tools:listitem="@layout/item_grade_statistics_pie" />
 
                     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                         android:id="@+id/gradeStatisticsProgress"

@@ -9,11 +9,10 @@ import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.message.tab.MessageTabFragment
 
 @Suppress("unused")
-@Module(includes = [MessageModule.Static::class])
+@Module
 abstract class MessageModule {
 
-    @Module
-    object Static {
+    companion object {
 
         @PerFragment
         @Provides

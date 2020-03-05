@@ -7,7 +7,9 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.getCurrentOrLast
 import timber.log.Timber
+import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class GradePresenter @Inject constructor(
@@ -20,6 +22,8 @@ class GradePresenter @Inject constructor(
 
     var selectedIndex = 0
         private set
+
+    private var schoolYear = 0
 
     private var semesters = emptyList<Semester>()
 
@@ -56,6 +60,7 @@ class GradePresenter @Inject constructor(
             selectedIndex = index + 1
             loadedSemesterId.clear()
             view?.let {
+                it.setCurrentSemesterName(index + 1, schoolYear)
                 notifyChildrenSemesterChange()
                 loadChild(it.currentPageIndex)
             }
@@ -95,17 +100,17 @@ class GradePresenter @Inject constructor(
     private fun loadData() {
         Timber.i("Loading grade data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it) }
-            .doOnSuccess {
-                it.first { item -> item.isCurrent }.also { current ->
-                    selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
-                    semesters = it.filter { semester -> semester.diaryId == current.diaryId }
-                }
-            }
+            .flatMap { semesterRepository.getSemesters(it, refreshOnNoCurrent = true) }
+            .delay(200, MILLISECONDS)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
-            .doFinally { view?.showProgress(false) }
             .subscribe({
+                val current = it.getCurrentOrLast()
+                selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
+                schoolYear = current.schoolYear
+                semesters = it.filter { semester -> semester.diaryId == current.diaryId }
+                view?.setCurrentSemesterName(current.semesterName, schoolYear)
+
                 view?.run {
                     Timber.i("Loading grade result: Attempt load index $currentPageIndex")
                     loadChild(currentPageIndex)
@@ -121,6 +126,7 @@ class GradePresenter @Inject constructor(
     private fun showErrorViewOnError(message: String, error: Throwable) {
         lastError = error
         view?.run {
+            showProgress(false)
             showErrorView(true)
             setErrorDetails(message)
         }

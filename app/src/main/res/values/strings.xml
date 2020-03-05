@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Wulkanowy</string>
 
 
@@ -12,7 +14,8 @@
     <string name="settings_title">Settings</string>
     <string name="more_title">More</string>
     <string name="about_title">About</string>
-    <string name="creators_title">Creators</string>
+    <string name="logviewer_title">Log viewer</string>
+    <string name="contributors_title">Contributors</string>
     <string name="license_title">Licenses</string>
     <string name="message_title">Messages</string>
     <string name="send_message_title">New message</string>
@@ -21,12 +24,18 @@
     <string name="account_title">Choose account</string>
 
 
+    <!--Subtitles-->
+    <string name="grade_subtitle">Semester %d, %d/%d</string>
+
+
     <!--Login-->
     <string name="login_header_default">Sign in with the student or parent account</string>
     <string name="login_header_symbol">Enter the symbol</string>
-    <string name="login_nickname_hint">Email or nick</string>
+    <string name="login_nickname_hint">Username</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_login_pesel_email_hint">Login, PESEL or e-mail</string>
     <string name="login_password_hint">Password</string>
-    <string name="login_host_hint">Register</string>
+    <string name="login_host_hint">UONET+ Register</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrid</string>
@@ -36,10 +45,11 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_invalid_password">Password too short</string>
-    <string name="login_incorrect_password">Login details are incorrect</string>
+    <string name="login_incorrect_password">Login details are incorrect. Make sure the correct UONET+ register is selected</string>
     <string name="login_invalid_pin">Invalid PIN</string>
     <string name="login_invalid_token">Invalid token</string>
     <string name="login_expired_token">Token expired</string>
+    <string name="login_invalid_email">Invalid email</string>
     <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>
@@ -47,6 +57,9 @@
     <string name="login_symbol_helper">The symbol can be found on the register page in Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
     <string name="login_select_student">Select students to log in to the application</string>
     <string name="login_advanced">Other options</string>
+    <string name="login_advanced_warning_mobile_api">In this mode, a lucky number does not work, a class grade stats, summary of attendance, excuse for absence, completed lessons, school information and preview of the list of registered devices</string>
+    <string name="login_advanced_warning_scraper">This mode displays the same data as it appears on the register website</string>
+    <string name="login_advanced_warning_hybrid">The combination of the best features of the other two modes. It works faster than scraper and provides features not available in the Mobile API mode. It is in the experimental phase</string>
     <string name="login_privacy_policy">Privacy policy</string>
     <string name="login_contact_header">Trouble signing in? Contact us!</string>
     <string name="login_contact_email">Email</string>
@@ -54,6 +67,11 @@
     <string name="login_email_intent_title">Send email</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
     <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\n\nOpis problemu:</string>
+    <string name="login_recover_warning">Make sure the correct UONET+ register is selected!</string>
+    <string name="login_recover_button">I forgot my password</string>
+    <string name="login_recover_title">Recover your account</string>
+    <string name="login_recover">Recover</string>
+    <string name="login_signed_in">Student is already signed in</string>
 
 
     <!--Main-->
@@ -145,6 +163,7 @@
 
     <!--Attendance summary-->
     <string name="attendance_summary_final">Attendance</string>
+    <string name="attendance_summary_total">Total</string>
 
 
     <!--Exam-->
@@ -257,8 +276,8 @@
 
     <!--About-->
     <string name="about_version">App version</string>
-    <string name="about_creator">Creators</string>
-    <string name="about_creator_summary">List of Wulkanowy developers</string>
+    <string name="about_contributor">Contributors</string>
+    <string name="about_contributor_summary">List of Wulkanowy developers</string>
     <string name="about_feedback">Report a bug</string>
     <string name="about_feedback_summary">Send a bug report via e-mail</string>
     <string name="about_faq">FAQ</string>
@@ -277,9 +296,14 @@
     <string name="license_dialog_title">License</string>
 
 
-    <!--Creators-->
-    <string name="creator_avatar_description">Avatar</string>
-    <string name="creator_see_more">See more on GitHub</string>
+    <!--Contributor-->
+    <string name="contributor_avatar_description">Avatar</string>
+    <string name="contributor_see_more">See more on GitHub</string>
+
+
+    <!--Log viewer-->
+    <string name="logviewer_share">Share logs</string>
+    <string name="logviewer_refresh">Refresh</string>
 
 
     <!--Generic-->
@@ -337,6 +361,10 @@
 
     <!--Notification Channels-->
     <string name="channel_new_entries">New entries in register</string>
+    <string name="channel_new_grades">New grades</string>
+    <string name="channel_lucky_number">Lucky number</string>
+    <string name="channel_new_message">New messages</string>
+    <string name="channel_new_notes">New notes</string>
     <string name="channel_debug">Debug</string>
 
 
@@ -361,6 +389,5 @@
     <string name="error_service_unavailable">Maintenance underway UONET + register. Try again later</string>
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
-    <string name="error_feature_not_available">Feature not available in this mode</string>
-
+    <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
 </resources>

@@ -43,8 +43,8 @@
             android:name=".ui.modules.message.send.SendMessageActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/send_message_title"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/WulkanowyTheme.NoActionBar" />
+            android:theme="@style/WulkanowyTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.modules.timetablewidget.TimetableWidgetConfigureActivity"
             android:excludeFromRecents="true"
@@ -95,6 +95,16 @@
             android:authorities="${applicationId}.workmanager-init"
             android:exported="false"
             tools:node="remove" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
         <meta-data
             android:name="io.fabric.ApiKey"

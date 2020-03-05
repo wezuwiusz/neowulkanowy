@@ -2,11 +2,11 @@ package io.github.wulkanowy.ui.modules.grade
 
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
-import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.grade.GradeRepository
 import io.github.wulkanowy.data.repositories.gradessummary.GradeSummaryRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
+import io.github.wulkanowy.data.repositories.semester.createSemesterEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
@@ -16,6 +16,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.doReturn
 import org.mockito.MockitoAnnotations
 import org.threeten.bp.LocalDate.now
+import org.threeten.bp.LocalDate.of
 import org.threeten.bp.LocalDateTime
 
 class GradeAverageProviderTest {
@@ -31,12 +32,12 @@ class GradeAverageProviderTest {
 
     private lateinit var gradeAverageProvider: GradeAverageProvider
 
-    private val student = Student("", "", "", "SCRAPPER", "", "", false, "", "", "", 101, 0, "", "", "", "", 1, true, LocalDateTime.now())
+    private val student = Student("", "", "", "SCRAPPER", "", "", false, "", "", "", 101, 0, "", "", "", "", "", 1, true, LocalDateTime.now())
 
     private val semesters = mutableListOf(
-        Semester(101, 10, "", 1, 21, 1, false, now(), now(), 1, 1),
-        Semester(101, 11, "", 1, 22, 1, false, now(), now(), 1, 1),
-        Semester(101, 11, "", 1, 23, 2, true, now(), now(), 1, 1)
+        createSemesterEntity(10, 21, of(2019, 1, 31), of(2019, 6, 23)),
+        createSemesterEntity(11, 22, of(2019, 9, 1), of(2020, 1, 31)),
+        createSemesterEntity(11, 23, of(2020, 2, 1), now(), semesterName = 2)
     )
 
     private val firstGrades = listOf(
