@@ -190,7 +190,7 @@ dependencies {
     testImplementation "junit:junit:4.13"
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation "org.threeten:threetenbp:1.4.1"
-    testImplementation "org.mockito:mockito-inline:3.3.1"
+    testImplementation "org.mockito:mockito-inline:3.3.3"
 
     androidTestImplementation "androidx.test:core:1.2.0"
     androidTestImplementation "androidx.test:runner:1.2.0"
