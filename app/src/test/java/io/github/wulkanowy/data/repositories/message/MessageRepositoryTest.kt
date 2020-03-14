@@ -94,4 +94,17 @@ class MessageRepositoryTest {
         message.subscribe(messageObserver)
         messageObserver.assertError(UnknownHostException::class.java)
     }
+
+    @Test
+    fun `get message when content in db is empty, unread and there is no internet connection`() {
+        val testMessage = Message(1, 1, 123, "", 1, "", "", "", now(), 1, true, 1, 1, false)
+
+        testObservingStrategy.isInternetConnection = false
+        `when`(local.getMessage(123)).thenReturn(Single.just(testMessage))
+
+        val message = repo.getMessage(student, 123)
+        val messageObserver = TestObserver<Message>()
+        message.subscribe(messageObserver)
+        messageObserver.assertError(UnknownHostException::class.java)
+    }
 }

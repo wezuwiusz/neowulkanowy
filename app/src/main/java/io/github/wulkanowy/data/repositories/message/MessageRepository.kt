@@ -55,7 +55,7 @@ class MessageRepository @Inject constructor(
                     .filter {
                         it.content.isNotEmpty().also { status ->
                             Timber.d("Message content in db empty: ${!status}")
-                        }
+                        } && !it.unread
                     }
                     .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                         .flatMap {
@@ -83,10 +83,6 @@ class MessageRepository @Inject constructor(
             .toSingle(emptyList())
     }
 
-    fun updateMessage(message: Message): Completable {
-        return Completable.fromCallable { local.updateMessages(listOf(message)) }
-    }
-
     fun updateMessages(messages: List<Message>): Completable {
         return Completable.fromCallable { local.updateMessages(messages) }
     }
@@ -99,13 +95,12 @@ class MessageRepository @Inject constructor(
             }
     }
 
-    fun deleteMessage(message: Message): Maybe<Boolean> {
+    fun deleteMessage(message: Message): Single<Boolean> {
         return ReactiveNetwork.checkInternetConnectivity(settings)
             .flatMap {
                 if (it) remote.deleteMessage(message)
                 else Single.error(UnknownHostException())
             }
-            .filter { it }
             .doOnSuccess {
                 if (!message.removed) local.updateMessages(listOf(message.copy(removed = true).apply {
                     id = message.id

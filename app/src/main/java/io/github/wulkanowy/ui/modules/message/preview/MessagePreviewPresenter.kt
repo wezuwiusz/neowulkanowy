@@ -119,8 +119,6 @@ class MessagePreviewPresenter @Inject constructor(
                 }, { error ->
                     retryCallback = { onMessageDelete() }
                     errorHandler.dispatch(error)
-                }, {
-                    view?.showErrorView(true)
                 })
             )
         }
