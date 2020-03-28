@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.settings
 
-import com.readystatesoftware.chuck.api.ChuckCollector
+import com.chuckerteam.chucker.api.ChuckerCollector
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
@@ -21,7 +21,7 @@ class SettingsPresenter @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper,
     private val syncManager: SyncManager,
-    private val chuckCollector: ChuckCollector,
+    private val chuckerCollector: ChuckerCollector,
     private val appInfo: AppInfo
 ) : BasePresenter<SettingsView>(errorHandler, studentRepository, schedulers) {
 
@@ -38,7 +38,7 @@ class SettingsPresenter @Inject constructor(
             when (key) {
                 serviceEnableKey -> with(syncManager) { if (isServiceEnabled) startSyncWorker() else stopSyncWorker() }
                 servicesIntervalKey, servicesOnlyWifiKey -> syncManager.startSyncWorker(true)
-                isDebugNotificationEnableKey -> chuckCollector.showNotification(isDebugNotificationEnable)
+                isDebugNotificationEnableKey -> chuckerCollector.showNotification = isDebugNotificationEnable
                 appThemeKey -> view?.recreateView()
                 appLanguageKey -> view?.run {
                     updateLanguage(if (appLanguage == "system") appInfo.systemLanguage else appLanguage)

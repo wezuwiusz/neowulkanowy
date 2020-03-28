@@ -7,9 +7,9 @@ import android.content.res.Resources
 import androidx.preference.PreferenceManager
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.strategy.WalledGardenInternetObservingStrategy
-import com.readystatesoftware.chuck.api.ChuckCollector
-import com.readystatesoftware.chuck.api.ChuckInterceptor
-import com.readystatesoftware.chuck.api.RetentionManager
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import io.github.wulkanowy.data.db.AppDatabase
@@ -32,23 +32,25 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideSdk(chuckCollector: ChuckCollector, context: Context): Sdk {
+    fun provideSdk(chuckerCollector: ChuckerCollector, context: Context): Sdk {
         return Sdk().apply {
             androidVersion = android.os.Build.VERSION.RELEASE
             buildTag = android.os.Build.MODEL
             setSimpleHttpLogger { Timber.d(it) }
 
             // for debug only
-            addInterceptor(ChuckInterceptor(context, chuckCollector).maxContentLength(250000L), true)
+            addInterceptor(ChuckerInterceptor(context, chuckerCollector), true)
         }
     }
 
     @Singleton
     @Provides
-    fun provideChuckCollector(context: Context, prefRepository: PreferencesRepository): ChuckCollector {
-        return ChuckCollector(context)
-            .showNotification(prefRepository.isDebugNotificationEnable)
-            .retentionManager(RetentionManager(context, ChuckCollector.Period.ONE_HOUR))
+    fun provideChuckerCollector(context: Context, prefRepository: PreferencesRepository): ChuckerCollector {
+        return ChuckerCollector(
+            context = context,
+            showNotification = prefRepository.isDebugNotificationEnable,
+            retentionPeriod = RetentionManager.Period.ONE_HOUR
+        )
     }
 
     @Singleton

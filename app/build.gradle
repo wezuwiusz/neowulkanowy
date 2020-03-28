@@ -113,7 +113,8 @@ ext {
     work_manager = "2.3.4"
     room = "2.2.5"
     dagger = "2.27"
-    chucker = "2.0.4"
+    // don't update https://github.com/ChuckerTeam/chucker/issues/242
+    chucker = "3.1.1"
     mockk = "1.9.2"
 }
 
@@ -122,7 +123,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:85d47f6"
+    implementation "io.github.wulkanowy:sdk:be7ed9c"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.core:core-ktx:1.2.0"
@@ -182,9 +183,9 @@ dependencies {
     playImplementation "com.google.firebase:firebase-core:17.2.3"
     playImplementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
-    releaseImplementation "fr.o80.chucker:library-no-op:$chucker"
+    releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
-    debugImplementation "fr.o80.chucker:library:$chucker"
+    debugImplementation "com.github.ChuckerTeam.Chucker:library:$chucker"
     debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 
     testImplementation "junit:junit:4.13"

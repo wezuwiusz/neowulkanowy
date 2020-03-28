@@ -1,0 +1,4 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <bool name="pref_default_notification_debug">true</bool>
+</resources>
