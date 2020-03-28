@@ -117,10 +117,10 @@
         <item quantity="other">Nowe oceny</item>
     </plurals>
     <plurals name="grade_notify_new_items">
-        <item quantity="one">Dostałeś %1$d ocenę</item>
-        <item quantity="few">"Dostałeś %1$d oceny</item>
-        <item quantity="many">Dostałeś %1$d ocen</item>
-        <item quantity="other">Dostałeś %1$d ocen</item>
+        <item quantity="one">Masz %1$d nową ocenę</item>
+        <item quantity="few">Masz %1$d nowe oceny</item>
+        <item quantity="many">Masz %1$d nowych ocen</item>
+        <item quantity="other">Masz %1$d nowych ocen</item>
     </plurals>
 
 
@@ -144,13 +144,13 @@
 
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
-    <string name="attendance_absence_school">Nieobecny z przyczyn szkolnych</string>
+    <string name="attendance_absence_school">Nieobecność z przyczyn szkolnych</string>
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
-    <string name="attendance_exemption">Zwolniony</string>
+    <string name="attendance_exemption">Zwolnienie</string>
     <string name="attendance_excused_lateness">Spóźnienie usprawiedliwione</string>
     <string name="attendance_unexcused_lateness">Spóźnienie nieusprawiedliwione</string>
-    <string name="attendance_present">Obecny</string>
+    <string name="attendance_present">Obecność</string>
     <string name="attendance_number">Numer lekcji</string>
     <string name="attendance_no_items">Brak wpisów</string>
     <plurals name="attendance_number_absences">
@@ -211,10 +211,10 @@
         <item quantity="other">Nowe wiadomości</item>
     </plurals>
     <plurals name="message_notify_new_items">
-        <item quantity="one">Dostałeś %1$d wiadomość</item>
-        <item quantity="few">"Dostałeś %1$d wiadomości</item>
-        <item quantity="many">Dostałeś %1$d wiadomości</item>
-        <item quantity="other">Dostałeś %1$d wiadomości</item>
+        <item quantity="one">Masz %1$d nową wiadomość</item>
+        <item quantity="few">Masz %1$d nowe wiadomości</item>
+        <item quantity="many">Masz %1$d nowych wiadomości</item>
+        <item quantity="other">Masz %1$d nowych wiadomości</item>
     </plurals>
 
 
@@ -233,10 +233,10 @@
         <item quantity="other">Nowe uwagi</item>
     </plurals>
     <plurals name="note_notify_new_items">
-        <item quantity="one">Dostałeś %1$d uwagę</item>
-        <item quantity="few">"Dostałeś %1$d uwagi</item>
-        <item quantity="many">Dostałeś %1$d uwag</item>
-        <item quantity="other">Dostałeś %1$d uwag</item>
+        <item quantity="one">Masz %1$d nową uwagę</item>
+        <item quantity="few">Masz %1$d nowe uwagi</item>
+        <item quantity="many">Masz %1$d nowych uwag</item>
+        <item quantity="other">Masz %1$d nowych uwag</item>
     </plurals>
 
 
