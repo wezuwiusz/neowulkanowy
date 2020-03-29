@@ -19,7 +19,7 @@ class LicenseItem(val library: Library) : AbstractFlexibleItem<LicenseItem.ViewH
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<*>>, holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
         with(holder) {
             licenseItemName.text = library.libraryName
-            licenseItemSummary.text = library.license?.licenseName
+            licenseItemSummary.text = library.license?.licenseName?.takeIf { it.isNotBlank() } ?: library.libraryVersion
         }
     }
 

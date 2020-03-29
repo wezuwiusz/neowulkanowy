@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 apply from: 'jacoco.gradle'
 apply from: 'sonarqube.gradle'
 apply from: 'hooks.gradle'
@@ -96,6 +97,10 @@ android {
         exclude 'META-INF/library_release.kotlin_module'
         exclude 'META-INF/library-core_release.kotlin_module'
     }
+
+    aboutLibraries {
+        configPath = "app/src/main/res/raw"
+    }
 }
 
 androidExtensions {
@@ -175,7 +180,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "at.favre.lib:slf4j-timber:1.0.1"
     implementation "fr.bipi.treessence:treessence:0.3.2"
-    implementation "com.mikepenz:aboutlibraries-core:7.1.0"
+    implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
     implementation("io.coil-kt:coil:0.9.5")
