@@ -220,6 +220,7 @@
 
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
+    <string name="note_points">Punkty</string>
     <plurals name="note_number_item">
         <item quantity="one">%d uwaga</item>
         <item quantity="few">%d uwagi</item>

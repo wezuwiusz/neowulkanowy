@@ -217,6 +217,7 @@
 
     <!--Note-->
     <string name="note_no_items">Немає даних про нотатки</string>
+    <string name="note_points">точок</string>
     <plurals name="note_number_item">
         <item quantity="one">%d нотатка</item>
         <item quantity="few">%d нотатки</item>

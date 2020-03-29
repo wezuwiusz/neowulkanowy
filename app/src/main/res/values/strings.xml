@@ -209,6 +209,7 @@
 
     <!--Note-->
     <string name="note_no_items">No info about notes</string>
+    <string name="note_points">Points</string>
     <plurals name="note_number_item">
         <item quantity="one">%d note</item>
         <item quantity="other">%d notes</item>

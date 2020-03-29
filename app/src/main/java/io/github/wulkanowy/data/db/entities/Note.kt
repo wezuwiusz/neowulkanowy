@@ -16,7 +16,18 @@ data class Note(
 
     val teacher: String,
 
+    @ColumnInfo(name = "teacher_symbol")
+    val teacherSymbol: String,
+
     val category: String,
+
+    @ColumnInfo(name = "category_type")
+    val categoryType: Int,
+
+    @ColumnInfo(name = "is_points_show")
+    val isPointsShow: Boolean,
+
+    val points: Int,
 
     val content: String
 ) : Serializable {

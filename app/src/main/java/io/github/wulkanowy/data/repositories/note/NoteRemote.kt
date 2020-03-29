@@ -18,7 +18,11 @@ class NoteRemote @Inject constructor(private val sdk: Sdk) {
                         studentId = semester.studentId,
                         date = it.date,
                         teacher = it.teacher,
+                        teacherSymbol = it.teacherSymbol,
                         category = it.category,
+                        categoryType = it.categoryType.id,
+                        isPointsShow = it.showPoints,
+                        points = it.points,
                         content = it.content
                     )
                 }
