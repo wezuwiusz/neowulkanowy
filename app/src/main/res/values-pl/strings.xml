@@ -347,6 +347,7 @@
     <string name="widget_timetable_theme_title">Wybierz motyw</string>
     <string name="widget_timetable_theme_light">Jasny</string>
     <string name="widget_timetable_theme_dark">Ciemny</string>
+    <string name="widget_timetable_theme_system">Motyw systemu</string>
 
 
     <!--Preferences-->

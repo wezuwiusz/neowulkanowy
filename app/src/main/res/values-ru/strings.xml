@@ -344,6 +344,7 @@
     <string name="widget_timetable_theme_title">Выбрать тему</string>
     <string name="widget_timetable_theme_light">Светлая</string>
     <string name="widget_timetable_theme_dark">Тёмная</string>
+    <string name="widget_timetable_theme_system">Системная тема</string>
 
 
     <!--Preferences-->

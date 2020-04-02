@@ -322,6 +322,7 @@
     <string name="widget_timetable_theme_title">Thema wählen</string>
     <string name="widget_timetable_theme_light">Licht</string>
     <string name="widget_timetable_theme_dark">Dunkel</string>
+    <string name="widget_timetable_theme_system">Systemthema</string>
 
 
     <!--Preferences-->
