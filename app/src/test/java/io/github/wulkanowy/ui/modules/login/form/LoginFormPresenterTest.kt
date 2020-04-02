@@ -52,7 +52,7 @@ class LoginFormPresenterTest {
     fun emptyNicknameLoginTest() {
         `when`(loginFormView.formUsernameValue).thenReturn("")
         `when`(loginFormView.formPassValue).thenReturn("test123")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf")
+        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
         presenter.onSignInClick()
 
         verify(loginFormView).setErrorUsernameRequired()
@@ -64,7 +64,7 @@ class LoginFormPresenterTest {
     fun emptyPassLoginTest() {
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf")
+        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
         presenter.onSignInClick()
 
         verify(loginFormView, never()).setErrorUsernameRequired()
@@ -76,7 +76,7 @@ class LoginFormPresenterTest {
     fun invalidPassLoginTest() {
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf")
+        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
         presenter.onSignInClick()
 
         verify(loginFormView, never()).setErrorUsernameRequired()
@@ -86,12 +86,12 @@ class LoginFormPresenterTest {
 
     @Test
     fun loginTest() {
-        val studentTest = Student(email = "test@", password = "123", scrapperBaseUrl = "https://fakelog.cf", loginType = "AUTO", studentName = "", schoolSymbol = "", schoolName = "", studentId = 0, classId = 1, isCurrent = false, symbol = "", registrationDate = now(), className = "", mobileBaseUrl = "", privateKey = "", certificateKey = "", loginMode = "", userLoginId = 0, schoolShortName = "", isParent = false)
+        val studentTest = Student(email = "test@", password = "123", scrapperBaseUrl = "https://fakelog.cf/", loginType = "AUTO", studentName = "", schoolSymbol = "", schoolName = "", studentId = 0, classId = 1, isCurrent = false, symbol = "", registrationDate = now(), className = "", mobileBaseUrl = "", privateKey = "", certificateKey = "", loginMode = "", userLoginId = 0, schoolShortName = "", isParent = false)
         doReturn(Single.just(listOf(studentTest))).`when`(repository).getStudentsScrapper(anyString(), anyString(), anyString(), anyString())
 
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123456")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf")
+        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
         `when`(loginFormView.formSymbolValue).thenReturn("Default")
         `when`(loginFormView.formHostSymbol).thenReturn("Default")
         presenter.onSignInClick()
@@ -109,7 +109,7 @@ class LoginFormPresenterTest {
             .`when`(repository).getStudentsScrapper(anyString(), anyString(), anyString(), anyString())
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123456")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf")
+        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
         `when`(loginFormView.formSymbolValue).thenReturn("Default")
         `when`(loginFormView.formHostSymbol).thenReturn("Default")
         presenter.onSignInClick()
@@ -127,7 +127,7 @@ class LoginFormPresenterTest {
             .`when`(repository).getStudentsScrapper(anyString(), anyString(), anyString(), anyString())
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123456")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf")
+        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
         `when`(loginFormView.formSymbolValue).thenReturn("Default")
         `when`(loginFormView.formHostSymbol).thenReturn("Default")
         presenter.onSignInClick()
@@ -146,7 +146,7 @@ class LoginFormPresenterTest {
         doReturn(Single.error<List<Student>>(testException)).`when`(repository).getStudentsScrapper(anyString(), anyString(), anyString(), anyString())
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123456")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf")
+        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
         `when`(loginFormView.formSymbolValue).thenReturn("Default")
         `when`(loginFormView.formHostSymbol).thenReturn("Default")
         presenter.onSignInClick()

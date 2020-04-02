@@ -50,6 +50,7 @@
     <string name="login_invalid_token">Invalid token</string>
     <string name="login_expired_token">Token expired</string>
     <string name="login_invalid_email">Invalid email</string>
+    <string name="login_invalid_login">Invalid login</string>
     <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>

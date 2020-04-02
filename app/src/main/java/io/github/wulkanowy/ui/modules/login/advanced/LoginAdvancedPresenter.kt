@@ -173,6 +173,8 @@ class LoginAdvancedPresenter @Inject constructor(
         val login = view?.formUsernameValue.orEmpty()
         val password = view?.formPassValue.orEmpty()
 
+        val host = view?.formHostValue.orEmpty()
+
         val pin = view?.formPinValue.orEmpty()
         val symbol = view?.formSymbolValue.orEmpty()
         val token = view?.formTokenValue.orEmpty()
@@ -196,26 +198,20 @@ class LoginAdvancedPresenter @Inject constructor(
                     isCorrect = false
                 }
             }
-            Sdk.Mode.SCRAPPER -> {
+            Sdk.Mode.HYBRID, Sdk.Mode.SCRAPPER -> {
                 if (login.isEmpty()) {
                     view?.setErrorUsernameRequired()
                     isCorrect = false
-                }
+                } else {
+                    if ("@" in login && "standard" !in host) {
+                        view?.setErrorLoginRequired()
+                        isCorrect = false
+                    }
 
-                if (password.isEmpty()) {
-                    view?.setErrorPassRequired(focus = isCorrect)
-                    isCorrect = false
-                }
-
-                if (password.length < 6 && password.isNotEmpty()) {
-                    view?.setErrorPassInvalid(focus = isCorrect)
-                    isCorrect = false
-                }
-            }
-            Sdk.Mode.HYBRID -> {
-                if (login.isEmpty()) {
-                    view?.setErrorUsernameRequired()
-                    isCorrect = false
+                    if ("@" !in login && "standard" in host) {
+                        view?.setErrorEmailRequired()
+                        isCorrect = false
+                    }
                 }
 
                 if (password.isEmpty()) {

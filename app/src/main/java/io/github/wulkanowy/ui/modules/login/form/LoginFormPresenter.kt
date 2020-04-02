@@ -131,6 +131,16 @@ class LoginFormPresenter @Inject constructor(
         if (login.isEmpty()) {
             view?.setErrorUsernameRequired()
             isCorrect = false
+        } else {
+            if ("@" in login && "standard" !in host) {
+                view?.setErrorLoginRequired()
+                isCorrect = false
+            }
+
+            if ("@" !in login && "standard" in host) {
+                view?.setErrorEmailRequired()
+                isCorrect = false
+            }
         }
 
         if (password.isEmpty()) {

@@ -121,6 +121,20 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         }
     }
 
+    override fun setErrorLoginRequired() {
+        with(loginFormUsernameLayout) {
+            requestFocus()
+            error = getString(R.string.login_invalid_login)
+        }
+    }
+
+    override fun setErrorEmailRequired() {
+        with(loginFormUsernameLayout) {
+            requestFocus()
+            error = getString(R.string.login_invalid_email)
+        }
+    }
+
     override fun setErrorSymbolRequired(focus: Boolean) {
         with(loginFormSymbolLayout) {
             if (focus) requestFocus()

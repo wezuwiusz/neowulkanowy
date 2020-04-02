@@ -48,6 +48,7 @@
     <string name="login_invalid_token">Ungültige token</string>
     <string name="login_expired_token">Token ist nicht mehr gültig</string>
     <string name="login_invalid_email">Ungültige email</string>
+    <string name="login_invalid_login">Ungültige login</string>
     <string name="login_invalid_symbol">Ungültige symbol</string>
     <string name="login_incorrect_symbol">Student nicht gefunden. Überprüfen Sie das Symbol</string>
     <string name="login_field_required">Dieses Datenfeld ist erforderlich</string>
