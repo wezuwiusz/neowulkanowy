@@ -1,14 +1,12 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
 import io.github.wulkanowy.data.db.entities.Message
-import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.toFormattedString
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,61 +18,51 @@ class MessagePreviewPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository, schedulers) {
 
-    var messageId = 0L
-
-    private var message: Message? = null
+    var message: Message? = null
 
     private lateinit var lastError: Throwable
 
     private var retryCallback: () -> Unit = {}
 
-    fun onAttachView(view: MessagePreviewView, id: Long) {
+    fun onAttachView(view: MessagePreviewView, message: Message) {
         super.onAttachView(view)
         view.initView()
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        loadData(id)
+        loadData(message)
     }
 
-    private fun onMessageLoadRetry() {
+    private fun onMessageLoadRetry(message: Message) {
         view?.run {
             showErrorView(false)
             showProgress(true)
         }
-        loadData(messageId)
+        loadData(message)
     }
 
     fun onDetailsClick() {
         view?.showErrorDetailsDialog(lastError)
     }
 
-    private fun loadData(id: Long) {
-        Timber.i("Loading message $id preview started")
-        messageId = id
+    private fun loadData(message: Message) {
+        Timber.i("Loading message ${message.messageId} preview started")
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
-                .flatMap { messageRepository.getMessage(it, messageId, true) }
+                .flatMap { messageRepository.getMessage(it, message, true) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally { view?.showProgress(false) }
                 .subscribe({ message ->
-                    Timber.i("Loading message $id preview result: Success ")
-                    this@MessagePreviewPresenter.message = message
-                    view?.run {
-                        message.let {
-                            setSubject(if (it.subject.isNotBlank()) it.subject else noSubjectString)
-                            setDate(it.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
-                            setContent(it.content)
-                            initOptions()
-
-                            if (it.folderId == MessageFolder.SENT.id) setRecipient(it.recipient)
-                            else setSender(it.sender)
-                        }
+                    Timber.i("Loading message ${message.message.messageId} preview result: Success ")
+                    this@MessagePreviewPresenter.message = message.message
+                    view?.apply {
+                        setMessageWithAttachment(message)
+                        initOptions()
                     }
-                    analytics.logEvent("load_message_preview", "length" to message.content.length)
+                    analytics.logEvent("load_message_preview", "length" to message.message.content.length)
                 }) {
-                    Timber.i("Loading message $id preview result: An exception occurred ")
-                    retryCallback = { onMessageLoadRetry() }
+                    Timber.i("Loading message ${message.messageId} preview result: An exception occurred ")
+                    retryCallback = { onMessageLoadRetry(message) }
                     errorHandler.dispatch(it)
                 })
         }

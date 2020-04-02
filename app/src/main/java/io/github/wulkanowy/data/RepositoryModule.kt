@@ -99,6 +99,10 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
+    fun provideMessageAttachmentsDao(database: AppDatabase) = database.messageAttachmentDao
+
+    @Singleton
+    @Provides
     fun provideExamDao(database: AppDatabase) = database.examsDao
 
     @Singleton

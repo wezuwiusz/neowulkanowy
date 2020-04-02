@@ -44,7 +44,10 @@ data class Message(
     @ColumnInfo(name = "read_by")
     val readBy: Int,
 
-    val removed: Boolean
+    val removed: Boolean,
+
+    @ColumnInfo(name = "has_attachments")
+    val hasAttachments: Boolean
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

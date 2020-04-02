@@ -62,7 +62,7 @@ class MessageTabPresenter @Inject constructor(
         if (item is MessageItem) {
             Timber.i("Select message ${item.message.id} item")
             view?.run {
-                openMessage(item.message.id)
+                openMessage(item.message)
                 if (item.message.unread) {
                     item.message.unread = false
                     updateItem(item)

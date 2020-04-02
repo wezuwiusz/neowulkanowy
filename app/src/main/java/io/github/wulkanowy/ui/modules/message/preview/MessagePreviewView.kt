@@ -1,25 +1,16 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
 import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.ui.base.BaseView
 
 interface MessagePreviewView : BaseView {
-
-    val noSubjectString: String
 
     val deleteMessageSuccessString: String
 
     fun initView()
 
-    fun setSubject(subject: String)
-
-    fun setRecipient(recipient: String)
-
-    fun setSender(sender: String)
-
-    fun setDate(date: String)
-
-    fun setContent(content: String)
+    fun setMessageWithAttachment(item: MessageWithAttachment)
 
     fun showProgress(show: Boolean)
 
