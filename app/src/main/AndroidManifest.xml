@@ -22,7 +22,8 @@
         <activity
             android:name=".ui.modules.splash.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/WulkanowyTheme.SplashScreen">
+            android:theme="@style/WulkanowyTheme.SplashScreen"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -112,5 +113,13 @@
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${crashlytics_enabled}" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_push" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="push_channel" />
     </application>
 </manifest>

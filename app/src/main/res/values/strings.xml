@@ -368,6 +368,7 @@
     <string name="channel_lucky_number">Lucky number</string>
     <string name="channel_new_message">New messages</string>
     <string name="channel_new_notes">New notes</string>
+    <string name="channel_push">Push notifications</string>
     <string name="channel_debug">Debug</string>
 
 

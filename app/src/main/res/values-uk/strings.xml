@@ -383,6 +383,7 @@
     <string name="channel_new_grades">Нові оцінки</string>
     <string name="channel_new_message">Нові повідомлення</string>
     <string name="channel_new_notes">Нові нотатки</string>
+    <string name="channel_push">Повідомлення pushs</string>
     <string name="channel_debug">Дебаг</string>
 
 

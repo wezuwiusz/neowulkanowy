@@ -382,6 +382,7 @@
     <string name="channel_lucky_number">Счастливый номер</string>
     <string name="channel_new_message">Новые сообщения</string>
     <string name="channel_new_notes">Новые заметки</string>
+    <string name="channel_push">Push-уведомления</string>
     <string name="channel_debug">Дебаг</string>
 
 

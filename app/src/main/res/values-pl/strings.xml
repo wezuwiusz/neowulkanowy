@@ -385,6 +385,7 @@
     <string name="channel_new_grades">Nowe oceny</string>
     <string name="channel_new_message">Nowe wiadomości</string>
     <string name="channel_new_notes">Nowe uwagi</string>
+    <string name="channel_push">Powiadomienia push</string>
     <string name="channel_debug">Debugowanie</string>
 
 
