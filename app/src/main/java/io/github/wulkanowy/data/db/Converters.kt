@@ -48,4 +48,14 @@ class Converters {
     fun gsonToIntList(value: String): List<Int> {
         return Gson().fromJson(value, object : TypeToken<List<Int>>() {}.type)
     }
+
+    @TypeConverter
+    fun stringPairListToGson(list: List<Pair<String, String>>): String {
+        return Gson().toJson(list)
+    }
+
+    @TypeConverter
+    fun gsonToStringPairList(value: String): List<Pair<String, String>> {
+        return Gson().fromJson(value, object : TypeToken<List<Pair<String, String>>>() {}.type)
+    }
 }

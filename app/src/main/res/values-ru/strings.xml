@@ -240,6 +240,9 @@
 
     <!--Homework-->
     <string name="homework_no_items">Нет домашних заданий</string>
+    <string name="homework_mark_as_done">сделанный</string>
+    <string name="homework_mark_as_undone">Не сделано</string>
+    <string name="homework_attachments">Вложения</string>
 
 
     <!--Lucky number-->

@@ -244,6 +244,9 @@
 
     <!--Homework-->
     <string name="homework_no_items">Brak zadań domowych</string>
+    <string name="homework_mark_as_done">Wykonane</string>
+    <string name="homework_mark_as_undone">Niewykonane</string>
+    <string name="homework_attachments">Załączniki</string>
 
 
     <!--Lucky number-->

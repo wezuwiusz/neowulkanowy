@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.uniqueSubtract
+import io.reactivex.Completable
 import io.reactivex.Single
 import org.threeten.bp.LocalDate
 import java.net.UnknownHostException
@@ -34,6 +35,14 @@ class HomeworkRepository @Inject constructor(
                                 local.saveHomework(new.uniqueSubtract(old))
                             }
                     }.flatMap { local.getHomework(semester, monday, friday).toSingle(emptyList()) })
+        }
+    }
+
+    fun toggleDone(homework: Homework): Completable {
+        return Completable.fromCallable {
+            local.updateHomework(listOf(homework.apply {
+                isDone = !isDone
+            }))
         }
     }
 }
