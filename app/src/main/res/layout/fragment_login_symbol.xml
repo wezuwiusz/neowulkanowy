@@ -108,11 +108,27 @@
                 android:text="@string/login_header_symbol"
                 android:textSize="16sp"
                 app:fontFamily="sans-serif-light"
-                app:layout_constraintBottom_toTopOf="@+id/loginSymbolNameLayout"
+                app:layout_constraintBottom_toTopOf="@+id/loginSymbolHelper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginSymbolContact"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/loginSymbolHelper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:gravity="center_horizontal"
+                android:text="@string/login_symbol_helper"
+                app:fontFamily="sans-serif-light"
+                app:layout_constraintBottom_toTopOf="@id/loginSymbolNameLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginSymbolHeader"
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -120,19 +136,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="48dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
+                android:layout_margin="24dp"
                 android:hint="@string/login_symbol_hint"
-                app:helperText="@string/login_symbol_helper"
-                app:helperTextEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/loginSymbolSignIn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginSymbolHeader">
+                app:layout_constraintTop_toBottomOf="@+id/loginSymbolHelper">
 
                 <AutoCompleteTextView
                     android:id="@+id/loginSymbolName"

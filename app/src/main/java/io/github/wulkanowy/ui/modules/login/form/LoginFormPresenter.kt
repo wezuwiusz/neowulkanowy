@@ -16,6 +16,8 @@ class LoginFormPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<LoginFormView>(loginErrorHandler, studentRepository, schedulers) {
 
+    private var lastError: Throwable? = null
+
     override fun onAttachView(view: LoginFormView) {
         super.onAttachView(view)
         view.run {
@@ -109,6 +111,7 @@ class LoginFormPresenter @Inject constructor(
                 Timber.i("Login result: An exception occurred")
                 analytics.logEvent("registration_form", "success" to false, "students" to -1, "scrapperBaseUrl" to host, "error" to it.message.ifNullOrBlank { "No message" })
                 loginErrorHandler.dispatch(it)
+                lastError = it
                 view?.showContact(true)
             }))
     }
@@ -118,7 +121,7 @@ class LoginFormPresenter @Inject constructor(
     }
 
     fun onEmailClick() {
-        view?.openEmail()
+        view?.openEmail(lastError?.message.ifNullOrBlank { "none" })
     }
 
     fun onRecoverClick() {

@@ -53,7 +53,7 @@
     <string name="login_incorrect_symbol">Student nicht gefunden. Überprüfen Sie das Symbol</string>
     <string name="login_field_required">Dieses Datenfeld ist erforderlich</string>
     <string name="login_duplicate_student">Ausgewählter Student ist bereits angemeldet.</string>
-    <string name="login_symbol_helper">Das Symbol finden Sie auf der Registerseite unter Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
+    <string name="login_symbol_helper">Das Symbol finden Sie auf der Registerseite unter <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen.</string>
     <string name="login_advanced">Andere Optionen</string>
     <string name="login_privacy_policy">Datenschutzerklärung</string>

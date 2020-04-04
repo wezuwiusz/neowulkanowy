@@ -31,5 +31,5 @@ interface LoginSymbolView : BaseView {
 
     fun openFaqPage()
 
-    fun openEmail()
+    fun openEmail(host: String, lastError: String)
 }

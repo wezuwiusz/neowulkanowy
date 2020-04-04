@@ -55,7 +55,7 @@
     <string name="login_incorrect_symbol">Не вдалося знайти учня. Будь ласка, перевірте \"symbol\"</string>
     <string name="login_field_required">Це поле обов\'язкове</string>
     <string name="login_duplicate_student">Даний учень вже авторизований</string>
-    <string name="login_symbol_helper">Ви можете знайти \"symbol\" в Uczeń -&gt; Dostęp Mobilny -&gt; Zarejestruj urządzenie mobilne</string>
+    <string name="login_symbol_helper">Ви можете знайти \"symbol\" в <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_privacy_policy">Політика приватності</string>
