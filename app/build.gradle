@@ -154,6 +154,8 @@ dependencies {
     implementation "androidx.work:work-rxjava2:$work_manager"
     implementation "androidx.work:work-gcm:$work_manager"
 
+    implementation 'com.github.PaulinaSadowska:RxWorkManagerObservers:1.0.0'
+
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-rxjava2:$room"
     implementation "androidx.room:room-ktx:$room"

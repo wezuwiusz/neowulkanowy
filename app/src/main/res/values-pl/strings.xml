@@ -375,6 +375,15 @@
     <string name="pref_services_suspended">Zawieszona na wakacjach</string>
     <string name="pref_services_interval">Interwał aktualizacji</string>
     <string name="pref_services_wifi">Tylko WiFi</string>
+    <string name="pref_services_force_sync">Synchronizuj teraz</string>
+    <string name="pref_services_message_sync_success">Zsynchronizowano!</string>
+    <string name="pref_services_message_sync_failed">Synchronizacja nie powiodła się</string>
+    <string name="pref_services_sync_in_progress">Synchronizacja w trakcie</string>
+    <string name="pref_services_dialog_force_sync_title">Synchronizacja</string>
+    <string name="pref_services_dialog_force_sync_summary">
+        Ręczna synchronizacja nie odświeża widoków w aplikacji.
+        \nAby zobaczyć zsynchronizowane informacje uruchom ponownie aplikację po zsynchronizowaniu.
+    </string>
 
     <string name="pref_other_header">Inne</string>
     <string name="pref_other_grade_modifier_plus">Wartość plusa</string>

@@ -360,6 +360,15 @@
     <string name="pref_services_suspended">Suspended on holidays</string>
     <string name="pref_services_interval">Updates interval</string>
     <string name="pref_services_wifi">Wi-Fi only</string>
+    <string name="pref_services_force_sync">Sync now</string>
+    <string name="pref_services_message_sync_success">Synced!</string>
+    <string name="pref_services_message_sync_failed">Sync failed</string>
+    <string name="pref_services_sync_in_progress">Sync in progress</string>
+    <string name="pref_services_dialog_force_sync_title">Synchronization</string>
+    <string name="pref_services_dialog_force_sync_summary">
+        Manual sync doesn\'t refresh app views.
+        \nTo see the synced data relaunch the app after syncing.
+    </string>
 
     <string name="pref_other_header">Other</string>
     <string name="pref_other_grade_modifier_plus">Value of the plus</string>

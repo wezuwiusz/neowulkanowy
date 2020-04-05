@@ -5,18 +5,24 @@ import android.os.Build.VERSION_CODES.O
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.BackoffPolicy.EXPONENTIAL
 import androidx.work.Constraints
+import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.UNMETERED
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.paulinasadowska.rxworkmanagerobservers.extensions.getWorkInfoByIdObservable
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.SharedPrefProvider.Companion.APP_VERSION_CODE_KEY
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.isHolidays
+import io.reactivex.Observable
 import org.threeten.bp.LocalDate.now
 import timber.log.Timber
 import java.util.concurrent.TimeUnit.MINUTES
@@ -42,13 +48,13 @@ class SyncManager @Inject constructor(
         }
 
         if (sharedPrefProvider.getLong(APP_VERSION_CODE_KEY, -1L) != appInfo.versionCode.toLong()) {
-            startSyncWorker(true)
+            startPeriodicSyncWorker(true)
             sharedPrefProvider.putLong(APP_VERSION_CODE_KEY, appInfo.versionCode.toLong(), true)
         }
         Timber.i("SyncManager was initialized")
     }
 
-    fun startSyncWorker(restart: Boolean = false) {
+    fun startPeriodicSyncWorker(restart: Boolean = false) {
         if (preferencesRepository.isServiceEnabled && !now().isHolidays) {
             workManager.enqueueUniquePeriodicWork(SyncWorker::class.java.simpleName, if (restart) REPLACE else KEEP,
                 PeriodicWorkRequestBuilder<SyncWorker>(preferencesRepository.servicesInterval, MINUTES)
@@ -59,6 +65,19 @@ class SyncManager @Inject constructor(
                         .build())
                     .build())
         }
+    }
+
+    fun startOneTimeSyncWorker(): Observable<WorkInfo> {
+        val work = OneTimeWorkRequestBuilder<SyncWorker>()
+            .setInputData(
+                Data.Builder()
+                    .putBoolean("one_time", true)
+                    .build()
+            )
+            .build()
+
+        workManager.enqueueUniqueWork("${SyncWorker::class.java.simpleName}_one_time", ExistingWorkPolicy.REPLACE, work)
+        return workManager.getWorkInfoByIdObservable(work.id)
     }
 
     fun stopSyncWorker() {
