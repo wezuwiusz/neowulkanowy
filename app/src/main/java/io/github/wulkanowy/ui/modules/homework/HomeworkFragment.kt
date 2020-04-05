@@ -13,6 +13,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.homework.details.HomeworkDetailsDialog
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.dpToPx
@@ -73,6 +74,10 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
         homeworkAdapter.updateDataSet(data, true)
     }
 
+    fun onReloadList() {
+        presenter.reloadData()
+    }
+
     override fun clearData() {
         homeworkAdapter.clear()
     }
@@ -118,7 +123,7 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
     }
 
     override fun showTimetableDialog(homework: Homework) {
-        (activity as? MainActivity)?.showDialogFragment(HomeworkDialog.newInstance(homework))
+        (activity as? MainActivity)?.showDialogFragment(HomeworkDetailsDialog.newInstance(homework))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -33,7 +33,7 @@ class MainPresenter @Inject constructor(
             Timber.i("Main view was initialized with $startMenuIndex menu index and $startMenuMoreIndex more index")
         }
 
-        syncManager.startSyncWorker()
+        syncManager.startPeriodicSyncWorker()
         analytics.logEvent("app_open", "destination" to initMenu?.name)
     }
 

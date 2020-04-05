@@ -20,6 +20,7 @@ import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeModule
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
+import io.github.wulkanowy.ui.modules.homework.details.HomeworkDetailsDialog
 import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.MessageModule
@@ -97,6 +98,10 @@ abstract class MainModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun bindHomeworkFragment(): HomeworkFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun bindHomeworkDetailsDialog(): HomeworkDetailsDialog
 
     @PerFragment
     @ContributesAndroidInjector

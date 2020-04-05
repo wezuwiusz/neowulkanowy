@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 apply from: 'jacoco.gradle'
 apply from: 'sonarqube.gradle'
 apply from: 'hooks.gradle'
@@ -17,8 +18,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 53
-        versionName "0.16.0"
+        versionCode 54
+        versionName "0.17.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -96,6 +97,10 @@ android {
         exclude 'META-INF/library_release.kotlin_module'
         exclude 'META-INF/library-core_release.kotlin_module'
     }
+
+    aboutLibraries {
+        configPath = "app/src/main/res/raw"
+    }
 }
 
 androidExtensions {
@@ -110,10 +115,11 @@ play {
 }
 
 ext {
-    work_manager = "2.3.2"
-    room = "2.2.4"
-    dagger = "2.26"
-    chucker = "2.0.4"
+    work_manager = "2.3.4"
+    room = "2.2.5"
+    dagger = "2.27"
+    // don't update https://github.com/ChuckerTeam/chucker/issues/242
+    chucker = "3.2.0"
     mockk = "1.9.2"
 }
 
@@ -122,21 +128,21 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:0.16.0"
+    implementation "io.github.wulkanowy:sdk:0.17.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.core:core-ktx:1.2.0"
     implementation "androidx.activity:activity-ktx:1.1.0"
-    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "androidx.appcompat:appcompat:1.2.0-beta01"
     implementation "androidx.appcompat:appcompat-resources:1.1.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.2"
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.multidex:multidex:2.0.1"
 
     implementation "androidx.preference:preference-ktx:1.1.0"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.viewpager:viewpager:1.0.0"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation "com.google.android.material:material:1.1.0"
@@ -147,6 +153,8 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_manager"
     implementation "androidx.work:work-rxjava2:$work_manager"
     implementation "androidx.work:work-gcm:$work_manager"
+
+    implementation 'com.github.PaulinaSadowska:RxWorkManagerObservers:1.0.0'
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-rxjava2:$room"
@@ -163,34 +171,37 @@ dependencies {
     implementation "eu.davidea:flexible-adapter-ui:1.0.0"
     implementation "com.aurelhubert:ahbottomnavigation:2.3.4"
     implementation "com.ncapdevi:frag-nav:3.3.0"
-    implementation "com.github.YarikSOffice:lingver:1.1.0"
+    implementation "com.github.YarikSOffice:lingver:1.2.1"
 
     implementation "com.github.pwittchen:reactivenetwork-rx2:3.0.6"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
-    implementation "io.reactivex.rxjava2:rxjava:2.2.18"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.19"
 
     implementation "com.google.code.gson:gson:2.8.6"
-    implementation "com.jakewharton.threetenabp:threetenabp:1.2.2"
+    implementation "com.jakewharton.threetenabp:threetenabp:1.2.3"
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "at.favre.lib:slf4j-timber:1.0.1"
     implementation "fr.bipi.treessence:treessence:0.3.2"
-    implementation "com.mikepenz:aboutlibraries-core:7.1.0"
+    implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+    implementation "io.coil-kt:coil:0.9.5"
 
-    implementation("io.coil-kt:coil:0.9.5")
-
-    playImplementation "com.google.firebase:firebase-core:17.2.3"
+    playImplementation 'com.google.firebase:firebase-analytics:17.3.0'
+    playImplementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.0.4'
+    playImplementation "com.google.firebase:firebase-inappmessaging-ktx:19.0.4"
+    playImplementation "com.google.firebase:firebase-messaging:20.1.0"
     playImplementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
+    playImplementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
-    releaseImplementation "fr.o80.chucker:library-no-op:$chucker"
+    releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
-    debugImplementation "fr.o80.chucker:library:$chucker"
+    debugImplementation "com.github.ChuckerTeam.Chucker:library:$chucker"
     debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 
     testImplementation "junit:junit:4.13"
     testImplementation "io.mockk:mockk:$mockk"
-    testImplementation "org.threeten:threetenbp:1.4.1"
-    testImplementation "org.mockito:mockito-inline:3.3.1"
+    testImplementation "org.threeten:threetenbp:1.4.3"
+    testImplementation "org.mockito:mockito-inline:3.3.3"
 
     androidTestImplementation "androidx.test:core:1.2.0"
     androidTestImplementation "androidx.test:runner:1.2.0"
@@ -198,7 +209,7 @@ dependencies {
     androidTestImplementation "io.mockk:mockk-android:$mockk"
     androidTestImplementation "androidx.room:room-testing:$room"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    androidTestImplementation "org.mockito:mockito-android:3.3.1"
+    androidTestImplementation "org.mockito:mockito-android:3.3.3"
 }
 
 apply plugin: 'com.google.gms.google-services'

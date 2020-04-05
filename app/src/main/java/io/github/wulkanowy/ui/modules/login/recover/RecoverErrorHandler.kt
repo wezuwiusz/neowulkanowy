@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.login.recover
 
 import android.content.res.Resources
-import com.readystatesoftware.chuck.api.ChuckCollector
+import com.chuckerteam.chucker.api.ChuckerCollector
 import io.github.wulkanowy.sdk.scrapper.exception.InvalidCaptchaException
 import io.github.wulkanowy.sdk.scrapper.exception.InvalidEmailException
 import io.github.wulkanowy.sdk.scrapper.exception.NoAccountFoundException
@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 class RecoverErrorHandler @Inject constructor(
     resources: Resources,
-    chuckCollector: ChuckCollector
-) : ErrorHandler(resources, chuckCollector) {
+    chuckerCollector: ChuckerCollector
+) : ErrorHandler(resources, chuckerCollector) {
 
     var onInvalidUsername: (String) -> Unit = {}
 

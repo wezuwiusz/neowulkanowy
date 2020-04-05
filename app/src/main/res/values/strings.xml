@@ -50,11 +50,12 @@
     <string name="login_invalid_token">Invalid token</string>
     <string name="login_expired_token">Token expired</string>
     <string name="login_invalid_email">Invalid email</string>
+    <string name="login_invalid_login">Invalid login</string>
     <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
     <string name="login_field_required">This field is required</string>
     <string name="login_duplicate_student">Selected student is already logged in</string>
-    <string name="login_symbol_helper">The symbol can be found on the register page in Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
+    <string name="login_symbol_helper">The symbol can be found on the register page in <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Select students to log in to the application</string>
     <string name="login_advanced">Other options</string>
     <string name="login_advanced_warning_mobile_api">In this mode, a lucky number does not work, a class grade stats, summary of attendance, excuse for absence, completed lessons, school information and preview of the list of registered devices</string>
@@ -65,8 +66,9 @@
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Send email</string>
+    <string name="login_email_details">Describe details of problem:</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
-    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\n\nOpis problemu:</string>
+    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nOstatni błąd: %5$s\n\nOpis problemu: </string>
     <string name="login_recover_warning">Make sure the correct UONET+ register is selected!</string>
     <string name="login_recover_button">I forgot my password</string>
     <string name="login_recover_title">Recover your account</string>
@@ -209,6 +211,7 @@
 
     <!--Note-->
     <string name="note_no_items">No info about notes</string>
+    <string name="note_points">Points</string>
     <plurals name="note_number_item">
         <item quantity="one">%d note</item>
         <item quantity="other">%d notes</item>
@@ -225,6 +228,9 @@
 
     <!--Homework-->
     <string name="homework_no_items">No info about homework</string>
+    <string name="homework_mark_as_done">Mark as done</string>
+    <string name="homework_mark_as_undone">Mark as undone</string>
+    <string name="homework_attachments">Attachments</string>
 
 
     <!--Lucky number-->
@@ -290,6 +296,7 @@
     <string name="about_homepage_summary">Visit the website and help develop the application</string>
     <string name="about_licenses">Licenses</string>
     <string name="about_licenses_summary">Licenses of libraries used in the application</string>
+    <string name="about_feedback_template" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\n\nTreść zgłoszenia:</string>
 
 
     <!--Licenses-->
@@ -352,6 +359,15 @@
     <string name="pref_services_suspended">Suspended on holidays</string>
     <string name="pref_services_interval">Updates interval</string>
     <string name="pref_services_wifi">Wi-Fi only</string>
+    <string name="pref_services_force_sync">Sync now</string>
+    <string name="pref_services_message_sync_success">Synced!</string>
+    <string name="pref_services_message_sync_failed">Sync failed</string>
+    <string name="pref_services_sync_in_progress">Sync in progress</string>
+    <string name="pref_services_dialog_force_sync_title">Synchronization</string>
+    <string name="pref_services_dialog_force_sync_summary">
+        Manual sync doesn\'t refresh app views.
+        \nTo see the synced data relaunch the app after syncing.
+    </string>
 
     <string name="pref_other_header">Other</string>
     <string name="pref_other_grade_modifier_plus">Value of the plus</string>
@@ -365,6 +381,7 @@
     <string name="channel_lucky_number">Lucky number</string>
     <string name="channel_new_message">New messages</string>
     <string name="channel_new_notes">New notes</string>
+    <string name="channel_push">Push notifications</string>
     <string name="channel_debug">Debug</string>
 
 

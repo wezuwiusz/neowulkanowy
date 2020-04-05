@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homework_subitem_container"
     android:layout_width="match_parent"
@@ -8,43 +9,75 @@
 
     <TextView
         android:id="@+id/homeworkItemSubject"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        android:textSize="17sp"
-        tools:text="@tools:sample/lorem" />
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/homeworkItemTeacher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/homeworkItemTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_toEndOf="@id/homeworkItemSubject"
-        android:layout_toRightOf="@id/homeworkItemSubject"
+        android:ellipsize="end"
         android:gravity="end"
+        android:maxWidth="200dp"
+        android:minWidth="80dp"
+        android:singleLine="true"
         android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/homeworkItemSubject"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names" />
 
     <TextView
         android:id="@+id/homeworkItemContent"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/homeworkItemSubject"
-        android:layout_alignStart="@id/homeworkItemSubject"
-        android:layout_alignLeft="@id/homeworkItemSubject"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="15dp"
+        android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
+        android:maxLines="2"
         android:textSize="14sp"
-        tools:text="@tools:sample/lorem" />
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/homeworkItemSubject"
+        app:layout_constraintTop_toBottomOf="@id/homeworkItemSubject"
+        tools:text="@tools:sample/lorem/random" />
+
+    <ImageView
+        android:id="@+id/homeworkItemCheckImage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/homeworkItemTeacher"
+        app:layout_constraintTop_toBottomOf="@id/homeworkItemTeacher"
+        app:srcCompat="@drawable/ic_check"
+        app:tint="?android:textColorSecondary"
+        tools:ignore="ContentDescription"
+        tools:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/homeworkItemAttachmentImage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/homeworkItemTeacher"
+        app:layout_constraintTop_toBottomOf="@id/homeworkItemTeacher"
+        app:srcCompat="@drawable/ic_attachment"
+        app:tint="?android:textColorSecondary"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

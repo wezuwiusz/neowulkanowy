@@ -39,6 +39,9 @@ class MessageItem(val message: Message, private val noSubjectString: String) :
                 text = message.date.toFormattedString()
                 setTypeface(null, style)
             }
+            with(messageItemAttachmentIcon) {
+                visibility = if (message.hasAttachments) View.VISIBLE else View.GONE
+            }
         }
     }
 
@@ -56,7 +59,8 @@ class MessageItem(val message: Message, private val noSubjectString: String) :
         return message.hashCode()
     }
 
-    class ViewHolder(val view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
+    class ViewHolder(val view: View, adapter: FlexibleAdapter<*>) :
+        FlexibleViewHolder(view, adapter), LayoutContainer {
         override val containerView: View
             get() = contentView
     }

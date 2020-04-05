@@ -17,6 +17,7 @@ import io.github.wulkanowy.data.db.dao.GradeStatisticsDao
 import io.github.wulkanowy.data.db.dao.GradeSummaryDao
 import io.github.wulkanowy.data.db.dao.HomeworkDao
 import io.github.wulkanowy.data.db.dao.LuckyNumberDao
+import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
 import io.github.wulkanowy.data.db.dao.MessagesDao
 import io.github.wulkanowy.data.db.dao.MobileDeviceDao
 import io.github.wulkanowy.data.db.dao.NoteDao
@@ -39,6 +40,7 @@ import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.db.entities.MessageAttachment
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.db.entities.Recipient
@@ -63,6 +65,9 @@ import io.github.wulkanowy.data.db.migrations.Migration2
 import io.github.wulkanowy.data.db.migrations.Migration20
 import io.github.wulkanowy.data.db.migrations.Migration21
 import io.github.wulkanowy.data.db.migrations.Migration22
+import io.github.wulkanowy.data.db.migrations.Migration23
+import io.github.wulkanowy.data.db.migrations.Migration24
+import io.github.wulkanowy.data.db.migrations.Migration25
 import io.github.wulkanowy.data.db.migrations.Migration3
 import io.github.wulkanowy.data.db.migrations.Migration4
 import io.github.wulkanowy.data.db.migrations.Migration5
@@ -86,6 +91,7 @@ import javax.inject.Singleton
         GradeStatistics::class,
         GradePointsStatistics::class,
         Message::class,
+        MessageAttachment::class,
         Note::class,
         Homework::class,
         Subject::class,
@@ -104,7 +110,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 22
+        const val VERSION_SCHEMA = 25
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider): Array<Migration> {
             return arrayOf(
@@ -128,7 +134,10 @@ abstract class AppDatabase : RoomDatabase() {
                 Migration19(sharedPrefProvider),
                 Migration20(),
                 Migration21(),
-                Migration22()
+                Migration22(),
+                Migration23(),
+                Migration24(),
+                Migration25()
             )
         }
 
@@ -163,6 +172,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val gradePointsStatistics: GradePointsStatisticsDao
 
     abstract val messagesDao: MessagesDao
+
+    abstract val messageAttachmentDao: MessageAttachmentDao
 
     abstract val noteDao: NoteDao
 

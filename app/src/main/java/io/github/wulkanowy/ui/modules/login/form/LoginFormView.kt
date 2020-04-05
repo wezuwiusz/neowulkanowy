@@ -31,6 +31,10 @@ interface LoginFormView : BaseView {
 
     fun setErrorUsernameRequired()
 
+    fun setErrorLoginRequired()
+
+    fun setErrorEmailRequired()
+
     fun setErrorSymbolRequired(focus: Boolean)
 
     fun setErrorPassRequired(focus: Boolean)
@@ -63,7 +67,7 @@ interface LoginFormView : BaseView {
 
     fun openFaqPage()
 
-    fun openEmail()
+    fun openEmail(lastError: String)
 
     fun openAdvancedLogin()
 

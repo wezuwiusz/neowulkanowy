@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data.repositories.message
 
 import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.db.entities.MessageAttachment
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
@@ -33,14 +34,25 @@ class MessageRemote @Inject constructor(private val sdk: Sdk) {
                     unread = it.unread ?: false,
                     unreadBy = it.unreadBy ?: 0,
                     readBy = it.readBy ?: 0,
-                    removed = it.removed
+                    removed = it.removed,
+                    hasAttachments = it.hasAttachments
                 )
             }
         }
     }
 
-    fun getMessagesContent(message: Message, markAsRead: Boolean = false): Single<String> {
-        return sdk.getMessageContent(message.messageId, message.folderId, markAsRead, message.realId)
+    fun getMessagesContentDetails(message: Message, markAsRead: Boolean = false): Single<Pair<String, List<MessageAttachment>>> {
+        return sdk.getMessageDetails(message.messageId, message.folderId, markAsRead, message.realId).map { details ->
+            details.content to details.attachments.map {
+                MessageAttachment(
+                    realId = it.id,
+                    messageId = it.messageId,
+                    oneDriveId = it.oneDriveId,
+                    url = it.url,
+                    filename = it.filename
+                )
+            }
+        }
     }
 
     fun sendMessage(subject: String, content: String, recipients: List<Recipient>): Single<SentMessage> {

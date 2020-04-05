@@ -48,11 +48,12 @@
     <string name="login_invalid_token">Ungültige token</string>
     <string name="login_expired_token">Token ist nicht mehr gültig</string>
     <string name="login_invalid_email">Ungültige email</string>
+    <string name="login_invalid_login">Ungültige login</string>
     <string name="login_invalid_symbol">Ungültige symbol</string>
     <string name="login_incorrect_symbol">Student nicht gefunden. Überprüfen Sie das Symbol</string>
     <string name="login_field_required">Dieses Datenfeld ist erforderlich</string>
     <string name="login_duplicate_student">Ausgewählter Student ist bereits angemeldet.</string>
-    <string name="login_symbol_helper">Das Symbol finden Sie auf der Registerseite unter Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
+    <string name="login_symbol_helper">Das Symbol finden Sie auf der Registerseite unter <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen.</string>
     <string name="login_advanced">Andere Optionen</string>
     <string name="login_privacy_policy">Datenschutzerklärung</string>
@@ -201,6 +202,7 @@
 
     <!--Note-->
     <string name="note_no_items">Keine Informationen über Eintragen</string>
+    <string name="note_points">Punkte</string>
     <plurals name="note_number_item">
         <item quantity="one">%d Eintrag</item>
         <item quantity="other">%d Eintragen</item>
@@ -217,6 +219,9 @@
 
     <!--Homework-->
     <string name="homework_no_items">Keine Informationen über Hausaufgaben</string>
+    <string name="homework_mark_as_done">Gemacht</string>
+    <string name="homework_mark_as_undone">Unvollständig</string>
+    <string name="homework_attachments">Anhänge</string>
 
 
     <!--Lucky number-->
@@ -354,6 +359,7 @@
     <string name="channel_lucky_number">Glückliche Nummer</string>
     <string name="channel_new_message">Neue Nachrichten</string>
     <string name="channel_new_notes">Neue Eintragen</string>
+    <string name="channel_push">Push-Benachrichtigungen</string>
     <string name="channel_debug">Debuggen</string>
 
 

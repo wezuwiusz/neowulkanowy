@@ -23,7 +23,8 @@ class HomeworkRemote @Inject constructor(private val sdk: Sdk) {
                         subject = it.subject,
                         content = it.content,
                         teacher = it.teacher,
-                        teacherSymbol = it.teacherSymbol
+                        teacherSymbol = it.teacherSymbol,
+                        attachments = it.attachments.map { attachment -> attachment.url to attachment.name }
                     )
                 }
             }

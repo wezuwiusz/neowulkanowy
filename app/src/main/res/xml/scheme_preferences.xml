@@ -77,6 +77,10 @@
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_services_wifi_only"
             app:title="@string/pref_services_wifi" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:title="@string/pref_services_force_sync"
+            app:key="@string/pref_key_services_force_sync" />
     </PreferenceCategory>
     <PreferenceCategory
         app:iconSpaceReserved="false"

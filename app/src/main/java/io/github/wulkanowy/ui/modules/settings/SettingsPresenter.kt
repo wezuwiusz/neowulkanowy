@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.settings
 
-import com.readystatesoftware.chuck.api.ChuckCollector
+import androidx.work.WorkInfo
+import com.chuckerteam.chucker.api.ChuckerCollector
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
@@ -21,7 +22,7 @@ class SettingsPresenter @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper,
     private val syncManager: SyncManager,
-    private val chuckCollector: ChuckCollector,
+    private val chuckerCollector: ChuckerCollector,
     private val appInfo: AppInfo
 ) : BasePresenter<SettingsView>(errorHandler, studentRepository, schedulers) {
 
@@ -29,6 +30,7 @@ class SettingsPresenter @Inject constructor(
         super.onAttachView(view)
         Timber.i("Settings view was initialized")
         view.setServicesSuspended(preferencesRepository.serviceEnableKey, now().isHolidays)
+        view.initView()
     }
 
     fun onSharedPreferenceChanged(key: String) {
@@ -36,9 +38,9 @@ class SettingsPresenter @Inject constructor(
 
         with(preferencesRepository) {
             when (key) {
-                serviceEnableKey -> with(syncManager) { if (isServiceEnabled) startSyncWorker() else stopSyncWorker() }
-                servicesIntervalKey, servicesOnlyWifiKey -> syncManager.startSyncWorker(true)
-                isDebugNotificationEnableKey -> chuckCollector.showNotification(isDebugNotificationEnable)
+                serviceEnableKey -> with(syncManager) { if (isServiceEnabled) startPeriodicSyncWorker() else stopSyncWorker() }
+                servicesIntervalKey, servicesOnlyWifiKey -> syncManager.startPeriodicSyncWorker(true)
+                isDebugNotificationEnableKey -> chuckerCollector.showNotification = isDebugNotificationEnable
                 appThemeKey -> view?.recreateView()
                 appLanguageKey -> view?.run {
                     updateLanguage(if (appLanguage == "system") appInfo.systemLanguage else appLanguage)
@@ -48,5 +50,26 @@ class SettingsPresenter @Inject constructor(
             }
         }
         analytics.logEvent("setting_changed", "name" to key)
+    }
+
+    fun onSyncNowClicked() {
+        view?.showForceSyncDialog()
+    }
+
+    fun onForceSyncDialogSubmit() {
+        view?.run {
+            Timber.i("Setting sync now started")
+            analytics.logEvent("sync_now_started")
+            disposable.add(syncManager.startOneTimeSyncWorker()
+                .doOnSubscribe { setSyncInProgress(true) }
+                .doFinally { setSyncInProgress(false) }
+                .subscribe({ workInfo ->
+                    if (workInfo.state == WorkInfo.State.SUCCEEDED) showMessage(syncSuccessString)
+                    else if (workInfo.state == WorkInfo.State.FAILED) showError(syncFailedString, Throwable(workInfo.outputData.getString("error")))
+                }, {
+                    Timber.e("Sync now failed")
+                })
+            )
+        }
     }
 }

@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -63,11 +62,10 @@ class MessageTabPresenter @Inject constructor(
         if (item is MessageItem) {
             Timber.i("Select message ${item.message.id} item")
             view?.run {
-                openMessage(item.message.id)
+                openMessage(item.message)
                 if (item.message.unread) {
                     item.message.unread = false
                     updateItem(item)
-                    updateMessage(item.message)
                 }
             }
         }
@@ -118,17 +116,5 @@ class MessageTabPresenter @Inject constructor(
                 showEmpty(false)
             } else showError(message, error)
         }
-    }
-
-    private fun updateMessage(message: Message) {
-        Timber.i("Attempt to update message ${message.id}")
-        disposable.add(messageRepository.updateMessage(message)
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .subscribe({ Timber.d("Update message ${message.id} result: Success") })
-            { error ->
-                Timber.i("Update message ${message.id} result: An exception occurred")
-                errorHandler.dispatch(error)
-            })
     }
 }

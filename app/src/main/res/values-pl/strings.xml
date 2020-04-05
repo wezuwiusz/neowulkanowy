@@ -44,16 +44,17 @@
     <string name="login_api_key_hint">Klucz API</string>
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
-    <string name="login_incorrect_password">Dane logowania są niepoprawne. Upewnij się, że został wybrany odpowiedni dziennik UONET+</string>
+    <string name="login_incorrect_password">Dane logowania są niepoprawne. Upewnij się, że został wybrany odpowiedni dziennik UONET+ w polu poniżej</string>
     <string name="login_invalid_pin">Nieprawidłowy PIN</string>
     <string name="login_invalid_token">Nieprawidłowy token</string>
     <string name="login_expired_token">Token stracił ważność</string>
     <string name="login_invalid_email">Niepoprawny adres email</string>
+    <string name="login_invalid_login">Niepoprawny login</string>
     <string name="login_invalid_symbol">Niepoprawny symbol</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź symbol</string>
     <string name="login_field_required">To pole jest wymagane</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
-    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w Uczeń -> Dostęp Mobilny -> Zarejestruj urządzenie mobilne</string>
+    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_advanced">Inne opcje</string>
     <string name="login_advanced_warning_mobile_api">W tym trybie nie działa szczęśliwy numerek, uczeń na tle klasy, podsumowanie frekwencji, usprawiedliwianie nieobecności, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń</string>
@@ -117,10 +118,10 @@
         <item quantity="other">Nowe oceny</item>
     </plurals>
     <plurals name="grade_notify_new_items">
-        <item quantity="one">Dostałeś %1$d ocenę</item>
-        <item quantity="few">"Dostałeś %1$d oceny</item>
-        <item quantity="many">Dostałeś %1$d ocen</item>
-        <item quantity="other">Dostałeś %1$d ocen</item>
+        <item quantity="one">Masz %1$d nową ocenę</item>
+        <item quantity="few">Masz %1$d nowe oceny</item>
+        <item quantity="many">Masz %1$d nowych ocen</item>
+        <item quantity="other">Masz %1$d nowych ocen</item>
     </plurals>
 
 
@@ -144,13 +145,13 @@
 
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
-    <string name="attendance_absence_school">Nieobecny z przyczyn szkolnych</string>
+    <string name="attendance_absence_school">Nieobecność z przyczyn szkolnych</string>
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
-    <string name="attendance_exemption">Zwolniony</string>
+    <string name="attendance_exemption">Zwolnienie</string>
     <string name="attendance_excused_lateness">Spóźnienie usprawiedliwione</string>
     <string name="attendance_unexcused_lateness">Spóźnienie nieusprawiedliwione</string>
-    <string name="attendance_present">Obecny</string>
+    <string name="attendance_present">Obecność</string>
     <string name="attendance_number">Numer lekcji</string>
     <string name="attendance_no_items">Brak wpisów</string>
     <plurals name="attendance_number_absences">
@@ -211,15 +212,16 @@
         <item quantity="other">Nowe wiadomości</item>
     </plurals>
     <plurals name="message_notify_new_items">
-        <item quantity="one">Dostałeś %1$d wiadomość</item>
-        <item quantity="few">"Dostałeś %1$d wiadomości</item>
-        <item quantity="many">Dostałeś %1$d wiadomości</item>
-        <item quantity="other">Dostałeś %1$d wiadomości</item>
+        <item quantity="one">Masz %1$d nową wiadomość</item>
+        <item quantity="few">Masz %1$d nowe wiadomości</item>
+        <item quantity="many">Masz %1$d nowych wiadomości</item>
+        <item quantity="other">Masz %1$d nowych wiadomości</item>
     </plurals>
 
 
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
+    <string name="note_points">Punkty</string>
     <plurals name="note_number_item">
         <item quantity="one">%d uwaga</item>
         <item quantity="few">%d uwagi</item>
@@ -233,15 +235,18 @@
         <item quantity="other">Nowe uwagi</item>
     </plurals>
     <plurals name="note_notify_new_items">
-        <item quantity="one">Dostałeś %1$d uwagę</item>
-        <item quantity="few">"Dostałeś %1$d uwagi</item>
-        <item quantity="many">Dostałeś %1$d uwag</item>
-        <item quantity="other">Dostałeś %1$d uwag</item>
+        <item quantity="one">Masz %1$d nową uwagę</item>
+        <item quantity="few">Masz %1$d nowe uwagi</item>
+        <item quantity="many">Masz %1$d nowych uwag</item>
+        <item quantity="other">Masz %1$d nowych uwag</item>
     </plurals>
 
 
     <!--Homework-->
     <string name="homework_no_items">Brak zadań domowych</string>
+    <string name="homework_mark_as_done">Wykonane</string>
+    <string name="homework_mark_as_undone">Niewykonane</string>
+    <string name="homework_attachments">Załączniki</string>
 
 
     <!--Lucky number-->
@@ -369,6 +374,15 @@
     <string name="pref_services_suspended">Zawieszona na wakacjach</string>
     <string name="pref_services_interval">Interwał aktualizacji</string>
     <string name="pref_services_wifi">Tylko WiFi</string>
+    <string name="pref_services_force_sync">Synchronizuj teraz</string>
+    <string name="pref_services_message_sync_success">Zsynchronizowano!</string>
+    <string name="pref_services_message_sync_failed">Synchronizacja nie powiodła się</string>
+    <string name="pref_services_sync_in_progress">Synchronizacja w trakcie</string>
+    <string name="pref_services_dialog_force_sync_title">Synchronizacja</string>
+    <string name="pref_services_dialog_force_sync_summary">
+        Ręczna synchronizacja nie odświeża widoków w aplikacji.
+        \nAby zobaczyć zsynchronizowane informacje uruchom ponownie aplikację po zsynchronizowaniu.
+    </string>
 
     <string name="pref_other_header">Inne</string>
     <string name="pref_other_grade_modifier_plus">Wartość plusa</string>
@@ -382,6 +396,7 @@
     <string name="channel_new_grades">Nowe oceny</string>
     <string name="channel_new_message">Nowe wiadomości</string>
     <string name="channel_new_notes">Nowe uwagi</string>
+    <string name="channel_push">Powiadomienia push</string>
     <string name="channel_debug">Debugowanie</string>
 
 

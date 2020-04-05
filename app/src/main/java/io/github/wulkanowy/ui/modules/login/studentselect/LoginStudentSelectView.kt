@@ -20,5 +20,5 @@ interface LoginStudentSelectView : BaseView {
 
     fun openDiscordInvite()
 
-    fun openEmail()
+    fun openEmail(lastError: String)
 }

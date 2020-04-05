@@ -41,6 +41,10 @@ interface LoginAdvancedView : BaseView {
 
     fun setErrorUsernameRequired()
 
+    fun setErrorLoginRequired()
+
+    fun setErrorEmailRequired()
+
     fun setErrorPassRequired(focus: Boolean)
 
     fun setErrorPassInvalid(focus: Boolean)

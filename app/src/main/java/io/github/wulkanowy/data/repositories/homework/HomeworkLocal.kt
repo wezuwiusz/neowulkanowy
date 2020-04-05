@@ -19,6 +19,10 @@ class HomeworkLocal @Inject constructor(private val homeworkDb: HomeworkDao) {
         homeworkDb.deleteAll(homework)
     }
 
+    fun updateHomework(homework: List<Homework>) {
+        homeworkDb.updateAll(homework)
+    }
+
     fun getHomework(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Homework>> {
         return homeworkDb.loadAll(semester.semesterId, semester.studentId, startDate, endDate)
             .filter { it.isNotEmpty() }

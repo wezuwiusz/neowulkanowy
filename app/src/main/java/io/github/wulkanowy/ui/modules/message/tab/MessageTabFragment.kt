@@ -12,6 +12,7 @@ import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -116,8 +117,8 @@ class MessageTabFragment : BaseFragment(), MessageTabView {
         messageTabSwipe.isRefreshing = show
     }
 
-    override fun openMessage(messageId: Long) {
-        (activity as? MainActivity)?.pushView(MessagePreviewFragment.newInstance(messageId))
+    override fun openMessage(message: Message) {
+        (activity as? MainActivity)?.pushView(MessagePreviewFragment.newInstance(message))
     }
 
     override fun notifyParentDataLoaded() {

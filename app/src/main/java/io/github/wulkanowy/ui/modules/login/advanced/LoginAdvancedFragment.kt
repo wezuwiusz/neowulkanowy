@@ -146,6 +146,20 @@ class LoginAdvancedFragment : BaseFragment(), LoginAdvancedView {
         }
     }
 
+    override fun setErrorLoginRequired() {
+        with(loginFormUsernameLayout) {
+            requestFocus()
+            error = getString(R.string.login_invalid_login)
+        }
+    }
+
+    override fun setErrorEmailRequired() {
+        with(loginFormUsernameLayout) {
+            requestFocus()
+            error = getString(R.string.login_invalid_email)
+        }
+    }
+
     override fun setErrorPassRequired(focus: Boolean) {
         with(loginFormPassLayout) {
             if (focus) requestFocus()

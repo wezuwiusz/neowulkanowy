@@ -95,6 +95,10 @@ class HomeworkPresenter @Inject constructor(
             })
     }
 
+    fun reloadData() {
+        loadData(currentDate, false)
+    }
+
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
         Timber.i("Loading homework data started")
         currentDate = date

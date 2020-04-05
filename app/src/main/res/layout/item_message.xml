@@ -1,5 +1,7 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
@@ -11,41 +13,53 @@
 
     <TextView
         android:id="@+id/messageItemAuthor"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:singleLine="true"
         android:textSize="15sp"
-        tools:text="@tools:sample/full_names" />
+        app:layout_constraintEnd_toStartOf="@+id/messageItemDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/messageItemDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@id/messageItemAuthor"
-        android:layout_toRightOf="@id/messageItemAuthor"
         android:gravity="end"
         android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/date/ddmmyy" />
 
     <TextView
         android:id="@+id/messageItemSubject"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/messageItemAuthor"
-        android:layout_alignStart="@id/messageItemAuthor"
-        android:layout_alignLeft="@id/messageItemAuthor"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:singleLine="true"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/messageItemAttachmentIcon"
+        app:layout_constraintStart_toStartOf="@id/messageItemAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/messageItemAuthor"
+        app:layout_goneMarginEnd="0dp"
         tools:text="@tools:sample/lorem/random" />
-</RelativeLayout>
+
+    <ImageView
+        android:id="@+id/messageItemAttachmentIcon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/messageItemSubject"
+        app:layout_constraintEnd_toEndOf="@id/messageItemDate"
+        app:srcCompat="@drawable/ic_attachment"
+        app:tint="?colorOnBackground"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

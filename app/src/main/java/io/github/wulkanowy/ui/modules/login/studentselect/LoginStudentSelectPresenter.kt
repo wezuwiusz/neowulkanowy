@@ -8,7 +8,6 @@ import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.ifNullOrBlank
-import io.reactivex.Single
 import timber.log.Timber
 import java.io.Serializable
 import javax.inject.Inject
@@ -19,6 +18,8 @@ class LoginStudentSelectPresenter @Inject constructor(
     private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<LoginStudentSelectView>(loginErrorHandler, studentRepository, schedulers) {
+
+    private var lastError: Throwable? = null
 
     var students = emptyList<Student>()
 
@@ -83,6 +84,7 @@ class LoginStudentSelectPresenter @Inject constructor(
                 })
             }, {
                 errorHandler.dispatch(it)
+                lastError = it
                 view?.updateData(students.map { student -> LoginStudentSelectItem(student, false) })
             })
         )
@@ -109,6 +111,7 @@ class LoginStudentSelectPresenter @Inject constructor(
                 students.forEach { analytics.logEvent("registration_student_select", "success" to false, "scrapperBaseUrl" to it.scrapperBaseUrl, "symbol" to it.symbol, "error" to error.message.ifNullOrBlank { "No message" }) }
                 Timber.i("Registration result: An exception occurred ")
                 loginErrorHandler.dispatch(error)
+                lastError = error
                 view?.apply {
                     showProgress(false)
                     showContent(true)
@@ -122,6 +125,6 @@ class LoginStudentSelectPresenter @Inject constructor(
     }
 
     fun onEmailClick() {
-        view?.openEmail()
+        view?.openEmail(lastError?.message.ifNullOrBlank { "empty" })
     }
 }

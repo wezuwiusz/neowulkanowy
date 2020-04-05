@@ -18,6 +18,8 @@ class LoginSymbolPresenter @Inject constructor(
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<LoginSymbolView>(loginErrorHandler, studentRepository, schedulers) {
 
+    private var lastError: Throwable? = null
+
     var loginData: Triple<String, String, String>? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -37,13 +39,15 @@ class LoginSymbolPresenter @Inject constructor(
     }
 
     fun attemptLogin(symbol: String) {
+        if (loginData == null) throw IllegalArgumentException("Login data is null")
+
         if (symbol.isBlank()) {
             view?.setErrorSymbolRequire()
             return
         }
 
         disposable.add(
-            Single.fromCallable { if (loginData == null) throw IllegalArgumentException("Login data is null") else loginData }
+            Single.fromCallable { loginData }
                 .flatMap { studentRepository.getStudentsScrapper(it.first, it.second, it.third, symbol) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
@@ -77,6 +81,7 @@ class LoginSymbolPresenter @Inject constructor(
                     Timber.i("Login with symbol result: An exception occurred")
                     analytics.logEvent("registration_symbol", "success" to false, "students" to -1, "scrapperBaseUrl" to loginData?.third, "symbol" to symbol, "error" to it.message.ifNullOrBlank { "No message" })
                     loginErrorHandler.dispatch(it)
+                    lastError = it
                     view?.showContact(true)
                 }))
     }
@@ -94,6 +99,6 @@ class LoginSymbolPresenter @Inject constructor(
     }
 
     fun onEmailClick() {
-        view?.openEmail()
+        view?.openEmail(loginData?.third.orEmpty(), lastError?.message.ifNullOrBlank { "empty" })
     }
 }

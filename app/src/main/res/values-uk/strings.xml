@@ -49,12 +49,13 @@
     <string name="login_invalid_pin">Недійсний PIN</string>
     <string name="login_invalid_token">Недійсний token</string>
     <string name="login_invalid_email">Недійсна адреса електронної пошти</string>
+    <string name="login_invalid_login">Невірний логін</string>
     <string name="login_expired_token">Токен протермінований</string>
     <string name="login_invalid_symbol">Недійсний symbol</string>
     <string name="login_incorrect_symbol">Не вдалося знайти учня. Будь ласка, перевірте \"symbol\"</string>
     <string name="login_field_required">Це поле обов\'язкове</string>
     <string name="login_duplicate_student">Даний учень вже авторизований</string>
-    <string name="login_symbol_helper">Ви можете знайти \"symbol\" в Uczeń -&gt; Dostęp Mobilny -&gt; Zarejestruj urządzenie mobilne</string>
+    <string name="login_symbol_helper">Ви можете знайти \"symbol\" в <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_privacy_policy">Політика приватності</string>
@@ -217,6 +218,7 @@
 
     <!--Note-->
     <string name="note_no_items">Немає даних про нотатки</string>
+    <string name="note_points">точок</string>
     <plurals name="note_number_item">
         <item quantity="one">%d нотатка</item>
         <item quantity="few">%d нотатки</item>
@@ -239,6 +241,9 @@
 
     <!--Homework-->
     <string name="homework_no_items">Немає домашніх завдань</string>
+    <string name="homework_mark_as_done">зроблений</string>
+    <string name="homework_mark_as_undone">Не зроблено</string>
+    <string name="homework_attachments">Вкладення</string>
 
 
     <!--Lucky number-->
@@ -380,6 +385,7 @@
     <string name="channel_new_grades">Нові оцінки</string>
     <string name="channel_new_message">Нові повідомлення</string>
     <string name="channel_new_notes">Нові нотатки</string>
+    <string name="channel_push">Повідомлення pushs</string>
     <string name="channel_debug">Дебаг</string>
 
 

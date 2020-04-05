@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.settings
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.yariksoffice.lingver.Lingver
@@ -33,9 +34,22 @@ class SettingsFragment : PreferenceFragmentCompat(),
 
     override val titleStringId get() = R.string.settings_title
 
+    override val syncSuccessString get() = getString(R.string.pref_services_message_sync_success)
+
+    override val syncFailedString get() = getString(R.string.pref_services_message_sync_failed)
+
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
+    }
+
+    override fun initView() {
+        findPreference<Preference>(getString(R.string.pref_key_services_force_sync))?.run {
+            onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                presenter.onSyncNowClicked()
+                true
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,9 +75,16 @@ class SettingsFragment : PreferenceFragmentCompat(),
     }
 
     override fun setServicesSuspended(serviceEnablesKey: String, isHolidays: Boolean) {
-        findPreference<Preference>(serviceEnablesKey)?.apply {
+        findPreference<Preference>(serviceEnablesKey)?.run {
             summary = if (isHolidays) getString(R.string.pref_services_suspended) else ""
             isEnabled = !isHolidays
+        }
+    }
+
+    override fun setSyncInProgress(inProgress: Boolean) {
+        findPreference<Preference>(getString(R.string.pref_key_services_force_sync))?.run {
+            isEnabled = !inProgress
+            summary = if (inProgress) getString(R.string.pref_services_sync_in_progress) else ""
         }
     }
 
@@ -85,6 +106,15 @@ class SettingsFragment : PreferenceFragmentCompat(),
 
     override fun showErrorDetailsDialog(error: Throwable) {
         ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
+    }
+
+    override fun showForceSyncDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.pref_services_dialog_force_sync_title)
+            .setMessage(R.string.pref_services_dialog_force_sync_summary)
+            .setPositiveButton(android.R.string.ok) { _, _ -> presenter.onForceSyncDialogSubmit() }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
     }
 
     override fun onResume() {

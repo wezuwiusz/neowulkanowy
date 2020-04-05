@@ -121,6 +121,20 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         }
     }
 
+    override fun setErrorLoginRequired() {
+        with(loginFormUsernameLayout) {
+            requestFocus()
+            error = getString(R.string.login_invalid_login)
+        }
+    }
+
+    override fun setErrorEmailRequired() {
+        with(loginFormUsernameLayout) {
+            requestFocus()
+            error = getString(R.string.login_invalid_email)
+        }
+    }
+
     override fun setErrorSymbolRequired(focus: Boolean) {
         with(loginFormSymbolLayout) {
             if (focus) requestFocus()
@@ -219,12 +233,18 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         }
     }
 
-    override fun openEmail() {
+    override fun openEmail(lastError: String) {
         context?.openEmailClient(
-            requireContext().getString(R.string.login_email_intent_title),
-            "wulkanowyinc@gmail.com",
-            requireContext().getString(R.string.login_email_subject),
-            requireContext().getString(R.string.login_email_text, appInfo.systemModel, appInfo.systemVersion.toString(), appInfo.versionName)
+            chooserTitle = requireContext().getString(R.string.login_email_intent_title),
+            email = "wulkanowyinc@gmail.com",
+            subject = requireContext().getString(R.string.login_email_subject),
+            body = requireContext().getString(R.string.login_email_text,
+                "${appInfo.systemManufacturer} ${appInfo.systemModel}",
+                appInfo.systemVersion.toString(),
+                appInfo.versionName,
+                "$formHostValue/$formSymbolValue",
+                lastError
+            )
         )
     }
 }

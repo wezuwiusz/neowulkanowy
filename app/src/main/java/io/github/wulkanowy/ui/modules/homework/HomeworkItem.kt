@@ -24,6 +24,8 @@ class HomeworkItem(header: HomeworkHeader, val homework: Homework) :
             homeworkItemSubject.text = homework.subject
             homeworkItemTeacher.text = homework.teacher
             homeworkItemContent.text = homework.content
+            homeworkItemCheckImage.visibility = if (homework.isDone) View.VISIBLE else View.GONE
+            homeworkItemAttachmentImage.visibility = if (!homework.isDone && homework.attachments.isNotEmpty()) View.VISIBLE else View.GONE
         }
     }
 
@@ -43,7 +45,8 @@ class HomeworkItem(header: HomeworkHeader, val homework: Homework) :
         return result
     }
 
-    class ViewHolder(val view: View, adapter: FlexibleAdapter<*>) : FlexibleViewHolder(view, adapter), LayoutContainer {
+    class ViewHolder(val view: View, adapter: FlexibleAdapter<*>) :
+        FlexibleViewHolder(view, adapter), LayoutContainer {
         override val containerView: View
             get() = contentView
     }

@@ -43,3 +43,10 @@
 
 #Config for Material Components
 -keep class com.google.android.material.tabs.** { *; }
+
+
+#Config for About Libraries
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}
