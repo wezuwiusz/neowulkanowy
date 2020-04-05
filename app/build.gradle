@@ -119,7 +119,7 @@ ext {
     room = "2.2.5"
     dagger = "2.27"
     // don't update https://github.com/ChuckerTeam/chucker/issues/242
-    chucker = "3.1.1"
+    chucker = "3.2.0"
     mockk = "1.9.2"
 }
 
