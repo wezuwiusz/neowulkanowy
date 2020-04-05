@@ -1,10 +1,11 @@
-Wersja 0.16.0
+Wersja 0.17.0
 
-- oceny zapisane w nawiasach nie są już liczone do średniej
-- naprawiliśmy wyświetlanie szczęśliwych numerków na kontach rodziców (może być potrzebne zalogowanie się ponownie)
-- dodaliśmy opcję przywracania hasła, ulepszyliśmy formularz logowania
-- dodaliśmy język ukraiński i niemiecki
-- dodaliśmy informację na górnym pasku o bieżącym semestrze w widoku ocen
-- ulepszyliśmy przełączanie aplikacji na nowy semestr
+- dodaliśmy wsparcie dla załączników w wiadomosciach i zadaniach domowych
+- dodaliśmy oznaczanie zadań domowych jako wykonanych
+- dodaliśmy wyświetlanie punktów przy uwagach
+- dodaliśmy funkcję powiadomień o awariach dziennika
+- dodaliśmy funkcję wymuszenia pełnej synchronizacji
+- zmieniliśmy sposób zwracania się do użytkownika na bezosobowy
+- naprawiliśmy logowanie na androidach niższych niż 5.0
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
