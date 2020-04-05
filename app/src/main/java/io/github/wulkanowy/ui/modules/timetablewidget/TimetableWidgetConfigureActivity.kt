@@ -4,9 +4,6 @@ import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS
 import android.content.Intent
-import android.content.res.Configuration
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
@@ -18,7 +15,6 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.EXTRA_FROM_PROVIDER
-import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.activity_widget_configure.*
 import javax.inject.Inject
@@ -31,9 +27,6 @@ class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePr
 
     @Inject
     override lateinit var presenter: TimetableWidgetConfigurePresenter
-
-    @Inject
-    lateinit var appInfo: AppInfo
 
     private var dialog: AlertDialog? = null
 
@@ -57,18 +50,16 @@ class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePr
     }
 
     override fun showThemeDialog() {
-        var items = arrayOf(
+        val items = arrayOf(
             getString(R.string.widget_timetable_theme_light),
             getString(R.string.widget_timetable_theme_dark)
         )
-        if (appInfo.versionCode >= Build.VERSION_CODES.Q) items += getString(R.string.widget_timetable_theme_system)
 
         dialog = AlertDialog.Builder(this, R.style.WulkanowyTheme_WidgetAccountSwitcher)
             .setTitle(R.string.widget_timetable_theme_title)
             .setOnDismissListener { presenter.onDismissThemeView() }
             .setSingleChoiceItems(items, -1) { _, which ->
-                val isDarkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
-                presenter.onThemeSelect(if (isDarkMode && which == 2 || which == 1) 1 else 0)
+                presenter.onThemeSelect(which)
             }
             .show()
     }
