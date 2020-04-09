@@ -82,6 +82,8 @@ class SettingsFragment : PreferenceFragmentCompat(),
     }
 
     override fun setSyncInProgress(inProgress: Boolean) {
+        if (activity == null || !isAdded) return
+
         findPreference<Preference>(getString(R.string.pref_key_services_force_sync))?.run {
             isEnabled = !inProgress
             summary = if (inProgress) getString(R.string.pref_services_sync_in_progress) else ""
