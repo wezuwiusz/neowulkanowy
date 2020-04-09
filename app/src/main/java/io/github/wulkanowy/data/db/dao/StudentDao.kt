@@ -22,6 +22,9 @@ interface StudentDao {
     @Query("SELECT * FROM Students WHERE is_current = 1")
     fun loadCurrent(): Maybe<Student>
 
+    @Query("SELECT * FROM Students WHERE id = :id")
+    fun loadById(id: Int): Maybe<Student>
+
     @Query("SELECT * FROM Students")
     fun loadAll(): Maybe<List<Student>>
 

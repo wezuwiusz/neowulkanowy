@@ -33,6 +33,14 @@ class StudentLocal @Inject constructor(
             .filter { it.isNotEmpty() }
     }
 
+    fun getStudentById(id: Int): Maybe<Student> {
+        return studentDb.loadById(id).map {
+            it.apply {
+                if (Sdk.Mode.valueOf(loginMode) != Sdk.Mode.API) password = decrypt(password)
+            }
+        }
+    }
+
     fun getCurrentStudent(decryptPass: Boolean): Maybe<Student> {
         return studentDb.loadCurrent().map {
             it.apply {
