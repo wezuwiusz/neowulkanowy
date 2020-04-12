@@ -88,6 +88,7 @@
                     android:autofillHints="emailAddress"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:imeOptions="actionDone"
                     tools:targetApi="o" />
 
                 <requestFocus />
@@ -105,7 +106,7 @@
                 android:layout_marginRight="24dp"
                 android:hint="@string/login_host_hint"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/loginRecoverSymbolLayout"
+                app:layout_constraintBottom_toTopOf="@+id/loginRecoverButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginRecoverNameLayout">
@@ -118,46 +119,17 @@
                     tools:ignore="Deprecated,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/loginRecoverSymbolLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
-                android:hint="@string/login_symbol_hint"
-                app:errorEnabled="true"
-                app:layout_constraintBottom_toTopOf="@+id/loginRecoverButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginRecoverHostLayout">
-
-                <AutoCompleteTextView
-                    android:id="@+id/loginRecoverSymbol"
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeActionLabel="@string/login_sign_in"
-                    android:imeOptions="actionDone"
-                    android:inputType="textAutoComplete|textNoSuggestions"
-                    android:maxLines="1"
-                    tools:ignore="LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <Button
                 android:id="@+id/loginRecoverButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:text="@string/login_recover"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginRecoverSymbolLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/loginRecoverHostLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

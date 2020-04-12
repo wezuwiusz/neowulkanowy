@@ -6,9 +6,9 @@ interface LoginRecoverView : BaseView {
 
     val recoverHostValue: String
 
-    val recoverNameValue: String
+    val formHostSymbol: String
 
-    val recoverSymbolValue: String
+    val recoverNameValue: String
 
     val emailHintString: String
 
@@ -22,17 +22,11 @@ interface LoginRecoverView : BaseView {
 
     fun clearUsernameError()
 
-    fun clearSymbolError()
-
-    fun showSymbol(show: Boolean)
-
     fun setErrorNameRequired()
 
     fun setUsernameHint(hint: String)
 
     fun setUsernameError(message: String)
-
-    fun setSymbolError(focus: Boolean)
 
     fun showSoftKeyboard()
 
