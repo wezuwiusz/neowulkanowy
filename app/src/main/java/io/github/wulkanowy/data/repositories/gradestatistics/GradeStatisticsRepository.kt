@@ -5,6 +5,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
 import io.github.wulkanowy.ui.modules.grade.statistics.ViewType
 import io.github.wulkanowy.utils.uniqueSubtract
@@ -20,11 +21,11 @@ class GradeStatisticsRepository @Inject constructor(
     private val remote: GradeStatisticsRemote
 ) {
 
-    fun getGradesStatistics(semester: Semester, subjectName: String, isSemester: Boolean, forceRefresh: Boolean = false): Single<List<GradeStatisticsItem>> {
+    fun getGradesStatistics(student: Student, semester: Semester, subjectName: String, isSemester: Boolean, forceRefresh: Boolean = false): Single<List<GradeStatisticsItem>> {
         return local.getGradesStatistics(semester, isSemester, subjectName).map { it.mapToStatisticItems() }.filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
-                    if (it) remote.getGradeStatistics(semester, isSemester)
+                    if (it) remote.getGradeStatistics(student, semester, isSemester)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getGradesStatistics(semester, isSemester).toSingle(emptyList())
@@ -35,11 +36,11 @@ class GradeStatisticsRepository @Inject constructor(
                 }.flatMap { local.getGradesStatistics(semester, isSemester, subjectName).map { it.mapToStatisticItems() }.toSingle(emptyList()) })
     }
 
-    fun getGradesPointsStatistics(semester: Semester, subjectName: String, forceRefresh: Boolean): Single<List<GradeStatisticsItem>> {
+    fun getGradesPointsStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean): Single<List<GradeStatisticsItem>> {
         return local.getGradesPointsStatistics(semester, subjectName).map { it.mapToStatisticsItem() }.filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
-                    if (it) remote.getGradePointsStatistics(semester)
+                    if (it) remote.getGradePointsStatistics(student, semester)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getGradesPointsStatistics(semester).toSingle(emptyList())

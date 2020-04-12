@@ -148,7 +148,8 @@ class SendMessagePresenter @Inject constructor(
 
     private fun sendMessage(subject: String, content: String, recipients: List<Recipient>) {
         Timber.i("Sending message started")
-        disposable.add(messageRepository.sendMessage(subject, content, recipients)
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { messageRepository.sendMessage(it, subject, content, recipients) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {

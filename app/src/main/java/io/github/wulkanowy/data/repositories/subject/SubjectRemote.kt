@@ -1,8 +1,10 @@
 package io.github.wulkanowy.data.repositories.subject
 
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.init
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,8 +12,9 @@ import javax.inject.Singleton
 @Singleton
 class SubjectRemote @Inject constructor(private val sdk: Sdk) {
 
-    fun getSubjects(semester: Semester): Single<List<Subject>> {
-        return sdk.switchDiary(semester.diaryId, semester.schoolYear).getSubjects()
+    fun getSubjects(student: Student, semester: Semester): Single<List<Subject>> {
+        return sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            .getSubjects()
             .map { subjects ->
                 subjects.map {
                     Subject(

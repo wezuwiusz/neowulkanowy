@@ -2,7 +2,6 @@ package io.github.wulkanowy.data.repositories.message
 
 import androidx.room.EmptyResultSetException
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.SdkHelper
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.data.db.entities.Student
@@ -20,9 +19,6 @@ import org.threeten.bp.LocalDateTime.now
 import java.net.UnknownHostException
 
 class MessageRepositoryTest {
-
-    @Mock
-    lateinit var sdk: SdkHelper
 
     @Mock
     lateinit var local: MessageLocal
@@ -43,7 +39,7 @@ class MessageRepositoryTest {
 
         repo = MessageRepository(InternetObservingSettings.builder()
             .strategy(testObservingStrategy)
-            .build(), local, remote, sdk)
+            .build(), local, remote)
     }
 
     @Test
@@ -80,7 +76,7 @@ class MessageRepositoryTest {
         `when`(local.getMessageWithAttachment(student, testMessage))
             .thenReturn(Single.just(mWa))
             .thenReturn(Single.just(mWaWithContent))
-        `when`(remote.getMessagesContentDetails(testMessageWithContent)).thenReturn(Single.just("Test" to emptyList()))
+        `when`(remote.getMessagesContentDetails(student, testMessageWithContent)).thenReturn(Single.just("Test" to emptyList()))
 
         val message = repo.getMessage(student, testMessage).blockingGet()
 

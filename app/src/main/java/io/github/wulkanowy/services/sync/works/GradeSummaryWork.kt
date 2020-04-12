@@ -9,6 +9,6 @@ import javax.inject.Inject
 class GradeSummaryWork @Inject constructor(private val gradeSummaryRepository: GradeSummaryRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return gradeSummaryRepository.getGradesSummary(semester, true).ignoreElement()
+        return gradeSummaryRepository.getGradesSummary(student, semester, true).ignoreElement()
     }
 }

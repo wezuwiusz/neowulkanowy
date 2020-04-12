@@ -85,7 +85,8 @@ class MessagePreviewPresenter @Inject constructor(
 
     private fun deleteMessage() {
         message?.let { message ->
-            disposable.add(messageRepository.deleteMessage(message)
+            disposable.add(studentRepository.getCurrentStudent()
+                .flatMap { messageRepository.deleteMessage(it, message) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doOnSubscribe {

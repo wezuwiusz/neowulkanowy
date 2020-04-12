@@ -114,9 +114,12 @@ class CompletedLessonsPresenter @Inject constructor(
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
-                .flatMap { semesterRepository.getCurrentSemester(it) }
+                .flatMap { student ->
+                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                        completedLessonsRepository.getCompletedLessons(student, semester, currentDate, currentDate, forceRefresh)
+                    }
+                }
                 .delay(200, TimeUnit.MILLISECONDS)
-                .flatMap { completedLessonsRepository.getCompletedLessons(it, currentDate, currentDate, forceRefresh) }
                 .map { items -> items.map { CompletedLessonItem(it) } }
                 .map { items -> items.sortedBy { it.completedLesson.number } }
                 .subscribeOn(schedulers.backgroundThread)

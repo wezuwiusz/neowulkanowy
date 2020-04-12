@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import java.net.UnknownHostException
@@ -17,11 +18,11 @@ class GradeSummaryRepository @Inject constructor(
     private val remote: GradeSummaryRemote
 ) {
 
-    fun getGradesSummary(semester: Semester, forceRefresh: Boolean = false): Single<List<GradeSummary>> {
+    fun getGradesSummary(student: Student, semester: Semester, forceRefresh: Boolean = false): Single<List<GradeSummary>> {
         return local.getGradesSummary(semester).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
-                    if (it) remote.getGradeSummary(semester)
+                    if (it) remote.getGradeSummary(student, semester)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getGradesSummary(semester).toSingle(emptyList())

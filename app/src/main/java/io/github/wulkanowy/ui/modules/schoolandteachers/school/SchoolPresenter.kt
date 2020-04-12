@@ -64,8 +64,11 @@ class SchoolPresenter @Inject constructor(
     private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading school info started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .flatMapMaybe { schoolRepository.getSchoolInfo(it, forceRefresh) }
+            .flatMapMaybe { student ->
+                semesterRepository.getCurrentSemester(student).flatMapMaybe {
+                    schoolRepository.getSchoolInfo(student, it, forceRefresh)
+                }
+            }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally {

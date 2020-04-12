@@ -112,9 +112,12 @@ class ExamPresenter @Inject constructor(
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
+                .flatMap { student ->
+                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                        examRepository.getExams(student, semester, currentDate.monday, currentDate.friday, forceRefresh)
+                    }
+                }
                 .delay(200, MILLISECONDS)
-                .flatMap { semesterRepository.getCurrentSemester(it) }
-                .flatMap { examRepository.getExams(it, currentDate.monday, currentDate.friday, forceRefresh) }
                 .map { it.groupBy { exam -> exam.date }.toSortedMap() }
                 .map { createExamItems(it) }
                 .subscribeOn(schedulers.backgroundThread)

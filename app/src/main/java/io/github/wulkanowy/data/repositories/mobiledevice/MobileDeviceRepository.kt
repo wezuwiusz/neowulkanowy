@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
 import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
@@ -18,11 +19,11 @@ class MobileDeviceRepository @Inject constructor(
     private val remote: MobileDeviceRemote
 ) {
 
-    fun getDevices(semester: Semester, forceRefresh: Boolean = false): Single<List<MobileDevice>> {
+    fun getDevices(student: Student, semester: Semester, forceRefresh: Boolean = false): Single<List<MobileDevice>> {
         return local.getDevices(semester).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
-                    if (it) remote.getDevices(semester)
+                    if (it) remote.getDevices(student, semester)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getDevices(semester).toSingle(emptyList())
@@ -34,18 +35,18 @@ class MobileDeviceRepository @Inject constructor(
             ).flatMap { local.getDevices(semester).toSingle(emptyList()) }
     }
 
-    fun unregisterDevice(semester: Semester, device: MobileDevice): Single<Boolean> {
+    fun unregisterDevice(student: Student, semester: Semester, device: MobileDevice): Single<Boolean> {
         return ReactiveNetwork.checkInternetConnectivity(settings)
             .flatMap {
-                if (it) remote.unregisterDevice(semester, device)
+                if (it) remote.unregisterDevice(student, semester, device)
                 else Single.error(UnknownHostException())
             }
     }
 
-    fun getToken(semester: Semester): Single<MobileDeviceToken> {
+    fun getToken(student: Student, semester: Semester): Single<MobileDeviceToken> {
         return ReactiveNetwork.checkInternetConnectivity(settings)
             .flatMap {
-                if (it) remote.getToken(semester)
+                if (it) remote.getToken(student, semester)
                 else Single.error(UnknownHostException())
             }
     }

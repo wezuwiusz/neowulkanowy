@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.UnitTestInternetObservingStrategy
+import io.github.wulkanowy.data.repositories.getStudentEntity
 import io.reactivex.Maybe
 import io.reactivex.Single
 import org.junit.Before
@@ -25,6 +26,8 @@ class MobileDeviceRepositoryTest {
     @Mock
     private lateinit var mobileDeviceLocal: MobileDeviceLocal
 
+    private val student = getStudentEntity()
+
     private lateinit var mobileDeviceRepository: MobileDeviceRepository
 
     private val settings = InternetObservingSettings.builder()
@@ -45,9 +48,9 @@ class MobileDeviceRepositoryTest {
         )
 
         doReturn(Maybe.empty<MobileDevice>()).`when`(mobileDeviceLocal).getDevices(semester)
-        doReturn(Single.just(devices)).`when`(mobileDeviceRemote).getDevices(semester)
+        doReturn(Single.just(devices)).`when`(mobileDeviceRemote).getDevices(student, semester)
 
-        mobileDeviceRepository.getDevices(semester).blockingGet()
+        mobileDeviceRepository.getDevices(student, semester).blockingGet()
 
         verify(mobileDeviceLocal).deleteDevices(emptyList())
         verify(mobileDeviceLocal).saveDevices(devices)

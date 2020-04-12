@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.uniqueSubtract
@@ -20,25 +21,22 @@ class ExamRepository @Inject constructor(
     private val remote: ExamRemote
 ) {
 
-    fun getExams(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false): Single<List<Exam>> {
-        return Single.fromCallable { startDate.monday to endDate.friday }
-            .flatMap { dates ->
-                local.getExams(semester, dates.first, dates.second).filter { !forceRefresh }
-                    .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
-                        .flatMap {
-                            if (it) remote.getExams(semester, dates.first, dates.second)
-                            else Single.error(UnknownHostException())
-                        }.flatMap { new ->
-                            local.getExams(semester, dates.first, dates.second)
-                                .toSingle(emptyList())
-                                .doOnSuccess { old ->
-                                    local.deleteExams(old.uniqueSubtract(new))
-                                    local.saveExams(new.uniqueSubtract(old))
-                                }
-                        }.flatMap {
-                            local.getExams(semester, dates.first, dates.second)
-                                .toSingle(emptyList())
-                        }).map { list -> list.filter { it.date in startDate..endDate } }
-            }
+    fun getExams(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): Single<List<Exam>> {
+        return local.getExams(semester, start.monday, end.friday).filter { !forceRefresh }
+            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
+                .flatMap {
+                    if (it) remote.getExams(student, semester, start.monday, end.friday)
+                    else Single.error(UnknownHostException())
+                }.flatMap { new ->
+                    local.getExams(semester, start.monday, end.friday)
+                        .toSingle(emptyList())
+                        .doOnSuccess { old ->
+                            local.deleteExams(old.uniqueSubtract(new))
+                            local.saveExams(new.uniqueSubtract(old))
+                        }
+                }.flatMap {
+                    local.getExams(semester, start.monday, end.friday)
+                        .toSingle(emptyList())
+                }).map { list -> list.filter { it.date in start..end } }
     }
 }

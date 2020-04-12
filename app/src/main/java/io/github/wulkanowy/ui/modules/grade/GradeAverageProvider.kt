@@ -34,7 +34,7 @@ class GradeAverageProvider @Inject constructor(
         val selectedSemester = semesters.single { it.semesterId == semesterId }
         val firstSemester = semesters.single { it.diaryId == selectedSemester.diaryId && it.semesterName == 1 }
 
-        return getAverageFromGradeSummary(selectedSemester, forceRefresh)
+        return getAverageFromGradeSummary(student, selectedSemester, forceRefresh)
             .switchIfEmpty(gradeRepository.getGrades(student, selectedSemester, forceRefresh)
                 .flatMap { firstGrades ->
                     if (selectedSemester == firstSemester) Single.just(firstGrades)
@@ -52,7 +52,7 @@ class GradeAverageProvider @Inject constructor(
     private fun getOnlyOneSemesterAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Single<List<Triple<String, Double, String>>> {
         val selectedSemester = semesters.single { it.semesterId == semesterId }
 
-        return getAverageFromGradeSummary(selectedSemester, forceRefresh)
+        return getAverageFromGradeSummary(student, selectedSemester, forceRefresh)
             .switchIfEmpty(gradeRepository.getGrades(student, selectedSemester, forceRefresh)
                 .map { grades ->
                     grades.map { if (student.loginMode == Sdk.Mode.SCRAPPER.name) it.changeModifier(plusModifier, minusModifier) else it }
@@ -61,8 +61,8 @@ class GradeAverageProvider @Inject constructor(
                 })
     }
 
-    private fun getAverageFromGradeSummary(selectedSemester: Semester, forceRefresh: Boolean): Maybe<List<Triple<String, Double, String>>> {
-        return gradeSummaryRepository.getGradesSummary(selectedSemester, forceRefresh)
+    private fun getAverageFromGradeSummary(student: Student, selectedSemester: Semester, forceRefresh: Boolean): Maybe<List<Triple<String, Double, String>>> {
+        return gradeSummaryRepository.getGradesSummary(student, selectedSemester, forceRefresh)
             .toMaybe()
             .flatMap {
                 if (it.any { summary -> summary.average != .0 }) {

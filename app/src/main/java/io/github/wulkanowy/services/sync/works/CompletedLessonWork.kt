@@ -14,7 +14,7 @@ class CompletedLessonWork @Inject constructor(
 ) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return completedLessonsRepository.getCompletedLessons(semester, now().monday, now().friday, true)
+        return completedLessonsRepository.getCompletedLessons(student, semester, now().monday, now().friday, true)
             .ignoreElement()
     }
 }

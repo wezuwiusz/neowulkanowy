@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.timetable
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
@@ -20,11 +21,11 @@ class TimetableRepository @Inject constructor(
     private val remote: TimetableRemote
 ) {
 
-    fun getTimetable(semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): Single<List<Timetable>> {
+    fun getTimetable(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): Single<List<Timetable>> {
         return Single.fromCallable { start.monday to end.friday }.flatMap { (monday, friday) ->
             local.getTimetable(semester, monday, friday).filter { !forceRefresh }
                 .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-                    if (it) remote.getTimetable(semester, monday, friday)
+                    if (it) remote.getTimetable(student, semester, monday, friday)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getTimetable(semester, monday, friday)

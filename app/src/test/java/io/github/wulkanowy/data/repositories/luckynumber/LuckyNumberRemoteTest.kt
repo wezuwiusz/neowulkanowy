@@ -1,10 +1,10 @@
 package io.github.wulkanowy.data.repositories.luckynumber
 
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.repositories.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.init
 import io.mockk.MockKAnnotations
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.reactivex.Maybe
 import org.junit.Assert.assertEquals
@@ -17,28 +17,26 @@ class LuckyNumberRemoteTest {
     @SpyK
     private var mockSdk = Sdk()
 
-    @MockK
-    private lateinit var studentMock: Student
+    private val student = getStudentEntity(Sdk.Mode.SCRAPPER)
 
     @Before
-    fun initApi() {
+    fun setUp() {
         MockKAnnotations.init(this)
     }
 
     @Test
     fun getLuckyNumberTest() {
+        every { mockSdk.init(student) } returns mockSdk
         every { mockSdk.getLuckyNumber("test") } returns Maybe.just(14)
 
         every { mockSdk.diaryId } returns 1
-        every { studentMock.studentId } returns 1
-        every { studentMock.schoolShortName } returns "test"
 
         val luckyNumber = LuckyNumberRemote(mockSdk)
-            .getLuckyNumber(studentMock)
+            .getLuckyNumber(student)
             .blockingGet()
 
         assertEquals(14, luckyNumber.luckyNumber)
         assertEquals(LocalDate.now(), luckyNumber.date)
-        assertEquals(studentMock.studentId, luckyNumber.studentId)
+        assertEquals(student.studentId, luckyNumber.studentId)
     }
 }

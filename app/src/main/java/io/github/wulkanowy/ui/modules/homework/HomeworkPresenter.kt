@@ -105,9 +105,12 @@ class HomeworkPresenter @Inject constructor(
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
+                .flatMap { student ->
+                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                        homeworkRepository.getHomework(student, semester, currentDate, currentDate, forceRefresh)
+                    }
+                }
                 .delay(200, TimeUnit.MILLISECONDS)
-                .flatMap { semesterRepository.getCurrentSemester(it) }
-                .flatMap { homeworkRepository.getHomework(it, currentDate, currentDate, forceRefresh) }
                 .map { it.groupBy { homework -> homework.date }.toSortedMap() }
                 .map { createHomeworkItem(it) }
                 .subscribeOn(schedulers.backgroundThread)

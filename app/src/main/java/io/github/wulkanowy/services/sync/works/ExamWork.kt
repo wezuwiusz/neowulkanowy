@@ -12,6 +12,6 @@ import javax.inject.Inject
 class ExamWork @Inject constructor(private val examRepository: ExamRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return examRepository.getExams(semester, now().monday, now().friday, true).ignoreElement()
+        return examRepository.getExams(student, semester, now().monday, now().friday, true).ignoreElement()
     }
 }

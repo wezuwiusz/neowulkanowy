@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GradeStatisticsWork @Inject constructor(private val gradeStatisticsRepository: GradeStatisticsRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return gradeStatisticsRepository.getGradesStatistics(semester, "Wszystkie", false, true)
+        return gradeStatisticsRepository.getGradesStatistics(student, semester, "Wszystkie", false, true)
             .ignoreElement()
     }
 }
