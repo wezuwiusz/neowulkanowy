@@ -1,11 +1,9 @@
-Wersja 0.17.0
+Wersja 0.17.1
 
-- dodaliśmy wsparcie dla załączników w wiadomosciach i zadaniach domowych
-- dodaliśmy oznaczanie zadań domowych jako wykonanych
-- dodaliśmy wyświetlanie punktów przy uwagach
-- dodaliśmy funkcję powiadomień o awariach dziennika
-- dodaliśmy funkcję wymuszenia pełnej synchronizacji
-- zmieniliśmy sposób zwracania się do użytkownika na bezosobowy
-- naprawiliśmy logowanie na androidach niższych niż 5.0
+- naprawiliśmy problemy ze stabilnością w szczegółach zadania domowego i podglądzie wiadomości
+- naprawiliśmy odświeżanie danych w określonych przypadkach
+- naprawiliśmy odświeżanie listy urządzeń
+- w trybie hybrydowym lista przedmiotów w zakładckach Klasa i Podsumowanie frekwencji powinna teraz zawierać tylko przedmioty ucznia
+- na liście dzienników pokazują się teraz również te niestandardowe
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
