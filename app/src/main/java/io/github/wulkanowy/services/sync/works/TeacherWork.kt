@@ -9,6 +9,6 @@ import javax.inject.Inject
 class TeacherWork @Inject constructor(private val teacherRepository: TeacherRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return teacherRepository.getTeachers(semester, true).ignoreElement()
+        return teacherRepository.getTeachers(student, semester, true).ignoreElement()
     }
 }

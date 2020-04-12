@@ -2,7 +2,9 @@ package io.github.wulkanowy.data.repositories.grade
 
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.init
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,8 +12,9 @@ import javax.inject.Singleton
 @Singleton
 class GradeRemote @Inject constructor(private val sdk: Sdk) {
 
-    fun getGrades(semester: Semester): Single<List<Grade>> {
-        return sdk.switchDiary(semester.diaryId, semester.schoolYear).getGrades(semester.semesterId)
+    fun getGrades(student: Student, semester: Semester): Single<List<Grade>> {
+        return sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            .getGrades(semester.semesterId)
             .map { grades ->
                 grades.map {
                     Grade(

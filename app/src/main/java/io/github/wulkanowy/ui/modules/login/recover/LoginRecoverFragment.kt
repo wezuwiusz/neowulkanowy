@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -35,14 +34,16 @@ class LoginRecoverFragment : BaseFragment(), LoginRecoverView {
 
     private lateinit var hostValues: Array<String>
 
+    private lateinit var hostSymbols: Array<String>
+
     override val recoverHostValue: String
         get() = hostValues.getOrNull(hostKeys.indexOf(loginRecoverHost.text.toString())).orEmpty()
 
+    override val formHostSymbol: String
+        get() = hostSymbols.getOrNull(hostKeys.indexOf(loginRecoverHost.text.toString())).orEmpty()
+
     override val recoverNameValue: String
         get() = loginRecoverName.text.toString().trim()
-
-    override val recoverSymbolValue: String
-        get() = loginRecoverSymbol.text.toString().trim()
 
     override val emailHintString: String
         get() = getString(R.string.login_email_hint)
@@ -66,16 +67,14 @@ class LoginRecoverFragment : BaseFragment(), LoginRecoverView {
         loginRecoverWebView.setBackgroundColor(Color.TRANSPARENT)
         hostKeys = resources.getStringArray(R.array.hosts_keys)
         hostValues = resources.getStringArray(R.array.hosts_values)
+        hostSymbols = resources.getStringArray(R.array.hosts_symbols)
 
         loginRecoverName.doOnTextChanged { _, _, _, _ -> presenter.onNameTextChanged() }
-        loginRecoverSymbol.doOnTextChanged { _, _, _, _ -> presenter.onSymbolTextChanged() }
         loginRecoverHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginRecoverButton.setOnClickListener { presenter.onRecoverClick() }
         loginRecoverErrorRetry.setOnClickListener { presenter.onRecoverClick() }
         loginRecoverErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         loginRecoverLogin.setOnClickListener { (activity as LoginActivity).switchView(0) }
-
-        loginRecoverSymbol.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.symbols_values)))
 
         with(loginRecoverHost) {
             setText(hostKeys.getOrNull(0).orEmpty())
@@ -106,23 +105,8 @@ class LoginRecoverFragment : BaseFragment(), LoginRecoverView {
         }
     }
 
-    override fun setSymbolError(focus: Boolean) {
-        with(loginRecoverSymbolLayout) {
-            if (focus) requestFocus()
-            error = getString(R.string.login_field_required)
-        }
-    }
-
     override fun clearUsernameError() {
         loginRecoverNameLayout.error = null
-    }
-
-    override fun clearSymbolError() {
-        loginRecoverSymbolLayout.error = null
-    }
-
-    override fun showSymbol(show: Boolean) {
-        loginRecoverSymbolLayout.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showProgress(show: Boolean) {

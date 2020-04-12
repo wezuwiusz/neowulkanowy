@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:paddingStart="20dp"
+    android:paddingTop="3dp"
+    android:paddingEnd="10dp"
+    android:paddingBottom="3dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/homeworkDialogAttachment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
+        android:textSize="12sp"
+        app:drawableStartCompat="@drawable/ic_attachment"
+        app:drawableTint="?colorOnBackground"
+        tools:text="@tools:sample/lorem" />
+</LinearLayout>

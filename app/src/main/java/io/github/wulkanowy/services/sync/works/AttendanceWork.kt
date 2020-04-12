@@ -12,7 +12,7 @@ import javax.inject.Inject
 class AttendanceWork @Inject constructor(private val attendanceRepository: AttendanceRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return attendanceRepository.getAttendance(semester, now().monday, now().friday, true)
+        return attendanceRepository.getAttendance(student, semester, now().monday, now().friday, true)
             .ignoreElement()
     }
 }

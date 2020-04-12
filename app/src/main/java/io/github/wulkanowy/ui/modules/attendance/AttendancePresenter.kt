@@ -188,13 +188,16 @@ class AttendancePresenter @Inject constructor(
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
-                .delay(200, MILLISECONDS)
-                .flatMap { semesterRepository.getCurrentSemester(it) }
-                .flatMap { attendanceRepository.getAttendance(it, date, date, forceRefresh) }
+                .flatMap { student ->
+                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                        attendanceRepository.getAttendance(student, semester, date, date, forceRefresh)
+                    }
+                }
                 .map { list ->
                     if (prefRepository.isShowPresent) list
                     else list.filter { !it.presence }
                 }
+                .delay(200, MILLISECONDS)
                 .map { items -> items.map { AttendanceItem(it) } }
                 .map { items -> items.sortedBy { it.attendance.number } }
                 .subscribeOn(schedulers.backgroundThread)
@@ -228,9 +231,12 @@ class AttendancePresenter @Inject constructor(
         Timber.i("Excusing absence started")
         disposable.apply {
             add(studentRepository.getCurrentStudent()
+                .flatMap { student ->
+                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                        attendanceRepository.excuseForAbsence(student, semester, toExcuseList, reason)
+                    }
+                }
                 .delay(200, MILLISECONDS)
-                .flatMap { semesterRepository.getCurrentSemester(it) }
-                .flatMap { attendanceRepository.excuseForAbsence(it, toExcuseList, reason) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doOnSubscribe {

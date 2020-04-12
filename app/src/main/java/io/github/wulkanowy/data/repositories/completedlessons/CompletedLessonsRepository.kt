@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.uniqueSubtract
@@ -20,25 +21,22 @@ class CompletedLessonsRepository @Inject constructor(
     private val remote: CompletedLessonsRemote
 ) {
 
-    fun getCompletedLessons(semester: Semester, startDate: LocalDate, endDate: LocalDate, forceRefresh: Boolean = false): Single<List<CompletedLesson>> {
-        return Single.fromCallable { startDate.monday to endDate.friday }
-            .flatMap { dates ->
-                local.getCompletedLessons(semester, dates.first, dates.second).filter { !forceRefresh }
-                    .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
-                        .flatMap {
-                            if (it) remote.getCompletedLessons(semester, dates.first, dates.second)
-                            else Single.error(UnknownHostException())
-                        }.flatMap { new ->
-                            local.getCompletedLessons(semester, dates.first, dates.second)
-                                .toSingle(emptyList())
-                                .doOnSuccess { old ->
-                                    local.deleteCompleteLessons(old.uniqueSubtract(new))
-                                    local.saveCompletedLessons(new.uniqueSubtract(old))
-                                }
-                        }.flatMap {
-                            local.getCompletedLessons(semester, dates.first, dates.second)
-                                .toSingle(emptyList())
-                        }).map { list -> list.filter { it.date in startDate..endDate } }
-            }
+    fun getCompletedLessons(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): Single<List<CompletedLesson>> {
+        return local.getCompletedLessons(semester, start.monday, end.friday).filter { !forceRefresh }
+            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
+                .flatMap {
+                    if (it) remote.getCompletedLessons(student, semester, start.monday, end.friday)
+                    else Single.error(UnknownHostException())
+                }.flatMap { new ->
+                    local.getCompletedLessons(semester, start.monday, end.friday)
+                        .toSingle(emptyList())
+                        .doOnSuccess { old ->
+                            local.deleteCompleteLessons(old.uniqueSubtract(new))
+                            local.saveCompletedLessons(new.uniqueSubtract(old))
+                        }
+                }.flatMap {
+                    local.getCompletedLessons(semester, start.monday, end.friday)
+                        .toSingle(emptyList())
+                }).map { list -> list.filter { it.date in start..end } }
     }
 }

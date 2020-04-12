@@ -1,12 +1,15 @@
 package io.github.wulkanowy.data.repositories.gradestatistics
 
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.repositories.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.GradePointsStatistics
 import io.github.wulkanowy.sdk.pojo.GradeStatistics
+import io.github.wulkanowy.utils.init
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.SpyK
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -14,15 +17,18 @@ import org.junit.Test
 
 class GradeStatisticsRemoteTest {
 
-    @MockK
-    private lateinit var mockSdk: Sdk
+    @SpyK
+    private var mockSdk = Sdk()
 
     @MockK
     private lateinit var semesterMock: Semester
 
+    private val student = getStudentEntity()
+
     @Before
     fun initApi() {
         MockKAnnotations.init(this)
+        every { mockSdk.init(student) } returns mockSdk
     }
 
     @Test
@@ -38,7 +44,7 @@ class GradeStatisticsRemoteTest {
         every { semesterMock.semesterId } returns 1
         every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val stats = GradeStatisticsRemote(mockSdk).getGradeStatistics(semesterMock, false).blockingGet()
+        val stats = GradeStatisticsRemote(mockSdk).getGradeStatistics(student, semesterMock, false).blockingGet()
         assertEquals(2, stats.size)
     }
 
@@ -55,7 +61,7 @@ class GradeStatisticsRemoteTest {
         every { semesterMock.semesterId } returns 1
         every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val stats = GradeStatisticsRemote(mockSdk).getGradePointsStatistics(semesterMock).blockingGet()
+        val stats = GradeStatisticsRemote(mockSdk).getGradePointsStatistics(student, semesterMock).blockingGet()
         assertEquals(2, stats.size)
     }
 

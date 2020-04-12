@@ -52,8 +52,11 @@ class TeacherPresenter @Inject constructor(
     private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading teachers data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .flatMap { teacherRepository.getTeachers(it, forceRefresh) }
+            .flatMap { student ->
+                semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                    teacherRepository.getTeachers(student, semester, forceRefresh)
+                }
+            }
             .map { it.filter { teacher -> teacher.name.isNotBlank() } }
             .map { items -> items.map { TeacherItem(it, view?.noSubjectString.orEmpty()) } }
             .subscribeOn(schedulers.backgroundThread)

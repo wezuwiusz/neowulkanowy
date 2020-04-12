@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.subject
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
@@ -17,11 +18,11 @@ class SubjectRepository @Inject constructor(
     private val remote: SubjectRemote
 ) {
 
-    fun getSubjects(semester: Semester, forceRefresh: Boolean = false): Single<List<Subject>> {
+    fun getSubjects(student: Student, semester: Semester, forceRefresh: Boolean = false): Single<List<Subject>> {
         return local.getSubjects(semester).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
-                    if (it) remote.getSubjects(semester)
+                    if (it) remote.getSubjects(student, semester)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getSubjects(semester)

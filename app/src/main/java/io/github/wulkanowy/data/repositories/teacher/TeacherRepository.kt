@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.teacher
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Teacher
 import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
@@ -17,11 +18,11 @@ class TeacherRepository @Inject constructor(
     private val remote: TeacherRemote
 ) {
 
-    fun getTeachers(semester: Semester, forceRefresh: Boolean = false): Single<List<Teacher>> {
+    fun getTeachers(student: Student, semester: Semester, forceRefresh: Boolean = false): Single<List<Teacher>> {
         return local.getTeachers(semester).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
-                    if (it) remote.getTeachers(semester)
+                    if (it) remote.getTeachers(student, semester)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getTeachers(semester).toSingle(emptyList())

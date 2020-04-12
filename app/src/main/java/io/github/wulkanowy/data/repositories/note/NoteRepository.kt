@@ -23,7 +23,7 @@ class NoteRepository @Inject constructor(
         return local.getNotes(student).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
-                    if (it) remote.getNotes(semester)
+                    if (it) remote.getNotes(student, semester)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getNotes(student).toSingle(emptyList())

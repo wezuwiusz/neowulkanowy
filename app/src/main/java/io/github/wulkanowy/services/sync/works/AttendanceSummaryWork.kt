@@ -11,7 +11,7 @@ class AttendanceSummaryWork @Inject constructor(
 ) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return attendanceSummaryRepository.getAttendanceSummary(semester, -1, true).ignoreElement()
+        return attendanceSummaryRepository.getAttendanceSummary(student, semester, -1, true).ignoreElement()
     }
 }
 

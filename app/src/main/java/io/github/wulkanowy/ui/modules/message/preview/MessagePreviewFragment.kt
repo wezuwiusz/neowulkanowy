@@ -63,7 +63,7 @@ class MessagePreviewFragment : BaseFragment(), MessagePreviewView, MainView.Titl
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         messageContainer = messagePreviewContainer
-        presenter.onAttachView(this, (savedInstanceState ?: arguments)?.getSerializable(MESSAGE_ID_KEY) as Message)
+        presenter.onAttachView(this, (savedInstanceState ?: arguments)?.getSerializable(MESSAGE_ID_KEY) as? Message)
     }
 
     override fun initView() {
@@ -150,8 +150,8 @@ class MessagePreviewFragment : BaseFragment(), MessagePreviewView, MainView.Titl
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         outState.putSerializable(MESSAGE_ID_KEY, presenter.message)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {

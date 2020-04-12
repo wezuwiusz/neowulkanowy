@@ -92,7 +92,6 @@ class LoginFormPresenterTest {
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123456")
         `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
-        `when`(loginFormView.formSymbolValue).thenReturn("Default")
         `when`(loginFormView.formHostSymbol).thenReturn("Default")
         presenter.onSignInClick()
 
@@ -110,7 +109,6 @@ class LoginFormPresenterTest {
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123456")
         `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
-        `when`(loginFormView.formSymbolValue).thenReturn("Default")
         `when`(loginFormView.formHostSymbol).thenReturn("Default")
         presenter.onSignInClick()
 
@@ -128,7 +126,6 @@ class LoginFormPresenterTest {
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123456")
         `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
-        `when`(loginFormView.formSymbolValue).thenReturn("Default")
         `when`(loginFormView.formHostSymbol).thenReturn("Default")
         presenter.onSignInClick()
         presenter.onSignInClick()
@@ -147,7 +144,6 @@ class LoginFormPresenterTest {
         `when`(loginFormView.formUsernameValue).thenReturn("@")
         `when`(loginFormView.formPassValue).thenReturn("123456")
         `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
-        `when`(loginFormView.formSymbolValue).thenReturn("Default")
         `when`(loginFormView.formHostSymbol).thenReturn("Default")
         presenter.onSignInClick()
 

@@ -9,6 +9,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.TestInternetObservingStrategy
+import io.github.wulkanowy.data.repositories.getStudent
 import io.github.wulkanowy.sdk.Sdk
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -32,6 +33,8 @@ class TimetableRepositoryTest {
     private val settings = InternetObservingSettings.builder()
         .strategy(TestInternetObservingStrategy())
         .build()
+
+    private val student = getStudent()
 
     @MockK
     private lateinit var semesterMock: Semester
@@ -78,7 +81,7 @@ class TimetableRepositoryTest {
         ))
 
         val lessons = TimetableRepository(settings, timetableLocal, timetableRemote)
-            .getTimetable(semesterMock, LocalDate.of(2019, 3, 5), LocalDate.of(2019, 3, 5), true)
+            .getTimetable(student, semesterMock, LocalDate.of(2019, 3, 5), LocalDate.of(2019, 3, 5), true)
             .blockingGet()
 
         assertEquals(4, lessons.size)
@@ -124,7 +127,7 @@ class TimetableRepositoryTest {
         ))
 
         val lessons = TimetableRepository(settings, timetableLocal, timetableRemote)
-            .getTimetable(semesterMock, LocalDate.of(2019, 12, 23), LocalDate.of(2019, 12, 25), true)
+            .getTimetable(student, semesterMock, LocalDate.of(2019, 12, 23), LocalDate.of(2019, 12, 25), true)
             .blockingGet()
 
         assertEquals(12, lessons.size)

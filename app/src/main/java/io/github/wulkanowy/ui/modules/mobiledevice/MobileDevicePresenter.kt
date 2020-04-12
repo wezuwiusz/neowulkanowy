@@ -49,8 +49,11 @@ class MobileDevicePresenter @Inject constructor(
     private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading mobile devices data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .flatMap { mobileDeviceRepository.getDevices(it, forceRefresh) }
+            .flatMap { student ->
+                semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                    mobileDeviceRepository.getDevices(student, semester, forceRefresh)
+                }
+            }
             .map { items -> items.map { MobileDeviceItem(it) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
@@ -107,10 +110,11 @@ class MobileDevicePresenter @Inject constructor(
     fun onUnregisterConfirmed(device: MobileDevice) {
         Timber.i("Unregister device started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .flatMap { semester ->
-                mobileDeviceRepository.unregisterDevice(semester, device)
-                    .flatMap { mobileDeviceRepository.getDevices(semester, it) }
+            .flatMap { student ->
+                semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                    mobileDeviceRepository.unregisterDevice(student, semester, device)
+                        .flatMap { mobileDeviceRepository.getDevices(student, semester, it) }
+                }
             }
             .map { items -> items.map { MobileDeviceItem(it) } }
             .subscribeOn(schedulers.backgroundThread)

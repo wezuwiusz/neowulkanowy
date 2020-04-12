@@ -48,21 +48,13 @@ class LoginFormPresenter @Inject constructor(
             if (formHostValue.contains("fakelog")) {
                 setCredentials("jan@fakelog.cf", "jan123")
             }
-            setSymbol(formHostSymbol)
             updateUsernameLabel()
-            updateSymbolInputVisibility()
         }
     }
 
     fun updateUsernameLabel() {
         view?.run {
             setUsernameLabel(if ("standard" in formHostValue) emailLabel else nicknameLabel)
-        }
-    }
-
-    fun updateSymbolInputVisibility() {
-        view?.run {
-            showSymbol("adfs" in formHostValue)
         }
     }
 
@@ -74,17 +66,13 @@ class LoginFormPresenter @Inject constructor(
         view?.clearUsernameError()
     }
 
-    fun onSymbolTextChanged() {
-        view?.clearSymbolError()
-    }
-
     fun onSignInClick() {
         val email = view?.formUsernameValue.orEmpty().trim()
         val password = view?.formPassValue.orEmpty().trim()
         val host = view?.formHostValue.orEmpty().trim()
-        val symbol = view?.formSymbolValue.orEmpty().trim()
+        val symbol = view?.formHostSymbol.orEmpty().trim()
 
-        if (!validateCredentials(email, password, host, symbol)) return
+        if (!validateCredentials(email, password, host)) return
 
         disposable.add(studentRepository.getStudentsScrapper(email, password, host, symbol)
             .subscribeOn(schedulers.backgroundThread)
@@ -128,7 +116,7 @@ class LoginFormPresenter @Inject constructor(
         view?.onRecoverClick()
     }
 
-    private fun validateCredentials(login: String, password: String, host: String, symbol: String): Boolean {
+    private fun validateCredentials(login: String, password: String, host: String): Boolean {
         var isCorrect = true
 
         if (login.isEmpty()) {
@@ -153,11 +141,6 @@ class LoginFormPresenter @Inject constructor(
 
         if (password.length < 6 && password.isNotEmpty()) {
             view?.setErrorPassInvalid(focus = isCorrect)
-            isCorrect = false
-        }
-
-        if ("standard" !in host && symbol.isBlank()) {
-            view?.setErrorSymbolRequired(focus = isCorrect)
             isCorrect = false
         }
 

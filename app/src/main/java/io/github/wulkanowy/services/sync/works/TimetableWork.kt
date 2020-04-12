@@ -12,7 +12,7 @@ import javax.inject.Inject
 class TimetableWork @Inject constructor(private val timetableRepository: TimetableRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return timetableRepository.getTimetable(semester, now().monday, now().friday, true)
+        return timetableRepository.getTimetable(student, semester, now().monday, now().friday, true)
             .ignoreElement()
     }
 }

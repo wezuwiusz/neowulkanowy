@@ -29,8 +29,11 @@ class MobileDeviceTokenPresenter @Inject constructor(
     private fun loadData() {
         Timber.i("Mobile device registration data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .flatMap { mobileDeviceRepository.getToken(it) }
+            .flatMap { student ->
+                semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                    mobileDeviceRepository.getToken(student, semester)
+                }
+            }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally { view?.hideLoading() }

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
@@ -46,9 +45,6 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     override val formHostSymbol: String
         get() = hostSymbols.getOrNull(hostKeys.indexOf(loginFormHost.text.toString())).orEmpty()
 
-    override val formSymbolValue: String
-        get() = loginFormSymbol.text.toString()
-
     override val nicknameLabel: String
         get() = getString(R.string.login_nickname_hint)
 
@@ -77,7 +73,6 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
         loginFormUsername.doOnTextChanged { _, _, _, _ -> presenter.onUsernameTextChanged() }
         loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
-        loginFormSymbol.doOnTextChanged { _, _, _, _ -> presenter.onSymbolTextChanged() }
         loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
         loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
         loginFormAdvancedButton.setOnClickListener { presenter.onAdvancedLoginClick() }
@@ -86,9 +81,6 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
         loginFormRecoverLink.setOnClickListener { presenter.onRecoverClick() }
         loginFormPass.setOnEditorDoneSignIn { loginFormSignIn.callOnClick() }
-        loginFormSymbol.setOnEditorDoneSignIn { loginFormSignIn.callOnClick() }
-
-        loginFormSymbol.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, resources.getStringArray(R.array.symbols_values)))
 
         with(loginFormHost) {
             setText(hostKeys.getOrNull(0).orEmpty())
@@ -102,16 +94,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         loginFormPass.setText(pass)
     }
 
-    override fun setSymbol(symbol: String) {
-        loginFormSymbol.setText(symbol)
-    }
-
     override fun setUsernameLabel(label: String) {
         loginFormUsernameLayout.hint = label
-    }
-
-    override fun showSymbol(show: Boolean) {
-        loginFormSymbolLayout.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorUsernameRequired() {
@@ -132,13 +116,6 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         with(loginFormUsernameLayout) {
             requestFocus()
             error = getString(R.string.login_invalid_email)
-        }
-    }
-
-    override fun setErrorSymbolRequired(focus: Boolean) {
-        with(loginFormSymbolLayout) {
-            if (focus) requestFocus()
-            error = getString(R.string.login_symbol_helper)
         }
     }
 
@@ -169,10 +146,6 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override fun clearPassError() {
         loginFormPassLayout.error = null
-    }
-
-    override fun clearSymbolError() {
-        loginFormSymbolLayout.error = null
     }
 
     override fun showSoftKeyboard() {
@@ -227,10 +200,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     override fun onResume() {
         super.onResume()
-        with(presenter) {
-            updateUsernameLabel()
-            updateSymbolInputVisibility()
-        }
+        presenter.updateUsernameLabel()
     }
 
     override fun openEmail(lastError: String) {
@@ -242,7 +212,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
                 "${appInfo.systemManufacturer} ${appInfo.systemModel}",
                 appInfo.systemVersion.toString(),
                 appInfo.versionName,
-                "$formHostValue/$formSymbolValue",
+                "$formHostValue/$formHostSymbol",
                 lastError
             )
         )

@@ -83,10 +83,13 @@ class AttendanceSummaryPresenter @Inject constructor(
         disposable.apply {
             clear()
             add(studentRepository.getCurrentStudent()
-                .delay(200, MILLISECONDS)
-                .flatMap { semesterRepository.getCurrentSemester(it) }
-                .flatMap { attendanceSummaryRepository.getAttendanceSummary(it, subjectId, forceRefresh) }
+                .flatMap { student ->
+                    semesterRepository.getCurrentSemester(student).flatMap {
+                        attendanceSummaryRepository.getAttendanceSummary(student, it, subjectId, forceRefresh)
+                    }
+                }
                 .map { createAttendanceSummaryItems(it) to AttendanceSummaryScrollableHeader(formatPercentage(it.calculatePercentage())) }
+                .delay(200, MILLISECONDS)
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally {
@@ -126,8 +129,11 @@ class AttendanceSummaryPresenter @Inject constructor(
     private fun loadSubjects() {
         Timber.i("Loading attendance summary subjects started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .flatMap { subjectRepository.getSubjects(it) }
+            .flatMap { student ->
+                semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                    subjectRepository.getSubjects(student, semester)
+                }
+            }
             .doOnSuccess { subjects = it }
             .map { ArrayList(it.map { subject -> subject.name }) }
             .subscribeOn(schedulers.backgroundThread)

@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.semester
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.init
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,7 +12,7 @@ import javax.inject.Singleton
 class SemesterRemote @Inject constructor(private val sdk: Sdk) {
 
     fun getSemesters(student: Student): Single<List<Semester>> {
-        return sdk.getSemesters().map { semesters ->
+        return sdk.init(student).getSemesters().map { semesters ->
             semesters.map {
                 Semester(
                     studentId = student.studentId,

@@ -47,6 +47,12 @@ class StudentRepository @Inject constructor(
         return local.getStudents(decryptPass).toSingle(emptyList())
     }
 
+    fun getStudentById(id: Int): Single<Student> {
+        return local.getStudentById(id)
+            .switchIfEmpty(Maybe.error(NoCurrentStudentException()))
+            .toSingle()
+    }
+
     fun getCurrentStudent(decryptPass: Boolean = true): Single<Student> {
         return local.getCurrentStudent(decryptPass)
             .switchIfEmpty(Maybe.error(NoCurrentStudentException()))

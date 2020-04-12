@@ -4,6 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
 import java.net.UnknownHostException
@@ -17,11 +18,11 @@ class AttendanceSummaryRepository @Inject constructor(
     private val remote: AttendanceSummaryRemote
 ) {
 
-    fun getAttendanceSummary(semester: Semester, subjectId: Int, forceRefresh: Boolean = false): Single<List<AttendanceSummary>> {
+    fun getAttendanceSummary(student: Student, semester: Semester, subjectId: Int, forceRefresh: Boolean = false): Single<List<AttendanceSummary>> {
         return local.getAttendanceSummary(semester, subjectId).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
                 .flatMap {
-                    if (it) remote.getAttendanceSummary(semester, subjectId)
+                    if (it) remote.getAttendanceSummary(student, semester, subjectId)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
                     local.getAttendanceSummary(semester, subjectId).toSingle(emptyList())

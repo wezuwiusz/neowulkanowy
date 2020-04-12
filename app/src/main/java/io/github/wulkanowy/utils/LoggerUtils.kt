@@ -18,7 +18,7 @@ class DebugLogTree : Timber.DebugTree() {
     }
 }
 
-private fun Bundle?.checkSavedState() = if (this == null) "(STATE IS NULL)" else ""
+private fun Bundle?.checkSavedState() = if (this == null) "(STATE IS NULL)" else "(STATE IS NOT NULL)"
 
 class ActivityLifecycleLogger : Application.ActivityLifecycleCallbacks {
 

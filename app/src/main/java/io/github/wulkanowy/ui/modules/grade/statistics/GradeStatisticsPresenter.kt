@@ -48,7 +48,6 @@ class GradeStatisticsPresenter @Inject constructor(
         loadDataByType(semesterId, currentSubjectName, currentType, forceRefresh)
     }
 
-
     fun onParentViewReselected() {
         view?.run {
             if (!isViewEmpty) resetView()
@@ -118,8 +117,11 @@ class GradeStatisticsPresenter @Inject constructor(
     private fun loadSubjects() {
         Timber.i("Loading grade stats subjects started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .flatMap { subjectRepository.getSubjects(it) }
+            .flatMap { student ->
+                semesterRepository.getCurrentSemester(student).flatMap { semester ->
+                    subjectRepository.getSubjects(student, semester)
+                }
+            }
             .doOnSuccess { subjects = it }
             .map { ArrayList(it.map { subject -> subject.name }) }
             .subscribeOn(schedulers.backgroundThread)
@@ -146,14 +148,15 @@ class GradeStatisticsPresenter @Inject constructor(
     private fun loadData(semesterId: Int, subjectName: String, type: ViewType, forceRefresh: Boolean) {
         Timber.i("Loading grade stats data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it) }
-            .flatMap {
-                val semester = it.first { item -> item.semesterId == semesterId }
+            .flatMap { student ->
+                semesterRepository.getSemesters(student).flatMap { semesters ->
+                    val semester = semesters.first { item -> item.semesterId == semesterId }
 
-                when (type) {
-                    ViewType.SEMESTER -> gradeStatisticsRepository.getGradesStatistics(semester, subjectName, true, forceRefresh)
-                    ViewType.PARTIAL -> gradeStatisticsRepository.getGradesStatistics(semester, subjectName, false, forceRefresh)
-                    ViewType.POINTS -> gradeStatisticsRepository.getGradesPointsStatistics(semester, subjectName, forceRefresh)
+                    when (type) {
+                        ViewType.SEMESTER -> gradeStatisticsRepository.getGradesStatistics(student, semester, subjectName, true, forceRefresh)
+                        ViewType.PARTIAL -> gradeStatisticsRepository.getGradesStatistics(student, semester, subjectName, false, forceRefresh)
+                        ViewType.POINTS -> gradeStatisticsRepository.getGradesPointsStatistics(student, semester, subjectName, forceRefresh)
+                    }
                 }
             }
             .subscribeOn(schedulers.backgroundThread)

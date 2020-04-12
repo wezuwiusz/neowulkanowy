@@ -24,11 +24,12 @@ class MessagePreviewPresenter @Inject constructor(
 
     private var retryCallback: () -> Unit = {}
 
-    fun onAttachView(view: MessagePreviewView, message: Message) {
+    fun onAttachView(view: MessagePreviewView, message: Message?) {
         super.onAttachView(view)
         view.initView()
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        loadData(message)
+        this.message = message
+        loadData(requireNotNull(message))
     }
 
     private fun onMessageLoadRetry(message: Message) {
@@ -47,7 +48,7 @@ class MessagePreviewPresenter @Inject constructor(
         Timber.i("Loading message ${message.messageId} preview started")
         disposable.apply {
             clear()
-            add(studentRepository.getCurrentStudent()
+            add(studentRepository.getStudentById(message.studentId)
                 .flatMap { messageRepository.getMessage(it, message, true) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
@@ -84,7 +85,8 @@ class MessagePreviewPresenter @Inject constructor(
 
     private fun deleteMessage() {
         message?.let { message ->
-            disposable.add(messageRepository.deleteMessage(message)
+            disposable.add(studentRepository.getCurrentStudent()
+                .flatMap { messageRepository.deleteMessage(it, message) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doOnSubscribe {
