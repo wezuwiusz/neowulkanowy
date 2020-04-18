@@ -133,7 +133,7 @@ class GradeStatisticsPresenter @Inject constructor(
                     showSubjects(true)
                 }
             }, {
-                Timber.e("Loading grade stats subjects result: An exception occurred")
+                Timber.i("Loading grade stats subjects result: An exception occurred")
                 errorHandler.dispatch(it)
             })
         )
@@ -179,7 +179,7 @@ class GradeStatisticsPresenter @Inject constructor(
                 }
                 analytics.logEvent("load_grade_statistics", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
-                Timber.e("Loading grade stats result: An exception occurred")
+                Timber.i("Loading grade stats result: An exception occurred")
                 errorHandler.dispatch(it)
             })
     }
