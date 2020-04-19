@@ -147,7 +147,7 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageVie
     }
 
     override fun popView() {
-        onBackPressed()
+        finish()
     }
 
     private fun setUpExtendedHitArea() {
