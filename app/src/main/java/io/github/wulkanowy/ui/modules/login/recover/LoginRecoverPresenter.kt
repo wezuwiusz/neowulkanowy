@@ -70,7 +70,7 @@ class LoginRecoverPresenter @Inject constructor(
             .subscribe({ (resetUrl, siteKey) ->
                 view?.loadReCaptcha(siteKey, resetUrl)
             }) {
-                Timber.e("Obtain captcha site key result: An exception occurred")
+                Timber.i("Obtain captcha site key result: An exception occurred")
                 errorHandler.dispatch(it)
             })
     }
@@ -120,7 +120,7 @@ class LoginRecoverPresenter @Inject constructor(
 
                     analytics.logEvent("account_recover", "register" to host, "symbol" to symbol, "success" to true)
                 }) {
-                    Timber.e("Send recover request result: An exception occurred")
+                    Timber.i("Send recover request result: An exception occurred")
                     errorHandler.dispatch(it)
                     analytics.logEvent("account_recover", "register" to host, "symbol" to symbol, "success" to false)
                 })

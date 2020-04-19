@@ -135,12 +135,12 @@ class SendMessagePresenter @Inject constructor(
                         if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(selectedRecipientChips)
                         showContent(true)
                     } else {
-                        Timber.e("Loading recipients result: Can't find the reporting unit")
+                        Timber.i("Loading recipients result: Can't find the reporting unit")
                         view?.showEmpty(true)
                     }
                 }
             }, {
-                Timber.e("Loading recipients result: An exception occurred")
+                Timber.i("Loading recipients result: An exception occurred")
                 view?.showContent(true)
                 errorHandler.dispatch(it)
             }))
