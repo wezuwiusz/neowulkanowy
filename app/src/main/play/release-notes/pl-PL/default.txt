@@ -1,9 +1,8 @@
-Wersja 0.17.1
+Wersja 0.17.2
 
-- naprawiliśmy problemy ze stabilnością w szczegółach zadania domowego i podglądzie wiadomości
-- naprawiliśmy odświeżanie danych w określonych przypadkach
-- naprawiliśmy odświeżanie listy urządzeń
-- w trybie hybrydowym lista przedmiotów w zakładckach Klasa i Podsumowanie frekwencji powinna teraz zawierać tylko przedmioty ucznia
-- na liście dzienników pokazują się teraz również te niestandardowe
+- naprawiliśmy wyświetlanie przycisku oznaczania zadania domowego jako wykonanego
+- naprawiliśmy rzadki błąd ze stabilnością przy wysyłaniu wiadomości
+- naprawiliśmy błąd po logowaniu w domyślnym trybie, jeśli wcześniej użytkownik zalogowany był w trybie Mobilnego API
+- ulepszyliśmy wygląd okienka ze szczegółami błędu
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
