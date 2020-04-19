@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import io.github.wulkanowy.R
 import io.github.wulkanowy.di.scopes.PerFragment
+import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.about.AboutFragment
 import io.github.wulkanowy.ui.modules.about.contributor.ContributorFragment
 import io.github.wulkanowy.ui.modules.about.license.LicenseFragment
@@ -116,6 +117,10 @@ abstract class MainModule {
     abstract fun bindAccountDialog(): AccountDialog
 
     @PerFragment
+    @ContributesAndroidInjector
+    abstract fun bindErrorDialog(): ErrorDialog
+
+    @PerFragment
     @ContributesAndroidInjector(modules = [MobileDeviceModule::class])
     abstract fun bindMobileDevices(): MobileDeviceFragment
 
@@ -132,7 +137,7 @@ abstract class MainModule {
     abstract fun bindLogViewerFragment(): LogViewerFragment
 
     @PerFragment
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun bindContributorFragment(): ContributorFragment
 
     @PerFragment
