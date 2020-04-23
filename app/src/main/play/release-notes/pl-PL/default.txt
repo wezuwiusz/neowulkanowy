@@ -1,5 +1,3 @@
-Wersja 0.17.2 i 0.17.3
-
 - naprawiliśmy wyświetlanie przycisku oznaczania zadania domowego jako wykonanego
 - naprawiliśmy rzadki błąd ze stabilnością przy wysyłaniu wiadomości
 - naprawiliśmy błąd po logowaniu w domyślnym trybie, jeśli wcześniej użytkownik zalogowany był w trybie Mobilnego API
