@@ -1,4 +1,4 @@
-Wersja 0.17.2
+Wersja 0.17.2 i 0.17.3
 
 - naprawiliśmy wyświetlanie przycisku oznaczania zadania domowego jako wykonanego
 - naprawiliśmy rzadki błąd ze stabilnością przy wysyłaniu wiadomości

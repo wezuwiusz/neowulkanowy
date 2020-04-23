@@ -381,6 +381,7 @@
     <string name="error_no_internet">Keine Internetverbindung</string>
     <string name="error_timeout">Das Zeitlimit für die Verbindung zum Klassenbuch ist abgelaufen</string>
     <string name="error_login_failed">Anmeldung fehlgeschlagen. Versuchen Sie es noch einmal oder starten Sie die Anwendung neu.</string>
+    <string name="error_password_change_required">Passwortänderung erforderlich</string>
     <string name="error_service_unavailable">Wartung im Gange UONET + Klassenbuch. Versuchen Sie es später noch einmal</string>
     <string name="error_unknown">Ein unerwarteter Fehler ist aufgetreten</string>
     <string name="error_feature_disabled">Funktion, die von Ihrer Schule deaktiviert wurde</string>
