@@ -407,6 +407,7 @@
     <string name="error_no_internet">Відсутнє інтернет-підключення</string>
     <string name="error_timeout">Занадто довге очікування з\'єднання з щоденником</string>
     <string name="error_login_failed">Авторизація не відбулася. Будь ласка, авторизуйтеся знову або перезавантажте щоденник</string>
+    <string name="error_password_change_required">Потрібно змінити пароль</string>
     <string name="error_service_unavailable">Технічна перерва в журналі UONET + продовжується. Спробуйте пізніше</string>
     <string name="error_unknown">Відбулася несподівана помилка</string>
     <string name="error_feature_disabled">Функція вимкнена школою</string>

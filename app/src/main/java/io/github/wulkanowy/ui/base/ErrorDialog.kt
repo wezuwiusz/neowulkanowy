@@ -19,6 +19,7 @@ import io.github.wulkanowy.utils.getString
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import kotlinx.android.synthetic.main.dialog_error.*
+import java.io.InterruptedIOException
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.net.SocketTimeoutException
@@ -76,6 +77,7 @@ class ErrorDialog : BaseDialogFragment() {
         errorDialogMessage.text = resources.getString(error)
         errorDialogReport.isEnabled = when (error) {
             is UnknownHostException,
+            is InterruptedIOException,
             is SocketTimeoutException,
             is ServiceUnavailableException,
             is FeatureDisabledException,

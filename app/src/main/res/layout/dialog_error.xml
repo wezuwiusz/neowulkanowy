@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="ifContentScrolls"
+            android:paddingHorizontal="24dp"
             app:layout_constrainedHeight="true"
             app:layout_constraintHeight_max="300dp"
             app:layout_constraintHeight_min="200dp"
@@ -41,10 +42,8 @@
 
             <HorizontalScrollView
                 android:id="@+id/errorDialogHorizontalScroll"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="24dp"
-                android:paddingRight="24dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/errorDialogContent"

@@ -406,6 +406,7 @@
     <string name="error_no_internet">Нет интернет-подключения</string>
     <string name="error_timeout">Слишком долгое ожидание соединения с дневником</string>
     <string name="error_login_failed">Авторизация не удалась. Пожалуйста, попробуйте ещё раз или перезапустите дневник</string>
+    <string name="error_password_change_required">Требуется смена пароля</string>
     <string name="error_service_unavailable">Технический перерыв в журнале UONET + продолжается. Попробуйте позже</string>
     <string name="error_unknown">Произошла неожиданная ошибка</string>
     <string name="error_feature_disabled">Функция была выключена школой</string>
