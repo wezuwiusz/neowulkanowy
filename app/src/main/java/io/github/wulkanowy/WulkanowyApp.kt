@@ -19,7 +19,6 @@ import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.CrashlyticsExceptionTree
 import io.github.wulkanowy.utils.CrashlyticsTree
 import io.github.wulkanowy.utils.DebugLogTree
-import io.github.wulkanowy.utils.initCrashlytics
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
@@ -50,7 +49,6 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
         themeManager.applyDefaultTheme()
 
         initLogging()
-        initCrashlytics(this, appInfo)
     }
 
     private fun initLogging() {
