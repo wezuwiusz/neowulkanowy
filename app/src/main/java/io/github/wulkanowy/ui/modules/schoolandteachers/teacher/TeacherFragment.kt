@@ -6,12 +6,11 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Teacher
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersChildView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
@@ -25,7 +24,7 @@ class TeacherFragment : BaseFragment(), TeacherView, MainView.TitledView,
     lateinit var presenter: TeacherPresenter
 
     @Inject
-    lateinit var teacherAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var teacherAdapter: TeacherAdapter
 
     companion object {
         fun newInstance() = TeacherFragment()
@@ -37,7 +36,7 @@ class TeacherFragment : BaseFragment(), TeacherView, MainView.TitledView,
     override val noSubjectString get() = getString(R.string.teacher_no_subject)
 
     override val isViewEmpty: Boolean
-        get() = teacherAdapter.isEmpty
+        get() = teacherAdapter.items.isEmpty()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_teacher, container, false)
@@ -50,28 +49,20 @@ class TeacherFragment : BaseFragment(), TeacherView, MainView.TitledView,
 
     override fun initView() {
         teacherRecycler.run {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = teacherAdapter
-            addItemDecoration(FlexibleItemDecoration(context)
-                .withDefaultDivider()
-                .withDrawDividerOnLastItem(false)
-            )
+            addItemDecoration(DividerItemDecoration(context))
         }
         teacherSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         teacherErrorRetry.setOnClickListener { presenter.onRetry() }
         teacherErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
-    override fun updateData(data: List<TeacherItem>) {
-        teacherAdapter.updateDataSet(data, true)
-    }
-
-    override fun updateItem(item: AbstractFlexibleItem<*>) {
-        teacherAdapter.updateItem(item)
-    }
-
-    override fun clearData() {
-        teacherAdapter.clear()
+    override fun updateData(data: List<Teacher>) {
+        with(teacherAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun showEmpty(show: Boolean) {

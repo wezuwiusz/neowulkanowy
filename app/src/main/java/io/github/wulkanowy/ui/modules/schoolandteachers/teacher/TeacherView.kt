@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.schoolandteachers.teacher
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import io.github.wulkanowy.data.db.entities.Teacher
 import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersChildView
 
@@ -12,13 +12,9 @@ interface TeacherView : BaseView, SchoolAndTeachersChildView {
 
     fun initView()
 
-    fun updateData(data: List<TeacherItem>)
-
-    fun updateItem(item: AbstractFlexibleItem<*>)
+    fun updateData(data: List<Teacher>)
 
     fun hideRefresh()
-
-    fun clearData()
 
     fun showProgress(show: Boolean)
 

@@ -9,13 +9,15 @@ interface MobileDeviceView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<MobileDeviceItem>)
+    fun updateData(data: List<MobileDevice>)
 
-    fun restoreDeleteItem()
+    fun deleteItem(device: MobileDevice, position: Int)
+
+    fun restoreDeleteItem(device: MobileDevice, position: Int)
+
+    fun showUndo(device: MobileDevice, position: Int)
 
     fun hideRefresh()
-
-    fun clearData()
 
     fun showProgress(show: Boolean)
 
@@ -28,8 +30,6 @@ interface MobileDeviceView : BaseView {
     fun showErrorView(show: Boolean)
 
     fun setErrorDetails(message: String)
-
-    fun showUndo(position: Int, device: MobileDevice)
 
     fun showTokenDialog()
 }

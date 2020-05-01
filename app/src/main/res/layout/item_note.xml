@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
-    tools:context=".ui.modules.note.NoteItem">
+    tools:context=".ui.modules.note.NoteAdapter">
 
     <TextView
         android:id="@+id/noteItemDate"

@@ -9,7 +9,6 @@ import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -115,7 +114,7 @@ class MainActivity : BaseActivity<MainPresenter>(), MainView {
                 AHBottomNavigationItem(R.string.more_title, R.drawable.ic_main_more, 0)
             ))
             accentColor = getThemeAttrColor(R.attr.colorPrimary)
-            inactiveColor = ColorUtils.setAlphaComponent(getThemeAttrColor(R.attr.colorOnSurface), 153)
+            inactiveColor = getThemeAttrColor(R.attr.colorOnSurface, 153)
             defaultBackgroundColor = overlayProvider.get().compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(8f))
             titleState = ALWAYS_SHOW
             currentItem = startMenuIndex

@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.grade.summary
 
+import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.ui.base.BaseView
 
 interface GradeSummaryView : BaseView {
@@ -12,7 +13,7 @@ interface GradeSummaryView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<GradeSummaryItem>, header: GradeSummaryScrollableHeader)
+    fun updateData(data: List<GradeSummary>)
 
     fun resetView()
 

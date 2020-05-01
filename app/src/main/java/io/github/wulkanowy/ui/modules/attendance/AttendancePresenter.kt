@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.attendance
 
 import android.annotation.SuppressLint
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.repositories.attendance.AttendanceRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
@@ -111,11 +110,11 @@ class AttendancePresenter @Inject constructor(
         view?.finishActionMode()
     }
 
-    fun onAttendanceItemSelected(item: AbstractFlexibleItem<*>?) {
+    fun onAttendanceItemSelected(attendance: Attendance) {
         view?.apply {
-            if (item is AttendanceItem && !excuseActionMode) {
-                Timber.i("Select attendance item ${item.attendance.id}")
-                showAttendanceDialog(item.attendance)
+            if (!excuseActionMode) {
+                Timber.i("Select attendance item ${attendance.id}")
+                showAttendanceDialog(attendance)
             }
         }
     }
@@ -197,9 +196,7 @@ class AttendancePresenter @Inject constructor(
                     if (prefRepository.isShowPresent) list
                     else list.filter { !it.presence }
                 }
-                .delay(200, MILLISECONDS)
-                .map { items -> items.map { AttendanceItem(it) } }
-                .map { items -> items.sortedBy { it.attendance.number } }
+                .map { items -> items.sortedBy { it.number } }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally {
@@ -216,7 +213,7 @@ class AttendancePresenter @Inject constructor(
                         showEmpty(it.isEmpty())
                         showErrorView(false)
                         showContent(it.isNotEmpty())
-                        showExcuseButton(it.any { item -> item.attendance.excusable })
+                        showExcuseButton(it.any { item -> item.excusable })
                     }
                     analytics.logEvent("load_attendance", "items" to it.size, "force_refresh" to forceRefresh)
                 }) {
@@ -236,7 +233,6 @@ class AttendancePresenter @Inject constructor(
                         attendanceRepository.excuseForAbsence(student, semester, toExcuseList, reason)
                     }
                 }
-                .delay(200, MILLISECONDS)
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doOnSubscribe {

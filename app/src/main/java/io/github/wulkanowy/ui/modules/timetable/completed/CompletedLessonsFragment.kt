@@ -7,19 +7,17 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getCompatDrawable
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_timetable_completed.*
 import org.threeten.bp.LocalDate
 import javax.inject.Inject
@@ -30,7 +28,7 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     lateinit var presenter: CompletedLessonsPresenter
 
     @Inject
-    lateinit var completedLessonsAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var completedLessonsAdapter: CompletedLessonsAdapter
 
     companion object {
         private const val SAVED_DATE_KEY = "CURRENT_DATE"
@@ -40,7 +38,7 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
 
     override val titleStringId get() = R.string.completed_lessons_title
 
-    override val isViewEmpty get() = completedLessonsAdapter.isEmpty
+    override val isViewEmpty get() = completedLessonsAdapter.items.isEmpty()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_timetable_completed, container, false)
@@ -53,11 +51,12 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
     }
 
     override fun initView() {
-        completedLessonsAdapter.setOnItemClickListener(presenter::onCompletedLessonsItemSelected)
+        completedLessonsAdapter.onClickListener = presenter::onCompletedLessonsItemSelected
 
         with(completedLessonsRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = completedLessonsAdapter
+            addItemDecoration(DividerItemDecoration(context))
         }
 
         completedLessonsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
@@ -71,12 +70,18 @@ class CompletedLessonsFragment : BaseFragment(), CompletedLessonsView, MainView.
         completedLessonsNavContainer.setElevationCompat(requireContext().dpToPx(8f))
     }
 
-    override fun updateData(data: List<CompletedLessonItem>) {
-        completedLessonsAdapter.updateDataSet(data, true)
+    override fun updateData(data: List<CompletedLesson>) {
+        with(completedLessonsAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun clearData() {
-        completedLessonsAdapter.clear()
+        with(completedLessonsAdapter) {
+            items = emptyList()
+            notifyDataSetChanged()
+        }
     }
 
     override fun updateNavigationDay(date: String) {

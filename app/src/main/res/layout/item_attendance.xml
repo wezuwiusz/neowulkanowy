@@ -11,7 +11,7 @@
     android:paddingEnd="12dp"
     android:paddingRight="12dp"
     android:paddingBottom="7dp"
-    tools:context=".ui.modules.attendance.AttendanceItem">
+    tools:context=".ui.modules.attendance.AttendanceAdapter">
 
     <LinearLayout
         android:id="@+id/attendanceItemNumberContainer"
@@ -29,8 +29,8 @@
             android:maxLength="2"
             android:textSize="32sp"
             android:visibility="gone"
-            tools:visibility="visible"
-            tools:text="5" />
+            tools:text="5"
+            tools:visibility="visible" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/attendanceItemExcuseCheckbox"
@@ -54,13 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
         android:layout_toStartOf="@id/attendanceItemAlert"
-        android:layout_toLeftOf="@id/attendanceItemAlert"
         android:layout_toEndOf="@+id/attendanceItemNumberContainer"
-        android:layout_toRightOf="@+id/attendanceItemNumberContainer"
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="17sp"
@@ -71,7 +67,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/attendanceItemSubject"
-        android:layout_alignLeft="@id/attendanceItemSubject"
         android:layout_alignBottom="@+id/attendanceItemNumberContainer"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
@@ -83,7 +78,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         app:srcCompat="@drawable/ic_all_mark"
         app:tint="?colorPrimary"

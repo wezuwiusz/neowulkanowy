@@ -6,16 +6,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_note.*
 import javax.inject.Inject
 
@@ -25,7 +22,7 @@ class NoteFragment : BaseFragment(), NoteView, MainView.TitledView {
     lateinit var presenter: NotePresenter
 
     @Inject
-    lateinit var noteAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var noteAdapter: NoteAdapter
 
     companion object {
         fun newInstance() = NoteFragment()
@@ -35,7 +32,7 @@ class NoteFragment : BaseFragment(), NoteView, MainView.TitledView {
         get() = R.string.note_title
 
     override val isViewEmpty: Boolean
-        get() = noteAdapter.isEmpty
+        get() = noteAdapter.items.isEmpty()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_note, container, false)
@@ -47,17 +44,12 @@ class NoteFragment : BaseFragment(), NoteView, MainView.TitledView {
     }
 
     override fun initView() {
-        noteAdapter.run {
-            setOnItemClickListener { presenter.onNoteItemSelected(it) }
-        }
+        noteAdapter.onClickListener = presenter::onNoteItemSelected
 
         noteRecycler.run {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = noteAdapter
-            addItemDecoration(FlexibleItemDecoration(context)
-                .withDefaultDivider()
-                .withDrawDividerOnLastItem(false)
-            )
+            addItemDecoration(DividerItemDecoration(context))
         }
         noteSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         noteErrorRetry.setOnClickListener { presenter.onRetry() }
@@ -68,16 +60,25 @@ class NoteFragment : BaseFragment(), NoteView, MainView.TitledView {
         (activity as? MainActivity)?.showDialogFragment(NoteDialog.newInstance(note))
     }
 
-    override fun updateData(data: List<NoteItem>) {
-        noteAdapter.updateDataSet(data, true)
+    override fun updateData(data: List<Note>) {
+        with(noteAdapter) {
+            items = data.toMutableList()
+            notifyDataSetChanged()
+        }
     }
 
-    override fun updateItem(item: AbstractFlexibleItem<*>) {
-        noteAdapter.updateItem(item)
+    override fun updateItem(item: Note, position: Int) {
+        with(noteAdapter) {
+            items[position] = item
+            notifyItemChanged(position)
+        }
     }
 
     override fun clearData() {
-        noteAdapter.clear()
+        with(noteAdapter) {
+            items = mutableListOf()
+            notifyDataSetChanged()
+        }
     }
 
     override fun showEmpty(show: Boolean) {

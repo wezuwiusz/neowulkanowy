@@ -9,7 +9,7 @@ interface ExamView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<ExamItem>)
+    fun updateData(data: List<ExamItem<*>>)
 
     fun updateNavigationWeek(date: String)
 

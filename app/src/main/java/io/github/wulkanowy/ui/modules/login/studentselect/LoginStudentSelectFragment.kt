@@ -6,9 +6,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -16,7 +14,6 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_login_student_select.*
 import java.io.Serializable
 import javax.inject.Inject
@@ -27,7 +24,7 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     lateinit var presenter: LoginStudentSelectPresenter
 
     @Inject
-    lateinit var loginAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var loginAdapter: LoginStudentSelectAdapter
 
     @Inject
     lateinit var appInfo: AppInfo
@@ -48,19 +45,22 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     }
 
     override fun initView() {
+        loginAdapter.onClickListener = presenter::onItemSelected
         loginStudentSelectSignIn.setOnClickListener { presenter.onSignIn() }
-        loginAdapter.apply { setOnItemClickListener { presenter.onItemSelected(it) } }
         loginStudentSelectContactDiscord.setOnClickListener { presenter.onDiscordClick() }
         loginStudentSelectContactEmail.setOnClickListener { presenter.onEmailClick() }
 
         loginStudentSelectRecycler.apply {
+            layoutManager = LinearLayoutManager(context)
             adapter = loginAdapter
-            layoutManager = SmoothScrollLinearLayoutManager(context)
         }
     }
 
-    override fun updateData(data: List<LoginStudentSelectItem>) {
-        loginAdapter.updateDataSet(data)
+    override fun updateData(data: List<Pair<Student, Boolean>>) {
+        with(loginAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun openMainView() {

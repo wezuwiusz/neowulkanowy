@@ -7,10 +7,9 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
@@ -23,14 +22,14 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
     lateinit var presenter: GradeSummaryPresenter
 
     @Inject
-    lateinit var gradeSummaryAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var gradeSummaryAdapter: GradeSummaryAdapter
 
     companion object {
         fun newInstance() = GradeSummaryFragment()
     }
 
     override val isViewEmpty
-        get() = gradeSummaryAdapter.isEmpty
+        get() = gradeSummaryAdapter.items.isEmpty()
 
     override val predictedString
         get() = getString(R.string.grade_summary_predicted_grade)
@@ -49,10 +48,8 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
     }
 
     override fun initView() {
-        gradeSummaryAdapter.setDisplayHeadersAtStartUp(true)
-
         gradeSummaryRecycler.run {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = gradeSummaryAdapter
         }
         gradeSummarySwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
@@ -60,16 +57,18 @@ class GradeSummaryFragment : BaseFragment(), GradeSummaryView, GradeView.GradeCh
         gradeSummaryErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
-    override fun updateData(data: List<GradeSummaryItem>, header: GradeSummaryScrollableHeader) {
-        gradeSummaryAdapter.apply {
-            updateDataSet(data, true)
-            removeAllScrollableHeaders()
-            addScrollableHeader(header)
+    override fun updateData(data: List<GradeSummary>) {
+        with(gradeSummaryAdapter) {
+            items = data
+            notifyDataSetChanged()
         }
     }
 
     override fun clearView() {
-        gradeSummaryAdapter.clear()
+        with(gradeSummaryAdapter) {
+            items = emptyList()
+            notifyDataSetChanged()
+        }
     }
 
     override fun resetView() {

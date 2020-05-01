@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.AboutFragment
@@ -21,7 +19,6 @@ import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
 import io.github.wulkanowy.utils.getCompatDrawable
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_more.*
 import javax.inject.Inject
 
@@ -31,7 +28,7 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
     lateinit var presenter: MorePresenter
 
     @Inject
-    lateinit var moreAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var moreAdapter: MoreAdapter
 
     companion object {
         fun newInstance() = MoreFragment()
@@ -74,10 +71,10 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
     }
 
     override fun initView() {
-        moreAdapter.setOnItemClickListener { presenter.onItemSelected(it) }
+        moreAdapter.onClickListener = presenter::onItemSelected
 
         moreRecycler.apply {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = moreAdapter
         }
     }
@@ -86,8 +83,11 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
         if (::presenter.isInitialized) presenter.onViewReselected()
     }
 
-    override fun updateData(data: List<MoreItem>) {
-        moreAdapter.updateDataSet(data)
+    override fun updateData(data: List<Pair<String, Drawable?>>) {
+        with(moreAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun openMessagesView() {

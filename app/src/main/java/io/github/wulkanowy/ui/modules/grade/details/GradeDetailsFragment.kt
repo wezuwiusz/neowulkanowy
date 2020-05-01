@@ -10,18 +10,13 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import eu.davidea.flexibleadapter.items.IExpandable
-import eu.davidea.flexibleadapter.items.IFlexible
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_grade_details.*
 import javax.inject.Inject
 
@@ -31,7 +26,7 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     lateinit var presenter: GradeDetailsPresenter
 
     @Inject
-    lateinit var gradeDetailsAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var gradeDetailsAdapter: GradeDetailsAdapter
 
     private var gradeDetailsMenu: Menu? = null
 
@@ -39,23 +34,8 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         fun newInstance() = GradeDetailsFragment()
     }
 
-    override val emptyAverageString: String
-        get() = getString(R.string.grade_no_average)
-
-    override val averageString: String
-        get() = getString(R.string.grade_average)
-
-    override val pointsSumString: String
-        get() = getString(R.string.grade_points_sum)
-
-    override val weightString: String
-        get() = getString(R.string.grade_weight)
-
-    override val noDescriptionString: String
-        get() = getString(R.string.all_no_description)
-
     override val isViewEmpty
-        get() = gradeDetailsAdapter.isEmpty
+        get() = gradeDetailsAdapter.itemCount == 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,18 +59,11 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     }
 
     override fun initView() {
-        gradeDetailsAdapter.run {
-            isAutoCollapseOnExpand = true
-            isAutoScrollOnExpand = true
-            setOnItemClickListener { presenter.onGradeItemSelected(it) }
-        }
+        gradeDetailsAdapter.onClickListener = presenter::onGradeItemSelected
 
         gradeDetailsRecycler.run {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = gradeDetailsAdapter
-            addItemDecoration(GradeDetailsHeaderItemDecoration(context)
-                .withDefaultDivider(R.layout.header_grade_details)
-            )
         }
         gradeDetailsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         gradeDetailsErrorRetry.setOnClickListener { presenter.onRetry() }
@@ -102,16 +75,23 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         else false
     }
 
-    override fun updateData(data: List<GradeDetailsHeader>) {
-        gradeDetailsAdapter.updateDataSet(data, true)
+    override fun updateData(data: List<GradeDetailsItem>, isGradeExpandable: Boolean, gradeColorTheme: String) {
+        with(gradeDetailsAdapter) {
+            colorTheme = gradeColorTheme
+            setDataItems(data, isGradeExpandable)
+            notifyDataSetChanged()
+        }
     }
 
-    override fun updateItem(item: AbstractFlexibleItem<*>) {
-        gradeDetailsAdapter.updateItem(item)
+    override fun updateItem(item: Grade, position: Int) {
+        gradeDetailsAdapter.updateDetailsItem(position, item)
     }
 
     override fun clearView() {
-        gradeDetailsAdapter.clear()
+        with(gradeDetailsAdapter) {
+            setDataItems(mutableListOf())
+            notifyDataSetChanged()
+        }
     }
 
     override fun collapseAllItems() {
@@ -119,15 +99,15 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     }
 
     override fun scrollToStart() {
-        gradeDetailsRecycler.scrollToPosition(0)
+        gradeDetailsRecycler.smoothScrollToPosition(0)
     }
 
-    override fun getHeaderOfItem(item: AbstractFlexibleItem<*>): IExpandable<*, out IFlexible<*>>? {
-        return gradeDetailsAdapter.getExpandableOf(item)
+    override fun getHeaderOfItem(subject: String): GradeDetailsItem {
+        return gradeDetailsAdapter.getHeaderItem(subject)
     }
 
-    override fun getGradeNumberString(number: Int): String {
-        return resources.getQuantityString(R.plurals.grade_number_item, number, number)
+    override fun updateHeaderItem(item: GradeDetailsItem) {
+        gradeDetailsAdapter.updateHeaderItem(item)
     }
 
     override fun showProgress(show: Boolean) {

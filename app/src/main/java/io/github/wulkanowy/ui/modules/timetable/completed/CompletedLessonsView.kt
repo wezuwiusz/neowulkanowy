@@ -10,7 +10,7 @@ interface CompletedLessonsView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<CompletedLessonItem>)
+    fun updateData(data: List<CompletedLesson>)
 
     fun clearData()
 

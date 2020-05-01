@@ -8,16 +8,13 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import dagger.Lazy
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_license.*
 import javax.inject.Inject
 
@@ -27,7 +24,7 @@ class LicenseFragment : BaseFragment(), LicenseView, MainView.TitledView {
     lateinit var presenter: LicensePresenter
 
     @Inject
-    lateinit var licenseAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var licenseAdapter: LicenseAdapter
 
     @Inject
     lateinit var libs: Lazy<Libs>
@@ -53,15 +50,19 @@ class LicenseFragment : BaseFragment(), LicenseView, MainView.TitledView {
     }
 
     override fun initView() {
+        licenseAdapter.onClickListener = presenter::onItemSelected
+
         with(licenseRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = licenseAdapter
         }
-        licenseAdapter.setOnItemClickListener(presenter::onItemSelected)
     }
 
-    override fun updateData(data: List<LicenseItem>) {
-        licenseAdapter.updateDataSet(data)
+    override fun updateData(data: List<Library>) {
+        with(licenseAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun openLicense(licenseHtml: String) {

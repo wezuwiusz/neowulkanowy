@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.contributor.ContributorFragment
@@ -19,7 +17,6 @@ import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
 
@@ -29,7 +26,7 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
     lateinit var presenter: AboutPresenter
 
     @Inject
-    lateinit var aboutAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var aboutAdapter: AboutAdapter
 
     @Inject
     lateinit var appInfo: AppInfo
@@ -90,19 +87,18 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
     }
 
     override fun initView() {
-        aboutAdapter.setOnItemClickListener(presenter::onItemSelected)
+        aboutAdapter.onClickListener = presenter::onItemSelected
 
         with(aboutRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = aboutAdapter
         }
     }
 
-    override fun updateData(header: AboutScrollableHeader, items: List<AboutItem>) {
+    override fun updateData(data: List<Triple<String, String, Drawable?>>) {
         with(aboutAdapter) {
-            removeAllScrollableHeaders()
-            addScrollableHeader(header)
-            updateDataSet(items)
+            items = data
+            notifyDataSetChanged()
         }
     }
 

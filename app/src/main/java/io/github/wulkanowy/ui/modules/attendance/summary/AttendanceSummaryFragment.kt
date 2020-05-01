@@ -9,10 +9,9 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.dpToPx
@@ -26,7 +25,7 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
     lateinit var presenter: AttendanceSummaryPresenter
 
     @Inject
-    lateinit var attendanceSummaryAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var attendanceSummaryAdapter: AttendanceSummaryAdapter
 
     private lateinit var subjectsAdapter: ArrayAdapter<String>
 
@@ -36,11 +35,9 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
         fun newInstance() = AttendanceSummaryFragment()
     }
 
-    override val totalString get() = getString(R.string.attendance_summary_total)
-
     override val titleStringId get() = R.string.attendance_title
 
-    override val isViewEmpty get() = attendanceSummaryAdapter.isEmpty
+    override val isViewEmpty get() = attendanceSummaryAdapter.items.isEmpty()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_attendance_summary, container, false)
@@ -54,7 +51,7 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
 
     override fun initView() {
         with(attendanceSummaryRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = attendanceSummaryAdapter
         }
 
@@ -81,16 +78,18 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
         }
     }
 
-    override fun updateDataSet(data: List<AttendanceSummaryItem>, header: AttendanceSummaryScrollableHeader) {
+    override fun updateDataSet(data: List<AttendanceSummary>) {
         with(attendanceSummaryAdapter) {
-            updateDataSet(data, true)
-            removeAllScrollableHeaders()
-            addScrollableHeader(header)
+            items = data
+            notifyDataSetChanged()
         }
     }
 
     override fun clearView() {
-        attendanceSummaryAdapter.clear()
+        with(attendanceSummaryAdapter) {
+            items = emptyList()
+            notifyDataSetChanged()
+        }
     }
 
     override fun showEmpty(show: Boolean) {

@@ -7,13 +7,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
-import io.github.wulkanowy.utils.setOnItemClickListener
+import io.github.wulkanowy.ui.base.WidgetConfigureAdapter
 import kotlinx.android.synthetic.main.activity_widget_configure.*
 import javax.inject.Inject
 
@@ -21,7 +20,7 @@ class LuckyNumberWidgetConfigureActivity : BaseActivity<LuckyNumberWidgetConfigu
     LuckyNumberWidgetConfigureView {
 
     @Inject
-    lateinit var configureAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var configureAdapter: WidgetConfigureAdapter
 
     @Inject
     override lateinit var presenter: LuckyNumberWidgetConfigurePresenter
@@ -41,10 +40,10 @@ class LuckyNumberWidgetConfigureActivity : BaseActivity<LuckyNumberWidgetConfigu
     override fun initView() {
         with(widgetConfigureRecycler) {
             adapter = configureAdapter
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
         }
 
-        configureAdapter.setOnItemClickListener(presenter::onItemSelect)
+        configureAdapter.onClickListener = presenter::onItemSelect
     }
 
     override fun showThemeDialog() {
@@ -53,17 +52,20 @@ class LuckyNumberWidgetConfigureActivity : BaseActivity<LuckyNumberWidgetConfigu
             getString(R.string.widget_timetable_theme_dark)
         )
 
-       dialog =  AlertDialog.Builder(this, R.style.WulkanowyTheme_WidgetAccountSwitcher)
+        dialog = AlertDialog.Builder(this, R.style.WulkanowyTheme_WidgetAccountSwitcher)
             .setTitle(R.string.widget_timetable_theme_title)
-           .setOnDismissListener { presenter.onDismissThemeView() }
+            .setOnDismissListener { presenter.onDismissThemeView() }
             .setSingleChoiceItems(items, -1) { _, which ->
                 presenter.onThemeSelect(which)
             }
             .show()
     }
 
-    override fun updateData(data: List<LuckyNumberWidgetConfigureItem>) {
-        configureAdapter.updateDataSet(data)
+    override fun updateData(data: List<Pair<Student, Boolean>>) {
+        with(configureAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun updateLuckyNumberWidget(widgetId: Int) {

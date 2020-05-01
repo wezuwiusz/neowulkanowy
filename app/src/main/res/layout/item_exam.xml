@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
-    tools:context=".ui.modules.exam.ExamItem">
+    tools:context=".ui.modules.exam.ExamAdapter">
 
     <TextView
         android:id="@+id/examItemSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:textSize="15sp"
         tools:text="@tools:sample/lorem" />
@@ -22,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/examItemSubject"
         android:layout_alignStart="@id/examItemSubject"
-        android:layout_alignLeft="@id/examItemSubject"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:textSize="13sp"
@@ -34,15 +32,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/examItemSubject"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@id/examItemType"
-        android:layout_toRightOf="@id/examItemType"
         android:gravity="end"
         android:textSize="13sp"
         tools:text="@tools:sample/lorem" />

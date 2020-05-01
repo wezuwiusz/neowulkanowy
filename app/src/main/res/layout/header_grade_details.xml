@@ -1,81 +1,93 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/gradeHeaderContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
-    android:paddingStart="16dp"
-    android:paddingLeft="16dp"
-    android:paddingTop="10dp"
-    android:paddingEnd="12dp"
-    android:paddingRight="14dp"
-    android:paddingBottom="10dp"
-    tools:context=".ui.modules.grade.details.GradeDetailsHeader">
+    android:background="?android:windowBackground">
 
-    <TextView
-        android:id="@+id/gradeHeaderSubject"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gradeHeaderContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_toStartOf="@id/gradeHeaderNote"
-        android:layout_toLeftOf="@id/gradeHeaderNote"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="15sp"
-        tools:text="Fizyka" />
+        android:background="?selectableItemBackground"
+        tools:context=".ui.modules.grade.details.GradeDetailsAdapter">
 
-    <TextView
-        android:id="@+id/gradeHeaderAverage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/gradeHeaderSubject"
-        android:layout_marginTop="5dp"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="12sp"
-        tools:text="Average: 6,00" />
+        <View
+            android:id="@+id/gradeHeaderDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/gradeHeaderPointsSum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/gradeHeaderSubject"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/gradeHeaderAverage"
-        android:layout_toRightOf="@+id/gradeHeaderAverage"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="12sp"
-        tools:text="Points: 123/200 (61,5%)" />
+        <TextView
+            android:id="@+id/gradeHeaderSubject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/gradeHeaderNote"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem/random" />
 
-    <TextView
-        android:id="@+id/gradeHeaderNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/gradeHeaderSubject"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/gradeHeaderPointsSum"
-        android:layout_toRightOf="@+id/gradeHeaderPointsSum"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="12sp"
-        tools:text="12 grades" />
+        <TextView
+            android:id="@+id/gradeHeaderAverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gradeHeaderSubject"
+            app:layout_constraintTop_toBottomOf="@+id/gradeHeaderSubject"
+            tools:text="Average: 6,00" />
 
-    <TextView
-        android:id="@+id/gradeHeaderNote"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/background_header_note"
-        android:gravity="center"
-        android:minWidth="20dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:textColor="?colorOnPrimary"
-        android:textSize="14sp"
-        tools:text="255" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/gradeHeaderPointsSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/gradeHeaderAverage"
+            app:layout_constraintTop_toBottomOf="@+id/gradeHeaderSubject"
+            tools:text="Points: 123/200 (61,5%)" />
+
+        <TextView
+            android:id="@+id/gradeHeaderNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/gradeHeaderPointsSum"
+            app:layout_constraintTop_toBottomOf="@id/gradeHeaderSubject"
+            tools:text="12 grades" />
+
+        <TextView
+            android:id="@+id/gradeHeaderNote"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/background_header_note"
+            android:gravity="center"
+            android:minWidth="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="?colorOnPrimary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="255" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -9,14 +9,13 @@
     android:paddingTop="10dp"
     android:paddingRight="16dp"
     android:paddingBottom="10dp"
-    tools:context=".ui.modules.message.MessageItem">
+    tools:context=".ui.modules.message.tab.MessageTabAdapter">
 
     <TextView
         android:id="@+id/messageItemAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textSize="15sp"

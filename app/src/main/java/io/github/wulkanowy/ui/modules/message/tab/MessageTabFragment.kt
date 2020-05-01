@@ -7,19 +7,15 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.message.MessageFragment
-import io.github.wulkanowy.ui.modules.message.MessageItem
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_message_tab.*
 import javax.inject.Inject
 
@@ -29,7 +25,7 @@ class MessageTabFragment : BaseFragment(), MessageTabView {
     lateinit var presenter: MessageTabPresenter
 
     @Inject
-    lateinit var tabAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var tabAdapter: MessageTabAdapter
 
     companion object {
         const val MESSAGE_TAB_FOLDER_ID = "message_tab_folder_id"
@@ -43,11 +39,8 @@ class MessageTabFragment : BaseFragment(), MessageTabView {
         }
     }
 
-    override val noSubjectString: String
-        get() = getString(R.string.message_no_subject)
-
     override val isViewEmpty
-        get() = tabAdapter.isEmpty
+        get() = tabAdapter.items.isEmpty()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_message_tab, container, false)
@@ -62,31 +55,30 @@ class MessageTabFragment : BaseFragment(), MessageTabView {
     }
 
     override fun initView() {
-        tabAdapter.setOnItemClickListener { presenter.onMessageItemSelected(it) }
+        tabAdapter.onClickListener = presenter::onMessageItemSelected
 
         messageTabRecycler.run {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = tabAdapter
-            addItemDecoration(FlexibleItemDecoration(context)
-                .withDefaultDivider()
-                .withDrawDividerOnLastItem(false)
-            )
+            addItemDecoration(DividerItemDecoration(context))
         }
         messageTabSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         messageTabErrorRetry.setOnClickListener { presenter.onRetry() }
         messageTabErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
-    override fun updateData(data: List<MessageItem>) {
-        tabAdapter.updateDataSet(data)
+    override fun updateData(data: List<Message>) {
+        with(tabAdapter) {
+            items = data.toMutableList()
+            notifyDataSetChanged()
+        }
     }
 
-    override fun updateItem(item: AbstractFlexibleItem<*>) {
-        tabAdapter.updateItem(item)
-    }
-
-    override fun clearView() {
-        tabAdapter.clear()
+    override fun updateItem(item: Message, position: Int) {
+        with(tabAdapter) {
+            items[position] = item
+            notifyItemChanged(position)
+        }
     }
 
     override fun showProgress(show: Boolean) {

@@ -9,10 +9,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.calcAverage
 import timber.log.Timber
-import java.lang.String.format
-import java.util.Locale.FRANCE
 import javax.inject.Inject
 
 class GradeSummaryPresenter @Inject constructor(
@@ -42,7 +39,7 @@ class GradeSummaryPresenter @Inject constructor(
                     .map { it.sortedBy { subject -> subject.subject } }
                     .flatMap { gradesSummary ->
                         averageProvider.getGradeAverage(student, semesters, semesterId, forceRefresh)
-                            .map { averages -> createGradeSummaryItemsAndHeader(gradesSummary, averages) }
+                            .map { averages -> createGradeSummaryItems(gradesSummary, averages) }
                     }
             }
             .subscribeOn(schedulers.backgroundThread)
@@ -54,15 +51,15 @@ class GradeSummaryPresenter @Inject constructor(
                     enableSwipe(true)
                     notifyParentDataLoaded(semesterId)
                 }
-            }.subscribe({ (gradeSummaryItems, gradeSummaryHeader) ->
+            }.subscribe({
                 Timber.i("Loading grade summary result: Success")
                 view?.run {
-                    showEmpty(gradeSummaryItems.isEmpty())
-                    showContent(gradeSummaryItems.isNotEmpty())
+                    showEmpty(it.isEmpty())
+                    showContent(it.isNotEmpty())
                     showErrorView(false)
-                    updateData(gradeSummaryItems, gradeSummaryHeader)
+                    updateData(it)
                 }
-                analytics.logEvent("load_grade_summary", "items" to gradeSummaryItems.size, "force_refresh" to forceRefresh)
+                analytics.logEvent("load_grade_summary", "items" to it.size, "force_refresh" to forceRefresh)
             }) {
                 Timber.i("Loading grade summary result: An exception occurred")
                 errorHandler.dispatch(it)
@@ -115,20 +112,11 @@ class GradeSummaryPresenter @Inject constructor(
         disposable.clear()
     }
 
-    private fun createGradeSummaryItemsAndHeader(gradesSummary: List<GradeSummary>, averages: List<Triple<String, Double, String>>): Pair<List<GradeSummaryItem>, GradeSummaryScrollableHeader> {
-        return averages.filter { value -> value.second != 0.0 }
-            .let { filteredAverages ->
-                gradesSummary.filter { !checkEmpty(it, filteredAverages) }
-                    .map { gradeSummary ->
-                        GradeSummaryItem(
-                            summary = gradeSummary,
-                            average = formatAverage(filteredAverages.singleOrNull { gradeSummary.subject == it.first }?.second ?: .0, "")
-                        )
-                    }.let {
-                        it to GradeSummaryScrollableHeader(
-                            formatAverage(gradesSummary.calcAverage()),
-                            formatAverage(filteredAverages.map { values -> values.second }.average()))
-                    }
+    private fun createGradeSummaryItems(gradesSummary: List<GradeSummary>, averages: List<Triple<String, Double, String>>): List<GradeSummary> {
+        return gradesSummary
+            .filter { !checkEmpty(it, averages) }
+            .map { gradeSummary ->
+                gradeSummary.copy(average = averages.singleOrNull { gradeSummary.subject == it.first }?.second ?: .0)
             }
     }
 
@@ -136,10 +124,5 @@ class GradeSummaryPresenter @Inject constructor(
         return gradeSummary.run {
             finalGrade.isBlank() && predictedGrade.isBlank() && averages.singleOrNull { it.first == subject } == null
         }
-    }
-
-    private fun formatAverage(average: Double, defaultValue: String = "-- --"): String {
-        return if (average == 0.0) defaultValue
-        else format(FRANCE, "%.2f", average)
     }
 }

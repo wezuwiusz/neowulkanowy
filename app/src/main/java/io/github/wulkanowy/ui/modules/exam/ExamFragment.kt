@@ -7,17 +7,14 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.dpToPx
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_exam.*
 import javax.inject.Inject
 
@@ -27,7 +24,7 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
     lateinit var presenter: ExamPresenter
 
     @Inject
-    lateinit var examAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var examAdapter: ExamAdapter
 
     companion object {
         private const val SAVED_DATE_KEY = "CURRENT_DATE"
@@ -37,7 +34,7 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
 
     override val titleStringId get() = R.string.exam_title
 
-    override val isViewEmpty get() = examAdapter.isEmpty
+    override val isViewEmpty get() = examAdapter.items.isEmpty()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_exam, container, false)
@@ -50,14 +47,12 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
     }
 
     override fun initView() {
-        examAdapter.setOnItemClickListener(presenter::onExamItemSelected)
+        examAdapter.onClickListener = presenter::onExamItemSelected
 
         with(examRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = examAdapter
-            addItemDecoration(FlexibleItemDecoration(context)
-                .withDefaultDivider(R.layout.item_exam)
-                .withDrawDividerOnLastItem(false))
+            addItemDecoration(DividerItemDecoration(context))
         }
 
         examSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
@@ -74,8 +69,11 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
         examSwipe.isRefreshing = false
     }
 
-    override fun updateData(data: List<ExamItem>) {
-        examAdapter.updateDataSet(data, true)
+    override fun updateData(data: List<ExamItem<*>>) {
+        with(examAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun updateNavigationWeek(date: String) {
@@ -83,7 +81,10 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
     }
 
     override fun clearData() {
-        examAdapter.clear()
+        with(examAdapter) {
+            items = emptyList()
+            notifyDataSetChanged()
+        }
     }
 
     override fun resetView() {

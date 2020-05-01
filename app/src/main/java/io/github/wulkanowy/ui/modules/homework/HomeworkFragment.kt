@@ -6,18 +6,15 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.homework.details.HomeworkDetailsDialog
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.dpToPx
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.fragment_homework.*
 import javax.inject.Inject
 
@@ -27,7 +24,7 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
     lateinit var presenter: HomeworkPresenter
 
     @Inject
-    lateinit var homeworkAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var homeworkAdapter: HomeworkAdapter
 
     companion object {
         private const val SAVED_DATE_KEY = "CURRENT_DATE"
@@ -37,7 +34,7 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
 
     override val titleStringId get() = R.string.homework_title
 
-    override val isViewEmpty get() = homeworkAdapter.isEmpty
+    override val isViewEmpty get() = homeworkAdapter.items.isEmpty()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_homework, container, false)
@@ -50,14 +47,12 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
     }
 
     override fun initView() {
-        homeworkAdapter.setOnItemClickListener(presenter::onHomeworkItemSelected)
+        homeworkAdapter.onClickListener = presenter::onHomeworkItemSelected
 
         with(homeworkRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = homeworkAdapter
-            addItemDecoration(FlexibleItemDecoration(context)
-                .withDefaultDivider()
-                .withDrawDividerOnLastItem(false))
+            addItemDecoration(DividerItemDecoration(context))
         }
 
         homeworkSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
@@ -70,8 +65,11 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
         homeworkNavContainer.setElevationCompat(requireContext().dpToPx(8f))
     }
 
-    override fun updateData(data: List<HomeworkItem>) {
-        homeworkAdapter.updateDataSet(data, true)
+    override fun updateData(data: List<HomeworkItem<*>>) {
+        with(homeworkAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     fun onReloadList() {
@@ -79,7 +77,10 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
     }
 
     override fun clearData() {
-        homeworkAdapter.clear()
+        with(homeworkAdapter) {
+            items = emptyList()
+            notifyDataSetChanged()
+        }
     }
 
     override fun updateNavigationWeek(date: String) {

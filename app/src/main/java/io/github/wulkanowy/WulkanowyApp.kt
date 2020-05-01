@@ -10,8 +10,6 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import com.yariksoffice.lingver.Lingver
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.utils.Log
 import fr.bipi.tressence.file.FileLoggerTree
 import io.github.wulkanowy.di.DaggerAppComponent
 import io.github.wulkanowy.services.sync.SyncWorkerFactory
@@ -57,7 +55,6 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
 
     private fun initLogging() {
         if (appInfo.isDebug) {
-            FlexibleAdapter.enableLogs(Log.Level.DEBUG)
             Timber.plant(DebugLogTree())
             Timber.plant(FileLoggerTree.Builder()
                 .withFileName("wulkanowy.%g.log")

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,44 +10,44 @@
     android:paddingLeft="24dp"
     android:paddingEnd="24dp"
     android:paddingRight="24dp"
-    tools:context=".ui.modules.account.AccountItem">
+    tools:context=".ui.modules.account.AccountAdapter">
 
     <ImageView
         android:id="@+id/accountItemImage"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_all_account"
         tools:ignore="ContentDescription"
         tools:tint="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/accountItemName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/accountItemImage"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toEndOf="@id/accountItemImage"
-        android:layout_toRightOf="@id/accountItemImage"
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/accountItemImage"
+        app:layout_constraintTop_toTopOf="@+id/accountItemImage"
         tools:text="@tools:sample/full_names" />
 
     <TextView
         android:id="@+id/accountItemSchool"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/accountItemName"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="3dp"
-        android:layout_toEndOf="@id/accountItemImage"
-        android:layout_toRightOf="@id/accountItemImage"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/accountItemImage"
+        app:layout_constraintTop_toBottomOf="@id/accountItemName"
         tools:text="@tools:sample/lorem/random" />
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

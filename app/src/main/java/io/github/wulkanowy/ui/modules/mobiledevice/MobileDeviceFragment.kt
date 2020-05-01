@@ -6,13 +6,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.helpers.UndoHelper
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.core.view.postDelayed
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.mobiledevice.token.MobileDeviceTokenDialog
@@ -25,7 +25,7 @@ class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledVi
     lateinit var presenter: MobileDevicePresenter
 
     @Inject
-    lateinit var devicesAdapter: MobileDeviceAdapter<AbstractFlexibleItem<*>>
+    lateinit var devicesAdapter: MobileDeviceAdapter
 
     companion object {
         fun newInstance() = MobileDeviceFragment()
@@ -35,7 +35,7 @@ class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledVi
         get() = R.string.mobile_devices_title
 
     override val isViewEmpty: Boolean
-        get() = devicesAdapter.isEmpty
+        get() = devicesAdapter.items.isEmpty()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_mobile_device, container, false)
@@ -48,51 +48,55 @@ class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledVi
     }
 
     override fun initView() {
+        devicesAdapter.onDeviceUnregisterListener = presenter::onUnregisterDevice
+
         with(mobileDevicesRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = devicesAdapter
-            addItemDecoration(FlexibleItemDecoration(context)
-                .withDefaultDivider()
-                .withDrawDividerOnLastItem(false)
-            )
+            addItemDecoration(DividerItemDecoration(context))
         }
-        with(devicesAdapter) {
-            isPermanentDelete = false
-            onDeviceUnregisterListener = presenter::onUnregisterDevice
-        }
+
         mobileDevicesSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
         mobileDevicesErrorRetry.setOnClickListener { presenter.onRetry() }
         mobileDevicesErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         mobileDeviceAddButton.setOnClickListener { presenter.onRegisterDevice() }
     }
 
-    override fun updateData(data: List<MobileDeviceItem>) {
-        devicesAdapter.updateDataSet(data)
-    }
-
-    override fun restoreDeleteItem() {
-        devicesAdapter.restoreDeletedItems()
-    }
-
-    override fun clearData() {
-        devicesAdapter.clear()
-    }
-
-    override fun showUndo(position: Int, device: MobileDevice) {
-        val onActionListener = object : UndoHelper.OnActionListener {
-            override fun onActionConfirmed(action: Int, event: Int) {
-                presenter.onUnregisterConfirmed(device)
-            }
-
-            override fun onActionCanceled(action: Int, positions: MutableList<Int>?) {
-                presenter.onUnregisterCancelled()
-            }
+    override fun updateData(data: List<MobileDevice>) {
+        with(devicesAdapter) {
+            items = data.toMutableList()
+            notifyDataSetChanged()
         }
+    }
 
-        UndoHelper(devicesAdapter, onActionListener)
-            .withConsecutive(false)
-            .withAction(UndoHelper.Action.REMOVE)
-            .start(listOf(position), mobileDevicesRecycler, R.string.mobile_device_removed, R.string.all_undo, 3000)
+    override fun deleteItem(device: MobileDevice, position: Int) {
+        with(devicesAdapter) {
+            items.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+        }
+    }
+
+    override fun restoreDeleteItem(device: MobileDevice, position: Int) {
+        with(devicesAdapter) {
+            items.add(position, device)
+            notifyItemInserted(position)
+            notifyItemRangeChanged(position, itemCount)
+        }
+    }
+
+    override fun showUndo(device: MobileDevice, position: Int) {
+        var confirmed = true
+
+        Snackbar.make(mobileDevicesRecycler, getString(R.string.mobile_device_removed), 3000)
+            .setAction(R.string.all_undo) {
+                confirmed = false
+                presenter.onUnregisterCancelled(device, position)
+            }.show()
+
+        view?.postDelayed(3000) {
+            if (confirmed) presenter.onUnregisterConfirmed(device)
+        }
     }
 
     override fun hideRefresh() {

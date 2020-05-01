@@ -13,19 +13,17 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ActionMode
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.dialog_excuse.*
 import kotlinx.android.synthetic.main.fragment_attendance.*
 import org.threeten.bp.LocalDate
@@ -38,7 +36,7 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     lateinit var presenter: AttendancePresenter
 
     @Inject
-    lateinit var attendanceAdapter: AttendanceAdapter<AbstractFlexibleItem<*>>
+    lateinit var attendanceAdapter: AttendanceAdapter
 
     override val excuseSuccessString: String
         get() = getString(R.string.attendance_excuse_success)
@@ -54,7 +52,7 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
 
     override val titleStringId get() = R.string.attendance_title
 
-    override val isViewEmpty get() = attendanceAdapter.isEmpty
+    override val isViewEmpty get() = attendanceAdapter.items.isEmpty()
 
     override val currentStackSize get() = (activity as? MainActivity)?.currentStackSize
 
@@ -102,15 +100,15 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun initView() {
-        attendanceAdapter.setOnItemClickListener(presenter::onAttendanceItemSelected)
-        attendanceAdapter.onExcuseCheckboxSelect = presenter::onExcuseCheckboxSelect
+        with(attendanceAdapter) {
+            onClickListener = presenter::onAttendanceItemSelected
+            onExcuseCheckboxSelect = presenter::onExcuseCheckboxSelect
+        }
 
         with(attendanceRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = attendanceAdapter
-            addItemDecoration(FlexibleItemDecoration(context)
-                .withDefaultDivider()
-                .withDrawDividerOnLastItem(false))
+            addItemDecoration(DividerItemDecoration(context))
         }
 
         attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
@@ -135,8 +133,11 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
         else false
     }
 
-    override fun updateData(data: List<AttendanceItem>) {
-        attendanceAdapter.updateDataSet(data, true)
+    override fun updateData(data: List<Attendance>) {
+        with(attendanceAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun updateNavigationDay(date: String) {
@@ -144,7 +145,10 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun clearData() {
-        attendanceAdapter.clear()
+        with(attendanceAdapter) {
+            items = emptyList()
+            notifyDataSetChanged()
+        }
     }
 
     override fun resetView() {

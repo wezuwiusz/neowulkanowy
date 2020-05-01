@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.modules.attendance.summary.AttendanceSummaryAdapter">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
             android:layout_weight="1"
             android:textSize="17sp"
             tools:text="January" />
@@ -46,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:text="@string/attendance_present"
             android:textSize="14sp" />
@@ -57,9 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
             tools:text="50" />
@@ -77,7 +74,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:text="@string/attendance_absence_unexcused"
             android:textSize="14sp" />
@@ -88,9 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
             tools:text="0" />
@@ -108,7 +102,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:text="@string/attendance_absence_excused"
             android:textSize="14sp" />
@@ -119,9 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
             tools:text="25" />
@@ -139,7 +130,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:text="@string/attendance_absence_school"
             android:textSize="14sp" />
@@ -150,9 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
             tools:text="0" />
@@ -170,7 +158,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:text="@string/attendance_exemption"
             android:textSize="14sp" />
@@ -181,9 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
             tools:text="6" />
@@ -201,7 +186,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:text="@string/attendance_unexcused_lateness"
             android:textSize="14sp" />
@@ -212,9 +196,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
             tools:text="0" />
@@ -232,7 +214,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:text="@string/attendance_excused_lateness"
             android:textSize="14sp" />
@@ -243,9 +224,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
             android:gravity="end"
             android:textSize="12sp"
             tools:text="0" />

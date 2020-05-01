@@ -9,7 +9,7 @@ interface HomeworkView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<HomeworkItem>)
+    fun updateData(data: List<HomeworkItem<*>>)
 
     fun clearData()
 

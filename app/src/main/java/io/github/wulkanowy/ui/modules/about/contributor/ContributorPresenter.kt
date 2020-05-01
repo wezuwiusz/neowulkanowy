@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.about.contributor
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import io.github.wulkanowy.data.pojos.Contributor
 import io.github.wulkanowy.data.repositories.appcreator.AppCreatorRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -21,9 +21,8 @@ class ContributorPresenter @Inject constructor(
         loadData()
     }
 
-    fun onItemSelected(item: AbstractFlexibleItem<*>) {
-        if (item !is ContributorItem) return
-        view?.openUserGithubPage(item.creator.githubUsername)
+    fun onItemSelected(contributor: Contributor) {
+        view?.openUserGithubPage(contributor.githubUsername)
     }
 
     fun onSeeMoreClick() {
@@ -32,7 +31,6 @@ class ContributorPresenter @Inject constructor(
 
     private fun loadData() {
         disposable.add(appCreatorRepository.getAppCreators()
-            .map { it.map { creator -> ContributorItem(creator) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally { view?.showProgress(false) }

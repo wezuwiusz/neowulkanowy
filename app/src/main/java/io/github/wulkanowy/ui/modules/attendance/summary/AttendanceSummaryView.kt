@@ -1,10 +1,9 @@
 package io.github.wulkanowy.ui.modules.attendance.summary
 
+import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.ui.base.BaseView
 
 interface AttendanceSummaryView : BaseView {
-
-    val totalString: String
 
     val isViewEmpty: Boolean
 
@@ -24,7 +23,7 @@ interface AttendanceSummaryView : BaseView {
 
     fun setErrorDetails(message: String)
 
-    fun updateDataSet(data: List<AttendanceSummaryItem>, header: AttendanceSummaryScrollableHeader)
+    fun updateDataSet(data: List<AttendanceSummary>)
 
     fun updateSubjects(data: ArrayList<String>)
 

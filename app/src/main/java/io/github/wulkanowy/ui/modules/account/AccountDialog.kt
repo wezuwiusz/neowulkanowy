@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.dialog_account.*
 import javax.inject.Inject
 
@@ -23,7 +21,7 @@ class AccountDialog : BaseDialogFragment(), AccountView {
     lateinit var presenter: AccountPresenter
 
     @Inject
-    lateinit var accountAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var accountAdapter: AccountAdapter
 
     companion object {
         fun newInstance() = AccountDialog()
@@ -44,18 +42,21 @@ class AccountDialog : BaseDialogFragment(), AccountView {
     }
 
     override fun initView() {
-        accountAdapter.setOnItemClickListener { presenter.onItemSelected(it) }
+        accountAdapter.onClickListener = presenter::onItemSelected
 
         accountDialogAdd.setOnClickListener { presenter.onAddSelected() }
         accountDialogRemove.setOnClickListener { presenter.onRemoveSelected() }
         accountDialogRecycler.apply {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = accountAdapter
         }
     }
 
-    override fun updateData(data: List<AccountItem>) {
-        accountAdapter.updateDataSet(data)
+    override fun updateData(data: List<Student>) {
+        with(accountAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun showError(text: String, error: Throwable) {

@@ -8,14 +8,13 @@ import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseActivity
+import io.github.wulkanowy.ui.base.WidgetConfigureAdapter
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.EXTRA_FROM_PROVIDER
-import io.github.wulkanowy.utils.setOnItemClickListener
 import kotlinx.android.synthetic.main.activity_widget_configure.*
 import javax.inject.Inject
 
@@ -23,7 +22,7 @@ class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePr
     TimetableWidgetConfigureView {
 
     @Inject
-    lateinit var configureAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var configureAdapter: WidgetConfigureAdapter
 
     @Inject
     override lateinit var presenter: TimetableWidgetConfigurePresenter
@@ -43,10 +42,10 @@ class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePr
     override fun initView() {
         with(widgetConfigureRecycler) {
             adapter = configureAdapter
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
         }
 
-        configureAdapter.setOnItemClickListener(presenter::onItemSelect)
+        configureAdapter.onClickListener = presenter::onItemSelect
     }
 
     override fun showThemeDialog() {
@@ -64,8 +63,11 @@ class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePr
             .show()
     }
 
-    override fun updateData(data: List<TimetableWidgetConfigureItem>) {
-        configureAdapter.updateDataSet(data)
+    override fun updateData(data: List<Pair<Student, Boolean>>) {
+        with(configureAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun updateTimetableWidget(widgetId: Int) {

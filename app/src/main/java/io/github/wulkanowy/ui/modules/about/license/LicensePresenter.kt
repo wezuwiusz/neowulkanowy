@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.about.license
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import com.mikepenz.aboutlibraries.entity.Library
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -20,14 +20,12 @@ class LicensePresenter @Inject constructor(
         loadData()
     }
 
-    fun onItemSelected(item: AbstractFlexibleItem<*>) {
-        if (item !is LicenseItem) return
-        view?.run { item.library.license?.licenseDescription?.let { openLicense(it) } }
+    fun onItemSelected(library: Library) {
+        view?.run { library.license?.licenseDescription?.let { openLicense(it) } }
     }
 
     private fun loadData() {
-        disposable.add(Single.fromCallable { view?.appLibraries }
-            .map { it.map { library -> LicenseItem(library) } }
+        disposable.add(Single.fromCallable { view?.appLibraries.orEmpty() }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnEvent { _, _ -> view?.showProgress(false) }
