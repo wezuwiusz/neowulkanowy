@@ -9,6 +9,6 @@ files:
       - /app/src/main/res/values/dimens.xml
       - /app/src/main/res/values/preferences_keys.xml
       - /app/src/main/res/values/preferences_defaults.xml
-    translation: /app/src/main/res/values-%android_code%/%original_file_name%.xml
+    translation: /app/src/main/res/values-%android_code%/%original_file_name%
     translate_attributes: 0
     content_segmentation: 0
