@@ -21,7 +21,6 @@ import io.github.wulkanowy.services.sync.works.AttendanceWork
 import io.github.wulkanowy.services.sync.works.CompletedLessonWork
 import io.github.wulkanowy.services.sync.works.ExamWork
 import io.github.wulkanowy.services.sync.works.GradeStatisticsWork
-import io.github.wulkanowy.services.sync.works.GradeSummaryWork
 import io.github.wulkanowy.services.sync.works.GradeWork
 import io.github.wulkanowy.services.sync.works.HomeworkWork
 import io.github.wulkanowy.services.sync.works.LuckyNumberWork
@@ -63,10 +62,6 @@ abstract class ServicesModule {
     @Binds
     @IntoSet
     abstract fun provideAttendanceWork(work: AttendanceWork): Work
-
-    @Binds
-    @IntoSet
-    abstract fun provideGradeSummaryWork(work: GradeSummaryWork): Work
 
     @Binds
     @IntoSet

@@ -107,7 +107,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             gradeHeaderAverage.text = formatAverage(header.average, root.context.resources)
             gradeHeaderPointsSum.text = root.context.getString(R.string.grade_points_sum, header.pointsSum)
             gradeHeaderPointsSum.visibility = if (!header.pointsSum.isNullOrEmpty()) View.VISIBLE else View.GONE
-            gradeHeaderNumber.text = root.context.resources.getQuantityString(R.plurals.grade_number_item, header.number, header.number)
+            gradeHeaderNumber.text = root.context.resources.getQuantityString(R.plurals.grade_number_item, header.grades.size, header.grades.size)
             gradeHeaderNote.visibility = if (header.newGrades > 0) View.VISIBLE else View.GONE
             if (header.newGrades > 0) gradeHeaderNote.text = header.newGrades.toString(10)
 

@@ -12,7 +12,6 @@ data class GradeDetailsItem(
 
 data class GradeDetailsHeader(
     val subject: String,
-    val number: Int,
     val average: Double?,
     val pointsSum: String?,
     var newGrades: Int,

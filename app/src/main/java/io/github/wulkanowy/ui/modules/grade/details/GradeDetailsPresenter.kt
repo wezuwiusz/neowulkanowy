@@ -8,6 +8,7 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
+import io.github.wulkanowy.ui.modules.grade.GradeDetailsWithAverage
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
@@ -126,14 +127,7 @@ class GradeDetailsPresenter @Inject constructor(
     private fun loadData(semesterId: Int, forceRefresh: Boolean) {
         Timber.i("Loading grade details data started")
         disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it).map { semester -> it to semester } }
-            .flatMap { (student, semesters) ->
-                averageProvider.getGradeAverage(student, semesters, semesterId, forceRefresh).flatMap { averages ->
-                    gradeRepository.getGrades(student, semesters.first { it.semesterId == semesterId }, forceRefresh)
-                        .map { it.sortedByDescending { grade -> grade.date } }
-                        .map { createGradeItems(it, averages) }
-                }
-            }
+            .flatMap { averageProvider.getGradesDetailsWithAverage(it, semesterId, forceRefresh) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally {
@@ -146,16 +140,14 @@ class GradeDetailsPresenter @Inject constructor(
             }
             .subscribe({ grades ->
                 Timber.i("Loading grade details result: Success")
-                newGradesAmount = grades
-                    .filter { it.viewType == ViewType.HEADER }
-                    .sumBy { item -> (item.value as GradeDetailsHeader).newGrades }
+                newGradesAmount = grades.sumBy { it.grades.sumBy { grade -> if (!grade.isRead) 1 else 0 } }
                 updateMarkAsDoneButton()
                 view?.run {
                     showEmpty(grades.isEmpty())
                     showErrorView(false)
                     showContent(grades.isNotEmpty())
                     updateData(
-                        data = grades,
+                        data = createGradeItems(grades),
                         isGradeExpandable = preferencesRepository.isGradeExpandable,
                         gradeColorTheme = preferencesRepository.gradeColorTheme
                     )
@@ -178,17 +170,16 @@ class GradeDetailsPresenter @Inject constructor(
         }
     }
 
-    private fun createGradeItems(items: List<Grade>, averages: List<Triple<String, Double, String>>): List<GradeDetailsItem> {
-        return items.groupBy { grade -> grade.subject }.toSortedMap().map { (subject, grades) ->
+    private fun createGradeItems(items: List<GradeDetailsWithAverage>): List<GradeDetailsItem> {
+        return items.filter { it.grades.isNotEmpty() }.map { (subject, average, points, _, grades) ->
             val subItems = grades.map {
                 GradeDetailsItem(it, ViewType.ITEM)
             }
 
             listOf(GradeDetailsItem(GradeDetailsHeader(
                 subject = subject,
-                average = averages.singleOrNull { subject == it.first }?.second,
-                pointsSum = averages.singleOrNull { subject == it.first }?.third,
-                number = grades.size,
+                average = average,
+                pointsSum = points,
                 newGrades = grades.filter { grade -> !grade.isRead }.size,
                 grades = subItems
             ), ViewType.HEADER)) + if (preferencesRepository.isGradeExpandable) emptyList() else subItems
