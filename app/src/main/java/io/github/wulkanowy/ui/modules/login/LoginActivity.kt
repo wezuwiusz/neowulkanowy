@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.databinding.ActivityLoginBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.login.advanced.LoginAdvancedFragment
@@ -14,10 +14,9 @@ import io.github.wulkanowy.ui.modules.login.recover.LoginRecoverFragment
 import io.github.wulkanowy.ui.modules.login.studentselect.LoginStudentSelectFragment
 import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
 import io.github.wulkanowy.utils.setOnSelectPageListener
-import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
+class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), LoginView {
 
     @Inject
     override lateinit var presenter: LoginPresenter
@@ -30,13 +29,13 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         fun getStartIntent(context: Context) = Intent(context, LoginActivity::class.java)
     }
 
-    override val currentViewIndex get() = loginViewpager.currentItem
+    override val currentViewIndex get() = binding.loginViewpager.currentItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        setSupportActionBar(loginToolbar)
-        messageContainer = loginContainer
+        setContentView(ActivityLoginBinding.inflate(layoutInflater).apply { binding = this }.root)
+        setSupportActionBar(binding.loginToolbar)
+        messageContainer = binding.loginContainer
 
         presenter.onAttachView(this)
     }
@@ -48,7 +47,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
         }
 
         with(loginAdapter) {
-            containerId = loginViewpager.id
+            containerId = binding.loginViewpager.id
             addFragments(listOf(
                 LoginFormFragment.newInstance(),
                 LoginSymbolFragment.newInstance(),
@@ -58,7 +57,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
             ))
         }
 
-        with(loginViewpager) {
+        with(binding.loginViewpager) {
             offscreenPageLimit = 2
             adapter = loginAdapter
             setOnSelectPageListener(presenter::onViewSelected)
@@ -71,7 +70,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginView {
     }
 
     override fun switchView(index: Int) {
-        loginViewpager.setCurrentItem(index, false)
+        binding.loginViewpager.setCurrentItem(index, false)
     }
 
     override fun showActionBar(show: Boolean) {

@@ -11,6 +11,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.core.content.getSystemService
 import io.github.wulkanowy.R
+import io.github.wulkanowy.databinding.DialogErrorBinding
 import io.github.wulkanowy.sdk.exception.FeatureDisabledException
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
 import io.github.wulkanowy.sdk.exception.ServiceUnavailableException
@@ -18,7 +19,6 @@ import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.getString
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
-import kotlinx.android.synthetic.main.dialog_error.*
 import java.io.InterruptedIOException
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -26,7 +26,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class ErrorDialog : BaseDialogFragment() {
+class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
 
     private lateinit var error: Throwable
 
@@ -52,7 +52,7 @@ class ErrorDialog : BaseDialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_error, container, false)
+        return DialogErrorBinding.inflate(inflater).apply { binding = this }.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -62,27 +62,29 @@ class ErrorDialog : BaseDialogFragment() {
             error.printStackTrace(PrintWriter(this))
         }
 
-        errorDialogContent.text = stringWriter.toString()
-        with(errorDialogHorizontalScroll) {
-            post { fullScroll(HorizontalScrollView.FOCUS_LEFT) }
-        }
-        errorDialogCopy.setOnClickListener {
-            val clip = ClipData.newPlainText("wulkanowy", stringWriter.toString())
-            activity?.getSystemService<ClipboardManager>()?.setPrimaryClip(clip)
+        with(binding) {
+            errorDialogContent.text = stringWriter.toString()
+            with(errorDialogHorizontalScroll) {
+                post { fullScroll(HorizontalScrollView.FOCUS_LEFT) }
+            }
+            errorDialogCopy.setOnClickListener {
+                val clip = ClipData.newPlainText("wulkanowy", stringWriter.toString())
+                activity?.getSystemService<ClipboardManager>()?.setPrimaryClip(clip)
 
-            Toast.makeText(context, R.string.all_copied, LENGTH_LONG).show()
-        }
-        errorDialogCancel.setOnClickListener { dismiss() }
-        errorDialogReport.setOnClickListener { openEmailClient(stringWriter.toString()) }
-        errorDialogMessage.text = resources.getString(error)
-        errorDialogReport.isEnabled = when (error) {
-            is UnknownHostException,
-            is InterruptedIOException,
-            is SocketTimeoutException,
-            is ServiceUnavailableException,
-            is FeatureDisabledException,
-            is FeatureNotAvailableException -> false
-            else -> true
+                Toast.makeText(context, R.string.all_copied, LENGTH_LONG).show()
+            }
+            errorDialogCancel.setOnClickListener { dismiss() }
+            errorDialogReport.setOnClickListener { openEmailClient(stringWriter.toString()) }
+            errorDialogMessage.text = resources.getString(error)
+            errorDialogReport.isEnabled = when (error) {
+                is UnknownHostException,
+                is InterruptedIOException,
+                is SocketTimeoutException,
+                is ServiceUnavailableException,
+                is FeatureDisabledException,
+                is FeatureNotAvailableException -> false
+                else -> true
+            }
         }
     }
 

@@ -1,24 +1,23 @@
 package io.github.wulkanowy.ui.modules.homework
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
+import io.github.wulkanowy.databinding.FragmentHomeworkBinding
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.homework.details.HomeworkDetailsDialog
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.dpToPx
-import kotlinx.android.synthetic.main.fragment_homework.*
 import javax.inject.Inject
 
-class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
+class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment_homework),
+    HomeworkView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: HomeworkPresenter
@@ -36,33 +35,32 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
 
     override val isViewEmpty get() = homeworkAdapter.items.isEmpty()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_homework, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = homeworkRecycler
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentHomeworkBinding.bind(view)
+        messageContainer = binding.homeworkRecycler
         presenter.onAttachView(this, savedInstanceState?.getLong(SAVED_DATE_KEY))
     }
 
     override fun initView() {
         homeworkAdapter.onClickListener = presenter::onHomeworkItemSelected
 
-        with(homeworkRecycler) {
+        with(binding.homeworkRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = homeworkAdapter
             addItemDecoration(DividerItemDecoration(context))
         }
 
-        homeworkSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
-        homeworkErrorRetry.setOnClickListener { presenter.onRetry() }
-        homeworkErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        with(binding) {
+            homeworkSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            homeworkErrorRetry.setOnClickListener { presenter.onRetry() }
+            homeworkErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
-        homeworkPreviousButton.setOnClickListener { presenter.onPreviousDay() }
-        homeworkNextButton.setOnClickListener { presenter.onNextDay() }
+            homeworkPreviousButton.setOnClickListener { presenter.onPreviousDay() }
+            homeworkNextButton.setOnClickListener { presenter.onNextDay() }
 
-        homeworkNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            homeworkNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+        }
     }
 
     override fun updateData(data: List<HomeworkItem<*>>) {
@@ -84,43 +82,43 @@ class HomeworkFragment : BaseFragment(), HomeworkView, MainView.TitledView {
     }
 
     override fun updateNavigationWeek(date: String) {
-        homeworkNavDate.text = date
+        binding.homeworkNavDate.text = date
     }
 
     override fun hideRefresh() {
-        homeworkSwipe.isRefreshing = false
+        binding.homeworkSwipe.isRefreshing = false
     }
 
     override fun showEmpty(show: Boolean) {
-        homeworkEmpty.visibility = if (show) VISIBLE else GONE
+        binding.homeworkEmpty.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showErrorView(show: Boolean) {
-        homeworkError.visibility = if (show) VISIBLE else GONE
+        binding.homeworkError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        homeworkErrorMessage.text = message
+        binding.homeworkErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        homeworkProgress.visibility = if (show) VISIBLE else GONE
+        binding.homeworkProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
-        homeworkSwipe.isEnabled = enable
+        binding.homeworkSwipe.isEnabled = enable
     }
 
     override fun showContent(show: Boolean) {
-        homeworkRecycler.visibility = if (show) VISIBLE else GONE
+        binding.homeworkRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showPreButton(show: Boolean) {
-        homeworkPreviousButton.visibility = if (show) VISIBLE else View.INVISIBLE
+        binding.homeworkPreviousButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        homeworkNextButton.visibility = if (show) VISIBLE else View.INVISIBLE
+        binding.homeworkNextButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
     override fun showTimetableDialog(homework: Homework) {

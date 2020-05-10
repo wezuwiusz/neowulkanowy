@@ -1,11 +1,9 @@
 package io.github.wulkanowy.ui.modules.about.license
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,12 +11,13 @@ import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import dagger.Lazy
 import io.github.wulkanowy.R
+import io.github.wulkanowy.databinding.FragmentLicenseBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
-import kotlinx.android.synthetic.main.fragment_license.*
 import javax.inject.Inject
 
-class LicenseFragment : BaseFragment(), LicenseView, MainView.TitledView {
+class LicenseFragment : BaseFragment<FragmentLicenseBinding>(R.layout.fragment_license),
+    LicenseView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: LicensePresenter
@@ -40,19 +39,16 @@ class LicenseFragment : BaseFragment(), LicenseView, MainView.TitledView {
         fun newInstance() = LicenseFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_license, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentLicenseBinding.bind(view)
         presenter.onAttachView(this)
     }
 
     override fun initView() {
         licenseAdapter.onClickListener = presenter::onItemSelected
 
-        with(licenseRecycler) {
+        with(binding.licenseRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = licenseAdapter
         }
@@ -77,7 +73,7 @@ class LicenseFragment : BaseFragment(), LicenseView, MainView.TitledView {
     }
 
     override fun showProgress(show: Boolean) {
-        licenseProgress.visibility = if (show) VISIBLE else GONE
+        binding.licenseProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun onDestroyView() {

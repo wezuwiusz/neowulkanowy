@@ -2,11 +2,10 @@ package io.github.wulkanowy.ui.modules.about
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.databinding.FragmentAboutBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.contributor.ContributorFragment
 import io.github.wulkanowy.ui.modules.about.license.LicenseFragment
@@ -17,10 +16,10 @@ import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
-import kotlinx.android.synthetic.main.fragment_about.*
 import javax.inject.Inject
 
-class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
+class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about), AboutView,
+    MainView.TitledView {
 
     @Inject
     lateinit var presenter: AboutPresenter
@@ -77,19 +76,16 @@ class AboutFragment : BaseFragment(), AboutView, MainView.TitledView {
         fun newInstance() = AboutFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_about, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAboutBinding.bind(view)
         presenter.onAttachView(this)
     }
 
     override fun initView() {
         aboutAdapter.onClickListener = presenter::onItemSelected
 
-        with(aboutRecycler) {
+        with(binding.aboutRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = aboutAdapter
         }

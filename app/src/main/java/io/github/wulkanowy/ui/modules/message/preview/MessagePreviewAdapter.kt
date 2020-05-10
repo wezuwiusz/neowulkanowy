@@ -10,10 +10,11 @@ import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageAttachment
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.data.repositories.message.MessageFolder
+import io.github.wulkanowy.databinding.ItemMessageAttachmentBinding
+import io.github.wulkanowy.databinding.ItemMessageDividerBinding
+import io.github.wulkanowy.databinding.ItemMessagePreviewBinding
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.toFormattedString
-import kotlinx.android.synthetic.main.item_message_attachment.view.*
-import kotlinx.android.synthetic.main.item_message_preview.view.*
 import javax.inject.Inject
 
 class MessagePreviewAdapter @Inject constructor() :
@@ -45,44 +46,47 @@ class MessagePreviewAdapter @Inject constructor() :
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            ViewType.MESSAGE.id -> MessageViewHolder(inflater.inflate(R.layout.item_message_preview, parent, false))
-            ViewType.DIVIDER.id -> DividerViewHolder(inflater.inflate(R.layout.item_message_divider, parent, false))
-            ViewType.ATTACHMENT.id -> AttachmentViewHolder(inflater.inflate(R.layout.item_message_attachment, parent, false))
+            ViewType.MESSAGE.id -> MessageViewHolder(ItemMessagePreviewBinding.inflate(inflater, parent, false))
+            ViewType.DIVIDER.id -> DividerViewHolder(ItemMessageDividerBinding.inflate(inflater, parent, false))
+            ViewType.ATTACHMENT.id -> AttachmentViewHolder(ItemMessageAttachmentBinding.inflate(inflater, parent, false))
             else -> throw IllegalStateException()
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MessageViewHolder -> bindMessage(holder.view, requireNotNull(messageWithAttachment).message)
-            is AttachmentViewHolder -> bindAttachment(holder.view, requireNotNull(messageWithAttachment).attachments[position - 2])
+            is MessageViewHolder -> bindMessage(holder, requireNotNull(messageWithAttachment).message)
+            is AttachmentViewHolder -> bindAttachment(holder, requireNotNull(messageWithAttachment).attachments[position - 2])
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindMessage(view: View, message: Message) {
-        with(view) {
-            messagePreviewSubject.text = if (message.subject.isNotBlank()) message.subject else context.getString(R.string.message_no_subject)
-            messagePreviewDate.text = context.getString(R.string.message_date, message.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
+    private fun bindMessage(holder: MessageViewHolder, message: Message) {
+        with(holder.binding) {
+            messagePreviewSubject.text = if (message.subject.isNotBlank()) message.subject else root.context.getString(R.string.message_no_subject)
+            messagePreviewDate.text = root.context.getString(R.string.message_date, message.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
             messagePreviewContent.text = message.content
-            messagePreviewAuthor.text = if (message.folderId == MessageFolder.SENT.id) "${context.getString(R.string.message_to)} ${message.recipient}"
-            else "${context.getString(R.string.message_from)} ${message.sender}"
+            messagePreviewAuthor.text = if (message.folderId == MessageFolder.SENT.id) "${root.context.getString(R.string.message_to)} ${message.recipient}"
+            else "${root.context.getString(R.string.message_from)} ${message.sender}"
         }
     }
 
-    private fun bindAttachment(view: View, attachment: MessageAttachment) {
-        with(view) {
+    private fun bindAttachment(holder: AttachmentViewHolder, attachment: MessageAttachment) {
+        with(holder.binding) {
             messagePreviewAttachment.visibility = View.VISIBLE
             messagePreviewAttachment.text = attachment.filename
-            setOnClickListener {
-                context.openInternetBrowser(attachment.url) { }
+            root.setOnClickListener {
+                root.context.openInternetBrowser(attachment.url) { }
             }
         }
     }
 
-    class MessageViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class MessageViewHolder(val binding: ItemMessagePreviewBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    class DividerViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class DividerViewHolder(val binding: ItemMessageDividerBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    class AttachmentViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class AttachmentViewHolder(val binding: ItemMessageAttachmentBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

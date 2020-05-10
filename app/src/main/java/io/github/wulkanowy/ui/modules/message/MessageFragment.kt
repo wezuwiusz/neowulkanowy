@@ -1,16 +1,15 @@
 package io.github.wulkanowy.ui.modules.message
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.repositories.message.MessageFolder.SENT
 import io.github.wulkanowy.data.repositories.message.MessageFolder.TRASHED
+import io.github.wulkanowy.databinding.FragmentMessageBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.main.MainView
@@ -18,10 +17,10 @@ import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
 import io.github.wulkanowy.ui.modules.message.tab.MessageTabFragment
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnSelectPageListener
-import kotlinx.android.synthetic.main.fragment_message.*
 import javax.inject.Inject
 
-class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
+class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_message),
+    MessageView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: MessagePresenter
@@ -35,20 +34,17 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
 
     override val titleStringId get() = R.string.message_title
 
-    override val currentPageIndex get() = messageViewPager.currentItem
+    override val currentPageIndex get() = binding.messageViewPager.currentItem
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_message, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentMessageBinding.bind(view)
         presenter.onAttachView(this)
     }
 
     override fun initView() {
         with(pagerAdapter) {
-            containerId = messageViewPager.id
+            containerId = binding.messageViewPager.id
             addFragmentsWithTitle(mapOf(
                 MessageTabFragment.newInstance(RECEIVED) to getString(R.string.message_inbox),
                 MessageTabFragment.newInstance(SENT) to getString(R.string.message_sent),
@@ -56,27 +52,29 @@ class MessageFragment : BaseFragment(), MessageView, MainView.TitledView {
             ))
         }
 
-        with(messageViewPager) {
+        with(binding.messageViewPager) {
             adapter = pagerAdapter
             offscreenPageLimit = 2
             setOnSelectPageListener(presenter::onPageSelected)
         }
 
-        with(messageTabLayout) {
-            setupWithViewPager(messageViewPager)
+        with(binding.messageTabLayout) {
+            setupWithViewPager(binding.messageViewPager)
             setElevationCompat(context.dpToPx(4f))
         }
 
-        openSendMessageButton.setOnClickListener { presenter.onSendMessageButtonClicked() }
+        binding.openSendMessageButton.setOnClickListener { presenter.onSendMessageButtonClicked() }
     }
 
     override fun showContent(show: Boolean) {
-        messageViewPager.visibility = if (show) VISIBLE else INVISIBLE
-        messageTabLayout.visibility = if (show) VISIBLE else INVISIBLE
+        with(binding) {
+            messageViewPager.visibility = if (show) VISIBLE else INVISIBLE
+            messageTabLayout.visibility = if (show) VISIBLE else INVISIBLE
+        }
     }
 
     override fun showProgress(show: Boolean) {
-        messageProgress.visibility = if (show) VISIBLE else INVISIBLE
+        binding.messageProgress.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     fun onDeleteMessage(message: Message) {

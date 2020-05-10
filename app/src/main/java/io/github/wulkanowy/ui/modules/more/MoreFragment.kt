@@ -2,11 +2,10 @@ package io.github.wulkanowy.ui.modules.more
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.databinding.FragmentMoreBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.AboutFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
@@ -19,10 +18,10 @@ import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
 import io.github.wulkanowy.utils.getCompatDrawable
-import kotlinx.android.synthetic.main.fragment_more.*
 import javax.inject.Inject
 
-class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.MainChildView {
+class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), MoreView,
+    MainView.TitledView, MainView.MainChildView {
 
     @Inject
     lateinit var presenter: MorePresenter
@@ -61,19 +60,16 @@ class MoreFragment : BaseFragment(), MoreView, MainView.TitledView, MainView.Mai
     override val aboutRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.about_title) to getCompatDrawable(R.drawable.ic_all_about) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_more, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentMoreBinding.bind(view)
         presenter.onAttachView(this)
     }
 
     override fun initView() {
         moreAdapter.onClickListener = presenter::onItemSelected
 
-        moreRecycler.apply {
+        with(binding.moreRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = moreAdapter
         }

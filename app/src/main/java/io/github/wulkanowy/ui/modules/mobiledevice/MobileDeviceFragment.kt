@@ -1,25 +1,25 @@
 package io.github.wulkanowy.ui.modules.mobiledevice
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.core.view.postDelayed
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.MobileDevice
+import io.github.wulkanowy.databinding.FragmentMobileDeviceBinding
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.mobiledevice.token.MobileDeviceTokenDialog
-import kotlinx.android.synthetic.main.fragment_mobile_device.*
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import javax.inject.Inject
 
-class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledView {
+class MobileDeviceFragment :
+    BaseFragment<FragmentMobileDeviceBinding>(R.layout.fragment_mobile_device), MobileDeviceView,
+    MainView.TitledView {
 
     @Inject
     lateinit var presenter: MobileDevicePresenter
@@ -37,29 +37,28 @@ class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledVi
     override val isViewEmpty: Boolean
         get() = devicesAdapter.items.isEmpty()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_mobile_device, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = mobileDevicesRecycler
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentMobileDeviceBinding.bind(view)
+        messageContainer = binding.mobileDevicesRecycler
         presenter.onAttachView(this)
     }
 
     override fun initView() {
         devicesAdapter.onDeviceUnregisterListener = presenter::onUnregisterDevice
 
-        with(mobileDevicesRecycler) {
+        with(binding.mobileDevicesRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = devicesAdapter
             addItemDecoration(DividerItemDecoration(context))
         }
 
-        mobileDevicesSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
-        mobileDevicesErrorRetry.setOnClickListener { presenter.onRetry() }
-        mobileDevicesErrorDetails.setOnClickListener { presenter.onDetailsClick() }
-        mobileDeviceAddButton.setOnClickListener { presenter.onRegisterDevice() }
+        with(binding) {
+            mobileDevicesSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            mobileDevicesErrorRetry.setOnClickListener { presenter.onRetry() }
+            mobileDevicesErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+            mobileDeviceAddButton.setOnClickListener { presenter.onRegisterDevice() }
+        }
     }
 
     override fun updateData(data: List<MobileDevice>) {
@@ -88,7 +87,7 @@ class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledVi
     override fun showUndo(device: MobileDevice, position: Int) {
         var confirmed = true
 
-        Snackbar.make(mobileDevicesRecycler, getString(R.string.mobile_device_removed), 3000)
+        Snackbar.make(binding.mobileDevicesRecycler, getString(R.string.mobile_device_removed), 3000)
             .setAction(R.string.all_undo) {
                 confirmed = false
                 presenter.onUnregisterCancelled(device, position)
@@ -100,31 +99,31 @@ class MobileDeviceFragment : BaseFragment(), MobileDeviceView, MainView.TitledVi
     }
 
     override fun hideRefresh() {
-        mobileDevicesSwipe.isRefreshing = false
+        binding.mobileDevicesSwipe.isRefreshing = false
     }
 
     override fun showProgress(show: Boolean) {
-        mobileDevicesProgress.visibility = if (show) VISIBLE else GONE
+        binding.mobileDevicesProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showEmpty(show: Boolean) {
-        mobileDevicesEmpty.visibility = if (show) VISIBLE else GONE
+        binding.mobileDevicesEmpty.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showErrorView(show: Boolean) {
-        mobileDevicesError.visibility = if (show) VISIBLE else GONE
+        binding.mobileDevicesError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        mobileDevicesErrorMessage.text = message
+        binding.mobileDevicesErrorMessage.text = message
     }
 
     override fun enableSwipe(enable: Boolean) {
-        mobileDevicesSwipe.isEnabled = enable
+        binding.mobileDevicesSwipe.isEnabled = enable
     }
 
     override fun showContent(show: Boolean) {
-        mobileDevicesRecycler.visibility = if (show) VISIBLE else GONE
+        binding.mobileDevicesRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showTokenDialog() {

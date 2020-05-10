@@ -1,25 +1,24 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
+import io.github.wulkanowy.databinding.FragmentMessageTabBinding
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
-import kotlinx.android.synthetic.main.fragment_message_tab.*
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import javax.inject.Inject
 
-class MessageTabFragment : BaseFragment(), MessageTabView {
+class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.fragment_message_tab),
+    MessageTabView {
 
     @Inject
     lateinit var presenter: MessageTabPresenter
@@ -42,13 +41,10 @@ class MessageTabFragment : BaseFragment(), MessageTabView {
     override val isViewEmpty
         get() = tabAdapter.items.isEmpty()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_message_tab, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = messageTabRecycler
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentMessageTabBinding.bind(view)
+        messageContainer = binding.messageTabRecycler
         presenter.onAttachView(this, MessageFolder.valueOf(
             (savedInstanceState ?: arguments)?.getString(MESSAGE_TAB_FOLDER_ID).orEmpty()
         ))
@@ -57,14 +53,16 @@ class MessageTabFragment : BaseFragment(), MessageTabView {
     override fun initView() {
         tabAdapter.onClickListener = presenter::onMessageItemSelected
 
-        messageTabRecycler.run {
+        with(binding.messageTabRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = tabAdapter
             addItemDecoration(DividerItemDecoration(context))
         }
-        messageTabSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
-        messageTabErrorRetry.setOnClickListener { presenter.onRetry() }
-        messageTabErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        with(binding) {
+            messageTabSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            messageTabErrorRetry.setOnClickListener { presenter.onRetry() }
+            messageTabErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        }
     }
 
     override fun updateData(data: List<Message>) {
@@ -82,31 +80,31 @@ class MessageTabFragment : BaseFragment(), MessageTabView {
     }
 
     override fun showProgress(show: Boolean) {
-        messageTabProgress.visibility = if (show) VISIBLE else GONE
+        binding.messageTabProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
-        messageTabSwipe.isEnabled = enable
+        binding.messageTabSwipe.isEnabled = enable
     }
 
     override fun showContent(show: Boolean) {
-        messageTabRecycler.visibility = if (show) VISIBLE else INVISIBLE
+        binding.messageTabRecycler.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showEmpty(show: Boolean) {
-        messageTabEmpty.visibility = if (show) VISIBLE else INVISIBLE
+        binding.messageTabEmpty.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showErrorView(show: Boolean) {
-        messageTabError.visibility = if (show) VISIBLE else GONE
+        binding.messageTabError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        messageTabErrorMessage.text = message
+        binding.messageTabErrorMessage.text = message
     }
 
     override fun showRefresh(show: Boolean) {
-        messageTabSwipe.isRefreshing = show
+        binding.messageTabSwipe.isRefreshing = show
     }
 
     override fun openMessage(message: Message) {

@@ -10,13 +10,14 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
+import io.github.wulkanowy.databinding.DialogExcuseBinding
+import io.github.wulkanowy.databinding.FragmentAttendanceBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
@@ -24,12 +25,10 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
-import kotlinx.android.synthetic.main.dialog_excuse.*
-import kotlinx.android.synthetic.main.fragment_attendance.*
 import org.threeten.bp.LocalDate
 import javax.inject.Inject
 
-class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildView,
+class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.fragment_attendance), AttendanceView, MainView.MainChildView,
     MainView.TitledView {
 
     @Inject
@@ -89,13 +88,10 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_attendance, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = attendanceRecycler
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAttendanceBinding.bind(view)
+        messageContainer = binding.attendanceRecycler
         presenter.onAttachView(this, savedInstanceState?.getLong(SAVED_DATE_KEY))
     }
 
@@ -105,23 +101,25 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
             onExcuseCheckboxSelect = presenter::onExcuseCheckboxSelect
         }
 
-        with(attendanceRecycler) {
+        with(binding.attendanceRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = attendanceAdapter
             addItemDecoration(DividerItemDecoration(context))
         }
 
-        attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
-        attendanceErrorRetry.setOnClickListener { presenter.onRetry() }
-        attendanceErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        with(binding) {
+            attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            attendanceErrorRetry.setOnClickListener { presenter.onRetry() }
+            attendanceErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
-        attendancePreviousButton.setOnClickListener { presenter.onPreviousDay() }
-        attendanceNavDate.setOnClickListener { presenter.onPickDate() }
-        attendanceNextButton.setOnClickListener { presenter.onNextDay() }
+            attendancePreviousButton.setOnClickListener { presenter.onPreviousDay() }
+            attendanceNavDate.setOnClickListener { presenter.onPickDate() }
+            attendanceNextButton.setOnClickListener { presenter.onNextDay() }
 
-        attendanceExcuseButton.setOnClickListener { presenter.onExcuseButtonClick() }
+            attendanceExcuseButton.setOnClickListener { presenter.onExcuseButtonClick() }
 
-        attendanceNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            attendanceNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -141,7 +139,7 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun updateNavigationDay(date: String) {
-        attendanceNavDate.text = date
+        binding.attendanceNavDate.text = date
     }
 
     override fun clearData() {
@@ -152,7 +150,7 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun resetView() {
-        attendanceRecycler.smoothScrollToPosition(0)
+        binding.attendanceRecycler.smoothScrollToPosition(0)
     }
 
     override fun onFragmentReselected() {
@@ -168,43 +166,43 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun showEmpty(show: Boolean) {
-        attendanceEmpty.visibility = if (show) VISIBLE else GONE
+        binding.attendanceEmpty.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showErrorView(show: Boolean) {
-        attendanceError.visibility = if (show) VISIBLE else GONE
+        binding.attendanceError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        attendanceErrorMessage.text = message
+        binding.attendanceErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        attendanceProgress.visibility = if (show) VISIBLE else GONE
+        binding.attendanceProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
-        attendanceSwipe.isEnabled = enable
+        binding.attendanceSwipe.isEnabled = enable
     }
 
     override fun showContent(show: Boolean) {
-        attendanceRecycler.visibility = if (show) VISIBLE else GONE
+        binding. attendanceRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun hideRefresh() {
-        attendanceSwipe.isRefreshing = false
+        binding.attendanceSwipe.isRefreshing = false
     }
 
     override fun showPreButton(show: Boolean) {
-        attendancePreviousButton.visibility = if (show) VISIBLE else INVISIBLE
+        binding.attendancePreviousButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        attendanceNextButton.visibility = if (show) VISIBLE else INVISIBLE
+        binding. attendanceNextButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showExcuseButton(show: Boolean) {
-        attendanceExcuseButton.visibility = if (show) VISIBLE else GONE
+        binding.attendanceExcuseButton.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showAttendanceDialog(lesson: Attendance) {
@@ -227,14 +225,15 @@ class AttendanceFragment : BaseFragment(), AttendanceView, MainView.MainChildVie
     }
 
     override fun showExcuseDialog() {
+        val dialogBinding = DialogExcuseBinding.inflate(LayoutInflater.from(context))
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.attendance_excuse_title)
-            .setView(R.layout.dialog_excuse)
+            .setView(dialogBinding.root)
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .create()
             .apply {
                 setButton(BUTTON_POSITIVE, getString(R.string.attendance_excuse_dialog_submit)) { _, _ ->
-                    presenter.onExcuseDialogSubmit(excuseReason.text?.toString().orEmpty())
+                    presenter.onExcuseDialogSubmit(dialogBinding.excuseReason.text?.toString().orEmpty())
                 }
             }.show()
     }

@@ -1,14 +1,13 @@
 package io.github.wulkanowy.ui.modules.homework.details
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
+import io.github.wulkanowy.databinding.ItemHomeworkDialogAttachmentBinding
+import io.github.wulkanowy.databinding.ItemHomeworkDialogAttachmentsHeaderBinding
+import io.github.wulkanowy.databinding.ItemHomeworkDialogDetailsBinding
 import io.github.wulkanowy.utils.toFormattedString
-import kotlinx.android.synthetic.main.item_homework_dialog_attachment.view.*
-import kotlinx.android.synthetic.main.item_homework_dialog_details.view.*
 import javax.inject.Inject
 
 class HomeworkDetailsAdapter @Inject constructor() :
@@ -42,9 +41,9 @@ class HomeworkDetailsAdapter @Inject constructor() :
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            ViewType.ATTACHMENTS_HEADER.id -> AttachmentsHeaderViewHolder(inflater.inflate(R.layout.item_homework_dialog_attachments_header, parent, false))
-            ViewType.ATTACHMENT.id -> AttachmentViewHolder(inflater.inflate(R.layout.item_homework_dialog_attachment, parent, false))
-            else -> DetailsViewHolder(inflater.inflate(R.layout.item_homework_dialog_details, parent, false))
+            ViewType.ATTACHMENTS_HEADER.id -> AttachmentsHeaderViewHolder(ItemHomeworkDialogAttachmentsHeaderBinding.inflate(inflater, parent, false))
+            ViewType.ATTACHMENT.id -> AttachmentViewHolder(ItemHomeworkDialogAttachmentBinding.inflate(inflater, parent, false))
+            else -> DetailsViewHolder(ItemHomeworkDialogDetailsBinding.inflate(inflater, parent, false))
         }
     }
 
@@ -56,7 +55,7 @@ class HomeworkDetailsAdapter @Inject constructor() :
     }
 
     private fun bindDetailsViewHolder(holder: DetailsViewHolder) {
-        with(holder.view) {
+        with(holder.binding) {
             homeworkDialogDate.text = homework?.date?.toFormattedString()
             homeworkDialogEntryDate.text = homework?.entryDate?.toFormattedString()
             homeworkDialogSubject.text = homework?.subject
@@ -68,17 +67,20 @@ class HomeworkDetailsAdapter @Inject constructor() :
     private fun bindAttachmentViewHolder(holder: AttachmentViewHolder, position: Int) {
         val item = attachments[position]
 
-        with(holder.view) {
+        with(holder.binding) {
             homeworkDialogAttachment.text = item.second
-            setOnClickListener {
+            root.setOnClickListener {
                 onAttachmentClickListener(item.first)
             }
         }
     }
 
-    class DetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class DetailsViewHolder(val binding: ItemHomeworkDialogDetailsBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    class AttachmentsHeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class AttachmentsHeaderViewHolder(val binding: ItemHomeworkDialogAttachmentsHeaderBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    class AttachmentViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class AttachmentViewHolder(val binding: ItemHomeworkDialogAttachmentBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

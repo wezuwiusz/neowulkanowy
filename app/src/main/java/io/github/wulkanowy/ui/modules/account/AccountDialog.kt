@@ -10,12 +10,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.databinding.DialogAccountBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
-import kotlinx.android.synthetic.main.dialog_account.*
 import javax.inject.Inject
 
-class AccountDialog : BaseDialogFragment(), AccountView {
+class AccountDialog : BaseDialogFragment<DialogAccountBinding>(), AccountView {
 
     @Inject
     lateinit var presenter: AccountPresenter
@@ -33,7 +33,7 @@ class AccountDialog : BaseDialogFragment(), AccountView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_account, container, false)
+        return DialogAccountBinding.inflate(inflater).apply { binding = this }.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -44,11 +44,13 @@ class AccountDialog : BaseDialogFragment(), AccountView {
     override fun initView() {
         accountAdapter.onClickListener = presenter::onItemSelected
 
-        accountDialogAdd.setOnClickListener { presenter.onAddSelected() }
-        accountDialogRemove.setOnClickListener { presenter.onRemoveSelected() }
-        accountDialogRecycler.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = accountAdapter
+        with(binding) {
+            accountDialogAdd.setOnClickListener { presenter.onAddSelected() }
+            accountDialogRemove.setOnClickListener { presenter.onRemoveSelected() }
+            accountDialogRecycler.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = accountAdapter
+            }
         }
     }
 

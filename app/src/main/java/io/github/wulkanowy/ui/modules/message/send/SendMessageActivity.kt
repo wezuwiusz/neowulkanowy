@@ -14,14 +14,14 @@ import android.widget.Toast.LENGTH_LONG
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.ReportingUnit
+import io.github.wulkanowy.databinding.ActivitySendMessageBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.showSoftInput
-import kotlinx.android.synthetic.main.activity_send_message.*
 import javax.inject.Inject
 
-class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageView {
+class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessageBinding>(), SendMessageView {
 
     @Inject
     override lateinit var presenter: SendMessagePresenter
@@ -41,17 +41,17 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageVie
     }
 
     override val isDropdownListVisible: Boolean
-        get() = sendMessageTo.isDropdownListVisible
+        get() = binding.sendMessageTo.isDropdownListVisible
 
     @Suppress("UNCHECKED_CAST")
     override val formRecipientsData: List<RecipientChipItem>
-        get() = sendMessageTo.addedChipItems as List<RecipientChipItem>
+        get() = binding.sendMessageTo.addedChipItems as List<RecipientChipItem>
 
     override val formSubjectValue: String
-        get() = sendMessageSubject.text.toString()
+        get() = binding.sendMessageSubject.text.toString()
 
     override val formContentValue: String
-        get() = sendMessageMessageContent.text.toString()
+        get() = binding.sendMessageMessageContent.text.toString()
 
     override val messageRequiredRecipients: String
         get() = getString(R.string.message_required_recipients)
@@ -64,18 +64,20 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_send_message)
-        setSupportActionBar(sendMessageToolbar)
+        setContentView(ActivitySendMessageBinding.inflate(layoutInflater).apply { binding = this }.root)
+        setSupportActionBar(binding.sendMessageToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        messageContainer = sendMessageContainer
+        messageContainer = binding.sendMessageContainer
 
         presenter.onAttachView(this, intent.getSerializableExtra(EXTRA_MESSAGE) as? Message, intent.getSerializableExtra(EXTRA_REPLY) as? Boolean)
     }
 
     override fun initView() {
         setUpExtendedHitArea()
-        sendMessageScroll.setOnTouchListener { _, _ -> presenter.onTouchScroll() }
-        sendMessageTo.onTextChangeListener = presenter::onRecipientsTextChange
+        with(binding) {
+            sendMessageScroll.setOnTouchListener { _, _ -> presenter.onTouchScroll() }
+            sendMessageTo.onTextChangeListener = presenter::onRecipientsTextChange
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -93,27 +95,27 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageVie
     }
 
     override fun setReportingUnit(unit: ReportingUnit) {
-        sendMessageFrom.text = unit.senderName
+        binding.sendMessageFrom.text = unit.senderName
     }
 
     override fun setRecipients(recipients: List<RecipientChipItem>) {
-        sendMessageTo.filterableChipItems = recipients
+        binding.sendMessageTo.filterableChipItems = recipients
     }
 
     override fun setSelectedRecipients(recipients: List<RecipientChipItem>) {
-        sendMessageTo.addChips(recipients)
+        binding.sendMessageTo.addChips(recipients)
     }
 
     override fun showProgress(show: Boolean) {
-        sendMessageProgress.visibility = if (show) VISIBLE else GONE
+        binding.sendMessageProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showContent(show: Boolean) {
-        sendMessageContent.visibility = if (show) VISIBLE else GONE
+        binding.sendMessageContent.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showEmpty(show: Boolean) {
-        sendMessageEmpty.visibility = if (show) VISIBLE else GONE
+        binding.sendMessageEmpty.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showActionBar(show: Boolean) {
@@ -121,11 +123,11 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageVie
     }
 
     override fun setSubject(subject: String) {
-        sendMessageSubject.setText(subject)
+        binding.sendMessageSubject.setText(subject)
     }
 
     override fun setContent(content: String) {
-        sendMessageMessageContent.setText(content)
+        binding.sendMessageMessageContent.setText(content)
     }
 
     override fun showMessage(text: String) {
@@ -137,12 +139,14 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageVie
     }
 
     override fun hideDropdownList() {
-        sendMessageTo.hideDropdownList()
+        binding.sendMessageTo.hideDropdownList()
     }
 
     override fun scrollToRecipients() {
-        sendMessageScroll.post {
-            sendMessageScroll.scrollTo(0, sendMessageTo.bottom - dpToPx(53f).toInt())
+        with(binding.sendMessageScroll) {
+            post {
+                scrollTo(0, binding.sendMessageTo.bottom - dpToPx(53f).toInt())
+            }
         }
     }
 
@@ -153,24 +157,24 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter>(), SendMessageVie
     private fun setUpExtendedHitArea() {
         fun extendHitArea() {
             val containerHitRect = Rect().apply {
-                sendMessageContent.getHitRect(this)
+                binding.sendMessageContent.getHitRect(this)
             }
 
             val contentHitRect = Rect().apply {
-                sendMessageMessageContent.getHitRect(this)
+                binding.sendMessageMessageContent.getHitRect(this)
             }
 
             contentHitRect.top = contentHitRect.bottom
             contentHitRect.bottom = containerHitRect.bottom
 
-            sendMessageContent.touchDelegate = TouchDelegate(contentHitRect, sendMessageMessageContent)
+            binding.sendMessageContent.touchDelegate = TouchDelegate(contentHitRect, binding.sendMessageMessageContent)
         }
 
-        sendMessageMessageContent.post {
-            sendMessageMessageContent.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+        with(binding.sendMessageMessageContent) {
+            post {
+                addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> extendHitArea() }
                 extendHitArea()
             }
-            extendHitArea()
         }
     }
 }

@@ -1,24 +1,23 @@
 package io.github.wulkanowy.ui.modules.exam
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
+import io.github.wulkanowy.databinding.FragmentExamBinding
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.dpToPx
-import kotlinx.android.synthetic.main.fragment_exam.*
 import javax.inject.Inject
 
-class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.TitledView {
+class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), ExamView,
+    MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: ExamPresenter
@@ -36,37 +35,36 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
 
     override val isViewEmpty get() = examAdapter.items.isEmpty()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_exam, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = examRecycler
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentExamBinding.bind(view)
+        messageContainer = binding.examRecycler
         presenter.onAttachView(this, savedInstanceState?.getLong(SAVED_DATE_KEY))
     }
 
     override fun initView() {
         examAdapter.onClickListener = presenter::onExamItemSelected
 
-        with(examRecycler) {
+        with(binding.examRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = examAdapter
             addItemDecoration(DividerItemDecoration(context))
         }
 
-        examSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
-        examErrorRetry.setOnClickListener { presenter.onRetry() }
-        examErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        with(binding) {
+            examSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            examErrorRetry.setOnClickListener { presenter.onRetry() }
+            examErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
-        examPreviousButton.setOnClickListener { presenter.onPreviousWeek() }
-        examNextButton.setOnClickListener { presenter.onNextWeek() }
+            examPreviousButton.setOnClickListener { presenter.onPreviousWeek() }
+            examNextButton.setOnClickListener { presenter.onNextWeek() }
 
-        examNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            examNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+        }
     }
 
     override fun hideRefresh() {
-        examSwipe.isRefreshing = false
+        binding.examSwipe.isRefreshing = false
     }
 
     override fun updateData(data: List<ExamItem<*>>) {
@@ -77,7 +75,7 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
     }
 
     override fun updateNavigationWeek(date: String) {
-        examNavDate.text = date
+        binding.examNavDate.text = date
     }
 
     override fun clearData() {
@@ -88,7 +86,7 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
     }
 
     override fun resetView() {
-        examRecycler.scrollToPosition(0)
+        binding.examRecycler.scrollToPosition(0)
     }
 
     override fun onFragmentReselected() {
@@ -96,35 +94,35 @@ class ExamFragment : BaseFragment(), ExamView, MainView.MainChildView, MainView.
     }
 
     override fun showEmpty(show: Boolean) {
-        examEmpty.visibility = if (show) VISIBLE else GONE
+        binding.examEmpty.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showErrorView(show: Boolean) {
-        examError.visibility = if (show) VISIBLE else GONE
+        binding.examError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        examErrorMessage.text = message
+        binding.examErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        examProgress.visibility = if (show) VISIBLE else GONE
+        binding.examProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
-        examSwipe.isEnabled = enable
+        binding.examSwipe.isEnabled = enable
     }
 
     override fun showContent(show: Boolean) {
-        examRecycler.visibility = if (show) VISIBLE else GONE
+        binding.examRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showPreButton(show: Boolean) {
-        examPreviousButton.visibility = if (show) VISIBLE else INVISIBLE
+        binding.examPreviousButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        examNextButton.visibility = if (show) VISIBLE else INVISIBLE
+        binding.examNextButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showExamDialog(exam: Exam) {

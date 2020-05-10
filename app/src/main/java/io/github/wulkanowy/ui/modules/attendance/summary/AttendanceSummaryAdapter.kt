@@ -23,7 +23,7 @@ class AttendanceSummaryAdapter @Inject constructor() :
 
     var items = emptyList<AttendanceSummary>()
 
-    override fun getItemCount() = items.size + 2
+    override fun getItemCount() = if (items.isNotEmpty()) items.size + 2 else 0
 
     override fun getItemViewType(position: Int) = when (position) {
         0 -> ViewType.HEADER.id

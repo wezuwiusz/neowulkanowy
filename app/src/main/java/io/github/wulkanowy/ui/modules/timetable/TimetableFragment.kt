@@ -1,31 +1,29 @@
 package io.github.wulkanowy.ui.modules.timetable
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.databinding.FragmentTimetableBinding
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
-import kotlinx.android.synthetic.main.fragment_timetable.*
 import org.threeten.bp.LocalDate
 import javax.inject.Inject
 
-class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
-    MainView.TitledView {
+class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragment_timetable),
+    TimetableView, MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: TimetablePresenter
@@ -50,34 +48,33 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_timetable, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = timetableRecycler
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentTimetableBinding.bind(view)
+        messageContainer = binding.timetableRecycler
         presenter.onAttachView(this, savedInstanceState?.getLong(SAVED_DATE_KEY))
     }
 
     override fun initView() {
         timetableAdapter.onClickListener = presenter::onTimetableItemSelected
 
-        with(timetableRecycler) {
+        with(binding.timetableRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = timetableAdapter
             addItemDecoration(DividerItemDecoration(context))
         }
 
-        timetableSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
-        timetableErrorRetry.setOnClickListener { presenter.onRetry() }
-        timetableErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        with(binding) {
+            timetableSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            timetableErrorRetry.setOnClickListener { presenter.onRetry() }
+            timetableErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
-        timetablePreviousButton.setOnClickListener { presenter.onPreviousDay() }
-        timetableNavDate.setOnClickListener { presenter.onPickDate() }
-        timetableNextButton.setOnClickListener { presenter.onNextDay() }
+            timetablePreviousButton.setOnClickListener { presenter.onPreviousDay() }
+            timetableNavDate.setOnClickListener { presenter.onPickDate() }
+            timetableNextButton.setOnClickListener { presenter.onNextDay() }
 
-        timetableNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            timetableNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -105,15 +102,15 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     }
 
     override fun updateNavigationDay(date: String) {
-        timetableNavDate.text = date
+        binding.timetableNavDate.text = date
     }
 
     override fun hideRefresh() {
-        timetableSwipe.isRefreshing = false
+        binding.timetableSwipe.isRefreshing = false
     }
 
     override fun resetView() {
-        timetableRecycler.smoothScrollToPosition(0)
+        binding.timetableRecycler.smoothScrollToPosition(0)
     }
 
     override fun onFragmentReselected() {
@@ -125,35 +122,35 @@ class TimetableFragment : BaseFragment(), TimetableView, MainView.MainChildView,
     }
 
     override fun showEmpty(show: Boolean) {
-        timetableEmpty.visibility = if (show) VISIBLE else GONE
+        binding.timetableEmpty.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showErrorView(show: Boolean) {
-        timetableError.visibility = if (show) VISIBLE else GONE
+        binding.timetableError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        timetableErrorMessage.text = message
+        binding.timetableErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        timetableProgress.visibility = if (show) VISIBLE else GONE
+        binding.timetableProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
-        timetableSwipe.isEnabled = enable
+        binding.timetableSwipe.isEnabled = enable
     }
 
     override fun showContent(show: Boolean) {
-        timetableRecycler.visibility = if (show) VISIBLE else GONE
+        binding.timetableRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showPreButton(show: Boolean) {
-        timetablePreviousButton.visibility = if (show) VISIBLE else View.INVISIBLE
+        binding.timetablePreviousButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
     override fun showNextButton(show: Boolean) {
-        timetableNextButton.visibility = if (show) VISIBLE else View.INVISIBLE
+        binding.timetableNextButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
     override fun showTimetableDialog(lesson: Timetable) {

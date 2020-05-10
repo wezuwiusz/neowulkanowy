@@ -11,14 +11,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.databinding.ActivityWidgetConfigureBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.WidgetConfigureAdapter
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.EXTRA_FROM_PROVIDER
-import kotlinx.android.synthetic.main.activity_widget_configure.*
 import javax.inject.Inject
 
-class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePresenter>(),
+class TimetableWidgetConfigureActivity :
+    BaseActivity<TimetableWidgetConfigurePresenter, ActivityWidgetConfigureBinding>(),
     TimetableWidgetConfigureView {
 
     @Inject
@@ -32,7 +33,7 @@ class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setResult(RESULT_CANCELED)
-        setContentView(R.layout.activity_widget_configure)
+        setContentView(ActivityWidgetConfigureBinding.inflate(layoutInflater).apply { binding = this }.root)
 
         intent.extras.let {
             presenter.onAttachView(this, it?.getInt(EXTRA_APPWIDGET_ID), it?.getBoolean(EXTRA_FROM_PROVIDER))
@@ -40,7 +41,7 @@ class TimetableWidgetConfigureActivity : BaseActivity<TimetableWidgetConfigurePr
     }
 
     override fun initView() {
-        with(widgetConfigureRecycler) {
+        with(binding.widgetConfigureRecycler) {
             adapter = configureAdapter
             layoutManager = LinearLayoutManager(context)
         }
