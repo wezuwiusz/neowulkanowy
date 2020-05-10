@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wulkanowy</string>
-
-
     <!--Activity/Fragment title-->
     <string name="login_title">Anmelden</string>
     <string name="main_title">Wulkanowy</string>
@@ -21,11 +19,8 @@
     <string name="note_title">Eintragen und Erfolgen</string>
     <string name="homework_title">Hausaufgaben</string>
     <string name="account_title">Wählen Sie ein Konto</string>
-
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %d, %d/%d</string>
-
-
     <!--Login-->
     <string name="login_header_default">Melden Sie sich mit dem Studenten- oder Elternkonto an</string>
     <string name="login_header_symbol">Geben Sie das Symbol</string>
@@ -56,24 +51,25 @@
     <string name="login_symbol_helper">Das Symbol finden Sie auf der Registerseite unter <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen.</string>
     <string name="login_advanced">Andere Optionen</string>
+    <string name="login_advanced_warning_mobile_api">In this mode, a lucky number does not work, a class grade stats, summary of attendance, excuse for absence, completed lessons, school information and preview of the list of registered devices</string>
+    <string name="login_advanced_warning_scraper">This mode displays the same data as it appears on the register website</string>
+    <string name="login_advanced_warning_hybrid">The combination of the best features of the other two modes. It works faster than scraper and provides features not available in the Mobile API mode. It is in the experimental phase</string>
     <string name="login_privacy_policy">Datenschutzerklärung</string>
     <string name="login_contact_header">Probleme bei der Anmeldung? Kontaktieren Sie uns!</string>
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">email senden</string>
+    <string name="login_email_details">Describe details of problem:</string>
+    <string name="login_recover_warning">Make sure the correct UONET+ register is selected!</string>
     <string name="login_recover_button">Ich habe mein Passwort vergessen.</string>
     <string name="login_recover_title">Ihr Konto wiederherstellen</string>
     <string name="login_recover">Wiederherstellen</string>
     <string name="login_signed_in">Student ist bereits angemeldet</string>
-
-
     <!--Main-->
     <string name="main_account_picker">Kundenbetreuer</string>
     <string name="main_log_in">Anmelden</string>
     <string name="main_session_expired">Die Sitzung ist abgelaufen</string>
     <string name="main_session_relogin">Die Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein</string>
-
-
     <!--Grade-->
     <string name="grade_header">Note</string>
     <string name="grade_semester">Semester %d</string>
@@ -112,8 +108,6 @@
         <item quantity="one">Du hast %1$d Note bekommen</item>
         <item quantity="other">Du hast %1$d Noten bekommen</item>
     </plurals>
-
-
     <!--Timetable-->
     <string name="timetable_lesson">Lektion</string>
     <string name="timetable_room">Klassenzimmer</string>
@@ -121,17 +115,13 @@
     <string name="timetable_time">Stunden</string>
     <string name="timetable_changes">Änderungen</string>
     <string name="timetable_no_items">Kein Unterricht an diesem Tag</string>
-
-
-    <!--CompletedLesson-->
+    <!--Completed lessons-->
     <string name="completed_lessons_title">Beendete Lektionen</string>
     <string name="completed_lessons_button">Beendete Lektionen anzeigen</string>
     <string name="completed_lessons_no_items">Keine Informationen über beendete Lektionen</string>
     <string name="completed_lessons_topic">Thema</string>
     <string name="completed_lessons_absence">Abwesenheit</string>
     <string name="completed_lessons_resources">Ressourcen</string>
-
-
     <!--Attendance-->
     <string name="attendance_summary_button">Übersicht über die Schulbesuch</string>
     <string name="attendance_absence_school">Aus schulischen Gründen abwesend</string>
@@ -152,19 +142,13 @@
     <string name="attendance_excuse_success">Abwesenheit erfolgreich entschuldigt!</string>
     <string name="attendance_excuse_no_selection">Sie müssen mindestens eine Abwesenheit auswählen!</string>
     <string name="attendance_excuse_title">Verzeihung</string>
-
-
     <!--Attendance summary-->
     <string name="attendance_summary_final">Schulbesuch</string>
     <string name="attendance_summary_total">Gesamt</string>
-
-
     <!--Exam-->
     <string name="exam_no_items">Diese Woche keine Prüfungen</string>
     <string name="exam_type">Form</string>
     <string name="exam_entry_date">Eintrittsdatum</string>
-
-
     <!--Message-->
     <string name="message_inbox">Posteingang</string>
     <string name="message_sent">Gesendet</string>
@@ -198,8 +182,6 @@
         <item quantity="one">Du hast %1$d nachricht bekommen</item>
         <item quantity="other">Du hast %1$d nachrichten bekommen</item>
     </plurals>
-
-
     <!--Note-->
     <string name="note_no_items">Keine Informationen über Eintragen</string>
     <string name="note_points">Punkte</string>
@@ -215,23 +197,17 @@
         <item quantity="one">Du hast %1$d Eintrag bekommen</item>
         <item quantity="other">Du hast %1$d Eintragen bekommen</item>
     </plurals>
-
-
     <!--Homework-->
     <string name="homework_no_items">Keine Informationen über Hausaufgaben</string>
     <string name="homework_mark_as_done">Gemacht</string>
     <string name="homework_mark_as_undone">Unvollständig</string>
     <string name="homework_attachments">Anhänge</string>
-
-
     <!--Lucky number-->
     <string name="lucky_number_title">Glückliche Nummer</string>
-    <string name="lucky_number_header">"Die heutige Glücksnummer ist "</string>
+    <string name="lucky_number_header">Die heutige Glücksnummer ist </string>
     <string name="lucky_number_empty">Keine Information über die Glücksnummer.</string>
     <string name="lucky_number_notify_new_item_title">Glücksnummer für heute</string>
-    <string name="lucky_number_notify_new_item">"Die heutige Glücksnummer ist: "</string>
-
-
+    <string name="lucky_number_notify_new_item">Die heutige Glücksnummer ist: </string>
     <!--Mobile devices-->
     <string name="mobile_devices_title">Mobile Geräte</string>
     <string name="mobile_devices_no_items">Keine Geräte</string>
@@ -241,12 +217,8 @@
     <string name="mobile_device_token">Token</string>
     <string name="mobile_device_symbol">Symbol</string>
     <string name="mobile_device_pin">PIN</string>
-
-
     <!--School and teachers-->
     <string name="schoolandteachers_title">Schule und Lehrer</string>
-
-
     <!--School-->
     <string name="school_title">Schule</string>
     <string name="school_no_info">Keine Informationen über die Schule</string>
@@ -257,21 +229,15 @@
     <string name="school_pedagogue">Name des Pädagogen</string>
     <string name="school_address_button">Auf Karte anzeigen</string>
     <string name="school_telephone_button">Rufen Sie an</string>
-
-
     <!--Teacher-->
     <string name="teachers_title">Lehrerinnen und Lehrer</string>
     <string name="teacher_no_items">Keine Informationen über Lehrer</string>
     <string name="teacher_no_subject">Kein Thema</string>
-
-
     <!--Account-->
     <string name="account_add_new">Konto hinzufügen</string>
     <string name="account_logout">Abmelden</string>
     <string name="account_confirm">Wollen Sie sich von einem aktiven Studenten abmelden?</string>
     <string name="account_logout_student">Abmeldung von Student</string>
-
-
     <!--About-->
     <string name="about_version">Version der App</string>
     <string name="about_contributor">Mitarbeiter</string>
@@ -288,21 +254,14 @@
     <string name="about_homepage_summary">Besuchen Sie die Website und helfen Sie bei der Entwicklung der Anwendung</string>
     <string name="about_licenses">Lizenzen</string>
     <string name="about_licenses_summary">Lizenzen der in der Anwendung verwendeten Bibliotheken</string>
-
-
     <!--Licenses-->
     <string name="license_dialog_title">Lizenz</string>
-
-
-    <!--Creators-->
+    <!--Contributor-->
     <string name="contributor_avatar_description">Avatar</string>
     <string name="contributor_see_more">Sehen Sie mehr auf GitHub</string>
-
     <!--Log viewer-->
     <string name="logviewer_share">Logs teilen</string>
     <string name="logviewer_refresh">Aktualisieren</string>
-
-
     <!--Generic-->
     <string name="all_content">Inhalt</string>
     <string name="all_retry">Wiederhol</string>
@@ -319,15 +278,11 @@
     <string name="all_subject">Thema</string>
     <string name="all_prev">Zurück</string>
     <string name="all_next">Nächste</string>
-
-
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Keine Lektionen</string>
     <string name="widget_timetable_theme_title">Thema wählen</string>
     <string name="widget_timetable_theme_light">Licht</string>
     <string name="widget_timetable_theme_dark">Dunkel</string>
-
-
     <!--Preferences-->
     <string name="pref_view_header">Erscheinungsbild</string>
     <string name="pref_view_list">Standard Ansicht</string>
@@ -347,12 +302,18 @@
     <string name="pref_services_suspended">An Feiertagen suspendiert</string>
     <string name="pref_services_interval">Aktualisierungsintervall</string>
     <string name="pref_services_wifi">Nur Wi-Fi</string>
+    <string name="pref_services_force_sync">Sync now</string>
+    <string name="pref_services_message_sync_success">Synced!</string>
+    <string name="pref_services_message_sync_failed">Sync failed</string>
+    <string name="pref_services_sync_in_progress">Sync in progress</string>
+    <string name="pref_services_dialog_force_sync_title">Synchronization</string>
+    <string name="pref_services_dialog_force_sync_summary">        Manual sync doesn\'t refresh app views.
+        \nTo see the synced data relaunch the app after syncing.
+    </string>
     <string name="pref_other_header">Andere</string>
     <string name="pref_other_grade_modifier_plus">Wert des Plus</string>
     <string name="pref_other_grade_modifier_minus">Wert des Minus</string>
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
-
-
     <!--Notification Channels-->
     <string name="channel_new_entries">Neue Einträge im Klassenbuch</string>
     <string name="channel_new_grades">Neue Noten</string>
@@ -361,8 +322,6 @@
     <string name="channel_new_notes">Neue Eintragen</string>
     <string name="channel_push">Push-Benachrichtigungen</string>
     <string name="channel_debug">Debuggen</string>
-
-
     <!--Colors-->
     <string name="all_black">Schwarz</string>
     <string name="all_red">Rot</string>
@@ -370,13 +329,9 @@
     <string name="all_green">Grün</string>
     <string name="all_purple">Violett</string>
     <string name="all_empty_color">Keine Farbe</string>
-
-
     <!--Others-->
     <string name="all_copied">Kopiert</string>
     <string name="all_undo">lösen</string>
-
-
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
     <string name="error_timeout">Das Zeitlimit für die Verbindung zum Klassenbuch ist abgelaufen</string>
