@@ -40,7 +40,7 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
         registerStudent(selectedStudent)
     }
 
-    fun onDismissThemeView(){
+    fun onDismissThemeView() {
         view?.finishView()
     }
 

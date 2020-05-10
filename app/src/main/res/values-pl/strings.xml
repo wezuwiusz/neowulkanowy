@@ -303,6 +303,7 @@
     <string name="widget_timetable_theme_title">Wybierz motyw</string>
     <string name="widget_timetable_theme_light">Jasny</string>
     <string name="widget_timetable_theme_dark">Ciemny</string>
+    <string name="widget_timetable_theme_system">Motyw systemu</string>
     <!--Preferences-->
     <string name="pref_view_header">Wygląd</string>
     <string name="pref_view_list">Domyślny widok</string>

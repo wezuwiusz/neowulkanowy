@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:layout_marginLeft="6dp"
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="13sp"
@@ -46,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@android:color/black"
@@ -59,7 +57,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="15sp"
@@ -70,12 +67,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="15sp"
             tools:text="Agata" />
+
         <TextView
             android:id="@+id/timetableWidgetItemDescription"
             android:layout_width="wrap_content"

@@ -16,9 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/timetableWidgetAccount"
-            android:layout_toLeftOf="@id/timetableWidgetAccount"
             android:layout_toEndOf="@id/timetableWidgetNext"
-            android:layout_toRightOf="@id/timetableWidgetNext"
             android:orientation="vertical">
 
             <TextView
@@ -26,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:maxLines="1"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
@@ -37,7 +34,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:maxLines="1"
                 android:textColor="@android:color/white"
                 android:textSize="13sp"
@@ -49,7 +45,6 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:background="?android:selectableItemBackground"
             android:contentDescription="@string/account_title"
             android:src="@drawable/ic_widget_account" />
@@ -60,7 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:contentDescription="@string/all_prev"
             android:src="@drawable/ic_widget_chevron"
@@ -72,7 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/timetableWidgetPrev"
-            android:layout_toRightOf="@id/timetableWidgetPrev"
             android:backgroundTint="@color/colorPrimaryDark"
             android:contentDescription="@string/all_next"
             android:rotation="180"

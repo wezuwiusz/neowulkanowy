@@ -12,12 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWidgetBackground"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:paddingLeft="6dp"
         android:paddingStart="6dp"
+        android:paddingTop="6dp"
         android:paddingEnd="12dp"
-        android:paddingRight="12dp">
+        android:paddingBottom="6dp">
 
         <TextView
             android:id="@+id/timetableWidgetItemNumber"
@@ -26,8 +24,8 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:maxLength="2"
-            android:textSize="28sp"
             android:textColor="@android:color/white"
+            android:textSize="28sp"
             tools:text="5" />
 
         <TextView
@@ -36,26 +34,21 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/timetableWidgetItemNumber"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
             android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
-            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="15sp"
             android:textColor="@android:color/white"
+            android:textSize="15sp"
             tools:text="@tools:sample/lorem" />
 
         <TextView
             android:id="@+id/timetableWidgetItemTimeStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/timetableWidgetItemNumber"
-            android:layout_toRightOf="@id/timetableWidgetItemNumber"
-            android:layout_marginLeft="6dp"
-            android:layout_marginStart="6dp"
             android:layout_alignTop="@id/timetableWidgetItemNumber"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@id/timetableWidgetItemNumber"
             android:maxLines="1"
             android:textColor="@android:color/white"
             android:textSize="13sp"
@@ -67,9 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/timetableWidgetItemNumber"
             android:layout_marginStart="6dp"
-            android:layout_marginLeft="6dp"
             android:layout_toEndOf="@id/timetableWidgetItemNumber"
-            android:layout_toRightOf="@id/timetableWidgetItemNumber"
             android:maxLines="1"
             android:textColor="@android:color/white"
             android:textSize="13sp"
@@ -81,9 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/timetableWidgetItemNumber"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
-            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
             android:maxLines="1"
             android:textColor="@android:color/white"
             android:textSize="13sp"
@@ -96,11 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/timetableWidgetItemNumber"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:layout_toEndOf="@id/timetableWidgetItemRoom"
-            android:layout_toRightOf="@id/timetableWidgetItemRoom"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/timetable_change_light"
@@ -115,16 +101,13 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/timetableWidgetItemTimeFinish"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
             android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
-            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
             android:textColor="@color/timetable_change_light"
             android:textSize="13sp"
             tools:text="Lekcja odwołana: uczniowie zwolnieni do domu"
-            tools:visibility="gone"/>
+            tools:visibility="gone" />
     </RelativeLayout>
 
     <FrameLayout

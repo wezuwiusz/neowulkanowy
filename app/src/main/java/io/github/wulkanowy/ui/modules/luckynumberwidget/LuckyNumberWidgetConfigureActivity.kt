@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -14,6 +15,7 @@ import io.github.wulkanowy.databinding.ActivityWidgetConfigureBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.WidgetConfigureAdapter
 import io.github.wulkanowy.ui.modules.login.LoginActivity
+import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
 
 class LuckyNumberWidgetConfigureActivity :
@@ -25,6 +27,9 @@ class LuckyNumberWidgetConfigureActivity :
 
     @Inject
     override lateinit var presenter: LuckyNumberWidgetConfigurePresenter
+
+    @Inject
+    lateinit var appInfo: AppInfo
 
     private var dialog: AlertDialog? = null
 
@@ -48,10 +53,11 @@ class LuckyNumberWidgetConfigureActivity :
     }
 
     override fun showThemeDialog() {
-        val items = arrayOf(
+        var items = arrayOf(
             getString(R.string.widget_timetable_theme_light),
             getString(R.string.widget_timetable_theme_dark)
         )
+        if (appInfo.systemVersion >= Build.VERSION_CODES.Q) items += (getString(R.string.widget_timetable_theme_system))
 
         dialog = AlertDialog.Builder(this, R.style.WulkanowyTheme_WidgetAccountSwitcher)
             .setTitle(R.string.widget_timetable_theme_title)

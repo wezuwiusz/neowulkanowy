@@ -303,6 +303,7 @@
     <string name="widget_timetable_theme_title">Увібрати тему</string>
     <string name="widget_timetable_theme_light">Яскрава</string>
     <string name="widget_timetable_theme_dark">Темна</string>
+    <string name="widget_timetable_theme_system">Тема системи</string>
     <!--Preferences-->
     <string name="pref_view_header">Вигляд</string>
     <string name="pref_view_list">Вікно за замовчуванням</string>
