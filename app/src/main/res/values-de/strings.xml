@@ -48,19 +48,19 @@
     <string name="login_incorrect_symbol">Student nicht gefunden. Überprüfen Sie das Symbol</string>
     <string name="login_field_required">Dieses Datenfeld ist erforderlich</string>
     <string name="login_duplicate_student">Ausgewählter Student ist bereits angemeldet.</string>
-    <string name="login_symbol_helper">Das Symbol finden Sie auf der Registerseite unter <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
+    <string name="login_symbol_helper">Das Symbol finden Sie auf der Registerseite unter&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen.</string>
     <string name="login_advanced">Andere Optionen</string>
-    <string name="login_advanced_warning_mobile_api">In this mode, a lucky number does not work, a class grade stats, summary of attendance, excuse for absence, completed lessons, school information and preview of the list of registered devices</string>
-    <string name="login_advanced_warning_scraper">This mode displays the same data as it appears on the register website</string>
-    <string name="login_advanced_warning_hybrid">The combination of the best features of the other two modes. It works faster than scraper and provides features not available in the Mobile API mode. It is in the experimental phase</string>
+    <string name="login_advanced_warning_mobile_api">In diesem Modus funktioniert eine Glücknummer, eine Klassenstatistik, eine Zusammenfassung der Anwesenheit, eine Entschuldigung für die Abwesenheit, abgeschlossene Lektionen, Schulinformationen und eine Vorschau der Liste der registrierten Geräte nicht</string>
+    <string name="login_advanced_warning_scraper">In diesem Modus werden dieselben Daten angezeigt, die auf der Klassenbuch-Website angezeigt werden</string>
+    <string name="login_advanced_warning_hybrid">Die Kombination der besten Eigenschaften der beiden anderen Modus. Es arbeitet schneller als Scraper und bietet Funktionen, die im mobilen API-Modus nicht verfügbar sind. Es ist in der experimentellen Phase</string>
     <string name="login_privacy_policy">Datenschutzerklärung</string>
     <string name="login_contact_header">Probleme bei der Anmeldung? Kontaktieren Sie uns!</string>
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">email senden</string>
-    <string name="login_email_details">Describe details of problem:</string>
-    <string name="login_recover_warning">Make sure the correct UONET+ register is selected!</string>
+    <string name="login_email_details">Beschreiben Sie die Details des Problems:</string>
+    <string name="login_recover_warning">Stellen Sie sicher, dass das richtige UONET + Klassenbuch ausgewählt ist!</string>
     <string name="login_recover_button">Ich habe mein Passwort vergessen.</string>
     <string name="login_recover_title">Ihr Konto wiederherstellen</string>
     <string name="login_recover">Wiederherstellen</string>
@@ -257,7 +257,7 @@
     <!--Licenses-->
     <string name="license_dialog_title">Lizenz</string>
     <!--Contributor-->
-    <string name="contributor_avatar_description">Avatar</string>
+    <string name="contributor_avatar_description">Benutzerbild</string>
     <string name="contributor_see_more">Sehen Sie mehr auf GitHub</string>
     <!--Log viewer-->
     <string name="logviewer_share">Logs teilen</string>
@@ -303,13 +303,13 @@
     <string name="pref_services_suspended">An Feiertagen suspendiert</string>
     <string name="pref_services_interval">Aktualisierungsintervall</string>
     <string name="pref_services_wifi">Nur Wi-Fi</string>
-    <string name="pref_services_force_sync">Sync now</string>
-    <string name="pref_services_message_sync_success">Synced!</string>
-    <string name="pref_services_message_sync_failed">Sync failed</string>
-    <string name="pref_services_sync_in_progress">Sync in progress</string>
-    <string name="pref_services_dialog_force_sync_title">Synchronization</string>
-    <string name="pref_services_dialog_force_sync_summary">        Manual sync doesn\'t refresh app views.
-        \nTo see the synced data relaunch the app after syncing.
+    <string name="pref_services_force_sync">Jetzt synchronisieren</string>
+    <string name="pref_services_message_sync_success">Synchronisiert!</string>
+    <string name="pref_services_message_sync_failed">Synchronisierung fehlgeschlagen</string>
+    <string name="pref_services_sync_in_progress">Synchronisierung läuft</string>
+    <string name="pref_services_dialog_force_sync_title">Synchronisation</string>
+    <string name="pref_services_dialog_force_sync_summary">        Die manuelle Synchronisierung aktualisiert die App-Ansichten nicht.
+        \nUm die synchronisierten Daten anzuzeigen, starten Sie die App nach der Synchronisierung neu.
     </string>
     <string name="pref_other_header">Andere</string>
     <string name="pref_other_grade_modifier_plus">Wert des Plus</string>

@@ -48,7 +48,7 @@
     <string name="login_incorrect_symbol">Не удалось найти ученика. Проверьте \"symbol\"</string>
     <string name="login_field_required">Обязательное поле</string>
     <string name="login_duplicate_student">Данный ученик уже авторизован</string>
-    <string name="login_symbol_helper">Вы можете найти \"symbol\" в <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
+    <string name="login_symbol_helper">Вы можете найти \"symbol\" на странице VULCAN по пути <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Выберите учеников для авторизации в приложении</string>
     <string name="login_advanced">Другие варианты</string>
     <string name="login_advanced_warning_mobile_api">В этом режиме не работают: счастливый номер, статистика класса по оценкам, статистика посещаемости и уроков, информация о школе и список зарегистрированных устройств</string>
@@ -303,7 +303,7 @@
     <string name="widget_timetable_theme_title">Выбрать тему</string>
     <string name="widget_timetable_theme_light">Светлая</string>
     <string name="widget_timetable_theme_dark">Тёмная</string>
-    <string name="widget_timetable_theme_system">Системная тема</string>
+    <string name="widget_timetable_theme_system">Тема системы</string>
     <!--Preferences-->
     <string name="pref_view_header">Вид</string>
     <string name="pref_view_list">Окно по умолчанию</string>

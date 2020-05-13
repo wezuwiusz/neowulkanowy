@@ -48,7 +48,7 @@
     <string name="login_incorrect_symbol">Не вдалося знайти учня. Будь ласка, перевірте \"symbol\"</string>
     <string name="login_field_required">Обов\'язкове поле</string>
     <string name="login_duplicate_student">Даного учня вже авторизовано</string>
-    <string name="login_symbol_helper">Ви можете знайти \"symbol\" в <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
+    <string name="login_symbol_helper">Ви можете знайти \"symbol\" на сторінцi VULCAN стежкою <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_advanced_warning_mobile_api">У цьому режимі не працюють: щасливий номер, статистика класу по оцінкам, статистика відвідуваності і уроків, інформація про школу і список зареєстрованних пристроїв</string>
