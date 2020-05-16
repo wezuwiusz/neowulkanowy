@@ -1,6 +1,8 @@
 package io.github.wulkanowy.ui.modules.homework.details
 
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.data.db.entities.Homework
@@ -28,6 +30,10 @@ class HomeworkDetailsAdapter @Inject constructor() :
         }
 
     var onAttachmentClickListener: (url: String) -> Unit = {}
+
+    var onFullScreenClickListener = {}
+
+    var onFullScreenExitClickListener = {}
 
     override fun getItemCount() = 1 + if (attachments.isNotEmpty()) attachments.size + 1 else 0
 
@@ -61,6 +67,16 @@ class HomeworkDetailsAdapter @Inject constructor() :
             homeworkDialogSubject.text = homework?.subject
             homeworkDialogTeacher.text = homework?.teacher
             homeworkDialogContent.text = homework?.content
+            homeworkDialogFullScreen.setOnClickListener {
+                homeworkDialogFullScreen.visibility = GONE
+                homeworkDialogFullScreenExit.visibility = VISIBLE
+                onFullScreenClickListener()
+            }
+            homeworkDialogFullScreenExit.setOnClickListener {
+                homeworkDialogFullScreen.visibility = VISIBLE
+                homeworkDialogFullScreenExit.visibility = GONE
+                onFullScreenExitClickListener()
+            }
         }
     }
 

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
@@ -63,6 +65,8 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
             layoutManager = LinearLayoutManager(context)
             adapter = detailsAdapter.apply {
                 onAttachmentClickListener = { context.openInternetBrowser(it, ::showMessage) }
+                onFullScreenClickListener = { dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT) }
+                onFullScreenExitClickListener = { dialog?.window?.setLayout(WRAP_CONTENT, WRAP_CONTENT) }
                 homework = this@HomeworkDetailsDialog.homework
             }
         }

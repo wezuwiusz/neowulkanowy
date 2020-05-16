@@ -195,7 +195,6 @@ class LoginRecoverFragment :
     }
 
     override fun onDestroyView() {
-        binding.loginRecoverWebView.destroy()
         presenter.onDetachView()
 
         super.onDestroyView()
