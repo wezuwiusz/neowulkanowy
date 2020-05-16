@@ -128,10 +128,7 @@ class GradeStatisticsPresenter @Inject constructor(
             .observeOn(schedulers.mainThread)
             .subscribe({
                 Timber.i("Loading grade stats subjects result: Success")
-                view?.run {
-                    updateSubjects(it)
-                    showSubjects(true)
-                }
+                view?.updateSubjects(it)
             }, {
                 Timber.i("Loading grade stats subjects result: An exception occurred")
                 errorHandler.dispatch(it)
@@ -140,22 +137,21 @@ class GradeStatisticsPresenter @Inject constructor(
     }
 
     private fun loadDataByType(semesterId: Int, subjectName: String, type: ViewType, forceRefresh: Boolean = false) {
-        currentSubjectName = subjectName
+        currentSubjectName = if (preferencesRepository.showAllSubjectsOnStatisticsList) "Wszystkie" else subjectName
         currentType = type
-        loadData(semesterId, subjectName, type, forceRefresh)
-    }
 
-    private fun loadData(semesterId: Int, subjectName: String, type: ViewType, forceRefresh: Boolean) {
         Timber.i("Loading grade stats data started")
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { student ->
                 semesterRepository.getSemesters(student).flatMap { semesters ->
                     val semester = semesters.first { item -> item.semesterId == semesterId }
 
-                    when (type) {
-                        ViewType.SEMESTER -> gradeStatisticsRepository.getGradesStatistics(student, semester, subjectName, true, forceRefresh)
-                        ViewType.PARTIAL -> gradeStatisticsRepository.getGradesStatistics(student, semester, subjectName, false, forceRefresh)
-                        ViewType.POINTS -> gradeStatisticsRepository.getGradesPointsStatistics(student, semester, subjectName, forceRefresh)
+                    with(gradeStatisticsRepository) {
+                        when (type) {
+                            ViewType.SEMESTER -> getGradesStatistics(student, semester, currentSubjectName, true, forceRefresh)
+                            ViewType.PARTIAL -> getGradesStatistics(student, semester, currentSubjectName, false, forceRefresh)
+                            ViewType.POINTS -> getGradesPointsStatistics(student, semester, currentSubjectName, forceRefresh)
+                        }
                     }
                 }
             }
@@ -175,7 +171,8 @@ class GradeStatisticsPresenter @Inject constructor(
                     showEmpty(it.isEmpty())
                     showContent(it.isNotEmpty())
                     showErrorView(false)
-                    updateData(it, preferencesRepository.gradeColorTheme)
+                    updateData(it, preferencesRepository.gradeColorTheme, preferencesRepository.showAllSubjectsOnStatisticsList)
+                    showSubjects(!preferencesRepository.showAllSubjectsOnStatisticsList)
                 }
                 analytics.logEvent("load_grade_statistics", "items" to it.size, "force_refresh" to forceRefresh)
             }) {

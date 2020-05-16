@@ -32,6 +32,8 @@ class GradeStatisticsAdapter @Inject constructor() :
 
     var theme: String = "vulcan"
 
+    var showAllSubjectsOnList: Boolean = false
+
     private val vulcanGradeColors = listOf(
         6 to R.color.grade_vulcan_six,
         5 to R.color.grade_vulcan_five,
@@ -59,7 +61,7 @@ class GradeStatisticsAdapter @Inject constructor() :
         "6, 6-", "5, 5-, 5+", "4, 4-, 4+", "3, 3-, 3+", "2, 2-, 2+", "1, 1+"
     )
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = if (showAllSubjectsOnList) items.size else (if (items.isEmpty()) 0 else 1)
 
     override fun getItemViewType(position: Int) = items[position].type.id
 
@@ -82,7 +84,7 @@ class GradeStatisticsAdapter @Inject constructor() :
     private fun bindPieChart(holder: PieViewHolder, partials: List<GradeStatistics>) {
         with(holder.binding.gradeStatisticsPieTitle) {
             text = partials.firstOrNull()?.subject
-            visibility = if (items.size == 1) GONE else VISIBLE
+            visibility = if (items.size == 1 || !showAllSubjectsOnList) GONE else VISIBLE
         }
 
         val gradeColors = when (theme) {

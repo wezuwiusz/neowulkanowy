@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="?android:windowBackground"
         android:padding="5dp"
-        android:visibility="invisible"
+        android:visibility="gone"
         tools:ignore="UnusedAttribute"
         tools:listitem="@layout/item_attendance_summary"
         tools:visibility="visible">
@@ -59,9 +59,7 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingTop="5dp"
-                        android:paddingEnd="16dp"
-                        android:visibility="invisible"
-                        tools:visibility="visible">
+                        android:paddingEnd="16dp">
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/gradeStatisticsTypePartial"

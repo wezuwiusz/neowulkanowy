@@ -312,6 +312,7 @@
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_app_theme">Motyw aplikacji</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
+    <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>
     <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
     <string name="pref_view_grade_color_scheme">Schemat kolorów ocen</string>
     <string name="pref_view_app_language">Język aplikacji</string>

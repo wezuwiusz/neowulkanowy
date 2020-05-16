@@ -26,6 +26,9 @@ class PreferencesRepository @Inject constructor(
     val isGradeExpandable: Boolean
         get() = !getBoolean(R.string.pref_key_expand_grade, R.bool.pref_default_expand_grade)
 
+    val showAllSubjectsOnStatisticsList: Boolean
+        get() = getBoolean(R.string.pref_key_grade_statistics_list, R.bool.pref_default_grade_statistics_list)
+
     val appThemeKey = context.getString(R.string.pref_key_app_theme)
     val appTheme: String
         get() = getString(appThemeKey, R.string.pref_default_app_theme)

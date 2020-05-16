@@ -80,17 +80,17 @@ class GradeStatisticsFragment :
         }
     }
 
-    override fun updateData(items: List<GradeStatisticsItem>, theme: String) {
-        statisticsAdapter.theme = theme
-        statisticsAdapter.items = items
-        statisticsAdapter.notifyDataSetChanged()
+    override fun updateData(items: List<GradeStatisticsItem>, theme: String, showAllSubjectsOnStatisticsList: Boolean) {
+        with(statisticsAdapter) {
+            this.showAllSubjectsOnList = showAllSubjectsOnStatisticsList
+            this.theme = theme
+            this.items = items
+            notifyDataSetChanged()
+        }
     }
 
     override fun showSubjects(show: Boolean) {
-        with(binding) {
-            gradeStatisticsSubjectsContainer.visibility = if (show) View.VISIBLE else View.INVISIBLE
-            gradeStatisticsTypeSwitch.visibility = if (show) View.VISIBLE else View.INVISIBLE
-        }
+        binding.gradeStatisticsSubjectsContainer.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun clearView() {

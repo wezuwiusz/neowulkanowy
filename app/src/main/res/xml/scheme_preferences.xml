@@ -29,6 +29,11 @@
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_expand_grade"
             app:title="@string/pref_view_expand_grade" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_grade_statistics_list"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_statistics_list"
+            app:title="@string/pref_view_grade_statistics_list"/>
         <ListPreference
             app:defaultValue="@string/pref_default_timetable_show_whole_class"
             app:entries="@array/timetable_show_whole_class_entries"
@@ -79,8 +84,8 @@
             app:title="@string/pref_services_wifi" />
         <Preference
             app:iconSpaceReserved="false"
-            app:title="@string/pref_services_force_sync"
-            app:key="@string/pref_key_services_force_sync" />
+            app:key="@string/pref_key_services_force_sync"
+            app:title="@string/pref_services_force_sync" />
     </PreferenceCategory>
     <PreferenceCategory
         app:iconSpaceReserved="false"
