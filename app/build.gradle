@@ -122,7 +122,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:445905b"
+    implementation "io.github.wulkanowy:sdk:46619e3"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.core:core-ktx:1.2.0"

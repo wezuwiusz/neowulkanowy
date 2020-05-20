@@ -42,7 +42,7 @@ class SyncManager @Inject constructor(
     init {
         if (now().isHolidays) stopSyncWorker()
 
-        if (SDK_INT > O) {
+        if (SDK_INT >= O) {
             channels.forEach { it.create() }
             notificationManager.deleteNotificationChannel("new_entries_channel")
         }
