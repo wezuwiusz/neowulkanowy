@@ -18,7 +18,8 @@
         android:supportsRtl="false"
         android:theme="@style/WulkanowyTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
+        tools:replace="android:supportsRtl,android:allowBackup">
         <activity
             android:name=".ui.modules.splash.SplashActivity"
             android:screenOrientation="portrait"

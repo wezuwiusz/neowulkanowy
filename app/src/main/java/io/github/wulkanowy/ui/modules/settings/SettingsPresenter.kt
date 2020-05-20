@@ -58,6 +58,10 @@ class SettingsPresenter @Inject constructor(
         view?.showForceSyncDialog()
     }
 
+    fun onFixSyncIssuesClicked() {
+        view?.showFixSyncDialog()
+    }
+
     fun onForceSyncDialogSubmit() {
         view?.run {
             val successString = syncSuccessString
