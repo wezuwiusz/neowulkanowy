@@ -1,15 +1,16 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import android.annotation.SuppressLint
+import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.ui.modules.message.MessageItem
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.toFormattedString
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -25,6 +26,10 @@ class MessageTabPresenter @Inject constructor(
     lateinit var folder: MessageFolder
 
     private lateinit var lastError: Throwable
+
+    private var lastSearchQuery = ""
+
+    private var messages = emptyList<Message>()
 
     fun onAttachView(view: MessageTabView, folder: MessageFolder) {
         super.onAttachView(view)
@@ -58,15 +63,13 @@ class MessageTabPresenter @Inject constructor(
         loadData(forceRefresh)
     }
 
-    fun onMessageItemSelected(item: AbstractFlexibleItem<*>) {
-        if (item is MessageItem) {
-            Timber.i("Select message ${item.message.id} item")
-            view?.run {
-                openMessage(item.message)
-                if (item.message.unread) {
-                    item.message.unread = false
-                    updateItem(item)
-                }
+    fun onMessageItemSelected(message: Message, position: Int) {
+        Timber.i("Select message ${message.id} item")
+        view?.run {
+            openMessage(message)
+            if (message.unread) {
+                message.unread = false
+                updateItem(message, position)
             }
         }
     }
@@ -79,7 +82,6 @@ class MessageTabPresenter @Inject constructor(
                 .flatMap { student ->
                     semesterRepository.getCurrentSemester(student)
                         .flatMap { messageRepository.getMessages(student, it, folder, forceRefresh) }
-                        .map { items -> items.map { MessageItem(it, view?.noSubjectString.orEmpty()) } }
                 }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
@@ -93,12 +95,8 @@ class MessageTabPresenter @Inject constructor(
                 }
                 .subscribe({
                     Timber.i("Loading $folder message result: Success")
-                    view?.run {
-                        showEmpty(it.isEmpty())
-                        showContent(it.isNotEmpty())
-                        showErrorView(false)
-                        updateData(it)
-                    }
+                    messages = it
+                    onSearchQueryTextChange(lastSearchQuery)
                     analytics.logEvent("load_messages", "items" to it.size, "folder" to folder.name)
                 }) {
                     Timber.i("Loading $folder message result: An exception occurred")
@@ -115,6 +113,35 @@ class MessageTabPresenter @Inject constructor(
                 showErrorView(true)
                 showEmpty(false)
             } else showError(message, error)
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    fun onSearchQueryTextChange(query: String) {
+        lastSearchQuery = query
+
+        val lowerCaseQuery = query.toLowerCase()
+        val filteredList = mutableListOf<Message>()
+        messages.forEach {
+            if (lowerCaseQuery in it.subject.toLowerCase() ||
+                lowerCaseQuery in it.sender.toLowerCase() ||
+                lowerCaseQuery in it.recipient.toLowerCase() ||
+                lowerCaseQuery in it.date.toFormattedString()
+            ) {
+                filteredList.add(it)
+            }
+        }
+
+        updateData(filteredList)
+    }
+
+    private fun updateData(data: List<Message>) {
+        view?.run {
+            showEmpty(data.isEmpty())
+            showContent(data.isNotEmpty())
+            showErrorView(false)
+            updateData(data)
+            resetListPosition()
         }
     }
 }

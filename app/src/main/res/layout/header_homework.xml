@@ -10,7 +10,7 @@
     android:paddingTop="10dp"
     android:paddingRight="20dp"
     android:paddingBottom="10dp"
-    tools:context=".ui.modules.homework.HomeworkHeader">
+    tools:context=".ui.modules.homework.HomeworkAdapter">
 
     <TextView
         android:id="@+id/homeworkHeaderDay"
@@ -25,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:gravity="end"
         android:textSize="13sp"
         tools:text="22.02.2022" />

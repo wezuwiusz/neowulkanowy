@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.account
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -63,32 +63,29 @@ class AccountPresenter @Inject constructor(
             }))
     }
 
-    fun onItemSelected(item: AbstractFlexibleItem<*>) {
-        if (item is AccountItem) {
-            Timber.i("Select student item ${item.student.id}")
-            if (item.student.isCurrent) {
-                view?.dismissView()
-            } else {
-                Timber.i("Attempt to change a student")
-                disposable.add(studentRepository.switchStudent(item.student)
-                    .subscribeOn(schedulers.backgroundThread)
-                    .observeOn(schedulers.mainThread)
-                    .doFinally { view?.dismissView() }
-                    .subscribe({
-                        Timber.i("Change a student result: Success")
-                        view?.recreateMainView()
-                    }, {
-                        Timber.i("Change a student result: An exception occurred")
-                        errorHandler.dispatch(it)
-                    }))
-            }
+    fun onItemSelected(student: Student) {
+        Timber.i("Select student item ${student.id}")
+        if (student.isCurrent) {
+            view?.dismissView()
+        } else {
+            Timber.i("Attempt to change a student")
+            disposable.add(studentRepository.switchStudent(student)
+                .subscribeOn(schedulers.backgroundThread)
+                .observeOn(schedulers.mainThread)
+                .doFinally { view?.dismissView() }
+                .subscribe({
+                    Timber.i("Change a student result: Success")
+                    view?.recreateMainView()
+                }, {
+                    Timber.i("Change a student result: An exception occurred")
+                    errorHandler.dispatch(it)
+                }))
         }
     }
 
     private fun loadData() {
         Timber.i("Loading account data started")
         disposable.add(studentRepository.getSavedStudents(false)
-            .map { it.map { item -> AccountItem(item) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({
@@ -100,4 +97,3 @@ class AccountPresenter @Inject constructor(
             }))
     }
 }
-

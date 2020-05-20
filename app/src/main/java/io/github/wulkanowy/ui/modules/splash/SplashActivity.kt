@@ -3,12 +3,13 @@ package io.github.wulkanowy.ui.modules.splash
 import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.viewbinding.ViewBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import javax.inject.Inject
 
-class SplashActivity : BaseActivity<SplashPresenter>(), SplashView {
+class SplashActivity : BaseActivity<SplashPresenter, ViewBinding>(), SplashView {
 
     @Inject
     override lateinit var presenter: SplashPresenter

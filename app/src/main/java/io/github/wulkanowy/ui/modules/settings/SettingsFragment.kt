@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.thelittlefireman.appkillermanager.AppKillerManager
 import com.yariksoffice.lingver.Lingver
 import dagger.android.support.AndroidSupportInjection
 import io.github.wulkanowy.R
@@ -50,6 +51,13 @@ class SettingsFragment : PreferenceFragmentCompat(),
                 true
             }
         }
+        findPreference<Preference>(getString(R.string.pref_key_notifications_fix_issues))?.run {
+            isVisible = AppKillerManager.isDeviceSupported() && AppKillerManager.isAnyActionAvailable(requireContext())
+            setOnPreferenceClickListener {
+                presenter.onFixSyncIssuesClicked()
+                true
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -91,19 +99,19 @@ class SettingsFragment : PreferenceFragmentCompat(),
     }
 
     override fun showError(text: String, error: Throwable) {
-        (activity as? BaseActivity<*>)?.showError(text, error)
+        (activity as? BaseActivity<*, *>)?.showError(text, error)
     }
 
     override fun showMessage(text: String) {
-        (activity as? BaseActivity<*>)?.showMessage(text)
+        (activity as? BaseActivity<*, *>)?.showMessage(text)
     }
 
     override fun showExpiredDialog() {
-        (activity as? BaseActivity<*>)?.showExpiredDialog()
+        (activity as? BaseActivity<*, *>)?.showExpiredDialog()
     }
 
     override fun openClearLoginView() {
-        (activity as? BaseActivity<*>)?.openClearLoginView()
+        (activity as? BaseActivity<*, *>)?.openClearLoginView()
     }
 
     override fun showErrorDetailsDialog(error: Throwable) {
@@ -116,6 +124,19 @@ class SettingsFragment : PreferenceFragmentCompat(),
             .setMessage(R.string.pref_services_dialog_force_sync_summary)
             .setPositiveButton(android.R.string.ok) { _, _ -> presenter.onForceSyncDialogSubmit() }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
+    }
+
+    override fun showFixSyncDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.pref_notify_fix_sync_issues)
+            .setMessage(R.string.pref_notify_fix_sync_issues_message)
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .setPositiveButton(R.string.pref_notify_fix_sync_issues_settings_button) { _, _ ->
+                AppKillerManager.doActionPowerSaving(requireContext())
+                AppKillerManager.doActionAutoStart(requireContext())
+                AppKillerManager.doActionNotification(requireContext())
+            }
             .show()
     }
 

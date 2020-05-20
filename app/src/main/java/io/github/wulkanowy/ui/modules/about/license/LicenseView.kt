@@ -9,7 +9,7 @@ interface LicenseView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<LicenseItem>)
+    fun updateData(data: List<Library>)
 
     fun openLicense(licenseHtml: String)
 

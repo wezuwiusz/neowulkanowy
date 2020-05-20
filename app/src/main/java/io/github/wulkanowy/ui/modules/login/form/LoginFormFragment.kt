@@ -2,14 +2,13 @@ package io.github.wulkanowy.ui.modules.login.form
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.databinding.FragmentLoginFormBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.AppInfo
@@ -18,10 +17,10 @@ import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.setOnEditorDoneSignIn
 import io.github.wulkanowy.utils.showSoftInput
-import kotlinx.android.synthetic.main.fragment_login_form.*
 import javax.inject.Inject
 
-class LoginFormFragment : BaseFragment(), LoginFormView {
+class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragment_login_form),
+    LoginFormView {
 
     @Inject
     lateinit var presenter: LoginFormPresenter
@@ -34,16 +33,16 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override val formUsernameValue: String
-        get() = loginFormUsername.text.toString()
+        get() = binding.loginFormUsername.text.toString()
 
     override val formPassValue: String
-        get() = loginFormPass.text.toString()
+        get() = binding.loginFormPass.text.toString()
 
     override val formHostValue: String
-        get() = hostValues.getOrNull(hostKeys.indexOf(loginFormHost.text.toString())).orEmpty()
+        get() = hostValues.getOrNull(hostKeys.indexOf(binding.loginFormHost.text.toString())).orEmpty()
 
     override val formHostSymbol: String
-        get() = hostSymbols.getOrNull(hostKeys.indexOf(loginFormHost.text.toString())).orEmpty()
+        get() = hostSymbols.getOrNull(hostKeys.indexOf(binding.loginFormHost.text.toString())).orEmpty()
 
     override val nicknameLabel: String
         get() = getString(R.string.login_nickname_hint)
@@ -57,12 +56,9 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
 
     private lateinit var hostSymbols: Array<String>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_login_form, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentLoginFormBinding.bind(view)
         presenter.onAttachView(this)
     }
 
@@ -71,81 +67,85 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
         hostValues = resources.getStringArray(R.array.hosts_values)
         hostSymbols = resources.getStringArray(R.array.hosts_symbols)
 
-        loginFormUsername.doOnTextChanged { _, _, _, _ -> presenter.onUsernameTextChanged() }
-        loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
-        loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
-        loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
-        loginFormAdvancedButton.setOnClickListener { presenter.onAdvancedLoginClick() }
-        loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
-        loginFormFaq.setOnClickListener { presenter.onFaqClick() }
-        loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
-        loginFormRecoverLink.setOnClickListener { presenter.onRecoverClick() }
-        loginFormPass.setOnEditorDoneSignIn { loginFormSignIn.callOnClick() }
+        with(binding) {
+            loginFormUsername.doOnTextChanged { _, _, _, _ -> presenter.onUsernameTextChanged() }
+            loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
+            loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
+            loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
+            loginFormAdvancedButton.setOnClickListener { presenter.onAdvancedLoginClick() }
+            loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
+            loginFormFaq.setOnClickListener { presenter.onFaqClick() }
+            loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
+            loginFormRecoverLink.setOnClickListener { presenter.onRecoverClick() }
+            loginFormPass.setOnEditorDoneSignIn { loginFormSignIn.callOnClick() }
+        }
 
-        with(loginFormHost) {
+        with(binding.loginFormHost) {
             setText(hostKeys.getOrNull(0).orEmpty())
             setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
-            setOnClickListener { if (loginFormContainer.visibility == GONE) dismissDropDown() }
+            setOnClickListener { if (binding.loginFormContainer.visibility == GONE) dismissDropDown() }
         }
     }
 
     override fun setCredentials(username: String, pass: String) {
-        loginFormUsername.setText(username)
-        loginFormPass.setText(pass)
+        with(binding) {
+            loginFormUsername.setText(username)
+            loginFormPass.setText(pass)
+        }
     }
 
     override fun setUsernameLabel(label: String) {
-        loginFormUsernameLayout.hint = label
+        binding.loginFormUsernameLayout.hint = label
     }
 
     override fun setErrorUsernameRequired() {
-        with(loginFormUsernameLayout) {
+        with(binding.loginFormUsernameLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorLoginRequired() {
-        with(loginFormUsernameLayout) {
+        with(binding.loginFormUsernameLayout) {
             requestFocus()
             error = getString(R.string.login_invalid_login)
         }
     }
 
     override fun setErrorEmailRequired() {
-        with(loginFormUsernameLayout) {
+        with(binding.loginFormUsernameLayout) {
             requestFocus()
             error = getString(R.string.login_invalid_email)
         }
     }
 
     override fun setErrorPassRequired(focus: Boolean) {
-        with(loginFormPassLayout) {
+        with(binding.loginFormPassLayout) {
             if (focus) requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassInvalid(focus: Boolean) {
-        with(loginFormPassLayout) {
+        with(binding.loginFormPassLayout) {
             if (focus) requestFocus()
             error = getString(R.string.login_invalid_password)
         }
     }
 
     override fun setErrorPassIncorrect() {
-        with(loginFormPassLayout) {
+        with(binding.loginFormPassLayout) {
             requestFocus()
             error = getString(R.string.login_incorrect_password)
         }
     }
 
     override fun clearUsernameError() {
-        loginFormUsernameLayout.error = null
+        binding.loginFormUsernameLayout.error = null
     }
 
     override fun clearPassError() {
-        loginFormPassLayout.error = null
+        binding.loginFormPassLayout.error = null
     }
 
     override fun showSoftKeyboard() {
@@ -157,16 +157,16 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun showProgress(show: Boolean) {
-        loginFormProgress.visibility = if (show) VISIBLE else GONE
+        binding.loginFormProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showContent(show: Boolean) {
-        loginFormContainer.visibility = if (show) VISIBLE else GONE
+        binding.loginFormContainer.visibility = if (show) VISIBLE else GONE
     }
 
     @SuppressLint("SetTextI18n")
     override fun showVersion() {
-        loginFormVersion.text = "v${appInfo.versionName}"
+        binding.loginFormVersion.text = "v${appInfo.versionName}"
     }
 
     override fun notifyParentAccountLogged(students: List<Student>, loginData: Triple<String, String, String>) {
@@ -178,7 +178,7 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun showContact(show: Boolean) {
-        loginFormContact.visibility = if (show) VISIBLE else GONE
+        binding.loginFormContact.visibility = if (show) VISIBLE else GONE
     }
 
     override fun openAdvancedLogin() {
@@ -190,8 +190,8 @@ class LoginFormFragment : BaseFragment(), LoginFormView {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.onDetachView()
+        super.onDestroyView()
     }
 
     override fun openFaqPage() {

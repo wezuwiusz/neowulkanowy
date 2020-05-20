@@ -1,0 +1,14 @@
+files:
+  - source: /app/src/main/res/values/*.xml
+    ignore:
+      - /app/src/main/res/values/styles.xml
+      - /app/src/main/res/values/api_hosts.xml
+      - /app/src/main/res/values/api_symbols.xml
+      - /app/src/main/res/values/attrs.xml
+      - /app/src/main/res/values/colors.xml
+      - /app/src/main/res/values/dimens.xml
+      - /app/src/main/res/values/preferences_keys.xml
+      - /app/src/main/res/values/preferences_defaults.xml
+    translation: /app/src/main/res/values-%android_code%/%original_file_name%
+    translate_attributes: 0
+    content_segmentation: 0

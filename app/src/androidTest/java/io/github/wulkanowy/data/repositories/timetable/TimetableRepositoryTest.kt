@@ -8,12 +8,15 @@ import androidx.test.filters.SdkSuppress
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.TestInternetObservingStrategy
 import io.github.wulkanowy.data.repositories.getStudent
+import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
 import io.github.wulkanowy.sdk.Sdk
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import io.reactivex.Single
 import org.junit.After
 import org.junit.Before
@@ -34,10 +37,16 @@ class TimetableRepositoryTest {
         .strategy(TestInternetObservingStrategy())
         .build()
 
+    @MockK
+    private lateinit var studentMock: Student
+
     private val student = getStudent()
 
     @MockK
     private lateinit var semesterMock: Semester
+
+    @MockK
+    private lateinit var timetableNotificationSchedulerHelper: TimetableNotificationSchedulerHelper
 
     private lateinit var timetableRemote: TimetableRemote
 
@@ -52,10 +61,17 @@ class TimetableRepositoryTest {
         timetableLocal = TimetableLocal(testDb.timetableDao)
         timetableRemote = TimetableRemote(mockSdk)
 
+        every { timetableNotificationSchedulerHelper.scheduleNotifications(any(), any()) } returns mockk()
+        every { timetableNotificationSchedulerHelper.cancelScheduled(any(), any()) } returns mockk()
+
+        every { studentMock.studentId } returns 1
+        every { studentMock.studentName } returns "Jan Kowalski"
+
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 2
         every { semesterMock.schoolYear } returns 2019
         every { semesterMock.semesterId } returns 1
+
         every { mockSdk.switchDiary(any(), any()) } returns mockSdk
     }
 
@@ -80,7 +96,7 @@ class TimetableRepositoryTest {
             createTimetableRemote(of(2019, 3, 5, 10, 30), 4, "", "W-F")
         ))
 
-        val lessons = TimetableRepository(settings, timetableLocal, timetableRemote)
+        val lessons = TimetableRepository(settings, timetableLocal, timetableRemote, timetableNotificationSchedulerHelper)
             .getTimetable(student, semesterMock, LocalDate.of(2019, 3, 5), LocalDate.of(2019, 3, 5), true)
             .blockingGet()
 
@@ -126,7 +142,7 @@ class TimetableRepositoryTest {
             createTimetableRemote(of(2019, 12, 25, 10, 40), 4, "126", "Matematyka", "Paweł Czwartkowski", true)
         ))
 
-        val lessons = TimetableRepository(settings, timetableLocal, timetableRemote)
+        val lessons = TimetableRepository(settings, timetableLocal, timetableRemote, timetableNotificationSchedulerHelper)
             .getTimetable(student, semesterMock, LocalDate.of(2019, 12, 23), LocalDate.of(2019, 12, 25), true)
             .blockingGet()
 

@@ -23,7 +23,7 @@ interface AboutView : BaseView {
 
     fun initView()
 
-    fun updateData(header: AboutScrollableHeader, items: List<AboutItem>)
+    fun updateData(data: List<Triple<String, String, Drawable?>>)
 
     fun openLogViewer()
 

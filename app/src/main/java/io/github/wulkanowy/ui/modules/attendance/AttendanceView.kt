@@ -18,7 +18,7 @@ interface AttendanceView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<AttendanceItem>)
+    fun updateData(data: List<Attendance>)
 
     fun updateNavigationDay(date: String)
 

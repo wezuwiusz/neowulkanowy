@@ -10,7 +10,7 @@
     android:paddingTop="10dp"
     android:paddingRight="20dp"
     android:paddingBottom="10dp"
-    tools:context=".ui.modules.exam.ExamHeader">
+    tools:context=".ui.modules.exam.ExamAdapter">
 
     <TextView
         android:id="@+id/examHeaderDay"
@@ -25,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:gravity="end"
         android:textSize="13sp"
         tools:text="25.01.2020" />

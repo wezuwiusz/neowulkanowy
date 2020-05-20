@@ -1,30 +1,27 @@
 package io.github.wulkanowy.ui.modules.about.contributor
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.FlexibleItemDecoration
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.pojos.Contributor
+import io.github.wulkanowy.databinding.FragmentContributorBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.openInternetBrowser
-import io.github.wulkanowy.utils.setOnItemClickListener
-import kotlinx.android.synthetic.main.fragment_creator.*
 import javax.inject.Inject
 
-class ContributorFragment : BaseFragment(), ContributorView, MainView.TitledView {
+class ContributorFragment : BaseFragment<FragmentContributorBinding>(R.layout.fragment_contributor),
+    ContributorView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: ContributorPresenter
 
     @Inject
-    lateinit var creatorsAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var creatorsAdapter: ContributorAdapter
 
     override val titleStringId get() = R.string.contributors_title
 
@@ -32,29 +29,27 @@ class ContributorFragment : BaseFragment(), ContributorView, MainView.TitledView
         fun newInstance() = ContributorFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_creator, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentContributorBinding.bind(view)
         presenter.onAttachView(this)
     }
 
     override fun initView() {
-        with(creatorRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+        with(binding.creatorRecycler) {
+            layoutManager = LinearLayoutManager(context)
             adapter = creatorsAdapter
-            addItemDecoration(FlexibleItemDecoration(context)
-                .withDefaultDivider()
-                .withDrawDividerOnLastItem(false))
+            addItemDecoration(DividerItemDecoration(context))
         }
-        creatorsAdapter.setOnItemClickListener(presenter::onItemSelected)
-        creatorSeeMore.setOnClickListener { presenter.onSeeMoreClick() }
+        creatorsAdapter.onClickListener = presenter::onItemSelected
+        binding.creatorSeeMore.setOnClickListener { presenter.onSeeMoreClick() }
     }
 
-    override fun updateData(data: List<ContributorItem>) {
-        creatorsAdapter.updateDataSet(data)
+    override fun updateData(data: List<Contributor>) {
+        with(creatorsAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun openUserGithubPage(username: String) {
@@ -66,7 +61,7 @@ class ContributorFragment : BaseFragment(), ContributorView, MainView.TitledView
     }
 
     override fun showProgress(show: Boolean) {
-        creatorProgress.visibility = if (show) VISIBLE else GONE
+        binding.creatorProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun onDestroyView() {

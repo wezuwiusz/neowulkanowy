@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.res.Configuration
 import android.widget.RemoteViews
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
@@ -71,6 +72,8 @@ class TimetableWidgetProvider : BroadcastReceiver() {
         fun getStudentWidgetKey(appWidgetId: Int) = "timetable_widget_student_$appWidgetId"
 
         fun getThemeWidgetKey(appWidgetId: Int) = "timetable_widget_theme_$appWidgetId"
+
+        fun getCurrentThemeWidgetKey(appWidgetId: Int) = "timetable_widget_current_theme_$appWidgetId"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -110,14 +113,23 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             with(sharedPref) {
                 delete(getStudentWidgetKey(appWidgetId))
                 delete(getDateWidgetKey(appWidgetId))
+                delete(getThemeWidgetKey(appWidgetId))
+                delete(getCurrentThemeWidgetKey(appWidgetId))
             }
         }
     }
 
     @SuppressLint("DefaultLocale")
     private fun updateWidget(context: Context, appWidgetId: Int, date: LocalDate, student: Student?) {
-        val savedTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
-        val layoutId = if (savedTheme == 0L) R.layout.widget_timetable else R.layout.widget_timetable_dark
+        val savedConfigureTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
+        val isSystemDarkMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        var currentTheme = 0L
+        var layoutId = R.layout.widget_timetable
+
+        if (savedConfigureTheme == 1L || (savedConfigureTheme == 2L && isSystemDarkMode)) {
+            currentTheme = 1L
+            layoutId = R.layout.widget_timetable_dark
+        }
 
         val nextNavIntent = createNavIntent(context, appWidgetId, appWidgetId, BUTTON_NEXT)
         val prevNavIntent = createNavIntent(context, -appWidgetId, appWidgetId, BUTTON_PREV)
@@ -150,7 +162,11 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             setPendingIntentTemplate(R.id.timetableWidgetList, appIntent)
         }
 
-        sharedPref.putLong(getDateWidgetKey(appWidgetId), date.toEpochDay(), true)
+        with(sharedPref) {
+            putLong(getCurrentThemeWidgetKey(appWidgetId), currentTheme)
+            putLong(getDateWidgetKey(appWidgetId), date.toEpochDay(), true)
+        }
+
         with(appWidgetManager) {
             notifyAppWidgetViewDataChanged(appWidgetId, R.id.timetableWidgetList)
             updateAppWidget(appWidgetId, remoteView)

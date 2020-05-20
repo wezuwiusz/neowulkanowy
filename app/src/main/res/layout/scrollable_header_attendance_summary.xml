@@ -6,7 +6,8 @@
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.modules.attendance.summary.AttendanceSummaryAdapter">
 
     <TextView
         android:layout_width="match_parent"

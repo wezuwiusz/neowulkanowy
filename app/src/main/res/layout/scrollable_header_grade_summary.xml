@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
     android:gravity="center_horizontal"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context=".ui.modules.grade.summary.GradeSummaryAdapter">
 
     <LinearLayout
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:orientation="vertical">
 
         <TextView

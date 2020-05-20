@@ -9,7 +9,7 @@
     android:paddingEnd="12dp"
     android:paddingRight="12dp"
     android:paddingBottom="7dp"
-    tools:context=".ui.modules.schoolandteachers.teacher.TeacherItem">
+    tools:context=".ui.modules.schoolandteachers.teacher.TeacherAdapter">
 
     <TextView
         android:id="@+id/teacherItemName"
@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="17sp"
@@ -28,11 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
         android:layout_toEndOf="@+id/teacherItemName"
-        android:layout_toRightOf="@+id/teacherItemName"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="17sp"
@@ -44,7 +40,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/teacherItemName"
         android:layout_alignStart="@id/teacherItemName"
-        android:layout_alignLeft="@id/teacherItemName"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"

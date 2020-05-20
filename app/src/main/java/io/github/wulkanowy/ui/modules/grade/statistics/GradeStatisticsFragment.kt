@@ -1,23 +1,23 @@
 package io.github.wulkanowy.ui.modules.grade.statistics
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
+import io.github.wulkanowy.databinding.FragmentGradeStatisticsBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemSelectedListener
-import kotlinx.android.synthetic.main.fragment_grade_statistics.*
 import javax.inject.Inject
 
-class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.GradeChildView {
+class GradeStatisticsFragment :
+    BaseFragment<FragmentGradeStatisticsBinding>(R.layout.fragment_grade_statistics),
+    GradeStatisticsView, GradeView.GradeChildView {
 
     @Inject
     lateinit var presenter: GradeStatisticsPresenter
@@ -36,24 +36,21 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
     override val isViewEmpty get() = statisticsAdapter.items.isEmpty()
 
     override val currentType
-        get() = when (gradeStatisticsTypeSwitch.checkedRadioButtonId) {
+        get() = when (binding.gradeStatisticsTypeSwitch.checkedRadioButtonId) {
             R.id.gradeStatisticsTypeSemester -> ViewType.SEMESTER
             R.id.gradeStatisticsTypePartial -> ViewType.PARTIAL
             else -> ViewType.POINTS
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_grade_statistics, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = gradeStatisticsSwipe
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentGradeStatisticsBinding.bind(view)
+        messageContainer = binding.gradeStatisticsSwipe
         presenter.onAttachView(this, savedInstanceState?.getSerializable(SAVED_CHART_TYPE) as? ViewType)
     }
 
     override fun initView() {
-        with(gradeStatisticsRecycler) {
+        with(binding.gradeStatisticsRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = statisticsAdapter
         }
@@ -61,16 +58,18 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
         subjectsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())
         subjectsAdapter.setDropDownViewResource(R.layout.item_attendance_summary_subject)
 
-        with(gradeStatisticsSubjects) {
+        with(binding.gradeStatisticsSubjects) {
             adapter = subjectsAdapter
             setOnItemSelectedListener<TextView> { presenter.onSubjectSelected(it?.text?.toString()) }
         }
 
-        gradeStatisticsSubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
+        with(binding) {
+            gradeStatisticsSubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
 
-        gradeStatisticsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
-        gradeStatisticsErrorRetry.setOnClickListener { presenter.onRetry() }
-        gradeStatisticsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+            gradeStatisticsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            gradeStatisticsErrorRetry.setOnClickListener { presenter.onRetry() }
+            gradeStatisticsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        }
     }
 
     override fun updateSubjects(data: ArrayList<String>) {
@@ -81,15 +80,17 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
         }
     }
 
-    override fun updateData(items: List<GradeStatisticsItem>, theme: String) {
-        statisticsAdapter.theme = theme
-        statisticsAdapter.items = items
-        statisticsAdapter.notifyDataSetChanged()
+    override fun updateData(items: List<GradeStatisticsItem>, theme: String, showAllSubjectsOnStatisticsList: Boolean) {
+        with(statisticsAdapter) {
+            this.showAllSubjectsOnList = showAllSubjectsOnStatisticsList
+            this.theme = theme
+            this.items = items
+            notifyDataSetChanged()
+        }
     }
 
     override fun showSubjects(show: Boolean) {
-        gradeStatisticsSubjectsContainer.visibility = if (show) View.VISIBLE else View.INVISIBLE
-        gradeStatisticsTypeSwitch.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        binding.gradeStatisticsSubjectsContainer.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun clearView() {
@@ -97,35 +98,35 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
     }
 
     override fun resetView() {
-        gradeStatisticsScroll.scrollTo(0, 0)
+        binding.gradeStatisticsScroll.scrollTo(0, 0)
     }
 
     override fun showContent(show: Boolean) {
-        gradeStatisticsRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        binding.gradeStatisticsRecycler.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun showEmpty(show: Boolean) {
-        gradeStatisticsEmpty.visibility = if (show) View.VISIBLE else View.INVISIBLE
+        binding.gradeStatisticsEmpty.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
     override fun showErrorView(show: Boolean) {
-        gradeStatisticsError.visibility = if (show) View.VISIBLE else View.GONE
+        binding.gradeStatisticsError.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun setErrorDetails(message: String) {
-        gradeStatisticsErrorMessage.text = message
+        binding.gradeStatisticsErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        gradeStatisticsProgress.visibility = if (show) View.VISIBLE else View.GONE
+        binding.gradeStatisticsProgress.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
-        gradeStatisticsSwipe.isEnabled = enable
+        binding.gradeStatisticsSwipe.isEnabled = enable
     }
 
     override fun showRefresh(show: Boolean) {
-        gradeStatisticsSwipe.isRefreshing = show
+        binding.gradeStatisticsSwipe.isRefreshing = show
     }
 
     override fun onParentLoadData(semesterId: Int, forceRefresh: Boolean) {
@@ -150,7 +151,7 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
 
     override fun onResume() {
         super.onResume()
-        gradeStatisticsTypeSwitch.setOnCheckedChangeListener { _, _ -> presenter.onTypeChange() }
+        binding.gradeStatisticsTypeSwitch.setOnCheckedChangeListener { _, _ -> presenter.onTypeChange() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -159,7 +160,7 @@ class GradeStatisticsFragment : BaseFragment(), GradeStatisticsView, GradeView.G
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.onDetachView()
+        super.onDestroyView()
     }
 }

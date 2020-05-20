@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.grade.details
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -9,29 +8,25 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
-import eu.davidea.flexibleadapter.items.IExpandable
-import eu.davidea.flexibleadapter.items.IFlexible
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.databinding.FragmentGradeDetailsBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.utils.setOnItemClickListener
-import kotlinx.android.synthetic.main.fragment_grade_details.*
 import javax.inject.Inject
 
-class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeChildView {
+class GradeDetailsFragment :
+    BaseFragment<FragmentGradeDetailsBinding>(R.layout.fragment_grade_details), GradeDetailsView,
+    GradeView.GradeChildView {
 
     @Inject
     lateinit var presenter: GradeDetailsPresenter
 
     @Inject
-    lateinit var gradeDetailsAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var gradeDetailsAdapter: GradeDetailsAdapter
 
     private var gradeDetailsMenu: Menu? = null
 
@@ -39,36 +34,18 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         fun newInstance() = GradeDetailsFragment()
     }
 
-    override val emptyAverageString: String
-        get() = getString(R.string.grade_no_average)
-
-    override val averageString: String
-        get() = getString(R.string.grade_average)
-
-    override val pointsSumString: String
-        get() = getString(R.string.grade_points_sum)
-
-    override val weightString: String
-        get() = getString(R.string.grade_weight)
-
-    override val noDescriptionString: String
-        get() = getString(R.string.all_no_description)
-
     override val isViewEmpty
-        get() = gradeDetailsAdapter.isEmpty
+        get() = gradeDetailsAdapter.itemCount == 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_grade_details, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = gradeDetailsRecycler
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentGradeDetailsBinding.bind(view)
+        messageContainer = binding.gradeDetailsRecycler
         presenter.onAttachView(this)
     }
 
@@ -79,22 +56,17 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     }
 
     override fun initView() {
-        gradeDetailsAdapter.run {
-            isAutoCollapseOnExpand = true
-            isAutoScrollOnExpand = true
-            setOnItemClickListener { presenter.onGradeItemSelected(it) }
-        }
+        gradeDetailsAdapter.onClickListener = presenter::onGradeItemSelected
 
-        gradeDetailsRecycler.run {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
-            adapter = gradeDetailsAdapter
-            addItemDecoration(GradeDetailsHeaderItemDecoration(context)
-                .withDefaultDivider(R.layout.header_grade_details)
-            )
+        with(binding) {
+            with(gradeDetailsRecycler) {
+                layoutManager = LinearLayoutManager(context)
+                adapter = gradeDetailsAdapter
+            }
+            gradeDetailsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            gradeDetailsErrorRetry.setOnClickListener { presenter.onRetry() }
+            gradeDetailsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }
-        gradeDetailsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
-        gradeDetailsErrorRetry.setOnClickListener { presenter.onRetry() }
-        gradeDetailsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -102,16 +74,23 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
         else false
     }
 
-    override fun updateData(data: List<GradeDetailsHeader>) {
-        gradeDetailsAdapter.updateDataSet(data, true)
+    override fun updateData(data: List<GradeDetailsItem>, isGradeExpandable: Boolean, gradeColorTheme: String) {
+        with(gradeDetailsAdapter) {
+            colorTheme = gradeColorTheme
+            setDataItems(data, isGradeExpandable)
+            notifyDataSetChanged()
+        }
     }
 
-    override fun updateItem(item: AbstractFlexibleItem<*>) {
-        gradeDetailsAdapter.updateItem(item)
+    override fun updateItem(item: Grade, position: Int) {
+        gradeDetailsAdapter.updateDetailsItem(position, item)
     }
 
     override fun clearView() {
-        gradeDetailsAdapter.clear()
+        with(gradeDetailsAdapter) {
+            setDataItems(mutableListOf())
+            notifyDataSetChanged()
+        }
     }
 
     override fun collapseAllItems() {
@@ -119,43 +98,43 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     }
 
     override fun scrollToStart() {
-        gradeDetailsRecycler.scrollToPosition(0)
+        binding.gradeDetailsRecycler.smoothScrollToPosition(0)
     }
 
-    override fun getHeaderOfItem(item: AbstractFlexibleItem<*>): IExpandable<*, out IFlexible<*>>? {
-        return gradeDetailsAdapter.getExpandableOf(item)
+    override fun getHeaderOfItem(subject: String): GradeDetailsItem {
+        return gradeDetailsAdapter.getHeaderItem(subject)
     }
 
-    override fun getGradeNumberString(number: Int): String {
-        return resources.getQuantityString(R.plurals.grade_number_item, number, number)
+    override fun updateHeaderItem(item: GradeDetailsItem) {
+        gradeDetailsAdapter.updateHeaderItem(item)
     }
 
     override fun showProgress(show: Boolean) {
-        gradeDetailsProgress.visibility = if (show) VISIBLE else GONE
+        binding.gradeDetailsProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
-        gradeDetailsSwipe.isEnabled = enable
+        binding.gradeDetailsSwipe.isEnabled = enable
     }
 
     override fun showContent(show: Boolean) {
-        gradeDetailsRecycler.visibility = if (show) VISIBLE else INVISIBLE
+        binding.gradeDetailsRecycler.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showEmpty(show: Boolean) {
-        gradeDetailsEmpty.visibility = if (show) VISIBLE else INVISIBLE
+        binding.gradeDetailsEmpty.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showErrorView(show: Boolean) {
-        gradeDetailsError.visibility = if (show) VISIBLE else GONE
+        binding.gradeDetailsError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        gradeDetailsErrorMessage.text = message
+        binding.gradeDetailsErrorMessage.text = message
     }
 
     override fun showRefresh(show: Boolean) {
-        gradeDetailsSwipe.isRefreshing = show
+        binding.gradeDetailsSwipe.isRefreshing = show
     }
 
     override fun showGradeDialog(grade: Grade, colorScheme: String) {
@@ -187,7 +166,7 @@ class GradeDetailsFragment : BaseFragment(), GradeDetailsView, GradeView.GradeCh
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.onDetachView()
+        super.onDestroyView()
     }
 }

@@ -18,9 +18,9 @@ import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getCurrentThemeWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getDateWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
-import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getThemeWidgetKey
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toFormattedString
@@ -41,9 +41,7 @@ class TimetableWidgetFactory(
 
     private var lessons = emptyList<Timetable>()
 
-    private var savedTheme: Long? = null
-
-    private var layoutId: Int? = null
+    private var savedCurrentTheme: Long? = null
 
     private var primaryColor: Int? = null
 
@@ -71,28 +69,32 @@ class TimetableWidgetFactory(
             val studentId = sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0)
 
             updateTheme(appWidgetId)
-
             updateLessons(date, studentId)
         }
     }
 
     private fun updateTheme(appWidgetId: Int) {
-        savedTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
-        layoutId = if (savedTheme == 0L) R.layout.item_widget_timetable else R.layout.item_widget_timetable_dark
+        savedCurrentTheme = sharedPref.getLong(getCurrentThemeWidgetKey(appWidgetId), 0)
 
-        primaryColor = if (savedTheme == 0L) R.color.colorPrimary else R.color.colorPrimaryLight
-        textColor = if (savedTheme == 0L) android.R.color.black else android.R.color.white
-        timetableChangeColor = if (savedTheme == 0L) R.color.timetable_change_dark else R.color.timetable_change_light
+        if (savedCurrentTheme == 0L) {
+            primaryColor = R.color.colorPrimary
+            textColor = android.R.color.black
+            timetableChangeColor = R.color.timetable_change_dark
+        } else {
+            primaryColor = R.color.colorPrimaryLight
+            textColor = android.R.color.white
+            timetableChangeColor = R.color.timetable_change_light
+        }
     }
 
     private fun getItemLayout(lesson: Timetable): Int {
         return when {
             prefRepository.showWholeClassPlan == "small" && !lesson.isStudentPlan -> {
-                if (savedTheme == 0L) R.layout.item_widget_timetable_small
+                if (savedCurrentTheme == 0L) R.layout.item_widget_timetable_small
                 else R.layout.item_widget_timetable_small_dark
             }
-            savedTheme == 0L -> R.layout.item_widget_timetable
-            else -> R.layout.item_widget_timetable_dark
+            savedCurrentTheme == 1L -> R.layout.item_widget_timetable_dark
+            else -> R.layout.item_widget_timetable
         }
     }
 

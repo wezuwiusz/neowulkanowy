@@ -1,32 +1,31 @@
 package io.github.wulkanowy.ui.modules.attendance.summary
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.AttendanceSummary
+import io.github.wulkanowy.databinding.FragmentAttendanceSummaryBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemSelectedListener
-import kotlinx.android.synthetic.main.fragment_attendance_summary.*
 import javax.inject.Inject
 
-class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainView.TitledView {
+class AttendanceSummaryFragment :
+    BaseFragment<FragmentAttendanceSummaryBinding>(R.layout.fragment_attendance_summary),
+    AttendanceSummaryView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: AttendanceSummaryPresenter
 
     @Inject
-    lateinit var attendanceSummaryAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var attendanceSummaryAdapter: AttendanceSummaryAdapter
 
     private lateinit var subjectsAdapter: ArrayAdapter<String>
 
@@ -36,41 +35,38 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
         fun newInstance() = AttendanceSummaryFragment()
     }
 
-    override val totalString get() = getString(R.string.attendance_summary_total)
-
     override val titleStringId get() = R.string.attendance_title
 
-    override val isViewEmpty get() = attendanceSummaryAdapter.isEmpty
+    override val isViewEmpty get() = attendanceSummaryAdapter.items.isEmpty()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_attendance_summary, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        messageContainer = attendanceSummaryRecycler
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAttendanceSummaryBinding.bind(view)
+        messageContainer = binding.attendanceSummaryRecycler
         presenter.onAttachView(this, savedInstanceState?.getInt(SAVED_SUBJECT_KEY))
     }
 
     override fun initView() {
-        with(attendanceSummaryRecycler) {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+        with(binding.attendanceSummaryRecycler) {
+            layoutManager = LinearLayoutManager(context)
             adapter = attendanceSummaryAdapter
         }
 
-        attendanceSummarySwipe.setOnRefreshListener(presenter::onSwipeRefresh)
-        attendanceSummaryErrorRetry.setOnClickListener { presenter.onRetry() }
-        attendanceSummaryErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        with(binding) {
+            attendanceSummarySwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            attendanceSummaryErrorRetry.setOnClickListener { presenter.onRetry() }
+            attendanceSummaryErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        }
 
         subjectsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())
         subjectsAdapter.setDropDownViewResource(R.layout.item_attendance_summary_subject)
 
-        with(attendanceSummarySubjects) {
+        with(binding.attendanceSummarySubjects) {
             adapter = subjectsAdapter
             setOnItemSelectedListener<TextView> { presenter.onSubjectSelected(it?.text?.toString()) }
         }
 
-        attendanceSummarySubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
+        binding.attendanceSummarySubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
     }
 
     override fun updateSubjects(data: ArrayList<String>) {
@@ -81,48 +77,50 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
         }
     }
 
-    override fun updateDataSet(data: List<AttendanceSummaryItem>, header: AttendanceSummaryScrollableHeader) {
+    override fun updateDataSet(data: List<AttendanceSummary>) {
         with(attendanceSummaryAdapter) {
-            updateDataSet(data, true)
-            removeAllScrollableHeaders()
-            addScrollableHeader(header)
+            items = data
+            notifyDataSetChanged()
         }
     }
 
     override fun clearView() {
-        attendanceSummaryAdapter.clear()
+        with(attendanceSummaryAdapter) {
+            items = emptyList()
+            notifyDataSetChanged()
+        }
     }
 
     override fun showEmpty(show: Boolean) {
-        attendanceSummaryEmpty.visibility = if (show) VISIBLE else GONE
+        binding.attendanceSummaryEmpty.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showErrorView(show: Boolean) {
-        attendanceSummaryError.visibility = if (show) VISIBLE else GONE
+        binding.attendanceSummaryError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        attendanceSummaryErrorMessage.text = message
+        binding.attendanceSummaryErrorMessage.text = message
     }
 
     override fun showProgress(show: Boolean) {
-        attendanceSummaryProgress.visibility = if (show) VISIBLE else GONE
+        binding.attendanceSummaryProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSwipe(enable: Boolean) {
-        attendanceSummarySwipe.isEnabled = enable
+        binding.attendanceSummarySwipe.isEnabled = enable
     }
 
     override fun showContent(show: Boolean) {
-        attendanceSummaryRecycler.visibility = if (show) VISIBLE else GONE
+        binding.attendanceSummaryRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showSubjects(show: Boolean) {
-        attendanceSummarySubjectsContainer.visibility = if (show) VISIBLE else INVISIBLE
+        binding.attendanceSummarySubjectsContainer.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun hideRefresh() {
-        attendanceSummarySwipe.isRefreshing = false
+        binding.attendanceSummarySwipe.isRefreshing = false
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -131,7 +129,7 @@ class AttendanceSummaryFragment : BaseFragment(), AttendanceSummaryView, MainVie
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.onDetachView()
+        super.onDestroyView()
     }
 }

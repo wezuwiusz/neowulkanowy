@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.about
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -23,10 +22,9 @@ class AboutPresenter @Inject constructor(
         loadData()
     }
 
-    fun onItemSelected(item: AbstractFlexibleItem<*>) {
-        if (item !is AboutItem) return
+    fun onItemSelected(name: String) {
         view?.run {
-            when (item.title) {
+            when (name) {
                 versionRes?.first -> {
                     Timber.i("Opening log viewer")
                     openLogViewer()
@@ -73,15 +71,16 @@ class AboutPresenter @Inject constructor(
 
     private fun loadData() {
         view?.run {
-            updateData(AboutScrollableHeader(), listOfNotNull(
-                versionRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
-                creatorsRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
-                feedbackRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
-                faqRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
-                discordRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
-                homepageRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
-                licensesRes?.let { (title, summary, image) -> AboutItem(title, summary, image) },
-                privacyRes?.let { (title, summary, image) -> AboutItem(title, summary, image) }))
+            updateData(listOfNotNull(
+                versionRes,
+                creatorsRes,
+                feedbackRes,
+                faqRes,
+                discordRes,
+                homepageRes,
+                licensesRes,
+                privacyRes
+            ))
         }
     }
 }

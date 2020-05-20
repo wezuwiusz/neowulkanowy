@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.attendance.summary
 
-import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.repositories.attendancesummary.AttendanceSummaryRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -10,13 +9,8 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.calculatePercentage
-import io.github.wulkanowy.utils.getFormattedName
 import org.threeten.bp.Month
 import timber.log.Timber
-import java.lang.String.format
-import java.util.Locale.FRANCE
-import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class AttendanceSummaryPresenter @Inject constructor(
@@ -88,8 +82,7 @@ class AttendanceSummaryPresenter @Inject constructor(
                         attendanceSummaryRepository.getAttendanceSummary(student, it, subjectId, forceRefresh)
                     }
                 }
-                .map { createAttendanceSummaryItems(it) to AttendanceSummaryScrollableHeader(formatPercentage(it.calculatePercentage())) }
-                .delay(200, MILLISECONDS)
+                .map { items -> items.sortedByDescending { if (it.month.value <= Month.JUNE.value) it.month.value + 12 else it.month.value } }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally {
@@ -102,11 +95,11 @@ class AttendanceSummaryPresenter @Inject constructor(
                 .subscribe({
                     Timber.i("Loading attendance summary result: Success")
                     view?.apply {
-                        showEmpty(it.first.isEmpty())
-                        showContent(it.first.isNotEmpty())
-                        updateDataSet(it.first, it.second)
+                        showEmpty(it.isEmpty())
+                        showContent(it.isNotEmpty())
+                        updateDataSet(it)
                     }
-                    analytics.logEvent("load_attendance_summary", "items" to it.first.size, "force_refresh" to forceRefresh, "item_id" to subjectId)
+                    analytics.logEvent("load_attendance_summary", "items" to it.size, "force_refresh" to forceRefresh, "item_id" to subjectId)
                 }) {
                     Timber.i("Loading attendance summary result: An exception occurred")
                     errorHandler.dispatch(it)
@@ -149,43 +142,5 @@ class AttendanceSummaryPresenter @Inject constructor(
                 errorHandler.dispatch(it)
             })
         )
-    }
-
-    private fun createAttendanceSummaryTotalItem(attendanceSummary: List<AttendanceSummary>): AttendanceSummaryItem {
-        return AttendanceSummaryItem(
-            month = view?.totalString.orEmpty(),
-            percentage = formatPercentage(attendanceSummary.calculatePercentage()),
-            present = attendanceSummary.sumBy { it.presence }.toString(),
-            absence = attendanceSummary.sumBy { it.absence }.toString(),
-            excusedAbsence = attendanceSummary.sumBy { it.absenceExcused }.toString(),
-            schoolAbsence = attendanceSummary.sumBy { it.absenceForSchoolReasons }.toString(),
-            exemption = attendanceSummary.sumBy { it.exemption }.toString(),
-            lateness = attendanceSummary.sumBy { it.lateness }.toString(),
-            excusedLateness = attendanceSummary.sumBy { it.latenessExcused }.toString()
-        )
-    }
-
-    private fun createAttendanceSummaryItems(attendanceSummary: List<AttendanceSummary>): List<AttendanceSummaryItem> {
-        if (attendanceSummary.isEmpty()) return emptyList()
-        return listOf(createAttendanceSummaryTotalItem(attendanceSummary)) + attendanceSummary.sortedByDescending {
-            if (it.month.value <= Month.JUNE.value) it.month.value + 12 else it.month.value
-        }.map {
-            AttendanceSummaryItem(
-                month = it.month.getFormattedName(),
-                percentage = formatPercentage(it.calculatePercentage()),
-                present = it.presence.toString(),
-                absence = it.absence.toString(),
-                excusedAbsence = it.absenceExcused.toString(),
-                schoolAbsence = it.absenceForSchoolReasons.toString(),
-                exemption = it.exemption.toString(),
-                lateness = it.lateness.toString(),
-                excusedLateness = it.latenessExcused.toString()
-            )
-        }
-    }
-
-    private fun formatPercentage(percentage: Double): String {
-        return if (percentage == 0.0) "0%"
-        else "${format(FRANCE, "%.2f", percentage)}%"
     }
 }

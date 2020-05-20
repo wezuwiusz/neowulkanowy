@@ -4,16 +4,16 @@ import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.grade.GradeRepository
-import io.github.wulkanowy.data.repositories.gradessummary.GradeSummaryRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.createSemesterEntity
+import io.github.wulkanowy.createSemesterEntity
+import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.of
@@ -25,10 +25,10 @@ class GradeAverageProviderTest {
     lateinit var preferencesRepository: PreferencesRepository
 
     @Mock
-    lateinit var gradeRepository: GradeRepository
+    lateinit var semesterRepository: SemesterRepository
 
     @Mock
-    lateinit var gradeSummaryRepository: GradeSummaryRepository
+    lateinit var gradeRepository: GradeRepository
 
     private lateinit var gradeAverageProvider: GradeAverageProvider
 
@@ -41,165 +41,192 @@ class GradeAverageProviderTest {
     )
 
     private val firstGrades = listOf(
+        // avg: 3.5
         getGrade(22, "Matematyka", 4.0),
         getGrade(22, "Matematyka", 3.0),
+
+        // avg: 3.5
         getGrade(22, "Fizyka", 6.0),
         getGrade(22, "Fizyka", 1.0)
     )
 
-    private val secondGrade = listOf(
+    private val firstSummaries = listOf(
+        getSummary(semesterId = 22, subject = "Matematyka", average = 3.9),
+        getSummary(semesterId = 22, subject = "Fizyka", average = 3.1)
+    )
+
+    private val secondGrades = listOf(
+        // avg: 2.5
         getGrade(23, "Matematyka", 2.0),
         getGrade(23, "Matematyka", 3.0),
+
+        // avg: 3.0
         getGrade(23, "Fizyka", 4.0),
         getGrade(23, "Fizyka", 2.0)
     )
 
+    private val secondSummaries = listOf(
+        getSummary(semesterId = 23, subject = "Matematyka", average = 2.9),
+        getSummary(semesterId = 23, subject = "Fizyka", average = 3.4)
+    )
+
     private val secondGradeWithModifier = listOf(
+        // avg: 3.375
         getGrade(24, "Język polski", 3.0, -0.50),
         getGrade(24, "Język polski", 4.0, 0.25)
     )
 
+    private val secondSummariesWithModifier = listOf(
+        getSummary(24, "Język polski", 3.49)
+    )
+
     @Before
-    fun initTest() {
+    fun setUp() {
         MockitoAnnotations.initMocks(this)
-        gradeAverageProvider = GradeAverageProvider(preferencesRepository, gradeRepository, gradeSummaryRepository)
 
-        doReturn(.33).`when`(preferencesRepository).gradeMinusModifier
-        doReturn(.33).`when`(preferencesRepository).gradePlusModifier
-        doReturn(false).`when`(preferencesRepository).gradeAverageForceCalc
+        `when`(preferencesRepository.gradeMinusModifier).thenReturn(.33)
+        `when`(preferencesRepository.gradePlusModifier).thenReturn(.33)
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(false)
+        `when`(semesterRepository.getSemesters(student)).thenReturn(Single.just(semesters))
 
-        doReturn(Single.just(firstGrades)).`when`(gradeRepository).getGrades(student, semesters[1], true)
-        doReturn(Single.just(secondGrade)).`when`(gradeRepository).getGrades(student, semesters[2], true)
+        gradeAverageProvider = GradeAverageProvider(semesterRepository, gradeRepository, preferencesRepository)
     }
 
     @Test
     fun onlyOneSemesterTest() {
-        doReturn("only_one_semester").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(emptyList<GradeSummary>())).`when`(gradeSummaryRepository).getGradesSummary(student, semesters[2], true)
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(true)
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("only_one_semester")
+        `when`(gradeRepository.getGrades(student, semesters[2])).thenReturn(Single.just(secondGrades to secondSummaries))
 
-        val averages = gradeAverageProvider.getGradeAverage(student, semesters, semesters[2].semesterId, true)
-            .blockingGet()
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId).blockingGet()
 
-        assertEquals(2, averages.size)
-        assertEquals(2.5, averages.single { it.first == "Matematyka" }.second, .0)
-        assertEquals(3.0, averages.single { it.first == "Fizyka" }.second, .0)
+        assertEquals(2, items.size)
+        assertEquals(2.5, items.single { it.subject == "Matematyka" }.average, .0)
+        assertEquals(3.0, items.single { it.subject == "Fizyka" }.average, .0)
     }
 
     @Test
     fun onlyOneSemester_gradesWithModifiers_default() {
-        doReturn("only_one_semester").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(emptyList<GradeSummary>())).`when`(gradeSummaryRepository).getGradesSummary(student, semesters[2], true)
-        doReturn(Single.just(secondGradeWithModifier)).`when`(gradeRepository).getGrades(student, semesters[2], true)
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(true)
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("only_one_semester")
+        `when`(gradeRepository.getGrades(student, semesters[2])).thenReturn(Single.just(secondGradeWithModifier to secondSummariesWithModifier))
 
-        val averages = gradeAverageProvider.getGradeAverage(student, semesters, semesters[2].semesterId, true)
-            .blockingGet()
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId).blockingGet()
 
-        assertEquals(3.5, averages.single { it.first == "Język polski" }.second, .0)
+        assertEquals(3.5, items.single { it.subject == "Język polski" }.average, .0)
     }
 
     @Test
     fun onlyOneSemester_gradesWithModifiers_api() {
-        doReturn("only_one_semester").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(emptyList<GradeSummary>())).`when`(gradeSummaryRepository).getGradesSummary(student.copy(loginMode = Sdk.Mode.API.name), semesters[2], true)
-        doReturn(Single.just(secondGradeWithModifier)).`when`(gradeRepository).getGrades(student.copy(loginMode = Sdk.Mode.API.name), semesters[2], true)
+        val student = student.copy(loginMode = Sdk.Mode.API.name)
 
-        val averages = gradeAverageProvider.getGradeAverage(student.copy(loginMode = Sdk.Mode.API.name), semesters, semesters[2].semesterId, true)
-            .blockingGet()
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(true)
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("only_one_semester")
+        `when`(semesterRepository.getSemesters(student)).thenReturn(Single.just(semesters))
+        `when`(gradeRepository.getGrades(student, semesters[2])).thenReturn(Single.just(secondGradeWithModifier to secondSummariesWithModifier))
 
-        assertEquals(3.375, averages.single { it.first == "Język polski" }.second, .0)
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId).blockingGet()
+
+        assertEquals(3.375, items.single { it.subject == "Język polski" }.average, .0)
     }
 
     @Test
     fun onlyOneSemester_gradesWithModifiers_scrapper() {
-        doReturn("only_one_semester").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(emptyList<GradeSummary>())).`when`(gradeSummaryRepository).getGradesSummary(student, semesters[2], true)
-        doReturn(Single.just(secondGradeWithModifier)).`when`(gradeRepository).getGrades(student.copy(loginMode = Sdk.Mode.SCRAPPER.name), semesters[2], true)
+        val student = student.copy(loginMode = Sdk.Mode.SCRAPPER.name)
 
-        val averages = gradeAverageProvider.getGradeAverage(student.copy(loginMode = Sdk.Mode.SCRAPPER.name), semesters, semesters[2].semesterId, true)
-            .blockingGet()
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(true)
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("only_one_semester")
+        `when`(semesterRepository.getSemesters(student)).thenReturn(Single.just(semesters))
+        `when`(gradeRepository.getGrades(student, semesters[2])).thenReturn(Single.just(secondGradeWithModifier to secondSummariesWithModifier))
 
-        assertEquals(3.5, averages.single { it.first == "Język polski" }.second, .0)
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId).blockingGet()
+
+        assertEquals(3.5, items.single { it.subject == "Język polski" }.average, .0)
     }
 
     @Test
     fun onlyOneSemester_gradesWithModifiers_hybrid() {
-        doReturn("only_one_semester").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(emptyList<GradeSummary>())).`when`(gradeSummaryRepository).getGradesSummary(student.copy(loginMode = Sdk.Mode.HYBRID.name), semesters[2], true)
-        doReturn(Single.just(secondGradeWithModifier)).`when`(gradeRepository).getGrades(student.copy(loginMode = Sdk.Mode.HYBRID.name), semesters[2], true)
+        val student = student.copy(loginMode = Sdk.Mode.HYBRID.name)
 
-        val averages = gradeAverageProvider.getGradeAverage(student.copy(loginMode = Sdk.Mode.HYBRID.name), semesters, semesters[2].semesterId, true)
-            .blockingGet()
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(true)
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("only_one_semester")
+        `when`(semesterRepository.getSemesters(student)).thenReturn(Single.just(semesters))
+        `when`(gradeRepository.getGrades(student, semesters[2])).thenReturn(Single.just(secondGradeWithModifier to secondSummariesWithModifier))
 
-        assertEquals(3.375, averages.single { it.first == "Język polski" }.second, .0)
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId).blockingGet()
+
+        assertEquals(3.375, items.single { it.subject == "Język polski" }.average, .0)
     }
 
     @Test
     fun allYearFirstSemesterTest() {
-        doReturn("all_year").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(emptyList<GradeSummary>())).`when`(gradeSummaryRepository).getGradesSummary(student, semesters[1], true)
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(true)
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("all_year")
+        `when`(gradeRepository.getGrades(student, semesters[1])).thenReturn(Single.just(firstGrades to firstSummaries))
 
-        val averages = gradeAverageProvider.getGradeAverage(student, semesters, semesters[1].semesterId, true)
-            .blockingGet()
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[1].semesterId).blockingGet()
 
-        assertEquals(2, averages.size)
-        assertEquals(3.5, averages.single { it.first == "Matematyka" }.second, .0)
-        assertEquals(3.5, averages.single { it.first == "Fizyka" }.second, .0)
+        assertEquals(2, items.size)
+        assertEquals(3.5, items.single { it.subject == "Matematyka" }.average, .0)
+        assertEquals(3.5, items.single { it.subject == "Fizyka" }.average, .0)
     }
 
     @Test
     fun allYearSecondSemesterTest() {
-        doReturn("all_year").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(firstGrades)).`when`(gradeRepository).getGrades(student, semesters[1], false)
-        doReturn(Single.just(emptyList<GradeSummary>())).`when`(gradeSummaryRepository).getGradesSummary(student, semesters[2], true)
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(true)
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("all_year")
+        `when`(gradeRepository.getGrades(student, semesters[1])).thenReturn(Single.just(firstGrades to firstSummaries))
+        `when`(gradeRepository.getGrades(student, semesters[2])).thenReturn(Single.just(secondGrades to secondSummaries))
 
-        val averages = gradeAverageProvider.getGradeAverage(student, semesters, semesters[2].semesterId, true)
-            .blockingGet()
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId).blockingGet()
 
-        assertEquals(2, averages.size)
-        assertEquals(3.0, averages.single { it.first == "Matematyka" }.second, .0)
-        assertEquals(3.25, averages.single { it.first == "Fizyka" }.second, .0)
+        assertEquals(2, items.size)
+        assertEquals(3.0, items.single { it.subject == "Matematyka" }.average, .0)
+        assertEquals(3.25, items.single { it.subject == "Fizyka" }.average, .0)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun incorrectAverageModeTest() {
-        doReturn("test_mode").`when`(preferencesRepository).gradeAverageMode
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("test_mode")
 
-        gradeAverageProvider.getGradeAverage(student, semesters, semesters[2].semesterId, true).blockingGet()
+        gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).blockingGet()
     }
 
     @Test
-    fun onlyOneSemester_averageFromSummary() {
-        doReturn("all_year").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(firstGrades)).`when`(gradeRepository).getGrades(student, semesters[1], false)
-        doReturn(Single.just(listOf(
-            getSummary(22, "Matematyka", 3.1),
-            getSummary(22, "Fizyka", 3.26)
-        ))).`when`(gradeSummaryRepository).getGradesSummary(student, semesters[2], true)
+    fun allYearSemester_averageFromSummary() {
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("all_year")
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(false)
+        `when`(gradeRepository.getGrades(student, semesters[1])).thenReturn(Single.just(firstGrades to listOf(
+            getSummary(22, "Matematyka", 3.0),
+            getSummary(22, "Fizyka", 3.5)
+        )))
+        `when`(gradeRepository.getGrades(student, semesters[2])).thenReturn(Single.just(secondGrades to listOf(
+            getSummary(22, "Matematyka", 3.5),
+            getSummary(22, "Fizyka", 4.0)
+        )))
 
-        val averages = gradeAverageProvider.getGradeAverage(student, semesters, semesters[2].semesterId, true)
-            .blockingGet()
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId).blockingGet()
 
-        assertEquals(2, averages.size)
-        assertEquals(3.1, averages.single { it.first == "Matematyka" }.second, .0)
-        assertEquals(3.26, averages.single { it.first == "Fizyka" }.second, .0)
+        assertEquals(2, items.size)
+        assertEquals(3.25, items.single { it.subject == "Matematyka" }.average, .0)
+        assertEquals(3.75, items.single { it.subject == "Fizyka" }.average, .0)
     }
 
     @Test
     fun onlyOneSemester_averageFromSummary_forceCalc() {
-        doReturn(true).`when`(preferencesRepository).gradeAverageForceCalc
-        doReturn("all_year").`when`(preferencesRepository).gradeAverageMode
-        doReturn(Single.just(firstGrades)).`when`(gradeRepository).getGrades(student, semesters[1], false)
-        doReturn(Single.just(listOf(
-            getSummary(22, "Matematyka", 3.1),
-            getSummary(22, "Fizyka", 3.26)
-        ))).`when`(gradeSummaryRepository).getGradesSummary(student, semesters[2], true)
+        `when`(preferencesRepository.gradeAverageMode).thenReturn("all_year")
+        `when`(preferencesRepository.gradeAverageForceCalc).thenReturn(true)
+        `when`(gradeRepository.getGrades(student, semesters[1])).thenReturn(Single.just(firstGrades to firstSummaries))
+        `when`(gradeRepository.getGrades(student, semesters[2])).thenReturn(Single.just(secondGrades to listOf(
+            getSummary(22, "Matematyka", 1.1),
+            getSummary(22, "Fizyka", 7.26)
+        )))
 
-        val averages = gradeAverageProvider.getGradeAverage(student, semesters, semesters[2].semesterId, true)
-            .blockingGet()
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId).blockingGet()
 
-        assertEquals(2, averages.size)
-        assertEquals(3.0, averages.single { it.first == "Matematyka" }.second, .0)
-        assertEquals(3.25, averages.single { it.first == "Fizyka" }.second, .0)
+        assertEquals(2, items.size)
+        assertEquals(3.0, items.single { it.subject == "Matematyka" }.average, .0)
+        assertEquals(3.25, items.single { it.subject == "Fizyka" }.average, .0)
     }
 
     private fun getGrade(semesterId: Int, subject: String, value: Double, modifier: Double = 0.0): Grade {
@@ -221,12 +248,12 @@ class GradeAverageProviderTest {
         )
     }
 
-    private fun getSummary(semesterId: Int, subject: String, value: Double): GradeSummary {
+    private fun getSummary(semesterId: Int, subject: String, average: Double): GradeSummary {
         return GradeSummary(
             studentId = 101,
             semesterId = semesterId,
             subject = subject,
-            average = value,
+            average = average,
             pointsSum = "",
             proposedPoints = "",
             finalPoints = "",

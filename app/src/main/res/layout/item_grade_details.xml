@@ -1,82 +1,82 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/grade_subitem_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
-    android:paddingStart="12dp"
-    android:paddingLeft="12dp"
-    android:paddingTop="7dp"
-    android:paddingEnd="12dp"
-    android:paddingRight="12dp"
-    android:paddingBottom="7dp"
-    tools:context=".ui.modules.grade.details.GradeDetailsItem">
+    android:background="?android:windowBackground">
 
-    <TextView
-        android:id="@+id/gradeItemValue"
-        android:layout_width="45dp"
-        android:layout_height="40dp"
-        android:layout_centerVertical="true"
-        android:background="@color/grade_material_default"
-        android:gravity="center"
-        android:maxLength="5"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        tools:text="6" />
-
-    <TextView
-        android:id="@+id/gradeItemDescription"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gradeSubItemContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_toStartOf="@id/gradeItemNote"
-        android:layout_toLeftOf="@id/gradeItemNote"
-        android:layout_toEndOf="@+id/gradeItemValue"
-        android:layout_toRightOf="@+id/gradeItemValue"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="14sp"
-        tools:text="@tools:sample/lorem" />
+        android:background="?selectableItemBackground"
+        android:paddingStart="12dp"
+        android:paddingTop="7dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="7dp"
+        tools:context=".ui.modules.grade.details.GradeDetailsAdapter">
 
-    <TextView
-        android:id="@+id/gradeItemDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/gradeItemDescription"
-        android:layout_alignLeft="@+id/gradeItemDescription"
-        android:layout_alignBottom="@+id/gradeItemValue"
-        android:textSize="12sp"
-        tools:text="@tools:sample/lorem" />
+        <TextView
+            android:id="@+id/gradeItemValue"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:background="@color/grade_material_default"
+            android:gravity="center"
+            android:maxLength="5"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="6" />
 
-    <TextView
-        android:id="@+id/gradeItemWeight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/gradeItemValue"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_toStartOf="@id/gradeItemNote"
-        android:layout_toLeftOf="@id/gradeItemNote"
-        android:layout_toEndOf="@+id/gradeItemDate"
-        android:layout_toRightOf="@+id/gradeItemDate"
-        android:textSize="12sp"
-        tools:text="@tools:sample/lorem" />
+        <TextView
+            android:id="@+id/gradeItemDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/gradeItemNote"
+            app:layout_constraintStart_toEndOf="@+id/gradeItemValue"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
 
-    <ImageView
-        android:id="@+id/gradeItemNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/ic_all_round_mark"
-        app:tint="?colorPrimary"
-        tools:ignore="contentDescription" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/gradeItemDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/gradeItemValue"
+            app:layout_constraintStart_toStartOf="@+id/gradeItemDescription"
+            tools:text="@tools:sample/date/ddmmyy" />
+
+        <TextView
+            android:id="@+id/gradeItemWeight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            android:maxLines="1"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/gradeItemValue"
+            app:layout_constraintEnd_toStartOf="@id/gradeItemNote"
+            app:layout_constraintStart_toEndOf="@+id/gradeItemDate"
+            tools:text="@tools:sample/lorem" />
+
+        <ImageView
+            android:id="@+id/gradeItemNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_all_round_mark"
+            app:tint="?colorPrimary"
+            tools:ignore="contentDescription" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

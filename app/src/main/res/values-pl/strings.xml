@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Wulkanowy</string>
-
-
     <!--Activity/Fragment title-->
     <string name="login_title">Logowanie</string>
     <string name="main_title">Wulkanowy</string>
@@ -22,11 +19,8 @@
     <string name="note_title">Uwagi i osiągnięcia</string>
     <string name="homework_title">Zadania domowe</string>
     <string name="account_title">Wybierz konto</string>
-
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %d, %d/%d</string>
-
-
     <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
     <string name="login_header_symbol">Podaj symbol</string>
@@ -35,13 +29,13 @@
     <string name="login_login_pesel_email_hint">Login, PESEL lub e-mail</string>
     <string name="login_password_hint">Hasło</string>
     <string name="login_host_hint">Dziennik UONET+</string>
-    <string name="login_symbol_hint">Symbol</string>
     <string name="login_type_api">Mobilne API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrydowe</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
     <string name="login_api_key_hint">Klucz API</string>
+    <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
     <string name="login_incorrect_password">Dane logowania są niepoprawne. Upewnij się, że został wybrany odpowiedni dziennik UONET+ w polu poniżej</string>
@@ -65,20 +59,17 @@
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Wyślij email</string>
+    <string name="login_email_details">Opisz problem:</string>
     <string name="login_recover_warning">Upewnij się, że został wybrany odpowiedni dziennik UONET+!</string>
     <string name="login_recover_button">Nie pamiętam hasła</string>
     <string name="login_recover_title">Przywróć swoje konto</string>
     <string name="login_recover">Przywróć</string>
     <string name="login_signed_in">Uczeń jest już zalogowany</string>
-
-
     <!--Main-->
     <string name="main_account_picker">Menadżer kont</string>
     <string name="main_log_in">Zaloguj się</string>
     <string name="main_session_expired">Sesja wygasła</string>
     <string name="main_session_relogin">Sesja wygasła, zaloguj się ponownie</string>
-
-
     <!--Grade-->
     <string name="grade_header">Ocena</string>
     <string name="grade_semester">Semestr %d</string>
@@ -123,8 +114,6 @@
         <item quantity="many">Masz %1$d nowych ocen</item>
         <item quantity="other">Masz %1$d nowych ocen</item>
     </plurals>
-
-
     <!--Timetable-->
     <string name="timetable_lesson">Lekcja</string>
     <string name="timetable_room">Sala</string>
@@ -132,17 +121,21 @@
     <string name="timetable_time">Godziny</string>
     <string name="timetable_changes">Zmiany</string>
     <string name="timetable_no_items">Brak lekcji w tym dniu</string>
-
-
-    <!--CompletedLesson-->
+    <string name="timetable_minutes">%s min</string>
+    <string name="timetable_seconds">%s sek</string>
+    <string name="timetable_time_left">jeszcze %1$s</string>
+    <string name="timetable_time_until">za %1$s</string>
+    <string name="timetable_finished">Zakończona</string>
+    <string name="timetable_now">Teraz: %s</string>
+    <string name="timetable_next">Za chwilę: %s</string>
+    <string name="timetable_later">Później: %s</string>
+    <!--Completed lessons-->
     <string name="completed_lessons_title">Lekcje zrealizowane</string>
     <string name="completed_lessons_button">Zobacz lekcje zrealizowane</string>
     <string name="completed_lessons_no_items">Brak informacji o lekcjach zrealizowanych</string>
     <string name="completed_lessons_topic">Temat</string>
     <string name="completed_lessons_absence">Nieobecność</string>
     <string name="completed_lessons_resources">Zasoby</string>
-
-
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
     <string name="attendance_absence_school">Nieobecność z przyczyn szkolnych</string>
@@ -165,19 +158,13 @@
     <string name="attendance_excuse_success">Usprawiedliwiono pomyślnie!</string>
     <string name="attendance_excuse_no_selection">Musisz wybrać co najmniej jedną nieobecność!</string>
     <string name="attendance_excuse_title">Usprawiedliw</string>
-
-
     <!--Attendance summary-->
     <string name="attendance_summary_final">Frekwencja</string>
     <string name="attendance_summary_total">Razem</string>
-
-
     <!--Exam-->
     <string name="exam_no_items">Brak sprawdzianów w tym tygodniu</string>
     <string name="exam_type">Typ</string>
     <string name="exam_entry_date">Data wpisu</string>
-
-
     <!--Message-->
     <string name="message_inbox">Odebrane</string>
     <string name="message_sent">Wysłane</string>
@@ -217,8 +204,6 @@
         <item quantity="many">Masz %1$d nowych wiadomości</item>
         <item quantity="other">Masz %1$d nowych wiadomości</item>
     </plurals>
-
-
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
     <string name="note_points">Punkty</string>
@@ -240,23 +225,17 @@
         <item quantity="many">Masz %1$d nowych uwag</item>
         <item quantity="other">Masz %1$d nowych uwag</item>
     </plurals>
-
-
     <!--Homework-->
     <string name="homework_no_items">Brak zadań domowych</string>
     <string name="homework_mark_as_done">Wykonane</string>
     <string name="homework_mark_as_undone">Niewykonane</string>
     <string name="homework_attachments">Załączniki</string>
-
-
     <!--Lucky number-->
     <string name="lucky_number_title">Szczęśliwy numerek</string>
     <string name="lucky_number_header">Dzisiejszym szczęśliwym numerkiem jest</string>
     <string name="lucky_number_empty">Brak informacji o szczęśliwym numerku</string>
     <string name="lucky_number_notify_new_item_title">Szczęśliwy numerek na dzisiaj</string>
     <string name="lucky_number_notify_new_item">Dziś szczęśliwym numerkiem jest: %d</string>
-
-
     <!--Mobile devices-->
     <string name="mobile_devices_title">Dostęp mobilny</string>
     <string name="mobile_devices_no_items">Brak urządzeń</string>
@@ -266,12 +245,8 @@
     <string name="mobile_device_token">Token</string>
     <string name="mobile_device_symbol">Symbol</string>
     <string name="mobile_device_pin">PIN</string>
-
-
     <!--School and teachers-->
     <string name="schoolandteachers_title">Szkoła i nauczyciele</string>
-
-
     <!--School-->
     <string name="school_title">Szkoła</string>
     <string name="school_no_info">Brak informacji o szkole</string>
@@ -282,21 +257,15 @@
     <string name="school_pedagogue">Imię i nazwisko pedagoga</string>
     <string name="school_address_button">Pokaż na mapie</string>
     <string name="school_telephone_button">Zadzwoń</string>
-
-
     <!--Teacher-->
     <string name="teachers_title">Nauczyciele</string>
     <string name="teacher_no_items">Brak informacji o nauczycielach</string>
     <string name="teacher_no_subject">Brak przedmiotu</string>
-
-
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>
     <string name="account_logout">Wyloguj</string>
     <string name="account_confirm">Czy chcesz wylogować aktualnego ucznia?</string>
     <string name="account_logout_student">Wylogowanie ucznia</string>
-
-
     <!--About-->
     <string name="about_version">Wersja aplikacji</string>
     <string name="about_contributor">Twórcy</string>
@@ -313,21 +282,14 @@
     <string name="about_homepage_summary">Odwiedź stronę i pomóż rozwijać aplikację</string>
     <string name="about_licenses">Licencje</string>
     <string name="about_licenses_summary">Licencje użytych bibliotek w aplikacji</string>
-
-
     <!--Licenses-->
     <string name="license_dialog_title">Licencja</string>
-
-
-    <!--Creators-->
+    <!--Contributor-->
     <string name="contributor_avatar_description">Awatar</string>
     <string name="contributor_see_more">Zobacz więcej na GitHub</string>
-
     <!--Log viewer-->
     <string name="logviewer_share">Udostępnij logi</string>
     <string name="logviewer_refresh">Odśwież</string>
-
-
     <!--Generic-->
     <string name="all_content">Treść</string>
     <string name="all_retry">Ponów</string>
@@ -344,15 +306,14 @@
     <string name="all_subject">Przedmiot</string>
     <string name="all_prev">Poprzedni</string>
     <string name="all_next">Następny</string>
-
-
+    <string name="all_search">Szukaj</string>
+    <string name="all_search_hint">Szukaj...</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
     <string name="widget_timetable_theme_title">Wybierz motyw</string>
     <string name="widget_timetable_theme_light">Jasny</string>
     <string name="widget_timetable_theme_dark">Ciemny</string>
-
-
+    <string name="widget_timetable_theme_system">Motyw systemu</string>
     <!--Preferences-->
     <string name="pref_view_header">Wygląd</string>
     <string name="pref_view_list">Domyślny widok</string>
@@ -361,14 +322,18 @@
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_app_theme">Motyw aplikacji</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
+    <string name="pref_view_timetable_show_timers">Oznaczaj bieżącą lekcję na planie</string>
+    <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>
     <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
     <string name="pref_view_grade_color_scheme">Schemat kolorów ocen</string>
     <string name="pref_view_app_language">Język aplikacji</string>
-
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
+    <string name="pref_notify_upcoming_lessons_switch">Pokazuj powiadomienia o nadchodzących lekcjach</string>
+    <string name="pref_notify_fix_sync_issues">Napraw problemy z synchronizacją i powiadomieniami</string>
+    <string name="pref_notify_fix_sync_issues_message">Na twoim urządzeniu mogą występować problemy z synchronizacją danych i powiadomieniami.\n\nBy je naprawić, dodaj Wulkanowego do autostartu i wyłącz optymalizację/oszczędzanie baterii w ustawieniach systemowych telefonu.</string>
+    <string name="pref_notify_fix_sync_issues_settings_button">Przejdź do ustawień</string>
     <string name="pref_notify_debug_switch">Pokazuj powiadomienia debugowania</string>
-
     <string name="pref_services_header">Synchronizacja</string>
     <string name="pref_services_switch">Automatyczna aktualizacja</string>
     <string name="pref_services_suspended">Zawieszona na wakacjach</string>
@@ -379,27 +344,22 @@
     <string name="pref_services_message_sync_failed">Synchronizacja nie powiodła się</string>
     <string name="pref_services_sync_in_progress">Synchronizacja w trakcie</string>
     <string name="pref_services_dialog_force_sync_title">Synchronizacja</string>
-    <string name="pref_services_dialog_force_sync_summary">
-        Ręczna synchronizacja nie odświeża widoków w aplikacji.
+    <string name="pref_services_dialog_force_sync_summary">        Ręczna synchronizacja nie odświeża widoków w aplikacji.
         \nAby zobaczyć zsynchronizowane informacje uruchom ponownie aplikację po zsynchronizowaniu.
     </string>
-
     <string name="pref_other_header">Inne</string>
     <string name="pref_other_grade_modifier_plus">Wartość plusa</string>
     <string name="pref_other_grade_modifier_minus">Wartość minusa</string>
     <string name="pref_other_fill_message_content">Odpowiadaj z historią wiadomości</string>
-
-
     <!--Notification Channels-->
     <string name="channel_new_entries">Nowe wpisy w dzienniku</string>
-    <string name="channel_lucky_number">Szczęśliwy numerek</string>
     <string name="channel_new_grades">Nowe oceny</string>
+    <string name="channel_lucky_number">Szczęśliwy numerek</string>
     <string name="channel_new_message">Nowe wiadomości</string>
     <string name="channel_new_notes">Nowe uwagi</string>
     <string name="channel_push">Powiadomienia push</string>
+    <string name="channel_upcoming_lessons">Nadchodzące lekcje</string>
     <string name="channel_debug">Debugowanie</string>
-
-
     <!--Colors-->
     <string name="all_black">Czarny</string>
     <string name="all_red">Czerwony</string>
@@ -407,13 +367,9 @@
     <string name="all_green">Zielony</string>
     <string name="all_purple">Fioletowy</string>
     <string name="all_empty_color">Brak koloru</string>
-
-
     <!--Others-->
     <string name="all_copied">Skopiowano</string>
     <string name="all_undo">Cofnij</string>
-
-
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_timeout">Upłynął limit czasu na połączenie z dziennikiem</string>

@@ -1,9 +1,13 @@
 package io.github.wulkanowy.ui.base
 
 import android.widget.Toast
+import androidx.viewbinding.ViewBinding
 import dagger.android.support.DaggerAppCompatDialogFragment
+import io.github.wulkanowy.utils.lifecycleAwareVariable
 
-abstract class BaseDialogFragment : DaggerAppCompatDialogFragment(), BaseView {
+abstract class BaseDialogFragment<VB : ViewBinding> : DaggerAppCompatDialogFragment(), BaseView {
+
+    protected var binding: VB by lifecycleAwareVariable()
 
     override fun showError(text: String, error: Throwable) {
         showMessage(text)
@@ -14,11 +18,11 @@ abstract class BaseDialogFragment : DaggerAppCompatDialogFragment(), BaseView {
     }
 
     override fun showExpiredDialog() {
-        (activity as? BaseActivity<*>)?.showExpiredDialog()
+        (activity as? BaseActivity<*, *>)?.showExpiredDialog()
     }
 
     override fun openClearLoginView() {
-        (activity as? BaseActivity<*>)?.openClearLoginView()
+        (activity as? BaseActivity<*, *>)?.openClearLoginView()
     }
 
     override fun showErrorDetailsDialog(error: Throwable) {

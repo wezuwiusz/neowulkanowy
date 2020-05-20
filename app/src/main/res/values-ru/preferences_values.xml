@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string-array name="services_interval_entries">
-        <item>15 минут</item>
-        <item>30 минут</item>
-        <item>1 час</item>
-        <item>2 часа</item>
-        <item>6 часов</item>
-        <item>12 часов</item>
-        <item>24 часа</item>
-    </string-array>
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
         <item>Светлая</item>
         <item>Тёмная</item>
@@ -21,6 +12,15 @@
         <item>Pусский</item>
         <item>Українська</item>
         <item>Deutsch</item>
+    </string-array>
+    <string-array name="services_interval_entries">
+        <item>15 минут</item>
+        <item>30 минут</item>
+        <item>1 час</item>
+        <item>2 часа</item>
+        <item>6 часов</item>
+        <item>12 часов</item>
+        <item>24 часа</item>
     </string-array>
     <string-array name="grade_modifier_entries">
         <item>0,0</item>
@@ -38,7 +38,6 @@
         <item>Средняя оценка со 2 семестра</item>
         <item>Средняя оценка с целого года</item>
     </string-array>
-
     <string-array name="timetable_show_whole_class_entries">
         <item>Не показывать</item>
         <item>Показать все</item>

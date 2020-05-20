@@ -1,16 +1,15 @@
 package io.github.wulkanowy.ui.modules.grade
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import io.github.wulkanowy.R
+import io.github.wulkanowy.databinding.FragmentGradeBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
@@ -19,10 +18,9 @@ import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnSelectPageListener
-import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
 
-class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainView.TitledView {
+class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade), GradeView, MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: GradePresenter
@@ -42,19 +40,16 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
 
     override var subtitleString = ""
 
-    override val currentPageIndex get() = gradeViewPager.currentItem
+    override val currentPageIndex get() = binding.gradeViewPager.currentItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_grade, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentGradeBinding.bind(view)
         presenter.onAttachView(this, savedInstanceState?.getInt(SAVED_SEMESTER_KEY))
     }
 
@@ -66,7 +61,7 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
 
     override fun initView() {
         with(pagerAdapter) {
-            containerId = gradeViewPager.id
+            containerId = binding.gradeViewPager.id
             addFragmentsWithTitle(mapOf(
                 GradeDetailsFragment.newInstance() to getString(R.string.all_details),
                 GradeSummaryFragment.newInstance() to getString(R.string.grade_menu_summary),
@@ -74,19 +69,21 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
             ))
         }
 
-        with(gradeViewPager) {
+        with(binding.gradeViewPager) {
             adapter = pagerAdapter
             offscreenPageLimit = 3
             setOnSelectPageListener(presenter::onPageSelected)
         }
 
-        with(gradeTabLayout) {
-            setupWithViewPager(gradeViewPager)
+        with(binding.gradeTabLayout) {
+            setupWithViewPager(binding.gradeViewPager)
             setElevationCompat(context.dpToPx(4f))
         }
 
-        gradeErrorRetry.setOnClickListener { presenter.onRetry() }
-        gradeErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        with(binding) {
+            gradeErrorRetry.setOnClickListener { presenter.onRetry() }
+            gradeErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -99,20 +96,22 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
     }
 
     override fun showContent(show: Boolean) {
-        gradeViewPager.visibility = if (show) VISIBLE else INVISIBLE
-        gradeTabLayout.visibility = if (show) VISIBLE else INVISIBLE
+        with(binding) {
+            gradeViewPager.visibility = if (show) VISIBLE else INVISIBLE
+            gradeTabLayout.visibility = if (show) VISIBLE else INVISIBLE
+        }
     }
 
     override fun showProgress(show: Boolean) {
-        gradeProgress.visibility = if (show) VISIBLE else INVISIBLE
+        binding.gradeProgress.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showErrorView(show: Boolean) {
-        gradeError.visibility = if (show) VISIBLE else INVISIBLE
+        binding.gradeError.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun setErrorDetails(message: String) {
-        gradeErrorMessage.text = message
+        binding.gradeErrorMessage.text = message
     }
 
     override fun showSemesterSwitch(show: Boolean) {
@@ -166,7 +165,7 @@ class GradeFragment : BaseFragment(), GradeView, MainView.MainChildView, MainVie
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         presenter.onDetachView()
+        super.onDestroyView()
     }
 }

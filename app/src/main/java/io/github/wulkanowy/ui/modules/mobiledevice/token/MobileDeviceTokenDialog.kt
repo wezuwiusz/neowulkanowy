@@ -14,11 +14,11 @@ import android.widget.Toast
 import androidx.core.content.getSystemService
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
+import io.github.wulkanowy.databinding.DialogMobileDeviceBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
-import kotlinx.android.synthetic.main.dialog_mobile_device.*
 import javax.inject.Inject
 
-class MobileDeviceTokenDialog : BaseDialogFragment(), MobileDeviceTokenVIew {
+class MobileDeviceTokenDialog : BaseDialogFragment<DialogMobileDeviceBinding>(), MobileDeviceTokenVIew {
 
     @Inject
     lateinit var presenter: MobileDeviceTokenPresenter
@@ -33,7 +33,7 @@ class MobileDeviceTokenDialog : BaseDialogFragment(), MobileDeviceTokenVIew {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_mobile_device, container, false)
+        return DialogMobileDeviceBinding.inflate(inflater).apply { binding = this }.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -42,24 +42,24 @@ class MobileDeviceTokenDialog : BaseDialogFragment(), MobileDeviceTokenVIew {
     }
 
     override fun initView() {
-        mobileDeviceDialogClose.setOnClickListener { dismiss() }
+        binding.mobileDeviceDialogClose.setOnClickListener { dismiss() }
     }
 
     override fun updateData(token: MobileDeviceToken) {
-        with(mobileDeviceDialogToken) {
+        with(binding.mobileDeviceDialogToken) {
             text = token.token
             setOnClickListener { clickCopy(token.token) }
         }
-        with(mobileDeviceDialogSymbol) {
+        with(binding.mobileDeviceDialogSymbol) {
             text = token.symbol
             setOnClickListener { clickCopy(token.symbol) }
         }
-        with(mobileDeviceDialogPin) {
+        with(binding.mobileDeviceDialogPin) {
             text = token.pin
             setOnClickListener { clickCopy(token.pin) }
         }
 
-        mobileDeviceQr.setImageBitmap(Base64.decode(token.qr, Base64.DEFAULT).let {
+        binding.mobileDeviceQr.setImageBitmap(Base64.decode(token.qr, Base64.DEFAULT).let {
             BitmapFactory.decodeByteArray(it, 0, it.size)
         })
     }
@@ -71,11 +71,11 @@ class MobileDeviceTokenDialog : BaseDialogFragment(), MobileDeviceTokenVIew {
     }
 
     override fun hideLoading() {
-        mobileDeviceDialogProgress.visibility = GONE
+        binding.mobileDeviceDialogProgress.visibility = GONE
     }
 
     override fun showContent() {
-        mobileDeviceDialogContent.visibility = VISIBLE
+        binding.mobileDeviceDialogContent.visibility = VISIBLE
     }
 
     override fun closeDialog() {

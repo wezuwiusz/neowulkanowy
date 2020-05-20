@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.note
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.repositories.note.NoteRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -53,8 +52,7 @@ class NotePresenter @Inject constructor(
         disposable.add(studentRepository.getCurrentStudent()
             .flatMap { semesterRepository.getCurrentSemester(it).map { semester -> semester to it } }
             .flatMap { noteRepository.getNotes(it.second, it.first, forceRefresh) }
-            .map { items -> items.map { NoteItem(it) } }
-            .map { items -> items.sortedByDescending { it.note.date } }
+            .map { items -> items.sortedByDescending { it.date } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally {
@@ -90,16 +88,14 @@ class NotePresenter @Inject constructor(
         }
     }
 
-    fun onNoteItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is NoteItem) {
-            Timber.i("Select note item ${item.note.id}")
-            view?.run {
-                showNoteDialog(item.note)
-                if (!item.note.isRead) {
-                    item.note.isRead = true
-                    updateItem(item)
-                    updateNote(item.note)
-                }
+    fun onNoteItemSelected(note: Note, position: Int) {
+        Timber.i("Select note item ${note.id}")
+        view?.run {
+            showNoteDialog(note)
+            if (!note.isRead) {
+                note.isRead = true
+                updateItem(note, position)
+                updateNote(note)
             }
         }
     }

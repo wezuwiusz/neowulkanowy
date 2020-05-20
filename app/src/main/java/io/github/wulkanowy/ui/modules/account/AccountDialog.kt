@@ -7,23 +7,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.databinding.DialogAccountBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
-import io.github.wulkanowy.utils.setOnItemClickListener
-import kotlinx.android.synthetic.main.dialog_account.*
 import javax.inject.Inject
 
-class AccountDialog : BaseDialogFragment(), AccountView {
+class AccountDialog : BaseDialogFragment<DialogAccountBinding>(), AccountView {
 
     @Inject
     lateinit var presenter: AccountPresenter
 
     @Inject
-    lateinit var accountAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var accountAdapter: AccountAdapter
 
     companion object {
         fun newInstance() = AccountDialog()
@@ -35,7 +33,7 @@ class AccountDialog : BaseDialogFragment(), AccountView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_account, container, false)
+        return DialogAccountBinding.inflate(inflater).apply { binding = this }.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -44,18 +42,23 @@ class AccountDialog : BaseDialogFragment(), AccountView {
     }
 
     override fun initView() {
-        accountAdapter.setOnItemClickListener { presenter.onItemSelected(it) }
+        accountAdapter.onClickListener = presenter::onItemSelected
 
-        accountDialogAdd.setOnClickListener { presenter.onAddSelected() }
-        accountDialogRemove.setOnClickListener { presenter.onRemoveSelected() }
-        accountDialogRecycler.apply {
-            layoutManager = SmoothScrollLinearLayoutManager(context)
-            adapter = accountAdapter
+        with(binding) {
+            accountDialogAdd.setOnClickListener { presenter.onAddSelected() }
+            accountDialogRemove.setOnClickListener { presenter.onRemoveSelected() }
+            accountDialogRecycler.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = accountAdapter
+            }
         }
     }
 
-    override fun updateData(data: List<AccountItem>) {
-        accountAdapter.updateDataSet(data)
+    override fun updateData(data: List<Student>) {
+        with(accountAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun showError(text: String, error: Throwable) {

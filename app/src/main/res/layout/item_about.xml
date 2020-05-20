@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="?selectableItemBackground">
+    android:background="?selectableItemBackground"
+    tools:context=".ui.modules.about.AboutAdapter">
 
     <ImageView
         android:id="@+id/aboutItemImage"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         app:tint="?colorOnBackground"
         tools:ignore="ContentDescription"
         tools:src="@drawable/ic_all_about" />
@@ -24,9 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_toEndOf="@id/aboutItemImage"
-        android:layout_toRightOf="@id/aboutItemImage"
         android:ellipsize="end"
         android:gravity="bottom"
         android:maxLines="1"
@@ -39,9 +36,7 @@
         android:layout_height="20dp"
         android:layout_below="@id/aboutItemTitle"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_toEndOf="@id/aboutItemImage"
-        android:layout_toRightOf="@id/aboutItemImage"
         android:ellipsize="end"
         android:gravity="bottom"
         android:maxLines="1"

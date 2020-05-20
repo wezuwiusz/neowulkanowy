@@ -4,16 +4,14 @@
     android:id="@+id/mobileDevice_subitem_container"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    tools:context=".ui.modules.mobiledevice.MobileDeviceItem">
+    tools:context=".ui.modules.mobiledevice.MobileDeviceAdapter">
 
     <TextView
         android:id="@+id/mobileDeviceItemName"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_toStartOf="@id/mobileDeviceItemUnregister"
-        android:layout_toLeftOf="@id/mobileDeviceItemUnregister"
         android:ellipsize="end"
         android:gravity="bottom"
         android:maxLines="1"
@@ -26,9 +24,7 @@
         android:layout_height="20dp"
         android:layout_below="@id/mobileDeviceItemName"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_toStartOf="@id/mobileDeviceItemUnregister"
-        android:layout_toLeftOf="@id/mobileDeviceItemUnregister"
         android:gravity="bottom"
         android:textColor="?android:textColorSecondary"
         android:textSize="14sp"
@@ -39,7 +35,6 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"

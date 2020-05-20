@@ -18,7 +18,8 @@
         android:supportsRtl="false"
         android:theme="@style/WulkanowyTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
+        tools:replace="android:supportsRtl,android:allowBackup">
         <activity
             android:name=".ui.modules.splash.SplashActivity"
             android:screenOrientation="portrait"
@@ -39,7 +40,8 @@
             android:name=".ui.modules.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/main_title"
-            android:theme="@style/WulkanowyTheme.NoActionBar" />
+            android:theme="@style/WulkanowyTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.modules.message.send.SendMessageActivity"
             android:configChanges="orientation|screenSize"
@@ -91,6 +93,8 @@
                 android:resource="@xml/provider_widget_lucky_number" />
         </receiver>
 
+        <receiver android:name=".services.alarm.TimetableNotificationReceiver" />
+
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
@@ -107,12 +111,33 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <!-- workaround for https://github.com/firebase/firebase-android-sdk/issues/473 enabled:false -->
+        <!-- https://firebase.googleblog.com/2017/03/take-control-of-your-firebase-init-on.html -->
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="${applicationId}.firebaseinitprovider"
+            android:enabled="${firebase_enabled}"
+            android:exported="false" />
+
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="${fabric_api_key}" />
+            android:name="firebase_analytics_collection_enabled"
+            android:value="${firebase_enabled}" />
+
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="${firebase_enabled}" />
+
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
-            android:value="${crashlytics_enabled}" />
+            android:value="${firebase_enabled}" />
+
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="${firebase_enabled}" />
+
+        <meta-data
+            android:name="firebase_inapp_messaging_auto_data_collection_enabled"
+            android:value="${firebase_enabled}" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

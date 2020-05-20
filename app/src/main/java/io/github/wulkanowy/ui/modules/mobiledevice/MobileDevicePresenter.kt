@@ -54,7 +54,6 @@ class MobileDevicePresenter @Inject constructor(
                     mobileDeviceRepository.getDevices(student, semester, forceRefresh)
                 }
             }
-            .map { items -> items.map { MobileDeviceItem(it) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally {
@@ -95,14 +94,15 @@ class MobileDevicePresenter @Inject constructor(
 
     fun onUnregisterDevice(device: MobileDevice, position: Int) {
         view?.run {
-            showUndo(position, device)
+            deleteItem(device, position)
+            showUndo(device, position)
             showEmpty(isViewEmpty)
         }
     }
 
-    fun onUnregisterCancelled() {
+    fun onUnregisterCancelled(device: MobileDevice, position: Int) {
         view?.run {
-            restoreDeleteItem()
+            restoreDeleteItem(device, position)
             showEmpty(isViewEmpty)
         }
     }
@@ -116,7 +116,6 @@ class MobileDevicePresenter @Inject constructor(
                         .flatMap { mobileDeviceRepository.getDevices(student, semester, it) }
                 }
             }
-            .map { items -> items.map { MobileDeviceItem(it) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally {

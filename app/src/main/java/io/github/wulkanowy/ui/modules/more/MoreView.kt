@@ -23,7 +23,7 @@ interface MoreView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<MoreItem>)
+    fun updateData(data: List<Pair<String, Drawable?>>)
 
     fun openSettingsView()
 

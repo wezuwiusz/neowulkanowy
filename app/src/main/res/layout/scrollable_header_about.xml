@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="104dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.modules.about.AboutAdapter">
 
     <ImageView
         android:id="@+id/aboutScrollableHeaderIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"

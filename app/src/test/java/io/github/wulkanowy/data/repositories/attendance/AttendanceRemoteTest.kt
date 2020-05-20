@@ -1,8 +1,7 @@
 package io.github.wulkanowy.data.repositories.attendance
 
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.getStudentEntity
+import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Attendance
 import io.github.wulkanowy.utils.init

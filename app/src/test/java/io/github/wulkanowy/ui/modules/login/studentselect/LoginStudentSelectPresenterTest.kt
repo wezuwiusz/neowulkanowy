@@ -53,7 +53,7 @@ class LoginStudentSelectPresenterTest {
     fun onSelectedStudentTest() {
         doReturn(Single.just(listOf(1L))).`when`(studentRepository).saveStudents(listOf(testStudent))
         doReturn(Completable.complete()).`when`(studentRepository).switchStudent(testStudent)
-        presenter.onItemSelected(LoginStudentSelectItem(testStudent, false))
+        presenter.onItemSelected(testStudent, false)
         presenter.onSignIn()
         verify(loginStudentSelectView).showContent(false)
         verify(loginStudentSelectView).showProgress(true)
@@ -64,7 +64,7 @@ class LoginStudentSelectPresenterTest {
     fun onSelectedStudentErrorTest() {
         doReturn(Single.error<Student>(testException)).`when`(studentRepository).saveStudents(listOf(testStudent))
         doReturn(Completable.complete()).`when`(studentRepository).logoutStudent(testStudent)
-        presenter.onItemSelected(LoginStudentSelectItem(testStudent, false))
+        presenter.onItemSelected(testStudent, false)
         presenter.onSignIn()
         verify(loginStudentSelectView).showContent(false)
         verify(loginStudentSelectView).showProgress(true)

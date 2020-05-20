@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -6,6 +7,29 @@
     android:paddingStart="20dp"
     android:paddingTop="20dp"
     android:paddingEnd="20dp">
+
+    <ImageButton
+        android:id="@+id/homework_dialog_full_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        app:srcCompat="@drawable/ic_fullscreen"
+        app:tint="?colorOnBackground"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/homework_dialog_full_screen_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_fullscreen_exit"
+        app:tint="?colorOnBackground"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:layout_width="wrap_content"

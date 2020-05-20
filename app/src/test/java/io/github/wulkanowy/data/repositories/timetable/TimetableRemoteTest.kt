@@ -1,7 +1,7 @@
 package io.github.wulkanowy.data.repositories.timetable
 
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.repositories.getStudentEntity
+import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Timetable
 import io.mockk.MockKAnnotations

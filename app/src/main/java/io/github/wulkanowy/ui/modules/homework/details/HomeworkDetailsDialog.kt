@@ -5,16 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
+import io.github.wulkanowy.databinding.DialogHomeworkBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
 import io.github.wulkanowy.utils.openInternetBrowser
-import kotlinx.android.synthetic.main.dialog_homework.*
 import javax.inject.Inject
 
-class HomeworkDetailsDialog : BaseDialogFragment(), HomeworkDetailsView {
+class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), HomeworkDetailsView {
 
     @Inject
     lateinit var presenter: HomeworkDetailsPresenter
@@ -43,7 +45,7 @@ class HomeworkDetailsDialog : BaseDialogFragment(), HomeworkDetailsView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_homework, container, false)
+        return DialogHomeworkBinding.inflate(inflater).apply { binding = this }.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -53,14 +55,18 @@ class HomeworkDetailsDialog : BaseDialogFragment(), HomeworkDetailsView {
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
-        homeworkDialogRead.text = view?.context?.getString(if (homework.isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
-        homeworkDialogRead.setOnClickListener { presenter.toggleDone(homework) }
-        homeworkDialogClose.setOnClickListener { dismiss() }
+        with(binding) {
+            homeworkDialogRead.text = view?.context?.getString(if (homework.isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
+            homeworkDialogRead.setOnClickListener { presenter.toggleDone(homework) }
+            homeworkDialogClose.setOnClickListener { dismiss() }
+        }
 
-        with(homeworkDialogRecycler) {
+        with(binding.homeworkDialogRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = detailsAdapter.apply {
                 onAttachmentClickListener = { context.openInternetBrowser(it, ::showMessage) }
+                onFullScreenClickListener = { dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT) }
+                onFullScreenExitClickListener = { dialog?.window?.setLayout(WRAP_CONTENT, WRAP_CONTENT) }
                 homework = this@HomeworkDetailsDialog.homework
             }
         }
@@ -68,7 +74,7 @@ class HomeworkDetailsDialog : BaseDialogFragment(), HomeworkDetailsView {
 
     override fun updateMarkAsDoneLabel(isDone: Boolean) {
         (parentFragment as? HomeworkFragment)?.onReloadList()
-        homeworkDialogRead.text = view?.context?.getString(if (isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
+        binding.homeworkDialogRead.text = view?.context?.getString(if (isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
     }
 
     override fun onDestroyView() {

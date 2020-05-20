@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.exam
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.repositories.exam.ExamRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -19,7 +18,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
 import timber.log.Timber
-import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class ExamPresenter @Inject constructor(
@@ -75,11 +73,9 @@ class ExamPresenter @Inject constructor(
         view?.showErrorDetailsDialog(lastError)
     }
 
-    fun onExamItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is ExamItem) {
-            Timber.i("Select exam item ${item.exam.id}")
-            view?.showExamDialog(item.exam)
-        }
+    fun onExamItemSelected(exam: Exam) {
+        Timber.i("Select exam item ${exam.id}")
+        view?.showExamDialog(exam)
     }
 
     fun onViewReselected() {
@@ -117,8 +113,6 @@ class ExamPresenter @Inject constructor(
                         examRepository.getExams(student, semester, currentDate.monday, currentDate.friday, forceRefresh)
                     }
                 }
-                .delay(200, MILLISECONDS)
-                .map { it.groupBy { exam -> exam.date }.toSortedMap() }
                 .map { createExamItems(it) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
@@ -156,12 +150,12 @@ class ExamPresenter @Inject constructor(
         }
     }
 
-    private fun createExamItems(items: Map<LocalDate, List<Exam>>): List<ExamItem> {
-        return items.flatMap {
-            ExamHeader(it.key).let { header ->
-                it.value.reversed().map { item -> ExamItem(header, item) }
+    private fun createExamItems(items: List<Exam>): List<ExamItem<*>> {
+        return items.groupBy { it.date }.toSortedMap().map { (date, exams) ->
+            listOf(ExamItem(date, ExamItem.ViewType.HEADER)) + exams.reversed().map { exam ->
+                ExamItem(exam, ExamItem.ViewType.ITEM)
             }
-        }
+        }.flatten()
     }
 
     private fun reloadView() {

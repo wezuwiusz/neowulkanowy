@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.timetablewidget
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -32,13 +31,11 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
         loadData()
     }
 
-    fun onItemSelect(item: AbstractFlexibleItem<*>) {
-        if (item is TimetableWidgetConfigureItem) {
-            selectedStudent = item.student
+    fun onItemSelect(student: Student) {
+        selectedStudent = student
 
-            if (isFromProvider) registerStudent(selectedStudent)
-            else view?.showThemeDialog()
-        }
+        if (isFromProvider) registerStudent(selectedStudent)
+        else view?.showThemeDialog()
     }
 
     fun onThemeSelect(index: Int) {
@@ -48,7 +45,7 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
         registerStudent(selectedStudent)
     }
 
-    fun onDismissThemeView(){
+    fun onDismissThemeView() {
         view?.finishView()
     }
 
@@ -56,7 +53,7 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
         disposable.add(studentRepository.getSavedStudents(false)
             .map { it to appWidgetId?.let { id -> sharedPref.getLong(getStudentWidgetKey(id), 0) } }
             .map { (students, currentStudentId) ->
-                students.map { student -> TimetableWidgetConfigureItem(student, student.id == currentStudentId) }
+                students.map { student -> student to (student.id == currentStudentId) }
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
@@ -64,7 +61,7 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
                 when {
                     it.isEmpty() -> view?.openLoginView()
                     it.size == 1 && !isFromProvider -> {
-                        selectedStudent = it.single().student
+                        selectedStudent = it.single().first
                         view?.showThemeDialog()
                     }
                     else -> view?.updateData(it)

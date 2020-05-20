@@ -24,7 +24,7 @@ class GradeLocalTest {
     fun createDb() {
         testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java)
             .build()
-        gradeLocal = GradeLocal(testDb.gradeDao)
+        gradeLocal = GradeLocal(testDb.gradeDao, testDb.gradeSummaryDao)
     }
 
     @After
@@ -43,7 +43,7 @@ class GradeLocalTest {
         val semester = Semester(1, 2, "", 2019, 2, 1, now(), now(), 1, 1)
 
         val grades = gradeLocal
-            .getGrades(semester)
+            .getGradesDetails(semester)
             .blockingGet()
 
         assertEquals(2, grades.size)

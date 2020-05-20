@@ -134,6 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="username|emailAddress"
+                    android:importantForAutofill="yes"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     tools:targetApi="o" />
@@ -167,6 +168,7 @@
                     android:autofillHints="password"
                     android:imeActionLabel="@string/login_sign_in"
                     android:imeOptions="actionDone"
+                    android:importantForAutofill="yes"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     app:fontFamily="sans-serif"

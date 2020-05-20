@@ -58,7 +58,6 @@ class TeacherPresenter @Inject constructor(
                 }
             }
             .map { it.filter { teacher -> teacher.name.isNotBlank() } }
-            .map { items -> items.map { TeacherItem(it, view?.noSubjectString.orEmpty()) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally {

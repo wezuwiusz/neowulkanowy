@@ -2,7 +2,6 @@ package io.github.wulkanowy.ui.modules.grade.statistics
 
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -21,9 +20,9 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
+import io.github.wulkanowy.databinding.ItemGradeStatisticsBarBinding
+import io.github.wulkanowy.databinding.ItemGradeStatisticsPieBinding
 import io.github.wulkanowy.utils.getThemeAttrColor
-import kotlinx.android.synthetic.main.item_grade_statistics_bar.view.*
-import kotlinx.android.synthetic.main.item_grade_statistics_pie.view.*
 import javax.inject.Inject
 
 class GradeStatisticsAdapter @Inject constructor() :
@@ -32,6 +31,8 @@ class GradeStatisticsAdapter @Inject constructor() :
     var items = emptyList<GradeStatisticsItem>()
 
     var theme: String = "vulcan"
+
+    var showAllSubjectsOnList: Boolean = false
 
     private val vulcanGradeColors = listOf(
         6 to R.color.grade_vulcan_six,
@@ -60,34 +61,30 @@ class GradeStatisticsAdapter @Inject constructor() :
         "6, 6-", "5, 5-, 5+", "4, 4-, 4+", "3, 3-, 3+", "2, 2-, 2+", "1, 1+"
     )
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = if (showAllSubjectsOnList) items.size else (if (items.isEmpty()) 0 else 1)
 
-    override fun getItemViewType(position: Int): Int {
-        return when (items[position].type) {
-            ViewType.SEMESTER, ViewType.PARTIAL -> R.layout.item_grade_statistics_pie
-            ViewType.POINTS -> R.layout.item_grade_statistics_bar
-        }
-    }
+    override fun getItemViewType(position: Int) = items[position].type.id
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.item_grade_statistics_bar -> GradeStatisticsBar(viewHolder)
-            else -> GradeStatisticsPie(viewHolder)
+            ViewType.PARTIAL.id, ViewType.SEMESTER.id -> PieViewHolder(ItemGradeStatisticsPieBinding.inflate(inflater, parent, false))
+            ViewType.POINTS.id -> BarViewHolder(ItemGradeStatisticsBarBinding.inflate(inflater, parent, false))
+            else -> throw IllegalStateException()
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is GradeStatisticsPie -> bindPieChart(holder, items[position].partial)
-            is GradeStatisticsBar -> bindBarChart(holder, items[position].points!!)
+            is PieViewHolder -> bindPieChart(holder, items[position].partial)
+            is BarViewHolder -> bindBarChart(holder, items[position].points!!)
         }
     }
 
-    private fun bindPieChart(holder: GradeStatisticsPie, partials: List<GradeStatistics>) {
-        with(holder.view.gradeStatisticsPieTitle) {
+    private fun bindPieChart(holder: PieViewHolder, partials: List<GradeStatistics>) {
+        with(holder.binding.gradeStatisticsPieTitle) {
             text = partials.firstOrNull()?.subject
-            visibility = if (items.size == 1) GONE else VISIBLE
+            visibility = if (items.size == 1 || !showAllSubjectsOnList) GONE else VISIBLE
         }
 
         val gradeColors = when (theme) {
@@ -105,10 +102,10 @@ class GradeStatisticsAdapter @Inject constructor() :
             valueTextColor = Color.WHITE
             setColors(partials.map {
                 gradeColors.single { color -> color.first == it.grade }.second
-            }.toIntArray(), holder.view.context)
+            }.toIntArray(), holder.binding.root.context)
         }
 
-        with(holder.view.gradeStatisticsPie) {
+        with(holder.binding.gradeStatisticsPie) {
             setTouchEnabled(false)
             if (partials.size == 1) animateXY(1000, 1000)
             data = PieData(dataset).apply {
@@ -140,8 +137,8 @@ class GradeStatisticsAdapter @Inject constructor() :
         }
     }
 
-    private fun bindBarChart(holder: GradeStatisticsBar, points: GradePointsStatistics) {
-        with(holder.view.gradeStatisticsBarTitle) {
+    private fun bindBarChart(holder: BarViewHolder, points: GradePointsStatistics) {
+        with(holder.binding.gradeStatisticsBarTitle) {
             text = points.subject
             visibility = if (items.size == 1) GONE else VISIBLE
         }
@@ -153,14 +150,14 @@ class GradeStatisticsAdapter @Inject constructor() :
 
         with(dataset) {
             valueTextSize = 12f
-            valueTextColor = holder.view.context.getThemeAttrColor(android.R.attr.textColorPrimary)
+            valueTextColor = holder.binding.root.context.getThemeAttrColor(android.R.attr.textColorPrimary)
             valueFormatter = object : ValueFormatter() {
                 override fun getBarLabel(barEntry: BarEntry) = "${barEntry.y}%"
             }
             colors = gradePointsColors
         }
 
-        with(holder.view.gradeStatisticsBar) {
+        with(holder.binding.gradeStatisticsBar) {
             setTouchEnabled(false)
             if (items.size == 1) animateXY(1000, 1000)
             data = BarData(dataset).apply {
@@ -183,7 +180,7 @@ class GradeStatisticsAdapter @Inject constructor() :
 
             description.isEnabled = false
 
-            holder.view.context.getThemeAttrColor(android.R.attr.textColorPrimary).let {
+            holder.binding.root.context.getThemeAttrColor(android.R.attr.textColorPrimary).let {
                 axisLeft.textColor = it
                 axisRight.textColor = it
             }
@@ -203,7 +200,9 @@ class GradeStatisticsAdapter @Inject constructor() :
         }
     }
 
-    class GradeStatisticsPie(val view: View) : RecyclerView.ViewHolder(view)
+    private class PieViewHolder(val binding: ItemGradeStatisticsPieBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    class GradeStatisticsBar(val view: View) : RecyclerView.ViewHolder(view)
+    private class BarViewHolder(val binding: ItemGradeStatisticsBarBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

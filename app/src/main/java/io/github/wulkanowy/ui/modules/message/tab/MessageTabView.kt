@@ -1,23 +1,19 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.ui.base.BaseView
-import io.github.wulkanowy.ui.modules.message.MessageItem
 
 interface MessageTabView : BaseView {
-
-    val noSubjectString: String
 
     val isViewEmpty: Boolean
 
     fun initView()
 
-    fun updateData(data: List<MessageItem>)
+    fun resetListPosition()
 
-    fun updateItem(item: AbstractFlexibleItem<*>)
+    fun updateData(data: List<Message>)
 
-    fun clearView()
+    fun updateItem(item: Message, position: Int)
 
     fun showProgress(show: Boolean)
 

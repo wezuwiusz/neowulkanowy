@@ -13,7 +13,7 @@ interface GradeStatisticsView : BaseView {
 
     fun updateSubjects(data: ArrayList<String>)
 
-    fun updateData(items: List<GradeStatisticsItem>, theme: String)
+    fun updateData(items: List<GradeStatisticsItem>, theme: String, showAllSubjectsOnStatisticsList: Boolean)
 
     fun showSubjects(show: Boolean)
 

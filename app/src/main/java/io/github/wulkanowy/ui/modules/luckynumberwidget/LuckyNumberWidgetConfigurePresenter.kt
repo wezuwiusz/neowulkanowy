@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.luckynumberwidget
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -29,11 +28,9 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
         loadData()
     }
 
-    fun onItemSelect(item: AbstractFlexibleItem<*>) {
-        if (item is LuckyNumberWidgetConfigureItem) {
-            selectedStudent = item.student
-            view?.showThemeDialog()
-        }
+    fun onItemSelect(student: Student) {
+        selectedStudent = student
+        view?.showThemeDialog()
     }
 
     fun onThemeSelect(index: Int) {
@@ -43,7 +40,7 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
         registerStudent(selectedStudent)
     }
 
-    fun onDismissThemeView(){
+    fun onDismissThemeView() {
         view?.finishView()
     }
 
@@ -51,7 +48,7 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
         disposable.add(studentRepository.getSavedStudents(false)
             .map { it to appWidgetId?.let { id -> sharedPref.getLong(getStudentWidgetKey(id), 0) } }
             .map { (students, currentStudentId) ->
-                students.map { student -> LuckyNumberWidgetConfigureItem(student, student.id == currentStudentId) }
+                students.map { student -> student to (student.id == currentStudentId) }
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
@@ -59,7 +56,7 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
                 when {
                     it.isEmpty() -> view?.openLoginView()
                     it.size == 1 -> {
-                        selectedStudent = it.single().student
+                        selectedStudent = it.single().first
                         view?.showThemeDialog()
                     }
                     else -> view?.updateData(it)

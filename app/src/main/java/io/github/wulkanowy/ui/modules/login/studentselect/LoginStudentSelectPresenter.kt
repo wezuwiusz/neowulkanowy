@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.login.studentselect
 
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -51,13 +50,14 @@ class LoginStudentSelectPresenter @Inject constructor(
         if (students.size == 1) registerStudents(students)
     }
 
-    fun onItemSelected(item: AbstractFlexibleItem<*>?) {
-        if (item is LoginStudentSelectItem && !item.alreadySaved) {
-            selectedStudents.removeAll { it == item.student }
-                .let { if (!it) selectedStudents.add(item.student) }
+    fun onItemSelected(student: Student, alreadySaved: Boolean) {
+        if (alreadySaved) return
 
-            view?.enableSignIn(selectedStudents.isNotEmpty())
-        }
+        selectedStudents
+            .removeAll { it == student }
+            .let { if (!it) selectedStudents.add(student) }
+
+        view?.enableSignIn(selectedStudents.isNotEmpty())
     }
 
     private fun compareStudents(a: Student, b: Student): Boolean {
@@ -73,19 +73,17 @@ class LoginStudentSelectPresenter @Inject constructor(
         disposable.add(studentRepository.getSavedStudents()
             .map { savedStudents ->
                 students.map { student ->
-                    Pair(student, savedStudents.any { compareStudents(student, it) })
+                    student to savedStudents.any { compareStudents(student, it) }
                 }
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({
-                view?.updateData(it.map { studentPair ->
-                    LoginStudentSelectItem(studentPair.first, studentPair.second)
-                })
+                view?.updateData(it)
             }, {
                 errorHandler.dispatch(it)
                 lastError = it
-                view?.updateData(students.map { student -> LoginStudentSelectItem(student, false) })
+                view?.updateData(students.map { student -> student to false })
             })
         )
     }

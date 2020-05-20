@@ -9,6 +9,8 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import io.github.wulkanowy.R
 
 @ColorInt
 fun Context.getThemeAttrColor(@AttrRes colorAttr: Int): Int {
@@ -18,6 +20,11 @@ fun Context.getThemeAttrColor(@AttrRes colorAttr: Int): Int {
     } finally {
         array.recycle()
     }
+}
+
+@ColorInt
+fun Context.getThemeAttrColor(@AttrRes colorAttr: Int, alpha: Int): Int {
+    return ColorUtils.setAlphaComponent(getThemeAttrColor(colorAttr), alpha)
 }
 
 @ColorInt

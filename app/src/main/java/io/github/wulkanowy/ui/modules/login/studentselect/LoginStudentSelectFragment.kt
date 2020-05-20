@@ -1,33 +1,30 @@
 package io.github.wulkanowy.ui.modules.login.studentselect
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
-import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
-import io.github.wulkanowy.utils.setOnItemClickListener
-import kotlinx.android.synthetic.main.fragment_login_student_select.*
 import java.io.Serializable
 import javax.inject.Inject
 
-class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
+class LoginStudentSelectFragment :
+    BaseFragment<FragmentLoginStudentSelectBinding>(R.layout.fragment_login_student_select),
+    LoginStudentSelectView {
 
     @Inject
     lateinit var presenter: LoginStudentSelectPresenter
 
     @Inject
-    lateinit var loginAdapter: FlexibleAdapter<AbstractFlexibleItem<*>>
+    lateinit var loginAdapter: LoginStudentSelectAdapter
 
     @Inject
     lateinit var appInfo: AppInfo
@@ -38,29 +35,32 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
         fun newInstance() = LoginStudentSelectFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_login_student_select, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentLoginStudentSelectBinding.bind(view)
         presenter.onAttachView(this, savedInstanceState?.getSerializable(SAVED_STUDENTS))
     }
 
     override fun initView() {
-        loginStudentSelectSignIn.setOnClickListener { presenter.onSignIn() }
-        loginAdapter.apply { setOnItemClickListener { presenter.onItemSelected(it) } }
-        loginStudentSelectContactDiscord.setOnClickListener { presenter.onDiscordClick() }
-        loginStudentSelectContactEmail.setOnClickListener { presenter.onEmailClick() }
+        loginAdapter.onClickListener = presenter::onItemSelected
 
-        loginStudentSelectRecycler.apply {
-            adapter = loginAdapter
-            layoutManager = SmoothScrollLinearLayoutManager(context)
+        with(binding) {
+            loginStudentSelectSignIn.setOnClickListener { presenter.onSignIn() }
+            loginStudentSelectContactDiscord.setOnClickListener { presenter.onDiscordClick() }
+            loginStudentSelectContactEmail.setOnClickListener { presenter.onEmailClick() }
+
+            with(loginStudentSelectRecycler) {
+                layoutManager = LinearLayoutManager(context)
+                adapter = loginAdapter
+            }
         }
     }
 
-    override fun updateData(data: List<LoginStudentSelectItem>) {
-        loginAdapter.updateDataSet(data)
+    override fun updateData(data: List<Pair<Student, Boolean>>) {
+        with(loginAdapter) {
+            items = data
+            notifyDataSetChanged()
+        }
     }
 
     override fun openMainView() {
@@ -68,15 +68,15 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     }
 
     override fun showProgress(show: Boolean) {
-        loginStudentSelectProgress.visibility = if (show) VISIBLE else GONE
+        binding.loginStudentSelectProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showContent(show: Boolean) {
-        loginStudentSelectContent.visibility = if (show) VISIBLE else GONE
+        binding.loginStudentSelectContent.visibility = if (show) VISIBLE else GONE
     }
 
     override fun enableSignIn(enable: Boolean) {
-        loginStudentSelectSignIn.isEnabled = enable
+        binding.loginStudentSelectSignIn.isEnabled = enable
     }
 
     fun onParentInitStudentSelectFragment(students: List<Student>) {
@@ -89,7 +89,7 @@ class LoginStudentSelectFragment : BaseFragment(), LoginStudentSelectView {
     }
 
     override fun showContact(show: Boolean) {
-        loginStudentSelectContact.visibility = if (show) VISIBLE else GONE
+        binding.loginStudentSelectContact.visibility = if (show) VISIBLE else GONE
     }
 
     override fun onDestroyView() {

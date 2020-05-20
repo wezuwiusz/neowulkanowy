@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidElementNotAllowed -->
+<?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         app:iconSpaceReserved="false"
@@ -29,6 +29,16 @@
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_expand_grade"
             app:title="@string/pref_view_expand_grade" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_timetable_show_timers"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_timetable_show_timers"
+            app:title="@string/pref_view_timetable_show_timers" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_grade_statistics_list"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_statistics_list"
+            app:title="@string/pref_view_grade_statistics_list" />
         <ListPreference
             app:defaultValue="@string/pref_default_timetable_show_whole_class"
             app:entries="@array/timetable_show_whole_class_entries"
@@ -79,18 +89,27 @@
             app:title="@string/pref_services_wifi" />
         <Preference
             app:iconSpaceReserved="false"
-            app:title="@string/pref_services_force_sync"
-            app:key="@string/pref_key_services_force_sync" />
+            app:key="@string/pref_key_services_force_sync"
+            app:title="@string/pref_services_force_sync" />
     </PreferenceCategory>
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/pref_notify_header">
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_notifications_fix_issues"
+            app:title="@string/pref_notify_fix_sync_issues" />
         <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_notifications_enable"
             app:dependency="services_enable"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notifications_enable"
             app:title="@string/pref_notify_switch" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_notification_upcoming_lessons_enable"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_notifications_upcoming_lessons_enable"
+            app:title="@string/pref_notify_upcoming_lessons_switch" />
         <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_notification_debug"
             app:iconSpaceReserved="false"
