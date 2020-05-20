@@ -1,6 +1,10 @@
-- naprawiliśmy wyświetlanie przycisku oznaczania zadania domowego jako wykonanego
-- naprawiliśmy rzadki błąd ze stabilnością przy wysyłaniu wiadomości
-- naprawiliśmy błąd po logowaniu w domyślnym trybie, jeśli wcześniej użytkownik zalogowany był w trybie Mobilnego API
-- ulepszyliśmy wygląd okienka ze szczegółami błędu
+Wersja 0.18.0
+- naprawiliśmy odświeżanie zadań domowych
+- naprawiliśmy powiadomienia na androidzie 8.0
+- oceny powinny się teraz odświeżać trochę szybciej
+- dodaliśmy tryb pełnoekranowy w zadaniach
+- dodaliśmy wyszukiwanie w wiadomościach
+- dodaliśmy opcje oznaczania bieżącej lekcji na planie/w powiadomieniu (domyślnie wyłączone)
+- dodaliśmy testową opcję naprawy powiadomień na np. Huawei, Xiaomi (znajdziesz ją w ustawieniach)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
