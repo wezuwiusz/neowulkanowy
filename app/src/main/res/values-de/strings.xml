@@ -115,6 +115,14 @@
     <string name="timetable_time">Stunden</string>
     <string name="timetable_changes">Änderungen</string>
     <string name="timetable_no_items">Kein Unterricht an diesem Tag</string>
+    <string name="timetable_minutes">%s min</string>
+    <string name="timetable_seconds">%s sek</string>
+    <string name="timetable_time_left">noch %1$s</string>
+    <string name="timetable_time_until">in %1$s</string>
+    <string name="timetable_finished">Fertig</string>
+    <string name="timetable_now">Jetzt: %s</string>
+    <string name="timetable_next">In einem Moment: %s</string>
+    <string name="timetable_later">Später: %s</string>
     <!--Completed lessons-->
     <string name="completed_lessons_title">Beendete Lektionen</string>
     <string name="completed_lessons_button">Beendete Lektionen anzeigen</string>
@@ -278,6 +286,8 @@
     <string name="all_subject">Thema</string>
     <string name="all_prev">Zurück</string>
     <string name="all_next">Nächste</string>
+    <string name="all_search">Suchen</string>
+    <string name="all_search_hint">Suchen...</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Keine Lektionen</string>
     <string name="widget_timetable_theme_title">Thema wählen</string>
@@ -292,11 +302,17 @@
     <string name="pref_view_present">Anwesenheit in Schulbesuch zeigen</string>
     <string name="pref_view_app_theme">Thema der Anwendung</string>
     <string name="pref_view_expand_grade">Noten erweitern</string>
+    <string name="pref_view_timetable_show_timers">Aktuelle Lektion im Stundenplan markieren</string>
+    <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>
     <string name="pref_view_timetable_show_whole_class">Unterricht der ganzen Klasse anzeigen</string>
     <string name="pref_view_grade_color_scheme">Farbschema der Noten</string>
     <string name="pref_view_app_language">App Sprache</string>
     <string name="pref_notify_header">Benachrichtigungen</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>
+    <string name="pref_notify_upcoming_lessons_switch">Benachrichtigungen über bevorstehende Lektionen anzeigen</string>
+    <string name="pref_notify_fix_sync_issues">Synchronisierungs- und Benachrichtigungsprobleme reparieren</string>
+    <string name="pref_notify_fix_sync_issues_message">Ihr Gerät hat möglicherweise Probleme mit der Datensynchronisierung und Benachrichtigungen.\n\nUm diese zu reparieren, fügen Sie Wulkanowy zum Autostart hinzu und deaktivieren Sie die Batterieoptimierung in den Systemeinstellungen des Geräts.</string>
+    <string name="pref_notify_fix_sync_issues_settings_button">Gehe zu den Einstellungen</string>
     <string name="pref_notify_debug_switch">Debug-Benachrichtigungen anzeigen</string>
     <string name="pref_services_header">Synchronisierung</string>
     <string name="pref_services_switch">Automatische Aktualisierung</string>
@@ -322,6 +338,7 @@
     <string name="channel_new_message">Neue Nachrichten</string>
     <string name="channel_new_notes">Neue Eintragen</string>
     <string name="channel_push">Push-Benachrichtigungen</string>
+    <string name="channel_upcoming_lessons">Bevorstehende Lektionen</string>
     <string name="channel_debug">Debuggen</string>
     <!--Colors-->
     <string name="all_black">Schwarz</string>

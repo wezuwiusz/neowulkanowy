@@ -307,6 +307,7 @@
     <string name="all_prev">Poprzedni</string>
     <string name="all_next">Następny</string>
     <string name="all_search">Szukaj</string>
+    <string name="all_search_hint">Szukaj...</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
     <string name="widget_timetable_theme_title">Wybierz motyw</string>
@@ -321,14 +322,14 @@
     <string name="pref_view_present">Pokazuj obecność we frekwencji</string>
     <string name="pref_view_app_theme">Motyw aplikacji</string>
     <string name="pref_view_expand_grade">Rozwiń oceny</string>
-    <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>
     <string name="pref_view_timetable_show_timers">Oznaczaj bieżącą lekcję na planie</string>
+    <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>
     <string name="pref_view_timetable_show_whole_class">Pokazuj lekcje całej klasy</string>
     <string name="pref_view_grade_color_scheme">Schemat kolorów ocen</string>
     <string name="pref_view_app_language">Język aplikacji</string>
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
-    <string name="pref_notify_upcoming_lessons_switch">Pokazuj powiadomienia o następnych lekcjach</string>
+    <string name="pref_notify_upcoming_lessons_switch">Pokazuj powiadomienia o nadchodzących lekcjach</string>
     <string name="pref_notify_fix_sync_issues">Napraw problemy z synchronizacją i powiadomieniami</string>
     <string name="pref_notify_fix_sync_issues_message">Na twoim urządzeniu mogą występować problemy z synchronizacją danych i powiadomieniami.\n\nBy je naprawić, dodaj Wulkanowego do autostartu i wyłącz optymalizację/oszczędzanie baterii w ustawieniach systemowych telefonu.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Przejdź do ustawień</string>

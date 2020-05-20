@@ -121,6 +121,14 @@
     <string name="timetable_time">Години</string>
     <string name="timetable_changes">Зміни</string>
     <string name="timetable_no_items">Брак уроків у цей день</string>
+    <string name="timetable_minutes">%s min</string>
+    <string name="timetable_seconds">%s sec</string>
+    <string name="timetable_time_left">%1$s left</string>
+    <string name="timetable_time_until">in %1$s</string>
+    <string name="timetable_finished">Finished</string>
+    <string name="timetable_now">Now: %s</string>
+    <string name="timetable_next">Next: %s</string>
+    <string name="timetable_later">Later: %s</string>
     <!--Completed lessons-->
     <string name="completed_lessons_title">Уроки, що відбулися</string>
     <string name="completed_lessons_button">Показати уроки, що відбулися</string>
@@ -298,6 +306,8 @@
     <string name="all_subject">Предмет</string>
     <string name="all_prev">Попередній</string>
     <string name="all_next">Наступний</string>
+    <string name="all_search">Search</string>
+    <string name="all_search_hint">Search...</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Брак уроків</string>
     <string name="widget_timetable_theme_title">Увібрати тему</string>
@@ -312,11 +322,17 @@
     <string name="pref_view_present">Показувати присутність у відвідуваності</string>
     <string name="pref_view_app_theme">Тема додатку</string>
     <string name="pref_view_expand_grade">Більше оцінок</string>
+    <string name="pref_view_timetable_show_timers">Mark current lesson in timetable</string>
+    <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
     <string name="pref_view_timetable_show_whole_class">Показати уроки всього класу</string>
     <string name="pref_view_grade_color_scheme">Схема кольорів оцінок</string>
     <string name="pref_view_app_language">Мова додатку</string>
     <string name="pref_notify_header">Повідомлення</string>
     <string name="pref_notify_switch">Показувати повідомлення</string>
+    <string name="pref_notify_upcoming_lessons_switch">Show upcoming lesson notifications</string>
+    <string name="pref_notify_fix_sync_issues">Fix synchronization &amp; notifications issues</string>
+    <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
+    <string name="pref_notify_fix_sync_issues_settings_button">Go to settings</string>
     <string name="pref_notify_debug_switch">Показувати дебаг-повідомлення</string>
     <string name="pref_services_header">Синхронізація</string>
     <string name="pref_services_switch">Автоматична синхронізація</string>
@@ -342,6 +358,7 @@
     <string name="channel_new_message">Нові повідомлення</string>
     <string name="channel_new_notes">Нові нотатки</string>
     <string name="channel_push">Показувати push-повідомлення</string>
+    <string name="channel_upcoming_lessons">Upcoming lessons</string>
     <string name="channel_debug">Дебаг</string>
     <!--Colors-->
     <string name="all_black">Чорний</string>
