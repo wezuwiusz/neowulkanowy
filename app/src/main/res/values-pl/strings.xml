@@ -298,6 +298,7 @@
     <string name="all_subject">Przedmiot</string>
     <string name="all_prev">Poprzedni</string>
     <string name="all_next">Następny</string>
+    <string name="all_search">Szukaj</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
     <string name="widget_timetable_theme_title">Wybierz motyw</string>

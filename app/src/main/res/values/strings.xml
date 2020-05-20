@@ -329,6 +329,8 @@
     <string name="all_subject">Subject</string>
     <string name="all_prev">Prev</string>
     <string name="all_next">Next</string>
+    <string name="all_search">Search</string>
+    <string name="all_search_hint">Search...</string>
 
 
     <!--Timetable Widget-->

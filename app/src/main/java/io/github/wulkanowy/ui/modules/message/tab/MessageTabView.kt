@@ -9,6 +9,8 @@ interface MessageTabView : BaseView {
 
     fun initView()
 
+    fun resetListPosition()
+
     fun updateData(data: List<Message>)
 
     fun updateItem(item: Message, position: Int)

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SortedList
+import androidx.recyclerview.widget.SortedListAdapterCallback
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
@@ -15,11 +17,41 @@ import javax.inject.Inject
 class MessageTabAdapter @Inject constructor() :
     RecyclerView.Adapter<MessageTabAdapter.ItemViewHolder>() {
 
-    var items = mutableListOf<Message>()
-
     var onClickListener: (Message, position: Int) -> Unit = { _, _ -> }
 
-    override fun getItemCount() = items.size
+    private val items = SortedList(Message::class.java, object :
+        SortedListAdapterCallback<Message>(this) {
+
+        override fun compare(item1: Message, item2: Message): Int {
+            return item2.date.compareTo(item1.date)
+        }
+
+        override fun areContentsTheSame(oldItem: Message?, newItem: Message?): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areItemsTheSame(item1: Message, item2: Message): Boolean {
+            return item1 == item2
+        }
+    })
+
+    fun replaceAll(models: List<Message>) {
+        items.beginBatchedUpdates()
+        for (i in items.size() - 1 downTo 0) {
+            val model = items.get(i)
+            if (model !in models) {
+                items.remove(model)
+            }
+        }
+        items.addAll(models)
+        items.endBatchedUpdates()
+    }
+
+    fun updateItem(position: Int, item: Message) {
+        items.updateItemAt(position, item)
+    }
+
+    override fun getItemCount() = items.size()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ItemViewHolder(
         ItemMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false)

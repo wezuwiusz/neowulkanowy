@@ -1,10 +1,13 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
@@ -39,7 +42,12 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
     }
 
     override val isViewEmpty
-        get() = tabAdapter.items.isEmpty()
+        get() = tabAdapter.itemCount == 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,18 +73,28 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.action_menu_message_tab, menu)
+
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.queryHint = getString(R.string.all_search_hint)
+        searchView.maxWidth = Int.MAX_VALUE
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String) = false
+            override fun onQueryTextChange(query: String): Boolean {
+                presenter.onSearchQueryTextChange(query)
+                return true
+            }
+        })
+    }
+
     override fun updateData(data: List<Message>) {
-        with(tabAdapter) {
-            items = data.toMutableList()
-            notifyDataSetChanged()
-        }
+        tabAdapter.replaceAll(data)
     }
 
     override fun updateItem(item: Message, position: Int) {
-        with(tabAdapter) {
-            items[position] = item
-            notifyItemChanged(position)
-        }
+        tabAdapter.updateItem(position, item)
     }
 
     override fun showProgress(show: Boolean) {
@@ -85,6 +103,10 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
 
     override fun enableSwipe(enable: Boolean) {
         binding.messageTabSwipe.isEnabled = enable
+    }
+
+    override fun resetListPosition() {
+        binding.messageTabRecycler.scrollToPosition(0)
     }
 
     override fun showContent(show: Boolean) {
