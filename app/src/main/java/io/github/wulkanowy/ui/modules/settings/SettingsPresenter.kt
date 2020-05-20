@@ -4,6 +4,7 @@ import androidx.work.WorkInfo
 import com.chuckerteam.chucker.api.ChuckerCollector
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -20,6 +21,7 @@ class SettingsPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val preferencesRepository: PreferencesRepository,
+    private val timetableNotificationHelper: TimetableNotificationSchedulerHelper,
     private val analytics: FirebaseAnalyticsHelper,
     private val syncManager: SyncManager,
     private val chuckerCollector: ChuckerCollector,
@@ -36,17 +38,17 @@ class SettingsPresenter @Inject constructor(
     fun onSharedPreferenceChanged(key: String) {
         Timber.i("Change settings $key")
 
-        with(preferencesRepository) {
+        preferencesRepository.apply {
             when (key) {
                 serviceEnableKey -> with(syncManager) { if (isServiceEnabled) startPeriodicSyncWorker() else stopSyncWorker() }
                 servicesIntervalKey, servicesOnlyWifiKey -> syncManager.startPeriodicSyncWorker(true)
                 isDebugNotificationEnableKey -> chuckerCollector.showNotification = isDebugNotificationEnable
                 appThemeKey -> view?.recreateView()
+                isUpcomingLessonsNotificationsEnableKey -> if (!isUpcomingLessonsNotificationsEnable) timetableNotificationHelper.cancelNotification()
                 appLanguageKey -> view?.run {
                     updateLanguage(if (appLanguage == "system") appInfo.systemLanguage else appLanguage)
                     recreateView()
                 }
-                else -> Unit
             }
         }
         analytics.logEvent("setting_changed", "name" to key)

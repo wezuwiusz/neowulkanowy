@@ -4,9 +4,13 @@ import org.threeten.bp.DayOfWeek.FRIDAY
 import org.threeten.bp.DayOfWeek.MONDAY
 import org.threeten.bp.DayOfWeek.SATURDAY
 import org.threeten.bp.DayOfWeek.SUNDAY
+import org.threeten.bp.Instant.ofEpochMilli
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalDateTime.ofInstant
 import org.threeten.bp.Month
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter.ofPattern
 import org.threeten.bp.format.TextStyle.FULL_STANDALONE
 import org.threeten.bp.temporal.TemporalAdjusters.firstInMonth
@@ -17,6 +21,10 @@ import java.util.Locale
 private const val DATE_PATTERN = "dd.MM.yyyy"
 
 fun String.toLocalDate(format: String = DATE_PATTERN): LocalDate = LocalDate.parse(this, ofPattern(format))
+
+fun LocalDateTime.toTimestamp() = atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC).toInstant().toEpochMilli()
+
+fun Long.toLocalDateTime() = ofInstant(ofEpochMilli(this), ZoneId.systemDefault())
 
 fun LocalDate.toFormattedString(format: String = DATE_PATTERN): String = format(ofPattern(format))
 

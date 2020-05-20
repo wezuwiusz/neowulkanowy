@@ -130,6 +130,9 @@
     <string name="timetable_time">Hours</string>
     <string name="timetable_changes">Changes</string>
     <string name="timetable_no_items">No lessons this day</string>
+    <string name="timetable_now">Now: %s</string>
+    <string name="timetable_next">Next: %s</string>
+    <string name="timetable_later">Later: %s</string>
 
 
     <!--Completed lessons-->
@@ -356,6 +359,7 @@
 
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show notifications</string>
+    <string name="pref_notify_upcoming_lessons_switch">Show upcoming lesson notifications</string>
     <string name="pref_notify_debug_switch">Show debug notifications</string>
 
     <string name="pref_services_header">Synchronization</string>
@@ -386,6 +390,7 @@
     <string name="channel_new_message">New messages</string>
     <string name="channel_new_notes">New notes</string>
     <string name="channel_push">Push notifications</string>
+    <string name="channel_upcoming_lessons">Upcoming lessons</string>
     <string name="channel_debug">Debug</string>
 
 

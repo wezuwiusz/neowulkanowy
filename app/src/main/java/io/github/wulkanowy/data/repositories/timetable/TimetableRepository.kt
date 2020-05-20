@@ -5,6 +5,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
 import io.github.wulkanowy.utils.friday
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.uniqueSubtract
@@ -18,7 +19,8 @@ import javax.inject.Singleton
 class TimetableRepository @Inject constructor(
     private val settings: InternetObservingSettings,
     private val local: TimetableLocal,
-    private val remote: TimetableRemote
+    private val remote: TimetableRemote,
+    private val schedulerHelper: TimetableNotificationSchedulerHelper
 ) {
 
     fun getTimetable(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): Single<List<Timetable>> {
@@ -31,8 +33,8 @@ class TimetableRepository @Inject constructor(
                     local.getTimetable(semester, monday, friday)
                         .toSingle(emptyList())
                         .doOnSuccess { old ->
-                            local.deleteTimetable(old.uniqueSubtract(new))
-                            local.saveTimetable(new.uniqueSubtract(old).map { item ->
+                            local.deleteTimetable(old.uniqueSubtract(new).also { schedulerHelper.cancelScheduled(it) })
+                            local.saveTimetable(new.uniqueSubtract(old).also { schedulerHelper.scheduleNotifications(it, student) }.map { item ->
                                 item.also { new ->
                                     old.singleOrNull { new.start == it.start }?.let { old ->
                                         return@map new.copy(
@@ -45,7 +47,7 @@ class TimetableRepository @Inject constructor(
                         }
                 }.flatMap {
                     local.getTimetable(semester, monday, friday).toSingle(emptyList())
-                }).map { list -> list.filter { it.date in start..end } }
+                }).map { list -> list.filter { it.date in start..end }.also { schedulerHelper.scheduleNotifications(it, student) } }
         }
     }
 }

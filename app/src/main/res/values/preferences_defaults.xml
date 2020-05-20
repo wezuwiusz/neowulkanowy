@@ -13,6 +13,7 @@
     <string name="pref_default_services_interval">60</string>
     <bool name="pref_default_services_wifi_only">false</bool>
     <bool name="pref_default_notifications_enable">true</bool>
+    <bool name="pref_default_notification_upcoming_lessons_enable">false</bool>
     <bool name="pref_default_notification_debug">false</bool>
     <string name="pref_default_grade_modifier_plus">0.33</string>
     <string name="pref_default_grade_modifier_minus">0.33</string>

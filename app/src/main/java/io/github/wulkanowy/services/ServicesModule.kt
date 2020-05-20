@@ -1,7 +1,9 @@
 package io.github.wulkanowy.services
 
+import android.app.AlarmManager
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.getSystemService
 import androidx.work.WorkManager
 import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Binds
@@ -15,6 +17,7 @@ import io.github.wulkanowy.services.sync.channels.LuckyNumberChannel
 import io.github.wulkanowy.services.sync.channels.NewGradesChannel
 import io.github.wulkanowy.services.sync.channels.NewMessagesChannel
 import io.github.wulkanowy.services.sync.channels.NewNotesChannel
+import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel
 import io.github.wulkanowy.services.sync.channels.PushChannel
 import io.github.wulkanowy.services.sync.works.AttendanceSummaryWork
 import io.github.wulkanowy.services.sync.works.AttendanceWork
@@ -46,6 +49,10 @@ abstract class ServicesModule {
         @Singleton
         @Provides
         fun provideNotificationManager(context: Context) = NotificationManagerCompat.from(context)
+
+        @Singleton
+        @Provides
+        fun provideAlarmManager(context: Context): AlarmManager = context.getSystemService()!!
     }
 
     @ContributesAndroidInjector
@@ -126,4 +133,8 @@ abstract class ServicesModule {
     @Binds
     @IntoSet
     abstract fun providePushChannel(channel: PushChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideUpcomingLessonsChannel(channel: UpcomingLessonsChannel): Channel
 }
