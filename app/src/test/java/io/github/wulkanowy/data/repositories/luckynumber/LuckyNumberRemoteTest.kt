@@ -1,6 +1,6 @@
 package io.github.wulkanowy.data.repositories.luckynumber
 
-import io.github.wulkanowy.data.repositories.getStudentEntity
+import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.init
 import io.mockk.MockKAnnotations

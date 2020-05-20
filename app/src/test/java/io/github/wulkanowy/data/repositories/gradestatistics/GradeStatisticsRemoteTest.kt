@@ -1,7 +1,7 @@
 package io.github.wulkanowy.data.repositories.gradestatistics
 
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.repositories.getStudentEntity
+import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.GradePointsStatistics
 import io.github.wulkanowy.sdk.pojo.GradeStatistics

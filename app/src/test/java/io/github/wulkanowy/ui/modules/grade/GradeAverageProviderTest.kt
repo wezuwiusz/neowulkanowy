@@ -3,9 +3,9 @@ package io.github.wulkanowy.ui.modules.grade
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.createSemesterEntity
 import io.github.wulkanowy.data.repositories.grade.GradeRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
+import io.github.wulkanowy.createSemesterEntity
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.reactivex.Single

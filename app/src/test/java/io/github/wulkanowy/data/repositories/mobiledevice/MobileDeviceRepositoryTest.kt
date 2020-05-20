@@ -4,7 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.repositories.UnitTestInternetObservingStrategy
-import io.github.wulkanowy.data.repositories.getStudentEntity
+import io.github.wulkanowy.getStudentEntity
 import io.reactivex.Maybe
 import io.reactivex.Single
 import org.junit.Before

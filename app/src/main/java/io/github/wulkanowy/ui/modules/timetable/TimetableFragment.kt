@@ -86,9 +86,10 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         else false
     }
 
-    override fun updateData(data: List<Timetable>, showWholeClassPlanType: String) {
+    override fun updateData(data: List<Timetable>, showWholeClassPlanType: String, showTimetableTimers: Boolean) {
         with(timetableAdapter) {
-            items = data
+            items = data.toMutableList()
+            showTimers = showTimetableTimers
             showWholeClassPlan = showWholeClassPlanType
             notifyDataSetChanged()
         }
@@ -96,7 +97,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override fun clearData() {
         with(timetableAdapter) {
-            items = emptyList()
+            items = mutableListOf()
             notifyDataSetChanged()
         }
     }

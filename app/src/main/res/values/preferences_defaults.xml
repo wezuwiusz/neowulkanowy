@@ -19,4 +19,5 @@
     <string name="pref_default_grade_modifier_minus">0.33</string>
     <bool name="pref_default_fill_message_content">true</bool>
     <string name="pref_default_timetable_show_whole_class">no</string>
+    <bool name="pref_default_timetable_show_timers">false</bool>
 </resources>

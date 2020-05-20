@@ -130,6 +130,11 @@
     <string name="timetable_time">Hours</string>
     <string name="timetable_changes">Changes</string>
     <string name="timetable_no_items">No lessons this day</string>
+    <string name="timetable_minutes">%s min</string>
+    <string name="timetable_seconds">%s sec</string>
+    <string name="timetable_time_left">%1$s left</string>
+    <string name="timetable_time_until">in %1$s</string>
+    <string name="timetable_finished">Finished</string>
     <string name="timetable_now">Now: %s</string>
     <string name="timetable_next">Next: %s</string>
     <string name="timetable_later">Later: %s</string>
@@ -352,6 +357,7 @@
     <string name="pref_view_present">Show presence in attendance</string>
     <string name="pref_view_app_theme">Application theme</string>
     <string name="pref_view_expand_grade">Expand grades</string>
+    <string name="pref_view_timetable_show_timers">Mark current lesson in timetable</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
     <string name="pref_view_timetable_show_whole_class">Show whole class lessons</string>
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>

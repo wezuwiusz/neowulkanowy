@@ -75,6 +75,9 @@ class PreferencesRepository @Inject constructor(
     val showWholeClassPlan: String
         get() = getString(R.string.pref_key_timetable_show_whole_class, R.string.pref_default_timetable_show_whole_class)
 
+    val showTimetableTimers: Boolean
+        get() = getBoolean(R.string.pref_key_timetable_show_timers, R.bool.pref_default_timetable_show_timers)
+
     private fun getString(id: Int, default: Int) = getString(context.getString(id), default)
 
     private fun getString(id: String, default: Int) = sharedPref.getString(id, context.getString(default)) ?: context.getString(default)

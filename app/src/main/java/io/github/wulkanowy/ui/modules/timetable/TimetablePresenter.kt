@@ -149,7 +149,7 @@ class TimetablePresenter @Inject constructor(
                 .subscribe({
                     Timber.i("Loading timetable result: Success")
                     view?.apply {
-                        updateData(it, prefRepository.showWholeClassPlan)
+                        updateData(it, prefRepository.showWholeClassPlan, prefRepository.showTimetableTimers)
                         showEmpty(it.isEmpty())
                         showErrorView(false)
                         showContent(it.isNotEmpty())

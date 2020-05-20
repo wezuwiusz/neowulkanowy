@@ -4,7 +4,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.UnitTestInternetObservingStrategy
-import io.github.wulkanowy.data.repositories.createSemesterEntity
+import io.github.wulkanowy.createSemesterEntity
 import io.reactivex.Maybe
 import io.reactivex.Single
 import org.junit.Assert.assertEquals

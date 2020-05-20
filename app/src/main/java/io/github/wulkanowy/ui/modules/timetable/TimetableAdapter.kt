@@ -2,6 +2,8 @@ package io.github.wulkanowy.ui.modules.timetable
 
 import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +12,16 @@ import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.databinding.ItemTimetableBinding
 import io.github.wulkanowy.databinding.ItemTimetableSmallBinding
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.isJustFinished
+import io.github.wulkanowy.utils.isShowTimeUntil
+import io.github.wulkanowy.utils.left
 import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.until
+import org.threeten.bp.LocalDateTime
+import timber.log.Timber
+import java.util.Timer
 import javax.inject.Inject
+import kotlin.concurrent.timer
 
 class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -20,11 +30,27 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         ITEM_SMALL(2)
     }
 
-    var items = emptyList<Timetable>()
+    var items = mutableListOf<Timetable>()
+        set(value) {
+            field = value
+            resetTimers()
+        }
 
     var onClickListener: (Timetable) -> Unit = {}
 
     var showWholeClassPlan: String = "no"
+
+    var showTimers: Boolean = false
+
+    private val timers = mutableMapOf<Int, Timer>()
+
+    private fun resetTimers() {
+        Timber.d("Timetable timers reset")
+        with(timers) {
+            forEach { (_, timer) -> timer.cancel() }
+            clear()
+        }
+    }
 
     override fun getItemCount() = items.size
 
@@ -43,11 +69,16 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         }
     }
 
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        resetTimers()
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val lesson = items[position]
 
         when (holder) {
-            is ItemViewHolder -> bindNormalView(holder.binding, lesson)
+            is ItemViewHolder -> bindNormalView(holder.binding, lesson, position)
             is SmallItemViewHolder -> bindSmallView(holder.binding, lesson)
         }
     }
@@ -68,7 +99,7 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         }
     }
 
-    private fun bindNormalView(binding: ItemTimetableBinding, lesson: Timetable) {
+    private fun bindNormalView(binding: ItemTimetableBinding, lesson: Timetable, position: Int) {
         with(binding) {
             timetableItemNumber.text = lesson.number.toString()
             timetableItemSubject.text = lesson.subject
@@ -81,7 +112,71 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             bindNormalDescription(binding, lesson)
             bindNormalColors(binding, lesson)
 
+            if (lesson.isStudentPlan && showTimers) timers[position] = timer(period = 1000) {
+                root.post { updateTimeLeft(binding, lesson, position) }
+            } else {
+                // reset item on set changed
+                timetableItemTimeUntil.visibility = GONE
+                timetableItemTimeLeft.visibility = GONE
+            }
+
             root.setOnClickListener { onClickListener(lesson) }
+        }
+    }
+
+    private fun getPreviousLesson(position: Int): LocalDateTime? {
+        return items.filter { it.isStudentPlan }.getOrNull(position - 1 - items.filterIndexed { i, item -> i < position && !item.isStudentPlan }.size)?.let {
+            if (!it.canceled && it.isStudentPlan) it.end
+            else null
+        }
+    }
+
+    private fun updateTimeLeft(binding: ItemTimetableBinding, lesson: Timetable, position: Int) {
+        with(binding) {
+            when {
+                // before lesson
+                lesson.isShowTimeUntil(getPreviousLesson(position)) -> {
+                    Timber.d("Show time until lesson: $position")
+                    timetableItemTimeLeft.visibility = GONE
+                    with(timetableItemTimeUntil) {
+                        visibility = VISIBLE
+                        text = context.getString(R.string.timetable_time_until,
+                            if (lesson.until.seconds <= 60) {
+                                context.getString(R.string.timetable_seconds, lesson.until.seconds.toString(10))
+                            } else {
+                                context.getString(R.string.timetable_minutes, lesson.until.toMinutes().toString(10))
+                            }
+                        )
+                    }
+                }
+                // after lesson start
+                lesson.left != null -> {
+                    Timber.d("Show time left lesson: $position")
+                    timetableItemTimeUntil.visibility = GONE
+                    with(timetableItemTimeLeft) {
+                        visibility = VISIBLE
+                        text = context.getString(
+                            R.string.timetable_time_left,
+                            if (lesson.left!!.seconds < 60) {
+                                context.getString(R.string.timetable_seconds, lesson.left?.seconds?.toString(10))
+                            } else {
+                                context.getString(R.string.timetable_minutes, lesson.left?.toMinutes()?.toString(10))
+                            }
+                        )
+                    }
+                }
+                // right after lesson finish
+                lesson.isJustFinished -> {
+                    Timber.d("Show just finished lesson: $position")
+                    timetableItemTimeUntil.visibility = GONE
+                    timetableItemTimeLeft.visibility = VISIBLE
+                    timetableItemTimeLeft.text = root.context.getString(R.string.timetable_finished)
+                }
+                else -> {
+                    timetableItemTimeUntil.visibility = GONE
+                    timetableItemTimeLeft.visibility = GONE
+                }
+            }
         }
     }
 
@@ -93,20 +188,20 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     private fun bindSmallDescription(binding: ItemTimetableSmallBinding, lesson: Timetable) {
         with(binding) {
             if (lesson.info.isNotBlank() && !lesson.changes) {
-                timetableSmallItemDescription.visibility = android.view.View.VISIBLE
+                timetableSmallItemDescription.visibility = VISIBLE
                 timetableSmallItemDescription.text = lesson.info
 
-                timetableSmallItemRoom.visibility = android.view.View.GONE
-                timetableSmallItemTeacher.visibility = android.view.View.GONE
+                timetableSmallItemRoom.visibility = GONE
+                timetableSmallItemTeacher.visibility = GONE
 
                 timetableSmallItemDescription.setTextColor(root.context.getThemeAttrColor(
                     if (lesson.canceled) R.attr.colorPrimary
                     else R.attr.colorTimetableChange
                 ))
             } else {
-                timetableSmallItemDescription.visibility = android.view.View.GONE
-                timetableSmallItemRoom.visibility = android.view.View.VISIBLE
-                timetableSmallItemTeacher.visibility = android.view.View.VISIBLE
+                timetableSmallItemDescription.visibility = GONE
+                timetableSmallItemRoom.visibility = VISIBLE
+                timetableSmallItemTeacher.visibility = VISIBLE
             }
         }
     }
@@ -114,20 +209,20 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     private fun bindNormalDescription(binding: ItemTimetableBinding, lesson: Timetable) {
         with(binding) {
             if (lesson.info.isNotBlank() && !lesson.changes) {
-                timetableItemDescription.visibility = android.view.View.VISIBLE
+                timetableItemDescription.visibility = VISIBLE
                 timetableItemDescription.text = lesson.info
 
-                timetableItemRoom.visibility = android.view.View.GONE
-                timetableItemTeacher.visibility = android.view.View.GONE
+                timetableItemRoom.visibility = GONE
+                timetableItemTeacher.visibility = GONE
 
                 timetableItemDescription.setTextColor(root.context.getThemeAttrColor(
                     if (lesson.canceled) R.attr.colorPrimary
                     else R.attr.colorTimetableChange
                 ))
             } else {
-                timetableItemDescription.visibility = android.view.View.GONE
-                timetableItemRoom.visibility = android.view.View.VISIBLE
-                timetableItemTeacher.visibility = android.view.View.VISIBLE
+                timetableItemDescription.visibility = GONE
+                timetableItemRoom.visibility = VISIBLE
+                timetableItemTeacher.visibility = VISIBLE
             }
         }
     }

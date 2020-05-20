@@ -1,9 +1,11 @@
-package io.github.wulkanowy.data.repositories
+package io.github.wulkanowy
 
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.sdk.Sdk
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalDateTime.now
 
 fun createSemesterEntity(diaryId: Int, semesterId: Int, start: LocalDate, end: LocalDate, semesterName: Int = 1): Semester {
@@ -45,3 +47,28 @@ fun getStudentEntity(mode: Sdk.Mode = Sdk.Mode.API): Student {
         userLoginId = 0
     )
 }
+
+fun getTimetableEntity(
+    isStudentPlan: Boolean = false,
+    canceled: Boolean = false,
+    start: LocalDateTime = now(),
+    end: LocalDateTime = now()
+) = Timetable(
+    studentId = 0,
+    subject = "",
+    number = 0,
+    diaryId = 0,
+    canceled = canceled,
+    changes = false,
+    date = LocalDate.now(),
+    end = end,
+    group = "",
+    info = "",
+    isStudentPlan = isStudentPlan,
+    room = "",
+    roomOld = "",
+    start = start,
+    subjectOld = "",
+    teacher = "",
+    teacherOld = ""
+)

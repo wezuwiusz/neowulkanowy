@@ -12,7 +12,7 @@ interface TimetableView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<Timetable>, showWholeClassPlanType: String)
+    fun updateData(data: List<Timetable>, showWholeClassPlanType: String, showTimetableTimers: Boolean)
 
     fun updateNavigationDay(date: String)
 
