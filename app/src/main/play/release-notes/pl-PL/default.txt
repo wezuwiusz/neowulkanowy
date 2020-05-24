@@ -1,10 +1,8 @@
-Wersja 0.18.0
-- naprawiliśmy odświeżanie zadań domowych
-- naprawiliśmy powiadomienia na androidzie 8.0
-- oceny powinny się teraz odświeżać trochę szybciej
-- dodaliśmy tryb pełnoekranowy w zadaniach
-- dodaliśmy wyszukiwanie w wiadomościach
-- dodaliśmy opcje oznaczania bieżącej lekcji na planie/w powiadomieniu (domyślnie wyłączone)
-- dodaliśmy testową opcję naprawy powiadomień na np. Huawei, Xiaomi (znajdziesz ją w ustawieniach)
+Wersja 0.18.1
+- naprawiliśmy sortowanie w ocenach
+- naprawilismy wiele problemów ze stabilnością
+- nazwy opcji w ustawieniach nie są już ucięte
+- w zadaniach domowych wyświetlają się teraz pozycje na weekend
+- wyłączyliśmy logowanie przez token (bo nie działa i nie wiadomo kiedy będzie działać)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
