@@ -64,7 +64,7 @@ class MessageTabPresenter @Inject constructor(
     }
 
     fun onMessageItemSelected(message: Message, position: Int) {
-        Timber.i("Select message ${message.id} item")
+        Timber.i("Select message ${message.id} item (position: $position)")
         view?.run {
             openMessage(message)
             if (message.unread) {
@@ -131,6 +131,8 @@ class MessageTabPresenter @Inject constructor(
                 filteredList.add(it)
             }
         }
+
+        Timber.d("Applying filter. Full list: ${messages.size}, filtered: ${filteredList.size}")
 
         updateData(filteredList)
     }

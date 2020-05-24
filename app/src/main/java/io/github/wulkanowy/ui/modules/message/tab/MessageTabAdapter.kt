@@ -77,7 +77,7 @@ class MessageTabAdapter @Inject constructor() :
             }
             messageItemAttachmentIcon.visibility = if (item.hasAttachments) View.VISIBLE else View.GONE
 
-            root.setOnClickListener { onClickListener(item, position) }
+            root.setOnClickListener { onClickListener(item, holder.adapterPosition) }
         }
     }
 
