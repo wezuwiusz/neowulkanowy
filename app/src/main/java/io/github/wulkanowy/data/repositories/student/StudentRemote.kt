@@ -39,7 +39,7 @@ class StudentRemote @Inject constructor(private val sdk: Sdk) {
     }
 
     fun getStudentsMobileApi(token: String, pin: String, symbol: String): Single<List<Student>> {
-        return sdk.getStudentsFromMobileApi(token, pin, symbol).map { mapStudents(it, "", "") }
+        return sdk.getStudentsFromMobileApi(token, pin, symbol, "").map { mapStudents(it, "", "") }
     }
 
     fun getStudentsScrapper(email: String, password: String, scrapperBaseUrl: String, symbol: String): Single<List<Student>> {
@@ -47,6 +47,6 @@ class StudentRemote @Inject constructor(private val sdk: Sdk) {
     }
 
     fun getStudentsHybrid(email: String, password: String, scrapperBaseUrl: String, symbol: String): Single<List<Student>> {
-        return sdk.getStudentsHybrid(email, password, scrapperBaseUrl, symbol).map { mapStudents(it, email, password) }
+        return sdk.getStudentsHybrid(email, password, scrapperBaseUrl, "", symbol).map { mapStudents(it, email, password) }
     }
 }
