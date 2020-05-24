@@ -22,7 +22,7 @@ class DebugChannel @Inject constructor(
     }
 
     override fun create() {
-        if (appInfo.isDebug) return
+        if (!appInfo.isDebug) return
         notificationManager.createNotificationChannel(
             NotificationChannel(CHANNEL_ID, context.getString(R.string.channel_debug), IMPORTANCE_DEFAULT)
                 .apply {
