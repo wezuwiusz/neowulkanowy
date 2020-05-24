@@ -132,41 +132,46 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     }
 
     private fun updateTimeLeft(binding: ItemTimetableBinding, lesson: Timetable, position: Int) {
+        val isShowTimeUntil = lesson.isShowTimeUntil(getPreviousLesson(position))
+        val until = lesson.until
+        val left = lesson.left
+        val isJustFinished = lesson.isJustFinished
+
         with(binding) {
             when {
                 // before lesson
-                lesson.isShowTimeUntil(getPreviousLesson(position)) -> {
+                isShowTimeUntil -> {
                     Timber.d("Show time until lesson: $position")
                     timetableItemTimeLeft.visibility = GONE
                     with(timetableItemTimeUntil) {
                         visibility = VISIBLE
                         text = context.getString(R.string.timetable_time_until,
-                            if (lesson.until.seconds <= 60) {
-                                context.getString(R.string.timetable_seconds, lesson.until.seconds.toString(10))
+                            if (until.seconds <= 60) {
+                                context.getString(R.string.timetable_seconds, until.seconds.toString(10))
                             } else {
-                                context.getString(R.string.timetable_minutes, lesson.until.toMinutes().toString(10))
+                                context.getString(R.string.timetable_minutes, until.toMinutes().toString(10))
                             }
                         )
                     }
                 }
                 // after lesson start
-                lesson.left != null -> {
+                left != null -> {
                     Timber.d("Show time left lesson: $position")
                     timetableItemTimeUntil.visibility = GONE
                     with(timetableItemTimeLeft) {
                         visibility = VISIBLE
                         text = context.getString(
                             R.string.timetable_time_left,
-                            if (lesson.left!!.seconds < 60) {
-                                context.getString(R.string.timetable_seconds, lesson.left?.seconds?.toString(10))
+                            if (left.seconds < 60) {
+                                context.getString(R.string.timetable_seconds, left.seconds.toString(10))
                             } else {
-                                context.getString(R.string.timetable_minutes, lesson.left?.toMinutes()?.toString(10))
+                                context.getString(R.string.timetable_minutes, left.toMinutes().toString(10))
                             }
                         )
                     }
                 }
                 // right after lesson finish
-                lesson.isJustFinished -> {
+                isJustFinished -> {
                     Timber.d("Show just finished lesson: $position")
                     timetableItemTimeUntil.visibility = GONE
                     timetableItemTimeLeft.visibility = VISIBLE

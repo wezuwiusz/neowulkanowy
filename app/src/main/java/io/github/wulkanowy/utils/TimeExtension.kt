@@ -92,8 +92,8 @@ inline val LocalDate.weekDayName: String
 inline val LocalDate.monday: LocalDate
     get() = with(MONDAY)
 
-inline val LocalDate.friday: LocalDate
-    get() = with(FRIDAY)
+inline val LocalDate.sunday: LocalDate
+    get() = with(SUNDAY)
 
 /**
  * [Dz.U. 2016 poz. 1335](http://prawo.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20160001335)

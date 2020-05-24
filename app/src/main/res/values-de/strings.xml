@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Wulkanowy</string>
     <!--Activity/Fragment title-->
     <string name="login_title">Anmelden</string>
     <string name="main_title">Wulkanowy</string>
@@ -270,6 +269,9 @@
     <!--Log viewer-->
     <string name="logviewer_share">Logs teilen</string>
     <string name="logviewer_refresh">Aktualisieren</string>
+    <!--Error dialog-->
+    <string name="dialog_error_check_update">Check for updates</string>
+    <string name="dialog_error_check_update_message">Before reporting a bug, check first if an update with the bug fix is available</string>
     <!--Generic-->
     <string name="all_content">Inhalt</string>
     <string name="all_retry">Wiederhol</string>

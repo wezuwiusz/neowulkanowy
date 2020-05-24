@@ -38,6 +38,7 @@
             app:defaultValue="@bool/pref_default_grade_statistics_list"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_grade_statistics_list"
+            app:singleLineTitle="false"
             app:title="@string/pref_view_grade_statistics_list" />
         <ListPreference
             app:defaultValue="@string/pref_default_timetable_show_whole_class"
@@ -109,11 +110,13 @@
             app:defaultValue="@bool/pref_default_notification_upcoming_lessons_enable"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notifications_upcoming_lessons_enable"
+            app:singleLineTitle="false"
             app:title="@string/pref_notify_upcoming_lessons_switch" />
         <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_notification_debug"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notification_debug"
+            app:singleLineTitle="false"
             app:title="@string/pref_notify_debug_switch" />
     </PreferenceCategory>
     <PreferenceCategory
@@ -147,11 +150,13 @@
             app:defaultValue="@bool/pref_default_grade_average_force_calc"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_grade_average_force_calc"
+            app:singleLineTitle="false"
             app:title="@string/pref_view_grade_average_force_calc" />
         <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_fill_message_content"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_fill_message_content"
+            app:singleLineTitle="false"
             app:title="@string/pref_other_fill_message_content" />
     </PreferenceCategory>
 </PreferenceScreen>

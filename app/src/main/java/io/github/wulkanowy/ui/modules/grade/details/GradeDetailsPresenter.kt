@@ -43,7 +43,7 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     fun onGradeItemSelected(grade: Grade, position: Int) {
-        Timber.i("Select grade item ${grade.id}")
+        Timber.i("Select grade item ${grade.id}, position: $position")
         view?.apply {
             showGradeDialog(grade, preferencesRepository.gradeColorTheme)
             if (!grade.isRead) {
@@ -152,7 +152,12 @@ class GradeDetailsPresenter @Inject constructor(
                         gradeColorTheme = preferencesRepository.gradeColorTheme
                     )
                 }
-                analytics.logEvent("load_grade_details", "items" to grades.size, "force_refresh" to forceRefresh)
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "grade_details",
+                    "items" to grades.size,
+                    "force_refresh" to forceRefresh
+                )
             }) {
                 Timber.i("Loading grade details result: An exception occurred")
                 errorHandler.dispatch(it)
@@ -171,19 +176,22 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     private fun createGradeItems(items: List<GradeDetailsWithAverage>): List<GradeDetailsItem> {
-        return items.filter { it.grades.isNotEmpty() }.map { (subject, average, points, _, grades) ->
-            val subItems = grades.map {
-                GradeDetailsItem(it, ViewType.ITEM)
-            }
+        return items
+            .filter { it.grades.isNotEmpty() }
+            .sortedBy { it.subject }
+            .map { (subject, average, points, _, grades) ->
+                val subItems = grades
+                    .sortedByDescending { it.date }
+                    .map { GradeDetailsItem(it, ViewType.ITEM) }
 
-            listOf(GradeDetailsItem(GradeDetailsHeader(
-                subject = subject,
-                average = average,
-                pointsSum = points,
-                newGrades = grades.filter { grade -> !grade.isRead }.size,
-                grades = subItems
-            ), ViewType.HEADER)) + if (preferencesRepository.isGradeExpandable) emptyList() else subItems
-        }.flatten()
+                listOf(GradeDetailsItem(GradeDetailsHeader(
+                    subject = subject,
+                    average = average,
+                    pointsSum = points,
+                    newGrades = grades.filter { grade -> !grade.isRead }.size,
+                    grades = subItems
+                ), ViewType.HEADER)) + if (preferencesRepository.isGradeExpandable) emptyList() else subItems
+            }.flatten()
     }
 
     private fun updateGrade(grade: Grade) {

@@ -1,5 +1,6 @@
 package io.github.wulkanowy.utils
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -23,5 +24,9 @@ class FirebaseAnalyticsHelper @Inject constructor(private val context: Context) 
             }
             analytics.logEvent(name, this)
         }
+    }
+
+    fun setCurrentScreen(activity: Activity, name: String?) {
+        analytics.setCurrentScreen(activity, name, null)
     }
 }

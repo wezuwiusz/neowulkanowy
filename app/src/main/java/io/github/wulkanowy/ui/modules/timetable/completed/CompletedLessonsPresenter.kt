@@ -134,7 +134,12 @@ class CompletedLessonsPresenter @Inject constructor(
                         showErrorView(false)
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_completed_lessons", "items" to it.size, "force_refresh" to forceRefresh)
+                    analytics.logEvent(
+                        "load_data",
+                        "type" to "completed_lessons",
+                        "items" to it.size,
+                        "force_refresh" to forceRefresh
+                    )
                 }) {
                     Timber.i("Loading completed lessons result: An exception occurred")
                     completedLessonsErrorHandler.dispatch(it)

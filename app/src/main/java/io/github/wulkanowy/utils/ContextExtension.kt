@@ -10,7 +10,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import io.github.wulkanowy.R
+import io.github.wulkanowy.BuildConfig.APPLICATION_ID
 
 @ColorInt
 fun Context.getThemeAttrColor(@AttrRes colorAttr: Int): Int {
@@ -36,6 +36,12 @@ fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -
     Intent.parseUri(uri, 0).let {
         if (it.resolveActivity(packageManager) != null) startActivity(it)
         else onActivityNotFound(uri)
+    }
+}
+
+fun Context.openAppInMarket(onActivityNotFound: (uri: String) -> Unit) {
+    openInternetBrowser("market://details?id=${APPLICATION_ID}") {
+        openInternetBrowser("https://github.com/wulkanowy/wulkanowy/releases", onActivityNotFound)
     }
 }
 

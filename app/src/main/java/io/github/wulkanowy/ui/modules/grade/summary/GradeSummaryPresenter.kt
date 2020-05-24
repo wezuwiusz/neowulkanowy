@@ -49,7 +49,12 @@ class GradeSummaryPresenter @Inject constructor(
                     showErrorView(false)
                     updateData(it)
                 }
-                analytics.logEvent("load_grade_summary", "items" to it.size, "force_refresh" to forceRefresh)
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "grade_summary",
+                    "items" to it.size,
+                    "force_refresh" to forceRefresh
+                )
             }) {
                 Timber.i("Loading grade summary result: An exception occurred")
                 errorHandler.dispatch(it)
@@ -103,14 +108,8 @@ class GradeSummaryPresenter @Inject constructor(
     }
 
     private fun createGradeSummaryItems(items: List<GradeDetailsWithAverage>): List<GradeSummary> {
-        return items.map {
-            it.summary.copy(average = it.average)
-        }
-    }
-
-    private fun checkEmpty(gradeSummary: GradeSummary, averages: List<Triple<String, Double, String>>): Boolean {
-        return gradeSummary.run {
-            finalGrade.isBlank() && predictedGrade.isBlank() && averages.singleOrNull { it.first == subject } == null
-        }
+        return items
+            .sortedBy { it.subject }
+            .map { it.summary.copy(average = it.average) }
     }
 }

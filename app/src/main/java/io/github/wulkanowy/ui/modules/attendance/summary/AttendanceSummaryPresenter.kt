@@ -99,7 +99,13 @@ class AttendanceSummaryPresenter @Inject constructor(
                         showContent(it.isNotEmpty())
                         updateDataSet(it)
                     }
-                    analytics.logEvent("load_attendance_summary", "items" to it.size, "force_refresh" to forceRefresh, "item_id" to subjectId)
+                    analytics.logEvent(
+                        "load_data",
+                        "type" to "attendance_summary",
+                        "items" to it.size,
+                        "force_refresh" to forceRefresh,
+                        "item_id" to subjectId
+                    )
                 }) {
                     Timber.i("Loading attendance summary result: An exception occurred")
                     errorHandler.dispatch(it)

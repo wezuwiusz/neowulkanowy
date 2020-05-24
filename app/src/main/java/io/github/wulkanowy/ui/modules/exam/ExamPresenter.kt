@@ -8,7 +8,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.friday
+import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.monday
@@ -110,7 +110,7 @@ class ExamPresenter @Inject constructor(
             add(studentRepository.getCurrentStudent()
                 .flatMap { student ->
                     semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                        examRepository.getExams(student, semester, currentDate.monday, currentDate.friday, forceRefresh)
+                        examRepository.getExams(student, semester, currentDate.monday, currentDate.sunday, forceRefresh)
                     }
                 }
                 .map { createExamItems(it) }
@@ -131,7 +131,12 @@ class ExamPresenter @Inject constructor(
                         showErrorView(false)
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_exam", "items" to it.size, "force_refresh" to forceRefresh)
+                    analytics.logEvent(
+                        "load_data",
+                        "type" to "exam",
+                        "items" to it.size,
+                        "force_refresh" to forceRefresh
+                    )
                 }) {
                     Timber.i("Loading exam result: An exception occurred")
                     errorHandler.dispatch(it)
@@ -176,7 +181,7 @@ class ExamPresenter @Inject constructor(
             showPreButton(!currentDate.minusDays(7).isHolidays)
             showNextButton(!currentDate.plusDays(7).isHolidays)
             updateNavigationWeek("${currentDate.monday.toFormattedString("dd.MM")} - " +
-                currentDate.friday.toFormattedString("dd.MM"))
+                currentDate.sunday.toFormattedString("dd.MM"))
         }
     }
 }

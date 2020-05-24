@@ -17,9 +17,10 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 59
-        versionName "0.18.0"
+        versionCode 60
+        versionName "0.18.1"
         multiDexEnabled true
+        resValue "string", "app_name", "Wulkanowy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         manifestPlaceholders = [
@@ -56,6 +57,7 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
+            resValue "string", "app_name", "Wulkanowy DEV " + defaultConfig.versionCode
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
             testCoverageEnabled = project.hasProperty('coverage')
@@ -122,7 +124,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:0.18.0"
+    implementation "io.github.wulkanowy:sdk:0.18.1"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.core:core-ktx:1.2.0"
@@ -179,10 +181,10 @@ dependencies {
     implementation "io.coil-kt:coil:0.11.0"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
 
-    playImplementation 'com.google.firebase:firebase-analytics:17.4.1'
-    playImplementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.0.6'
-    playImplementation "com.google.firebase:firebase-inappmessaging-ktx:19.0.6"
-    playImplementation 'com.google.firebase:firebase-messaging:20.1.7'
+    playImplementation 'com.google.firebase:firebase-analytics:17.4.2'
+    playImplementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.0.7'
+    playImplementation "com.google.firebase:firebase-inappmessaging-ktx:19.0.7"
+    playImplementation 'com.google.firebase:firebase-messaging:20.2.0'
     playImplementation 'com.google.firebase:firebase-crashlytics:17.0.0'
     playImplementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 

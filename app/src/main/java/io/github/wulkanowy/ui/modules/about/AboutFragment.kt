@@ -14,6 +14,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.getCompatDrawable
+import io.github.wulkanowy.utils.openAppInMarket
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
@@ -98,8 +99,12 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
         }
     }
 
+    override fun openAppInMarket() {
+        context?.openAppInMarket(::showMessage)
+    }
+
     override fun openLogViewer() {
-        if (appInfo.isDebug) (activity as? MainActivity)?.pushView(LogViewerFragment.newInstance())
+        (activity as? MainActivity)?.pushView(LogViewerFragment.newInstance())
     }
 
     override fun openDiscordInvite() {
@@ -115,7 +120,7 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
             chooserTitle = getString(R.string.about_feedback),
             email = "wulkanowyinc@gmail.com",
             subject = "Zgłoszenie błędu",
-            body = requireContext().getString(R.string.about_feedback_template,
+            body = getString(R.string.about_feedback_template,
                 "${appInfo.systemManufacturer} ${appInfo.systemModel}", appInfo.systemVersion.toString(), appInfo.versionName
             ),
             onActivityNotFound = {

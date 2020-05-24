@@ -139,8 +139,8 @@
             android:background="?selectableItemBackgroundBorderless"
             android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="@string/app_name"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="@tools:sample/date/ddmmyy" />
 
         <ImageButton
             android:id="@+id/timetableNextButton"
