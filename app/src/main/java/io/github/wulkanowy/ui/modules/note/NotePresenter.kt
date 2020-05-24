@@ -69,7 +69,12 @@ class NotePresenter @Inject constructor(
                     showErrorView(false)
                     showContent(it.isNotEmpty())
                 }
-                analytics.logEvent("load_note", "items" to it.size, "force_refresh" to forceRefresh)
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "note",
+                    "items" to it.size,
+                    "force_refresh" to forceRefresh
+                )
             }, {
                 Timber.i("Loading note result: An exception occurred")
                 errorHandler.dispatch(it)

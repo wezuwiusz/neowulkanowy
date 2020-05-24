@@ -215,7 +215,12 @@ class AttendancePresenter @Inject constructor(
                         showContent(it.isNotEmpty())
                         showExcuseButton(it.any { item -> item.excusable })
                     }
-                    analytics.logEvent("load_attendance", "items" to it.size, "force_refresh" to forceRefresh)
+                    analytics.logEvent(
+                        "load_data",
+                        "type" to "attendance",
+                        "items" to it.size,
+                        "force_refresh" to forceRefresh
+                    )
                 }) {
                     Timber.i("Loading attendance result: An exception occurred")
                     errorHandler.dispatch(it)

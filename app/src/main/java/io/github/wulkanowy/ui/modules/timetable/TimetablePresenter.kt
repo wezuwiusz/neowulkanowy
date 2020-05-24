@@ -154,7 +154,12 @@ class TimetablePresenter @Inject constructor(
                         showErrorView(false)
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_timetable", "items" to it.size, "force_refresh" to forceRefresh)
+                    analytics.logEvent(
+                        "load_data",
+                        "type" to "timetable",
+                        "items" to it.size,
+                        "force_refresh" to forceRefresh
+                    )
                 }) {
                     Timber.i("Loading timetable result: An exception occurred")
                     errorHandler.dispatch(it)

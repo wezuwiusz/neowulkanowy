@@ -174,7 +174,12 @@ class GradeStatisticsPresenter @Inject constructor(
                     updateData(it, preferencesRepository.gradeColorTheme, preferencesRepository.showAllSubjectsOnStatisticsList)
                     showSubjects(!preferencesRepository.showAllSubjectsOnStatisticsList)
                 }
-                analytics.logEvent("load_grade_statistics", "items" to it.size, "force_refresh" to forceRefresh)
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "grade_statistics",
+                    "items" to it.size,
+                    "force_refresh" to forceRefresh
+                )
             }) {
                 Timber.i("Loading grade stats result: An exception occurred")
                 errorHandler.dispatch(it)

@@ -60,7 +60,11 @@ class MessagePreviewPresenter @Inject constructor(
                         setMessageWithAttachment(message)
                         initOptions()
                     }
-                    analytics.logEvent("load_message_preview", "length" to message.message.content.length)
+                    analytics.logEvent(
+                        "load_item",
+                        "type" to "message_preview",
+                        "length" to message.message.content.length
+                    )
                 }) {
                     Timber.i("Loading message ${message.messageId} preview result: An exception occurred ")
                     retryCallback = { onMessageLoadRetry(message) }

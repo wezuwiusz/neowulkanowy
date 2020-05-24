@@ -131,7 +131,12 @@ class ExamPresenter @Inject constructor(
                         showErrorView(false)
                         showContent(it.isNotEmpty())
                     }
-                    analytics.logEvent("load_exam", "items" to it.size, "force_refresh" to forceRefresh)
+                    analytics.logEvent(
+                        "load_data",
+                        "type" to "exam",
+                        "items" to it.size,
+                        "force_refresh" to forceRefresh
+                    )
                 }) {
                     Timber.i("Loading exam result: An exception occurred")
                     errorHandler.dispatch(it)

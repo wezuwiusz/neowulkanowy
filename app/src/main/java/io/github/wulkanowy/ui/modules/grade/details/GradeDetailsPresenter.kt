@@ -152,7 +152,12 @@ class GradeDetailsPresenter @Inject constructor(
                         gradeColorTheme = preferencesRepository.gradeColorTheme
                     )
                 }
-                analytics.logEvent("load_grade_details", "items" to grades.size, "force_refresh" to forceRefresh)
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "grade_details",
+                    "items" to grades.size,
+                    "force_refresh" to forceRefresh
+                )
             }) {
                 Timber.i("Loading grade details result: An exception occurred")
                 errorHandler.dispatch(it)

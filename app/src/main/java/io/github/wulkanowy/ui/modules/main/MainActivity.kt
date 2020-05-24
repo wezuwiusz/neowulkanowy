@@ -31,6 +31,7 @@ import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
+import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.safelyPopFragments
@@ -45,6 +46,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     @Inject
     lateinit var navController: FragNavController
+
+    @Inject
+    lateinit var analytics: FirebaseAnalyticsHelper
 
     @Inject
     lateinit var overlayProvider: Lazy<ElevationOverlayProvider>
@@ -134,6 +138,10 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
                 MoreFragment.newInstance()
             )
         }
+    }
+
+    override fun setCurrentScreen(name: String?) {
+        analytics.setCurrentScreen(this, name)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

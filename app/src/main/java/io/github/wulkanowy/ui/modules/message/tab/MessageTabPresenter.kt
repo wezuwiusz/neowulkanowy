@@ -97,7 +97,12 @@ class MessageTabPresenter @Inject constructor(
                     Timber.i("Loading $folder message result: Success")
                     messages = it
                     onSearchQueryTextChange(lastSearchQuery)
-                    analytics.logEvent("load_messages", "items" to it.size, "folder" to folder.name)
+                    analytics.logEvent(
+                        "load_data",
+                        "type" to "messages",
+                        "items" to it.size,
+                        "folder" to folder.name
+                    )
                 }) {
                     Timber.i("Loading $folder message result: An exception occurred")
                     errorHandler.dispatch(it)

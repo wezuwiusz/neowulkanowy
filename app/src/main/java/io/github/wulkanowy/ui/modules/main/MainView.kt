@@ -24,6 +24,8 @@ interface MainView : BaseView {
 
     fun showAccountPicker()
 
+    fun setCurrentScreen(name: String?)
+
     fun showActionBarElevation(show: Boolean)
 
     fun notifyMenuViewReselected()

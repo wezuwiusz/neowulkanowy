@@ -88,7 +88,11 @@ class SchoolPresenter @Inject constructor(
                     showEmpty(false)
                     showErrorView(false)
                 }
-                analytics.logEvent("load_school", "force_refresh" to forceRefresh)
+                analytics.logEvent(
+                    "load_item",
+                    "type" to "school",
+                    "force_refresh" to forceRefresh
+                )
             }, {
                 Timber.i("Loading school result: An exception occurred")
                 errorHandler.dispatch(it)

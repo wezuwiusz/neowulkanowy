@@ -54,7 +54,12 @@ class LuckyNumberPresenter @Inject constructor(
                         showEmpty(false)
                         showErrorView(false)
                     }
-                    analytics.logEvent("load_lucky_number", "lucky_number" to it.luckyNumber, "force_refresh" to forceRefresh)
+                    analytics.logEvent(
+                        "load_item",
+                        "type" to "lucky_number",
+                        "number" to it.luckyNumber,
+                        "force_refresh" to forceRefresh
+                    )
                 }, {
                     Timber.i("Loading lucky number result: An exception occurred")
                     errorHandler.dispatch(it)
