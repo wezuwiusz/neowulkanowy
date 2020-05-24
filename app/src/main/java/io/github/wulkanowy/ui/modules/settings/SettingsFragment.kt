@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.thelittlefireman.appkillermanager.AppKillerManager
+import com.thelittlefireman.appkillermanager.exceptions.NoActionFoundException
 import com.yariksoffice.lingver.Lingver
 import dagger.android.support.AndroidSupportInjection
 import io.github.wulkanowy.R
@@ -14,6 +15,7 @@ import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
+import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(),
@@ -133,9 +135,13 @@ class SettingsFragment : PreferenceFragmentCompat(),
             .setMessage(R.string.pref_notify_fix_sync_issues_message)
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .setPositiveButton(R.string.pref_notify_fix_sync_issues_settings_button) { _, _ ->
-                AppKillerManager.doActionPowerSaving(requireContext())
-                AppKillerManager.doActionAutoStart(requireContext())
-                AppKillerManager.doActionNotification(requireContext())
+                try {
+                    AppKillerManager.doActionPowerSaving(requireContext())
+                    AppKillerManager.doActionAutoStart(requireContext())
+                    AppKillerManager.doActionNotification(requireContext())
+                } catch (e: NoActionFoundException) {
+                    requireContext().openInternetBrowser("https://dontkillmyapp.com/${AppKillerManager.getDevice()?.manufacturer}", ::showMessage)
+                }
             }
             .show()
     }
