@@ -38,12 +38,12 @@ class TimeExtensionTest {
     }
 
     @Test
-    fun fridayTest() {
-        assertEquals(of(2018, 10, 5), of(2018, 10, 2).friday)
-        assertEquals(of(2018, 10, 5), of(2018, 10, 5).friday)
-        assertEquals(of(2018, 10, 5), of(2018, 10, 6).friday)
-        assertEquals(of(2018, 10, 5), of(2018, 10, 7).friday)
-        assertEquals(of(2018, 10, 12), of(2018, 10, 8).friday)
+    fun sundayTestTest() {
+        assertEquals(of(2018, 10, 7), of(2018, 10, 2).sunday)
+        assertEquals(of(2018, 10, 7), of(2018, 10, 5).sunday)
+        assertEquals(of(2018, 10, 7), of(2018, 10, 6).sunday)
+        assertEquals(of(2018, 10, 7), of(2018, 10, 7).sunday)
+        assertEquals(of(2018, 10, 14), of(2018, 10, 8).sunday)
     }
 
     @Test

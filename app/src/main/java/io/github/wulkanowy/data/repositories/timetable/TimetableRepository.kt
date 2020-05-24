@@ -6,7 +6,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
-import io.github.wulkanowy.utils.friday
+import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
@@ -24,13 +24,13 @@ class TimetableRepository @Inject constructor(
 ) {
 
     fun getTimetable(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): Single<List<Timetable>> {
-        return Single.fromCallable { start.monday to end.friday }.flatMap { (monday, friday) ->
-            local.getTimetable(semester, monday, friday).filter { !forceRefresh }
+        return Single.fromCallable { start.monday to end.sunday }.flatMap { (monday, sunday) ->
+            local.getTimetable(semester, monday, sunday).filter { !forceRefresh }
                 .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-                    if (it) remote.getTimetable(student, semester, monday, friday)
+                    if (it) remote.getTimetable(student, semester, monday, sunday)
                     else Single.error(UnknownHostException())
                 }.flatMap { new ->
-                    local.getTimetable(semester, monday, friday)
+                    local.getTimetable(semester, monday, sunday)
                         .toSingle(emptyList())
                         .doOnSuccess { old ->
                             local.deleteTimetable(old.uniqueSubtract(new).also { schedulerHelper.cancelScheduled(it) })
@@ -46,7 +46,7 @@ class TimetableRepository @Inject constructor(
                             })
                         }
                 }.flatMap {
-                    local.getTimetable(semester, monday, friday).toSingle(emptyList())
+                    local.getTimetable(semester, monday, sunday).toSingle(emptyList())
                 }).map { list -> list.filter { it.date in start..end }.also { schedulerHelper.scheduleNotifications(it, student) } }
         }
     }

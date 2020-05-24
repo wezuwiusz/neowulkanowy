@@ -5,7 +5,7 @@ import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.Inter
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.utils.friday
+import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.uniqueSubtract
 import io.reactivex.Single
@@ -22,19 +22,19 @@ class AttendanceRepository @Inject constructor(
 ) {
 
     fun getAttendance(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean): Single<List<Attendance>> {
-        return local.getAttendance(semester, start.monday, end.friday).filter { !forceRefresh }
+        return local.getAttendance(semester, start.monday, end.sunday).filter { !forceRefresh }
             .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-                if (it) remote.getAttendance(student, semester, start.monday, end.friday)
+                if (it) remote.getAttendance(student, semester, start.monday, end.sunday)
                 else Single.error(UnknownHostException())
             }.flatMap { newAttendance ->
-                local.getAttendance(semester, start.monday, end.friday)
+                local.getAttendance(semester, start.monday, end.sunday)
                     .toSingle(emptyList())
                     .doOnSuccess { oldAttendance ->
                         local.deleteAttendance(oldAttendance.uniqueSubtract(newAttendance))
                         local.saveAttendance(newAttendance.uniqueSubtract(oldAttendance))
                     }
             }.flatMap {
-                local.getAttendance(semester, start.monday, end.friday)
+                local.getAttendance(semester, start.monday, end.sunday)
                     .toSingle(emptyList())
             }).map { list -> list.filter { it.date in start..end } }
     }

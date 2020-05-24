@@ -17,7 +17,7 @@ class SchooldaysRangeLimiter : DateRangeLimiter {
     override fun isOutOfRange(year: Int, month: Int, day: Int): Boolean {
         val date = LocalDate.of(year, month + 1, day)
         val dayOfWeek = date.dayOfWeek
-        return dayOfWeek == DayOfWeek.SUNDAY || dayOfWeek == DayOfWeek.SATURDAY || date.isHolidays
+        return dayOfWeek == DayOfWeek.SUNDAY || date.isHolidays
     }
 
     override fun getStartDate(): Calendar {

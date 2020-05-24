@@ -8,7 +8,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.friday
+import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.monday
@@ -175,7 +175,7 @@ class HomeworkPresenter @Inject constructor(
             showPreButton(!currentDate.minusDays(7).isHolidays)
             showNextButton(!currentDate.plusDays(7).isHolidays)
             updateNavigationWeek("${currentDate.monday.toFormattedString("dd.MM")} - " +
-                currentDate.friday.toFormattedString("dd.MM"))
+                currentDate.sunday.toFormattedString("dd.MM"))
         }
     }
 }
