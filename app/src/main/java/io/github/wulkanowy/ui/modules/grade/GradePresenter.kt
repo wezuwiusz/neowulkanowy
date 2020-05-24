@@ -133,6 +133,7 @@ class GradePresenter @Inject constructor(
     }
 
     private fun loadChild(index: Int, forceRefresh: Boolean = false) {
+        Timber.d("Load grade tab child. Selected semester: $selectedIndex, semesters: ${semesters.joinToString { it.semesterName.toString() }}")
         semesters.first { it.semesterName == selectedIndex }.semesterId.also {
             if (forceRefresh || loadedSemesterId[index] != it) {
                 Timber.i("Load grade child view index: $index")

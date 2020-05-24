@@ -43,7 +43,7 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     fun onGradeItemSelected(grade: Grade, position: Int) {
-        Timber.i("Select grade item ${grade.id}")
+        Timber.i("Select grade item ${grade.id}, position: $position")
         view?.apply {
             showGradeDialog(grade, preferencesRepository.gradeColorTheme)
             if (!grade.isRead) {

@@ -14,6 +14,7 @@ import io.github.wulkanowy.databinding.ItemGradeDetailsBinding
 import io.github.wulkanowy.ui.base.BaseExpandableAdapter
 import io.github.wulkanowy.utils.getBackgroundColor
 import io.github.wulkanowy.utils.toFormattedString
+import timber.log.Timber
 import javax.inject.Inject
 
 class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<RecyclerView.ViewHolder>() {
@@ -38,12 +39,26 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
     }
 
     fun updateDetailsItem(position: Int, grade: Grade) {
+        if (items.getOrNull(position)?.viewType != ViewType.ITEM) {
+            Timber.e("Trying to update item $position on list ${items.size} size, expanded position: $expandedPosition")
+            return
+        }
         items[position] = GradeDetailsItem(grade, ViewType.ITEM)
         notifyItemChanged(position)
     }
 
     fun getHeaderItem(subject: String): GradeDetailsItem {
-        return headers.single { (it.value as GradeDetailsHeader).subject == subject }
+        if (headers.any { it.value !is GradeDetailsHeader }) {
+            Timber.e("Headers contains no-header items! $headers")
+        }
+
+        val candidates = headers.filter { (it.value as GradeDetailsHeader).subject == subject }
+
+        if (candidates.size > 1) {
+            Timber.e("Header with subject $subject found ${candidates.size} times! Items: $candidates, expanded: $expandedPosition")
+        }
+
+        return candidates.first()
     }
 
     fun updateHeaderItem(item: GradeDetailsItem) {
@@ -92,7 +107,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             is ItemViewHolder -> bindItemViewHolder(
                 binding = holder.binding,
                 grade = items[position].value as Grade,
-                position = position
+                position = holder.adapterPosition
             )
         }
     }
