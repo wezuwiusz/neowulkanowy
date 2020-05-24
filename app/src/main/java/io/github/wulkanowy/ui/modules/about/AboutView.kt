@@ -25,6 +25,8 @@ interface AboutView : BaseView {
 
     fun updateData(data: List<Triple<String, String, Drawable?>>)
 
+    fun openAppInMarket()
+
     fun openLogViewer()
 
     fun openDiscordInvite()

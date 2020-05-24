@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.about
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import timber.log.Timber
@@ -12,6 +13,7 @@ class AboutPresenter @Inject constructor(
     schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
+    private val appInfo: AppInfo,
     private val analytics: FirebaseAnalyticsHelper
 ) : BasePresenter<AboutView>(errorHandler, studentRepository, schedulers) {
 
@@ -27,7 +29,8 @@ class AboutPresenter @Inject constructor(
             when (name) {
                 versionRes?.first -> {
                     Timber.i("Opening log viewer")
-                    openLogViewer()
+                    if (appInfo.isDebug) openLogViewer()
+                    else openAppInMarket()
                     analytics.logEvent("about_open", "name" to "log_viewer")
                 }
                 feedbackRes?.first -> {

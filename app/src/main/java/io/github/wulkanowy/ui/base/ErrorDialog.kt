@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogErrorBinding
@@ -17,6 +18,7 @@ import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
 import io.github.wulkanowy.sdk.exception.ServiceUnavailableException
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.getString
+import io.github.wulkanowy.utils.openAppInMarket
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import java.io.InterruptedIOException
@@ -74,7 +76,9 @@ class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
                 Toast.makeText(context, R.string.all_copied, LENGTH_LONG).show()
             }
             errorDialogCancel.setOnClickListener { dismiss() }
-            errorDialogReport.setOnClickListener { openEmailClient(stringWriter.toString()) }
+            errorDialogReport.setOnClickListener {
+                openConfirmDialog { openEmailClient(stringWriter.toString()) }
+            }
             errorDialogMessage.text = resources.getString(error)
             errorDialogReport.isEnabled = when (error) {
                 is UnknownHostException,
@@ -86,6 +90,17 @@ class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
                 else -> true
             }
         }
+    }
+
+    private fun openConfirmDialog(callback: () -> Unit) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.dialog_error_check_update)
+            .setMessage(R.string.dialog_error_check_update_message)
+            .setNeutralButton(R.string.about_feedback) { _, _ -> callback() }
+            .setPositiveButton(R.string.dialog_error_check_update) { _, _ ->
+                requireContext().openAppInMarket(::showMessage)
+            }
+            .show()
     }
 
     private fun openEmailClient(content: String) {

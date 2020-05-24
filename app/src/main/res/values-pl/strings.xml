@@ -289,6 +289,9 @@
     <!--Log viewer-->
     <string name="logviewer_share">Udostępnij logi</string>
     <string name="logviewer_refresh">Odśwież</string>
+    <!--Error dialog-->
+    <string name="dialog_error_check_update">Sprawdź aktualizację</string>
+    <string name="dialog_error_check_update_message">Przed zgłoszeniem błędu sprawdź wcześniej, czy dostępna jest już aktualizacja z poprawką błędu</string>
     <!--Generic-->
     <string name="all_content">Treść</string>
     <string name="all_retry">Ponów</string>

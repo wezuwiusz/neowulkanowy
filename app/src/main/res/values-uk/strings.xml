@@ -289,6 +289,9 @@
     <!--Log viewer-->
     <string name="logviewer_share">Поділитися логами</string>
     <string name="logviewer_refresh">Оновити</string>
+    <!--Error dialog-->
+    <string name="dialog_error_check_update">Check for updates</string>
+    <string name="dialog_error_check_update_message">Before reporting a bug, check first if an update with the bug fix is available</string>
     <!--Generic-->
     <string name="all_content">Зміст</string>
     <string name="all_retry">Повторити</string>
