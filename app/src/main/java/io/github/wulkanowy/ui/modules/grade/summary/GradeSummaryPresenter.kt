@@ -103,14 +103,8 @@ class GradeSummaryPresenter @Inject constructor(
     }
 
     private fun createGradeSummaryItems(items: List<GradeDetailsWithAverage>): List<GradeSummary> {
-        return items.map {
-            it.summary.copy(average = it.average)
-        }
-    }
-
-    private fun checkEmpty(gradeSummary: GradeSummary, averages: List<Triple<String, Double, String>>): Boolean {
-        return gradeSummary.run {
-            finalGrade.isBlank() && predictedGrade.isBlank() && averages.singleOrNull { it.first == subject } == null
-        }
+        return items
+            .sortedBy { it.subject }
+            .map { it.summary.copy(average = it.average) }
     }
 }
