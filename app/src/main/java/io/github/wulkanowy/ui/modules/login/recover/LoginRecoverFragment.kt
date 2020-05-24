@@ -22,6 +22,10 @@ import javax.inject.Inject
 class LoginRecoverFragment :
     BaseFragment<FragmentLoginRecoverBinding>(R.layout.fragment_login_recover), LoginRecoverView {
 
+    private var _binding: FragmentLoginRecoverBinding? = null
+
+    private val bindingLocal: FragmentLoginRecoverBinding get() = _binding!!
+
     @Inject
     lateinit var presenter: LoginRecoverPresenter
 
@@ -36,13 +40,13 @@ class LoginRecoverFragment :
     private lateinit var hostSymbols: Array<String>
 
     override val recoverHostValue: String
-        get() = hostValues.getOrNull(hostKeys.indexOf(binding.loginRecoverHost.text.toString())).orEmpty()
+        get() = hostValues.getOrNull(hostKeys.indexOf(bindingLocal.loginRecoverHost.text.toString())).orEmpty()
 
     override val formHostSymbol: String
-        get() = hostSymbols.getOrNull(hostKeys.indexOf(binding.loginRecoverHost.text.toString())).orEmpty()
+        get() = hostSymbols.getOrNull(hostKeys.indexOf(bindingLocal.loginRecoverHost.text.toString())).orEmpty()
 
     override val recoverNameValue: String
-        get() = binding.loginRecoverName.text.toString().trim()
+        get() = bindingLocal.loginRecoverName.text.toString().trim()
 
     override val emailHintString: String
         get() = getString(R.string.login_email_hint)
@@ -55,7 +59,7 @@ class LoginRecoverFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentLoginRecoverBinding.bind(view)
+        _binding = FragmentLoginRecoverBinding.bind(view)
         presenter.onAttachView(this)
     }
 
@@ -64,7 +68,7 @@ class LoginRecoverFragment :
         hostValues = resources.getStringArray(R.array.hosts_values)
         hostSymbols = resources.getStringArray(R.array.hosts_symbols)
 
-        with(binding) {
+        with(bindingLocal) {
             loginRecoverWebView.setBackgroundColor(Color.TRANSPARENT)
             loginRecoverName.doOnTextChanged { _, _, _, _ -> presenter.onNameTextChanged() }
             loginRecoverHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
@@ -74,69 +78,69 @@ class LoginRecoverFragment :
             loginRecoverLogin.setOnClickListener { (activity as LoginActivity).switchView(0) }
         }
 
-        with(binding.loginRecoverHost) {
+        with(bindingLocal.loginRecoverHost) {
             setText(hostKeys.getOrNull(0).orEmpty())
             setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
-            setOnClickListener { if (binding.loginRecoverFormContainer.visibility == GONE) dismissDropDown() }
+            setOnClickListener { if (bindingLocal.loginRecoverFormContainer.visibility == GONE) dismissDropDown() }
         }
     }
 
     override fun setDefaultCredentials(username: String) {
-        binding.loginRecoverName.setText(username)
+        bindingLocal.loginRecoverName.setText(username)
     }
 
     override fun setErrorNameRequired() {
-        with(binding.loginRecoverNameLayout) {
+        with(bindingLocal.loginRecoverNameLayout) {
             requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setUsernameHint(hint: String) {
-        binding.loginRecoverNameLayout.hint = hint
+        bindingLocal.loginRecoverNameLayout.hint = hint
     }
 
     override fun setUsernameError(message: String) {
-        with(binding.loginRecoverNameLayout) {
+        with(bindingLocal.loginRecoverNameLayout) {
             requestFocus()
             error = message
         }
     }
 
     override fun clearUsernameError() {
-        binding.loginRecoverNameLayout.error = null
+        bindingLocal.loginRecoverNameLayout.error = null
     }
 
     override fun showProgress(show: Boolean) {
-        binding.loginRecoverProgress.visibility = if (show) VISIBLE else GONE
+        bindingLocal.loginRecoverProgress.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showRecoverForm(show: Boolean) {
-        binding.loginRecoverFormContainer.visibility = if (show) VISIBLE else GONE
+        bindingLocal.loginRecoverFormContainer.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showCaptcha(show: Boolean) {
-        binding.loginRecoverCaptchaContainer.visibility = if (show) VISIBLE else GONE
+        bindingLocal.loginRecoverCaptchaContainer.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showErrorView(show: Boolean) {
-        binding.loginRecoverError.visibility = if (show) VISIBLE else GONE
+        bindingLocal.loginRecoverError.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setErrorDetails(message: String) {
-        binding.loginRecoverErrorMessage.text = message
+        bindingLocal.loginRecoverErrorMessage.text = message
     }
 
     override fun showSuccessView(show: Boolean) {
-        binding.loginRecoverSuccess.visibility = if (show) VISIBLE else GONE
+        bindingLocal.loginRecoverSuccess.visibility = if (show) VISIBLE else GONE
     }
 
     override fun setSuccessTitle(title: String) {
-        binding.loginRecoverSuccessTitle.text = title
+        bindingLocal.loginRecoverSuccessTitle.text = title
     }
 
     override fun setSuccessMessage(message: String) {
-        binding.loginRecoverSuccessMessage.text = message
+        bindingLocal.loginRecoverSuccessMessage.text = message
     }
 
     override fun showSoftKeyboard() {
@@ -157,7 +161,7 @@ class LoginRecoverFragment :
             callback:e =>Android.captchaCallback(e)})</script>
         """.trimIndent()
 
-        with(binding.loginRecoverWebView) {
+        with(bindingLocal.loginRecoverWebView) {
             settings.javaScriptEnabled = true
             webViewClient = object : WebViewClient() {
                 private var recoverWebViewSuccess: Boolean = true
@@ -197,6 +201,8 @@ class LoginRecoverFragment :
     }
 
     override fun onDestroyView() {
+        bindingLocal.loginRecoverWebView.destroy()
+        _binding = null
         presenter.onDetachView()
 
         super.onDestroyView()
