@@ -3,7 +3,7 @@ package io.github.wulkanowy.services.alarm
 import android.app.AlarmManager
 import android.app.AlarmManager.RTC_WAKEUP
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_CANCEL_CURRENT
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.AlarmManagerCompat
@@ -55,7 +55,7 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
 
     private fun cancelScheduledTo(range: ClosedRange<LocalDateTime>, requestCode: Int) {
         if (now() in range) cancelNotification()
-        alarmManager.cancel(PendingIntent.getBroadcast(context, requestCode, Intent(), FLAG_CANCEL_CURRENT))
+        alarmManager.cancel(PendingIntent.getBroadcast(context, requestCode, Intent(), FLAG_UPDATE_CURRENT))
     }
 
     fun cancelNotification() = NotificationManagerCompat.from(context).cancel(MainView.Section.TIMETABLE.id)
@@ -102,7 +102,7 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
             PendingIntent.getBroadcast(context, getRequestCode(time, studentId), intent.also {
                 it.putExtra(NOTIFICATION_ID, MainView.Section.TIMETABLE.id)
                 it.putExtra(LESSON_TYPE, notificationType)
-            }, FLAG_CANCEL_CURRENT)
+            }, FLAG_UPDATE_CURRENT)
         )
         Timber.d("TimetableNotification scheduled: type: $notificationType, subject: ${intent.getStringExtra(LESSON_TITLE)}, start: $time, student: $studentId")
     }
