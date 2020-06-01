@@ -31,8 +31,13 @@ class LoginStudentSelectAdapter @Inject constructor() :
             loginItemSchool.text = student.schoolName
             loginItemName.isEnabled = !alreadySaved
             loginItemSchool.isEnabled = !alreadySaved
-            loginItemCheck.isEnabled = !alreadySaved
             loginItemSignedIn.visibility = if (alreadySaved) View.VISIBLE else View.GONE
+
+            with(loginItemCheck) {
+                isEnabled = !alreadySaved
+                keyListener = null
+                isChecked = false
+            }
 
             root.setOnClickListener {
                 onClickListener(student, alreadySaved)
