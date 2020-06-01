@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.databinding.HeaderGradeDetailsBinding
@@ -23,7 +24,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
 
     private var items = mutableListOf<GradeDetailsItem>()
 
-    private var expandedPosition = RecyclerView.NO_POSITION
+    private var expandedPosition = NO_POSITION
 
     private var isExpandable = false
 
@@ -35,7 +36,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
         headers = data.filter { it.viewType == ViewType.HEADER }.toMutableList()
         items = if (isExpanded) headers else data.toMutableList()
         isExpandable = isExpanded
-        expandedPosition = RecyclerView.NO_POSITION
+        expandedPosition = NO_POSITION
     }
 
     fun updateDetailsItem(position: Int, grade: Grade) {
@@ -48,37 +49,40 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
     }
 
     fun getHeaderItem(subject: String): GradeDetailsItem {
-        if (headers.any { it.value !is GradeDetailsHeader }) {
-            Timber.e("Headers contains no-header items! $headers")
-        }
-
         val candidates = headers.filter { (it.value as GradeDetailsHeader).subject == subject }
 
         if (candidates.size > 1) {
-            Timber.e("Header with subject $subject found ${candidates.size} times! Items: $candidates, expanded: $expandedPosition")
+            Timber.e("Header with subject $subject found ${candidates.size} times! Expanded: $expandedPosition. Items: $candidates")
         }
 
         return candidates.first()
     }
 
     fun updateHeaderItem(item: GradeDetailsItem) {
-        headers[headers.indexOf(item)] = item
-        items[items.indexOf(item)] = item
-        notifyItemChanged(items.indexOf(item))
+        val headerPosition = headers.indexOf(item)
+        val itemPosition = items.indexOf(item)
+
+        if (headerPosition == NO_POSITION || itemPosition == NO_POSITION) {
+            Timber.e("Invalid update header positions! Header: $headerPosition, item: $itemPosition")
+        }
+
+        headers[headerPosition] = item
+        items[itemPosition] = item
+        notifyItemChanged(itemPosition)
     }
 
     fun collapseAll() {
         if (expandedPosition != -1) {
             refreshList(headers)
-            expandedPosition = RecyclerView.NO_POSITION
+            expandedPosition = NO_POSITION
         }
     }
 
     @Synchronized
-    private fun refreshList(newItems: List<GradeDetailsItem>) {
+    private fun refreshList(newItems: MutableList<GradeDetailsItem>) {
         val diffCallback = GradeDetailsDiffUtil(items, newItems)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        items = newItems.toMutableList()
+        items = newItems
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -99,23 +103,24 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> bindHeaderViewHolder(
-                binding = holder.binding,
+                holder = holder,
                 header = items[position].value as GradeDetailsHeader,
-                headerPosition = headers.indexOf(items[position]),
-                adapterPosition = position
+                position = position
             )
             is ItemViewHolder -> bindItemViewHolder(
-                binding = holder.binding,
-                grade = items[position].value as Grade,
-                position = holder.adapterPosition
+                holder = holder,
+                grade = items[position].value as Grade
             )
         }
     }
 
-    private fun bindHeaderViewHolder(binding: HeaderGradeDetailsBinding, header: GradeDetailsHeader, headerPosition: Int, adapterPosition: Int) {
-        with(binding) {
+    private fun bindHeaderViewHolder(holder: HeaderViewHolder, header: GradeDetailsHeader, position: Int) {
+        val headerPosition = headers.indexOf(items[position])
+        val adapterPosition = holder.adapterPosition
+
+        with(holder.binding) {
             gradeHeaderDivider.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
-            gradeHeaderSubject.apply {
+            with(gradeHeaderSubject) {
                 text = header.subject
                 maxLines = if (headerPosition == expandedPosition) 2 else 1
             }
@@ -130,7 +135,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             gradeHeaderContainer.setOnClickListener {
                 expandedPosition = if (expandedPosition == adapterPosition) -1 else adapterPosition
 
-                if (expandedPosition != RecyclerView.NO_POSITION) {
+                if (expandedPosition != NO_POSITION) {
                     refreshList(headers.toMutableList().apply {
                         addAll(headerPosition + 1, header.grades)
                     })
@@ -148,8 +153,8 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindItemViewHolder(binding: ItemGradeDetailsBinding, grade: Grade, position: Int) {
-        with(binding) {
+    private fun bindItemViewHolder(holder: ItemViewHolder, grade: Grade) {
+        with(holder.binding) {
             gradeItemValue.run {
                 text = grade.entry
                 setBackgroundResource(grade.getBackgroundColor(colorTheme))
@@ -163,7 +168,9 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             gradeItemWeight.text = "${root.context.getString(R.string.grade_weight)}: ${grade.weight}"
             gradeItemNote.visibility = if (!grade.isRead) View.VISIBLE else View.GONE
 
-            root.setOnClickListener { onClickListener(grade, position) }
+            root.setOnClickListener {
+                holder.adapterPosition.let { if (it != NO_POSITION) onClickListener(grade, it) }
+            }
         }
     }
 

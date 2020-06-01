@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 import io.github.wulkanowy.R
@@ -77,7 +78,9 @@ class MessageTabAdapter @Inject constructor() :
             }
             messageItemAttachmentIcon.visibility = if (item.hasAttachments) View.VISIBLE else View.GONE
 
-            root.setOnClickListener { onClickListener(item, holder.adapterPosition) }
+            root.setOnClickListener {
+                holder.adapterPosition.let { if (it != NO_POSITION) onClickListener(item, it) }
+            }
         }
     }
 
