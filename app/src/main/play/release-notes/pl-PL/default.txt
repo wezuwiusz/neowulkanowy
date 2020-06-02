@@ -1,8 +1,9 @@
-Wersja 0.18.1
-- naprawiliśmy sortowanie w ocenach
-- naprawilismy wiele problemów ze stabilnością
-- nazwy opcji w ustawieniach nie są już ucięte
-- w zadaniach domowych wyświetlają się teraz pozycje na weekend
-- wyłączyliśmy logowanie przez token (bo nie działa i nie wiadomo kiedy będzie działać)
+Wersja 0.18.2
+- naprawiliśmy zaznaczanie uczniów przy logowaniu
+- naprawiliśmy odświeżanie planu lekcji na samsungach
+- naprawiliśmy wysyłanie wiadomości
+- poprawiliśmy oznaczanie nowych wiadomości jako przeczytanych
+- w podsumowaniu ocen nie będą się już pokazywać „puste” przedmioty
+- w polu pisania wiadomości pierwsza litera w zdaniu będzie teraz domyślnie duża
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
