@@ -290,8 +290,8 @@
     <string name="logviewer_share">Поделиться логами</string>
     <string name="logviewer_refresh">Обновить</string>
     <!--Error dialog-->
-    <string name="dialog_error_check_update">Check for updates</string>
-    <string name="dialog_error_check_update_message">Before reporting a bug, check first if an update with the bug fix is available</string>
+    <string name="dialog_error_check_update">Проверить наличие обновлений</string>
+    <string name="dialog_error_check_update_message">Прежде чем сообщать об ошибке, проверьте наличие обновлений</string>
     <!--Generic-->
     <string name="all_content">Содержание</string>
     <string name="all_retry">Повторить</string>
