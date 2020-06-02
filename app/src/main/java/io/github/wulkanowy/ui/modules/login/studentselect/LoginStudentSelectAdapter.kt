@@ -12,7 +12,13 @@ import javax.inject.Inject
 class LoginStudentSelectAdapter @Inject constructor() :
     RecyclerView.Adapter<LoginStudentSelectAdapter.ItemViewHolder>() {
 
+    private val checkedList = mutableMapOf<Int, Boolean>()
+
     var items = emptyList<Pair<Student, Boolean>>()
+        set(value) {
+            field = value
+            checkedList.clear()
+        }
 
     var onClickListener: (Student, alreadySaved: Boolean) -> Unit = { _, _ -> }
 
@@ -36,7 +42,7 @@ class LoginStudentSelectAdapter @Inject constructor() :
             with(loginItemCheck) {
                 isEnabled = !alreadySaved
                 keyListener = null
-                isChecked = false
+                isChecked = checkedList[position] ?: false
             }
 
             root.setOnClickListener {
@@ -45,6 +51,7 @@ class LoginStudentSelectAdapter @Inject constructor() :
                 with(loginItemCheck) {
                     if (isEnabled) {
                         isChecked = !isChecked
+                        checkedList[position] = isChecked
                     }
                 }
             }

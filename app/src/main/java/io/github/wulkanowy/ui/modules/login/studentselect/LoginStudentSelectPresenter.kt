@@ -22,7 +22,7 @@ class LoginStudentSelectPresenter @Inject constructor(
 
     var students = emptyList<Student>()
 
-    private var selectedStudents = mutableListOf<Student>()
+    private val selectedStudents = mutableListOf<Student>()
 
     fun onAttachView(view: LoginStudentSelectView, students: Serializable?) {
         super.onAttachView(view)
@@ -69,6 +69,7 @@ class LoginStudentSelectPresenter @Inject constructor(
     }
 
     private fun loadData(students: List<Student>) {
+        resetSelectedState()
         this.students = students
         disposable.add(studentRepository.getSavedStudents()
             .map { savedStudents ->
@@ -86,6 +87,11 @@ class LoginStudentSelectPresenter @Inject constructor(
                 view?.updateData(students.map { student -> student to false })
             })
         )
+    }
+
+    private fun resetSelectedState() {
+        selectedStudents.clear()
+        view?.enableSignIn(false)
     }
 
     private fun registerStudents(students: List<Student>) {
