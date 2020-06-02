@@ -119,7 +119,7 @@ class GradeSummaryPresenter @Inject constructor(
             summary.finalGrade.isBlank()
                 && summary.predictedGrade.isBlank()
                 && average == .0
-                && points == "-"
+                && points.isBlank()
         }
     }
 }

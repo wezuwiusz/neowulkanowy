@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.grade
 
+import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.grade.GradeRepository
@@ -58,21 +60,42 @@ class GradeAverageProvider @Inject constructor(
             val isAnyAverage = summaries.any { it.average != .0 }
             val allGrades = details.groupBy { it.subject }
 
-            summaries.map { summary ->
+            summaries.emulateEmptySummaries(student, semester, allGrades.toList(), isAnyAverage).map { summary ->
                 val grades = allGrades[summary.subject].orEmpty()
                 GradeDetailsWithAverage(
                     subject = summary.subject,
                     average = if (!isAnyAverage || preferencesRepository.gradeAverageForceCalc) {
-                        grades.map {
-                            if (student.loginMode == Sdk.Mode.SCRAPPER.name) it.changeModifier(plusModifier, minusModifier)
-                            else it
-                        }.calcAverage()
+                        (if (student.loginMode == Sdk.Mode.SCRAPPER.name)
+                            grades.map { it.changeModifier(plusModifier, minusModifier) }
+                        else grades).calcAverage()
                     } else summary.average,
                     points = summary.pointsSum,
                     summary = summary,
                     grades = grades
                 )
             }
+        }
+    }
+
+    private fun List<GradeSummary>.emulateEmptySummaries(student: Student, semester: Semester, grades: List<Pair<String, List<Grade>>>, calcAverage: Boolean): List<GradeSummary> {
+        if (isNotEmpty() && size == grades.size) return this
+
+        return grades.mapIndexed { i, (subject, details) ->
+            singleOrNull { it.subject == subject }?.let { return@mapIndexed it }
+            GradeSummary(
+                studentId = student.studentId,
+                semesterId = semester.semesterId,
+                position = i,
+                subject = subject,
+                predictedGrade = "",
+                finalGrade = "",
+                proposedPoints = "",
+                finalPoints = "",
+                pointsSum = "",
+                average = if (calcAverage) (if (student.loginMode == Sdk.Mode.SCRAPPER.name) {
+                    details.map { it.changeModifier(plusModifier, minusModifier) }
+                } else details).calcAverage() else .0
+            )
         }
     }
 }
