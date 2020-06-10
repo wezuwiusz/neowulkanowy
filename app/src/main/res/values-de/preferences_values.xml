@@ -36,6 +36,7 @@
     </string-array>
     <string-array name="grade_average_mode_entries">
         <item>Durchschnittsnote für das 2. Semester</item>
+        <item>Average of grades from both semesters</item>
         <item>Durchschnitt der Bewertungen für das ganze Jahr</item>
     </string-array>
     <string-array name="timetable_show_whole_class_entries">

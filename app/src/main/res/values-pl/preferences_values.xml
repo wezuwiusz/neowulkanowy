@@ -35,8 +35,9 @@
         <item>Kolory ocen w dzienniku</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
-        <item>Średnia ocen z 2 semestru</item>
-        <item>Średnia ocen z całego roku</item>
+        <item>Średnia ocen z drugiego semestru</item>
+        <item>Średnia średnich z obu semestrów</item>
+        <item>Średnia wszystkich ocen z całego roku</item>
     </string-array>
     <string-array name="timetable_show_whole_class_entries">
         <item>Nie pokazuj</item>

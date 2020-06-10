@@ -1,9 +1,6 @@
-Wersja 0.18.2
-- naprawiliśmy zaznaczanie uczniów przy logowaniu
-- naprawiliśmy odświeżanie planu lekcji na samsungach
-- naprawiliśmy wysyłanie wiadomości
-- poprawiliśmy oznaczanie nowych wiadomości jako przeczytanych
-- w podsumowaniu ocen nie będą się już pokazywać „puste” przedmioty
-- w polu pisania wiadomości pierwsza litera w zdaniu będzie teraz domyślnie duża
+Wersja 0.18.3
+- poprawiliśmy liczenie średniej i dodaliśmy nowy sposób jej liczenia w ustawieniach
+- naprawiliśmy usuwanie wiadomości
+- naprawiliśmy wysyłanie wiadomości na Lubelskim Portalu Oświatowym
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

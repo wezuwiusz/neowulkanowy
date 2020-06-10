@@ -75,6 +75,6 @@ class MessageRemote @Inject constructor(private val sdk: Sdk) {
     }
 
     fun deleteMessage(student: Student, message: Message): Single<Boolean> {
-        return sdk.init(student).deleteMessages(listOf(Pair(message.realId, message.folderId)))
+        return sdk.init(student).deleteMessages(listOf(message.messageId to message.folderId))
     }
 }
