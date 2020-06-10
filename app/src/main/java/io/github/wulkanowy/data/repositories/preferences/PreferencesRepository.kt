@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import io.github.wulkanowy.R
+import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,8 +18,8 @@ class PreferencesRepository @Inject constructor(
     val isShowPresent: Boolean
         get() = getBoolean(R.string.pref_key_attendance_present, R.bool.pref_default_attendance_present)
 
-    val gradeAverageMode: String
-        get() = getString(R.string.pref_key_grade_average_mode, R.string.pref_default_grade_average_mode)
+    val gradeAverageMode: GradeAverageMode
+        get() = GradeAverageMode.getByValue(getString(R.string.pref_key_grade_average_mode, R.string.pref_default_grade_average_mode))
 
     val gradeAverageForceCalc: Boolean
         get() = getBoolean(R.string.pref_key_grade_average_force_calc, R.bool.pref_default_grade_average_force_calc)

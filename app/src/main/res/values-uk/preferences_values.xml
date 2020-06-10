@@ -36,6 +36,7 @@
     </string-array>
     <string-array name="grade_average_mode_entries">
         <item>Середня оцінка з 2 семестру</item>
+        <item>Average of grades from both semesters</item>
         <item>Середня оцінка за весь рік</item>
     </string-array>
     <string-array name="timetable_show_whole_class_entries">
