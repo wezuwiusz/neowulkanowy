@@ -282,6 +282,10 @@
     <string name="account_logout">Logout</string>
     <string name="account_confirm">Do you want to log out of an active student?</string>
     <string name="account_logout_student">Student logout</string>
+    <string name="account_type_student">Student account</string>
+    <string name="account_type_parent">Parent account</string>
+    <string name="account_login_mobile_api">Mobile API mode</string>
+    <string name="account_login_hybrid">Hybrid mode</string>
 
 
     <!--About-->

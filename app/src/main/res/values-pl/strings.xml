@@ -265,6 +265,10 @@
     <string name="account_logout">Wyloguj</string>
     <string name="account_confirm">Czy chcesz wylogować aktualnego ucznia?</string>
     <string name="account_logout_student">Wylogowanie ucznia</string>
+    <string name="account_type_student">Konto ucznia</string>
+    <string name="account_type_parent">Konto rodzica</string>
+    <string name="account_login_mobile_api">Tryb API mobilne</string>
+    <string name="account_login_hybrid">Tryb hybrydowy</string>
     <!--About-->
     <string name="about_version">Wersja aplikacji</string>
     <string name="about_contributor">Twórcy</string>
