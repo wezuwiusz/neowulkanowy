@@ -43,7 +43,7 @@ class CompletedLessonsPresenter @Inject constructor(
         completedLessonsErrorHandler.showErrorMessage = ::showErrorViewOnError
         completedLessonsErrorHandler.onFeatureDisabled = {
             this.view?.showFeatureDisabled()
-            this.view?.showEmpty(true);
+            this.view?.showEmpty(true)
             Timber.i("Completed lessons feature disabled by school")
         }
         loadData(ofEpochDay(date ?: baseDate.toEpochDay()))

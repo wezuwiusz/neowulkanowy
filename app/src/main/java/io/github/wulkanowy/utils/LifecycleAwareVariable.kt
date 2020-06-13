@@ -52,4 +52,4 @@ class LifecycleAwareVariableActivity<T : Any> : ReadWriteProperty<AppCompatActiv
 @Suppress("unused")
 fun <T : Any> Fragment.lifecycleAwareVariable() = LifecycleAwareVariable<T>()
 
-fun <T : Any> AppCompatActivity.lifecycleAwareVariable() = LifecycleAwareVariableActivity<T>()
+fun <T : Any> lifecycleAwareVariable() = LifecycleAwareVariableActivity<T>()

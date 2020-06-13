@@ -1,17 +1,15 @@
 package io.github.wulkanowy.data
 
-import android.app.AlarmManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.content.res.Resources
-import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.strategy.WalledGardenInternetObservingStrategy
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
+import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
+import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.strategy.WalledGardenInternetObservingStrategy
 import dagger.Module
 import dagger.Provides
 import io.github.wulkanowy.data.db.AppDatabase

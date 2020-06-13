@@ -120,23 +120,23 @@ class Migration13Test : AbstractMigrationTest() {
             assertEquals(2, first.diaryId)
         }
 
-        getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 2 AND class_id = 5").let {
-            assertTrue { it.single { it.second }.second }
-            assertEquals(1970, it[0].first.schoolYear)
-            assertEquals(of(1970, 1, 1), it[0].first.end)
-            assertEquals(of(1970, 1, 1), it[0].first.start)
-            assertFalse(it[0].second)
-            assertFalse(it[1].second)
-            assertFalse(it[2].second)
-            assertTrue(it[3].second)
+        getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 2 AND class_id = 5").let { semesters ->
+            assertTrue { semesters.single { it.second }.second }
+            assertEquals(1970, semesters[0].first.schoolYear)
+            assertEquals(of(1970, 1, 1), semesters[0].first.end)
+            assertEquals(of(1970, 1, 1), semesters[0].first.start)
+            assertFalse(semesters[0].second)
+            assertFalse(semesters[1].second)
+            assertFalse(semesters[2].second)
+            assertTrue(semesters[3].second)
         }
 
-        getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 2 AND class_id = 5").let {
-            assertTrue { it.single { it.second }.second }
-            assertFalse(it[0].second)
-            assertFalse(it[1].second)
-            assertFalse(it[2].second)
-            assertTrue(it[3].second)
+        getSemesters(db, "SELECT * FROM Semesters WHERE student_id = 2 AND class_id = 5").let { semesters ->
+            assertTrue { semesters.single { it.second }.second }
+            assertFalse(semesters[0].second)
+            assertFalse(semesters[1].second)
+            assertFalse(semesters[2].second)
+            assertTrue(semesters[3].second)
         }
     }
 

@@ -11,7 +11,7 @@ import javax.inject.Singleton
 class ReportingUnitLocal @Inject constructor(private val reportingUnitDb: ReportingUnitDao) {
 
     fun getReportingUnits(student: Student): Maybe<List<ReportingUnit>> {
-        return reportingUnitDb.load(student.studentId).filter { !it.isEmpty() }
+        return reportingUnitDb.load(student.studentId).filter { it.isNotEmpty() }
     }
 
     fun getReportingUnit(student: Student, unitId: Int): Maybe<ReportingUnit> {

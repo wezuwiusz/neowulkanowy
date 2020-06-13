@@ -2,7 +2,6 @@
 
 package io.github.wulkanowy.utils
 
-import android.content.Context
 import timber.log.Timber
 
 open class TimberTreeNoOp : Timber.Tree() {
