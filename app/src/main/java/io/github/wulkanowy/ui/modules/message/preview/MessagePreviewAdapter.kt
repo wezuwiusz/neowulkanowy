@@ -63,7 +63,7 @@ class MessagePreviewAdapter @Inject constructor() :
     @SuppressLint("SetTextI18n")
     private fun bindMessage(holder: MessageViewHolder, message: Message) {
         with(holder.binding) {
-            messagePreviewSubject.text = if (message.subject.isNotBlank()) message.subject else root.context.getString(R.string.message_no_subject)
+            messagePreviewSubject.text = message.subject.ifBlank { root.context.getString(R.string.message_no_subject) }
             messagePreviewDate.text = root.context.getString(R.string.message_date, message.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
             messagePreviewContent.text = message.content
             messagePreviewAuthor.text = if (message.folderId == MessageFolder.SENT.id) "${root.context.getString(R.string.message_to)} ${message.recipient}"

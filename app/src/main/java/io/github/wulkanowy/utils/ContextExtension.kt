@@ -71,4 +71,17 @@ fun Context.openDialer(phone: String) {
     startActivity(intent)
 }
 
+fun Context.shareText(text: String, subject: String?) {
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, text)
+        if (subject != null) {
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+        }
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
+    startActivity(shareIntent)
+}
+
 fun Context.dpToPx(dp: Float) = dp * resources.displayMetrics.densityDpi / DENSITY_DEFAULT

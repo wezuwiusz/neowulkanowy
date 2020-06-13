@@ -204,6 +204,8 @@
     <string name="message_move_to_bin">Przenieś do kosza</string>
     <string name="message_delete_forever">Usuń trwale</string>
     <string name="message_delete_success">Wiadomość usunięta pomyślnie</string>
+    <string name="message_share">Udostępnij</string>
+    <string name="message_print">Drukuj</string>
     <string name="message_subject">Temat</string>
     <string name="message_content">Treść</string>
     <string name="message_send_successful">Wiadomość wysłana pomyślnie</string>
