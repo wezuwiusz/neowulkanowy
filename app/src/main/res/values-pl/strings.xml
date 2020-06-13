@@ -107,11 +107,35 @@
         <item quantity="many">Nowe oceny</item>
         <item quantity="other">Nowe oceny</item>
     </plurals>
+    <plurals name="grade_new_items_predicted">
+        <item quantity="one">Nowa ocena przewidywana</item>
+        <item quantity="few">Nowe oceny przewidywane</item>
+        <item quantity="many">Nowe oceny przewidywane</item>
+        <item quantity="other">Nowe oceny przewidywane</item>
+    </plurals>
+    <plurals name="grade_new_items_final">
+        <item quantity="one">Nowa ocena końcowa</item>
+        <item quantity="few">Nowe oceny końcowe</item>
+        <item quantity="many">Nowe oceny końcowe</item>
+        <item quantity="other">Nowe oceny końcowe</item>
+    </plurals>
     <plurals name="grade_notify_new_items">
         <item quantity="one">Masz %1$d nową ocenę</item>
         <item quantity="few">Masz %1$d nowe oceny</item>
         <item quantity="many">Masz %1$d nowych ocen</item>
         <item quantity="other">Masz %1$d nowych ocen</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_predicted">
+        <item quantity="one">Masz %1$d nową przewidywaną ocenę</item>
+        <item quantity="few">Masz %1$d nowe przewidywane oceny</item>
+        <item quantity="many">Masz %1$d nowych przewidywanych ocen</item>
+        <item quantity="other">Masz %1$d nowych przewidywanych ocen</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_final">
+        <item quantity="one">Masz %1$d nową końcową ocenę</item>
+        <item quantity="few">Masz %1$d nowe końcowe oceny</item>
+        <item quantity="many">Masz %1$d nowych końcowych ocen</item>
+        <item quantity="other">Masz %1$d nowych końcowych ocen</item>
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lekcja</string>

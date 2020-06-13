@@ -27,6 +27,10 @@ class GradeLocal @Inject constructor(
         gradeDb.updateAll(grades)
     }
 
+    fun updateGradesSummary(gradesSummary: List<GradeSummary>) {
+        gradeSummaryDb.updateAll(gradesSummary)
+    }
+
     fun getGradesDetails(semester: Semester): Maybe<List<Grade>> {
         return gradeDb.loadAll(semester.semesterId, semester.studentId).filter { it.isNotEmpty() }
     }
