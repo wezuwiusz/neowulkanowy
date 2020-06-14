@@ -107,11 +107,35 @@
         <item quantity="many">Нові оцінки</item>
         <item quantity="other">Нові оцінки</item>
     </plurals>
+    <plurals name="grade_new_items_predicted">
+        <item quantity="one">New predicted grade</item>
+        <item quantity="few">New predicted grades</item>
+        <item quantity="many">New predicted grades</item>
+        <item quantity="other">New predicted grades</item>
+    </plurals>
+    <plurals name="grade_new_items_final">
+        <item quantity="one">New final grade</item>
+        <item quantity="few">New final grades</item>
+        <item quantity="many">New final grades</item>
+        <item quantity="other">New final grades</item>
+    </plurals>
     <plurals name="grade_notify_new_items">
         <item quantity="one">Ви отримали %1$d оцінку</item>
         <item quantity="few">Ви отримали %1$d оцінки</item>
         <item quantity="many">Ви отримали %1$d оцінок</item>
         <item quantity="other">Ви отримали %1$d оцінок</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_predicted">
+        <item quantity="one">You received %1$d predicted grade</item>
+        <item quantity="few">You received %1$d predicted grades</item>
+        <item quantity="many">You received %1$d predicted grades</item>
+        <item quantity="other">You received %1$d predicted grades</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_final">
+        <item quantity="one">You received %1$d final grade</item>
+        <item quantity="few">You received %1$d final grades</item>
+        <item quantity="many">You received %1$d final grades</item>
+        <item quantity="other">You received %1$d final grades</item>
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Урок</string>
@@ -180,6 +204,8 @@
     <string name="message_move_to_bin">Перемістити у кошик</string>
     <string name="message_delete_forever">Видалити назавжди</string>
     <string name="message_delete_success">Повідомлення було успішно видалено</string>
+    <string name="message_share">Share</string>
+    <string name="message_print">Print</string>
     <string name="message_subject">Тема</string>
     <string name="message_content">Зміст</string>
     <string name="message_send_successful">Повідомлення було успішно відправлено</string>
@@ -265,6 +291,10 @@
     <string name="account_logout">Вийти</string>
     <string name="account_confirm">Ви впевнені, що хочете вийти з цього аккаунту?</string>
     <string name="account_logout_student">Вийти з аккаунту учня</string>
+    <string name="account_type_student">Student account</string>
+    <string name="account_type_parent">Parent account</string>
+    <string name="account_login_mobile_api">Mobile API mode</string>
+    <string name="account_login_hybrid">Hybrid mode</string>
     <!--About-->
     <string name="about_version">Версія додатка</string>
     <string name="about_contributor">Розробники</string>
@@ -309,7 +339,7 @@
     <string name="all_prev">Попередній</string>
     <string name="all_next">Наступний</string>
     <string name="all_search">Пошук</string>
-    <string name="all_search_hint">Пошук...</string>
+    <string name="all_search_hint">Пошук…</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Брак уроків</string>
     <string name="widget_timetable_theme_title">Увібрати тему</string>
