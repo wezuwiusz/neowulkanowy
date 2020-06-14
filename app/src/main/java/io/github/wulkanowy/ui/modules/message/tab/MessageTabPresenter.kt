@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
-import android.annotation.SuppressLint
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.data.repositories.message.MessageRepository
@@ -11,8 +10,13 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.toFormattedString
+import io.reactivex.subjects.PublishSubject
+import me.xdrop.fuzzywuzzy.FuzzySearch
 import timber.log.Timber
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.math.pow
 
 class MessageTabPresenter @Inject constructor(
     schedulers: SchedulersProvider,
@@ -31,9 +35,12 @@ class MessageTabPresenter @Inject constructor(
 
     private var messages = emptyList<Message>()
 
+    private val searchQuery = PublishSubject.create<String>()
+
     fun onAttachView(view: MessageTabView, folder: MessageFolder) {
         super.onAttachView(view)
         view.initView()
+        initializeSearchStream()
         errorHandler.showErrorMessage = ::showErrorViewOnError
         this.folder = folder
     }
@@ -76,38 +83,35 @@ class MessageTabPresenter @Inject constructor(
 
     private fun loadData(forceRefresh: Boolean) {
         Timber.i("Loading $folder message data started")
-        disposable.apply {
-            clear()
-            add(studentRepository.getCurrentStudent()
-                .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student)
-                        .flatMap { messageRepository.getMessages(student, it, folder, forceRefresh) }
+        disposable.add(studentRepository.getCurrentStudent()
+            .flatMap { student ->
+                semesterRepository.getCurrentSemester(student)
+                    .flatMap { messageRepository.getMessages(student, it, folder, forceRefresh) }
+            }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .doFinally {
+                view?.run {
+                    showRefresh(false)
+                    showProgress(false)
+                    enableSwipe(true)
+                    notifyParentDataLoaded()
                 }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doFinally {
-                    view?.run {
-                        showRefresh(false)
-                        showProgress(false)
-                        enableSwipe(true)
-                        notifyParentDataLoaded()
-                    }
-                }
-                .subscribe({
-                    Timber.i("Loading $folder message result: Success")
-                    messages = it
-                    onSearchQueryTextChange(lastSearchQuery)
-                    analytics.logEvent(
-                        "load_data",
-                        "type" to "messages",
-                        "items" to it.size,
-                        "folder" to folder.name
-                    )
-                }) {
-                    Timber.i("Loading $folder message result: An exception occurred")
-                    errorHandler.dispatch(it)
-                })
-        }
+            }
+            .subscribe({
+                Timber.i("Loading $folder message result: Success")
+                messages = it
+                view?.updateData(getFilteredData(lastSearchQuery))
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "messages",
+                    "items" to it.size,
+                    "folder" to folder.name
+                )
+            }) {
+                Timber.i("Loading $folder message result: An exception occurred")
+                errorHandler.dispatch(it)
+            })
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
@@ -121,25 +125,36 @@ class MessageTabPresenter @Inject constructor(
         }
     }
 
-    @SuppressLint("DefaultLocale")
     fun onSearchQueryTextChange(query: String) {
-        lastSearchQuery = query
+        if (query != searchQuery.toString())
+            searchQuery.onNext(query)
+    }
 
-        val lowerCaseQuery = query.toLowerCase()
-        val filteredList = mutableListOf<Message>()
-        messages.forEach {
-            if (lowerCaseQuery in it.subject.toLowerCase() ||
-                lowerCaseQuery in it.sender.toLowerCase() ||
-                lowerCaseQuery in it.recipient.toLowerCase() ||
-                lowerCaseQuery in it.date.toFormattedString()
-            ) {
-                filteredList.add(it)
+    private fun initializeSearchStream() {
+        disposable.add(searchQuery
+            .debounce(250, TimeUnit.MILLISECONDS)
+            .map { query ->
+                lastSearchQuery = query
+                getFilteredData(query)
             }
+            .subscribeOn(schedulers.backgroundThread)
+            .observeOn(schedulers.mainThread)
+            .subscribe({
+                Timber.d("Applying filter. Full list: ${messages.size}, filtered: ${it.size}")
+                updateData(it)
+            }) { Timber.e(it) })
+    }
+
+    private fun getFilteredData(query: String): List<Message> {
+        return if (query.trim().isEmpty()) {
+            messages.sortedByDescending { it.date }
+        } else {
+            messages
+                .map { it to calculateMatchRatio(it, query) }
+                .sortedByDescending { it.second }
+                .filter { it.second > 5000 }
+                .map { it.first }
         }
-
-        Timber.d("Applying filter. Full list: ${messages.size}, filtered: ${filteredList.size}")
-
-        updateData(filteredList)
     }
 
     private fun updateData(data: List<Message>) {
@@ -150,5 +165,43 @@ class MessageTabPresenter @Inject constructor(
             updateData(data)
             resetListPosition()
         }
+    }
+
+    private fun calculateMatchRatio(message: Message, query: String): Int {
+        val subjectRatio = FuzzySearch.tokenSortPartialRatio(
+            query.toLowerCase(Locale.getDefault()),
+            message.subject
+        )
+
+        val senderOrRecipientRatio = FuzzySearch.tokenSortPartialRatio(
+            query.toLowerCase(Locale.getDefault()),
+            if (message.sender.isNotEmpty()) message.sender.toLowerCase(Locale.getDefault())
+            else message.recipient.toLowerCase(Locale.getDefault())
+        )
+
+        val dateRatio = listOf(
+            FuzzySearch.ratio(
+                query.toLowerCase(Locale.getDefault()),
+                message.date.toFormattedString("dd.MM").toLowerCase(Locale.getDefault())
+            ),
+            FuzzySearch.ratio(
+                query.toLowerCase(Locale.getDefault()),
+                message.date.toFormattedString("dd.MM.yyyy").toLowerCase(Locale.getDefault())
+            ),
+            FuzzySearch.ratio(
+                query.toLowerCase(Locale.getDefault()),
+                message.date.toFormattedString("d MMMM").toLowerCase(Locale.getDefault())
+            ),
+            FuzzySearch.ratio(
+                query.toLowerCase(Locale.getDefault()),
+                message.date.toFormattedString("d MMMM yyyy").toLowerCase(Locale.getDefault())
+            )
+        ).max() ?: 0
+
+
+        return (subjectRatio.toDouble().pow(2)
+            + senderOrRecipientRatio.toDouble().pow(2)
+            + dateRatio.toDouble().pow(2) * 2
+            ).toInt()
     }
 }

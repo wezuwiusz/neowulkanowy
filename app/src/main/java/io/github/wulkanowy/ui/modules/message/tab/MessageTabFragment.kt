@@ -90,7 +90,7 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
     }
 
     override fun updateData(data: List<Message>) {
-        tabAdapter.replaceAll(data)
+        tabAdapter.setDataItems(data)
     }
 
     override fun updateItem(item: Message, position: Int) {

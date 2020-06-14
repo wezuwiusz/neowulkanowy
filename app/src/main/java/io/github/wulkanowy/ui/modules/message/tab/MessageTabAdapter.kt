@@ -4,10 +4,9 @@ import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
-import androidx.recyclerview.widget.SortedList
-import androidx.recyclerview.widget.SortedListAdapterCallback
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
@@ -20,39 +19,23 @@ class MessageTabAdapter @Inject constructor() :
 
     var onClickListener: (Message, position: Int) -> Unit = { _, _ -> }
 
-    private val items = SortedList(Message::class.java, object :
-        SortedListAdapterCallback<Message>(this) {
+    private var items = mutableListOf<Message>()
 
-        override fun compare(item1: Message, item2: Message): Int {
-            return item2.date.compareTo(item1.date)
-        }
-
-        override fun areContentsTheSame(oldItem: Message?, newItem: Message?): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areItemsTheSame(item1: Message, item2: Message): Boolean {
-            return item1 == item2
-        }
-    })
-
-    fun replaceAll(models: List<Message>) {
-        items.beginBatchedUpdates()
-        for (i in items.size() - 1 downTo 0) {
-            val model = items.get(i)
-            if (model !in models) {
-                items.remove(model)
-            }
-        }
-        items.addAll(models)
-        items.endBatchedUpdates()
+    fun setDataItems(data: List<Message>) {
+        val diffResult = DiffUtil.calculateDiff(MessageTabDiffUtil(items, data))
+        items = data.toMutableList()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun updateItem(position: Int, item: Message) {
-        items.updateItemAt(position, item)
+        val currentItem = items[position]
+        items[position] = item
+        if (item != currentItem) {
+            notifyItemChanged(position)
+        }
     }
 
-    override fun getItemCount() = items.size()
+    override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ItemViewHolder(
         ItemMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -85,4 +68,19 @@ class MessageTabAdapter @Inject constructor() :
     }
 
     class ItemViewHolder(val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root)
+
+    private class MessageTabDiffUtil(private val old: List<Message>, private val new: List<Message>) :
+        DiffUtil.Callback() {
+        override fun getOldListSize(): Int = old.size
+
+        override fun getNewListSize(): Int = new.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return old[oldItemPosition].id == new[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return old[oldItemPosition] == new[newItemPosition]
+        }
+    }
 }
