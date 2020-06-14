@@ -1,5 +1,6 @@
 package io.github.wulkanowy
 
+import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
@@ -71,4 +72,26 @@ fun getTimetableEntity(
     subjectOld = "",
     teacher = "",
     teacherOld = ""
+)
+
+fun getMessageEntity(
+    messageId: Int,
+    content: String,
+    unread: Boolean
+) = Message(
+    studentId = 1,
+    realId = 1,
+    messageId = messageId,
+    sender = "",
+    senderId = 1,
+    recipient = "",
+    subject = "",
+    content = content,
+    date = now(),
+    folderId = 1,
+    unread = unread,
+    unreadBy = 1,
+    readBy = 1,
+    removed = false,
+    hasAttachments = false
 )

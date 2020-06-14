@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.threeten.bp.LocalDateTime
 
 @Entity(tableName = "GradesSummary")
 data class GradeSummary(
@@ -36,4 +37,16 @@ data class GradeSummary(
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    @ColumnInfo(name = "is_predicted_grade_notified")
+    var isPredictedGradeNotified: Boolean = true
+
+    @ColumnInfo(name = "is_final_grade_notified")
+    var isFinalGradeNotified: Boolean = true
+
+    @ColumnInfo(name = "predicted_grade_last_change")
+    var predictedGradeLastChange: LocalDateTime = LocalDateTime.now()
+
+    @ColumnInfo(name = "final_grade_last_change")
+    var finalGradeLastChange: LocalDateTime = LocalDateTime.now()
 }

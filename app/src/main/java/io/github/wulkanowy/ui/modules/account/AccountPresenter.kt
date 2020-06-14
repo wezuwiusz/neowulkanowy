@@ -83,11 +83,20 @@ class AccountPresenter @Inject constructor(
         }
     }
 
+    private fun createAccountItems(items: List<Student>): List<AccountItem<*>> {
+        return items.groupBy { Account(it.email, it.isParent) }.map { (account, students) ->
+            listOf(AccountItem(account, AccountItem.ViewType.HEADER)) + students.map { student ->
+                AccountItem(student, AccountItem.ViewType.ITEM)
+            }
+        }.flatten()
+    }
+
     private fun loadData() {
         Timber.i("Loading account data started")
         disposable.add(studentRepository.getSavedStudents(false)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
+            .map { createAccountItems(it) }
             .subscribe({
                 Timber.i("Loading account result: Success")
                 view?.updateData(it)

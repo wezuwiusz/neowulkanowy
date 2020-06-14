@@ -23,6 +23,8 @@ fun Sdk.init(student: Student): Sdk {
     certKey = student.certificateKey
     privateKey = student.privateKey
 
+    emptyCookieJarInterceptor = true
+
     Timber.d("Sdk in ${student.loginMode} mode reinitialized")
 
     return this

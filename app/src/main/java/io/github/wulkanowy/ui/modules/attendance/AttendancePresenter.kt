@@ -20,7 +20,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
 import timber.log.Timber
-import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
 class AttendancePresenter @Inject constructor(

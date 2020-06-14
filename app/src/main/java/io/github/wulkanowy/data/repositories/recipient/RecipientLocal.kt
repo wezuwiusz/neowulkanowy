@@ -12,7 +12,7 @@ import javax.inject.Singleton
 class RecipientLocal @Inject constructor(private val recipientDb: RecipientDao) {
 
     fun getRecipients(student: Student, role: Int, unit: ReportingUnit): Maybe<List<Recipient>> {
-        return recipientDb.load(student.studentId, role, unit.realId).filter { !it.isEmpty() }
+        return recipientDb.load(student.studentId, role, unit.realId).filter { it.isNotEmpty() }
     }
 
     fun saveRecipients(recipients: List<Recipient>): List<Long> {

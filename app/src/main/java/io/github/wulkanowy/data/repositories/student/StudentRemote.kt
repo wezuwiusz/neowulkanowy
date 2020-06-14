@@ -14,7 +14,7 @@ class StudentRemote @Inject constructor(private val sdk: Sdk) {
     private fun mapStudents(students: List<SdkStudent>, email: String, password: String): List<Student> {
         return students.map { student ->
             Student(
-                email = email,
+                email = email.ifBlank { student.email },
                 password = password,
                 isParent = student.isParent,
                 symbol = student.symbol,

@@ -98,7 +98,7 @@ class GradeAverageProvider @Inject constructor(
     }
 
     private fun List<GradeSummary>.emulateEmptySummaries(student: Student, semester: Semester, grades: List<Pair<String, List<Grade>>>, calcAverage: Boolean): List<GradeSummary> {
-        if (isNotEmpty() && size == grades.size) return this
+        if (isNotEmpty() && size > grades.size) return this
 
         return grades.mapIndexed { i, (subject, details) ->
             singleOrNull { it.subject == subject }?.let { return@mapIndexed it }

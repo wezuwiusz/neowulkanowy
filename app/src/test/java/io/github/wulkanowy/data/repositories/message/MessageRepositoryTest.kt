@@ -2,10 +2,10 @@ package io.github.wulkanowy.data.repositories.message
 
 import androidx.room.EmptyResultSetException
 import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.UnitTestInternetObservingStrategy
+import io.github.wulkanowy.getMessageEntity
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import org.junit.Assert.assertEquals
@@ -15,7 +15,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
-import org.threeten.bp.LocalDateTime.now
 import java.net.UnknownHostException
 
 class MessageRepositoryTest {
@@ -44,7 +43,7 @@ class MessageRepositoryTest {
 
     @Test
     fun `throw error when message is not in the db`() {
-        val testMessage = Message(1, 1, 1, "", 1, "", "", "", now(), 1, false, 1, 1, false, false)
+        val testMessage = getMessageEntity(1, "", false)
         `when`(local.getMessageWithAttachment(student, testMessage)).thenReturn(Single.error(EmptyResultSetException("No message in database")))
 
         val message = repo.getMessage(student, testMessage)
@@ -55,7 +54,7 @@ class MessageRepositoryTest {
 
     @Test
     fun `get message when content already in db`() {
-        val testMessage = Message(1, 1, 123, "", 1, "", "", "Test", now(), 1, false, 1, 1, false, false)
+        val testMessage = getMessageEntity(123, "Test", false)
         val messageWithAttachment = MessageWithAttachment(testMessage, emptyList())
 
         `when`(local.getMessageWithAttachment(student, testMessage)).thenReturn(Single.just(messageWithAttachment))
@@ -67,7 +66,7 @@ class MessageRepositoryTest {
 
     @Test
     fun `get message when content in db is empty`() {
-        val testMessage = Message(1, 1, 123, "", 1, "", "", "", now(), 1, true, 1, 1, false, false)
+        val testMessage = getMessageEntity(123, "", true)
         val testMessageWithContent = testMessage.copy(content = "Test")
 
         val mWa = MessageWithAttachment(testMessage, emptyList())
@@ -86,7 +85,7 @@ class MessageRepositoryTest {
 
     @Test
     fun `get message when content in db is empty and there is no internet connection`() {
-        val testMessage = Message(1, 1, 123, "", 1, "", "", "", now(), 1, false, 1, 1, false, false)
+        val testMessage = getMessageEntity(123, "", false)
         val messageWithAttachment = MessageWithAttachment(testMessage, emptyList())
 
         testObservingStrategy.isInternetConnection = false
@@ -100,7 +99,7 @@ class MessageRepositoryTest {
 
     @Test
     fun `get message when content in db is empty, unread and there is no internet connection`() {
-        val testMessage = Message(1, 1, 123, "", 1, "", "", "", now(), 1, true, 1, 1, false, false)
+        val testMessage = getMessageEntity(123, "", true)
         val messageWithAttachment = MessageWithAttachment(testMessage, emptyList())
 
         testObservingStrategy.isInternetConnection = false

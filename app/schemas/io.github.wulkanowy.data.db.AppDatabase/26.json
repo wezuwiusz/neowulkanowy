@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 25,
-    "identityHash": "d101f5a26a024f62e6fee161e421b882",
+    "version": 26,
+    "identityHash": "43f8777ffe95a5a2850ee981db3dbe2e",
     "entities": [
       {
         "tableName": "Students",
@@ -770,11 +770,35 @@
       },
       {
         "tableName": "GradesSummary",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `semester_id` INTEGER NOT NULL, `student_id` INTEGER NOT NULL, `position` INTEGER NOT NULL, `subject` TEXT NOT NULL, `predicted_grade` TEXT NOT NULL, `final_grade` TEXT NOT NULL, `proposed_points` TEXT NOT NULL, `final_points` TEXT NOT NULL, `points_sum` TEXT NOT NULL, `average` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `is_predicted_grade_notified` INTEGER NOT NULL, `is_final_grade_notified` INTEGER NOT NULL, `predicted_grade_last_change` INTEGER NOT NULL, `final_grade_last_change` INTEGER NOT NULL, `semester_id` INTEGER NOT NULL, `student_id` INTEGER NOT NULL, `position` INTEGER NOT NULL, `subject` TEXT NOT NULL, `predicted_grade` TEXT NOT NULL, `final_grade` TEXT NOT NULL, `proposed_points` TEXT NOT NULL, `final_points` TEXT NOT NULL, `points_sum` TEXT NOT NULL, `average` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPredictedGradeNotified",
+            "columnName": "is_predicted_grade_notified",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFinalGradeNotified",
+            "columnName": "is_final_grade_notified",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "predictedGradeLastChange",
+            "columnName": "predicted_grade_last_change",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "finalGradeLastChange",
+            "columnName": "final_grade_last_change",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -1738,7 +1762,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd101f5a26a024f62e6fee161e421b882')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '43f8777ffe95a5a2850ee981db3dbe2e')"
     ]
   }
 }

@@ -10,6 +10,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.of
 import kotlin.test.assertEquals
@@ -35,9 +36,18 @@ class AttendanceLocalTest {
     @Test
     fun saveAndReadTest() {
         attendanceLocal.saveAttendance(listOf(
-            Attendance(1, 2, 3, of(2018, 9, 10), 0, "", "", false, false, false, false, false, false, false, SentExcuseStatus.ACCEPTED.name),
-            Attendance(1, 2, 3, of(2018, 9, 14), 0, "", "", false, false, false, false, false, false, false, SentExcuseStatus.WAITING.name),
-            Attendance(1, 2, 3, of(2018, 9, 17), 0, "", "", false, false, false, false, false, false, false, SentExcuseStatus.ACCEPTED.name)
+            getAttendanceEntity(
+                of(2018, 9, 10),
+                SentExcuseStatus.ACCEPTED
+            ),
+            getAttendanceEntity(
+                of(2018, 9, 14),
+                SentExcuseStatus.WAITING
+            ),
+            getAttendanceEntity(
+                of(2018, 9, 17),
+                SentExcuseStatus.ACCEPTED
+            )
         ))
 
         val attendance = attendanceLocal
@@ -50,4 +60,25 @@ class AttendanceLocalTest {
         assertEquals(attendance[0].date, of(2018, 9, 10))
         assertEquals(attendance[1].date, of(2018, 9, 14))
     }
+
+    private fun getAttendanceEntity(
+        date: LocalDate,
+        excuseStatus: SentExcuseStatus
+    ) = Attendance(
+        studentId = 1,
+        diaryId = 2,
+        timeId = 3,
+        date = date,
+        number = 0,
+        subject = "",
+        name = "",
+        presence = false,
+        absence = false,
+        exemption = false,
+        lateness = false,
+        excused = false,
+        deleted = false,
+        excusable = false,
+        excuseStatus = excuseStatus.name
+    )
 }

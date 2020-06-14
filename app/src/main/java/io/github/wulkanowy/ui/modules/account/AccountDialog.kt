@@ -9,7 +9,6 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.DialogAccountBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
@@ -54,7 +53,7 @@ class AccountDialog : BaseDialogFragment<DialogAccountBinding>(), AccountView {
         }
     }
 
-    override fun updateData(data: List<Student>) {
+    override fun updateData(data: List<AccountItem<*>>) {
         with(accountAdapter) {
             items = data
             notifyDataSetChanged()

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>%SUBJECT% | Wulkanowy</title>
+    <style>
+        @page {
+            margin: 2.5cm;
+            size: A4;
+        }
+
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .title {
+            line-height: 1.5;
+            letter-spacing: 1pt;
+            font-size: 24pt;
+            font-weight: 200;
+            margin: 0 0 0.5cm;
+        }
+
+        .info {
+            margin: 0.5cm 0;
+        }
+
+        .info div {
+            font-size: 14pt;
+            font-weight: 400;
+            margin: 0.5cm 0;
+        }
+
+        h4 {
+            font-weight: 200;
+            text-transform: uppercase;
+            letter-spacing: 1pt;
+            font-size: 10pt;
+            margin: 0;
+            margin-bottom: 0.25cm;
+            font-family: sans-serif;
+        }
+
+        .content {
+            margin-top: 0.5cm;
+            font-size: 14pt;
+            font-weight: 400;
+            text-align: justify;
+            font-family: serif;
+            line-height: 1.5;
+        }
+
+        .content p {
+            page-break-after: auto;
+            page-break-inside: auto;
+            margin-bottom: 0.6cm;
+        }
+
+        .footer {
+            font-size: 11pt;
+            font-weight: 200;
+            display: flex;
+            align-items: center;
+            color: rgba(0, 0, 0, 0.5)
+            margin: 0;
+            margin-bottom: 0.5cm;
+        }
+        
+        .footer .logo {
+            height: 0.5cm;
+            width: 0.5cm;
+            display: block;
+            margin-right: 0.2cm;
+        }
+    </style>
+</head>
+<body>
+<h1 class="title">%SUBJECT%</h1>
+<hr>
+<div class="info">
+    %INFO%
+</div>
+<div class="footer">
+    <img src="wulkanowy-logo-black.svg" class="logo">
+    Wulkanowy Dzienniczek
+</div>
+<hr>
+<div class="content">
+    <h4>Treść wiadomości</h4>
+    %CONTENT%
+</div>
+</body>
+</html>

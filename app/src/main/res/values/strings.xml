@@ -113,9 +113,25 @@
         <item quantity="one">New grade</item>
         <item quantity="other">New grades</item>
     </plurals>
+    <plurals name="grade_new_items_predicted">
+        <item quantity="one">New predicted grade</item>
+        <item quantity="other">New predicted grades</item>
+    </plurals>
+    <plurals name="grade_new_items_final">
+        <item quantity="one">New final grade</item>
+        <item quantity="other">New final grades</item>
+    </plurals>
     <plurals name="grade_notify_new_items">
         <item quantity="one">You received %1$d grade</item>
         <item quantity="other">You received %1$d grades</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_predicted">
+        <item quantity="one">You received %1$d predicted grade</item>
+        <item quantity="other">You received %1$d predicted grades</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_final">
+        <item quantity="one">You received %1$d final grade</item>
+        <item quantity="other">You received %1$d final grades</item>
     </plurals>
 
 
@@ -194,6 +210,8 @@
     <string name="message_move_to_bin">Move to trash</string>
     <string name="message_delete_forever">Delete permanently</string>
     <string name="message_delete_success">Message deleted successfully</string>
+    <string name="message_share">Share</string>
+    <string name="message_print">Print</string>
     <string name="message_subject">Subject</string>
     <string name="message_content">Content</string>
     <string name="message_send_successful">Message sent successfully</string>
@@ -282,6 +300,10 @@
     <string name="account_logout">Logout</string>
     <string name="account_confirm">Do you want to log out of an active student?</string>
     <string name="account_logout_student">Student logout</string>
+    <string name="account_type_student">Student account</string>
+    <string name="account_type_parent">Parent account</string>
+    <string name="account_login_mobile_api">Mobile API mode</string>
+    <string name="account_login_hybrid">Hybrid mode</string>
 
 
     <!--About-->
@@ -339,7 +361,7 @@
     <string name="all_prev">Prev</string>
     <string name="all_next">Next</string>
     <string name="all_search">Search</string>
-    <string name="all_search_hint">Search...</string>
+    <string name="all_search_hint">Search…</string>
 
 
     <!--Timetable Widget-->

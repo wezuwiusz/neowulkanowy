@@ -13,7 +13,7 @@ class ExamLocal @Inject constructor(private val examDb: ExamDao) {
 
     fun getExams(semester: Semester, startDate: LocalDate, endDate: LocalDate): Maybe<List<Exam>> {
         return examDb.loadAll(semester.diaryId, semester.studentId, startDate, endDate)
-                .filter { !it.isEmpty() }
+                .filter { it.isNotEmpty() }
     }
 
     fun saveExams(exams: List<Exam>) {
