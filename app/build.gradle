@@ -188,7 +188,7 @@ dependencies {
     playImplementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.0.7'
     playImplementation "com.google.firebase:firebase-inappmessaging-ktx:19.0.7"
     playImplementation 'com.google.firebase:firebase-messaging:20.2.1'
-    playImplementation 'com.google.firebase:firebase-crashlytics:17.0.1'
+    playImplementation 'com.google.firebase:firebase-crashlytics:17.1.0'
     playImplementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
