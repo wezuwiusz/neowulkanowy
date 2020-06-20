@@ -7,6 +7,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -28,10 +29,10 @@ class MobileDeviceTokenPresenter @Inject constructor(
 
     private fun loadData() {
         Timber.i("Mobile device registration data started")
-        disposable.add(studentRepository.getCurrentStudent()
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
             .flatMap { student ->
-                semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                    mobileDeviceRepository.getToken(student, semester)
+                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                    rxSingle { mobileDeviceRepository.getToken(student, semester) }
                 }
             }
             .subscribeOn(schedulers.backgroundThread)

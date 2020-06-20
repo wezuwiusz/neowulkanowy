@@ -7,10 +7,11 @@ import io.github.wulkanowy.sdk.pojo.GradePointsStatistics
 import io.github.wulkanowy.sdk.pojo.GradeStatistics
 import io.github.wulkanowy.utils.init
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
-import io.reactivex.Single
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -33,10 +34,10 @@ class GradeStatisticsRemoteTest {
 
     @Test
     fun getGradeStatisticsTest() {
-        every { mockSdk.getGradesPartialStatistics(1) } returns Single.just(listOf(
+        coEvery { mockSdk.getGradesPartialStatistics(1) } returns listOf(
             getGradeStatistics("Fizyka"),
             getGradeStatistics("Matematyka")
-        ))
+        )
 
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 1
@@ -44,16 +45,16 @@ class GradeStatisticsRemoteTest {
         every { semesterMock.semesterId } returns 1
         every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val stats = GradeStatisticsRemote(mockSdk).getGradeStatistics(student, semesterMock, false).blockingGet()
+        val stats = runBlocking { GradeStatisticsRemote(mockSdk).getGradeStatistics(student, semesterMock, false) }
         assertEquals(2, stats.size)
     }
 
     @Test
     fun getGradePointsStatisticsTest() {
-        every { mockSdk.getGradesPointsStatistics(1) } returns Single.just(listOf(
+        coEvery { mockSdk.getGradesPointsStatistics(1) } returns listOf(
             getGradePointsStatistics("Fizyka"),
             getGradePointsStatistics("Matematyka")
-        ))
+        )
 
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 1
@@ -61,7 +62,7 @@ class GradeStatisticsRemoteTest {
         every { semesterMock.semesterId } returns 1
         every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val stats = GradeStatisticsRemote(mockSdk).getGradePointsStatistics(student, semesterMock).blockingGet()
+        val stats = runBlocking { GradeStatisticsRemote(mockSdk).getGradePointsStatistics(student, semesterMock) }
         assertEquals(2, stats.size)
     }
 

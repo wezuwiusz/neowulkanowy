@@ -7,6 +7,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,7 +27,7 @@ class HomeworkDetailsPresenter @Inject constructor(
 
     fun toggleDone(homework: Homework) {
         Timber.i("Homework details update start")
-        disposable.add(homeworkRepository.toggleDone(homework)
+        disposable.add(rxSingle { homeworkRepository.toggleDone(homework) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({

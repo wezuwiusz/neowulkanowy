@@ -14,6 +14,7 @@ import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.rx2.rxSingle
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
@@ -93,8 +94,8 @@ class CompletedLessonsPresenter @Inject constructor(
     }
 
     private fun setBaseDateOnHolidays() {
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { semesterRepository.getCurrentSemester(it) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({
@@ -111,10 +112,10 @@ class CompletedLessonsPresenter @Inject constructor(
         currentDate = date
         disposable.apply {
             clear()
-            add(studentRepository.getCurrentStudent()
+            add(rxSingle { studentRepository.getCurrentStudent() }
                 .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                        completedLessonsRepository.getCompletedLessons(student, semester, currentDate, currentDate, forceRefresh)
+                    rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                        rxSingle { completedLessonsRepository.getCompletedLessons(student, semester, currentDate, currentDate, forceRefresh) }
                     }
                 }
                 .map { items -> items.sortedBy { it.number } }

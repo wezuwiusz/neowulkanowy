@@ -2,11 +2,11 @@ package io.github.wulkanowy.utils
 
 import android.content.res.Resources
 import io.github.wulkanowy.R
-import io.github.wulkanowy.sdk.exception.FeatureDisabledException
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
-import io.github.wulkanowy.sdk.exception.NotLoggedInException
-import io.github.wulkanowy.sdk.exception.PasswordChangeRequiredException
-import io.github.wulkanowy.sdk.exception.ServiceUnavailableException
+import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
+import io.github.wulkanowy.sdk.scrapper.exception.ServiceUnavailableException
+import io.github.wulkanowy.sdk.scrapper.login.NotLoggedInException
+import io.github.wulkanowy.sdk.scrapper.login.PasswordChangeRequiredException
 import java.io.InterruptedIOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException

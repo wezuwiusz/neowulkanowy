@@ -9,6 +9,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxSingle
 import org.threeten.bp.Month
 import timber.log.Timber
 import javax.inject.Inject
@@ -76,10 +77,10 @@ class AttendanceSummaryPresenter @Inject constructor(
         currentSubjectId = subjectId
         disposable.apply {
             clear()
-            add(studentRepository.getCurrentStudent()
+            add(rxSingle { studentRepository.getCurrentStudent() }
                 .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).flatMap {
-                        attendanceSummaryRepository.getAttendanceSummary(student, it, subjectId, forceRefresh)
+                    rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap {
+                        rxSingle { attendanceSummaryRepository.getAttendanceSummary(student, it, subjectId, forceRefresh) }
                     }
                 }
                 .map { items -> items.sortedByDescending { if (it.month.value <= Month.JUNE.value) it.month.value + 12 else it.month.value } }
@@ -127,10 +128,10 @@ class AttendanceSummaryPresenter @Inject constructor(
 
     private fun loadSubjects() {
         Timber.i("Loading attendance summary subjects started")
-        disposable.add(studentRepository.getCurrentStudent()
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
             .flatMap { student ->
-                semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                    subjectRepository.getSubjects(student, semester)
+                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                    rxSingle { subjectRepository.getSubjects(student, semester) }
                 }
             }
             .doOnSuccess { subjects = it }

@@ -8,8 +8,6 @@ import androidx.preference.PreferenceManager
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.strategy.WalledGardenInternetObservingStrategy
 import dagger.Module
 import dagger.Provides
 import io.github.wulkanowy.data.db.AppDatabase
@@ -21,14 +19,6 @@ import javax.inject.Singleton
 
 @Module
 internal class RepositoryModule {
-
-    @Singleton
-    @Provides
-    fun provideInternetObservingSettings(): InternetObservingSettings {
-        return InternetObservingSettings.builder()
-            .strategy(WalledGardenInternetObservingStrategy())
-            .build()
-    }
 
     @Singleton
     @Provides

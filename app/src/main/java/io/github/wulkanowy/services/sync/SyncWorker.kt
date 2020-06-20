@@ -15,13 +15,15 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.sdk.exception.FeatureDisabledException
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
+import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
 import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.works.Work
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.rxMaybe
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import kotlin.random.Random
 
@@ -37,11 +39,11 @@ class SyncWorker @AssistedInject constructor(
 
     override fun createWork(): Single<Result> {
         Timber.i("SyncWorker is starting")
-        return studentRepository.isCurrentStudentSet()
+        return rxSingle { studentRepository.isCurrentStudentSet() }
             .filter { true }
-            .flatMap { studentRepository.getCurrentStudent().toMaybe() }
+            .flatMap { rxMaybe { studentRepository.getCurrentStudent() } }
             .flatMapCompletable { student ->
-                semesterRepository.getCurrentSemester(student, true)
+                rxSingle { semesterRepository.getCurrentSemester(student, true) }
                     .flatMapCompletable { semester ->
                         Completable.mergeDelayError(works.map { work ->
                             work.create(student, semester)

@@ -6,9 +6,6 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.security.decrypt
 import io.github.wulkanowy.utils.security.encrypt
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,47 +15,41 @@ class StudentLocal @Inject constructor(
     private val context: Context
 ) {
 
-    fun saveStudents(students: List<Student>): Single<List<Long>> {
-        return Single.fromCallable {
-            studentDb.insertAll(students.map {
-                if (Sdk.Mode.valueOf(it.loginMode) != Sdk.Mode.API) it.copy(password = encrypt(it.password, context))
-                else it
-            })
-        }
+    suspend fun saveStudents(students: List<Student>): List<Long> {
+        return studentDb.insertAll(students.map {
+            if (Sdk.Mode.valueOf(it.loginMode) != Sdk.Mode.API) it.copy(password = encrypt(it.password, context))
+            else it
+        })
     }
 
-    fun getStudents(decryptPass: Boolean): Maybe<List<Student>> {
-        return studentDb.loadAll()
-            .map { list -> list.map { it.apply { if (decryptPass && Sdk.Mode.valueOf(loginMode) != Sdk.Mode.API) password = decrypt(password) } } }
-            .filter { it.isNotEmpty() }
-    }
-
-    fun getStudentById(id: Int): Maybe<Student> {
-        return studentDb.loadById(id).map {
-            it.apply {
-                if (Sdk.Mode.valueOf(loginMode) != Sdk.Mode.API) password = decrypt(password)
-            }
-        }
-    }
-
-    fun getCurrentStudent(decryptPass: Boolean): Maybe<Student> {
-        return studentDb.loadCurrent().map {
+    suspend fun getStudents(decryptPass: Boolean): List<Student> {
+        return studentDb.loadAll().map {
             it.apply {
                 if (decryptPass && Sdk.Mode.valueOf(loginMode) != Sdk.Mode.API) password = decrypt(password)
             }
         }
     }
 
-    fun setCurrentStudent(student: Student): Completable {
-        return Completable.fromCallable {
-            studentDb.run {
-                resetCurrent()
-                updateCurrent(student.id)
-            }
+    suspend fun getStudentById(id: Int): Student? {
+        return studentDb.loadById(id)?.apply {
+            if (Sdk.Mode.valueOf(loginMode) != Sdk.Mode.API) password = decrypt(password)
         }
     }
 
-    fun logoutStudent(student: Student): Completable {
-        return Completable.fromCallable { studentDb.delete(student) }
+    suspend fun getCurrentStudent(decryptPass: Boolean): Student? {
+        return studentDb.loadCurrent()?.apply {
+            if (decryptPass && Sdk.Mode.valueOf(loginMode) != Sdk.Mode.API) password = decrypt(password)
+        }
+    }
+
+    suspend fun setCurrentStudent(student: Student) {
+        return studentDb.run {
+            resetCurrent()
+            updateCurrent(student.id)
+        }
+    }
+
+    suspend fun logoutStudent(student: Student) {
+        return studentDb.delete(student)
     }
 }

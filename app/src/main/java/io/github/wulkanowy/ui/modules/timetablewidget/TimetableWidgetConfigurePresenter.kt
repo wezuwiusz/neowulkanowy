@@ -8,6 +8,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getThemeWidgetKey
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 
 class TimetableWidgetConfigurePresenter @Inject constructor(
@@ -50,7 +51,7 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
     }
 
     private fun loadData() {
-        disposable.add(studentRepository.getSavedStudents(false)
+        disposable.add(rxSingle { studentRepository.getSavedStudents(false) }
             .map { it to appWidgetId?.let { id -> sharedPref.getLong(getStudentWidgetKey(id), 0) } }
             .map { (students, currentStudentId) ->
                 students.map { student -> student to (student.id == currentStudentId) }

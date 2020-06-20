@@ -24,6 +24,8 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Maybe
+import kotlinx.coroutines.rx2.rxMaybe
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -139,23 +141,23 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
 
     private fun getLuckyNumber(studentId: Long, appWidgetId: Int): LuckyNumber? {
         return try {
-            studentRepository.isStudentSaved()
+            rxSingle { studentRepository.isStudentSaved() }
                 .filter { true }
-                .flatMap { studentRepository.getSavedStudents().toMaybe() }
+                .flatMap { rxMaybe { studentRepository.getSavedStudents() } }
                 .flatMap { students ->
                     val student = students.singleOrNull { student -> student.id == studentId }
                     when {
                         student != null -> Maybe.just(student)
                         studentId != 0L -> {
-                            studentRepository.isCurrentStudentSet()
+                            rxSingle { studentRepository.isCurrentStudentSet() }
                                 .filter { true }
-                                .flatMap { studentRepository.getCurrentStudent(false).toMaybe() }
+                                .flatMap { rxMaybe { studentRepository.getCurrentStudent(false) } }
                                 .doOnSuccess { sharedPref.putLong(getStudentWidgetKey(appWidgetId), it.id) }
                         }
                         else -> Maybe.empty()
                     }
                 }
-                .flatMap { luckyNumberRepository.getLuckyNumber(it) }
+                .flatMap { rxMaybe { luckyNumberRepository.getLuckyNumber(it) } }
                 .subscribeOn(schedulers.backgroundThread)
                 .blockingGet()
         } catch (e: Exception) {

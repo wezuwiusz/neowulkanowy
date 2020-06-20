@@ -14,6 +14,7 @@ import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.rx2.rxSingle
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.ofEpochDay
 import timber.log.Timber
@@ -78,8 +79,8 @@ class HomeworkPresenter @Inject constructor(
     }
 
     private fun setBaseDateOnHolidays() {
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { semesterRepository.getCurrentSemester(it) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({
@@ -100,10 +101,10 @@ class HomeworkPresenter @Inject constructor(
         currentDate = date
         disposable.apply {
             clear()
-            add(studentRepository.getCurrentStudent()
+            add(rxSingle { studentRepository.getCurrentStudent() }
                 .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                        homeworkRepository.getHomework(student, semester, currentDate, currentDate, forceRefresh)
+                    rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                        rxSingle { homeworkRepository.getHomework(student, semester, currentDate, currentDate, forceRefresh) }
                     }
                 }
                 .map { createHomeworkItem(it) }

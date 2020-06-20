@@ -9,6 +9,7 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.ifNullOrBlank
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -162,10 +163,12 @@ class LoginAdvancedPresenter @Inject constructor(
         val symbol = view?.formSymbolValue.orEmpty()
         val token = view?.formTokenValue.orEmpty()
 
-        return when (Sdk.Mode.valueOf(view?.formLoginType ?: "")) {
-            Sdk.Mode.API -> studentRepository.getStudentsApi(pin, symbol, token)
-            Sdk.Mode.SCRAPPER -> studentRepository.getStudentsScrapper(email, password, endpoint, symbol)
-            Sdk.Mode.HYBRID -> studentRepository.getStudentsHybrid(email, password, endpoint, symbol)
+        return rxSingle {
+            when (Sdk.Mode.valueOf(view?.formLoginType ?: "")) {
+                Sdk.Mode.API -> studentRepository.getStudentsApi(pin, symbol, token)
+                Sdk.Mode.SCRAPPER -> studentRepository.getStudentsScrapper(email, password, endpoint, symbol)
+                Sdk.Mode.HYBRID -> studentRepository.getStudentsHybrid(email, password, endpoint, symbol)
+            }
         }
     }
 

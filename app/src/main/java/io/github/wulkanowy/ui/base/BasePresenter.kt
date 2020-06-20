@@ -4,6 +4,8 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.rx2.rxCompletable
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 
 open class BasePresenter<T : BaseView>(
@@ -27,13 +29,13 @@ open class BasePresenter<T : BaseView>(
 
     fun onExpiredLoginSelected() {
         Timber.i("Attempt to switch the student after the session expires")
-        disposable.add(studentRepository.getCurrentStudent(false)
-            .flatMapCompletable { studentRepository.logoutStudent(it) }
-            .andThen(studentRepository.getSavedStudents(false))
+        disposable.add(rxSingle { studentRepository.getCurrentStudent(false) }
+            .flatMapCompletable { rxCompletable { studentRepository.logoutStudent(it) } }
+            .andThen(rxSingle { studentRepository.getSavedStudents(false) })
             .flatMapCompletable {
                 if (it.isNotEmpty()) {
                     Timber.i("Switching current student")
-                    studentRepository.switchStudent(it[0])
+                    rxCompletable { studentRepository.switchStudent(it[0]) }
                 } else Completable.complete()
             }
             .subscribeOn(schedulers.backgroundThread)

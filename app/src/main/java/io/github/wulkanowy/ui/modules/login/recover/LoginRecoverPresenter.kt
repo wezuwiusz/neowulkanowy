@@ -6,6 +6,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.ifNullOrBlank
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -55,7 +56,7 @@ class LoginRecoverPresenter @Inject constructor(
 
         if (!validateInput(username, host)) return
 
-        disposable.add(recoverRepository.getReCaptchaSiteKey(host, symbol.ifBlank { "Default" })
+        disposable.add(rxSingle { recoverRepository.getReCaptchaSiteKey(host, symbol.ifBlank { "Default" }) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {
@@ -98,7 +99,7 @@ class LoginRecoverPresenter @Inject constructor(
 
         with(disposable) {
             clear()
-            add(recoverRepository.sendRecoverRequest(host, symbol, username, reCaptchaResponse)
+            add(rxSingle { recoverRepository.sendRecoverRequest(host, symbol, username, reCaptchaResponse) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doOnSubscribe {

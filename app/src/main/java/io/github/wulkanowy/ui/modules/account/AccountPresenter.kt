@@ -7,6 +7,8 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.rxCompletable
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -36,11 +38,11 @@ class AccountPresenter @Inject constructor(
 
     fun onLogoutConfirm() {
         Timber.i("Attempt to logout current user ")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMapCompletable { studentRepository.logoutStudent(it) }
-            .andThen(studentRepository.getSavedStudents(false))
+        disposable.add(rxSingle { studentRepository.getCurrentStudent(false) }
+            .flatMapCompletable { rxCompletable { studentRepository.logoutStudent(it) } }
+            .andThen(rxSingle { studentRepository.getSavedStudents(false) })
             .flatMap {
-                if (it.isNotEmpty()) studentRepository.switchStudent(it[0]).toSingle { it }
+                if (it.isNotEmpty()) rxCompletable { studentRepository.switchStudent(it[0]) }.toSingle { it }
                 else Single.just(it)
             }
             .subscribeOn(schedulers.backgroundThread)
@@ -69,7 +71,7 @@ class AccountPresenter @Inject constructor(
             view?.dismissView()
         } else {
             Timber.i("Attempt to change a student")
-            disposable.add(studentRepository.switchStudent(student)
+            disposable.add(rxSingle { studentRepository.switchStudent(student) }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally { view?.dismissView() }
@@ -93,7 +95,7 @@ class AccountPresenter @Inject constructor(
 
     private fun loadData() {
         Timber.i("Loading account data started")
-        disposable.add(studentRepository.getSavedStudents(false)
+        disposable.add(rxSingle { studentRepository.getSavedStudents(false) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .map { createAccountItems(it) }

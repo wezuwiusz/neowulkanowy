@@ -7,6 +7,7 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.ifNullOrBlank
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import java.io.Serializable
 import javax.inject.Inject
@@ -48,7 +49,7 @@ class LoginSymbolPresenter @Inject constructor(
 
         disposable.add(
             Single.fromCallable { loginData }
-                .flatMap { studentRepository.getStudentsScrapper(it.first, it.second, it.third, symbol) }
+                .flatMap { rxSingle { studentRepository.getStudentsScrapper(it.first, it.second, it.third, symbol) } }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doOnSubscribe {

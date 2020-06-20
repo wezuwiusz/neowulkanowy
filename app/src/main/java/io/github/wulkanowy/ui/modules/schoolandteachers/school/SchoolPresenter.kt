@@ -7,6 +7,8 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxMaybe
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -63,10 +65,10 @@ class SchoolPresenter @Inject constructor(
 
     private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading school info started")
-        disposable.add(studentRepository.getCurrentStudent()
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
             .flatMapMaybe { student ->
-                semesterRepository.getCurrentSemester(student).flatMapMaybe {
-                    schoolRepository.getSchoolInfo(student, it, forceRefresh)
+                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMapMaybe {
+                    rxMaybe { schoolRepository.getSchoolInfo(student, it, forceRefresh) }
                 }
             }
             .subscribeOn(schedulers.backgroundThread)

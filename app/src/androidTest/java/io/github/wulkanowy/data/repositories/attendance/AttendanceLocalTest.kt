@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -35,7 +36,7 @@ class AttendanceLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        attendanceLocal.saveAttendance(listOf(
+        val list = listOf(
             getAttendanceEntity(
                 of(2018, 9, 10),
                 SentExcuseStatus.ACCEPTED
@@ -48,14 +49,11 @@ class AttendanceLocalTest {
                 of(2018, 9, 17),
                 SentExcuseStatus.ACCEPTED
             )
-        ))
+        )
+        runBlocking { attendanceLocal.saveAttendance(list) }
 
-        val attendance = attendanceLocal
-            .getAttendance(Semester(1, 2, "", 1, 3, 2019, now(), now(), 1, 1),
-                of(2018, 9, 10),
-                of(2018, 9, 14)
-            )
-            .blockingGet()
+        val semester = Semester(1, 2, "", 1, 3, 2019, now(), now(), 1, 1)
+        val attendance = runBlocking { attendanceLocal.getAttendance(semester, of(2018, 9, 10), of(2018, 9, 14)) }
         assertEquals(2, attendance.size)
         assertEquals(attendance[0].date, of(2018, 9, 10))
         assertEquals(attendance[1].date, of(2018, 9, 14))

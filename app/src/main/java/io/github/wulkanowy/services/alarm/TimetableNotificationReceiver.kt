@@ -19,6 +19,7 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toLocalDateTime
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -53,7 +54,7 @@ class TimetableNotificationReceiver : BroadcastReceiver() {
         Timber.d("Receiving intent... ${intent.toUri(0)}")
         AndroidInjection.inject(this, context)
 
-        studentRepository.getCurrentStudent(false)
+        rxSingle { studentRepository.getCurrentStudent(false) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({

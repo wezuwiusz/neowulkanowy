@@ -7,6 +7,8 @@ import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.ifNullOrBlank
+import kotlinx.coroutines.rx2.rxCompletable
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import java.io.Serializable
 import javax.inject.Inject
@@ -71,7 +73,7 @@ class LoginStudentSelectPresenter @Inject constructor(
     private fun loadData(students: List<Student>) {
         resetSelectedState()
         this.students = students
-        disposable.add(studentRepository.getSavedStudents()
+        disposable.add(rxSingle { studentRepository.getSavedStudents(false) }
             .map { savedStudents ->
                 students.map { student ->
                     student to savedStudents.any { compareStudents(student, it) }
@@ -95,9 +97,9 @@ class LoginStudentSelectPresenter @Inject constructor(
     }
 
     private fun registerStudents(students: List<Student>) {
-        disposable.add(studentRepository.saveStudents(students)
+        disposable.add(rxSingle { studentRepository.saveStudents(students) }
             .map { students.first().apply { id = it.first() } }
-            .flatMapCompletable { studentRepository.switchStudent(it) }
+            .flatMapCompletable { rxCompletable { studentRepository.switchStudent(it) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {

@@ -1,49 +1,37 @@
 package io.github.wulkanowy.data.repositories.homework
 
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.uniqueSubtract
-import io.reactivex.Completable
-import io.reactivex.Single
 import org.threeten.bp.LocalDate
-import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class HomeworkRepository @Inject constructor(
-    private val settings: InternetObservingSettings,
     private val local: HomeworkLocal,
     private val remote: HomeworkRemote
 ) {
 
-    fun getHomework(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): Single<List<Homework>> {
-        return Single.fromCallable { start.monday to end.sunday }.flatMap { (monday, friday) ->
-            local.getHomework(semester, monday, friday).filter { !forceRefresh }
-                .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
-                    .flatMap {
-                        if (it) remote.getHomework(student, semester, monday, friday)
-                        else Single.error(UnknownHostException())
-                    }.flatMap { new ->
-                        local.getHomework(semester, monday, friday).toSingle(emptyList())
-                            .doOnSuccess { old ->
-                                local.deleteHomework(old.uniqueSubtract(new))
-                                local.saveHomework(new.uniqueSubtract(old))
-                            }
-                    }.flatMap { local.getHomework(semester, monday, friday).toSingle(emptyList()) })
+    suspend fun getHomework(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): List<Homework> {
+        return local.getHomework(semester, start.monday, end.sunday).filter { !forceRefresh }.ifEmpty {
+            val new = remote.getHomework(student, semester, start.monday, end.sunday)
+
+            val old = local.getHomework(semester, start.monday, end.sunday)
+
+            local.deleteHomework(old.uniqueSubtract(new))
+            local.saveHomework(new.uniqueSubtract(old))
+
+            local.getHomework(semester, start.monday, end.sunday)
         }
     }
 
-    fun toggleDone(homework: Homework): Completable {
-        return Completable.fromCallable {
-            local.updateHomework(listOf(homework.apply {
-                isDone = !isDone
-            }))
-        }
+    suspend fun toggleDone(homework: Homework) {
+        local.updateHomework(listOf(homework.apply {
+            isDone = !isDone
+        }))
     }
 }

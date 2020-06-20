@@ -25,6 +25,8 @@ import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Maybe
+import kotlinx.coroutines.rx2.rxMaybe
+import kotlinx.coroutines.rx2.rxSingle
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
@@ -100,9 +102,9 @@ class TimetableWidgetFactory(
 
     private fun updateLessons(date: LocalDate, studentId: Long) {
         lessons = try {
-            studentRepository.isStudentSaved()
+            rxSingle { studentRepository.isStudentSaved() }
                 .filter { true }
-                .flatMap { studentRepository.getSavedStudents().toMaybe() }
+                .flatMap { rxMaybe { studentRepository.getSavedStudents() } }
                 .flatMap {
                     val student = it.singleOrNull { student -> student.id == studentId }
 
@@ -110,8 +112,8 @@ class TimetableWidgetFactory(
                     else Maybe.empty()
                 }
                 .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).toMaybe().flatMap { semester ->
-                        timetableRepository.getTimetable(student, semester, date, date).toMaybe()
+                    rxMaybe { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                        rxMaybe { timetableRepository.getTimetable(student, semester, date, date) }
                     }
                 }
                 .map { items -> items.sortedWith(compareBy({ it.number }, { !it.isStudentPlan })) }

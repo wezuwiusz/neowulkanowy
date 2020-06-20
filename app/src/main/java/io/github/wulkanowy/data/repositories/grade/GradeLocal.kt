@@ -5,7 +5,6 @@ import io.github.wulkanowy.data.db.dao.GradeSummaryDao
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
-import io.reactivex.Maybe
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,35 +14,35 @@ class GradeLocal @Inject constructor(
     private val gradeSummaryDb: GradeSummaryDao
 ) {
 
-    fun saveGrades(grades: List<Grade>) {
+    suspend fun saveGrades(grades: List<Grade>) {
         gradeDb.insertAll(grades)
     }
 
-    fun deleteGrades(grades: List<Grade>) {
+    suspend fun deleteGrades(grades: List<Grade>) {
         gradeDb.deleteAll(grades)
     }
 
-    fun updateGrades(grades: List<Grade>) {
+    suspend fun updateGrades(grades: List<Grade>) {
         gradeDb.updateAll(grades)
     }
 
-    fun updateGradesSummary(gradesSummary: List<GradeSummary>) {
+    suspend fun updateGradesSummary(gradesSummary: List<GradeSummary>) {
         gradeSummaryDb.updateAll(gradesSummary)
     }
 
-    fun getGradesDetails(semester: Semester): Maybe<List<Grade>> {
-        return gradeDb.loadAll(semester.semesterId, semester.studentId).filter { it.isNotEmpty() }
+    suspend fun getGradesDetails(semester: Semester): List<Grade> {
+        return gradeDb.loadAll(semester.semesterId, semester.studentId)
     }
 
-    fun saveGradesSummary(gradesSummary: List<GradeSummary>) {
+    suspend fun saveGradesSummary(gradesSummary: List<GradeSummary>) {
         gradeSummaryDb.insertAll(gradesSummary)
     }
 
-    fun deleteGradesSummary(gradesSummary: List<GradeSummary>) {
+    suspend fun deleteGradesSummary(gradesSummary: List<GradeSummary>) {
         gradeSummaryDb.deleteAll(gradesSummary)
     }
 
-    fun getGradesSummary(semester: Semester): Maybe<List<GradeSummary>> {
-        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId).filter { it.isNotEmpty() }
+    suspend fun getGradesSummary(semester: Semester): List<GradeSummary> {
+        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId)
     }
 }

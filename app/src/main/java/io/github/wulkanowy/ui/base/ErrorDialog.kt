@@ -13,9 +13,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogErrorBinding
-import io.github.wulkanowy.sdk.exception.FeatureDisabledException
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
-import io.github.wulkanowy.sdk.exception.ServiceUnavailableException
+import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
+import io.github.wulkanowy.sdk.scrapper.exception.ServiceUnavailableException
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.getString
 import io.github.wulkanowy.utils.openAppInMarket

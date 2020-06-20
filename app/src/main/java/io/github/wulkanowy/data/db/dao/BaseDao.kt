@@ -7,11 +7,11 @@ import androidx.room.Update
 interface BaseDao<T> {
 
     @Insert
-    fun insertAll(items: List<T>): List<Long>
+    suspend fun insertAll(items: List<T>): List<Long>
 
     @Update
-    fun updateAll(items: List<T>)
+    suspend fun updateAll(items: List<T>)
 
     @Delete
-    fun deleteAll(items: List<T>)
+    suspend fun deleteAll(items: List<T>)
 }

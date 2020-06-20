@@ -8,6 +8,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.getCurrentOrLast
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
@@ -99,8 +100,8 @@ class GradePresenter @Inject constructor(
 
     private fun loadData() {
         Timber.i("Loading grade data started")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it, refreshOnNoCurrent = true) }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { semesterRepository.getSemesters(it, refreshOnNoCurrent = true) } }
             .delay(200, MILLISECONDS)
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)

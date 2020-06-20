@@ -12,6 +12,7 @@ import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,8 +57,8 @@ class MessagePreviewPresenter @Inject constructor(
         Timber.i("Loading message ${message.messageId} preview started")
         disposable.apply {
             clear()
-            add(studentRepository.getStudentById(message.studentId)
-                .flatMap { messageRepository.getMessage(it, message, true) }
+            add(rxSingle { studentRepository.getStudentById(message.studentId) }
+                .flatMap { rxSingle { messageRepository.getMessage(it, message, true) } }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally { view?.showProgress(false) }
@@ -152,8 +153,8 @@ class MessagePreviewPresenter @Inject constructor(
 
     private fun deleteMessage() {
         message?.let { message ->
-            disposable.add(studentRepository.getCurrentStudent()
-                .flatMap { messageRepository.deleteMessage(it, message) }
+            disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+                .flatMap { rxSingle { messageRepository.deleteMessage(it, message) } }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doOnSubscribe {

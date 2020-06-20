@@ -10,6 +10,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -116,10 +117,10 @@ class GradeStatisticsPresenter @Inject constructor(
 
     private fun loadSubjects() {
         Timber.i("Loading grade stats subjects started")
-        disposable.add(studentRepository.getCurrentStudent()
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
             .flatMap { student ->
-                semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                    subjectRepository.getSubjects(student, semester)
+                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                    rxSingle { subjectRepository.getSubjects(student, semester) }
                 }
             }
             .doOnSuccess { subjects = it }
@@ -141,16 +142,18 @@ class GradeStatisticsPresenter @Inject constructor(
         currentType = type
 
         Timber.i("Loading grade stats data started")
-        disposable.add(studentRepository.getCurrentStudent()
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
             .flatMap { student ->
-                semesterRepository.getSemesters(student).flatMap { semesters ->
+                rxSingle { semesterRepository.getSemesters(student) }.flatMap { semesters ->
                     val semester = semesters.first { item -> item.semesterId == semesterId }
 
-                    with(gradeStatisticsRepository) {
-                        when (type) {
-                            ViewType.SEMESTER -> getGradesStatistics(student, semester, currentSubjectName, true, forceRefresh)
-                            ViewType.PARTIAL -> getGradesStatistics(student, semester, currentSubjectName, false, forceRefresh)
-                            ViewType.POINTS -> getGradesPointsStatistics(student, semester, currentSubjectName, forceRefresh)
+                    rxSingle {
+                        with(gradeStatisticsRepository) {
+                            when (type) {
+                                ViewType.SEMESTER -> getGradesStatistics(student, semester, currentSubjectName, true, forceRefresh)
+                                ViewType.PARTIAL -> getGradesStatistics(student, semester, currentSubjectName, false, forceRefresh)
+                                ViewType.POINTS -> getGradesPointsStatistics(student, semester, currentSubjectName, forceRefresh)
+                            }
                         }
                     }
                 }

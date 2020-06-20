@@ -2,32 +2,32 @@ package io.github.wulkanowy.ui.modules.login
 
 import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.mockk.MockKAnnotations
+import io.mockk.clearMocks
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.verify
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.clearInvocations
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
 
 class LoginPresenterTest {
 
-    @Mock
+    @MockK(relaxed = true)
     lateinit var loginView: LoginView
 
-    @Mock
+    @MockK(relaxed = true)
     lateinit var errorHandler: LoginErrorHandler
 
-    @Mock
+    @MockK
     lateinit var studentRepository: StudentRepository
 
     private lateinit var presenter: LoginPresenter
 
     @Before
     fun initPresenter() {
-        MockitoAnnotations.initMocks(this)
-        clearInvocations(loginView)
+        MockKAnnotations.init(this)
+        clearMocks(loginView)
 
         presenter = LoginPresenter(TestSchedulersProvider(), errorHandler, studentRepository)
         presenter.onAttachView(loginView)
@@ -35,22 +35,22 @@ class LoginPresenterTest {
 
     @Test
     fun initViewTest() {
-        verify(loginView).initView()
-        verify(loginView).showActionBar(false)
+        verify { loginView.initView() }
+        verify { loginView.showActionBar(false) }
     }
 
     @Test
     fun onBackPressedTest() {
-        clearInvocations(loginView)
-        doReturn(1).`when`(loginView).currentViewIndex
+        clearMocks(loginView)
+        every { loginView.currentViewIndex } returns 1
         presenter.onBackPressed { }
-        verify(loginView).switchView(0)
+        verify { loginView.switchView(0) }
     }
 
     @Test
     fun onBackPressedDefaultTest() {
         var i = 0
-        doReturn(0).`when`(loginView).currentViewIndex
+        every { loginView.currentViewIndex } returns 0
         presenter.onBackPressed { i++ }
         assertNotEquals(0, i)
     }

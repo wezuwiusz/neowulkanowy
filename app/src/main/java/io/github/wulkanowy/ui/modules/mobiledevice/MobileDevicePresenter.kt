@@ -8,6 +8,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -48,10 +49,10 @@ class MobileDevicePresenter @Inject constructor(
 
     private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading mobile devices data started")
-        disposable.add(studentRepository.getCurrentStudent()
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
             .flatMap { student ->
-                semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                    mobileDeviceRepository.getDevices(student, semester, forceRefresh)
+                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                    rxSingle { mobileDeviceRepository.getDevices(student, semester, forceRefresh) }
                 }
             }
             .subscribeOn(schedulers.backgroundThread)
@@ -114,11 +115,11 @@ class MobileDevicePresenter @Inject constructor(
 
     fun onUnregisterConfirmed(device: MobileDevice) {
         Timber.i("Unregister device started")
-        disposable.add(studentRepository.getCurrentStudent()
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
             .flatMap { student ->
-                semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                    mobileDeviceRepository.unregisterDevice(student, semester, device)
-                        .flatMap { mobileDeviceRepository.getDevices(student, semester, it) }
+                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                    rxSingle { mobileDeviceRepository.unregisterDevice(student, semester, device) }
+                        .flatMap { rxSingle { mobileDeviceRepository.getDevices(student, semester, it) } }
                 }
             }
             .subscribeOn(schedulers.backgroundThread)

@@ -31,6 +31,8 @@ import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Maybe
+import kotlinx.coroutines.rx2.rxMaybe
+import kotlinx.coroutines.rx2.rxSingle
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import timber.log.Timber
@@ -184,17 +186,17 @@ class TimetableWidgetProvider : BroadcastReceiver() {
 
     private fun getStudent(studentId: Long, appWidgetId: Int): Student? {
         return try {
-            studentRepository.isStudentSaved()
+            rxSingle { studentRepository.isStudentSaved() }
                 .filter { true }
-                .flatMap { studentRepository.getSavedStudents(false).toMaybe() }
+                .flatMap { rxMaybe { studentRepository.getSavedStudents(false) } }
                 .flatMap { students ->
                     val student = students.singleOrNull { student -> student.id == studentId }
                     when {
                         student != null -> Maybe.just(student)
                         studentId != 0L -> {
-                            studentRepository.isCurrentStudentSet()
+                            rxSingle { studentRepository.isCurrentStudentSet() }
                                 .filter { true }
-                                .flatMap { studentRepository.getCurrentStudent(false).toMaybe() }
+                                .flatMap { rxMaybe { studentRepository.getCurrentStudent(false) } }
                                 .doOnSuccess { sharedPref.putLong(getStudentWidgetKey(appWidgetId), it.id) }
                         }
                         else -> Maybe.empty()

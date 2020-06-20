@@ -6,10 +6,11 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Attendance
 import io.github.wulkanowy.utils.init
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
-import io.reactivex.Single
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -34,16 +35,16 @@ class AttendanceRemoteTest {
     @Test
     fun getAttendanceTest() {
         every { mockSdk.init(student) } returns mockSdk
-        every {
+        coEvery {
             mockSdk.getAttendance(
                 of(2018, 9, 10),
                 of(2018, 9, 15),
                 1
             )
-        } returns Single.just(listOf(
+        } returns listOf(
             getAttendance(of(2018, 9, 10)),
             getAttendance(of(2018, 9, 17))
-        ))
+        )
 
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 1
@@ -51,10 +52,12 @@ class AttendanceRemoteTest {
         every { semesterMock.semesterId } returns 1
         every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val attendance = AttendanceRemote(mockSdk).getAttendance(student, semesterMock,
-            of(2018, 9, 10),
-            of(2018, 9, 15)
-        ).blockingGet()
+        val attendance = runBlocking {
+            AttendanceRemote(mockSdk).getAttendance(student, semesterMock,
+                of(2018, 9, 10),
+                of(2018, 9, 15)
+            )
+        }
         assertEquals(2, attendance.size)
     }
 

@@ -8,6 +8,7 @@ import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.ui.modules.grade.GradeDetailsWithAverage
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,8 +30,8 @@ class GradeSummaryPresenter @Inject constructor(
 
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
         Timber.i("Loading grade summary data started")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { averageProvider.getGradesDetailsWithAverage(it, semesterId, forceRefresh) }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { averageProvider.getGradesDetailsWithAverage(it, semesterId, forceRefresh) } }
             .map { createGradeSummaryItems(it) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)

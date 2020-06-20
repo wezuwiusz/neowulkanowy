@@ -3,44 +3,43 @@ package io.github.wulkanowy.ui.modules.splash
 import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.reactivex.Single
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.impl.annotations.MockK
+import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
 
 class SplashPresenterTest {
 
-    @Mock
+    @MockK(relaxed = true)
     lateinit var splashView: SplashView
 
-    @Mock
+    @MockK
     lateinit var studentRepository: StudentRepository
 
-    @Mock
+    @MockK(relaxed = true)
     lateinit var errorHandler: ErrorHandler
 
     private lateinit var presenter: SplashPresenter
 
     @Before
     fun initPresenter() {
-        MockitoAnnotations.initMocks(this)
+        MockKAnnotations.init(this)
         presenter = SplashPresenter(TestSchedulersProvider(), errorHandler, studentRepository)
     }
 
     @Test
     fun testOpenLoginView() {
-        doReturn(Single.just(false)).`when`(studentRepository).isCurrentStudentSet()
+        coEvery { studentRepository.isCurrentStudentSet() } returns false
         presenter.onAttachView(splashView)
-        verify(splashView).openLoginView()
+        verify { splashView.openLoginView() }
     }
 
     @Test
     fun testMainMainView() {
-        doReturn(Single.just(true)).`when`(studentRepository).isCurrentStudentSet()
+        coEvery { studentRepository.isCurrentStudentSet() } returns true
         presenter.onAttachView(splashView)
-        verify(splashView).openMainView()
+        verify { splashView.openMainView() }
     }
 }

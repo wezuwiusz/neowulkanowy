@@ -11,6 +11,7 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.rx2.rxSingle
 import me.xdrop.fuzzywuzzy.FuzzySearch
 import timber.log.Timber
 import java.util.Locale
@@ -83,10 +84,10 @@ class MessageTabPresenter @Inject constructor(
 
     private fun loadData(forceRefresh: Boolean) {
         Timber.i("Loading $folder message data started")
-        disposable.add(studentRepository.getCurrentStudent()
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
             .flatMap { student ->
-                semesterRepository.getCurrentSemester(student)
-                    .flatMap { messageRepository.getMessages(student, it, folder, forceRefresh) }
+                rxSingle { semesterRepository.getCurrentSemester(student) }
+                    .flatMap { rxSingle { messageRepository.getMessages(student, it, folder, forceRefresh) } }
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)

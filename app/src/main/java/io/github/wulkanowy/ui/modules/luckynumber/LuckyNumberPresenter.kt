@@ -6,6 +6,8 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxMaybe
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -35,8 +37,8 @@ class LuckyNumberPresenter @Inject constructor(
         Timber.i("Loading lucky number started")
         disposable.apply {
             clear()
-            add(studentRepository.getCurrentStudent()
-                .flatMapMaybe { luckyNumberRepository.getLuckyNumber(it, forceRefresh) }
+            add(rxSingle { studentRepository.getCurrentStudent() }
+                .flatMapMaybe { rxMaybe { luckyNumberRepository.getLuckyNumber(it, forceRefresh) } }
                 .subscribeOn(schedulers.backgroundThread)
                 .observeOn(schedulers.mainThread)
                 .doFinally {

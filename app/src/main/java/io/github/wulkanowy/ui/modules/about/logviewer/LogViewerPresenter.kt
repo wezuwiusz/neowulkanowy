@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -22,7 +23,7 @@ class LogViewerPresenter @Inject constructor(
     }
 
     fun onShareLogsSelected(): Boolean {
-        disposable.add(loggerRepository.getLogFiles()
+        disposable.add(rxSingle { loggerRepository.getLogFiles() }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({ files ->
@@ -40,7 +41,7 @@ class LogViewerPresenter @Inject constructor(
     }
 
     private fun loadLogFile() {
-        disposable.add(loggerRepository.getLastLogLines()
+        disposable.add(rxSingle { loggerRepository.getLastLogLines() }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({

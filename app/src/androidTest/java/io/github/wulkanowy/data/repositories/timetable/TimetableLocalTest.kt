@@ -5,6 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -34,17 +35,21 @@ class TimetableLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        timetableDb.saveTimetable(listOf(
+        val list = listOf(
             createTimetableLocal(of(2018, 9, 10, 0, 0, 0), 1),
             createTimetableLocal(of(2018, 9, 14, 0, 0, 0), 1),
             createTimetableLocal(of(2018, 9, 17, 0, 0, 0), 1)
-        ))
+        )
+        runBlocking { timetableDb.saveTimetable(list) }
 
-        val exams = timetableDb.getTimetable(
-            Semester(1, 2, "", 1, 1, 2019, LocalDate.now(), LocalDate.now(), 1, 1),
-            LocalDate.of(2018, 9, 10),
-            LocalDate.of(2018, 9, 14)
-        ).blockingGet()
+        val semester = Semester(1, 2, "", 1, 1, 2019, LocalDate.now(), LocalDate.now(), 1, 1)
+        val exams = runBlocking {
+            timetableDb.getTimetable(
+                semester = semester,
+                startDate = LocalDate.of(2018, 9, 10),
+                endDate = LocalDate.of(2018, 9, 14)
+            )
+        }
 
         assertEquals(2, exams.size)
         assertEquals(exams[0].date, LocalDate.of(2018, 9, 10))

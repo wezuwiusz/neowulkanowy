@@ -18,6 +18,8 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
+import kotlinx.coroutines.rx2.rxCompletable
+import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -29,11 +31,11 @@ class NoteWork @Inject constructor(
 ) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return noteRepository.getNotes(student, semester, true, preferencesRepository.isNotificationsEnable)
-            .flatMap { noteRepository.getNotNotifiedNotes(student) }
+        return rxSingle { noteRepository.getNotes(student, semester, true, preferencesRepository.isNotificationsEnable) }
+            .flatMap { rxSingle { noteRepository.getNotNotifiedNotes(student) } }
             .flatMapCompletable {
                 if (it.isNotEmpty()) notify(it)
-                noteRepository.updateNotes(it.onEach { note -> note.isNotified = true })
+                rxCompletable { noteRepository.updateNotes(it.onEach { note -> note.isNotified = true }) }
             }
     }
 

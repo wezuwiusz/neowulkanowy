@@ -11,6 +11,8 @@ import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.ui.modules.grade.GradeDetailsWithAverage
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import kotlinx.coroutines.rx2.rxCompletable
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -62,13 +64,13 @@ class GradeDetailsPresenter @Inject constructor(
 
     fun onMarkAsReadSelected(): Boolean {
         Timber.i("Select mark grades as read")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getSemesters(it) }
-            .flatMap { gradeRepository.getUnreadGrades(it.first { item -> item.semesterId == currentSemesterId }) }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { semesterRepository.getSemesters(it) } }
+            .flatMap { rxSingle { gradeRepository.getUnreadGrades(it.first { item -> item.semesterId == currentSemesterId }) } }
             .map { it.map { grade -> grade.apply { isRead = true } } }
             .flatMapCompletable {
                 Timber.i("Mark as read ${it.size} grades")
-                gradeRepository.updateGrades(it)
+                rxCompletable { gradeRepository.updateGrades(it) }
             }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
@@ -126,8 +128,8 @@ class GradeDetailsPresenter @Inject constructor(
 
     private fun loadData(semesterId: Int, forceRefresh: Boolean) {
         Timber.i("Loading grade details data started")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { averageProvider.getGradesDetailsWithAverage(it, semesterId, forceRefresh) }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { averageProvider.getGradesDetailsWithAverage(it, semesterId, forceRefresh) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doFinally {
@@ -196,7 +198,7 @@ class GradeDetailsPresenter @Inject constructor(
 
     private fun updateGrade(grade: Grade) {
         Timber.i("Attempt to update grade ${grade.id}")
-        disposable.add(gradeRepository.updateGrade(grade)
+        disposable.add(rxCompletable { gradeRepository.updateGrade(grade) }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({

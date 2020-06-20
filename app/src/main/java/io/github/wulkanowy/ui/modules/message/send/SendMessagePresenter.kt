@@ -15,6 +15,8 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Completable
+import kotlinx.coroutines.rx2.rxMaybe
+import kotlinx.coroutines.rx2.rxSingle
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -98,19 +100,19 @@ class SendMessagePresenter @Inject constructor(
         var selectedRecipientChips: List<RecipientChipItem> = emptyList()
 
         Timber.i("Loading recipients started")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it).map { semester -> it to semester } }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { semesterRepository.getCurrentSemester(it) }.map { semester -> it to semester } }
             .flatMapCompletable { (student, semester) ->
-                reportingUnitRepository.getReportingUnit(student, semester.unitId)
+                rxMaybe { reportingUnitRepository.getReportingUnit(student, semester.unitId) }
                     .doOnSuccess { reportingUnit = it }
-                    .flatMap { recipientRepository.getRecipients(student, 2, it).toMaybe() }
+                    .flatMap { rxMaybe { recipientRepository.getRecipients(student, 2, it) } }
                     .doOnSuccess {
                         Timber.i("Loading recipients result: Success, fetched %d recipients", it.size)
                         recipientChips = createChips(it)
                     }
                     .flatMapCompletable {
                         if (message == null || reply != true) Completable.complete()
-                        else recipientRepository.getMessageRecipients(student, message)
+                        else rxSingle { recipientRepository.getMessageRecipients(student, message) }
                             .doOnSuccess {
                                 Timber.i("Loaded message recipients to reply result: Success, fetched %d recipients", it.size)
                                 selectedRecipientChips = createChips(it)
@@ -148,8 +150,8 @@ class SendMessagePresenter @Inject constructor(
 
     private fun sendMessage(subject: String, content: String, recipients: List<Recipient>) {
         Timber.i("Sending message started")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { messageRepository.sendMessage(it, subject, content, recipients) }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { messageRepository.sendMessage(it, subject, content, recipients) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .doOnSubscribe {

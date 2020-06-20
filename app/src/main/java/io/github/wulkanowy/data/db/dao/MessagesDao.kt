@@ -5,19 +5,17 @@ import androidx.room.Query
 import androidx.room.Transaction
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
-import io.reactivex.Maybe
-import io.reactivex.Single
 
 @Dao
 interface MessagesDao : BaseDao<Message> {
 
     @Transaction
     @Query("SELECT * FROM Messages WHERE student_id = :studentId AND message_id = :messageId")
-    fun loadMessageWithAttachment(studentId: Int, messageId: Int): Single<MessageWithAttachment>
+    suspend fun loadMessageWithAttachment(studentId: Int, messageId: Int): MessageWithAttachment
 
     @Query("SELECT * FROM Messages WHERE student_id = :studentId AND folder_id = :folder AND removed = 0 ORDER BY date DESC")
-    fun loadAll(studentId: Int, folder: Int): Maybe<List<Message>>
+    suspend fun loadAll(studentId: Int, folder: Int): List<Message>
 
     @Query("SELECT * FROM Messages WHERE student_id = :studentId AND removed = 1 ORDER BY date DESC")
-    fun loadDeleted(studentId: Int): Maybe<List<Message>>
+    suspend fun loadDeleted(studentId: Int): List<Message>
 }

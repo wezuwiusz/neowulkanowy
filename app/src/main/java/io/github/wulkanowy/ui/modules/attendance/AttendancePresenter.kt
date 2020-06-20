@@ -16,6 +16,7 @@ import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousOrSameSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.rx2.rxSingle
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDate.ofEpochDay
@@ -167,8 +168,8 @@ class AttendancePresenter @Inject constructor(
     }
 
     private fun setBaseDateOnHolidays() {
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
+        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
+            .flatMap { rxSingle { semesterRepository.getCurrentSemester(it) } }
             .subscribeOn(schedulers.backgroundThread)
             .observeOn(schedulers.mainThread)
             .subscribe({
@@ -185,10 +186,10 @@ class AttendancePresenter @Inject constructor(
         currentDate = date
         disposable.apply {
             clear()
-            add(studentRepository.getCurrentStudent()
+            add(rxSingle { studentRepository.getCurrentStudent() }
                 .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                        attendanceRepository.getAttendance(student, semester, date, date, forceRefresh)
+                    rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                        rxSingle { attendanceRepository.getAttendance(student, semester, date, date, forceRefresh) }
                     }
                 }
                 .map { list ->
@@ -231,10 +232,10 @@ class AttendancePresenter @Inject constructor(
     private fun excuseAbsence(reason: String?, toExcuseList: List<Attendance>) {
         Timber.i("Excusing absence started")
         disposable.apply {
-            add(studentRepository.getCurrentStudent()
+            add(rxSingle { studentRepository.getCurrentStudent() }
                 .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                        attendanceRepository.excuseForAbsence(student, semester, toExcuseList, reason)
+                    rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
+                        rxSingle { attendanceRepository.excuseForAbsence(student, semester, toExcuseList, reason) }
                     }
                 }
                 .subscribeOn(schedulers.backgroundThread)
