@@ -104,24 +104,24 @@
         <item quantity="other">Neue Noten</item>
     </plurals>
     <plurals name="grade_new_items_predicted">
-        <item quantity="one">New predicted grade</item>
-        <item quantity="other">New predicted grades</item>
+        <item quantity="one">Neue vorhergesagte Note</item>
+        <item quantity="other">Neue vorhergesagte Noten</item>
     </plurals>
     <plurals name="grade_new_items_final">
-        <item quantity="one">New final grade</item>
-        <item quantity="other">New final grades</item>
+        <item quantity="one">Neue Abschlussnote</item>
+        <item quantity="other">Neue Abschlussnoten</item>
     </plurals>
     <plurals name="grade_notify_new_items">
         <item quantity="one">Du hast %1$d Note bekommen</item>
         <item quantity="other">Du hast %1$d Noten bekommen</item>
     </plurals>
     <plurals name="grade_notify_new_items_predicted">
-        <item quantity="one">You received %1$d predicted grade</item>
-        <item quantity="other">You received %1$d predicted grades</item>
+        <item quantity="one">Sie haben %1$d vorhergesagte Note bekommen</item>
+        <item quantity="other">Sie haben %1$d vorhergesagte Noten bekommen</item>
     </plurals>
     <plurals name="grade_notify_new_items_final">
-        <item quantity="one">You received %1$d final grade</item>
-        <item quantity="other">You received %1$d final grades</item>
+        <item quantity="one">Sie haben %1$d Abschlussnote bekommen</item>
+        <item quantity="other">Sie haben %1$d Abschlussnoten bekommen</item>
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lektion</string>
@@ -188,8 +188,8 @@
     <string name="message_move_to_bin">In den Korb wandern</string>
     <string name="message_delete_forever">Dauerhaft löschen</string>
     <string name="message_delete_success">Nachricht erfolgreich gelöscht</string>
-    <string name="message_share">Share</string>
-    <string name="message_print">Print</string>
+    <string name="message_share">Teilen</string>
+    <string name="message_print">Drucken</string>
     <string name="message_subject">Thema</string>
     <string name="message_content">Inhalt</string>
     <string name="message_send_successful">Nachricht erfolgreich gesendet</string>
@@ -263,10 +263,10 @@
     <string name="account_logout">Abmelden</string>
     <string name="account_confirm">Wollen Sie sich von einem aktiven Studenten abmelden?</string>
     <string name="account_logout_student">Abmeldung von Student</string>
-    <string name="account_type_student">Student account</string>
-    <string name="account_type_parent">Parent account</string>
-    <string name="account_login_mobile_api">Mobile API mode</string>
-    <string name="account_login_hybrid">Hybrid mode</string>
+    <string name="account_type_student">Studentenkonto</string>
+    <string name="account_type_parent">Elternkonto</string>
+    <string name="account_login_mobile_api">Mobiler API Modus</string>
+    <string name="account_login_hybrid">Hybrid Modus</string>
     <!--About-->
     <string name="about_version">Version der App</string>
     <string name="about_contributor">Mitarbeiter</string>
