@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.advanced
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.sdk.Sdk
@@ -7,9 +8,10 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
-import io.reactivex.Single
-import kotlinx.coroutines.rx2.rxSingle
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -126,35 +128,42 @@ class LoginAdvancedPresenter @Inject constructor(
     fun onSignInClick() {
         if (!validateCredentials()) return
 
-        disposable.add(getStudentsAppropriatesToLoginType()
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .doOnSubscribe {
-                view?.apply {
+        flowWithResource { getStudentsAppropriatesToLoginType() }.onEach {
+            when (it.status) {
+                Status.LOADING -> view?.run {
+                    Timber.i("Login started")
                     hideSoftKeyboard()
                     showProgress(true)
                     showContent(false)
                 }
-                Timber.i("Login started")
-            }
-            .doFinally {
-                view?.apply {
-                    showProgress(false)
-                    showContent(true)
+                Status.SUCCESS -> {
+                    Timber.i("Login result: Success")
+                    analytics.logEvent("registration_form",
+                        "success" to true,
+                        "students" to it.data!!.size,
+                        "error" to "No error"
+                    )
+                    view?.notifyParentAccountLogged(it.data)
+                }
+                Status.ERROR -> {
+                    Timber.i("Login result: An exception occurred")
+                    analytics.logEvent(
+                        "registration_form",
+                        "success" to false, "students" to -1,
+                        "error" to it.error!!.message.ifNullOrBlank { "No message" }
+                    )
+                    loginErrorHandler.dispatch(it.error)
                 }
             }
-            .subscribe({
-                Timber.i("Login result: Success")
-                analytics.logEvent("registration_form", "success" to true, "students" to it.size, "error" to "No error")
-                view?.notifyParentAccountLogged(it)
-            }, {
-                Timber.i("Login result: An exception occurred")
-                analytics.logEvent("registration_form", "success" to false, "students" to -1, "error" to it.message.ifNullOrBlank { "No message" })
-                loginErrorHandler.dispatch(it)
-            }))
+        }.afterLoading {
+            view?.apply {
+                showProgress(false)
+                showContent(true)
+            }
+        }.launch("login")
     }
 
-    private fun getStudentsAppropriatesToLoginType(): Single<List<Student>> {
+    private suspend fun getStudentsAppropriatesToLoginType(): List<Student> {
         val email = view?.formUsernameValue.orEmpty()
         val password = view?.formPassValue.orEmpty()
         val endpoint = view?.formHostValue.orEmpty()
@@ -163,12 +172,10 @@ class LoginAdvancedPresenter @Inject constructor(
         val symbol = view?.formSymbolValue.orEmpty()
         val token = view?.formTokenValue.orEmpty()
 
-        return rxSingle {
-            when (Sdk.Mode.valueOf(view?.formLoginType ?: "")) {
-                Sdk.Mode.API -> studentRepository.getStudentsApi(pin, symbol, token)
-                Sdk.Mode.SCRAPPER -> studentRepository.getStudentsScrapper(email, password, endpoint, symbol)
-                Sdk.Mode.HYBRID -> studentRepository.getStudentsHybrid(email, password, endpoint, symbol)
-            }
+        return when (Sdk.Mode.valueOf(view?.formLoginType.orEmpty())) {
+            Sdk.Mode.API -> studentRepository.getStudentsApi(pin, symbol, token)
+            Sdk.Mode.SCRAPPER -> studentRepository.getStudentsScrapper(email, password, endpoint, symbol)
+            Sdk.Mode.HYBRID -> studentRepository.getStudentsHybrid(email, password, endpoint, symbol)
         }
     }
 

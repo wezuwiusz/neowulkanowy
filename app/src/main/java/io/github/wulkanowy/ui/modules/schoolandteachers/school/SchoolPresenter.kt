@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.schoolandteachers.school
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.school.SchoolRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -7,8 +8,9 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import kotlinx.coroutines.rx2.rxMaybe
-import kotlinx.coroutines.rx2.rxSingle
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResourceIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -64,48 +66,46 @@ class SchoolPresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
-        Timber.i("Loading school info started")
-        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
-            .flatMapMaybe { student ->
-                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMapMaybe {
-                    rxMaybe { schoolRepository.getSchoolInfo(student, it, forceRefresh) }
-                }
-            }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .doFinally {
-                view?.run {
-                    hideRefresh()
-                    showProgress(false)
-                    enableSwipe(true)
-                    notifyParentDataLoaded()
-                }
-            }.subscribe({
-                Timber.i("Loading teachers result: Success")
-                view?.run {
-                    address = it.address.ifBlank { null }
-                    contact = it.contact.ifBlank { null }
-                    updateData(it)
-                    showContent(true)
-                    showEmpty(false)
-                    showErrorView(false)
-                }
-                analytics.logEvent(
-                    "load_item",
-                    "type" to "school",
-                    "force_refresh" to forceRefresh
-                )
-            }, {
-                Timber.i("Loading school result: An exception occurred")
-                errorHandler.dispatch(it)
-            }, {
-                Timber.i("Loading school result: No school info found")
-                view?.run {
+        flowWithResourceIn {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student)
+            schoolRepository.getSchoolInfo(student, semester, forceRefresh)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Loading school info started")
+                Status.SUCCESS -> if (it.data != null) {
+                    Timber.i("Loading teachers result: Success")
+                    view?.run {
+                        address = it.data.address.ifBlank { null }
+                        contact = it.data.contact.ifBlank { null }
+                        updateData(it.data)
+                        showContent(true)
+                        showEmpty(false)
+                        showErrorView(false)
+                    }
+                    analytics.logEvent(
+                        "load_item",
+                        "type" to "school"
+                    )
+                } else view?.run {
+                    Timber.i("Loading school result: No school info found")
                     showContent(!isViewEmpty)
                     showEmpty(isViewEmpty)
                     showErrorView(false)
                 }
-            }))
+                Status.ERROR -> {
+                    Timber.i("Loading school result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.afterLoading {
+            view?.run {
+                hideRefresh()
+                showProgress(false)
+                enableSwipe(true)
+                notifyParentDataLoaded()
+            }
+        }.launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

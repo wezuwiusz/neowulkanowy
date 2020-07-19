@@ -24,10 +24,10 @@ open class ErrorHandler @Inject constructor(protected val resources: Resources, 
     }
 
     protected open fun proceed(error: Throwable) {
+        showErrorMessage(resources.getString(error), error)
         when (error) {
             is ScramblerException, is BadCredentialsException -> onSessionExpired()
             is NoCurrentStudentException -> onNoCurrentStudent()
-            else -> showErrorMessage(resources.getString(error), error)
         }
     }
 

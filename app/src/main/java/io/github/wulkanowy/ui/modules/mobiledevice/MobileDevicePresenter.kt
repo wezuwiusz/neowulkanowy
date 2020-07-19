@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.mobiledevice
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.repositories.mobiledevice.MobileDeviceRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -8,7 +9,11 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import kotlinx.coroutines.rx2.rxSingle
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResource
+import io.github.wulkanowy.utils.flowWithResourceIn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -48,39 +53,39 @@ class MobileDevicePresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
-        Timber.i("Loading mobile devices data started")
-        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
-            .flatMap { student ->
-                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
-                    rxSingle { mobileDeviceRepository.getDevices(student, semester, forceRefresh) }
+        flowWithResourceIn {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student)
+            mobileDeviceRepository.getDevices(student, semester, forceRefresh)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Loading mobile devices data started")
+                Status.SUCCESS -> {
+                    Timber.i("Loading mobile devices result: Success")
+                    view?.run {
+                        updateData(it.data!!)
+                        showContent(it.data.isNotEmpty())
+                        showEmpty(it.data.isEmpty())
+                        showErrorView(false)
+                    }
+                    analytics.logEvent(
+                        "load_data",
+                        "type" to "devices",
+                        "items" to it.data!!.size
+                    )
+                }
+                Status.ERROR -> {
+                    Timber.i("Loading mobile devices result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
                 }
             }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .doFinally {
-                view?.run {
-                    hideRefresh()
-                    showProgress(false)
-                    enableSwipe(true)
-                }
-            }.subscribe({
-                Timber.i("Loading mobile devices result: Success")
-                view?.run {
-                    updateData(it)
-                    showContent(it.isNotEmpty())
-                    showEmpty(it.isEmpty())
-                    showErrorView(false)
-                }
-                analytics.logEvent(
-                    "load_data",
-                    "type" to "devices",
-                    "items" to it.size,
-                    "force_refresh" to forceRefresh
-                )
-            }) {
-                Timber.i("Loading mobile devices result: An exception occurred")
-                errorHandler.dispatch(it)
-            })
+        }.afterLoading {
+            view?.run {
+                hideRefresh()
+                showProgress(false)
+                enableSwipe(true)
+            }
+        }.launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
@@ -114,33 +119,25 @@ class MobileDevicePresenter @Inject constructor(
     }
 
     fun onUnregisterConfirmed(device: MobileDevice) {
-        Timber.i("Unregister device started")
-        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
-            .flatMap { student ->
-                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
-                    rxSingle { mobileDeviceRepository.unregisterDevice(student, semester, device) }
-                        .flatMap { rxSingle { mobileDeviceRepository.getDevices(student, semester, it) } }
+        flowWithResource {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student)
+            mobileDeviceRepository.unregisterDevice(student, semester, device)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Unregister device started")
+                Status.SUCCESS -> {
+                    Timber.i("Unregister device result: Success")
+                    view?.run {
+                        showProgress(false)
+                        enableSwipe(true)
+                    }
+                }
+                Status.ERROR -> {
+                    Timber.i("Unregister device result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
                 }
             }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .doFinally {
-                view?.run {
-                    showProgress(false)
-                    enableSwipe(true)
-                }
-            }
-            .subscribe({
-                Timber.i("Unregister device result: Success")
-                view?.run {
-                    updateData(it)
-                    showContent(it.isNotEmpty())
-                    showEmpty(it.isEmpty())
-                }
-            }) {
-                Timber.i("Unregister device result: An exception occurred")
-                errorHandler.dispatch(it)
-            }
-        )
+        }.launchIn(this)
     }
 }

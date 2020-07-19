@@ -19,6 +19,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.rx2.rxCompletable
 import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
@@ -32,14 +33,14 @@ class GradeWork @Inject constructor(
 ) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return rxCompletable { gradeRepository.getGrades(student, semester, true, preferencesRepository.isNotificationsEnable) }
-            .concatWith(Completable.concatArray(rxSingle { gradeRepository.getNotNotifiedGrades(semester) }.flatMapCompletable {
+        return rxCompletable { gradeRepository.getGrades(student, semester, true, preferencesRepository.isNotificationsEnable).waitForResult() }
+            .concatWith(Completable.concatArray(rxSingle { gradeRepository.getNotNotifiedGrades(semester).first() }.flatMapCompletable {
                 if (it.isNotEmpty()) notifyDetails(it)
                 rxCompletable { gradeRepository.updateGrades(it.onEach { grade -> grade.isNotified = true }) }
-            }, rxSingle { gradeRepository.getNotNotifiedPredictedGrades(semester) }.flatMapCompletable {
+            }, rxSingle { gradeRepository.getNotNotifiedPredictedGrades(semester).first() }.flatMapCompletable {
                 if (it.isNotEmpty()) notifyPredicted(it)
                 rxCompletable { gradeRepository.updateGradesSummary(it.onEach { grade -> grade.isPredictedGradeNotified = true }) }
-            }, rxSingle { gradeRepository.getNotNotifiedFinalGrades(semester) }.flatMapCompletable {
+            }, rxSingle { gradeRepository.getNotNotifiedFinalGrades(semester).first() }.flatMapCompletable {
                 if (it.isNotEmpty()) notifyFinal(it)
                 rxCompletable { gradeRepository.updateGradesSummary(it.onEach { grade -> grade.isFinalGradeNotified = true }) }
             }))

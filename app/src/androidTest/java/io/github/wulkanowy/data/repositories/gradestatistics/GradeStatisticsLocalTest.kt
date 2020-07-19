@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -42,7 +43,7 @@ class GradeStatisticsLocalTest {
         )
         runBlocking { gradeStatisticsLocal.saveGradesStatistics(list) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesStatistics(getSemester(), false, "Matematyka") }
+        val stats = runBlocking { gradeStatisticsLocal.getGradesStatistics(getSemester(), false).first() }
         assertEquals(1, stats.size)
         assertEquals(stats[0].subject, "Matematyka")
     }
@@ -56,11 +57,12 @@ class GradeStatisticsLocalTest {
         )
         runBlocking { gradeStatisticsLocal.saveGradesStatistics(list) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesStatistics(getSemester(), false, "Wszystkie") }
-        assertEquals(3, stats.size)
-        assertEquals(stats[0].subject, "Wszystkie")
-        assertEquals(stats[1].subject, "Matematyka")
-        assertEquals(stats[2].subject, "Chemia")
+        val stats = runBlocking { gradeStatisticsLocal.getGradesStatistics(getSemester(), false).first() }
+        assertEquals(2, stats.size)
+//        assertEquals(3, stats.size)
+//        assertEquals(stats[0].subject, "Wszystkie") // now in main repo
+        assertEquals(stats[0].subject, "Matematyka")
+        assertEquals(stats[1].subject, "Chemia")
     }
 
     @Test
@@ -72,7 +74,7 @@ class GradeStatisticsLocalTest {
         )
         runBlocking { gradeStatisticsLocal.saveGradesPointsStatistics(list) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester(), "Matematyka") }
+        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester()).first() }
         with(stats[0]) {
             assertEquals(subject, "Matematyka")
             assertEquals(others, 5.0)
@@ -84,7 +86,7 @@ class GradeStatisticsLocalTest {
     fun saveAndRead_subjectEmpty() {
         runBlocking { gradeStatisticsLocal.saveGradesPointsStatistics(listOf()) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester(), "Matematyka") }
+        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester()).first() }
         assertEquals(emptyList(), stats)
     }
 
@@ -92,7 +94,7 @@ class GradeStatisticsLocalTest {
     fun saveAndRead_allEmpty() {
         runBlocking { gradeStatisticsLocal.saveGradesPointsStatistics(listOf()) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester(), "Wszystkie") }
+        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester()).first() }
         assertEquals(emptyList(), stats)
     }
 

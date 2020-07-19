@@ -14,13 +14,17 @@ class RecipientRepository @Inject constructor(
     private val remote: RecipientRemote
 ) {
 
-    suspend fun getRecipients(student: Student, role: Int, unit: ReportingUnit, forceRefresh: Boolean = false): List<Recipient> {
-        return local.getRecipients(student, role, unit).filter { !forceRefresh }.ifEmpty {
-            val new = remote.getRecipients(student, role, unit)
-            val old = local.getRecipients(student, role, unit)
+    suspend fun refreshRecipients(student: Student, role: Int, unit: ReportingUnit) {
+        val new = remote.getRecipients(student, role, unit)
+        val old = local.getRecipients(student, role, unit)
 
-            local.deleteRecipients(old.uniqueSubtract(new))
-            local.saveRecipients(new.uniqueSubtract(old))
+        local.deleteRecipients(old uniqueSubtract new)
+        local.saveRecipients(new uniqueSubtract old)
+    }
+
+    suspend fun getRecipients(student: Student, role: Int, unit: ReportingUnit): List<Recipient> {
+        return local.getRecipients(student, role, unit).ifEmpty {
+            refreshRecipients(student, role, unit)
 
             local.getRecipients(student, role, unit)
         }

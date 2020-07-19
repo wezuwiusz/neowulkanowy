@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.attendance.summary
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.repositories.attendancesummary.AttendanceSummaryRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -9,7 +10,9 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import kotlinx.coroutines.rx2.rxSingle
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResourceIn
+import kotlinx.coroutines.flow.onEach
 import org.threeten.bp.Month
 import timber.log.Timber
 import javax.inject.Inject
@@ -73,46 +76,43 @@ class AttendanceSummaryPresenter @Inject constructor(
     }
 
     private fun loadData(subjectId: Int, forceRefresh: Boolean = false) {
-        Timber.i("Loading attendance summary data started")
         currentSubjectId = subjectId
-        disposable.apply {
-            clear()
-            add(rxSingle { studentRepository.getCurrentStudent() }
-                .flatMap { student ->
-                    rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap {
-                        rxSingle { attendanceSummaryRepository.getAttendanceSummary(student, it, subjectId, forceRefresh) }
-                    }
-                }
-                .map { items -> items.sortedByDescending { if (it.month.value <= Month.JUNE.value) it.month.value + 12 else it.month.value } }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doFinally {
-                    view?.run {
-                        hideRefresh()
-                        showProgress(false)
-                        enableSwipe(true)
-                    }
-                }
-                .subscribe({
+
+        flowWithResourceIn {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student)
+            attendanceSummaryRepository.getAttendanceSummary(student, semester, subjectId, forceRefresh)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Loading attendance summary data started")
+                Status.SUCCESS -> {
                     Timber.i("Loading attendance summary result: Success")
                     view?.apply {
-                        showEmpty(it.isEmpty())
-                        showContent(it.isNotEmpty())
-                        updateDataSet(it)
+                        showEmpty(it.data!!.isEmpty())
+                        showContent(it.data.isNotEmpty())
+                        updateDataSet(it.data.sortedByDescending { item ->
+                            if (item.month.value <= Month.JUNE.value) item.month.value + 12 else item.month.value
+                        })
                     }
                     analytics.logEvent(
                         "load_data",
                         "type" to "attendance_summary",
-                        "items" to it.size,
-                        "force_refresh" to forceRefresh,
+                        "items" to it.data!!.size,
                         "item_id" to subjectId
                     )
-                }) {
-                    Timber.i("Loading attendance summary result: An exception occurred")
-                    errorHandler.dispatch(it)
                 }
-            )
-        }
+                Status.ERROR -> {
+                    Timber.i("Loading attendance summary result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.afterLoading {
+            view?.run {
+                hideRefresh()
+                showProgress(false)
+                enableSwipe(true)
+            }
+        }.launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
@@ -127,27 +127,27 @@ class AttendanceSummaryPresenter @Inject constructor(
     }
 
     private fun loadSubjects() {
-        Timber.i("Loading attendance summary subjects started")
-        disposable.add(rxSingle { studentRepository.getCurrentStudent() }
-            .flatMap { student ->
-                rxSingle { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
-                    rxSingle { subjectRepository.getSubjects(student, semester) }
+        flowWithResourceIn {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student)
+            subjectRepository.getSubjects(student, semester)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Loading attendance summary subjects started")
+                Status.SUCCESS -> {
+                    subjects = it.data!!
+
+                    Timber.i("Loading attendance summary subjects result: Success")
+                    view?.run {
+                        view?.updateSubjects(ArrayList(it.data.map { subject -> subject.name }))
+                        showSubjects(true)
+                    }
+                }
+                Status.ERROR -> {
+                    Timber.i("Loading attendance summary subjects result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
                 }
             }
-            .doOnSuccess { subjects = it }
-            .map { ArrayList(it.map { subject -> subject.name }) }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .subscribe({
-                Timber.i("Loading attendance summary subjects result: Success")
-                view?.run {
-                    view?.updateSubjects(it)
-                    showSubjects(true)
-                }
-            }, {
-                Timber.i("Loading attendance summary subjects result: An exception occurred")
-                errorHandler.dispatch(it)
-            })
-        )
+        }.launch("subjects")
     }
 }

@@ -13,6 +13,6 @@ import javax.inject.Inject
 class TimetableWork @Inject constructor(private val timetableRepository: TimetableRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return rxCompletable { timetableRepository.getTimetable(student, semester, now().monday, now().sunday, true) }
+        return rxCompletable { timetableRepository.getTimetable(student, semester, now().monday, now().sunday, true).waitForResult() }
     }
 }

@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.note
 import io.github.wulkanowy.data.db.dao.NoteDao
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.db.entities.Student
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,7 +22,7 @@ class NoteLocal @Inject constructor(private val noteDb: NoteDao) {
         noteDb.deleteAll(notes)
     }
 
-    suspend fun getNotes(student: Student): List<Note> {
+    fun getNotes(student: Student): Flow<List<Note>> {
         return noteDb.loadAll(student.studentId)
     }
 }

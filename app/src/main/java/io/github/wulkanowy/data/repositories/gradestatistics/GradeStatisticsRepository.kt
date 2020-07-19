@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
 import io.github.wulkanowy.ui.modules.grade.statistics.ViewType
+import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,29 +17,40 @@ class GradeStatisticsRepository @Inject constructor(
     private val remote: GradeStatisticsRemote
 ) {
 
-    suspend fun getGradesStatistics(student: Student, semester: Semester, subjectName: String, isSemester: Boolean, forceRefresh: Boolean = false): List<GradeStatisticsItem> {
-        return local.getGradesStatistics(semester, isSemester, subjectName).mapToStatisticItems().filter { !forceRefresh }.ifEmpty {
-            val new = remote.getGradeStatistics(student, semester, isSemester)
-            val old = local.getGradesStatistics(semester, isSemester)
-
-            local.deleteGradesStatistics(old.uniqueSubtract(new))
-            local.saveGradesStatistics(new.uniqueSubtract(old))
-
-            local.getGradesStatistics(semester, isSemester, subjectName).mapToStatisticItems()
+    fun getGradesStatistics(student: Student, semester: Semester, subjectName: String, isSemester: Boolean, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it.isEmpty() || forceRefresh },
+        query = { local.getGradesStatistics(semester, isSemester) },
+        fetch = { remote.getGradeStatistics(student, semester, isSemester) },
+        saveFetchResult = { old, new ->
+            local.deleteGradesStatistics(old uniqueSubtract new)
+            local.saveGradesStatistics(new uniqueSubtract old)
+        },
+        mapResult = { items ->
+            when (subjectName) {
+                "Wszystkie" -> items.groupBy { it.grade }.map {
+                    GradeStatistics(semester.studentId, semester.semesterId, subjectName, it.key,
+                        it.value.fold(0) { acc, e -> acc + e.amount }, false)
+                } + items
+                else -> items.filter { it.subject == subjectName }
+            }.mapToStatisticItems()
         }
-    }
+    )
 
-    suspend fun getGradesPointsStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean): List<GradeStatisticsItem> {
-        return local.getGradesPointsStatistics(semester, subjectName).mapToStatisticsItem().filter { !forceRefresh }.ifEmpty {
-            val new = remote.getGradePointsStatistics(student, semester)
-            val old = local.getGradesPointsStatistics(semester)
-
-            local.deleteGradesPointsStatistics(old.uniqueSubtract(new))
-            local.saveGradesPointsStatistics(new.uniqueSubtract(old))
-
-            local.getGradesPointsStatistics(semester, subjectName).mapToStatisticsItem()
+    fun getGradesPointsStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it.isEmpty() || forceRefresh },
+        query = { local.getGradesPointsStatistics(semester) },
+        fetch = { remote.getGradePointsStatistics(student, semester) },
+        saveFetchResult = { old, new ->
+            local.deleteGradesPointsStatistics(old uniqueSubtract new)
+            local.saveGradesPointsStatistics(new uniqueSubtract old)
+        },
+        mapResult = { items ->
+            when (subjectName) {
+                "Wszystkie" -> items
+                else -> items.filter { it.subject == subjectName }
+            }.mapToStatisticsItem()
         }
-    }
+    )
 
     private fun List<GradeStatistics>.mapToStatisticItems() = groupBy { it.subject }.map {
         GradeStatisticsItem(

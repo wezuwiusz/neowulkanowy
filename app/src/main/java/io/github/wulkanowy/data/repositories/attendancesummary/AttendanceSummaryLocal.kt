@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.attendancesummary
 import io.github.wulkanowy.data.db.dao.AttendanceSummaryDao
 import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +18,7 @@ class AttendanceSummaryLocal @Inject constructor(private val attendanceDb: Atten
         attendanceDb.deleteAll(attendance)
     }
 
-    suspend fun getAttendanceSummary(semester: Semester, subjectId: Int): List<AttendanceSummary> {
+    fun getAttendanceSummary(semester: Semester, subjectId: Int): Flow<List<AttendanceSummary>> {
         return attendanceDb.loadAll(semester.diaryId, semester.studentId, subjectId)
     }
 }

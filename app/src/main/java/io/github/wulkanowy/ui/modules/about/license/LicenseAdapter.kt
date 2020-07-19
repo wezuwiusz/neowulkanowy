@@ -24,7 +24,7 @@ class LicenseAdapter @Inject constructor() : RecyclerView.Adapter<LicenseAdapter
 
         with(holder.binding) {
             licenseItemName.text = item.libraryName
-            licenseItemSummary.text = item.license?.licenseName?.takeIf { it.isNotBlank() } ?: item.libraryVersion
+            licenseItemSummary.text = item.licenses?.firstOrNull()?.licenseName?.takeIf { it.isNotBlank() } ?: item.libraryVersion
 
             root.setOnClickListener { onClickListener(item) }
         }

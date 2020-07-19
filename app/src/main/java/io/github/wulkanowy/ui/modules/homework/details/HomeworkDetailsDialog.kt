@@ -73,7 +73,6 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
     }
 
     override fun updateMarkAsDoneLabel(isDone: Boolean) {
-        (parentFragment as? HomeworkFragment)?.onReloadList()
         binding.homeworkDialogRead.text = view?.context?.getString(if (isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
     }
 

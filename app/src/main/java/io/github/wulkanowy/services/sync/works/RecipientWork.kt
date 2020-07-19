@@ -15,10 +15,11 @@ class RecipientWork @Inject constructor(
 ) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return rxSingle { reportingUnitRepository.getReportingUnits(student, true) }
+        return rxSingle { reportingUnitRepository.refreshReportingUnits(student) }
+            .flatMap { rxSingle { reportingUnitRepository.getReportingUnits(student) } }
             .flatMapCompletable { units ->
                 Completable.mergeDelayError(units.map {
-                    rxCompletable { recipientRepository.getRecipients(student, 2, it, true) }
+                    rxCompletable { recipientRepository.refreshRecipients(student, 2, it) }
                 })
             }
     }

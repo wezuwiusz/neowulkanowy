@@ -12,6 +12,7 @@ import android.widget.AdapterView.INVALID_POSITION
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
@@ -25,6 +26,8 @@ import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Maybe
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.rx2.rxMaybe
 import kotlinx.coroutines.rx2.rxSingle
 import org.threeten.bp.LocalDate
@@ -113,7 +116,7 @@ class TimetableWidgetFactory(
                 }
                 .flatMap { student ->
                     rxMaybe { semesterRepository.getCurrentSemester(student) }.flatMap { semester ->
-                        rxMaybe { timetableRepository.getTimetable(student, semester, date, date) }
+                        rxMaybe { timetableRepository.getTimetable(student, semester, date, date, true).takeWhile { it.status == Status.LOADING }.first().data }
                     }
                 }
                 .map { items -> items.sortedWith(compareBy({ it.number }, { !it.isStudentPlan })) }

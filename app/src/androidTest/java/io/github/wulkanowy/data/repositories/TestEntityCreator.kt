@@ -1,6 +1,8 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import org.threeten.bp.LocalDate.now
 import org.threeten.bp.LocalDateTime
 
 fun getStudent(): Student {
@@ -27,3 +29,16 @@ fun getStudent(): Student {
         isParent = false
     )
 }
+
+fun getSemester() = Semester(
+    semesterId = 1,
+    studentId = 1,
+    classId = 1,
+    diaryId = 2,
+    diaryName = "",
+    end = now(),
+    schoolYear = 2019,
+    semesterName = 1,
+    start = now(),
+    unitId = 1
+)

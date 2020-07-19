@@ -4,9 +4,9 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.SchedulersProvider
-import io.reactivex.Completable
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SchoolAndTeachersPresenter @Inject constructor(
@@ -17,12 +17,12 @@ class SchoolAndTeachersPresenter @Inject constructor(
 
     override fun onAttachView(view: SchoolAndTeachersView) {
         super.onAttachView(view)
-        disposable.add(Completable.timer(150, TimeUnit.MILLISECONDS, schedulers.mainThread)
-            .subscribe {
-                view.initView()
-                Timber.i("Message view was initialized")
-                loadData()
-            })
+        launch {
+            delay(150)
+            view.initView()
+            Timber.i("Message view was initialized")
+            loadData()
+        }
     }
 
     fun onPageSelected(index: Int) {

@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.db.dao.GradeSummaryDao
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,7 +31,7 @@ class GradeLocal @Inject constructor(
         gradeSummaryDb.updateAll(gradesSummary)
     }
 
-    suspend fun getGradesDetails(semester: Semester): List<Grade> {
+    fun getGradesDetails(semester: Semester): Flow<List<Grade>> {
         return gradeDb.loadAll(semester.semesterId, semester.studentId)
     }
 
@@ -42,7 +43,7 @@ class GradeLocal @Inject constructor(
         gradeSummaryDb.deleteAll(gradesSummary)
     }
 
-    suspend fun getGradesSummary(semester: Semester): List<GradeSummary> {
+    fun getGradesSummary(semester: Semester): Flow<List<GradeSummary>> {
         return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId)
     }
 }

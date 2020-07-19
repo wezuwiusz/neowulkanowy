@@ -10,6 +10,6 @@ import javax.inject.Inject
 class TeacherWork @Inject constructor(private val teacherRepository: TeacherRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return rxCompletable { teacherRepository.getTeachers(student, semester, true) }
+        return rxCompletable { teacherRepository.getTeachers(student, semester, true).waitForResult() }
     }
 }

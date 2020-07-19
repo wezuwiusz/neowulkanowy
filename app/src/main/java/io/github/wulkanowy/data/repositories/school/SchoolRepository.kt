@@ -1,8 +1,8 @@
 package io.github.wulkanowy.data.repositories.school
 
-import io.github.wulkanowy.data.db.entities.School
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.utils.networkBoundResource
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,18 +12,16 @@ class SchoolRepository @Inject constructor(
     private val remote: SchoolRemote
 ) {
 
-    suspend fun getSchoolInfo(student: Student, semester: Semester, forceRefresh: Boolean = false): School {
-        return local.getSchool(semester).takeIf { it != null && !forceRefresh } ?: run {
-            val new = remote.getSchoolInfo(student, semester)
-            val old = local.getSchool(semester)
-
+    fun getSchoolInfo(student: Student, semester: Semester, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it == null || forceRefresh },
+        query = { local.getSchool(semester) },
+        fetch = { remote.getSchoolInfo(student, semester) },
+        saveFetchResult = { old, new ->
             if (new != old && old != null) {
                 local.deleteSchool(old)
                 local.saveSchool(new)
             }
             local.saveSchool(new)
-
-            local.getSchool(semester)!!
         }
-    }
+    )
 }

@@ -7,10 +7,17 @@ import io.reactivex.Completable
 import kotlinx.coroutines.rx2.rxCompletable
 import javax.inject.Inject
 
-class GradeStatisticsWork @Inject constructor(private val gradeStatisticsRepository: GradeStatisticsRepository) : Work {
+class GradeStatisticsWork @Inject constructor(
+    private val gradeStatisticsRepository: GradeStatisticsRepository
+) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return rxCompletable { gradeStatisticsRepository.getGradesStatistics(student, semester, "Wszystkie", false, forceRefresh = true) }
+        return rxCompletable {
+            with(gradeStatisticsRepository) {
+                getGradesStatistics(student, semester, "Wszystkie", isSemester = true, forceRefresh = true).waitForResult()
+                getGradesStatistics(student, semester, "Wszystkie", isSemester = false, forceRefresh = true).waitForResult()
+                getGradesPointsStatistics(student, semester, "Wszystkie", forceRefresh = true).waitForResult()
+            }
+        }
     }
 }
-

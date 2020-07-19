@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.form
 
+import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -7,18 +8,21 @@ import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
-import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.just
 import io.mockk.verify
-import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.threeten.bp.LocalDateTime.now
+import java.io.IOException
 
 class LoginFormPresenterTest {
+
+    @get:Rule
+    val coroutineRule = MainCoroutineRule()
 
     @MockK(relaxed = true)
     lateinit var loginFormView: LoginFormView
@@ -35,7 +39,7 @@ class LoginFormPresenterTest {
     private lateinit var presenter: LoginFormPresenter
 
     @Before
-    fun initPresenter() {
+    fun setUp() {
         MockKAnnotations.init(this)
 
         every { loginFormView.initView() } just Runs
@@ -50,11 +54,6 @@ class LoginFormPresenterTest {
 
         presenter = LoginFormPresenter(TestSchedulersProvider(), repository, errorHandler, analytics)
         presenter.onAttachView(loginFormView)
-    }
-
-    @After
-    fun tearDown() {
-        clearAllMocks()
     }
 
     @Test
@@ -111,9 +110,9 @@ class LoginFormPresenterTest {
 
         verify { loginFormView.hideSoftKeyboard() }
         verify { loginFormView.showProgress(true) }
-//        verify { loginFormView.showProgress(false) }
-//        verify { loginFormView.showContent(false) }
-//        verify { loginFormView.showContent(true) }
+        verify { loginFormView.showProgress(false) }
+        verify { loginFormView.showContent(false) }
+        verify { loginFormView.showContent(true) }
     }
 
     @Test
@@ -151,7 +150,7 @@ class LoginFormPresenterTest {
 
     @Test
     fun loginErrorTest() {
-        val testException = RuntimeException("test")
+        val testException = IOException("test")
         coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } throws testException
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
@@ -162,10 +161,9 @@ class LoginFormPresenterTest {
         presenter.onSignInClick()
 
         verify { loginFormView.hideSoftKeyboard() }
-        verify { loginFormView.showProgress(true) }
-//        verify { loginFormView.showProgress(false) }
-//        verify { loginFormView.showContent(false) }
-//        verify { loginFormView.showContent(true) }
-//        verify { errorHandler.dispatch(testException) }
+        verify { loginFormView.showProgress(false) }
+        verify { loginFormView.showContent(false) }
+        verify { loginFormView.showContent(true) }
+        verify { errorHandler.dispatch(match { it.message == testException.message }) }
     }
 }

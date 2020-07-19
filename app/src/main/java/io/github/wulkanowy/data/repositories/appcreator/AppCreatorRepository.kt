@@ -14,12 +14,10 @@ class AppCreatorRepository @Inject constructor(
     private val dispatchers: DispatchersProvider
 ) {
 
-    suspend fun getAppCreators(): List<Contributor> {
-        return withContext(dispatchers.backgroundThread) {
-            Gson().fromJson(
-                assets.open("contributors.json").bufferedReader().use { it.readText() },
-                Array<Contributor>::class.java
-            ).toList()
-        }
+    suspend fun getAppCreators() = withContext(dispatchers.backgroundThread) {
+        Gson().fromJson(
+            assets.open("contributors.json").bufferedReader().use { it.readText() },
+            Array<Contributor>::class.java
+        ).toList()
     }
 }

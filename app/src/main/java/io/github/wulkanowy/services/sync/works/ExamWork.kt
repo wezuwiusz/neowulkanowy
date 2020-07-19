@@ -13,6 +13,6 @@ import javax.inject.Inject
 class ExamWork @Inject constructor(private val examRepository: ExamRepository) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return rxCompletable { examRepository.getExams(student, semester, now().monday, now().sunday, true) }
+        return rxCompletable { examRepository.getExams(student, semester, now().monday, now().sunday, true).waitForResult() }
     }
 }

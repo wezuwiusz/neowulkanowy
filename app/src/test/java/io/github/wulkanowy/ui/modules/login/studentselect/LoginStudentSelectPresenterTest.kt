@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.studentselect
 
+import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
@@ -12,14 +13,16 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.just
-import io.mockk.unmockkAll
 import io.mockk.verify
-import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.threeten.bp.LocalDateTime.now
 
 class LoginStudentSelectPresenterTest {
+
+    @get:Rule
+    val coroutineRule = MainCoroutineRule()
 
     @MockK(relaxed = true)
     lateinit var errorHandler: LoginErrorHandler
@@ -40,8 +43,9 @@ class LoginStudentSelectPresenterTest {
     private val testException by lazy { RuntimeException("Problem") }
 
     @Before
-    fun initPresenter() {
+    fun setUp() {
         MockKAnnotations.init(this)
+
         clearMocks(studentRepository, loginStudentSelectView)
         every { loginStudentSelectView.initView() } just Runs
         every { loginStudentSelectView.showContact(any()) } just Runs
@@ -51,11 +55,6 @@ class LoginStudentSelectPresenterTest {
 
         presenter = LoginStudentSelectPresenter(TestSchedulersProvider(), studentRepository, errorHandler, analytics)
         presenter.onAttachView(loginStudentSelectView, null)
-    }
-
-    @After
-    fun tearDown() {
-        unmockkAll()
     }
 
     @Test
@@ -73,7 +72,7 @@ class LoginStudentSelectPresenterTest {
 
         verify { loginStudentSelectView.showContent(false) }
         verify { loginStudentSelectView.showProgress(true) }
-//        verify { loginStudentSelectView.openMainView() }
+        verify { loginStudentSelectView.openMainView() }
     }
 
     @Test
@@ -84,6 +83,6 @@ class LoginStudentSelectPresenterTest {
         presenter.onSignIn()
         verify { loginStudentSelectView.showContent(false) }
         verify { loginStudentSelectView.showProgress(true) }
-        verify { errorHandler.dispatch(testException) }
+        verify { errorHandler.dispatch(match { testException.message == it.message }) }
     }
 }

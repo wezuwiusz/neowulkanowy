@@ -1,13 +1,15 @@
 package io.github.wulkanowy.ui.modules.luckynumber
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
-import kotlinx.coroutines.rx2.rxMaybe
-import kotlinx.coroutines.rx2.rxSingle
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResourceIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,47 +36,47 @@ class LuckyNumberPresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
-        Timber.i("Loading lucky number started")
-        disposable.apply {
-            clear()
-            add(rxSingle { studentRepository.getCurrentStudent() }
-                .flatMapMaybe { rxMaybe { luckyNumberRepository.getLuckyNumber(it, forceRefresh) } }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doFinally {
-                    view?.run {
-                        hideRefresh()
-                        showProgress(false)
-                        enableSwipe(true)
+        flowWithResourceIn {
+            val student = studentRepository.getCurrentStudent()
+            luckyNumberRepository.getLuckyNumber(student, forceRefresh)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Loading lucky number started")
+                Status.SUCCESS -> {
+                    if (it.data != null) {
+                        Timber.i("Loading lucky number result: Success")
+                        view?.apply {
+                            updateData(it.data)
+                            showContent(true)
+                            showEmpty(false)
+                            showErrorView(false)
+                        }
+                        analytics.logEvent(
+                            "load_item",
+                            "type" to "lucky_number",
+                            "number" to it.data.luckyNumber
+                        )
+                    } else {
+                        Timber.i("Loading lucky number result: No lucky number found")
+                        view?.run {
+                            showContent(false)
+                            showEmpty(true)
+                            showErrorView(false)
+                        }
                     }
                 }
-                .subscribe({
-                    Timber.i("Loading lucky number result: Success")
-                    view?.apply {
-                        updateData(it)
-                        showContent(true)
-                        showEmpty(false)
-                        showErrorView(false)
-                    }
-                    analytics.logEvent(
-                        "load_item",
-                        "type" to "lucky_number",
-                        "number" to it.luckyNumber,
-                        "force_refresh" to forceRefresh
-                    )
-                }, {
+                Status.ERROR -> {
                     Timber.i("Loading lucky number result: An exception occurred")
-                    errorHandler.dispatch(it)
-                }, {
-                    Timber.i("Loading lucky number result: No lucky number found")
-                    view?.run {
-                        showContent(false)
-                        showEmpty(true)
-                        showErrorView(false)
-                    }
-                })
-            )
-        }
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.afterLoading {
+            view?.run {
+                hideRefresh()
+                showProgress(false)
+                enableSwipe(true)
+            }
+        }.launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

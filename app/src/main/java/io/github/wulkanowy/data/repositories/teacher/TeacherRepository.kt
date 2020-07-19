@@ -2,7 +2,7 @@ package io.github.wulkanowy.data.repositories.teacher
 
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.db.entities.Teacher
+import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,15 +13,13 @@ class TeacherRepository @Inject constructor(
     private val remote: TeacherRemote
 ) {
 
-    suspend fun getTeachers(student: Student, semester: Semester, forceRefresh: Boolean = false): List<Teacher> {
-        return local.getTeachers(semester).filter { !forceRefresh }.ifEmpty {
-            val new = remote.getTeachers(student, semester)
-            val old = local.getTeachers(semester)
-
-            local.deleteTeachers(old.uniqueSubtract(new))
-            local.saveTeachers(new.uniqueSubtract(old))
-
-            local.getTeachers(semester)
+    fun getTeachers(student: Student, semester: Semester, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it.isEmpty() || forceRefresh },
+        query = { local.getTeachers(semester) },
+        fetch = { remote.getTeachers(student, semester) },
+        saveFetchResult = { old, new ->
+            local.deleteTeachers(old uniqueSubtract new)
+            local.saveTeachers(new uniqueSubtract old)
         }
-    }
+    )
 }

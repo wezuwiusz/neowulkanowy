@@ -70,10 +70,6 @@ class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment
         }
     }
 
-    fun onReloadList() {
-        presenter.reloadData()
-    }
-
     override fun clearData() {
         with(homeworkAdapter) {
             items = emptyList()

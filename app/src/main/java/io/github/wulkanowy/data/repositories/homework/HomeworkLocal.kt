@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories.homework
 import io.github.wulkanowy.data.db.dao.HomeworkDao
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,7 +23,7 @@ class HomeworkLocal @Inject constructor(private val homeworkDb: HomeworkDao) {
         homeworkDb.updateAll(homework)
     }
 
-    suspend fun getHomework(semester: Semester, startDate: LocalDate, endDate: LocalDate): List<Homework> {
+    fun getHomework(semester: Semester, startDate: LocalDate, endDate: LocalDate): Flow<List<Homework>> {
         return homeworkDb.loadAll(semester.semesterId, semester.studentId, startDate, endDate)
     }
 }

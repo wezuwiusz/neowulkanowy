@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories.semester
 
+import io.github.wulkanowy.TestDispatchersProvider
 import io.github.wulkanowy.createSemesterEntity
 import io.github.wulkanowy.data.db.entities.Student
 import io.mockk.MockKAnnotations
@@ -32,7 +33,7 @@ class SemesterRepositoryTest {
     @Before
     fun initTest() {
         MockKAnnotations.init(this)
-        semesterRepository = SemesterRepository(semesterRemote, semesterLocal)
+        semesterRepository = SemesterRepository(semesterRemote, semesterLocal, TestDispatchersProvider())
         every { student.loginMode } returns "SCRAPPER"
     }
 

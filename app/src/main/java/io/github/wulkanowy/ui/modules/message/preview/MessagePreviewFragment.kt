@@ -203,10 +203,6 @@ class MessagePreviewFragment :
         (activity as MainActivity).popView()
     }
 
-    override fun notifyParentMessageDeleted(message: Message) {
-        parentFragmentManager.fragments.forEach { if (it is MessageFragment) it.onDeleteMessage(message) }
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putSerializable(MESSAGE_ID_KEY, presenter.message)
         super.onSaveInstanceState(outState)

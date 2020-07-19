@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.db.dao.GradeStatisticsDao
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,32 +15,12 @@ class GradeStatisticsLocal @Inject constructor(
     private val gradePointsStatisticsDb: GradePointsStatisticsDao
 ) {
 
-    suspend fun getGradesStatistics(semester: Semester, isSemester: Boolean): List<GradeStatistics> {
+    fun getGradesStatistics(semester: Semester, isSemester: Boolean): Flow<List<GradeStatistics>> {
         return gradeStatisticsDb.loadAll(semester.semesterId, semester.studentId, isSemester)
     }
 
-    suspend fun getGradesPointsStatistics(semester: Semester): List<GradePointsStatistics> {
+    fun getGradesPointsStatistics(semester: Semester): Flow<List<GradePointsStatistics>> {
         return gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId)
-    }
-
-    suspend fun getGradesStatistics(semester: Semester, isSemester: Boolean, subjectName: String): List<GradeStatistics> {
-        return when (subjectName) {
-            "Wszystkie" -> {
-                val statistics = gradeStatisticsDb.loadAll(semester.semesterId, semester.studentId, isSemester)
-                statistics.groupBy { it.grade }.map {
-                    GradeStatistics(semester.studentId, semester.semesterId, subjectName, it.key,
-                        it.value.fold(0) { acc, e -> acc + e.amount }, false)
-                } + statistics
-            }
-            else -> gradeStatisticsDb.loadSubject(semester.semesterId, semester.studentId, subjectName, isSemester)
-        }
-    }
-
-    suspend fun getGradesPointsStatistics(semester: Semester, subjectName: String): List<GradePointsStatistics> {
-        return when (subjectName) {
-            "Wszystkie" -> gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId)
-            else -> gradePointsStatisticsDb.loadSubject(semester.semesterId, semester.studentId, subjectName)
-        }
     }
 
     suspend fun saveGradesStatistics(gradesStatistics: List<GradeStatistics>) {

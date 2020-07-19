@@ -12,16 +12,12 @@ class LoggerRepository @Inject constructor(
     private val dispatchers: DispatchersProvider
 ) {
 
-    suspend fun getLastLogLines(): List<String> {
-        return getLastModified().readText().split("\n")
-    }
+    suspend fun getLastLogLines() = getLastModified().readText().split("\n")
 
-    suspend fun getLogFiles(): List<File> {
-        return withContext(dispatchers.backgroundThread) {
-            File(context.filesDir.absolutePath).listFiles(File::isFile)?.filter {
-                it.name.endsWith(".log")
-            }!!
-        }
+    suspend fun getLogFiles() = withContext(dispatchers.backgroundThread) {
+        File(context.filesDir.absolutePath).listFiles(File::isFile)?.filter {
+            it.name.endsWith(".log")
+        }!!
     }
 
     private suspend fun getLastModified(): File {

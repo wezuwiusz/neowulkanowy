@@ -5,6 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -45,7 +46,7 @@ class GradeLocalTest {
 
         val semester = Semester(1, 2, "", 2019, 2, 1, now(), now(), 1, 1)
 
-        val grades = runBlocking { gradeLocal.getGradesDetails(semester) }
+        val grades = runBlocking { gradeLocal.getGradesDetails(semester).first() }
 
         assertEquals(2, grades.size)
         assertEquals(grades[0].date, LocalDate.of(2019, 2, 27))

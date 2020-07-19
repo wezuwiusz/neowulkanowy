@@ -19,6 +19,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
 import io.reactivex.Completable
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.rx2.rxCompletable
 import kotlinx.coroutines.rx2.rxSingle
 import javax.inject.Inject
@@ -32,8 +33,8 @@ class MessageWork @Inject constructor(
 ) : Work {
 
     override fun create(student: Student, semester: Semester): Completable {
-        return rxSingle { messageRepository.getMessages(student, semester, RECEIVED, true, preferencesRepository.isNotificationsEnable) }
-            .flatMap { rxSingle { messageRepository.getNotNotifiedMessages(student) } }
+        return rxSingle { messageRepository.getMessages(student, semester, RECEIVED, true, preferencesRepository.isNotificationsEnable).waitForResult() }
+            .flatMap { rxSingle { messageRepository.getNotNotifiedMessages(student).first() } }
             .flatMapCompletable {
                 if (it.isNotEmpty()) notify(it)
                 rxCompletable { messageRepository.updateMessages(it.onEach { message -> message.isNotified = true }) }

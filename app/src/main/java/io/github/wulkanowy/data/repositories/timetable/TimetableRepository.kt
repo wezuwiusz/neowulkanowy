@@ -2,11 +2,12 @@ package io.github.wulkanowy.data.repositories.timetable
 
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
 import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.uniqueSubtract
+import kotlinx.coroutines.flow.map
 import org.threeten.bp.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,11 +19,11 @@ class TimetableRepository @Inject constructor(
     private val schedulerHelper: TimetableNotificationSchedulerHelper
 ) {
 
-    suspend fun getTimetable(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean = false): List<Timetable> {
-        return local.getTimetable(semester, start.monday, start.sunday).filter { !forceRefresh }.ifEmpty {
-            val new = remote.getTimetable(student, semester, start.monday, start.sunday)
-            val old = local.getTimetable(semester, start.monday, start.sunday)
-
+    fun getTimetable(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it.isEmpty() || forceRefresh },
+        query = { local.getTimetable(semester, start.monday, end.sunday).map { schedulerHelper.scheduleNotifications(it, student); it } },
+        fetch = { remote.getTimetable(student, semester, start.monday, end.sunday) },
+        saveFetchResult = { old, new ->
             local.deleteTimetable(old.uniqueSubtract(new).also { schedulerHelper.cancelScheduled(it) })
             local.saveTimetable(new.uniqueSubtract(old).also { schedulerHelper.scheduleNotifications(it, student) }.map { item ->
                 item.also { new ->
@@ -34,8 +35,7 @@ class TimetableRepository @Inject constructor(
                     }
                 }
             })
-
-            local.getTimetable(semester, start.monday, start.sunday)
-        }.filter { it.date in start..end }.also { schedulerHelper.scheduleNotifications(it, student) }
-    }
+        },
+        filterResult = { it.filter { item -> item.date in start..end } }
+    )
 }
