@@ -7,7 +7,7 @@ import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.sunday
 import io.reactivex.Completable
 import kotlinx.coroutines.rx2.rxCompletable
-import org.threeten.bp.LocalDate.now
+import java.time.LocalDate.now
 import javax.inject.Inject
 
 class AttendanceWork @Inject constructor(private val attendanceRepository: AttendanceRepository) : Work {

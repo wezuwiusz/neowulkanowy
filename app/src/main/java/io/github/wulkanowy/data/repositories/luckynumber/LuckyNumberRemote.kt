@@ -4,7 +4,7 @@ import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.init
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -9,7 +9,7 @@ import io.github.wulkanowy.databinding.HeaderExamBinding
 import io.github.wulkanowy.databinding.ItemExamBinding
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.weekDayName
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 
 class ExamAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

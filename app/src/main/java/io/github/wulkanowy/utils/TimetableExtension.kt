@@ -1,10 +1,10 @@
 package io.github.wulkanowy.utils
 
 import io.github.wulkanowy.data.db.entities.Timetable
-import org.threeten.bp.Duration
-import org.threeten.bp.Duration.between
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalDateTime.now
+import java.time.Duration
+import java.time.Duration.between
+import java.time.LocalDateTime
+import java.time.LocalDateTime.now
 
 fun Timetable.isShowTimeUntil(previousLessonEnd: LocalDateTime?) = when {
     !isStudentPlan -> false

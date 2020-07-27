@@ -15,7 +15,7 @@ import io.github.wulkanowy.databinding.DialogTimetableBinding
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 import io.github.wulkanowy.utils.toFormattedString
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 
 class TimetableDialog : DialogFragment() {
 

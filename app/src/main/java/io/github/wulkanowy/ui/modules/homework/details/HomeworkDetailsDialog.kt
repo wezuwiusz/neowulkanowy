@@ -12,7 +12,6 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.databinding.DialogHomeworkBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
-import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
 import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
 

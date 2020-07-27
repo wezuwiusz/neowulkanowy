@@ -2,7 +2,7 @@ package io.github.wulkanowy.data.repositories.student
 
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDateTime.now
 import javax.inject.Inject
 import javax.inject.Singleton
 import io.github.wulkanowy.sdk.pojo.Student as SdkStudent

@@ -3,8 +3,8 @@ package io.github.wulkanowy.data.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.threeten.bp.LocalDateTime
 import java.io.Serializable
+import java.time.LocalDateTime
 
 @Entity(tableName = "MobileDevices")
 data class MobileDevice(

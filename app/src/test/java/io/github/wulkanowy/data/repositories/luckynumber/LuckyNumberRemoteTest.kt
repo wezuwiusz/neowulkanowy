@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class LuckyNumberRemoteTest {
 

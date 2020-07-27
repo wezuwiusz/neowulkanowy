@@ -16,7 +16,7 @@ import io.mockk.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDateTime.now
 import java.io.IOException
 
 class LoginFormPresenterTest {

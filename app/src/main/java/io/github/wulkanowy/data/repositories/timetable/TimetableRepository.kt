@@ -8,7 +8,7 @@ import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.map
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 

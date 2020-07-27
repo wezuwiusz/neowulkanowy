@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import org.threeten.bp.LocalDateTime.of
+import java.time.LocalDateTime.of
 
 class MobileDeviceRepositoryTest {
 

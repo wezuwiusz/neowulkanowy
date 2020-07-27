@@ -30,8 +30,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.rx2.rxMaybe
 import kotlinx.coroutines.rx2.rxSingle
-import org.threeten.bp.LocalDate
 import timber.log.Timber
+import java.time.LocalDate
 
 class TimetableWidgetFactory(
     private val timetableRepository: TimetableRepository,

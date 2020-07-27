@@ -23,10 +23,10 @@ import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDate.now
-import org.threeten.bp.LocalDate.ofEpochDay
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.LocalDate.now
+import java.time.LocalDate.ofEpochDay
 import javax.inject.Inject
 
 class AttendancePresenter @Inject constructor(

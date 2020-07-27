@@ -10,10 +10,10 @@ import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.databinding.DialogNoteBinding
-import io.github.wulkanowy.utils.getThemeAttrColor
-import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.sdk.scrapper.notes.Note.CategoryType
+import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.utils.toFormattedString
 
 class NoteDialog : DialogFragment() {
 

@@ -19,7 +19,7 @@ import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragme
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 
 class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragment_timetable),

@@ -9,7 +9,7 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.sdk.pojo.SentMessage
 import io.github.wulkanowy.utils.init
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDateTime.now
 import javax.inject.Inject
 import javax.inject.Singleton
 import io.github.wulkanowy.sdk.pojo.Recipient as SdkRecipient

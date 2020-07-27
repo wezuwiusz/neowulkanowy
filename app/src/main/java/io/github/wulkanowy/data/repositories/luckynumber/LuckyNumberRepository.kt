@@ -4,7 +4,7 @@ import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.networkBoundResource
 import kotlinx.coroutines.flow.Flow
-import org.threeten.bp.LocalDate.now
+import java.time.LocalDate.now
 import javax.inject.Inject
 import javax.inject.Singleton
 

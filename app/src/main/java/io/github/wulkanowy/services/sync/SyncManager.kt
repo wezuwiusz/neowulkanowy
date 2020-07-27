@@ -23,8 +23,8 @@ import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.isHolidays
 import io.reactivex.Observable
-import org.threeten.bp.LocalDate.now
 import timber.log.Timber
+import java.time.LocalDate.now
 import java.util.concurrent.TimeUnit.MINUTES
 import javax.inject.Inject
 import javax.inject.Singleton

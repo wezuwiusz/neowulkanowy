@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.threeten.bp.LocalDate.of
+import java.time.LocalDate.of
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

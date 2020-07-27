@@ -2,8 +2,8 @@ package io.github.wulkanowy.data.repositories
 
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import org.threeten.bp.LocalDate.now
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDate.now
+import java.time.LocalDateTime
 
 fun getStudent(): Student {
     return Student(

@@ -11,8 +11,8 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDate.now
+import java.time.LocalDate
+import java.time.LocalDate.now
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)

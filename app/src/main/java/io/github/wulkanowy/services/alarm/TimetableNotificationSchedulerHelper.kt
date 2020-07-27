@@ -26,9 +26,9 @@ import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companio
 import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companion.STUDENT_NAME
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.toTimestamp
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalDateTime.now
 import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.LocalDateTime.now
 import javax.inject.Inject
 
 class TimetableNotificationSchedulerHelper @Inject constructor(

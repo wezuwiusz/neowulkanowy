@@ -13,9 +13,9 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDate.of
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDate
+import java.time.LocalDate.of
+import java.time.LocalDateTime.now
 
 class TimetableRemoteTest {
 

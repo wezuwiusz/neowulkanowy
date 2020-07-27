@@ -33,9 +33,9 @@ import io.github.wulkanowy.utils.toFormattedString
 import io.reactivex.Maybe
 import kotlinx.coroutines.rx2.rxMaybe
 import kotlinx.coroutines.rx2.rxSingle
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDate.now
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.LocalDate.now
 import javax.inject.Inject
 
 class TimetableWidgetProvider : BroadcastReceiver() {

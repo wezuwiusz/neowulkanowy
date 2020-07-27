@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import kotlinx.coroutines.flow.Flow
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Singleton
 
 @Singleton

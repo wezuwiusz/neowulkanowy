@@ -4,7 +4,7 @@ import io.github.wulkanowy.data.db.dao.ExamDao
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Semester
 import kotlinx.coroutines.flow.Flow
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 

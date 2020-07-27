@@ -12,8 +12,8 @@ import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
-import org.threeten.bp.LocalDate.now
 import timber.log.Timber
+import java.time.LocalDate.now
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(

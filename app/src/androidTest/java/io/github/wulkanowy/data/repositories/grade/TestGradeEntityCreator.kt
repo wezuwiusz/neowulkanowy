@@ -1,6 +1,6 @@
 package io.github.wulkanowy.data.repositories.grade
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import io.github.wulkanowy.sdk.pojo.Grade as GradeRemote
 import io.github.wulkanowy.data.db.entities.Grade as GradeLocal
 

@@ -6,7 +6,6 @@ import android.util.Log.INFO
 import android.util.Log.VERBOSE
 import androidx.multidex.MultiDex
 import androidx.work.Configuration
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.yariksoffice.lingver.Lingver
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -43,7 +42,6 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        AndroidThreeTen.init(this)
         RxJavaPlugins.setErrorHandler(::onError)
         Lingver.init(this)
         themeManager.applyDefaultTheme()

@@ -8,7 +8,7 @@ import io.mockk.impl.annotations.MockK
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class GradeExtensionTest {
 
