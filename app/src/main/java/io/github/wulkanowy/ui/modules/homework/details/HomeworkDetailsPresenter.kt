@@ -7,19 +7,17 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
 class HomeworkDetailsPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val homeworkRepository: HomeworkRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<HomeworkDetailsView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<HomeworkDetailsView>(errorHandler, studentRepository) {
 
     override fun onAttachView(view: HomeworkDetailsView) {
         super.onAttachView(view)

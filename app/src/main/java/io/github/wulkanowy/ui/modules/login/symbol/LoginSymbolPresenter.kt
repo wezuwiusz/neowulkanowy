@@ -5,7 +5,6 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
@@ -16,10 +15,9 @@ import javax.inject.Inject
 
 class LoginSymbolPresenter @Inject constructor(
     studentRepository: StudentRepository,
-    schedulers: SchedulersProvider,
     private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LoginSymbolView>(loginErrorHandler, studentRepository, schedulers) {
+) : BasePresenter<LoginSymbolView>(loginErrorHandler, studentRepository) {
 
     private var lastError: Throwable? = null
 

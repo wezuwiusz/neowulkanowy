@@ -17,10 +17,8 @@ import io.github.wulkanowy.services.sync.channels.LuckyNumberChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.getCompatColor
-import io.reactivex.Completable
+import io.github.wulkanowy.utils.waitForResult
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.rx2.rxCompletable
-import kotlinx.coroutines.rx2.rxMaybe
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -31,13 +29,13 @@ class LuckyNumberWork @Inject constructor(
     private val preferencesRepository: PreferencesRepository
 ) : Work {
 
-    override fun create(student: Student, semester: Semester): Completable {
-        return rxMaybe { luckyNumberRepository.getLuckyNumber(student, true, preferencesRepository.isNotificationsEnable).waitForResult() }
-            .flatMap { rxMaybe { luckyNumberRepository.getNotNotifiedLuckyNumber(student).first() } }
-            .flatMapCompletable {
-                notify(it)
-                rxCompletable { luckyNumberRepository.updateLuckyNumber(it.apply { isNotified = true }) }
-            }
+    override suspend fun doWork(student: Student, semester: Semester) {
+        luckyNumberRepository.getLuckyNumber(student, true, preferencesRepository.isNotificationsEnable).waitForResult()
+
+        luckyNumberRepository.getNotNotifiedLuckyNumber(student).first()?.let {
+            notify(it)
+            luckyNumberRepository.updateLuckyNumber(it.apply { isNotified = true })
+        }
     }
 
     private fun notify(luckyNumber: LuckyNumber) {

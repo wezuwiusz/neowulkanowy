@@ -8,7 +8,6 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
@@ -27,13 +26,12 @@ import java.time.LocalDate.ofEpochDay
 import javax.inject.Inject
 
 class ExamPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val examRepository: ExamRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<ExamView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<ExamView>(errorHandler, studentRepository) {
 
     private var baseDate: LocalDate = now().nextOrSameSchoolDay
 

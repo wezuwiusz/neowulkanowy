@@ -10,7 +10,6 @@ import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
@@ -30,14 +29,13 @@ import java.time.LocalDate.ofEpochDay
 import javax.inject.Inject
 
 class TimetablePresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val timetableRepository: TimetableRepository,
     private val semesterRepository: SemesterRepository,
     private val prefRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<TimetableView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<TimetableView>(errorHandler, studentRepository) {
 
     private var baseDate: LocalDate = now().nextOrSameSchoolDay
 

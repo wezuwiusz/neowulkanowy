@@ -6,7 +6,6 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
 import kotlinx.coroutines.flow.onEach
@@ -15,11 +14,10 @@ import java.io.Serializable
 import javax.inject.Inject
 
 class LoginStudentSelectPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     studentRepository: StudentRepository,
     private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LoginStudentSelectView>(loginErrorHandler, studentRepository, schedulers) {
+) : BasePresenter<LoginStudentSelectView>(loginErrorHandler, studentRepository) {
 
     private var lastError: Throwable? = null
 

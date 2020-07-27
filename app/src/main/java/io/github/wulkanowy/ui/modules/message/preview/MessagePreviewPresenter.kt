@@ -11,7 +11,6 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
@@ -21,13 +20,12 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MessagePreviewPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
     private val analytics: FirebaseAnalyticsHelper,
     private var appInfo: AppInfo
-) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository) {
 
     var message: Message? = null
 

@@ -11,7 +11,6 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.ui.modules.grade.GradeDetailsWithAverage
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
@@ -21,7 +20,6 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class GradeDetailsPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val gradeRepository: GradeRepository,
@@ -29,7 +27,7 @@ class GradeDetailsPresenter @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val averageProvider: GradeAverageProvider,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<GradeDetailsView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<GradeDetailsView>(errorHandler, studentRepository) {
 
     private var newGradesAmount: Int = 0
 

@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.studentselect
 
 import io.github.wulkanowy.MainCoroutineRule
-import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -53,7 +52,7 @@ class LoginStudentSelectPresenterTest {
         every { loginStudentSelectView.showProgress(any()) } just Runs
         every { loginStudentSelectView.showContent(any()) } just Runs
 
-        presenter = LoginStudentSelectPresenter(TestSchedulersProvider(), studentRepository, errorHandler, analytics)
+        presenter = LoginStudentSelectPresenter(studentRepository, errorHandler, analytics)
         presenter.onAttachView(loginStudentSelectView, null)
     }
 

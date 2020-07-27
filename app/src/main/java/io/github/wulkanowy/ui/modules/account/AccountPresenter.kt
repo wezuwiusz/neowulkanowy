@@ -6,7 +6,6 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.flow.onEach
@@ -14,11 +13,10 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AccountPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val syncManager: SyncManager
-) : BasePresenter<AccountView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<AccountView>(errorHandler, studentRepository) {
 
     override fun onAttachView(view: AccountView) {
         super.onAttachView(view)

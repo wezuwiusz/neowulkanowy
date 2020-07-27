@@ -6,17 +6,15 @@ import io.github.wulkanowy.data.repositories.appcreator.AppCreatorRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ContributorPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val appCreatorRepository: AppCreatorRepository
-) : BasePresenter<ContributorView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<ContributorView>(errorHandler, studentRepository) {
 
     override fun onAttachView(view: ContributorView) {
         super.onAttachView(view)

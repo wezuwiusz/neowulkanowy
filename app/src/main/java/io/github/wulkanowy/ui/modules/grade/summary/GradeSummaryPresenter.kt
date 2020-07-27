@@ -8,7 +8,6 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.ui.modules.grade.GradeDetailsWithAverage
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
 import kotlinx.coroutines.flow.onEach
@@ -16,12 +15,11 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class GradeSummaryPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val averageProvider: GradeAverageProvider,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<GradeSummaryView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<GradeSummaryView>(errorHandler, studentRepository) {
 
     private lateinit var lastError: Throwable
 

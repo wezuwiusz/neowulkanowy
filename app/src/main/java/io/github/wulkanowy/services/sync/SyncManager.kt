@@ -3,6 +3,7 @@ package io.github.wulkanowy.services.sync
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.asFlow
 import androidx.work.BackoffPolicy.EXPONENTIAL
 import androidx.work.Constraints
 import androidx.work.Data
@@ -15,14 +16,13 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.paulinasadowska.rxworkmanagerobservers.extensions.getWorkInfoByIdObservable
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.SharedPrefProvider.Companion.APP_VERSION_CODE_KEY
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.isHolidays
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import java.time.LocalDate.now
 import java.util.concurrent.TimeUnit.MINUTES
@@ -67,7 +67,7 @@ class SyncManager @Inject constructor(
         }
     }
 
-    fun startOneTimeSyncWorker(): Observable<WorkInfo> {
+    fun startOneTimeSyncWorker(): Flow<WorkInfo> {
         val work = OneTimeWorkRequestBuilder<SyncWorker>()
             .setInputData(
                 Data.Builder()
@@ -77,7 +77,8 @@ class SyncManager @Inject constructor(
             .build()
 
         workManager.enqueueUniqueWork("${SyncWorker::class.java.simpleName}_one_time", ExistingWorkPolicy.REPLACE, work)
-        return workManager.getWorkInfoByIdObservable(work.id)
+
+        return workManager.getWorkInfoByIdLiveData(work.id).asFlow()
     }
 
     fun stopSyncWorker() {

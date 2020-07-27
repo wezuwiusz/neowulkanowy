@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.login
 
-import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
@@ -29,7 +28,7 @@ class LoginPresenterTest {
         MockKAnnotations.init(this)
         clearMocks(loginView)
 
-        presenter = LoginPresenter(TestSchedulersProvider(), errorHandler, studentRepository)
+        presenter = LoginPresenter(errorHandler, studentRepository)
         presenter.onAttachView(loginView)
     }
 

@@ -12,7 +12,6 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.toFormattedString
@@ -21,7 +20,6 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SendMessagePresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
@@ -30,7 +28,7 @@ class SendMessagePresenter @Inject constructor(
     private val recipientRepository: RecipientRepository,
     private val preferencesRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<SendMessageView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<SendMessageView>(errorHandler, studentRepository) {
 
     fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean?) {
         super.onAttachView(view)

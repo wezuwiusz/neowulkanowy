@@ -12,14 +12,17 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel.Companion.CHANNEL_ID
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
-import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toLocalDateTime
-import kotlinx.coroutines.rx2.rxSingle
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,9 +30,6 @@ class TimetableNotificationReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var studentRepository: StudentRepository
-
-    @Inject
-    lateinit var schedulers: SchedulersProvider
 
     companion object {
         const val NOTIFICATION_TYPE_CURRENT = 1
@@ -54,14 +54,14 @@ class TimetableNotificationReceiver : BroadcastReceiver() {
         Timber.d("Receiving intent... ${intent.toUri(0)}")
         AndroidInjection.inject(this, context)
 
-        rxSingle { studentRepository.getCurrentStudent(false) }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .subscribe({
-                val studentId = intent.getIntExtra(STUDENT_ID, 0)
-                if (it.studentId == studentId) prepareNotification(context, intent)
-                else Timber.d("Notification studentId($studentId) differs from current(${it.studentId})")
-            }, { Timber.e(it) })
+        flowWithResource {
+            val student = studentRepository.getCurrentStudent(false)
+            val studentId = intent.getIntExtra(STUDENT_ID, 0)
+            if (student.studentId == studentId) prepareNotification(context, intent)
+            else Timber.d("Notification studentId($studentId) differs from current(${student.studentId})")
+        }.onEach {
+            if (it.status == Status.ERROR) Timber.e(it.error!!)
+        }.launchIn(GlobalScope)
     }
 
     private fun prepareNotification(context: Context, intent: Intent) {

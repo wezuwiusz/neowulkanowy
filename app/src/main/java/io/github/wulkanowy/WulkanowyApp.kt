@@ -18,10 +18,7 @@ import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.CrashlyticsExceptionTree
 import io.github.wulkanowy.utils.CrashlyticsTree
 import io.github.wulkanowy.utils.DebugLogTree
-import io.reactivex.exceptions.UndeliverableException
-import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
-import java.io.IOException
 import javax.inject.Inject
 
 class WulkanowyApp : DaggerApplication(), Configuration.Provider {
@@ -42,7 +39,6 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        RxJavaPlugins.setErrorHandler(::onError)
         Lingver.init(this)
         themeManager.applyDefaultTheme()
 
@@ -64,14 +60,6 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
             Timber.plant(CrashlyticsTree())
         }
         registerActivityLifecycleCallbacks(ActivityLifecycleLogger())
-    }
-
-    private fun onError(error: Throwable) {
-        //RxJava's too deep stack traces may cause SOE on older android devices
-        val cause = error.cause
-        if (error is UndeliverableException && cause is IOException || cause is InterruptedException || cause is StackOverflowError) {
-            Timber.e(cause, "An undeliverable error occurred")
-        } else throw error
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

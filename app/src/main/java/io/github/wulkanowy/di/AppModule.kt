@@ -8,7 +8,6 @@ import dagger.Provides
 import io.github.wulkanowy.WulkanowyApp
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.DispatchersProvider
-import io.github.wulkanowy.utils.SchedulersProvider
 import javax.inject.Singleton
 
 @Module
@@ -17,10 +16,6 @@ internal class AppModule {
     @Singleton
     @Provides
     fun provideContext(app: WulkanowyApp): Context = app
-
-    @Singleton
-    @Provides
-    fun provideSchedulersProvider() = SchedulersProvider()
 
     @Singleton
     @Provides

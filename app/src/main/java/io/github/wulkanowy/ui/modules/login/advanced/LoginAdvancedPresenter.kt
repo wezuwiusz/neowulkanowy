@@ -7,7 +7,6 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
@@ -16,11 +15,10 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class LoginAdvancedPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     studentRepository: StudentRepository,
     private val loginErrorHandler: LoginErrorHandler,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<LoginAdvancedView>(loginErrorHandler, studentRepository, schedulers) {
+) : BasePresenter<LoginAdvancedView>(loginErrorHandler, studentRepository) {
 
     override fun onAttachView(view: LoginAdvancedView) {
         super.onAttachView(view)

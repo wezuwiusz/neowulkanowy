@@ -5,7 +5,6 @@ import io.github.wulkanowy.data.repositories.recover.RecoverRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
@@ -14,12 +13,11 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class LoginRecoverPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     studentRepository: StudentRepository,
     private val loginErrorHandler: RecoverErrorHandler,
     private val analytics: FirebaseAnalyticsHelper,
     private val recoverRepository: RecoverRepository
-) : BasePresenter<LoginRecoverView>(loginErrorHandler, studentRepository, schedulers) {
+) : BasePresenter<LoginRecoverView>(loginErrorHandler, studentRepository) {
 
     private lateinit var lastError: Throwable
 

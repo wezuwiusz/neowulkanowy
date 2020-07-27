@@ -10,7 +10,6 @@ import io.github.wulkanowy.data.repositories.subject.SubjectRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
 import kotlinx.coroutines.flow.onEach
@@ -18,7 +17,6 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class GradeStatisticsPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val gradeStatisticsRepository: GradeStatisticsRepository,
@@ -26,7 +24,7 @@ class GradeStatisticsPresenter @Inject constructor(
     private val semesterRepository: SemesterRepository,
     private val preferencesRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<GradeStatisticsView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<GradeStatisticsView>(errorHandler, studentRepository) {
 
     private var subjects = emptyList<Subject>()
 

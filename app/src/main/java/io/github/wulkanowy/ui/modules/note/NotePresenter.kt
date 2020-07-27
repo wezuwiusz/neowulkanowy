@@ -8,7 +8,6 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
@@ -18,13 +17,12 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class NotePresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val noteRepository: NoteRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<NoteView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<NoteView>(errorHandler, studentRepository) {
 
     private lateinit var lastError: Throwable
 

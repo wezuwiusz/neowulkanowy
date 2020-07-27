@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.main
 
-import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
@@ -48,7 +47,7 @@ class MainPresenterTest {
         every { mainView.startMenuIndex } returns 1
         every { mainView.startMenuMoreIndex } returns 1
         every { mainView.initView() } just Runs
-        presenter = MainPresenter(TestSchedulersProvider(), errorHandler, studentRepository, prefRepository, syncManager, analytics)
+        presenter = MainPresenter(errorHandler, studentRepository, prefRepository, syncManager, analytics)
         presenter.onAttachView(mainView, null)
     }
 

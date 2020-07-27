@@ -9,7 +9,6 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.toFormattedString
@@ -28,13 +27,12 @@ import javax.inject.Inject
 import kotlin.math.pow
 
 class MessageTabPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<MessageTabView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<MessageTabView>(errorHandler, studentRepository) {
 
     lateinit var folder: MessageFolder
 

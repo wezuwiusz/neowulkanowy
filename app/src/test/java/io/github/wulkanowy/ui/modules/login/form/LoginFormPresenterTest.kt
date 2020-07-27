@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.form
 
 import io.github.wulkanowy.MainCoroutineRule
-import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -52,7 +51,7 @@ class LoginFormPresenterTest {
         every { loginFormView.setErrorPassRequired(any()) } just Runs
         every { loginFormView.setErrorUsernameRequired() } just Runs
 
-        presenter = LoginFormPresenter(TestSchedulersProvider(), repository, errorHandler, analytics)
+        presenter = LoginFormPresenter(repository, errorHandler, analytics)
         presenter.onAttachView(loginFormView)
     }
 

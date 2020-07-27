@@ -3,17 +3,15 @@ package io.github.wulkanowy.ui.modules.message
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.SchedulersProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 class MessagePresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository
-) : BasePresenter<MessageView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<MessageView>(errorHandler, studentRepository) {
 
     override fun onAttachView(view: MessageView) {
         super.onAttachView(view)

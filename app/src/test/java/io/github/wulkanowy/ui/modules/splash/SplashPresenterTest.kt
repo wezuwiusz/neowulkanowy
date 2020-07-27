@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.splash
 
 import io.github.wulkanowy.MainCoroutineRule
-import io.github.wulkanowy.TestSchedulersProvider
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.mockk.MockKAnnotations
@@ -31,7 +30,7 @@ class SplashPresenterTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        presenter = SplashPresenter(TestSchedulersProvider(), errorHandler, studentRepository)
+        presenter = SplashPresenter(errorHandler, studentRepository)
     }
 
     @Test

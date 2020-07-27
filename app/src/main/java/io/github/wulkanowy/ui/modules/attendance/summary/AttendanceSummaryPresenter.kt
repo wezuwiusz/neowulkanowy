@@ -9,7 +9,6 @@ import io.github.wulkanowy.data.repositories.subject.SubjectRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
 import kotlinx.coroutines.flow.onEach
@@ -18,14 +17,13 @@ import java.time.Month
 import javax.inject.Inject
 
 class AttendanceSummaryPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val attendanceSummaryRepository: AttendanceSummaryRepository,
     private val subjectRepository: SubjectRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<AttendanceSummaryView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<AttendanceSummaryView>(errorHandler, studentRepository) {
 
     private var subjects = emptyList<Subject>()
 

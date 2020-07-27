@@ -5,10 +5,12 @@ import io.github.wulkanowy.data.Status
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.takeWhile
 
 inline fun <ResultType, RequestType> networkBoundResource(
     showSavedOnLoading: Boolean = true,
@@ -91,3 +93,7 @@ fun <T> flowWithResourceIn(block: suspend () -> Flow<Resource<T>>) = flow {
 fun <T> Flow<Resource<T>>.afterLoading(callback: () -> Unit) = onEach {
     if (it.status != Status.LOADING) callback()
 }
+
+suspend fun <T> Flow<Resource<T>>.toFirstResult() = filter { it.status != Status.LOADING }.first()
+
+suspend fun <T> Flow<Resource<T>>.waitForResult() = takeWhile { it.status == Status.LOADING }.collect()

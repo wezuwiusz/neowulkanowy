@@ -8,18 +8,16 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getThemeWidgetKey
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
 class TimetableWidgetConfigurePresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val sharedPref: SharedPrefProvider
-) : BasePresenter<TimetableWidgetConfigureView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<TimetableWidgetConfigureView>(errorHandler, studentRepository) {
 
     private var appWidgetId: Int? = null
 

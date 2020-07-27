@@ -5,8 +5,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.completedlessons.CompletedLessonsRepository
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.sunday
-import io.reactivex.Completable
-import kotlinx.coroutines.rx2.rxCompletable
+import io.github.wulkanowy.utils.waitForResult
 import java.time.LocalDate.now
 import javax.inject.Inject
 
@@ -14,7 +13,7 @@ class CompletedLessonWork @Inject constructor(
     private val completedLessonsRepository: CompletedLessonsRepository
 ) : Work {
 
-    override fun create(student: Student, semester: Semester): Completable {
-        return rxCompletable { completedLessonsRepository.getCompletedLessons(student, semester, now().monday, now().sunday, true).waitForResult() }
+    override suspend fun doWork(student: Student, semester: Semester) {
+        completedLessonsRepository.getCompletedLessons(student, semester, now().monday, now().sunday, true).waitForResult()
     }
 }

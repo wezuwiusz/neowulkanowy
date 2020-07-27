@@ -15,20 +15,14 @@ import android.view.View.VISIBLE
 import android.widget.RemoteViews
 import dagger.android.AndroidInjection
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.SharedPrefProvider
-import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.luckynumber.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
-import io.github.wulkanowy.utils.SchedulersProvider
-import io.reactivex.Maybe
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.takeWhile
-import kotlinx.coroutines.rx2.rxMaybe
-import kotlinx.coroutines.rx2.rxSingle
+import io.github.wulkanowy.utils.toFirstResult
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -39,12 +33,6 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
 
     @Inject
     lateinit var luckyNumberRepository: LuckyNumberRepository
-
-    @Inject
-    lateinit var schedulers: SchedulersProvider
-
-    @Inject
-    lateinit var appWidgetManager: AppWidgetManager
 
     @Inject
     lateinit var sharedPref: SharedPrefProvider
@@ -142,27 +130,23 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
         return n - 1
     }
 
-    private fun getLuckyNumber(studentId: Long, appWidgetId: Int): LuckyNumber? {
-        return try {
-            rxSingle { studentRepository.isStudentSaved() }
-                .filter { true }
-                .flatMap { rxMaybe { studentRepository.getSavedStudents() } }
-                .flatMap { students ->
-                    val student = students.singleOrNull { student -> student.id == studentId }
-                    when {
-                        student != null -> Maybe.just(student)
-                        studentId != 0L -> {
-                            rxSingle { studentRepository.isCurrentStudentSet() }
-                                .filter { true }
-                                .flatMap { rxMaybe { studentRepository.getCurrentStudent(false) } }
-                                .doOnSuccess { sharedPref.putLong(getStudentWidgetKey(appWidgetId), it.id) }
-                        }
-                        else -> Maybe.empty()
+    private fun getLuckyNumber(studentId: Long, appWidgetId: Int) = runBlocking {
+        try {
+            val students = studentRepository.getSavedStudents()
+            val student = students.singleOrNull { student -> student.id == studentId }
+            val currentStudent = when {
+                student != null -> student
+                studentId != 0L && studentRepository.isCurrentStudentSet() -> {
+                    studentRepository.getCurrentStudent(false).also {
+                        sharedPref.putLong(getStudentWidgetKey(appWidgetId), it.id)
                     }
                 }
-                .flatMap { rxMaybe { luckyNumberRepository.getLuckyNumber(it, false).takeWhile { it.status == Status.LOADING }.first().data } }
-                .subscribeOn(schedulers.backgroundThread)
-                .blockingGet()
+                else -> null
+            }
+
+            currentStudent?.let {
+                luckyNumberRepository.getLuckyNumber(it, false).toFirstResult().data
+            }
         } catch (e: Exception) {
             if (e.cause !is NoCurrentStudentException) {
                 Timber.e(e, "An error has occurred in lucky number provider")
