@@ -10,6 +10,9 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
@@ -18,11 +21,12 @@ import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
+@InstallIn(ApplicationComponent::class)
 internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideSdk(chuckerCollector: ChuckerCollector, context: Context): Sdk {
+    fun provideSdk(chuckerCollector: ChuckerCollector, @ApplicationContext context: Context): Sdk {
         return Sdk().apply {
             androidVersion = android.os.Build.VERSION.RELEASE
             buildTag = android.os.Build.MODEL
@@ -35,7 +39,7 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideChuckerCollector(context: Context, prefRepository: PreferencesRepository): ChuckerCollector {
+    fun provideChuckerCollector(@ApplicationContext context: Context, prefRepository: PreferencesRepository): ChuckerCollector {
         return ChuckerCollector(
             context = context,
             showNotification = prefRepository.isDebugNotificationEnable,
@@ -45,19 +49,19 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(context: Context, sharedPrefProvider: SharedPrefProvider) = AppDatabase.newInstance(context, sharedPrefProvider)
+    fun provideDatabase(@ApplicationContext context: Context, sharedPrefProvider: SharedPrefProvider) = AppDatabase.newInstance(context, sharedPrefProvider)
 
     @Singleton
     @Provides
-    fun provideResources(context: Context): Resources = context.resources
+    fun provideResources(@ApplicationContext context: Context): Resources = context.resources
 
     @Singleton
     @Provides
-    fun provideAssets(context: Context): AssetManager = context.assets
+    fun provideAssets(@ApplicationContext context: Context): AssetManager = context.assets
 
     @Singleton
     @Provides
-    fun provideSharedPref(context: Context): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    fun provideSharedPref(@ApplicationContext context: Context): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     @Singleton
     @Provides

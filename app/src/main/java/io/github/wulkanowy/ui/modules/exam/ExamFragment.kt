@@ -6,6 +6,7 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.databinding.FragmentExamBinding
@@ -16,6 +17,7 @@ import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.dpToPx
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), ExamView,
     MainView.MainChildView, MainView.TitledView {
 

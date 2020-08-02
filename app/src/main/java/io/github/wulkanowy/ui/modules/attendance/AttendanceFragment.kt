@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.databinding.DialogExcuseBinding
@@ -28,6 +29,7 @@ import io.github.wulkanowy.utils.dpToPx
 import java.time.LocalDate
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.fragment_attendance), AttendanceView, MainView.MainChildView,
     MainView.TitledView {
 

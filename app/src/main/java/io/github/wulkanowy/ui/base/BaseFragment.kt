@@ -2,14 +2,14 @@ package io.github.wulkanowy.ui.base
 
 import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
-import dagger.android.support.DaggerFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 
-abstract class BaseFragment<VB : ViewBinding>(@LayoutRes layoutId: Int) : DaggerFragment(layoutId),
+abstract class BaseFragment<VB : ViewBinding>(@LayoutRes layoutId: Int) : Fragment(layoutId),
     BaseView {
 
     protected var binding: VB by lifecycleAwareVariable()

@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.BuildConfig.APPLICATION_ID
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentLogviewerBinding
@@ -22,6 +23,7 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import java.io.File
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LogViewerFragment : BaseFragment<FragmentLogviewerBinding>(R.layout.fragment_logviewer),
     LogViewerView, MainView.TitledView {
 

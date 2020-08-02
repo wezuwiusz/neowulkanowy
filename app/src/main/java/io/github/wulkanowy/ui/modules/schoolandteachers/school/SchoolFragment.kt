@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.School
 import io.github.wulkanowy.databinding.FragmentSchoolBinding
@@ -15,6 +16,7 @@ import io.github.wulkanowy.utils.openDialer
 import io.github.wulkanowy.utils.openNavigation
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_school), SchoolView,
     MainView.TitledView, SchoolAndTeachersChildView {
 

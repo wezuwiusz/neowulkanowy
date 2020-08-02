@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.ActivityLoginBinding
 import io.github.wulkanowy.ui.base.BaseActivity
@@ -16,13 +17,13 @@ import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
 import io.github.wulkanowy.utils.setOnSelectPageListener
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), LoginView {
 
     @Inject
     override lateinit var presenter: LoginPresenter
 
-    @Inject
-    lateinit var loginAdapter: BaseFragmentPagerAdapter
+    private val loginAdapter = BaseFragmentPagerAdapter(supportFragmentManager)
 
     companion object {
 

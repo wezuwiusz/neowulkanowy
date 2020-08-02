@@ -6,6 +6,7 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.databinding.FragmentGradeSummaryBinding
@@ -14,6 +15,7 @@ import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class GradeSummaryFragment :
     BaseFragment<FragmentGradeSummaryBinding>(R.layout.fragment_grade_summary), GradeSummaryView,
     GradeView.GradeChildView {

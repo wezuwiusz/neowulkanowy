@@ -7,10 +7,11 @@ import android.os.Build.VERSION.SDK_INT
 import io.github.wulkanowy.BuildConfig.DEBUG
 import io.github.wulkanowy.BuildConfig.VERSION_CODE
 import io.github.wulkanowy.BuildConfig.VERSION_NAME
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-open class AppInfo {
+open class AppInfo @Inject constructor() {
 
     open val isDebug get() = DEBUG
 

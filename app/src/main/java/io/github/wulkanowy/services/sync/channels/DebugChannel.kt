@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager.IMPORTANCE_DEFAULT
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @TargetApi(26)
 class DebugChannel @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val appInfo: AppInfo
 ) : Channel {
 

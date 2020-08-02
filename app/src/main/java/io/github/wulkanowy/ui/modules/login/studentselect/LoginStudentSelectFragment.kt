@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
@@ -16,6 +17,7 @@ import io.github.wulkanowy.utils.openInternetBrowser
 import java.io.Serializable
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginStudentSelectFragment :
     BaseFragment<FragmentLoginStudentSelectBinding>(R.layout.fragment_login_student_select),
     LoginStudentSelectView {

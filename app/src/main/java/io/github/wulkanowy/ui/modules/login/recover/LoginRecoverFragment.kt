@@ -10,6 +10,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.widget.doOnTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentLoginRecoverBinding
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -19,6 +20,7 @@ import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.showSoftInput
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginRecoverFragment :
     BaseFragment<FragmentLoginRecoverBinding>(R.layout.fragment_login_recover), LoginRecoverView {
 

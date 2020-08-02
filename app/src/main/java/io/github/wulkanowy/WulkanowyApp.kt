@@ -1,17 +1,16 @@
 package io.github.wulkanowy
 
+import android.app.Application
 import android.content.Context
 import android.util.Log.DEBUG
 import android.util.Log.INFO
 import android.util.Log.VERBOSE
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.multidex.MultiDex
 import androidx.work.Configuration
 import com.yariksoffice.lingver.Lingver
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import dagger.hilt.android.HiltAndroidApp
 import fr.bipi.tressence.file.FileLoggerTree
-import io.github.wulkanowy.di.DaggerAppComponent
-import io.github.wulkanowy.services.sync.SyncWorkerFactory
 import io.github.wulkanowy.ui.base.ThemeManager
 import io.github.wulkanowy.utils.ActivityLifecycleLogger
 import io.github.wulkanowy.utils.AppInfo
@@ -21,10 +20,11 @@ import io.github.wulkanowy.utils.DebugLogTree
 import timber.log.Timber
 import javax.inject.Inject
 
-class WulkanowyApp : DaggerApplication(), Configuration.Provider {
+@HiltAndroidApp
+class WulkanowyApp : Application(), Configuration.Provider {
 
     @Inject
-    lateinit var workerFactory: SyncWorkerFactory
+    lateinit var workerFactory: HiltWorkerFactory
 
     @Inject
     lateinit var themeManager: ThemeManager
@@ -60,10 +60,6 @@ class WulkanowyApp : DaggerApplication(), Configuration.Provider {
             Timber.plant(CrashlyticsTree())
         }
         registerActivityLifecycleCallbacks(ActivityLifecycleLogger())
-    }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.factory().create(this)
     }
 
     override fun getWorkManagerConfiguration() = Configuration.Builder()

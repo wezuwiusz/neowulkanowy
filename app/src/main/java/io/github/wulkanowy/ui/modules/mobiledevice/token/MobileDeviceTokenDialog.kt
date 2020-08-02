@@ -12,12 +12,14 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.getSystemService
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
 import io.github.wulkanowy.databinding.DialogMobileDeviceBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MobileDeviceTokenDialog : BaseDialogFragment<DialogMobileDeviceBinding>(), MobileDeviceTokenVIew {
 
     @Inject

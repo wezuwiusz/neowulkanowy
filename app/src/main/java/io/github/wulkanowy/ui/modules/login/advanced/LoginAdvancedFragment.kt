@@ -6,6 +6,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.FragmentLoginAdvancedBinding
@@ -18,6 +19,7 @@ import io.github.wulkanowy.utils.setOnEditorDoneSignIn
 import io.github.wulkanowy.utils.showSoftInput
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginAdvancedFragment :
     BaseFragment<FragmentLoginAdvancedBinding>(R.layout.fragment_login_advanced),
     LoginAdvancedView {

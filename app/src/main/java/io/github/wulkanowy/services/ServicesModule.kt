@@ -5,11 +5,12 @@ import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
 import androidx.work.WorkManager
-import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.android.ContributesAndroidInjector
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.multibindings.IntoSet
 import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.services.sync.channels.DebugChannel
@@ -33,30 +34,26 @@ import io.github.wulkanowy.services.sync.works.RecipientWork
 import io.github.wulkanowy.services.sync.works.TeacherWork
 import io.github.wulkanowy.services.sync.works.TimetableWork
 import io.github.wulkanowy.services.sync.works.Work
-import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import javax.inject.Singleton
 
 @Suppress("unused")
-@AssistedModule
-@Module(includes = [AssistedInject_ServicesModule::class])
+@Module
+@InstallIn(ApplicationComponent::class)
 abstract class ServicesModule {
 
     companion object {
 
         @Provides
-        fun provideWorkManager(context: Context) = WorkManager.getInstance(context)
+        fun provideWorkManager(@ApplicationContext context: Context) = WorkManager.getInstance(context)
 
         @Singleton
         @Provides
-        fun provideNotificationManager(context: Context) = NotificationManagerCompat.from(context)
+        fun provideNotificationManager(@ApplicationContext context: Context) = NotificationManagerCompat.from(context)
 
         @Singleton
         @Provides
-        fun provideAlarmManager(context: Context): AlarmManager = context.getSystemService()!!
+        fun provideAlarmManager(@ApplicationContext context: Context): AlarmManager = context.getSystemService()!!
     }
-
-    @ContributesAndroidInjector
-    abstract fun bindTimetableWidgetService(): TimetableWidgetService
 
     @Binds
     @IntoSet

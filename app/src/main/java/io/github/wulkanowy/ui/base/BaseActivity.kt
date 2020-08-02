@@ -14,9 +14,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
-import dagger.android.AndroidInjection
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.FragmentLifecycleLogger
@@ -25,12 +22,9 @@ import io.github.wulkanowy.utils.lifecycleAwareVariable
 import javax.inject.Inject
 
 abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
-    AppCompatActivity(), BaseView, HasAndroidInjector {
+    AppCompatActivity(), BaseView {
 
     protected var binding: VB by lifecycleAwareVariable()
-
-    @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var fragmentLifecycleLogger: FragmentLifecycleLogger
@@ -42,8 +36,7 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
 
     abstract var presenter: T
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
         themeManager.applyActivityTheme(this)
         super.onCreate(savedInstanceState)
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleLogger, true)
@@ -91,6 +84,4 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
         invalidateOptionsMenu()
         presenter.onDetachView()
     }
-
-    override fun androidInjector() = androidInjector
 }

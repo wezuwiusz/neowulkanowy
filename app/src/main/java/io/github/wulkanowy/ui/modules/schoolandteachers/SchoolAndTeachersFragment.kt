@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentSchoolandteachersBinding
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -15,6 +16,7 @@ import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnSelectPageListener
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SchoolAndTeachersFragment :
     BaseFragment<FragmentSchoolandteachersBinding>(R.layout.fragment_schoolandteachers),
     SchoolAndTeachersView, MainView.TitledView {
@@ -22,8 +24,7 @@ class SchoolAndTeachersFragment :
     @Inject
     lateinit var presenter: SchoolAndTeachersPresenter
 
-    @Inject
-    lateinit var pagerAdapter: BaseFragmentPagerAdapter
+    private val pagerAdapter by lazy { BaseFragmentPagerAdapter(childFragmentManager) }
 
     companion object {
         fun newInstance() = SchoolAndTeachersFragment()

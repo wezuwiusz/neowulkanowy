@@ -7,13 +7,12 @@ import android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT
 import android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.RemoteViews
-import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
@@ -26,6 +25,7 @@ import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LuckyNumberWidgetProvider : AppWidgetProvider() {
 
     @Inject
@@ -46,11 +46,6 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
         fun getHeightWidgetKey(appWidgetId: Int) = "lucky_number_widget_height_$appWidgetId"
 
         fun getWidthWidgetKey(appWidgetId: Int) = "lucky_number_widget_width_$appWidgetId"
-    }
-
-    override fun onReceive(context: Context, intent: Intent) {
-        AndroidInjection.inject(this, context)
-        super.onReceive(context, intent)
     }
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray?) {

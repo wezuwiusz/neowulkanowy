@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.databinding.FragmentHomeworkBinding
@@ -16,6 +17,7 @@ import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.dpToPx
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment_homework),
     HomeworkView, MainView.TitledView {
 

@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.DEFAULT_ALL
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
 import androidx.core.app.NotificationManagerCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Semester
@@ -24,7 +25,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class MessageWork @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val notificationManager: NotificationManagerCompat,
     private val messageRepository: MessageRepository,
     private val preferencesRepository: PreferencesRepository

@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentAboutBinding
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -19,6 +20,7 @@ import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about), AboutView,
     MainView.TitledView {
 

@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentMoreBinding
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -20,6 +21,7 @@ import io.github.wulkanowy.ui.modules.settings.SettingsFragment
 import io.github.wulkanowy.utils.getCompatDrawable
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), MoreView,
     MainView.TitledView, MainView.MainChildView {
 

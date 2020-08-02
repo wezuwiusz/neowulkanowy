@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.widget.doOnTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.FragmentLoginFormBinding
@@ -19,6 +20,7 @@ import io.github.wulkanowy.utils.setOnEditorDoneSignIn
 import io.github.wulkanowy.utils.showSoftInput
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragment_login_form),
     LoginFormView {
 

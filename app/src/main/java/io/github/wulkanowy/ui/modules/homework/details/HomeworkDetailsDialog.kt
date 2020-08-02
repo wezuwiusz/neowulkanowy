@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.databinding.DialogHomeworkBinding
@@ -15,6 +16,7 @@ import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), HomeworkDetailsView {
 
     @Inject

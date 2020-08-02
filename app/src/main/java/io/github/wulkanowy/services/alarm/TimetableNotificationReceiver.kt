@@ -3,17 +3,17 @@ package io.github.wulkanowy.services.alarm
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Build.VERSION_CODES.N
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.services.HiltBroadcastReceiver
 import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel.Companion.CHANNEL_ID
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
@@ -26,7 +26,8 @@ import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
-class TimetableNotificationReceiver : BroadcastReceiver() {
+@AndroidEntryPoint
+class TimetableNotificationReceiver : HiltBroadcastReceiver() {
 
     @Inject
     lateinit var studentRepository: StudentRepository
@@ -51,8 +52,8 @@ class TimetableNotificationReceiver : BroadcastReceiver() {
 
     @SuppressLint("CheckResult")
     override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
         Timber.d("Receiving intent... ${intent.toUri(0)}")
-        AndroidInjection.inject(this, context)
 
         flowWithResource {
             val student = studentRepository.getCurrentStudent(false)

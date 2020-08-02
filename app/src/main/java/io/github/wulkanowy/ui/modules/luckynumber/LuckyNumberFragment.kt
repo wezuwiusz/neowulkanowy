@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.databinding.FragmentLuckyNumberBinding
@@ -11,6 +12,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LuckyNumberFragment :
     BaseFragment<FragmentLuckyNumberBinding>(R.layout.fragment_lucky_number), LuckyNumberView,
     MainView.TitledView {

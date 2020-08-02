@@ -16,6 +16,7 @@ import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
@@ -28,6 +29,7 @@ import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.shareText
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MessagePreviewFragment :
     BaseFragment<FragmentMessagePreviewBinding>(R.layout.fragment_message_preview),
     MessagePreviewView, MainView.TitledView {

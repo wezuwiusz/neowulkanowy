@@ -11,6 +11,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogErrorBinding
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
@@ -28,6 +29,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
 
     private lateinit var error: Throwable

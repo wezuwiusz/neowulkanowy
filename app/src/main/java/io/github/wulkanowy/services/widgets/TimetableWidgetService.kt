@@ -2,7 +2,7 @@ package io.github.wulkanowy.services.widgets
 
 import android.content.Intent
 import android.widget.RemoteViewsService
-import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -12,6 +12,7 @@ import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetFactory
 import timber.log.Timber
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TimetableWidgetService : RemoteViewsService() {
 
     @Inject
@@ -30,7 +31,6 @@ class TimetableWidgetService : RemoteViewsService() {
     lateinit var sharedPref: SharedPrefProvider
 
     override fun onGetViewFactory(intent: Intent?): RemoteViewsFactory {
-        AndroidInjection.inject(this)
         Timber.d("TimetableWidgetFactory created")
         return TimetableWidgetFactory(timetableRepo, studentRepo, semesterRepo, prefRepository, sharedPref, applicationContext, intent)
     }

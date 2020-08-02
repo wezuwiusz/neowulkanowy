@@ -7,6 +7,7 @@ import android.view.View.VISIBLE
 import androidx.core.view.postDelayed
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.databinding.FragmentMobileDeviceBinding
@@ -17,6 +18,7 @@ import io.github.wulkanowy.ui.modules.mobiledevice.token.MobileDeviceTokenDialog
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MobileDeviceFragment :
     BaseFragment<FragmentMobileDeviceBinding>(R.layout.fragment_mobile_device), MobileDeviceView,
     MainView.TitledView {

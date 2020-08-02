@@ -10,6 +10,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.ActivityWidgetConfigureBinding
@@ -20,6 +21,7 @@ import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Co
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TimetableWidgetConfigureActivity :
     BaseActivity<TimetableWidgetConfigurePresenter, ActivityWidgetConfigureBinding>(),
     TimetableWidgetConfigureView {
@@ -35,7 +37,7 @@ class TimetableWidgetConfigureActivity :
 
     private var dialog: AlertDialog? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override public fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setResult(RESULT_CANCELED)
         setContentView(ActivityWidgetConfigureBinding.inflate(layoutInflater).apply { binding = this }.root)

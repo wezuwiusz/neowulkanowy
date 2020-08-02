@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationManagerCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
@@ -32,7 +33,7 @@ import java.time.LocalDateTime.now
 import javax.inject.Inject
 
 class TimetableNotificationSchedulerHelper @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val alarmManager: AlarmManager,
     private val preferencesRepository: PreferencesRepository
 ) {
