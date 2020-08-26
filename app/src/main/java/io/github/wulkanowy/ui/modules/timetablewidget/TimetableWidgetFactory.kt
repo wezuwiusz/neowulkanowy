@@ -102,7 +102,7 @@ class TimetableWidgetFactory(
             if (!studentRepository.isStudentSaved()) return@runBlocking emptyList<Timetable>()
 
             val students = studentRepository.getSavedStudents()
-            val student = students.singleOrNull { student -> student.id == studentId }
+            val student = students.singleOrNull { it.student.id == studentId }?.student
                 ?: return@runBlocking emptyList<Timetable>()
 
             val semester = semesterRepository.getCurrentSemester(student)

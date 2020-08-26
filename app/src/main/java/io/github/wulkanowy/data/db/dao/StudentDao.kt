@@ -5,7 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.ABORT
 import androidx.room.Query
+import androidx.room.Transaction
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import javax.inject.Singleton
 
 @Singleton
@@ -26,6 +28,10 @@ interface StudentDao {
 
     @Query("SELECT * FROM Students")
     suspend fun loadAll(): List<Student>
+
+    @Transaction
+    @Query("SELECT * FROM Students")
+    suspend fun loadStudentsWithSemesters(): List<StudentWithSemesters>
 
     @Query("UPDATE Students SET is_current = 1 WHERE id = :id")
     suspend fun updateCurrent(id: Long)

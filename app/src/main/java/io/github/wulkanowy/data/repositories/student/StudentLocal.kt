@@ -27,9 +27,9 @@ class StudentLocal @Inject constructor(
     }
 
     suspend fun getStudents(decryptPass: Boolean) = withContext(dispatchers.backgroundThread) {
-        studentDb.loadAll().map {
+        studentDb.loadStudentsWithSemesters().map {
             it.apply {
-                if (decryptPass && Sdk.Mode.valueOf(loginMode) != Sdk.Mode.API) password = decrypt(password)
+                if (decryptPass && Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.API) student.password = decrypt(student.password)
             }
         }
     }

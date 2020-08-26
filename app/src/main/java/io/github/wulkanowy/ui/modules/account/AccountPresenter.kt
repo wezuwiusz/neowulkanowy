@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.account
 
 import io.github.wulkanowy.data.Status
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -68,11 +68,11 @@ class AccountPresenter @Inject constructor(
         }.launch("logout")
     }
 
-    fun onItemSelected(student: Student) {
-        Timber.i("Select student item ${student.id}")
-        if (student.isCurrent) {
+    fun onItemSelected(studentWithSemesters: StudentWithSemesters) {
+        Timber.i("Select student item ${studentWithSemesters.student.id}")
+        if (studentWithSemesters.student.isCurrent) {
             view?.dismissView()
-        } else flowWithResource { studentRepository.switchStudent(student) }.onEach {
+        } else flowWithResource { studentRepository.switchStudent(studentWithSemesters) }.onEach {
             when (it.status) {
                 Status.LOADING -> Timber.i("Attempt to change a student")
                 Status.SUCCESS -> {
@@ -89,8 +89,8 @@ class AccountPresenter @Inject constructor(
         }.launch("switch")
     }
 
-    private fun createAccountItems(items: List<Student>): List<AccountItem<*>> {
-        return items.groupBy { Account(it.email, it.isParent) }.map { (account, students) ->
+    private fun createAccountItems(items: List<StudentWithSemesters>): List<AccountItem<*>> {
+        return items.groupBy { Account(it.student.email, it.student.isParent) }.map { (account, students) ->
             listOf(AccountItem(account, AccountItem.ViewType.HEADER)) + students.map { student ->
                 AccountItem(student, AccountItem.ViewType.ITEM)
             }

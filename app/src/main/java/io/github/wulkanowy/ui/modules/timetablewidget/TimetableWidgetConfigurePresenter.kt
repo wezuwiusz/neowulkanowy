@@ -60,11 +60,11 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
                     when {
                         it.data!!.isEmpty() -> view?.openLoginView()
                         it.data.size == 1 && !isFromProvider -> {
-                            selectedStudent = it.data.single()
+                            selectedStudent = it.data.single().student
                             view?.showThemeDialog()
                         }
-                        else -> view?.updateData(it.data.map { student ->
-                            student to (student.id == widgetId)
+                        else -> view?.updateData(it.data.map { entity ->
+                            entity.student to (entity.student.id == widgetId)
                         })
                     }
                 }

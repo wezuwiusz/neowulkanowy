@@ -7,7 +7,7 @@ import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -58,7 +58,7 @@ class LoginStudentSelectFragment :
         }
     }
 
-    override fun updateData(data: List<Pair<Student, Boolean>>) {
+    override fun updateData(data: List<Pair<StudentWithSemesters, Boolean>>) {
         with(loginAdapter) {
             items = data
             notifyDataSetChanged()
@@ -81,8 +81,8 @@ class LoginStudentSelectFragment :
         binding.loginStudentSelectSignIn.isEnabled = enable
     }
 
-    fun onParentInitStudentSelectFragment(students: List<Student>) {
-        presenter.onParentInitStudentSelectView(students)
+    fun onParentInitStudentSelectFragment(studentsWithSemesters: List<StudentWithSemesters>) {
+        presenter.onParentInitStudentSelectView(studentsWithSemesters)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

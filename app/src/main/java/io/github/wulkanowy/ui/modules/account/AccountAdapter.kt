@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.HeaderAccountBinding
 import io.github.wulkanowy.databinding.ItemAccountBinding
 import io.github.wulkanowy.sdk.Sdk
@@ -19,7 +20,7 @@ class AccountAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.V
 
     var items = emptyList<AccountItem<*>>()
 
-    var onClickListener: (Student) -> Unit = {}
+    var onClickListener: (StudentWithSemesters) -> Unit = {}
 
     override fun getItemCount() = items.size
 
@@ -38,7 +39,7 @@ class AccountAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.V
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> bindHeaderViewHolder(holder.binding, items[position].value as Account)
-            is ItemViewHolder -> bindItemViewHolder(holder.binding, items[position].value as Student)
+            is ItemViewHolder -> bindItemViewHolder(holder.binding, items[position].value as StudentWithSemesters)
         }
     }
 
@@ -50,10 +51,14 @@ class AccountAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.V
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindItemViewHolder(binding: ItemAccountBinding, student: Student) {
+    private fun bindItemViewHolder(binding: ItemAccountBinding, studentWithSemesters: StudentWithSemesters) {
+        val student = studentWithSemesters.student
+        val semesters = studentWithSemesters.semesters
+        val diary = semesters.maxByOrNull { it.semesterId }
+
         with(binding) {
-            accountItemName.text = "${student.studentName} ${student.className}"
-            accountItemSchool.text = student.schoolName
+            accountItemName.text = "${student.studentName} ${diary?.diaryName.orEmpty()}"
+            accountItemSchool.text = studentWithSemesters.student.schoolName
             with(accountItemLoginMode) {
                 visibility = when (Sdk.Mode.valueOf(student.loginMode)) {
                     Sdk.Mode.API -> {
@@ -77,7 +82,7 @@ class AccountAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.V
                 setColorFilter(colorImage, PorterDuff.Mode.SRC_IN)
             }
 
-            root.setOnClickListener { onClickListener(student) }
+            root.setOnClickListener { onClickListener(studentWithSemesters) }
         }
     }
 

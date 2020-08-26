@@ -26,7 +26,7 @@ class StudentRemoteTest {
 
         val students = runBlocking { StudentRemote(mockSdk).getStudentsScrapper("", "", "http://fakelog.cf", "") }
         assertEquals(1, students.size)
-        assertEquals("test", students.first().studentName)
+        assertEquals("test Kowalski", students.first().student.studentName)
     }
 
     private fun getStudent(name: String): Student {
@@ -35,7 +35,10 @@ class StudentRemoteTest {
             symbol = "",
             studentId = 0,
             userLoginId = 0,
+            userLogin = "",
+            userName = "",
             studentName = name,
+            studentSurname = "Kowalski",
             schoolSymbol = "",
             schoolShortName = "",
             schoolName = "",
@@ -47,7 +50,8 @@ class StudentRemoteTest {
             mobileBaseUrl = "",
             loginType = Sdk.ScrapperLoginType.STANDARD,
             scrapperBaseUrl = "",
-            isParent = false
+            isParent = false,
+            semesters = emptyList()
         )
     }
 }

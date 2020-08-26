@@ -206,7 +206,7 @@ class MessageTabPresenter @Inject constructor(
                 query.toLowerCase(Locale.getDefault()),
                 message.date.toFormattedString("d MMMM yyyy").toLowerCase(Locale.getDefault())
             )
-        ).max() ?: 0
+        ).maxOrNull() ?: 0
 
 
         return (subjectRatio.toDouble().pow(2)

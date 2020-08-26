@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.login
 
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.ui.base.BaseView
 
 interface LoginView : BaseView {
@@ -15,5 +15,5 @@ interface LoginView : BaseView {
 
     fun notifyInitSymbolFragment(loginData: Triple<String, String, String>)
 
-    fun notifyInitStudentSelectFragment(students: List<Student>)
+    fun notifyInitStudentSelectFragment(studentsWithSemesters: List<StudentWithSemesters>)
 }

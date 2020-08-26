@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.login.studentselect
 
 import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
@@ -63,10 +64,10 @@ class LoginStudentSelectPresenterTest {
 
     @Test
     fun onSelectedStudentTest() {
-        coEvery { studentRepository.saveStudents(listOf(testStudent)) } returns listOf(1L)
-        coEvery { studentRepository.switchStudent(testStudent) } just Runs
+        coEvery { studentRepository.saveStudents(listOf(StudentWithSemesters(testStudent, emptyList()))) } returns listOf(1L)
+        coEvery { studentRepository.switchStudent(StudentWithSemesters(testStudent, emptyList())) } just Runs
         every { loginStudentSelectView.openMainView() } just Runs
-        presenter.onItemSelected(testStudent, false)
+        presenter.onItemSelected(StudentWithSemesters(testStudent, emptyList()), false)
         presenter.onSignIn()
 
         verify { loginStudentSelectView.showContent(false) }
@@ -76,9 +77,9 @@ class LoginStudentSelectPresenterTest {
 
     @Test
     fun onSelectedStudentErrorTest() {
-        coEvery { studentRepository.saveStudents(listOf(testStudent)) } throws testException
+        coEvery { studentRepository.saveStudents(listOf(StudentWithSemesters(testStudent, emptyList()))) } throws testException
         coEvery { studentRepository.logoutStudent(testStudent) } just Runs
-        presenter.onItemSelected(testStudent, false)
+        presenter.onItemSelected(StudentWithSemesters(testStudent, emptyList()), false)
         presenter.onSignIn()
         verify { loginStudentSelectView.showContent(false) }
         verify { loginStudentSelectView.showProgress(true) }

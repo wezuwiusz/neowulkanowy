@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.login.advanced
 
 import io.github.wulkanowy.data.Status
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -161,7 +161,7 @@ class LoginAdvancedPresenter @Inject constructor(
         }.launch("login")
     }
 
-    private suspend fun getStudentsAppropriatesToLoginType(): List<Student> {
+    private suspend fun getStudentsAppropriatesToLoginType(): List<StudentWithSemesters> {
         val email = view?.formUsernameValue.orEmpty()
         val password = view?.formPassValue.orEmpty()
         val endpoint = view?.formHostValue.orEmpty()

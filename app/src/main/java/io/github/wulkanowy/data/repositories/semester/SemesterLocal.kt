@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class SemesterLocal @Inject constructor(private val semesterDb: SemesterDao) {
 
     suspend fun saveSemesters(semesters: List<Semester>) {
-        semesterDb.insertAll(semesters)
+        semesterDb.insertSemesters(semesters)
     }
 
     suspend fun deleteSemesters(semesters: List<Semester>) {

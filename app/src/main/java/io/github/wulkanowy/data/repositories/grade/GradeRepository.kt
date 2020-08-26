@@ -30,7 +30,7 @@ class GradeRepository @Inject constructor(
     )
 
     private suspend fun refreshGradeDetails(student: Student, oldGrades: List<Grade>, newDetails: List<Grade>, notify: Boolean) {
-        val notifyBreakDate = oldGrades.maxBy { it.date }?.date ?: student.registrationDate.toLocalDate()
+        val notifyBreakDate = oldGrades.maxByOrNull { it.date }?.date ?: student.registrationDate.toLocalDate()
         local.deleteGrades(oldGrades uniqueSubtract newDetails)
         local.saveGrades((newDetails uniqueSubtract oldGrades).onEach {
             if (it.date >= notifyBreakDate) it.apply {

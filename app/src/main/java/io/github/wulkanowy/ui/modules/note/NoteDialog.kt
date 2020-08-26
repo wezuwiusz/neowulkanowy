@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.databinding.DialogNoteBinding
-import io.github.wulkanowy.sdk.scrapper.notes.Note.CategoryType
+import io.github.wulkanowy.sdk.scrapper.notes.NoteCategory
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 import io.github.wulkanowy.utils.toFormattedString
@@ -57,9 +57,9 @@ class NoteDialog : DialogFragment() {
         if (note.isPointsShow) {
             with(binding.noteDialogPoints) {
                 text = "${if (note.points > 0) "+" else ""}${note.points}"
-                setTextColor(when (CategoryType.getByValue(note.categoryType)) {
-                    CategoryType.POSITIVE -> ContextCompat.getColor(requireContext(), R.color.note_positive)
-                    CategoryType.NEGATIVE -> ContextCompat.getColor(requireContext(), R.color.note_negative)
+                setTextColor(when (NoteCategory.getByValue(note.categoryType)) {
+                    NoteCategory.POSITIVE -> ContextCompat.getColor(requireContext(), R.color.note_positive)
+                    NoteCategory.NEGATIVE -> ContextCompat.getColor(requireContext(), R.color.note_negative)
                     else -> requireContext().getThemeAttrColor(android.R.attr.textColorPrimary)
                 })
             }

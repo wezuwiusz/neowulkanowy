@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.symbol
 
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.ui.base.BaseView
 
 interface LoginSymbolView : BaseView {
@@ -25,7 +25,7 @@ interface LoginSymbolView : BaseView {
 
     fun showContent(show: Boolean)
 
-    fun notifyParentAccountLogged(students: List<Student>)
+    fun notifyParentAccountLogged(studentsWithSemesters: List<StudentWithSemesters>)
 
     fun showContact(show: Boolean)
 
