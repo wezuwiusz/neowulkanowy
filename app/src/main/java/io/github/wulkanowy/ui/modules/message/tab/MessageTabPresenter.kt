@@ -12,6 +12,7 @@ import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -44,6 +45,7 @@ class MessageTabPresenter @Inject constructor(
 
     private val searchChannel = Channel<String>()
 
+    @FlowPreview
     fun onAttachView(view: MessageTabView, folder: MessageFolder) {
         super.onAttachView(view)
         view.initView()
@@ -139,6 +141,7 @@ class MessageTabPresenter @Inject constructor(
         }
     }
 
+    @FlowPreview
     private fun initializeSearchStream() {
         launch {
             searchChannel.consumeAsFlow()
