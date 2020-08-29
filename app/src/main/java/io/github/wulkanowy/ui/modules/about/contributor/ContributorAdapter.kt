@@ -3,7 +3,7 @@ package io.github.wulkanowy.ui.modules.about.contributor
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import coil.transform.RoundedCornersTransformation
 import io.github.wulkanowy.data.pojos.Contributor
 import io.github.wulkanowy.databinding.ItemContributorBinding

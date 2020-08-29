@@ -5,29 +5,23 @@ import android.content.Context
 import com.yariksoffice.lingver.Lingver
 import dagger.Module
 import dagger.Provides
-import io.github.wulkanowy.WulkanowyApp
-import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.SchedulersProvider
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.wulkanowy.utils.DispatchersProvider
 import javax.inject.Singleton
 
 @Module
+@InstallIn(ApplicationComponent::class)
 internal class AppModule {
 
     @Singleton
     @Provides
-    fun provideContext(app: WulkanowyApp): Context = app
+    fun provideDispatchersProvider() = DispatchersProvider()
 
     @Singleton
     @Provides
-    fun provideSchedulersProvider() = SchedulersProvider()
-
-    @Singleton
-    @Provides
-    fun provideAppWidgetManager(context: Context): AppWidgetManager = AppWidgetManager.getInstance(context)
-
-    @Singleton
-    @Provides
-    fun provideAppInfo() = AppInfo()
+    fun provideAppWidgetManager(@ApplicationContext context: Context): AppWidgetManager = AppWidgetManager.getInstance(context)
 
     @Singleton
     @Provides

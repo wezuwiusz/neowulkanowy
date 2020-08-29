@@ -9,6 +9,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.databinding.FragmentTimetableBinding
@@ -19,9 +20,10 @@ import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragme
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragment_timetable),
     TimetableView, MainView.MainChildView, MainView.TitledView {
 

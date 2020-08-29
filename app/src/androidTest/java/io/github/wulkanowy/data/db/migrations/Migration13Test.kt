@@ -5,10 +5,11 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import io.github.wulkanowy.data.db.Converters
 import io.github.wulkanowy.data.db.entities.Semester
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.threeten.bp.LocalDate.of
+import java.time.LocalDate.of
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -26,7 +27,7 @@ class Migration13Test : AbstractMigrationTest() {
         helper.runMigrationsAndValidate(dbName, 13, true, Migration13())
 
         val db = getMigratedRoomDatabase()
-        val students = db.studentDao.loadAll().blockingGet()
+        val students = runBlocking { db.studentDao.loadAll() }
 
         assertEquals(3, students.size)
 
@@ -60,7 +61,7 @@ class Migration13Test : AbstractMigrationTest() {
         helper.runMigrationsAndValidate(dbName, 13, true, Migration13())
 
         val db = getMigratedRoomDatabase()
-        val students = db.studentDao.loadAll().blockingGet()
+        val students = runBlocking { db.studentDao.loadAll() }
 
         assertEquals(2, students.size)
 

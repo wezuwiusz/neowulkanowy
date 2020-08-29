@@ -7,6 +7,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.databinding.FragmentTimetableCompletedBinding
@@ -17,9 +18,10 @@ import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getCompatDrawable
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CompletedLessonsFragment :
     BaseFragment<FragmentTimetableCompletedBinding>(R.layout.fragment_timetable_completed),
     CompletedLessonsView, MainView.TitledView {

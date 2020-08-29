@@ -1,43 +1,40 @@
 package io.github.wulkanowy.data.repositories.mobiledevice
 
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.repositories.UnitTestInternetObservingStrategy
 import io.github.wulkanowy.getStudentEntity
-import io.reactivex.Maybe
-import io.reactivex.Single
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
+import io.mockk.just
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
-import org.threeten.bp.LocalDateTime.of
+import java.time.LocalDateTime.of
 
 class MobileDeviceRepositoryTest {
 
-    @Mock
+    @MockK
     private lateinit var semester: Semester
 
-    @Mock
+    @MockK
     private lateinit var mobileDeviceRemote: MobileDeviceRemote
 
-    @Mock
+    @MockK
     private lateinit var mobileDeviceLocal: MobileDeviceLocal
 
     private val student = getStudentEntity()
 
     private lateinit var mobileDeviceRepository: MobileDeviceRepository
 
-    private val settings = InternetObservingSettings.builder()
-        .strategy(UnitTestInternetObservingStrategy())
-        .build()
-
     @Before
     fun initTest() {
-        MockitoAnnotations.initMocks(this)
-        mobileDeviceRepository = MobileDeviceRepository(settings, mobileDeviceLocal, mobileDeviceRemote)
+        MockKAnnotations.init(this)
+        mobileDeviceRepository = MobileDeviceRepository(mobileDeviceLocal, mobileDeviceRemote)
     }
 
     @Test
@@ -47,13 +44,15 @@ class MobileDeviceRepositoryTest {
             getDeviceEntity(2)
         )
 
-        doReturn(Maybe.empty<MobileDevice>()).`when`(mobileDeviceLocal).getDevices(semester)
-        doReturn(Single.just(devices)).`when`(mobileDeviceRemote).getDevices(student, semester)
+        coEvery { mobileDeviceLocal.getDevices(semester) } returns flowOf(emptyList())
+        coEvery { mobileDeviceLocal.deleteDevices(emptyList()) } just Runs
+        coEvery { mobileDeviceLocal.saveDevices(devices) } just Runs
+        coEvery { mobileDeviceRemote.getDevices(student, semester) } returns devices
 
-        mobileDeviceRepository.getDevices(student, semester).blockingGet()
+        runBlocking { mobileDeviceRepository.getDevices(student, semester, true).toList() }
 
-        verify(mobileDeviceLocal).deleteDevices(emptyList())
-        verify(mobileDeviceLocal).saveDevices(devices)
+        coVerify { mobileDeviceLocal.deleteDevices(emptyList()) }
+        coVerify { mobileDeviceLocal.saveDevices(devices) }
     }
 
     private fun getDeviceEntity(day: Int): MobileDevice {

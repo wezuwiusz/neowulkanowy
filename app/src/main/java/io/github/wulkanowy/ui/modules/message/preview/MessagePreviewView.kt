@@ -22,8 +22,6 @@ interface MessagePreviewView : BaseView {
 
     fun showContent(show: Boolean)
 
-    fun notifyParentMessageDeleted(message: Message)
-
     fun showErrorView(show: Boolean)
 
     fun setErrorDetails(message: String)

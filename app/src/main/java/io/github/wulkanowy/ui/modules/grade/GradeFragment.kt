@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AlertDialog
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentGradeBinding
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -20,13 +21,14 @@ import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnSelectPageListener
 import javax.inject.Inject
 
-class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade), GradeView, MainView.MainChildView, MainView.TitledView {
+@AndroidEntryPoint
+class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade), GradeView,
+    MainView.MainChildView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: GradePresenter
 
-    @Inject
-    lateinit var pagerAdapter: BaseFragmentPagerAdapter
+    private val pagerAdapter by lazy { BaseFragmentPagerAdapter(childFragmentManager) }
 
     private var semesterSwitchMenu: MenuItem? = null
 

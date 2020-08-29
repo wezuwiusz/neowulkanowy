@@ -5,74 +5,48 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.AppDatabase
-import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.TestInternetObservingStrategy
+import io.github.wulkanowy.data.repositories.getSemester
 import io.github.wulkanowy.data.repositories.getStudent
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
-import io.github.wulkanowy.sdk.Sdk
 import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
-import io.reactivex.Single
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime.of
+import java.time.LocalDate
+import java.time.LocalDateTime.of
 import kotlin.test.assertEquals
 
 @SdkSuppress(minSdkVersion = P)
 @RunWith(AndroidJUnit4::class)
 class TimetableRepositoryTest {
 
-    @MockK
-    private lateinit var mockSdk: Sdk
-
-    private val settings = InternetObservingSettings.builder()
-        .strategy(TestInternetObservingStrategy())
-        .build()
-
-    @MockK
-    private lateinit var studentMock: Student
-
-    private val student = getStudent()
-
-    @MockK
-    private lateinit var semesterMock: Semester
-
-    @MockK
+    @MockK(relaxed = true)
     private lateinit var timetableNotificationSchedulerHelper: TimetableNotificationSchedulerHelper
 
+    @MockK
     private lateinit var timetableRemote: TimetableRemote
 
     private lateinit var timetableLocal: TimetableLocal
 
     private lateinit var testDb: AppDatabase
 
+    private val student = getStudent()
+
+    private val semester = getSemester()
+
     @Before
     fun initApi() {
         MockKAnnotations.init(this)
         testDb = Room.inMemoryDatabaseBuilder(getApplicationContext(), AppDatabase::class.java).build()
         timetableLocal = TimetableLocal(testDb.timetableDao)
-        timetableRemote = TimetableRemote(mockSdk)
-
-        every { timetableNotificationSchedulerHelper.scheduleNotifications(any(), any()) } returns mockk()
-        every { timetableNotificationSchedulerHelper.cancelScheduled(any(), any()) } returns mockk()
-
-        every { studentMock.studentId } returns 1
-        every { studentMock.studentName } returns "Jan Kowalski"
-
-        every { semesterMock.studentId } returns 1
-        every { semesterMock.diaryId } returns 2
-        every { semesterMock.schoolYear } returns 2019
-        every { semesterMock.semesterId } returns 1
-
-        every { mockSdk.switchDiary(any(), any()) } returns mockSdk
     }
 
     @After
@@ -82,23 +56,31 @@ class TimetableRepositoryTest {
 
     @Test
     fun copyRoomToCompletedFromPrevious() {
-        timetableLocal.saveTimetable(listOf(
-            createTimetableLocal(of(2019, 3, 5, 8, 0), 1, "123", "Przyroda"),
-            createTimetableLocal(of(2019, 3, 5, 8, 50), 2, "321", "Religia"),
-            createTimetableLocal(of(2019, 3, 5, 9, 40), 3, "213", "W-F"),
-            createTimetableLocal(of(2019, 3, 5, 10, 30),3, "213", "W-F", "Jan Kowalski")
-        ))
+        runBlocking {
+            timetableLocal.saveTimetable(listOf(
+                createTimetableLocal(of(2019, 3, 5, 8, 0), 1, "123", "Przyroda"),
+                createTimetableLocal(of(2019, 3, 5, 8, 50), 2, "321", "Religia"),
+                createTimetableLocal(of(2019, 3, 5, 9, 40), 3, "213", "W-F"),
+                createTimetableLocal(of(2019, 3, 5, 10, 30), 3, "213", "W-F", "Jan Kowalski")
+            ))
+        }
 
-        every { mockSdk.getTimetable(any(), any()) } returns Single.just(listOf(
-            createTimetableRemote(of(2019, 3, 5, 8, 0), 1, "", "Przyroda"),
-            createTimetableRemote(of(2019, 3, 5, 8, 50), 2, "", "Religia"),
-            createTimetableRemote(of(2019, 3, 5, 9, 40), 3, "", "W-F"),
-            createTimetableRemote(of(2019, 3, 5, 10, 30), 4, "", "W-F")
-        ))
+        coEvery { timetableRemote.getTimetable(student, semester, any(), any()) } returns listOf(
+            createTimetableLocal(of(2019, 3, 5, 8, 0), 1, "", "Przyroda"),
+            createTimetableLocal(of(2019, 3, 5, 8, 50), 2, "", "Religia"),
+            createTimetableLocal(of(2019, 3, 5, 9, 40), 3, "", "W-F"),
+            createTimetableLocal(of(2019, 3, 5, 10, 30), 4, "", "W-F")
+        )
 
-        val lessons = TimetableRepository(settings, timetableLocal, timetableRemote, timetableNotificationSchedulerHelper)
-            .getTimetable(student, semesterMock, LocalDate.of(2019, 3, 5), LocalDate.of(2019, 3, 5), true)
-            .blockingGet()
+        val lessons = runBlocking {
+            TimetableRepository(timetableLocal, timetableRemote, timetableNotificationSchedulerHelper).getTimetable(
+                student = student,
+                semester = semester,
+                start = LocalDate.of(2019, 3, 5),
+                end = LocalDate.of(2019, 3, 5),
+                forceRefresh = true
+            ).filter { it.status == Status.SUCCESS }.first().data.orEmpty()
+        }
 
         assertEquals(4, lessons.size)
         assertEquals("123", lessons[0].room)
@@ -108,7 +90,7 @@ class TimetableRepositoryTest {
 
     @Test
     fun copyTeacherToCompletedFromPrevious() {
-        timetableLocal.saveTimetable(listOf(
+        val list = listOf(
             createTimetableLocal(of(2019, 12, 23, 8, 0), 1, "123", "Matematyka", "Paweł Poniedziałkowski", false),
             createTimetableLocal(of(2019, 12, 23, 8, 50), 2, "124", "Matematyka", "Paweł Poniedziałkowski", false),
             createTimetableLocal(of(2019, 12, 23, 9, 40), 3, "125", "Język polski", "Joanna Wtorkowska", true),
@@ -123,28 +105,35 @@ class TimetableRepositoryTest {
             createTimetableLocal(of(2019, 12, 25, 8, 50), 2, "124", "Matematyka", "", false),
             createTimetableLocal(of(2019, 12, 25, 9, 40), 3, "125", "Matematyka", "", true),
             createTimetableLocal(of(2019, 12, 25, 10, 40), 4, "126", "Matematyka", "", true)
-        ))
+        )
+        runBlocking { timetableLocal.saveTimetable(list) }
 
-        every { mockSdk.getTimetable(any(), any()) } returns Single.just(listOf(
-            createTimetableRemote(of(2019, 12, 23, 8, 0), 1, "123", "Matematyka", "Paweł Poniedziałkowski", false),
-            createTimetableRemote(of(2019, 12, 23, 8, 50), 2, "124", "Matematyka", "Jakub Wtorkowski", true),
-            createTimetableRemote(of(2019, 12, 23, 9, 40), 3, "125", "Język polski", "Joanna Poniedziałkowska", false),
-            createTimetableRemote(of(2019, 12, 23, 10, 40), 4, "126", "Język polski", "Joanna Wtorkowska", true),
+        coEvery { timetableRemote.getTimetable(student, semester, any(), any()) } returns listOf(
+            createTimetableLocal(of(2019, 12, 23, 8, 0), 1, "123", "Matematyka", "Paweł Poniedziałkowski", false),
+            createTimetableLocal(of(2019, 12, 23, 8, 50), 2, "124", "Matematyka", "Jakub Wtorkowski", true),
+            createTimetableLocal(of(2019, 12, 23, 9, 40), 3, "125", "Język polski", "Joanna Poniedziałkowska", false),
+            createTimetableLocal(of(2019, 12, 23, 10, 40), 4, "126", "Język polski", "Joanna Wtorkowska", true),
 
-            createTimetableRemote(of(2019, 12, 24, 8, 0), 1, "123", "Język polski", "", false),
-            createTimetableRemote(of(2019, 12, 24, 8, 50), 2, "124", "Język polski", "", true),
-            createTimetableRemote(of(2019, 12, 24, 9, 40), 3, "125", "Język polski", "", false),
-            createTimetableRemote(of(2019, 12, 24, 10, 40), 4, "126", "Język polski", "", true),
+            createTimetableLocal(of(2019, 12, 24, 8, 0), 1, "123", "Język polski", "", false),
+            createTimetableLocal(of(2019, 12, 24, 8, 50), 2, "124", "Język polski", "", true),
+            createTimetableLocal(of(2019, 12, 24, 9, 40), 3, "125", "Język polski", "", false),
+            createTimetableLocal(of(2019, 12, 24, 10, 40), 4, "126", "Język polski", "", true),
 
-            createTimetableRemote(of(2019, 12, 25, 8, 0), 1, "123", "Matematyka", "Paweł Środowski", false),
-            createTimetableRemote(of(2019, 12, 25, 8, 50), 2, "124", "Matematyka", "Paweł Czwartkowski", true),
-            createTimetableRemote(of(2019, 12, 25, 9, 40), 3, "125", "Matematyka", "Paweł Środowski", false),
-            createTimetableRemote(of(2019, 12, 25, 10, 40), 4, "126", "Matematyka", "Paweł Czwartkowski", true)
-        ))
+            createTimetableLocal(of(2019, 12, 25, 8, 0), 1, "123", "Matematyka", "Paweł Środowski", false),
+            createTimetableLocal(of(2019, 12, 25, 8, 50), 2, "124", "Matematyka", "Paweł Czwartkowski", true),
+            createTimetableLocal(of(2019, 12, 25, 9, 40), 3, "125", "Matematyka", "Paweł Środowski", false),
+            createTimetableLocal(of(2019, 12, 25, 10, 40), 4, "126", "Matematyka", "Paweł Czwartkowski", true)
+        )
 
-        val lessons = TimetableRepository(settings, timetableLocal, timetableRemote, timetableNotificationSchedulerHelper)
-            .getTimetable(student, semesterMock, LocalDate.of(2019, 12, 23), LocalDate.of(2019, 12, 25), true)
-            .blockingGet()
+        val lessons = runBlocking {
+            TimetableRepository(timetableLocal, timetableRemote, timetableNotificationSchedulerHelper).getTimetable(
+                student = student,
+                semester = semester,
+                start = LocalDate.of(2019, 12, 23),
+                end = LocalDate.of(2019, 12, 25),
+                forceRefresh = true
+            ).filter { it.status == Status.SUCCESS }.first().data.orEmpty()
+        }
 
         assertEquals(12, lessons.size)
 

@@ -4,29 +4,26 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.init
-import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SemesterRemote @Inject constructor(private val sdk: Sdk) {
 
-    fun getSemesters(student: Student): Single<List<Semester>> {
-        return sdk.init(student).getSemesters().map { semesters ->
-            semesters.map {
-                Semester(
-                    studentId = student.studentId,
-                    diaryId = it.diaryId,
-                    diaryName = it.diaryName,
-                    schoolYear = it.schoolYear,
-                    semesterId = it.semesterId,
-                    semesterName = it.semesterNumber,
-                    start = it.start,
-                    end = it.end,
-                    classId = it.classId,
-                    unitId = it.unitId
-                )
-            }
+    suspend fun getSemesters(student: Student): List<Semester> {
+        return sdk.init(student).getSemesters().map {
+            Semester(
+                studentId = student.studentId,
+                diaryId = it.diaryId,
+                diaryName = it.diaryName,
+                schoolYear = it.schoolYear,
+                semesterId = it.semesterId,
+                semesterName = it.semesterNumber,
+                start = it.start,
+                end = it.end,
+                classId = it.classId,
+                unitId = it.unitId
+            )
         }
     }
 }

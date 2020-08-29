@@ -5,16 +5,17 @@ import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Timetable
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
-import io.reactivex.Single
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDate.of
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDate
+import java.time.LocalDate.of
+import java.time.LocalDateTime.now
 
 class TimetableRemoteTest {
 
@@ -33,15 +34,15 @@ class TimetableRemoteTest {
 
     @Test
     fun getTimetableTest() {
-        every {
+        coEvery {
             mockSdk.getTimetable(
                 of(2018, 9, 10),
                 of(2018, 9, 15)
             )
-        } returns Single.just(listOf(
+        } returns listOf(
             getTimetable(of(2018, 9, 10)),
             getTimetable(of(2018, 9, 17))
-        ))
+        )
 
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 1
@@ -49,10 +50,12 @@ class TimetableRemoteTest {
         every { semesterMock.semesterId } returns 1
         every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val timetable = TimetableRemote(mockSdk).getTimetable(student, semesterMock,
-            of(2018, 9, 10),
-            of(2018, 9, 15)
-        ).blockingGet()
+        val timetable = runBlocking {
+            TimetableRemote(mockSdk).getTimetable(student, semesterMock,
+                of(2018, 9, 10),
+                of(2018, 9, 15)
+            )
+        }
         assertEquals(2, timetable.size)
     }
 

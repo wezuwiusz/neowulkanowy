@@ -1,73 +1,57 @@
 package io.github.wulkanowy.data.repositories.student
 
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Single
-import java.net.UnknownHostException
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.repositories.semester.SemesterLocal
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class StudentRepository @Inject constructor(
     private val local: StudentLocal,
-    private val remote: StudentRemote,
-    private val settings: InternetObservingSettings
+    private val semestersLocal: SemesterLocal,
+    private val remote: StudentRemote
 ) {
 
-    fun isStudentSaved(): Single<Boolean> = local.getStudents(false).isEmpty.map { !it }
+    suspend fun isStudentSaved(): Boolean = local.getStudents(false).isNotEmpty()
 
-    fun isCurrentStudentSet(): Single<Boolean> = local.getCurrentStudent(false).isEmpty.map { !it }
+    suspend fun isCurrentStudentSet(): Boolean = local.getCurrentStudent(false)?.isCurrent ?: false
 
-    fun getStudentsApi(pin: String, symbol: String, token: String): Single<List<Student>> {
-        return ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-            if (it) remote.getStudentsMobileApi(token, pin, symbol)
-            else Single.error(UnknownHostException("No internet connection"))
-        }
+    suspend fun getStudentsApi(pin: String, symbol: String, token: String): List<StudentWithSemesters> {
+        return remote.getStudentsMobileApi(token, pin, symbol)
     }
 
-    fun getStudentsScrapper(email: String, password: String, endpoint: String, symbol: String): Single<List<Student>> {
-        return ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-            if (it) remote.getStudentsScrapper(email, password, endpoint, symbol)
-            else Single.error(UnknownHostException("No internet connection"))
-        }
+    suspend fun getStudentsScrapper(email: String, password: String, endpoint: String, symbol: String): List<StudentWithSemesters> {
+        return remote.getStudentsScrapper(email, password, endpoint, symbol)
     }
 
-    fun getStudentsHybrid(email: String, password: String, endpoint: String, symbol: String): Single<List<Student>> {
-        return ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-            if (it) remote.getStudentsHybrid(email, password, endpoint, symbol)
-            else Single.error(UnknownHostException("No internet connection"))
-        }
+    suspend fun getStudentsHybrid(email: String, password: String, endpoint: String, symbol: String): List<StudentWithSemesters> {
+        return remote.getStudentsHybrid(email, password, endpoint, symbol)
     }
 
-    fun getSavedStudents(decryptPass: Boolean = true): Single<List<Student>> {
-        return local.getStudents(decryptPass).toSingle(emptyList())
+    suspend fun getSavedStudents(decryptPass: Boolean = true): List<StudentWithSemesters> {
+        return local.getStudents(decryptPass)
     }
 
-    fun getStudentById(id: Int): Single<Student> {
-        return local.getStudentById(id)
-            .switchIfEmpty(Maybe.error(NoCurrentStudentException()))
-            .toSingle()
+    suspend fun getStudentById(id: Int): Student {
+        return local.getStudentById(id) ?: throw NoCurrentStudentException()
     }
 
-    fun getCurrentStudent(decryptPass: Boolean = true): Single<Student> {
-        return local.getCurrentStudent(decryptPass)
-            .switchIfEmpty(Maybe.error(NoCurrentStudentException()))
-            .toSingle()
+    suspend fun getCurrentStudent(decryptPass: Boolean = true): Student {
+        return local.getCurrentStudent(decryptPass) ?: throw NoCurrentStudentException()
     }
 
-    fun saveStudents(students: List<Student>): Single<List<Long>> {
-        return local.saveStudents(students)
+    suspend fun saveStudents(studentsWithSemesters: List<StudentWithSemesters>): List<Long> {
+        semestersLocal.saveSemesters(studentsWithSemesters.flatMap { it.semesters })
+        return local.saveStudents(studentsWithSemesters.map { it.student })
     }
 
-    fun switchStudent(student: Student): Completable {
-        return local.setCurrentStudent(student)
+    suspend fun switchStudent(studentWithSemesters: StudentWithSemesters) {
+        return local.setCurrentStudent(studentWithSemesters.student)
     }
 
-    fun logoutStudent(student: Student): Completable {
+    suspend fun logoutStudent(student: Student) {
         return local.logoutStudent(student)
     }
 }

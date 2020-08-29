@@ -17,8 +17,8 @@ import io.github.wulkanowy.utils.isShowTimeUntil
 import io.github.wulkanowy.utils.left
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.until
-import org.threeten.bp.LocalDateTime
 import timber.log.Timber
+import java.time.LocalDateTime
 import java.util.Timer
 import javax.inject.Inject
 import kotlin.concurrent.timer

@@ -1,11 +1,11 @@
 package io.github.wulkanowy.ui.base
 
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
-import dagger.android.support.DaggerAppCompatDialogFragment
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 
-abstract class BaseDialogFragment<VB : ViewBinding> : DaggerAppCompatDialogFragment(), BaseView {
+abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment(), BaseView {
 
     protected var binding: VB by lifecycleAwareVariable()
 

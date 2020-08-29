@@ -4,11 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FirebaseAnalyticsHelper @Inject constructor(private val context: Context) {
+class FirebaseAnalyticsHelper @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
     private val analytics by lazy { FirebaseAnalytics.getInstance(context) }
 

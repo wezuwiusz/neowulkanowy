@@ -1,7 +1,9 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDate.now
+import java.time.LocalDateTime
 
 fun getStudent(): Student {
     return Student(
@@ -11,6 +13,7 @@ fun getStudent(): Student {
         scrapperBaseUrl = "fakelog.cf",
         loginType = "AUTO",
         isCurrent = true,
+        userName = "",
         studentName = "",
         schoolShortName = "",
         schoolName = "",
@@ -27,3 +30,16 @@ fun getStudent(): Student {
         isParent = false
     )
 }
+
+fun getSemester() = Semester(
+    semesterId = 1,
+    studentId = 1,
+    classId = 1,
+    diaryId = 2,
+    diaryName = "",
+    end = now(),
+    schoolYear = 2019,
+    semesterName = 1,
+    start = now(),
+    unitId = 1
+)

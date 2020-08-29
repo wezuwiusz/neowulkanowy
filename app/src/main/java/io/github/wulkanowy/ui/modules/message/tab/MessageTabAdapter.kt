@@ -19,20 +19,15 @@ class MessageTabAdapter @Inject constructor() :
 
     var onClickListener: (Message, position: Int) -> Unit = { _, _ -> }
 
+    var onChangesDetectedListener = {}
+
     private var items = mutableListOf<Message>()
 
     fun setDataItems(data: List<Message>) {
+        if (items.size != data.size) onChangesDetectedListener()
         val diffResult = DiffUtil.calculateDiff(MessageTabDiffUtil(items, data))
         items = data.toMutableList()
         diffResult.dispatchUpdatesTo(this)
-    }
-
-    fun updateItem(position: Int, item: Message) {
-        val currentItem = items[position]
-        items[position] = item
-        if (item != currentItem) {
-            notifyItemChanged(position)
-        }
     }
 
     override fun getItemCount() = items.size

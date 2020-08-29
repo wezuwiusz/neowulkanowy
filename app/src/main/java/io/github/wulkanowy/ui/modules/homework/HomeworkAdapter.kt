@@ -10,7 +10,7 @@ import io.github.wulkanowy.databinding.HeaderHomeworkBinding
 import io.github.wulkanowy.databinding.ItemHomeworkBinding
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.weekDayName
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 
 class HomeworkAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

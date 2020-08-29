@@ -9,7 +9,6 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageAttachment
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
-import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.databinding.ItemMessageAttachmentBinding
 import io.github.wulkanowy.databinding.ItemMessageDividerBinding
 import io.github.wulkanowy.databinding.ItemMessagePreviewBinding
@@ -66,8 +65,8 @@ class MessagePreviewAdapter @Inject constructor() :
             messagePreviewSubject.text = message.subject.ifBlank { root.context.getString(R.string.message_no_subject) }
             messagePreviewDate.text = root.context.getString(R.string.message_date, message.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
             messagePreviewContent.text = message.content
-            messagePreviewAuthor.text = if (message.folderId == MessageFolder.SENT.id) "${root.context.getString(R.string.message_to)} ${message.recipient}"
-            else "${root.context.getString(R.string.message_from)} ${message.sender}"
+            messagePreviewFromSender.text = message.sender
+            messagePreviewToRecipient.text = message.recipient
         }
     }
 

@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.grade
 
+import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
@@ -13,9 +15,17 @@ import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.BOTH_SEMESTERS
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.ONE_SEMESTER
 import io.github.wulkanowy.utils.calcAverage
 import io.github.wulkanowy.utils.changeModifier
-import io.reactivex.Single
+import io.github.wulkanowy.utils.flowWithResourceIn
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 class GradeAverageProvider @Inject constructor(
     private val semesterRepository: SemesterRepository,
     private val gradeRepository: GradeRepository,
@@ -26,63 +36,64 @@ class GradeAverageProvider @Inject constructor(
 
     private val minusModifier get() = preferencesRepository.gradeMinusModifier
 
-    fun getGradesDetailsWithAverage(student: Student, semesterId: Int, forceRefresh: Boolean = false): Single<List<GradeDetailsWithAverage>> {
-        return semesterRepository.getSemesters(student).flatMap { semesters ->
-            when (preferencesRepository.gradeAverageMode) {
-                ONE_SEMESTER -> getSemesterDetailsWithAverage(student, semesters.single { it.semesterId == semesterId }, forceRefresh)
-                BOTH_SEMESTERS -> calculateBothSemestersAverage(student, semesters, semesterId, forceRefresh)
-                ALL_YEAR -> calculateAllYearAverage(student, semesters, semesterId, forceRefresh)
-            }
-        }
-    }
+    fun getGradesDetailsWithAverage(student: Student, semesterId: Int, forceRefresh: Boolean) = flowWithResourceIn {
+        val semesters = semesterRepository.getSemesters(student)
 
-    private fun calculateBothSemestersAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Single<List<GradeDetailsWithAverage>> {
+        when (preferencesRepository.gradeAverageMode) {
+            ONE_SEMESTER -> getSemesterDetailsWithAverage(student, semesters.single { it.semesterId == semesterId }, forceRefresh)
+            BOTH_SEMESTERS -> calculateBothSemestersAverage(student, semesters, semesterId, forceRefresh)
+            ALL_YEAR -> calculateAllYearAverage(student, semesters, semesterId, forceRefresh)
+        }
+    }.distinctUntilChanged()
+
+    private fun calculateBothSemestersAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Flow<Resource<List<GradeDetailsWithAverage>>> {
         val selectedSemester = semesters.single { it.semesterId == semesterId }
         val firstSemester = semesters.single { it.diaryId == selectedSemester.diaryId && it.semesterName == 1 }
 
-        return getSemesterDetailsWithAverage(student, selectedSemester, forceRefresh).flatMap { selectedDetails ->
-            val isAnyAverage = selectedDetails.any { it.average != .0 }
+        return getSemesterDetailsWithAverage(student, selectedSemester, forceRefresh).flatMapConcat { selectedDetails ->
+            val isAnyAverage = selectedDetails.data.orEmpty().any { it.average != .0 }
 
             if (selectedSemester != firstSemester) {
                 getSemesterDetailsWithAverage(student, firstSemester, forceRefresh).map { secondDetails ->
-                    selectedDetails.map { selected ->
-                        val second = secondDetails.singleOrNull { it.subject == selected.subject }
+                    secondDetails.copy(data = selectedDetails.data?.map { selected ->
+                        val second = secondDetails.data.orEmpty().singleOrNull { it.subject == selected.subject }
                         selected.copy(average = if (!isAnyAverage || preferencesRepository.gradeAverageForceCalc) {
                             val selectedGrades = selected.grades.updateModifiers(student).calcAverage()
                             (selectedGrades + (second?.grades?.updateModifiers(student)?.calcAverage() ?: selectedGrades)) / 2
                         } else (selected.average + (second?.average ?: selected.average)) / 2)
-                    }
-                }
-            } else Single.just(selectedDetails)
+                    })
+                }.filter { it.status != Status.LOADING }.filter { it.data != null }
+            } else flowOf(selectedDetails)
         }
     }
 
-    private fun calculateAllYearAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Single<List<GradeDetailsWithAverage>> {
+    private fun calculateAllYearAverage(student: Student, semesters: List<Semester>, semesterId: Int, forceRefresh: Boolean): Flow<Resource<List<GradeDetailsWithAverage>>> {
         val selectedSemester = semesters.single { it.semesterId == semesterId }
         val firstSemester = semesters.single { it.diaryId == selectedSemester.diaryId && it.semesterName == 1 }
 
-        return getSemesterDetailsWithAverage(student, selectedSemester, forceRefresh).flatMap { selectedDetails ->
-            val isAnyAverage = selectedDetails.any { it.average != .0 }
+        return getSemesterDetailsWithAverage(student, selectedSemester, forceRefresh).flatMapConcat { selectedDetails ->
+            val isAnyAverage = selectedDetails.data.orEmpty().any { it.average != .0 }
 
             if (selectedSemester != firstSemester) {
                 getSemesterDetailsWithAverage(student, firstSemester, forceRefresh).map { secondDetails ->
-                    selectedDetails.map { selected ->
-                        val second = secondDetails.singleOrNull { it.subject == selected.subject }
+                    secondDetails.copy(data = selectedDetails.data?.map { selected ->
+                        val second = secondDetails.data.orEmpty().singleOrNull { it.subject == selected.subject }
                         selected.copy(average = if (!isAnyAverage || preferencesRepository.gradeAverageForceCalc) {
                             (selected.grades.updateModifiers(student) + second?.grades?.updateModifiers(student).orEmpty()).calcAverage()
                         } else selected.average)
-                    }
-                }
-            } else Single.just(selectedDetails)
+                    })
+                }.filter { it.status != Status.LOADING }.filter { it.data != null }
+            } else flowOf(selectedDetails)
         }
     }
 
-    private fun getSemesterDetailsWithAverage(student: Student, semester: Semester, forceRefresh: Boolean): Single<List<GradeDetailsWithAverage>> {
-        return gradeRepository.getGrades(student, semester, forceRefresh).map { (details, summaries) ->
-            val isAnyAverage = summaries.any { it.average != .0 }
-            val allGrades = details.groupBy { it.subject }
+    private fun getSemesterDetailsWithAverage(student: Student, semester: Semester, forceRefresh: Boolean): Flow<Resource<List<GradeDetailsWithAverage>>> {
+        return gradeRepository.getGrades(student, semester, forceRefresh = forceRefresh).map { res ->
+            val (details, summaries) = res.data ?: null to null
+            val isAnyAverage = summaries.orEmpty().any { it.average != .0 }
+            val allGrades = details.orEmpty().groupBy { it.subject }
 
-            summaries.emulateEmptySummaries(student, semester, allGrades.toList(), isAnyAverage).map { summary ->
+            Resource(res.status, summaries?.emulateEmptySummaries(student, semester, allGrades.toList(), isAnyAverage)?.map { summary ->
                 val grades = allGrades[summary.subject].orEmpty()
                 GradeDetailsWithAverage(
                     subject = summary.subject,
@@ -93,7 +104,7 @@ class GradeAverageProvider @Inject constructor(
                     summary = summary,
                     grades = grades
                 )
-            }
+            }, res.error)
         }
     }
 

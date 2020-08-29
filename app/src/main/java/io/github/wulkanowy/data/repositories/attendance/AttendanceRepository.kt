@@ -1,45 +1,34 @@
 package io.github.wulkanowy.data.repositories.attendance
 
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.networkBoundResource
+import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.uniqueSubtract
-import io.reactivex.Single
-import org.threeten.bp.LocalDate
-import java.net.UnknownHostException
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AttendanceRepository @Inject constructor(
-    private val settings: InternetObservingSettings,
     private val local: AttendanceLocal,
     private val remote: AttendanceRemote
 ) {
 
-    fun getAttendance(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean): Single<List<Attendance>> {
-        return local.getAttendance(semester, start.monday, end.sunday).filter { !forceRefresh }
-            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-                if (it) remote.getAttendance(student, semester, start.monday, end.sunday)
-                else Single.error(UnknownHostException())
-            }.flatMap { newAttendance ->
-                local.getAttendance(semester, start.monday, end.sunday)
-                    .toSingle(emptyList())
-                    .doOnSuccess { oldAttendance ->
-                        local.deleteAttendance(oldAttendance.uniqueSubtract(newAttendance))
-                        local.saveAttendance(newAttendance.uniqueSubtract(oldAttendance))
-                    }
-            }.flatMap {
-                local.getAttendance(semester, start.monday, end.sunday)
-                    .toSingle(emptyList())
-            }).map { list -> list.filter { it.date in start..end } }
-    }
+    fun getAttendance(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it.isEmpty() || forceRefresh },
+        query = { local.getAttendance(semester, start.monday, end.sunday) },
+        fetch = { remote.getAttendance(student, semester, start.monday, end.sunday) },
+        saveFetchResult = { old, new ->
+            local.deleteAttendance(old uniqueSubtract new)
+            local.saveAttendance(new uniqueSubtract old)
+        },
+        filterResult = { it.filter { item -> item.date in start..end } }
+    )
 
-    fun excuseForAbsence(student: Student, semester: Semester, attendanceList: List<Attendance>, reason: String? = null): Single<Boolean> {
-        return remote.excuseAbsence(student, semester, attendanceList, reason)
+    suspend fun excuseForAbsence(student: Student, semester: Semester, attendanceList: List<Attendance>, reason: String? = null) {
+        remote.excuseAbsence(student, semester, attendanceList, reason)
     }
 }

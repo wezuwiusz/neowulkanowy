@@ -6,13 +6,14 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import javax.inject.Inject
 
 @TargetApi(26)
 class PushChannel @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) : Channel {
 
     companion object {

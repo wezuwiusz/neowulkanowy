@@ -4,9 +4,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.threeten.bp.LocalDate.of
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.Month.JANUARY
+import java.time.LocalDate.of
+import java.time.LocalDateTime
+import java.time.Month.JANUARY
 import java.util.Locale
 
 class TimeExtensionTest {

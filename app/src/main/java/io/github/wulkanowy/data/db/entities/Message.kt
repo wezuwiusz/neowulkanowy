@@ -3,8 +3,8 @@ package io.github.wulkanowy.data.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.threeten.bp.LocalDateTime
 import java.io.Serializable
+import java.time.LocalDateTime
 
 @Entity(tableName = "Messages")
 data class Message(
@@ -28,8 +28,6 @@ data class Message(
     val recipient: String,
 
     val subject: String,
-
-    var content: String,
 
     val date: LocalDateTime,
 
@@ -55,4 +53,6 @@ data class Message(
 
     @ColumnInfo(name = "is_notified")
     var isNotified: Boolean = true
+
+    var content: String = ""
 }

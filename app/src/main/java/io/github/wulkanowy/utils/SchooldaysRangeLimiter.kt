@@ -3,8 +3,8 @@ package io.github.wulkanowy.utils
 import android.os.Parcel
 import android.os.Parcelable
 import com.wdullaer.materialdatetimepicker.date.DateRangeLimiter
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.LocalDate
+import java.time.DayOfWeek
+import java.time.LocalDate
 import java.util.Calendar
 
 @Suppress("UNUSED_PARAMETER")

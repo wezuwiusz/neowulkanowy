@@ -1,19 +1,20 @@
 package io.github.wulkanowy.ui.modules.about.logviewer
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.logger.LoggerRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.flowWithResource
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
 class LogViewerPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val loggerRepository: LoggerRepository
-) : BasePresenter<LogViewerView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<LogViewerView>(errorHandler, studentRepository) {
 
     override fun onAttachView(view: LogViewerView) {
         super.onAttachView(view)
@@ -22,16 +23,19 @@ class LogViewerPresenter @Inject constructor(
     }
 
     fun onShareLogsSelected(): Boolean {
-        disposable.add(loggerRepository.getLogFiles()
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .subscribe({ files ->
-                Timber.i("Loading logs files result: ${files.joinToString { it.name }}")
-                view?.shareLogs(files)
-            }, {
-                Timber.i("Loading logs files result: An exception occurred")
-                errorHandler.dispatch(it)
-            }))
+        flowWithResource { loggerRepository.getLogFiles() }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.d("Loading logs files started")
+                Status.SUCCESS -> {
+                    Timber.i("Loading logs files result: ${it.data!!.joinToString { file -> file.name }}")
+                    view?.shareLogs(it.data)
+                }
+                Status.ERROR -> {
+                    Timber.i("Loading logs files result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.launch("share")
         return true
     }
 
@@ -40,15 +44,18 @@ class LogViewerPresenter @Inject constructor(
     }
 
     private fun loadLogFile() {
-        disposable.add(loggerRepository.getLastLogLines()
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .subscribe({
-                Timber.i("Loading last log file result: load ${it.size} lines")
-                view?.setLines(it)
-            }, {
-                Timber.i("Loading last log file result: An exception occurred")
-                errorHandler.dispatch(it)
-            }))
+        flowWithResource { loggerRepository.getLastLogLines() }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.d("Loading last log file started")
+                Status.SUCCESS -> {
+                    Timber.i("Loading last log file result: load ${it.data!!.size} lines")
+                    view?.setLines(it.data)
+                }
+                Status.ERROR -> {
+                    Timber.i("Loading last log file result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.launch("file")
     }
 }

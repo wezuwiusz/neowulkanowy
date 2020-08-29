@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.repositories.message.MessageFolder.SENT
 import io.github.wulkanowy.data.repositories.message.MessageFolder.TRASHED
@@ -19,14 +19,14 @@ import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnSelectPageListener
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_message),
     MessageView, MainView.TitledView {
 
     @Inject
     lateinit var presenter: MessagePresenter
 
-    @Inject
-    lateinit var pagerAdapter: BaseFragmentPagerAdapter
+    private val pagerAdapter by lazy { BaseFragmentPagerAdapter(childFragmentManager) }
 
     companion object {
         fun newInstance() = MessageFragment()
@@ -75,10 +75,6 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
 
     override fun showProgress(show: Boolean) {
         binding.messageProgress.visibility = if (show) VISIBLE else INVISIBLE
-    }
-
-    fun onDeleteMessage(message: Message) {
-        presenter.onDeleteMessage(message)
     }
 
     fun onChildFragmentLoaded() {

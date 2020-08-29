@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.ActivityWidgetConfigureBinding
@@ -18,6 +19,7 @@ import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LuckyNumberWidgetConfigureActivity :
     BaseActivity<LuckyNumberWidgetConfigurePresenter, ActivityWidgetConfigureBinding>(),
     LuckyNumberWidgetConfigureView {

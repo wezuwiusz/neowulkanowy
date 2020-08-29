@@ -21,12 +21,12 @@ import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getCurrentThemeWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getDateWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.getCompatColor
+import io.github.wulkanowy.utils.toFirstResult
 import io.github.wulkanowy.utils.toFormattedString
-import io.reactivex.Maybe
-import org.threeten.bp.LocalDate
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
+import java.time.LocalDate
 
 class TimetableWidgetFactory(
     private val timetableRepository: TimetableRepository,
@@ -34,7 +34,6 @@ class TimetableWidgetFactory(
     private val semesterRepository: SemesterRepository,
     private val prefRepository: PreferencesRepository,
     private val sharedPref: SharedPrefProvider,
-    private val schedulers: SchedulersProvider,
     private val context: Context,
     private val intent: Intent?
 ) : RemoteViewsService.RemoteViewsFactory {
@@ -69,7 +68,7 @@ class TimetableWidgetFactory(
             val studentId = sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0)
 
             updateTheme(appWidgetId)
-            updateLessons(date, studentId)
+            lessons = getLessons(date, studentId)
         }
     }
 
@@ -98,30 +97,23 @@ class TimetableWidgetFactory(
         }
     }
 
-    private fun updateLessons(date: LocalDate, studentId: Long) {
-        lessons = try {
-            studentRepository.isStudentSaved()
-                .filter { true }
-                .flatMap { studentRepository.getSavedStudents().toMaybe() }
-                .flatMap {
-                    val student = it.singleOrNull { student -> student.id == studentId }
+    private fun getLessons(date: LocalDate, studentId: Long) = try {
+        runBlocking {
+            if (!studentRepository.isStudentSaved()) return@runBlocking emptyList<Timetable>()
 
-                    if (student != null) Maybe.just(student)
-                    else Maybe.empty()
-                }
-                .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).toMaybe().flatMap { semester ->
-                        timetableRepository.getTimetable(student, semester, date, date).toMaybe()
-                    }
-                }
-                .map { items -> items.sortedWith(compareBy({ it.number }, { !it.isStudentPlan })) }
-                .map { lessons -> lessons.filter { if (prefRepository.showWholeClassPlan == "no") it.isStudentPlan else true } }
-                .subscribeOn(schedulers.backgroundThread)
-                .blockingGet(emptyList())
-        } catch (e: Exception) {
-            Timber.e(e, "An error has occurred in timetable widget factory")
-            emptyList()
+            val students = studentRepository.getSavedStudents()
+            val student = students.singleOrNull { it.student.id == studentId }?.student
+                ?: return@runBlocking emptyList<Timetable>()
+
+            val semester = semesterRepository.getCurrentSemester(student)
+            timetableRepository.getTimetable(student, semester, date, date, false)
+                .toFirstResult().data.orEmpty()
+                .sortedWith(compareBy({ it.number }, { !it.isStudentPlan }))
+                .filter { if (prefRepository.showWholeClassPlan == "no") it.isStudentPlan else true }
         }
+    } catch (e: Exception) {
+        Timber.e(e, "An error has occurred in timetable widget factory")
+        emptyList<Timetable>()
     }
 
     @SuppressLint("DefaultLocale")

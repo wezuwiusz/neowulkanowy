@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.timetable
 
 import android.annotation.SuppressLint
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -9,29 +10,32 @@ import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDate.now
-import org.threeten.bp.LocalDate.of
-import org.threeten.bp.LocalDate.ofEpochDay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.LocalDate.now
+import java.time.LocalDate.of
+import java.time.LocalDate.ofEpochDay
 import javax.inject.Inject
 
 class TimetablePresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val timetableRepository: TimetableRepository,
     private val semesterRepository: SemesterRepository,
     private val prefRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<TimetableView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<TimetableView>(errorHandler, studentRepository) {
 
     private var baseDate: LocalDate = now().nextOrSameSchoolDay
 
@@ -111,60 +115,60 @@ class TimetablePresenter @Inject constructor(
     }
 
     private fun setBaseDateOnHolidays() {
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .subscribe({
-                baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
-                currentDate = baseDate
-                reloadNavigation()
-            }) {
-                Timber.i("Loading semester result: An exception occurred")
-            })
+        flow {
+            val student = studentRepository.getCurrentStudent()
+            emit(semesterRepository.getCurrentSemester(student))
+        }.catch {
+            Timber.i("Loading semester result: An exception occurred")
+        }.onEach {
+            baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
+            currentDate = baseDate
+            reloadNavigation()
+        }.launch("holidays")
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
-        Timber.i("Loading timetable data started")
         currentDate = date
-        disposable.apply {
-            clear()
-            add(studentRepository.getCurrentStudent()
-                .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                        timetableRepository.getTimetable(student, semester, currentDate, currentDate, forceRefresh)
-                    }
-                }
-                .map { items -> items.filter { if (prefRepository.showWholeClassPlan == "no") it.isStudentPlan else true } }
-                .map { items -> items.sortedWith(compareBy({ it.number }, { !it.isStudentPlan })) }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doFinally {
-                    view?.run {
-                        hideRefresh()
-                        showProgress(false)
-                        enableSwipe(true)
-                    }
-                }
-                .subscribe({
+
+        flowWithResourceIn {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student)
+            timetableRepository.getTimetable(student, semester, date, date, forceRefresh)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Loading timetable data started")
+                Status.SUCCESS -> {
                     Timber.i("Loading timetable result: Success")
                     view?.apply {
-                        updateData(it, prefRepository.showWholeClassPlan, prefRepository.showTimetableTimers)
-                        showEmpty(it.isEmpty())
+                        updateData(
+                            showWholeClassPlanType = prefRepository.showWholeClassPlan,
+                            showTimetableTimers = prefRepository.showTimetableTimers,
+                            data = it.data!!
+                                .filter { item -> if (prefRepository.showWholeClassPlan == "no") item.isStudentPlan else true }
+                                .sortedWith(compareBy({ item -> item.number }, { item -> !item.isStudentPlan }))
+                        )
+                        showEmpty(it.data.isEmpty())
                         showErrorView(false)
-                        showContent(it.isNotEmpty())
+                        showContent(it.data.isNotEmpty())
                     }
                     analytics.logEvent(
                         "load_data",
                         "type" to "timetable",
-                        "items" to it.size,
-                        "force_refresh" to forceRefresh
+                        "items" to it.data!!.size
                     )
-                }) {
+                }
+                Status.ERROR -> {
                     Timber.i("Loading timetable result: An exception occurred")
-                    errorHandler.dispatch(it)
-                })
-        }
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.afterLoading {
+            view?.run {
+                hideRefresh()
+                showProgress(false)
+                enableSwipe(true)
+            }
+        }.launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

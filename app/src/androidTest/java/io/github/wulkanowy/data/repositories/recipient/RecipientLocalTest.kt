@@ -7,11 +7,12 @@ import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.data.db.entities.Student
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
@@ -35,17 +36,21 @@ class RecipientLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        recipientLocal.saveRecipients(listOf(
+        val list = listOf(
             Recipient(1, "2rPracownik", "Kowalski Jan", "Kowalski Jan [KJ] - Pracownik (Fake123456)", 3, 4, 2, "hash"),
             Recipient(1, "3rPracownik", "Kowalska Karolina", "Kowalska Karolina [KK] - Pracownik (Fake123456)", 4, 4, 2, "hash"),
             Recipient(1, "4rPracownik", "Krupa Stanisław", "Krupa Stanisław [KS] - Uczeń (Fake123456)", 5, 4, 1, "hash")
-        ))
+        )
+        runBlocking { recipientLocal.saveRecipients(list) }
 
-        val recipients = recipientLocal.getRecipients(
-            Student("fakelog.cf", "AUTO", "", "", "", "", false, "", "", "", 1, 0, "", "", "", "", "", 1, true, LocalDateTime.now()),
-            2,
-            ReportingUnit(1, 4, "", 0, "", emptyList())
-        ).blockingGet()
+        val student = Student("fakelog.cf", "AUTO", "", "", "", "", false, "", "", "", 1, 0, "", "", "", "", "", "", 1, true, LocalDateTime.now())
+        val recipients = runBlocking {
+            recipientLocal.getRecipients(
+                student = student,
+                role = 2,
+                unit = ReportingUnit(1, 4, "", 0, "", emptyList())
+            )
+        }
 
         assertEquals(2, recipients.size)
         assertEquals(1, recipients[0].studentId)

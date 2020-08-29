@@ -11,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.ReportingUnit
@@ -21,6 +22,7 @@ import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.showSoftInput
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessageBinding>(), SendMessageView {
 
     @Inject
@@ -62,7 +64,7 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
     override val messageSuccess: String
         get() = getString(R.string.message_send_successful)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivitySendMessageBinding.inflate(layoutInflater).apply { binding = this }.root)
         setSupportActionBar(binding.sendMessageToolbar)

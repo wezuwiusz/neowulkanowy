@@ -1,75 +1,72 @@
 package io.github.wulkanowy.data.repositories.gradestatistics
 
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
 import io.github.wulkanowy.ui.modules.grade.statistics.ViewType
+import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
-import io.reactivex.Single
-import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class GradeStatisticsRepository @Inject constructor(
-    private val settings: InternetObservingSettings,
     private val local: GradeStatisticsLocal,
     private val remote: GradeStatisticsRemote
 ) {
 
-    fun getGradesStatistics(student: Student, semester: Semester, subjectName: String, isSemester: Boolean, forceRefresh: Boolean = false): Single<List<GradeStatisticsItem>> {
-        return local.getGradesStatistics(semester, isSemester, subjectName).map { it.mapToStatisticItems() }.filter { !forceRefresh }
-            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
-                .flatMap {
-                    if (it) remote.getGradeStatistics(student, semester, isSemester)
-                    else Single.error(UnknownHostException())
-                }.flatMap { new ->
-                    local.getGradesStatistics(semester, isSemester).toSingle(emptyList())
-                        .doOnSuccess { old ->
-                            local.deleteGradesStatistics(old.uniqueSubtract(new))
-                            local.saveGradesStatistics(new.uniqueSubtract(old))
-                        }
-                }.flatMap { local.getGradesStatistics(semester, isSemester, subjectName).map { it.mapToStatisticItems() }.toSingle(emptyList()) })
-    }
-
-    fun getGradesPointsStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean): Single<List<GradeStatisticsItem>> {
-        return local.getGradesPointsStatistics(semester, subjectName).map { it.mapToStatisticsItem() }.filter { !forceRefresh }
-            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings)
-                .flatMap {
-                    if (it) remote.getGradePointsStatistics(student, semester)
-                    else Single.error(UnknownHostException())
-                }.flatMap { new ->
-                    local.getGradesPointsStatistics(semester).toSingle(emptyList())
-                        .doOnSuccess { old ->
-                            local.deleteGradesPointsStatistics(old.uniqueSubtract(new))
-                            local.saveGradesPointsStatistics(new.uniqueSubtract(old))
-                        }
-                }.flatMap { local.getGradesPointsStatistics(semester, subjectName).map { it.mapToStatisticsItem() }.toSingle(emptyList()) })
-    }
-
-    private fun List<GradeStatistics>.mapToStatisticItems(): List<GradeStatisticsItem> {
-        return groupBy { it.subject }.map {
-            GradeStatisticsItem(
-                type = ViewType.PARTIAL,
-                partial = it.value
-                    .sortedByDescending { item -> item.grade }
-                    .filter { item -> item.amount != 0 },
-                points = null
-            )
+    fun getGradesStatistics(student: Student, semester: Semester, subjectName: String, isSemester: Boolean, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it.isEmpty() || forceRefresh },
+        query = { local.getGradesStatistics(semester, isSemester) },
+        fetch = { remote.getGradeStatistics(student, semester, isSemester) },
+        saveFetchResult = { old, new ->
+            local.deleteGradesStatistics(old uniqueSubtract new)
+            local.saveGradesStatistics(new uniqueSubtract old)
+        },
+        mapResult = { items ->
+            when (subjectName) {
+                "Wszystkie" -> items.groupBy { it.grade }.map {
+                    GradeStatistics(semester.studentId, semester.semesterId, subjectName, it.key,
+                        it.value.fold(0) { acc, e -> acc + e.amount }, false)
+                } + items
+                else -> items.filter { it.subject == subjectName }
+            }.mapToStatisticItems()
         }
+    )
+
+    fun getGradesPointsStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it.isEmpty() || forceRefresh },
+        query = { local.getGradesPointsStatistics(semester) },
+        fetch = { remote.getGradePointsStatistics(student, semester) },
+        saveFetchResult = { old, new ->
+            local.deleteGradesPointsStatistics(old uniqueSubtract new)
+            local.saveGradesPointsStatistics(new uniqueSubtract old)
+        },
+        mapResult = { items ->
+            when (subjectName) {
+                "Wszystkie" -> items
+                else -> items.filter { it.subject == subjectName }
+            }.mapToStatisticsItem()
+        }
+    )
+
+    private fun List<GradeStatistics>.mapToStatisticItems() = groupBy { it.subject }.map {
+        GradeStatisticsItem(
+            type = ViewType.PARTIAL,
+            partial = it.value
+                .sortedByDescending { item -> item.grade }
+                .filter { item -> item.amount != 0 },
+            points = null
+        )
     }
 
-    private fun List<GradePointsStatistics>.mapToStatisticsItem(): List<GradeStatisticsItem> {
-        return map {
-            GradeStatisticsItem(
-                type = ViewType.POINTS,
-                partial = emptyList(),
-                points = it
-            )
-        }
+    private fun List<GradePointsStatistics>.mapToStatisticsItem() = map {
+        GradeStatisticsItem(
+            type = ViewType.POINTS,
+            partial = emptyList(),
+            points = it
+        )
     }
 }

@@ -9,13 +9,14 @@ import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
-import dagger.Lazy
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentLicenseBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LicenseFragment : BaseFragment<FragmentLicenseBinding>(R.layout.fragment_license),
     LicenseView, MainView.TitledView {
 
@@ -25,14 +26,13 @@ class LicenseFragment : BaseFragment<FragmentLicenseBinding>(R.layout.fragment_l
     @Inject
     lateinit var licenseAdapter: LicenseAdapter
 
-    @Inject
-    lateinit var libs: Lazy<Libs>
+    private val libs by lazy { Libs(requireContext()) }
 
     override val titleStringId get() = R.string.license_title
 
     override val appLibraries: ArrayList<Library>?
         get() = context?.let {
-            libs.get().prepareLibraries(it, emptyArray(), emptyArray(), autoDetect = true, checkCachedDetection = true, sort = true)
+            libs.prepareLibraries(it, emptyArray(), emptyArray(), autoDetect = true, checkCachedDetection = true, sort = true)
         }
 
     companion object {

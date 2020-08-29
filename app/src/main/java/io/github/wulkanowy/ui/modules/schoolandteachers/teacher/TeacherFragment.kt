@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Teacher
 import io.github.wulkanowy.databinding.FragmentTeacherBinding
@@ -15,6 +16,7 @@ import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragmen
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TeacherFragment : BaseFragment<FragmentTeacherBinding>(R.layout.fragment_teacher),
     TeacherView, MainView.TitledView, SchoolAndTeachersChildView {
 

@@ -10,14 +10,14 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
 import io.github.wulkanowy.utils.isHolidays
-import org.threeten.bp.LocalDate.now
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import java.time.LocalDate.now
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val preferencesRepository: PreferencesRepository,
@@ -26,7 +26,7 @@ class SettingsPresenter @Inject constructor(
     private val syncManager: SyncManager,
     private val chuckerCollector: ChuckerCollector,
     private val appInfo: AppInfo
-) : BasePresenter<SettingsView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<SettingsView>(errorHandler, studentRepository) {
 
     override fun onAttachView(view: SettingsView) {
         super.onAttachView(view)
@@ -64,31 +64,27 @@ class SettingsPresenter @Inject constructor(
 
     fun onForceSyncDialogSubmit() {
         view?.run {
-            val successString = syncSuccessString
-            val failedString = syncFailedString
-            disposable.add(syncManager.startOneTimeSyncWorker()
-                .doOnSubscribe {
-                    setSyncInProgress(true)
-                    Timber.i("Setting sync now started")
-                    analytics.logEvent("sync_now", "status" to "started")
-                }
-                .doFinally { setSyncInProgress(false) }
-                .subscribe({ workInfo ->
-                    when (workInfo.state) {
-                        WorkInfo.State.SUCCEEDED -> {
-                            showMessage(successString)
-                            analytics.logEvent("sync_now", "status" to "success")
-                        }
-                        WorkInfo.State.FAILED -> {
-                            showError(failedString, Throwable(workInfo.outputData.getString("error")))
-                            analytics.logEvent("sync_now", "status" to "failed")
-                        }
-                        else -> Timber.d("Sync now state: ${workInfo.state}")
+            syncManager.startOneTimeSyncWorker().onEach { workInfo ->
+                when (workInfo.state) {
+                    WorkInfo.State.ENQUEUED -> {
+                        setSyncInProgress(true)
+                        Timber.i("Setting sync now started")
+                        analytics.logEvent("sync_now", "status" to "started")
                     }
-                }, {
-                    Timber.e(it, "Sync now failed")
-                })
-            )
+                    WorkInfo.State.SUCCEEDED -> {
+                        showMessage(syncSuccessString)
+                        analytics.logEvent("sync_now", "status" to "success")
+                    }
+                    WorkInfo.State.FAILED -> {
+                        showError(syncFailedString, Throwable(workInfo.outputData.getString("error")))
+                        analytics.logEvent("sync_now", "status" to "failed")
+                    }
+                    else -> Timber.d("Sync now state: ${workInfo.state}")
+                }
+                if (workInfo.state.isFinished) setSyncInProgress(false)
+            }.catch {
+                Timber.e(it, "Sync now failed")
+            }.launch("sync")
         }
     }
 }

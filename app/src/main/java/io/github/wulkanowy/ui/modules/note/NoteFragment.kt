@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.databinding.FragmentNoteBinding
@@ -14,6 +15,7 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note), NoteView,
     MainView.TitledView {
 

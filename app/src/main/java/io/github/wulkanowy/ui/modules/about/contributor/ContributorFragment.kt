@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.Contributor
 import io.github.wulkanowy.databinding.FragmentContributorBinding
@@ -14,6 +15,7 @@ import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ContributorFragment : BaseFragment<FragmentContributorBinding>(R.layout.fragment_contributor),
     ContributorView, MainView.TitledView {
 

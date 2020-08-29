@@ -1,157 +1,169 @@
 package io.github.wulkanowy.ui.modules.login.form
 
-import io.github.wulkanowy.TestSchedulersProvider
+import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.reactivex.Single
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.just
+import io.mockk.verify
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.clearInvocations
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.never
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDateTime.now
+import java.io.IOException
 
 class LoginFormPresenterTest {
 
-    @Mock
+    @get:Rule
+    val coroutineRule = MainCoroutineRule()
+
+    @MockK(relaxed = true)
     lateinit var loginFormView: LoginFormView
 
-    @Mock
+    @MockK
     lateinit var repository: StudentRepository
 
-    @Mock
+    @MockK(relaxed = true)
     lateinit var errorHandler: LoginErrorHandler
 
-    @Mock
+    @MockK(relaxed = true)
     lateinit var analytics: FirebaseAnalyticsHelper
 
     private lateinit var presenter: LoginFormPresenter
 
     @Before
-    fun initPresenter() {
-        MockitoAnnotations.initMocks(this)
-        clearInvocations(repository, loginFormView)
-        presenter = LoginFormPresenter(TestSchedulersProvider(), repository, errorHandler, analytics)
+    fun setUp() {
+        MockKAnnotations.init(this)
+
+        every { loginFormView.initView() } just Runs
+        every { loginFormView.showContact(any()) } just Runs
+        every { loginFormView.showVersion() } just Runs
+        every { loginFormView.showProgress(any()) } just Runs
+        every { loginFormView.showContent(any()) } just Runs
+        every { loginFormView.formHostSymbol } returns "Default"
+        every { loginFormView.setErrorPassInvalid(any()) } just Runs
+        every { loginFormView.setErrorPassRequired(any()) } just Runs
+        every { loginFormView.setErrorUsernameRequired() } just Runs
+
+        presenter = LoginFormPresenter(repository, errorHandler, analytics)
         presenter.onAttachView(loginFormView)
     }
 
     @Test
     fun initViewTest() {
-        verify(loginFormView).initView()
+        verify { loginFormView.initView() }
     }
 
     @Test
     fun emptyNicknameLoginTest() {
-        `when`(loginFormView.formUsernameValue).thenReturn("")
-        `when`(loginFormView.formPassValue).thenReturn("test123")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
+        every { loginFormView.formUsernameValue } returns ""
+        every { loginFormView.formPassValue } returns "test123"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
         presenter.onSignInClick()
 
-        verify(loginFormView).setErrorUsernameRequired()
-        verify(loginFormView, never()).setErrorPassRequired(false)
-        verify(loginFormView, never()).setErrorPassInvalid(false)
+        verify { loginFormView.setErrorUsernameRequired() }
+        verify(exactly = 0) { loginFormView.setErrorPassRequired(true) }
+        verify(exactly = 0) { loginFormView.setErrorPassInvalid(false) }
     }
 
     @Test
     fun emptyPassLoginTest() {
-        `when`(loginFormView.formUsernameValue).thenReturn("@")
-        `when`(loginFormView.formPassValue).thenReturn("")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
+        every { loginFormView.formUsernameValue } returns "@"
+        every { loginFormView.formPassValue } returns ""
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
         presenter.onSignInClick()
 
-        verify(loginFormView, never()).setErrorUsernameRequired()
-        verify(loginFormView).setErrorPassRequired(true)
-        verify(loginFormView, never()).setErrorPassInvalid(false)
+        verify(exactly = 0) { loginFormView.setErrorUsernameRequired() }
+        verify { loginFormView.setErrorPassRequired(true) }
+        verify(exactly = 0) { loginFormView.setErrorPassInvalid(false) }
     }
 
     @Test
     fun invalidPassLoginTest() {
-        `when`(loginFormView.formUsernameValue).thenReturn("@")
-        `when`(loginFormView.formPassValue).thenReturn("123")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
+        every { loginFormView.formUsernameValue } returns "@"
+        every { loginFormView.formPassValue } returns "123"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
         presenter.onSignInClick()
 
-        verify(loginFormView, never()).setErrorUsernameRequired()
-        verify(loginFormView, never()).setErrorPassRequired(true)
-        verify(loginFormView).setErrorPassInvalid(true)
+        verify(exactly = 0) { loginFormView.setErrorUsernameRequired() }
+        verify(exactly = 0) { loginFormView.setErrorPassRequired(true) }
+        verify { loginFormView.setErrorPassInvalid(true) }
     }
 
     @Test
     fun loginTest() {
-        val studentTest = Student(email = "test@", password = "123", scrapperBaseUrl = "https://fakelog.cf/", loginType = "AUTO", studentName = "", schoolSymbol = "", schoolName = "", studentId = 0, classId = 1, isCurrent = false, symbol = "", registrationDate = now(), className = "", mobileBaseUrl = "", privateKey = "", certificateKey = "", loginMode = "", userLoginId = 0, schoolShortName = "", isParent = false)
-        doReturn(Single.just(listOf(studentTest))).`when`(repository).getStudentsScrapper(anyString(), anyString(), anyString(), anyString())
+        val studentTest = Student(email = "test@", password = "123", scrapperBaseUrl = "https://fakelog.cf/", loginType = "AUTO", studentName = "", schoolSymbol = "", schoolName = "", studentId = 0, classId = 1, isCurrent = false, symbol = "", registrationDate = now(), className = "", mobileBaseUrl = "", privateKey = "", certificateKey = "", loginMode = "", userLoginId = 0, schoolShortName = "", isParent = false, userName = "")
+        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf(StudentWithSemesters(studentTest, emptyList()))
 
-        `when`(loginFormView.formUsernameValue).thenReturn("@")
-        `when`(loginFormView.formPassValue).thenReturn("123456")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
-        `when`(loginFormView.formHostSymbol).thenReturn("Default")
+        every { loginFormView.formUsernameValue } returns "@"
+        every { loginFormView.formPassValue } returns "123456"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostSymbol } returns "Default"
         presenter.onSignInClick()
 
-        verify(loginFormView).hideSoftKeyboard()
-        verify(loginFormView).showProgress(true)
-        verify(loginFormView).showProgress(false)
-        verify(loginFormView).showContent(false)
-        verify(loginFormView).showContent(true)
+        verify { loginFormView.hideSoftKeyboard() }
+        verify { loginFormView.showProgress(true) }
+        verify { loginFormView.showProgress(false) }
+        verify { loginFormView.showContent(false) }
+        verify { loginFormView.showContent(true) }
     }
 
     @Test
     fun loginEmptyTest() {
-        doReturn(Single.just(emptyList<Student>()))
-            .`when`(repository).getStudentsScrapper(anyString(), anyString(), anyString(), anyString())
-        `when`(loginFormView.formUsernameValue).thenReturn("@")
-        `when`(loginFormView.formPassValue).thenReturn("123456")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
-        `when`(loginFormView.formHostSymbol).thenReturn("Default")
+        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf()
+        every { loginFormView.formUsernameValue } returns "@"
+        every { loginFormView.formPassValue } returns "123456"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostSymbol } returns "Default"
         presenter.onSignInClick()
 
-        verify(loginFormView).hideSoftKeyboard()
-        verify(loginFormView).showProgress(true)
-        verify(loginFormView).showProgress(false)
-        verify(loginFormView).showContent(false)
-        verify(loginFormView).showContent(true)
+        verify { loginFormView.showContent(false) }
+        verify { loginFormView.showProgress(true) }
+        verify { loginFormView.showProgress(false) }
+        verify { loginFormView.showContent(false) }
+        verify { loginFormView.showContent(true) }
     }
 
     @Test
     fun loginEmptyTwiceTest() {
-        doReturn(Single.just(emptyList<Student>()))
-            .`when`(repository).getStudentsScrapper(anyString(), anyString(), anyString(), anyString())
-        `when`(loginFormView.formUsernameValue).thenReturn("@")
-        `when`(loginFormView.formPassValue).thenReturn("123456")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
-        `when`(loginFormView.formHostSymbol).thenReturn("Default")
+        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf()
+        every { loginFormView.formUsernameValue } returns "@"
+        every { loginFormView.formPassValue } returns "123456"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostSymbol } returns "Default"
         presenter.onSignInClick()
         presenter.onSignInClick()
 
-        verify(loginFormView, times(2)).hideSoftKeyboard()
-        verify(loginFormView, times(2)).showProgress(true)
-        verify(loginFormView, times(2)).showProgress(false)
-        verify(loginFormView, times(2)).showContent(false)
-        verify(loginFormView, times(2)).showContent(true)
+        verify(exactly = 2) { loginFormView.hideSoftKeyboard() }
+        verify(exactly = 2) { loginFormView.showProgress(true) }
+        verify(exactly = 2) { loginFormView.showProgress(false) }
+        verify(exactly = 2) { loginFormView.showContent(false) }
+        verify(exactly = 2) { loginFormView.showContent(true) }
     }
 
     @Test
     fun loginErrorTest() {
-        val testException = RuntimeException("test")
-        doReturn(Single.error<List<Student>>(testException)).`when`(repository).getStudentsScrapper(anyString(), anyString(), anyString(), anyString())
-        `when`(loginFormView.formUsernameValue).thenReturn("@")
-        `when`(loginFormView.formPassValue).thenReturn("123456")
-        `when`(loginFormView.formHostValue).thenReturn("https://fakelog.cf/?standard")
-        `when`(loginFormView.formHostSymbol).thenReturn("Default")
+        val testException = IOException("test")
+        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } throws testException
+        every { loginFormView.formUsernameValue } returns "@"
+        every { loginFormView.formPassValue } returns "123456"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostSymbol } returns "Default"
+        every { loginFormView.showProgress(any()) } just Runs
+        every { loginFormView.showProgress(any()) } just Runs
         presenter.onSignInClick()
 
-        verify(loginFormView).hideSoftKeyboard()
-        verify(loginFormView).showProgress(true)
-        verify(loginFormView).showProgress(false)
-        verify(loginFormView).showContent(false)
-        verify(loginFormView).showContent(true)
-        verify(errorHandler).dispatch(testException)
+        verify { loginFormView.hideSoftKeyboard() }
+        verify { loginFormView.showProgress(false) }
+        verify { loginFormView.showContent(false) }
+        verify { loginFormView.showContent(true) }
+        verify { errorHandler.dispatch(match { it.message == testException.message }) }
     }
 }

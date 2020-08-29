@@ -3,19 +3,18 @@ package io.github.wulkanowy.data.db
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.threeten.bp.DateTimeUtils
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.Month
-import org.threeten.bp.ZoneOffset
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Month
+import java.time.ZoneOffset
 import java.util.Date
 
 class Converters {
 
     @TypeConverter
     fun timestampToDate(value: Long?): LocalDate? = value?.run {
-        DateTimeUtils.toInstant(Date(value)).atZone(ZoneOffset.UTC).toLocalDate()
+        Date(value).toInstant().atZone(ZoneOffset.UTC).toLocalDate()
     }
 
     @TypeConverter

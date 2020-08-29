@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.message.send
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
-import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.recipient.RecipientRepository
@@ -12,14 +12,14 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.toFormattedString
-import io.reactivex.Completable
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
 class SendMessagePresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val semesterRepository: SemesterRepository,
@@ -28,14 +28,14 @@ class SendMessagePresenter @Inject constructor(
     private val recipientRepository: RecipientRepository,
     private val preferencesRepository: PreferencesRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<SendMessageView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<SendMessageView>(errorHandler, studentRepository) {
 
     fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean?) {
         super.onAttachView(view)
         view.initView()
         Timber.i("Send message view was initialized")
         loadData(message, reply)
-        view.apply {
+        with(view) {
             message?.let {
                 setSubject(when (reply) {
                     true -> "RE: "
@@ -93,90 +93,89 @@ class SendMessagePresenter @Inject constructor(
     }
 
     private fun loadData(message: Message?, reply: Boolean?) {
-        var reportingUnit: ReportingUnit? = null
-        var recipientChips: List<RecipientChipItem> = emptyList()
-        var selectedRecipientChips: List<RecipientChipItem> = emptyList()
+        flowWithResource {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student)
+            val unit = reportingUnitRepository.getReportingUnit(student, semester.unitId)
 
-        Timber.i("Loading recipients started")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it).map { semester -> it to semester } }
-            .flatMapCompletable { (student, semester) ->
-                reportingUnitRepository.getReportingUnit(student, semester.unitId)
-                    .doOnSuccess { reportingUnit = it }
-                    .flatMap { recipientRepository.getRecipients(student, 2, it).toMaybe() }
-                    .doOnSuccess {
-                        Timber.i("Loading recipients result: Success, fetched %d recipients", it.size)
-                        recipientChips = createChips(it)
-                    }
-                    .flatMapCompletable {
-                        if (message == null || reply != true) Completable.complete()
-                        else recipientRepository.getMessageRecipients(student, message)
-                            .doOnSuccess {
-                                Timber.i("Loaded message recipients to reply result: Success, fetched %d recipients", it.size)
-                                selectedRecipientChips = createChips(it)
-                            }
-                            .ignoreElement()
-                    }
-            }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .doOnSubscribe {
-                view?.run {
+            Timber.i("Loading recipients started")
+            val recipients = when {
+                unit != null -> recipientRepository.getRecipients(student, 2, unit)
+                else -> listOf()
+            }.let { createChips(it) }
+            Timber.i("Loading recipients result: Success, fetched %d recipients", recipients.size)
+
+            Timber.i("Loading message recipients started")
+            val messageRecipients = when {
+                message != null && reply == true -> recipientRepository.getMessageRecipients(student, message)
+                else -> emptyList()
+            }.let { createChips(it) }
+            Timber.i("Loaded message recipients to reply result: Success, fetched %d recipients", messageRecipients.size)
+
+            Triple(unit, recipients, messageRecipients)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> view?.run {
+                    Timber.i("Loading recipients started")
                     showProgress(true)
                     showContent(false)
                 }
-            }
-            .doFinally { view?.run { showProgress(false) } }
-            .subscribe({
-                view?.run {
-                    if (reportingUnit !== null) {
-                        reportingUnit?.let { setReportingUnit(it) }
-                        setRecipients(recipientChips)
-                        if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(selectedRecipientChips)
-                        showContent(true)
-                    } else {
-                        Timber.i("Loading recipients result: Can't find the reporting unit")
-                        view?.showEmpty(true)
+                Status.SUCCESS -> it.data!!.let { (reportingUnit, recipientChips, selectedRecipientChips) ->
+                    view?.run {
+                        if (reportingUnit != null) {
+                            setReportingUnit(reportingUnit)
+                            setRecipients(recipientChips)
+                            if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(selectedRecipientChips)
+                            showContent(true)
+                        } else {
+                            Timber.i("Loading recipients result: Can't find the reporting unit")
+                            view?.showEmpty(true)
+                        }
                     }
                 }
-            }, {
-                Timber.i("Loading recipients result: An exception occurred")
-                view?.showContent(true)
-                errorHandler.dispatch(it)
-            }))
+                Status.ERROR -> {
+                    Timber.i("Loading recipients result: An exception occurred")
+                    view?.showContent(true)
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.afterLoading {
+            view?.run { showProgress(false) }
+        }.launch()
     }
 
     private fun sendMessage(subject: String, content: String, recipients: List<Recipient>) {
-        Timber.i("Sending message started")
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { messageRepository.sendMessage(it, subject, content, recipients) }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .doOnSubscribe {
-                view?.run {
+        flowWithResource {
+            val student = studentRepository.getCurrentStudent()
+            messageRepository.sendMessage(student, subject, content, recipients)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> view?.run {
+                    Timber.i("Sending message started")
                     showSoftInput(false)
                     showContent(false)
                     showProgress(true)
                     showActionBar(false)
                 }
+                Status.SUCCESS -> {
+                    Timber.i("Sending message result: Success")
+                    view?.run {
+                        showMessage(messageSuccess)
+                        popView()
+                    }
+                    analytics.logEvent("send_message", "recipients" to recipients.size)
+                }
+                Status.ERROR -> {
+                    Timber.i("Sending message result: An exception occurred")
+                    view?.run {
+                        showContent(true)
+                        showProgress(false)
+                        showActionBar(true)
+                    }
+                    errorHandler.dispatch(it.error!!)
+                }
             }
-            .subscribe({
-                Timber.i("Sending message result: Success")
-                analytics.logEvent("send_message", "recipients" to recipients.size)
-                view?.run {
-                    showMessage(messageSuccess)
-                    popView()
-                }
-            }, {
-                Timber.i("Sending message result: An exception occurred")
-                view?.run {
-                    showContent(true)
-                    showProgress(false)
-                    showActionBar(true)
-                }
-                errorHandler.dispatch(it)
-            })
-        )
+        }.launch("send")
     }
 
     private fun createChips(recipients: List<Recipient>): List<RecipientChipItem> {

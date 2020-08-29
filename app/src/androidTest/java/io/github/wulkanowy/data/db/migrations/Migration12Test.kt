@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase.CONFLICT_FAIL
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -29,7 +30,7 @@ class Migration12Test : AbstractMigrationTest() {
         helper.runMigrationsAndValidate(dbName, 12, true, Migration12())
 
         val db = getMigratedRoomDatabase()
-        val students = db.studentDao.loadAll().blockingGet()
+        val students = runBlocking { db.studentDao.loadAll() }
 
         assertEquals(2, students.size)
 
@@ -58,7 +59,7 @@ class Migration12Test : AbstractMigrationTest() {
         helper.runMigrationsAndValidate(dbName, 12, true, Migration12())
 
         val db = getMigratedRoomDatabase()
-        val students = db.studentDao.loadAll().blockingGet()
+        val students = runBlocking { db.studentDao.loadAll() }
 
         assertEquals(1, students.size)
 
@@ -84,7 +85,7 @@ class Migration12Test : AbstractMigrationTest() {
         helper.runMigrationsAndValidate(dbName, 12, true, Migration12())
 
         val db = getMigratedRoomDatabase()
-        val students = db.studentDao.loadAll().blockingGet()
+        val students = runBlocking { db.studentDao.loadAll() }
 
         assertEquals(3, students.size)
 

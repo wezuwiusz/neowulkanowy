@@ -2,27 +2,31 @@ package io.github.wulkanowy.ui.modules.message.preview
 
 import android.annotation.SuppressLint
 import android.os.Build
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageAttachment
+import io.github.wulkanowy.data.repositories.message.MessageFolder
 import io.github.wulkanowy.data.repositories.message.MessageRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResource
+import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
 class MessagePreviewPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
     private val analytics: FirebaseAnalyticsHelper,
     private var appInfo: AppInfo
-) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository) {
 
     var message: Message? = null
 
@@ -53,33 +57,35 @@ class MessagePreviewPresenter @Inject constructor(
     }
 
     private fun loadData(message: Message) {
-        Timber.i("Loading message ${message.messageId} preview started")
-        disposable.apply {
-            clear()
-            add(studentRepository.getStudentById(message.studentId)
-                .flatMap { messageRepository.getMessage(it, message, true) }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doFinally { view?.showProgress(false) }
-                .subscribe({ message ->
-                    Timber.i("Loading message ${message.message.messageId} preview result: Success ")
-                    this@MessagePreviewPresenter.message = message.message
-                    this@MessagePreviewPresenter.attachments = message.attachments
+        flowWithResourceIn {
+            val student = studentRepository.getStudentById(message.studentId)
+            messageRepository.getMessage(student, message, true)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Loading message ${message.messageId} preview started")
+                Status.SUCCESS -> {
+                    Timber.i("Loading message ${it.data!!.message.messageId} preview result: Success ")
+                    this@MessagePreviewPresenter.message = it.data.message
+                    this@MessagePreviewPresenter.attachments = it.data.attachments
                     view?.apply {
-                        setMessageWithAttachment(message)
+                        setMessageWithAttachment(it.data)
                         initOptions()
                     }
                     analytics.logEvent(
                         "load_item",
                         "type" to "message_preview",
-                        "length" to message.message.content.length
+                        "length" to it.data.message.content.length
                     )
-                }) {
+                }
+                Status.ERROR -> {
                     Timber.i("Loading message ${message.messageId} preview result: An exception occurred ")
                     retryCallback = { onMessageLoadRetry(message) }
-                    errorHandler.dispatch(it)
-                })
-        }
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.afterLoading {
+            view?.showProgress(false)
+        }.launch()
     }
 
     fun onReply(): Boolean {
@@ -151,34 +157,37 @@ class MessagePreviewPresenter @Inject constructor(
     }
 
     private fun deleteMessage() {
-        message?.let { message ->
-            disposable.add(studentRepository.getCurrentStudent()
-                .flatMap { messageRepository.deleteMessage(it, message) }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doOnSubscribe {
+        message ?: return
+
+        view?.run {
+            showContent(false)
+            showProgress(true)
+            showOptions(false)
+            showErrorView(false)
+        }
+
+        flowWithResource {
+            val student = studentRepository.getCurrentStudent()
+            messageRepository.deleteMessage(student, message!!)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.d("Message ${message?.id} delete started")
+                Status.SUCCESS -> {
+                    Timber.d("Message ${message?.id} delete success")
                     view?.run {
-                        showContent(false)
-                        showProgress(true)
-                        showOptions(false)
-                        showErrorView(false)
-                    }
-                }
-                .doFinally {
-                    view?.showProgress(false)
-                }
-                .subscribe({
-                    view?.run {
-                        notifyParentMessageDeleted(message)
                         showMessage(deleteMessageSuccessString)
                         popView()
                     }
-                }, { error ->
+                }
+                Status.ERROR -> {
+                    Timber.d("Message ${message?.id} delete failed")
                     retryCallback = { onMessageDelete() }
-                    errorHandler.dispatch(error)
-                })
-            )
-        }
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.afterLoading {
+            view?.showProgress(false)
+        }.launch("delete")
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
@@ -199,7 +208,7 @@ class MessagePreviewPresenter @Inject constructor(
         view?.apply {
             showOptions(message != null)
             message?.let {
-                when (it.removed) {
+                when (it.folderId == MessageFolder.TRASHED.id) {
                     true -> setDeletedOptionsLabels()
                     false -> setNotDeletedOptionsLabels()
                 }

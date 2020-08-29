@@ -9,7 +9,7 @@ import io.github.wulkanowy.databinding.ItemAttendanceSummaryBinding
 import io.github.wulkanowy.databinding.ScrollableHeaderAttendanceSummaryBinding
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.getFormattedName
-import org.threeten.bp.Month
+import java.time.Month
 import java.util.Locale
 import javax.inject.Inject
 

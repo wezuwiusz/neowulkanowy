@@ -1,55 +1,52 @@
 package io.github.wulkanowy.data.repositories.message
 
-import androidx.room.EmptyResultSetException
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.UnitTestInternetObservingStrategy
 import io.github.wulkanowy.getMessageEntity
-import io.reactivex.Single
-import io.reactivex.observers.TestObserver
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.just
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
 import java.net.UnknownHostException
 
 class MessageRepositoryTest {
 
-    @Mock
+    @MockK
     lateinit var local: MessageLocal
 
-    @Mock
+    @MockK
     lateinit var remote: MessageRemote
 
-    @Mock
+    @MockK
     lateinit var student: Student
-
-    private val testObservingStrategy = UnitTestInternetObservingStrategy()
 
     private lateinit var repo: MessageRepository
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockKAnnotations.init(this)
 
-        repo = MessageRepository(InternetObservingSettings.builder()
-            .strategy(testObservingStrategy)
-            .build(), local, remote)
+        every { student.userName } returns "Jan"
+        repo = MessageRepository(local, remote)
     }
 
     @Test
     fun `throw error when message is not in the db`() {
         val testMessage = getMessageEntity(1, "", false)
-        `when`(local.getMessageWithAttachment(student, testMessage)).thenReturn(Single.error(EmptyResultSetException("No message in database")))
+        coEvery { local.getMessageWithAttachment(student, testMessage) } throws NullPointerException("No message in database")
 
-        val message = repo.getMessage(student, testMessage)
-        val messageObserver = TestObserver<MessageWithAttachment>()
-        message.subscribe(messageObserver)
-        messageObserver.assertError(EmptyResultSetException::class.java)
+        val message = runCatching { runBlocking { repo.getMessage(student, testMessage).toList()[1] } }
+        assertEquals(NullPointerException::class.java, message.exceptionOrNull()?.javaClass)
     }
 
     @Test
@@ -57,30 +54,32 @@ class MessageRepositoryTest {
         val testMessage = getMessageEntity(123, "Test", false)
         val messageWithAttachment = MessageWithAttachment(testMessage, emptyList())
 
-        `when`(local.getMessageWithAttachment(student, testMessage)).thenReturn(Single.just(messageWithAttachment))
+        coEvery { local.getMessageWithAttachment(student, testMessage) } returns flowOf(messageWithAttachment)
 
-        val message = repo.getMessage(student, testMessage).blockingGet()
+        val message = runBlocking { repo.getMessage(student, testMessage).toList() }
 
-        assertEquals("Test", message.message.content)
+        assertEquals(Status.SUCCESS, message[1].status)
+        assertEquals("Test", message[1].data!!.message.content)
     }
 
     @Test
     fun `get message when content in db is empty`() {
         val testMessage = getMessageEntity(123, "", true)
-        val testMessageWithContent = testMessage.copy(content = "Test")
+        val testMessageWithContent = testMessage.copy().apply { content = "Test" }
 
         val mWa = MessageWithAttachment(testMessage, emptyList())
         val mWaWithContent = MessageWithAttachment(testMessageWithContent, emptyList())
 
-        `when`(local.getMessageWithAttachment(student, testMessage))
-            .thenReturn(Single.just(mWa))
-            .thenReturn(Single.just(mWaWithContent))
-        `when`(remote.getMessagesContentDetails(student, testMessageWithContent)).thenReturn(Single.just("Test" to emptyList()))
+        coEvery { local.getMessageWithAttachment(student, testMessage) } returnsMany listOf(flowOf(mWa), flowOf(mWaWithContent))
+        coEvery { remote.getMessagesContentDetails(student, any(), any()) } returns ("Test" to emptyList())
+        coEvery { local.updateMessages(any()) } just Runs
+        coEvery { local.saveMessageAttachments(any()) } just Runs
 
-        val message = repo.getMessage(student, testMessage).blockingGet()
+        val message = runBlocking { repo.getMessage(student, testMessage).toList() }
 
-        assertEquals("Test", message.message.content)
-        verify(local).updateMessages(listOf(testMessageWithContent))
+        assertEquals(Status.SUCCESS, message[2].status)
+        assertEquals("Test", message[2].data!!.message.content)
+        coVerify { local.updateMessages(listOf(testMessageWithContent)) }
     }
 
     @Test
@@ -88,13 +87,10 @@ class MessageRepositoryTest {
         val testMessage = getMessageEntity(123, "", false)
         val messageWithAttachment = MessageWithAttachment(testMessage, emptyList())
 
-        testObservingStrategy.isInternetConnection = false
-        `when`(local.getMessageWithAttachment(student, testMessage)).thenReturn(Single.just(messageWithAttachment))
+        coEvery { local.getMessageWithAttachment(student, testMessage) } throws UnknownHostException()
 
-        val message = repo.getMessage(student, testMessage)
-        val messageObserver = TestObserver<MessageWithAttachment>()
-        message.subscribe(messageObserver)
-        messageObserver.assertError(UnknownHostException::class.java)
+        val message = runCatching { runBlocking { repo.getMessage(student, testMessage).toList()[1] } }
+        assertEquals(UnknownHostException::class.java, message.exceptionOrNull()?.javaClass)
     }
 
     @Test
@@ -102,12 +98,9 @@ class MessageRepositoryTest {
         val testMessage = getMessageEntity(123, "", true)
         val messageWithAttachment = MessageWithAttachment(testMessage, emptyList())
 
-        testObservingStrategy.isInternetConnection = false
-        `when`(local.getMessageWithAttachment(student, testMessage)).thenReturn(Single.just(messageWithAttachment))
+        coEvery { local.getMessageWithAttachment(student, testMessage) } throws UnknownHostException()
 
-        val message = repo.getMessage(student, testMessage)
-        val messageObserver = TestObserver<MessageWithAttachment>()
-        message.subscribe(messageObserver)
-        messageObserver.assertError(UnknownHostException::class.java)
+        val message = runCatching { runBlocking { repo.getMessage(student, testMessage).toList()[1] } }
+        assertEquals(UnknownHostException::class.java, message.exceptionOrNull()?.javaClass)
     }
 }

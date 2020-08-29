@@ -2,8 +2,8 @@ package io.github.wulkanowy.data.db.migrations
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import org.threeten.bp.LocalDateTime.now
-import org.threeten.bp.ZoneOffset
+import java.time.LocalDateTime.now
+import java.time.ZoneOffset
 
 class Migration5 : Migration(4, 5) {
 

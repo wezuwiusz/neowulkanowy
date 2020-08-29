@@ -5,15 +5,14 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.init
-import io.reactivex.Single
 import javax.inject.Inject
 
 class SchoolRemote @Inject constructor(private val sdk: Sdk) {
 
-    fun getSchoolInfo(student: Student, semester: Semester): Single<School> {
+    suspend fun getSchoolInfo(student: Student, semester: Semester): School {
         return sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
             .getSchool()
-            .map {
+            .let {
                 School(
                     studentId = semester.studentId,
                     classId = semester.classId,

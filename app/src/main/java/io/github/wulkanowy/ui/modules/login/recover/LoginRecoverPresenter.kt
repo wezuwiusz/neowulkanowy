@@ -1,21 +1,23 @@
 package io.github.wulkanowy.ui.modules.login.recover
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.recover.RecoverRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
 class LoginRecoverPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     studentRepository: StudentRepository,
     private val loginErrorHandler: RecoverErrorHandler,
     private val analytics: FirebaseAnalyticsHelper,
     private val recoverRepository: RecoverRepository
-) : BasePresenter<LoginRecoverView>(loginErrorHandler, studentRepository, schedulers) {
+) : BasePresenter<LoginRecoverView>(loginErrorHandler, studentRepository) {
 
     private lateinit var lastError: Throwable
 
@@ -55,24 +57,22 @@ class LoginRecoverPresenter @Inject constructor(
 
         if (!validateInput(username, host)) return
 
-        disposable.add(recoverRepository.getReCaptchaSiteKey(host, symbol.ifBlank { "Default" })
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .doOnSubscribe {
-                view?.run {
+        flowWithResource { recoverRepository.getReCaptchaSiteKey(host, symbol.ifBlank { "Default" }) }.onEach {
+            when (it.status) {
+                Status.LOADING -> view?.run {
                     hideSoftKeyboard()
                     showRecoverForm(false)
                     showProgress(true)
                     showErrorView(false)
                     showCaptcha(false)
                 }
+                Status.SUCCESS -> view?.loadReCaptcha(siteKey = it.data!!.first, url = it.data.second)
+                Status.ERROR -> {
+                    Timber.i("Obtain captcha site key result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
+                }
             }
-            .subscribe({ (resetUrl, siteKey) ->
-                view?.loadReCaptcha(siteKey, resetUrl)
-            }) {
-                Timber.i("Obtain captcha site key result: An exception occurred")
-                errorHandler.dispatch(it)
-            })
+        }.launch("captcha")
     }
 
     private fun validateInput(username: String, host: String): Boolean {
@@ -96,35 +96,28 @@ class LoginRecoverPresenter @Inject constructor(
         val host = view?.recoverHostValue.orEmpty()
         val symbol = view?.formHostSymbol.ifNullOrBlank { "Default" }
 
-        with(disposable) {
-            clear()
-            add(recoverRepository.sendRecoverRequest(host, symbol, username, reCaptchaResponse)
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doOnSubscribe {
-                    view?.run {
-                        showProgress(true)
-                        showRecoverForm(false)
-                        showCaptcha(false)
-                    }
+        flowWithResource { recoverRepository.sendRecoverRequest(host, symbol, username, reCaptchaResponse) }.onEach {
+            when (it.status) {
+                Status.LOADING -> view?.run {
+                    showProgress(true)
+                    showRecoverForm(false)
+                    showCaptcha(false)
                 }
-                .doFinally {
-                    view?.showProgress(false)
-                }
-                .subscribe({
-                    view?.run {
-                        showSuccessView(true)
-                        setSuccessTitle(it.substringBefore(". "))
-                        setSuccessMessage(it.substringAfter(". "))
-                    }
-
+                Status.SUCCESS -> view?.run {
+                    showSuccessView(true)
+                    setSuccessTitle(it.data!!.substringBefore(". "))
+                    setSuccessMessage(it.data.substringAfter(". "))
                     analytics.logEvent("account_recover", "register" to host, "symbol" to symbol, "success" to true)
-                }) {
+                }
+                Status.ERROR -> {
                     Timber.i("Send recover request result: An exception occurred")
-                    errorHandler.dispatch(it)
+                    errorHandler.dispatch(it.error!!)
                     analytics.logEvent("account_recover", "register" to host, "symbol" to symbol, "success" to false)
-                })
-        }
+                }
+            }
+        }.afterLoading {
+            view?.showProgress(false)
+        }.launch("verified")
     }
 
     fun onDetailsClick() {

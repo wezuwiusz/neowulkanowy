@@ -4,7 +4,6 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.recipient.RecipientRepository
 import io.github.wulkanowy.data.repositories.reportingunit.ReportingUnitRepository
-import io.reactivex.Completable
 import javax.inject.Inject
 
 class RecipientWork @Inject constructor(
@@ -12,13 +11,13 @@ class RecipientWork @Inject constructor(
     private val recipientRepository: RecipientRepository
 ) : Work {
 
-    override fun create(student: Student, semester: Semester): Completable {
-        return reportingUnitRepository.getReportingUnits(student, true)
-            .flatMapCompletable { units ->
-                Completable.mergeDelayError(units.map {
-                    recipientRepository.getRecipients(student, 2, it, true).ignoreElement()
-                })
+    override suspend fun doWork(student: Student, semester: Semester) {
+        reportingUnitRepository.refreshReportingUnits(student)
+
+        reportingUnitRepository.getReportingUnits(student).let { units ->
+            units.map {
+                recipientRepository.refreshRecipients(student, 2, it)
             }
+        }
     }
 }
-

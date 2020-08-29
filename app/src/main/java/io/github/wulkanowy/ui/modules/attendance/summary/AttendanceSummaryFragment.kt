@@ -8,6 +8,7 @@ import android.view.View.VISIBLE
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.databinding.FragmentAttendanceSummaryBinding
@@ -17,6 +18,7 @@ import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AttendanceSummaryFragment :
     BaseFragment<FragmentAttendanceSummaryBinding>(R.layout.fragment_attendance_summary),
     AttendanceSummaryView, MainView.TitledView {

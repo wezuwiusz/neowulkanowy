@@ -1,44 +1,40 @@
 package io.github.wulkanowy.data.repositories.semester
 
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
-import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.UnitTestInternetObservingStrategy
+import io.github.wulkanowy.TestDispatchersProvider
 import io.github.wulkanowy.createSemesterEntity
-import io.reactivex.Maybe
-import io.reactivex.Single
+import io.github.wulkanowy.data.db.entities.Student
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.just
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
-import org.threeten.bp.LocalDate.now
+import java.time.LocalDate.now
 
 class SemesterRepositoryTest {
 
-    @Mock
+    @MockK
     private lateinit var semesterRemote: SemesterRemote
 
-    @Mock
+    @MockK
     private lateinit var semesterLocal: SemesterLocal
 
-    @Mock
+    @MockK
     private lateinit var student: Student
 
     private lateinit var semesterRepository: SemesterRepository
 
-    private val settings = InternetObservingSettings.builder()
-        .strategy(UnitTestInternetObservingStrategy())
-        .build()
-
     @Before
     fun initTest() {
-        MockitoAnnotations.initMocks(this)
-        semesterRepository = SemesterRepository(semesterRemote, semesterLocal, settings)
-        doReturn("SCRAPPER").`when`(student).loginMode
+        MockKAnnotations.init(this)
+        semesterRepository = SemesterRepository(semesterRemote, semesterLocal, TestDispatchersProvider())
+        every { student.loginMode } returns "SCRAPPER"
     }
 
     @Test
@@ -48,33 +44,35 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 2, now().minusMonths(3), now())
         )
 
-        doReturn(Maybe.empty<Semester>()).`when`(semesterLocal).getSemesters(student)
-        doReturn(Single.just(semesters)).`when`(semesterRemote).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns emptyList()
+        coEvery { semesterRemote.getSemesters(student) } returns semesters
+        coEvery { semesterLocal.deleteSemesters(any()) } just Runs
+        coEvery { semesterLocal.saveSemesters(any()) } just Runs
 
-        semesterRepository.getSemesters(student).blockingGet()
+        runBlocking { semesterRepository.getSemesters(student) }
 
-        verify(semesterLocal).deleteSemesters(emptyList())
-        verify(semesterLocal).saveSemesters(semesters)
+        coVerify { semesterLocal.saveSemesters(semesters) }
+        coVerify { semesterLocal.deleteSemesters(emptyList()) }
     }
 
     @Test
     fun getSemesters_invalidDiary_api() {
-        doReturn("API").`when`(student).loginMode
+        every { student.loginMode } returns "API"
         val badSemesters = listOf(
             createSemesterEntity(0, 1, now().minusMonths(6), now().minusMonths(3)),
             createSemesterEntity(0, 2, now().minusMonths(3), now())
         )
 
-        doReturn(Maybe.just(badSemesters)).`when`(semesterLocal).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns badSemesters
 
-        val items = semesterRepository.getSemesters(student).blockingGet()
+        val items = runBlocking { semesterRepository.getSemesters(student) }
         assertEquals(2, items.size)
         assertEquals(0, items[0].diaryId)
     }
 
     @Test
     fun getSemesters_invalidDiary_scrapper() {
-        doReturn("SCRAPPER").`when`(student).loginMode
+        every { student.loginMode } returns "SCRAPPER"
         val badSemesters = listOf(
             createSemesterEntity(0, 1, now().minusMonths(6), now().minusMonths(3)),
             createSemesterEntity(0, 2, now().minusMonths(3), now())
@@ -85,10 +83,12 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 2, now().minusMonths(3), now())
         )
 
-        doReturn(Maybe.just(badSemesters), Maybe.just(badSemesters), Maybe.just(goodSemesters)).`when`(semesterLocal).getSemesters(student)
-        doReturn(Single.just(goodSemesters)).`when`(semesterRemote).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returnsMany listOf(badSemesters, badSemesters, goodSemesters)
+        coEvery { semesterRemote.getSemesters(student) } returns goodSemesters
+        coEvery { semesterLocal.deleteSemesters(any()) } just Runs
+        coEvery { semesterLocal.saveSemesters(any()) } just Runs
 
-        val items = semesterRepository.getSemesters(student).blockingGet()
+        val items = runBlocking { semesterRepository.getSemesters(student) }
         assertEquals(2, items.size)
         assertNotEquals(0, items[0].diaryId)
     }
@@ -100,9 +100,9 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 2, now().minusMonths(6), now().minusMonths(1))
         )
 
-        doReturn(Maybe.just(semesters)).`when`(semesterLocal).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns semesters
 
-        val items = semesterRepository.getSemesters(student).blockingGet()
+        val items = runBlocking { semesterRepository.getSemesters(student) }
         assertEquals(2, items.size)
     }
 
@@ -113,9 +113,9 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 2, now().minusMonths(3), now())
         )
 
-        doReturn(Maybe.just(semesters)).`when`(semesterLocal).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns semesters
 
-        val items = semesterRepository.getSemesters(student).blockingGet()
+        val items = runBlocking { semesterRepository.getSemesters(student) }
         assertEquals(2, items.size)
     }
 
@@ -126,9 +126,9 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 2, now(), now())
         )
 
-        doReturn(Maybe.just(semesters)).`when`(semesterLocal).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns semesters
 
-        val items = semesterRepository.getSemesters(student).blockingGet()
+        val items = runBlocking { semesterRepository.getSemesters(student) }
         assertEquals(2, items.size)
     }
 
@@ -139,13 +139,15 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 2, now().minusMonths(3), now())
         )
 
-        doReturn(Maybe.empty<Semester>()).`when`(semesterLocal).getSemesters(student)
-        doReturn(Single.just(semesters)).`when`(semesterRemote).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns emptyList()
+        coEvery { semesterRemote.getSemesters(student) } returns semesters
+        coEvery { semesterLocal.deleteSemesters(any()) } just Runs
+        coEvery { semesterLocal.saveSemesters(any()) } just Runs
 
-        semesterRepository.getSemesters(student, refreshOnNoCurrent = true).blockingGet()
+        runBlocking { semesterRepository.getSemesters(student, refreshOnNoCurrent = true) }
 
-        verify(semesterLocal).deleteSemesters(emptyList())
-        verify(semesterLocal).saveSemesters(semesters)
+        coVerify { semesterLocal.deleteSemesters(emptyList()) }
+        coVerify { semesterLocal.saveSemesters(semesters) }
     }
 
     @Test
@@ -155,10 +157,9 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 2, now().minusMonths(6), now().minusMonths(1))
         )
 
-        doReturn(Maybe.just(semesters)).`when`(semesterLocal).getSemesters(student)
-        doReturn(Single.just(semesters)).`when`(semesterRemote).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns semesters
 
-        val items = semesterRepository.getSemesters(student, refreshOnNoCurrent = true).blockingGet()
+        val items = runBlocking { semesterRepository.getSemesters(student, refreshOnNoCurrent = true) }
         assertEquals(2, items.size)
     }
 
@@ -169,9 +170,9 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 2, now(), now())
         )
 
-        doReturn(Maybe.just(semesters)).`when`(semesterLocal).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns semesters
 
-        val items = semesterRepository.getSemesters(student, refreshOnNoCurrent = true).blockingGet()
+        val items = runBlocking { semesterRepository.getSemesters(student, refreshOnNoCurrent = true) }
         assertEquals(2, items.size)
     }
 
@@ -182,15 +183,15 @@ class SemesterRepositoryTest {
             createSemesterEntity(1, 1, now(), now())
         )
 
-        doReturn(Maybe.just(semesters)).`when`(semesterLocal).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns semesters
 
-        semesterRepository.getCurrentSemester(student).blockingGet()
+        runBlocking { semesterRepository.getCurrentSemester(student) }
     }
 
     @Test(expected = RuntimeException::class)
     fun getCurrentSemester_emptyList() {
-        doReturn(Maybe.just(emptyList<Semester>())).`when`(semesterLocal).getSemesters(student)
+        coEvery { semesterLocal.getSemesters(student) } returns emptyList()
 
-        semesterRepository.getCurrentSemester(student).blockingGet()
+        runBlocking { semesterRepository.getCurrentSemester(student) }
     }
 }

@@ -8,8 +8,9 @@ import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.IME_NULL
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.FragmentLoginSymbolBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
@@ -20,6 +21,7 @@ import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.showSoftInput
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginSymbolFragment :
     BaseFragment<FragmentLoginSymbolBinding>(R.layout.fragment_login_symbol), LoginSymbolView {
 
@@ -106,8 +108,8 @@ class LoginSymbolFragment :
         binding.loginSymbolContainer.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun notifyParentAccountLogged(students: List<Student>) {
-        (activity as? LoginActivity)?.onSymbolFragmentAccountLogged(students)
+    override fun notifyParentAccountLogged(studentsWithSemesters: List<StudentWithSemesters>) {
+        (activity as? LoginActivity)?.onSymbolFragmentAccountLogged(studentsWithSemesters)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

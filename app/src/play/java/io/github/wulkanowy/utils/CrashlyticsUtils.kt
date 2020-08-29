@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import fr.bipi.tressence.base.FormatterPriorityTree
 import fr.bipi.tressence.common.StackTraceRecorder
-import io.github.wulkanowy.sdk.exception.FeatureDisabledException
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
+import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
 import java.io.InterruptedIOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException

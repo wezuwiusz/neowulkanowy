@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import io.github.wulkanowy.sdk.scrapper.notes.Note.CategoryType
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.databinding.ItemNoteBinding
+import io.github.wulkanowy.sdk.scrapper.notes.NoteCategory
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.toFormattedString
 import javax.inject.Inject
@@ -43,9 +43,9 @@ class NoteAdapter @Inject constructor() : RecyclerView.Adapter<NoteAdapter.ItemV
             with(noteItemPoints) {
                 text = "${if (item.points > 0) "+" else ""}${item.points}"
                 visibility = if (item.isPointsShow) View.VISIBLE else View.GONE
-                setTextColor(when (CategoryType.getByValue(item.categoryType)) {
-                    CategoryType.POSITIVE -> ContextCompat.getColor(context, R.color.note_positive)
-                    CategoryType.NEGATIVE -> ContextCompat.getColor(context, R.color.note_negative)
+                setTextColor(when (NoteCategory.getByValue(item.categoryType)) {
+                    NoteCategory.POSITIVE -> ContextCompat.getColor(context, R.color.note_positive)
+                    NoteCategory.NEGATIVE -> ContextCompat.getColor(context, R.color.note_negative)
                     else -> context.getThemeAttrColor(android.R.attr.textColorPrimary)
                 })
             }

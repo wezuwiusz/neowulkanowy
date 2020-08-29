@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.ItemLoginStudentSelectBinding
 import javax.inject.Inject
 
@@ -14,13 +14,13 @@ class LoginStudentSelectAdapter @Inject constructor() :
 
     private val checkedList = mutableMapOf<Int, Boolean>()
 
-    var items = emptyList<Pair<Student, Boolean>>()
+    var items = emptyList<Pair<StudentWithSemesters, Boolean>>()
         set(value) {
             field = value
             checkedList.clear()
         }
 
-    var onClickListener: (Student, alreadySaved: Boolean) -> Unit = { _, _ -> }
+    var onClickListener: (StudentWithSemesters, alreadySaved: Boolean) -> Unit = { _, _ -> }
 
     override fun getItemCount() = items.size
 
@@ -30,10 +30,13 @@ class LoginStudentSelectAdapter @Inject constructor() :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val (student, alreadySaved) = items[position]
+        val (studentAndSemesters, alreadySaved) = items[position]
+        val student = studentAndSemesters.student
+        val semesters = studentAndSemesters.semesters
+        val diary = semesters.maxByOrNull { it.semesterId }
 
         with(holder.binding) {
-            loginItemName.text = "${student.studentName} ${student.className}"
+            loginItemName.text = "${student.studentName} ${diary?.diaryName.orEmpty()}"
             loginItemSchool.text = student.schoolName
             loginItemName.isEnabled = !alreadySaved
             loginItemSchool.isEnabled = !alreadySaved
@@ -46,7 +49,7 @@ class LoginStudentSelectAdapter @Inject constructor() :
             }
 
             root.setOnClickListener {
-                onClickListener(student, alreadySaved)
+                onClickListener(studentAndSemesters, alreadySaved)
 
                 with(loginItemCheck) {
                     if (isEnabled) {

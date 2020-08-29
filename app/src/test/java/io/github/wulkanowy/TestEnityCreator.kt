@@ -5,9 +5,9 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.sdk.Sdk
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalDateTime.now
 
 fun createSemesterEntity(diaryId: Int, semesterId: Int, start: LocalDate, end: LocalDate, semesterName: Int = 1): Semester {
     return Semester(
@@ -45,7 +45,8 @@ fun getStudentEntity(mode: Sdk.Mode = Sdk.Mode.API): Student {
         studentId = 0,
         studentName = "",
         symbol = "",
-        userLoginId = 0
+        userLoginId = 0,
+        userName = "",
     )
 }
 
@@ -86,7 +87,6 @@ fun getMessageEntity(
     senderId = 1,
     recipient = "",
     subject = "",
-    content = content,
     date = now(),
     folderId = 1,
     unread = unread,
@@ -94,4 +94,6 @@ fun getMessageEntity(
     readBy = 1,
     removed = false,
     hasAttachments = false
-)
+).apply {
+    this.content = content
+}

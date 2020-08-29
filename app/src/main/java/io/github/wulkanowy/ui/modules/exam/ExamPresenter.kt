@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.exam
 
+import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.repositories.exam.ExamRepository
 import io.github.wulkanowy.data.repositories.semester.SemesterRepository
@@ -7,27 +8,30 @@ import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.github.wulkanowy.utils.SchedulersProvider
-import io.github.wulkanowy.utils.sunday
+import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
+import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.toFormattedString
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDate.now
-import org.threeten.bp.LocalDate.ofEpochDay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.LocalDate.now
+import java.time.LocalDate.ofEpochDay
 import javax.inject.Inject
 
 class ExamPresenter @Inject constructor(
-    schedulers: SchedulersProvider,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val examRepository: ExamRepository,
     private val semesterRepository: SemesterRepository,
     private val analytics: FirebaseAnalyticsHelper
-) : BasePresenter<ExamView>(errorHandler, studentRepository, schedulers) {
+) : BasePresenter<ExamView>(errorHandler, studentRepository) {
 
     private var baseDate: LocalDate = now().nextOrSameSchoolDay
 
@@ -89,59 +93,54 @@ class ExamPresenter @Inject constructor(
     }
 
     private fun setBaseDateOnHolidays() {
-        disposable.add(studentRepository.getCurrentStudent()
-            .flatMap { semesterRepository.getCurrentSemester(it) }
-            .subscribeOn(schedulers.backgroundThread)
-            .observeOn(schedulers.mainThread)
-            .subscribe({
-                baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
-                currentDate = baseDate
-                reloadNavigation()
-            }) {
-                Timber.i("Loading semester result: An exception occurred")
-            })
+        flow {
+            val student = studentRepository.getCurrentStudent()
+            emit(semesterRepository.getCurrentSemester(student))
+        }.catch {
+            Timber.i("Loading semester result: An exception occurred")
+        }.onEach {
+            baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
+            currentDate = baseDate
+            reloadNavigation()
+        }.launch("holidays")
     }
 
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
-        Timber.i("Loading exam data started")
         currentDate = date
-        disposable.apply {
-            clear()
-            add(studentRepository.getCurrentStudent()
-                .flatMap { student ->
-                    semesterRepository.getCurrentSemester(student).flatMap { semester ->
-                        examRepository.getExams(student, semester, currentDate.monday, currentDate.sunday, forceRefresh)
-                    }
-                }
-                .map { createExamItems(it) }
-                .subscribeOn(schedulers.backgroundThread)
-                .observeOn(schedulers.mainThread)
-                .doFinally {
-                    view?.run {
-                        hideRefresh()
-                        showProgress(false)
-                        enableSwipe(true)
-                    }
-                }
-                .subscribe({
+
+        flowWithResourceIn {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student)
+            examRepository.getExams(student, semester, currentDate.monday, currentDate.sunday, forceRefresh)
+        }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Loading exam data started")
+                Status.SUCCESS -> {
                     Timber.i("Loading exam result: Success")
                     view?.apply {
-                        updateData(it)
-                        showEmpty(it.isEmpty())
+                        updateData(createExamItems(it.data!!))
+                        showEmpty(it.data.isEmpty())
                         showErrorView(false)
-                        showContent(it.isNotEmpty())
+                        showContent(it.data.isNotEmpty())
                     }
                     analytics.logEvent(
                         "load_data",
                         "type" to "exam",
-                        "items" to it.size,
-                        "force_refresh" to forceRefresh
+                        "items" to it.data!!.size
                     )
-                }) {
+                }
+                Status.ERROR -> {
                     Timber.i("Loading exam result: An exception occurred")
-                    errorHandler.dispatch(it)
-                })
-        }
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.afterLoading {
+            view?.run {
+                hideRefresh()
+                showProgress(false)
+                enableSwipe(true)
+            }
+        }.launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

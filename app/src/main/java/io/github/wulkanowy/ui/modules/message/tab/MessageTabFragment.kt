@@ -9,6 +9,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.repositories.message.MessageFolder
@@ -18,8 +19,10 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.fragment_message_tab),
     MessageTabView {
 
@@ -49,6 +52,7 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         setHasOptionsMenu(true)
     }
 
+    @FlowPreview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMessageTabBinding.bind(view)
@@ -59,7 +63,10 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
     }
 
     override fun initView() {
-        tabAdapter.onClickListener = presenter::onMessageItemSelected
+        with(tabAdapter) {
+            onClickListener = presenter::onMessageItemSelected
+            onChangesDetectedListener = ::resetListPosition
+        }
 
         with(binding.messageTabRecycler) {
             layoutManager = LinearLayoutManager(context)
@@ -91,10 +98,6 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
 
     override fun updateData(data: List<Message>) {
         tabAdapter.setDataItems(data)
-    }
-
-    override fun updateItem(item: Message, position: Int) {
-        tabAdapter.updateItem(position, item)
     }
 
     override fun showProgress(show: Boolean) {

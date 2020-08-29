@@ -3,27 +3,27 @@ package io.github.wulkanowy.data.repositories.luckynumber
 import io.github.wulkanowy.data.db.dao.LuckyNumberDao
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
-import io.reactivex.Maybe
-import org.threeten.bp.LocalDate
+import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class LuckyNumberLocal @Inject constructor(private val luckyNumberDb: LuckyNumberDao) {
 
-    fun saveLuckyNumber(luckyNumber: LuckyNumber) {
-        luckyNumberDb.insertAll(listOf(luckyNumber))
+    suspend fun saveLuckyNumber(luckyNumber: LuckyNumber?) {
+        luckyNumberDb.insertAll(listOfNotNull(luckyNumber))
     }
 
-    fun updateLuckyNumber(luckyNumber: LuckyNumber) {
-        luckyNumberDb.updateAll(listOf(luckyNumber))
+    suspend fun updateLuckyNumber(luckyNumber: LuckyNumber?) {
+        luckyNumberDb.updateAll(listOfNotNull(luckyNumber))
     }
 
-    fun deleteLuckyNumber(luckyNumber: LuckyNumber) {
-        luckyNumberDb.deleteAll(listOf(luckyNumber))
+    suspend fun deleteLuckyNumber(luckyNumber: LuckyNumber?) {
+        luckyNumberDb.deleteAll(listOfNotNull(luckyNumber))
     }
 
-    fun getLuckyNumber(student: Student, date: LocalDate): Maybe<LuckyNumber> {
+    fun getLuckyNumber(student: Student, date: LocalDate): Flow<LuckyNumber?> {
         return luckyNumberDb.load(student.studentId, date)
     }
 }

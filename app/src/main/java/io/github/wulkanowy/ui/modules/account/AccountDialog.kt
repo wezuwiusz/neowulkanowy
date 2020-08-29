@@ -8,12 +8,14 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogAccountBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AccountDialog : BaseDialogFragment<DialogAccountBinding>(), AccountView {
 
     @Inject

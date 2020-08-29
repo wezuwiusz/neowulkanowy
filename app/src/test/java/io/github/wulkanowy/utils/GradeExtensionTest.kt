@@ -3,21 +3,21 @@ package io.github.wulkanowy.utils
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
+import io.mockk.MockKAnnotations
+import io.mockk.impl.annotations.MockK
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class GradeExtensionTest {
 
-    @Mock
+    @MockK
     lateinit var date: LocalDate
 
     @Before
     fun before() {
-        MockitoAnnotations.initMocks(this)
+        MockKAnnotations.init(this)
     }
 
     @Test

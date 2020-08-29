@@ -5,8 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.ABORT
 import androidx.room.Query
+import androidx.room.Transaction
 import io.github.wulkanowy.data.db.entities.Student
-import io.reactivex.Maybe
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import javax.inject.Singleton
 
 @Singleton
@@ -14,23 +15,27 @@ import javax.inject.Singleton
 interface StudentDao {
 
     @Insert(onConflict = ABORT)
-    fun insertAll(student: List<Student>): List<Long>
+    suspend fun insertAll(student: List<Student>): List<Long>
 
     @Delete
-    fun delete(student: Student)
+    suspend fun delete(student: Student)
 
     @Query("SELECT * FROM Students WHERE is_current = 1")
-    fun loadCurrent(): Maybe<Student>
+    suspend fun loadCurrent(): Student?
 
     @Query("SELECT * FROM Students WHERE id = :id")
-    fun loadById(id: Int): Maybe<Student>
+    suspend fun loadById(id: Int): Student?
 
     @Query("SELECT * FROM Students")
-    fun loadAll(): Maybe<List<Student>>
+    suspend fun loadAll(): List<Student>
+
+    @Transaction
+    @Query("SELECT * FROM Students")
+    suspend fun loadStudentsWithSemesters(): List<StudentWithSemesters>
 
     @Query("UPDATE Students SET is_current = 1 WHERE id = :id")
-    fun updateCurrent(id: Long)
+    suspend fun updateCurrent(id: Long)
 
     @Query("UPDATE Students SET is_current = 0")
-    fun resetCurrent()
+    suspend fun resetCurrent()
 }

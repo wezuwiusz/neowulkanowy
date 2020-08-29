@@ -1,73 +1,88 @@
 package io.github.wulkanowy.ui.modules.login.studentselect
 
-import io.github.wulkanowy.TestSchedulersProvider
+import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.clearMocks
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.just
+import io.mockk.verify
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.clearInvocations
-import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDateTime.now
 
 class LoginStudentSelectPresenterTest {
 
-    @Mock
+    @get:Rule
+    val coroutineRule = MainCoroutineRule()
+
+    @MockK(relaxed = true)
     lateinit var errorHandler: LoginErrorHandler
 
-    @Mock
+    @MockK(relaxed = true)
     lateinit var loginStudentSelectView: LoginStudentSelectView
 
-    @Mock
+    @MockK
     lateinit var studentRepository: StudentRepository
 
-    @Mock
+    @MockK(relaxed = true)
     lateinit var analytics: FirebaseAnalyticsHelper
 
     private lateinit var presenter: LoginStudentSelectPresenter
 
-    private val testStudent by lazy { Student(email = "test", password = "test123", scrapperBaseUrl = "https://fakelog.cf", loginType = "AUTO", symbol = "", isCurrent = false, studentId = 0, schoolName = "", schoolSymbol = "", classId = 1, studentName = "", registrationDate = now(), className = "", loginMode = "", certificateKey = "", privateKey = "", mobileBaseUrl = "", schoolShortName = "", userLoginId = 1, isParent = false) }
+    private val testStudent by lazy { Student(email = "test", password = "test123", scrapperBaseUrl = "https://fakelog.cf", loginType = "AUTO", symbol = "", isCurrent = false, studentId = 0, schoolName = "", schoolSymbol = "", classId = 1, studentName = "", registrationDate = now(), className = "", loginMode = "", certificateKey = "", privateKey = "", mobileBaseUrl = "", schoolShortName = "", userLoginId = 1, isParent = false, userName = "") }
 
     private val testException by lazy { RuntimeException("Problem") }
 
     @Before
-    fun initPresenter() {
-        MockitoAnnotations.initMocks(this)
-        clearInvocations(studentRepository, loginStudentSelectView)
-        presenter = LoginStudentSelectPresenter(TestSchedulersProvider(), studentRepository, errorHandler, analytics)
+    fun setUp() {
+        MockKAnnotations.init(this)
+
+        clearMocks(studentRepository, loginStudentSelectView)
+        every { loginStudentSelectView.initView() } just Runs
+        every { loginStudentSelectView.showContact(any()) } just Runs
+        every { loginStudentSelectView.enableSignIn(any()) } just Runs
+        every { loginStudentSelectView.showProgress(any()) } just Runs
+        every { loginStudentSelectView.showContent(any()) } just Runs
+
+        presenter = LoginStudentSelectPresenter(studentRepository, errorHandler, analytics)
         presenter.onAttachView(loginStudentSelectView, null)
     }
 
     @Test
     fun initViewTest() {
-        verify(loginStudentSelectView).initView()
+        verify { loginStudentSelectView.initView() }
     }
 
     @Test
     fun onSelectedStudentTest() {
-        doReturn(Single.just(listOf(1L))).`when`(studentRepository).saveStudents(listOf(testStudent))
-        doReturn(Completable.complete()).`when`(studentRepository).switchStudent(testStudent)
-        presenter.onItemSelected(testStudent, false)
+        coEvery { studentRepository.saveStudents(listOf(StudentWithSemesters(testStudent, emptyList()))) } returns listOf(1L)
+        coEvery { studentRepository.switchStudent(StudentWithSemesters(testStudent, emptyList())) } just Runs
+        every { loginStudentSelectView.openMainView() } just Runs
+        presenter.onItemSelected(StudentWithSemesters(testStudent, emptyList()), false)
         presenter.onSignIn()
-        verify(loginStudentSelectView).showContent(false)
-        verify(loginStudentSelectView).showProgress(true)
-        verify(loginStudentSelectView).openMainView()
+
+        verify { loginStudentSelectView.showContent(false) }
+        verify { loginStudentSelectView.showProgress(true) }
+        verify { loginStudentSelectView.openMainView() }
     }
 
     @Test
     fun onSelectedStudentErrorTest() {
-        doReturn(Single.error<Student>(testException)).`when`(studentRepository).saveStudents(listOf(testStudent))
-        doReturn(Completable.complete()).`when`(studentRepository).logoutStudent(testStudent)
-        presenter.onItemSelected(testStudent, false)
+        coEvery { studentRepository.saveStudents(listOf(StudentWithSemesters(testStudent, emptyList()))) } throws testException
+        coEvery { studentRepository.logoutStudent(testStudent) } just Runs
+        presenter.onItemSelected(StudentWithSemesters(testStudent, emptyList()), false)
         presenter.onSignIn()
-        verify(loginStudentSelectView).showContent(false)
-        verify(loginStudentSelectView).showProgress(true)
-        verify(errorHandler).dispatch(testException)
+        verify { loginStudentSelectView.showContent(false) }
+        verify { loginStudentSelectView.showProgress(true) }
+        verify { errorHandler.dispatch(match { testException.message == it.message }) }
     }
 }

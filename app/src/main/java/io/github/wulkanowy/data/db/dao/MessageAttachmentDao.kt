@@ -9,5 +9,5 @@ import io.github.wulkanowy.data.db.entities.MessageAttachment
 interface MessageAttachmentDao : BaseDao<MessageAttachment> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAttachments(items: List<MessageAttachment>): List<Long>
+    suspend fun insertAttachments(items: List<MessageAttachment>): List<Long>
 }

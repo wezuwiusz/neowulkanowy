@@ -1,110 +1,98 @@
 package io.github.wulkanowy.data.repositories.grade
 
-import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
-import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
-import io.reactivex.Completable
-import io.reactivex.Single
-import org.threeten.bp.LocalDateTime
-import java.net.UnknownHostException
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class GradeRepository @Inject constructor(
-    private val settings: InternetObservingSettings,
     private val local: GradeLocal,
     private val remote: GradeRemote
 ) {
 
-    fun getGrades(student: Student, semester: Semester, forceRefresh: Boolean = false, notify: Boolean = false): Single<Pair<List<Grade>, List<GradeSummary>>> {
-        return local.getGradesDetails(semester).flatMap { details ->
-            local.getGradesSummary(semester).map { summary -> details to summary }
-        }.filter { !forceRefresh }
-            .switchIfEmpty(ReactiveNetwork.checkInternetConnectivity(settings).flatMap {
-                if (it) remote.getGrades(student, semester)
-                else Single.error(UnknownHostException())
-            }.flatMap { (newDetails, newSummary) ->
-                local.getGradesDetails(semester).toSingle(emptyList())
-                    .doOnSuccess { old ->
-                        val notifyBreakDate = old.maxBy { it.date }?.date ?: student.registrationDate.toLocalDate()
-                        local.deleteGrades(old.uniqueSubtract(newDetails))
-                        local.saveGrades(newDetails.uniqueSubtract(old)
-                            .onEach {
-                                if (it.date >= notifyBreakDate) it.apply {
-                                    isRead = false
-                                    if (notify) isNotified = false
-                                }
-                            })
-                    }.flatMap {
-                        local.getGradesSummary(semester).toSingle(emptyList())
-                            .doOnSuccess { old ->
-                                local.deleteGradesSummary(old.uniqueSubtract(newSummary))
-                                local.saveGradesSummary(newSummary.uniqueSubtract(old)
-                                    .onEach { summary ->
-                                        val oldSummary = old.find { oldSummary -> oldSummary.subject == summary.subject }
-                                        summary.isPredictedGradeNotified = when {
-                                            summary.predictedGrade.isEmpty() -> true
-                                            notify && oldSummary?.predictedGrade != summary.predictedGrade -> false
-                                            else -> true
-                                        }
-                                        summary.isFinalGradeNotified = when {
-                                            summary.finalGrade.isEmpty() -> true
-                                            notify && oldSummary?.finalGrade != summary.finalGrade -> false
-                                            else -> true
-                                        }
+    fun getGrades(student: Student, semester: Semester, forceRefresh: Boolean, notify: Boolean = false) = networkBoundResource(
+        shouldFetch = { (details, summaries) -> details.isEmpty() || summaries.isEmpty() || forceRefresh },
+        query = { local.getGradesDetails(semester).combine(local.getGradesSummary(semester)) { details, summaries -> details to summaries } },
+        fetch = { remote.getGrades(student, semester) },
+        saveFetchResult = { old, new ->
+            refreshGradeDetails(student, old.first, new.first, notify)
+            refreshGradeSummaries(old.second, new.second, notify)
+        }
+    )
 
-                                        summary.predictedGradeLastChange = when {
-                                            oldSummary == null -> LocalDateTime.now()
-                                            summary.predictedGrade != oldSummary.predictedGrade -> LocalDateTime.now()
-                                            else -> oldSummary.predictedGradeLastChange
-                                        }
-                                        summary.finalGradeLastChange = when {
-                                            oldSummary == null -> LocalDateTime.now()
-                                            summary.finalGrade != oldSummary.finalGrade -> LocalDateTime.now()
-                                            else -> oldSummary.finalGradeLastChange
-                                        }
-                                    })
-                            }
-                    }
-            }.flatMap {
-                local.getGradesDetails(semester).toSingle(emptyList()).flatMap { details ->
-                    local.getGradesSummary(semester).toSingle(emptyList()).map { summary ->
-                        details to summary
-                    }
-                }
-            })
+    private suspend fun refreshGradeDetails(student: Student, oldGrades: List<Grade>, newDetails: List<Grade>, notify: Boolean) {
+        val notifyBreakDate = oldGrades.maxByOrNull { it.date }?.date ?: student.registrationDate.toLocalDate()
+        local.deleteGrades(oldGrades uniqueSubtract newDetails)
+        local.saveGrades((newDetails uniqueSubtract oldGrades).onEach {
+            if (it.date >= notifyBreakDate) it.apply {
+                isRead = false
+                if (notify) isNotified = false
+            }
+        })
     }
 
-    fun getUnreadGrades(semester: Semester): Single<List<Grade>> {
-        return local.getGradesDetails(semester).map { it.filter { grade -> !grade.isRead } }.toSingle(emptyList())
+    private suspend fun refreshGradeSummaries(oldSummaries: List<GradeSummary>, newSummary: List<GradeSummary>, notify: Boolean) {
+        local.deleteGradesSummary(oldSummaries uniqueSubtract newSummary)
+        local.saveGradesSummary((newSummary uniqueSubtract oldSummaries).onEach { summary ->
+            val oldSummary = oldSummaries.find { oldSummary -> oldSummary.subject == summary.subject }
+            summary.isPredictedGradeNotified = when {
+                summary.predictedGrade.isEmpty() -> true
+                notify && oldSummary?.predictedGrade != summary.predictedGrade -> false
+                else -> true
+            }
+            summary.isFinalGradeNotified = when {
+                summary.finalGrade.isEmpty() -> true
+                notify && oldSummary?.finalGrade != summary.finalGrade -> false
+                else -> true
+            }
+
+            summary.predictedGradeLastChange = when {
+                oldSummary == null -> LocalDateTime.now()
+                summary.predictedGrade != oldSummary.predictedGrade -> LocalDateTime.now()
+                else -> oldSummary.predictedGradeLastChange
+            }
+            summary.finalGradeLastChange = when {
+                oldSummary == null -> LocalDateTime.now()
+                summary.finalGrade != oldSummary.finalGrade -> LocalDateTime.now()
+                else -> oldSummary.finalGradeLastChange
+            }
+        })
     }
 
-    fun getNotNotifiedGrades(semester: Semester): Single<List<Grade>> {
-        return local.getGradesDetails(semester).map { it.filter { grade -> !grade.isNotified } }.toSingle(emptyList())
+    fun getUnreadGrades(semester: Semester): Flow<List<Grade>> {
+        return local.getGradesDetails(semester).map { it.filter { grade -> !grade.isRead } }
     }
 
-    fun getNotNotifiedPredictedGrades(semester: Semester): Single<List<GradeSummary>> {
-        return local.getGradesSummary(semester).map { it.filter { gradeSummary -> !gradeSummary.isPredictedGradeNotified } }.toSingle(emptyList())
+    fun getNotNotifiedGrades(semester: Semester): Flow<List<Grade>> {
+        return local.getGradesDetails(semester).map { it.filter { grade -> !grade.isNotified } }
     }
 
-    fun getNotNotifiedFinalGrades(semester: Semester): Single<List<GradeSummary>> {
-        return local.getGradesSummary(semester).map { it.filter { gradeSummary -> !gradeSummary.isFinalGradeNotified } }.toSingle(emptyList())
+    fun getNotNotifiedPredictedGrades(semester: Semester): Flow<List<GradeSummary>> {
+        return local.getGradesSummary(semester).map { it.filter { gradeSummary -> !gradeSummary.isPredictedGradeNotified } }
     }
 
-    fun updateGrade(grade: Grade): Completable {
-        return Completable.fromCallable { local.updateGrades(listOf(grade)) }
+    fun getNotNotifiedFinalGrades(semester: Semester): Flow<List<GradeSummary>> {
+        return local.getGradesSummary(semester).map { it.filter { gradeSummary -> !gradeSummary.isFinalGradeNotified } }
     }
 
-    fun updateGrades(grades: List<Grade>): Completable {
-        return Completable.fromCallable { local.updateGrades(grades) }
+    suspend fun updateGrade(grade: Grade) {
+        return local.updateGrades(listOf(grade))
     }
 
-    fun updateGradesSummary(gradesSummary: List<GradeSummary>): Completable {
-        return Completable.fromCallable { local.updateGradesSummary(gradesSummary) }
+    suspend fun updateGrades(grades: List<Grade>) {
+        return local.updateGrades(grades)
+    }
+
+    suspend fun updateGradesSummary(gradesSummary: List<GradeSummary>) {
+        return local.updateGradesSummary(gradesSummary)
     }
 }

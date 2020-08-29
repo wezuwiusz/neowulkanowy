@@ -4,13 +4,14 @@ import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.init
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.SpyK
-import io.reactivex.Maybe
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class LuckyNumberRemoteTest {
 
@@ -27,16 +28,17 @@ class LuckyNumberRemoteTest {
     @Test
     fun getLuckyNumberTest() {
         every { mockSdk.init(student) } returns mockSdk
-        every { mockSdk.getLuckyNumber("test") } returns Maybe.just(14)
+        coEvery { mockSdk.getLuckyNumber("test") } returns 14
 
         every { mockSdk.diaryId } returns 1
 
-        val luckyNumber = LuckyNumberRemote(mockSdk)
-            .getLuckyNumber(student)
-            .blockingGet()
+        val luckyNumber = runBlocking {
+            LuckyNumberRemote(mockSdk)
+                .getLuckyNumber(student)
+        }
 
-        assertEquals(14, luckyNumber.luckyNumber)
-        assertEquals(LocalDate.now(), luckyNumber.date)
-        assertEquals(student.studentId, luckyNumber.studentId)
+        assertEquals(14, luckyNumber?.luckyNumber)
+        assertEquals(LocalDate.now(), luckyNumber?.date)
+        assertEquals(student.studentId, luckyNumber?.studentId)
     }
 }

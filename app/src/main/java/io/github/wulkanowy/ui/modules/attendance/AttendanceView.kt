@@ -2,7 +2,7 @@ package io.github.wulkanowy.ui.modules.attendance
 
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.ui.base.BaseView
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 interface AttendanceView : BaseView {
 

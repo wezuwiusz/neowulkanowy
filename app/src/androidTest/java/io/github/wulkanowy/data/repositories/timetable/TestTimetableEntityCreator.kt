@@ -1,7 +1,7 @@
 package io.github.wulkanowy.data.repositories.timetable
 
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalDateTime.now
+import java.time.LocalDateTime
+import java.time.LocalDateTime.now
 import io.github.wulkanowy.data.db.entities.Timetable as TimetableLocal
 import io.github.wulkanowy.sdk.pojo.Timetable as TimetableRemote
 

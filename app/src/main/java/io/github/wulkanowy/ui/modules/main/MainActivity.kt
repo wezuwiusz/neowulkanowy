@@ -17,7 +17,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
-import dagger.Lazy
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.ActivityMainBinding
 import io.github.wulkanowy.ui.base.BaseActivity
@@ -39,19 +39,18 @@ import io.github.wulkanowy.utils.setOnViewChangeListener
 import timber.log.Timber
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainView {
 
     @Inject
     override lateinit var presenter: MainPresenter
 
     @Inject
-    lateinit var navController: FragNavController
-
-    @Inject
     lateinit var analytics: FirebaseAnalyticsHelper
 
-    @Inject
-    lateinit var overlayProvider: Lazy<ElevationOverlayProvider>
+    private val overlayProvider by lazy { ElevationOverlayProvider(this) }
+
+    private val navController = FragNavController(supportFragmentManager, R.id.mainFragmentContainer)
 
     companion object {
         const val EXTRA_START_MENU = "extraStartMenu"
@@ -106,7 +105,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     override fun initView() {
         with(binding.mainToolbar) {
             if (SDK_INT >= LOLLIPOP) stateListAnimator = null
-            setBackgroundColor(overlayProvider.get().compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(4f)))
+            setBackgroundColor(overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(4f)))
         }
 
         with(binding.mainBottomNav) {
@@ -119,7 +118,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             ))
             accentColor = getThemeAttrColor(R.attr.colorPrimary)
             inactiveColor = getThemeAttrColor(R.attr.colorOnSurface, 153)
-            defaultBackgroundColor = overlayProvider.get().compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(8f))
+            defaultBackgroundColor = overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(8f))
             titleState = ALWAYS_SHOW
             currentItem = startMenuIndex
             isBehaviorTranslationEnabled = false

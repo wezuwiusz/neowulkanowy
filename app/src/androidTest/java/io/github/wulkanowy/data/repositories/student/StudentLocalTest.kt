@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.github.wulkanowy.data.TestDispatchersProvider
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.repositories.getStudent
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +28,7 @@ class StudentLocalTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         testDb = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
             .build()
-        studentLocal = StudentLocal(testDb.studentDao, context)
+        studentLocal = StudentLocal(testDb.studentDao, TestDispatchersProvider(), context)
     }
 
     @After
@@ -36,9 +38,9 @@ class StudentLocalTest {
 
     @Test
     fun saveAndReadTest() {
-        studentLocal.saveStudents(listOf(student)).blockingGet()
+        runBlocking { studentLocal.saveStudents(listOf(student)) }
 
-        val student = studentLocal.getCurrentStudent(true).blockingGet()
-        assertEquals("23", student.schoolSymbol)
+        val student = runBlocking { studentLocal.getCurrentStudent(true) }
+        assertEquals("23", student?.schoolSymbol)
     }
 }

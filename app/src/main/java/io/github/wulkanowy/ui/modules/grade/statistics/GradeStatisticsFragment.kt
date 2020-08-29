@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
 import io.github.wulkanowy.databinding.FragmentGradeStatisticsBinding
@@ -15,6 +16,7 @@ import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class GradeStatisticsFragment :
     BaseFragment<FragmentGradeStatisticsBinding>(R.layout.fragment_grade_statistics),
     GradeStatisticsView, GradeView.GradeChildView {

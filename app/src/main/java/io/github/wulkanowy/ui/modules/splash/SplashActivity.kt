@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.viewbinding.ViewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashActivity : BaseActivity<SplashPresenter, ViewBinding>(), SplashView {
 
     @Inject
