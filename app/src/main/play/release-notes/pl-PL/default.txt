@@ -1,8 +1,5 @@
-Wersja 0.19.0
-- naprawiliśmy pokazywanie brakujących przedmiotów na liście podsumowania ocen
-- ulepszyliśmy wygląd menadżera kont
-- ulepszyliśmy wyszukiwarkę wiadomości
-- dodaliśmy powiadomienia o proponowanych i końcowych ocenach
-- dodaliśmy opcję udostępniania i drukowania wiadomości
+Wersja 0.20.0
+- naprawiliśmy obsługę wiadomości
+- naprawiliśmy wyświetlanie oznaczenia klasy ucznia w menadżerze kont
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
