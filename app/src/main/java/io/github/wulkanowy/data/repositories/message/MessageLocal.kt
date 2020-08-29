@@ -38,9 +38,6 @@ class MessageLocal @Inject constructor(
     }
 
     fun getMessages(student: Student, folder: MessageFolder): Flow<List<Message>> {
-        return when (folder) {
-            TRASHED -> messagesDb.loadDeleted(student.id.toInt())
-            else -> messagesDb.loadAll(student.id.toInt(), folder.id)
-        }
+        return messagesDb.loadAll(student.id.toInt(), folder.id)
     }
 }

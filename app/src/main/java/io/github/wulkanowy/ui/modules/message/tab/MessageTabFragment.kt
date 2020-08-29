@@ -63,7 +63,10 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
     }
 
     override fun initView() {
-        tabAdapter.onClickListener = presenter::onMessageItemSelected
+        with(tabAdapter) {
+            onClickListener = presenter::onMessageItemSelected
+            onChangesDetectedListener = ::resetListPosition
+        }
 
         with(binding.messageTabRecycler) {
             layoutManager = LinearLayoutManager(context)
@@ -95,10 +98,6 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
 
     override fun updateData(data: List<Message>) {
         tabAdapter.setDataItems(data)
-    }
-
-    override fun updateItem(item: Message, position: Int) {
-        tabAdapter.updateItem(position, item)
     }
 
     override fun showProgress(show: Boolean) {

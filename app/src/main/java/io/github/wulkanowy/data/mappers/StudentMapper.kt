@@ -14,6 +14,7 @@ fun List<SdkStudent>.mapToEntities(password: String = "") = map {
             symbol = it.symbol,
             studentId = it.studentId,
             userLoginId = it.userLoginId,
+            userName = it.userName,
             studentName = it.studentName + " " + it.studentSurname,
             schoolSymbol = it.schoolSymbol,
             schoolShortName = it.schoolShortName,

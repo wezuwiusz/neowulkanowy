@@ -43,6 +43,9 @@ data class Student(
     @ColumnInfo(name = "user_login_id")
     val userLoginId: Int,
 
+    @ColumnInfo(name = "user_name")
+    val userName: String,
+
     @ColumnInfo(name = "student_name")
     val studentName: String,
 

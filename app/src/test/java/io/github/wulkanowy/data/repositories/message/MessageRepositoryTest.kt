@@ -8,6 +8,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.just
 import kotlinx.coroutines.flow.flowOf
@@ -35,6 +36,7 @@ class MessageRepositoryTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
+        every { student.userName } returns "Jan"
         repo = MessageRepository(local, remote)
     }
 
@@ -63,7 +65,7 @@ class MessageRepositoryTest {
     @Test
     fun `get message when content in db is empty`() {
         val testMessage = getMessageEntity(123, "", true)
-        val testMessageWithContent = testMessage.copy(content = "Test")
+        val testMessageWithContent = testMessage.copy().apply { content = "Test" }
 
         val mWa = MessageWithAttachment(testMessage, emptyList())
         val mWaWithContent = MessageWithAttachment(testMessageWithContent, emptyList())

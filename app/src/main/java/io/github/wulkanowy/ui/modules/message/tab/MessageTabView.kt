@@ -13,8 +13,6 @@ interface MessageTabView : BaseView {
 
     fun updateData(data: List<Message>)
 
-    fun updateItem(item: Message, position: Int)
-
     fun showProgress(show: Boolean)
 
     fun enableSwipe(enable: Boolean)

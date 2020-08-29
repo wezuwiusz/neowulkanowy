@@ -45,7 +45,8 @@ fun getStudentEntity(mode: Sdk.Mode = Sdk.Mode.API): Student {
         studentId = 0,
         studentName = "",
         symbol = "",
-        userLoginId = 0
+        userLoginId = 0,
+        userName = "",
     )
 }
 
@@ -86,7 +87,6 @@ fun getMessageEntity(
     senderId = 1,
     recipient = "",
     subject = "",
-    content = content,
     date = now(),
     folderId = 1,
     unread = unread,
@@ -94,4 +94,6 @@ fun getMessageEntity(
     readBy = 1,
     removed = false,
     hasAttachments = false
-)
+).apply {
+    this.content = content
+}

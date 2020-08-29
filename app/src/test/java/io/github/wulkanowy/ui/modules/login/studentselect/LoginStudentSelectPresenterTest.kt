@@ -38,7 +38,7 @@ class LoginStudentSelectPresenterTest {
 
     private lateinit var presenter: LoginStudentSelectPresenter
 
-    private val testStudent by lazy { Student(email = "test", password = "test123", scrapperBaseUrl = "https://fakelog.cf", loginType = "AUTO", symbol = "", isCurrent = false, studentId = 0, schoolName = "", schoolSymbol = "", classId = 1, studentName = "", registrationDate = now(), className = "", loginMode = "", certificateKey = "", privateKey = "", mobileBaseUrl = "", schoolShortName = "", userLoginId = 1, isParent = false) }
+    private val testStudent by lazy { Student(email = "test", password = "test123", scrapperBaseUrl = "https://fakelog.cf", loginType = "AUTO", symbol = "", isCurrent = false, studentId = 0, schoolName = "", schoolSymbol = "", classId = 1, studentName = "", registrationDate = now(), className = "", loginMode = "", certificateKey = "", privateKey = "", mobileBaseUrl = "", schoolShortName = "", userLoginId = 1, isParent = false, userName = "") }
 
     private val testException by lazy { RuntimeException("Problem") }
 

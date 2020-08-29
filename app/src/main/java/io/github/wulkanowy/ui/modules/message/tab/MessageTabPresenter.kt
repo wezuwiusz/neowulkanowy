@@ -81,13 +81,7 @@ class MessageTabPresenter @Inject constructor(
 
     fun onMessageItemSelected(message: Message, position: Int) {
         Timber.i("Select message ${message.id} item (position: $position)")
-        view?.run {
-            openMessage(message)
-            if (message.unread) {
-                message.unread = false
-                updateItem(message, position)
-            }
-        }
+        view?.openMessage(message)
     }
 
     private fun loadData(forceRefresh: Boolean) {
@@ -154,6 +148,7 @@ class MessageTabPresenter @Inject constructor(
                 .collect {
                     Timber.d("Applying filter. Full list: ${messages.size}, filtered: ${it.size}")
                     updateData(it)
+                    view?.resetListPosition()
                 }
         }
     }
@@ -176,7 +171,6 @@ class MessageTabPresenter @Inject constructor(
             showContent(data.isNotEmpty())
             showErrorView(false)
             updateData(data)
-            resetListPosition()
         }
     }
 

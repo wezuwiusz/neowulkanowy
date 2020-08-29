@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/messagePreviewContentContainer"
     android:layout_width="match_parent"
@@ -9,37 +10,84 @@
 
     <TextView
         android:id="@+id/messagePreviewSubject"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:lineSpacingMultiplier="1.2"
         android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/lorem" />
 
     <TextView
-        android:id="@+id/messagePreviewAuthor"
+        android:id="@+id/messagePreviewFromLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/message_from"
+        android:textColor="?android:textColorSecondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/messagePreviewSubject" />
+
+    <TextView
+        android:id="@+id/messagePreviewFromSender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="15sp"
-        tools:text="@tools:sample/full_names" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/messagePreviewFromLabel"
+        app:layout_constraintTop_toTopOf="@id/messagePreviewFromLabel"
+        tools:text="@tools:sample/full_names[0]" />
+
+    <TextView
+        android:id="@+id/messagePreviewToLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/message_to"
+        android:textColor="?android:textColorSecondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/messagePreviewFromLabel" />
+
+    <TextView
+        android:id="@+id/messagePreviewToRecipient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/messagePreviewToLabel"
+        app:layout_constraintTop_toTopOf="@id/messagePreviewToLabel"
+        tools:text="@tools:sample/full_names[1]" />
 
     <TextView
         android:id="@+id/messagePreviewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="4dp"
         android:textColor="?android:textColorSecondary"
         android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/messagePreviewToLabel"
         tools:text="@tools:sample/date/ddmmyy" />
 
     <TextView
         android:id="@+id/messagePreviewContent"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:autoLink="web"
         android:lineSpacingMultiplier="1.2"
         android:textIsSelectable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/messagePreviewDate"
         tools:text="@tools:sample/lorem/random" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

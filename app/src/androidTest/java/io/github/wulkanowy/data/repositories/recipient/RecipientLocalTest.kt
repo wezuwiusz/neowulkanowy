@@ -43,7 +43,7 @@ class RecipientLocalTest {
         )
         runBlocking { recipientLocal.saveRecipients(list) }
 
-        val student = Student("fakelog.cf", "AUTO", "", "", "", "", false, "", "", "", 1, 0, "", "", "", "", "", 1, true, LocalDateTime.now())
+        val student = Student("fakelog.cf", "AUTO", "", "", "", "", false, "", "", "", 1, 0, "", "", "", "", "", "", 1, true, LocalDateTime.now())
         val recipients = runBlocking {
             recipientLocal.getRecipients(
                 student = student,

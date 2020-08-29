@@ -18,24 +18,25 @@ import io.github.wulkanowy.sdk.pojo.Recipient as SdkRecipient
 class MessageRemote @Inject constructor(private val sdk: Sdk) {
 
     suspend fun getMessages(student: Student, semester: Semester, folder: MessageFolder): List<Message> {
-        return sdk.init(student).getMessages(Folder.valueOf(folder.name), semester.start.atStartOfDay(), semester.end.atStartOfDay()).map {
+        return sdk.init(student).getMessages(Folder.valueOf(folder.name), now().minusMonths(3), now()).map {
             Message(
                 studentId = student.id.toInt(),
                 realId = it.id ?: 0,
                 messageId = it.messageId ?: 0,
-                sender = it.sender.orEmpty(),
-                senderId = it.senderId ?: 0,
-                recipient = it.recipient.orEmpty(),
+                sender = it.sender?.name.orEmpty(),
+                senderId = it.sender?.loginId ?: 0,
+                recipient = it.recipients.singleOrNull()?.name ?: "Wielu adresatów",
                 subject = it.subject.trim(),
                 date = it.date ?: now(),
-                content = it.content.orEmpty(),
                 folderId = it.folderId,
                 unread = it.unread ?: false,
                 unreadBy = it.unreadBy ?: 0,
                 readBy = it.readBy ?: 0,
                 removed = it.removed,
                 hasAttachments = it.hasAttachments
-            )
+            ).apply {
+                content = it.content.orEmpty()
+            }
         }
     }
 
@@ -72,6 +73,6 @@ class MessageRemote @Inject constructor(private val sdk: Sdk) {
     }
 
     suspend fun deleteMessage(student: Student, message: Message): Boolean {
-        return sdk.init(student).deleteMessages(listOf(message.messageId to message.folderId))
+        return sdk.init(student).deleteMessages(listOf(message.messageId), message.folderId)
     }
 }

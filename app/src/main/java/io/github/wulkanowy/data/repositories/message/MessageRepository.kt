@@ -64,9 +64,11 @@ class MessageRepository @Inject constructor(
     suspend fun deleteMessage(student: Student, message: Message) {
         val isDeleted = remote.deleteMessage(student, message)
 
-        if (!message.removed) local.updateMessages(listOf(message.copy(removed = isDeleted).apply {
-            id = message.id
-            content = message.content
-        })) else local.deleteMessages(listOf(message))
+        if (message.folderId != MessageFolder.TRASHED.id) {
+            if (isDeleted) local.updateMessages(listOf(message.copy(folderId = MessageFolder.TRASHED.id).apply {
+                id = message.id
+                content = message.content
+            }))
+        } else local.deleteMessages(listOf(message))
     }
 }

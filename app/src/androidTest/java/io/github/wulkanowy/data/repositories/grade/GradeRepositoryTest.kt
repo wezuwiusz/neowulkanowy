@@ -215,6 +215,7 @@ class GradeRepositoryTest {
         studentId = 0,
         studentName = "",
         symbol = "",
-        userLoginId = 0
+        userLoginId = 0,
+        userName = ""
     )
 }

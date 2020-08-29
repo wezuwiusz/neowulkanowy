@@ -41,7 +41,7 @@ class LuckyNumberLocalTest {
         val number = LuckyNumber(1, LocalDate.of(2019, 1, 20), 14)
         runBlocking { luckyNumberLocal.saveLuckyNumber(number) }
 
-        val student = Student("", "", "", "", "", "", false, "", "", "", 1, 1, "", "", "", "", "", 1, false, now())
+        val student = Student("", "", "", "", "", "", false, "", "", "", 1, 1, "", "", "", "", "", "", 1, false, now())
         val luckyNumber = runBlocking { luckyNumberLocal.getLuckyNumber(student, LocalDate.of(2019, 1, 20)).first() }
 
         assertEquals(1, luckyNumber?.studentId)

@@ -13,6 +13,7 @@ fun getStudent(): Student {
         scrapperBaseUrl = "fakelog.cf",
         loginType = "AUTO",
         isCurrent = true,
+        userName = "",
         studentName = "",
         schoolShortName = "",
         schoolName = "",

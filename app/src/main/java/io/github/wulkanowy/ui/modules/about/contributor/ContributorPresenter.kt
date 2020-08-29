@@ -40,6 +40,6 @@ class ContributorPresenter @Inject constructor(
                 }
                 Status.ERROR -> errorHandler.dispatch(it.error!!)
             }
-        }
+        }.launch()
     }
 }
