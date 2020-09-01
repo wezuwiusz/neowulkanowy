@@ -21,7 +21,7 @@ class GradeSummaryAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerV
 
     var items = emptyList<GradeSummary>()
 
-    override fun getItemCount() = items.size + 1
+    override fun getItemCount() = items.size + if (items.isNotEmpty()) 1 else 0
 
     override fun getItemViewType(position: Int) = when (position) {
         0 -> ViewType.HEADER.id

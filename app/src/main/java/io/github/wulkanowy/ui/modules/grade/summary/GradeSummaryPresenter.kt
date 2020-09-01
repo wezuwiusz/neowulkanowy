@@ -45,16 +45,17 @@ class GradeSummaryPresenter @Inject constructor(
                 Status.LOADING -> Timber.i("Loading grade summary started")
                 Status.SUCCESS -> {
                     Timber.i("Loading grade summary result: Success")
+                    val items = createGradeSummaryItems(it.data!!)
                     view?.run {
-                        showEmpty(it.data!!.isEmpty())
-                        showContent(it.data.isNotEmpty())
+                        showEmpty(items.isEmpty())
+                        showContent(items.isNotEmpty())
                         showErrorView(false)
-                        updateData(createGradeSummaryItems(it.data))
+                        updateData(items)
                     }
                     analytics.logEvent(
                         "load_data",
                         "type" to "grade_summary",
-                        "items" to it.data!!.size
+                        "items" to it.data.size
                     )
                 }
                 Status.ERROR -> {
