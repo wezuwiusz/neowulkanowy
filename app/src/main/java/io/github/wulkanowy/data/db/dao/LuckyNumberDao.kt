@@ -12,5 +12,5 @@ import javax.inject.Singleton
 interface LuckyNumberDao : BaseDao<LuckyNumber> {
 
     @Query("SELECT * FROM LuckyNumbers WHERE student_id = :studentId AND date = :date")
-    fun load(studentId: Int, date: LocalDate): Flow<LuckyNumber>
+    fun load(studentId: Int, date: LocalDate): Flow<LuckyNumber?>
 }

@@ -55,14 +55,6 @@ class SettingsPresenter @Inject constructor(
     }
 
     fun onSyncNowClicked() {
-        view?.showForceSyncDialog()
-    }
-
-    fun onFixSyncIssuesClicked() {
-        view?.showFixSyncDialog()
-    }
-
-    fun onForceSyncDialogSubmit() {
         view?.run {
             syncManager.startOneTimeSyncWorker().onEach { workInfo ->
                 when (workInfo.state) {
@@ -86,5 +78,9 @@ class SettingsPresenter @Inject constructor(
                 Timber.e(it, "Sync now failed")
             }.launch("sync")
         }
+    }
+
+    fun onFixSyncIssuesClicked() {
+        view?.showFixSyncDialog()
     }
 }

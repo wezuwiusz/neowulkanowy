@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import java.lang.NullPointerException
 import java.time.LocalDate
 import java.time.LocalDate.now
 import java.time.LocalDate.of

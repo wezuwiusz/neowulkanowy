@@ -47,7 +47,6 @@ You can also download a [development version](https://wulkanowy.github.io/#downl
 
 
 * [Wulkanowy SDK](https://github.com/wulkanowy/sdk)
-* [RxJava 2](https://github.com/ReactiveX/RxJava)
 * [Dagger 2](https://github.com/google/dagger)
 * [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) 

@@ -10,6 +10,7 @@
         <item>Rawa Mazowiecka - Platforma vEdukacja</item>
         <item>Zduńska Wola - e-Urząd</item>
         <item>Sieradz - Portal oświatowy</item>
+        <item>Skarżysko-Kamienna - e-Skarżysko</item>
         <item>Łask - Platforma vEdukacja</item>
         <item>Powiat łaski - Platforma edukacyjna</item>
         <item>Powiat Krasnostawski - Platforma oświatowa</item>
@@ -36,6 +37,7 @@
         <item>https://vulcan.net.pl/</item>
         <item>https://vulcan.net.pl/</item>
         <item>https://vulcan.net.pl/</item>
+        <item>https://vulcan.net.pl/</item>
         <item>http://fakelog.tk/?standard</item>
     </string-array>
     <string-array name="hosts_symbols">
@@ -48,6 +50,7 @@
         <item>rawamazowiecka</item>
         <item>zdunskawola</item>
         <item>sieradz</item>
+        <item>skarzyskokamienna</item>
         <item>lask</item>
         <item>powiatlaski</item>
         <item>powiatkrasnostawski</item>

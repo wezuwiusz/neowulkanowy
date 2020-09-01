@@ -18,6 +18,5 @@ interface SettingsView : BaseView {
 
     fun setSyncInProgress(inProgress: Boolean)
 
-    fun showForceSyncDialog()
     fun showFixSyncDialog()
 }

@@ -3,6 +3,7 @@ package io.github.wulkanowy.utils
 import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.Status
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filter
@@ -69,22 +70,24 @@ inline fun <ResultType, RequestType, T> networkBoundResource(
 
 fun <T> flowWithResource(block: suspend () -> T) = flow {
     emit(Resource.loading())
-    try {
-        emit(Resource.success(block()))
+    emit(try {
+        Resource.success(block())
     } catch (e: Throwable) {
-        emit(Resource.error(e))
-    }
+        Resource.error(e)
+    })
 }
 
 fun <T> flowWithResourceIn(block: suspend () -> Flow<Resource<T>>) = flow {
     emit(Resource.loading())
 
     try {
-        block().collect {
-            if (it.status != Status.LOADING) { // LOADING is already emitted
-                emit(it)
+        block()
+            .catch { emit(Resource.error(it)) }
+            .collect {
+                if (it.status != Status.LOADING) { // LOADING is already emitted
+                    emit(it)
+                }
             }
-        }
     } catch (e: Throwable) {
         emit(Resource.error(e))
     }

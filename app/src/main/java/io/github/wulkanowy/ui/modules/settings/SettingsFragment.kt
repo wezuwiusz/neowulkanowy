@@ -120,15 +120,6 @@ class SettingsFragment : PreferenceFragmentCompat(),
         ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
     }
 
-    override fun showForceSyncDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.pref_services_dialog_force_sync_title)
-            .setMessage(R.string.pref_services_dialog_force_sync_summary)
-            .setPositiveButton(android.R.string.ok) { _, _ -> presenter.onForceSyncDialogSubmit() }
-            .setNegativeButton(android.R.string.cancel) { _, _ -> }
-            .show()
-    }
-
     override fun showFixSyncDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.pref_notify_fix_sync_issues)
