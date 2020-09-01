@@ -26,6 +26,7 @@ class UpcomingLessonsChannel @Inject constructor(
                 lockscreenVisibility = VISIBILITY_PUBLIC
                 setShowBadge(false)
                 enableVibration(false)
+                setSound(null, null)
             }
         )
     }
