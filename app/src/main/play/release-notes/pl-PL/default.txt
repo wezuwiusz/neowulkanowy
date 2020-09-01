@@ -1,5 +1,7 @@
-Wersja 0.20.0
-- naprawiliśmy obsługę wiadomości
-- naprawiliśmy wyświetlanie oznaczenia klasy ucznia w menadżerze kont
+Wersja 0.20.1
+- naprawiliśmy powiadomienie o szczęśliwym numerku
+- naprawiliśmy przełączanie na nowy rok szkolny
+- naprawiliśmy funkcję resetowania hasła
+- dodaliśmy dziennik e-Skarżysko
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
