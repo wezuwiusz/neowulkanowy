@@ -3,7 +3,8 @@ package io.github.wulkanowy.data.repositories.luckynumber
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.networkBoundResource
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import java.time.LocalDate.now
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,11 +29,8 @@ class LuckyNumberRepository @Inject constructor(
         }
     )
 
-    fun getNotNotifiedLuckyNumber(student: Student): Flow<LuckyNumber?> {
-        return local.getLuckyNumber(student, now())
-    }
+    suspend fun getNotNotifiedLuckyNumber(student: Student) =
+        local.getLuckyNumber(student, now()).map { if (it?.isNotified == false) it else null }.first()
 
-    suspend fun updateLuckyNumber(luckyNumber: LuckyNumber?) {
-        local.updateLuckyNumber(luckyNumber)
-    }
+    suspend fun updateLuckyNumber(luckyNumber: LuckyNumber?) = local.updateLuckyNumber(luckyNumber)
 }
