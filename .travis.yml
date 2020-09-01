@@ -14,7 +14,7 @@ cache:
 branches:
   only:
     - develop
-    - 0.20.1
+    - 0.20.2
 
 android:
  licenses:
