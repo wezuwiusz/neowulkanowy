@@ -66,7 +66,12 @@ class LoginRecoverPresenter @Inject constructor(
                     showErrorView(false)
                     showCaptcha(false)
                 }
-                Status.SUCCESS -> view?.loadReCaptcha(siteKey = it.data!!.first, url = it.data.second)
+                Status.SUCCESS -> view?.run {
+                    loadReCaptcha(url = it.data!!.first, siteKey = it.data.second)
+                    showProgress(false)
+                    showErrorView(false)
+                    showCaptcha(true)
+                }
                 Status.ERROR -> {
                     Timber.i("Obtain captcha site key result: An exception occurred")
                     errorHandler.dispatch(it.error!!)
