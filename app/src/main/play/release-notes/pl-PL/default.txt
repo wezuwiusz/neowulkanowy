@@ -1,4 +1,4 @@
-Wersja 0.20.1
+Wersja 0.20.2
 - naprawiliśmy powiadomienie o szczęśliwym numerku
 - naprawiliśmy przełączanie na nowy rok szkolny
 - naprawiliśmy funkcję resetowania hasła
