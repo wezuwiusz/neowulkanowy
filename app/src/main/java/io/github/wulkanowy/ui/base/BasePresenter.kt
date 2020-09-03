@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -63,7 +64,7 @@ open class BasePresenter<T : BaseView>(
 
     fun <T> Flow<T>.launch(individualJobTag: String = "load"): Job {
         jobs[individualJobTag]?.cancel()
-        val job = launchIn(this@BasePresenter)
+        val job = catch { errorHandler.dispatch(it) }.launchIn(this@BasePresenter)
         jobs[individualJobTag] = job
         Timber.d("Job $individualJobTag launched in ${this@BasePresenter.javaClass.simpleName}: $job")
         return job
