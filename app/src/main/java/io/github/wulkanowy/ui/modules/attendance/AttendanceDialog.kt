@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.databinding.DialogAttendanceBinding
+import io.github.wulkanowy.utils.description
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 import io.github.wulkanowy.utils.toFormattedString
 
@@ -43,7 +44,7 @@ class AttendanceDialog : DialogFragment() {
 
         with(binding) {
             attendanceDialogSubject.text = attendance.subject
-            attendanceDialogDescription.text = attendance.name
+            attendanceDialogDescription.setText(attendance.description)
             attendanceDialogDate.text = attendance.date.toFormattedString()
             attendanceDialogNumber.text = attendance.number.toString()
             attendanceDialogClose.setOnClickListener { dismiss() }
