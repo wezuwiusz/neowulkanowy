@@ -1,7 +1,4 @@
-Wersja 0.20.2
-- naprawiliśmy powiadomienie o szczęśliwym numerku
-- naprawiliśmy przełączanie na nowy rok szkolny
-- naprawiliśmy funkcję resetowania hasła
-- dodaliśmy dziennik e-Skarżysko
+Wersja 0.20.3
+- naprawiliśmy opisy wpisów frekwencyjnych, które teraz będą już w całości po polsku
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

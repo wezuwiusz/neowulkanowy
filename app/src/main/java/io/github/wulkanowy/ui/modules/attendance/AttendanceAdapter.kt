@@ -9,6 +9,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.repositories.attendance.SentExcuseStatus
 import io.github.wulkanowy.databinding.ItemAttendanceBinding
+import io.github.wulkanowy.utils.description
 import javax.inject.Inject
 
 class AttendanceAdapter @Inject constructor() :
@@ -34,7 +35,7 @@ class AttendanceAdapter @Inject constructor() :
         with(holder.binding) {
             attendanceItemNumber.text = item.number.toString()
             attendanceItemSubject.text = item.subject
-            attendanceItemDescription.text = item.name
+            attendanceItemDescription.setText(item.description)
             attendanceItemAlert.visibility = item.run { if (absence && !excused) View.VISIBLE else View.INVISIBLE }
             attendanceItemNumber.visibility = View.GONE
             attendanceItemExcuseInfo.visibility = View.GONE

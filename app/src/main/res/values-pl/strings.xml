@@ -168,6 +168,8 @@
     <string name="attendance_excused_lateness">Spóźnienie usprawiedliwione</string>
     <string name="attendance_unexcused_lateness">Spóźnienie nieusprawiedliwione</string>
     <string name="attendance_present">Obecność</string>
+    <string name="attendance_deleted">Usunięty</string>
+    <string name="attendance_unknown">Nieznany</string>
     <string name="attendance_number">Numer lekcji</string>
     <string name="attendance_no_items">Brak wpisów</string>
     <plurals name="attendance_number_absences">

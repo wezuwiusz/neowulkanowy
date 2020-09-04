@@ -50,13 +50,16 @@ class SyncWorker @WorkerInject constructor(
             } catch (e: Throwable) {
                 Timber.w("${work::class.java.simpleName} result: An exception ${e.message} occurred")
                 if (e is FeatureDisabledException || e is FeatureNotAvailableException) null
-                else e
+                else {
+                    Timber.e(e)
+                    e
+                }
             }
         }
         val result = when {
             exceptions.isNotEmpty() && inputData.getBoolean("one_time", false) -> {
                 Result.failure(Data.Builder()
-                    .putString("error", exceptions.toString())
+                    .putString("error", exceptions.map { it.stackTraceToString() }.toString())
                     .build()
                 )
             }
