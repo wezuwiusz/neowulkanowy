@@ -27,7 +27,7 @@ private fun calculatePercentage(presence: Double, absence: Double): Double {
 }
 
 inline val Attendance.description
-    get() = when (AttendanceCategory.valueOf(name)) {
+    get() = when (AttendanceCategory.getCategoryByName(name)) {
         AttendanceCategory.PRESENCE -> R.string.attendance_present
         AttendanceCategory.ABSENCE_UNEXCUSED -> R.string.attendance_absence_unexcused
         AttendanceCategory.ABSENCE_EXCUSED -> R.string.attendance_absence_excused
