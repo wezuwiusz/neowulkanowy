@@ -164,8 +164,8 @@ class GradeStatisticsPresenter @Inject constructor(
                 Status.SUCCESS -> {
                     Timber.i("Loading grade stats result: Success")
                     view?.run {
-                        showEmpty(it.data!!.isEmpty())
-                        showContent(it.data.isNotEmpty())
+                        showEmpty(it.data!!.isEmpty() || it.data.first().partial.isEmpty())
+                        showContent(it.data.isNotEmpty() && it.data.first().partial.isNotEmpty())
                         showErrorView(false)
                         updateData(it.data, preferencesRepository.gradeColorTheme, preferencesRepository.showAllSubjectsOnStatisticsList)
                         showSubjects(!preferencesRepository.showAllSubjectsOnStatisticsList)
