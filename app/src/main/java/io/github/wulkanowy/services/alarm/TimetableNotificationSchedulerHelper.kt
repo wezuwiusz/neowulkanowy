@@ -26,7 +26,9 @@ import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companio
 import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companion.STUDENT_ID
 import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companion.STUDENT_NAME
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.DispatchersProvider
 import io.github.wulkanowy.utils.toTimestamp
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.LocalDateTime.now
@@ -35,7 +37,8 @@ import javax.inject.Inject
 class TimetableNotificationSchedulerHelper @Inject constructor(
     @ApplicationContext private val context: Context,
     private val alarmManager: AlarmManager,
-    private val preferencesRepository: PreferencesRepository
+    private val preferencesRepository: PreferencesRepository,
+    private val dispatchersProvider: DispatchersProvider,
 ) {
 
     private fun getRequestCode(time: LocalDateTime, studentId: Int) = (time.toTimestamp() * studentId).toInt()
@@ -44,13 +47,15 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
         return day.getOrNull(index - 1)?.end ?: lesson.start.minusMinutes(30)
     }
 
-    fun cancelScheduled(lessons: List<Timetable>, studentId: Int = 1) {
-        lessons.sortedBy { it.start }.forEachIndexed { index, lesson ->
-            val upcomingTime = getUpcomingLessonTime(index, lessons, lesson)
-            cancelScheduledTo(upcomingTime..lesson.start, getRequestCode(upcomingTime, studentId))
-            cancelScheduledTo(lesson.start..lesson.end, getRequestCode(lesson.start, studentId))
+    suspend fun cancelScheduled(lessons: List<Timetable>, studentId: Int = 1) {
+        withContext(dispatchersProvider.backgroundThread) {
+            lessons.sortedBy { it.start }.forEachIndexed { index, lesson ->
+                val upcomingTime = getUpcomingLessonTime(index, lessons, lesson)
+                cancelScheduledTo(upcomingTime..lesson.start, getRequestCode(upcomingTime, studentId))
+                cancelScheduledTo(lesson.start..lesson.end, getRequestCode(lesson.start, studentId))
 
-            Timber.d("TimetableNotification canceled: type 1 & 2, subject: ${lesson.subject}, start: ${lesson.start}, student: $studentId")
+                Timber.d("TimetableNotification canceled: type 1 & 2, subject: ${lesson.subject}, start: ${lesson.start}, student: $studentId")
+            }
         }
     }
 
@@ -61,28 +66,30 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
 
     fun cancelNotification() = NotificationManagerCompat.from(context).cancel(MainView.Section.TIMETABLE.id)
 
-    fun scheduleNotifications(lessons: List<Timetable>, student: Student) {
+    suspend fun scheduleNotifications(lessons: List<Timetable>, student: Student) {
         if (!preferencesRepository.isUpcomingLessonsNotificationsEnable) return cancelScheduled(lessons, student.studentId)
 
-        lessons.groupBy { it.date }
-            .map { it.value.sortedBy { lesson -> lesson.start } }
-            .map { it.filter { lesson -> !lesson.canceled && lesson.isStudentPlan } }
-            .map { day ->
-                day.forEachIndexed { index, lesson ->
-                    val intent = createIntent(student, lesson, day.getOrNull(index + 1))
+        withContext(dispatchersProvider.backgroundThread) {
+            lessons.groupBy { it.date }
+                .map { it.value.sortedBy { lesson -> lesson.start } }
+                .map { it.filter { lesson -> !lesson.canceled && lesson.isStudentPlan } }
+                .map { day ->
+                    day.forEachIndexed { index, lesson ->
+                        val intent = createIntent(student, lesson, day.getOrNull(index + 1))
 
-                    if (lesson.start > now()) {
-                        scheduleBroadcast(intent, student.studentId, NOTIFICATION_TYPE_UPCOMING, getUpcomingLessonTime(index, day, lesson))
-                    }
+                        if (lesson.start > now()) {
+                            scheduleBroadcast(intent, student.studentId, NOTIFICATION_TYPE_UPCOMING, getUpcomingLessonTime(index, day, lesson))
+                        }
 
-                    if (lesson.end > now()) {
-                        scheduleBroadcast(intent, student.studentId, NOTIFICATION_TYPE_CURRENT, lesson.start)
-                        if (day.lastIndex == index) {
-                            scheduleBroadcast(intent, student.studentId, NOTIFICATION_TYPE_LAST_LESSON_CANCELLATION, lesson.end)
+                        if (lesson.end > now()) {
+                            scheduleBroadcast(intent, student.studentId, NOTIFICATION_TYPE_CURRENT, lesson.start)
+                            if (day.lastIndex == index) {
+                                scheduleBroadcast(intent, student.studentId, NOTIFICATION_TYPE_LAST_LESSON_CANCELLATION, lesson.end)
+                            }
                         }
                     }
                 }
-            }
+        }
     }
 
     private fun createIntent(student: Student, lesson: Timetable, nextLesson: Timetable?): Intent {
