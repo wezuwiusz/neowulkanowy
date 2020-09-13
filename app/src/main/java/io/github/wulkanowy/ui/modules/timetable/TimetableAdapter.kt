@@ -6,6 +6,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
@@ -44,8 +45,8 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
     private val timers = mutableMapOf<Int, Timer>()
 
-    private fun resetTimers() {
-        Timber.d("Timetable timers reset")
+    fun resetTimers() {
+        Timber.d("Timetable timers (${timers.size}) reset")
         with(timers) {
             forEach { (_, timer) -> timer.cancel() }
             clear()
@@ -67,11 +68,6 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             ViewType.ITEM_SMALL.id -> SmallItemViewHolder(ItemTimetableSmallBinding.inflate(inflater, parent, false))
             else -> throw IllegalStateException()
         }
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        resetTimers()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -112,8 +108,12 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             bindNormalDescription(binding, lesson)
             bindNormalColors(binding, lesson)
 
-            if (lesson.isStudentPlan && showTimers) timers[position] = timer(period = 1000) {
-                root.post { updateTimeLeft(binding, lesson, position) }
+            if (lesson.isStudentPlan && showTimers) {
+                timers[position] = timer(period = 1000) {
+                    if (ViewCompat.isAttachedToWindow(root)) {
+                        root.post { updateTimeLeft(binding, lesson, position) }
+                    }
+                }
             } else {
                 // reset item on set changed
                 timetableItemTimeUntil.visibility = GONE

@@ -8,6 +8,7 @@ import io.github.wulkanowy.utils.getCurrentOrLast
 import io.github.wulkanowy.utils.isCurrent
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,7 +42,7 @@ class SemesterRepository @Inject constructor(
 
     private suspend fun refreshSemesters(student: Student) {
         val new = remote.getSemesters(student)
-        if (new.isEmpty()) throw IllegalArgumentException("Empty semester list!")
+        if (new.isEmpty()) return Timber.i("Empty semester list!")
 
         val old = local.getSemesters(student)
         local.deleteSemesters(old.uniqueSubtract(new))

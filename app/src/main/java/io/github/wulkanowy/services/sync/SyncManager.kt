@@ -44,6 +44,7 @@ class SyncManager @Inject constructor(
 
         if (SDK_INT >= O) {
             channels.forEach { it.create() }
+            notificationManager.deleteNotificationChannel("lesson_channel")
             notificationManager.deleteNotificationChannel("new_entries_channel")
         }
 

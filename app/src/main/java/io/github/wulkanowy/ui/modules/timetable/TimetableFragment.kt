@@ -185,6 +185,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     }
 
     override fun onDestroyView() {
+        timetableAdapter.resetTimers()
         presenter.onDetachView()
         super.onDestroyView()
     }
