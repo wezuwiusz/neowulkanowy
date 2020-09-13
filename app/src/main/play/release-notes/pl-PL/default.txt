@@ -1,4 +1,7 @@
-Wersja 0.20.3
-- naprawiliśmy opisy wpisów frekwencyjnych, które teraz będą już w całości po polsku
+Wersja 0.20.4
+- dodaliśmy obsługę koszalińskiego dziennika
+- poprawiliśmy synchronizację sprawdzianów
+- wyłączyliśmy dźwięk powiadomienia przy włączonej opcji pokazywania nadchodzących lekcji w powiadomieniu
+- poprawiliśmy problemy ze stabilnością we frekwencji i planie lekcji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
