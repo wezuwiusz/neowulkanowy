@@ -89,7 +89,7 @@ fun <T> flowWithResourceIn(block: suspend () -> Flow<Resource<T>>) = flow {
                 }
             }
     } catch (e: Throwable) {
-        emit(Resource.error(e))
+        emit(Resource.error<T>(e))
     }
 }
 

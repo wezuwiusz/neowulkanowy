@@ -1,6 +1,6 @@
 package io.github.wulkanowy.data
 
-data class Resource<out T>(val status: Status, val data: T?, val error: Throwable?) {
+data class Resource<T>(val status: Status, val data: T?, val error: Throwable?) {
     companion object {
         fun <T> success(data: T?): Resource<T> {
             return Resource(Status.SUCCESS, data, null)
