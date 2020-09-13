@@ -13,8 +13,7 @@ import java.time.Month
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter.ofPattern
-import java.time.format.TextStyle.FULL_STANDALONE
-import java.time.format.TextStyle.*
+import java.time.format.TextStyle.FULL
 import java.time.temporal.TemporalAdjusters.firstInMonth
 import java.time.temporal.TemporalAdjusters.next
 import java.time.temporal.TemporalAdjusters.previous
@@ -77,6 +76,12 @@ inline val LocalDate.nextOrSameSchoolDay: LocalDate
             else -> this
         }
     }
+
+inline val LocalDate.startExamsDay: LocalDate
+    get() = nextOrSameSchoolDay.monday
+
+inline val LocalDate.endExamsDay: LocalDate
+    get() = nextOrSameSchoolDay.monday.plusWeeks(4).minusDays(1)
 
 inline val LocalDate.previousOrSameSchoolDay: LocalDate
     get() {

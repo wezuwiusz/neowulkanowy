@@ -171,4 +171,42 @@ class TimeExtensionTest {
         assertEquals(of(2019, 5, 1), of(2019, 5, 1).getLastSchoolDayIfHoliday(2018))
         assertEquals(of(2018, 5, 1), of(2019, 5, 1).getLastSchoolDayIfHoliday(2017))
     }
+
+    @Test
+    fun getExamsCutOffDates() {
+        with(of(2020, 9, 13)) {
+            assertEquals(of(2020, 9, 14), startExamsDay)
+            assertEquals(of(2020, 10, 11), endExamsDay)
+        }
+
+        with(of(2020, 9, 14)) {
+            assertEquals(of(2020, 9, 14), startExamsDay)
+            assertEquals(of(2020, 10, 11), endExamsDay)
+        }
+
+        with(of(2020, 9, 15)) {
+            assertEquals(of(2020, 9, 14), startExamsDay)
+            assertEquals(of(2020, 10, 11), endExamsDay)
+        }
+
+        with(of(2020, 9, 16)) {
+            assertEquals(of(2020, 9, 14), startExamsDay)
+            assertEquals(of(2020, 10, 11), endExamsDay)
+        }
+
+        with(of(2020, 9, 17)) {
+            assertEquals(of(2020, 9, 14), startExamsDay)
+            assertEquals(of(2020, 10, 11), endExamsDay)
+        }
+
+        with(of(2020, 9, 18)) {
+            assertEquals(of(2020, 9, 14), startExamsDay)
+            assertEquals(of(2020, 10, 11), endExamsDay)
+        }
+
+        with(of(2020, 9, 19)) {
+            assertEquals(of(2020, 9, 21), startExamsDay)
+            assertEquals(of(2020, 10, 18), endExamsDay)
+        }
+    }
 }
