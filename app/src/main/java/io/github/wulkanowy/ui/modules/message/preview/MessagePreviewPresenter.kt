@@ -64,7 +64,8 @@ class MessagePreviewPresenter @Inject constructor(
             when (it.status) {
                 Status.LOADING -> Timber.i("Loading message ${message.messageId} preview started")
                 Status.SUCCESS -> {
-                    Timber.i("Loading message ${it.data!!.message.messageId} preview result: Success ")
+                    Timber.i("Loading message ${message.messageId} preview result: Success ")
+                    checkNotNull(it.data, { "Can't find message in local db! Probably no longer exist in this folder" })
                     this@MessagePreviewPresenter.message = it.data.message
                     this@MessagePreviewPresenter.attachments = it.data.attachments
                     view?.apply {
@@ -194,6 +195,7 @@ class MessagePreviewPresenter @Inject constructor(
         view?.run {
             lastError = error
             setErrorDetails(message)
+            showContent(false)
             showErrorView(true)
             setErrorRetryCallback { retryCallback() }
         }

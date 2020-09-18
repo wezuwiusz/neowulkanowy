@@ -30,12 +30,12 @@ class MessageRemote @Inject constructor(private val sdk: Sdk) {
                 date = it.date ?: now(),
                 folderId = it.folderId,
                 unread = it.unread ?: false,
-                unreadBy = it.unreadBy ?: 0,
-                readBy = it.readBy ?: 0,
                 removed = it.removed,
                 hasAttachments = it.hasAttachments
             ).apply {
                 content = it.content.orEmpty()
+                unreadBy = it.unreadBy ?: 0
+                readBy = it.readBy ?: 0
             }
         }
     }
