@@ -1,7 +1,5 @@
-Wersja 0.20.4
-- dodaliśmy obsługę koszalińskiego dziennika
-- poprawiliśmy synchronizację sprawdzianów
-- wyłączyliśmy dźwięk powiadomienia przy włączonej opcji pokazywania nadchodzących lekcji w powiadomieniu
-- poprawiliśmy problemy ze stabilnością we frekwencji i planie lekcji
+Wersja 0.20.5
+- naprawiliśmy logowanie do koszalińskiego dziennika
+- naprawiliśmy resetowanie hasła na gdańskim dzienniku
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
