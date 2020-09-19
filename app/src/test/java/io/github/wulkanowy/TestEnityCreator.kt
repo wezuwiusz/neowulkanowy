@@ -90,10 +90,10 @@ fun getMessageEntity(
     date = now(),
     folderId = 1,
     unread = unread,
-    unreadBy = 1,
-    readBy = 1,
     removed = false,
     hasAttachments = false
 ).apply {
     this.content = content
+    unreadBy = 1
+    readBy = 1
 }

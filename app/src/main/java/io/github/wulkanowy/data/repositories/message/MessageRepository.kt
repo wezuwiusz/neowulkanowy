@@ -34,12 +34,14 @@ class MessageRepository @Inject constructor(
 
     fun getMessage(student: Student, message: Message, markAsRead: Boolean = false) = networkBoundResource(
         shouldFetch = {
+            checkNotNull(it, { "This message no longer exist!" })
             Timber.d("Message content in db empty: ${it.message.content.isEmpty()}")
             it.message.unread || it.message.content.isEmpty()
         },
         query = { local.getMessageWithAttachment(student, message) },
-        fetch = { remote.getMessagesContentDetails(student, it.message, markAsRead) },
+        fetch = { remote.getMessagesContentDetails(student, it!!.message, markAsRead) },
         saveFetchResult = { old, (downloadedMessage, attachments) ->
+            checkNotNull(old, { "Fetched message no longer exist!" })
             local.updateMessages(listOf(old.message.copy(unread = !markAsRead).apply {
                 id = old.message.id
                 content = content.ifBlank { downloadedMessage }

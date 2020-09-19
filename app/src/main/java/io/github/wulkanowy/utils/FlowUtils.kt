@@ -80,17 +80,13 @@ fun <T> flowWithResource(block: suspend () -> T) = flow {
 fun <T> flowWithResourceIn(block: suspend () -> Flow<Resource<T>>) = flow {
     emit(Resource.loading())
 
-    try {
-        block()
-            .catch { emit(Resource.error(it)) }
-            .collect {
-                if (it.status != Status.LOADING) { // LOADING is already emitted
-                    emit(it)
-                }
+    block()
+        .catch { emit(Resource.error(it)) }
+        .collect {
+            if (it.status != Status.LOADING) { // LOADING is already emitted
+                emit(it)
             }
-    } catch (e: Throwable) {
-        emit(Resource.error<T>(e))
-    }
+        }
 }
 
 fun <T> Flow<Resource<T>>.afterLoading(callback: () -> Unit) = onEach {
