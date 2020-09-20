@@ -48,8 +48,8 @@ before_script:
 script:
   - ./gradlew dependencies --stacktrace --daemon
   - fossa --no-ansi || true
-  - ./gradlew -Pcoverage testPlayDebugUnitTest --stacktrace --daemon
-  - ./gradlew -Pcoverage createFdroidDebugCoverageReport --stacktrace --daemon
+  - ./gradlew -Pcoverage testFdroidDebugUnitTest --stacktrace --daemon
+  - ./gradlew -Pcoverage connectedFdroidDebugAndroidTest --stacktrace --daemon
   - ./gradlew -Pcoverage jacocoTestReport --stacktrace --daemon
   - |
     if [ $TRAVIS_TAG ]; then

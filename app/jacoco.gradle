@@ -35,13 +35,13 @@ task jacocoTestReport(type: JacocoReport) {
             dir: "$buildDir/intermediates/classes/debug",
             excludes: excludes
     ) + fileTree(
-            dir: "$buildDir/tmp/kotlin-classes/playDebug",
+            dir: "$buildDir/tmp/kotlin-classes/fdroidDebug",
             excludes: excludes
     ))
 
     sourceDirectories.setFrom(files([
             "src/main/java",
-            "src/play/java"
+            "src/fdroid/java"
     ]))
     executionData.setFrom(fileTree(
             dir: project.projectDir,

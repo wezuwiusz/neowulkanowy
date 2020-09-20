@@ -19,7 +19,7 @@
     <string name="homework_title">Домашние задания</string>
     <string name="account_title">Выберите аккаунт</string>
     <!--Subtitles-->
-    <string name="grade_subtitle">%d семестр, %d/%d</string>
+    <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Авторизируйтесь при помощи аккаунта ученика или родителя</string>
     <string name="login_header_symbol">Впишите \"symbol\"</string>
