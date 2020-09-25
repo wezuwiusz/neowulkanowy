@@ -40,6 +40,12 @@
             app:key="@string/pref_key_grade_statistics_list"
             app:singleLineTitle="false"
             app:title="@string/pref_view_grade_statistics_list" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_subjects_without_grades"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_subjects_without_grades"
+            app:singleLineTitle="false"
+            app:title="@string/pref_view_subjects_without_grades" />
         <ListPreference
             app:defaultValue="@string/pref_default_timetable_show_whole_class"
             app:entries="@array/timetable_show_whole_class_entries"

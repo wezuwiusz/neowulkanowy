@@ -22,4 +22,5 @@
     <string name="pref_key_fill_message_content">fill_message_content</string>
     <string name="pref_key_timetable_show_whole_class">show_whole_class_plan</string>
     <string name="pref_key_timetable_show_timers">timetable_show_timers</string>
+    <string name="pref_key_subjects_without_grades">subjects_without_grades</string>
 </resources>

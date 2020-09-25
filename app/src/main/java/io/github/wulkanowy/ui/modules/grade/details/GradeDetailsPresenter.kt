@@ -186,7 +186,7 @@ class GradeDetailsPresenter @Inject constructor(
 
     private fun createGradeItems(items: List<GradeDetailsWithAverage>): List<GradeDetailsItem> {
         return items
-            .filter { it.grades.isNotEmpty() }
+            .let { if (!preferencesRepository.showSubjectsWithoutGrades) it.filter { it.grades.isNotEmpty() } else it.filter { true }}
             .sortedBy { it.subject }
             .map { (subject, average, points, _, grades) ->
                 val subItems = grades
