@@ -252,6 +252,44 @@
         <item quantity="many">Masz %1$d nowych uwag</item>
         <item quantity="other">Masz %1$d nowych uwag</item>
     </plurals>
+    <!--Praise-->
+    <plurals name="praise_number_item">
+        <item quantity="one">%d pochwała</item>
+        <item quantity="few">%d pochwały</item>
+        <item quantity="many">%d pochwał</item>
+        <item quantity="other">%d pochwał</item>
+    </plurals>
+    <plurals name="praise_new_items">
+        <item quantity="one">Nowa pochwała</item>
+        <item quantity="few">Nowe pochwały</item>
+        <item quantity="many">Nowe pochwały</item>
+        <item quantity="other">Nowe pochwały</item>
+    </plurals>
+    <plurals name="praise_notify_new_items">
+        <item quantity="one">Masz %1$d nową pochwałę</item>
+        <item quantity="few">Masz %1$d nowe pochwały</item>
+        <item quantity="many">Masz %1$d nowych pochwał</item>
+        <item quantity="other">Masz %1$d nowych pochwał</item>
+    </plurals>
+    <!--Neutral notes-->
+    <plurals name="neutral_note_number_item">
+        <item quantity="one">%d neutralna uwaga</item>
+        <item quantity="few">%d neutralne uwagi</item>
+        <item quantity="many">%d neutralnych uwag</item>
+        <item quantity="other">%d neutralnych uwag</item>
+    </plurals>
+    <plurals name="neutral_note_new_items">
+        <item quantity="one">Nowa neutralna uwaga</item>
+        <item quantity="few">Nowe neutralne uwagi</item>
+        <item quantity="many">Nowe neutralne uwagi</item>
+        <item quantity="other">Nowe neutralne uwagi</item>
+    </plurals>
+    <plurals name="neutral_note_notify_new_items">
+        <item quantity="one">Masz %1$d nową neutralną uwagę</item>
+        <item quantity="few">Masz %1$d nowe neutralne uwagi</item>
+        <item quantity="many">Masz %1$d nowych neutralnych uwag</item>
+        <item quantity="other">Masz %1$d nowych neutralnych uwag</item>
+    </plurals>
     <!--Homework-->
     <string name="homework_no_items">Brak zadań domowych</string>
     <string name="homework_mark_as_done">Wykonane</string>
