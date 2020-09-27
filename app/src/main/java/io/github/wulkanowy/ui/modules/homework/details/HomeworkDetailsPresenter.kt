@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.homework.details
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.repositories.homework.HomeworkRepository
+import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -16,8 +17,15 @@ class HomeworkDetailsPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val homeworkRepository: HomeworkRepository,
-    private val analytics: FirebaseAnalyticsHelper
+    private val analytics: FirebaseAnalyticsHelper,
+    private val preferencesRepository: PreferencesRepository
 ) : BasePresenter<HomeworkDetailsView>(errorHandler, studentRepository) {
+
+    var isHomeworkFullscreen
+        get() = preferencesRepository.isHomeworkFullscreen
+        set(value) {
+            preferencesRepository.isHomeworkFullscreen = value
+        }
 
     override fun onAttachView(view: HomeworkDetailsView) {
         super.onAttachView(view)

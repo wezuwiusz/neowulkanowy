@@ -62,12 +62,25 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
             homeworkDialogClose.setOnClickListener { dismiss() }
         }
 
+        if (presenter.isHomeworkFullscreen) {
+            dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
+        } else {
+            dialog?.window?.setLayout(WRAP_CONTENT, WRAP_CONTENT)
+        }
+
         with(binding.homeworkDialogRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = detailsAdapter.apply {
                 onAttachmentClickListener = { context.openInternetBrowser(it, ::showMessage) }
-                onFullScreenClickListener = { dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT) }
-                onFullScreenExitClickListener = { dialog?.window?.setLayout(WRAP_CONTENT, WRAP_CONTENT) }
+                onFullScreenClickListener = {
+                    dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
+                    presenter.isHomeworkFullscreen = true
+                }
+                onFullScreenExitClickListener = {
+                    dialog?.window?.setLayout(WRAP_CONTENT, WRAP_CONTENT)
+                    presenter.isHomeworkFullscreen = false
+                }
+                isHomeworkFullscreen = presenter.isHomeworkFullscreen
                 homework = this@HomeworkDetailsDialog.homework
             }
         }
