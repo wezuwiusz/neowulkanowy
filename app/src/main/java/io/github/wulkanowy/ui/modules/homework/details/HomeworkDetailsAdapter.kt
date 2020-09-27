@@ -29,6 +29,8 @@ class HomeworkDetailsAdapter @Inject constructor() :
             attachments = value?.attachments.orEmpty()
         }
 
+    var isHomeworkFullscreen = false
+
     var onAttachmentClickListener: (url: String) -> Unit = {}
 
     var onFullScreenClickListener = {}
@@ -67,6 +69,8 @@ class HomeworkDetailsAdapter @Inject constructor() :
             homeworkDialogSubject.text = homework?.subject
             homeworkDialogTeacher.text = homework?.teacher
             homeworkDialogContent.text = homework?.content
+            homeworkDialogFullScreen.visibility = if (isHomeworkFullscreen) GONE else VISIBLE
+            homeworkDialogFullScreenExit.visibility = if (isHomeworkFullscreen) VISIBLE else GONE
             homeworkDialogFullScreen.setOnClickListener {
                 homeworkDialogFullScreen.visibility = GONE
                 homeworkDialogFullScreenExit.visibility = VISIBLE

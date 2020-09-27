@@ -19,7 +19,7 @@
     <string name="homework_title">Hausaufgaben</string>
     <string name="account_title">Wählen Sie ein Konto</string>
     <!--Subtitles-->
-    <string name="grade_subtitle">Semester %d, %d/%d</string>
+    <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Melden Sie sich mit dem Studenten- oder Elternkonto an</string>
     <string name="login_header_symbol">Geben Sie das Symbol</string>

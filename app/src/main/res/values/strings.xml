@@ -21,7 +21,7 @@
 
 
     <!--Subtitles-->
-    <string name="grade_subtitle">Semester %d, %d/%d</string>
+    <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
 
 
     <!--Login-->
@@ -249,6 +249,34 @@
         <item quantity="other">You received %1$d notes</item>
     </plurals>
 
+    <!--Praise-->
+    <plurals name="praise_number_item">
+        <item quantity="one">%d praise</item>
+        <item quantity="other">%d praises</item>
+    </plurals>
+    <plurals name="praise_new_items">
+        <item quantity="one">New praise</item>
+        <item quantity="other">New praises</item>
+    </plurals>
+    <plurals name="praise_notify_new_items">
+        <item quantity="one">You received %1$d praise</item>
+        <item quantity="other">You received %1$d praises</item>
+    </plurals>
+
+    <!--Neutral notes-->
+    <plurals name="neutral_note_number_item">
+        <item quantity="one">%d neutral note</item>
+        <item quantity="other">%d neutral notes</item>
+    </plurals>
+    <plurals name="neutral_note_new_items">
+        <item quantity="one">New neutral note</item>
+        <item quantity="other">New neutral notes</item>
+    </plurals>
+    <plurals name="neutral_note_notify_new_items">
+        <item quantity="one">You received %1$d neutral note</item>
+        <item quantity="other">You received %1$d neutral notes</item>
+    </plurals>
+
 
     <!--Homework-->
     <string name="homework_no_items">No info about homework</string>
@@ -383,9 +411,12 @@
     <string name="pref_view_app_theme">Application theme</string>
     <string name="pref_view_expand_grade">Expand grades</string>
     <string name="pref_view_timetable_show_timers">Mark current lesson in timetable</string>
+    <string name="pref_view_timetable_show_groups">Show groups next to subjects in timetable</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
     <string name="pref_view_timetable_show_whole_class">Show whole class lessons</string>
+    <string name="pref_view_subjects_without_grades">Show subjects without grades in Grades</string>
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>
+    <string name="pref_view_grade_sorting_mode">Subjects sorting in "Grades"</string>
     <string name="pref_view_app_language">App language</string>
 
     <string name="pref_notify_header">Notifications</string>

@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.grade.details
 
+import android.annotation.SuppressLint
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.repositories.grade.GradeRepository
@@ -10,6 +11,8 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.ui.modules.grade.GradeDetailsWithAverage
+import io.github.wulkanowy.ui.modules.grade.GradeSortingMode.ALPHABETIC
+import io.github.wulkanowy.ui.modules.grade.GradeSortingMode.DATE
 import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
@@ -184,10 +187,20 @@ class GradeDetailsPresenter @Inject constructor(
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun createGradeItems(items: List<GradeDetailsWithAverage>): List<GradeDetailsItem> {
         return items
-            .filter { it.grades.isNotEmpty() }
-            .sortedBy { it.subject }
+            .let { gradesWithAverages ->
+                if (!preferencesRepository.showSubjectsWithoutGrades) {
+                    gradesWithAverages.filter { it.grades.isNotEmpty() }
+                } else gradesWithAverages
+            }
+            .let {
+                when (preferencesRepository.gradeSortingMode) {
+                    DATE -> it.sortedByDescending { gradeDetailsWithAverage -> gradeDetailsWithAverage.grades.firstOrNull()?.date }
+                    ALPHABETIC -> it.sortedBy { gradeDetailsWithAverage -> gradeDetailsWithAverage.subject.toLowerCase() }
+                }
+            }
             .map { (subject, average, points, _, grades) ->
                 val subItems = grades
                     .sortedByDescending { it.date }

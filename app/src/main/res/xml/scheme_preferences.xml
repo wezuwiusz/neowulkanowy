@@ -40,6 +40,18 @@
             app:key="@string/pref_key_grade_statistics_list"
             app:singleLineTitle="false"
             app:title="@string/pref_view_grade_statistics_list" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_timetable_show_groups"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_timetable_show_groups"
+            app:singleLineTitle="false"
+            app:title="@string/pref_view_timetable_show_groups" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_subjects_without_grades"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_subjects_without_grades"
+            app:singleLineTitle="false"
+            app:title="@string/pref_view_subjects_without_grades" />
         <ListPreference
             app:defaultValue="@string/pref_default_timetable_show_whole_class"
             app:entries="@array/timetable_show_whole_class_entries"
@@ -55,6 +67,14 @@
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_grade_color_scheme"
             app:title="@string/pref_view_grade_color_scheme"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            app:defaultValue="@string/pref_default_grade_sorting_mode"
+            app:entries="@array/grade_sorting_mode_entries"
+            app:entryValues="@array/grade_sorting_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_sorting_mode"
+            app:title="@string/pref_view_grade_sorting_mode"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
             app:defaultValue="@string/pref_default_app_language"
