@@ -63,6 +63,14 @@
             app:title="@string/pref_view_grade_color_scheme"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
+            app:defaultValue="@string/pref_default_grade_sorting_mode"
+            app:entries="@array/grade_sorting_mode_entries"
+            app:entryValues="@array/grade_sorting_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_sorting_mode"
+            app:title="@string/pref_view_grade_sorting_mode"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
             app:defaultValue="@string/pref_default_app_language"
             app:entries="@array/app_language_entries"
             app:entryValues="@array/app_language_values"
