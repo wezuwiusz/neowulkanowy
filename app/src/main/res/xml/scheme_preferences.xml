@@ -41,6 +41,12 @@
             app:singleLineTitle="false"
             app:title="@string/pref_view_grade_statistics_list" />
         <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_timetable_show_groups"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_timetable_show_groups"
+            app:singleLineTitle="false"
+            app:title="@string/pref_view_timetable_show_groups" />
+        <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_subjects_without_grades"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_subjects_without_grades"

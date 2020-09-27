@@ -143,6 +143,7 @@ class TimetablePresenter @Inject constructor(
                     view?.apply {
                         updateData(
                             showWholeClassPlanType = prefRepository.showWholeClassPlan,
+                            showGroupsInPlanType = prefRepository.showGroupsInPlan,
                             showTimetableTimers = prefRepository.showTimetableTimers,
                             data = it.data!!
                                 .filter { item -> if (prefRepository.showWholeClassPlan == "no") item.isStudentPlan else true }

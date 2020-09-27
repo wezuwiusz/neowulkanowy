@@ -75,6 +75,9 @@ class PreferencesRepository @Inject constructor(
     val fillMessageContent: Boolean
         get() = getBoolean(R.string.pref_key_fill_message_content, R.bool.pref_default_fill_message_content)
 
+    val showGroupsInPlan: Boolean
+        get() = getBoolean(R.string.pref_key_timetable_show_groups, R.bool.pref_default_timetable_show_groups)
+
     val showWholeClassPlan: String
         get() = getString(R.string.pref_key_timetable_show_whole_class, R.string.pref_default_timetable_show_whole_class)
 
