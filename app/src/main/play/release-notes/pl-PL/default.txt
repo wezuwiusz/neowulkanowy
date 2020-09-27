@@ -1,5 +1,10 @@
-Wersja 0.20.5
-- naprawiliśmy logowanie do koszalińskiego dziennika
-- naprawiliśmy resetowanie hasła na gdańskim dzienniku
+Wersja 0.21.0
+- naprawiliśmy logowanie do tarnowskiego dziennika
+- naprawiliśmy wyświetlanie podsumowania punktów klasy
+- dodaliśmy skróty aplikacji
+- dodaliśmy opcję pokazywania nazwy grupy w planie lekcji na liście
+- dodaliśmy opcję pokazywania w ocenach przedmiotów bez ocen
+- dodaliśmy dodatkowe opcje sortowania ocen
+- dodaliśmy rozróżnianie powiadomień dla pochwał i uwag
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
