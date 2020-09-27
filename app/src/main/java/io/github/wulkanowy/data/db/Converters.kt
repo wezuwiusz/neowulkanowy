@@ -1,8 +1,8 @@
 package io.github.wulkanowy.data.db
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -11,6 +11,16 @@ import java.time.ZoneOffset
 import java.util.Date
 
 class Converters {
+
+    private val moshi by lazy { Moshi.Builder().build() }
+
+    private val integerListAdapter by lazy {
+        moshi.adapter<List<Int>>(Types.newParameterizedType(List::class.java, Integer::class.java))
+    }
+
+    private val stringMapAdapter by lazy {
+        moshi.adapter<Map<String, String>>(Types.newParameterizedType(MutableMap::class.java, String::class.java, String::class.java))
+    }
 
     @TypeConverter
     fun timestampToDate(value: Long?): LocalDate? = value?.run {
@@ -39,22 +49,22 @@ class Converters {
     fun intToMonth(value: Int?) = value?.let { Month.of(it) }
 
     @TypeConverter
-    fun intListToGson(list: List<Int>): String {
-        return Gson().toJson(list)
+    fun intListToJson(list: List<Int>): String {
+        return integerListAdapter.toJson(list)
     }
 
     @TypeConverter
-    fun gsonToIntList(value: String): List<Int> {
-        return Gson().fromJson(value, object : TypeToken<List<Int>>() {}.type)
+    fun jsonToIntList(value: String): List<Int> {
+        return integerListAdapter.fromJson(value).orEmpty()
     }
 
     @TypeConverter
-    fun stringPairListToGson(list: List<Pair<String, String>>): String {
-        return Gson().toJson(list)
+    fun stringPairListToJson(list: List<Pair<String, String>>): String {
+        return stringMapAdapter.toJson(list.toMap())
     }
 
     @TypeConverter
-    fun gsonToStringPairList(value: String): List<Pair<String, String>> {
-        return Gson().fromJson(value, object : TypeToken<List<Pair<String, String>>>() {}.type)
+    fun jsonToStringPairList(value: String): List<Pair<String, String>> {
+        return stringMapAdapter.fromJson(value).orEmpty().toList()
     }
 }
