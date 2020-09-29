@@ -127,7 +127,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:0.21.1"
+    implementation "io.github.wulkanowy:sdk:7577fc9"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 

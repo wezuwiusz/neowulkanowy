@@ -56,11 +56,11 @@ object PairAdapterFactory : JsonAdapter.Factory {
         private fun deserializeGsonPair(reader: JsonReader): List<Pair<String, String>>? {
             val list = listAdapter.fromJson(reader) ?: return null
 
-            require(list.size == 2 || list.isEmpty()) {
-                "pair with more or less than two elements: $list"
-            }
-
             return list.map {
+                require(it.size == 2) {
+                    "pair with more or less than two elements: $list"
+                }
+
                 it["first"].orEmpty() to it["second"].orEmpty()
             }
         }
