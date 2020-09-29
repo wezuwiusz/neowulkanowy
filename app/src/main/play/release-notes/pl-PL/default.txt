@@ -1,4 +1,4 @@
-Wersja 0.21.1
+Wersja 0.21.2
 - naprawiliśmy logowanie do tarnowskiego dziennika
 - naprawiliśmy wyświetlanie podsumowania punktów klasy
 - dodaliśmy skróty aplikacji
