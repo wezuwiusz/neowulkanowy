@@ -179,7 +179,7 @@ dependencies {
     implementation "fr.bipi.treessence:treessence:0.3.2"
     implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
-    implementation "io.coil-kt:coil:1.0.0-rc2"
+    implementation "io.coil-kt:coil:1.0.0-rc3"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
     implementation 'me.xdrop:fuzzywuzzy:1.3.1'
 
