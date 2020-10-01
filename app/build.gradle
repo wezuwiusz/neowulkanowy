@@ -117,7 +117,7 @@ play {
 ext {
     work_manager = "2.4.0"
     room = "2.2.5"
-    chucker = "3.2.0"
+    chucker = "3.3.0"
     mockk = "1.10.2"
     moshi = "1.10.0"
 }
