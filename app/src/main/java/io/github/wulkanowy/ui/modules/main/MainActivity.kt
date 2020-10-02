@@ -181,8 +181,8 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         analytics.setCurrentScreen(this, name)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.mainMenuAccount) presenter.onAccountManagerSelected()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.mainMenuAccount) presenter.onAccountManagerSelected()
         else false
     }
 

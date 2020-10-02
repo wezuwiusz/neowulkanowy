@@ -174,7 +174,7 @@ class MessagePreviewFragment :
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun printDocument(html: String, jobName: String) {
-        val webView = WebView(activity)
+        val webView = WebView(requireContext())
         webView.webViewClient = object : WebViewClient() {
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest) = false

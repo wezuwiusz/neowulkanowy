@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.message.send
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -74,6 +75,7 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
         presenter.onAttachView(this, intent.getSerializableExtra(EXTRA_MESSAGE) as? Message, intent.getSerializableExtra(EXTRA_REPLY) as? Boolean)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initView() {
         setUpExtendedHitArea()
         with(binding) {
@@ -87,8 +89,8 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.sendMessageMenuSend) presenter.onSend()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.sendMessageMenuSend) presenter.onSend()
         else false
     }
 
