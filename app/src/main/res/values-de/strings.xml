@@ -154,6 +154,8 @@
     <string name="attendance_excused_lateness">Entschuldigte Verspätung</string>
     <string name="attendance_unexcused_lateness">Unentschuldigte Verspätung</string>
     <string name="attendance_present">Anwesend</string>
+    <string name="attendance_deleted">Deleted</string>
+    <string name="attendance_unknown">Unknown</string>
     <string name="attendance_number">Lektion Nummer</string>
     <string name="attendance_no_items">Keine Einträgen</string>
     <plurals name="attendance_number_absences">
@@ -221,6 +223,32 @@
     <plurals name="note_notify_new_items">
         <item quantity="one">Du hast %1$d Eintrag bekommen</item>
         <item quantity="other">Du hast %1$d Eintragen bekommen</item>
+    </plurals>
+    <!--Praise-->
+    <plurals name="praise_number_item">
+        <item quantity="one">%d praise</item>
+        <item quantity="other">%d praises</item>
+    </plurals>
+    <plurals name="praise_new_items">
+        <item quantity="one">New praise</item>
+        <item quantity="other">New praises</item>
+    </plurals>
+    <plurals name="praise_notify_new_items">
+        <item quantity="one">You received %1$d praise</item>
+        <item quantity="other">You received %1$d praises</item>
+    </plurals>
+    <!--Neutral notes-->
+    <plurals name="neutral_note_number_item">
+        <item quantity="one">%d neutral note</item>
+        <item quantity="other">%d neutral notes</item>
+    </plurals>
+    <plurals name="neutral_note_new_items">
+        <item quantity="one">New neutral note</item>
+        <item quantity="other">New neutral notes</item>
+    </plurals>
+    <plurals name="neutral_note_notify_new_items">
+        <item quantity="one">You received %1$d neutral note</item>
+        <item quantity="other">You received %1$d neutral notes</item>
     </plurals>
     <!--Homework-->
     <string name="homework_no_items">Keine Informationen über Hausaufgaben</string>
@@ -327,9 +355,12 @@
     <string name="pref_view_app_theme">Thema der Anwendung</string>
     <string name="pref_view_expand_grade">Noten erweitern</string>
     <string name="pref_view_timetable_show_timers">Aktuelle Lektion im Stundenplan markieren</string>
+    <string name="pref_view_timetable_show_groups">Show groups next to subjects in timetable</string>
     <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>
     <string name="pref_view_timetable_show_whole_class">Unterricht der ganzen Klasse anzeigen</string>
+    <string name="pref_view_subjects_without_grades">Show subjects without grades in Grades</string>
     <string name="pref_view_grade_color_scheme">Farbschema der Noten</string>
+    <string name="pref_view_grade_sorting_mode">Subjects sorting in \"Grades\"</string>
     <string name="pref_view_app_language">App Sprache</string>
     <string name="pref_notify_header">Benachrichtigungen</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>
