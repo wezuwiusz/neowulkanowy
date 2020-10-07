@@ -32,14 +32,17 @@ Unofficial android VULCAN UONET+ register client for both students and their par
 
 ## Download
 
-You can download the current beta version from the Google Play or the F-Droid store
+You can download the current beta version from the Google Play, F-Droid or Huawei AppGallery store
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-      alt="Get it on Google Play"
-      height="80">](https://play.google.com/store/apps/details?id=io.github.wulkanowy)
+    alt="Get it on Google Play"
+    height="80">](https://play.google.com/store/apps/details?id=io.github.wulkanowy)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
     alt="Get it on F-Droid"
     height="80">](https://f-droid.org/packages/io.github.wulkanowy/)
+[<img src="appgallery_badge.png"
+    alt="Explore it on AppGallery"
+    height="80">](https://appgallery.cloud.huawei.com/ag/n/app/C101440411?channelId=Badge&id=1b3f7fbb700849a9be0dba6b520b2282&s=EB1D3BF9ED9D1564D869B7B94B18016D3CABFCA5AEFB8E29F675FA04E0DC131D&detailType=0&v=)
     
 You can also download a [development version](https://wulkanowy.github.io/#download) that includes new features being prepared for the next release
 
