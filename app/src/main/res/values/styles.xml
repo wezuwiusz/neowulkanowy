@@ -23,7 +23,7 @@
         <item name="android:windowBackground">@drawable/layer_splash_background</item>
     </style>
 
-    <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.MaterialComponents.Light.Dialog">
+    <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.MaterialComponents.DayNight.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorPrimary</item>
         <item name="windowActionBar">false</item>
