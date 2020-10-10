@@ -18,62 +18,82 @@
 
         <TextView
             android:id="@+id/gradeItemValue"
-            android:layout_width="45dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@color/grade_material_default"
             android:gravity="center"
             android:maxLength="5"
+            android:minWidth="45dp"
+            android:minHeight="40dp"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/gradeDetailsContainer"
+            app:layout_constraintEnd_toStartOf="@+id/gradeDetailsContainer"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gradeDetailsContainer"
             tools:text="6" />
 
-        <TextView
-            android:id="@+id/gradeItemDescription"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/gradeDetailsContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="20dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/gradeItemNote"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gradeItemNote"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/gradeItemValue"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@tools:sample/lorem" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/gradeItemDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/gradeItemValue"
-            app:layout_constraintStart_toStartOf="@+id/gradeItemDescription"
-            tools:text="@tools:sample/date/ddmmyy" />
+            <TextView
+                android:id="@+id/gradeItemDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/gradeDetailsContainer"
+                app:layout_constraintStart_toStartOf="@id/gradeDetailsContainer"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/lorem" />
 
-        <TextView
-            android:id="@+id/gradeItemWeight"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="20dp"
-            android:maxLines="1"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/gradeItemValue"
-            app:layout_constraintEnd_toStartOf="@id/gradeItemNote"
-            app:layout_constraintStart_toEndOf="@+id/gradeItemDate"
-            tools:text="@tools:sample/lorem" />
+            <TextView
+                android:id="@+id/gradeItemDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/gradeDetailsContainer"
+                app:layout_constraintStart_toStartOf="@+id/gradeItemDescription"
+                app:layout_constraintTop_toBottomOf="@+id/gradeItemDescription"
+                tools:text="@tools:sample/date/ddmmyy" />
+
+            <TextView
+                android:id="@+id/gradeItemWeight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:maxLines="1"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/gradeDetailsContainer"
+                app:layout_constraintEnd_toEndOf="@id/gradeDetailsContainer"
+                app:layout_constraintStart_toEndOf="@+id/gradeItemDate"
+                app:layout_constraintTop_toBottomOf="@+id/gradeItemDescription"
+                tools:text="@tools:sample/lorem" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/gradeItemNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/gradeDetailsContainer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/gradeDetailsContainer"
+            app:layout_constraintTop_toTopOf="@+id/gradeDetailsContainer"
             app:srcCompat="@drawable/ic_all_round_mark"
             app:tint="?colorPrimary"
             tools:ignore="contentDescription" />

@@ -48,7 +48,8 @@
     <TextView
         android:id="@+id/loginItemSignedIn"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
+        android:minHeight="20dp"
         android:layout_below="@id/loginItemSchool"
         android:layout_marginEnd="16dp"
         android:layout_toEndOf="@id/loginItemCheck"
