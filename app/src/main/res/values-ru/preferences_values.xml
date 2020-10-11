@@ -12,6 +12,7 @@
         <item>Pусский</item>
         <item>Українська</item>
         <item>Deutsch</item>
+        <item>Čeština</item>
     </string-array>
     <string-array name="services_interval_entries">
         <item>15 минут</item>
@@ -30,8 +31,8 @@
         <item>0,75</item>
     </string-array>
     <string-array name="grade_sorting_mode_entries">
-        <item>Alphabetic</item>
-        <item>By date</item>
+        <item>Алфавитный</item>
+        <item>По дате</item>
     </string-array>
     <string-array name="grade_color_scheme_entries">
         <item>Dzienniczek+</item>
