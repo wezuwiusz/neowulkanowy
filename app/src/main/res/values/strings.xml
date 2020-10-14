@@ -472,6 +472,12 @@
     <string name="all_copied">Copied</string>
     <string name="all_undo">Undo</string>
 
+    <!--Update helper-->
+    <string name="update_download_started">Start downloading update…</string>
+    <string name="update_download_success">An update has just been downloaded.</string>
+    <string name="update_download_success_button">Restart</string>
+    <string name="update_failed">Update failed! Wulkanowy may not function properly. Consider updating</string>
+
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>

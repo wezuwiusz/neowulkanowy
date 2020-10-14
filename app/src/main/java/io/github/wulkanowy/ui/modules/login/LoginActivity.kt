@@ -14,6 +14,7 @@ import io.github.wulkanowy.ui.modules.login.form.LoginFormFragment
 import io.github.wulkanowy.ui.modules.login.recover.LoginRecoverFragment
 import io.github.wulkanowy.ui.modules.login.studentselect.LoginStudentSelectFragment
 import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
+import io.github.wulkanowy.utils.UpdateHelper
 import io.github.wulkanowy.utils.setOnSelectPageListener
 import javax.inject.Inject
 
@@ -24,6 +25,9 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
     override lateinit var presenter: LoginPresenter
 
     private val loginAdapter = BaseFragmentPagerAdapter(supportFragmentManager)
+
+    @Inject
+    lateinit var updateHelper: UpdateHelper
 
     companion object {
 
@@ -37,8 +41,20 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         setContentView(ActivityLoginBinding.inflate(layoutInflater).apply { binding = this }.root)
         setSupportActionBar(binding.loginToolbar)
         messageContainer = binding.loginContainer
+        updateHelper.messageContainer = binding.loginContainer
 
         presenter.onAttachView(this)
+        updateHelper.checkAndInstallUpdates(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateHelper.onResume(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        updateHelper.onActivityResult(requestCode, resultCode)
     }
 
     override fun initView() {
