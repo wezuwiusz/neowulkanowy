@@ -32,14 +32,17 @@ Nieoficjalny klient dziennika VULCAN UONET+ dla ucznia i rodzica
 
 ## Pobierz
 
-Aktualną wersję beta możesz pobrać ze sklepu Google Play lub F-Droid
+Aktualną wersję beta możesz pobrać ze sklepu Google Play, F-Droid lub Huawei AppGallery
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-      alt="Pobierz z Google Play"
-      height="80">](https://play.google.com/store/apps/details?id=io.github.wulkanowy)
+    alt="Pobierz z Google Play"
+    height="80">](https://play.google.com/store/apps/details?id=io.github.wulkanowy)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
     alt="Pobierz z F-Droid"
     height="80">](https://f-droid.org/packages/io.github.wulkanowy/)
+[<img src="appgallery_badge.png"
+    alt="Odkrywaj w AppGallery"
+    height="80">](https://appgallery.cloud.huawei.com/ag/n/app/C101440411?channelId=Badge&id=1b3f7fbb700849a9be0dba6b520b2282&s=EB1D3BF9ED9D1564D869B7B94B18016D3CABFCA5AEFB8E29F675FA04E0DC131D&detailType=0&v=)
 
 
 Możesz także pobrać [wersję rozwojową](https://wulkanowy.github.io/#download), która zawiera nowe funkcje przygotowywane do następnego wydania

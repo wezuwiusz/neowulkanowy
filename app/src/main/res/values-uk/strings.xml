@@ -168,6 +168,8 @@
     <string name="attendance_excused_lateness">Спізнення з поважних причин</string>
     <string name="attendance_unexcused_lateness">Спізнення з не поважних причин</string>
     <string name="attendance_present">Присутність</string>
+    <string name="attendance_deleted">Deleted</string>
+    <string name="attendance_unknown">Unknown</string>
     <string name="attendance_number">Номер уроку</string>
     <string name="attendance_no_items">Брак записів</string>
     <plurals name="attendance_number_absences">
@@ -249,6 +251,44 @@
         <item quantity="few">%1$d нових зауваження</item>
         <item quantity="many">%1$d нових зауважень</item>
         <item quantity="other">%1$d нових зауважень</item>
+    </plurals>
+    <!--Praise-->
+    <plurals name="praise_number_item">
+        <item quantity="one">%d praise</item>
+        <item quantity="few">%d praises</item>
+        <item quantity="many">%d praises</item>
+        <item quantity="other">%d praises</item>
+    </plurals>
+    <plurals name="praise_new_items">
+        <item quantity="one">New praise</item>
+        <item quantity="few">New praises</item>
+        <item quantity="many">New praises</item>
+        <item quantity="other">New praises</item>
+    </plurals>
+    <plurals name="praise_notify_new_items">
+        <item quantity="one">You received %1$d praise</item>
+        <item quantity="few">You received %1$d praises</item>
+        <item quantity="many">You received %1$d praises</item>
+        <item quantity="other">You received %1$d praises</item>
+    </plurals>
+    <!--Neutral notes-->
+    <plurals name="neutral_note_number_item">
+        <item quantity="one">%d neutral note</item>
+        <item quantity="few">%d neutral notes</item>
+        <item quantity="many">%d neutral notes</item>
+        <item quantity="other">%d neutral notes</item>
+    </plurals>
+    <plurals name="neutral_note_new_items">
+        <item quantity="one">New neutral note</item>
+        <item quantity="few">New neutral notes</item>
+        <item quantity="many">New neutral notes</item>
+        <item quantity="other">New neutral notes</item>
+    </plurals>
+    <plurals name="neutral_note_notify_new_items">
+        <item quantity="one">You received %1$d neutral note</item>
+        <item quantity="few">You received %1$d neutral notes</item>
+        <item quantity="many">You received %1$d neutral notes</item>
+        <item quantity="other">You received %1$d neutral notes</item>
     </plurals>
     <!--Homework-->
     <string name="homework_no_items">Брак домашніх завдань</string>
@@ -355,9 +395,12 @@
     <string name="pref_view_app_theme">Тема додатку</string>
     <string name="pref_view_expand_grade">Більше оцінок</string>
     <string name="pref_view_timetable_show_timers">Позначити поточний урок у розкладі</string>
+    <string name="pref_view_timetable_show_groups">Show groups next to subjects in timetable</string>
     <string name="pref_view_grade_statistics_list">Показувати діаграми в оцінках класу</string>
     <string name="pref_view_timetable_show_whole_class">Показати уроки всього класу</string>
+    <string name="pref_view_subjects_without_grades">Show subjects without grades in Grades</string>
     <string name="pref_view_grade_color_scheme">Схема кольорів оцінок</string>
+    <string name="pref_view_grade_sorting_mode">Subjects sorting in \"Grades\"</string>
     <string name="pref_view_app_language">Мова додатку</string>
     <string name="pref_notify_header">Повідомлення</string>
     <string name="pref_notify_switch">Показувати повідомлення</string>

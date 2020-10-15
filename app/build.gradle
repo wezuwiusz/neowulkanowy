@@ -10,16 +10,16 @@ apply from: 'sonarqube.gradle'
 apply from: 'hooks.gradle'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
 
     defaultConfig {
         applicationId "io.github.wulkanowy"
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
-        targetSdkVersion 29
-        versionCode 72
-        versionName "0.21.2"
+        targetSdkVersion 30
+        versionCode 73
+        versionName "0.22.0"
         multiDexEnabled true
         resValue "string", "app_name", "Wulkanowy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -112,14 +112,15 @@ play {
     serviceAccountCredentials = file('key.p12')
     defaultToAppBundles = false
     track = 'alpha'
+    updatePriority = 0
 }
 
 ext {
     work_manager = "2.4.0"
     room = "2.2.5"
-    chucker = "3.2.0"
-    mockk = "1.10.0"
-    moshi = "1.9.3"
+    chucker = "3.3.0"
+    mockk = "1.10.2"
+    moshi = "1.11.0"
 }
 
 configurations.all {
@@ -127,14 +128,14 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:0.21.2"
+    implementation "io.github.wulkanowy:sdk:0.22.0"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 
-    implementation "androidx.core:core-ktx:1.3.1"
+    implementation "androidx.core:core-ktx:1.3.2"
     implementation "androidx.activity:activity-ktx:1.1.0"
     implementation "androidx.appcompat:appcompat:1.2.0"
     implementation "androidx.appcompat:appcompat-resources:1.2.0"
@@ -179,15 +180,16 @@ dependencies {
     implementation "fr.bipi.treessence:treessence:0.3.2"
     implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
-    implementation "io.coil-kt:coil:1.0.0-rc2"
+    implementation "io.coil-kt:coil:1.0.0-rc3"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
     implementation 'me.xdrop:fuzzywuzzy:1.3.1'
 
-    playImplementation 'com.google.firebase:firebase-analytics:17.5.0'
+    playImplementation 'com.google.firebase:firebase-analytics:17.6.0'
     playImplementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.1.1'
     playImplementation "com.google.firebase:firebase-inappmessaging-ktx:19.1.1"
-    playImplementation 'com.google.firebase:firebase-messaging:20.2.4'
-    playImplementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+    playImplementation 'com.google.firebase:firebase-messaging:20.3.0'
+    playImplementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    playImplementation 'com.google.android.play:core-ktx:1.8.1'
     playImplementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"

@@ -33,7 +33,11 @@ internal class RepositoryModule {
             setSimpleHttpLogger { Timber.d(it) }
 
             // for debug only
-            addInterceptor(ChuckerInterceptor(context, chuckerCollector), true)
+            addInterceptor(ChuckerInterceptor(
+                context = context,
+                collector = chuckerCollector,
+                alwaysReadResponseBody = true
+            ), true)
         }
     }
 

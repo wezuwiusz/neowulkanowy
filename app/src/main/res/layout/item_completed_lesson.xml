@@ -12,8 +12,11 @@
 
     <TextView
         android:id="@+id/completedLessonItemNumber"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
         android:layout_centerVertical="true"
         android:gravity="center"
         android:includeFontPadding="false"
@@ -40,9 +43,9 @@
         android:id="@+id/completedLessonItemTopic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/completedLessonItemSubject"
         android:layout_alignStart="@id/completedLessonItemSubject"
         android:layout_alignEnd="@+id/completedLessonItemAlert"
-        android:layout_alignBottom="@+id/completedLessonItemNumber"
         android:layout_marginEnd="40dp"
         android:ellipsize="end"
         android:maxLines="1"
@@ -56,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:tint="?colorTimetableChange"
         app:srcCompat="@drawable/ic_timetable_swap"
+        app:tint="?colorTimetableChange"
         tools:ignore="contentDescription" />
 </RelativeLayout>

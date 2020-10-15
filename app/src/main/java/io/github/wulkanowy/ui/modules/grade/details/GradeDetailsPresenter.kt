@@ -81,7 +81,10 @@ class GradeDetailsPresenter @Inject constructor(
         }.onEach {
             when (it.status) {
                 Status.LOADING -> Timber.i("Select mark grades as read")
-                Status.SUCCESS -> Timber.i("Mark as read result: Success")
+                Status.SUCCESS -> {
+                    Timber.i("Mark as read result: Success")
+                    loadData(currentSemesterId, false)
+                }
                 Status.ERROR -> {
                     Timber.i("Mark as read result: An exception occurred")
                     errorHandler.dispatch(it.error!!)
