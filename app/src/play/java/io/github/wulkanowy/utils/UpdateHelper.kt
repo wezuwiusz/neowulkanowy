@@ -17,13 +17,14 @@ import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_T
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
 import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
 import com.google.android.play.core.ktx.isImmediateUpdateAllowed
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UpdateHelper @Inject constructor(private val context: Context) {
+class UpdateHelper @Inject constructor(@ApplicationContext private val context: Context) {
 
     lateinit var messageContainer: View
 

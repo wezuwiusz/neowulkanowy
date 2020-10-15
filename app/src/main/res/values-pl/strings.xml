@@ -448,9 +448,11 @@
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_timeout">Upłynął limit czasu na połączenie z dziennikiem</string>
-    <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie lub zrestartuj aplikację</string>
+    <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie</string>
     <string name="error_password_change_required">Wymagana zmiana hasła</string>
     <string name="error_service_unavailable">Trwa przerwa techniczna dziennika UONET+. Spróbuj ponownie później</string>
+    <string name="error_unknown_uonet">Wystąpił nieznany błąd dziennika UONET+. Spróbuj ponownie później</string>
+    <string name="error_unknown_app">Wystąpił nieznany błąd aplikacji</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w trybie innym niż Mobilne API</string>
