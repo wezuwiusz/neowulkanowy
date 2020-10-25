@@ -14,6 +14,7 @@ data class GradeDetailsHeader(
     val subject: String,
     val average: Double?,
     val pointsSum: String?,
-    var newGrades: Int,
     val grades: List<GradeDetailsItem>
-)
+) {
+    var newGrades = 0
+}

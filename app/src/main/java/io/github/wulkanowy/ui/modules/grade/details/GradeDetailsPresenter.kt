@@ -213,9 +213,10 @@ class GradeDetailsPresenter @Inject constructor(
                     subject = subject,
                     average = average,
                     pointsSum = points,
-                    newGrades = grades.filter { grade -> !grade.isRead }.size,
                     grades = subItems
-                ), ViewType.HEADER)) + if (preferencesRepository.isGradeExpandable) emptyList() else subItems
+                ).apply {
+                    newGrades = grades.filter { grade -> !grade.isRead }.size
+                }, ViewType.HEADER)) + if (preferencesRepository.isGradeExpandable) emptyList() else subItems
             }.flatten()
     }
 
