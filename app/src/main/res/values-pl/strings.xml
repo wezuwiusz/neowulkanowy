@@ -445,14 +445,19 @@
     <!--Others-->
     <string name="all_copied">Skopiowano</string>
     <string name="all_undo">Cofnij</string>
+    <!--Update helper-->
+    <string name="update_download_started">Rozpoczęto pobieranie aktualizacji…</string>
+    <string name="update_download_success">Aktualizacja została pobrana.</string>
+    <string name="update_download_success_button">Uruchom ponownie</string>
+    <string name="update_failed">Aktualizacja nie powiodła się! Wulkanowy może nie działać prawidłowo. Rozważ aktualizację</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_timeout">Upłynął limit czasu na połączenie z dziennikiem</string>
     <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie</string>
     <string name="error_password_change_required">Wymagana zmiana hasła</string>
     <string name="error_service_unavailable">Trwa przerwa techniczna dziennika UONET+. Spróbuj ponownie później</string>
-    <string name="error_unknown_uonet">Wystąpił nieznany błąd dziennika UONET+. Spróbuj ponownie później</string>
-    <string name="error_unknown_app">Wystąpił nieznany błąd aplikacji</string>
+    <string name="error_unknown_uonet">Nieznany błąd dziennika UONET+. Spróbuj ponownie później</string>
+    <string name="error_unknown_app">Nieznany błąd aplikacji</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w trybie innym niż Mobilne API</string>
