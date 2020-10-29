@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FirebaseAnalyticsHelper @Inject constructor(
+class AnalyticsHelper @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
@@ -30,6 +30,9 @@ class FirebaseAnalyticsHelper @Inject constructor(
     }
 
     fun setCurrentScreen(activity: Activity, name: String?) {
-        analytics.setCurrentScreen(activity, name, null)
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+            putString(FirebaseAnalytics.Param.SCREEN_NAME, name)
+            putString(FirebaseAnalytics.Param.SCREEN_CLASS, activity::class.simpleName)
+        })
     }
 }

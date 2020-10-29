@@ -6,7 +6,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Suppress("UNUSED_PARAMETER")
-class FirebaseAnalyticsHelper @Inject constructor() {
+class AnalyticsHelper @Inject constructor() {
 
     fun logEvent(name: String, vararg params: Pair<String, Any?>) {
         // do nothing

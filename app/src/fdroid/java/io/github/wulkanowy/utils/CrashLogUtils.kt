@@ -8,6 +8,6 @@ open class TimberTreeNoOp : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {}
 }
 
-class CrashlyticsTree : TimberTreeNoOp()
+class CrashLogTree : TimberTreeNoOp()
 
-class CrashlyticsExceptionTree : TimberTreeNoOp()
+class CrashLogExceptionTree : TimberTreeNoOp()

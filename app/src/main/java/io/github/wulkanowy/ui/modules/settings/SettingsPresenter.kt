@@ -9,7 +9,7 @@ import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
+import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.isHolidays
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onEach
@@ -22,7 +22,7 @@ class SettingsPresenter @Inject constructor(
     studentRepository: StudentRepository,
     private val preferencesRepository: PreferencesRepository,
     private val timetableNotificationHelper: TimetableNotificationSchedulerHelper,
-    private val analytics: FirebaseAnalyticsHelper,
+    private val analytics: AnalyticsHelper,
     private val syncManager: SyncManager,
     private val chuckerCollector: ChuckerCollector,
     private val appInfo: AppInfo

@@ -39,7 +39,7 @@ import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
+import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.UpdateHelper
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -55,7 +55,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     override lateinit var presenter: MainPresenter
 
     @Inject
-    lateinit var analytics: FirebaseAnalyticsHelper
+    lateinit var analytics: AnalyticsHelper
 
     @Inject
     lateinit var updateHelper: UpdateHelper

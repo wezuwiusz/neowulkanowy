@@ -1,7 +1,7 @@
 package io.github.wulkanowy.utils
 
 import android.util.Log
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.huawei.agconnect.crash.AGConnectCrash
 import fr.bipi.tressence.base.FormatterPriorityTree
 import fr.bipi.tressence.common.StackTraceRecorder
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
@@ -12,37 +12,41 @@ import java.net.UnknownHostException
 
 class CrashLogTree : FormatterPriorityTree(Log.VERBOSE) {
 
-    private val crashlytics by lazy { FirebaseCrashlytics.getInstance() }
+    private val connectCrash by lazy { AGConnectCrash.getInstance() }
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (skipLog(priority, tag, message, t)) return
 
-        crashlytics.log(format(priority, tag, message))
+        connectCrash.log(format(priority, tag, message))
     }
 }
 
 class CrashLogExceptionTree : FormatterPriorityTree(Log.ERROR) {
 
-    private val crashlytics by lazy { FirebaseCrashlytics.getInstance() }
+    private val connectCrash by lazy { AGConnectCrash.getInstance() }
 
     override fun skipLog(priority: Int, tag: String?, message: String, t: Throwable?): Boolean {
-        if (t is FeatureDisabledException || t is FeatureNotAvailableException || t is UnknownHostException || t is SocketTimeoutException || t is InterruptedIOException) {
-            return true
+        return when (t) {
+            is FeatureDisabledException,
+            is FeatureNotAvailableException,
+            is UnknownHostException,
+            is SocketTimeoutException,
+            is InterruptedIOException -> true
+            else -> super.skipLog(priority, tag, message, t)
         }
-
-        return super.skipLog(priority, tag, message, t)
     }
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (skipLog(priority, tag, message, t)) return
 
-        crashlytics.setCustomKey("priority", priority)
-        crashlytics.setCustomKey("tag", tag.orEmpty())
-        crashlytics.setCustomKey("message", message)
+        connectCrash.setCustomKey("priority", priority)
+        connectCrash.setCustomKey("tag", tag.orEmpty())
+        connectCrash.setCustomKey("message", message)
+        connectCrash.log(priority, t?.stackTraceToString())
         if (t != null) {
-            crashlytics.recordException(t)
+            connectCrash.log(priority, t.stackTraceToString())
         } else {
-            crashlytics.recordException(StackTraceRecorder(format(priority, tag, message)))
+            connectCrash.log(priority, StackTraceRecorder(format(priority, tag, message)).stackTraceToString())
         }
     }
 }
