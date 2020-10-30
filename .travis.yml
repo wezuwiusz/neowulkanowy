@@ -14,7 +14,7 @@ cache:
 branches:
   only:
     - develop
-    - 0.22.1
+    - 0.22.2
 
 android:
  licenses:
@@ -58,6 +58,7 @@ script:
   - |
     if [ $TRAVIS_TAG ]; then
       gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/google-services.json.gpg;
+      gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/agconnect-services.json.gpg;
       gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg;
       gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg;
       ./gradlew publishPlayRelease -PenableFirebase --stacktrace;
