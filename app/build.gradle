@@ -18,8 +18,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 74
-        versionName "0.22.1"
+        versionCode 75
+        versionName "0.22.2"
         multiDexEnabled true
         resValue "string", "app_name", "Wulkanowy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -142,7 +142,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:0.22.1"
+    implementation "io.github.wulkanowy:sdk:0.22.2"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 
@@ -206,7 +206,7 @@ dependencies {
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
     playImplementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:5.0.4.300'
+    hmsImplementation 'com.huawei.hms:hianalytics:5.0.4.301'
     hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.4.1.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
