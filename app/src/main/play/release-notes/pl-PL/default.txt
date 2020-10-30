@@ -1,7 +1,6 @@
-Wersja 0.22
-- naprawiliśmy krytyczny błąd ze stabilnością przy ładowaniu danych
-- naprawiliśmy skalowanie tekstu przy bardzo dużych jego rozmiarach
-- naprawiliśmy wyświetlanie powiadomień o odwołanych lekcjach (nie powinny się już pokazywać)
-- dodaliśmy informowanie o dostępności aktualizacji w aplikacji
+Wersja 0.22.1
+- naprawiliśmy problem z wyświetlaniem pozycji na liście ocen
+- zmieniliśmy komunikaty o błędach, które powinny być teraz czytelniejsze dla większej liczby użytkowników
+- zwiększyliśmy maksymalny czas, przez który aplikacja będzie próbowała łączyć się z dziennikiem do 1 minuty
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

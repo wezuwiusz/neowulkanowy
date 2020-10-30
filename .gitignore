@@ -113,3 +113,6 @@ Thumbs.db
 
 !/gradle/wrapper/gradle-wrapper.jar
 .idea/jarRepositories.xml
+
+
+app/src/release/agconnect-services.json

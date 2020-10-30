@@ -24,7 +24,7 @@ import io.github.wulkanowy.services.HiltBroadcastReceiver
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
-import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
+import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
@@ -49,7 +49,7 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
     lateinit var sharedPref: SharedPrefProvider
 
     @Inject
-    lateinit var analytics: FirebaseAnalyticsHelper
+    lateinit var analytics: AnalyticsHelper
 
     companion object {
 

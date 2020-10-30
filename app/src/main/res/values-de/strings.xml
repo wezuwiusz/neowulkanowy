@@ -405,12 +405,19 @@
     <!--Others-->
     <string name="all_copied">Kopiert</string>
     <string name="all_undo">lösen</string>
+    <!--Update helper-->
+    <string name="update_download_started">Download of updates has started…</string>
+    <string name="update_download_success">An update has just been downloaded.</string>
+    <string name="update_download_success_button">Restart</string>
+    <string name="update_failed">Update failed! Wulkanowy may not function properly. Consider updating</string>
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
     <string name="error_timeout">Das Zeitlimit für die Verbindung zum Klassenbuch ist abgelaufen</string>
-    <string name="error_login_failed">Anmeldung fehlgeschlagen. Versuchen Sie es noch einmal oder starten Sie die Anwendung neu.</string>
+    <string name="error_login_failed">Login failed. Try again</string>
     <string name="error_password_change_required">Passwortänderung erforderlich</string>
     <string name="error_service_unavailable">Wartung im Gange UONET + Klassenbuch. Versuchen Sie es später noch einmal</string>
+    <string name="error_unknown_uonet">Unknown UONET + register error. Try again later</string>
+    <string name="error_unknown_app">Unknown application error</string>
     <string name="error_unknown">Ein unerwarteter Fehler ist aufgetreten</string>
     <string name="error_feature_disabled">Funktion, die von Ihrer Schule deaktiviert wurde</string>
     <string name="error_feature_not_available">Feature in diesem Modus nicht verfügbar</string>

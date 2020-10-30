@@ -40,10 +40,6 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
     }
 
     fun updateDetailsItem(position: Int, grade: Grade) {
-        if (items.getOrNull(position)?.viewType != ViewType.ITEM) {
-            Timber.e("Trying to update item $position on list ${items.size} size, expanded position: $expandedPosition")
-            return
-        }
         items[position] = GradeDetailsItem(grade, ViewType.ITEM)
         notifyItemChanged(position)
     }
@@ -61,10 +57,6 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
     fun updateHeaderItem(item: GradeDetailsItem) {
         val headerPosition = headers.indexOf(item)
         val itemPosition = items.indexOf(item)
-
-        if (headerPosition == NO_POSITION || itemPosition == NO_POSITION) {
-            Timber.e("Invalid update header positions! Header: $headerPosition, item: $itemPosition")
-        }
 
         headers[headerPosition] = item
         items[itemPosition] = item

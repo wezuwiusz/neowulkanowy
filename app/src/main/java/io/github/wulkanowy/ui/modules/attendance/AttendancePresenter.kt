@@ -9,7 +9,7 @@ import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
+import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
@@ -34,7 +34,7 @@ class AttendancePresenter @Inject constructor(
     private val attendanceRepository: AttendanceRepository,
     private val semesterRepository: SemesterRepository,
     private val prefRepository: PreferencesRepository,
-    private val analytics: FirebaseAnalyticsHelper
+    private val analytics: AnalyticsHelper
 ) : BasePresenter<AttendanceView>(errorHandler, studentRepository) {
 
     private var baseDate: LocalDate = now().previousOrSameSchoolDay

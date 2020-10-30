@@ -18,8 +18,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 73
-        versionName "0.22.0"
+        versionCode 74
+        versionName "0.22.1"
         multiDexEnabled true
         resValue "string", "app_name", "Wulkanowy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -69,12 +69,26 @@ android {
     flavorDimensions "platform"
 
     productFlavors {
+        hms {
+            dimension "platform"
+            minSdkVersion 19
+            manifestPlaceholders = [
+                    install_channel: "AppGallery"
+            ]
+        }
+
         play {
             dimension "platform"
+            manifestPlaceholders = [
+                    install_channel: "Google Play"
+            ]
         }
 
         fdroid {
             dimension "platform"
+            manifestPlaceholders = [
+                    install_channel: "F-Droid"
+            ]
         }
     }
 
@@ -112,7 +126,7 @@ play {
     serviceAccountCredentials = file('key.p12')
     defaultToAppBundles = false
     track = 'alpha'
-    updatePriority = 0
+    updatePriority = 1
 }
 
 ext {
@@ -128,7 +142,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:0.22.0"
+    implementation "io.github.wulkanowy:sdk:0.22.1"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 
@@ -192,12 +206,15 @@ dependencies {
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
     playImplementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
+    hmsImplementation 'com.huawei.hms:hianalytics:5.0.4.300'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.4.1.300'
+
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
     debugImplementation "com.github.ChuckerTeam.Chucker:library:$chucker"
     debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 
-    testImplementation "junit:junit:4.13"
+    testImplementation "junit:junit:4.13.1"
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9'
 
@@ -210,3 +227,4 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.huawei.agconnect'

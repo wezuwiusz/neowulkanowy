@@ -22,12 +22,12 @@
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
-    <string name="login_header_symbol">Podaj symbol</string>
+    <string name="login_header_symbol">Podaj symbol ze strony dziennika</string>
     <string name="login_nickname_hint">Nazwa użytkownika</string>
     <string name="login_email_hint">Email</string>
     <string name="login_login_pesel_email_hint">Login, PESEL lub e-mail</string>
     <string name="login_password_hint">Hasło</string>
-    <string name="login_host_hint">Dziennik UONET+</string>
+    <string name="login_host_hint">Odmiana dziennika UONET+</string>
     <string name="login_type_api">Mobilne API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrydowe</string>
@@ -37,17 +37,17 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
-    <string name="login_incorrect_password">Dane logowania są niepoprawne. Upewnij się, że został wybrany odpowiedni dziennik UONET+ w polu poniżej</string>
+    <string name="login_incorrect_password">Dane logowania są niepoprawne. Upewnij się, że została wybrana odpowiednia odmiana dziennika UONET+ w polu poniżej</string>
     <string name="login_invalid_pin">Nieprawidłowy PIN</string>
     <string name="login_invalid_token">Nieprawidłowy token</string>
     <string name="login_expired_token">Token stracił ważność</string>
     <string name="login_invalid_email">Niepoprawny adres email</string>
-    <string name="login_invalid_login">Niepoprawny login</string>
+    <string name="login_invalid_login">Użyj przydzielonego loginu zamiast emaila</string>
     <string name="login_invalid_symbol">Niepoprawny symbol</string>
-    <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź symbol</string>
+    <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź poprawność symbolu i wybranej odmiany dziennika UONET+</string>
     <string name="login_field_required">To pole jest wymagane</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
-    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUpewnij się, że w polu <b>Dziennik UONET+</b> na poprzednim ekranie został ustawiony odpowiedni dziennik</string>
+    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUpewnij się, że w polu <b>Dziennik UONET+</b> na poprzednim ekranie została ustawiona odpowiednia odmiana dziennika. Wulkanowy na chwilę obecną nie wykrywa uczniów przedszkolnych</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_advanced">Inne opcje</string>
     <string name="login_advanced_warning_mobile_api">W tym trybie nie działa szczęśliwy numerek, uczeń na tle klasy, podsumowanie frekwencji, usprawiedliwianie nieobecności, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń</string>
@@ -59,7 +59,7 @@
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Wyślij email</string>
     <string name="login_email_details">Opisz problem:</string>
-    <string name="login_recover_warning">Upewnij się, że został wybrany odpowiedni dziennik UONET+!</string>
+    <string name="login_recover_warning">Upewnij się, że została wybrana odpowiednia odmiana dziennika UONET+!</string>
     <string name="login_recover_button">Nie pamiętam hasła</string>
     <string name="login_recover_title">Przywróć swoje konto</string>
     <string name="login_recover">Przywróć</string>
@@ -445,14 +445,19 @@
     <!--Others-->
     <string name="all_copied">Skopiowano</string>
     <string name="all_undo">Cofnij</string>
+    <!--Update helper-->
+    <string name="update_download_started">Rozpoczęto pobieranie aktualizacji…</string>
+    <string name="update_download_success">Aktualizacja została pobrana.</string>
+    <string name="update_download_success_button">Uruchom ponownie</string>
+    <string name="update_failed">Aktualizacja nie powiodła się! Wulkanowy może nie działać prawidłowo. Rozważ aktualizację</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
-    <string name="error_timeout">Upłynął limit czasu na połączenie z dziennikiem</string>
-    <string name="error_login_failed">Logowanie nie powiodło się. Spróbuj ponownie</string>
-    <string name="error_password_change_required">Wymagana zmiana hasła</string>
+    <string name="error_timeout">Nie udało się połączyć z dziennikiem. Serwery mogą być przeciążone. Spróbuj ponownie później</string>
+    <string name="error_login_failed">Ładowanie danych nie powiodło się. Spróbuj ponownie później</string>
+    <string name="error_password_change_required">Wymagana zmiana hasła do dziennika</string>
     <string name="error_service_unavailable">Trwa przerwa techniczna dziennika UONET+. Spróbuj ponownie później</string>
-    <string name="error_unknown_uonet">Wystąpił nieznany błąd dziennika UONET+. Spróbuj ponownie później</string>
-    <string name="error_unknown_app">Wystąpił nieznany błąd aplikacji</string>
+    <string name="error_unknown_uonet">Nieznany błąd dziennika UONET+. Spróbuj ponownie później</string>
+    <string name="error_unknown_app">Nieznany błąd aplikacji. Spróbuj ponownie później</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w trybie innym niż Mobilne API</string>

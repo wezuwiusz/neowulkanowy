@@ -14,8 +14,8 @@ import fr.bipi.tressence.file.FileLoggerTree
 import io.github.wulkanowy.ui.base.ThemeManager
 import io.github.wulkanowy.utils.ActivityLifecycleLogger
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.CrashlyticsExceptionTree
-import io.github.wulkanowy.utils.CrashlyticsTree
+import io.github.wulkanowy.utils.CrashLogExceptionTree
+import io.github.wulkanowy.utils.CrashLogTree
 import io.github.wulkanowy.utils.DebugLogTree
 import timber.log.Timber
 import javax.inject.Inject
@@ -56,8 +56,8 @@ class WulkanowyApp : Application(), Configuration.Provider {
                 .build()
             )
         } else {
-            Timber.plant(CrashlyticsExceptionTree())
-            Timber.plant(CrashlyticsTree())
+            Timber.plant(CrashLogExceptionTree())
+            Timber.plant(CrashLogTree())
         }
         registerActivityLifecycleCallbacks(ActivityLifecycleLogger())
     }

@@ -8,7 +8,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.main.MainView.Section.GRADE
 import io.github.wulkanowy.ui.modules.main.MainView.Section.MESSAGE
 import io.github.wulkanowy.ui.modules.main.MainView.Section.SCHOOL
-import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
+import io.github.wulkanowy.utils.AnalyticsHelper
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ class MainPresenter @Inject constructor(
     studentRepository: StudentRepository,
     private val prefRepository: PreferencesRepository,
     private val syncManager: SyncManager,
-    private val analytics: FirebaseAnalyticsHelper
+    private val analytics: AnalyticsHelper
 ) : BasePresenter<MainView>(errorHandler, studentRepository) {
 
     fun onAttachView(view: MainView, initMenu: MainView.Section?) {

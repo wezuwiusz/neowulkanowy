@@ -7,7 +7,7 @@ import io.github.wulkanowy.data.repositories.semester.SemesterRepository
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
+import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
@@ -30,7 +30,7 @@ class ExamPresenter @Inject constructor(
     studentRepository: StudentRepository,
     private val examRepository: ExamRepository,
     private val semesterRepository: SemesterRepository,
-    private val analytics: FirebaseAnalyticsHelper
+    private val analytics: AnalyticsHelper
 ) : BasePresenter<ExamView>(errorHandler, studentRepository) {
 
     private var baseDate: LocalDate = now().nextOrSameSchoolDay

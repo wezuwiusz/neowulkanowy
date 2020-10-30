@@ -13,7 +13,7 @@ import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.ui.modules.grade.GradeDetailsWithAverage
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode.ALPHABETIC
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode.DATE
-import io.github.wulkanowy.utils.FirebaseAnalyticsHelper
+import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
@@ -29,7 +29,7 @@ class GradeDetailsPresenter @Inject constructor(
     private val semesterRepository: SemesterRepository,
     private val preferencesRepository: PreferencesRepository,
     private val averageProvider: GradeAverageProvider,
-    private val analytics: FirebaseAnalyticsHelper
+    private val analytics: AnalyticsHelper
 ) : BasePresenter<GradeDetailsView>(errorHandler, studentRepository) {
 
     private var newGradesAmount: Int = 0
@@ -213,9 +213,10 @@ class GradeDetailsPresenter @Inject constructor(
                     subject = subject,
                     average = average,
                     pointsSum = points,
-                    newGrades = grades.filter { grade -> !grade.isRead }.size,
                     grades = subItems
-                ), ViewType.HEADER)) + if (preferencesRepository.isGradeExpandable) emptyList() else subItems
+                ).apply {
+                    newGrades = grades.filter { grade -> !grade.isRead }.size
+                }, ViewType.HEADER)) + if (preferencesRepository.isGradeExpandable) emptyList() else subItems
             }.flatten()
     }
 
