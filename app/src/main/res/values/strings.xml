@@ -325,6 +325,11 @@
     <string name="teacher_no_subject">No subject</string>
 
 
+    <!--Conference-->
+    <string name="conferences_title">Conferences</string>
+    <string name="conference_no_items">No info about conferences</string>
+
+
     <!--Account-->
     <string name="account_add_new">Add account</string>
     <string name="account_logout">Logout</string>

@@ -1,0 +1,87 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conference_item_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    tools:context=".ui.modules.conference.ConferenceAdapter">
+
+    <TextView
+        android:id="@+id/conferenceItemDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="15sp"
+        app:layout_constraintRight_toLeftOf="@+id/conferenceItemName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/date/ddmmyy" />
+
+    <TextView
+        android:id="@+id/conferenceItemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:singleLine="true"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/conferenceItemDate"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names" />
+
+    <TextView
+        android:id="@+id/conferenceItemTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/conferenceItemName"
+        app:layout_constraintStart_toStartOf="@id/conferenceItemDate"
+        app:layout_constraintTop_toBottomOf="@id/conferenceItemDate"
+        app:layout_goneMarginEnd="0dp"
+        tools:text="@tools:sample/lorem" />
+
+    <TextView
+        android:id="@+id/conferenceItemSubject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/conferenceItemContent"
+        app:layout_constraintEnd_toEndOf="@id/conferenceItemTitle"
+        app:layout_constraintStart_toStartOf="@id/conferenceItemTitle"
+        app:layout_constraintTop_toBottomOf="@id/conferenceItemTitle"
+        app:layout_goneMarginBottom="15dp"
+        app:layout_goneMarginEnd="0dp"
+        tools:text="@tools:sample/lorem" />
+
+    <TextView
+        android:id="@+id/conferenceItemContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="2"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/conferenceItemName"
+        app:layout_constraintStart_toStartOf="@id/conferenceItemDate"
+        app:layout_constraintTop_toBottomOf="@id/conferenceItemSubject"
+        tools:text="@tools:sample/lorem/random"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>
