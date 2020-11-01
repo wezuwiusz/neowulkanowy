@@ -26,12 +26,12 @@
 
     <!--Login-->
     <string name="login_header_default">Sign in with the student or parent account</string>
-    <string name="login_header_symbol">Enter the symbol</string>
+    <string name="login_header_symbol">Enter the symbol from the register page</string>
     <string name="login_nickname_hint">Username</string>
     <string name="login_email_hint">Email</string>
     <string name="login_login_pesel_email_hint">Login, PESEL or e-mail</string>
     <string name="login_password_hint">Password</string>
-    <string name="login_host_hint">UONET+ Register</string>
+    <string name="login_host_hint">UONET+ register variant</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrid</string>
@@ -41,17 +41,17 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_invalid_password">Password too short</string>
-    <string name="login_incorrect_password">Login details are incorrect. Make sure the correct UONET+ register is selected</string>
+    <string name="login_incorrect_password">Login details are incorrect. Make sure the correct UONET+ register variation is selected in the field below</string>
     <string name="login_invalid_pin">Invalid PIN</string>
     <string name="login_invalid_token">Invalid token</string>
     <string name="login_expired_token">Token expired</string>
     <string name="login_invalid_email">Invalid email</string>
-    <string name="login_invalid_login">Invalid login</string>
+    <string name="login_invalid_login">Use the assigned login instead of email</string>
     <string name="login_invalid_symbol">Invalid symbol</string>
-    <string name="login_incorrect_symbol">Student not found. Check the symbol</string>
+    <string name="login_incorrect_symbol">Student not found. Validate the symbol and the chosen variation of the UONET+ register</string>
     <string name="login_field_required">This field is required</string>
     <string name="login_duplicate_student">Selected student is already logged in</string>
-    <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
+    <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the previous screen. Wulkanowy does not detect pre-school students at the moment</string>
     <string name="login_select_student">Select students to log in to the application</string>
     <string name="login_advanced">Other options</string>
     <string name="login_advanced_warning_mobile_api">In this mode, a lucky number does not work, a class grade stats, summary of attendance, excuse for absence, completed lessons, school information and preview of the list of registered devices</string>
@@ -65,7 +65,7 @@
     <string name="login_email_details">Describe details of problem:</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
     <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nOstatni błąd: %5$s\n\nOpis problemu: </string>
-    <string name="login_recover_warning">Make sure the correct UONET+ register is selected!</string>
+    <string name="login_recover_warning">Make sure you select the correct UONET+ register variation!</string>
     <string name="login_recover_button">I forgot my password</string>
     <string name="login_recover_title">Recover your account</string>
     <string name="login_recover">Recover</string>
@@ -486,12 +486,12 @@
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>
-    <string name="error_timeout">Connection to the register timed out</string>
-    <string name="error_login_failed">Login failed. Try again</string>
-    <string name="error_password_change_required">Password change required</string>
+    <string name="error_timeout">Connection to register failed. Servers can be overloaded. Please try again later</string>
+    <string name="error_login_failed">Loading data failed. Please try again later</string>
+    <string name="error_password_change_required">Register password change required</string>
     <string name="error_service_unavailable">Maintenance underway UONET + register. Try again later</string>
     <string name="error_unknown_uonet">Unknown UONET + register error. Try again later</string>
-    <string name="error_unknown_app">Unknown application error</string>
+    <string name="error_unknown_app">Unknown application error. Please try again later</string>
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
