@@ -22,12 +22,12 @@
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Přihlaste se pomocí studentského nebo nadřazeného účtu</string>
-    <string name="login_header_symbol">Zadejte symbol</string>
+    <string name="login_header_symbol">Zadejte symbol ze stránky deníku</string>
     <string name="login_nickname_hint">Uživatelské jméno</string>
     <string name="login_email_hint">Email</string>
     <string name="login_login_pesel_email_hint">Přihlášení, číslo PESEL nebo e-mail</string>
     <string name="login_password_hint">Heslo</string>
-    <string name="login_host_hint">Deník UONET+</string>
+    <string name="login_host_hint">Variace deníku UONET+</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybridní</string>
@@ -37,17 +37,17 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Přihlásit</string>
     <string name="login_invalid_password">Toto heslo je příliš krátké</string>
-    <string name="login_incorrect_password">Přihlašovací údaje jsou nesprávné. Zkontrolujte, zda je v poli níže vybrán správný deník UONET+</string>
+    <string name="login_incorrect_password">Přihlašovací údaje jsou nesprávné. Ujistěte se, že je v poli níže vybrána správná variace deníku UONET+</string>
     <string name="login_invalid_pin">Neplatný PIN</string>
     <string name="login_invalid_token">Neplatný token</string>
     <string name="login_expired_token">Platnost tokenu vypršela</string>
     <string name="login_invalid_email">Nesprávná e-mailová adresa</string>
-    <string name="login_invalid_login">Neplatné přihlášení</string>
+    <string name="login_invalid_login">Místo e-mailu použijte přiřazené přihlašovací údaje</string>
     <string name="login_invalid_symbol">Neplatný symbol</string>
-    <string name="login_incorrect_symbol">Student nebyl nalezen. Zkontrolujte symbol</string>
+    <string name="login_incorrect_symbol">Student nebyl nalezen. Zkontrolujte správnost symbolu a vybrané varianty deníku UONET+</string>
     <string name="login_field_required">Toto pole je povinné</string>
     <string name="login_duplicate_student">Vybraný student je již přihlášen</string>
-    <string name="login_symbol_helper">Symbol najdete na stránce deníku v&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
+    <string name="login_symbol_helper">Symbol najdete na stránce deníku v &#160;<b>Uczeń</b> → &#160;<b>Dostęp Mobilny</b> → &#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUjistěte se, že jste na předchozí obrazovce nastavili správnou variantu deníku do pole <b>Variace deníku UONET+</b>. Wulkanowy v tuto chvíli nezjistí předškolní studenty</string>
     <string name="login_select_student">Vyberte studenty k přihlášení do aplikace</string>
     <string name="login_advanced">Jiné možnosti</string>
     <string name="login_advanced_warning_mobile_api">V tomto režimu nefungují následující: šťastné číslo, statistiky třídy, shrnutí docházky, ospravedlnění nepřítomnosti, absolvované lekce, informace o škole a prohlížení seznamu registrovaných zařízení</string>
@@ -59,7 +59,7 @@
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Poslat e-mail</string>
     <string name="login_email_details">Popište podrobnosti problému:</string>
-    <string name="login_recover_warning">Ujistěte se, že je vybrán správný UONET+ deník!</string>
+    <string name="login_recover_warning">Ujistěte se, že jste vybrali správnou variantu deníku UONET+!</string>
     <string name="login_recover_button">Zapomněl jsem své heslo</string>
     <string name="login_recover_title">Obnovte svůj účet</string>
     <string name="login_recover">Obnovit</string>
@@ -326,6 +326,9 @@
     <string name="teachers_title">Učitelé</string>
     <string name="teacher_no_items">Žádné informace o učitelích</string>
     <string name="teacher_no_subject">Žádný předmět</string>
+    <!--Conference-->
+    <string name="conferences_title">Setkání</string>
+    <string name="conference_no_items">Žádné informace o setkání</string>
     <!--Account-->
     <string name="account_add_new">Přidat účet</string>
     <string name="account_logout">Odhlásit se</string>
@@ -452,12 +455,12 @@
     <string name="update_failed">Aktualizace selhala! Wulkanowy nemusí fungovat správně. Zvažte aktualizaci</string>
     <!--Errors-->
     <string name="error_no_internet">Žádné internetové připojení</string>
-    <string name="error_timeout">Vypršel časový limit připojení k denik</string>
-    <string name="error_login_failed">Přihlášení selhalo. Zkus to znovu</string>
-    <string name="error_password_change_required">Je vyžadována změna hesla</string>
+    <string name="error_timeout">Nelze se připojit ke deníku. Servery mohou být přetíženy. Prosím zkuste to znovu později</string>
+    <string name="error_login_failed">Načítání dat se nezdařilo. Prosím zkuste to znovu později</string>
+    <string name="error_password_change_required">Je vyžadována změna hesla pro deník</string>
     <string name="error_service_unavailable">Probíhá údržba UONET+ deník. Zkuste to později znovu</string>
     <string name="error_unknown_uonet">Neznámá chyba denika UONET+. Prosím zkuste to znovu později</string>
-    <string name="error_unknown_app">Neznámá chyba aplikace</string>
+    <string name="error_unknown_app">Neznámá chyba aplikace. Prosím zkuste to znovu později</string>
     <string name="error_unknown">Došlo k neočekávané chybě</string>
     <string name="error_feature_disabled">Funkce deaktivována vaší školou</string>
     <string name="error_feature_not_available">Funkce není k dispozici. Přihlaste se v jiném režimu než Mobile API</string>
