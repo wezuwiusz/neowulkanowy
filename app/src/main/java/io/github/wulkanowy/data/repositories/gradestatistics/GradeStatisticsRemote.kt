@@ -1,7 +1,8 @@
 package io.github.wulkanowy.data.repositories.gradestatistics
 
+import io.github.wulkanowy.data.db.entities.GradePartialStatistics
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
-import io.github.wulkanowy.data.db.entities.GradeStatistics
+import io.github.wulkanowy.data.db.entities.GradeSemesterStatistics
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
@@ -12,20 +13,38 @@ import javax.inject.Singleton
 @Singleton
 class GradeStatisticsRemote @Inject constructor(private val sdk: Sdk) {
 
-    suspend fun getGradeStatistics(student: Student, semester: Semester, isSemester: Boolean): List<GradeStatistics> {
-        return sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear).let {
-            if (isSemester) it.getGradesAnnualStatistics(semester.semesterId)
-            else it.getGradesPartialStatistics(semester.semesterId)
-        }.map {
-            GradeStatistics(
-                semesterId = semester.semesterId,
-                studentId = semester.studentId,
-                subject = it.subject,
-                grade = it.gradeValue,
-                amount = it.amount,
-                semester = isSemester
-            )
-        }
+    suspend fun getGradePartialStatistics(student: Student, semester: Semester): List<GradePartialStatistics> {
+        return sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            .getGradesPartialStatistics(semester.semesterId)
+            .map {
+                GradePartialStatistics(
+                    semesterId = semester.semesterId,
+                    studentId = student.studentId,
+                    subject = it.subject,
+                    classAverage = it.classAverage,
+                    studentAverage = it.studentAverage,
+                    classAmounts = it.classItems
+                        .sortedBy { item -> item.grade }
+                        .map { item -> item.amount },
+                    studentAmounts = it.studentItems.map { item -> item.amount }
+                )
+            }
+    }
+
+    suspend fun getGradeSemesterStatistics(student: Student, semester: Semester): List<GradeSemesterStatistics> {
+        return sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            .getGradesSemesterStatistics(semester.semesterId)
+            .map {
+                GradeSemesterStatistics(
+                    semesterId = semester.semesterId,
+                    studentId = semester.studentId,
+                    subject = it.subject,
+                    amounts = it.items
+                        .sortedBy { item -> item.grade }
+                        .map { item -> item.amount },
+                    studentGrade = it.items.singleOrNull { item -> item.isStudentHere }?.grade ?: 0
+                )
+            }
     }
 
     suspend fun getGradePointsStatistics(student: Student, semester: Semester): List<GradePointsStatistics> {

@@ -17,8 +17,9 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.GradePartialStatistics
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
-import io.github.wulkanowy.data.db.entities.GradeStatistics
+import io.github.wulkanowy.data.db.entities.GradeSemesterStatistics
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
 import io.github.wulkanowy.databinding.ItemGradeStatisticsBarBinding
 import io.github.wulkanowy.databinding.ItemGradeStatisticsPieBinding
@@ -68,22 +69,32 @@ class GradeStatisticsAdapter @Inject constructor() :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            ViewType.PARTIAL.id, ViewType.SEMESTER.id -> PieViewHolder(ItemGradeStatisticsPieBinding.inflate(inflater, parent, false))
-            ViewType.POINTS.id -> BarViewHolder(ItemGradeStatisticsBarBinding.inflate(inflater, parent, false))
+            ViewType.PARTIAL.id -> PartialViewHolder(ItemGradeStatisticsPieBinding.inflate(inflater, parent, false))
+            ViewType.SEMESTER.id -> SemesterViewHolder(ItemGradeStatisticsPieBinding.inflate(inflater, parent, false))
+            ViewType.POINTS.id -> PointsViewHolder(ItemGradeStatisticsBarBinding.inflate(inflater, parent, false))
             else -> throw IllegalStateException()
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is PieViewHolder -> bindPieChart(holder, items[position].partial)
-            is BarViewHolder -> bindBarChart(holder, items[position].points!!)
+            is PartialViewHolder -> bindPartialChart(holder, items[position].partial!!)
+            is SemesterViewHolder -> bindSemesterChart(holder, items[position].semester!!)
+            is PointsViewHolder -> bindBarChart(holder, items[position].points!!)
         }
     }
 
-    private fun bindPieChart(holder: PieViewHolder, partials: List<GradeStatistics>) {
-        with(holder.binding.gradeStatisticsPieTitle) {
-            text = partials.firstOrNull()?.subject
+    private fun bindPartialChart(holder: PartialViewHolder, partials: GradePartialStatistics) {
+        bindPieChart(holder.binding, partials.subject, partials.classAverage, partials.classAmounts)
+    }
+
+    private fun bindSemesterChart(holder: SemesterViewHolder, semester: GradeSemesterStatistics) {
+        bindPieChart(holder.binding, semester.subject, semester.average, semester.amounts)
+    }
+
+    private fun bindPieChart(binding: ItemGradeStatisticsPieBinding, subject: String, average: String, amounts: List<Int>) {
+        with(binding.gradeStatisticsPieTitle) {
+            text = subject
             visibility = if (items.size == 1 || !showAllSubjectsOnList) GONE else VISIBLE
         }
 
@@ -92,22 +103,23 @@ class GradeStatisticsAdapter @Inject constructor() :
             else -> materialGradeColors
         }
 
-        val dataset = PieDataSet(partials.map {
-            PieEntry(it.amount.toFloat(), it.grade.toString())
-        }, "Legenda")
+        val dataset = PieDataSet(amounts.mapIndexed { grade, amount ->
+            PieEntry(amount.toFloat(), (grade + 1).toString())
+        }.reversed().filterNot { it.value == 0f }, "Legenda")
 
         with(dataset) {
             valueTextSize = 12f
             sliceSpace = 1f
             valueTextColor = Color.WHITE
-            setColors(partials.map {
-                gradeColors.single { color -> color.first == it.grade }.second
-            }.toIntArray(), holder.binding.root.context)
+            val grades = amounts.mapIndexed { grade, amount -> (grade + 1) to amount }.filterNot { it.second == 0 }
+            setColors(grades.reversed().map { (grade, _) ->
+                gradeColors.single { color -> color.first == grade }.second
+            }.toIntArray(), binding.root.context)
         }
 
-        with(holder.binding.gradeStatisticsPie) {
+        with(binding.gradeStatisticsPie) {
             setTouchEnabled(false)
-            if (partials.size == 1) animateXY(1000, 1000)
+            if (amounts.size == 1) animateXY(1000, 1000)
             data = PieData(dataset).apply {
                 setValueFormatter(object : ValueFormatter() {
                     override fun getPieLabel(value: Float, pieEntry: PieEntry): String {
@@ -128,8 +140,9 @@ class GradeStatisticsAdapter @Inject constructor() :
 
             minAngleForSlices = 25f
             description.isEnabled = false
-            centerText = partials.fold(0) { acc, it -> acc + it.amount }
-                .let { resources.getQuantityString(R.plurals.grade_number_item, it, it) }
+            centerText = amounts.fold(0) { acc, it -> acc + it }
+                .let { resources.getQuantityString(R.plurals.grade_number_item, it, it) } +
+                ("\n\nŚrednia: $average").takeIf { average.isNotBlank() }.orEmpty()
 
             setHoleColor(context.getThemeAttrColor(android.R.attr.windowBackground))
             setCenterTextColor(context.getThemeAttrColor(android.R.attr.textColorPrimary))
@@ -137,7 +150,7 @@ class GradeStatisticsAdapter @Inject constructor() :
         }
     }
 
-    private fun bindBarChart(holder: BarViewHolder, points: GradePointsStatistics) {
+    private fun bindBarChart(holder: PointsViewHolder, points: GradePointsStatistics) {
         with(holder.binding.gradeStatisticsBarTitle) {
             text = points.subject
             visibility = if (items.size == 1) GONE else VISIBLE
@@ -200,9 +213,12 @@ class GradeStatisticsAdapter @Inject constructor() :
         }
     }
 
-    private class PieViewHolder(val binding: ItemGradeStatisticsPieBinding) :
+    private class PartialViewHolder(val binding: ItemGradeStatisticsPieBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private class BarViewHolder(val binding: ItemGradeStatisticsBarBinding) :
+    private class SemesterViewHolder(val binding: ItemGradeStatisticsPieBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    private class PointsViewHolder(val binding: ItemGradeStatisticsBarBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

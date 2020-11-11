@@ -85,11 +85,15 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideGradeStatisticsDao(database: AppDatabase) = database.gradeStatistics
+    fun provideGradePartialStatisticsDao(database: AppDatabase) = database.gradePartialStatisticsDao
 
     @Singleton
     @Provides
-    fun provideGradePointsStatisticsDao(database: AppDatabase) = database.gradePointsStatistics
+    fun provideGradeSemesterStatisticsDao(database: AppDatabase) = database.gradeSemesterStatisticsDao
+
+    @Singleton
+    @Provides
+    fun provideGradePointsStatisticsDao(database: AppDatabase) = database.gradePointsStatisticsDao
 
     @Singleton
     @Provides

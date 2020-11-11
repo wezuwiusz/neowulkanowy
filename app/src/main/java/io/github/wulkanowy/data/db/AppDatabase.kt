@@ -13,8 +13,9 @@ import io.github.wulkanowy.data.db.dao.CompletedLessonsDao
 import io.github.wulkanowy.data.db.dao.ConferenceDao
 import io.github.wulkanowy.data.db.dao.ExamDao
 import io.github.wulkanowy.data.db.dao.GradeDao
+import io.github.wulkanowy.data.db.dao.GradePartialStatisticsDao
 import io.github.wulkanowy.data.db.dao.GradePointsStatisticsDao
-import io.github.wulkanowy.data.db.dao.GradeStatisticsDao
+import io.github.wulkanowy.data.db.dao.GradeSemesterStatisticsDao
 import io.github.wulkanowy.data.db.dao.GradeSummaryDao
 import io.github.wulkanowy.data.db.dao.HomeworkDao
 import io.github.wulkanowy.data.db.dao.LuckyNumberDao
@@ -36,8 +37,9 @@ import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.data.db.entities.Conference
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradePartialStatistics
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
-import io.github.wulkanowy.data.db.entities.GradeStatistics
+import io.github.wulkanowy.data.db.entities.GradeSemesterStatistics
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.db.entities.LuckyNumber
@@ -73,6 +75,7 @@ import io.github.wulkanowy.data.db.migrations.Migration25
 import io.github.wulkanowy.data.db.migrations.Migration26
 import io.github.wulkanowy.data.db.migrations.Migration27
 import io.github.wulkanowy.data.db.migrations.Migration28
+import io.github.wulkanowy.data.db.migrations.Migration29
 import io.github.wulkanowy.data.db.migrations.Migration3
 import io.github.wulkanowy.data.db.migrations.Migration4
 import io.github.wulkanowy.data.db.migrations.Migration5
@@ -93,8 +96,9 @@ import javax.inject.Singleton
         AttendanceSummary::class,
         Grade::class,
         GradeSummary::class,
-        GradeStatistics::class,
+        GradePartialStatistics::class,
         GradePointsStatistics::class,
+        GradeSemesterStatistics::class,
         Message::class,
         MessageAttachment::class,
         Note::class,
@@ -116,7 +120,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 28
+        const val VERSION_SCHEMA = 29
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider): Array<Migration> {
             return arrayOf(
@@ -147,6 +151,7 @@ abstract class AppDatabase : RoomDatabase() {
                 Migration26(),
                 Migration27(),
                 Migration28(),
+                Migration29()
             )
         }
 
@@ -176,9 +181,11 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract val gradeSummaryDao: GradeSummaryDao
 
-    abstract val gradeStatistics: GradeStatisticsDao
+    abstract val gradePartialStatisticsDao: GradePartialStatisticsDao
 
-    abstract val gradePointsStatistics: GradePointsStatisticsDao
+    abstract val gradePointsStatisticsDao: GradePointsStatisticsDao
+
+    abstract val gradeSemesterStatisticsDao: GradeSemesterStatisticsDao
 
     abstract val messagesDao: MessagesDao
 
