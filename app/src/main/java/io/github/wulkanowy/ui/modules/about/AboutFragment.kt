@@ -58,6 +58,11 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
             Triple(getString(R.string.about_discord), getString(R.string.about_discord_summary), getCompatDrawable(R.drawable.ic_about_discord))
         }
 
+    override val facebookRes: Triple<String, String, Drawable?>?
+        get() = context?.run {
+            Triple(getString(R.string.about_facebook), getString(R.string.about_facebook_summary), getCompatDrawable(R.drawable.ic_about_facebook))
+        }
+
     override val homepageRes: Triple<String, String, Drawable?>?
         get() = context?.run {
             Triple(getString(R.string.about_homepage), getString(R.string.about_homepage_summary), getCompatDrawable(R.drawable.ic_about_homepage))
@@ -111,6 +116,10 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
 
     override fun openDiscordInvite() {
         context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
+    }
+
+    override fun openFacebookPage() {
+        context?.openInternetBrowser("https://www.facebook.com/wulkanowy", ::showMessage)
     }
 
     override fun openHomepage() {
