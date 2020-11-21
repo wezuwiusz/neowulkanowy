@@ -348,6 +348,8 @@
     <string name="about_faq_summary">Часто задаваемые вопросы</string>
     <string name="about_discord">Сервер Discord</string>
     <string name="about_discord_summary">Присоединиться к сообществу приложения</string>
+    <string name="about_facebook">Facebook фан-страница</string>
+    <string name="about_facebook_summary">Поставьте лайк на нашей странице в Facebook</string>
     <string name="about_privacy">Политика приватности</string>
     <string name="about_privacy_summary">Правила хранения личных данных</string>
     <string name="about_homepage">Домашняя страница</string>
