@@ -38,8 +38,8 @@ import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
-import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.UpdateHelper
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -182,7 +182,10 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         }
 
         with(navController) {
-            setOnViewChangeListener(presenter::onViewChange)
+            setOnViewChangeListener { section, name ->
+                analytics.setCurrentScreen(this@MainActivity, name)
+                presenter.onViewChange(section)
+            }
             fragmentHideStrategy = HIDE
             rootFragments = listOf(
                 GradeFragment.newInstance(),
@@ -192,10 +195,6 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
                 MoreFragment.newInstance()
             )
         }
-    }
-
-    override fun setCurrentScreen(name: String?) {
-        analytics.setCurrentScreen(this, name)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -208,6 +207,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     override fun switchMenuView(position: Int) {
+        analytics.popCurrentScreen(navController.currentFrag!!::class.simpleName)
         navController.switchTab(position)
     }
 
@@ -245,10 +245,12 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     fun pushView(fragment: Fragment) {
+        analytics.popCurrentScreen(navController.currentFrag!!::class.simpleName)
         navController.pushFragment(fragment)
     }
 
     override fun popView(depth: Int) {
+        analytics.popCurrentScreen(navController.currentFrag!!::class.simpleName)
         navController.safelyPopFragments(depth)
     }
 

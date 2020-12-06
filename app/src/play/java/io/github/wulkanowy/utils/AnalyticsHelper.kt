@@ -35,4 +35,8 @@ class AnalyticsHelper @Inject constructor(
             putString(FirebaseAnalytics.Param.SCREEN_CLASS, activity::class.simpleName)
         })
     }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun popCurrentScreen(name: String?) {
+    }
 }

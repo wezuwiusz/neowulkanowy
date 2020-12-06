@@ -35,9 +35,8 @@ class MainPresenter @Inject constructor(
         analytics.logEvent("app_open", "destination" to initMenu?.name)
     }
 
-    fun onViewChange(section: MainView.Section?, name: String?) {
+    fun onViewChange(section: MainView.Section?) {
         view?.apply {
-            setCurrentScreen(name)
             showActionBarElevation(section != GRADE && section != MESSAGE && section != SCHOOL)
             currentViewTitle?.let { setViewTitle(it) }
             currentViewSubtitle?.let { setViewSubTitle(it.ifBlank { null }) }

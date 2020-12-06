@@ -30,9 +30,10 @@ class AnalyticsHelper @Inject constructor(
     }
 
     fun setCurrentScreen(activity: Activity, name: String?) {
-        analytics.onEvent("screen_view", Bundle().apply {
-            putString("screen_name", name)
-            putString("screen_class", activity::class.simpleName)
-        })
+        analytics.pageStart(name, activity::class.simpleName)
+    }
+
+    fun popCurrentScreen(name: String?) {
+        analytics.pageEnd(name)
     }
 }
