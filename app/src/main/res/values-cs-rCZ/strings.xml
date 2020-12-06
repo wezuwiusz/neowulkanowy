@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Activity/Fragment title-->
-    <string name="login_title">Přihlásit se</string>
+    <string name="login_title">Přihlášení</string>
     <string name="main_title">Wulkanowy</string>
     <string name="grade_title">Známky</string>
-    <string name="attendance_title">Prezence</string>
+    <string name="attendance_title">Docházka</string>
     <string name="exam_title">Zkoušky</string>
     <string name="timetable_title">Plán lekce</string>
     <string name="settings_title">Nastavení</string>
@@ -16,12 +16,12 @@
     <string name="message_title">Zprávy</string>
     <string name="send_message_title">Nová zpráva</string>
     <string name="note_title">Poznámky a úspěchy</string>
-    <string name="homework_title">Domácí práce</string>
+    <string name="homework_title">Domácí úkoly</string>
     <string name="account_title">Vyberte účet</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
-    <string name="login_header_default">Přihlaste se pomocí studentského nebo nadřazeného účtu</string>
+    <string name="login_header_default">Přihlaste se pomocí studentského nebo rodičovského účtu</string>
     <string name="login_header_symbol">Zadejte symbol ze stránky deníku</string>
     <string name="login_nickname_hint">Uživatelské jméno</string>
     <string name="login_email_hint">Email</string>
@@ -41,14 +41,14 @@
     <string name="login_invalid_pin">Neplatný PIN</string>
     <string name="login_invalid_token">Neplatný token</string>
     <string name="login_expired_token">Platnost tokenu vypršela</string>
-    <string name="login_invalid_email">Nesprávná e-mailová adresa</string>
+    <string name="login_invalid_email">Neplatný e-mail</string>
     <string name="login_invalid_login">Místo e-mailu použijte přiřazené přihlašovací údaje</string>
     <string name="login_invalid_symbol">Neplatný symbol</string>
     <string name="login_incorrect_symbol">Student nebyl nalezen. Zkontrolujte správnost symbolu a vybrané varianty deníku UONET+</string>
     <string name="login_field_required">Toto pole je povinné</string>
     <string name="login_duplicate_student">Vybraný student je již přihlášen</string>
     <string name="login_symbol_helper">Symbol najdete na stránce deníku v &#160;<b>Uczeń</b> → &#160;<b>Dostęp Mobilny</b> → &#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUjistěte se, že jste na předchozí obrazovce nastavili správnou variantu deníku do pole <b>Variace deníku UONET+</b>. Wulkanowy v tuto chvíli nezjistí předškolní studenty</string>
-    <string name="login_select_student">Vyberte studenty k přihlášení do aplikace</string>
+    <string name="login_select_student">Vyberte studenty, kteří se mají do aplikace přihlásit</string>
     <string name="login_advanced">Jiné možnosti</string>
     <string name="login_advanced_warning_mobile_api">V tomto režimu nefungují následující: šťastné číslo, statistiky třídy, shrnutí docházky, ospravedlnění nepřítomnosti, absolvované lekce, informace o škole a prohlížení seznamu registrovaných zařízení</string>
     <string name="login_advanced_warning_scraper">Tento režim zobrazuje stejná data, která se zobrazují na webových stránkách deníka</string>
@@ -65,7 +65,7 @@
     <string name="login_recover">Obnovit</string>
     <string name="login_signed_in">Student je již přihlášen</string>
     <!--Main-->
-    <string name="main_account_picker">Správce účtu</string>
+    <string name="main_account_picker">Manažer účtů</string>
     <string name="main_log_in">Přihlásit se</string>
     <string name="main_session_expired">Platnost relace vypršela</string>
     <string name="main_session_relogin">Vaše relace vypršela, přihlaste se prosím znovu</string>
@@ -79,9 +79,9 @@
     <string name="grade_comment">Komentář</string>
     <string name="grade_no_new_items">Žádné nové známky</string>
     <string name="grade_number_new_items">Počet nových známek: %1$d</string>
-    <string name="grade_average">Průměrný: %1$.2f</string>
+    <string name="grade_average">Průměr: %1$.2f</string>
     <string name="grade_points_sum">Body: %s</string>
-    <string name="grade_no_average">Žádný průměr</string>
+    <string name="grade_no_average">Bez průměru</string>
     <string name="grade_predicted">Předpovězeno: %1$s</string>
     <string name="grade_final">Konečná: %1$s</string>
     <string name="grade_summary_points">Celkem bodů</string>
@@ -126,10 +126,10 @@
         <item quantity="other">Máte %1$d nové známky</item>
     </plurals>
     <plurals name="grade_notify_new_items_predicted">
-        <item quantity="one">Máte %1$d novou konečnou známku</item>
-        <item quantity="few">Máte %1$d nové konečné známky</item>
-        <item quantity="many">Máte %1$d nové konečné známky</item>
-        <item quantity="other">Máte %1$d nové konečné známky</item>
+        <item quantity="one">Máte %1$d novou předpokládanou známku</item>
+        <item quantity="few">Máte %1$d nové předpokládané známky</item>
+        <item quantity="many">Máte %1$d nové předpokládané známky</item>
+        <item quantity="other">Máte %1$d nové předpokládané známky</item>
     </plurals>
     <plurals name="grade_notify_new_items_final">
         <item quantity="one">Máte %1$d novou konečnou známku</item>
@@ -143,7 +143,7 @@
     <string name="timetable_group">Skupina</string>
     <string name="timetable_time">Hodiny</string>
     <string name="timetable_changes">Změny</string>
-    <string name="timetable_no_items">Dnes žádné lekce</string>
+    <string name="timetable_no_items">Žádné lekce tento den</string>
     <string name="timetable_minutes">%s min</string>
     <string name="timetable_seconds">%s sek</string>
     <string name="timetable_time_left">dosud %1$s</string>
@@ -155,32 +155,32 @@
     <!--Completed lessons-->
     <string name="completed_lessons_title">Dokončené lekce</string>
     <string name="completed_lessons_button">Zobrazit dokončené lekce</string>
-    <string name="completed_lessons_no_items">Žádné informace o absolvovaných lekcích</string>
+    <string name="completed_lessons_no_items">Žádné informace o dokončených lekcích</string>
     <string name="completed_lessons_topic">Téma</string>
-    <string name="completed_lessons_absence">Absence</string>
+    <string name="completed_lessons_absence">Nepřítomnost</string>
     <string name="completed_lessons_resources">Zdroje</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Souhrn docházky</string>
     <string name="attendance_absence_school">Nepřítomen ze školních důvodů</string>
-    <string name="attendance_absence_excused">Omluvená absence</string>
+    <string name="attendance_absence_excused">Omluvená nepřítomnost</string>
     <string name="attendance_absence_unexcused">Neomluvená absence</string>
     <string name="attendance_exemption">Osvobození</string>
-    <string name="attendance_excused_lateness">Oprávněné zpoždění</string>
-    <string name="attendance_unexcused_lateness">Neomluvená zpoždění</string>
+    <string name="attendance_excused_lateness">Omluvené zpoždění</string>
+    <string name="attendance_unexcused_lateness">Neomluvené zpoždění</string>
     <string name="attendance_present">Přítomnost</string>
     <string name="attendance_deleted">Smazáno</string>
     <string name="attendance_unknown">Neznámý</string>
     <string name="attendance_number">Číslo lekce</string>
     <string name="attendance_no_items">Žádné položky</string>
     <plurals name="attendance_number_absences">
-        <item quantity="one">%1$d absence</item>
-        <item quantity="few">%1$d absence</item>
-        <item quantity="many">%1$d absence</item>
-        <item quantity="other">%1$d absence</item>
+        <item quantity="one">%1$d nepřítomnost</item>
+        <item quantity="few">%1$d nepřítomnosti</item>
+        <item quantity="many">%1$d nepřítomnosti</item>
+        <item quantity="other">%1$d nepřítomnosti</item>
     </plurals>
-    <string name="attendance_excuse_dialog_reason">Důvod absence (volitelný)</string>
+    <string name="attendance_excuse_dialog_reason">Důvod nepřítomnosti (volitelný)</string>
     <string name="attendance_excuse_dialog_submit">Poslat</string>
-    <string name="attendance_excuse_success">Absence úspěšně omluvena!</string>
+    <string name="attendance_excuse_success">Nepřítomnost úspěšně omluvena!</string>
     <string name="attendance_excuse_no_selection">Musíte vybrat alespoň jednu nepřítomnost!</string>
     <string name="attendance_excuse_title">Ospravedlnit</string>
     <!--Attendance summary-->
@@ -198,7 +198,7 @@
     <string name="message_no_items">Žádné zprávy</string>
     <string name="message_preview_error">Při stahování obsahu zprávy došlo k chybě</string>
     <string name="message_from">Od:</string>
-    <string name="message_to">Do:</string>
+    <string name="message_to">Komu:</string>
     <string name="message_date">Datum: %s</string>
     <string name="message_reply">Odpověď</string>
     <string name="message_forward">Poslat dále</string>
@@ -226,10 +226,10 @@
         <item quantity="other">Nové zprávy</item>
     </plurals>
     <plurals name="message_notify_new_items">
-        <item quantity="one">Obdrželi jste %1$d zprávu</item>
-        <item quantity="few">Obdrželi jste %1$d zpráv</item>
-        <item quantity="many">Obdrželi jste %1$d zpráv</item>
-        <item quantity="other">Obdrželi jste %1$d zpráv</item>
+        <item quantity="one">Máte %1$d novou zprávu</item>
+        <item quantity="few">Máte %1$d nové zprávy</item>
+        <item quantity="many">Máte %1$d nové zprávy</item>
+        <item quantity="other">Máte %1$d nové zprávy</item>
     </plurals>
     <!--Note-->
     <string name="note_no_items">Žádné informace o poznámkách</string>
@@ -286,12 +286,12 @@
     </plurals>
     <plurals name="neutral_note_notify_new_items">
         <item quantity="one">Máte %1$d novou neutrální pozornost</item>
-        <item quantity="few">Máte %1$d nové neutrální komentáře</item>
-        <item quantity="many">Máte %1$d nové neutrální komentáře</item>
-        <item quantity="other">Máte %1$d nové neutrální komentáře</item>
+        <item quantity="few">Máte %1$d nové neutrální 	pozornosti</item>
+        <item quantity="many">Máte %1$d nové neutrální 	pozornosti</item>
+        <item quantity="other">Máte %1$d nové neutrální 	pozornosti</item>
     </plurals>
     <!--Homework-->
-    <string name="homework_no_items">Žádný domácí úkol</string>
+    <string name="homework_no_items">Žádné informace o domácím úkolu</string>
     <string name="homework_mark_as_done">Označit jako hotové</string>
     <string name="homework_mark_as_undone">Neudělané</string>
     <string name="homework_attachments">Přílohy</string>
@@ -315,7 +315,7 @@
     <!--School-->
     <string name="school_title">Škola</string>
     <string name="school_no_info">Žádné informace o škole</string>
-    <string name="school_name">Školní jméno</string>
+    <string name="school_name">Název školy</string>
     <string name="school_address">Adresa školy</string>
     <string name="school_telephone">Telefon</string>
     <string name="school_headmaster">Jméno ředitele</string>
@@ -336,14 +336,14 @@
     <string name="account_logout_student">Odhlášení studentů</string>
     <string name="account_type_student">Studentský účet</string>
     <string name="account_type_parent">Rodičovský účet</string>
-    <string name="account_login_mobile_api">Režimu Mobíle API</string>
+    <string name="account_login_mobile_api">Režim Mobilního API</string>
     <string name="account_login_hybrid">Hybridní režim</string>
     <!--About-->
     <string name="about_version">Verze aplikace</string>
     <string name="about_contributor">Tvůrci</string>
     <string name="about_contributor_summary">Seznam vývojářů Wulkanowy</string>
     <string name="about_feedback">Nahlásit chybu</string>
-    <string name="about_feedback_summary">Pošlete hlášení o chybě e-mailem</string>
+    <string name="about_feedback_summary">Odeslat zprávu o chybě e-mailem</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Přečtěte si často kladené otázky</string>
     <string name="about_discord">Server Discord</string>
@@ -365,8 +365,8 @@
     <string name="logviewer_share">Sdílejte protokoly</string>
     <string name="logviewer_refresh">Obnovit</string>
     <!--Error dialog-->
-    <string name="dialog_error_check_update">Kontrola aktualizací</string>
-    <string name="dialog_error_check_update_message">Před nahlášením chyby nejprve zkontrolujte, zda je k dispozici aktualizace s opravou chyby</string>
+    <string name="dialog_error_check_update">Zkontrolovat aktualizace</string>
+    <string name="dialog_error_check_update_message">Před hlášením chyby zkontrolujte, zda je k dispozici aktualizace s opravou chyb</string>
     <!--Generic-->
     <string name="all_content">Obsah</string>
     <string name="all_retry">Zkuste to znovu</string>
@@ -383,21 +383,21 @@
     <string name="all_subject">Předmět</string>
     <string name="all_prev">Předchozí</string>
     <string name="all_next">Další</string>
-    <string name="all_search">Vyhledávání</string>
-    <string name="all_search_hint">Vyhledávání…</string>
+    <string name="all_search">Hledat</string>
+    <string name="all_search_hint">Hledat…</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Žádné lekce</string>
-    <string name="widget_timetable_theme_title">Vyberte téma</string>
+    <string name="widget_timetable_theme_title">Vybrat motiv</string>
     <string name="widget_timetable_theme_light">Světlý</string>
     <string name="widget_timetable_theme_dark">Tmavý</string>
-    <string name="widget_timetable_theme_system">Téma systému</string>
+    <string name="widget_timetable_theme_system">Motiv systému</string>
     <!--Preferences-->
     <string name="pref_view_header">Vzhled</string>
     <string name="pref_view_list">Výchozí zobrazení</string>
     <string name="pref_view_grade_average_mode">Výpočet koncoročního průměru</string>
     <string name="pref_view_grade_average_force_calc">Vynutit průměrný výpočet podle aplikace</string>
     <string name="pref_view_present">Zobrazit přítomnost v účasti</string>
-    <string name="pref_view_app_theme">Téma aplikace</string>
+    <string name="pref_view_app_theme">Motiv aplikace</string>
     <string name="pref_view_expand_grade">Rozbalit známky</string>
     <string name="pref_view_timetable_show_timers">Označte aktuální lekci v plánu lekce</string>
     <string name="pref_view_timetable_show_groups">Ukázat skupiny vedle předmětů v plánu lekce</string>
@@ -412,22 +412,22 @@
     <string name="pref_notify_upcoming_lessons_switch">Ukázat nadcházející oznámení o lekci</string>
     <string name="pref_notify_fix_sync_issues">Opravte problémy se synchronizací a upozorněním</string>
     <string name="pref_notify_fix_sync_issues_message">Ve vašem zařízení mohou nastat problémy se synchronizací dat a oznámenímii.\n\nChcete-li je opravit, přidejte Wulkanowy do funkce Autostart a vypněte optimalizaci/úsporu baterie v nastavení systému telefonu.</string>
-    <string name="pref_notify_fix_sync_issues_settings_button">Jdi do nastavení</string>
+    <string name="pref_notify_fix_sync_issues_settings_button">Přejít do nastavení</string>
     <string name="pref_notify_debug_switch">Ukázat oznámení o ladění</string>
     <string name="pref_services_header">Synchronizace</string>
     <string name="pref_services_switch">Automatická aktualizace</string>
     <string name="pref_services_suspended">Pozastaveno na dovolené</string>
     <string name="pref_services_interval">Interval aktualizací</string>
     <string name="pref_services_wifi">Pouze Wi-Fi</string>
-    <string name="pref_services_force_sync">Nyní synchronizovat</string>
+    <string name="pref_services_force_sync">Synchronizovat nyní</string>
     <string name="pref_services_message_sync_success">Synchronizováno!</string>
-    <string name="pref_services_message_sync_failed">Synchronizace se nezdařila</string>
+    <string name="pref_services_message_sync_failed">Synchronizace selhala</string>
     <string name="pref_services_sync_in_progress">Probíhá synchronizace</string>
     <string name="pref_services_dialog_force_sync_title">Synchronizace</string>
     <string name="pref_services_dialog_force_sync_summary">        Ruční synchronizace neobnoví zobrazení aplikace.
         \nChcete-li zobrazit synchronizovaná data, restartujte aplikaci po synchronizaci.
     </string>
-    <string name="pref_other_header">Jiný</string>
+    <string name="pref_other_header">Jiné</string>
     <string name="pref_other_grade_modifier_plus">Hodnota plusu</string>
     <string name="pref_other_grade_modifier_minus">Hodnota mínusu</string>
     <string name="pref_other_fill_message_content">Odpovědět s historií zpráv</string>
@@ -437,9 +437,9 @@
     <string name="channel_lucky_number">Šťastné číslo</string>
     <string name="channel_new_message">Nové zprávy</string>
     <string name="channel_new_notes">Nové poznámky</string>
-    <string name="channel_push">Oznámení push</string>
+    <string name="channel_push">Push oznámení</string>
     <string name="channel_upcoming_lessons">Nadcházející lekce</string>
-    <string name="channel_debug">Ladění</string>
+    <string name="channel_debug">Debug</string>
     <!--Colors-->
     <string name="all_black">Černý</string>
     <string name="all_red">Červený</string>
