@@ -14,7 +14,7 @@ class TimetableRemote @Inject constructor(private val sdk: Sdk) {
 
     suspend fun getTimetable(student: Student, semester: Semester, startDate: LocalDate, endDate: LocalDate): List<Timetable> {
         return sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
-            .getTimetable(startDate, endDate)
+            .getTimetable(startDate, endDate).first
             .map {
                 Timetable(
                     studentId = semester.studentId,

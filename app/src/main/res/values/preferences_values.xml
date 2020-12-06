@@ -78,7 +78,7 @@
     </string-array>
 
     <string-array name="grade_sorting_mode_entries">
-        <item>Alphabetic</item>
+        <item>Alphabetically</item>
         <item>By date</item>
     </string-array>
     <string-array name="grade_sorting_mode_values" translatable="false">

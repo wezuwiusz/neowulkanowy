@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "GradesStatistics")
-data class GradeStatistics(
+@Entity(tableName = "GradeSemesterStatistics")
+data class GradeSemesterStatistics(
 
     @ColumnInfo(name = "student_id")
     val studentId: Int,
@@ -15,13 +15,14 @@ data class GradeStatistics(
 
     val subject: String,
 
-    val grade: Int,
+    val amounts: List<Int>,
 
-    val amount: Int,
-
-    @ColumnInfo(name = "is_semester")
-    val semester: Boolean
+    @ColumnInfo(name = "student_grade")
+    val studentGrade: Int
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    @Transient
+    var average: String = ""
 }

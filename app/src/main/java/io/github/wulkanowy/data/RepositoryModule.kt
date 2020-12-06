@@ -11,8 +11,8 @@ import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
@@ -21,7 +21,7 @@ import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 internal class RepositoryModule {
 
     @Singleton
@@ -85,11 +85,15 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideGradeStatisticsDao(database: AppDatabase) = database.gradeStatistics
+    fun provideGradePartialStatisticsDao(database: AppDatabase) = database.gradePartialStatisticsDao
 
     @Singleton
     @Provides
-    fun provideGradePointsStatisticsDao(database: AppDatabase) = database.gradePointsStatistics
+    fun provideGradeSemesterStatisticsDao(database: AppDatabase) = database.gradeSemesterStatisticsDao
+
+    @Singleton
+    @Provides
+    fun provideGradePointsStatisticsDao(database: AppDatabase) = database.gradePointsStatisticsDao
 
     @Singleton
     @Provides
@@ -154,4 +158,8 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideSchoolInfoDao(database: AppDatabase) = database.schoolDao
+
+    @Singleton
+    @Provides
+    fun provideConferenceDao(database: AppDatabase) = database.conferenceDao
 }

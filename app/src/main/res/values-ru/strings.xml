@@ -22,12 +22,12 @@
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Авторизируйтесь при помощи аккаунта ученика или родителя</string>
-    <string name="login_header_symbol">Впишите \"symbol\"</string>
+    <string name="login_header_symbol">Введите символ со страницы регистрации</string>
     <string name="login_nickname_hint">Имя пользователя</string>
     <string name="login_email_hint">Электронная почта</string>
     <string name="login_login_pesel_email_hint">Логин, PESEL или электронная почта</string>
     <string name="login_password_hint">Пароль</string>
-    <string name="login_host_hint">Дневник UONET+</string>
+    <string name="login_host_hint">Разновидностью бревна UONET+</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrid</string>
@@ -37,17 +37,17 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Войти</string>
     <string name="login_invalid_password">Слишком короткий пароль</string>
-    <string name="login_incorrect_password">Указаны неверные данные. Убедитесь, что вы выбрали нужный дневник</string>
+    <string name="login_incorrect_password">Данные для входа неверны. Убедитесь, что в поле ниже выбран правильный вариант регистра UONET+</string>
     <string name="login_invalid_pin">Неправильный PIN</string>
     <string name="login_invalid_token">Неправильный token</string>
     <string name="login_expired_token">Токен просрочен</string>
     <string name="login_invalid_email">Неверный адрес электронной почты</string>
-    <string name="login_invalid_login">Неправильный логин</string>
+    <string name="login_invalid_login">Используйте назначенный логин вместо электронной почты</string>
     <string name="login_invalid_symbol">Неправильный symbol</string>
-    <string name="login_incorrect_symbol">Не удалось найти ученика. Проверьте \"symbol\"</string>
+    <string name="login_incorrect_symbol">Студент не найден. Подтвердите символ и выбранный вариант регистра UONET+</string>
     <string name="login_field_required">Обязательное поле</string>
     <string name="login_duplicate_student">Данный ученик уже авторизован</string>
-    <string name="login_symbol_helper">Вы можете найти \"symbol\" на странице VULCAN по пути <b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b></string>
+    <string name="login_symbol_helper">Этот символ можно найти на странице регистрации в &#160;<b>Uczeń</b> → &#160;<b>Dostęp Mobilny</b> → &#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nУбедитесь, что вы установили соответствующий вариант регистра в поле <b>Разновидностью бревна UONET+</b> на предыдущем экране. Wulkanowy на данный момент не обнаруживает дошкольников</string>
     <string name="login_select_student">Выберите учеников для авторизации в приложении</string>
     <string name="login_advanced">Другие варианты</string>
     <string name="login_advanced_warning_mobile_api">В этом режиме не работают: счастливый номер, статистика класса по оценкам, статистика посещаемости и уроков, информация о школе и список зарегистрированных устройств</string>
@@ -59,7 +59,7 @@
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Отправить письмо</string>
     <string name="login_email_details">Опишите детали проблемы:</string>
-    <string name="login_recover_warning">Убедитесь, что выбран нужный дневник!</string>
+    <string name="login_recover_warning">Убедитесь, что вы выбрали правильный вариант регистра UONET+!</string>
     <string name="login_recover_button">Забыли пароль?</string>
     <string name="login_recover_title">Восстановите свой аккаунт</string>
     <string name="login_recover">Восстановить</string>
@@ -326,6 +326,9 @@
     <string name="teachers_title">Учителя</string>
     <string name="teacher_no_items">Нет информации о учителях</string>
     <string name="teacher_no_subject">Нет предмета</string>
+    <!--Conference-->
+    <string name="conferences_title">Встречи</string>
+    <string name="conference_no_items">Нет информации о встречах</string>
     <!--Account-->
     <string name="account_add_new">Добавить аккаунт</string>
     <string name="account_logout">Выйти</string>
@@ -345,6 +348,8 @@
     <string name="about_faq_summary">Часто задаваемые вопросы</string>
     <string name="about_discord">Сервер Discord</string>
     <string name="about_discord_summary">Присоединиться к сообществу приложения</string>
+    <string name="about_facebook">Facebook фан-страница</string>
+    <string name="about_facebook_summary">Поставьте лайк на нашей странице в Facebook</string>
     <string name="about_privacy">Политика приватности</string>
     <string name="about_privacy_summary">Правила хранения личных данных</string>
     <string name="about_homepage">Домашняя страница</string>
@@ -446,18 +451,18 @@
     <string name="all_copied">Скопировано</string>
     <string name="all_undo">Отменить</string>
     <!--Update helper-->
-    <string name="update_download_started">Download of updates has started…</string>
-    <string name="update_download_success">An update has just been downloaded.</string>
-    <string name="update_download_success_button">Restart</string>
-    <string name="update_failed">Update failed! Wulkanowy may not function properly. Consider updating</string>
+    <string name="update_download_started">Загрузка обновлений началась…</string>
+    <string name="update_download_success">Только что было скачано обновление.</string>
+    <string name="update_download_success_button">Перезапустить</string>
+    <string name="update_failed">Не удалось обновить! Wulkanowy может работать некорректно. Рассмотрите возможность обновления</string>
     <!--Errors-->
     <string name="error_no_internet">Нет интернет-подключения</string>
-    <string name="error_timeout">Слишком долгое ожидание соединения с дневником</string>
-    <string name="error_login_failed">Login failed. Try again</string>
-    <string name="error_password_change_required">Требуется смена пароля</string>
+    <string name="error_timeout">Не удалось подключиться к регистрации. Серверы могут быть перегружены. Пожалуйста, повторите попытку позже</string>
+    <string name="error_login_failed">Не удалось загрузить данные. Пожалуйста, повторите попытку позже</string>
+    <string name="error_password_change_required">Необходимо изменить пароль реестра</string>
     <string name="error_service_unavailable">Технический перерыв в журнале UONET + продолжается. Попробуйте позже</string>
-    <string name="error_unknown_uonet">Unknown UONET + register error. Try again later</string>
-    <string name="error_unknown_app">Unknown application error</string>
+    <string name="error_unknown_uonet">Неизвестная ошибка UONET + регистр. Попробуйте позже</string>
+    <string name="error_unknown_app">Неизвестная ошибка приложения. Пожалуйста, повторите попытку позже</string>
     <string name="error_unknown">Произошла неожиданная ошибка</string>
     <string name="error_feature_disabled">Функция была выключена школой</string>
     <string name="error_feature_not_available">Функция не доступна в этом режиме</string>

@@ -42,11 +42,11 @@ class CrashLogExceptionTree : FormatterPriorityTree(Log.ERROR) {
         connectCrash.setCustomKey("priority", priority)
         connectCrash.setCustomKey("tag", tag.orEmpty())
         connectCrash.setCustomKey("message", message)
-        connectCrash.log(priority, t?.stackTraceToString())
+
         if (t != null) {
-            connectCrash.log(priority, t.stackTraceToString())
+            connectCrash.recordException(t)
         } else {
-            connectCrash.log(priority, StackTraceRecorder(format(priority, tag, message)).stackTraceToString())
+            connectCrash.recordException(StackTraceRecorder(format(priority, tag, message)))
         }
     }
 }

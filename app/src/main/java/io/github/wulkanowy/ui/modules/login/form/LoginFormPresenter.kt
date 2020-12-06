@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.form
 
+import androidx.core.net.toUri
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -56,7 +57,7 @@ class LoginFormPresenter @Inject constructor(
 
     fun updateUsernameLabel() {
         view?.run {
-            setUsernameLabel(if ("standard" in formHostValue) emailLabel else nicknameLabel)
+            setUsernameLabel(if ("login" in formHostValue) nicknameLabel else emailLabel)
         }
     }
 
@@ -66,6 +67,16 @@ class LoginFormPresenter @Inject constructor(
 
     fun onUsernameTextChanged() {
         view?.clearUsernameError()
+
+        val username = view?.formUsernameValue.orEmpty().trim()
+        if ("@" in username && "@vulcan" !in username) {
+            val hosts = view?.getHostsValues().orEmpty().map { it.toUri().host to it }.toMap()
+            val usernameHost = username.substringAfter("@")
+
+            hosts[usernameHost]?.let {
+                view?.setHost(it)
+            }
+        }
     }
 
     fun onSignInClick() {
@@ -135,12 +146,12 @@ class LoginFormPresenter @Inject constructor(
             view?.setErrorUsernameRequired()
             isCorrect = false
         } else {
-            if ("@" in login && "standard" !in host) {
+            if ("@" in login && "login" in host) {
                 view?.setErrorLoginRequired()
                 isCorrect = false
             }
 
-            if ("@" !in login && "standard" in host) {
+            if ("@" !in login && "email" in host) {
                 view?.setErrorEmailRequired()
                 isCorrect = false
             }

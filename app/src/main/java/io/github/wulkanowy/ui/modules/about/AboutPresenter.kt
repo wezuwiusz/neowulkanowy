@@ -3,8 +3,8 @@ package io.github.wulkanowy.ui.modules.about
 import io.github.wulkanowy.data.repositories.student.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,6 +46,11 @@ class AboutPresenter @Inject constructor(
                     openDiscordInvite()
                     analytics.logEvent("about_open", "name" to "discord")
                 }
+                facebookRes?.first -> {
+                    Timber.i("Opening facebook")
+                    openFacebookPage()
+                    analytics.logEvent("about_open", "name" to "facebook")
+                }
                 homepageRes?.first -> {
                     Timber.i("Opening homepage")
                     openHomepage()
@@ -78,6 +83,7 @@ class AboutPresenter @Inject constructor(
                 feedbackRes,
                 faqRes,
                 discordRes,
+                facebookRes,
                 homepageRes,
                 licensesRes,
                 privacyRes

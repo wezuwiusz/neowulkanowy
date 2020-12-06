@@ -9,6 +9,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentMoreBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.AboutFragment
+import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
 import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -52,6 +53,9 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override val mobileDevicesRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.mobile_devices_title) to getCompatDrawable(R.drawable.ic_more_mobile_devices) }
+
+    override val conferencesRes: Pair<String, Drawable?>?
+        get() = context?.run { getString(R.string.conferences_title) to getCompatDrawable(R.drawable.ic_more_conferences) }
 
     override val schoolAndTeachersRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.schoolandteachers_title) to getCompatDrawable((R.drawable.ic_more_schoolandteachers)) }
@@ -106,6 +110,10 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override fun openMobileDevicesView() {
         (activity as? MainActivity)?.pushView(MobileDeviceFragment.newInstance())
+    }
+
+    override fun openConferencesView() {
+        (activity as? MainActivity)?.pushView(ConferenceFragment.newInstance())
     }
 
     override fun openSchoolAndTeachersView() {

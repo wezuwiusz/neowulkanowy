@@ -15,4 +15,8 @@ class AnalyticsHelper @Inject constructor() {
     fun setCurrentScreen(activity: Activity, name: String?) {
         // do nothing
     }
+
+    fun popCurrentScreen(name: String?) {
+        // do nothing
+    }
 }

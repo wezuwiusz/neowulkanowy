@@ -31,8 +31,8 @@
         <item>0,75</item>
     </string-array>
     <string-array name="grade_sorting_mode_entries">
-        <item>Alphabetic</item>
-        <item>By date</item>
+        <item>За алфавітом</item>
+        <item>За датою</item>
     </string-array>
     <string-array name="grade_color_scheme_entries">
         <item>Dzienniczek+</item>
@@ -41,8 +41,8 @@
     </string-array>
     <string-array name="grade_average_mode_entries">
         <item>Середня оцінка з 2 семестру</item>
-        <item>Average of grades from both semesters</item>
-        <item>Average of grades from the whole year</item>
+        <item>Середнє оцінювання за обидва семестри</item>
+        <item>Середнє оцінювання за весь рік</item>
     </string-array>
     <string-array name="timetable_show_whole_class_entries">
         <item>Не показувати</item>

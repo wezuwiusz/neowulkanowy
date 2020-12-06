@@ -4,7 +4,8 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.GradePointsStatistics
-import io.github.wulkanowy.sdk.pojo.GradeStatistics
+import io.github.wulkanowy.sdk.pojo.GradeStatisticsItem
+import io.github.wulkanowy.sdk.pojo.GradeStatisticsSubject
 import io.github.wulkanowy.utils.init
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -35,8 +36,8 @@ class GradeStatisticsRemoteTest {
     @Test
     fun getGradeStatisticsTest() {
         coEvery { mockSdk.getGradesPartialStatistics(1) } returns listOf(
-            getGradeStatistics("Fizyka"),
-            getGradeStatistics("Matematyka")
+            getGradeStatisticsPartialSubject("Fizyka"),
+            getGradeStatisticsPartialSubject("Matematyka")
         )
 
         every { semesterMock.studentId } returns 1
@@ -45,7 +46,7 @@ class GradeStatisticsRemoteTest {
         every { semesterMock.semesterId } returns 1
         every { mockSdk.switchDiary(any(), any()) } returns mockSdk
 
-        val stats = runBlocking { GradeStatisticsRemote(mockSdk).getGradeStatistics(student, semesterMock, false) }
+        val stats = runBlocking { GradeStatisticsRemote(mockSdk).getGradePartialStatistics(student, semesterMock) }
         assertEquals(2, stats.size)
     }
 
@@ -66,19 +67,24 @@ class GradeStatisticsRemoteTest {
         assertEquals(2, stats.size)
     }
 
-    private fun getGradeStatistics(subjectName: String): GradeStatistics {
-        return GradeStatistics(
+    private fun getGradeStatisticsPartialSubject(subjectName: String): GradeStatisticsSubject {
+        return GradeStatisticsSubject(
             subject = subjectName,
-            gradeValue = 5,
-            amount = 10,
-            grade = "",
-            semesterId = 1
+            studentAverage = "",
+            classAverage = "",
+            classItems = listOf(
+                GradeStatisticsItem(
+                    subject = subjectName,
+                    grade = 0,
+                    amount = 0
+                )
+            ),
+            studentItems = listOf()
         )
     }
 
     private fun getGradePointsStatistics(subjectName: String): GradePointsStatistics {
         return GradePointsStatistics(
-            semesterId = 1,
             subject = subjectName,
             student = 0.80,
             others = 0.40

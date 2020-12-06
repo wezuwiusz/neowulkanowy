@@ -4,8 +4,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.wulkanowy.data.db.AppDatabase
+import io.github.wulkanowy.data.db.entities.GradePartialStatistics
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
-import io.github.wulkanowy.data.db.entities.GradeStatistics
 import io.github.wulkanowy.data.db.entities.Semester
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -27,7 +27,7 @@ class GradeStatisticsLocalTest {
     fun createDb() {
         testDb = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase::class.java)
             .build()
-        gradeStatisticsLocal = GradeStatisticsLocal(testDb.gradeStatistics, testDb.gradePointsStatistics)
+        gradeStatisticsLocal = GradeStatisticsLocal(testDb.gradePartialStatisticsDao, testDb.gradePointsStatisticsDao, testDb.gradeSemesterStatisticsDao)
     }
 
     @After
@@ -41,9 +41,9 @@ class GradeStatisticsLocalTest {
             getGradeStatistics("Matematyka", 2, 1),
             getGradeStatistics("Fizyka", 1, 2)
         )
-        runBlocking { gradeStatisticsLocal.saveGradesStatistics(list) }
+        runBlocking { gradeStatisticsLocal.saveGradePartialStatistics(list) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesStatistics(getSemester(), false).first() }
+        val stats = runBlocking { gradeStatisticsLocal.getGradePartialStatistics(getSemester()).first() }
         assertEquals(1, stats.size)
         assertEquals(stats[0].subject, "Matematyka")
     }
@@ -55,12 +55,10 @@ class GradeStatisticsLocalTest {
             getGradeStatistics("Chemia", 2, 1),
             getGradeStatistics("Fizyka", 1, 2)
         )
-        runBlocking { gradeStatisticsLocal.saveGradesStatistics(list) }
+        runBlocking { gradeStatisticsLocal.saveGradePartialStatistics(list) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesStatistics(getSemester(), false).first() }
+        val stats = runBlocking { gradeStatisticsLocal.getGradePartialStatistics(getSemester()).first() }
         assertEquals(2, stats.size)
-//        assertEquals(3, stats.size)
-//        assertEquals(stats[0].subject, "Wszystkie") // now in main repo
         assertEquals(stats[0].subject, "Matematyka")
         assertEquals(stats[1].subject, "Chemia")
     }
@@ -72,9 +70,9 @@ class GradeStatisticsLocalTest {
             getGradePointsStatistics("Chemia", 2, 1),
             getGradePointsStatistics("Fizyka", 1, 2)
         )
-        runBlocking { gradeStatisticsLocal.saveGradesPointsStatistics(list) }
+        runBlocking { gradeStatisticsLocal.saveGradePointsStatistics(list) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester()).first() }
+        val stats = runBlocking { gradeStatisticsLocal.getGradePointsStatistics(getSemester()).first() }
         with(stats[0]) {
             assertEquals(subject, "Matematyka")
             assertEquals(others, 5.0)
@@ -84,17 +82,17 @@ class GradeStatisticsLocalTest {
 
     @Test
     fun saveAndRead_subjectEmpty() {
-        runBlocking { gradeStatisticsLocal.saveGradesPointsStatistics(listOf()) }
+        runBlocking { gradeStatisticsLocal.saveGradePointsStatistics(listOf()) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester()).first() }
+        val stats = runBlocking { gradeStatisticsLocal.getGradePointsStatistics(getSemester()).first() }
         assertEquals(emptyList(), stats)
     }
 
     @Test
     fun saveAndRead_allEmpty() {
-        runBlocking { gradeStatisticsLocal.saveGradesPointsStatistics(listOf()) }
+        runBlocking { gradeStatisticsLocal.saveGradePointsStatistics(listOf()) }
 
-        val stats = runBlocking { gradeStatisticsLocal.getGradesPointsStatistics(getSemester()).first() }
+        val stats = runBlocking { gradeStatisticsLocal.getGradePointsStatistics(getSemester()).first() }
         assertEquals(emptyList(), stats)
     }
 
@@ -102,8 +100,8 @@ class GradeStatisticsLocalTest {
         return Semester(2, 2, "", 2019, 1, 2, now(), now(), 1, 1)
     }
 
-    private fun getGradeStatistics(subject: String, studentId: Int, semesterId: Int): GradeStatistics {
-        return GradeStatistics(studentId, semesterId, subject, 5, 5, false)
+    private fun getGradeStatistics(subject: String, studentId: Int, semesterId: Int): GradePartialStatistics {
+        return GradePartialStatistics(studentId, semesterId, subject, "", "", listOf(5), listOf(5))
     }
 
     private fun getGradePointsStatistics(subject: String, studentId: Int, semesterId: Int): GradePointsStatistics {
