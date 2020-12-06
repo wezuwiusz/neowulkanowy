@@ -39,10 +39,10 @@ class TimetableRemoteTest {
                 of(2018, 9, 10),
                 of(2018, 9, 15)
             )
-        } returns listOf(
+        } returns (listOf(
             getTimetable(of(2018, 9, 10)),
             getTimetable(of(2018, 9, 17))
-        )
+        ) to emptyList())
 
         every { semesterMock.studentId } returns 1
         every { semesterMock.diaryId } returns 1

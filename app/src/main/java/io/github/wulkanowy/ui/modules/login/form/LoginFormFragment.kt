@@ -89,11 +89,19 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         }
     }
 
+    override fun getHostsValues(): List<String> = hostValues.toList()
+
     override fun setCredentials(username: String, pass: String) {
         with(binding) {
             loginFormUsername.setText(username)
             loginFormPass.setText(pass)
         }
+    }
+
+    override fun setHost(host: String) {
+        binding.loginFormHost.setText(
+            hostKeys.getOrNull(hostValues.indexOf(host)).orEmpty()
+        )
     }
 
     override fun setUsernameLabel(label: String) {

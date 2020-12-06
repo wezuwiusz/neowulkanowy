@@ -19,7 +19,11 @@ interface LoginFormView : BaseView {
 
     val emailLabel: String
 
+    fun getHostsValues(): List<String>
+
     fun setCredentials(username: String, pass: String)
+
+    fun setHost(host: String)
 
     fun setUsernameLabel(label: String)
 
