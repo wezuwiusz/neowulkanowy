@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlin_version = '1.4.20'
-        about_libraries = '8.6.2'
+        about_libraries = '8.6.3'
         hilt_version = "2.29.1-alpha"
     }
     repositories {
