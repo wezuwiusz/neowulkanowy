@@ -9,8 +9,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.services.sync.channels.DebugChannel
@@ -38,7 +38,7 @@ import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class ServicesModule {
 
     companion object {
