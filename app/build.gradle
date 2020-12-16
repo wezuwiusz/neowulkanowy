@@ -18,8 +18,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 76
-        versionName "0.23.0"
+        versionCode 77
+        versionName "0.23.1"
         multiDexEnabled true
         resValue "string", "app_name", "Wulkanowy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -142,7 +142,7 @@ configurations.all {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:41b164fe"
+    implementation "io.github.wulkanowy:sdk:0.23.1"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
 
