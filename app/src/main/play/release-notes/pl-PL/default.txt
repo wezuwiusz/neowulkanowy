@@ -1,7 +1,5 @@
-Wersja 0.23.0
-- naprawiliśmy logowanie do dziennika Gdańskiej i Koszalińskiej Platformy Edukacyjnej
-- przy logowaniu odpowiednia odmiana dziennika jest ustawiana automatycznie na podstawie wpisanego adresu email
-- dodaliśmy wyświetlanie średniej w ocenach klasy (jeśli włączone przez szkołę)
-- dodaliśmy wyświetlanie zebrań
+Wersja 0.23.1
+- naprawiliśmy opis pola na email/login przy wyborze niestandardowych dzienników
+- naprawiliśmy obsługę dziennika lubelskiego i koszalińskiego na starszych urządzeniach (z Androidem 5 i starszymi)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
