@@ -98,8 +98,8 @@
     <plurals name="grade_number_item">
         <item quantity="one">%d známka</item>
         <item quantity="few">%d známky</item>
-        <item quantity="many">%d známky</item>
-        <item quantity="other">%d známky</item>
+        <item quantity="many">%d známek</item>
+        <item quantity="other">%d známek</item>
     </plurals>
     <plurals name="grade_new_items">
         <item quantity="one">Nová známka</item>
@@ -291,7 +291,7 @@
         <item quantity="other">Máte %1$d nové neutrální 	pozornosti</item>
     </plurals>
     <!--Homework-->
-    <string name="homework_no_items">Žádné informace o domácím úkolu</string>
+    <string name="homework_no_items">Žádné informace o domácích úkolech</string>
     <string name="homework_mark_as_done">Označit jako hotové</string>
     <string name="homework_mark_as_undone">Neudělané</string>
     <string name="homework_attachments">Přílohy</string>

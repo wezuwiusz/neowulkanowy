@@ -57,7 +57,7 @@ class LoginFormPresenter @Inject constructor(
 
     fun updateUsernameLabel() {
         view?.run {
-            setUsernameLabel(if ("login" in formHostValue) nicknameLabel else emailLabel)
+            setUsernameLabel(if ("email" !in formHostValue) nicknameLabel else emailLabel)
         }
     }
 
