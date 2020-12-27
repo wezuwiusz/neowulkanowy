@@ -44,5 +44,7 @@ interface TimetableView : BaseView {
 
     fun popView()
 
+    fun openAdditionalLessonsView()
+
     fun openCompletedLessonsView()
 }

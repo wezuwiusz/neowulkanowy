@@ -21,11 +21,15 @@ class GradeRepository @Inject constructor(
 
     fun getGrades(student: Student, semester: Semester, forceRefresh: Boolean, notify: Boolean = false) = networkBoundResource(
         shouldFetch = { (details, summaries) -> details.isEmpty() || summaries.isEmpty() || forceRefresh },
-        query = { local.getGradesDetails(semester).combine(local.getGradesSummary(semester)) { details, summaries -> details to summaries } },
+        query = {
+            local.getGradesDetails(semester).combine(local.getGradesSummary(semester)) { details, summaries ->
+                details to summaries
+            }
+        },
         fetch = { remote.getGrades(student, semester) },
-        saveFetchResult = { old, new ->
-            refreshGradeDetails(student, old.first, new.first, notify)
-            refreshGradeSummaries(old.second, new.second, notify)
+        saveFetchResult = { (oldDetails, oldSummary), (newDetails, newSummary) ->
+            refreshGradeDetails(student, oldDetails, newDetails, notify)
+            refreshGradeSummaries(oldSummary, newSummary, notify)
         }
     )
 

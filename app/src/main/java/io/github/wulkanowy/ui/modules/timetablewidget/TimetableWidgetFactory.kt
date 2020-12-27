@@ -107,7 +107,7 @@ class TimetableWidgetFactory(
 
             val semester = semesterRepository.getCurrentSemester(student)
             timetableRepository.getTimetable(student, semester, date, date, false)
-                .toFirstResult().data.orEmpty()
+                .toFirstResult().data?.first.orEmpty()
                 .sortedWith(compareBy({ it.number }, { !it.isStudentPlan }))
                 .filter { if (prefRepository.showWholeClassPlan == "no") it.isStudentPlan else true }
         }

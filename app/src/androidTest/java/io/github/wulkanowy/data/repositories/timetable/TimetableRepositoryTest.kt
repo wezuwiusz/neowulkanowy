@@ -46,7 +46,7 @@ class TimetableRepositoryTest {
     fun initApi() {
         MockKAnnotations.init(this)
         testDb = Room.inMemoryDatabaseBuilder(getApplicationContext(), AppDatabase::class.java).build()
-        timetableLocal = TimetableLocal(testDb.timetableDao)
+        timetableLocal = TimetableLocal(testDb.timetableDao, testDb.timetableAdditionalDao)
     }
 
     @After
@@ -65,12 +65,12 @@ class TimetableRepositoryTest {
             ))
         }
 
-        coEvery { timetableRemote.getTimetable(student, semester, any(), any()) } returns listOf(
+        coEvery { timetableRemote.getTimetable(student, semester, any(), any()) } returns (listOf(
             createTimetableLocal(of(2019, 3, 5, 8, 0), 1, "", "Przyroda"),
             createTimetableLocal(of(2019, 3, 5, 8, 50), 2, "", "Religia"),
             createTimetableLocal(of(2019, 3, 5, 9, 40), 3, "", "W-F"),
             createTimetableLocal(of(2019, 3, 5, 10, 30), 4, "", "W-F")
-        )
+        ) to emptyList())
 
         val lessons = runBlocking {
             TimetableRepository(timetableLocal, timetableRemote, timetableNotificationSchedulerHelper).getTimetable(
@@ -79,7 +79,7 @@ class TimetableRepositoryTest {
                 start = LocalDate.of(2019, 3, 5),
                 end = LocalDate.of(2019, 3, 5),
                 forceRefresh = true
-            ).filter { it.status == Status.SUCCESS }.first().data.orEmpty()
+            ).filter { it.status == Status.SUCCESS }.first().data?.first.orEmpty()
         }
 
         assertEquals(4, lessons.size)
@@ -108,7 +108,7 @@ class TimetableRepositoryTest {
         )
         runBlocking { timetableLocal.saveTimetable(list) }
 
-        coEvery { timetableRemote.getTimetable(student, semester, any(), any()) } returns listOf(
+        coEvery { timetableRemote.getTimetable(student, semester, any(), any()) } returns (listOf(
             createTimetableLocal(of(2019, 12, 23, 8, 0), 1, "123", "Matematyka", "Paweł Poniedziałkowski", false),
             createTimetableLocal(of(2019, 12, 23, 8, 50), 2, "124", "Matematyka", "Jakub Wtorkowski", true),
             createTimetableLocal(of(2019, 12, 23, 9, 40), 3, "125", "Język polski", "Joanna Poniedziałkowska", false),
@@ -123,7 +123,7 @@ class TimetableRepositoryTest {
             createTimetableLocal(of(2019, 12, 25, 8, 50), 2, "124", "Matematyka", "Paweł Czwartkowski", true),
             createTimetableLocal(of(2019, 12, 25, 9, 40), 3, "125", "Matematyka", "Paweł Środowski", false),
             createTimetableLocal(of(2019, 12, 25, 10, 40), 4, "126", "Matematyka", "Paweł Czwartkowski", true)
-        )
+        ) to emptyList())
 
         val lessons = runBlocking {
             TimetableRepository(timetableLocal, timetableRemote, timetableNotificationSchedulerHelper).getTimetable(
@@ -132,7 +132,7 @@ class TimetableRepositoryTest {
                 start = LocalDate.of(2019, 12, 23),
                 end = LocalDate.of(2019, 12, 25),
                 forceRefresh = true
-            ).filter { it.status == Status.SUCCESS }.first().data.orEmpty()
+            ).filter { it.status == Status.SUCCESS }.first().data?.first.orEmpty()
         }
 
         assertEquals(12, lessons.size)

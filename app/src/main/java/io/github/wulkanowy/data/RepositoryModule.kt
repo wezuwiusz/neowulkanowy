@@ -162,4 +162,8 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideConferenceDao(database: AppDatabase) = database.conferenceDao
+
+    @Singleton
+    @Provides
+    fun provideTimetableAdditionalDao(database: AppDatabase) = database.timetableAdditionalDao
 }

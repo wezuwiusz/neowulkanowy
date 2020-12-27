@@ -56,7 +56,7 @@ class TimetableRemoteTest {
                 of(2018, 9, 15)
             )
         }
-        assertEquals(2, timetable.size)
+        assertEquals(2, timetable.first.size)
     }
 
     private fun getTimetable(date: LocalDate): Timetable {
