@@ -1,7 +1,8 @@
 [English version of README](README.en.md)
 
 # Wulkanowy
-[![Travis](https://img.shields.io/travis/com/wulkanowy/wulkanowy/master.svg?style=flat-square)](https://travis-ci.com/wulkanowy/wulkanowy)
+
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wulkanowy/wulkanowy/Test%20and%20deploy/develop?style=flat-square)](https://github.com/wulkanowy/wulkanowy/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/wulkanowy/wulkanowy/master.svg?style=flat-square)](https://codecov.io/gh/wulkanowy/wulkanowy)
 [![Discord](https://img.shields.io/discord/390889354199040011.svg?style=flat-square)](https://discord.gg/vccAQBr)
 [![F-Droid](https://img.shields.io/f-droid/v/io.github.wulkanowy.svg?style=flat-square)](https://f-droid.org/packages/io.github.wulkanowy/)
@@ -50,8 +51,9 @@ Możesz także pobrać [wersję rozwojową](https://wulkanowy.github.io/#downloa
 
 ## Zbudowana za pomocą
 
-* [Wulkanowy SDK](https://github.com/wulkanowy/SDK)
-* [Dagger 2](https://github.com/google/dagger)
+* [Wulkanowy SDK](https://github.com/wulkanowy/sdk)
+* [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
+* [Hilt](https://dagger.dev/hilt/)
 * [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) 
 
