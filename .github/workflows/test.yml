@@ -28,9 +28,9 @@ jobs:
             ~/.gradle/wrapper
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
       - name: Build
-        run: ./gradlew compileFdroidDebugUnitTestKotlin packageFdroidDebug preFdroidDebugAndroidTestBuild
+        run: ./gradlew --build-cache compileFdroidDebugUnitTestKotlin preFdroidDebugAndroidTestBuild dexBuilderFdroidDebugAndroidTest packageFdroidDebug packageFdroidDebugAndroidTest
       - name: Prepare build cache
-        run: tar -cvf prebuild.tar .gradle app/build
+        run: tar -cf prebuild.tar .build-cache .gradle app/build
       - uses: actions/upload-artifact@v2
         with:
           name: prebuild.tar
@@ -56,18 +56,18 @@ jobs:
           with:
             name: prebuild.tar
         - name: Extract build cache
-          run: tar -xvf prebuild.tar app/build
+          run: tar -xf prebuild.tar
         - name: Unit tests
           run: |
-            ./gradlew -Pcoverage testFdroidDebugUnitTest --stacktrace
-            ./gradlew -Pcoverage jacocoTestReport --stacktrace
+            ./gradlew --build-cache -Pcoverage testFdroidDebugUnitTest --stacktrace
+            ./gradlew --build-cache -Pcoverage jacocoTestReport --stacktrace
         - uses: codecov/codecov-action@v1
           with:
               flags: unit
 
   instrumentation-tests:
       name: Instrumentation tests
-      runs-on: ubuntu-latest
+      runs-on: macOS-latest
       timeout-minutes: 15
       needs: [ build ]
       strategy:
@@ -89,15 +89,15 @@ jobs:
             with:
               name: prebuild.tar
           - name: Extract build cache
-            run: tar -xvf prebuild.tar app/build
+            run: tar -xf prebuild.tar
           - name: Instrumentation tests
             uses: reactivecircus/android-emulator-runner@v2.13.0
             with:
                 api-level: ${{ matrix.api-level }}
                 arch: x86
                 script: |
-                  ./gradlew -Pcoverage connectedFdroidDebugAndroidTest --stacktrace
-                  ./gradlew -Pcoverage jacocoTestReport --stacktrace
+                  ./gradlew --build-cache -Pcoverage connectedFdroidDebugAndroidTest --stacktrace
+                  ./gradlew --build-cache -Pcoverage jacocoTestReport --stacktrace
           - uses: codecov/codecov-action@v1
             with:
                 flags: instrumented,api-${{ matrix.api-level }}
@@ -124,7 +124,7 @@ jobs:
           with:
             name: prebuild.tar
         - name: Extract build cache
-          run: tar -xvf prebuild.tar app/build
+          run: tar -xf prebuild.tar
         - name: Decrypt keys
           env:
             ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
