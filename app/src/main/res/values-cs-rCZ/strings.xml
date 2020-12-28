@@ -159,6 +159,10 @@
     <string name="completed_lessons_topic">Téma</string>
     <string name="completed_lessons_absence">Nepřítomnost</string>
     <string name="completed_lessons_resources">Zdroje</string>
+    <!--Additional lessons-->
+    <string name="additional_lessons_title">Další lekce</string>
+    <string name="additional_lessons_button">Zobrazit další lekce</string>
+    <string name="additional_lessons_no_items">Žádné informace o dalších lekcích</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Souhrn docházky</string>
     <string name="attendance_absence_school">Nepřítomen ze školních důvodů</string>
