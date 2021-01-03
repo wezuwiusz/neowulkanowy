@@ -10,5 +10,5 @@ import javax.inject.Singleton
 interface RecipientDao : BaseDao<Recipient> {
 
     @Query("SELECT * FROM Recipients WHERE student_id = :studentId AND role = :role AND unit_id = :unitId")
-    suspend fun load(studentId: Int, role: Int, unitId: Int): List<Recipient>
+    suspend fun loadAll(studentId: Int, role: Int, unitId: Int): List<Recipient>
 }

@@ -6,9 +6,9 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.repositories.message.MessageFolder.RECEIVED
-import io.github.wulkanowy.data.repositories.message.MessageFolder.SENT
-import io.github.wulkanowy.data.repositories.message.MessageFolder.TRASHED
+import io.github.wulkanowy.data.enums.MessageFolder.RECEIVED
+import io.github.wulkanowy.data.enums.MessageFolder.SENT
+import io.github.wulkanowy.data.enums.MessageFolder.TRASHED
 import io.github.wulkanowy.databinding.FragmentMessageBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter

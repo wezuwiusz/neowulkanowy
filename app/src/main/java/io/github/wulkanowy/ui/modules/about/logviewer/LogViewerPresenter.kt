@@ -1,8 +1,8 @@
 package io.github.wulkanowy.ui.modules.about.logviewer
 
 import io.github.wulkanowy.data.Status
-import io.github.wulkanowy.data.repositories.logger.LoggerRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.LoggerRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.flowWithResource

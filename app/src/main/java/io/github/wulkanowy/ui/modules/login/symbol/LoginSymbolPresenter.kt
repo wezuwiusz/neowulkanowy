@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.login.symbol
 
 import io.github.wulkanowy.data.Status
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper

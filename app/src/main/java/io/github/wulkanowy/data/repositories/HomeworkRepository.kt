@@ -1,0 +1,43 @@
+package io.github.wulkanowy.data.repositories
+
+import io.github.wulkanowy.data.db.dao.HomeworkDao
+import io.github.wulkanowy.data.db.entities.Homework
+import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.networkBoundResource
+import io.github.wulkanowy.utils.sunday
+import io.github.wulkanowy.utils.uniqueSubtract
+import java.time.LocalDate
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class HomeworkRepository @Inject constructor(
+    private val homeworkDb: HomeworkDao,
+    private val sdk: Sdk
+) {
+
+    fun getHomework(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean) = networkBoundResource(
+        shouldFetch = { it.isEmpty() || forceRefresh },
+        query = { homeworkDb.loadAll(semester.semesterId, semester.studentId, start.monday, end.sunday) },
+        fetch = {
+            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+                .getHomework(start.monday, end.sunday)
+                .mapToEntities(semester)
+        },
+        saveFetchResult = { old, new ->
+            homeworkDb.deleteAll(old uniqueSubtract new)
+            homeworkDb.insertAll(new uniqueSubtract old)
+        }
+    )
+
+    suspend fun toggleDone(homework: Homework) {
+        homeworkDb.updateAll(listOf(homework.apply {
+            isDone = !isDone
+        }))
+    }
+}

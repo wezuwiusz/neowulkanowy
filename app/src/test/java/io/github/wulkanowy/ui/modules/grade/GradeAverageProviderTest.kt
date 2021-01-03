@@ -1,13 +1,13 @@
 package io.github.wulkanowy.ui.modules.grade
 
-import io.github.wulkanowy.createSemesterEntity
 import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.grade.GradeRepository
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
+import io.github.wulkanowy.data.repositories.GradeRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.flowWithResource
 import io.mockk.MockKAnnotations
@@ -42,9 +42,9 @@ class GradeAverageProviderTest {
     private val student = Student("", "", "", "SCRAPPER", "", "", false, "", "", "", 101, 0, "", "", "", "", "", "", 1, true, LocalDateTime.now())
 
     private val semesters = mutableListOf(
-        createSemesterEntity(10, 21, of(2019, 1, 31), of(2019, 6, 23)),
-        createSemesterEntity(11, 22, of(2019, 9, 1), of(2020, 1, 31)),
-        createSemesterEntity(11, 23, of(2020, 2, 1), now(), semesterName = 2)
+        getSemesterEntity(10, 21, of(2019, 1, 31), of(2019, 6, 23)),
+        getSemesterEntity(11, 22, of(2019, 9, 1), of(2020, 1, 31)),
+        getSemesterEntity(11, 23, of(2020, 2, 1), now(), semesterName = 2)
     )
 
     private val firstGrades = listOf(

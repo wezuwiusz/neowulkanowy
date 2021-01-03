@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.login
 
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import timber.log.Timber

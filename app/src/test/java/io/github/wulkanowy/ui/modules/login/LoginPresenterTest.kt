@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.login
 
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.every

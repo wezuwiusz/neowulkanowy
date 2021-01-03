@@ -2,11 +2,11 @@ package io.github.wulkanowy.ui.modules.grade.statistics
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Subject
-import io.github.wulkanowy.data.repositories.gradestatistics.GradeStatisticsRepository
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.data.repositories.subject.SubjectRepository
+import io.github.wulkanowy.data.repositories.GradeStatisticsRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.SubjectRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper

@@ -2,7 +2,6 @@ package io.github.wulkanowy.ui.modules.login
 
 import android.content.res.Resources
 import android.database.sqlite.SQLiteConstraintException
-import com.chuckerteam.chucker.api.ChuckerCollector
 import io.github.wulkanowy.R
 import io.github.wulkanowy.sdk.mobile.exception.InvalidPinException
 import io.github.wulkanowy.sdk.mobile.exception.InvalidSymbolException
@@ -12,10 +11,7 @@ import io.github.wulkanowy.sdk.scrapper.login.BadCredentialsException
 import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 
-class LoginErrorHandler @Inject constructor(
-    resources: Resources,
-    chuckerCollector: ChuckerCollector
-) : ErrorHandler(resources, chuckerCollector) {
+class LoginErrorHandler @Inject constructor(resources: Resources) : ErrorHandler(resources) {
 
     var onBadCredentials: () -> Unit = {}
 
