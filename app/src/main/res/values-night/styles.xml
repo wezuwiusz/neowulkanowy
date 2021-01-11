@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="WulkanowyTheme" parent="@style/Theme.MaterialComponents">
+        <item name="android:forceDarkAllowed" tools:targetApi="Q">false</item>
         <item name="colorPrimary">@color/colorPrimaryLight</item>
         <item name="colorSecondary">@color/colorPrimaryLight</item>
         <item name="colorTimetableChange">@color/timetable_change_light</item>
