@@ -83,8 +83,8 @@ class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment
         binding.homeworkNavDate.text = date
     }
 
-    override fun hideRefresh() {
-        binding.homeworkSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.homeworkSwipe.isRefreshing = show
     }
 
     override fun showEmpty(show: Boolean) {

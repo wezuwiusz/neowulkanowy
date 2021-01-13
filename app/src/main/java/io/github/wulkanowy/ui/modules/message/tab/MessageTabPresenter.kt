@@ -85,13 +85,27 @@ class MessageTabPresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean) {
+        Timber.i("Loading $folder message data started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             messageRepository.getMessages(student, semester, folder, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading $folder message data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            messages = it.data
+                            updateData(getFilteredData(lastSearchQuery))
+                            notifyParentDataLoaded()
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading $folder message result: Success")
                     messages = it.data!!

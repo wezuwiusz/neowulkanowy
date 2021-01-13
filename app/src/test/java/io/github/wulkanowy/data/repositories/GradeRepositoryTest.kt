@@ -6,11 +6,13 @@ import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.toFirstResult
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.just
@@ -36,6 +38,9 @@ class GradeRepositoryTest {
     @MockK
     private lateinit var gradeSummaryDb: GradeSummaryDao
 
+    @MockK(relaxUnitFun = true)
+    private lateinit var refreshHelper: AutoRefreshHelper
+
     private val semester = getSemesterEntity()
 
     private val student = getStudentEntity()
@@ -45,8 +50,9 @@ class GradeRepositoryTest {
     @Before
     fun initApi() {
         MockKAnnotations.init(this)
+        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
 
-        gradeRepository = GradeRepository(gradeDb, gradeSummaryDb, sdk)
+        gradeRepository = GradeRepository(gradeDb, gradeSummaryDb, sdk, refreshHelper)
 
         coEvery { gradeDb.deleteAll(any()) } just Runs
         coEvery { gradeDb.insertAll(any()) } returns listOf()

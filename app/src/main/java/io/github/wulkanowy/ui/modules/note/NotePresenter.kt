@@ -52,13 +52,25 @@ class NotePresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading note data started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             noteRepository.getNotes(student, semester, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading note data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(it.data)
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading note result: Success")
                     view?.apply {
@@ -80,7 +92,7 @@ class NotePresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }

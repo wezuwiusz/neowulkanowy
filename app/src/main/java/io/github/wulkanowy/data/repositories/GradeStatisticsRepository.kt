@@ -12,6 +12,8 @@ import io.github.wulkanowy.data.mappers.mapPointsToStatisticsItems
 import io.github.wulkanowy.data.mappers.mapSemesterToStatisticItems
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
@@ -24,11 +26,16 @@ class GradeStatisticsRepository @Inject constructor(
     private val gradePartialStatisticsDb: GradePartialStatisticsDao,
     private val gradePointsStatisticsDb: GradePointsStatisticsDao,
     private val gradeSemesterStatisticsDb: GradeSemesterStatisticsDao,
-    private val sdk: Sdk
+    private val sdk: Sdk,
+    private val refreshHelper: AutoRefreshHelper,
 ) {
 
+    private val partialCacheKey = "grade_stats_partial"
+    private val semesterCacheKey = "grade_stats_semester"
+    private val pointsCacheKey = "grade_stats_points"
+
     fun getGradesPartialStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
-        shouldFetch = { it.isEmpty() || forceRefresh },
+        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(partialCacheKey, semester)) },
         query = { gradePartialStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
@@ -38,6 +45,7 @@ class GradeStatisticsRepository @Inject constructor(
         saveFetchResult = { old, new ->
             gradePartialStatisticsDb.deleteAll(old uniqueSubtract new)
             gradePartialStatisticsDb.insertAll(new uniqueSubtract old)
+            refreshHelper.updateLastRefreshTimestamp(getRefreshKey(partialCacheKey, semester))
         },
         mapResult = { items ->
             when (subjectName) {
@@ -63,7 +71,7 @@ class GradeStatisticsRepository @Inject constructor(
     )
 
     fun getGradesSemesterStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
-        shouldFetch = { it.isEmpty() || forceRefresh },
+        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(semesterCacheKey, semester)) },
         query = { gradeSemesterStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
@@ -73,6 +81,7 @@ class GradeStatisticsRepository @Inject constructor(
         saveFetchResult = { old, new ->
             gradeSemesterStatisticsDb.deleteAll(old uniqueSubtract new)
             gradeSemesterStatisticsDb.insertAll(new uniqueSubtract old)
+            refreshHelper.updateLastRefreshTimestamp(getRefreshKey(semesterCacheKey, semester))
         },
         mapResult = { items ->
             val itemsWithAverage = items.map { item ->
@@ -103,7 +112,7 @@ class GradeStatisticsRepository @Inject constructor(
     )
 
     fun getGradesPointsStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
-        shouldFetch = { it.isEmpty() || forceRefresh },
+        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(pointsCacheKey, semester)) },
         query = { gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
@@ -113,6 +122,7 @@ class GradeStatisticsRepository @Inject constructor(
         saveFetchResult = { old, new ->
             gradePointsStatisticsDb.deleteAll(old uniqueSubtract new)
             gradePointsStatisticsDb.insertAll(new uniqueSubtract old)
+            refreshHelper.updateLastRefreshTimestamp(getRefreshKey(pointsCacheKey, semester))
         },
         mapResult = { items ->
             when (subjectName) {

@@ -191,8 +191,8 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
         binding. attendanceRecycler.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun hideRefresh() {
-        binding.attendanceSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.attendanceSwipe.isRefreshing = show
     }
 
     override fun showPreButton(show: Boolean) {

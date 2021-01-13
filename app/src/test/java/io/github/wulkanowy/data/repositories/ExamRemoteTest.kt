@@ -5,11 +5,13 @@ import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.toFirstResult
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.just
@@ -28,6 +30,9 @@ class ExamRemoteTest {
 
     @MockK
     private lateinit var examDb: ExamDao
+
+    @MockK(relaxUnitFun = true)
+    private lateinit var refreshHelper: AutoRefreshHelper
 
     private val semester = getSemesterEntity()
 
@@ -49,8 +54,9 @@ class ExamRemoteTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
+        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
 
-        examRepository = ExamRepository(examDb, sdk)
+        examRepository = ExamRepository(examDb, sdk, refreshHelper)
     }
 
     @Test

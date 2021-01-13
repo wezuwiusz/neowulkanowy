@@ -7,11 +7,13 @@ import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
+import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.toFirstResult
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.just
@@ -39,6 +41,9 @@ class TimetableRepositoryTest {
     @MockK
     private lateinit var timetableAdditionalDao: TimetableAdditionalDao
 
+    @MockK(relaxUnitFun = true)
+    private lateinit var refreshHelper: AutoRefreshHelper
+
     private val student = getStudentEntity()
 
     private val semester = getSemesterEntity()
@@ -52,7 +57,9 @@ class TimetableRepositoryTest {
     @Before
     fun initApi() {
         MockKAnnotations.init(this)
-        timetableRepository = TimetableRepository(timetableDb, timetableAdditionalDao, sdk, timetableNotificationSchedulerHelper)
+        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
+
+        timetableRepository = TimetableRepository(timetableDb, timetableAdditionalDao, sdk, timetableNotificationSchedulerHelper, refreshHelper)
     }
 
     @Test

@@ -5,11 +5,13 @@ import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.toFirstResult
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.just
@@ -30,6 +32,9 @@ class CompletedLessonsRepositoryTest {
     @MockK
     private lateinit var completedLessonDb: CompletedLessonsDao
 
+    @MockK(relaxUnitFun = true)
+    private lateinit var refreshHelper: AutoRefreshHelper
+
     private val semester = getSemesterEntity()
 
     private val student = getStudentEntity()
@@ -48,8 +53,9 @@ class CompletedLessonsRepositoryTest {
     @Before
     fun initApi() {
         MockKAnnotations.init(this)
+        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
 
-        completedLessonRepository = CompletedLessonsRepository(completedLessonDb, sdk)
+        completedLessonRepository = CompletedLessonsRepository(completedLessonDb, sdk, refreshHelper)
     }
 
     @Test

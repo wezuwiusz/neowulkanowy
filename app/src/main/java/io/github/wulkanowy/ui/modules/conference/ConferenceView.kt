@@ -13,7 +13,7 @@ interface ConferenceView : BaseView {
 
     fun clearData()
 
-    fun hideRefresh()
+    fun showRefresh(show: Boolean)
 
     fun showEmpty(show: Boolean)
 

@@ -51,13 +51,25 @@ class MobileDevicePresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading mobile devices data started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             mobileDeviceRepository.getDevices(student, semester, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading mobile devices data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(it.data)
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading mobile devices result: Success")
                     view?.run {
@@ -79,7 +91,7 @@ class MobileDevicePresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }

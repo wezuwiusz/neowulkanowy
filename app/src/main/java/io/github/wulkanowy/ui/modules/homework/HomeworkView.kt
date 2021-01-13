@@ -15,7 +15,7 @@ interface HomeworkView : BaseView {
 
     fun updateNavigationWeek(date: String)
 
-    fun hideRefresh()
+    fun showRefresh(show: Boolean)
 
     fun showEmpty(show: Boolean)
 

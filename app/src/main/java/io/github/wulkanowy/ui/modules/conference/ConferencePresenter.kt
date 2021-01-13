@@ -59,13 +59,25 @@ class ConferencePresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading conference data started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             conferenceRepository.getConferences(student, semester, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading conference data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(it.data.sortedByDescending { conference -> conference.date })
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading conference result: Success")
                     view?.run {
@@ -87,7 +99,7 @@ class ConferencePresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }

@@ -24,7 +24,7 @@ interface AttendanceView : BaseView {
 
     fun clearData()
 
-    fun hideRefresh()
+    fun showRefresh(show: Boolean)
 
     fun resetView()
 

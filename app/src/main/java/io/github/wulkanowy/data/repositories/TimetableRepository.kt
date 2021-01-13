@@ -9,6 +9,8 @@ import io.github.wulkanowy.data.db.entities.TimetableAdditional
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.networkBoundResource
@@ -25,11 +27,14 @@ class TimetableRepository @Inject constructor(
     private val timetableDb: TimetableDao,
     private val timetableAdditionalDb: TimetableAdditionalDao,
     private val sdk: Sdk,
-    private val schedulerHelper: TimetableNotificationSchedulerHelper
+    private val schedulerHelper: TimetableNotificationSchedulerHelper,
+    private val refreshHelper: AutoRefreshHelper,
 ) {
 
+    private val cacheKey = "timetable"
+
     fun getTimetable(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean, refreshAdditional: Boolean = false) = networkBoundResource(
-        shouldFetch = { (timetable, additional) -> timetable.isEmpty() || (additional.isEmpty() && refreshAdditional) || forceRefresh },
+        shouldFetch = { (timetable, additional) -> timetable.isEmpty() || (additional.isEmpty() && refreshAdditional) || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end)) },
         query = {
             timetableDb.loadAll(semester.diaryId, semester.studentId, start.monday, end.sunday)
                 .map { schedulerHelper.scheduleNotifications(it, student); it }
@@ -47,6 +52,7 @@ class TimetableRepository @Inject constructor(
             refreshTimetable(student, oldTimetable, newTimetable)
             refreshAdditional(oldAdditional, newAdditional)
 
+            refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester, start, end))
         },
         filterResult = { (timetable, additional) ->
             timetable.filter { item ->

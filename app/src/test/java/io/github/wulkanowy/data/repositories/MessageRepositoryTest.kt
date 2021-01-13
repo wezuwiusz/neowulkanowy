@@ -8,11 +8,13 @@ import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.MessageDetails
+import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.toFirstResult
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.just
@@ -36,6 +38,9 @@ class MessageRepositoryTest {
     @MockK
     private lateinit var messageAttachmentDao: MessageAttachmentDao
 
+    @MockK(relaxUnitFun = true)
+    private lateinit var refreshHelper: AutoRefreshHelper
+
     private val student = getStudentEntity()
 
     private lateinit var messageRepository: MessageRepository
@@ -43,8 +48,9 @@ class MessageRepositoryTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
+        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
 
-        messageRepository = MessageRepository(messageDb, messageAttachmentDao, sdk)
+        messageRepository = MessageRepository(messageDb, messageAttachmentDao, sdk, refreshHelper)
     }
 
     @Test(expected = NoSuchElementException::class)

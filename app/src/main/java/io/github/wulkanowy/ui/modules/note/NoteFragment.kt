@@ -105,8 +105,8 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note), 
         binding.noteRecycler.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun hideRefresh() {
-        binding.noteSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.noteSwipe.isRefreshing = show
     }
 
     override fun onDestroyView() {

@@ -6,6 +6,8 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
@@ -17,11 +19,14 @@ import javax.inject.Singleton
 @Singleton
 class NoteRepository @Inject constructor(
     private val noteDb: NoteDao,
-    private val sdk: Sdk
+    private val sdk: Sdk,
+    private val refreshHelper: AutoRefreshHelper,
 ) {
 
+    private val cacheKey = "note"
+
     fun getNotes(student: Student, semester: Semester, forceRefresh: Boolean, notify: Boolean = false) = networkBoundResource(
-        shouldFetch = { it.isEmpty() || forceRefresh },
+        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester)) },
         query = { noteDb.loadAll(student.studentId) },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
@@ -36,6 +41,8 @@ class NoteRepository @Inject constructor(
                     if (notify) isNotified = false
                 }
             })
+
+            refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester))
         }
     )
 

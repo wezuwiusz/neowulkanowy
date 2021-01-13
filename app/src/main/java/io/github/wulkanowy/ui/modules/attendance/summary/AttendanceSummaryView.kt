@@ -9,7 +9,7 @@ interface AttendanceSummaryView : BaseView {
 
     fun initView()
 
-    fun hideRefresh()
+    fun showRefresh(show: Boolean)
 
     fun showContent(show: Boolean)
 

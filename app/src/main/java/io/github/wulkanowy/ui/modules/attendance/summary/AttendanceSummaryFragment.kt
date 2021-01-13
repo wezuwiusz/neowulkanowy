@@ -121,8 +121,8 @@ class AttendanceSummaryFragment :
         binding.attendanceSummarySubjectsContainer.visibility = if (show) VISIBLE else INVISIBLE
     }
 
-    override fun hideRefresh() {
-        binding.attendanceSummarySwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.attendanceSummarySwipe.isRefreshing = show
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

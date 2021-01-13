@@ -113,8 +113,8 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         binding.timetableNavDate.text = date
     }
 
-    override fun hideRefresh() {
-        binding.timetableSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.timetableSwipe.isRefreshing = show
     }
 
     override fun resetView() {

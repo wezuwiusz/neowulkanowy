@@ -65,8 +65,8 @@ class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), 
         }
     }
 
-    override fun hideRefresh() {
-        binding.examSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.examSwipe.isRefreshing = show
     }
 
     override fun updateData(data: List<ExamItem<*>>) {

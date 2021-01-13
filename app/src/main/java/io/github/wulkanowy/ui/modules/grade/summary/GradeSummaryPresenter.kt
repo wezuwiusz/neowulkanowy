@@ -37,12 +37,26 @@ class GradeSummaryPresenter @Inject constructor(
     }
 
     private fun loadData(semesterId: Int, forceRefresh: Boolean) {
+        Timber.i("Loading grade summary started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             averageProvider.getGradesDetailsWithAverage(student, semesterId, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading grade summary started")
+                Status.LOADING -> {
+                    val items = createGradeSummaryItems(it.data.orEmpty())
+                    if (items.isNotEmpty()) {
+                        Timber.i("Loading grade summary result: load cached data")
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(items)
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading grade summary result: Success")
                     val items = createGradeSummaryItems(it.data!!)

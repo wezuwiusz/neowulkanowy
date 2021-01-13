@@ -6,13 +6,15 @@ import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.mappers.mapFromEntities
-import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.enums.MessageFolder.RECEIVED
+import io.github.wulkanowy.data.mappers.mapFromEntities
+import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.sdk.pojo.SentMessage
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
@@ -27,12 +29,15 @@ import javax.inject.Singleton
 class MessageRepository @Inject constructor(
     private val messagesDb: MessagesDao,
     private val messageAttachmentDao: MessageAttachmentDao,
-    private val sdk: Sdk
+    private val sdk: Sdk,
+    private val refreshHelper: AutoRefreshHelper,
 ) {
+
+    private val cacheKey = "message"
 
     @Suppress("UNUSED_PARAMETER")
     fun getMessages(student: Student, semester: Semester, folder: MessageFolder, forceRefresh: Boolean, notify: Boolean = false) = networkBoundResource(
-        shouldFetch = { it.isEmpty() || forceRefresh },
+        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, student, folder)) },
         query = { messagesDb.loadAll(student.id.toInt(), folder.id) },
         fetch = { sdk.init(student).getMessages(Folder.valueOf(folder.name), now().minusMonths(3), now()).mapToEntities(student) },
         saveFetchResult = { old, new ->
@@ -40,6 +45,8 @@ class MessageRepository @Inject constructor(
             messagesDb.insertAll((new uniqueSubtract old).onEach {
                 it.isNotified = !notify
             })
+
+            refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, student, folder))
         }
     )
 
