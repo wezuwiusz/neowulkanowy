@@ -9,7 +9,7 @@ import java.io.Serializable
 data class Recipient(
 
     @ColumnInfo(name = "student_id")
-    val studentId: Int,
+    val userLoginId: Int,
 
     @ColumnInfo(name = "real_id")
     val realId: String,

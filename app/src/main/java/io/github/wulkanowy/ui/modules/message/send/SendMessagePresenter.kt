@@ -100,7 +100,7 @@ class SendMessagePresenter @Inject constructor(
 
             Timber.i("Loading recipients started")
             val recipients = when {
-                unit != null -> recipientRepository.getRecipients(student, 2, unit)
+                unit != null -> recipientRepository.getRecipients(student, unit, 2)
                 else -> listOf()
             }.let { createChips(it) }
             Timber.i("Loading recipients result: Success, fetched %d recipients", recipients.size)

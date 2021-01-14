@@ -46,39 +46,39 @@ class RecipientLocalTest {
     @Test
     fun `load recipients when items already in database`() {
         // prepare
-        coEvery { recipientDb.loadAll(1, 1, 1) } returnsMany listOf(
-            remoteList.mapToEntities(student),
-            remoteList.mapToEntities(student)
+        coEvery { recipientDb.loadAll(4, 123, 7) } returnsMany listOf(
+            remoteList.mapToEntities(4),
+            remoteList.mapToEntities(4)
         )
         coEvery { recipientDb.insertAll(any()) } returns listOf(1, 2, 3)
         coEvery { recipientDb.deleteAll(any()) } just Runs
 
         // execute
-        val res = runBlocking { recipientRepository.getRecipients(student, 1, ReportingUnit(1, 1, "", 1, "", listOf())) }
+        val res = runBlocking { recipientRepository.getRecipients(student, ReportingUnit(1, 123, "", 4, "", listOf()), 7) }
 
         // verify
         assertEquals(3, res.size)
-        coVerify { recipientDb.loadAll(1, 1, 1) }
+        coVerify { recipientDb.loadAll(4, 123, 7) }
     }
 
     @Test
     fun `load recipients when database is empty`() {
         // prepare
-        coEvery { sdk.getRecipients(1, 1) } returns remoteList
-        coEvery { recipientDb.loadAll(1, 1, 1) } returnsMany listOf(
+        coEvery { sdk.getRecipients(123, 7) } returns remoteList
+        coEvery { recipientDb.loadAll(4, 123, 7) } returnsMany listOf(
             emptyList(),
-            remoteList.mapToEntities(student)
+            remoteList.mapToEntities(4)
         )
         coEvery { recipientDb.insertAll(any()) } returns listOf(1, 2, 3)
         coEvery { recipientDb.deleteAll(any()) } just Runs
 
         // execute
-        val res = runBlocking { recipientRepository.getRecipients(student, 1, ReportingUnit(1, 1, "", 1, "", listOf())) }
+        val res = runBlocking { recipientRepository.getRecipients(student, ReportingUnit(1, 123, "", 4, "", listOf()), 7) }
 
         // verify
         assertEquals(3, res.size)
-        coVerify { sdk.getRecipients(1, 1) }
-        coVerify { recipientDb.loadAll(1, 1, 1) }
+        coVerify { sdk.getRecipients(123, 7) }
+        coVerify { recipientDb.loadAll(4, 123, 7) }
         coVerify { recipientDb.insertAll(match { it.isEmpty() }) }
         coVerify { recipientDb.deleteAll(match { it.isEmpty() }) }
     }

@@ -16,7 +16,7 @@ class RecipientWork @Inject constructor(
 
         reportingUnitRepository.getReportingUnits(student).let { units ->
             units.map {
-                recipientRepository.refreshRecipients(student, 2, it)
+                recipientRepository.refreshRecipients(student, it, 2)
             }
         }
     }

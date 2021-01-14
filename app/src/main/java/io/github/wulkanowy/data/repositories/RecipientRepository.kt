@@ -18,23 +18,23 @@ class RecipientRepository @Inject constructor(
     private val sdk: Sdk
 ) {
 
-    suspend fun refreshRecipients(student: Student, role: Int, unit: ReportingUnit) {
-        val new = sdk.init(student).getRecipients(unit.realId, role).mapToEntities(student)
-        val old = recipientDb.loadAll(student.studentId, role, unit.realId)
+    suspend fun refreshRecipients(student: Student, unit: ReportingUnit, role: Int) {
+        val new = sdk.init(student).getRecipients(unit.unitId, role).mapToEntities(unit.senderId)
+        val old = recipientDb.loadAll(unit.senderId, unit.unitId, role)
 
         recipientDb.deleteAll(old uniqueSubtract new)
         recipientDb.insertAll(new uniqueSubtract old)
     }
 
-    suspend fun getRecipients(student: Student, role: Int, unit: ReportingUnit): List<Recipient> {
-        return recipientDb.loadAll(student.studentId, role, unit.realId).ifEmpty {
-            refreshRecipients(student, role, unit)
+    suspend fun getRecipients(student: Student, unit: ReportingUnit, role: Int): List<Recipient> {
+        return recipientDb.loadAll(unit.senderId, unit.unitId, role).ifEmpty {
+            refreshRecipients(student, unit, role)
 
-            recipientDb.loadAll(student.studentId, role, unit.realId)
+            recipientDb.loadAll(unit.senderId, unit.unitId, role)
         }
     }
 
     suspend fun getMessageRecipients(student: Student, message: Message): List<Recipient> {
-        return sdk.init(student).getMessageRecipients(message.messageId, message.senderId).mapToEntities(student)
+        return sdk.init(student).getMessageRecipients(message.messageId, message.senderId).mapToEntities(student.userLoginId)
     }
 }

@@ -1,12 +1,11 @@
 package io.github.wulkanowy.data.mappers
 
 import io.github.wulkanowy.data.db.entities.Recipient
-import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.pojo.Recipient as SdkRecipient
 
-fun List<SdkRecipient>.mapToEntities(student: Student) = map {
+fun List<SdkRecipient>.mapToEntities(userLoginId: Int) = map {
     Recipient(
-        studentId = student.studentId,
+        userLoginId = userLoginId,
         realId = it.id,
         realName = it.name,
         name = it.shortName,
