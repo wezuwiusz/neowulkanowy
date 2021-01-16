@@ -91,7 +91,7 @@ jobs:
           - name: Extract build cache
             run: tar -xf prebuild.tar
           - name: Instrumentation tests
-            uses: reactivecircus/android-emulator-runner@v2.13.0
+            uses: reactivecircus/android-emulator-runner@v2
             with:
                 api-level: ${{ matrix.api-level }}
                 arch: x86
