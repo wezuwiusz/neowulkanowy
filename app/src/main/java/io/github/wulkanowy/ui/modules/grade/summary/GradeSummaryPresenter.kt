@@ -43,6 +43,7 @@ class GradeSummaryPresenter @Inject constructor(
             val student = studentRepository.getCurrentStudent()
             averageProvider.getGradesDetailsWithAverage(student, semesterId, forceRefresh)
         }.onEach {
+            Timber.d("Loading grade summary status: ${it.status}, data: ${it.data != null}")
             when (it.status) {
                 Status.LOADING -> {
                     val items = createGradeSummaryItems(it.data.orEmpty())
@@ -52,6 +53,7 @@ class GradeSummaryPresenter @Inject constructor(
                             enableSwipe(true)
                             showRefresh(true)
                             showProgress(false)
+                            showEmpty(false)
                             showContent(true)
                             updateData(items)
                         }

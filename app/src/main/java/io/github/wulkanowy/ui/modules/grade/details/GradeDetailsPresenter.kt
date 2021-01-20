@@ -143,16 +143,18 @@ class GradeDetailsPresenter @Inject constructor(
             val student = studentRepository.getCurrentStudent()
             averageProvider.getGradesDetailsWithAverage(student, semesterId, forceRefresh)
         }.onEach {
+            Timber.d("Loading grade details status: ${it.status}, data: ${it.data != null}")
             when (it.status) {
                 Status.LOADING -> {
                     val items = createGradeItems(it.data.orEmpty())
                     if (items.isNotEmpty()) {
-                        Timber.i("Loading gradle details result: load cached data")
+                        Timber.i("Loading grade details result: load cached data")
                         view?.run {
                             updateNewGradesAmount(it.data.orEmpty())
                             enableSwipe(true)
                             showRefresh(true)
                             showProgress(false)
+                            showEmpty(false)
                             showContent(true)
                             updateData(
                                 data = items,
