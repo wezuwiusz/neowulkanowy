@@ -201,7 +201,10 @@ class AttendancePresenter @Inject constructor(
                             showRefresh(true)
                             showProgress(false)
                             showContent(true)
-                            updateData(it.data)
+                            updateData(it.data.let { items ->
+                                if (prefRepository.isShowPresent) items
+                                else items.filter { item -> !item.presence }
+                            }.sortedBy { item -> item.number })
                         }
                     }
                 }

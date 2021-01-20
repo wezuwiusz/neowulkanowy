@@ -1,5 +1,8 @@
-Wersja 0.23.1
-- naprawiliśmy opis pola na email/login przy wyborze niestandardowych dzienników
-- naprawiliśmy obsługę dziennika lubelskiego i koszalińskiego na starszych urządzeniach (z Androidem 5 i starszymi)
+Wersja 0.24.0
+- naprawiliśmy niekończące się ładowanie w ocenach na drugim semestrze
+- naprawiliśmy ciemny motyw na MIUI 12
+- dodaliśmy automatyczne odświeżanie danych w aplikacji
+- naprawiliśmy wysyłanie wiadomości kiedy uczeń zalogowany był/jest przez konto ucznia i rodzica
+- dodaliśmy zakładkę lekcji dodatkowych (na górnym pasku w planie lekcji)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
