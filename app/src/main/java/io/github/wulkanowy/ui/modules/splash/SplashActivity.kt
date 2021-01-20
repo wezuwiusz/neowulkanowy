@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -18,7 +19,7 @@ class SplashActivity : BaseActivity<SplashPresenter, ViewBinding>(), SplashView 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.onAttachView(this)
+        presenter.onAttachView(this, intent?.getStringExtra("external_url"))
     }
 
     override fun openLoginView() {
@@ -28,6 +29,11 @@ class SplashActivity : BaseActivity<SplashPresenter, ViewBinding>(), SplashView 
 
     override fun openMainView() {
         startActivity(MainActivity.getStartIntent(this))
+        finish()
+    }
+
+    override fun openExternalUrlAndFinish(url: String) {
+        openInternetBrowser(url, ::showMessage)
         finish()
     }
 

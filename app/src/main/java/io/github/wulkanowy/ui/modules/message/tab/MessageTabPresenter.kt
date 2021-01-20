@@ -2,10 +2,10 @@ package io.github.wulkanowy.ui.modules.message.tab
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Message
-import io.github.wulkanowy.data.repositories.message.MessageFolder
-import io.github.wulkanowy.data.repositories.message.MessageRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.enums.MessageFolder
+import io.github.wulkanowy.data.repositories.MessageRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -85,13 +85,27 @@ class MessageTabPresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean) {
+        Timber.i("Loading $folder message data started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             messageRepository.getMessages(student, semester, folder, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading $folder message data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            messages = it.data
+                            updateData(getFilteredData(lastSearchQuery))
+                            notifyParentDataLoaded()
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading $folder message result: Success")
                     messages = it.data!!

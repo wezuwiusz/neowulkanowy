@@ -14,10 +14,10 @@ import android.widget.RemoteViewsService
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getCurrentThemeWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getDateWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
@@ -107,7 +107,7 @@ class TimetableWidgetFactory(
 
             val semester = semesterRepository.getCurrentSemester(student)
             timetableRepository.getTimetable(student, semester, date, date, false)
-                .toFirstResult().data.orEmpty()
+                .toFirstResult().data?.first.orEmpty()
                 .sortedWith(compareBy({ it.number }, { !it.isStudentPlan }))
                 .filter { if (prefRepository.showWholeClassPlan == "no") it.isStudentPlan else true }
         }

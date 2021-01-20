@@ -3,10 +3,10 @@ package io.github.wulkanowy.ui.modules.timetable
 import android.annotation.SuppressLint
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -34,7 +34,7 @@ class TimetablePresenter @Inject constructor(
     private val timetableRepository: TimetableRepository,
     private val semesterRepository: SemesterRepository,
     private val prefRepository: PreferencesRepository,
-    private val analytics: AnalyticsHelper
+    private val analytics: AnalyticsHelper,
 ) : BasePresenter<TimetableView>(errorHandler, studentRepository) {
 
     private var baseDate: LocalDate = now().nextOrSameSchoolDay
@@ -49,19 +49,19 @@ class TimetablePresenter @Inject constructor(
         view.initView()
         Timber.i("Timetable was initialized")
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        reloadView(ofEpochDay(date ?: baseDate.toEpochDay()))
+        loadData()
         if (currentDate.isHolidays) setBaseDateOnHolidays()
-        reloadView()
     }
 
     fun onPreviousDay() {
-        loadData(currentDate.previousSchoolDay)
-        reloadView()
+        reloadView(currentDate.previousSchoolDay)
+        loadData()
     }
 
     fun onNextDay() {
-        loadData(currentDate.nextSchoolDay)
-        reloadView()
+        reloadView(currentDate.nextSchoolDay)
+        loadData()
     }
 
     fun onPickDate() {
@@ -69,13 +69,13 @@ class TimetablePresenter @Inject constructor(
     }
 
     fun onDateSet(year: Int, month: Int, day: Int) {
-        loadData(of(year, month, day))
-        reloadView()
+        reloadView(of(year, month, day))
+        loadData()
     }
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the timetable")
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onRetry() {
@@ -83,7 +83,7 @@ class TimetablePresenter @Inject constructor(
             showErrorView(false)
             showProgress(true)
         }
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onDetailsClick() {
@@ -96,8 +96,8 @@ class TimetablePresenter @Inject constructor(
             if (view.currentStackSize == 1) {
                 baseDate.also {
                     if (currentDate != it) {
-                        loadData(it)
-                        reloadView()
+                        reloadView(it)
+                        loadData()
                     } else if (!view.isViewEmpty) view.resetView()
                 }
             } else view.popView()
@@ -107,6 +107,11 @@ class TimetablePresenter @Inject constructor(
     fun onTimetableItemSelected(lesson: Timetable) {
         Timber.i("Select timetable item ${lesson.id}")
         view?.showTimetableDialog(lesson)
+    }
+
+    fun onAdditionalLessonsSwitchSelected(): Boolean {
+        view?.openAdditionalLessonsView()
+        return true
     }
 
     fun onCompletedLessonsSwitchSelected(): Boolean {
@@ -127,35 +132,38 @@ class TimetablePresenter @Inject constructor(
         }.launch("holidays")
     }
 
-    private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
-        currentDate = date
+    private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading timetable data started")
 
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            timetableRepository.getTimetable(student, semester, date, date, forceRefresh)
+            timetableRepository.getTimetable(student, semester, currentDate, currentDate, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading timetable data started")
+                Status.LOADING -> {
+                    if (!it.data?.first.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(it.data!!.first)
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading timetable result: Success")
                     view?.apply {
-                        updateData(
-                            showWholeClassPlanType = prefRepository.showWholeClassPlan,
-                            showGroupsInPlanType = prefRepository.showGroupsInPlan,
-                            showTimetableTimers = prefRepository.showTimetableTimers,
-                            data = it.data!!
-                                .filter { item -> if (prefRepository.showWholeClassPlan == "no") item.isStudentPlan else true }
-                                .sortedWith(compareBy({ item -> item.number }, { item -> !item.isStudentPlan }))
-                        )
-                        showEmpty(it.data.isEmpty())
+                        updateData(it.data!!.first)
+                        showEmpty(it.data.first.isEmpty())
                         showErrorView(false)
-                        showContent(it.data.isNotEmpty())
+                        showContent(it.data.first.isNotEmpty())
                     }
                     analytics.logEvent(
                         "load_data",
                         "type" to "timetable",
-                        "items" to it.data!!.size
+                        "items" to it.data!!.first.size
                     )
                 }
                 Status.ERROR -> {
@@ -165,12 +173,25 @@ class TimetablePresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }
         }.launch()
     }
+
+    private fun updateData(lessons: List<Timetable>) {
+        view?.updateData(
+            showWholeClassPlanType = prefRepository.showWholeClassPlan,
+            showGroupsInPlanType = prefRepository.showGroupsInPlan,
+            showTimetableTimers = prefRepository.showTimetableTimers,
+            data = createItems(lessons)
+        )
+    }
+
+    private fun createItems(items: List<Timetable>) = items.filter { item ->
+        if (prefRepository.showWholeClassPlan == "no") item.isStudentPlan else true
+    }.sortedWith(compareBy({ item -> item.number }, { item -> !item.isStudentPlan }))
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
         view?.run {
@@ -183,7 +204,9 @@ class TimetablePresenter @Inject constructor(
         }
     }
 
-    private fun reloadView() {
+    private fun reloadView(date: LocalDate) {
+        currentDate = date
+
         Timber.i("Reload timetable view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)

@@ -2,9 +2,9 @@ package io.github.wulkanowy.ui.modules.mobiledevice
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.MobileDevice
-import io.github.wulkanowy.data.repositories.mobiledevice.MobileDeviceRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.MobileDeviceRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -51,13 +51,25 @@ class MobileDevicePresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading mobile devices data started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             mobileDeviceRepository.getDevices(student, semester, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading mobile devices data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(it.data)
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading mobile devices result: Success")
                     view?.run {
@@ -79,7 +91,7 @@ class MobileDevicePresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }

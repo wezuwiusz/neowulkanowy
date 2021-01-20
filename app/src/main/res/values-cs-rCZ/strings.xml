@@ -159,6 +159,10 @@
     <string name="completed_lessons_topic">Téma</string>
     <string name="completed_lessons_absence">Nepřítomnost</string>
     <string name="completed_lessons_resources">Zdroje</string>
+    <!--Additional lessons-->
+    <string name="additional_lessons_title">Další lekce</string>
+    <string name="additional_lessons_button">Zobrazit další lekce</string>
+    <string name="additional_lessons_no_items">Žádné informace o dalších lekcích</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Souhrn docházky</string>
     <string name="attendance_absence_school">Nepřítomen ze školních důvodů</string>
@@ -211,6 +215,7 @@
     <string name="message_subject">Téma</string>
     <string name="message_content">Obsah</string>
     <string name="message_send_successful">Zpráva úspěšně odeslána</string>
+    <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">Musíte vybrat alespoň 1 příjemce</string>
     <string name="message_content_min_length">Obsah zprávy musí mít alespoň 3 znaky</string>
     <plurals name="message_number_item">

@@ -12,7 +12,7 @@ data class ReportingUnit(
     val studentId: Int,
 
     @ColumnInfo(name = "real_id")
-    val realId: Int,
+    val unitId: Int,
 
     @ColumnInfo(name = "short")
     val shortName: String,

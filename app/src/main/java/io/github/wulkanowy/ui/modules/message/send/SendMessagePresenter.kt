@@ -3,12 +3,12 @@ package io.github.wulkanowy.ui.modules.message.send
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
-import io.github.wulkanowy.data.repositories.message.MessageRepository
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.recipient.RecipientRepository
-import io.github.wulkanowy.data.repositories.reportingunit.ReportingUnitRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.MessageRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.RecipientRepository
+import io.github.wulkanowy.data.repositories.ReportingUnitRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -100,7 +100,7 @@ class SendMessagePresenter @Inject constructor(
 
             Timber.i("Loading recipients started")
             val recipients = when {
-                unit != null -> recipientRepository.getRecipients(student, 2, unit)
+                unit != null -> recipientRepository.getRecipients(student, unit, 2)
                 else -> listOf()
             }.let { createChips(it) }
             Timber.i("Loading recipients result: Success, fetched %d recipients", recipients.size)

@@ -1,8 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="WulkanowyTheme" parent="BaseWulkanowyTheme" />
 
     <style name="BaseWulkanowyTheme" parent="@style/Theme.MaterialComponents.Light">
+        <item name="android:forceDarkAllowed" tools:targetApi="Q">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorPrimary</item>
         <item name="colorOnSecondary">@android:color/white</item>
@@ -31,5 +32,5 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="mdtp_ActionButton.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog"/>
+    <style name="mdtp_ActionButton.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog" />
 </resources>

@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.splash
 
 import io.github.wulkanowy.data.Status
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.flowWithResource
@@ -14,8 +14,13 @@ class SplashPresenter @Inject constructor(
     studentRepository: StudentRepository
 ) : BasePresenter<SplashView>(errorHandler, studentRepository) {
 
-    override fun onAttachView(view: SplashView) {
+    fun onAttachView(view: SplashView, externalUrl: String?) {
         super.onAttachView(view)
+
+        if (!externalUrl.isNullOrBlank()) {
+            return view.openExternalUrlAndFinish(externalUrl)
+        }
+
         flowWithResource { studentRepository.isCurrentStudentSet() }.onEach {
             when (it.status) {
                 Status.LOADING -> Timber.d("Is current user set check started")

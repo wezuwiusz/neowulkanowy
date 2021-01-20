@@ -15,7 +15,7 @@ interface ExamView : BaseView {
 
     fun clearData()
 
-    fun hideRefresh()
+    fun showRefresh(show: Boolean)
 
     fun resetView()
 

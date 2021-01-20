@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 data class MobileDevice(
 
     @ColumnInfo(name = "student_id")
-    val studentId: Int,
+    val userLoginId: Int,
 
     @ColumnInfo(name = "device_id")
     val deviceId: Int,

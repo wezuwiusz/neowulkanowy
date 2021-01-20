@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
+        <item>Svetlý</item>
+        <item>Tmavý</item>
+        <item>Čierny (AMOLED)</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>Jazyk systému</item>
+        <item>Polski</item>
+        <item>English</item>
+        <item>Pусский</item>
+        <item>Українська</item>
+        <item>Deutsch</item>
+        <item>Čeština</item>
+    </string-array>
+    <string-array name="services_interval_entries">
+        <item>15 minút</item>
+        <item>30 minút</item>
+        <item>1 hodina</item>
+        <item>2 hodiny</item>
+        <item>6 hodín</item>
+        <item>12 hodín</item>
+        <item>24 hodín</item>
+    </string-array>
+    <string-array name="grade_modifier_entries">
+        <item>0,00</item>
+        <item>0,25</item>
+        <item>0,33</item>
+        <item>0,5</item>
+        <item>0,75</item>
+    </string-array>
+    <string-array name="grade_sorting_mode_entries">
+        <item>Abecedne</item>
+        <item>Podľa dátumu</item>
+    </string-array>
+    <string-array name="grade_color_scheme_entries">
+        <item>Dzienniczek+</item>
+        <item>Wulkanowy</item>
+        <item>Farby známok v denníku</item>
+    </string-array>
+    <string-array name="grade_average_mode_entries">
+        <item>Priemer známok až od druhého semestra</item>
+        <item>Priemer známok z oboch semestrov</item>
+        <item>Priemer známok z celého roka</item>
+    </string-array>
+    <string-array name="timetable_show_whole_class_entries">
+        <item>Neukaz</item>
+        <item>Zobrazit vše</item>
+        <item>Zobrazit menší</item>
+    </string-array>
+</resources>

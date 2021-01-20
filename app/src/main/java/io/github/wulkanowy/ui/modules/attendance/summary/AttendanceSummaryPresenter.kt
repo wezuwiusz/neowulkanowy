@@ -1,11 +1,12 @@
 package io.github.wulkanowy.ui.modules.attendance.summary
 
 import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.Subject
-import io.github.wulkanowy.data.repositories.attendancesummary.AttendanceSummaryRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.data.repositories.subject.SubjectRepository
+import io.github.wulkanowy.data.repositories.AttendanceSummaryRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.SubjectRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -74,6 +75,8 @@ class AttendanceSummaryPresenter @Inject constructor(
     }
 
     private fun loadData(subjectId: Int, forceRefresh: Boolean = false) {
+        Timber.i("Loading attendance summary data started")
+
         currentSubjectId = subjectId
 
         flowWithResourceIn {
@@ -82,15 +85,23 @@ class AttendanceSummaryPresenter @Inject constructor(
             attendanceSummaryRepository.getAttendanceSummary(student, semester, subjectId, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading attendance summary data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateDataSet(sortItems(it.data))
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading attendance summary result: Success")
                     view?.apply {
                         showEmpty(it.data!!.isEmpty())
                         showContent(it.data.isNotEmpty())
-                        updateDataSet(it.data.sortedByDescending { item ->
-                            if (item.month.value <= Month.JUNE.value) item.month.value + 12 else item.month.value
-                        })
+                        updateDataSet(sortItems(it.data))
                     }
                     analytics.logEvent(
                         "load_data",
@@ -106,11 +117,15 @@ class AttendanceSummaryPresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }
         }.launch()
+    }
+
+    private fun sortItems(items: List<AttendanceSummary>) = items.sortedByDescending { item ->
+        if (item.month.value <= Month.JUNE.value) item.month.value + 12 else item.month.value
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

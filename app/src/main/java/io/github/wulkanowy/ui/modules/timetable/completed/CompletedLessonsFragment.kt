@@ -89,8 +89,8 @@ class CompletedLessonsFragment :
         binding.completedLessonsNavDate.text = date
     }
 
-    override fun hideRefresh() {
-        binding.completedLessonsSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.completedLessonsSwipe.isRefreshing = show
     }
 
     override fun showEmpty(show: Boolean) {

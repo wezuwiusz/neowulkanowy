@@ -18,7 +18,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
     crossinline query: () -> Flow<ResultType>,
     crossinline fetch: suspend (ResultType) -> RequestType,
     crossinline saveFetchResult: suspend (old: ResultType, new: RequestType) -> Unit,
-    crossinline onFetchFailed: (Throwable) -> Unit = { Unit },
+    crossinline onFetchFailed: (Throwable) -> Unit = { },
     crossinline shouldFetch: (ResultType) -> Boolean = { true },
     crossinline filterResult: (ResultType) -> ResultType = { it }
 ) = flow {
@@ -29,7 +29,8 @@ inline fun <ResultType, RequestType> networkBoundResource(
         if (showSavedOnLoading) emit(Resource.loading(filterResult(data)))
 
         try {
-            saveFetchResult(data, fetch(data))
+            val newData = fetch(data)
+            saveFetchResult(data, newData)
             query().map { Resource.success(filterResult(it)) }
         } catch (throwable: Throwable) {
             onFetchFailed(throwable)
@@ -83,7 +84,7 @@ fun <T> flowWithResourceIn(block: suspend () -> Flow<Resource<T>>) = flow {
     block()
         .catch { emit(Resource.error(it)) }
         .collect {
-            if (it.status != Status.LOADING) { // LOADING is already emitted
+            if (it.status != Status.LOADING || (it.status == Status.LOADING && it.data != null)) { // LOADING without data is already emitted
                 emit(it)
             }
         }

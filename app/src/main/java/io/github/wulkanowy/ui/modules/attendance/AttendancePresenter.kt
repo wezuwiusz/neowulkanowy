@@ -3,10 +3,10 @@ package io.github.wulkanowy.ui.modules.attendance
 import android.annotation.SuppressLint
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Attendance
-import io.github.wulkanowy.data.repositories.attendance.AttendanceRepository
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.AttendanceRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -51,23 +51,23 @@ class AttendancePresenter @Inject constructor(
         view.initView()
         Timber.i("Attendance view was initialized")
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        reloadView(ofEpochDay(date ?: baseDate.toEpochDay()))
+        loadData()
         if (currentDate.isHolidays) setBaseDateOnHolidays()
-        reloadView()
     }
 
     fun onPreviousDay() {
         view?.finishActionMode()
         attendanceToExcuseList.clear()
-        loadData(currentDate.previousSchoolDay)
-        reloadView()
+        reloadView(currentDate.previousSchoolDay)
+        loadData()
     }
 
     fun onNextDay() {
         view?.finishActionMode()
         attendanceToExcuseList.clear()
-        loadData(currentDate.nextSchoolDay)
-        reloadView()
+        reloadView(currentDate.nextSchoolDay)
+        loadData()
     }
 
     fun onPickDate() {
@@ -75,13 +75,13 @@ class AttendancePresenter @Inject constructor(
     }
 
     fun onDateSet(year: Int, month: Int, day: Int) {
-        loadData(LocalDate.of(year, month, day))
-        reloadView()
+        reloadView(LocalDate.of(year, month, day))
+        loadData()
     }
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the attendance")
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onRetry() {
@@ -89,7 +89,7 @@ class AttendancePresenter @Inject constructor(
             showErrorView(false)
             showProgress(true)
         }
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onDetailsClick() {
@@ -102,8 +102,8 @@ class AttendancePresenter @Inject constructor(
             if (view.currentStackSize == 1) {
                 baseDate.also {
                     if (currentDate != it) {
-                        loadData(it)
-                        reloadView()
+                        reloadView(it)
+                        loadData()
                     } else if (!view.isViewEmpty) view.resetView()
                 }
             } else view.popView()
@@ -184,17 +184,30 @@ class AttendancePresenter @Inject constructor(
         }.launch("holidays")
     }
 
-    private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
+    private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading attendance data started")
-        currentDate = date
 
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            attendanceRepository.getAttendance(student, semester, date, date, forceRefresh)
+            attendanceRepository.getAttendance(student, semester, currentDate, currentDate, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> view?.showExcuseButton(false)
+                Status.LOADING -> {
+                    view?.showExcuseButton(false)
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(it.data.let { items ->
+                                if (prefRepository.isShowPresent) items
+                                else items.filter { item -> !item.presence }
+                            }.sortedBy { item -> item.number })
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading attendance result: Success")
                     view?.apply {
@@ -220,7 +233,7 @@ class AttendancePresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }
@@ -250,12 +263,12 @@ class AttendancePresenter @Inject constructor(
                         showContent(true)
                         showProgress(false)
                     }
-                    loadData(currentDate, forceRefresh = true)
+                    loadData(forceRefresh = true)
                 }
                 Status.ERROR -> {
                     Timber.i("Excusing for absence result: An exception occurred")
                     errorHandler.dispatch(it.error!!)
-                    loadData(currentDate)
+                    loadData()
                 }
             }
         }.launch("excuse")
@@ -272,11 +285,14 @@ class AttendancePresenter @Inject constructor(
         }
     }
 
-    private fun reloadView() {
+    private fun reloadView(date: LocalDate) {
+        currentDate = date
+
         Timber.i("Reload attendance view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)
             enableSwipe(false)
+            showRefresh(false)
             showContent(false)
             showEmpty(false)
             showErrorView(false)

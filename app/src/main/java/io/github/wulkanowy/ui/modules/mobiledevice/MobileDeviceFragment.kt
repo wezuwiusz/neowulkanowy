@@ -100,8 +100,8 @@ class MobileDeviceFragment :
         }
     }
 
-    override fun hideRefresh() {
-        binding.mobileDevicesSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.mobileDevicesSwipe.isRefreshing = show
     }
 
     override fun showProgress(show: Boolean) {

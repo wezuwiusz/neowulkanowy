@@ -17,7 +17,7 @@ interface MobileDeviceView : BaseView {
 
     fun showUndo(device: MobileDevice, position: Int)
 
-    fun hideRefresh()
+    fun showRefresh(show: Boolean)
 
     fun showProgress(show: Boolean)
 

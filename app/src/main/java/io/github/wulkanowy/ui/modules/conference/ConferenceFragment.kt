@@ -67,8 +67,8 @@ class ConferenceFragment : BaseFragment<FragmentConferenceBinding>(R.layout.frag
         }
     }
 
-    override fun hideRefresh() {
-        binding.conferenceSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.conferenceSwipe.isRefreshing = show
     }
 
     override fun showProgress(show: Boolean) {

@@ -6,7 +6,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SharedPrefProvider @Inject constructor(private val sharedPref: SharedPreferences) {
+class SharedPrefProvider @Inject constructor(
+    private val sharedPref: SharedPreferences
+) {
 
     companion object {
         const val APP_VERSION_CODE_KEY = "app_version_code"

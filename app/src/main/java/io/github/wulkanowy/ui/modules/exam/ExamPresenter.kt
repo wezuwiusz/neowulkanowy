@@ -2,9 +2,9 @@ package io.github.wulkanowy.ui.modules.exam
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Exam
-import io.github.wulkanowy.data.repositories.exam.ExamRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.ExamRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -45,24 +45,24 @@ class ExamPresenter @Inject constructor(
         view.initView()
         Timber.i("Exam view was initialized")
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        reloadView(ofEpochDay(date ?: baseDate.toEpochDay()))
+        loadData()
         if (currentDate.isHolidays) setBaseDateOnHolidays()
-        reloadView()
     }
 
     fun onPreviousWeek() {
-        loadData(currentDate.minusDays(7))
-        reloadView()
+        reloadView(currentDate.minusDays(7))
+        loadData()
     }
 
     fun onNextWeek() {
-        loadData(currentDate.plusDays(7))
-        reloadView()
+        reloadView(currentDate.plusDays(7))
+        loadData()
     }
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the exam")
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onRetry() {
@@ -70,7 +70,7 @@ class ExamPresenter @Inject constructor(
             showErrorView(false)
             showProgress(true)
         }
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onDetailsClick() {
@@ -86,8 +86,8 @@ class ExamPresenter @Inject constructor(
         Timber.i("Exam view is reselected")
         baseDate.also {
             if (currentDate != it) {
-                loadData(it)
-                reloadView()
+                reloadView(it)
+                loadData()
             } else if (view?.isViewEmpty == false) view?.resetView()
         }
     }
@@ -105,8 +105,8 @@ class ExamPresenter @Inject constructor(
         }.launch("holidays")
     }
 
-    private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
-        currentDate = date
+    private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading exam data started")
 
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
@@ -114,7 +114,17 @@ class ExamPresenter @Inject constructor(
             examRepository.getExams(student, semester, currentDate.monday, currentDate.sunday, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading exam data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(createExamItems(it.data))
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading exam result: Success")
                     view?.apply {
@@ -136,7 +146,7 @@ class ExamPresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }
@@ -162,7 +172,9 @@ class ExamPresenter @Inject constructor(
         }.flatten()
     }
 
-    private fun reloadView() {
+    private fun reloadView(date: LocalDate) {
+        currentDate = date
+
         Timber.i("Reload exam view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)

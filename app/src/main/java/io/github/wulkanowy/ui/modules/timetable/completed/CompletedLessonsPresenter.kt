@@ -3,9 +3,9 @@ package io.github.wulkanowy.ui.modules.timetable.completed
 import android.annotation.SuppressLint
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.CompletedLesson
-import io.github.wulkanowy.data.repositories.completedlessons.CompletedLessonsRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.CompletedLessonsRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
@@ -50,19 +50,19 @@ class CompletedLessonsPresenter @Inject constructor(
             this.view?.showEmpty(true)
             Timber.i("Completed lessons feature disabled by school")
         }
-        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        reloadView(ofEpochDay(date ?: baseDate.toEpochDay()))
+        loadData()
         if (currentDate.isHolidays) setBaseDateOnHolidays()
-        reloadView()
     }
 
     fun onPreviousDay() {
-        loadData(currentDate.previousSchoolDay)
-        reloadView()
+        reloadView(currentDate.previousSchoolDay)
+        loadData()
     }
 
     fun onNextDay() {
-        loadData(currentDate.nextSchoolDay)
-        reloadView()
+        reloadView(currentDate.nextSchoolDay)
+        loadData()
     }
 
     fun onPickDate() {
@@ -70,13 +70,13 @@ class CompletedLessonsPresenter @Inject constructor(
     }
 
     fun onDateSet(year: Int, month: Int, day: Int) {
-        loadData(LocalDate.of(year, month, day))
-        reloadView()
+        reloadView(LocalDate.of(year, month, day))
+        loadData()
     }
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the completed lessons")
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onRetry() {
@@ -84,7 +84,7 @@ class CompletedLessonsPresenter @Inject constructor(
             showErrorView(false)
             showProgress(true)
         }
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onDetailsClick() {
@@ -109,16 +109,26 @@ class CompletedLessonsPresenter @Inject constructor(
         }.launch("holidays")
     }
 
-    private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
-        currentDate = date
+    private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading completed lessons data started")
 
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            completedLessonsRepository.getCompletedLessons(student, semester, date, date, forceRefresh)
+            completedLessonsRepository.getCompletedLessons(student, semester, currentDate, currentDate, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading completed lessons data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(it.data.sortedBy { item -> item.number })
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading completed lessons lessons result: Success")
                     view?.apply {
@@ -140,7 +150,7 @@ class CompletedLessonsPresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }
@@ -158,7 +168,9 @@ class CompletedLessonsPresenter @Inject constructor(
         }
     }
 
-    private fun reloadView() {
+    private fun reloadView(date: LocalDate) {
+        currentDate = date
+
         Timber.i("Reload completed lessons view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)

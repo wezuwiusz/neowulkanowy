@@ -16,6 +16,7 @@ import io.github.wulkanowy.databinding.FragmentTimetableBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.timetable.additional.AdditionalLessonsFragment
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
@@ -84,8 +85,11 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.timetableMenuCompletedLessons) presenter.onCompletedLessonsSwitchSelected()
-        else false
+        return when (item.itemId) {
+            R.id.timetableMenuAdditionalLessons -> presenter.onAdditionalLessonsSwitchSelected()
+            R.id.timetableMenuCompletedLessons -> presenter.onCompletedLessonsSwitchSelected()
+            else -> false
+        }
     }
 
     override fun updateData(data: List<Timetable>, showWholeClassPlanType: String, showGroupsInPlanType: Boolean, showTimetableTimers: Boolean) {
@@ -109,8 +113,8 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         binding.timetableNavDate.text = date
     }
 
-    override fun hideRefresh() {
-        binding.timetableSwipe.isRefreshing = false
+    override fun showRefresh(show: Boolean) {
+        binding.timetableSwipe.isRefreshing = show
     }
 
     override fun resetView() {
@@ -174,6 +178,10 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
             scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
             show(this@TimetableFragment.parentFragmentManager, null)
         }
+    }
+
+    override fun openAdditionalLessonsView() {
+        (activity as? MainActivity)?.pushView(AdditionalLessonsFragment.newInstance())
     }
 
     override fun openCompletedLessonsView() {

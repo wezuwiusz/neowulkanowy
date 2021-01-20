@@ -2,14 +2,14 @@ package io.github.wulkanowy.ui.modules.settings
 
 import androidx.work.WorkInfo
 import com.chuckerteam.chucker.api.ChuckerCollector
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.isHolidays
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onEach
@@ -46,7 +46,10 @@ class SettingsPresenter @Inject constructor(
                 appThemeKey -> view?.recreateView()
                 isUpcomingLessonsNotificationsEnableKey -> if (!isUpcomingLessonsNotificationsEnable) timetableNotificationHelper.cancelNotification()
                 appLanguageKey -> view?.run {
-                    updateLanguage(if (appLanguage == "system") appInfo.systemLanguage else appLanguage)
+                    val newLang = if (appLanguage == "system") appInfo.systemLanguage else appLanguage
+                    analytics.logEvent("language", "setting_changed" to newLang)
+
+                    updateLanguage(newLang)
                     recreateView()
                 }
             }

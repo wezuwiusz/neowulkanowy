@@ -2,9 +2,9 @@ package io.github.wulkanowy.ui.modules.homework
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Homework
-import io.github.wulkanowy.data.repositories.homework.HomeworkRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.HomeworkRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -44,24 +44,24 @@ class HomeworkPresenter @Inject constructor(
         view.initView()
         Timber.i("Homework view was initialized")
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        loadData(ofEpochDay(date ?: baseDate.toEpochDay()))
+        reloadView(ofEpochDay(date ?: baseDate.toEpochDay()))
+        loadData()
         if (currentDate.isHolidays) setBaseDateOnHolidays()
-        reloadView()
     }
 
     fun onPreviousDay() {
-        loadData(currentDate.minusDays(7))
-        reloadView()
+        reloadView(currentDate.minusDays(7))
+        loadData()
     }
 
     fun onNextDay() {
-        loadData(currentDate.plusDays(7))
-        reloadView()
+        reloadView(currentDate.plusDays(7))
+        loadData()
     }
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the homework")
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onRetry() {
@@ -69,7 +69,7 @@ class HomeworkPresenter @Inject constructor(
             showErrorView(false)
             showProgress(true)
         }
-        loadData(currentDate, true)
+        loadData(true)
     }
 
     fun onDetailsClick() {
@@ -94,16 +94,26 @@ class HomeworkPresenter @Inject constructor(
         }.launch("holidays")
     }
 
-    private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
-        currentDate = date
+    private fun loadData(forceRefresh: Boolean = false) {
+        Timber.i("Loading homework data started")
 
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            homeworkRepository.getHomework(student, semester, date, date, forceRefresh)
+            homeworkRepository.getHomework(student, semester, currentDate, currentDate, forceRefresh)
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading homework data started")
+                Status.LOADING -> {
+                    if (!it.data.isNullOrEmpty()) {
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showContent(true)
+                            updateData(createHomeworkItem(it.data))
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading homework result: Success")
                     view?.apply {
@@ -125,7 +135,7 @@ class HomeworkPresenter @Inject constructor(
             }
         }.afterLoading {
             view?.run {
-                hideRefresh()
+                showRefresh(false)
                 showProgress(false)
                 enableSwipe(true)
             }
@@ -151,7 +161,9 @@ class HomeworkPresenter @Inject constructor(
         }.flatten()
     }
 
-    private fun reloadView() {
+    private fun reloadView(date: LocalDate) {
+        currentDate = date
+
         Timber.i("Reload homework view with the date ${currentDate.toFormattedString()}")
         view?.apply {
             showProgress(true)

@@ -4,10 +4,10 @@ import android.content.Intent
 import android.widget.RemoteViewsService
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.SharedPrefProvider
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.data.repositories.timetable.TimetableRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetFactory
 import timber.log.Timber
 import javax.inject.Inject

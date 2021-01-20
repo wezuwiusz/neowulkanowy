@@ -1,11 +1,13 @@
 package io.github.wulkanowy.utils
 
-import io.github.wulkanowy.getTimetableEntity
+import io.github.wulkanowy.data.db.entities.Timetable
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalDateTime.now
 
 class TimetableExtensionTest {
@@ -40,4 +42,29 @@ class TimetableExtensionTest {
         assertTrue(getTimetableEntity(end = now().minusSeconds(1)).isJustFinished)
         assertFalse(getTimetableEntity(end = now().plusSeconds(1)).isJustFinished)
     }
+
+    private fun getTimetableEntity(
+        isStudentPlan: Boolean = false,
+        canceled: Boolean = false,
+        start: LocalDateTime = now(),
+        end: LocalDateTime = now()
+    ) = Timetable(
+        studentId = 0,
+        subject = "",
+        number = 0,
+        diaryId = 0,
+        canceled = canceled,
+        changes = false,
+        date = LocalDate.now(),
+        end = end,
+        group = "",
+        info = "",
+        isStudentPlan = isStudentPlan,
+        room = "",
+        roomOld = "",
+        start = start,
+        subjectOld = "",
+        teacher = "",
+        teacherOld = ""
+    )
 }

@@ -2,11 +2,12 @@ package io.github.wulkanowy.ui.modules.grade.statistics
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Subject
-import io.github.wulkanowy.data.repositories.gradestatistics.GradeStatisticsRepository
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
-import io.github.wulkanowy.data.repositories.subject.SubjectRepository
+import io.github.wulkanowy.data.pojos.GradeStatisticsItem
+import io.github.wulkanowy.data.repositories.GradeStatisticsRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.SubjectRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -143,6 +144,8 @@ class GradeStatisticsPresenter @Inject constructor(
     }
 
     private fun loadDataByType(semesterId: Int, subjectName: String, type: ViewType, forceRefresh: Boolean = false) {
+        Timber.i("Loading grade stats data started")
+
         currentSubjectName = if (preferencesRepository.showAllSubjectsOnStatisticsList) "Wszystkie" else subjectName
         currentType = type
 
@@ -160,17 +163,24 @@ class GradeStatisticsPresenter @Inject constructor(
             }
         }.onEach {
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading grade stats data started")
+                Status.LOADING -> {
+                    val isNoContent = it.data == null || checkIsNoContent(it.data, type)
+                    if (!isNoContent) {
+                        view?.run {
+                            showEmpty(isNoContent)
+                            showContent(!isNoContent)
+                            showErrorView(false)
+                            enableSwipe(true)
+                            showRefresh(true)
+                            updateData(it.data!!, preferencesRepository.gradeColorTheme, preferencesRepository.showAllSubjectsOnStatisticsList)
+                            showSubjects(!preferencesRepository.showAllSubjectsOnStatisticsList)
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading grade stats result: Success")
                     view?.run {
-                        val isNoContent = it.data!!.isEmpty() || when (type) {
-                            ViewType.SEMESTER -> it.data.firstOrNull()?.semester?.amounts.orEmpty().sum() == 0
-                            ViewType.PARTIAL -> it.data.firstOrNull()?.partial?.classAmounts.orEmpty().sum() == 0
-                            ViewType.POINTS -> it.data.firstOrNull()?.points?.let { points ->
-                                points.student == .0 && points.others == .0
-                            } ?: false
-                        }
+                        val isNoContent = checkIsNoContent(it.data!!, type)
                         showEmpty(isNoContent)
                         showContent(!isNoContent)
                         showErrorView(false)
@@ -196,6 +206,16 @@ class GradeStatisticsPresenter @Inject constructor(
                 notifyParentDataLoaded(semesterId)
             }
         }.launch("load")
+    }
+
+    private fun checkIsNoContent(items: List<GradeStatisticsItem>, type: ViewType): Boolean {
+        return items.isEmpty() || when (type) {
+            ViewType.SEMESTER -> items.firstOrNull()?.semester?.amounts.orEmpty().sum() == 0
+            ViewType.PARTIAL -> items.firstOrNull()?.partial?.classAmounts.orEmpty().sum() == 0
+            ViewType.POINTS -> items.firstOrNull()?.points?.let { points ->
+                points.student == .0 && points.others == .0
+            } ?: false
+        }
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

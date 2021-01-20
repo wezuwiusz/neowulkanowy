@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlin_version = '1.4.21'
-        about_libraries = '8.6.3'
+        about_libraries = '8.6.7'
         hilt_version = "2.30.1-alpha"
     }
     repositories {
@@ -13,13 +13,13 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath 'com.google.gms:google-services:4.3.4'
         classpath 'com.huawei.agconnect:agcp:1.4.2.301'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
         classpath "com.github.triplet.gradle:play-publisher:2.8.0"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.1"
         classpath "gradle.plugin.com.star-zero.gradle:githook:1.2.0"
         classpath "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:$about_libraries"
     }

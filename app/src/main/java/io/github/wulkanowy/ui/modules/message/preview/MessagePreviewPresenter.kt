@@ -5,13 +5,13 @@ import android.os.Build
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageAttachment
-import io.github.wulkanowy.data.repositories.message.MessageFolder
-import io.github.wulkanowy.data.repositories.message.MessageRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.enums.MessageFolder
+import io.github.wulkanowy.data.repositories.MessageRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
@@ -65,18 +65,24 @@ class MessagePreviewPresenter @Inject constructor(
                 Status.LOADING -> Timber.i("Loading message ${message.messageId} preview started")
                 Status.SUCCESS -> {
                     Timber.i("Loading message ${message.messageId} preview result: Success ")
-                    checkNotNull(it.data, { "Can't find message in local db! Probably no longer exist in this folder" })
-                    this@MessagePreviewPresenter.message = it.data.message
-                    this@MessagePreviewPresenter.attachments = it.data.attachments
-                    view?.apply {
-                        setMessageWithAttachment(it.data)
-                        initOptions()
+                    if (it.data != null) {
+                        this@MessagePreviewPresenter.message = it.data.message
+                        this@MessagePreviewPresenter.attachments = it.data.attachments
+                        view?.apply {
+                            setMessageWithAttachment(it.data)
+                            initOptions()
+                        }
+                        analytics.logEvent(
+                            "load_item",
+                            "type" to "message_preview",
+                            "length" to it.data.message.content.length
+                        )
+                    } else {
+                        view?.run {
+                            showMessage(messageNotExists)
+                            popView()
+                        }
                     }
-                    analytics.logEvent(
-                        "load_item",
-                        "type" to "message_preview",
-                        "length" to it.data.message.content.length
-                    )
                 }
                 Status.ERROR -> {
                     Timber.i("Loading message ${message.messageId} preview result: An exception occurred ")

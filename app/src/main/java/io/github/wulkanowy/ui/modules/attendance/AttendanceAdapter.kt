@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
-import io.github.wulkanowy.data.repositories.attendance.SentExcuseStatus
+import io.github.wulkanowy.data.enums.SentExcuseStatus
 import io.github.wulkanowy.databinding.ItemAttendanceBinding
 import io.github.wulkanowy.utils.description
 import javax.inject.Inject

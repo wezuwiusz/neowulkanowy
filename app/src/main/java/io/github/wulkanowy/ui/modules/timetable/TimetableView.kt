@@ -18,7 +18,7 @@ interface TimetableView : BaseView {
 
     fun clearData()
 
-    fun hideRefresh()
+    fun showRefresh(show: Boolean)
 
     fun resetView()
 
@@ -43,6 +43,8 @@ interface TimetableView : BaseView {
     fun showDatePickerDialog(currentDate: LocalDate)
 
     fun popView()
+
+    fun openAdditionalLessonsView()
 
     fun openCompletedLessonsView()
 }

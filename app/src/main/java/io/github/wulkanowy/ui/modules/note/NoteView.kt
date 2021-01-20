@@ -27,7 +27,7 @@ interface NoteView : BaseView {
 
     fun showContent(show: Boolean)
 
-    fun hideRefresh()
+    fun showRefresh(show: Boolean)
 
     fun showNoteDialog(note: Note)
 }

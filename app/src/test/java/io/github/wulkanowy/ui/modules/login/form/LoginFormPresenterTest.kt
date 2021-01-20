@@ -3,7 +3,7 @@ package io.github.wulkanowy.ui.modules.login.form
 import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.mockk.MockKAnnotations
@@ -16,8 +16,8 @@ import io.mockk.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.time.LocalDateTime.now
 import java.io.IOException
+import java.time.LocalDateTime.now
 
 class LoginFormPresenterTest {
 

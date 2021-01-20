@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.base
 
 import io.github.wulkanowy.data.Status
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

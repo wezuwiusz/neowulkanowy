@@ -2,7 +2,7 @@ package io.github.wulkanowy.services.sync.works
 
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.repositories.gradestatistics.GradeStatisticsRepository
+import io.github.wulkanowy.data.repositories.GradeStatisticsRepository
 import io.github.wulkanowy.utils.waitForResult
 import javax.inject.Inject
 

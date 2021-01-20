@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.settings
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -41,10 +40,6 @@ class SettingsFragment : PreferenceFragmentCompat(),
     override val syncSuccessString get() = getString(R.string.pref_services_message_sync_success)
 
     override val syncFailedString get() = getString(R.string.pref_services_message_sync_failed)
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
 
     override fun initView() {
         findPreference<Preference>(getString(R.string.pref_key_services_force_sync))?.run {

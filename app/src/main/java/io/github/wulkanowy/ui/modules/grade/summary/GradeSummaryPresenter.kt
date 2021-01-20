@@ -2,7 +2,7 @@ package io.github.wulkanowy.ui.modules.grade.summary
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.GradeSummary
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
@@ -37,12 +37,28 @@ class GradeSummaryPresenter @Inject constructor(
     }
 
     private fun loadData(semesterId: Int, forceRefresh: Boolean) {
+        Timber.i("Loading grade summary started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             averageProvider.getGradesDetailsWithAverage(student, semesterId, forceRefresh)
         }.onEach {
+            Timber.d("Loading grade summary status: ${it.status}, data: ${it.data != null}")
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading grade summary started")
+                Status.LOADING -> {
+                    val items = createGradeSummaryItems(it.data.orEmpty())
+                    if (items.isNotEmpty()) {
+                        Timber.i("Loading grade summary result: load cached data")
+                        view?.run {
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showEmpty(false)
+                            showContent(true)
+                            updateData(items)
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading grade summary result: Success")
                     val items = createGradeSummaryItems(it.data!!)

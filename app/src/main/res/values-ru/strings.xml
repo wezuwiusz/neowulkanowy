@@ -159,6 +159,10 @@
     <string name="completed_lessons_topic">Тема</string>
     <string name="completed_lessons_absence">Отсутствие</string>
     <string name="completed_lessons_resources">Ресурсы</string>
+    <!--Additional lessons-->
+    <string name="additional_lessons_title">Additional lessons</string>
+    <string name="additional_lessons_button">Show additional lessons</string>
+    <string name="additional_lessons_no_items">No info about additional lessons</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Итоговая посещаемость</string>
     <string name="attendance_absence_school">Отсутствие по школьным причинам</string>
@@ -211,6 +215,7 @@
     <string name="message_subject">Тема</string>
     <string name="message_content">Текст</string>
     <string name="message_send_successful">Сообщение успешно отправлено</string>
+    <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">Вы должны выбрать как минимум одного получателя</string>
     <string name="message_content_min_length">Текст сообщения должен содержать как минимум 3 знака</string>
     <plurals name="message_number_item">

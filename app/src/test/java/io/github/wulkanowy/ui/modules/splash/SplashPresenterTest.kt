@@ -1,7 +1,7 @@
 package io.github.wulkanowy.ui.modules.splash
 
 import io.github.wulkanowy.MainCoroutineRule
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -36,14 +36,14 @@ class SplashPresenterTest {
     @Test
     fun testOpenLoginView() {
         coEvery { studentRepository.isCurrentStudentSet() } returns false
-        presenter.onAttachView(splashView)
+        presenter.onAttachView(splashView, null)
         verify { splashView.openLoginView() }
     }
 
     @Test
     fun testMainMainView() {
         coEvery { studentRepository.isCurrentStudentSet() } returns true
-        presenter.onAttachView(splashView)
+        presenter.onAttachView(splashView, null)
         verify { splashView.openMainView() }
     }
 }

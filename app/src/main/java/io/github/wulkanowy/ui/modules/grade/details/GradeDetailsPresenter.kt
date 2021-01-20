@@ -3,10 +3,10 @@ package io.github.wulkanowy.ui.modules.grade.details
 import android.annotation.SuppressLint
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Grade
-import io.github.wulkanowy.data.repositories.grade.GradeRepository
-import io.github.wulkanowy.data.repositories.preferences.PreferencesRepository
-import io.github.wulkanowy.data.repositories.semester.SemesterRepository
-import io.github.wulkanowy.data.repositories.student.StudentRepository
+import io.github.wulkanowy.data.repositories.GradeRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
@@ -137,15 +137,37 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     private fun loadData(semesterId: Int, forceRefresh: Boolean) {
+        Timber.i("Loading grade details data started")
+
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             averageProvider.getGradesDetailsWithAverage(student, semesterId, forceRefresh)
         }.onEach {
+            Timber.d("Loading grade details status: ${it.status}, data: ${it.data != null}")
             when (it.status) {
-                Status.LOADING -> Timber.i("Loading grade details data started")
+                Status.LOADING -> {
+                    val items = createGradeItems(it.data.orEmpty())
+                    if (items.isNotEmpty()) {
+                        Timber.i("Loading grade details result: load cached data")
+                        view?.run {
+                            updateNewGradesAmount(it.data.orEmpty())
+                            enableSwipe(true)
+                            showRefresh(true)
+                            showProgress(false)
+                            showEmpty(false)
+                            showContent(true)
+                            updateData(
+                                data = items,
+                                isGradeExpandable = preferencesRepository.isGradeExpandable,
+                                gradeColorTheme = preferencesRepository.gradeColorTheme
+                            )
+                            notifyParentDataLoaded(semesterId)
+                        }
+                    }
+                }
                 Status.SUCCESS -> {
                     Timber.i("Loading grade details result: Success")
-                    newGradesAmount = it.data!!.sumBy { item -> item.grades.sumBy { grade -> if (!grade.isRead) 1 else 0 } }
+                    updateNewGradesAmount(it.data!!)
                     updateMarkAsDoneButton()
                     val items = createGradeItems(it.data)
                     view?.run {
@@ -177,6 +199,10 @@ class GradeDetailsPresenter @Inject constructor(
                 notifyParentDataLoaded(semesterId)
             }
         }.launch()
+    }
+
+    private fun updateNewGradesAmount(grades: List<GradeDetailsWithAverage>) {
+        newGradesAmount = grades.sumBy { item -> item.grades.sumBy { grade -> if (!grade.isRead) 1 else 0 } }
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

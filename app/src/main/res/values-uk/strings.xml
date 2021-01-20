@@ -159,6 +159,10 @@
     <string name="completed_lessons_topic">Тема</string>
     <string name="completed_lessons_absence">Відсутність</string>
     <string name="completed_lessons_resources">Ресурси</string>
+    <!--Additional lessons-->
+    <string name="additional_lessons_title">Additional lessons</string>
+    <string name="additional_lessons_button">Show additional lessons</string>
+    <string name="additional_lessons_no_items">No info about additional lessons</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Підсумок відвідуваності</string>
     <string name="attendance_absence_school">Відсутність зі шкільних причин</string>
@@ -211,6 +215,7 @@
     <string name="message_subject">Тема</string>
     <string name="message_content">Зміст</string>
     <string name="message_send_successful">Повідомлення було успішно відправлено</string>
+    <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">Необхідно обрати принаймні 1 адресата</string>
     <string name="message_content_min_length">Зміст повідомлення мусить складатися принаймні з 3 знаків</string>
     <plurals name="message_number_item">

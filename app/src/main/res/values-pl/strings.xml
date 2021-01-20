@@ -159,6 +159,10 @@
     <string name="completed_lessons_topic">Temat</string>
     <string name="completed_lessons_absence">Nieobecność</string>
     <string name="completed_lessons_resources">Zasoby</string>
+    <!--Additional lessons-->
+    <string name="additional_lessons_title">Dodatkowe lekcje</string>
+    <string name="additional_lessons_button">Pokaż dodatkowe lekcje</string>
+    <string name="additional_lessons_no_items">Brak informacji o dodatkowych lekcjach</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
     <string name="attendance_absence_school">Nieobecność z przyczyn szkolnych</string>
@@ -211,6 +215,7 @@
     <string name="message_subject">Temat</string>
     <string name="message_content">Treść</string>
     <string name="message_send_successful">Wiadomość wysłana pomyślnie</string>
+    <string name="message_not_exists">Wiadomość nie istnieje</string>
     <string name="message_required_recipients">Musisz wybrać co najmniej 1 adresata</string>
     <string name="message_content_min_length">Treść wiadomości musi zawierać co najmniej 3 znaki</string>
     <plurals name="message_number_item">
