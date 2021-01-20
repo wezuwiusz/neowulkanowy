@@ -215,6 +215,7 @@
     <string name="message_subject">Temat</string>
     <string name="message_content">Treść</string>
     <string name="message_send_successful">Wiadomość wysłana pomyślnie</string>
+    <string name="message_not_exists">Wiadomość nie istnieje</string>
     <string name="message_required_recipients">Musisz wybrać co najmniej 1 adresata</string>
     <string name="message_content_min_length">Treść wiadomości musi zawierać co najmniej 3 znaki</string>
     <plurals name="message_number_item">

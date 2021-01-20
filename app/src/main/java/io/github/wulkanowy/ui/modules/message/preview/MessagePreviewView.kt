@@ -14,6 +14,8 @@ interface MessagePreviewView : BaseView {
 
     val printHTML: String
 
+    val messageNotExists: String
+
     fun initView()
 
     fun setMessageWithAttachment(item: MessageWithAttachment)

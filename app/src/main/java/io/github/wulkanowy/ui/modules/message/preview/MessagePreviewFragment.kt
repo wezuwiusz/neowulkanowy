@@ -65,6 +65,9 @@ class MessagePreviewFragment :
     override val printHTML: String
         get() = requireContext().assets.open("message-print-page.html").bufferedReader().use { it.readText() }
 
+    override val messageNotExists: String
+        get() = getString(R.string.message_not_exists)
+
     companion object {
         const val MESSAGE_ID_KEY = "message_id"
 

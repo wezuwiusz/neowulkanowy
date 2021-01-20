@@ -223,6 +223,7 @@
     <string name="message_subject">Subject</string>
     <string name="message_content">Content</string>
     <string name="message_send_successful">Message sent successfully</string>
+    <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">You need to choose at least 1 recipient</string>
     <string name="message_content_min_length">The message content must be at least 3 characters</string>
     <plurals name="message_number_item">
