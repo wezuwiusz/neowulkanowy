@@ -215,6 +215,7 @@
     <string name="message_subject">Téma</string>
     <string name="message_content">Obsah</string>
     <string name="message_send_successful">Zpráva úspěšně odeslána</string>
+    <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">Musíte vybrat alespoň 1 příjemce</string>
     <string name="message_content_min_length">Obsah zprávy musí mít alespoň 3 znaky</string>
     <plurals name="message_number_item">

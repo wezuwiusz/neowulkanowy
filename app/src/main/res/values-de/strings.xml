@@ -199,6 +199,7 @@
     <string name="message_subject">Thema</string>
     <string name="message_content">Inhalt</string>
     <string name="message_send_successful">Nachricht erfolgreich gesendet</string>
+    <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">Sie müssen mindestens 1 Empfänger auswählen.</string>
     <string name="message_content_min_length">Der Inhalt der Nachricht muss mindestens 3 Zeichen lang sein.</string>
     <plurals name="message_number_item">

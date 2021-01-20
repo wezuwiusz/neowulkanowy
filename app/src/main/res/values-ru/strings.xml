@@ -215,6 +215,7 @@
     <string name="message_subject">Тема</string>
     <string name="message_content">Текст</string>
     <string name="message_send_successful">Сообщение успешно отправлено</string>
+    <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">Вы должны выбрать как минимум одного получателя</string>
     <string name="message_content_min_length">Текст сообщения должен содержать как минимум 3 знака</string>
     <plurals name="message_number_item">

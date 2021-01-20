@@ -215,6 +215,7 @@
     <string name="message_subject">Тема</string>
     <string name="message_content">Зміст</string>
     <string name="message_send_successful">Повідомлення було успішно відправлено</string>
+    <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">Необхідно обрати принаймні 1 адресата</string>
     <string name="message_content_min_length">Зміст повідомлення мусить складатися принаймні з 3 знаків</string>
     <plurals name="message_number_item">
