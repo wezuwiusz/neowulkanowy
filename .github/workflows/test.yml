@@ -135,6 +135,7 @@ jobs:
             gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg
         - name: Upload apk to google play
           env:
+            PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
             PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
             PLAY_SERVICE_ACCOUNT_EMAIL: ${{ secrets.PLAY_SERVICE_ACCOUNT_EMAIL }}
             PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
