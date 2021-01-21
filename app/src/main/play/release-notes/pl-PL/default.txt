@@ -1,4 +1,4 @@
-Wersja 0.24.2
+Wersja 0.24.3
 - naprawiliśmy odczytywanie wiadomości
 - naprawiliśmy niekończące się ładowanie w ocenach na drugim semestrze
 - naprawiliśmy ciemny motyw na MIUI 12
