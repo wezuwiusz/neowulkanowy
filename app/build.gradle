@@ -18,8 +18,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 79
-        versionName "0.24.1"
+        versionCode 80
+        versionName "0.24.2"
         multiDexEnabled true
         resValue "string", "app_name", "Wulkanowy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
