@@ -1,6 +1,7 @@
 package io.github.wulkanowy.utils
 
 import android.annotation.SuppressLint
+import java.text.SimpleDateFormat
 import java.time.DayOfWeek.FRIDAY
 import java.time.DayOfWeek.MONDAY
 import java.time.DayOfWeek.SATURDAY
@@ -8,12 +9,12 @@ import java.time.DayOfWeek.SUNDAY
 import java.time.Instant.ofEpochMilli
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalDateTime.now
 import java.time.LocalDateTime.ofInstant
 import java.time.Month
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter.ofPattern
-import java.time.format.TextStyle.FULL
 import java.time.temporal.TemporalAdjusters.firstInMonth
 import java.time.temporal.TemporalAdjusters.next
 import java.time.temporal.TemporalAdjusters.previous
@@ -33,24 +34,10 @@ fun LocalDateTime.toFormattedString(format: String = DATE_PATTERN): String = for
 
 @SuppressLint("DefaultLocale")
 fun Month.getFormattedName(): String {
-    return getDisplayName(FULL, Locale.getDefault())
-        .let {
-            when (it) {
-                "stycznia" -> "Styczeń"
-                "lutego" -> "Luty"
-                "marca" -> "Marzec"
-                "kwietnia" -> "Kwiecień"
-                "maja" -> "Maj"
-                "czerwca" -> "Czerwiec"
-                "lipca" -> "Lipiec"
-                "sierpnia" -> "Sierpień"
-                "września" -> "Wrzesień"
-                "października" -> "Październik"
-                "listopada" -> "Listopad"
-                "grudnia" -> "Grudzień"
-                else -> it
-            }
-        }.capitalize()
+    val formatter = SimpleDateFormat("LLLL", Locale.getDefault())
+
+    val date = now().withMonth(value)
+    return formatter.format(date.toInstant(ZoneOffset.UTC).toEpochMilli()).capitalize()
 }
 
 inline val LocalDate.nextSchoolDay: LocalDate
