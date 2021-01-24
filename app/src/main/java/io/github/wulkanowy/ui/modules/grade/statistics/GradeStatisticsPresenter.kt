@@ -172,6 +172,7 @@ class GradeStatisticsPresenter @Inject constructor(
                             showErrorView(false)
                             enableSwipe(true)
                             showRefresh(true)
+                            showProgress(false)
                             updateData(it.data!!, preferencesRepository.gradeColorTheme, preferencesRepository.showAllSubjectsOnStatisticsList)
                             showSubjects(!preferencesRepository.showAllSubjectsOnStatisticsList)
                         }
