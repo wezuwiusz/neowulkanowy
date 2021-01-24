@@ -128,6 +128,7 @@ class AdditionalLessonsFragment :
             setDateRangeLimiter(SchooldaysRangeLimiter())
             version = DatePickerDialog.Version.VERSION_2
             scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
+            vibrate(false)
             show(this@AdditionalLessonsFragment.parentFragmentManager, null)
         }
     }

@@ -176,6 +176,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
             setDateRangeLimiter(SchooldaysRangeLimiter())
             version = DatePickerDialog.Version.VERSION_2
             scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
+            vibrate(false)
             show(this@TimetableFragment.parentFragmentManager, null)
         }
     }
