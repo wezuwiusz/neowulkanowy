@@ -5,11 +5,12 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.BigTextStyle
 import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
 import androidx.core.app.NotificationManagerCompat
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
@@ -23,7 +24,8 @@ import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
 import kotlin.random.Random
 
-class SyncWorker @WorkerInject constructor(
+@HiltWorker
+class SyncWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParameters: WorkerParameters,
     private val studentRepository: StudentRepository,
@@ -58,9 +60,10 @@ class SyncWorker @WorkerInject constructor(
         }
         val result = when {
             exceptions.isNotEmpty() && inputData.getBoolean("one_time", false) -> {
-                Result.failure(Data.Builder()
-                    .putString("error", exceptions.map { it.stackTraceToString() }.toString())
-                    .build()
+                Result.failure(
+                    Data.Builder()
+                        .putString("error", exceptions.map { it.stackTraceToString() }.toString())
+                        .build()
                 )
             }
             exceptions.isNotEmpty() -> Result.retry()
@@ -74,13 +77,16 @@ class SyncWorker @WorkerInject constructor(
     }
 
     private fun notify(result: Result) {
-        notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(applicationContext, DebugChannel.CHANNEL_ID)
-            .setContentTitle("Debug notification")
-            .setSmallIcon(R.drawable.ic_stat_push)
-            .setAutoCancel(true)
-            .setColor(applicationContext.getCompatColor(R.color.colorPrimary))
-            .setStyle(BigTextStyle().bigText("${SyncWorker::class.java.simpleName} result: $result"))
-            .setPriority(PRIORITY_DEFAULT)
-            .build())
+        notificationManager.notify(
+            Random.nextInt(Int.MAX_VALUE),
+            NotificationCompat.Builder(applicationContext, DebugChannel.CHANNEL_ID)
+                .setContentTitle("Debug notification")
+                .setSmallIcon(R.drawable.ic_stat_push)
+                .setAutoCancel(true)
+                .setColor(applicationContext.getCompatColor(R.color.colorPrimary))
+                .setStyle(BigTextStyle().bigText("${SyncWorker::class.java.simpleName} result: $result"))
+                .setPriority(PRIORITY_DEFAULT)
+                .build()
+        )
     }
 }
