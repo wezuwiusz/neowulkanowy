@@ -2,6 +2,8 @@ package io.github.wulkanowy.utils
 
 import androidx.fragment.app.Fragment
 import io.github.wulkanowy.ui.modules.about.AboutFragment
+import io.github.wulkanowy.ui.modules.account.AccountFragment
+import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsFragment
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
@@ -13,6 +15,7 @@ import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
+import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 
 fun Fragment.toSection(): MainView.Section? {
@@ -29,6 +32,9 @@ fun Fragment.toSection(): MainView.Section? {
         is SettingsFragment -> MainView.Section.SETTINGS
         is AboutFragment -> MainView.Section.ABOUT
         is SchoolAndTeachersFragment -> MainView.Section.SCHOOL
+        is AccountFragment -> MainView.Section.ACCOUNT
+        is AccountDetailsFragment -> MainView.Section.ACCOUNT
+        is StudentInfoFragment -> MainView.Section.STUDENT_INFO
         else -> null
     }
 }

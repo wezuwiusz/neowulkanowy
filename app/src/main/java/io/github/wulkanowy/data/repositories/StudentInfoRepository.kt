@@ -1,6 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
-import io.github.wulkanowy.data.db.dao.SchoolDao
+import io.github.wulkanowy.data.db.dao.StudentInfoDao
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntity
@@ -11,27 +11,27 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SchoolRepository @Inject constructor(
-    private val schoolDb: SchoolDao,
+class StudentInfoRepository @Inject constructor(
+    private val studentInfoDao: StudentInfoDao,
     private val sdk: Sdk
 ) {
 
-    fun getSchoolInfo(student: Student, semester: Semester, forceRefresh: Boolean) =
+    fun getStudentInfo(student: Student, semester: Semester, forceRefresh: Boolean) =
         networkBoundResource(
             shouldFetch = { it == null || forceRefresh },
-            query = { schoolDb.load(semester.studentId, semester.classId) },
+            query = { studentInfoDao.loadStudentInfo(student.studentId) },
             fetch = {
-                sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear).getSchool()
-                    .mapToEntity(semester)
+                sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+                    .getStudentInfo().mapToEntity(semester)
             },
             saveFetchResult = { old, new ->
                 if (old != null && new != old) {
-                    with(schoolDb) {
+                    with(studentInfoDao) {
                         deleteAll(listOf(old))
                         insertAll(listOf(new))
                     }
                 } else if (old == null) {
-                    schoolDb.insertAll(listOf(new))
+                    studentInfoDao.insertAll(listOf(new))
                 }
             }
         )

@@ -35,7 +35,9 @@ class StudentTest {
 
     @Test
     fun testRemoteAll() {
-        coEvery { mockSdk.getStudentsFromScrapper(any(), any(), any(), any()) } returns listOf(getStudent("test"))
+        coEvery { mockSdk.getStudentsFromScrapper(any(), any(), any(), any()) } returns listOf(
+            getStudent("test")
+        )
 
         val students = runBlocking { studentRepository.getStudentsScrapper("", "", "http://fakelog.cf", "") }
         assertEquals(1, students.size)

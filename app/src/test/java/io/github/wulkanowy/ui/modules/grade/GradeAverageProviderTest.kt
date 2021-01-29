@@ -41,7 +41,29 @@ class GradeAverageProviderTest {
 
     private lateinit var gradeAverageProvider: GradeAverageProvider
 
-    private val student = Student("", "", "", "SCRAPPER", "", "", false, "", "", "", 101, 0, "", "", "", "", "", "", 1, true, LocalDateTime.now())
+    private val student = Student(
+        scrapperBaseUrl = "",
+        mobileBaseUrl = "",
+        loginType = "",
+        loginMode = "SCRAPPER",
+        certificateKey = "",
+        privateKey = "",
+        isParent = false,
+        email = "",
+        password = "",
+        symbol = "",
+        studentId = 101,
+        userLoginId = 0,
+        userName = "",
+        studentName = "",
+        schoolSymbol = "",
+        schoolShortName = "",
+        schoolName = "",
+        className = "",
+        classId = 1,
+        isCurrent = true,
+        registrationDate = LocalDateTime.now()
+    )
 
     private val semesters = mutableListOf(
         getSemesterEntity(10, 21, of(2019, 1, 31), of(2019, 6, 23)),

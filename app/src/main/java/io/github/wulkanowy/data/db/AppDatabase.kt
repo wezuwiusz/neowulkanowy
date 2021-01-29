@@ -28,6 +28,7 @@ import io.github.wulkanowy.data.db.dao.ReportingUnitDao
 import io.github.wulkanowy.data.db.dao.SchoolDao
 import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.dao.StudentDao
+import io.github.wulkanowy.data.db.dao.StudentInfoDao
 import io.github.wulkanowy.data.db.dao.SubjectDao
 import io.github.wulkanowy.data.db.dao.TeacherDao
 import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
@@ -53,6 +54,7 @@ import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.data.db.entities.School
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentInfo
 import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.db.entities.Teacher
 import io.github.wulkanowy.data.db.entities.Timetable
@@ -80,6 +82,7 @@ import io.github.wulkanowy.data.db.migrations.Migration28
 import io.github.wulkanowy.data.db.migrations.Migration29
 import io.github.wulkanowy.data.db.migrations.Migration3
 import io.github.wulkanowy.data.db.migrations.Migration30
+import io.github.wulkanowy.data.db.migrations.Migration31
 import io.github.wulkanowy.data.db.migrations.Migration4
 import io.github.wulkanowy.data.db.migrations.Migration5
 import io.github.wulkanowy.data.db.migrations.Migration6
@@ -116,6 +119,7 @@ import javax.inject.Singleton
         School::class,
         Conference::class,
         TimetableAdditional::class,
+        StudentInfo::class,
     ],
     version = AppDatabase.VERSION_SCHEMA,
     exportSchema = true
@@ -124,7 +128,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 30
+        const val VERSION_SCHEMA = 31
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider): Array<Migration> {
             return arrayOf(
@@ -157,6 +161,7 @@ abstract class AppDatabase : RoomDatabase() {
                 Migration28(),
                 Migration29(),
                 Migration30(),
+                Migration31()
             )
         }
 
@@ -219,4 +224,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val conferenceDao: ConferenceDao
 
     abstract val timetableAdditionalDao: TimetableAdditionalDao
+
+    abstract val studentInfoDao: StudentInfoDao
 }

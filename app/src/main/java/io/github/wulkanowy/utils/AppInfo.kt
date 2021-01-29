@@ -28,4 +28,9 @@ open class AppInfo @Inject constructor() {
     @Suppress("DEPRECATION")
     open val systemLanguage: String
         get() = Resources.getSystem().configuration.locale.language
+
+    open val defaultColorsForAvatar = listOf(
+        0xe57373, 0xf06292, 0xba68c8, 0x9575cd, 0x7986cb, 0x64b5f6, 0x4fc3f7, 0x4dd0e1, 0x4db6ac,
+        0x81c784, 0xaed581, 0xff8a65, 0xd4e157, 0xffd54f, 0xffb74d, 0xa1887f, 0x90a4ae
+    )
 }

@@ -7,7 +7,13 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.time.LocalDateTime
 
-@Entity(tableName = "Students", indices = [Index(value = ["email", "symbol", "student_id", "school_id", "class_id"], unique = true)])
+@Entity(
+    tableName = "Students",
+    indices = [Index(
+        value = ["email", "symbol", "student_id", "school_id", "class_id"],
+        unique = true
+    )]
+)
 data class Student(
 
     @ColumnInfo(name = "scrapper_base_url")
@@ -52,7 +58,7 @@ data class Student(
     @ColumnInfo(name = "school_id")
     val schoolSymbol: String,
 
-    @ColumnInfo(name ="school_short")
+    @ColumnInfo(name = "school_short")
     val schoolShortName: String,
 
     @ColumnInfo(name = "school_name")

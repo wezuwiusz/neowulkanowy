@@ -64,6 +64,8 @@ interface MainView : BaseView {
         LUCKY_NUMBER(8),
         SETTINGS(9),
         ABOUT(10),
-        SCHOOL(11)
+        SCHOOL(11),
+        ACCOUNT(12),
+        STUDENT_INFO(13)
     }
 }

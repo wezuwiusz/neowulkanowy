@@ -65,7 +65,11 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
 
     override val homepageRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_homepage), getString(R.string.about_homepage_summary), getCompatDrawable(R.drawable.ic_about_homepage))
+            Triple(
+                getString(R.string.about_homepage),
+                getString(R.string.about_homepage_summary),
+                getCompatDrawable(R.drawable.ic_all_home)
+            )
         }
 
     override val licensesRes: Triple<String, String, Drawable?>?

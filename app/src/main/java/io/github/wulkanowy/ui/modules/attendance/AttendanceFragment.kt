@@ -60,6 +60,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
     override val excuseActionMode: Boolean get() = attendanceAdapter.excuseActionMode
 
     private var actionMode: ActionMode? = null
+
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater

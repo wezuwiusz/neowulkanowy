@@ -17,7 +17,10 @@
     <string name="send_message_title">New message</string>
     <string name="note_title">Notes and achievements</string>
     <string name="homework_title">Homework</string>
-    <string name="account_title">Choose account</string>
+    <string name="account_title">Accounts manager</string>
+    <string name="account_quick_title">Select account</string>
+    <string name="account_details_title">Account details</string>
+    <string name="student_info_title">Student info</string>
 
 
     <!--Subtitles-->
@@ -344,12 +347,19 @@
     <!--Account-->
     <string name="account_add_new">Add account</string>
     <string name="account_logout">Logout</string>
-    <string name="account_confirm">Do you want to log out of an active student?</string>
+    <string name="account_confirm">Do you want to log out this student?</string>
     <string name="account_logout_student">Student logout</string>
     <string name="account_type_student">Student account</string>
     <string name="account_type_parent">Parent account</string>
     <string name="account_login_mobile_api">Mobile API mode</string>
     <string name="account_login_hybrid">Hybrid mode</string>
+    <string name="account_details_edit">Edit data</string>
+    <string name="account_quick_manager">Accounts manager</string>
+    <string name="account_select_student">Select student</string>
+    <string name="account_family">Family</string>
+    <string name="account_contact">Contact</string>
+    <string name="account_address">Residence details</string>
+    <string name="account_personal_data">Personal information</string>
 
 
     <!--About-->
@@ -382,6 +392,28 @@
     <string name="contributor_see_more">See more on GitHub</string>
 
 
+    <!--Student info-->
+    <string name="student_info_empty">No info about student</string>
+    <string name="student_info_first_name">Name</string>
+    <string name="student_info_second_name">Second name</string>
+    <string name="student_info_gender">Gender</string>
+    <string name="student_info_polish_citizenship">Polish citizenship</string>
+    <string name="student_info_family_name">Family name</string>
+    <string name="student_info_parents_name">Mother\'s and father\'s names</string>
+    <string name="student_info_phone">Phone</string>
+    <string name="student_info_cellphone">Cellphone</string>
+    <string name="student_info_email">E-mail</string>
+    <string name="student_info_address">Address of residence</string>
+    <string name="student_info_registered_address">Address of registration</string>
+    <string name="student_info_correspondence_address">Correspondence address</string>
+    <string name="student_info_full_name">Surname and first name</string>
+    <string name="student_info_kinship">Degree of kinship</string>
+    <string name="student_info_guardian_address">Address</string>
+    <string name="student_info_phones">Phones</string>
+    <string name="student_info_male">Male</string>
+    <string name="student_info_female">Female</string>
+
+
     <!--Log viewer-->
     <string name="logviewer_share">Share logs</string>
     <string name="logviewer_refresh">Refresh</string>
@@ -410,6 +442,8 @@
     <string name="all_next">Next</string>
     <string name="all_search">Search</string>
     <string name="all_search_hint">Search…</string>
+    <string name="all_yes">Yes</string>
+    <string name="all_no">No</string>
 
 
     <!--Timetable Widget-->
@@ -508,4 +542,5 @@
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
+
 </resources>

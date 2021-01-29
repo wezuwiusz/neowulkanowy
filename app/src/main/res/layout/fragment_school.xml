@@ -140,7 +140,7 @@
                     android:id="@+id/schoolTelephoneButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_school_phone"
+                    app:srcCompat="@drawable/ic_all_phone"
                     android:contentDescription="@string/school_telephone_button"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:tint="?colorPrimary"

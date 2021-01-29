@@ -8,23 +8,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <TextView
-            android:id="@+id/accountDialogTitle"
+            android:id="@+id/account_quick_dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="24dp"
             android:paddingLeft="24dp"
             android:paddingEnd="24dp"
             android:paddingRight="24dp"
-            android:text="@string/account_title"
+            android:text="@string/account_quick_title"
             android:textSize="20sp"
             android:textStyle="bold"
             app:firstBaselineToTopHeight="40dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/accountDialogRecycler"
+            android:id="@+id/account_quick_dialog_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -39,26 +40,12 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/accountDialogAdd"
+                android:id="@+id/account_quick_dialog_manger"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="@string/account_add_new"
-                android:textColor="?android:textColorPrimary" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/accountDialogRemove"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/account_logout" />
+                android:text="@string/account_quick_manager" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
