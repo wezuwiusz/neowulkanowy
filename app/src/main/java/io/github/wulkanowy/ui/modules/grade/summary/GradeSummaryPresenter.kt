@@ -6,7 +6,7 @@ import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
-import io.github.wulkanowy.ui.modules.grade.GradeDetailsWithAverage
+import io.github.wulkanowy.ui.modules.grade.GradeSubject
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
@@ -135,14 +135,14 @@ class GradeSummaryPresenter @Inject constructor(
         cancelJobs("load")
     }
 
-    private fun createGradeSummaryItems(items: List<GradeDetailsWithAverage>): List<GradeSummary> {
+    private fun createGradeSummaryItems(items: List<GradeSubject>): List<GradeSummary> {
         return items
             .filter { !checkEmpty(it) }
             .sortedBy { it.subject }
             .map { it.summary.copy(average = it.average) }
     }
 
-    private fun checkEmpty(gradeSummary: GradeDetailsWithAverage): Boolean {
+    private fun checkEmpty(gradeSummary: GradeSubject): Boolean {
         return gradeSummary.run {
             summary.finalGrade.isBlank()
                 && summary.predictedGrade.isBlank()
