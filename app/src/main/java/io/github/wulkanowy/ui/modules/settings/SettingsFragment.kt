@@ -79,6 +79,10 @@ class SettingsFragment : PreferenceFragmentCompat(),
         lingver.setLocale(requireContext(), langCode)
     }
 
+    override fun updateLanguageToFollowSystem() {
+        lingver.setFollowSystemLocale(requireContext())
+    }
+
     override fun setServicesSuspended(serviceEnablesKey: String, isHolidays: Boolean) {
         findPreference<Preference>(serviceEnablesKey)?.run {
             summary = if (isHolidays) getString(R.string.pref_services_suspended) else ""

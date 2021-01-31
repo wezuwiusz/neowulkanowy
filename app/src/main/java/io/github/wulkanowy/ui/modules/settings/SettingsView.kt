@@ -14,6 +14,8 @@ interface SettingsView : BaseView {
 
     fun updateLanguage(langCode: String)
 
+    fun updateLanguageToFollowSystem()
+
     fun setServicesSuspended(serviceEnablesKey: String, isHolidays: Boolean)
 
     fun setSyncInProgress(inProgress: Boolean)
