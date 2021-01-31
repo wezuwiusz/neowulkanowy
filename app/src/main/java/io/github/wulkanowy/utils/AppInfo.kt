@@ -4,7 +4,9 @@ import android.content.res.Resources
 import android.os.Build.MANUFACTURER
 import android.os.Build.MODEL
 import android.os.Build.VERSION.SDK_INT
+import io.github.wulkanowy.BuildConfig.BUILD_TIMESTAMP
 import io.github.wulkanowy.BuildConfig.DEBUG
+import io.github.wulkanowy.BuildConfig.FLAVOR
 import io.github.wulkanowy.BuildConfig.VERSION_CODE
 import io.github.wulkanowy.BuildConfig.VERSION_NAME
 import javax.inject.Inject
@@ -16,6 +18,10 @@ open class AppInfo @Inject constructor() {
     open val isDebug get() = DEBUG
 
     open val versionCode get() = VERSION_CODE
+
+    open val buildTimestamp get() = BUILD_TIMESTAMP
+
+    open val buildFlavor get() = FLAVOR
 
     open val versionName get() = VERSION_NAME
 

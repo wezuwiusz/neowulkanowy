@@ -21,9 +21,12 @@ android {
         versionCode 81
         versionName "0.24.3"
         multiDexEnabled true
-        resValue "string", "app_name", "Wulkanowy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        resValue "string", "app_name", "Wulkanowy"
+        buildConfigField "long", "BUILD_TIMESTAMP", String.valueOf(System.currentTimeMillis())
+
         manifestPlaceholders = [
                 firebase_enabled: project.hasProperty("enableFirebase")
         ]

@@ -57,7 +57,7 @@ class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return DialogErrorBinding.inflate(inflater).apply { binding = this }.root
     }
 
@@ -114,11 +114,17 @@ class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
             chooserTitle = getString(R.string.about_feedback),
             email = "wulkanowyinc@gmail.com",
             subject = "Zgłoszenie błędu",
-            body = requireContext().getString(R.string.about_feedback_template,
-                "${appInfo.systemManufacturer} ${appInfo.systemModel}", appInfo.systemVersion.toString(), appInfo.versionName
+            body = requireContext().getString(
+                R.string.about_feedback_template,
+                "${appInfo.systemManufacturer} ${appInfo.systemModel}",
+                appInfo.systemVersion.toString(),
+                "${appInfo.versionName}-${appInfo.buildFlavor}"
             ) + "\n" + content,
             onActivityNotFound = {
-                requireContext().openInternetBrowser("https://github.com/wulkanowy/wulkanowy/issues", ::showMessage)
+                requireContext().openInternetBrowser(
+                    "https://github.com/wulkanowy/wulkanowy/issues",
+                    ::showMessage
+                )
             }
         )
     }
