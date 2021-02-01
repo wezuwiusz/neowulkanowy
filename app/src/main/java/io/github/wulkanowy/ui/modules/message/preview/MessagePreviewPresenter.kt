@@ -70,6 +70,7 @@ class MessagePreviewPresenter @Inject constructor(
                         this@MessagePreviewPresenter.attachments = it.data.attachments
                         view?.apply {
                             setMessageWithAttachment(it.data)
+                            showContent(true)
                             initOptions()
                         }
                         analytics.logEvent(
