@@ -13,6 +13,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import javax.inject.Inject
 
@@ -69,6 +70,8 @@ class GradeStatisticsFragment :
             gradeStatisticsSubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
 
             gradeStatisticsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            gradeStatisticsSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            gradeStatisticsSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             gradeStatisticsErrorRetry.setOnClickListener { presenter.onRetry() }
             gradeStatisticsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

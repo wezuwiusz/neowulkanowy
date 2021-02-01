@@ -15,6 +15,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -55,6 +56,8 @@ class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), 
 
         with(binding) {
             examSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            examSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            examSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             examErrorRetry.setOnClickListener { presenter.onRetry() }
             examErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 

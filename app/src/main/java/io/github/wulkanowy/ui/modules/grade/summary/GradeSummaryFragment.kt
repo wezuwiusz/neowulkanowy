@@ -13,6 +13,7 @@ import io.github.wulkanowy.databinding.FragmentGradeSummaryBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -52,7 +53,9 @@ class GradeSummaryFragment :
             adapter = gradeSummaryAdapter
         }
         with(binding) {
-            gradeSummarySwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            gradeSummarySwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            gradeSummarySwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            gradeSummarySwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             gradeSummaryErrorRetry.setOnClickListener { presenter.onRetry() }
             gradeSummaryErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

@@ -21,6 +21,7 @@ import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragme
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.getThemeAttrColor
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -69,6 +70,8 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
         with(binding) {
             timetableSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            timetableSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            timetableSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             timetableErrorRetry.setOnClickListener { presenter.onRetry() }
             timetableErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 

@@ -22,6 +22,7 @@ import io.github.wulkanowy.databinding.FragmentStudentInfoBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -72,7 +73,9 @@ class StudentInfoFragment :
 
     override fun initView() {
         with(binding) {
-            studentInfoSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            studentInfoSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            studentInfoSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            studentInfoSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             studentInfoErrorRetry.setOnClickListener { presenter.onRetry() }
             studentInfoErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

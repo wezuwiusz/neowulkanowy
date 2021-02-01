@@ -18,6 +18,7 @@ import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchooldaysRangeLimiter
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getCompatDrawable
+import io.github.wulkanowy.utils.getThemeAttrColor
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -60,6 +61,8 @@ class CompletedLessonsFragment :
 
         with(binding) {
             completedLessonsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            completedLessonsSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            completedLessonsSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             completedLessonErrorRetry.setOnClickListener { presenter.onRetry() }
             completedLessonErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 

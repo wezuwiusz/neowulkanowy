@@ -10,6 +10,7 @@ import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.databinding.FragmentLuckyNumberBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,7 +39,9 @@ class LuckyNumberFragment :
 
     override fun initView() {
         with(binding) {
-            luckyNumberSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            luckyNumberSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            luckyNumberSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            luckyNumberSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             luckyNumberErrorRetry.setOnClickListener { presenter.onRetry() }
             luckyNumberErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }
