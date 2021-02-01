@@ -18,8 +18,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 81
-        versionName "0.24.3"
+        versionCode 82
+        versionName "0.25.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -129,7 +129,7 @@ play {
     serviceAccountCredentials = file('key.p12')
     defaultToAppBundles = false
     track = 'alpha'
-    updatePriority = 5
+    updatePriority = 3
 }
 
 ext {
@@ -142,7 +142,7 @@ ext {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:b7576e86"
+    implementation "io.github.wulkanowy:sdk:0.25.0"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
 
