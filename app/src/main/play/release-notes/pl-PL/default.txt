@@ -1,9 +1,7 @@
-Wersja 0.24.3
-- naprawiliśmy odczytywanie wiadomości
-- naprawiliśmy niekończące się ładowanie w ocenach na drugim semestrze
-- naprawiliśmy ciemny motyw na MIUI 12
-- dodaliśmy automatyczne odświeżanie danych w aplikacji
-- naprawiliśmy wysyłanie wiadomości kiedy uczeń zalogowany był/jest przez konto ucznia i rodzica
-- dodaliśmy zakładkę lekcji dodatkowych (na górnym pasku w planie lekcji)
+Wersja 0.25.0
+- naprawiliśmy przełączanie semestrów przy przełączaniu uczniów
+- naprawiliśmy błąd przy odświeżaniu ocen gdy włączony był inny niż domyślny tryb liczenia średniej
+- dodaliśmy menadżer kont, gdzie można podejrzeć informacje o uczniu oraz zmienić pseudonim
+- zmieniliśmy ikonę planu lekcji oraz kolor animacji odświeżania w ciemnym motywie
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
