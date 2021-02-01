@@ -27,6 +27,7 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
+import io.github.wulkanowy.utils.nickOrName
 import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.coroutines.GlobalScope
@@ -151,8 +152,14 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
 
         val remoteView = RemoteViews(context.packageName, layoutId).apply {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
-            setTextViewText(R.id.timetableWidgetDate, date.toFormattedString("EEEE, dd.MM").capitalize())
-            setTextViewText(R.id.timetableWidgetName, student?.studentName ?: context.getString(R.string.all_no_data))
+            setTextViewText(
+                R.id.timetableWidgetDate,
+                date.toFormattedString("EEEE, dd.MM").capitalize()
+            )
+            setTextViewText(
+                R.id.timetableWidgetName,
+                student?.nickOrName ?: context.getString(R.string.all_no_data)
+            )
             setRemoteAdapter(R.id.timetableWidgetList, adapterIntent)
             setOnClickPendingIntent(R.id.timetableWidgetNext, nextNavIntent)
             setOnClickPendingIntent(R.id.timetableWidgetPrev, prevNavIntent)

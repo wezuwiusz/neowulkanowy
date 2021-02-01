@@ -109,6 +109,7 @@ class StudentInfoFragment :
             listOf(
                 getString(R.string.student_info_first_name) to studentInfo.firstName,
                 getString(R.string.student_info_second_name) to studentInfo.secondName,
+                getString(R.string.student_info_last_name) to studentInfo.surname,
                 getString(R.string.student_info_gender) to getString(if (studentInfo.gender == Gender.MALE) R.string.student_info_male else R.string.student_info_female),
                 getString(R.string.student_info_polish_citizenship) to getString(if (studentInfo.hasPolishCitizenship) R.string.all_yes else R.string.all_no),
                 getString(R.string.student_info_family_name) to studentInfo.familyName,

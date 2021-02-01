@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.account.accountdetails
 
+import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentRepository
@@ -9,6 +10,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,14 +21,74 @@ class AccountDetailsPresenter @Inject constructor(
     private val syncManager: SyncManager
 ) : BasePresenter<AccountDetailsView>(errorHandler, studentRepository) {
 
-    lateinit var studentWithSemesters: StudentWithSemesters
+    private lateinit var studentWithSemesters: StudentWithSemesters
 
-    override fun onAttachView(view: AccountDetailsView) {
+    private lateinit var lastError: Throwable
+
+    private var studentId: Long? = null
+
+    fun onAttachView(view: AccountDetailsView, studentWithSemesters: StudentWithSemesters) {
         super.onAttachView(view)
-        view.initView()
-        Timber.i("Account details view was initialized")
+        studentId = studentWithSemesters.student.id
 
-        view.showAccountData(studentWithSemesters)
+        view.initView()
+        errorHandler.showErrorMessage = ::showErrorViewOnError
+        Timber.i("Account details view was initialized")
+        loadData()
+    }
+
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData()
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
+    }
+
+    private fun loadData() {
+        flowWithResource { studentRepository.getSavedStudents() }
+            .map { studentWithSemesters ->
+                Resource(
+                    data = studentWithSemesters.data?.single { it.student.id == studentId },
+                    status = studentWithSemesters.status,
+                    error = studentWithSemesters.error
+                )
+            }
+            .onEach {
+                when (it.status) {
+                    Status.LOADING -> {
+                        view?.run {
+                            showProgress(true)
+                            showContent(false)
+                        }
+                        Timber.i("Loading account details view started")
+                    }
+                    Status.SUCCESS -> {
+                        Timber.i("Loading account details view result: Success")
+                        studentWithSemesters = it.data!!
+                        view?.run {
+                            showAccountData(studentWithSemesters.student)
+                            enableSelectStudentButton(!studentWithSemesters.student.isCurrent)
+                            showContent(true)
+                            showErrorView(false)
+                        }
+                    }
+                    Status.ERROR -> {
+                        Timber.i("Loading account details view result: An exception occurred")
+                        errorHandler.dispatch(it.error!!)
+                    }
+                }
+            }
+            .afterLoading { view?.showProgress(false) }
+            .launch()
+    }
+
+    fun onAccountEditSelected() {
+        view?.showAccountEditDetailsDialog(studentWithSemesters.student)
     }
 
     fun onStudentInfoSelected(infoType: StudentInfoView.Type) {
@@ -96,5 +158,15 @@ class AccountDetailsPresenter @Inject constructor(
         }.afterLoading {
             view?.popView()
         }.launch("logout")
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            lastError = error
+            setErrorDetails(message)
+            showErrorView(true)
+            showContent(false)
+            showProgress(false)
+        }
     }
 }

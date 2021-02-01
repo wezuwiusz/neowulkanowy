@@ -9,6 +9,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.ItemAccountBinding
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.nickOrName
 import javax.inject.Inject
 
 class WidgetConfigureAdapter @Inject constructor() : RecyclerView.Adapter<WidgetConfigureAdapter.ItemViewHolder>() {
@@ -28,7 +29,7 @@ class WidgetConfigureAdapter @Inject constructor() : RecyclerView.Adapter<Widget
         val (student, isCurrent) = items[position]
 
         with(holder.binding) {
-            accountItemName.text = "${student.studentName} ${student.className}"
+            accountItemName.text = "${student.nickOrName} ${student.className}"
             accountItemSchool.text = student.schoolName
 
             with(accountItemImage) {

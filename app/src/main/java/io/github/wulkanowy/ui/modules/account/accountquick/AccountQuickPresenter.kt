@@ -52,9 +52,9 @@ class AccountQuickPresenter @Inject constructor(
                         errorHandler.dispatch(it.error!!)
                     }
                 }
-            }.afterLoading {
-                view?.popView()
-            }.launch("switch")
+            }
+            .afterLoading { view?.popView() }
+            .launch("switch")
     }
 
     private fun loadData() {

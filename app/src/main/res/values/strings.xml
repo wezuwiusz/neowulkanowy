@@ -412,6 +412,12 @@
     <string name="student_info_phones">Phones</string>
     <string name="student_info_male">Male</string>
     <string name="student_info_female">Female</string>
+    <string name="student_info_last_name">Last name</string>
+
+
+    <!--Account edit-->
+    <string name="account_edit_nick_hint">Nick</string>
+    <string name="account_edit_header">Add nick</string>
 
 
     <!--Log viewer-->
@@ -444,6 +450,7 @@
     <string name="all_search_hint">Search…</string>
     <string name="all_yes">Yes</string>
     <string name="all_no">No</string>
+    <string name="all_save">Save</string>
 
 
     <!--Timetable Widget-->

@@ -45,7 +45,7 @@
         android:orientation="vertical"
         android:visibility="invisible"
         tools:ignore="UseCompoundDrawables"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ImageView
             android:layout_width="100dp"

@@ -12,6 +12,7 @@ import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.HeaderAccountBinding
 import io.github.wulkanowy.databinding.ItemAccountBinding
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.nickOrName
 import javax.inject.Inject
 
 class AccountAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -84,7 +85,7 @@ class AccountAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.V
         }.size > 1 && isAccountQuickDialogMode
 
         with(binding) {
-            accountItemName.text = "${student.studentName} ${diary?.diaryName.orEmpty()}"
+            accountItemName.text = "${student.nickOrName} ${diary?.diaryName.orEmpty()}"
             accountItemSchool.text = studentWithSemesters.student.schoolName
             accountItemAccountType.setText(if (student.isParent) R.string.account_type_parent else R.string.account_type_student)
             accountItemAccountType.visibility = if (isDuplicatedStudent) VISIBLE else GONE

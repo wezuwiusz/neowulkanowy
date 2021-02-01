@@ -9,13 +9,16 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.get
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.FragmentAccountDetailsBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.account.accountedit.AccountEditDialog
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoFragment
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
+import io.github.wulkanowy.utils.nickOrName
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,22 +46,19 @@ class AccountDetailsFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        arguments?.let {
-            presenter.studentWithSemesters =
-                it.getSerializable(ARGUMENT_KEY) as StudentWithSemesters
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAccountDetailsBinding.bind(view)
-        presenter.onAttachView(this)
+        presenter.onAttachView(this, requireArguments()[ARGUMENT_KEY] as StudentWithSemesters)
     }
 
     override fun initView() {
+        binding.accountDetailsErrorRetry.setOnClickListener { presenter.onRetry() }
+        binding.accountDetailsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         binding.accountDetailsLogout.setOnClickListener { presenter.onRemoveSelected() }
         binding.accountDetailsSelect.setOnClickListener { presenter.onStudentSelect() }
-        binding.accountDetailsSelect.isEnabled = !presenter.studentWithSemesters.student.isCurrent
 
         binding.accountDetailsPersonalData.setOnClickListener {
             presenter.onStudentInfoSelected(StudentInfoView.Type.PERSONAL)
@@ -76,24 +76,31 @@ class AccountDetailsFragment :
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu[0].isVisible = false
+        inflater.inflate(R.menu.action_menu_account_details, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.accountDetailsMenuEdit) {
-            showAccountEditDetailsDialog()
-            return true
+            presenter.onAccountEditSelected()
+            true
         } else false
     }
 
-    override fun showAccountData(studentWithSemesters: StudentWithSemesters) {
+    override fun showAccountData(student: Student) {
         with(binding) {
-            accountDetailsName.text = studentWithSemesters.student.studentName
-            accountDetailsSchool.text = studentWithSemesters.student.schoolName
+            accountDetailsName.text = student.nickOrName
+            accountDetailsSchool.text = student.schoolName
         }
     }
 
-    override fun showAccountEditDetailsDialog() {
-        (requireActivity() as MainActivity).showDialogFragment(AccountEditDetailsDialog.newInstance())
+    override fun enableSelectStudentButton(enable: Boolean) {
+        binding.accountDetailsSelect.isEnabled = enable
+    }
+
+    override fun showAccountEditDetailsDialog(student: Student) {
+        (requireActivity() as MainActivity).showDialogFragment(
+            AccountEditDialog.newInstance(student)
+        )
     }
 
     override fun showLogoutConfirmDialog() {
@@ -125,6 +132,22 @@ class AccountDetailsFragment :
                 studentWithSemesters
             )
         )
+    }
+
+    override fun showErrorView(show: Boolean) {
+        binding.accountDetailsError.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun setErrorDetails(message: String) {
+        binding.accountDetailsErrorMessage.text = message
+    }
+
+    override fun showProgress(show: Boolean) {
+        binding.accountDetailsProgress.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun showContent(show: Boolean) {
+        binding.accountDetailsContent.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

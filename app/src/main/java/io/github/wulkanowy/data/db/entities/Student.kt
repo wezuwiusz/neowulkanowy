@@ -79,4 +79,6 @@ data class Student(
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    var nick = ""
 }
