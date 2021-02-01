@@ -17,7 +17,10 @@
     <string name="send_message_title">neue Nachricht</string>
     <string name="note_title">Eintragen und Erfolgen</string>
     <string name="homework_title">Hausaufgaben</string>
-    <string name="account_title">Wählen Sie ein Konto</string>
+    <string name="account_title">Konten-Manager</string>
+    <string name="account_quick_title">Konto auswählen</string>
+    <string name="account_details_title">Kontodetails</string>
+    <string name="student_info_title">Schülerinfo</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -95,6 +98,10 @@
     <string name="grade_statistics_partial">Partiell</string>
     <string name="grade_statistics_semester">Semester</string>
     <string name="grade_statistics_points">Punkte</string>
+    <string name="grade_statistics_legend">Legende</string>
+    <string name="grade_statistics_average">Durchschnitt: %1$s</string>
+    <string name="grade_statistics_average_class">Klasse</string>
+    <string name="grade_statistics_average_student">Schüler</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d Note</item>
         <item quantity="other">%d Noten</item>
@@ -146,9 +153,9 @@
     <string name="completed_lessons_absence">Abwesenheit</string>
     <string name="completed_lessons_resources">Ressourcen</string>
     <!--Additional lessons-->
-    <string name="additional_lessons_title">Additional lessons</string>
-    <string name="additional_lessons_button">Show additional lessons</string>
-    <string name="additional_lessons_no_items">No info about additional lessons</string>
+    <string name="additional_lessons_title">Zusätzliche Lektionen</string>
+    <string name="additional_lessons_button">Zusätzliche Lektionen anzeigen</string>
+    <string name="additional_lessons_no_items">Keine Infos zu zusätzlichen Lektionen</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Übersicht über die Schulbesuch</string>
     <string name="attendance_absence_school">Aus schulischen Gründen abwesend</string>
@@ -199,7 +206,7 @@
     <string name="message_subject">Thema</string>
     <string name="message_content">Inhalt</string>
     <string name="message_send_successful">Nachricht erfolgreich gesendet</string>
-    <string name="message_not_exists">Message does not exist</string>
+    <string name="message_not_exists">Nachricht existiert nicht</string>
     <string name="message_required_recipients">Sie müssen mindestens 1 Empfänger auswählen.</string>
     <string name="message_content_min_length">Der Inhalt der Nachricht muss mindestens 3 Zeichen lang sein.</string>
     <plurals name="message_number_item">
@@ -297,12 +304,19 @@
     <!--Account-->
     <string name="account_add_new">Konto hinzufügen</string>
     <string name="account_logout">Abmelden</string>
-    <string name="account_confirm">Wollen Sie sich von einem aktiven Studenten abmelden?</string>
+    <string name="account_confirm">Wollen Sie diesen Schüler abmelden?</string>
     <string name="account_logout_student">Abmeldung von Student</string>
     <string name="account_type_student">Studentenkonto</string>
     <string name="account_type_parent">Elternkonto</string>
     <string name="account_login_mobile_api">Mobiler API Modus</string>
     <string name="account_login_hybrid">Hybrid Modus</string>
+    <string name="account_details_edit">Daten bearbeiten</string>
+    <string name="account_quick_manager">Konten-Manager</string>
+    <string name="account_select_student">Schüler auswählen</string>
+    <string name="account_family">Familie</string>
+    <string name="account_contact">Kontakt</string>
+    <string name="account_address">Wohnungsdetails</string>
+    <string name="account_personal_data">Persönliche Information</string>
     <!--About-->
     <string name="about_version">Version der App</string>
     <string name="about_contributor">Mitarbeiter</string>
@@ -326,6 +340,30 @@
     <!--Contributor-->
     <string name="contributor_avatar_description">Benutzerbild</string>
     <string name="contributor_see_more">Sehen Sie mehr auf GitHub</string>
+    <!--Student info-->
+    <string name="student_info_empty">Keine Informationen über Schüler</string>
+    <string name="student_info_first_name">Name</string>
+    <string name="student_info_second_name">Zweite Name</string>
+    <string name="student_info_gender">Geschlecht</string>
+    <string name="student_info_polish_citizenship">Polnische Staatsbürgerschaft</string>
+    <string name="student_info_family_name">Familienname</string>
+    <string name="student_info_parents_name">Namen von Mutter und Vater</string>
+    <string name="student_info_phone">Telefonnummer</string>
+    <string name="student_info_cellphone">Mobiltelefonnummer</string>
+    <string name="student_info_email">E-Mail</string>
+    <string name="student_info_address">Wohnadresse</string>
+    <string name="student_info_registered_address">Adresse der Registrierung</string>
+    <string name="student_info_correspondence_address">Korrespondenzadresse</string>
+    <string name="student_info_full_name">Nachname und Vorname</string>
+    <string name="student_info_kinship">Verwandtschaftsgrad</string>
+    <string name="student_info_guardian_address">Adresse</string>
+    <string name="student_info_phones">Telefonnummern</string>
+    <string name="student_info_male">Mann</string>
+    <string name="student_info_female">Frau</string>
+    <string name="student_info_last_name">Nachname</string>
+    <!--Account edit-->
+    <string name="account_edit_nick_hint">Nick</string>
+    <string name="account_edit_header">Nick hinzufügen</string>
     <!--Log viewer-->
     <string name="logviewer_share">Logs teilen</string>
     <string name="logviewer_refresh">Aktualisieren</string>
@@ -350,6 +388,9 @@
     <string name="all_next">Nächste</string>
     <string name="all_search">Suchen</string>
     <string name="all_search_hint">Suchen…</string>
+    <string name="all_yes">Ja</string>
+    <string name="all_no">Nein</string>
+    <string name="all_save">Speichern</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Keine Lektionen</string>
     <string name="widget_timetable_theme_title">Thema wählen</string>

@@ -17,7 +17,10 @@
     <string name="send_message_title">Nowa wiadomość</string>
     <string name="note_title">Uwagi i osiągnięcia</string>
     <string name="homework_title">Zadania domowe</string>
-    <string name="account_title">Wybierz konto</string>
+    <string name="account_title">Menadżer kont</string>
+    <string name="account_quick_title">Wybierz konto</string>
+    <string name="account_details_title">Szczegóły konta</string>
+    <string name="student_info_title">Informacje o uczniu</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -95,6 +98,10 @@
     <string name="grade_statistics_partial">Cząstkowe</string>
     <string name="grade_statistics_semester">Semestralne</string>
     <string name="grade_statistics_points">Punkty</string>
+    <string name="grade_statistics_legend">Legenda</string>
+    <string name="grade_statistics_average">Średnia: %1$s</string>
+    <string name="grade_statistics_average_class">Klasa</string>
+    <string name="grade_statistics_average_student">Uczeń</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d ocena</item>
         <item quantity="few">%d oceny</item>
@@ -337,12 +344,19 @@
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>
     <string name="account_logout">Wyloguj</string>
-    <string name="account_confirm">Czy chcesz wylogować aktualnego ucznia?</string>
+    <string name="account_confirm">Czy chcesz wylogować tego ucznia?</string>
     <string name="account_logout_student">Wylogowanie ucznia</string>
     <string name="account_type_student">Konto ucznia</string>
     <string name="account_type_parent">Konto rodzica</string>
     <string name="account_login_mobile_api">Tryb API mobilne</string>
     <string name="account_login_hybrid">Tryb hybrydowy</string>
+    <string name="account_details_edit">Edytuj dane</string>
+    <string name="account_quick_manager">Menadżer kont</string>
+    <string name="account_select_student">Wybierz ucznia</string>
+    <string name="account_family">Rodzina</string>
+    <string name="account_contact">Kontakt</string>
+    <string name="account_address">Dane adresowe</string>
+    <string name="account_personal_data">Dane osobowe</string>
     <!--About-->
     <string name="about_version">Wersja aplikacji</string>
     <string name="about_contributor">Twórcy</string>
@@ -366,6 +380,30 @@
     <!--Contributor-->
     <string name="contributor_avatar_description">Awatar</string>
     <string name="contributor_see_more">Zobacz więcej na GitHub</string>
+    <!--Student info-->
+    <string name="student_info_empty">Brak informacji o uczniu</string>
+    <string name="student_info_first_name">Imię</string>
+    <string name="student_info_second_name">Drugie imię</string>
+    <string name="student_info_gender">Płeć</string>
+    <string name="student_info_polish_citizenship">Obywatelstwo polskie</string>
+    <string name="student_info_family_name">Nazwisko rodowe</string>
+    <string name="student_info_parents_name">Imiona matki i ojca</string>
+    <string name="student_info_phone">Telefon</string>
+    <string name="student_info_cellphone">Telefon komórkowy</string>
+    <string name="student_info_email">E-mail</string>
+    <string name="student_info_address">Adres zamieszkania</string>
+    <string name="student_info_registered_address">Adres zameldowania</string>
+    <string name="student_info_correspondence_address">Adres korespondencyjny</string>
+    <string name="student_info_full_name">Nazwisko i imię</string>
+    <string name="student_info_kinship">Stopień pokrewieństwa</string>
+    <string name="student_info_guardian_address">Adres</string>
+    <string name="student_info_phones">Telefony</string>
+    <string name="student_info_male">Mężczyzna</string>
+    <string name="student_info_female">Kobieta</string>
+    <string name="student_info_last_name">Nazwisko</string>
+    <!--Account edit-->
+    <string name="account_edit_nick_hint">Pseudonim</string>
+    <string name="account_edit_header">Dodaj pseudonim</string>
     <!--Log viewer-->
     <string name="logviewer_share">Udostępnij logi</string>
     <string name="logviewer_refresh">Odśwież</string>
@@ -390,6 +428,9 @@
     <string name="all_next">Następny</string>
     <string name="all_search">Szukaj</string>
     <string name="all_search_hint">Szukaj…</string>
+    <string name="all_yes">Tak</string>
+    <string name="all_no">Nie</string>
+    <string name="all_save">Zapisz</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
     <string name="widget_timetable_theme_title">Wybierz motyw</string>

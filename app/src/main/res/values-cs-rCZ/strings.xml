@@ -17,7 +17,10 @@
     <string name="send_message_title">Nová zpráva</string>
     <string name="note_title">Poznámky a úspěchy</string>
     <string name="homework_title">Domácí úkoly</string>
-    <string name="account_title">Vyberte účet</string>
+    <string name="account_title">Manažer účtů</string>
+    <string name="account_quick_title">Vyberte účet</string>
+    <string name="account_details_title">Manažer účtů</string>
+    <string name="student_info_title">Informace o žáku</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -44,11 +47,11 @@
     <string name="login_invalid_email">Neplatný e-mail</string>
     <string name="login_invalid_login">Místo e-mailu použijte přiřazené přihlašovací údaje</string>
     <string name="login_invalid_symbol">Neplatný symbol</string>
-    <string name="login_incorrect_symbol">Student nebyl nalezen. Zkontrolujte správnost symbolu a vybrané varianty deníku UONET+</string>
+    <string name="login_incorrect_symbol">Žák nebyl nalezen. Zkontrolujte správnost symbolu a vybrané varianty deníku UONET+</string>
     <string name="login_field_required">Toto pole je povinné</string>
-    <string name="login_duplicate_student">Vybraný student je již přihlášen</string>
+    <string name="login_duplicate_student">Vybraný žák je již přihlášen</string>
     <string name="login_symbol_helper">Symbol najdete na stránce deníku v &#160;<b>Uczeń</b> → &#160;<b>Dostęp Mobilny</b> → &#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUjistěte se, že jste na předchozí obrazovce nastavili správnou variantu deníku do pole <b>Variace deníku UONET+</b>. Wulkanowy v tuto chvíli nezjistí předškolní studenty</string>
-    <string name="login_select_student">Vyberte studenty, kteří se mají do aplikace přihlásit</string>
+    <string name="login_select_student">Vyberte žáky, kteří se mají do aplikace přihlásit</string>
     <string name="login_advanced">Jiné možnosti</string>
     <string name="login_advanced_warning_mobile_api">V tomto režimu nefungují následující: šťastné číslo, statistiky třídy, shrnutí docházky, ospravedlnění nepřítomnosti, absolvované lekce, informace o škole a prohlížení seznamu registrovaných zařízení</string>
     <string name="login_advanced_warning_scraper">Tento režim zobrazuje stejná data, která se zobrazují na webových stránkách deníka</string>
@@ -63,7 +66,7 @@
     <string name="login_recover_button">Zapomněl jsem své heslo</string>
     <string name="login_recover_title">Obnovte svůj účet</string>
     <string name="login_recover">Obnovit</string>
-    <string name="login_signed_in">Student je již přihlášen</string>
+    <string name="login_signed_in">Žák je již přihlášen</string>
     <!--Main-->
     <string name="main_account_picker">Manažer účtů</string>
     <string name="main_log_in">Přihlásit se</string>
@@ -84,17 +87,21 @@
     <string name="grade_no_average">Bez průměru</string>
     <string name="grade_predicted">Předpovězeno: %1$s</string>
     <string name="grade_final">Konečná: %1$s</string>
-    <string name="grade_summary_points">Celkem bodů</string>
+    <string name="grade_summary_points">Součet bodů</string>
     <string name="grade_summary_final_grade">Konečná známka</string>
     <string name="grade_summary_predicted_grade">Předpokládaná známka</string>
     <string name="grade_summary_calculated_average">Vypočítaný průměr</string>
     <string name="grade_summary_final_average">Konečný průměr</string>
-    <string name="grade_menu_summary">Souhrn</string>
+    <string name="grade_menu_summary">Shrnutí</string>
     <string name="grade_menu_statistics">Třída</string>
     <string name="grade_menu_read">Označit jako přečtené</string>
     <string name="grade_statistics_partial">Částečně</string>
     <string name="grade_statistics_semester">Semestr</string>
     <string name="grade_statistics_points">Body</string>
+    <string name="grade_statistics_legend">Vysvětlivky</string>
+    <string name="grade_statistics_average">Průměr: %1$s</string>
+    <string name="grade_statistics_average_class">Třída</string>
+    <string name="grade_statistics_average_student">Žák</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d známka</item>
         <item quantity="few">%d známky</item>
@@ -139,7 +146,7 @@
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lekce</string>
-    <string name="timetable_room">Pokoj</string>
+    <string name="timetable_room">Učebna</string>
     <string name="timetable_group">Skupina</string>
     <string name="timetable_time">Hodiny</string>
     <string name="timetable_changes">Změny</string>
@@ -164,10 +171,10 @@
     <string name="additional_lessons_button">Zobrazit další lekce</string>
     <string name="additional_lessons_no_items">Žádné informace o dalších lekcích</string>
     <!--Attendance-->
-    <string name="attendance_summary_button">Souhrn docházky</string>
+    <string name="attendance_summary_button">Shrnutí docházky</string>
     <string name="attendance_absence_school">Nepřítomen ze školních důvodů</string>
     <string name="attendance_absence_excused">Omluvená nepřítomnost</string>
-    <string name="attendance_absence_unexcused">Neomluvená absence</string>
+    <string name="attendance_absence_unexcused">Neomluvená nepřítomnost</string>
     <string name="attendance_exemption">Osvobození</string>
     <string name="attendance_excused_lateness">Omluvené zpoždění</string>
     <string name="attendance_unexcused_lateness">Neomluvené zpoždění</string>
@@ -189,7 +196,7 @@
     <string name="attendance_excuse_title">Ospravedlnit</string>
     <!--Attendance summary-->
     <string name="attendance_summary_final">Účast</string>
-    <string name="attendance_summary_total">Celkový</string>
+    <string name="attendance_summary_total">Společně</string>
     <!--Exam-->
     <string name="exam_no_items">Tento týden žádné testy</string>
     <string name="exam_type">Typ</string>
@@ -215,7 +222,7 @@
     <string name="message_subject">Téma</string>
     <string name="message_content">Obsah</string>
     <string name="message_send_successful">Zpráva úspěšně odeslána</string>
-    <string name="message_not_exists">Message does not exist</string>
+    <string name="message_not_exists">Zpráva neexistuje</string>
     <string name="message_required_recipients">Musíte vybrat alespoň 1 příjemce</string>
     <string name="message_content_min_length">Obsah zprávy musí mít alespoň 3 znaky</string>
     <plurals name="message_number_item">
@@ -337,12 +344,19 @@
     <!--Account-->
     <string name="account_add_new">Přidat účet</string>
     <string name="account_logout">Odhlásit se</string>
-    <string name="account_confirm">Chcete se odhlásit z aktivního studenta?</string>
-    <string name="account_logout_student">Odhlášení studentů</string>
-    <string name="account_type_student">Studentský účet</string>
+    <string name="account_confirm">Chcete se odhlásit z aktivního žáka?</string>
+    <string name="account_logout_student">Odhlášení žáků</string>
+    <string name="account_type_student">Žákův účet</string>
     <string name="account_type_parent">Rodičovský účet</string>
     <string name="account_login_mobile_api">Režim Mobilního API</string>
     <string name="account_login_hybrid">Hybridní režim</string>
+    <string name="account_details_edit">Upravit data</string>
+    <string name="account_quick_manager">Manažer účtů</string>
+    <string name="account_select_student">Vyberte žáka</string>
+    <string name="account_family">Rodina</string>
+    <string name="account_contact">Kontakt</string>
+    <string name="account_address">Údaje o adresách</string>
+    <string name="account_personal_data">Osobní údaje</string>
     <!--About-->
     <string name="about_version">Verze aplikace</string>
     <string name="about_contributor">Tvůrci</string>
@@ -366,6 +380,30 @@
     <!--Contributor-->
     <string name="contributor_avatar_description">Avatar</string>
     <string name="contributor_see_more">Zobrazit více na GitHub</string>
+    <!--Student info-->
+    <string name="student_info_empty">Žádné informace o žácích</string>
+    <string name="student_info_first_name">Jméno</string>
+    <string name="student_info_second_name">Druhé jméno</string>
+    <string name="student_info_gender">Pohlaví</string>
+    <string name="student_info_polish_citizenship">Polské občanství</string>
+    <string name="student_info_family_name">Rodinné jméno</string>
+    <string name="student_info_parents_name">Jména matky a otce</string>
+    <string name="student_info_phone">Telefon</string>
+    <string name="student_info_cellphone">Mobilní telefon</string>
+    <string name="student_info_email">E-mail</string>
+    <string name="student_info_address">Adresa bydliště</string>
+    <string name="student_info_registered_address">Registrovaná adresa</string>
+    <string name="student_info_correspondence_address">Korespondenční adresa</string>
+    <string name="student_info_full_name">Příjmení a jméno</string>
+    <string name="student_info_kinship">Stupeň příbuznosti</string>
+    <string name="student_info_guardian_address">Adresa</string>
+    <string name="student_info_phones">Telefony</string>
+    <string name="student_info_male">Muž</string>
+    <string name="student_info_female">Žena</string>
+    <string name="student_info_last_name">Příjmení</string>
+    <!--Account edit-->
+    <string name="account_edit_nick_hint">Přezdívka</string>
+    <string name="account_edit_header">Přidat přezdívku</string>
     <!--Log viewer-->
     <string name="logviewer_share">Sdílejte protokoly</string>
     <string name="logviewer_refresh">Obnovit</string>
@@ -390,6 +428,9 @@
     <string name="all_next">Další</string>
     <string name="all_search">Hledat</string>
     <string name="all_search_hint">Hledat…</string>
+    <string name="all_yes">Ano</string>
+    <string name="all_no">Ne</string>
+    <string name="all_save">Uložit</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Žádné lekce</string>
     <string name="widget_timetable_theme_title">Vybrat motiv</string>

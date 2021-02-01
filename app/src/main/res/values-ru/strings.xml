@@ -8,7 +8,7 @@
     <string name="exam_title">Тесты</string>
     <string name="timetable_title">Расписание</string>
     <string name="settings_title">Настройки</string>
-    <string name="more_title">Другое</string>
+    <string name="more_title">Ещё</string>
     <string name="about_title">О приложении</string>
     <string name="logviewer_title">Просмотр журнала</string>
     <string name="contributors_title">Разработчики</string>
@@ -17,7 +17,10 @@
     <string name="send_message_title">Новое сообщение</string>
     <string name="note_title">Предупреждения и свершения</string>
     <string name="homework_title">Домашние задания</string>
-    <string name="account_title">Выберите аккаунт</string>
+    <string name="account_title">Менеджер аккаунтов</string>
+    <string name="account_quick_title">Выбор учетной записи</string>
+    <string name="account_details_title">Данные аккаунта</string>
+    <string name="student_info_title">Информация о студенте</string>
     <!--Subtitles-->
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
@@ -27,10 +30,10 @@
     <string name="login_email_hint">Электронная почта</string>
     <string name="login_login_pesel_email_hint">Логин, PESEL или электронная почта</string>
     <string name="login_password_hint">Пароль</string>
-    <string name="login_host_hint">Разновидностью бревна UONET+</string>
-    <string name="login_type_api">Mobile API</string>
+    <string name="login_host_hint">UONET + вариант регистрации</string>
+    <string name="login_type_api">Мобильный API</string>
     <string name="login_type_scrapper">Scraper</string>
-    <string name="login_type_hybrid">Hybrid</string>
+    <string name="login_type_hybrid">Гибрид</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
     <string name="login_api_key_hint">Ключ API</string>
@@ -39,15 +42,15 @@
     <string name="login_invalid_password">Слишком короткий пароль</string>
     <string name="login_incorrect_password">Данные для входа неверны. Убедитесь, что в поле ниже выбран правильный вариант регистра UONET+</string>
     <string name="login_invalid_pin">Неправильный PIN</string>
-    <string name="login_invalid_token">Неправильный token</string>
-    <string name="login_expired_token">Токен просрочен</string>
+    <string name="login_invalid_token">Неверный token</string>
+    <string name="login_expired_token">Token просрочен</string>
     <string name="login_invalid_email">Неверный адрес электронной почты</string>
     <string name="login_invalid_login">Используйте назначенный логин вместо электронной почты</string>
-    <string name="login_invalid_symbol">Неправильный symbol</string>
+    <string name="login_invalid_symbol">Неправильный символ</string>
     <string name="login_incorrect_symbol">Студент не найден. Подтвердите символ и выбранный вариант регистра UONET+</string>
-    <string name="login_field_required">Обязательное поле</string>
+    <string name="login_field_required">Это обязательное поле</string>
     <string name="login_duplicate_student">Данный ученик уже авторизован</string>
-    <string name="login_symbol_helper">Этот символ можно найти на странице регистрации в &#160;<b>Uczeń</b> → &#160;<b>Dostęp Mobilny</b> → &#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nУбедитесь, что вы установили соответствующий вариант регистра в поле <b>Разновидностью бревна UONET+</b> на предыдущем экране. Wulkanowy на данный момент не обнаруживает дошкольников</string>
+    <string name="login_symbol_helper">Этот символ можно найти на странице регистрации в &#160;<b>Ученик</b> → &#160;<b>Телефонный доступ</b> → &#160;<b> Зарегистрируйте мобильное устройство</b>.\n\nУбедитесь, что вы установили соответствующий вариант регистра в поле <b>Разновидностью бревна UONET+</b> на предыдущем экране. Вулкановый на данный момент не обнаруживает дошкольников</string>
     <string name="login_select_student">Выберите учеников для авторизации в приложении</string>
     <string name="login_advanced">Другие варианты</string>
     <string name="login_advanced_warning_mobile_api">В этом режиме не работают: счастливый номер, статистика класса по оценкам, статистика посещаемости и уроков, информация о школе и список зарегистрированных устройств</string>
@@ -60,7 +63,7 @@
     <string name="login_email_intent_title">Отправить письмо</string>
     <string name="login_email_details">Опишите детали проблемы:</string>
     <string name="login_recover_warning">Убедитесь, что вы выбрали правильный вариант регистра UONET+!</string>
-    <string name="login_recover_button">Забыли пароль?</string>
+    <string name="login_recover_button">Я забыл свой пароль</string>
     <string name="login_recover_title">Восстановите свой аккаунт</string>
     <string name="login_recover">Восстановить</string>
     <string name="login_signed_in">Студент уже вошел в систему</string>
@@ -68,7 +71,7 @@
     <string name="main_account_picker">Менеджер аккаунтов</string>
     <string name="main_log_in">Войти</string>
     <string name="main_session_expired">Сеанс истёк</string>
-    <string name="main_session_relogin">Сеанс истёк, пожалуйста, авторизируйтесь ещё раз</string>
+    <string name="main_session_relogin">Сеанс истёк, пожалуйста, войдите ещё раз</string>
     <!--Grade-->
     <string name="grade_header">Оценка</string>
     <string name="grade_semester">Семестр %d</string>
@@ -95,6 +98,10 @@
     <string name="grade_statistics_partial">Частичные</string>
     <string name="grade_statistics_semester">За семестр</string>
     <string name="grade_statistics_points">Баллы</string>
+    <string name="grade_statistics_legend">Легенда</string>
+    <string name="grade_statistics_average">Средняя: %1$s</string>
+    <string name="grade_statistics_average_class">Класс</string>
+    <string name="grade_statistics_average_student">Студент</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d оценка</item>
         <item quantity="few">%d оценки</item>
@@ -132,7 +139,7 @@
         <item quantity="other">Вы получили %1$d ожидаемых оценок</item>
     </plurals>
     <plurals name="grade_notify_new_items_final">
-        <item quantity="one">Вы получили %1$d финальную оценку</item>
+        <item quantity="one">Вы получили %1$d итоговою оценку</item>
         <item quantity="few">Вы получили %1$d итоговых оценки</item>
         <item quantity="many">Вы получили %1$d итоговых оценок</item>
         <item quantity="other">Вы получили %1$d финальные оценки</item>
@@ -143,7 +150,7 @@
     <string name="timetable_group">Группа</string>
     <string name="timetable_time">Часы</string>
     <string name="timetable_changes">Изменения</string>
-    <string name="timetable_no_items">Нет уроков в данный день</string>
+    <string name="timetable_no_items">Нету уроков в данный день</string>
     <string name="timetable_minutes">%s мин</string>
     <string name="timetable_seconds">%s сек</string>
     <string name="timetable_time_left">%1$s осталось</string>
@@ -160,9 +167,9 @@
     <string name="completed_lessons_absence">Отсутствие</string>
     <string name="completed_lessons_resources">Ресурсы</string>
     <!--Additional lessons-->
-    <string name="additional_lessons_title">Additional lessons</string>
-    <string name="additional_lessons_button">Show additional lessons</string>
-    <string name="additional_lessons_no_items">No info about additional lessons</string>
+    <string name="additional_lessons_title">Дополнительные уроки</string>
+    <string name="additional_lessons_button">Показать дополнительные уроки</string>
+    <string name="additional_lessons_no_items">Нет информации о дополнительных уроках</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Итоговая посещаемость</string>
     <string name="attendance_absence_school">Отсутствие по школьным причинам</string>
@@ -215,7 +222,7 @@
     <string name="message_subject">Тема</string>
     <string name="message_content">Текст</string>
     <string name="message_send_successful">Сообщение успешно отправлено</string>
-    <string name="message_not_exists">Message does not exist</string>
+    <string name="message_not_exists">Сообщения не существует</string>
     <string name="message_required_recipients">Вы должны выбрать как минимум одного получателя</string>
     <string name="message_content_min_length">Текст сообщения должен содержать как минимум 3 знака</string>
     <plurals name="message_number_item">
@@ -237,7 +244,7 @@
         <item quantity="other">Вы получили %1$d новых сообщений</item>
     </plurals>
     <!--Note-->
-    <string name="note_no_items">Нет данных о предупреждениях</string>
+    <string name="note_no_items">Нет информации о заметках</string>
     <string name="note_points">Баллы</string>
     <plurals name="note_number_item">
         <item quantity="one">%d предупреждение</item>
@@ -297,19 +304,19 @@
     </plurals>
     <!--Homework-->
     <string name="homework_no_items">Нет домашних заданий</string>
-    <string name="homework_mark_as_done">сделанный</string>
-    <string name="homework_mark_as_undone">Не сделано</string>
+    <string name="homework_mark_as_done">Отметить как выполненное</string>
+    <string name="homework_mark_as_undone">Отметить как невыполненное</string>
     <string name="homework_attachments">Вложения</string>
     <!--Lucky number-->
     <string name="lucky_number_title">Счастливый номер</string>
-    <string name="lucky_number_header">Сегодняшний счастливый номер</string>
+    <string name="lucky_number_header">Сегодняшний счастливый номер это</string>
     <string name="lucky_number_empty">Нет данных о счастливом номере</string>
     <string name="lucky_number_notify_new_item_title">Сегодняшний счастливый номер</string>
-    <string name="lucky_number_notify_new_item">Сегодняшний счастливый номер: %d</string>
+    <string name="lucky_number_notify_new_item">Сегодняшний счастливый номер это: %d</string>
     <!--Mobile devices-->
     <string name="mobile_devices_title">Мобильные устройства</string>
     <string name="mobile_devices_no_items">Нет устройств</string>
-    <string name="mobile_devices_unregister">Удалить</string>
+    <string name="mobile_devices_unregister">Отменить регистрацию</string>
     <string name="mobile_device_removed">Устройство удалено</string>
     <string name="mobile_device_qr">QR-код</string>
     <string name="mobile_device_token">Token</string>
@@ -323,8 +330,8 @@
     <string name="school_name">Название школы</string>
     <string name="school_address">Адрес школы</string>
     <string name="school_telephone">Телефон</string>
-    <string name="school_headmaster">Директор</string>
-    <string name="school_pedagogue">Педагог</string>
+    <string name="school_headmaster">Имя директора</string>
+    <string name="school_pedagogue">Имя педагога</string>
     <string name="school_address_button">Показать на карте</string>
     <string name="school_telephone_button">Позвонить</string>
     <!--Teacher-->
@@ -343,10 +350,17 @@
     <string name="account_type_parent">Профиль родителя</string>
     <string name="account_login_mobile_api">Режим Mobile API</string>
     <string name="account_login_hybrid">Гибридный режим</string>
+    <string name="account_details_edit">Изменить данные</string>
+    <string name="account_quick_manager">Менеджер аккаунтов</string>
+    <string name="account_select_student">Выберите Студента</string>
+    <string name="account_family">Семья</string>
+    <string name="account_contact">Контакт</string>
+    <string name="account_address">Детали проживания</string>
+    <string name="account_personal_data">Персональные данные</string>
     <!--About-->
     <string name="about_version">Версия приложения</string>
     <string name="about_contributor">Разработчики</string>
-    <string name="about_contributor_summary">Список разработчиков \"Wulkanowy\"</string>
+    <string name="about_contributor_summary">Список разработчиков \"Вулкановый\"</string>
     <string name="about_feedback">Возникла ошибка?</string>
     <string name="about_feedback_summary">Сообщить о ошибке</string>
     <string name="about_faq">FAQ</string>
@@ -366,6 +380,30 @@
     <!--Contributor-->
     <string name="contributor_avatar_description">Aватар</string>
     <string name="contributor_see_more">Страница проекта на GitHub</string>
+    <!--Student info-->
+    <string name="student_info_empty">Нет информации о студенте</string>
+    <string name="student_info_first_name">Имя</string>
+    <string name="student_info_second_name">Фамилия</string>
+    <string name="student_info_gender">Пол</string>
+    <string name="student_info_polish_citizenship">Польское гражданство</string>
+    <string name="student_info_family_name">Фамилия</string>
+    <string name="student_info_parents_name">Имена матери и отца</string>
+    <string name="student_info_phone">Телефон</string>
+    <string name="student_info_cellphone">Сотовый телефон</string>
+    <string name="student_info_email">Эл. почта</string>
+    <string name="student_info_address">Адрес проживания</string>
+    <string name="student_info_registered_address">Адрес регистрации</string>
+    <string name="student_info_correspondence_address">Адрес переписки</string>
+    <string name="student_info_full_name">Фамилия и имя</string>
+    <string name="student_info_kinship">Степень родства</string>
+    <string name="student_info_guardian_address">Адрес</string>
+    <string name="student_info_phones">Телефоны</string>
+    <string name="student_info_male">Муж</string>
+    <string name="student_info_female">Женская</string>
+    <string name="student_info_last_name">Фамилия</string>
+    <!--Account edit-->
+    <string name="account_edit_nick_hint">Ник</string>
+    <string name="account_edit_header">Добавить ник</string>
     <!--Log viewer-->
     <string name="logviewer_share">Поделиться логами</string>
     <string name="logviewer_refresh">Обновить</string>
@@ -390,6 +428,9 @@
     <string name="all_next">Следующий</string>
     <string name="all_search">Поиск</string>
     <string name="all_search_hint">Поиск…</string>
+    <string name="all_yes">Да</string>
+    <string name="all_no">Нет</string>
+    <string name="all_save">Сохранить</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Нет уроков</string>
     <string name="widget_timetable_theme_title">Выбрать тему</string>

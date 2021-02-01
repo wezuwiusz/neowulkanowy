@@ -17,11 +17,14 @@
     <string name="send_message_title">Нове повідомлення</string>
     <string name="note_title">Нотатки та досягнення</string>
     <string name="homework_title">Домашні завдання</string>
-    <string name="account_title">Оберіть аккаунт</string>
+    <string name="account_title">Менеджер аккаунтів</string>
+    <string name="account_quick_title">Виберіть обліковий запис</string>
+    <string name="account_details_title">Деталі облікового запису</string>
+    <string name="student_info_title">Інформація про учня</string>
     <!--Subtitles-->
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
-    <string name="login_header_default">Авторизуйтеся за допомогою аккаунта учня або батька</string>
+    <string name="login_header_default">Авторизуйтеся за допомогою аккаунта учня або батьків</string>
     <string name="login_header_symbol">Введіть символ зі сторінки реєстру</string>
     <string name="login_nickname_hint">Ім\'я користувача</string>
     <string name="login_email_hint">Електронна пошта</string>
@@ -43,11 +46,11 @@
     <string name="login_expired_token">Минув термін дії токену</string>
     <string name="login_invalid_email">Недійсна адреса електронної пошти</string>
     <string name="login_invalid_login">Використовуйте призначений логін замість електронної пошти</string>
-    <string name="login_invalid_symbol">Неправильний symbol</string>
+    <string name="login_invalid_symbol">Неправильний симбвол</string>
     <string name="login_incorrect_symbol">Студента не знайдено Перевірте символ та обраний варіант реєстру UONET+</string>
     <string name="login_field_required">Обов\'язкове поле</string>
     <string name="login_duplicate_student">Даного учня вже авторизовано</string>
-    <string name="login_symbol_helper">Символ можна знайти на сторінці реєстру в &#160; <b> Uczeń </b> → &#160; <b> Dostęp Mobilny </b> → &#160; <b> Zarejestruj urządzenie mobilne </b>.\n\nПереконайтесь, що ви встановили відповідний варіант реєстру в полі <b> UONET + варіант реєстрації </b> на попередньому екрані. На даний момент Wulkanowy не виявляє учнів дошкільних закладів</string>
+    <string name="login_symbol_helper">Символ можна знайти на сторінці реєстру в &#160; <b> Учень </b> → &#160; <b> Мобільний доступ </b> → &#160; <b> Додайте мобільне приладдя </b>.\n\nПереконайтесь, що ви встановили відповідний варіант реєстру в полі <b> UONET + варіант реєстрації </b> на попередньому екрані. На даний момент Wulkanowy не виявляє учнів дошкільних закладів</string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_advanced_warning_mobile_api">У цьому режимі не працюють: щасливий номер, статистика класу по оцінкам, статистика відвідуваності і уроків, інформація про школу і список зареєстрованних пристроїв</string>
@@ -61,7 +64,7 @@
     <string name="login_email_details">Опишіть деталі помилки:</string>
     <string name="login_recover_warning">Переконайтеся, що ви вибрали правильний варіант реєстрації UONET+!</string>
     <string name="login_recover_button">Забули пароль?</string>
-    <string name="login_recover_title">Відновіть свій аккаунт</string>
+    <string name="login_recover_title">Відновіть свій обліковий запис</string>
     <string name="login_recover">Відновити</string>
     <string name="login_signed_in">Учень вже увійшов до системи</string>
     <!--Main-->
@@ -73,15 +76,15 @@
     <string name="grade_header">Оцінка</string>
     <string name="grade_semester">%d семестр</string>
     <string name="grade_switch_semester">Змінити семестр</string>
-    <string name="grade_no_items">Брак оцінок</string>
+    <string name="grade_no_items">Оцінки відсутні</string>
     <string name="grade_weight">Вартість</string>
     <string name="grade_weight_value">Вартість: %s</string>
     <string name="grade_comment">Коментар</string>
-    <string name="grade_no_new_items">Брак нових оцінок</string>
+    <string name="grade_no_new_items">Нові оцінки відсутні</string>
     <string name="grade_number_new_items">Кількість нових оцінок: %1$d</string>
     <string name="grade_average">Середня оцінка: %1$.2f</string>
-    <string name="grade_points_sum">точок: %s</string>
-    <string name="grade_no_average">Брак середньої оцінки</string>
+    <string name="grade_points_sum">Балів: %s</string>
+    <string name="grade_no_average">Відсутність середньої оцінки</string>
     <string name="grade_predicted">Очікувана оцінка: %1$s</string>
     <string name="grade_final">Підсумкова оцінка: %1$s</string>
     <string name="grade_summary_points">Сума балів</string>
@@ -95,6 +98,10 @@
     <string name="grade_statistics_partial">Поточні</string>
     <string name="grade_statistics_semester">Семестрові</string>
     <string name="grade_statistics_points">Бали</string>
+    <string name="grade_statistics_legend">Умовні позначення</string>
+    <string name="grade_statistics_average">Середня оцінка: %1$s</string>
+    <string name="grade_statistics_average_class">Клас</string>
+    <string name="grade_statistics_average_student">Учень</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d оцінка</item>
         <item quantity="few">%d оцінки</item>
@@ -160,9 +167,9 @@
     <string name="completed_lessons_absence">Відсутність</string>
     <string name="completed_lessons_resources">Ресурси</string>
     <!--Additional lessons-->
-    <string name="additional_lessons_title">Additional lessons</string>
-    <string name="additional_lessons_button">Show additional lessons</string>
-    <string name="additional_lessons_no_items">No info about additional lessons</string>
+    <string name="additional_lessons_title">Додаткові уроки</string>
+    <string name="additional_lessons_button">Показати додаткові уроки</string>
+    <string name="additional_lessons_no_items">Немає інформації про додаткових уроків</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Підсумок відвідуваності</string>
     <string name="attendance_absence_school">Відсутність зі шкільних причин</string>
@@ -215,7 +222,7 @@
     <string name="message_subject">Тема</string>
     <string name="message_content">Зміст</string>
     <string name="message_send_successful">Повідомлення було успішно відправлено</string>
-    <string name="message_not_exists">Message does not exist</string>
+    <string name="message_not_exists">Такого повідомлення не існує</string>
     <string name="message_required_recipients">Необхідно обрати принаймні 1 адресата</string>
     <string name="message_content_min_length">Зміст повідомлення мусить складатися принаймні з 3 знаків</string>
     <plurals name="message_number_item">
@@ -343,6 +350,13 @@
     <string name="account_type_parent">Головний рахунок</string>
     <string name="account_login_mobile_api">Режим мобільного API</string>
     <string name="account_login_hybrid">Гібридний режим</string>
+    <string name="account_details_edit">Редагувати дані</string>
+    <string name="account_quick_manager">Менеджер аккаунтів</string>
+    <string name="account_select_student">Виберіть учня</string>
+    <string name="account_family">Сім\'я</string>
+    <string name="account_contact">Контакт</string>
+    <string name="account_address">Деталі проживання</string>
+    <string name="account_personal_data">Особиста інформація</string>
     <!--About-->
     <string name="about_version">Версія додатка</string>
     <string name="about_contributor">Розробники</string>
@@ -366,6 +380,30 @@
     <!--Contributor-->
     <string name="contributor_avatar_description">Аватар</string>
     <string name="contributor_see_more">Сторінка проекту на GitHub</string>
+    <!--Student info-->
+    <string name="student_info_empty">Брак інформації про учня</string>
+    <string name="student_info_first_name">Ім\'я</string>
+    <string name="student_info_second_name">Друге ім\'я</string>
+    <string name="student_info_gender">Стать</string>
+    <string name="student_info_polish_citizenship">Польське громадянство</string>
+    <string name="student_info_family_name">Прізвище</string>
+    <string name="student_info_parents_name">Імена батька і матері</string>
+    <string name="student_info_phone">Номер телефону</string>
+    <string name="student_info_cellphone">Мобільний телефон</string>
+    <string name="student_info_email">Електронна пошта</string>
+    <string name="student_info_address">Місця проживання</string>
+    <string name="student_info_registered_address">Адреса реєстрації</string>
+    <string name="student_info_correspondence_address">Адреса для кореспонденції</string>
+    <string name="student_info_full_name">Прізвище та ім\'я</string>
+    <string name="student_info_kinship">Ступінь спорідненості</string>
+    <string name="student_info_guardian_address">Адреса</string>
+    <string name="student_info_phones">Телефони</string>
+    <string name="student_info_male">Чоловіча</string>
+    <string name="student_info_female">Жінка</string>
+    <string name="student_info_last_name">Прізвище</string>
+    <!--Account edit-->
+    <string name="account_edit_nick_hint">Псевдонім</string>
+    <string name="account_edit_header">Додати псевдонім</string>
     <!--Log viewer-->
     <string name="logviewer_share">Поділитися логами</string>
     <string name="logviewer_refresh">Оновити</string>
@@ -390,6 +428,9 @@
     <string name="all_next">Наступний</string>
     <string name="all_search">Пошук</string>
     <string name="all_search_hint">Пошук…</string>
+    <string name="all_yes">Так</string>
+    <string name="all_no">Ні</string>
+    <string name="all_save">Зберегти</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Брак уроків</string>
     <string name="widget_timetable_theme_title">Увібрати тему</string>
