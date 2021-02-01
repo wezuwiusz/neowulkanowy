@@ -15,6 +15,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
@@ -41,7 +42,29 @@ class GradeAverageProviderTest {
 
     private lateinit var gradeAverageProvider: GradeAverageProvider
 
-    private val student = Student("", "", "", "SCRAPPER", "", "", false, "", "", "", 101, 0, "", "", "", "", "", "", 1, true, LocalDateTime.now())
+    private val student = Student(
+        scrapperBaseUrl = "",
+        mobileBaseUrl = "",
+        loginType = "",
+        loginMode = "SCRAPPER",
+        certificateKey = "",
+        privateKey = "",
+        isParent = false,
+        email = "",
+        password = "",
+        symbol = "",
+        studentId = 101,
+        userLoginId = 0,
+        userName = "",
+        studentName = "",
+        schoolSymbol = "",
+        schoolShortName = "",
+        schoolName = "",
+        className = "",
+        classId = 1,
+        isCurrent = true,
+        registrationDate = LocalDateTime.now()
+    )
 
     private val semesters = mutableListOf(
         getSemesterEntity(10, 21, of(2019, 1, 31), of(2019, 6, 23)),
@@ -128,6 +151,51 @@ class GradeAverageProviderTest {
         }
 
         assertEquals(3.5, items[1].data?.single { it.subject == "Język polski" }!!.average, .0) // from details and after set custom plus/minus
+    }
+
+    @Test
+    fun `calc all year semester average with delayed emit`(){
+        every { preferencesRepository.gradeAverageForceCalc } returns true
+        every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
+
+        coEvery { semesterRepository.getSemesters(student) } returns semesters
+        coEvery { gradeRepository.getGrades(student, semesters[2], false) } returns flow {
+            emit(Resource.loading())
+            delay(1000)
+            emit(Resource.success(secondGradeWithModifier to secondSummariesWithModifier))
+        }
+        coEvery { gradeRepository.getGrades(student, semesters[1], false) } returns flow {
+            emit(Resource.loading())
+            emit(Resource.success(secondGradeWithModifier to secondSummariesWithModifier))
+        }
+
+        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, false).toList() }
+
+        with(items[0]) {
+            assertEquals(Status.LOADING, status)
+            assertEquals(null, data)
+        }
+        with(items[1]) {
+            assertEquals(Status.SUCCESS, status)
+            assertEquals(1, data!!.size)
+        }
+
+        assertEquals(3.5, items[1].data?.single { it.subject == "Język polski" }!!.average, .0) // from details and after set custom plus/minus
+    }
+
+    @Test
+    fun `calc both semesters average with grade without grade in second semester`() {
+        every { preferencesRepository.gradeAverageForceCalc } returns true
+        every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
+
+        coEvery { gradeRepository.getGrades(student, semesters[1], false) } returns flowWithResource { secondGradeWithModifier to secondSummariesWithModifier }
+        coEvery { gradeRepository.getGrades(student, semesters[2], false) } returns flowWithResource {
+            listOf(getGrade(semesters[2].semesterId, "Język polski", .0, .0, .0)) to listOf(getSummary(semesters[2].semesterId, "Język polski", 2.5))
+        }
+
+        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, false).getResult() }
+
+        assertEquals(3.5, items.single { it.subject == "Język polski" }.average, .0)
     }
 
     @Test

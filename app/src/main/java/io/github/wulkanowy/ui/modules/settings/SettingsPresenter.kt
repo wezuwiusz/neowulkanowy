@@ -42,14 +42,18 @@ class SettingsPresenter @Inject constructor(
             when (key) {
                 serviceEnableKey -> with(syncManager) { if (isServiceEnabled) startPeriodicSyncWorker() else stopSyncWorker() }
                 servicesIntervalKey, servicesOnlyWifiKey -> syncManager.startPeriodicSyncWorker(true)
-                isDebugNotificationEnableKey -> chuckerCollector.showNotification = isDebugNotificationEnable
+                isDebugNotificationEnableKey -> chuckerCollector.showNotification =
+                    isDebugNotificationEnable
                 appThemeKey -> view?.recreateView()
                 isUpcomingLessonsNotificationsEnableKey -> if (!isUpcomingLessonsNotificationsEnable) timetableNotificationHelper.cancelNotification()
                 appLanguageKey -> view?.run {
-                    val newLang = if (appLanguage == "system") appInfo.systemLanguage else appLanguage
-                    analytics.logEvent("language", "setting_changed" to newLang)
-
-                    updateLanguage(newLang)
+                    if (appLanguage == "system") {
+                        updateLanguageToFollowSystem()
+                        analytics.logEvent("language", "setting_changed" to appInfo.systemLanguage)
+                    } else {
+                        updateLanguage(appLanguage)
+                        analytics.logEvent("language", "setting_changed" to appLanguage)
+                    }
                     recreateView()
                 }
             }
@@ -71,7 +75,10 @@ class SettingsPresenter @Inject constructor(
                         analytics.logEvent("sync_now", "status" to "success")
                     }
                     WorkInfo.State.FAILED -> {
-                        showError(syncFailedString, Throwable(workInfo.outputData.getString("error")))
+                        showError(
+                            syncFailedString,
+                            Throwable(workInfo.outputData.getString("error"))
+                        )
                         analytics.logEvent("sync_now", "status" to "failed")
                     }
                     else -> Timber.d("Sync now state: ${workInfo.state}")

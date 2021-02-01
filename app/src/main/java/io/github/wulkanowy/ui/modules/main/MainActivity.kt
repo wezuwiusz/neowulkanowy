@@ -14,6 +14,7 @@ import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
@@ -28,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.ActivityMainBinding
 import io.github.wulkanowy.ui.base.BaseActivity
-import io.github.wulkanowy.ui.modules.account.AccountDialog
+import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
@@ -65,17 +66,19 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     private val overlayProvider by lazy { ElevationOverlayProvider(this) }
 
-    private val navController = FragNavController(supportFragmentManager, R.id.mainFragmentContainer)
+    private val navController =
+        FragNavController(supportFragmentManager, R.id.mainFragmentContainer)
 
     companion object {
         const val EXTRA_START_MENU = "extraStartMenu"
 
-        fun getStartIntent(context: Context, startMenu: MainView.Section? = null, clear: Boolean = false): Intent {
-            return Intent(context, MainActivity::class.java)
-                .apply {
-                    if (clear) flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-                    startMenu?.let { putExtra(EXTRA_START_MENU, it.id) }
-                }
+        fun getStartIntent(
+            context: Context,
+            startMenu: MainView.Section? = null,
+            clear: Boolean = false
+        ) = Intent(context, MainActivity::class.java).apply {
+            if (clear) flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+            startMenu?.let { putExtra(EXTRA_START_MENU, it.id) }
         }
     }
 
@@ -83,7 +86,10 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     override val currentStackSize get() = navController.currentStack?.size
 
-    override val currentViewTitle get() = (navController.currentFrag as? MainView.TitledView)?.titleStringId?.let { getString(it) }
+    override val currentViewTitle
+        get() = (navController.currentFrag as? MainView.TitledView)?.titleStringId?.let {
+            getString(it)
+        }
 
     override val currentViewSubtitle get() = (navController.currentFrag as? MainView.TitledView)?.subtitleString
 
@@ -106,7 +112,10 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         messageContainer = binding.mainFragmentContainer
         updateHelper.messageContainer = binding.mainFragmentContainer
 
-        presenter.onAttachView(this, MainView.Section.values().singleOrNull { it.id == intent.getIntExtra(EXTRA_START_MENU, -1) })
+        val section = MainView.Section.values()
+            .singleOrNull { it.id == intent.getIntExtra(EXTRA_START_MENU, -1) }
+
+        presenter.onAttachView(this, section)
 
         with(navController) {
             initialize(startMenuIndex, savedInstanceState)
@@ -132,21 +141,49 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         val shortcutsList = mutableListOf<ShortcutInfo>()
 
         listOf(
-            Triple(getString(R.string.grade_title), R.drawable.ic_shortcut_grade, MainView.Section.GRADE),
-            Triple(getString(R.string.attendance_title), R.drawable.ic_shortcut_attendance, MainView.Section.ATTENDANCE),
-            Triple(getString(R.string.exam_title), R.drawable.ic_shortcut_exam, MainView.Section.EXAM),
-            Triple(getString(R.string.timetable_title), R.drawable.ic_shortcut_timetable, MainView.Section.TIMETABLE),
-            Triple(getString(R.string.message_title), R.drawable.ic_shortcut_message, MainView.Section.MESSAGE)
+            Triple(
+                getString(R.string.grade_title),
+                R.drawable.ic_shortcut_grade,
+                MainView.Section.GRADE
+            ),
+            Triple(
+                getString(R.string.attendance_title),
+                R.drawable.ic_shortcut_attendance,
+                MainView.Section.ATTENDANCE
+            ),
+            Triple(
+                getString(R.string.exam_title),
+                R.drawable.ic_shortcut_exam,
+                MainView.Section.EXAM
+            ),
+            Triple(
+                getString(R.string.timetable_title),
+                R.drawable.ic_shortcut_timetable,
+                MainView.Section.TIMETABLE
+            ),
+            Triple(
+                getString(R.string.message_title),
+                R.drawable.ic_shortcut_message,
+                MainView.Section.MESSAGE
+            )
         ).forEach { (title, icon, enum) ->
-            shortcutsList.add(ShortcutInfo.Builder(applicationContext, title)
-                .setShortLabel(title)
-                .setLongLabel(title)
-                .setIcon(Icon.createWithResource(applicationContext, icon))
-                .setIntents(arrayOf(
-                    Intent(applicationContext, MainActivity::class.java).setAction(Intent.ACTION_VIEW),
-                    Intent(applicationContext, MainActivity::class.java).putExtra(EXTRA_START_MENU, enum.id)
-                        .setAction(Intent.ACTION_VIEW).addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)))
-                .build())
+            shortcutsList.add(
+                ShortcutInfo.Builder(applicationContext, title)
+                    .setShortLabel(title)
+                    .setLongLabel(title)
+                    .setIcon(Icon.createWithResource(applicationContext, icon))
+                    .setIntents(
+                        arrayOf(
+                            Intent(applicationContext, MainActivity::class.java)
+                                .setAction(Intent.ACTION_VIEW),
+                            Intent(applicationContext, MainActivity::class.java)
+                                .putExtra(EXTRA_START_MENU, enum.id)
+                                .setAction(Intent.ACTION_VIEW)
+                                .addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
+                        )
+                    )
+                    .build()
+            )
         }
 
         getSystemService<ShortcutManager>()?.dynamicShortcuts = shortcutsList
@@ -160,20 +197,33 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     override fun initView() {
         with(binding.mainToolbar) {
             if (SDK_INT >= LOLLIPOP) stateListAnimator = null
-            setBackgroundColor(overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(4f)))
+            setBackgroundColor(
+                overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(4f))
+            )
         }
 
         with(binding.mainBottomNav) {
-            addItems(listOf(
-                AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_main_grade, 0),
-                AHBottomNavigationItem(R.string.attendance_title, R.drawable.ic_main_attendance, 0),
-                AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_main_exam, 0),
-                AHBottomNavigationItem(R.string.timetable_title, R.drawable.ic_main_timetable, 0),
-                AHBottomNavigationItem(R.string.more_title, R.drawable.ic_main_more, 0)
-            ))
+            addItems(
+                listOf(
+                    AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_main_grade, 0),
+                    AHBottomNavigationItem(
+                        R.string.attendance_title,
+                        R.drawable.ic_main_attendance,
+                        0
+                    ),
+                    AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_main_exam, 0),
+                    AHBottomNavigationItem(
+                        R.string.timetable_title,
+                        R.drawable.ic_main_timetable,
+                        0
+                    ),
+                    AHBottomNavigationItem(R.string.more_title, R.drawable.ic_main_more, 0)
+                )
+            )
             accentColor = getThemeAttrColor(R.attr.colorPrimary)
             inactiveColor = getThemeAttrColor(R.attr.colorOnSurface, 153)
-            defaultBackgroundColor = overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(8f))
+            defaultBackgroundColor =
+                overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(8f))
             titleState = ALWAYS_SHOW
             currentItem = startMenuIndex
             isBehaviorTranslationEnabled = false
@@ -183,6 +233,13 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
         with(navController) {
             setOnViewChangeListener { section, name ->
+                binding.mainBottomNav.visibility =
+                    if (section == MainView.Section.ACCOUNT || section == MainView.Section.STUDENT_INFO) {
+                        View.GONE
+                    } else {
+                        View.VISIBLE
+                    }
+
                 analytics.setCurrentScreen(this@MainActivity, name)
                 presenter.onViewChange(section)
             }
@@ -224,7 +281,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     override fun showAccountPicker() {
-        navController.showDialogFragment(AccountDialog.newInstance())
+        navController.showDialogFragment(AccountQuickDialog.newInstance())
     }
 
     override fun showActionBarElevation(show: Boolean) {

@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="horizontal"
-    android:paddingVertical="8dp"
     android:paddingHorizontal="16dp"
+    android:paddingVertical="8dp"
     tools:context=".ui.modules.account.AccountAdapter">
 
     <ImageView
@@ -49,7 +51,7 @@
         tools:text="@tools:sample/lorem/random" />
 
     <TextView
-        android:id="@+id/accountItemLoginMode"
+        android:id="@+id/accountItemAccountType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -58,7 +60,6 @@
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/accountItemImage"
         app:layout_constraintTop_toBottomOf="@id/accountItemSchool"

@@ -25,9 +25,8 @@
         android:visibility="invisible"
         tools:visibility="visible" />
 
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/gradeProgress"
-        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

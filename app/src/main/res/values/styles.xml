@@ -10,6 +10,7 @@
         <item name="colorTimetableChange">@color/timetable_change_dark</item>
         <item name="colorError">@color/colorError</item>
         <item name="colorDivider">@color/colorDivider</item>
+        <item name="colorSwipeRefresh">@color/colorSwipeRefresh</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:preferenceStyle">@style/PreferenceThemeOverlay</item>
     </style>

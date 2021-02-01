@@ -78,18 +78,18 @@ class GradeStatisticsAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is PartialViewHolder -> bindPartialChart(holder, items[position].partial!!)
-            is SemesterViewHolder -> bindSemesterChart(holder, items[position].semester!!)
-            is PointsViewHolder -> bindBarChart(holder, items[position].points!!)
+            is PartialViewHolder -> bindPartialChart(holder.binding, items[position].partial!!)
+            is SemesterViewHolder -> bindSemesterChart(holder.binding, items[position].semester!!)
+            is PointsViewHolder -> bindBarChart(holder.binding, items[position].points!!)
         }
     }
 
-    private fun bindPartialChart(holder: PartialViewHolder, partials: GradePartialStatistics) {
-        bindPieChart(holder.binding, partials.subject, partials.classAverage, partials.classAmounts)
+    private fun bindPartialChart(binding: ItemGradeStatisticsPieBinding, partials: GradePartialStatistics) {
+        bindPieChart(binding, partials.subject, partials.classAverage, partials.classAmounts)
     }
 
-    private fun bindSemesterChart(holder: SemesterViewHolder, semester: GradeSemesterStatistics) {
-        bindPieChart(holder.binding, semester.subject, semester.average, semester.amounts)
+    private fun bindSemesterChart(binding: ItemGradeStatisticsPieBinding, semester: GradeSemesterStatistics) {
+        bindPieChart(binding, semester.subject, semester.average, semester.amounts)
     }
 
     private fun bindPieChart(binding: ItemGradeStatisticsPieBinding, subject: String, average: String, amounts: List<Int>) {
@@ -103,9 +103,12 @@ class GradeStatisticsAdapter @Inject constructor() :
             else -> materialGradeColors
         }
 
-        val dataset = PieDataSet(amounts.mapIndexed { grade, amount ->
-            PieEntry(amount.toFloat(), (grade + 1).toString())
-        }.reversed().filterNot { it.value == 0f }, "Legenda")
+        val dataset = PieDataSet(
+            amounts.mapIndexed { grade, amount ->
+                PieEntry(amount.toFloat(), (grade + 1).toString())
+            }.reversed().filterNot { it.value == 0f },
+            binding.root.context.getString(R.string.grade_statistics_legend)
+        )
 
         with(dataset) {
             valueTextSize = 12f
@@ -138,11 +141,13 @@ class GradeStatisticsAdapter @Inject constructor() :
                 })
             }
 
+            val numberOfGradesString = amounts.fold(0) { acc, it -> acc + it }
+                .let { resources.getQuantityString(R.plurals.grade_number_item, it, it) }
+            val averageString = binding.root.context.getString(R.string.grade_statistics_average, average)
+
             minAngleForSlices = 25f
             description.isEnabled = false
-            centerText = amounts.fold(0) { acc, it -> acc + it }
-                .let { resources.getQuantityString(R.plurals.grade_number_item, it, it) } +
-                ("\n\nŚrednia: $average").takeIf { average.isNotBlank() }.orEmpty()
+            centerText = numberOfGradesString + ("\n\n" + averageString).takeIf { average.isNotBlank() }.orEmpty()
 
             setHoleColor(context.getThemeAttrColor(android.R.attr.windowBackground))
             setCenterTextColor(context.getThemeAttrColor(android.R.attr.textColorPrimary))
@@ -150,8 +155,8 @@ class GradeStatisticsAdapter @Inject constructor() :
         }
     }
 
-    private fun bindBarChart(holder: PointsViewHolder, points: GradePointsStatistics) {
-        with(holder.binding.gradeStatisticsBarTitle) {
+    private fun bindBarChart(binding: ItemGradeStatisticsBarBinding, points: GradePointsStatistics) {
+        with(binding.gradeStatisticsBarTitle) {
             text = points.subject
             visibility = if (items.size == 1) GONE else VISIBLE
         }
@@ -159,18 +164,18 @@ class GradeStatisticsAdapter @Inject constructor() :
         val dataset = BarDataSet(listOf(
             BarEntry(1f, points.others.toFloat()),
             BarEntry(2f, points.student.toFloat())
-        ), "Legenda")
+        ), binding.root.context.getString(R.string.grade_statistics_legend))
 
         with(dataset) {
             valueTextSize = 12f
-            valueTextColor = holder.binding.root.context.getThemeAttrColor(android.R.attr.textColorPrimary)
+            valueTextColor = binding.root.context.getThemeAttrColor(android.R.attr.textColorPrimary)
             valueFormatter = object : ValueFormatter() {
                 override fun getBarLabel(barEntry: BarEntry) = "${barEntry.y}%"
             }
             colors = gradePointsColors
         }
 
-        with(holder.binding.gradeStatisticsBar) {
+        with(binding.gradeStatisticsBar) {
             setTouchEnabled(false)
             if (items.size == 1) animateXY(1000, 1000)
             data = BarData(dataset).apply {
@@ -179,12 +184,12 @@ class GradeStatisticsAdapter @Inject constructor() :
             }
             legend.setCustom(listOf(
                 LegendEntry().apply {
-                    label = "Średnia klasy"
+                    label = binding.root.context.getString(R.string.grade_statistics_average_class)
                     formColor = gradePointsColors[0]
                     form = Legend.LegendForm.SQUARE
                 },
                 LegendEntry().apply {
-                    label = "Uczeń"
+                    label = binding.root.context.getString(R.string.grade_statistics_average_student)
                     formColor = gradePointsColors[1]
                     form = Legend.LegendForm.SQUARE
                 }
@@ -193,7 +198,7 @@ class GradeStatisticsAdapter @Inject constructor() :
 
             description.isEnabled = false
 
-            holder.binding.root.context.getThemeAttrColor(android.R.attr.textColorPrimary).let {
+            binding.root.context.getThemeAttrColor(android.R.attr.textColorPrimary).let {
                 axisLeft.textColor = it
                 axisRight.textColor = it
             }

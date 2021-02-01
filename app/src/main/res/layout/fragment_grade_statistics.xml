@@ -95,9 +95,8 @@
                         android:layout_height="match_parent"
                         tools:listitem="@layout/item_grade_statistics_pie" />
 
-                    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
                         android:id="@+id/gradeStatisticsProgress"
-                        style="@style/Widget.MaterialProgressBar.ProgressBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

@@ -81,10 +81,7 @@ class SchoolPresenter @Inject constructor(
                         showEmpty(false)
                         showErrorView(false)
                     }
-                    analytics.logEvent(
-                        "load_item",
-                        "type" to "school"
-                    )
+                    analytics.logEvent("load_item", "type" to "school")
                 } else view?.run {
                     Timber.i("Loading school result: No school info found")
                     showContent(!isViewEmpty)

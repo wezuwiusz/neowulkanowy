@@ -14,6 +14,7 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersChildView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,7 +52,9 @@ class TeacherFragment : BaseFragment<FragmentTeacherBinding>(R.layout.fragment_t
             addItemDecoration(DividerItemDecoration(context))
         }
         with(binding) {
-            teacherSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            teacherSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            teacherSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            teacherSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             teacherErrorRetry.setOnClickListener { presenter.onRetry() }
             teacherErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

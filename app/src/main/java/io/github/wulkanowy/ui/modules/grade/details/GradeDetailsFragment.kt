@@ -17,6 +17,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -65,7 +66,9 @@ class GradeDetailsFragment :
                 layoutManager = LinearLayoutManager(context)
                 adapter = gradeDetailsAdapter
             }
-            gradeDetailsSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            gradeDetailsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            gradeDetailsSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            gradeDetailsSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             gradeDetailsErrorRetry.setOnClickListener { presenter.onRetry() }
             gradeDetailsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

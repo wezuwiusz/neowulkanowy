@@ -17,7 +17,10 @@
     <string name="send_message_title">Nová správa</string>
     <string name="note_title">Poznámky a úspechy</string>
     <string name="homework_title">Domáce úlohy</string>
-    <string name="account_title">Vyberte účet</string>
+    <string name="account_title">Accounts manager</string>
+    <string name="account_quick_title">Select account</string>
+    <string name="account_details_title">Account details</string>
+    <string name="student_info_title">Student info</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -44,11 +47,11 @@
     <string name="login_invalid_email">Neplatný e-mail</string>
     <string name="login_invalid_login">Namiesto e-mailu použite priradené prihlasovacie údaje</string>
     <string name="login_invalid_symbol">Neplatný symbol</string>
-    <string name="login_incorrect_symbol">Študent nebol nájdený. Skontrolujte správnosť symbolu a vybrané varianty denníka UONET+</string>
+    <string name="login_incorrect_symbol">Žiak nebol nájdený. Skontrolujte správnosť symbolu a vybrané varianty denníka UONET+</string>
     <string name="login_field_required">Toto pole je povinné</string>
-    <string name="login_duplicate_student">Vybraný študent je už prihlásený</string>
+    <string name="login_duplicate_student">Vybraný žiak už je prihlásený</string>
     <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the previous screen. Wulkanowy does not detect pre-school students at the moment</string>
-    <string name="login_select_student">Vyberte studenty, kteří se mají do aplikace přihlásit</string>
+    <string name="login_select_student">Vyberte žiakov, ktorí sa majú do aplikácie prihlásiť</string>
     <string name="login_advanced">Iné možnosti</string>
     <string name="login_advanced_warning_mobile_api">In this mode, a lucky number does not work, a class grade stats, summary of attendance, excuse for absence, completed lessons, school information and preview of the list of registered devices</string>
     <string name="login_advanced_warning_scraper">This mode displays the same data as it appears on the register website</string>
@@ -84,17 +87,21 @@
     <string name="grade_no_average">Bez priemeru</string>
     <string name="grade_predicted">Predpovedané: %1$s</string>
     <string name="grade_final">Konečná: %1$s</string>
-    <string name="grade_summary_points">Celkom bodov</string>
+    <string name="grade_summary_points">Súčet bodov</string>
     <string name="grade_summary_final_grade">Konečná známka</string>
     <string name="grade_summary_predicted_grade">Predpokladaná známka</string>
     <string name="grade_summary_calculated_average">Vypočítaný priemer</string>
     <string name="grade_summary_final_average">Konečný priemer</string>
-    <string name="grade_menu_summary">Súhrn</string>
+    <string name="grade_menu_summary">Zhrnutie</string>
     <string name="grade_menu_statistics">Trieda</string>
     <string name="grade_menu_read">Označiť ako prečítané</string>
-    <string name="grade_statistics_partial">Čiastočne</string>
+    <string name="grade_statistics_partial">Čiastočné</string>
     <string name="grade_statistics_semester">Semester</string>
     <string name="grade_statistics_points">Body</string>
+    <string name="grade_statistics_legend">Legenda</string>
+    <string name="grade_statistics_average">Average: %1$s</string>
+    <string name="grade_statistics_average_class">Trieda</string>
+    <string name="grade_statistics_average_student">Žiák</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d známka</item>
         <item quantity="few">%d známky</item>
@@ -109,27 +116,27 @@
     </plurals>
     <plurals name="grade_new_items_predicted">
         <item quantity="one">Nová predpokladaná známka</item>
-        <item quantity="few">Nové predpovedanej známky</item>
-        <item quantity="many">Nové predpovedanej známky</item>
-        <item quantity="other">Nové predpovedanej známky</item>
+        <item quantity="few">Nové predpokladané známky</item>
+        <item quantity="many">Nové predpokladané známky</item>
+        <item quantity="other">Nové predpokladané známky</item>
     </plurals>
     <plurals name="grade_new_items_final">
         <item quantity="one">Nová konečná známka</item>
-        <item quantity="few">Nové konečnej známky</item>
-        <item quantity="many">Nové konečnej známky</item>
-        <item quantity="other">Nové konečnej známky</item>
+        <item quantity="few">Nové konečné známky</item>
+        <item quantity="many">Nové konečné známky</item>
+        <item quantity="other">Nové konečné známky</item>
     </plurals>
     <plurals name="grade_notify_new_items">
         <item quantity="one">Máte %1$d novú známku</item>
         <item quantity="few">Máte %1$d nové známky</item>
-        <item quantity="many">Máte %1$d nové známky</item>
-        <item quantity="other">Máte %1$d nové známky</item>
+        <item quantity="many">Máte %1$d nových známok</item>
+        <item quantity="other">Máte %1$d nových známok</item>
     </plurals>
     <plurals name="grade_notify_new_items_predicted">
         <item quantity="one">Máte %1$d novú predpokladanú známku</item>
         <item quantity="few">Máte %1$d nové predpokladané známky</item>
-        <item quantity="many">Máte %1$d nové predpokladané známky</item>
-        <item quantity="other">Máte %1$d nové predpokladané známky</item>
+        <item quantity="many">Máte %1$d nových predpokladaných známok</item>
+        <item quantity="other">Máte %1$d nových predpokladaných známok</item>
     </plurals>
     <plurals name="grade_notify_new_items_final">
         <item quantity="one">Máte %1$d novú konečnú známku</item>
@@ -139,7 +146,7 @@
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lekcia</string>
-    <string name="timetable_room">Room</string>
+    <string name="timetable_room">Učebňa</string>
     <string name="timetable_group">Skupina</string>
     <string name="timetable_time">Hodiny</string>
     <string name="timetable_changes">Zmeny</string>
@@ -158,9 +165,9 @@
     <string name="completed_lessons_no_items">No info about completed lessons</string>
     <string name="completed_lessons_topic">Téma</string>
     <string name="completed_lessons_absence">Neprítomnosť</string>
-    <string name="completed_lessons_resources">Resources</string>
+    <string name="completed_lessons_resources">Zdroje</string>
     <!--Additional lessons-->
-    <string name="additional_lessons_title">Additional lessons</string>
+    <string name="additional_lessons_title">Ďalší lekcie</string>
     <string name="additional_lessons_button">Show additional lessons</string>
     <string name="additional_lessons_no_items">No info about additional lessons</string>
     <!--Attendance-->
@@ -171,11 +178,11 @@
     <string name="attendance_exemption">Exemption</string>
     <string name="attendance_excused_lateness">Excused lateness</string>
     <string name="attendance_unexcused_lateness">Unexcused lateness</string>
-    <string name="attendance_present">Present</string>
+    <string name="attendance_present">Prítomnosť</string>
     <string name="attendance_deleted">Deleted</string>
-    <string name="attendance_unknown">Unknown</string>
+    <string name="attendance_unknown">Neznámy</string>
     <string name="attendance_number">Number of lesson</string>
-    <string name="attendance_no_items">No entries</string>
+    <string name="attendance_no_items">Žiadne položky</string>
     <plurals name="attendance_number_absences">
         <item quantity="one">%1$d absence</item>
         <item quantity="few">%1$d absences</item>
@@ -183,7 +190,7 @@
         <item quantity="other">%1$d absences</item>
     </plurals>
     <string name="attendance_excuse_dialog_reason">Absence reason (optional)</string>
-    <string name="attendance_excuse_dialog_submit">Send</string>
+    <string name="attendance_excuse_dialog_submit">Poslať</string>
     <string name="attendance_excuse_success">Absence excused successfully!</string>
     <string name="attendance_excuse_no_selection">You must select at least one absence!</string>
     <string name="attendance_excuse_title">Excuse</string>
@@ -337,12 +344,19 @@
     <!--Account-->
     <string name="account_add_new">Add account</string>
     <string name="account_logout">Logout</string>
-    <string name="account_confirm">Do you want to log out of an active student?</string>
+    <string name="account_confirm">Do you want to log out this student?</string>
     <string name="account_logout_student">Student logout</string>
     <string name="account_type_student">Student account</string>
     <string name="account_type_parent">Parent account</string>
     <string name="account_login_mobile_api">Mobile API mode</string>
     <string name="account_login_hybrid">Hybrid mode</string>
+    <string name="account_details_edit">Edit data</string>
+    <string name="account_quick_manager">Accounts manager</string>
+    <string name="account_select_student">Select student</string>
+    <string name="account_family">Family</string>
+    <string name="account_contact">Contact</string>
+    <string name="account_address">Residence details</string>
+    <string name="account_personal_data">Personal information</string>
     <!--About-->
     <string name="about_version">App version</string>
     <string name="about_contributor">Contributors</string>
@@ -366,6 +380,30 @@
     <!--Contributor-->
     <string name="contributor_avatar_description">Avatar</string>
     <string name="contributor_see_more">See more on GitHub</string>
+    <!--Student info-->
+    <string name="student_info_empty">No info about student</string>
+    <string name="student_info_first_name">Name</string>
+    <string name="student_info_second_name">Second name</string>
+    <string name="student_info_gender">Gender</string>
+    <string name="student_info_polish_citizenship">Polish citizenship</string>
+    <string name="student_info_family_name">Family name</string>
+    <string name="student_info_parents_name">Mother\'s and father\'s names</string>
+    <string name="student_info_phone">Phone</string>
+    <string name="student_info_cellphone">Cellphone</string>
+    <string name="student_info_email">E-mail</string>
+    <string name="student_info_address">Address of residence</string>
+    <string name="student_info_registered_address">Address of registration</string>
+    <string name="student_info_correspondence_address">Correspondence address</string>
+    <string name="student_info_full_name">Surname and first name</string>
+    <string name="student_info_kinship">Degree of kinship</string>
+    <string name="student_info_guardian_address">Address</string>
+    <string name="student_info_phones">Phones</string>
+    <string name="student_info_male">Male</string>
+    <string name="student_info_female">Female</string>
+    <string name="student_info_last_name">Last name</string>
+    <!--Account edit-->
+    <string name="account_edit_nick_hint">Nick</string>
+    <string name="account_edit_header">Add nick</string>
     <!--Log viewer-->
     <string name="logviewer_share">Share logs</string>
     <string name="logviewer_refresh">Refresh</string>
@@ -390,6 +428,9 @@
     <string name="all_next">Next</string>
     <string name="all_search">Search</string>
     <string name="all_search_hint">Search…</string>
+    <string name="all_yes">Yes</string>
+    <string name="all_no">No</string>
+    <string name="all_save">Save</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">No lessons</string>
     <string name="widget_timetable_theme_title">Choose theme</string>

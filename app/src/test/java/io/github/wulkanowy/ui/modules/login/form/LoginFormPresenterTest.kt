@@ -99,8 +99,32 @@ class LoginFormPresenterTest {
 
     @Test
     fun loginTest() {
-        val studentTest = Student(email = "test@", password = "123", scrapperBaseUrl = "https://fakelog.cf/", loginType = "AUTO", studentName = "", schoolSymbol = "", schoolName = "", studentId = 0, classId = 1, isCurrent = false, symbol = "", registrationDate = now(), className = "", mobileBaseUrl = "", privateKey = "", certificateKey = "", loginMode = "", userLoginId = 0, schoolShortName = "", isParent = false, userName = "")
-        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf(StudentWithSemesters(studentTest, emptyList()))
+        val studentTest = Student(
+            email = "test@",
+            password = "123",
+            scrapperBaseUrl = "https://fakelog.cf/",
+            loginType = "AUTO",
+            studentName = "",
+            schoolSymbol = "",
+            schoolName = "",
+            studentId = 0,
+            classId = 1,
+            isCurrent = false,
+            symbol = "",
+            registrationDate = now(),
+            className = "",
+            mobileBaseUrl = "",
+            privateKey = "",
+            certificateKey = "",
+            loginMode = "",
+            userLoginId = 0,
+            schoolShortName = "",
+            isParent = false,
+            userName = ""
+        )
+        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf(
+            StudentWithSemesters(studentTest, emptyList())
+        )
 
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"

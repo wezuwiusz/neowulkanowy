@@ -10,6 +10,7 @@ import io.github.wulkanowy.databinding.FragmentConferenceBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -47,7 +48,9 @@ class ConferenceFragment : BaseFragment<FragmentConferenceBinding>(R.layout.frag
         }
 
         with(binding) {
-            conferenceSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            conferenceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            conferenceSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            conferenceSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             conferenceErrorRetry.setOnClickListener { presenter.onRetry() }
             conferenceErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

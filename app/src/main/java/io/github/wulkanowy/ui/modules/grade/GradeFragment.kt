@@ -33,7 +33,6 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     private var semesterSwitchMenu: MenuItem? = null
 
     companion object {
-        private const val SAVED_SEMESTER_KEY = "CURRENT_SEMESTER"
 
         fun newInstance() = GradeFragment()
     }
@@ -52,7 +51,7 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGradeBinding.bind(view)
-        presenter.onAttachView(this, savedInstanceState?.getInt(SAVED_SEMESTER_KEY))
+        presenter.onAttachView(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -159,11 +158,6 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
 
     override fun notifyChildSemesterChange(index: Int) {
         (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentChangeSemester()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(SAVED_SEMESTER_KEY, presenter.selectedIndex)
     }
 
     override fun onDestroyView() {

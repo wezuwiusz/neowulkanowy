@@ -17,9 +17,8 @@
             tools:listitem="@layout/item_grade_summary" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/gradeSummaryProgress"
-        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

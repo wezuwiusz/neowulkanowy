@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log.DEBUG
 import android.util.Log.INFO
 import android.util.Log.VERBOSE
+import android.webkit.WebView
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.multidex.MultiDex
 import androidx.work.Configuration
@@ -47,22 +48,23 @@ class WulkanowyApp : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        Lingver.init(this)
-        themeManager.applyDefaultTheme()
 
+        initializeAppLanguage()
+        themeManager.applyDefaultTheme()
         initLogging()
-        logCurrentLanguage()
+        fixWebViewLocale()
     }
 
     private fun initLogging() {
         if (appInfo.isDebug) {
             Timber.plant(DebugLogTree())
-            Timber.plant(FileLoggerTree.Builder()
-                .withFileName("wulkanowy.%g.log")
-                .withDirName(applicationContext.filesDir.absolutePath)
-                .withFileLimit(10)
-                .withMinPriority(DEBUG)
-                .build()
+            Timber.plant(
+                FileLoggerTree.Builder()
+                    .withFileName("wulkanowy.%g.log")
+                    .withDirName(applicationContext.filesDir.absolutePath)
+                    .withFileLimit(10)
+                    .withMinPriority(DEBUG)
+                    .build()
             )
         } else {
             Timber.plant(CrashLogExceptionTree())
@@ -71,14 +73,20 @@ class WulkanowyApp : Application(), Configuration.Provider {
         registerActivityLifecycleCallbacks(ActivityLifecycleLogger())
     }
 
-    private fun logCurrentLanguage() {
-        val newLang = if (preferencesRepository.appLanguage == "system") {
-            appInfo.systemLanguage
-        } else {
-            preferencesRepository.appLanguage
-        }
+    private fun initializeAppLanguage() {
+        Lingver.init(this)
 
-        analyticsHelper.logEvent("language", "startup" to newLang)
+        if (preferencesRepository.appLanguage == "system") {
+            Lingver.getInstance().setFollowSystemLocale(this)
+            analyticsHelper.logEvent("language", "startup" to appInfo.systemLanguage)
+        } else {
+            analyticsHelper.logEvent("language", "startup" to preferencesRepository.appLanguage)
+        }
+    }
+
+    private fun fixWebViewLocale() {
+        //https://stackoverflow.com/questions/40398528/android-webview-language-changes-abruptly-on-android-7-0-and-above
+        WebView(this).destroy()
     }
 
     override fun getWorkManagerConfiguration() = Configuration.Builder()

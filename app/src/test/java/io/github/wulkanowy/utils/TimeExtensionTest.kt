@@ -50,15 +50,28 @@ class TimeExtensionTest {
     fun monthNameTest() {
         Locale.setDefault(Locale.forLanguageTag("PL"))
         assertEquals("Styczeń", JANUARY.getFormattedName())
-        Locale.setDefault(Locale.forLanguageTag("EN"))
+
+        Locale.setDefault(Locale.forLanguageTag("CS"))
+        assertEquals("Leden", JANUARY.getFormattedName())
+
+        Locale.setDefault(Locale.ENGLISH)
         assertEquals("January", JANUARY.getFormattedName())
+
+        Locale.setDefault(Locale.forLanguageTag("DE"))
+        assertEquals("Januar", JANUARY.getFormattedName())
+
+        Locale.setDefault(Locale.forLanguageTag("RU"))
+        assertEquals("Январь", JANUARY.getFormattedName())
+
+        Locale.setDefault(Locale.forLanguageTag("UK"))
+        assertEquals("Січень", JANUARY.getFormattedName())
     }
 
     @Test
     fun weekDayNameTest() {
         Locale.setDefault(Locale.forLanguageTag("PL"))
         assertEquals("poniedziałek", of(2018, 10, 1).weekDayName)
-        Locale.setDefault(Locale.forLanguageTag("EN"))
+        Locale.setDefault(Locale.ENGLISH)
         assertEquals("Monday", of(2018, 10, 1).weekDayName)
     }
 

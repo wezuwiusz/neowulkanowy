@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.modules.account
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.afterLoading
@@ -15,14 +14,28 @@ import javax.inject.Inject
 class AccountPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
-    private val syncManager: SyncManager
 ) : BasePresenter<AccountView>(errorHandler, studentRepository) {
+
+    private lateinit var lastError: Throwable
 
     override fun onAttachView(view: AccountView) {
         super.onAttachView(view)
         view.initView()
-        Timber.i("Account dialog view was initialized")
+        Timber.i("Account view was initialized")
+        errorHandler.showErrorMessage = ::showErrorViewOnError
         loadData()
+    }
+
+    fun onRetry() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData()
+    }
+
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
     }
 
     fun onAddSelected() {
@@ -30,86 +43,62 @@ class AccountPresenter @Inject constructor(
         view?.openLoginView()
     }
 
-    fun onRemoveSelected() {
-        Timber.i("Select remove account")
-        view?.showConfirmDialog()
-    }
-
-    fun onLogoutConfirm() {
-        flowWithResource {
-            val student = studentRepository.getCurrentStudent(false)
-            studentRepository.logoutStudent(student)
-
-            val students = studentRepository.getSavedStudents(false)
-            if (students.isNotEmpty()) {
-                studentRepository.switchStudent(students[0])
-            }
-            students
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Attempt to logout current user ")
-                Status.SUCCESS -> view?.run {
-                    if (it.data!!.isEmpty()) {
-                        Timber.i("Logout result: Open login view")
-                        syncManager.stopSyncWorker()
-                        openClearLoginView()
-                    } else {
-                        Timber.i("Logout result: Switch to another student")
-                        recreateMainView()
-                    }
-                }
-                Status.ERROR -> {
-                    Timber.i("Logout result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                }
-            }
-        }.afterLoading {
-            view?.dismissView()
-        }.launch("logout")
-    }
-
     fun onItemSelected(studentWithSemesters: StudentWithSemesters) {
-        Timber.i("Select student item ${studentWithSemesters.student.id}")
-        if (studentWithSemesters.student.isCurrent) {
-            view?.dismissView()
-        } else flowWithResource { studentRepository.switchStudent(studentWithSemesters) }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Attempt to change a student")
-                Status.SUCCESS -> {
-                    Timber.i("Change a student result: Success")
-                    view?.recreateMainView()
-                }
-                Status.ERROR -> {
-                    Timber.i("Change a student result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                }
-            }
-        }.afterLoading {
-            view?.dismissView()
-        }.launch("switch")
+        view?.openAccountDetailsView(studentWithSemesters)
     }
 
     private fun createAccountItems(items: List<StudentWithSemesters>): List<AccountItem<*>> {
-        return items.groupBy { Account(it.student.email, it.student.isParent) }.map { (account, students) ->
-            listOf(AccountItem(account, AccountItem.ViewType.HEADER)) + students.map { student ->
-                AccountItem(student, AccountItem.ViewType.ITEM)
+        return items.groupBy {
+            Account("${it.student.userName} (${it.student.email})", it.student.isParent)
+        }
+            .map { (account, students) ->
+                listOf(
+                    AccountItem(account, AccountItem.ViewType.HEADER)
+                ) + students.map { student ->
+                    AccountItem(student, AccountItem.ViewType.ITEM)
+                }
             }
-        }.flatten()
+            .flatten()
     }
 
     private fun loadData() {
-        flowWithResource { studentRepository.getSavedStudents(false) }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Loading account data started")
-                Status.SUCCESS -> {
-                    Timber.i("Loading account result: Success")
-                    view?.updateData(createAccountItems(it.data!!))
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading account result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+        flowWithResource { studentRepository.getSavedStudents(false) }
+            .onEach {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Timber.i("Loading account data started")
+                        view?.run {
+                            showProgress(true)
+                            showContent(false)
+                        }
+                    }
+                    Status.SUCCESS -> {
+                        Timber.i("Loading account result: Success")
+                        view?.updateData(createAccountItems(it.data!!))
+                        view?.run {
+                            showContent(true)
+                            showErrorView(false)
+                        }
+                    }
+                    Status.ERROR -> {
+                        Timber.i("Loading account result: An exception occurred")
+                        errorHandler.dispatch(it.error!!)
+                    }
                 }
             }
-        }.launch()
+            .afterLoading { view?.showProgress(false) }
+            .launch()
+    }
+
+    private fun showErrorViewOnError(message: String, error: Throwable) {
+        view?.run {
+            if (isViewEmpty) {
+                lastError = error
+                setErrorDetails(message)
+                showErrorView(true)
+                showContent(false)
+                showProgress(false)
+            } else showError(message, error)
+        }
     }
 }

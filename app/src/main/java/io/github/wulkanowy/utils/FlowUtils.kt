@@ -2,6 +2,7 @@ package io.github.wulkanowy.utils
 
 import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.Status
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -71,24 +72,14 @@ inline fun <ResultType, RequestType, T> networkBoundResource(
 
 fun <T> flowWithResource(block: suspend () -> T) = flow {
     emit(Resource.loading())
-    emit(try {
-        Resource.success(block())
-    } catch (e: Throwable) {
-        Resource.error(e)
-    })
-}
+    emit(Resource.success(block()))
+}.catch { emit(Resource.error(it)) }
 
+@OptIn(FlowPreview::class)
 fun <T> flowWithResourceIn(block: suspend () -> Flow<Resource<T>>) = flow {
     emit(Resource.loading())
-
-    block()
-        .catch { emit(Resource.error(it)) }
-        .collect {
-            if (it.status != Status.LOADING || (it.status == Status.LOADING && it.data != null)) { // LOADING without data is already emitted
-                emit(it)
-            }
-        }
-}
+    emitAll(block().filter { it.status != Status.LOADING || (it.status == Status.LOADING && it.data != null) })
+}.catch { emit(Resource.error(it)) }
 
 fun <T> Flow<Resource<T>>.afterLoading(callback: () -> Unit) = onEach {
     if (it.status != Status.LOADING) callback()
@@ -96,4 +87,5 @@ fun <T> Flow<Resource<T>>.afterLoading(callback: () -> Unit) = onEach {
 
 suspend fun <T> Flow<Resource<T>>.toFirstResult() = filter { it.status != Status.LOADING }.first()
 
-suspend fun <T> Flow<Resource<T>>.waitForResult() = takeWhile { it.status == Status.LOADING }.collect()
+suspend fun <T> Flow<Resource<T>>.waitForResult() =
+    takeWhile { it.status == Status.LOADING }.collect()

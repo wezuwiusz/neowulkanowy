@@ -13,6 +13,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,7 +51,9 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note), 
             addItemDecoration(DividerItemDecoration(context))
         }
         with(binding) {
-            noteSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            noteSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            noteSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            noteSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             noteErrorRetry.setOnClickListener { presenter.onRetry() }
             noteErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

@@ -16,6 +16,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.mobiledevice.token.MobileDeviceTokenDialog
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
+import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -56,7 +57,9 @@ class MobileDeviceFragment :
         }
 
         with(binding) {
-            mobileDevicesSwipe.setOnRefreshListener { presenter.onSwipeRefresh() }
+            mobileDevicesSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            mobileDevicesSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            mobileDevicesSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             mobileDevicesErrorRetry.setOnClickListener { presenter.onRetry() }
             mobileDevicesErrorDetails.setOnClickListener { presenter.onDetailsClick() }
             mobileDeviceAddButton.setOnClickListener { presenter.onRegisterDevice() }

@@ -15,6 +15,7 @@ import io.github.wulkanowy.databinding.FragmentAttendanceSummaryBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import javax.inject.Inject
 
@@ -56,6 +57,8 @@ class AttendanceSummaryFragment :
 
         with(binding) {
             attendanceSummarySwipe.setOnRefreshListener(presenter::onSwipeRefresh)
+            attendanceSummarySwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+            attendanceSummarySwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             attendanceSummaryErrorRetry.setOnClickListener { presenter.onRetry() }
             attendanceSummaryErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

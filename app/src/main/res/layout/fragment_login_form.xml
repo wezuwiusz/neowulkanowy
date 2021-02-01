@@ -5,9 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.modules.login.form.LoginFormFragment">
 
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+    <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/loginFormProgress"
-        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -238,9 +237,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
                 android:text="@string/login_sign_in"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout" />
 

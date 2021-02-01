@@ -12,6 +12,9 @@
     <color name="colorDivider">#1f000000</color>
     <color name="colorDividerInverse">#1fffffff</color>
 
+    <color name="colorSwipeRefreshDark">#ff383838</color>
+    <color name="colorSwipeRefresh">#ffffffff</color>
+
     <color name="note_positive">#a0c431</color>
     <color name="note_negative">#d43f3f</color>
 

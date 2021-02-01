@@ -20,7 +20,7 @@ class AnalyticsHelper @Inject constructor(
             params.forEach {
                 if (it.second == null) return@forEach
                 when (it.second) {
-                    is String, is String? -> putString(it.first, it.second as String)
+                    is String, is String? -> putString(it.first, it.second.toString())
                     is Int, is Int? -> putInt(it.first, it.second as Int)
                     is Boolean, is Boolean? -> putBoolean(it.first, it.second as Boolean)
                 }
