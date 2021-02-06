@@ -5,14 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
+import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.ItemGradeSummaryBinding
 import io.github.wulkanowy.databinding.ScrollableHeaderGradeSummaryBinding
+import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.calcAverage
+import io.github.wulkanowy.utils.changeModifier
 import java.util.Locale
 import javax.inject.Inject
 
-class GradeSummaryAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GradeSummaryAdapter @Inject constructor(
+    private val preferencesRepository: PreferencesRepository
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private enum class ViewType(val id: Int) {
         HEADER(1),
@@ -49,7 +56,7 @@ class GradeSummaryAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerV
         if (items.isEmpty()) return
 
         with(binding) {
-            gradeSummaryScrollableHeaderFinal.text = formatAverage(items.calcAverage())
+            gradeSummaryScrollableHeaderFinal.text = formatAverage(items.calcAverage(preferencesRepository.gradePlusModifier, preferencesRepository.gradeMinusModifier))
             gradeSummaryScrollableHeaderCalculated.text = formatAverage(items
                 .filter { value -> value.average != 0.0 }
                 .map { values -> values.average }

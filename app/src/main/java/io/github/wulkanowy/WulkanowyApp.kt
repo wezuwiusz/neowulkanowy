@@ -86,7 +86,11 @@ class WulkanowyApp : Application(), Configuration.Provider {
 
     private fun fixWebViewLocale() {
         //https://stackoverflow.com/questions/40398528/android-webview-language-changes-abruptly-on-android-7-0-and-above
-        WebView(this).destroy()
+        try {
+            WebView(this).destroy()
+        } catch (e: Exception) {
+            //Ignore exceptions
+        }
     }
 
     override fun getWorkManagerConfiguration() = Configuration.Builder()

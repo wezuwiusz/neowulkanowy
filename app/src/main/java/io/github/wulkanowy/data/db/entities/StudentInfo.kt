@@ -59,10 +59,10 @@ data class StudentInfo(
     val email: String,
 
     @Embedded(prefix = "first_guardian_")
-    val firstGuardian: StudentGuardian,
+    val firstGuardian: StudentGuardian?,
 
     @Embedded(prefix = "second_guardian_")
-    val secondGuardian: StudentGuardian
+    val secondGuardian: StudentGuardian?
 
 ) : Serializable {
 

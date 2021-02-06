@@ -25,8 +25,8 @@ fun SdkStudentInfo.mapToEntity(semester: Semester) = StudentInfo(
     phoneNumber = phoneNumber,
     cellPhoneNumber = phoneNumber,
     email = email,
-    firstGuardian = guardians[0].mapToEntity(),
-    secondGuardian = guardians[1].mapToEntity()
+    firstGuardian = guardianFirst?.mapToEntity(),
+    secondGuardian = guardianSecond?.mapToEntity()
 )
 
 fun SdkStudentGuardian.mapToEntity() = StudentGuardian(

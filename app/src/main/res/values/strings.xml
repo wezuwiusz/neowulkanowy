@@ -393,7 +393,7 @@
 
 
     <!--Student info-->
-    <string name="student_info_empty">No info about student</string>
+    <string name="student_info_empty">No info about student or student family</string>
     <string name="student_info_first_name">Name</string>
     <string name="student_info_second_name">Second name</string>
     <string name="student_info_gender">Gender</string>
