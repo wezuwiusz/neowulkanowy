@@ -1,6 +1,7 @@
-Wersja 0.25.0
+Wersja 0.25.1
 - naprawiliśmy przełączanie semestrów przy przełączaniu uczniów
 - naprawiliśmy błąd przy odświeżaniu ocen gdy włączony był inny niż domyślny tryb liczenia średniej
+- do średniej końcowej wliczają się teraz również oceny z plusami i minusami
 - dodaliśmy menadżer kont, gdzie można podejrzeć informacje o uczniu oraz zmienić pseudonim
 - zmieniliśmy ikonę planu lekcji oraz kolor animacji odświeżania w ciemnym motywie
 
