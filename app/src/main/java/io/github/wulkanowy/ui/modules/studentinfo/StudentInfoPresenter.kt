@@ -84,7 +84,7 @@ class StudentInfoPresenter @Inject constructor(
             when (it.status) {
                 Status.LOADING -> Timber.i("Loading student info $infoType started")
                 Status.SUCCESS -> {
-                    if (it.data != null) {
+                    if (it.data != null && !(infoType == StudentInfoView.Type.FAMILY && it.data.firstGuardian == null && it.data.secondGuardian == null)) {
                         Timber.i("Loading student info $infoType result: Success")
                         showCorrectData(it.data)
                         view?.run {
@@ -94,7 +94,7 @@ class StudentInfoPresenter @Inject constructor(
                         }
                         analytics.logEvent("load_item", "type" to "student_info")
                     } else {
-                        Timber.i("Loading student info $infoType result: No school info found")
+                        Timber.i("Loading student info $infoType result: No student or family info found")
                         view?.run {
                             showContent(!isViewEmpty)
                             showEmpty(isViewEmpty)
@@ -122,8 +122,8 @@ class StudentInfoPresenter @Inject constructor(
             StudentInfoView.Type.CONTACT -> view?.showContactTypeData(studentInfo)
             StudentInfoView.Type.ADDRESS -> view?.showAddressTypeData(studentInfo)
             StudentInfoView.Type.FAMILY -> view?.showFamilyTypeData(studentInfo)
-            StudentInfoView.Type.SECOND_GUARDIAN -> view?.showSecondGuardianTypeData(studentInfo)
-            StudentInfoView.Type.FIRST_GUARDIAN -> view?.showFirstGuardianTypeData(studentInfo)
+            StudentInfoView.Type.SECOND_GUARDIAN -> view?.showSecondGuardianTypeData(studentInfo.secondGuardian!!)
+            StudentInfoView.Type.FIRST_GUARDIAN -> view?.showFirstGuardianTypeData(studentInfo.firstGuardian!!)
         }
     }
 

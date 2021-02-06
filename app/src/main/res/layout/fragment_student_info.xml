@@ -36,7 +36,7 @@
         android:padding="10dp"
         android:visibility="gone"
         tools:ignore="UseCompoundDrawables"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <ImageView
             android:layout_width="100dp"
