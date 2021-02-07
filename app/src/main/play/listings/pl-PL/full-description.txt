@@ -4,7 +4,7 @@ Wyróżnione cechy i funkcje:
 - obliczanie średniej ważonej,
 - procentowy podgląd frekwencji,
 - szczęśliwy numerek,
-- podgląd lekcji zrealizowanych,
+- podgląd lekcji dodatkowych i zrealizowanych,
 - ciemny motyw.
 - brak reklam,
 - tryb offline,
