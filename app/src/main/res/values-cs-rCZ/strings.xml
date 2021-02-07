@@ -381,7 +381,7 @@
     <string name="contributor_avatar_description">Avatar</string>
     <string name="contributor_see_more">Zobrazit více na GitHub</string>
     <!--Student info-->
-    <string name="student_info_empty">Žádné informace o žácích</string>
+    <string name="student_info_empty">Žádné informace o žáků nebo rodině žáka</string>
     <string name="student_info_first_name">Jméno</string>
     <string name="student_info_second_name">Druhé jméno</string>
     <string name="student_info_gender">Pohlaví</string>

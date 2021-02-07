@@ -381,7 +381,7 @@
     <string name="contributor_avatar_description">Aватар</string>
     <string name="contributor_see_more">Страница проекта на GitHub</string>
     <!--Student info-->
-    <string name="student_info_empty">Нет информации о студенте</string>
+    <string name="student_info_empty">Нет информации об ученике или семье ученика</string>
     <string name="student_info_first_name">Имя</string>
     <string name="student_info_second_name">Фамилия</string>
     <string name="student_info_gender">Пол</string>

@@ -1,8 +1,10 @@
-Wersja 0.25.1
-- naprawiliśmy przełączanie semestrów przy przełączaniu uczniów
-- naprawiliśmy błąd przy odświeżaniu ocen gdy włączony był inny niż domyślny tryb liczenia średniej
-- do średniej końcowej wliczają się teraz również oceny z plusami i minusami
-- dodaliśmy menadżer kont, gdzie można podejrzeć informacje o uczniu oraz zmienić pseudonim
-- zmieniliśmy ikonę planu lekcji oraz kolor animacji odświeżania w ciemnym motywie
+Wersja 1.0.0
+
+Pierwsza produkcyjna wersja Wulkanowego 🎉
+
+Dziękujemy wszystkim użytkownikom za testowanie dotychczasowej wersji będącej we wczesnym dostępie
+jak i programistom, którzy w wolnych chwilach pomagali rozwijać aplikację i naprawiać znalezione błędy.
+
+Bez was wszystkich niemożliwe byłoby to dzieło!
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
