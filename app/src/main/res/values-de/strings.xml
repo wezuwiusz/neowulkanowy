@@ -341,7 +341,7 @@
     <string name="contributor_avatar_description">Benutzerbild</string>
     <string name="contributor_see_more">Sehen Sie mehr auf GitHub</string>
     <!--Student info-->
-    <string name="student_info_empty">Keine Informationen über Schüler</string>
+    <string name="student_info_empty">Keine Informationen über Schüler- oder Studentenfamilie</string>
     <string name="student_info_first_name">Name</string>
     <string name="student_info_second_name">Zweite Name</string>
     <string name="student_info_gender">Geschlecht</string>
