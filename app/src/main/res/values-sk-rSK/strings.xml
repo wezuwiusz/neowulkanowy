@@ -17,10 +17,10 @@
     <string name="send_message_title">Nová správa</string>
     <string name="note_title">Poznámky a úspechy</string>
     <string name="homework_title">Domáce úlohy</string>
-    <string name="account_title">Accounts manager</string>
-    <string name="account_quick_title">Select account</string>
-    <string name="account_details_title">Account details</string>
-    <string name="student_info_title">Student info</string>
+    <string name="account_title">Manažér účtov</string>
+    <string name="account_quick_title">Vyberte účet</string>
+    <string name="account_details_title">Detaily účtu</string>
+    <string name="student_info_title">Informácie o žiakovi</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -81,7 +81,7 @@
     <string name="grade_weight_value">Váha: %s</string>
     <string name="grade_comment">Komentár</string>
     <string name="grade_no_new_items">Žiadne nové známky</string>
-    <string name="grade_number_new_items">Number of new ratings: %1$d</string>
+    <string name="grade_number_new_items">Počet nových známok %1$d</string>
     <string name="grade_average">Priemer: %1$.2f</string>
     <string name="grade_points_sum">Body: %s</string>
     <string name="grade_no_average">Bez priemeru</string>
@@ -99,7 +99,7 @@
     <string name="grade_statistics_semester">Semester</string>
     <string name="grade_statistics_points">Body</string>
     <string name="grade_statistics_legend">Legenda</string>
-    <string name="grade_statistics_average">Average: %1$s</string>
+    <string name="grade_statistics_average">Priemer: %1$s</string>
     <string name="grade_statistics_average_class">Trieda</string>
     <string name="grade_statistics_average_student">Žiák</string>
     <plurals name="grade_number_item">
@@ -152,7 +152,7 @@
     <string name="timetable_changes">Zmeny</string>
     <string name="timetable_no_items">Žiadne lekcie tento deň</string>
     <string name="timetable_minutes">%s min</string>
-    <string name="timetable_seconds">%s sec</string>
+    <string name="timetable_seconds">%s sek</string>
     <string name="timetable_time_left">%1$s left</string>
     <string name="timetable_time_until">in %1$s</string>
     <string name="timetable_finished">Lekcia skončila</string>
@@ -161,17 +161,17 @@
     <string name="timetable_later">Later: %s</string>
     <!--Completed lessons-->
     <string name="completed_lessons_title">Completed lessons</string>
-    <string name="completed_lessons_button">Show completed lessons</string>
-    <string name="completed_lessons_no_items">No info about completed lessons</string>
+    <string name="completed_lessons_button">Zobraziť dokončené lekcie</string>
+    <string name="completed_lessons_no_items">Žiadne informácie o dokončených lekciách</string>
     <string name="completed_lessons_topic">Téma</string>
     <string name="completed_lessons_absence">Neprítomnosť</string>
     <string name="completed_lessons_resources">Zdroje</string>
     <!--Additional lessons-->
     <string name="additional_lessons_title">Ďalší lekcie</string>
-    <string name="additional_lessons_button">Show additional lessons</string>
-    <string name="additional_lessons_no_items">No info about additional lessons</string>
+    <string name="additional_lessons_button">Zobraziť ďalšie lekcie</string>
+    <string name="additional_lessons_no_items">Žiadne informácie o ďalších lekciách</string>
     <!--Attendance-->
-    <string name="attendance_summary_button">Attendance summary</string>
+    <string name="attendance_summary_button">Zhrnutie dochádzky</string>
     <string name="attendance_absence_school">Absent for school reasons</string>
     <string name="attendance_absence_excused">Excused absence</string>
     <string name="attendance_absence_unexcused">Unexcused absence</string>
@@ -193,49 +193,49 @@
     <string name="attendance_excuse_dialog_submit">Poslať</string>
     <string name="attendance_excuse_success">Absence excused successfully!</string>
     <string name="attendance_excuse_no_selection">You must select at least one absence!</string>
-    <string name="attendance_excuse_title">Excuse</string>
+    <string name="attendance_excuse_title">Ospravedlniť</string>
     <!--Attendance summary-->
     <string name="attendance_summary_final">Attendance</string>
     <string name="attendance_summary_total">Total</string>
     <!--Exam-->
     <string name="exam_no_items">No exams this week</string>
-    <string name="exam_type">Type</string>
+    <string name="exam_type">Typ</string>
     <string name="exam_entry_date">Entry date</string>
     <!--Message-->
     <string name="message_inbox">Inbox</string>
-    <string name="message_sent">Sent</string>
-    <string name="message_trash">Trash</string>
+    <string name="message_sent">Odoslané</string>
+    <string name="message_trash">Kôš</string>
     <string name="message_no_subject">(no subject)</string>
-    <string name="message_no_items">No messages</string>
+    <string name="message_no_items">Žiadne správy</string>
     <string name="message_preview_error">An error occurred while downloading message content</string>
     <string name="message_from">From:</string>
     <string name="message_to">To:</string>
     <string name="message_date">Date: %s</string>
-    <string name="message_reply">Reply</string>
-    <string name="message_forward">Forward</string>
-    <string name="message_delete">Delete</string>
-    <string name="message_move_to_bin">Move to trash</string>
+    <string name="message_reply">Odpoveď</string>
+    <string name="message_forward">Poslať ďalej</string>
+    <string name="message_delete">Vymazať</string>
+    <string name="message_move_to_bin">Presunúť do koša</string>
     <string name="message_delete_forever">Delete permanently</string>
     <string name="message_delete_success">Message deleted successfully</string>
     <string name="message_share">Share</string>
     <string name="message_print">Print</string>
     <string name="message_subject">Subject</string>
-    <string name="message_content">Content</string>
-    <string name="message_send_successful">Message sent successfully</string>
-    <string name="message_not_exists">Message does not exist</string>
+    <string name="message_content">Obsah</string>
+    <string name="message_send_successful">Správa úspešne odoslaná</string>
+    <string name="message_not_exists">Správa neexistuje</string>
     <string name="message_required_recipients">You need to choose at least 1 recipient</string>
     <string name="message_content_min_length">The message content must be at least 3 characters</string>
     <plurals name="message_number_item">
-        <item quantity="one">%d message</item>
-        <item quantity="few">%d messages</item>
-        <item quantity="many">%d messages</item>
-        <item quantity="other">%d messages</item>
+        <item quantity="one">%d správa</item>
+        <item quantity="few">%d správy</item>
+        <item quantity="many">%d správ</item>
+        <item quantity="other">%d správ</item>
     </plurals>
     <plurals name="message_new_items">
-        <item quantity="one">New message</item>
-        <item quantity="few">New messages</item>
-        <item quantity="many">New messages</item>
-        <item quantity="other">New messages</item>
+        <item quantity="one">Nová správa</item>
+        <item quantity="few">Nové správy</item>
+        <item quantity="many">Nové správy</item>
+        <item quantity="other">Nové správy</item>
     </plurals>
     <plurals name="message_notify_new_items">
         <item quantity="one">You received %1$d message</item>
@@ -318,18 +318,18 @@
     <string name="mobile_devices_no_items">No devices</string>
     <string name="mobile_devices_unregister">Deregister</string>
     <string name="mobile_device_removed">Device removed</string>
-    <string name="mobile_device_qr">QR code</string>
+    <string name="mobile_device_qr">QR kód</string>
     <string name="mobile_device_token">Token</string>
     <string name="mobile_device_symbol">Symbol</string>
     <string name="mobile_device_pin">PIN</string>
     <!--School and teachers-->
     <string name="schoolandteachers_title">School and teachers</string>
     <!--School-->
-    <string name="school_title">School</string>
+    <string name="school_title">Škola</string>
     <string name="school_no_info">No info about school</string>
-    <string name="school_name">School name</string>
-    <string name="school_address">School address</string>
-    <string name="school_telephone">Telephone</string>
+    <string name="school_name">Názov školy</string>
+    <string name="school_address">Adresa školy</string>
+    <string name="school_telephone">Telefón</string>
     <string name="school_headmaster">Name of headmaster</string>
     <string name="school_pedagogue">Name of pedagogue</string>
     <string name="school_address_button">Show on map</string>
@@ -361,11 +361,11 @@
     <string name="about_version">App version</string>
     <string name="about_contributor">Contributors</string>
     <string name="about_contributor_summary">List of Wulkanowy developers</string>
-    <string name="about_feedback">Report a bug</string>
+    <string name="about_feedback">Nahlásiť chybu</string>
     <string name="about_feedback_summary">Send a bug report via e-mail</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Read Frequently Asked Questions</string>
-    <string name="about_discord">Discord server</string>
+    <string name="about_discord">Server Discord</string>
     <string name="about_discord_summary">Join the Wulkanowy community</string>
     <string name="about_facebook">Facebook fanpage</string>
     <string name="about_facebook_summary">Like our facebook fanpage</string>
@@ -398,8 +398,8 @@
     <string name="student_info_kinship">Degree of kinship</string>
     <string name="student_info_guardian_address">Address</string>
     <string name="student_info_phones">Phones</string>
-    <string name="student_info_male">Male</string>
-    <string name="student_info_female">Female</string>
+    <string name="student_info_male">Muž</string>
+    <string name="student_info_female">Žena</string>
     <string name="student_info_last_name">Last name</string>
     <!--Account edit-->
     <string name="account_edit_nick_hint">Nick</string>
@@ -416,12 +416,12 @@
     <string name="all_description">Description</string>
     <string name="all_no_description">No description</string>
     <string name="all_teacher">Teacher</string>
-    <string name="all_date">Date</string>
+    <string name="all_date">Dátum</string>
     <string name="all_entry_date">Entry date</string>
-    <string name="all_color">Color</string>
+    <string name="all_color">Farba</string>
     <string name="all_details">Details</string>
     <string name="all_category">Category</string>
-    <string name="all_close">Close</string>
+    <string name="all_close">Zavrieť</string>
     <string name="all_no_data">No data</string>
     <string name="all_subject">Subject</string>
     <string name="all_prev">Prev</string>
@@ -453,8 +453,8 @@
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>
     <string name="pref_view_grade_sorting_mode">Subjects sorting in \"Grades\"</string>
     <string name="pref_view_app_language">App language</string>
-    <string name="pref_notify_header">Notifications</string>
-    <string name="pref_notify_switch">Show notifications</string>
+    <string name="pref_notify_header">Oznámenia</string>
+    <string name="pref_notify_switch">Zobraziť upozornenia</string>
     <string name="pref_notify_upcoming_lessons_switch">Show upcoming lesson notifications</string>
     <string name="pref_notify_fix_sync_issues">Fix synchronization &amp; notifications issues</string>
     <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
@@ -473,7 +473,7 @@
     <string name="pref_services_dialog_force_sync_summary">        Manual sync doesn\'t refresh app views.
         \nTo see the synced data relaunch the app after syncing.
     </string>
-    <string name="pref_other_header">Other</string>
+    <string name="pref_other_header">Iné</string>
     <string name="pref_other_grade_modifier_plus">Value of the plus</string>
     <string name="pref_other_grade_modifier_minus">Value of the minus</string>
     <string name="pref_other_fill_message_content">Reply with message history</string>
@@ -487,29 +487,29 @@
     <string name="channel_upcoming_lessons">Upcoming lessons</string>
     <string name="channel_debug">Debug</string>
     <!--Colors-->
-    <string name="all_black">Black</string>
-    <string name="all_red">Red</string>
-    <string name="all_blue">Blue</string>
-    <string name="all_green">Green</string>
-    <string name="all_purple">Purple</string>
-    <string name="all_empty_color">No color</string>
+    <string name="all_black">Čierny</string>
+    <string name="all_red">Červený</string>
+    <string name="all_blue">Modrý</string>
+    <string name="all_green">Zelený</string>
+    <string name="all_purple">Fialový</string>
+    <string name="all_empty_color">Žiadna farba</string>
     <!--Others-->
-    <string name="all_copied">Copied</string>
+    <string name="all_copied">Skopírované</string>
     <string name="all_undo">Undo</string>
     <!--Update helper-->
     <string name="update_download_started">Download of updates has started…</string>
     <string name="update_download_success">An update has just been downloaded.</string>
-    <string name="update_download_success_button">Restart</string>
+    <string name="update_download_success_button">Reštartovať</string>
     <string name="update_failed">Update failed! Wulkanowy may not function properly. Consider updating</string>
     <!--Errors-->
-    <string name="error_no_internet">No internet connection</string>
+    <string name="error_no_internet">Žiadne internetové pripojenie</string>
     <string name="error_timeout">Connection to register failed. Servers can be overloaded. Please try again later</string>
     <string name="error_login_failed">Loading data failed. Please try again later</string>
     <string name="error_password_change_required">Register password change required</string>
     <string name="error_service_unavailable">Maintenance underway UONET + register. Try again later</string>
     <string name="error_unknown_uonet">Unknown UONET + register error. Try again later</string>
     <string name="error_unknown_app">Unknown application error. Please try again later</string>
-    <string name="error_unknown">An unexpected error occurred</string>
-    <string name="error_feature_disabled">Feature disabled by your school</string>
+    <string name="error_unknown">Došlo k neočakávanej chybe</string>
+    <string name="error_feature_disabled">Funkcia deaktivovaná vašej školou</string>
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
 </resources>

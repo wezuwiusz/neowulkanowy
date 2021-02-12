@@ -19,7 +19,7 @@
     <string name="homework_title">Domácí úkoly</string>
     <string name="account_title">Manažer účtů</string>
     <string name="account_quick_title">Vyberte účet</string>
-    <string name="account_details_title">Manažer účtů</string>
+    <string name="account_details_title">Detaily účtu</string>
     <string name="student_info_title">Informace o žáku</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
@@ -195,7 +195,7 @@
     <string name="attendance_excuse_no_selection">Musíte vybrat alespoň jednu nepřítomnost!</string>
     <string name="attendance_excuse_title">Ospravedlnit</string>
     <!--Attendance summary-->
-    <string name="attendance_summary_final">Účast</string>
+    <string name="attendance_summary_final">Docházka</string>
     <string name="attendance_summary_total">Společně</string>
     <!--Exam-->
     <string name="exam_no_items">Tento týden žádné testy</string>
@@ -228,8 +228,8 @@
     <plurals name="message_number_item">
         <item quantity="one">%d zpráva</item>
         <item quantity="few">%d zprávy</item>
-        <item quantity="many">%d zprávy</item>
-        <item quantity="other">%d zprávy</item>
+        <item quantity="many">%d zpráv</item>
+        <item quantity="other">%d zpráv</item>
     </plurals>
     <plurals name="message_new_items">
         <item quantity="one">Nová zpráva</item>
@@ -442,7 +442,7 @@
     <string name="pref_view_list">Výchozí zobrazení</string>
     <string name="pref_view_grade_average_mode">Výpočet koncoročního průměru</string>
     <string name="pref_view_grade_average_force_calc">Vynutit průměrný výpočet podle aplikace</string>
-    <string name="pref_view_present">Zobrazit přítomnost v účasti</string>
+    <string name="pref_view_present">Zobrazit přítomnost v docházce</string>
     <string name="pref_view_app_theme">Motiv aplikace</string>
     <string name="pref_view_expand_grade">Rozbalit známky</string>
     <string name="pref_view_timetable_show_timers">Označte aktuální lekci v plánu lekce</string>
@@ -454,7 +454,7 @@
     <string name="pref_view_grade_sorting_mode">Předměty seřazené v \"Známky\"</string>
     <string name="pref_view_app_language">Jazyk aplikace</string>
     <string name="pref_notify_header">Oznámení</string>
-    <string name="pref_notify_switch">Ukázat notifikace</string>
+    <string name="pref_notify_switch">Ukázat oznámení</string>
     <string name="pref_notify_upcoming_lessons_switch">Ukázat nadcházející oznámení o lekci</string>
     <string name="pref_notify_fix_sync_issues">Opravte problémy se synchronizací a upozorněním</string>
     <string name="pref_notify_fix_sync_issues_message">Ve vašem zařízení mohou nastat problémy se synchronizací dat a oznámenímii.\n\nChcete-li je opravit, přidejte Wulkanowy do funkce Autostart a vypněte optimalizaci/úsporu baterie v nastavení systému telefonu.</string>
@@ -491,7 +491,7 @@
     <string name="all_red">Červený</string>
     <string name="all_blue">Modrý</string>
     <string name="all_green">Zelený</string>
-    <string name="all_purple">Nachový</string>
+    <string name="all_purple">Fialový</string>
     <string name="all_empty_color">Žádná barva</string>
     <!--Others-->
     <string name="all_copied">Zkopírováno</string>
