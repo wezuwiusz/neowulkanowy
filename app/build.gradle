@@ -214,7 +214,7 @@ dependencies {
     debugImplementation "com.github.ChuckerTeam.Chucker:library:$chucker"
     debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 
-    testImplementation "junit:junit:4.13.1"
+    testImplementation "junit:junit:4.13.2"
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
