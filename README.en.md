@@ -12,7 +12,7 @@ Unofficial android VULCAN UONET+ register client for both students and their par
 
 ## Features
 
-* logging in using the email and password OR using token and pin
+* logging in using the email and password
 * functions from the register website:
     * grades
     * grade statistics
@@ -25,15 +25,19 @@ Unofficial android VULCAN UONET+ register client for both students and their par
     * homework
     * notes
     * lucky number
+    * additional lessons
+    * school conferences
+    * student and school information
 * calculation of the average independently of school's preferences
 * notifications, e.g. about a new grade
+* support for multiple accounts with the ability to rename students 
 * dark and black (AMOLED) theme
 * offline mode
 * no ads
 
 ## Download
 
-You can download the current beta version from the Google Play, F-Droid or Huawei AppGallery store
+You can download the current version from the Google Play, F-Droid or Huawei AppGallery store
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
     alt="Get it on Google Play"
@@ -59,6 +63,9 @@ You can also download a [development version](https://wulkanowy.github.io/#downl
 ## Contributing
 
 Please contribute to the project either by creating a PR or submitting an issue on GitHub.
+
+For people interested in translating the application into different languages, we provide Crowdin
+https://crowdin.com/project/wulkanowy2
 
 ## License
 

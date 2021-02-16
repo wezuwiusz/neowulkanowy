@@ -383,7 +383,7 @@
     <string name="all_category">Kategorie</string>
     <string name="all_close">Schließ</string>
     <string name="all_no_data">Keine Daten</string>
-    <string name="all_subject">Thema</string>
+    <string name="all_subject">Schulfach</string>
     <string name="all_prev">Zurück</string>
     <string name="all_next">Nächste</string>
     <string name="all_search">Suchen</string>
@@ -406,12 +406,12 @@
     <string name="pref_view_app_theme">Thema der Anwendung</string>
     <string name="pref_view_expand_grade">Noten erweitern</string>
     <string name="pref_view_timetable_show_timers">Aktuelle Lektion im Stundenplan markieren</string>
-    <string name="pref_view_timetable_show_groups">Zeige Gruppen neben Themen im Zeitplan</string>
+    <string name="pref_view_timetable_show_groups">Gruppen neben Schulfächer im Zeitplan anzeigen</string>
     <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>
     <string name="pref_view_timetable_show_whole_class">Unterricht der ganzen Klasse anzeigen</string>
-    <string name="pref_view_subjects_without_grades">Zeigen Sie Themen ohne Noten in Noten</string>
+    <string name="pref_view_subjects_without_grades">Schulfächer ohne Noten in \"Noten\" anzeigen</string>
     <string name="pref_view_grade_color_scheme">Farbschema der Noten</string>
-    <string name="pref_view_grade_sorting_mode">Themen sortieren in \"Noten\"</string>
+    <string name="pref_view_grade_sorting_mode">Schulfächer sortieren in \"Noten\"</string>
     <string name="pref_view_app_language">App Sprache</string>
     <string name="pref_notify_header">Benachrichtigungen</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>

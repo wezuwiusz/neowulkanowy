@@ -1,10 +1,6 @@
-Wersja 1.0.0
+Wersja 1.0.1
 
-Pierwsza produkcyjna wersja Wulkanowego 🎉
-
-Dziękujemy wszystkim użytkownikom za testowanie dotychczasowej wersji będącej we wczesnym dostępie
-jak i programistom, którzy w wolnych chwilach pomagali rozwijać aplikację i naprawiać znalezione błędy.
-
-Bez was wszystkich niemożliwe byłoby to dzieło!
+- naprawiliśmy błąd podczas wysyłania wiadomości
+- poprawiliśmy błędy w tłumaczeniach
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

@@ -12,7 +12,7 @@ Nieoficjalny klient dziennika VULCAN UONET+ dla ucznia i rodzica
 
 ## Funkcje
 
-* logowanie za pomocą e-maila i hasła LUB tokena i pinu
+* logowanie za pomocą e-maila i hasła
 * funkcje ze strony internetowej dziennika:
     * oceny
     * statystyki ocen
@@ -25,15 +25,19 @@ Nieoficjalny klient dziennika VULCAN UONET+ dla ucznia i rodzica
     * zadania domowe
     * uwagi
     * szczęśliwy numerek
+    * dodatkowe lekcje
+    * zebrania w szkole
+    * informacje o uczniu i szkole
 * obliczanie średniej niezależnie od preferencji szkoły
 * powiadomienia np. o nowej ocenie
+* obsługa wielu kont wraz z możliwością zmiany nazwy ucznia 
 * ciemny i czarny (AMOLED) motyw
 * tryb offilne
 * brak reklam
 
 ## Pobierz
 
-Aktualną wersję beta możesz pobrać ze sklepu Google Play, F-Droid lub Huawei AppGallery
+Aktualną wersję możesz pobrać ze sklepu Google Play, F-Droid lub Huawei AppGallery
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
     alt="Pobierz z Google Play"
@@ -60,6 +64,9 @@ Możesz także pobrać [wersję rozwojową](https://wulkanowy.github.io/#downloa
 ## Współpraca
 
 Wnieś swój wkład w projekt, tworząc PR lub wysyłając issue na GitHub.
+
+Dla osób zainteresowanych tłumaczeniem aplikacji na różne języki udostępniamy Crowdina
+https://crowdin.com/project/wulkanowy2
 
 ## Licencja
 

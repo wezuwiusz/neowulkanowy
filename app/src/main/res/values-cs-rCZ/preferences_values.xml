@@ -45,8 +45,8 @@
         <item>Průměr známek z celého roku</item>
     </string-array>
     <string-array name="timetable_show_whole_class_entries">
-        <item>Neukaž</item>
-        <item>Ukázat vše</item>
-        <item>Ukázat menší</item>
+        <item>Nezobrazovat</item>
+        <item>Zobrazit vše</item>
+        <item>Zobrazit menší</item>
     </string-array>
 </resources>
