@@ -56,7 +56,7 @@
             android:name=".ui.modules.login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/login_title"
-            android:theme="@style/WulkanowyTheme.NoActionBar"
+            android:theme="@style/WulkanowyTheme.Login"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.modules.main.MainActivity"
@@ -68,7 +68,7 @@
             android:name=".ui.modules.message.send.SendMessageActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/send_message_title"
-            android:theme="@style/WulkanowyTheme.NoActionBar"
+            android:theme="@style/WulkanowyTheme.MessageSend"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.modules.timetablewidget.TimetableWidgetConfigureActivity"

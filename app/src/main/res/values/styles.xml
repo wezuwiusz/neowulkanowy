@@ -34,4 +34,8 @@
     </style>
 
     <style name="mdtp_ActionButton.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog" />
+
+    <style name="WulkanowyTheme.Login" parent="WulkanowyTheme.NoActionBar" />
+
+    <style name="WulkanowyTheme.MessageSend" parent="WulkanowyTheme.NoActionBar" />
 </resources>
