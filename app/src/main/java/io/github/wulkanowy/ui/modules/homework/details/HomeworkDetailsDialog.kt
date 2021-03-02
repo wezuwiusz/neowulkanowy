@@ -28,12 +28,11 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
     private lateinit var homework: Homework
 
     companion object {
+
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(homework: Homework): HomeworkDetailsDialog {
-            return HomeworkDetailsDialog().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, homework) }
-            }
+        fun newInstance(homework: Homework) = HomeworkDetailsDialog().apply {
+            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, homework) }
         }
     }
 
@@ -45,19 +44,22 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogHomeworkBinding.inflate(inflater).apply { binding = this }.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = DialogHomeworkBinding.inflate(inflater).apply { binding = this }.root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.onAttachView(this)
     }
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
         with(binding) {
-            homeworkDialogRead.text = view?.context?.getString(if (homework.isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
+            homeworkDialogRead.text =
+                view?.context?.getString(if (homework.isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
             homeworkDialogRead.setOnClickListener { presenter.toggleDone(homework) }
             homeworkDialogClose.setOnClickListener { dismiss() }
         }
@@ -87,7 +89,8 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
     }
 
     override fun updateMarkAsDoneLabel(isDone: Boolean) {
-        binding.homeworkDialogRead.text = view?.context?.getString(if (isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
+        binding.homeworkDialogRead.text =
+            view?.context?.getString(if (isDone) R.string.homework_mark_as_undone else R.string.homework_mark_as_done)
     }
 
     override fun onDestroyView() {

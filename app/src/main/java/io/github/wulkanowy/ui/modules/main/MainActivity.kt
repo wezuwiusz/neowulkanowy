@@ -122,6 +122,11 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             initialize(startMenuIndex, savedInstanceState)
             pushFragment(moreMenuFragments[startMenuMoreIndex])
         }
+
+        if (appInfo.systemVersion >= Build.VERSION_CODES.N_MR1) {
+            initShortcuts()
+        }
+
         updateHelper.checkAndInstallUpdates(this)
     }
 
@@ -130,11 +135,11 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         updateHelper.onResume(this)
     }
 
-    @SuppressLint("NewApi")
+    //https://developer.android.com/guide/playcore/in-app-updates#status_callback
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         updateHelper.onActivityResult(requestCode, resultCode)
-        if (appInfo.systemVersion >= Build.VERSION_CODES.N_MR1) initShortcuts()
     }
 
     @RequiresApi(Build.VERSION_CODES.N_MR1)
@@ -161,11 +166,6 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
                 getString(R.string.timetable_title),
                 R.drawable.ic_shortcut_timetable,
                 MainView.Section.TIMETABLE
-            ),
-            Triple(
-                getString(R.string.message_title),
-                R.drawable.ic_shortcut_message,
-                MainView.Section.MESSAGE
             )
         ).forEach { (title, icon, enum) ->
             shortcutsList.add(

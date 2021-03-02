@@ -52,6 +52,8 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         updateHelper.onResume(this)
     }
 
+    //https://developer.android.com/guide/playcore/in-app-updates#status_callback
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         updateHelper.onActivityResult(requestCode, resultCode)
@@ -65,13 +67,15 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
 
         with(loginAdapter) {
             containerId = binding.loginViewpager.id
-            addFragments(listOf(
-                LoginFormFragment.newInstance(),
-                LoginSymbolFragment.newInstance(),
-                LoginStudentSelectFragment.newInstance(),
-                LoginAdvancedFragment.newInstance(),
-                LoginRecoverFragment.newInstance()
-            ))
+            addFragments(
+                listOf(
+                    LoginFormFragment.newInstance(),
+                    LoginSymbolFragment.newInstance(),
+                    LoginStudentSelectFragment.newInstance(),
+                    LoginAdvancedFragment.newInstance(),
+                    LoginRecoverFragment.newInstance()
+                )
+            )
         }
 
         with(binding.loginViewpager) {
@@ -99,14 +103,20 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
     }
 
     override fun notifyInitSymbolFragment(loginData: Triple<String, String, String>) {
-        (loginAdapter.getFragmentInstance(1) as? LoginSymbolFragment)?.onParentInitSymbolFragment(loginData)
+        (loginAdapter.getFragmentInstance(1) as? LoginSymbolFragment)?.onParentInitSymbolFragment(
+            loginData
+        )
     }
 
     override fun notifyInitStudentSelectFragment(studentsWithSemesters: List<StudentWithSemesters>) {
-        (loginAdapter.getFragmentInstance(2) as? LoginStudentSelectFragment)?.onParentInitStudentSelectFragment(studentsWithSemesters)
+        (loginAdapter.getFragmentInstance(2) as? LoginStudentSelectFragment)
+            ?.onParentInitStudentSelectFragment(studentsWithSemesters)
     }
 
-    fun onFormFragmentAccountLogged(studentsWithSemesters: List<StudentWithSemesters>, loginData: Triple<String, String, String>) {
+    fun onFormFragmentAccountLogged(
+        studentsWithSemesters: List<StudentWithSemesters>,
+        loginData: Triple<String, String, String>
+    ) {
         presenter.onFormViewAccountLogged(studentsWithSemesters, loginData)
     }
 

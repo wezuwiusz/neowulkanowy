@@ -22,12 +22,11 @@ class NoteDialog : DialogFragment() {
     private lateinit var note: Note
 
     companion object {
+
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(exam: Note): NoteDialog {
-            return NoteDialog().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
-            }
+        fun newInstance(exam: Note) = NoteDialog().apply {
+            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
         }
     }
 
@@ -39,13 +38,15 @@ class NoteDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogNoteBinding.inflate(inflater).apply { binding = this }.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = DialogNoteBinding.inflate(inflater).apply { binding = this }.root
 
     @SuppressLint("SetTextI18n")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             noteDialogDate.text = note.date.toFormattedString()
@@ -57,11 +58,19 @@ class NoteDialog : DialogFragment() {
         if (note.isPointsShow) {
             with(binding.noteDialogPoints) {
                 text = "${if (note.points > 0) "+" else ""}${note.points}"
-                setTextColor(when (NoteCategory.getByValue(note.categoryType)) {
-                    NoteCategory.POSITIVE -> ContextCompat.getColor(requireContext(), R.color.note_positive)
-                    NoteCategory.NEGATIVE -> ContextCompat.getColor(requireContext(), R.color.note_negative)
-                    else -> requireContext().getThemeAttrColor(android.R.attr.textColorPrimary)
-                })
+                setTextColor(
+                    when (NoteCategory.getByValue(note.categoryType)) {
+                        NoteCategory.POSITIVE -> ContextCompat.getColor(
+                            requireContext(),
+                            R.color.note_positive
+                        )
+                        NoteCategory.NEGATIVE -> ContextCompat.getColor(
+                            requireContext(),
+                            R.color.note_negative
+                        )
+                        else -> requireContext().getThemeAttrColor(android.R.attr.textColorPrimary)
+                    }
+                )
             }
         }
 

@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.timetable.completed
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +16,11 @@ class CompletedLessonDialog : DialogFragment() {
     private lateinit var completedLesson: CompletedLesson
 
     companion object {
+
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(exam: CompletedLesson): CompletedLessonDialog {
-            return CompletedLessonDialog().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
-            }
+        fun newInstance(exam: CompletedLesson) = CompletedLessonDialog().apply {
+            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
         }
     }
 
@@ -34,13 +32,14 @@ class CompletedLessonDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogLessonCompletedBinding.inflate(inflater).apply { binding = this }.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = DialogLessonCompletedBinding.inflate(inflater).apply { binding = this }.root
 
-    @SuppressLint("SetTextI18n")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             completedLessonDialogSubject.text = completedLesson.subject
