@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.DialogAccountEditBinding
@@ -15,6 +16,9 @@ class AccountEditDialog : BaseDialogFragment<DialogAccountEditBinding>(), Accoun
 
     @Inject
     lateinit var presenter: AccountEditPresenter
+
+    @Inject
+    lateinit var accountEditColorAdapter: AccountEditColorAdapter
 
     companion object {
 
@@ -48,8 +52,30 @@ class AccountEditDialog : BaseDialogFragment<DialogAccountEditBinding>(), Accoun
         with(binding) {
             accountEditDetailsCancel.setOnClickListener { dismiss() }
             accountEditDetailsSave.setOnClickListener {
-                presenter.changeStudentNick(binding.accountEditDetailsNickText.text.toString())
+                presenter.changeStudentNickAndAvatar(
+                    binding.accountEditDetailsNickText.text.toString(),
+                    accountEditColorAdapter.selectedColor
+                )
             }
+
+            with(binding.accountEditColors) {
+                layoutManager = GridLayoutManager(context, 4)
+                adapter = accountEditColorAdapter
+            }
+        }
+    }
+
+    override fun updateSelectedColorData(color: Int) {
+        with(accountEditColorAdapter) {
+            selectedColor = color
+            notifyDataSetChanged()
+        }
+    }
+
+    override fun updateColorsData(colors: List<Int>) {
+        with(accountEditColorAdapter) {
+            items = colors
+            notifyDataSetChanged()
         }
     }
 

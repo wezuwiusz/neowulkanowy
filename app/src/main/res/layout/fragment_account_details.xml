@@ -21,9 +21,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="invisible"
+        android:visibility="gone"
         tools:ignore="UseCompoundDrawables"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ImageView
             android:layout_width="100dp"
@@ -69,7 +69,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/account_details_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -90,9 +92,22 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_all_account"
-                    app:tint="?colorPrimary"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    tools:src="@tools:sample/avatars" />
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/account_details_check"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="70dp"
+                    android:layout_marginTop="70dp"
+                    app:civ_border_color="?colorSurface"
+                    app:civ_border_width="1dp"
+                    app:civ_circle_color="?colorSurface"
+                    app:layout_constraintStart_toStartOf="@id/accountDetailsAvatar"
+                    app:layout_constraintTop_toTopOf="@id/accountDetailsAvatar"
+                    app:srcCompat="@drawable/ic_all_round_check"
+                    app:tint="?colorPrimary" />
 
                 <TextView
                     android:id="@+id/accountDetailsName"

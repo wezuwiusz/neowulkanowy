@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.DialogAccountQuickBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.ui.modules.account.AccountAdapter
@@ -24,7 +25,15 @@ class AccountQuickDialog : BaseDialogFragment<DialogAccountQuickBinding>(), Acco
     lateinit var presenter: AccountQuickPresenter
 
     companion object {
-        fun newInstance() = AccountQuickDialog()
+
+        private const val STUDENTS_ARGUMENT_KEY = "students"
+
+        fun newInstance(studentsWithSemesters: List<StudentWithSemesters>) =
+            AccountQuickDialog().apply {
+                arguments = Bundle().apply {
+                    putSerializable(STUDENTS_ARGUMENT_KEY, studentsWithSemesters.toTypedArray())
+                }
+            }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +47,12 @@ class AccountQuickDialog : BaseDialogFragment<DialogAccountQuickBinding>(), Acco
         savedInstanceState: Bundle?
     ) = DialogAccountQuickBinding.inflate(inflater).apply { binding = this }.root
 
+    @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presenter.onAttachView(this)
+        val studentsWithSemesters =
+            (requireArguments()[STUDENTS_ARGUMENT_KEY] as Array<StudentWithSemesters>).toList()
+
+        presenter.onAttachView(this, studentsWithSemesters)
     }
 
     override fun initView() {

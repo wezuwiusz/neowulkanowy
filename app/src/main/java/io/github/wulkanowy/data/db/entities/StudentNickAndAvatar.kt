@@ -1,13 +1,17 @@
 package io.github.wulkanowy.data.db.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity
-data class StudentNick(
+data class StudentNickAndAvatar(
 
-    val nick: String
+    val nick: String,
+
+    @ColumnInfo(name = "avatar_color")
+    var avatarColor: Long
 
 ) : Serializable {
 

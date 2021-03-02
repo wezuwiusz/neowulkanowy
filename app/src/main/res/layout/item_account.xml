@@ -18,15 +18,27 @@
         android:layout_height="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_all_account"
         tools:ignore="ContentDescription"
-        tools:tint="@color/colorPrimary" />
+        tools:src="@tools:sample/avatars" />
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/account_item_check"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        app:civ_border_width="1dp"
+        app:layout_constraintStart_toStartOf="@id/accountItemImage"
+        app:layout_constraintTop_toTopOf="@id/accountItemImage"
+        app:srcCompat="@drawable/ic_all_round_check"
+        app:tint="?colorPrimary" />
 
     <TextView
         android:id="@+id/accountItemName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="16sp"
@@ -41,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="3dp"
+        android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
@@ -56,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="3dp"
+        android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"

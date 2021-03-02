@@ -1,16 +1,17 @@
 package io.github.wulkanowy.ui.modules.account
 
 import android.annotation.SuppressLint
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.HeaderAccountBinding
 import io.github.wulkanowy.databinding.ItemAccountBinding
+import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.nickOrName
 import javax.inject.Inject
@@ -72,9 +73,13 @@ class AccountAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.V
         binding: ItemAccountBinding,
         studentWithSemesters: StudentWithSemesters
     ) {
+        val context = binding.root.context
         val student = studentWithSemesters.student
         val semesters = studentWithSemesters.semesters
         val diary = semesters.maxByOrNull { it.semesterId }
+        val avatar = context.createNameInitialsDrawable(student.nickOrName, student.avatarColor)
+        val checkBackgroundColor =
+            context.getThemeAttrColor(if (isAccountQuickDialogMode) R.attr.colorBackgroundFloating else R.attr.colorSurface)
         val isDuplicatedStudent = items.filter {
             if (it.value !is StudentWithSemesters) return@filter false
             val studentToCompare = it.value.student
@@ -87,15 +92,17 @@ class AccountAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.V
         with(binding) {
             accountItemName.text = "${student.nickOrName} ${diary?.diaryName.orEmpty()}"
             accountItemSchool.text = studentWithSemesters.student.schoolName
-            accountItemAccountType.setText(if (student.isParent) R.string.account_type_parent else R.string.account_type_student)
-            accountItemAccountType.visibility = if (isDuplicatedStudent) VISIBLE else GONE
+            accountItemImage.setImageDrawable(avatar)
 
-            with(accountItemImage) {
-                val colorImage =
-                    if (student.isCurrent) context.getThemeAttrColor(R.attr.colorPrimary)
-                    else context.getThemeAttrColor(R.attr.colorOnSurface, 153)
+            with(accountItemAccountType) {
+                setText(if (student.isParent) R.string.account_type_parent else R.string.account_type_student)
+                isVisible = isDuplicatedStudent
+            }
 
-                setColorFilter(colorImage, PorterDuff.Mode.SRC_IN)
+            with(accountItemCheck) {
+                isVisible = student.isCurrent
+                borderColor = checkBackgroundColor
+                circleColor = checkBackgroundColor
             }
 
             root.setOnClickListener { onClickListener(studentWithSemesters) }

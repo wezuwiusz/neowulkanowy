@@ -36,23 +36,20 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
     override var subtitleString = ""
 
-    override val isViewEmpty get() = accountAdapter.items.isEmpty()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding = FragmentAccountBinding.bind(view)
         presenter.onAttachView(this)
     }
 
     override fun initView() {
-        binding.accountErrorRetry.setOnClickListener { presenter.onRetry() }
-        binding.accountErrorDetails.setOnClickListener { presenter.onDetailsClick() }
-
         binding.accountRecycler.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = accountAdapter
@@ -60,9 +57,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
         accountAdapter.onClickListener = presenter::onItemSelected
 
-        with(binding) {
-            accountAdd.setOnClickListener { presenter.onAddSelected() }
-        }
+        binding.accountAdd.setOnClickListener { presenter.onAddSelected() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -84,28 +79,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
 
     override fun openAccountDetailsView(studentWithSemesters: StudentWithSemesters) {
         (activity as? MainActivity)?.pushView(
-            AccountDetailsFragment.newInstance(
-                studentWithSemesters
-            )
+            AccountDetailsFragment.newInstance(studentWithSemesters)
         )
-    }
-
-    override fun showErrorView(show: Boolean) {
-        binding.accountError.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    override fun setErrorDetails(message: String) {
-        binding.accountErrorMessage.text = message
-    }
-
-    override fun showProgress(show: Boolean) {
-        binding.accountProgress.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    override fun showContent(show: Boolean) {
-        with(binding) {
-            accountRecycler.visibility = if (show) View.VISIBLE else View.GONE
-            accountAdd.visibility = if (show) View.VISIBLE else View.GONE
-        }
     }
 }

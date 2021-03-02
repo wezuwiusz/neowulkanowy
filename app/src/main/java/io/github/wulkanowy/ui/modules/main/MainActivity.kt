@@ -28,6 +28,8 @@ import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.ActivityMainBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
@@ -43,8 +45,10 @@ import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.UpdateHelper
+import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.nickOrName
 import io.github.wulkanowy.utils.safelyPopFragments
 import io.github.wulkanowy.utils.setOnViewChangeListener
 import timber.log.Timber
@@ -64,6 +68,8 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     @Inject
     lateinit var appInfo: AppInfo
+
+    private var accountMenu: MenuItem? = null
 
     private val overlayProvider by lazy { ElevationOverlayProvider(this) }
 
@@ -192,6 +198,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.action_menu_main, menu)
+        accountMenu = menu?.findItem(R.id.mainMenuAccount)
+
+        presenter.onActionMenuCreated()
         return true
     }
 
@@ -288,8 +297,8 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         supportActionBar?.setDisplayHomeAsUpEnabled(show)
     }
 
-    override fun showAccountPicker() {
-        navController.showDialogFragment(AccountQuickDialog.newInstance())
+    override fun showAccountPicker(studentWithSemesters: List<StudentWithSemesters>) {
+        navController.showDialogFragment(AccountQuickDialog.newInstance(studentWithSemesters))
     }
 
     override fun showActionBarElevation(show: Boolean) {
@@ -321,6 +330,13 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     override fun onBackPressed() {
         presenter.onBackPressed { super.onBackPressed() }
+    }
+
+    override fun showStudentAvatar(student: Student) {
+        accountMenu?.run {
+            icon = createNameInitialsDrawable(student.nickOrName, student.avatarColor, 0.44f)
+            title = getString(R.string.main_account_picker)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

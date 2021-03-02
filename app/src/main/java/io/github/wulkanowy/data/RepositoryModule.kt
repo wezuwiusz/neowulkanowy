@@ -17,6 +17,7 @@ import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.AppInfo
 import timber.log.Timber
 import javax.inject.Singleton
 
@@ -60,7 +61,8 @@ internal class RepositoryModule {
     fun provideDatabase(
         @ApplicationContext context: Context,
         sharedPrefProvider: SharedPrefProvider,
-    ) = AppDatabase.newInstance(context, sharedPrefProvider)
+        appInfo: AppInfo
+    ) = AppDatabase.newInstance(context, sharedPrefProvider, appInfo)
 
     @Singleton
     @Provides

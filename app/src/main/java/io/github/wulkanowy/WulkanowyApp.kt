@@ -1,11 +1,13 @@
 package io.github.wulkanowy
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.util.Log.DEBUG
 import android.util.Log.INFO
 import android.util.Log.VERBOSE
 import android.webkit.WebView
+import androidx.fragment.app.FragmentManager
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.multidex.MultiDex
 import androidx.work.Configuration
@@ -46,8 +48,10 @@ class WulkanowyApp : Application(), Configuration.Provider {
         MultiDex.install(this)
     }
 
+    @SuppressLint("UnsafeOptInUsageWarning")
     override fun onCreate() {
         super.onCreate()
+        FragmentManager.enableNewStateManager(false)
 
         initializeAppLanguage()
         themeManager.applyDefaultTheme()

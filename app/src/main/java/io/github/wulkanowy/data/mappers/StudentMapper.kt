@@ -5,7 +5,7 @@ import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import java.time.LocalDateTime
 import io.github.wulkanowy.sdk.pojo.Student as SdkStudent
 
-fun List<SdkStudent>.mapToEntities(password: String = "") = map {
+fun List<SdkStudent>.mapToEntities(password: String = "", colors: List<Long>) = map {
     StudentWithSemesters(
         student = Student(
             email = it.email,
@@ -28,8 +28,10 @@ fun List<SdkStudent>.mapToEntities(password: String = "") = map {
             mobileBaseUrl = it.mobileBaseUrl,
             privateKey = it.privateKey,
             certificateKey = it.certificateKey,
-            loginMode = it.loginMode.name
-        ),
+            loginMode = it.loginMode.name,
+        ).apply {
+            avatarColor = colors.random()
+        },
         semesters = it.semesters.mapToEntities(it.studentId)
     )
 }

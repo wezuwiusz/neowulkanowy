@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 data class Message(
 
     @ColumnInfo(name = "student_id")
-    val studentId: Int,
+    val studentId: Long,
 
     @ColumnInfo(name = "real_id")
     val realId: Int,
