@@ -61,7 +61,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="24dp"
-            android:text="Wybierz kolor avatara"
+            android:text="@string/account_edit_avatar_title"
             android:textSize="21sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

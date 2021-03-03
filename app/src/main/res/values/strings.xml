@@ -418,6 +418,7 @@
     <!--Account edit-->
     <string name="account_edit_nick_hint">Nick</string>
     <string name="account_edit_header">Add nick</string>
+    <string name="account_edit_avatar_title">Choose avatar color</string>
 
 
     <!--Log viewer-->
@@ -549,5 +550,4 @@
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
-
 </resources>
