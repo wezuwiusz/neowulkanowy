@@ -65,7 +65,7 @@ class LoginFormPresenterTest {
     fun emptyNicknameLoginTest() {
         every { loginFormView.formUsernameValue } returns ""
         every { loginFormView.formPassValue } returns "test123"
-        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
         presenter.onSignInClick()
 
         verify { loginFormView.setErrorUsernameRequired() }
@@ -74,10 +74,20 @@ class LoginFormPresenterTest {
     }
 
     @Test
+    fun invalidEmailLoginTest() {
+        every { loginFormView.formUsernameValue } returns "@"
+        every { loginFormView.formPassValue } returns "123456"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/"
+        presenter.onSignInClick()
+
+        verify { loginFormView.setErrorEmailInvalid("fakelog.cf") }
+    }
+
+    @Test
     fun emptyPassLoginTest() {
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns ""
-        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
         presenter.onSignInClick()
 
         verify(exactly = 0) { loginFormView.setErrorUsernameRequired() }
@@ -89,7 +99,7 @@ class LoginFormPresenterTest {
     fun invalidPassLoginTest() {
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123"
-        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
         presenter.onSignInClick()
 
         verify(exactly = 0) { loginFormView.setErrorUsernameRequired() }
@@ -102,7 +112,7 @@ class LoginFormPresenterTest {
         val studentTest = Student(
             email = "test@",
             password = "123",
-            scrapperBaseUrl = "https://fakelog.cf/",
+            scrapperBaseUrl = "https://fakelog.cf/?email",
             loginType = "AUTO",
             studentName = "",
             schoolSymbol = "",
@@ -128,7 +138,7 @@ class LoginFormPresenterTest {
 
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
-        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
         every { loginFormView.formHostSymbol } returns "Default"
         presenter.onSignInClick()
 
@@ -144,7 +154,7 @@ class LoginFormPresenterTest {
         coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf()
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
-        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
         every { loginFormView.formHostSymbol } returns "Default"
         presenter.onSignInClick()
 
@@ -160,7 +170,7 @@ class LoginFormPresenterTest {
         coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf()
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
-        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
         every { loginFormView.formHostSymbol } returns "Default"
         presenter.onSignInClick()
         presenter.onSignInClick()
@@ -178,7 +188,7 @@ class LoginFormPresenterTest {
         coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } throws testException
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
-        every { loginFormView.formHostValue } returns "https://fakelog.cf/?standard"
+        every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
         every { loginFormView.formHostSymbol } returns "Default"
         every { loginFormView.showProgress(any()) } just Runs
         every { loginFormView.showProgress(any()) } just Runs

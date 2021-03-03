@@ -50,6 +50,7 @@
     <string name="login_expired_token">Token expired</string>
     <string name="login_invalid_email">Invalid email</string>
     <string name="login_invalid_login">Use the assigned login instead of email</string>
+    <string name="login_invalid_custom_email">Use the assigned login or email in @%1$s</string>
     <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Validate the symbol and the chosen variation of the UONET+ register</string>
     <string name="login_field_required">This field is required</string>
