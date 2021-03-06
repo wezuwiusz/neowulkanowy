@@ -208,7 +208,7 @@ dependencies {
     playImplementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
     hmsImplementation 'com.huawei.hms:hianalytics:5.2.0.300'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.5.0.200'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.5.0.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
