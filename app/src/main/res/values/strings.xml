@@ -464,7 +464,7 @@
 
 
     <!--Preferences-->
-    <string name="pref_view_header">App apearance &amp; behavior</string>
+    <string name="pref_view_header">App appearance &amp; behavior</string>
     <string name="pref_view_list">Default view</string>
     <string name="pref_view_grade_average_mode">Calculation of the end-of-year average</string>
     <string name="pref_view_grade_average_force_calc">Force average calculation by app</string>
