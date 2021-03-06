@@ -7,13 +7,17 @@ interface GradeStatisticsView : BaseView {
 
     val isViewEmpty: Boolean
 
-    val currentType: ViewType
+    val currentType: GradeStatisticsItem.DataType
 
     fun initView()
 
     fun updateSubjects(data: ArrayList<String>)
 
-    fun updateData(items: List<GradeStatisticsItem>, theme: String, showAllSubjectsOnStatisticsList: Boolean)
+    fun updateData(
+        newItems: List<GradeStatisticsItem>,
+        newTheme: String,
+        showAllSubjectsOnStatisticsList: Boolean
+    )
 
     fun showSubjects(show: Boolean)
 
@@ -24,8 +28,6 @@ interface GradeStatisticsView : BaseView {
     fun clearView()
 
     fun resetView()
-
-    fun showContent(show: Boolean)
 
     fun showEmpty(show: Boolean)
 

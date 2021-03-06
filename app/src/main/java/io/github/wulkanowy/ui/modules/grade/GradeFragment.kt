@@ -39,7 +39,7 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
 
     override val titleStringId get() = R.string.grade_title
 
-    override var subtitleString = " "
+    override var subtitleString = ""
 
     override val currentPageIndex get() = binding.gradeViewPager.currentItem
 

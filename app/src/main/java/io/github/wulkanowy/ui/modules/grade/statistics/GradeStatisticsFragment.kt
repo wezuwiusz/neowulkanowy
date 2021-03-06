@@ -38,27 +38,28 @@ class GradeStatisticsFragment :
 
     override val isViewEmpty get() = statisticsAdapter.items.isEmpty()
 
-    override val currentType
-        get() = when (binding.gradeStatisticsTypeSwitch.checkedRadioButtonId) {
-            R.id.gradeStatisticsTypeSemester -> ViewType.SEMESTER
-            R.id.gradeStatisticsTypePartial -> ViewType.PARTIAL
-            else -> ViewType.POINTS
-        }
+    override val currentType get() = statisticsAdapter.currentDataType
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGradeStatisticsBinding.bind(view)
         messageContainer = binding.gradeStatisticsSwipe
-        presenter.onAttachView(this, savedInstanceState?.getSerializable(SAVED_CHART_TYPE) as? ViewType)
+        presenter.onAttachView(
+            this,
+            savedInstanceState?.getSerializable(SAVED_CHART_TYPE) as? GradeStatisticsItem.DataType
+        )
     }
 
     override fun initView() {
+        statisticsAdapter.onDataTypeChangeListener = presenter::onTypeChange
+
         with(binding.gradeStatisticsRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = statisticsAdapter
         }
 
-        subjectsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())
+        subjectsAdapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mutableListOf())
         subjectsAdapter.setDropDownViewResource(R.layout.item_attendance_summary_subject)
 
         with(binding.gradeStatisticsSubjects) {
@@ -71,7 +72,9 @@ class GradeStatisticsFragment :
 
             gradeStatisticsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             gradeStatisticsSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
-            gradeStatisticsSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
+            gradeStatisticsSwipe.setProgressBackgroundColorSchemeColor(
+                requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh)
+            )
             gradeStatisticsErrorRetry.setOnClickListener { presenter.onRetry() }
             gradeStatisticsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }
@@ -85,11 +88,15 @@ class GradeStatisticsFragment :
         }
     }
 
-    override fun updateData(items: List<GradeStatisticsItem>, theme: String, showAllSubjectsOnStatisticsList: Boolean) {
+    override fun updateData(
+        newItems: List<GradeStatisticsItem>,
+        newTheme: String,
+        showAllSubjectsOnStatisticsList: Boolean
+    ) {
         with(statisticsAdapter) {
-            this.showAllSubjectsOnList = showAllSubjectsOnStatisticsList
-            this.theme = theme
-            this.items = items
+            showAllSubjectsOnList = showAllSubjectsOnStatisticsList
+            theme = newTheme
+            items = newItems
             notifyDataSetChanged()
         }
     }
@@ -103,11 +110,7 @@ class GradeStatisticsFragment :
     }
 
     override fun resetView() {
-        binding.gradeStatisticsScroll.scrollTo(0, 0)
-    }
-
-    override fun showContent(show: Boolean) {
-        binding.gradeStatisticsRecycler.visibility = if (show) View.VISIBLE else View.GONE
+        binding.gradeStatisticsRecycler.scrollToPosition(0)
     }
 
     override fun showEmpty(show: Boolean) {
@@ -152,11 +155,6 @@ class GradeStatisticsFragment :
 
     override fun notifyParentRefresh() {
         (parentFragment as? GradeFragment)?.onChildRefresh()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.gradeStatisticsTypeSwitch.setOnCheckedChangeListener { _, _ -> presenter.onTypeChange() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
