@@ -33,8 +33,6 @@ class AccountDetailsFragment :
 
     override val titleStringId = R.string.account_details_title
 
-    override var subtitleString = ""
-
     companion object {
 
         private const val ARGUMENT_KEY = "Data"
