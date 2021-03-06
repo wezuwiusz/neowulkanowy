@@ -5,7 +5,7 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface LicenseView : BaseView {
 
-    val appLibraries: ArrayList<Library>?
+    val appLibraries: List<Library>
 
     fun initView()
 
