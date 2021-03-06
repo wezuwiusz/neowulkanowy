@@ -464,21 +464,21 @@
 
 
     <!--Preferences-->
-    <string name="pref_view_header">Appearance</string>
+    <string name="pref_view_header">App apearance &amp; behavior</string>
     <string name="pref_view_list">Default view</string>
     <string name="pref_view_grade_average_mode">Calculation of the end-of-year average</string>
     <string name="pref_view_grade_average_force_calc">Force average calculation by app</string>
-    <string name="pref_view_present">Show presence in attendance</string>
-    <string name="pref_view_app_theme">Application theme</string>
+    <string name="pref_view_present">Show presence</string>
+    <string name="pref_view_app_theme">Theme</string>
     <string name="pref_view_expand_grade">Expand grades</string>
-    <string name="pref_view_timetable_show_timers">Mark current lesson in timetable</string>
-    <string name="pref_view_timetable_show_groups">Show groups next to subjects in timetable</string>
+    <string name="pref_view_timetable_show_timers">Mark current lesson</string>
+    <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
     <string name="pref_view_timetable_show_whole_class">Show whole class lessons</string>
-    <string name="pref_view_subjects_without_grades">Show subjects without grades in Grades</string>
+    <string name="pref_view_subjects_without_grades">Show subjects without grades</string>
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>
-    <string name="pref_view_grade_sorting_mode">Subjects sorting in "Grades"</string>
-    <string name="pref_view_app_language">App language</string>
+    <string name="pref_view_grade_sorting_mode">Subjects sorting</string>
+    <string name="pref_view_app_language">Language</string>
 
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show notifications</string>
@@ -487,6 +487,7 @@
     <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Go to settings</string>
     <string name="pref_notify_debug_switch">Show debug notifications</string>
+    <string name="pref_notify_disabled_summary">Synchronization is disabled</string>
 
     <string name="pref_services_header">Synchronization</string>
     <string name="pref_services_switch">Automatic update</string>
@@ -497,16 +498,31 @@
     <string name="pref_services_message_sync_success">Synced!</string>
     <string name="pref_services_message_sync_failed">Sync failed</string>
     <string name="pref_services_sync_in_progress">Sync in progress</string>
-    <string name="pref_services_dialog_force_sync_title">Synchronization</string>
-    <string name="pref_services_dialog_force_sync_summary">
-        Manual sync doesn\'t refresh app views.
-        \nTo see the synced data relaunch the app after syncing.
-    </string>
 
-    <string name="pref_other_header">Other</string>
     <string name="pref_other_grade_modifier_plus">Value of the plus</string>
     <string name="pref_other_grade_modifier_minus">Value of the minus</string>
     <string name="pref_other_fill_message_content">Reply with message history</string>
+
+    <string name="pref_settings_advanced_title">Advanced</string>
+    <string name="pref_settings_appearance_title">Appearance &amp; Behavior</string>
+    <string name="pref_settings_notifications_title">Notifications</string>
+    <string name="pref_settings_sync_title">Synchronization</string>
+
+    <string name="pref_grades_appearance_header">Grades</string>
+    <string name="pref_attendance_appearance_view">Attendance</string>
+    <string name="pref_timetable_appearance_view">Timetable</string>
+    <string name="pref_grades_advanced_header">Grades</string>
+    <string name="pref_messages_advanced_header">Messages</string>
+
+    <string name="pref_appearance_category">Appearance &amp; Behavior</string>
+    <string name="pref_appearance_category_summary">Languages, themes, subjects sorting</string>
+    <string name="pref_notifications_category_summary">App notifications, fix problems</string>
+    <string name="pref_notifications_category">Notifications</string>
+    <string name="pref_sync_category">Synchronization</string>
+    <string name="pref_sync_category_summary">Automatic update, synchronization interval</string>
+    <string name="pref_advanced_category_summary">Plus and minus values, average calculation</string>
+    <string name="pref_advanced_category">Advanced</string>
+    <string name="pref_about_category_summary">App version, contributors, social portals, licenses</string>
 
 
     <!--Notification Channels-->

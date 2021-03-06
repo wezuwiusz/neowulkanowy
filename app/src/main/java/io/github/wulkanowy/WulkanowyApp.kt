@@ -52,7 +52,6 @@ class WulkanowyApp : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         FragmentManager.enableNewStateManager(false)
-
         initializeAppLanguage()
         themeManager.applyDefaultTheme()
         initLogging()

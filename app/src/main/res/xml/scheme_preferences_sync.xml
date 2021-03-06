@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_services_header">
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_services_enable"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_services_enable"
+            app:title="@string/pref_services_switch" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_services_wifi_only"
+            app:dependency="services_enable"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_services_wifi_only"
+            app:title="@string/pref_services_wifi" />
+        <ListPreference
+            app:defaultValue="@string/pref_default_services_interval"
+            app:dependency="services_enable"
+            app:entries="@array/services_interval_entries"
+            app:entryValues="@array/services_interval_value"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_services_interval"
+            app:title="@string/pref_services_interval"
+            app:useSimpleSummaryProvider="true" />
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_services_force_sync"
+            app:title="@string/pref_services_force_sync" />
+    </PreferenceCategory>
+</PreferenceScreen>

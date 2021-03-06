@@ -1,8 +1,8 @@
-package io.github.wulkanowy.ui.modules.settings
+package io.github.wulkanowy.ui.modules.settings.sync
 
 import io.github.wulkanowy.ui.base.BaseView
 
-interface SettingsView : BaseView {
+interface SyncView : BaseView {
 
     val syncSuccessString: String
 
@@ -10,15 +10,7 @@ interface SettingsView : BaseView {
 
     fun initView()
 
-    fun recreateView()
-
-    fun updateLanguage(langCode: String)
-
-    fun updateLanguageToFollowSystem()
-
     fun setServicesSuspended(serviceEnablesKey: String, isHolidays: Boolean)
 
     fun setSyncInProgress(inProgress: Boolean)
-
-    fun showFixSyncDialog()
 }

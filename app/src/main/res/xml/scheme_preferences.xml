@@ -1,182 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref_view_header">
-        <ListPreference
-            app:defaultValue="@string/pref_default_startup"
-            app:entries="@array/startup_tab_entries"
-            app:entryValues="@array/startup_tab_value"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_start_menu"
-            app:title="@string/pref_view_list"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            app:defaultValue="@string/pref_default_app_theme"
-            app:entries="@array/app_theme_entries"
-            app:entryValues="@array/app_theme_values"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_app_theme"
-            app:title="@string/pref_view_app_theme"
-            app:useSimpleSummaryProvider="true" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_attendance_present"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_attendance_present"
-            app:title="@string/pref_view_present" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_expand_grade"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_expand_grade"
-            app:title="@string/pref_view_expand_grade" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_timetable_show_timers"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_timetable_show_timers"
-            app:title="@string/pref_view_timetable_show_timers" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_grade_statistics_list"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_grade_statistics_list"
-            app:singleLineTitle="false"
-            app:title="@string/pref_view_grade_statistics_list" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_timetable_show_groups"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_timetable_show_groups"
-            app:singleLineTitle="false"
-            app:title="@string/pref_view_timetable_show_groups" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_subjects_without_grades"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_subjects_without_grades"
-            app:singleLineTitle="false"
-            app:title="@string/pref_view_subjects_without_grades" />
-        <ListPreference
-            app:defaultValue="@string/pref_default_timetable_show_whole_class"
-            app:entries="@array/timetable_show_whole_class_entries"
-            app:entryValues="@array/timetable_show_whole_class_values"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_timetable_show_whole_class"
-            app:title="@string/pref_view_timetable_show_whole_class"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            app:defaultValue="@string/pref_default_grade_color_scheme"
-            app:entries="@array/grade_color_scheme_entries"
-            app:entryValues="@array/grade_color_scheme_values"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_grade_color_scheme"
-            app:title="@string/pref_view_grade_color_scheme"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            app:defaultValue="@string/pref_default_grade_sorting_mode"
-            app:entries="@array/grade_sorting_mode_entries"
-            app:entryValues="@array/grade_sorting_mode_values"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_grade_sorting_mode"
-            app:title="@string/pref_view_grade_sorting_mode"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            app:defaultValue="@string/pref_default_app_language"
-            app:entries="@array/app_language_entries"
-            app:entryValues="@array/app_language_values"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_app_language"
-            app:title="@string/pref_view_app_language"
-            app:useSimpleSummaryProvider="true" />
-    </PreferenceCategory>
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref_services_header">
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_services_enable"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_services_enable"
-            app:title="@string/pref_services_switch" />
-        <ListPreference
-            app:defaultValue="@string/pref_default_services_interval"
-            app:dependency="services_enable"
-            app:entries="@array/services_interval_entries"
-            app:entryValues="@array/services_interval_value"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_services_interval"
-            app:title="@string/pref_services_interval"
-            app:useSimpleSummaryProvider="true" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_services_wifi_only"
-            app:dependency="services_enable"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_services_wifi_only"
-            app:title="@string/pref_services_wifi" />
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_services_force_sync"
-            app:title="@string/pref_services_force_sync" />
-    </PreferenceCategory>
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref_notify_header">
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_notifications_fix_issues"
-            app:title="@string/pref_notify_fix_sync_issues" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_notifications_enable"
-            app:dependency="services_enable"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_notifications_enable"
-            app:title="@string/pref_notify_switch" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_notification_upcoming_lessons_enable"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_notifications_upcoming_lessons_enable"
-            app:singleLineTitle="false"
-            app:title="@string/pref_notify_upcoming_lessons_switch" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_notification_debug"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_notification_debug"
-            app:singleLineTitle="false"
-            app:title="@string/pref_notify_debug_switch" />
-    </PreferenceCategory>
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref_other_header">
-        <ListPreference
-            app:defaultValue="@string/pref_default_grade_modifier_plus"
-            app:entries="@array/grade_modifier_entries"
-            app:entryValues="@array/grade_modifier_value"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_grade_modifier_plus"
-            app:title="@string/pref_other_grade_modifier_plus"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            app:defaultValue="@string/pref_default_grade_modifier_minus"
-            app:entries="@array/grade_modifier_entries"
-            app:entryValues="@array/grade_modifier_value"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_grade_modifier_minus"
-            app:title="@string/pref_other_grade_modifier_minus"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            app:defaultValue="@string/pref_default_grade_average_mode"
-            app:entries="@array/grade_average_mode_entries"
-            app:entryValues="@array/grade_average_mode_values"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_grade_average_mode"
-            app:title="@string/pref_view_grade_average_mode"
-            app:useSimpleSummaryProvider="true" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_grade_average_force_calc"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_grade_average_force_calc"
-            app:singleLineTitle="false"
-            app:title="@string/pref_view_grade_average_force_calc" />
-        <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_fill_message_content"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_fill_message_content"
-            app:singleLineTitle="false"
-            app:title="@string/pref_other_fill_message_content" />
-    </PreferenceCategory>
+    <Preference
+        app:key="appearance"
+        app:icon="@drawable/ic_settings_appearance"
+        app:summary="@string/pref_appearance_category_summary"
+        app:title="@string/pref_appearance_category"
+        app:fragment="io.github.wulkanowy.ui.modules.settings.appearance.AppearanceFragment" />
+    <Preference
+        app:key="notifications"
+        app:icon="@drawable/ic_settings_notifications"
+        app:summary="@string/pref_notifications_category_summary"
+        app:title="@string/pref_notifications_category"
+        app:fragment="io.github.wulkanowy.ui.modules.settings.notifications.NotificationsFragment" />
+    <Preference
+        app:key="sync"
+        app:icon="@drawable/ic_settings_sync"
+        app:summary="@string/pref_sync_category_summary"
+        app:title="@string/pref_sync_category"
+        app:fragment="io.github.wulkanowy.ui.modules.settings.sync.SyncFragment" />
+    <Preference
+        app:key="advanced"
+        app:icon="@drawable/ic_settings_advanced"
+        app:summary="@string/pref_advanced_category_summary"
+        app:title="@string/pref_advanced_category"
+        app:fragment="io.github.wulkanowy.ui.modules.settings.advanced.AdvancedFragment" />
+    <Preference
+        app:key="about"
+        app:icon="@drawable/ic_all_about"
+        app:summary="@string/pref_about_category_summary"
+        app:title="@string/about_title"
+        app:fragment="io.github.wulkanowy.ui.modules.about.AboutFragment" />
 </PreferenceScreen>

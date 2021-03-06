@@ -15,12 +15,17 @@ import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation.TitleState.ALWAYS_SHOW
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.material.elevation.ElevationOverlayProvider
@@ -55,7 +60,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainView {
+class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainView,
+    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     @Inject
     override lateinit var presenter: MainPresenter
@@ -245,12 +251,20 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         with(navController) {
             setOnViewChangeListener { section, name ->
                 if (section == MainView.Section.ACCOUNT || section == MainView.Section.STUDENT_INFO) {
-                    binding.mainBottomNav.visibility = View.GONE
+                    binding.mainBottomNav.isVisible = false
+                    binding.mainFragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                        updateMargins(bottom = 0)
+                    }
+
                     if (appInfo.systemVersion >= P) {
                         window.navigationBarColor = getThemeAttrColor(R.attr.colorSurface)
                     }
                 } else {
-                    binding.mainBottomNav.visibility = View.VISIBLE
+                    binding.mainBottomNav.isVisible = true
+                    binding.mainFragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                        updateMargins(bottom = dpToPx(56f).toInt())
+                    }
+
                     if (appInfo.systemVersion >= P) {
                         window.navigationBarColor =
                             getThemeAttrColor(android.R.attr.navigationBarColor)
@@ -269,6 +283,16 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
                 MoreFragment.newInstance()
             )
         }
+    }
+
+    override fun onPreferenceStartFragment(
+        caller: PreferenceFragmentCompat,
+        pref: Preference
+    ): Boolean {
+        val fragment =
+            supportFragmentManager.fragmentFactory.instantiate(classLoader, pref.fragment)
+        navController.pushFragment(fragment)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
