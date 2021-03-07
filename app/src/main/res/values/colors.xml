@@ -6,10 +6,11 @@
     <color name="colorError">#ff5722</color>
     <color name="colorErrorLight">#e84853</color>
 
-    <color name="colorNavigationBarLight">#2E2E2E</color>
+    <color name="colorNavigationBarLight">#2D2D2D</color>
     <color name="colorNavigationBarBlack">#1E1E1E</color>
 
     <color name="colorStatusBarLight">#1C1C1C</color>
+    <color name="colorStatusBarBlack">#0D0D0D</color>
 
     <color name="timetable_change_light">#ffd54f</color>
     <color name="timetable_change_dark">#ff8f00</color>
