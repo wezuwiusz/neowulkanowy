@@ -17,12 +17,11 @@ class ExamDialog : DialogFragment() {
     private lateinit var exam: Exam
 
     companion object {
+
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(exam: Exam): ExamDialog {
-            return ExamDialog().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
-            }
+        fun newInstance(exam: Exam) = ExamDialog().apply {
+            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
         }
     }
 
@@ -34,12 +33,14 @@ class ExamDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogExamBinding.inflate(inflater).apply { binding = this }.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = DialogExamBinding.inflate(inflater).apply { binding = this }.root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             examDialogSubjectValue.text = exam.subject

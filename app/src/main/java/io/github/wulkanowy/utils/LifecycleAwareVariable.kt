@@ -1,5 +1,7 @@
 package io.github.wulkanowy.utils
 
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -28,7 +30,8 @@ class LifecycleAwareVariable<T : Any> : ReadWriteProperty<Fragment, T>, Lifecycl
     }
 }
 
-class LifecycleAwareVariableActivity<T : Any> : ReadWriteProperty<AppCompatActivity, T>, LifecycleObserver {
+class LifecycleAwareVariableActivity<T : Any> : ReadWriteProperty<AppCompatActivity, T>,
+    LifecycleObserver {
 
     private var _value: T? = null
 
@@ -44,10 +47,11 @@ class LifecycleAwareVariableActivity<T : Any> : ReadWriteProperty<AppCompatActiv
     @Suppress("unused")
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroyView() {
-        _value = null
+        Handler(Looper.getMainLooper()).post {
+            _value = null
+        }
     }
 }
-
 
 @Suppress("unused")
 fun <T : Any> Fragment.lifecycleAwareVariable() = LifecycleAwareVariable<T>()

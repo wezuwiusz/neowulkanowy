@@ -24,17 +24,18 @@ class GradeDetailsDialog : DialogFragment() {
     private lateinit var colorScheme: String
 
     companion object {
+
         private const val ARGUMENT_KEY = "Item"
+
         private const val COLOR_SCHEME_KEY = "Scheme"
 
-        fun newInstance(grade: Grade, colorScheme: String): GradeDetailsDialog {
-            return GradeDetailsDialog().apply {
+        fun newInstance(grade: Grade, colorScheme: String) =
+            GradeDetailsDialog().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARGUMENT_KEY, grade)
                     putString(COLOR_SCHEME_KEY, colorScheme)
                 }
             }
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +47,14 @@ class GradeDetailsDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogGradeBinding.inflate(inflater).apply { binding = this }.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = DialogGradeBinding.inflate(inflater).apply { binding = this }.root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             gradeDialogSubject.text = grade.subject

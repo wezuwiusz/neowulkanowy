@@ -8,6 +8,7 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
+import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +18,10 @@ class TeacherRepository @Inject constructor(
     private val sdk: Sdk
 ) {
 
+    private val saveFetchResultMutex = Mutex()
+
     fun getTeachers(student: Student, semester: Semester, forceRefresh: Boolean) = networkBoundResource(
+        mutex = saveFetchResultMutex,
         shouldFetch = { it.isEmpty() || forceRefresh },
         query = { teacherDb.loadAll(semester.studentId, semester.classId) },
         fetch = {

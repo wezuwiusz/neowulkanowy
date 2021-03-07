@@ -72,6 +72,7 @@ class LuckyNumberRemoteTest {
         coEvery { sdk.getLuckyNumber(student.schoolShortName) } returns luckyNumber
         coEvery { luckyNumberDb.load(1, date) } returnsMany listOf(
             flowOf(luckyNumber.mapToEntity(student).copy(luckyNumber = 6666)),
+            flowOf(luckyNumber.mapToEntity(student).copy(luckyNumber = 6666)), // after fetch end before save result
             flowOf(luckyNumber.mapToEntity(student))
         )
         coEvery { luckyNumberDb.insertAll(any()) } returns listOf(1, 2, 3)
@@ -101,6 +102,7 @@ class LuckyNumberRemoteTest {
         coEvery { sdk.getLuckyNumber(student.schoolShortName) } returns luckyNumber
         coEvery { luckyNumberDb.load(1, date) } returnsMany listOf(
             flowOf(null),
+            flowOf(null), // after fetch end before save result
             flowOf(luckyNumber.mapToEntity(student))
         )
         coEvery { luckyNumberDb.insertAll(any()) } returns listOf(1, 2, 3)

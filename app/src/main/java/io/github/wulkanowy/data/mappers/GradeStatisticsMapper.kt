@@ -5,10 +5,9 @@ import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeSemesterStatistics
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
-import io.github.wulkanowy.ui.modules.grade.statistics.ViewType
-import io.github.wulkanowy.sdk.pojo.GradeStatisticsSubject as SdkGradeStatisticsSubject
-import io.github.wulkanowy.sdk.pojo.GradeStatisticsSemester as SdkGradeStatisticsSemester
 import io.github.wulkanowy.sdk.pojo.GradePointsStatistics as SdkGradePointsStatistics
+import io.github.wulkanowy.sdk.pojo.GradeStatisticsSemester as SdkGradeStatisticsSemester
+import io.github.wulkanowy.sdk.pojo.GradeStatisticsSubject as SdkGradeStatisticsSubject
 
 @JvmName("mapToEntitiesSubject")
 fun List<SdkGradeStatisticsSubject>.mapToEntities(semester: Semester) = map {
@@ -51,7 +50,7 @@ fun List<SdkGradePointsStatistics>.mapToEntities(semester: Semester) = map {
 
 fun List<GradePartialStatistics>.mapPartialToStatisticItems() = filterNot { it.classAmounts.isEmpty() }.map {
     GradeStatisticsItem(
-        type = ViewType.PARTIAL,
+        type = GradeStatisticsItem.DataType.PARTIAL,
         average = it.classAverage,
         partial = it,
         points = null,
@@ -61,7 +60,7 @@ fun List<GradePartialStatistics>.mapPartialToStatisticItems() = filterNot { it.c
 
 fun List<GradeSemesterStatistics>.mapSemesterToStatisticItems() = filterNot { it.amounts.isEmpty() }.map {
     GradeStatisticsItem(
-        type = ViewType.SEMESTER,
+        type = GradeStatisticsItem.DataType.SEMESTER,
         partial = null,
         points = null,
         average = "",
@@ -71,7 +70,7 @@ fun List<GradeSemesterStatistics>.mapSemesterToStatisticItems() = filterNot { it
 
 fun List<GradePointsStatistics>.mapPointsToStatisticsItems() = map {
     GradeStatisticsItem(
-        type = ViewType.POINTS,
+        type = GradeStatisticsItem.DataType.POINTS,
         partial = null,
         semester = null,
         average = "",

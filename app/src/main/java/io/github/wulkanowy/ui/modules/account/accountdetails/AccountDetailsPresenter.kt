@@ -21,7 +21,7 @@ class AccountDetailsPresenter @Inject constructor(
     private val syncManager: SyncManager
 ) : BasePresenter<AccountDetailsView>(errorHandler, studentRepository) {
 
-    private lateinit var studentWithSemesters: StudentWithSemesters
+    private var studentWithSemesters: StudentWithSemesters? = null
 
     private lateinit var lastError: Throwable
 
@@ -69,10 +69,10 @@ class AccountDetailsPresenter @Inject constructor(
                     }
                     Status.SUCCESS -> {
                         Timber.i("Loading account details view result: Success")
-                        studentWithSemesters = it.data!!
+                        studentWithSemesters = it.data
                         view?.run {
-                            showAccountData(studentWithSemesters.student)
-                            enableSelectStudentButton(!studentWithSemesters.student.isCurrent)
+                            showAccountData(studentWithSemesters!!.student)
+                            enableSelectStudentButton(!studentWithSemesters!!.student.isCurrent)
                             showContent(true)
                             showErrorView(false)
                         }
@@ -88,17 +88,23 @@ class AccountDetailsPresenter @Inject constructor(
     }
 
     fun onAccountEditSelected() {
-        view?.showAccountEditDetailsDialog(studentWithSemesters.student)
+        studentWithSemesters?.let {
+            view?.showAccountEditDetailsDialog(it.student)
+        }
     }
 
     fun onStudentInfoSelected(infoType: StudentInfoView.Type) {
-        view?.openStudentInfoView(infoType, studentWithSemesters)
+        studentWithSemesters?.let {
+            view?.openStudentInfoView(infoType, it)
+        }
     }
 
     fun onStudentSelect() {
-        Timber.i("Select student ${studentWithSemesters.student.id}")
+        if (studentWithSemesters == null) return
 
-        flowWithResource { studentRepository.switchStudent(studentWithSemesters) }
+        Timber.i("Select student ${studentWithSemesters!!.student.id}")
+
+        flowWithResource { studentRepository.switchStudent(studentWithSemesters!!) }
             .onEach {
                 when (it.status) {
                     Status.LOADING -> Timber.i("Attempt to change a student")
@@ -122,8 +128,10 @@ class AccountDetailsPresenter @Inject constructor(
     }
 
     fun onLogoutConfirm() {
+        if (studentWithSemesters == null) return
+
         flowWithResource {
-            val studentToLogout = studentWithSemesters.student
+            val studentToLogout = studentWithSemesters!!.student
 
             studentRepository.logoutStudent(studentToLogout)
             val students = studentRepository.getSavedStudents(false)
@@ -143,7 +151,7 @@ class AccountDetailsPresenter @Inject constructor(
                             syncManager.stopSyncWorker()
                             openClearLoginView()
                         }
-                        studentWithSemesters.student.isCurrent -> {
+                        studentWithSemesters!!.student.isCurrent -> {
                             Timber.i("Logout result: Logout student and switch to another")
                             recreateMainView()
                         }

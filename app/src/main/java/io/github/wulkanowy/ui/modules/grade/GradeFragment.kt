@@ -63,11 +63,13 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     override fun initView() {
         with(pagerAdapter) {
             containerId = binding.gradeViewPager.id
-            addFragmentsWithTitle(mapOf(
-                GradeDetailsFragment.newInstance() to getString(R.string.all_details),
-                GradeSummaryFragment.newInstance() to getString(R.string.grade_menu_summary),
-                GradeStatisticsFragment.newInstance() to getString(R.string.grade_menu_statistics)
-            ))
+            addFragmentsWithTitle(
+                mapOf(
+                    GradeDetailsFragment.newInstance() to getString(R.string.all_details),
+                    GradeSummaryFragment.newInstance() to getString(R.string.grade_menu_summary),
+                    GradeStatisticsFragment.newInstance() to getString(R.string.grade_menu_statistics)
+                )
+            )
         }
 
         with(binding.gradeViewPager) {
@@ -137,7 +139,10 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
 
     override fun setCurrentSemesterName(semester: Int, schoolYear: Int) {
         subtitleString = getString(R.string.grade_subtitle, semester, schoolYear, schoolYear + 1)
-        (activity as MainView).setViewSubTitle(subtitleString)
+
+        if (isVisible) {
+            (activity as MainView?)?.setViewSubTitle(subtitleString)
+        }
     }
 
     fun onChildRefresh() {
@@ -149,7 +154,8 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     }
 
     override fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean) {
-        (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentLoadData(semesterId, forceRefresh)
+        (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)
+            ?.onParentLoadData(semesterId, forceRefresh)
     }
 
     override fun notifyChildParentReselected(index: Int) {

@@ -3,6 +3,7 @@ package io.github.wulkanowy.utils
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.IntentSender
 import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
@@ -87,9 +88,13 @@ class UpdateHelper @Inject constructor(
 
     private fun startUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo, updateType: Int) {
         Timber.d("Start update ($updateType): $appUpdateInfo")
-        appUpdateManager.startUpdateFlowForResult(
-            appUpdateInfo, updateType, activity, IN_APP_UPDATE_REQUEST_CODE
-        )
+        try {
+            appUpdateManager.startUpdateFlowForResult(
+                appUpdateInfo, updateType, activity, IN_APP_UPDATE_REQUEST_CODE
+            )
+        } catch (e: IntentSender.SendIntentException) {
+            Timber.i("Update failed! Duplicated PendingIntent")
+        }
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int) {

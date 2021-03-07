@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_grades_advanced_header">
+        <ListPreference
+            app:defaultValue="@string/pref_default_grade_modifier_plus"
+            app:entries="@array/grade_modifier_entries"
+            app:entryValues="@array/grade_modifier_value"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_modifier_plus"
+            app:title="@string/pref_other_grade_modifier_plus"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            app:defaultValue="@string/pref_default_grade_modifier_minus"
+            app:entries="@array/grade_modifier_entries"
+            app:entryValues="@array/grade_modifier_value"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_modifier_minus"
+            app:title="@string/pref_other_grade_modifier_minus"
+            app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_grade_average_force_calc"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_average_force_calc"
+            app:singleLineTitle="false"
+            app:title="@string/pref_view_grade_average_force_calc" />
+        <ListPreference
+            app:defaultValue="@string/pref_default_grade_average_mode"
+            app:entries="@array/grade_average_mode_entries"
+            app:entryValues="@array/grade_average_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_grade_average_mode"
+            app:title="@string/pref_view_grade_average_mode"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_messages_advanced_header">
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_fill_message_content"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_fill_message_content"
+            app:singleLineTitle="false"
+            app:title="@string/pref_other_fill_message_content" />
+    </PreferenceCategory>
+</PreferenceScreen>

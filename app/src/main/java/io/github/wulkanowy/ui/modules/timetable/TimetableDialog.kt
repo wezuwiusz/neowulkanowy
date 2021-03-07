@@ -24,12 +24,11 @@ class TimetableDialog : DialogFragment() {
     private lateinit var lesson: Timetable
 
     companion object {
+
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(exam: Timetable): TimetableDialog {
-            return TimetableDialog().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
-            }
+        fun newInstance(exam: Timetable) = TimetableDialog().apply {
+            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
         }
     }
 
@@ -41,12 +40,14 @@ class TimetableDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogTimetableBinding.inflate(inflater).apply { binding = this }.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = DialogTimetableBinding.inflate(inflater).apply { binding = this }.root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         with(lesson) {
             setInfo(info, teacher, canceled, changes)
@@ -76,15 +77,24 @@ class TimetableDialog : DialogFragment() {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun setInfo(info: String, teacher: String, canceled: Boolean, changes: Boolean) {
         with(binding) {
             when {
                 info.isNotBlank() -> {
                     if (canceled) {
-                        timetableDialogChangesTitle.setTextColor(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+                        timetableDialogChangesTitle.setTextColor(
+                            requireContext().getThemeAttrColor(
+                                R.attr.colorPrimary
+                            )
+                        )
                         timetableDialogChanges.setTextColor(requireContext().getThemeAttrColor(R.attr.colorPrimary))
                     } else {
-                        timetableDialogChangesTitle.setTextColor(requireContext().getThemeAttrColor(R.attr.colorTimetableChange))
+                        timetableDialogChangesTitle.setTextColor(
+                            requireContext().getThemeAttrColor(
+                                R.attr.colorTimetableChange
+                            )
+                        )
                         timetableDialogChanges.setTextColor(requireContext().getThemeAttrColor(R.attr.colorTimetableChange))
                     }
 
@@ -167,6 +177,7 @@ class TimetableDialog : DialogFragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setTime(start: LocalDateTime, end: LocalDateTime) {
-        binding.timetableDialogTime.text = "${start.toFormattedString("HH:mm")} - ${end.toFormattedString("HH:mm")}"
+        binding.timetableDialogTime.text =
+            "${start.toFormattedString("HH:mm")} - ${end.toFormattedString("HH:mm")}"
     }
 }

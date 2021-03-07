@@ -30,7 +30,6 @@ class MorePresenter @Inject constructor(
                 conferencesRes?.first -> openConferencesView()
                 schoolAndTeachersRes?.first -> openSchoolAndTeachersView()
                 settingsRes?.first -> openSettingsView()
-                aboutRes?.first -> openAboutView()
             }
         }
     }
@@ -51,8 +50,7 @@ class MorePresenter @Inject constructor(
                 mobileDevicesRes,
                 conferencesRes,
                 schoolAndTeachersRes,
-                settingsRes,
-                aboutRes
+                settingsRes
             ))
         }
     }

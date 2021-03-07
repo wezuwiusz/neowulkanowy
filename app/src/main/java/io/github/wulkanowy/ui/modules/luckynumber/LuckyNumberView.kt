@@ -24,4 +24,6 @@ interface LuckyNumberView : BaseView {
     fun enableSwipe(enable: Boolean)
 
     fun showContent(show: Boolean)
+
+    fun openLuckyNumberHistory()
 }

@@ -18,12 +18,11 @@ class AttendanceDialog : DialogFragment() {
     private lateinit var attendance: Attendance
 
     companion object {
+
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(exam: Attendance): AttendanceDialog {
-            return AttendanceDialog().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
-            }
+        fun newInstance(exam: Attendance) = AttendanceDialog().apply {
+            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
         }
     }
 
@@ -35,12 +34,14 @@ class AttendanceDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogAttendanceBinding.inflate(inflater).apply { binding = this }.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = DialogAttendanceBinding.inflate(inflater).apply { binding = this }.root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
             attendanceDialogSubject.text = attendance.subject

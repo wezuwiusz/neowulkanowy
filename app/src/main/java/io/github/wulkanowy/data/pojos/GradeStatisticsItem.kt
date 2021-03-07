@@ -3,11 +3,10 @@ package io.github.wulkanowy.data.pojos
 import io.github.wulkanowy.data.db.entities.GradePartialStatistics
 import io.github.wulkanowy.data.db.entities.GradePointsStatistics
 import io.github.wulkanowy.data.db.entities.GradeSemesterStatistics
-import io.github.wulkanowy.ui.modules.grade.statistics.ViewType
 
 data class GradeStatisticsItem(
 
-    val type: ViewType,
+    val type: DataType,
 
     val average: String,
 
@@ -16,4 +15,11 @@ data class GradeStatisticsItem(
     val semester: GradeSemesterStatistics?,
 
     val points: GradePointsStatistics?
-)
+
+) {
+    enum class DataType {
+        SEMESTER,
+        PARTIAL,
+        POINTS,
+    }
+}

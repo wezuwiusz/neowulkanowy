@@ -81,4 +81,7 @@ data class Student(
     var id: Long = 0
 
     var nick = ""
+
+    @ColumnInfo(name = "avatar_color")
+    var avatarColor = 0L
 }

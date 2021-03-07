@@ -13,6 +13,7 @@
         <item>Українська</item>
         <item>Deutsch</item>
         <item>Čeština</item>
+        <item>Slovenčina</item>
     </string-array>
     <string-array name="services_interval_entries">
         <item>15 minut</item>
@@ -24,7 +25,7 @@
         <item>24 godziny</item>
     </string-array>
     <string-array name="grade_modifier_entries">
-        <item>0,0</item>
+        <item>0,00</item>
         <item>0,25</item>
         <item>0,33</item>
         <item>0,5</item>

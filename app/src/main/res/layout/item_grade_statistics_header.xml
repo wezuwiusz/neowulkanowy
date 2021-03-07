@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioGroup
+            android:id="@+id/gradeStatisticsTypeSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="16dp">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/gradeStatisticsTypePartial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:tag="partial"
+                android:text="@string/grade_statistics_partial" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/gradeStatisticsTypeSemester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="annual"
+                android:text="@string/grade_statistics_semester" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/gradeStatisticsTypePoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tag="points"
+                android:text="@string/grade_statistics_points" />
+        </RadioGroup>
+    </HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

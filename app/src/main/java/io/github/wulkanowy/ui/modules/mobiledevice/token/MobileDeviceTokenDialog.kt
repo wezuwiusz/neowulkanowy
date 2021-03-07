@@ -20,13 +20,15 @@ import io.github.wulkanowy.ui.base.BaseDialogFragment
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MobileDeviceTokenDialog : BaseDialogFragment<DialogMobileDeviceBinding>(), MobileDeviceTokenVIew {
+class MobileDeviceTokenDialog : BaseDialogFragment<DialogMobileDeviceBinding>(),
+    MobileDeviceTokenVIew {
 
     @Inject
     lateinit var presenter: MobileDeviceTokenPresenter
 
     companion object {
-        fun newInstance(): MobileDeviceTokenDialog = MobileDeviceTokenDialog()
+
+        fun newInstance() = MobileDeviceTokenDialog()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +36,14 @@ class MobileDeviceTokenDialog : BaseDialogFragment<DialogMobileDeviceBinding>(),
         setStyle(STYLE_NO_TITLE, 0)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return DialogMobileDeviceBinding.inflate(inflater).apply { binding = this }.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = DialogMobileDeviceBinding.inflate(inflater).apply { binding = this }.root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         presenter.onAttachView(this)
     }
 

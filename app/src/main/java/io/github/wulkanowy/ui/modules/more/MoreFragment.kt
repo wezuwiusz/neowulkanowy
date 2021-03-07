@@ -63,9 +63,6 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
     override val settingsRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.settings_title) to getCompatDrawable(R.drawable.ic_more_settings) }
 
-    override val aboutRes: Pair<String, Drawable?>?
-        get() = context?.run { getString(R.string.about_title) to getCompatDrawable(R.drawable.ic_all_about) }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMoreBinding.bind(view)
@@ -122,10 +119,6 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override fun openSettingsView() {
         (activity as? MainActivity)?.pushView(SettingsFragment.newInstance())
-    }
-
-    override fun openAboutView() {
-        (activity as? MainActivity)?.pushView(AboutFragment.newInstance())
     }
 
     override fun popView(depth: Int) {

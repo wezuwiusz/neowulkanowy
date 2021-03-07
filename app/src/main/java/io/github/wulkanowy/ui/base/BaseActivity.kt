@@ -37,6 +37,7 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
     abstract var presenter: T
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        inject()
         themeManager.applyActivityTheme(this)
         super.onCreate(savedInstanceState)
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleLogger, true)
@@ -44,7 +45,9 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
 
         if (SDK_INT >= LOLLIPOP) {
             @Suppress("DEPRECATION")
-            setTaskDescription(ActivityManager.TaskDescription(null, null, getThemeAttrColor(R.attr.colorSurface)))
+            setTaskDescription(
+                ActivityManager.TaskDescription(null, null, getThemeAttrColor(R.attr.colorSurface))
+            )
         }
     }
 
@@ -83,5 +86,10 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
         super.onDestroy()
         invalidateOptionsMenu()
         presenter.onDetachView()
+    }
+
+    //https://github.com/google/dagger/releases/tag/dagger-2.33
+    protected open fun inject() {
+        throw UnsupportedOperationException()
     }
 }

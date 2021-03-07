@@ -18,8 +18,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 84
-        versionName "1.0.0"
+        versionCode 86
+        versionName "1.1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -41,7 +41,8 @@ android {
     }
 
     sourceSets {
-        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+        // https://github.com/robolectric/robolectric/issues/3928#issuecomment-395309991
+        debug.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
     signingConfigs {
@@ -103,6 +104,10 @@ android {
         disable 'HardwareIds'
     }
 
+    testOptions.unitTests {
+        includeAndroidResources = true
+    }
+
     compileOptions {
         coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -128,32 +133,32 @@ play {
     serviceAccountEmail = System.getenv("PLAY_SERVICE_ACCOUNT_EMAIL") ?: "jan@fakelog.cf"
     serviceAccountCredentials = file('key.p12')
     defaultToAppBundles = false
-    track = 'alpha'
+    track = 'production'
     updatePriority = 3
 }
 
 ext {
     work_manager = "2.5.0"
     work_hilt = "1.0.0-alpha03"
-    room = "2.3.0-beta01"
+    room = "2.3.0-beta02"
     chucker = "3.4.0"
-    mockk = "1.10.5"
+    mockk = "1.10.6"
     moshi = "1.11.0"
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:1.0.0"
+    implementation "io.github.wulkanowy:sdk:1.1.0"
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
 
     implementation "androidx.core:core-ktx:1.3.2"
-    implementation "androidx.activity:activity-ktx:1.1.0"
+    implementation "androidx.activity:activity-ktx:1.2.0"
     implementation "androidx.appcompat:appcompat:1.2.0"
     implementation "androidx.appcompat:appcompat-resources:1.2.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.5"
+    implementation "androidx.fragment:fragment-ktx:1.3.0"
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.multidex:multidex:2.0.1"
 
@@ -163,14 +168,15 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout:2.0.4"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
-    implementation "com.google.android.material:material:1.3.0-rc01"
+    implementation "com.google.android.material:material:1.3.0"
     implementation "com.github.wulkanowy:material-chips-input:2.1.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
+    implementation 'com.mikhaellopez:circularimageview:4.2.0'
 
     implementation "androidx.work:work-runtime-ktx:$work_manager"
     playImplementation "androidx.work:work-gcm:$work_manager"
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-ktx:$room"
@@ -197,7 +203,7 @@ dependencies {
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
     implementation 'me.xdrop:fuzzywuzzy:1.3.1'
 
-    playImplementation platform('com.google.firebase:firebase-bom:26.4.0')
+    playImplementation platform('com.google.firebase:firebase-bom:26.6.0')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-inappmessaging-display-ktx'
     playImplementation "com.google.firebase:firebase-inappmessaging-ktx"
@@ -206,24 +212,31 @@ dependencies {
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
     playImplementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:5.1.0.301'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.5.0.200'
+    hmsImplementation 'com.huawei.hms:hianalytics:5.2.0.300'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.5.0.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
     debugImplementation "com.github.ChuckerTeam.Chucker:library:$chucker"
     debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 
-    testImplementation "junit:junit:4.13.1"
+    testImplementation "junit:junit:4.13.2"
     testImplementation "io.mockk:mockk:$mockk"
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+
+    testImplementation 'org.robolectric:robolectric:4.5.1'
+    testImplementation "androidx.test:runner:1.3.0"
+    testImplementation "androidx.test.ext:junit:1.1.2"
+    testImplementation "androidx.test:core:1.3.0"
+    testImplementation "androidx.room:room-testing:$room"
+    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     androidTestImplementation "androidx.test:core:1.3.0"
     androidTestImplementation "androidx.test:runner:1.3.0"
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
     androidTestImplementation "io.mockk:mockk-android:$mockk"
-    androidTestImplementation "androidx.room:room-testing:$room"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 

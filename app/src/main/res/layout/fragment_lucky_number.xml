@@ -67,6 +67,26 @@
             android:textSize="20sp" />
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/luckyNumberHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/luckyNumberHistoryButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:text="@string/lucky_number_history_button" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/luckyNumberError"
         android:layout_width="match_parent"

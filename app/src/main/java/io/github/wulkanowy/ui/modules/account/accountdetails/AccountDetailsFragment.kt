@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.get
+import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
@@ -18,6 +19,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoFragment
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
+import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.nickOrName
 import javax.inject.Inject
 
@@ -30,8 +32,6 @@ class AccountDetailsFragment :
     lateinit var presenter: AccountDetailsPresenter
 
     override val titleStringId = R.string.account_details_title
-
-    override var subtitleString = ""
 
     companion object {
 
@@ -88,8 +88,15 @@ class AccountDetailsFragment :
 
     override fun showAccountData(student: Student) {
         with(binding) {
+            accountDetailsCheck.isVisible = student.isCurrent
             accountDetailsName.text = student.nickOrName
             accountDetailsSchool.text = student.schoolName
+            accountDetailsAvatar.setImageDrawable(
+                requireContext().createNameInitialsDrawable(
+                    student.nickOrName,
+                    student.avatarColor
+                )
+            )
         }
     }
 

@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,14 +26,9 @@ class LicenseFragment : BaseFragment<FragmentLicenseBinding>(R.layout.fragment_l
     @Inject
     lateinit var licenseAdapter: LicenseAdapter
 
-    private val libs by lazy { Libs(requireContext()) }
-
     override val titleStringId get() = R.string.license_title
 
-    override val appLibraries: ArrayList<Library>?
-        get() = context?.let {
-            libs.prepareLibraries(it, emptyArray(), emptyArray(), autoDetect = true, checkCachedDetection = true, sort = true)
-        }
+    override val appLibraries by lazy { Libs(requireContext()).libraries }
 
     companion object {
         fun newInstance() = LicenseFragment()
@@ -63,7 +58,7 @@ class LicenseFragment : BaseFragment<FragmentLicenseBinding>(R.layout.fragment_l
 
     override fun openLicense(licenseHtml: String) {
         context?.let {
-            AlertDialog.Builder(it).apply {
+            MaterialAlertDialogBuilder(it).apply {
                 setTitle(R.string.license_dialog_title)
                 setMessage(licenseHtml.parseAsHtml())
                 setPositiveButton(android.R.string.ok) { _, _ -> }

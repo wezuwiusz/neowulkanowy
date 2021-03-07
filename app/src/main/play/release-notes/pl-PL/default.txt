@@ -1,10 +1,11 @@
-Wersja 1.0.0
+Wersja 1.1.0
 
-Pierwsza produkcyjna wersja Wulkanowego 🎉
-
-Dziękujemy wszystkim użytkownikom za testowanie dotychczasowej wersji będącej we wczesnym dostępie
-jak i programistom, którzy w wolnych chwilach pomagali rozwijać aplikację i naprawiać znalezione błędy.
-
-Bez was wszystkich niemożliwe byłoby to dzieło!
+- dodaliśmy wyświetlanie inicjałów imienia ucznia jako awatar widoczny w aplikacji
+- dodaliśmy historię szczęśliwego numerka
+- dodaliśmy język słowacki
+- zmieniliśmy kolor górnego i dolnego paska systemowego lepiej dostosowując je do aplikacji
+- zmieniliśmy wygląd ustawień dzieląc je na sekcje
+- naprawiliśmy problem dublujących się czasem ocen
+- naprawiliśmy kilka innych błędów i poprawiliśmy stabilność aplikacji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

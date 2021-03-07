@@ -150,6 +150,13 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         }
     }
 
+    override fun setErrorEmailInvalid(domain: String) {
+        with(binding.loginFormUsernameLayout) {
+            requestFocus()
+            error = getString(R.string.login_invalid_custom_email,domain)
+        }
+    }
+
     override fun clearUsernameError() {
         binding.loginFormUsernameLayout.error = null
     }

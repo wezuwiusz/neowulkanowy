@@ -87,6 +87,7 @@ class CompletedLessonsRepositoryTest {
         coEvery { sdk.getCompletedLessons(startDate, endDate) } returns remoteList
         coEvery { completedLessonDb.loadAll(1, 1, startDate, endDate) } returnsMany listOf(
             flowOf(remoteList.dropLast(1).mapToEntities(semester)),
+            flowOf(remoteList.dropLast(1).mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.mapToEntities(semester))
         )
         coEvery { completedLessonDb.insertAll(any()) } returns listOf(1, 2, 3)
@@ -114,6 +115,7 @@ class CompletedLessonsRepositoryTest {
         coEvery { sdk.getCompletedLessons(startDate, endDate) } returns remoteList.dropLast(1)
         coEvery { completedLessonDb.loadAll(1, 1, startDate, endDate) } returnsMany listOf(
             flowOf(remoteList.mapToEntities(semester)),
+            flowOf(remoteList.mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.dropLast(1).mapToEntities(semester))
         )
         coEvery { completedLessonDb.insertAll(any()) } returns listOf(1, 2, 3)

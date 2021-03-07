@@ -35,8 +35,8 @@ open class AppInfo @Inject constructor() {
     open val systemLanguage: String
         get() = Resources.getSystem().configuration.locale.language
 
-    open val defaultColorsForAvatar = listOf(
-        0xe57373, 0xf06292, 0xba68c8, 0x9575cd, 0x7986cb, 0x64b5f6, 0x4fc3f7, 0x4dd0e1, 0x4db6ac,
-        0x81c784, 0xaed581, 0xff8a65, 0xd4e157, 0xffd54f, 0xffb74d, 0xa1887f, 0x90a4ae
-    )
+    val defaultColorsForAvatar = listOf(
+        0xd32f2f, 0xE64A19, 0xFFA000, 0xAFB42B, 0x689F38, 0x388E3C, 0x00796B, 0x0097A7,
+        0x1976D2, 0x3647b5, 0x6236c9, 0x9225c1, 0xC2185B, 0x616161, 0x455A64, 0x7a5348
+    ).map { (it and 0x00ffffff or (255 shl 24)).toLong() }
 }
