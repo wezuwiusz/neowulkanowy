@@ -1,6 +1,11 @@
-Wersja 1.0.1
+Wersja 1.1.0
 
-- naprawiliśmy błąd podczas wysyłania wiadomości
-- poprawiliśmy błędy w tłumaczeniach
+- dodaliśmy wyświetlanie inicjałów imienia ucznia jako awatar widoczny w aplikacji
+- dodaliśmy historię szczęśliwego numerka
+- dodaliśmy język słowacki
+- zmieniliśmy kolor górnego i dolnego paska systemowego lepiej dostosowując je do aplikacji
+- zmieniliśmy wygląd ustawień dzieląc je na sekcje
+- naprawiliśmy problem dublujących się czasem ocen
+- naprawiliśmy kilka innych błędów i poprawiliśmy stabilność aplikacji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
