@@ -88,6 +88,7 @@ class ExamRemoteTest {
         coEvery { sdk.getExams(startDate, realEndDate, 1) } returns remoteList
         coEvery { examDb.loadAll(1, 1, startDate, realEndDate) } returnsMany listOf(
             flowOf(remoteList.dropLast(1).mapToEntities(semester)),
+            flowOf(remoteList.dropLast(1).mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.mapToEntities(semester))
         )
         coEvery { examDb.insertAll(any()) } returns listOf(1, 2, 3)
@@ -115,6 +116,7 @@ class ExamRemoteTest {
         coEvery { sdk.getExams(startDate, realEndDate, 1) } returns remoteList.dropLast(1)
         coEvery { examDb.loadAll(1, 1, startDate, realEndDate) } returnsMany listOf(
             flowOf(remoteList.mapToEntities(semester)),
+            flowOf(remoteList.mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.dropLast(1).mapToEntities(semester))
         )
         coEvery { examDb.insertAll(any()) } returns listOf(1, 2, 3)

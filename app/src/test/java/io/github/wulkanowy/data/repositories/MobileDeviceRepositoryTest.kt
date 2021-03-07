@@ -82,6 +82,7 @@ class MobileDeviceRepositoryTest {
         coEvery { sdk.getRegisteredDevices() } returns remoteList
         coEvery { mobileDeviceDb.loadAll(1) } returnsMany listOf(
             flowOf(remoteList.dropLast(1).mapToEntities(semester)),
+            flowOf(remoteList.dropLast(1).mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.mapToEntities(semester))
         )
         coEvery { mobileDeviceDb.insertAll(any()) } returns listOf(1, 2, 3)
@@ -109,6 +110,7 @@ class MobileDeviceRepositoryTest {
         coEvery { sdk.getRegisteredDevices() } returns remoteList.dropLast(1)
         coEvery { mobileDeviceDb.loadAll(1) } returnsMany listOf(
             flowOf(remoteList.mapToEntities(semester)),
+            flowOf(remoteList.mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.dropLast(1).mapToEntities(semester))
         )
         coEvery { mobileDeviceDb.insertAll(any()) } returns listOf(1, 2, 3)

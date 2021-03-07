@@ -16,6 +16,7 @@ import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
 import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,14 +29,20 @@ class GradeRepository @Inject constructor(
     private val refreshHelper: AutoRefreshHelper,
 ) {
 
+    private val saveFetchResultMutex = Mutex()
+
     private val cacheKey = "grade"
 
     fun getGrades(student: Student, semester: Semester, forceRefresh: Boolean, notify: Boolean = false) = networkBoundResource(
-        shouldFetch = { (details, summaries) -> details.isEmpty() || summaries.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester)) },
+        mutex = saveFetchResultMutex,
+        shouldFetch = { (details, summaries) ->
+            val isShouldBeRefreshed = refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester))
+            details.isEmpty() || summaries.isEmpty() || forceRefresh || isShouldBeRefreshed
+        },
         query = {
-            gradeDb.loadAll(semester.semesterId, semester.studentId).combine(gradeSummaryDb.loadAll(semester.semesterId, semester.studentId)) { details, summaries ->
-                details to summaries
-            }
+            val detailsFlow = gradeDb.loadAll(semester.semesterId, semester.studentId)
+            val summaryFlow = gradeSummaryDb.loadAll(semester.semesterId, semester.studentId)
+            detailsFlow.combine(summaryFlow) { details, summaries -> details to summaries }
         },
         fetch = {
             val (details, summary) = sdk.init(student)
@@ -92,19 +99,27 @@ class GradeRepository @Inject constructor(
     }
 
     fun getUnreadGrades(semester: Semester): Flow<List<Grade>> {
-        return gradeDb.loadAll(semester.semesterId, semester.studentId).map { it.filter { grade -> !grade.isRead } }
+        return gradeDb.loadAll(semester.semesterId, semester.studentId).map {
+            it.filter { grade -> !grade.isRead }
+        }
     }
 
     fun getNotNotifiedGrades(semester: Semester): Flow<List<Grade>> {
-        return gradeDb.loadAll(semester.semesterId, semester.studentId).map { it.filter { grade -> !grade.isNotified } }
+        return gradeDb.loadAll(semester.semesterId, semester.studentId).map {
+            it.filter { grade -> !grade.isNotified }
+        }
     }
 
     fun getNotNotifiedPredictedGrades(semester: Semester): Flow<List<GradeSummary>> {
-        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId).map { it.filter { gradeSummary -> !gradeSummary.isPredictedGradeNotified } }
+        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId).map {
+            it.filter { gradeSummary -> !gradeSummary.isPredictedGradeNotified }
+        }
     }
 
     fun getNotNotifiedFinalGrades(semester: Semester): Flow<List<GradeSummary>> {
-        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId).map { it.filter { gradeSummary -> !gradeSummary.isFinalGradeNotified } }
+        return gradeSummaryDb.loadAll(semester.semesterId, semester.studentId).map {
+            it.filter { gradeSummary -> !gradeSummary.isFinalGradeNotified }
+        }
     }
 
     suspend fun updateGrade(grade: Grade) {

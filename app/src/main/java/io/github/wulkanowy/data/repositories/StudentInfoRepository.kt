@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.mappers.mapToEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
+import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,8 +17,11 @@ class StudentInfoRepository @Inject constructor(
     private val sdk: Sdk
 ) {
 
+    private val saveFetchResultMutex = Mutex()
+
     fun getStudentInfo(student: Student, semester: Semester, forceRefresh: Boolean) =
         networkBoundResource(
+            mutex = saveFetchResultMutex,
             shouldFetch = { it == null || forceRefresh },
             query = { studentInfoDao.loadStudentInfo(student.studentId) },
             fetch = {

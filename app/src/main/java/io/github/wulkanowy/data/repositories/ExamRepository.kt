@@ -12,6 +12,7 @@ import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.startExamsDay
 import io.github.wulkanowy.utils.uniqueSubtract
+import kotlinx.coroutines.sync.Mutex
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,9 +24,12 @@ class ExamRepository @Inject constructor(
     private val refreshHelper: AutoRefreshHelper,
 ) {
 
+    private val saveFetchResultMutex = Mutex()
+
     private val cacheKey = "exam"
 
     fun getExams(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean) = networkBoundResource(
+        mutex = saveFetchResultMutex,
         shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end)) },
         query = { examDb.loadAll(semester.diaryId, semester.studentId, start.startExamsDay, start.endExamsDay) },
         fetch = {

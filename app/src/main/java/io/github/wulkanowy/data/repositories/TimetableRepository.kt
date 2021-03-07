@@ -18,6 +18,7 @@ import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,9 +32,12 @@ class TimetableRepository @Inject constructor(
     private val refreshHelper: AutoRefreshHelper,
 ) {
 
+    private val saveFetchResultMutex = Mutex()
+
     private val cacheKey = "timetable"
 
     fun getTimetable(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean, refreshAdditional: Boolean = false) = networkBoundResource(
+        mutex = saveFetchResultMutex,
         shouldFetch = { (timetable, additional) -> timetable.isEmpty() || (additional.isEmpty() && refreshAdditional) || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end)) },
         query = {
             timetableDb.loadAll(semester.diaryId, semester.studentId, start.monday, end.sunday)

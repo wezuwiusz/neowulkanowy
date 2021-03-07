@@ -17,6 +17,7 @@ import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
+import kotlinx.coroutines.sync.Mutex
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,11 +31,16 @@ class GradeStatisticsRepository @Inject constructor(
     private val refreshHelper: AutoRefreshHelper,
 ) {
 
+    private val partialMutex = Mutex()
+    private val semesterMutex = Mutex()
+    private val pointsMutex = Mutex()
+
     private val partialCacheKey = "grade_stats_partial"
     private val semesterCacheKey = "grade_stats_semester"
     private val pointsCacheKey = "grade_stats_points"
 
     fun getGradesPartialStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
+        mutex = partialMutex,
         shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(partialCacheKey, semester)) },
         query = { gradePartialStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
@@ -71,6 +77,7 @@ class GradeStatisticsRepository @Inject constructor(
     )
 
     fun getGradesSemesterStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
+        mutex = semesterMutex,
         shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(semesterCacheKey, semester)) },
         query = { gradeSemesterStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
@@ -112,6 +119,7 @@ class GradeStatisticsRepository @Inject constructor(
     )
 
     fun getGradesPointsStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
+        mutex = pointsMutex,
         shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(pointsCacheKey, semester)) },
         query = { gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {

@@ -57,7 +57,7 @@ class GradeRepositoryTest {
         coEvery { gradeDb.deleteAll(any()) } just Runs
         coEvery { gradeDb.insertAll(any()) } returns listOf()
 
-        coEvery { gradeSummaryDb.loadAll(1, 1) } returnsMany listOf(flowOf(listOf()), flowOf(listOf()))
+        coEvery { gradeSummaryDb.loadAll(1, 1) } returnsMany listOf(flowOf(listOf()), flowOf(listOf()), flowOf(listOf()))
         coEvery { gradeSummaryDb.deleteAll(any()) } just Runs
         coEvery { gradeSummaryDb.insertAll(any()) } returns listOf()
     }
@@ -76,7 +76,8 @@ class GradeRepositoryTest {
 
         coEvery { gradeDb.loadAll(1, 1) } returnsMany listOf(
             flowOf(listOf()), // empty because it is new user
-            flowOf(remoteList.mapToEntities(semester))
+            flowOf(listOf()), // empty again, after fetch end before save result
+            flowOf(remoteList.mapToEntities(semester)),
         )
 
         // execute
@@ -114,6 +115,7 @@ class GradeRepositoryTest {
         )
         coEvery { gradeDb.loadAll(1, 1) } returnsMany listOf(
             flowOf(localList.mapToEntities(semester)),
+            flowOf(localList.mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.mapToEntities(semester))
         )
 
@@ -155,6 +157,7 @@ class GradeRepositoryTest {
         )
         coEvery { gradeDb.loadAll(1, 1) } returnsMany listOf(
             flowOf(localList.mapToEntities(semester)),
+            flowOf(localList.mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.mapToEntities(semester))
         )
 
@@ -184,6 +187,7 @@ class GradeRepositoryTest {
         )
         coEvery { gradeDb.loadAll(1, 1) } returnsMany listOf(
             flowOf(localList.mapToEntities(semester)),
+            flowOf(localList.mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.mapToEntities(semester))
         )
 
@@ -209,6 +213,7 @@ class GradeRepositoryTest {
 
         coEvery { gradeDb.loadAll(1, 1) } returnsMany listOf(
             flowOf(listOf()),
+            flowOf(listOf()), // after fetch end before save result
             flowOf(remoteList.mapToEntities(semester))
         )
 
