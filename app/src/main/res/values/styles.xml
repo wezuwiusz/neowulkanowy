@@ -13,6 +13,7 @@
         <item name="colorSwipeRefresh">@color/colorSwipeRefresh</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:preferenceStyle">@style/PreferenceThemeOverlay</item>
+        <item name="mdtp_theme_dark">false</item>
     </style>
 
     <style name="WulkanowyTheme.NoActionBar" parent="WulkanowyTheme">
