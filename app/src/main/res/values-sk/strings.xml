@@ -46,6 +46,7 @@
     <string name="login_expired_token">Platnosť tokenu vypršala</string>
     <string name="login_invalid_email">Neplatný e-mail</string>
     <string name="login_invalid_login">Namiesto e-mailu použite priradené prihlasovacie údaje</string>
+    <string name="login_invalid_custom_email">Použite priradené prihlasovacie alebo e-mail v @%1$s</string>
     <string name="login_invalid_symbol">Neplatný symbol</string>
     <string name="login_incorrect_symbol">Žiak nebol nájdený. Skontrolujte správnosť symbolu a vybrané varianty denníka UONET+</string>
     <string name="login_field_required">Toto pole je povinné</string>
@@ -313,6 +314,10 @@
     <string name="lucky_number_empty">Žiadne informácie o šťastnom čísle</string>
     <string name="lucky_number_notify_new_item_title">Šťastné číslo pre dnešok</string>
     <string name="lucky_number_notify_new_item">Dnes je šťastným číslom: %d</string>
+    <string name="lucky_number_history_button">Zobraziť históriu</string>
+    <!--Lucky number history-->
+    <string name="lucky_number_history_title">História šťastných čísel</string>
+    <string name="lucky_number_history_empty">Žiadne informácie o šťastných číslach</string>
     <!--Mobile devices-->
     <string name="mobile_devices_title">Mobilný prístup</string>
     <string name="mobile_devices_no_items">Žiadne zariadenia</string>
@@ -404,6 +409,7 @@
     <!--Account edit-->
     <string name="account_edit_nick_hint">Prezývka</string>
     <string name="account_edit_header">Pridať prezývku</string>
+    <string name="account_edit_avatar_title">Vybrať farbu avataru</string>
     <!--Log viewer-->
     <string name="logviewer_share">Zdieľať protokoly</string>
     <string name="logviewer_refresh">Obnoviť</string>
@@ -438,21 +444,21 @@
     <string name="widget_timetable_theme_dark">Tmavý</string>
     <string name="widget_timetable_theme_system">Motív systému</string>
     <!--Preferences-->
-    <string name="pref_view_header">Vzhľad</string>
+    <string name="pref_view_header">Vzhľad a správanie aplikácií</string>
     <string name="pref_view_list">Predvolené zobrazenie</string>
     <string name="pref_view_grade_average_mode">Výpočet koncoročního priemeru</string>
     <string name="pref_view_grade_average_force_calc">Vynútiť priemerný výpočet podľa aplikácie</string>
-    <string name="pref_view_present">Zobraziť prítomnosť v dochádzke</string>
-    <string name="pref_view_app_theme">Motív aplikácie</string>
+    <string name="pref_view_present">Zobraziť prítomnosť</string>
+    <string name="pref_view_app_theme">Motív</string>
     <string name="pref_view_expand_grade">Rozbaliť známky</string>
-    <string name="pref_view_timetable_show_timers">Označiť aktuálne lekciu v pláne lekcie</string>
-    <string name="pref_view_timetable_show_groups">Zobraziť skupiny vedľa predmetov v pláne lekcie</string>
+    <string name="pref_view_timetable_show_timers">Označiť aktuálne lekciu</string>
+    <string name="pref_view_timetable_show_groups">Zobraziť skupiny vedľa predmetov</string>
     <string name="pref_view_grade_statistics_list">Zobraziť zoznam grafov v známkach triedy</string>
     <string name="pref_view_timetable_show_whole_class">Zobraziť lekcie pre celú triedu</string>
-    <string name="pref_view_subjects_without_grades">Zobraziť predmety bez známok v \"Známky\"</string>
+    <string name="pref_view_subjects_without_grades">Zobraziť predmety bez známok</string>
     <string name="pref_view_grade_color_scheme">Známky farebnú schému</string>
-    <string name="pref_view_grade_sorting_mode">Triedenie predmetov v \"Známky\"</string>
-    <string name="pref_view_app_language">Jazyk aplikácie</string>
+    <string name="pref_view_grade_sorting_mode">Triedenie predmetov</string>
+    <string name="pref_view_app_language">Jazyk</string>
     <string name="pref_notify_header">Upozornenia</string>
     <string name="pref_notify_switch">Zobraziť upozornenia</string>
     <string name="pref_notify_upcoming_lessons_switch">Zobraziť upozornenia o nadchádzajúcej lekciu</string>
@@ -460,6 +466,7 @@
     <string name="pref_notify_fix_sync_issues_message">Vaše zariadenie môže mať problémy so synchronizáciou dát as upozorneniami.\n\nAk ich chcete opraviť, pridajte Wulkanového do funkcie Autostart a vypnite optimalizáciu/úsporu batérie v nastavení systému telefóne.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Prejsť do nastavení</string>
     <string name="pref_notify_debug_switch">Zobraziť upozornenia o ladení</string>
+    <string name="pref_notify_disabled_summary">Synchronizácia je vypnutá</string>
     <string name="pref_services_header">Synchronizácia</string>
     <string name="pref_services_switch">Automatická aktualizácia</string>
     <string name="pref_services_suspended">Pozastavený počas dovolenky</string>
@@ -469,14 +476,27 @@
     <string name="pref_services_message_sync_success">Synchronizovano!</string>
     <string name="pref_services_message_sync_failed">Synchronizácia zlyhala</string>
     <string name="pref_services_sync_in_progress">Prebieha synchronizácia</string>
-    <string name="pref_services_dialog_force_sync_title">Synchronizácia</string>
-    <string name="pref_services_dialog_force_sync_summary">        Ručná synchronizácia neobnoví zobrazenie aplikácie.
-        \nAk chcete zobraziť synchronizované údaje, reštartujte aplikáciu po synchronizácii.
-    </string>
-    <string name="pref_other_header">Iné</string>
     <string name="pref_other_grade_modifier_plus">Hodnota plusu</string>
     <string name="pref_other_grade_modifier_minus">Hodnota mínusu</string>
     <string name="pref_other_fill_message_content">Odpovedať s históriou správ</string>
+    <string name="pref_settings_advanced_title">Pokročilé</string>
+    <string name="pref_settings_appearance_title">Vzhľad a správanie</string>
+    <string name="pref_settings_notifications_title">Upozornenia</string>
+    <string name="pref_settings_sync_title">Synchronizácia</string>
+    <string name="pref_grades_appearance_header">Známky</string>
+    <string name="pref_attendance_appearance_view">Dochádzka</string>
+    <string name="pref_timetable_appearance_view">Plán lekcie</string>
+    <string name="pref_grades_advanced_header">Známky</string>
+    <string name="pref_messages_advanced_header">Správy</string>
+    <string name="pref_appearance_category">Vzhľad a správanie</string>
+    <string name="pref_appearance_category_summary">Jazyky, motívy, triedenie predmetov</string>
+    <string name="pref_notifications_category_summary">Upozornenia aplikácie, oprava problémov</string>
+    <string name="pref_notifications_category">Upozornenia</string>
+    <string name="pref_sync_category">Synchronizácia</string>
+    <string name="pref_sync_category_summary">Automatická aktualizácia, interval aktualizácií</string>
+    <string name="pref_advanced_category_summary">Hodnota plusu a mínusu, výpočet priemeru</string>
+    <string name="pref_advanced_category">Pokročilé</string>
+    <string name="pref_about_category_summary">Verzia aplikácie, prispievatelia, sociálne portály, licencie</string>
     <!--Notification Channels-->
     <string name="channel_new_entries">Nové položky v denníku</string>
     <string name="channel_new_grades">Nové známky</string>

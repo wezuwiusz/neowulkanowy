@@ -46,6 +46,7 @@
     <string name="login_expired_token">Минув термін дії токену</string>
     <string name="login_invalid_email">Недійсна адреса електронної пошти</string>
     <string name="login_invalid_login">Використовуйте призначений логін замість електронної пошти</string>
+    <string name="login_invalid_custom_email">Використовуйте призначений логін або електронну адресу в @% 1 $ s</string>
     <string name="login_invalid_symbol">Неправильний симбвол</string>
     <string name="login_incorrect_symbol">Студента не знайдено Перевірте символ та обраний варіант реєстру UONET+</string>
     <string name="login_field_required">Обов\'язкове поле</string>
@@ -313,6 +314,10 @@
     <string name="lucky_number_empty">Брак інформації о щасливому номері</string>
     <string name="lucky_number_notify_new_item_title">Сьогоднішній щасливий номер</string>
     <string name="lucky_number_notify_new_item">Сьогоднішнім щасливим номером є %d</string>
+    <string name="lucky_number_history_button">Показати історію</string>
+    <!--Lucky number history-->
+    <string name="lucky_number_history_title">Історія щасливих чисел</string>
+    <string name="lucky_number_history_empty">Немає інформації про щасливі номери</string>
     <!--Mobile devices-->
     <string name="mobile_devices_title">Мобільні пристрої</string>
     <string name="mobile_devices_no_items">Брак пристроїв</string>
@@ -404,6 +409,7 @@
     <!--Account edit-->
     <string name="account_edit_nick_hint">Псевдонім</string>
     <string name="account_edit_header">Додати псевдонім</string>
+    <string name="account_edit_avatar_title">Оберіть колір аватара</string>
     <!--Log viewer-->
     <string name="logviewer_share">Поділитися логами</string>
     <string name="logviewer_refresh">Оновити</string>
@@ -438,21 +444,21 @@
     <string name="widget_timetable_theme_dark">Темна</string>
     <string name="widget_timetable_theme_system">Тема системи</string>
     <!--Preferences-->
-    <string name="pref_view_header">Вигляд</string>
+    <string name="pref_view_header">Поява додатка &amp; amp; поведінки</string>
     <string name="pref_view_list">Вікно за замовчуванням</string>
     <string name="pref_view_grade_average_mode">Спосіб облічування оцінки на кінець року</string>
     <string name="pref_view_grade_average_force_calc">Примусово розрахувати середню оцінку через додаток</string>
-    <string name="pref_view_present">Показувати присутність у відвідуваності</string>
-    <string name="pref_view_app_theme">Тема додатку</string>
+    <string name="pref_view_present">Показати присутність</string>
+    <string name="pref_view_app_theme">Тема</string>
     <string name="pref_view_expand_grade">Більше оцінок</string>
-    <string name="pref_view_timetable_show_timers">Позначити поточний урок у розкладі</string>
-    <string name="pref_view_timetable_show_groups">Покажіть групи поруч із предметами в розкладі</string>
+    <string name="pref_view_timetable_show_timers">Позначити поточний урок</string>
+    <string name="pref_view_timetable_show_groups">Показувати групи поруч з темами</string>
     <string name="pref_view_grade_statistics_list">Показувати діаграми в оцінках класу</string>
     <string name="pref_view_timetable_show_whole_class">Показати уроки всього класу</string>
-    <string name="pref_view_subjects_without_grades">Показуйте предмети без оцінок у оцінках</string>
+    <string name="pref_view_subjects_without_grades">Показати предмети без оцінок</string>
     <string name="pref_view_grade_color_scheme">Схема кольорів оцінок</string>
-    <string name="pref_view_grade_sorting_mode">Сортування предметів за \"Оцінками\"</string>
-    <string name="pref_view_app_language">Мова додатку</string>
+    <string name="pref_view_grade_sorting_mode">Сортування предметів</string>
+    <string name="pref_view_app_language">Мова</string>
     <string name="pref_notify_header">Повідомлення</string>
     <string name="pref_notify_switch">Показувати повідомлення</string>
     <string name="pref_notify_upcoming_lessons_switch">Показувати повідомлення о наступних уроках</string>
@@ -460,6 +466,7 @@
     <string name="pref_notify_fix_sync_issues_message">На вашому пристрої можуть бути помилки з синхронізацією і повідомленнями\n\nЩоб виправити іх, вам необхідно додати Wulkanowy в авто-старт и вимкнути оптимізацію/экономію батареї в налаштуваннях пристрою.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Перейти до налаштувань</string>
     <string name="pref_notify_debug_switch">Показувати дебаг-повідомлення</string>
+    <string name="pref_notify_disabled_summary">Синхронізація вимкнена</string>
     <string name="pref_services_header">Синхронізація</string>
     <string name="pref_services_switch">Автоматична синхронізація</string>
     <string name="pref_services_suspended">Призупинено на час канікул</string>
@@ -469,14 +476,27 @@
     <string name="pref_services_message_sync_success">Синхронізовано!</string>
     <string name="pref_services_message_sync_failed">Синхронізація не вдалася</string>
     <string name="pref_services_sync_in_progress">Триває синхронізація</string>
-    <string name="pref_services_dialog_force_sync_title">Синхронізація</string>
-    <string name="pref_services_dialog_force_sync_summary">Ручна синхронізація не оновлює дані в додатку.
-        \nЩоб побачити оновлені дані, перезавантажте додаток.
-    </string>
-    <string name="pref_other_header">Інші</string>
     <string name="pref_other_grade_modifier_plus">Вартість плюсу</string>
     <string name="pref_other_grade_modifier_minus">Вага мінуса</string>
     <string name="pref_other_fill_message_content">Відповісти з історією повідомлень</string>
+    <string name="pref_settings_advanced_title">Додатково</string>
+    <string name="pref_settings_appearance_title">Вигляд &amp; Поведінка</string>
+    <string name="pref_settings_notifications_title">Повідомлення</string>
+    <string name="pref_settings_sync_title">Синхронізація</string>
+    <string name="pref_grades_appearance_header">Оцінки</string>
+    <string name="pref_attendance_appearance_view">Відвідуваність</string>
+    <string name="pref_timetable_appearance_view">Розклад</string>
+    <string name="pref_grades_advanced_header">Класи</string>
+    <string name="pref_messages_advanced_header">Повідомлення</string>
+    <string name="pref_appearance_category">Вигляд &amp; Поведінка</string>
+    <string name="pref_appearance_category_summary">Мови, теми, тема сортування</string>
+    <string name="pref_notifications_category_summary">Сповіщення додатку, виправляти проблеми</string>
+    <string name="pref_notifications_category">Повідомлення</string>
+    <string name="pref_sync_category">Синхронізація</string>
+    <string name="pref_sync_category_summary">Автоматичне оновлення, інтервал синхронізації</string>
+    <string name="pref_advanced_category_summary">Плюс і мінус значення, середні обчислення</string>
+    <string name="pref_advanced_category">Додатково</string>
+    <string name="pref_about_category_summary">Версія програми, учасники, соціальні портали, ліцензії</string>
     <!--Notification Channels-->
     <string name="channel_new_entries">Нові дані в щоденнику</string>
     <string name="channel_new_grades">Нові оцінки</string>

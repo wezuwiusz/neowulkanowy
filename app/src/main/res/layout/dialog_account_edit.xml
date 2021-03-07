@@ -89,7 +89,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/accountEditDetailsSave"
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-            android:layout_width="88dp"
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="8dp"
@@ -98,6 +98,7 @@
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
+            android:minWidth="88dp"
             android:text="@string/all_save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +107,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/accountEditDetailsCancel"
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-            android:layout_width="88dp"
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="8dp"
@@ -115,6 +116,7 @@
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
+            android:minWidth="88dp"
             android:text="@android:string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/accountEditDetailsSave"
