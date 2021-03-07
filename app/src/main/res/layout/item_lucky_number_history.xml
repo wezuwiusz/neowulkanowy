@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="15dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="15dp"
+    android:paddingBottom="8dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/luckyNumberHistoryWeekName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        tools:text="Monday" />
+
+    <TextView
+        android:id="@+id/luckyNumberHistoryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/luckyNumberHistoryWeekName"
+        android:textColor="?android:textColorSecondary"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="16sp"
+        tools:text="05.03" />
+
+    <TextView
+        android:id="@+id/luckyNumberHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/luckyNumberHistoryWeekName"
+        android:padding="4dp"
+        android:gravity="end"
+        android:includeFontPadding="false"
+        android:layout_marginStart="10dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="35sp"
+        tools:text="5" />
+
+</RelativeLayout>

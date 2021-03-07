@@ -9,6 +9,7 @@ import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 import java.time.LocalDate.now
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,6 +33,9 @@ class LuckyNumberRepository @Inject constructor(
             }
         }
     )
+
+    fun getLuckyNumberHistory(student: Student, start: LocalDate, end: LocalDate) =
+        luckyNumberDb.getAll(student.studentId, start, end)
 
     suspend fun getNotNotifiedLuckyNumber(student: Student) = luckyNumberDb.load(student.studentId, now()).map {
         if (it?.isNotified == false) it else null
