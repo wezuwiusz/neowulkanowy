@@ -291,7 +291,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     ): Boolean {
         val fragment =
             supportFragmentManager.fragmentFactory.instantiate(classLoader, pref.fragment)
-        navController.pushFragment(fragment)
+        pushView(fragment)
         return true
     }
 
@@ -305,6 +305,8 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     override fun switchMenuView(position: Int) {
+        if (supportFragmentManager.isStateSaved) return
+
         analytics.popCurrentScreen(navController.currentFrag!!::class.simpleName)
         navController.switchTab(position)
     }
@@ -322,6 +324,8 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     override fun showAccountPicker(studentWithSemesters: List<StudentWithSemesters>) {
+        if (supportFragmentManager.isStateSaved) return
+
         navController.showDialogFragment(AccountQuickDialog.newInstance(studentWithSemesters))
     }
 
@@ -339,15 +343,21 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     fun showDialogFragment(dialog: DialogFragment) {
+        if (supportFragmentManager.isStateSaved) return
+
         navController.showDialogFragment(dialog)
     }
 
     fun pushView(fragment: Fragment) {
+        if (supportFragmentManager.isStateSaved) return
+
         analytics.popCurrentScreen(navController.currentFrag!!::class.simpleName)
         navController.pushFragment(fragment)
     }
 
     override fun popView(depth: Int) {
+        if (supportFragmentManager.isStateSaved) return
+
         analytics.popCurrentScreen(navController.currentFrag!!::class.simpleName)
         navController.safelyPopFragments(depth)
     }
