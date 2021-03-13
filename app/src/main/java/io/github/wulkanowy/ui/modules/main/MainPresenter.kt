@@ -113,7 +113,7 @@ class MainPresenter @Inject constructor(
 
     private fun showCurrentStudentAvatar() {
         val currentStudent =
-            studentsWitSemesters!!.single { it.student.isCurrent }.student
+            studentsWitSemesters?.singleOrNull { it.student.isCurrent }?.student ?: return
 
         view?.showStudentAvatar(currentStudent)
     }
