@@ -1,33 +1,21 @@
-# Optimizations
--optimizationpasses 5
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--dontskipnonpubliclibraryclassmembers
--dontpreverify
+# General
 -dontobfuscate
--allowaccessmodification
--repackageclasses ''
--verbose
 
 
-#Keep all wulkanowy files
+#Config for wulkanowy
 -keep class io.github.wulkanowy.** {*;}
 
 
-#Config for anallitycs
--keepattributes *Annotation*
+#Config for firebase crashlitycs
 -keepattributes SourceFile,LineNumberTable
--keep class com.crashlytics.** {*;}
 -keep public class * extends java.lang.Exception
--dontwarn com.crashlytics.**
 
 
-#Config for OkHttp
+#Config for Okio and OkHttp
+-dontwarn javax.annotation.**
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 -dontwarn org.codehaus.mojo.animal_sniffer.*
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
--dontwarn javax.annotation.**
 
 
 #Config for MPAndroidChart
@@ -36,10 +24,3 @@
 
 #Config for Material Components
 -keep class com.google.android.material.tabs.** { *; }
-
-
-#Config for About Libraries
--keep class .R
--keep class **.R$* {
-    <fields>;
-}
