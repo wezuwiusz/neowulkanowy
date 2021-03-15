@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AlertDialog
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.databinding.FragmentGradeBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
@@ -121,11 +122,9 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
         semesterSwitchMenu?.isVisible = show
     }
 
-    override fun showSemesterDialog(selectedIndex: Int) {
-        val choices = arrayOf(
-            getString(R.string.grade_semester, 1),
-            getString(R.string.grade_semester, 2)
-        )
+    override fun showSemesterDialog(selectedIndex: Int, semesters: List<Semester>) {
+        val choices = semesters.map { getString(R.string.grade_semester, it.semesterName) }
+            .toTypedArray()
 
         AlertDialog.Builder(requireContext())
             .setSingleChoiceItems(choices, selectedIndex) { dialog, which ->
