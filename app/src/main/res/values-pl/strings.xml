@@ -192,7 +192,7 @@
     </plurals>
     <string name="attendance_excuse_dialog_reason">Powód nieobecności (opcjonalny)</string>
     <string name="attendance_excuse_dialog_submit">Wyślij</string>
-    <string name="attendance_excuse_success">Usprawiedliwiono pomyślnie!</string>
+    <string name="attendance_excuse_success">Prośba o usprawiedliwienie została pomyślnie wysłana!</string>
     <string name="attendance_excuse_no_selection">Musisz wybrać co najmniej jedną nieobecność!</string>
     <string name="attendance_excuse_title">Usprawiedliw</string>
     <!--Attendance summary-->
@@ -317,7 +317,7 @@
     <string name="lucky_number_history_button">Pokaż historię</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Historia numerków</string>
-    <string name="lucky_number_history_empty">Brak informacji o szczęśliwych numerach</string>
+    <string name="lucky_number_history_empty">Brak informacji o szczęśliwych numerkach</string>
     <!--Mobile devices-->
     <string name="mobile_devices_title">Dostęp mobilny</string>
     <string name="mobile_devices_no_items">Brak urządzeń</string>

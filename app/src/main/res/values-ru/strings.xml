@@ -192,7 +192,7 @@
     </plurals>
     <string name="attendance_excuse_dialog_reason">Причина отсутствия (необязательно)</string>
     <string name="attendance_excuse_dialog_submit">Послать</string>
-    <string name="attendance_excuse_success">Статус отсутствия изменён</string>
+    <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
     <string name="attendance_excuse_no_selection">Выберите хотя-бы одно отсутствие</string>
     <string name="attendance_excuse_title">Изменить статус</string>
     <!--Attendance summary-->

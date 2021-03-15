@@ -53,13 +53,14 @@ class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_sch
 
     override fun updateData(data: School) {
         with(binding) {
-            schoolName.text = data.name
-            schoolAddress.text = data.address.ifBlank { "-" }
+            val noDataString = getString(R.string.all_no_data)
+            schoolName.text = data.name.ifBlank { noDataString }
+            schoolAddress.text = data.address.ifBlank { noDataString }
             schoolAddressButton.visibility = if (data.address.isNotBlank()) VISIBLE else GONE
-            schoolTelephone.text = data.contact.ifBlank { "-" }
+            schoolTelephone.text = data.contact.ifBlank { noDataString }
             schoolTelephoneButton.visibility = if (data.contact.isNotBlank()) VISIBLE else GONE
-            schoolHeadmaster.text = data.headmaster
-            schoolPedagogue.text = data.pedagogue
+            schoolHeadmaster.text = data.headmaster.ifBlank { noDataString }
+            schoolPedagogue.text = data.pedagogue.ifBlank { noDataString }
         }
     }
 

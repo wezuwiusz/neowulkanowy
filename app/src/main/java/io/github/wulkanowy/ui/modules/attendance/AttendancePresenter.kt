@@ -190,35 +190,48 @@ class AttendancePresenter @Inject constructor(
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            attendanceRepository.getAttendance(student, semester, currentDate, currentDate, forceRefresh)
+            attendanceRepository.getAttendance(
+                student,
+                semester,
+                currentDate,
+                currentDate,
+                forceRefresh
+            )
         }.onEach {
             when (it.status) {
                 Status.LOADING -> {
                     view?.showExcuseButton(false)
                     if (!it.data.isNullOrEmpty()) {
+                        val filteredAttendance = if (prefRepository.isShowPresent) {
+                            it.data
+                        } else {
+                            it.data.filter { item -> !item.presence }
+                        }
+
                         view?.run {
                             enableSwipe(true)
                             showRefresh(true)
                             showProgress(false)
-                            showContent(true)
-                            updateData(it.data.let { items ->
-                                if (prefRepository.isShowPresent) items
-                                else items.filter { item -> !item.presence }
-                            }.sortedBy { item -> item.number })
+                            showEmpty(filteredAttendance.isEmpty())
+                            showContent(filteredAttendance.isNotEmpty())
+                            updateData(filteredAttendance.sortedBy { item -> item.number })
                         }
                     }
                 }
                 Status.SUCCESS -> {
                     Timber.i("Loading attendance result: Success")
+                    val filteredAttendance = if (prefRepository.isShowPresent) {
+                        it.data.orEmpty()
+                    } else {
+                        it.data?.filter { item -> !item.presence }.orEmpty()
+                    }
+
                     view?.apply {
-                        updateData(it.data!!.let { items ->
-                            if (prefRepository.isShowPresent) items
-                            else items.filter { item -> !item.presence }
-                        }.sortedBy { item -> item.number })
-                        showEmpty(it.data.isEmpty())
+                        updateData(filteredAttendance.sortedBy { item -> item.number })
+                        showEmpty(filteredAttendance.isEmpty())
                         showErrorView(false)
-                        showContent(it.data.isNotEmpty())
-                        showExcuseButton(it.data.any { item -> item.excusable })
+                        showContent(filteredAttendance.isNotEmpty())
+                        showExcuseButton(filteredAttendance.any { item -> item.excusable })
                     }
                     analytics.logEvent(
                         "load_data",

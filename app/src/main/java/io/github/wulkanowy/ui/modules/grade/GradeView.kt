@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.grade
 
+import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.ui.base.BaseView
 
 interface GradeView : BaseView {
@@ -18,7 +19,7 @@ interface GradeView : BaseView {
 
     fun showSemesterSwitch(show: Boolean)
 
-    fun showSemesterDialog(selectedIndex: Int)
+    fun showSemesterDialog(selectedIndex: Int, semesters: List<Semester>)
 
     fun setCurrentSemesterName(semester: Int, schoolYear: Int)
 

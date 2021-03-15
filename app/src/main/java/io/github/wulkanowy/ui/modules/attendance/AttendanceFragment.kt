@@ -192,7 +192,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
     }
 
     override fun showContent(show: Boolean) {
-        binding. attendanceRecycler.visibility = if (show) VISIBLE else GONE
+        binding.attendanceRecycler.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showRefresh(show: Boolean) {
