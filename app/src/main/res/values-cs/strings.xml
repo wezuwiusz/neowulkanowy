@@ -192,7 +192,7 @@
     </plurals>
     <string name="attendance_excuse_dialog_reason">Důvod nepřítomnosti (volitelný)</string>
     <string name="attendance_excuse_dialog_submit">Poslat</string>
-    <string name="attendance_excuse_success">Nepřítomnost úspěšně omluvena!</string>
+    <string name="attendance_excuse_success">Žádost o omluvu nepřítomnosti byla úspěšně odeslána!</string>
     <string name="attendance_excuse_no_selection">Musíte vybrat alespoň jednu nepřítomnost!</string>
     <string name="attendance_excuse_title">Ospravedlnit</string>
     <!--Attendance summary-->

@@ -176,7 +176,7 @@
     </plurals>
     <string name="attendance_excuse_dialog_reason">Abwesenheitsgrund (optional)</string>
     <string name="attendance_excuse_dialog_submit">Senden</string>
-    <string name="attendance_excuse_success">Abwesenheit erfolgreich entschuldigt!</string>
+    <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
     <string name="attendance_excuse_no_selection">Sie müssen mindestens eine Abwesenheit auswählen!</string>
     <string name="attendance_excuse_title">Verzeihung</string>
     <!--Attendance summary-->
