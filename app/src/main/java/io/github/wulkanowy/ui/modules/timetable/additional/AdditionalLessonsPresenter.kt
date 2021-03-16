@@ -80,6 +80,10 @@ class AdditionalLessonsPresenter @Inject constructor(
         loadData(currentDate, true)
     }
 
+    fun onDetailsClick() {
+        view?.showErrorDetailsDialog(lastError)
+    }
+
     private fun setBaseDateOnHolidays() {
         flow {
             val student = studentRepository.getCurrentStudent()
