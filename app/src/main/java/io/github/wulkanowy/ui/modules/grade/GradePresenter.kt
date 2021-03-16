@@ -50,7 +50,7 @@ class GradePresenter @Inject constructor(
 
     fun onSemesterSwitch(): Boolean {
         if (semesters.isNotEmpty()) {
-            view?.showSemesterDialog(selectedIndex - 1, semesters.slice(0..1))
+            view?.showSemesterDialog(selectedIndex - 1, semesters.take(2))
         }
         return true
     }
