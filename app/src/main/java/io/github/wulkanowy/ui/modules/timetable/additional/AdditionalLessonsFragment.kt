@@ -57,6 +57,7 @@ class AdditionalLessonsFragment :
             additionalLessonsSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
             additionalLessonsSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
             additionalLessonsErrorRetry.setOnClickListener { presenter.onRetry() }
+            additionalLessonsErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
             additionalLessonsPreviousButton.setOnClickListener { presenter.onPreviousDay() }
             additionalLessonsNavDate.setOnClickListener { presenter.onPickDate() }

@@ -1,6 +1,6 @@
-Wersja 1.1.1
+Wersja 1.1.2
 
-- naprawiliśmy wyświetlanie planu lekcji
+- naprawiliśmy wyświetlanie planu lekcji i lekcji dodatkowych
 - naprawiliśmy kilka rzadkich problemów ze stabilnością
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
