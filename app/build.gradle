@@ -20,8 +20,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 87
-        versionName "1.1.1"
+        versionCode 88
+        versionName "1.1.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -150,7 +150,7 @@ ext {
 }
 
 dependencies {
-    implementation "com.github.wulkanowy:sdk:340cf4ebd3"
+    implementation "io.github.wulkanowy:sdk:1.1.2"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
