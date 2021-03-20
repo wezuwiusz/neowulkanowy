@@ -541,6 +541,12 @@
     <string name="channel_debug">Debug</string>
 
 
+    <!--Drop kitkat alert dialog strings-->
+    <string name="drop_kitkat_title">End of support</string>
+    <string name="drop_kitkat_content">We are ending support for your device. No more new features will appear for it in Wulkanowy. However, we will be releasing critical patches until the end of 2021 so you have time to switch to a newer model</string>
+    <string name="drop_kitkat_again">Don\'t show again</string>
+
+
     <!--Colors-->
     <string name="all_black">Black</string>
     <string name="all_red">Red</string>
@@ -553,6 +559,7 @@
     <!--Others-->
     <string name="all_copied">Copied</string>
     <string name="all_undo">Undo</string>
+
 
     <!--Update helper-->
     <string name="update_download_started">Download of updates has started…</string>
