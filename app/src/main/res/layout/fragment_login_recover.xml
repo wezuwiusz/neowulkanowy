@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/loginFormHeader"
@@ -85,9 +85,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="emailAddress"
+                    android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:imeOptions="actionDone"
                     tools:targetApi="o" />
 
                 <requestFocus />
@@ -156,7 +156,7 @@
         android:orientation="vertical"
         android:visibility="invisible"
         tools:ignore="UseCompoundDrawables"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <ImageView
             android:layout_width="100dp"
@@ -175,12 +175,10 @@
             android:text="@string/error_unknown"
             android:textSize="20sp" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_marginTop="16dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginRecoverErrorDetails"
@@ -189,14 +187,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/all_details" />
+                android:text="@string/all_details"
+                app:layout_constraintEnd_toStartOf="@id/loginRecoverErrorRetry"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginRecoverErrorRetry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/all_retry" />
-        </LinearLayout>
+                android:text="@string/all_retry"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/loginRecoverErrorDetails"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -206,7 +211,7 @@
         android:fillViewport="true"
         android:scrollbars="none"
         android:visibility="invisible"
-        tools:visibility="invisible">
+        tools:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -253,6 +258,5 @@
                 android:layout_marginBottom="30dp"
                 android:text="@android:string/ok" />
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>
