@@ -49,4 +49,12 @@
         <item name="android:navigationBarColor" tools:targetApi="lollipop">?colorSurface</item>
         <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/black</item>
     </style>
+
+    <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.MaterialComponents.Dialog">
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorSecondary">@color/colorPrimaryLight</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
 </resources>

@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.ItemAccountBinding
 import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -16,7 +17,9 @@ import javax.inject.Inject
 class WidgetConfigureAdapter @Inject constructor() :
     RecyclerView.Adapter<WidgetConfigureAdapter.ItemViewHolder>() {
 
-    var items = emptyList<Pair<Student, Boolean>>()
+    var items = emptyList<StudentWithSemesters>()
+
+    var selectedId = -1L
 
     var onClickListener: (Student) -> Unit = {}
 
@@ -28,12 +31,13 @@ class WidgetConfigureAdapter @Inject constructor() :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val (student, isCurrent) = items[position]
+        val (student, semesters) = items[position]
+        val semester = semesters.maxByOrNull { it.semesterId }
         val context = holder.binding.root.context
         val checkBackgroundColor = context.getThemeAttrColor(R.attr.colorSurface)
         val avatar = context.createNameInitialsDrawable(student.nickOrName, student.avatarColor)
         val isDuplicatedStudent = items.filter {
-            val studentToCompare = it.first
+            val studentToCompare = it.student
 
             studentToCompare.studentId == student.studentId
                 && studentToCompare.schoolSymbol == student.schoolSymbol
@@ -41,7 +45,7 @@ class WidgetConfigureAdapter @Inject constructor() :
         }.size > 1
 
         with(holder.binding) {
-            accountItemName.text = "${student.nickOrName} ${student.className}"
+            accountItemName.text = "${student.nickOrName} ${semester?.diaryName.orEmpty()}"
             accountItemSchool.text = student.schoolName
             accountItemImage.setImageDrawable(avatar)
 
@@ -51,7 +55,7 @@ class WidgetConfigureAdapter @Inject constructor() :
             }
 
             with(accountItemCheck) {
-                isVisible = isCurrent
+                isVisible = student.id == selectedId
                 borderColor = checkBackgroundColor
                 circleColor = checkBackgroundColor
             }
