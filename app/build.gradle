@@ -143,7 +143,7 @@ play {
 ext {
     work_manager = "2.5.0"
     work_hilt = "1.0.0-beta01"
-    room = "2.3.0-beta03"
+    room = "2.3.0-rc01"
     chucker = "3.4.0"
     mockk = "1.11.0"
     moshi = "1.11.0"
