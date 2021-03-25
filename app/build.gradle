@@ -213,7 +213,7 @@ dependencies {
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
 
     hmsImplementation 'com.huawei.hms:hianalytics:5.2.0.301'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.5.0.300'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.5.1.200'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
