@@ -19,22 +19,22 @@ class RecipientRepository @Inject constructor(
 ) {
 
     suspend fun refreshRecipients(student: Student, unit: ReportingUnit, role: Int) {
-        val new = sdk.init(student).getRecipients(unit.unitId, role).mapToEntities(unit.senderId)
-        val old = recipientDb.loadAll(unit.senderId, unit.unitId, role)
+        val new = sdk.init(student).getRecipients(unit.unitId, role).mapToEntities(unit.studentId)
+        val old = recipientDb.loadAll(unit.studentId, unit.unitId, role)
 
         recipientDb.deleteAll(old uniqueSubtract new)
         recipientDb.insertAll(new uniqueSubtract old)
     }
 
     suspend fun getRecipients(student: Student, unit: ReportingUnit, role: Int): List<Recipient> {
-        return recipientDb.loadAll(unit.senderId, unit.unitId, role).ifEmpty {
+        return recipientDb.loadAll(unit.studentId, unit.unitId, role).ifEmpty {
             refreshRecipients(student, unit, role)
 
-            recipientDb.loadAll(unit.senderId, unit.unitId, role)
+            recipientDb.loadAll(unit.studentId, unit.unitId, role)
         }
     }
 
     suspend fun getMessageRecipients(student: Student, message: Message): List<Recipient> {
-        return sdk.init(student).getMessageRecipients(message.messageId, message.senderId).mapToEntities(student.userLoginId)
+        return sdk.init(student).getMessageRecipients(message.messageId, message.senderId).mapToEntities(student.studentId)
     }
 }

@@ -54,7 +54,7 @@ class RecipientLocalTest {
         coEvery { recipientDb.deleteAll(any()) } just Runs
 
         // execute
-        val res = runBlocking { recipientRepository.getRecipients(student, ReportingUnit(1, 123, "", 4, "", listOf()), 7) }
+        val res = runBlocking { recipientRepository.getRecipients(student, ReportingUnit(4, 123, "", 4, "", listOf()), 7) }
 
         // verify
         assertEquals(3, res.size)
@@ -73,7 +73,7 @@ class RecipientLocalTest {
         coEvery { recipientDb.deleteAll(any()) } just Runs
 
         // execute
-        val res = runBlocking { recipientRepository.getRecipients(student, ReportingUnit(1, 123, "", 4, "", listOf()), 7) }
+        val res = runBlocking { recipientRepository.getRecipients(student, ReportingUnit(4, 123, "", 4, "", listOf()), 7) }
 
         // verify
         assertEquals(3, res.size)

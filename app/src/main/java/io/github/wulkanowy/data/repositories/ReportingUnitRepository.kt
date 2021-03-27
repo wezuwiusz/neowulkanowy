@@ -18,25 +18,25 @@ class ReportingUnitRepository @Inject constructor(
 
     suspend fun refreshReportingUnits(student: Student) {
         val new = sdk.init(student).getReportingUnits().mapToEntities(student)
-        val old = reportingUnitDb.load(student.studentId)
+        val old = reportingUnitDb.load(student.id.toInt())
 
         reportingUnitDb.deleteAll(old.uniqueSubtract(new))
         reportingUnitDb.insertAll(new.uniqueSubtract(old))
     }
 
     suspend fun getReportingUnits(student: Student): List<ReportingUnit> {
-        return reportingUnitDb.load(student.studentId).ifEmpty {
+        return reportingUnitDb.load(student.id.toInt()).ifEmpty {
             refreshReportingUnits(student)
 
-            reportingUnitDb.load(student.studentId)
+            reportingUnitDb.load(student.id.toInt())
         }
     }
 
     suspend fun getReportingUnit(student: Student, unitId: Int): ReportingUnit? {
-        return reportingUnitDb.loadOne(student.studentId, unitId) ?: run {
+        return reportingUnitDb.loadOne(student.id.toInt(), unitId) ?: run {
             refreshReportingUnits(student)
 
-            return reportingUnitDb.loadOne(student.studentId, unitId)
+            return reportingUnitDb.loadOne(student.id.toInt(), unitId)
         }
     }
 }

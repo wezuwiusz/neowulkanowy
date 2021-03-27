@@ -5,7 +5,7 @@ import io.github.wulkanowy.sdk.pojo.Recipient as SdkRecipient
 
 fun List<SdkRecipient>.mapToEntities(userLoginId: Int) = map {
     Recipient(
-        userLoginId = userLoginId,
+        studentId = userLoginId,
         realId = it.id,
         realName = it.name,
         name = it.shortName,
