@@ -176,7 +176,7 @@
     </plurals>
     <string name="attendance_excuse_dialog_reason">Abwesenheitsgrund (optional)</string>
     <string name="attendance_excuse_dialog_submit">Senden</string>
-    <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
+    <string name="attendance_excuse_success">Abwesenheitsentschuldigungsanfrage erfolgreich gesendet!</string>
     <string name="attendance_excuse_no_selection">Sie müssen mindestens eine Abwesenheit auswählen!</string>
     <string name="attendance_excuse_title">Verzeihung</string>
     <!--Attendance summary-->
@@ -466,6 +466,10 @@
     <string name="channel_push">Push-Benachrichtigungen</string>
     <string name="channel_upcoming_lessons">Bevorstehende Lektionen</string>
     <string name="channel_debug">Debuggen</string>
+    <!--Drop kitkat alert dialog strings-->
+    <string name="drop_kitkat_title">Ende der Unterstützung</string>
+    <string name="drop_kitkat_content">Wir beenden die Unterstützung für dein Gerät. Es werden keine neuen Funktionen mehr in Wulkanowy erscheinen. Allerdings werden wir bis Ende 2021 kritische Patches veröffentlichen, so dass du Zeit hast, zu einem neueren Modell zu wechseln</string>
+    <string name="drop_kitkat_again">Nicht mehr fragen</string>
     <!--Colors-->
     <string name="all_black">Schwarz</string>
     <string name="all_red">Rot</string>

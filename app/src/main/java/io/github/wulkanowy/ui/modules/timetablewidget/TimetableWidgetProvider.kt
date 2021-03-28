@@ -13,6 +13,8 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.widget.RemoteViews
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -25,6 +27,8 @@ import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.createNameInitialsDrawable
+import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.nickOrName
@@ -72,7 +76,8 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
 
         fun getThemeWidgetKey(appWidgetId: Int) = "timetable_widget_theme_$appWidgetId"
 
-        fun getCurrentThemeWidgetKey(appWidgetId: Int) = "timetable_widget_current_theme_$appWidgetId"
+        fun getCurrentThemeWidgetKey(appWidgetId: Int) =
+            "timetable_widget_current_theme_$appWidgetId"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -88,21 +93,29 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
     private suspend fun onUpdate(context: Context, intent: Intent) {
         if (intent.getStringExtra(EXTRA_BUTTON_TYPE) === null) {
             intent.getIntArrayExtra(EXTRA_APPWIDGET_IDS)?.forEach { appWidgetId ->
-                val student = getStudent(sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0), appWidgetId)
+                val student =
+                    getStudent(sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0), appWidgetId)
                 updateWidget(context, appWidgetId, now().nextOrSameSchoolDay, student)
             }
         } else {
             val buttonType = intent.getStringExtra(EXTRA_BUTTON_TYPE)
             val toggledWidgetId = intent.getIntExtra(EXTRA_TOGGLED_WIDGET_ID, 0)
-            val student = getStudent(sharedPref.getLong(getStudentWidgetKey(toggledWidgetId), 0), toggledWidgetId)
-            val savedDate = LocalDate.ofEpochDay(sharedPref.getLong(getDateWidgetKey(toggledWidgetId), 0))
+            val student = getStudent(
+                sharedPref.getLong(getStudentWidgetKey(toggledWidgetId), 0),
+                toggledWidgetId
+            )
+            val savedDate =
+                LocalDate.ofEpochDay(sharedPref.getLong(getDateWidgetKey(toggledWidgetId), 0))
             val date = when (buttonType) {
                 BUTTON_RESET -> now().nextOrSameSchoolDay
                 BUTTON_NEXT -> savedDate.nextSchoolDay
                 BUTTON_PREV -> savedDate.previousSchoolDay
                 else -> now().nextOrSameSchoolDay
             }
-            if (!buttonType.isNullOrBlank()) analytics.logEvent("changed_timetable_widget_day", "button" to buttonType)
+            if (!buttonType.isNullOrBlank()) analytics.logEvent(
+                "changed_timetable_widget_day",
+                "button" to buttonType
+            )
             updateWidget(context, toggledWidgetId, date, student)
         }
     }
@@ -121,9 +134,15 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
     }
 
     @SuppressLint("DefaultLocale")
-    private fun updateWidget(context: Context, appWidgetId: Int, date: LocalDate, student: Student?) {
+    private fun updateWidget(
+        context: Context,
+        appWidgetId: Int,
+        date: LocalDate,
+        student: Student?
+    ) {
         val savedConfigureTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
-        val isSystemDarkMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        val isSystemDarkMode =
+            context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
         var currentTheme = 0L
         var layoutId = R.layout.widget_timetable
 
@@ -134,21 +153,28 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
 
         val nextNavIntent = createNavIntent(context, appWidgetId, appWidgetId, BUTTON_NEXT)
         val prevNavIntent = createNavIntent(context, -appWidgetId, appWidgetId, BUTTON_PREV)
-        val resetNavIntent = createNavIntent(context, Int.MAX_VALUE - appWidgetId, appWidgetId, BUTTON_RESET)
+        val resetNavIntent =
+            createNavIntent(context, Int.MAX_VALUE - appWidgetId, appWidgetId, BUTTON_RESET)
         val adapterIntent = Intent(context, TimetableWidgetService::class.java)
             .apply {
                 putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
                 //make Intent unique
                 action = appWidgetId.toString()
             }
-        val accountIntent = PendingIntent.getActivity(context, -Int.MAX_VALUE + appWidgetId,
+        val accountIntent = PendingIntent.getActivity(
+            context, -Int.MAX_VALUE + appWidgetId,
             Intent(context, TimetableWidgetConfigureActivity::class.java).apply {
                 addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
                 putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
                 putExtra(EXTRA_FROM_PROVIDER, true)
-            }, FLAG_UPDATE_CURRENT)
-        val appIntent = PendingIntent.getActivity(context, MainView.Section.TIMETABLE.id,
-            MainActivity.getStartIntent(context, MainView.Section.TIMETABLE, true), FLAG_UPDATE_CURRENT)
+            }, FLAG_UPDATE_CURRENT
+        )
+        val appIntent = PendingIntent.getActivity(
+            context,
+            MainView.Section.TIMETABLE.id,
+            MainActivity.getStartIntent(context, MainView.Section.TIMETABLE, true),
+            FLAG_UPDATE_CURRENT
+        )
 
         val remoteView = RemoteViews(context.packageName, layoutId).apply {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
@@ -160,6 +186,11 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
                 R.id.timetableWidgetName,
                 student?.nickOrName ?: context.getString(R.string.all_no_data)
             )
+
+            student?.let {
+                setImageViewBitmap(R.id.timetableWidgetAccount, context.createAvatarBitmap(it))
+            }
+
             setRemoteAdapter(R.id.timetableWidgetList, adapterIntent)
             setOnClickPendingIntent(R.id.timetableWidgetNext, nextNavIntent)
             setOnClickPendingIntent(R.id.timetableWidgetPrev, prevNavIntent)
@@ -181,13 +212,20 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
         }
     }
 
-    private fun createNavIntent(context: Context, code: Int, appWidgetId: Int, buttonType: String): PendingIntent {
-        return PendingIntent.getBroadcast(context, code,
+    private fun createNavIntent(
+        context: Context,
+        code: Int,
+        appWidgetId: Int,
+        buttonType: String
+    ): PendingIntent {
+        return PendingIntent.getBroadcast(
+            context, code,
             Intent(context, TimetableWidgetProvider::class.java).apply {
                 action = ACTION_APPWIDGET_UPDATE
                 putExtra(EXTRA_BUTTON_TYPE, buttonType)
                 putExtra(EXTRA_TOGGLED_WIDGET_ID, appWidgetId)
-            }, FLAG_UPDATE_CURRENT)
+            }, FLAG_UPDATE_CURRENT
+        )
     }
 
     private suspend fun getStudent(studentId: Long, appWidgetId: Int) = try {
@@ -207,5 +245,30 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
             Timber.e(e, "An error has occurred in timetable widget provider")
         }
         null
+    }
+
+    private fun Context.createAvatarBitmap(student: Student): Bitmap {
+        val avatarColor = if (student.avatarColor == -2937041L) {
+            getCompatColor(R.color.colorPrimaryLight).toLong()
+        } else {
+            student.avatarColor
+        }
+        val avatarDrawable = createNameInitialsDrawable(student.nickOrName, avatarColor, 0.5f)
+
+        val avatarBitmap =
+            if (avatarDrawable.intrinsicWidth <= 0 || avatarDrawable.intrinsicHeight <= 0) {
+                Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+            } else {
+                Bitmap.createBitmap(
+                    avatarDrawable.intrinsicWidth,
+                    avatarDrawable.intrinsicHeight,
+                    Bitmap.Config.ARGB_8888
+                )
+            }
+
+        val canvas = Canvas(avatarBitmap)
+        avatarDrawable.setBounds(0, 0, canvas.width, canvas.height)
+        avatarDrawable.draw(canvas)
+        return avatarBitmap
     }
 }

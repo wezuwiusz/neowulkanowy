@@ -9,4 +9,6 @@ interface SplashView : BaseView {
     fun openMainView()
 
     fun openExternalUrlAndFinish(url: String)
+
+    fun showKitkatView()
 }

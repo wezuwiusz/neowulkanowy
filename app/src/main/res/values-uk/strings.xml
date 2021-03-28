@@ -46,7 +46,7 @@
     <string name="login_expired_token">Минув термін дії токену</string>
     <string name="login_invalid_email">Недійсна адреса електронної пошти</string>
     <string name="login_invalid_login">Використовуйте призначений логін замість електронної пошти</string>
-    <string name="login_invalid_custom_email">Використовуйте призначений логін або електронну адресу в @% 1 $ s</string>
+    <string name="login_invalid_custom_email">Використовуйте призначений логін або електронну адресу в @%1$s</string>
     <string name="login_invalid_symbol">Неправильний симбвол</string>
     <string name="login_incorrect_symbol">Студента не знайдено Перевірте символ та обраний варіант реєстру UONET+</string>
     <string name="login_field_required">Обов\'язкове поле</string>
@@ -192,7 +192,7 @@
     </plurals>
     <string name="attendance_excuse_dialog_reason">Причина відсутності (необов’язково)</string>
     <string name="attendance_excuse_dialog_submit">Надіслати</string>
-    <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
+    <string name="attendance_excuse_success">Запит на виправдання відсутності успішно надіслано!</string>
     <string name="attendance_excuse_no_selection">Оберіть хоча б одну відсутність</string>
     <string name="attendance_excuse_title">Змінити статус</string>
     <!--Attendance summary-->
@@ -506,6 +506,10 @@
     <string name="channel_push">Показувати push-повідомлення</string>
     <string name="channel_upcoming_lessons">Наступні уроки</string>
     <string name="channel_debug">Дебаг</string>
+    <!--Drop kitkat alert dialog strings-->
+    <string name="drop_kitkat_title">Кінець підтримки</string>
+    <string name="drop_kitkat_content">Ми завершуємо підтримку вашого пристрою. Більше нових функцій не з\'явиться у Wulkanowy. Однак ми виробляємо критичні патчі до кінця 2021, тому у вас буде час перейти на новішу модель</string>
+    <string name="drop_kitkat_again">Не показувати знову</string>
     <!--Colors-->
     <string name="all_black">Чорний</string>
     <string name="all_red">Червоний</string>

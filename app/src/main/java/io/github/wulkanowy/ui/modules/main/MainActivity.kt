@@ -324,9 +324,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     override fun showAccountPicker(studentWithSemesters: List<StudentWithSemesters>) {
-        if (supportFragmentManager.isStateSaved) return
-
-        navController.showDialogFragment(AccountQuickDialog.newInstance(studentWithSemesters))
+        showDialogFragment(AccountQuickDialog.newInstance(studentWithSemesters))
     }
 
     override fun showActionBarElevation(show: Boolean) {
@@ -342,8 +340,17 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         (navController.currentStack?.getOrNull(0) as? MainView.MainChildView)?.onFragmentChanged()
     }
 
+    @Suppress("DEPRECATION")
     fun showDialogFragment(dialog: DialogFragment) {
         if (supportFragmentManager.isStateSaved) return
+
+        //Deprecated method is used here to avoid fragnav bug
+        if (navController.currentDialogFrag?.fragmentManager == null) {
+            FragNavController::class.java.getDeclaredField("mCurrentDialogFrag").apply {
+                isAccessible = true
+                set(navController, null)
+            }
+        }
 
         navController.showDialogFragment(dialog)
     }

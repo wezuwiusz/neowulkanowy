@@ -1,13 +1,13 @@
 package io.github.wulkanowy.ui.modules.timetablewidget
 
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.ui.base.BaseView
 
 interface TimetableWidgetConfigureView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<Pair<Student, Boolean>>)
+    fun updateData(data: List<StudentWithSemesters>, selectedStudentId: Long)
 
     fun updateTimetableWidget(widgetId: Int)
 

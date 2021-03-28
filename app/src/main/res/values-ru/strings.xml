@@ -192,7 +192,7 @@
     </plurals>
     <string name="attendance_excuse_dialog_reason">Причина отсутствия (необязательно)</string>
     <string name="attendance_excuse_dialog_submit">Послать</string>
-    <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
+    <string name="attendance_excuse_success">Запрос на освобождение оправдания успешно отправлен!</string>
     <string name="attendance_excuse_no_selection">Выберите хотя-бы одно отсутствие</string>
     <string name="attendance_excuse_title">Изменить статус</string>
     <!--Attendance summary-->
@@ -506,6 +506,10 @@
     <string name="channel_push">Показывать push-уведомления</string>
     <string name="channel_upcoming_lessons">Будущие уроки</string>
     <string name="channel_debug">Дебаг</string>
+    <!--Drop kitkat alert dialog strings-->
+    <string name="drop_kitkat_title">Конец поддержки</string>
+    <string name="drop_kitkat_content">Поддержка заканчивается на вашем устройстве. В Wulkanowy больше не появятся новые возможности. Однако до конца 2021 года мы выпустим критические патчи, чтобы у вас было время перейти на новую модель</string>
+    <string name="drop_kitkat_again">Не показывать снова</string>
     <!--Colors-->
     <string name="all_black">Чёрный</string>
     <string name="all_red">Красный</string>

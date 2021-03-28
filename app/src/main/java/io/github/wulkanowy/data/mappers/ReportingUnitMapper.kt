@@ -6,7 +6,7 @@ import io.github.wulkanowy.sdk.pojo.ReportingUnit as SdkReportingUnit
 
 fun List<SdkReportingUnit>.mapToEntities(student: Student) = map {
     ReportingUnit(
-        studentId = student.studentId,
+        studentId = student.id.toInt(),
         unitId = it.id,
         roles = it.roles,
         senderId = it.senderId,

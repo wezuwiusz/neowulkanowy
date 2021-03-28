@@ -1,6 +1,11 @@
-Wersja 1.1.2
+Wersja 1.1.3
 
-- naprawiliśmy wyświetlanie planu lekcji i lekcji dodatkowych
-- naprawiliśmy kilka rzadkich problemów ze stabilnością
+Oprócz tego naprawiliśmy:
+- rzadkie problemy ze stabilnością przy logowaniu i w innych miejscach
+- brakujące awatary przy zmianie konta z poziomu widżetu
+- wysyłanie wiadomości gdy w aplikacji jest zalogowany jednocześnie uczeń i rodzic
+
+Ta wersja jest ostatnią, która będzie działać na starszych urządzeniach z Androidem 4.
+Od tej pory do końca roku bedziemy dla nich udostępniać wyłącznie krytyczne poprawki błędów
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.ActivityWidgetConfigureBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.WidgetConfigureAdapter
@@ -37,13 +37,19 @@ class TimetableWidgetConfigureActivity :
 
     private var dialog: AlertDialog? = null
 
-    override public fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setResult(RESULT_CANCELED)
-        setContentView(ActivityWidgetConfigureBinding.inflate(layoutInflater).apply { binding = this }.root)
+        setContentView(
+            ActivityWidgetConfigureBinding.inflate(layoutInflater).apply { binding = this }.root
+        )
 
         intent.extras.let {
-            presenter.onAttachView(this, it?.getInt(EXTRA_APPWIDGET_ID), it?.getBoolean(EXTRA_FROM_PROVIDER))
+            presenter.onAttachView(
+                this,
+                it?.getInt(EXTRA_APPWIDGET_ID),
+                it?.getBoolean(EXTRA_FROM_PROVIDER)
+            )
         }
     }
 
@@ -61,6 +67,7 @@ class TimetableWidgetConfigureActivity :
             getString(R.string.widget_timetable_theme_light),
             getString(R.string.widget_timetable_theme_dark)
         )
+
         if (appInfo.systemVersion >= Build.VERSION_CODES.Q) items += getString(R.string.widget_timetable_theme_system)
 
         dialog = AlertDialog.Builder(this, R.style.WulkanowyTheme_WidgetAccountSwitcher)
@@ -72,8 +79,9 @@ class TimetableWidgetConfigureActivity :
             .show()
     }
 
-    override fun updateData(data: List<Pair<Student, Boolean>>) {
+    override fun updateData(data: List<StudentWithSemesters>, selectedStudentId: Long) {
         with(configureAdapter) {
+            selectedId = selectedStudentId
             items = data
             notifyDataSetChanged()
         }

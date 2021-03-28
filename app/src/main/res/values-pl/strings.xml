@@ -506,6 +506,10 @@
     <string name="channel_push">Powiadomienia push</string>
     <string name="channel_upcoming_lessons">Nadchodzące lekcje</string>
     <string name="channel_debug">Debugowanie</string>
+    <!--Drop kitkat alert dialog strings-->
+    <string name="drop_kitkat_title">Koniec wsparcia</string>
+    <string name="drop_kitkat_content">Kończymy wsparcie dla Twojego urządzenia. Nie pojawią się już dla niego żadne nowe funkcje w Wulkanowym. Będziemy jednak wypuszczać krytyczne poprawki do końca 2021 roku, abyś miał czas na przeniesienie się na nowszy model</string>
+    <string name="drop_kitkat_again">Nie pokazuj ponownie</string>
     <!--Colors-->
     <string name="all_black">Czarny</string>
     <string name="all_red">Czerwony</string>

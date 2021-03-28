@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Activity/Fragment title-->
-    <string name="login_title">Login</string>
+    <string name="login_title">Prisijungti</string>
     <string name="main_title">Wulkanowy</string>
     <string name="grade_title">Laipsnis</string>
     <string name="attendance_title">Attendance</string>
@@ -506,6 +506,10 @@
     <string name="channel_push">Push notifications</string>
     <string name="channel_upcoming_lessons">Upcoming lessons</string>
     <string name="channel_debug">Debug</string>
+    <!--Drop kitkat alert dialog strings-->
+    <string name="drop_kitkat_title">End of support</string>
+    <string name="drop_kitkat_content">We are ending support for your device. No more new features will appear for it in Wulkanowy. However, we will be releasing critical patches until the end of 2021 so you have time to switch to a newer model</string>
+    <string name="drop_kitkat_again">Don\'t show again</string>
     <!--Colors-->
     <string name="all_black">Black</string>
     <string name="all_red">Red</string>
