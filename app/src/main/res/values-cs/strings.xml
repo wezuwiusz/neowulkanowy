@@ -506,6 +506,10 @@
     <string name="channel_push">Push upozornění</string>
     <string name="channel_upcoming_lessons">Nadcházející lekce</string>
     <string name="channel_debug">Ladění</string>
+    <!--Drop kitkat alert dialog strings-->
+    <string name="drop_kitkat_title">Konec podpory</string>
+    <string name="drop_kitkat_content">Ukončujeme podporu pro vaše zařízení. V Wulkanovým už pro něj nebudou žádné nové funkce. Kritické opravy však budeme vydávat až do konce roku 2021, abyste měli čas přejít na novější model</string>
+    <string name="drop_kitkat_again">Nezobrazovat znovu</string>
     <!--Colors-->
     <string name="all_black">Černý</string>
     <string name="all_red">Červený</string>
