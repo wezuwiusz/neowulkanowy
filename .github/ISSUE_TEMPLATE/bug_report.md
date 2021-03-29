@@ -1,3 +1,12 @@
+---
+name: Bug report
+about: Utwórz raport błędu, aby pomóc nam ulepszyć Wulkanowego
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ## Co powinno się dziać
 
 
