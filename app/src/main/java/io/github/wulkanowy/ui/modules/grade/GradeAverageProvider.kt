@@ -34,6 +34,8 @@ class GradeAverageProvider @Inject constructor(
 
     private val minusModifier get() = preferencesRepository.gradeMinusModifier
 
+    private val isOptionalArithmeticAverage get() = preferencesRepository.isOptionalArithmeticAverage
+
     fun getGradesDetailsWithAverage(student: Student, semesterId: Int, forceRefresh: Boolean) =
         flowWithResourceIn {
             val semesters = semesterRepository.getSemesters(student)
@@ -130,7 +132,7 @@ class GradeAverageProvider @Inject constructor(
         val updatedFirstSemesterGrades =
             firstSemesterSubject?.grades?.updateModifiers(student).orEmpty()
 
-        (updatedSecondSemesterGrades + updatedFirstSemesterGrades).calcAverage()
+        (updatedSecondSemesterGrades + updatedFirstSemesterGrades).calcAverage(isOptionalArithmeticAverage)
     } else {
         secondSemesterSubject.average
     }
@@ -146,9 +148,9 @@ class GradeAverageProvider @Inject constructor(
 
         return if (!isAnyVulcanAverage || gradeAverageForceCalc) {
             val secondSemesterAverage =
-                secondSemesterSubject.grades.updateModifiers(student).calcAverage()
+                secondSemesterSubject.grades.updateModifiers(student).calcAverage(isOptionalArithmeticAverage)
             val firstSemesterAverage = firstSemesterSubject?.grades?.updateModifiers(student)
-                ?.calcAverage() ?: secondSemesterAverage
+                ?.calcAverage(isOptionalArithmeticAverage) ?: secondSemesterAverage
 
             (secondSemesterAverage + firstSemesterAverage) / divider
         } else {
@@ -179,7 +181,7 @@ class GradeAverageProvider @Inject constructor(
                     GradeSubject(
                         subject = summary.subject,
                         average = if (!isAnyAverage || gradeAverageForceCalc) {
-                            grades.updateModifiers(student).calcAverage()
+                            grades.updateModifiers(student).calcAverage(isOptionalArithmeticAverage)
                         } else summary.average,
                         points = summary.pointsSum,
                         summary = summary,
@@ -211,7 +213,7 @@ class GradeAverageProvider @Inject constructor(
                 proposedPoints = "",
                 finalPoints = "",
                 pointsSum = "",
-                average = if (calcAverage) details.updateModifiers(student).calcAverage() else .0
+                average = if (calcAverage) details.updateModifiers(student).calcAverage(isOptionalArithmeticAverage) else .0
             )
         }
     }

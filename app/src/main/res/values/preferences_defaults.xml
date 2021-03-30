@@ -24,4 +24,5 @@
     <bool name="pref_default_timetable_show_timers">false</bool>
     <bool name="pref_default_homework_fullscreen">false</bool>
     <bool name="pref_default_subjects_without_grades">false</bool>
+    <bool name="pref_default_optional_arithmetic_average">false</bool>
 </resources>

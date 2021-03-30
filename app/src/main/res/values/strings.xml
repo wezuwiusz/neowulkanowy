@@ -507,6 +507,7 @@
     <string name="pref_other_grade_modifier_plus">Value of the plus</string>
     <string name="pref_other_grade_modifier_minus">Value of the minus</string>
     <string name="pref_other_fill_message_content">Reply with message history</string>
+    <string name="pref_other_optional_arithmetic_average">Show arithmetic average when no weights provided</string>
 
     <string name="pref_settings_advanced_title">Advanced</string>
     <string name="pref_settings_appearance_title">Appearance &amp; Behavior</string>

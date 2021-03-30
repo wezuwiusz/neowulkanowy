@@ -25,6 +25,12 @@
             app:key="@string/pref_key_grade_average_force_calc"
             app:singleLineTitle="false"
             app:title="@string/pref_view_grade_average_force_calc" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_optional_arithmetic_average"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_optional_arithmetic_average"
+            app:singleLineTitle="false"
+            app:title="@string/pref_other_optional_arithmetic_average" />
         <ListPreference
             app:defaultValue="@string/pref_default_grade_average_mode"
             app:entries="@array/grade_average_mode_entries"
