@@ -1,4 +1,4 @@
-Wersja 1.1.3
+Wersja 1.1.4
 
 Oprócz tego naprawiliśmy:
 - rzadkie problemy ze stabilnością przy logowaniu i w innych miejscach
