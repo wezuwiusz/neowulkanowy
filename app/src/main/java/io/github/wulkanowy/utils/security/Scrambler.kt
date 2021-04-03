@@ -58,10 +58,6 @@ private val cipher: Cipher
 fun encrypt(plainText: String, context: Context): String {
     if (plainText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
-    if (SDK_INT < JELLY_BEAN_MR2) {
-        return String(encode(plainText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
-    }
-
     return try {
         if (!isKeyPairExists) generateKeyPair(context)
 
@@ -90,10 +86,6 @@ fun decrypt(cipherText: String): String {
     if (cipherText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
     return try {
-        if (SDK_INT < JELLY_BEAN_MR2 || cipherText.length < 250) {
-            return String(decode(cipherText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
-        }
-
         if (!isKeyPairExists) throw ScramblerException("KeyPair doesn't exist")
 
         cipher.let {

@@ -4,9 +4,6 @@ import android.content.Intent
 import android.content.Intent.EXTRA_EMAIL
 import android.content.Intent.EXTRA_STREAM
 import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
-import android.net.Uri
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -81,8 +78,7 @@ class LogViewerFragment : BaseFragment<FragmentLogviewerBinding>(R.layout.fragme
             putExtra(EXTRA_EMAIL, arrayOf("wulkanowyinc@gmail.com"))
             addFlags(FLAG_GRANT_READ_URI_PERMISSION)
             putParcelableArrayListExtra(EXTRA_STREAM, ArrayList(files.map {
-                if (SDK_INT < LOLLIPOP) Uri.fromFile(it)
-                else FileProvider.getUriForFile(requireContext(), "$APPLICATION_ID.fileprovider", it)
+                FileProvider.getUriForFile(requireContext(), "$APPLICATION_ID.fileprovider", it)
             }))
         }
 

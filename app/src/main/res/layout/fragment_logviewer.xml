@@ -29,6 +29,6 @@
         android:focusable="true"
         android:text="@string/logviewer_refresh"
         android:tint="?colorOnSecondary"
-        app:srcCompat="@drawable/ic_refresh" />
-
+        app:srcCompat="@drawable/ic_refresh"
+        tools:ignore="ContentDescription" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -2,14 +2,12 @@ package io.github.wulkanowy
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
 import android.util.Log.DEBUG
 import android.util.Log.INFO
 import android.util.Log.VERBOSE
 import android.webkit.WebView
 import androidx.fragment.app.FragmentManager
 import androidx.hilt.work.HiltWorkerFactory
-import androidx.multidex.MultiDex
 import androidx.work.Configuration
 import com.yariksoffice.lingver.Lingver
 import dagger.hilt.android.HiltAndroidApp
@@ -42,11 +40,6 @@ class WulkanowyApp : Application(), Configuration.Provider {
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        MultiDex.install(this)
-    }
 
     @SuppressLint("UnsafeOptInUsageWarning")
     override fun onCreate() {

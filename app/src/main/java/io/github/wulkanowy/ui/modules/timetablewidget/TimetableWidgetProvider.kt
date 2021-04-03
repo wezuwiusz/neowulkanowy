@@ -230,7 +230,7 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
 
     private suspend fun getStudent(studentId: Long, appWidgetId: Int) = try {
         val students = studentRepository.getSavedStudents(false)
-        val student = students.singleOrNull { it -> it.student.id == studentId }?.student
+        val student = students.singleOrNull { it.student.id == studentId }?.student
         when {
             student != null -> student
             studentId != 0L && studentRepository.isCurrentStudentSet() -> {

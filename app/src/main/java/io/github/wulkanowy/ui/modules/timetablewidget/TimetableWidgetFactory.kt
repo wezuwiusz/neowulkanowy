@@ -113,7 +113,7 @@ class TimetableWidgetFactory(
         }
     } catch (e: Exception) {
         Timber.e(e, "An error has occurred in timetable widget factory")
-        emptyList<Timetable>()
+        emptyList()
     }
 
     @SuppressLint("DefaultLocale")

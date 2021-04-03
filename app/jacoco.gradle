@@ -1,8 +1,8 @@
 apply plugin: "jacoco"
 
 jacoco {
-    toolVersion "0.8.5"
-    reportsDir = file("$buildDir/reports")
+    toolVersion "0.8.6"
+    reportsDirectory = file("$buildDir/reports")
 }
 
 tasks.withType(Test) {

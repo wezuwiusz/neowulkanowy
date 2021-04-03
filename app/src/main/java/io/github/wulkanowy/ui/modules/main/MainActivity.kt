@@ -9,8 +9,6 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Build
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.view.Menu
@@ -211,7 +209,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     @SuppressLint("NewApi")
     override fun initView() {
         with(binding.mainToolbar) {
-            if (SDK_INT >= LOLLIPOP) stateListAnimator = null
+            stateListAnimator = null
             setBackgroundColor(
                 overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(4f))
             )

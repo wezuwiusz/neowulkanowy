@@ -109,15 +109,4 @@
         <item>both_semesters</item>
         <item>all_year</item>
     </string-array>
-
-    <string-array name="timetable_show_whole_class_entries">
-        <item>Don\'t show</item>
-        <item>Show all</item>
-        <item>Show smaller</item>
-    </string-array>
-    <string-array name="timetable_show_whole_class_values" translatable="false">
-        <item>no</item>
-        <item>yes</item>
-        <item>small</item>
-    </string-array>
 </resources>

@@ -15,6 +15,7 @@ class AppCreatorRepository @Inject constructor(
     private val dispatchers: DispatchersProvider
 ) {
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     suspend fun getAppCreators() = withContext(dispatchers.backgroundThread) {
         val moshi = Moshi.Builder().build()
         val type = Types.newParameterizedType(List::class.java, Contributor::class.java)

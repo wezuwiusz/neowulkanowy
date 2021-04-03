@@ -40,7 +40,6 @@
     <string name="login_type_hybrid">Hybrid</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
-    <string name="login_api_key_hint">API key</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_invalid_password">Password too short</string>
@@ -66,7 +65,6 @@
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Send email</string>
-    <string name="login_email_details">Describe details of problem:</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
     <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nOstatni błąd: %5$s\n\nOpis problemu: </string>
     <string name="login_recover_warning">Make sure you select the correct UONET+ register variation!</string>
@@ -91,13 +89,10 @@
     <string name="grade_weight">Weight</string>
     <string name="grade_weight_value">Weight: %s</string>
     <string name="grade_comment">Comment</string>
-    <string name="grade_no_new_items">No new grades</string>
     <string name="grade_number_new_items">Number of new ratings: %1$d</string>
     <string name="grade_average">Average: %1$.2f</string>
     <string name="grade_points_sum">Points: %s</string>
     <string name="grade_no_average">No average</string>
-    <string name="grade_predicted">Predicted: %1$s</string>
-    <string name="grade_final">Final: %1$s</string>
     <string name="grade_summary_points">Total points</string>
     <string name="grade_summary_final_grade">Final grade</string>
     <string name="grade_summary_predicted_grade">Predicted grade</string>
@@ -188,10 +183,6 @@
     <string name="attendance_unknown">Unknown</string>
     <string name="attendance_number">Number of lesson</string>
     <string name="attendance_no_items">No entries</string>
-    <plurals name="attendance_number_absences">
-        <item quantity="one">%1$d absence</item>
-        <item quantity="other">%1$d absences</item>
-    </plurals>
     <string name="attendance_excuse_dialog_reason">Absence reason (optional)</string>
     <string name="attendance_excuse_dialog_submit">Send</string>
     <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
@@ -200,7 +191,6 @@
 
 
     <!--Attendance summary-->
-    <string name="attendance_summary_final">Attendance</string>
     <string name="attendance_summary_total">Total</string>
 
 
@@ -216,7 +206,6 @@
     <string name="message_trash">Trash</string>
     <string name="message_no_subject">(no subject)</string>
     <string name="message_no_items">No messages</string>
-    <string name="message_preview_error">An error occurred while downloading message content</string>
     <string name="message_from">From:</string>
     <string name="message_to">To:</string>
     <string name="message_date">Date: %s</string>
@@ -357,8 +346,6 @@
     <string name="account_logout_student">Student logout</string>
     <string name="account_type_student">Student account</string>
     <string name="account_type_parent">Parent account</string>
-    <string name="account_login_mobile_api">Mobile API mode</string>
-    <string name="account_login_hybrid">Hybrid mode</string>
     <string name="account_details_edit">Edit data</string>
     <string name="account_quick_manager">Accounts manager</string>
     <string name="account_select_student">Select student</string>
@@ -479,7 +466,6 @@
     <string name="pref_view_timetable_show_timers">Mark current lesson</string>
     <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
-    <string name="pref_view_timetable_show_whole_class">Show whole class lessons</string>
     <string name="pref_view_subjects_without_grades">Show subjects without grades</string>
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>
     <string name="pref_view_grade_sorting_mode">Subjects sorting</string>
@@ -532,7 +518,6 @@
 
 
     <!--Notification Channels-->
-    <string name="channel_new_entries">New entries in register</string>
     <string name="channel_new_grades">New grades</string>
     <string name="channel_lucky_number">Lucky number</string>
     <string name="channel_new_message">New messages</string>

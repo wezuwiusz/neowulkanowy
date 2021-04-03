@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
-import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.ItemGradeSummaryBinding
 import io.github.wulkanowy.databinding.ScrollableHeaderGradeSummaryBinding
-import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.calcAverage
-import io.github.wulkanowy.utils.changeModifier
 import java.util.Locale
 import javax.inject.Inject
 

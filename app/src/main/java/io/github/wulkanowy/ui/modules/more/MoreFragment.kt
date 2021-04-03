@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentMoreBinding
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.modules.about.AboutFragment
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
 import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment

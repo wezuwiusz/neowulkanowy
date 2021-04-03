@@ -8,7 +8,6 @@ import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.databinding.ItemLuckyNumberHistoryBinding
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.weekDayName
-import java.util.Locale
 import javax.inject.Inject
 
 class LuckyNumberHistoryAdapter @Inject constructor() :

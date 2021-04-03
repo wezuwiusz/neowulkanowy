@@ -24,7 +24,7 @@ class MainPresenter @Inject constructor(
     private val analytics: AnalyticsHelper,
 ) : BasePresenter<MainView>(errorHandler, studentRepository) {
 
-    var studentsWitSemesters: List<StudentWithSemesters>? = null
+    private var studentsWitSemesters: List<StudentWithSemesters>? = null
 
     fun onAttachView(view: MainView, initMenu: MainView.Section?) {
         super.onAttachView(view)
