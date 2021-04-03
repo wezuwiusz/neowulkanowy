@@ -34,6 +34,10 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="WulkanowyTheme.TextAppearanceBottomNavigation">
+        <item name="android:textSize">11sp</item>
+    </style>
+
     <style name="mdtp_ActionButton.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog" />
 
     <style name="WulkanowyTheme.Login" parent="WulkanowyTheme.NoActionBar" />

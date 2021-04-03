@@ -17,11 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
-        android:layout_marginBottom="@dimen/bottom_navigation_height" />
+        android:layout_marginBottom="56dp" />
 
-    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mainBottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        app:itemTextAppearanceActive="@style/WulkanowyTheme.TextAppearanceBottomNavigation"
+        app:itemTextAppearanceInactive="@style/WulkanowyTheme.TextAppearanceBottomNavigation"
+        app:labelVisibilityMode="labeled" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

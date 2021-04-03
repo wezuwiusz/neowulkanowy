@@ -26,8 +26,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation.TitleState.ALWAYS_SHOW
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
@@ -220,32 +218,21 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         }
 
         with(binding.mainBottomNav) {
-            addItems(
-                listOf(
-                    AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_main_grade, 0),
-                    AHBottomNavigationItem(
-                        R.string.attendance_title,
-                        R.drawable.ic_main_attendance,
-                        0
-                    ),
-                    AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_main_exam, 0),
-                    AHBottomNavigationItem(
-                        R.string.timetable_title,
-                        R.drawable.ic_main_timetable,
-                        0
-                    ),
-                    AHBottomNavigationItem(R.string.more_title, R.drawable.ic_main_more, 0)
-                )
-            )
-            accentColor = getThemeAttrColor(R.attr.colorPrimary)
-            inactiveColor = getThemeAttrColor(R.attr.colorOnSurface, 153)
-            defaultBackgroundColor =
-                overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(8f))
-            titleState = ALWAYS_SHOW
-            currentItem = startMenuIndex
-            isBehaviorTranslationEnabled = false
-            setTitleTextSizeInSp(10f, 10f)
-            setOnTabSelectedListener(presenter::onTabSelected)
+            with(menu) {
+                add(Menu.NONE, 0, Menu.NONE, R.string.grade_title)
+                    .setIcon(R.drawable.ic_main_grade)
+                add(Menu.NONE, 1, Menu.NONE, R.string.attendance_title)
+                    .setIcon(R.drawable.ic_main_attendance)
+                add(Menu.NONE, 2, Menu.NONE, R.string.exam_title)
+                    .setIcon(R.drawable.ic_main_exam)
+                add(Menu.NONE, 3, Menu.NONE, R.string.timetable_title)
+                    .setIcon(R.drawable.ic_main_timetable)
+                add(Menu.NONE, 4, Menu.NONE, R.string.more_title)
+                    .setIcon(R.drawable.ic_main_more)
+            }
+            selectedItemId = startMenuIndex
+            setOnNavigationItemSelectedListener { presenter.onTabSelected(it.itemId, false) }
+            setOnNavigationItemReselectedListener { presenter.onTabSelected(it.itemId, true) }
         }
 
         with(navController) {
