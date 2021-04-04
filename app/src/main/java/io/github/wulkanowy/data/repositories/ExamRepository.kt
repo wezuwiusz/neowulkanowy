@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data.repositories
 
 import io.github.wulkanowy.data.db.dao.ExamDao
+import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
@@ -12,6 +13,8 @@ import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.startExamsDay
 import io.github.wulkanowy.utils.uniqueSubtract
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import java.time.LocalDate
 import javax.inject.Inject
@@ -28,20 +31,54 @@ class ExamRepository @Inject constructor(
 
     private val cacheKey = "exam"
 
-    fun getExams(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean) = networkBoundResource(
+    fun getExams(
+        student: Student,
+        semester: Semester,
+        start: LocalDate,
+        end: LocalDate,
+        forceRefresh: Boolean,
+        notify: Boolean = false
+    ) = networkBoundResource(
         mutex = saveFetchResultMutex,
-        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end)) },
-        query = { examDb.loadAll(semester.diaryId, semester.studentId, start.startExamsDay, start.endExamsDay) },
+        shouldFetch = {
+            it.isEmpty() || forceRefresh
+                || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end))
+        },
+        query = {
+            examDb.loadAll(
+                diaryId = semester.diaryId,
+                studentId = semester.studentId,
+                from = start.startExamsDay,
+                end = start.endExamsDay
+            )
+        },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
                 .getExams(start.startExamsDay, start.endExamsDay, semester.semesterId)
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
+            val examsToSave = (new uniqueSubtract old).onEach {
+                if (notify) it.isNotified = false
+            }
+
             examDb.deleteAll(old uniqueSubtract new)
-            examDb.insertAll(new uniqueSubtract old)
+            examDb.insertAll(examsToSave)
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester, start, end))
         },
         filterResult = { it.filter { item -> item.date in start..end } }
     )
+
+    fun getNotNotifiedExam(semester: Semester, start: LocalDate): Flow<List<Exam>> {
+        return examDb.loadAll(
+            diaryId = semester.diaryId,
+            studentId = semester.studentId,
+            from = start.startExamsDay,
+            end = start.endExamsDay
+        ).map {
+            it.filter { exam -> !exam.isNotified }
+        }
+    }
+
+    suspend fun updateExam(exam: List<Exam>) = examDb.updateAll(exam)
 }

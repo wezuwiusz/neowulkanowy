@@ -37,4 +37,7 @@ data class Homework(
 
     @ColumnInfo(name = "is_done")
     var isDone: Boolean = false
+
+    @ColumnInfo(name = "is_notified")
+    var isNotified: Boolean = true
 }

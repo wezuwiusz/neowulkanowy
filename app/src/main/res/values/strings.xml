@@ -198,6 +198,14 @@
     <string name="exam_no_items">No exams this week</string>
     <string name="exam_type">Type</string>
     <string name="exam_entry_date">Entry date</string>
+    <plurals name="exam_notify_new_item_title">
+        <item quantity="one">New exam</item>
+        <item quantity="other">New exams</item>
+    </plurals>
+    <plurals name="exam_number_item">
+        <item quantity="one">%d exam</item>
+        <item quantity="other">%d exams</item>
+    </plurals>
 
 
     <!--Message-->
@@ -287,6 +295,14 @@
     <string name="homework_mark_as_done">Mark as done</string>
     <string name="homework_mark_as_undone">Mark as undone</string>
     <string name="homework_attachments">Attachments</string>
+    <plurals name="homework_notify_new_item_title">
+        <item quantity="one">New homework</item>
+        <item quantity="other">New homework</item>
+    </plurals>
+    <plurals name="homework_number_item">
+        <item quantity="one">%d homework</item>
+        <item quantity="other">%d homework</item>
+    </plurals>
 
 
     <!--Lucky number-->
@@ -519,18 +535,14 @@
 
     <!--Notification Channels-->
     <string name="channel_new_grades">New grades</string>
+    <string name="channel_new_homework">New homework</string>
+    <string name="channel_new_exam">New exams</string>
     <string name="channel_lucky_number">Lucky number</string>
     <string name="channel_new_message">New messages</string>
     <string name="channel_new_notes">New notes</string>
     <string name="channel_push">Push notifications</string>
     <string name="channel_upcoming_lessons">Upcoming lessons</string>
     <string name="channel_debug">Debug</string>
-
-
-    <!--Drop kitkat alert dialog strings-->
-    <string name="drop_kitkat_title">End of support</string>
-    <string name="drop_kitkat_content">We are ending support for your device. No more new features will appear for it in Wulkanowy. However, we will be releasing critical patches until the end of 2021 so you have time to switch to a newer model</string>
-    <string name="drop_kitkat_again">Don\'t show again</string>
 
 
     <!--Colors-->
