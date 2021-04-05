@@ -110,15 +110,15 @@ class AdditionalLessonsPresenter @Inject constructor(
                 Status.SUCCESS -> {
                     Timber.i("Loading additional lessons lessons result: Success")
                     view?.apply {
-                        updateData(it.data!!.second.sortedBy { item -> item.date })
-                        showEmpty(it.data.second.isEmpty())
+                        updateData(it.data!!.additional.sortedBy { item -> item.date })
+                        showEmpty(it.data.additional.isEmpty())
                         showErrorView(false)
-                        showContent(it.data.second.isNotEmpty())
+                        showContent(it.data.additional.isNotEmpty())
                     }
                     analytics.logEvent(
                         "load_data",
                         "type" to "additional_lessons",
-                        "items" to it.data!!.second.size
+                        "items" to it.data!!.additional.size
                     )
                 }
                 Status.ERROR -> {

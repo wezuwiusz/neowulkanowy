@@ -32,6 +32,7 @@ import io.github.wulkanowy.data.db.dao.SubjectDao
 import io.github.wulkanowy.data.db.dao.TeacherDao
 import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
 import io.github.wulkanowy.data.db.dao.TimetableDao
+import io.github.wulkanowy.data.db.dao.TimetableHeaderDao
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.CompletedLesson
@@ -58,6 +59,7 @@ import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.db.entities.Teacher
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.entities.TimetableAdditional
+import io.github.wulkanowy.data.db.entities.TimetableHeader
 import io.github.wulkanowy.data.db.migrations.Migration10
 import io.github.wulkanowy.data.db.migrations.Migration11
 import io.github.wulkanowy.data.db.migrations.Migration12
@@ -87,6 +89,7 @@ import io.github.wulkanowy.data.db.migrations.Migration33
 import io.github.wulkanowy.data.db.migrations.Migration34
 import io.github.wulkanowy.data.db.migrations.Migration35
 import io.github.wulkanowy.data.db.migrations.Migration36
+import io.github.wulkanowy.data.db.migrations.Migration37
 import io.github.wulkanowy.data.db.migrations.Migration4
 import io.github.wulkanowy.data.db.migrations.Migration5
 import io.github.wulkanowy.data.db.migrations.Migration6
@@ -125,6 +128,7 @@ import javax.inject.Singleton
         Conference::class,
         TimetableAdditional::class,
         StudentInfo::class,
+        TimetableHeader::class,
     ],
     version = AppDatabase.VERSION_SCHEMA,
     exportSchema = true
@@ -133,7 +137,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 36
+        const val VERSION_SCHEMA = 37
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),
@@ -170,7 +174,8 @@ abstract class AppDatabase : RoomDatabase() {
             Migration33(),
             Migration34(),
             Migration35(appInfo),
-            Migration36()
+            Migration36(),
+            Migration37(),
         )
 
         fun newInstance(
@@ -236,4 +241,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val timetableAdditionalDao: TimetableAdditionalDao
 
     abstract val studentInfoDao: StudentInfoDao
+
+    abstract val timetableHeaderDao: TimetableHeaderDao
 }

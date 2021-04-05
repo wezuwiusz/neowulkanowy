@@ -51,7 +51,8 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
         lesson: Timetable
     ) = day.getOrNull(index - 1)?.end ?: lesson.start.minusMinutes(30)
 
-    suspend fun cancelScheduled(lessons: List<Timetable>, studentId: Int = 1) {
+    suspend fun cancelScheduled(lessons: List<Timetable>, student: Student) {
+        val studentId = student.studentId
         withContext(dispatchersProvider.backgroundThread) {
             lessons.sortedBy { it.start }.forEachIndexed { index, lesson ->
                 val upcomingTime = getUpcomingLessonTime(index, lessons, lesson)
@@ -78,7 +79,7 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
 
     suspend fun scheduleNotifications(lessons: List<Timetable>, student: Student) {
         if (!preferencesRepository.isUpcomingLessonsNotificationsEnable) {
-            return cancelScheduled(lessons, student.studentId)
+            return cancelScheduled(lessons, student)
         }
 
         withContext(dispatchersProvider.backgroundThread) {
@@ -89,7 +90,7 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
                     val canceled = day.filter { it.canceled }
                     val active = day.filter { !it.canceled }
 
-                    cancelScheduled(canceled)
+                    cancelScheduled(canceled, student)
                     active.forEachIndexed { index, lesson ->
                         val intent = createIntent(student, lesson, active.getOrNull(index + 1))
 
