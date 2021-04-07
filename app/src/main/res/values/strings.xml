@@ -385,6 +385,8 @@
     <string name="about_facebook_summary">Like our facebook fanpage</string>
     <string name="about_privacy">Privacy policy</string>
     <string name="about_privacy_summary">Rules for collecting personal data</string>
+    <string name="about_system">System settings</string>
+    <string name="about_system_summary">Open system settings</string>
     <string name="about_homepage">Homepage</string>
     <string name="about_homepage_summary">Visit the website and help develop the application</string>
     <string name="about_licenses">Licenses</string>
@@ -490,6 +492,7 @@
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show notifications</string>
     <string name="pref_notify_upcoming_lessons_switch">Show upcoming lesson notifications</string>
+    <string name="pref_notify_open_system_settings">Open system notification settings</string>
     <string name="pref_notify_fix_sync_issues">Fix synchronization &amp; notifications issues</string>
     <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Go to settings</string>

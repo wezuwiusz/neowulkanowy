@@ -1,7 +1,12 @@
 package io.github.wulkanowy.ui.modules.settings.notifications
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +21,9 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.openInternetBrowser
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -26,6 +33,9 @@ class NotificationsFragment : PreferenceFragmentCompat(),
 
     @Inject
     lateinit var presenter: NotificationsPresenter
+
+    @Inject
+    lateinit var appInfo: AppInfo
 
     companion object {
         fun newInstance() = NotificationsFragment()
@@ -43,6 +53,13 @@ class NotificationsFragment : PreferenceFragmentCompat(),
 
             setOnPreferenceClickListener {
                 presenter.onFixSyncIssuesClicked()
+                true
+            }
+        }
+
+        findPreference<Preference>(getString(R.string.pref_key_notifications_system_settings))?.run {
+            setOnPreferenceClickListener {
+                presenter.onOpenSystemSettingsClicked()
                 true
             }
         }
@@ -116,6 +133,24 @@ class NotificationsFragment : PreferenceFragmentCompat(),
                 }
             }
             .show()
+    }
+
+    @SuppressLint("InlinedApi")
+    override fun openSystemSettings() {
+        val intent = if (appInfo.systemVersion >= Build.VERSION_CODES.O) {
+            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                putExtra("android.provider.extra.APP_PACKAGE", requireActivity().packageName)
+            }
+        } else {
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.fromParts("package", requireActivity().packageName, null)
+            }
+        }
+        try {
+            requireActivity().startActivity(intent)
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
     }
 
     override fun onResume() {

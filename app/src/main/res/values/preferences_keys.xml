@@ -14,6 +14,7 @@
     <string name="pref_key_services_wifi_only">services_disable_wifi_only</string>
     <string name="pref_key_services_force_sync">services_force_sync</string>
     <string name="pref_key_notifications_fix_issues">notifications_fix_issues</string>
+    <string name="pref_key_notifications_system_settings">notifications_system_settings</string>
     <string name="pref_key_notifications_enable">notifications_enable</string>
     <string name="pref_key_notifications_upcoming_lessons_enable">notifications_upcoming_lessons_enable</string>
     <string name="pref_key_notification_debug">notification_debug</string>
