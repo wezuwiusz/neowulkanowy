@@ -1,0 +1,75 @@
+name: Deploy to app stores
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+
+  deploy-google-play:
+    name: Deploy to google play
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: google-play
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+      - name: Decrypt keys
+        env:
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+          SERVICES_ENCRYPT_KEY: ${{ secrets.SERVICES_ENCRYPT_KEY }}
+        run: |
+          gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/google-services.json.gpg
+          gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg
+          gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg
+      - name: Upload apk to google play
+        env:
+          PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
+          PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
+          PLAY_SERVICE_ACCOUNT_EMAIL: ${{ secrets.PLAY_SERVICE_ACCOUNT_EMAIL }}
+          PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
+        run: ./gradlew publishPlayRelease -PenableFirebase --stacktrace;
+
+  deploy-app-gallery:
+    name: Deploy to AppGallery
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: app-gallery
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+      - name: Decrypt keys
+        env:
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+          SERVICES_ENCRYPT_KEY: ${{ secrets.SERVICES_ENCRYPT_KEY }}
+        run: |
+          gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/agconnect-services.json.gpg
+          gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg
+          gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg
+      - name: Build HMS version
+        env:
+          PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
+          PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
+          PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
+        run: ./gradlew assembleHmsRelease --stacktrace
+      - name: Upload APK to AppGallery
+        env:
+          AGC_CLIENT_ID: ${{ secrets.AGC_CLIENT_ID }}
+          AGC_CLIENT_SECRET: ${{ secrets.AGC_CLIENT_SECRET }}
+        run: ./gradlew publishHuaweiAppGalleryHmsRelease --stacktrace;

@@ -1,0 +1,144 @@
+name: Deploy to app tests
+
+on:
+  push:
+#    branches: [ develop ]
+    branches: [ '!*' ]
+  pull_request_target:
+#    branches: [ develop ]
+    branches: [ '!*' ]
+
+  workflow_dispatch:
+
+jobs:
+
+  deploy-appcenter:
+    name: App Center
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: app-center
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+      - name: Set run number with offset
+        env:
+          BUILD_NUMBER_OFFSET: ${{ secrets.BUILD_NUMBER_OFFSET }}
+        run: echo "RUN_NUMBER=$((GITHUB_RUN_NUMBER+BUILD_NUMBER_OFFSET))" >> $GITHUB_ENV
+      - name: Prepare build configuration
+        run: |
+          sed -i -e "s#applicationIdSuffix \".dev\"#applicationIdSuffix \".${GITHUB_HEAD_REF//[-.\/]/_}\"#" app/build.gradle
+          sed -i -e "s#.dev\"#.${GITHUB_HEAD_REF//[-.\/]/_}\"#" app/src/debug/google-services.json
+          sed -i -e "s#.dev\"#.${GITHUB_HEAD_REF//[-.\/]/_}\"#" app/src/debug/agconnect-services.json
+          sed -i -e '/versionNameSuffix/d' app/build.gradle
+      - name: Add signing config
+        run: |
+          cat >> app/build.gradle <<EOF
+          android.signingConfigs.debug {
+              storeFile file("bitrise.jks")
+              storePassword System.getenv("BITRISE_KEYSTORE_PASSWORD")
+              keyAlias System.getenv("BITRISE_KEY_ALIAS")
+              keyPassword System.getenv("BITRISE_KEY_PASSWORD")
+          }
+          EOF
+      - name: Decrypt keys
+        env:
+          BITRISE_ENCRYPT_KEY: ${{ secrets.BITRISE_ENCRYPT_KEY }}
+        run: |
+          gpg --yes --batch --passphrase=$BITRISE_ENCRYPT_KEY ./app/bitrise.jks.gpg
+      - name: Bump version
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: app/build.gradle
+          versionCode: ${{ env.RUN_NUMBER }}
+          versionName: ${{ env.RUN_NUMBER }}-${{ github.head_ref }}
+      - name: Build apk
+        env:
+          BITRISE_KEYSTORE_PASSWORD: ${{ secrets.BITRISE_KEYSTORE_PASSWORD }}
+          BITRISE_KEY_ALIAS: ${{ secrets.BITRISE_KEY_ALIAS }}
+          BITRISE_KEY_PASSWORD: ${{ secrets.BITRISE_KEY_PASSWORD }}
+        run: ./gradlew assembleFdroidDebug --stacktrace
+      - name: Upload apk to github artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: wulkanowyDEV-${{ env.RUN_NUMBER }}.apk
+          path: app/build/outputs/apk/fdroid/debug/app-fdroid-debug.apk
+      - name: Deploy to app center
+        uses: wzieba/AppCenter-Github-Action@v1
+        with:
+          appName: wulkanowy/wulkanowy
+          token: ${{ secrets.APP_CENTER_TOKEN }}
+          group: Testers
+          file: app/build/outputs/apk/fdroid/debug/app-fdroid-debug.apk
+          notifyTesters: true
+          debug: true
+
+  deploy-app-distribution:
+    name: App Distribution
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: app-distribution
+    if: github.event_name != 'pull_request_target'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+      - name: Set run number with offset
+        env:
+          BUILD_NUMBER_OFFSET: ${{ secrets.BUILD_NUMBER_OFFSET }}
+        run: echo "RUN_NUMBER=$((GITHUB_RUN_NUMBER+BUILD_NUMBER_OFFSET))" >> $GITHUB_ENV
+      - name: Add signing config
+        run: |
+          cat >> app/build.gradle <<EOF
+          android.signingConfigs.debug {
+              storeFile file("bitrise.jks")
+              storePassword System.getenv("BITRISE_KEYSTORE_PASSWORD")
+              keyAlias System.getenv("BITRISE_KEY_ALIAS")
+              keyPassword System.getenv("BITRISE_KEY_PASSWORD")
+          }
+          EOF
+      - name: Decrypt keys
+        env:
+          BITRISE_ENCRYPT_KEY: ${{ secrets.BITRISE_ENCRYPT_KEY }}
+          BITRISE_SERVICES_ENCRYPT_KEY: ${{ secrets.BITRISE_SERVICES_ENCRYPT_KEY }}
+        run: |
+          gpg --yes --batch --passphrase=$BITRISE_SERVICES_ENCRYPT_KEY ./app/src/debug/google-services.json.gpg
+          gpg --yes --batch --passphrase=$BITRISE_ENCRYPT_KEY ./app/bitrise.jks.gpg
+      - name: Bump version
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: app/build.gradle
+          versionCode: ${{ env.RUN_NUMBER }}
+          versionName: ${{ env.RUN_NUMBER }}
+      - name: Build apk
+        env:
+          BITRISE_KEYSTORE_PASSWORD: ${{ secrets.BITRISE_KEYSTORE_PASSWORD }}
+          BITRISE_KEY_ALIAS: ${{ secrets.BITRISE_KEY_ALIAS }}
+          BITRISE_KEY_PASSWORD: ${{ secrets.BITRISE_KEY_PASSWORD }}
+        run: ./gradlew assemblePlayDebug -PenableFirebase --stacktrace
+      - name: Upload apk to github artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: wulkanowyDEV-${{ env.RUN_NUMBER }}-dev.apk
+          path: app/build/outputs/apk/play/debug/app-play-debug.apk
+      - name: Deploy to app distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: discord
+          file: app/build/outputs/apk/play/debug/app-play-debug.apk
