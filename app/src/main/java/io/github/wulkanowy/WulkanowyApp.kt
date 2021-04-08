@@ -84,7 +84,7 @@ class WulkanowyApp : Application(), Configuration.Provider {
         //https://stackoverflow.com/questions/40398528/android-webview-language-changes-abruptly-on-android-7-0-and-above
         try {
             WebView(this).destroy()
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             //Ignore exceptions
         }
     }
