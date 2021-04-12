@@ -13,7 +13,8 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
@@ -24,9 +25,12 @@ import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragme
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.SchooldaysRangeLimiter
+import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.schoolYearStart
+import io.github.wulkanowy.utils.toLocalDateTime
+import io.github.wulkanowy.utils.toTimestamp
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -216,19 +220,27 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
     }
 
     override fun showDatePickerDialog(currentDate: LocalDate) {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            presenter.onDateSet(year, month + 1, dayOfMonth)
-        }
-        val datePickerDialog = DatePickerDialog.newInstance(dateSetListener,
-            currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth)
+        val now = LocalDate.now()
+        val startOfSchoolYear = now.schoolYearStart.toTimestamp()
+        val endWeek = now.plusWeeks(1).toTimestamp()
 
-        with(datePickerDialog) {
-            setDateRangeLimiter(SchooldaysRangeLimiter())
-            version = DatePickerDialog.Version.VERSION_2
-            scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
-            vibrate(false)
-            show(this@AttendanceFragment.parentFragmentManager, null)
+        val constraintsBuilder = CalendarConstraints.Builder().apply {
+            setValidator(SchoolDaysValidator(startOfSchoolYear, endWeek))
+            setStart(startOfSchoolYear)
+            setEnd(endWeek)
         }
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setCalendarConstraints(constraintsBuilder.build())
+                .setSelection(currentDate.toTimestamp())
+                .build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            val date = it.toLocalDateTime()
+            presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
+        }
+
+        datePicker.show(this@AttendanceFragment.parentFragmentManager, null)
     }
 
     override fun showExcuseDialog() {

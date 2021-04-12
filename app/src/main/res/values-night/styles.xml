@@ -14,7 +14,6 @@
         <item name="android:statusBarColor">@color/colorStatusBarLight</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
-        <item name="mdtp_theme_dark">true</item>
     </style>
 
     <style name="WulkanowyTheme.Black" parent="WulkanowyTheme.NoActionBar">
