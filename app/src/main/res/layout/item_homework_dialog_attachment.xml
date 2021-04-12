@@ -3,18 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
-    android:paddingStart="20dp"
-    android:paddingTop="3dp"
-    android:paddingEnd="10dp"
-    android:paddingBottom="3dp">
+    android:background="?selectableItemBackground">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/homeworkDialogAttachment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="24dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="16dp"
         android:drawablePadding="10dp"
-        android:textSize="12sp"
+        android:textSize="16sp"
         app:drawableStartCompat="@drawable/ic_attachment"
         app:drawableTint="?colorOnBackground"
         tools:text="@tools:sample/lorem" />

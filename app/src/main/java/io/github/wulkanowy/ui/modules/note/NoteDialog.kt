@@ -49,14 +49,14 @@ class NoteDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            noteDialogDate.text = note.date.toFormattedString()
-            noteDialogCategory.text = note.category
-            noteDialogTeacher.text = note.teacher
-            noteDialogContent.text = note.content
+            noteDialogDateValue.text = note.date.toFormattedString()
+            noteDialogCategoryValue.text = note.category
+            noteDialogTeacherValue.text = note.teacher
+            noteDialogContentValue.text = note.content
         }
 
         if (note.isPointsShow) {
-            with(binding.noteDialogPoints) {
+            with(binding.noteDialogPointsValue) {
                 text = "${if (note.points > 0) "+" else ""}${note.points}"
                 setTextColor(
                     when (NoteCategory.getByValue(note.categoryType)) {

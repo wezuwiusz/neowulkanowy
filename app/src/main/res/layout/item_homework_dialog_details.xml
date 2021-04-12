@@ -4,121 +4,162 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingStart="20dp"
-    android:paddingTop="20dp"
-    android:paddingEnd="20dp">
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
 
-    <ImageButton
-        android:id="@+id/homework_dialog_full_screen"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="5dp"
-        app:srcCompat="@drawable/ic_fullscreen"
-        app:tint="?colorOnBackground"
-        tools:ignore="ContentDescription" />
+        android:orientation="horizontal" >
 
-    <ImageButton
-        android:id="@+id/homework_dialog_full_screen_exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="5dp"
-        android:visibility="gone"
-        app:srcCompat="@drawable/ic_fullscreen_exit"
-        app:tint="?colorOnBackground"
-        tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/allDetailsHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/all_details"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/homework_dialog_full_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:layout_marginTop="24dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_fullscreen"
+            app:tint="?colorOnBackground"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/homework_dialog_full_screen_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:layout_marginTop="24dp"
+            android:padding="5dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_fullscreen_exit"
+            app:tint="?colorOnBackground"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="@string/all_details"
-        android:textSize="20sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/all_subject"
-        android:textSize="17sp" />
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/homeworkDialogSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="24dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="16dp"
         android:text="@string/all_no_data"
         android:textIsSelectable="true"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/all_teacher"
-        android:textSize="17sp" />
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/homeworkDialogTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="24dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="16dp"
         android:text="@string/all_no_data"
         android:textIsSelectable="true"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/all_date"
-        android:textSize="17sp" />
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/homeworkDialogDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="24dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="16dp"
         android:text="@string/all_no_data"
         android:textIsSelectable="true"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/all_entry_date"
-        android:textSize="17sp" />
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/homeworkDialogEntryDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="24dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="16dp"
         android:text="@string/all_no_data"
         android:textIsSelectable="true"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/all_content"
-        android:textSize="17sp" />
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/homeworkDialogContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="24dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="16dp"
         android:autoLink="web"
         android:lineSpacingMultiplier="1.2"
         android:text="@string/all_no_data"
         android:textIsSelectable="true"
-        android:textSize="12sp"
+        android:textSize="16sp"
         tools:text="@tools:sample/lorem/random" />
 
 </LinearLayout>

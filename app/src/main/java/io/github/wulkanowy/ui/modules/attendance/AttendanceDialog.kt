@@ -44,10 +44,10 @@ class AttendanceDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            attendanceDialogSubject.text = attendance.subject
-            attendanceDialogDescription.setText(attendance.description)
-            attendanceDialogDate.text = attendance.date.toFormattedString()
-            attendanceDialogNumber.text = attendance.number.toString()
+            attendanceDialogSubjectValue.text = attendance.subject
+            attendanceDialogDescriptionValue.setText(attendance.description)
+            attendanceDialogDateValue.text = attendance.date.toFormattedString()
+            attendanceDialogNumberValue.text = attendance.number.toString()
             attendanceDialogClose.setOnClickListener { dismiss() }
         }
     }
