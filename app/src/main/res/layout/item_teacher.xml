@@ -12,37 +12,44 @@
     tools:context=".ui.modules.schoolandteachers.teacher.TeacherAdapter">
 
     <TextView
-        android:id="@+id/teacherItemName"
+        android:id="@+id/teacherItemSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textSize="17sp"
-        tools:text="@tools:sample/full_names" />
-
-    <TextView
-        android:id="@+id/teacherItemShortName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="40dp"
-        android:layout_toEndOf="@+id/teacherItemName"
-        android:maxLines="1"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="17sp"
-        tools:text="[LI]" />
-
-    <TextView
-        android:id="@+id/teacherItemSubject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/teacherItemName"
-        android:layout_alignStart="@id/teacherItemName"
-        android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
         tools:text="11:11-12:00" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/teacherItemSubject"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:id="@+id/teacherItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="16sp"
+            tools:text="@tools:sample/full_names" />
+
+        <TextView
+            android:id="@+id/teacherItemShortName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="40dp"
+            android:maxLines="1"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="16sp"
+            tools:text="[LI]" />
+
+    </LinearLayout>
 
 </RelativeLayout>

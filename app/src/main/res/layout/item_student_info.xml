@@ -11,14 +11,14 @@
     <TextView
         android:id="@+id/student_info_item_title"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="13dp"
         android:layout_marginEnd="16dp"
         android:gravity="bottom"
         android:maxLines="1"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="16sp"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,15 +27,16 @@
     <TextView
         android:id="@+id/student_info_item_subtitle"
         android:layout_width="match_parent"
-        android:layout_height="18dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:gravity="bottom"
         android:maxLines="1"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="12sp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/student_info_item_title"
         tools:text="@tools:sample/lorem/random" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
