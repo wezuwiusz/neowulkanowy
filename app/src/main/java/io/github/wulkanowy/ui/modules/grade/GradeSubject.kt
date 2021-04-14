@@ -8,5 +8,6 @@ data class GradeSubject(
     val average: Double,
     val points: String,
     val summary: GradeSummary,
-    val grades: List<Grade>
+    val grades: List<Grade>,
+    val isVulcanAverage: Boolean
 )
