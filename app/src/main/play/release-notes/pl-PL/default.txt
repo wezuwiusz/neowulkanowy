@@ -1,11 +1,5 @@
-Wersja 1.1.4
+Wersja 1.1.5
 
-Oprócz tego naprawiliśmy:
-- rzadkie problemy ze stabilnością przy logowaniu i w innych miejscach
-- brakujące awatary przy zmianie konta z poziomu widżetu
-- wysyłanie wiadomości gdy w aplikacji jest zalogowany jednocześnie uczeń i rodzic
-
-Ta wersja jest ostatnią, która będzie działać na starszych urządzeniach z Androidem 4.
-Od tej pory do końca roku bedziemy dla nich udostępniać wyłącznie krytyczne poprawki błędów
+Naprawiliśmy liczenie średniej wszystkich ocen z całego roku
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
