@@ -70,7 +70,7 @@ class GradeAverageProvider @Inject constructor(
         forceRefresh: Boolean,
         averageMode: GradeAverageMode
     ): Flow<Resource<List<GradeSubject>>> {
-        val gradeAverageForceCalc = preferencesRepository.gradeAverageForceCalc
+        val isGradeAverageForceCalc = preferencesRepository.gradeAverageForceCalc
         val selectedSemester = semesters.single { it.semesterId == semesterId }
         val firstSemester =
             semesters.single { it.diaryId == selectedSemester.diaryId && it.semesterName == 1 }
@@ -80,8 +80,7 @@ class GradeAverageProvider @Inject constructor(
 
         if (selectedSemester == firstSemester) return selectedSemesterGradeSubjects
 
-        val firstSemesterGradeSubjects =
-            getGradeSubjects(student, firstSemester, forceRefresh)
+        val firstSemesterGradeSubjects = getGradeSubjects(student, firstSemester, forceRefresh)
 
         return selectedSemesterGradeSubjects.combine(firstSemesterGradeSubjects) { secondSemesterGradeSubject, firstSemesterGradeSubject ->
             if (firstSemesterGradeSubject.status == Status.ERROR) {
@@ -89,9 +88,9 @@ class GradeAverageProvider @Inject constructor(
             }
 
             val isAnyVulcanAverageInFirstSemester =
-                firstSemesterGradeSubject.data.orEmpty().any { it.average != .0 }
+                firstSemesterGradeSubject.data.orEmpty().any { it.isVulcanAverage }
             val isAnyVulcanAverageInSecondSemester =
-                secondSemesterGradeSubject.data.orEmpty().any { it.average != .0 }
+                secondSemesterGradeSubject.data.orEmpty().any { it.isVulcanAverage }
 
             val updatedData = secondSemesterGradeSubject.data?.map { secondSemesterSubject ->
                 val firstSemesterSubject = firstSemesterGradeSubject.data.orEmpty()
@@ -101,7 +100,7 @@ class GradeAverageProvider @Inject constructor(
                     calculateAllYearAverage(
                         student = student,
                         isAnyVulcanAverage = isAnyVulcanAverageInFirstSemester || isAnyVulcanAverageInSecondSemester,
-                        gradeAverageForceCalc = gradeAverageForceCalc,
+                        isGradeAverageForceCalc = isGradeAverageForceCalc,
                         secondSemesterSubject = secondSemesterSubject,
                         firstSemesterSubject = firstSemesterSubject
                     )
@@ -109,7 +108,7 @@ class GradeAverageProvider @Inject constructor(
                     calculateBothSemestersAverage(
                         student = student,
                         isAnyVulcanAverage = isAnyVulcanAverageInFirstSemester || isAnyVulcanAverageInSecondSemester,
-                        gradeAverageForceCalc = gradeAverageForceCalc,
+                        isGradeAverageForceCalc = isGradeAverageForceCalc,
                         secondSemesterSubject = secondSemesterSubject,
                         firstSemesterSubject = firstSemesterSubject
                     )
@@ -123,10 +122,10 @@ class GradeAverageProvider @Inject constructor(
     private fun calculateAllYearAverage(
         student: Student,
         isAnyVulcanAverage: Boolean,
-        gradeAverageForceCalc: Boolean,
+        isGradeAverageForceCalc: Boolean,
         secondSemesterSubject: GradeSubject,
         firstSemesterSubject: GradeSubject?
-    ) = if (!isAnyVulcanAverage || gradeAverageForceCalc) {
+    ) = if (!isAnyVulcanAverage || isGradeAverageForceCalc) {
         val updatedSecondSemesterGrades =
             secondSemesterSubject.grades.updateModifiers(student)
         val updatedFirstSemesterGrades =
@@ -140,13 +139,13 @@ class GradeAverageProvider @Inject constructor(
     private fun calculateBothSemestersAverage(
         student: Student,
         isAnyVulcanAverage: Boolean,
-        gradeAverageForceCalc: Boolean,
+        isGradeAverageForceCalc: Boolean,
         secondSemesterSubject: GradeSubject,
         firstSemesterSubject: GradeSubject?
     ): Double {
         val divider = if (secondSemesterSubject.grades.any { it.weightValue > .0 }) 2 else 1
 
-        return if (!isAnyVulcanAverage || gradeAverageForceCalc) {
+        return if (!isAnyVulcanAverage || isGradeAverageForceCalc) {
             val secondSemesterAverage =
                 secondSemesterSubject.grades.updateModifiers(student).calcAverage(isOptionalArithmeticAverage)
             val firstSemesterAverage = firstSemesterSubject?.grades?.updateModifiers(student)
@@ -163,7 +162,7 @@ class GradeAverageProvider @Inject constructor(
         semester: Semester,
         forceRefresh: Boolean
     ): Flow<Resource<List<GradeSubject>>> {
-        val gradeAverageForceCalc = preferencesRepository.gradeAverageForceCalc
+        val isGradeAverageForceCalc = preferencesRepository.gradeAverageForceCalc
 
         return gradeRepository.getGrades(student, semester, forceRefresh = forceRefresh)
             .map { res ->
@@ -172,20 +171,21 @@ class GradeAverageProvider @Inject constructor(
                 val allGrades = details.orEmpty().groupBy { it.subject }
 
                 val items = summaries?.emulateEmptySummaries(
-                    student,
-                    semester,
-                    allGrades.toList(),
-                    isAnyAverage
+                    student = student,
+                    semester = semester,
+                    grades = allGrades.toList(),
+                    calcAverage = isAnyAverage
                 )?.map { summary ->
                     val grades = allGrades[summary.subject].orEmpty()
                     GradeSubject(
                         subject = summary.subject,
-                        average = if (!isAnyAverage || gradeAverageForceCalc) {
+                        average = if (!isAnyAverage || isGradeAverageForceCalc) {
                             grades.updateModifiers(student).calcAverage(isOptionalArithmeticAverage)
                         } else summary.average,
                         points = summary.pointsSum,
                         summary = summary,
-                        grades = grades
+                        grades = grades,
+                        isVulcanAverage = isAnyAverage
                     )
                 }
 
