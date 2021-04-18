@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'ru.cian.huawei-publish'
 apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.huawei.agconnect'
@@ -138,6 +139,17 @@ play {
     defaultToAppBundles = false
     track = 'production'
     updatePriority = 3
+}
+
+huaweiPublish {
+    instances {
+        hmsRelease {
+            clientId = System.getenv("AGC_CLIENT_ID")
+            clientSecret = System.getenv("AGC_CLIENT_SECRET")
+            buildFormat = "apk"
+            deployType = "draft"
+        }
+    }
 }
 
 ext {
