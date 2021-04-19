@@ -520,6 +520,7 @@ class GradeAverageProviderTest {
     fun `calc all year average`() {
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
         every { preferencesRepository.gradeAverageForceCalc } returns false
+        every { preferencesRepository.isOptionalArithmeticAverage } returns false
         coEvery {
             gradeRepository.getGrades(
                 student,
