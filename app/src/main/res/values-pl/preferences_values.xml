@@ -45,9 +45,4 @@
         <item>Średnia średnich z obu semestrów</item>
         <item>Średnia wszystkich ocen z całego roku</item>
     </string-array>
-    <string-array name="timetable_show_whole_class_entries">
-        <item>Nie pokazuj</item>
-        <item>Pokazuj wszystkie</item>
-        <item>Pokazuj pomniejszone</item>
-    </string-array>
 </resources>

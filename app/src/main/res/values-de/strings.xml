@@ -36,7 +36,6 @@
     <string name="login_type_hybrid">Hybride</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
-    <string name="login_api_key_hint">API Schlüssel</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Anmelden</string>
     <string name="login_invalid_password">Passwort ist zu kurz</string>
@@ -62,7 +61,6 @@
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">email senden</string>
-    <string name="login_email_details">Beschreiben Sie die Details des Problems:</string>
     <string name="login_recover_warning">Stellen Sie sicher, dass Sie die richtige UONET+ Registervariation wählen!</string>
     <string name="login_recover_button">Ich habe mein Passwort vergessen.</string>
     <string name="login_recover_title">Ihr Konto wiederherstellen</string>
@@ -81,13 +79,10 @@
     <string name="grade_weight">Gewichtung</string>
     <string name="grade_weight_value">Gewichtung: %s</string>
     <string name="grade_comment">Kommentar</string>
-    <string name="grade_no_new_items">Keine neuen Noten</string>
     <string name="grade_number_new_items">Anzahl der neuen Bewertungen: %1$d</string>
     <string name="grade_average">Durchschnitt: %1$.2f</string>
     <string name="grade_points_sum">Punkte: %s</string>
     <string name="grade_no_average">Kein Durchschnitt</string>
-    <string name="grade_predicted">Vorausgesagt: %1$s</string>
-    <string name="grade_final">Finale: %1$s</string>
     <string name="grade_summary_points">Gesamtpunkte</string>
     <string name="grade_summary_final_grade">Finaler Note</string>
     <string name="grade_summary_predicted_grade">Vorhergesagte Note</string>
@@ -170,29 +165,31 @@
     <string name="attendance_unknown">Unbekannt</string>
     <string name="attendance_number">Lektion Nummer</string>
     <string name="attendance_no_items">Keine Einträgen</string>
-    <plurals name="attendance_number_absences">
-        <item quantity="one">%1$d abwesenheit</item>
-        <item quantity="other">%1$d Abwesenheiten</item>
-    </plurals>
     <string name="attendance_excuse_dialog_reason">Abwesenheitsgrund (optional)</string>
     <string name="attendance_excuse_dialog_submit">Senden</string>
     <string name="attendance_excuse_success">Abwesenheitsentschuldigungsanfrage erfolgreich gesendet!</string>
     <string name="attendance_excuse_no_selection">Sie müssen mindestens eine Abwesenheit auswählen!</string>
     <string name="attendance_excuse_title">Verzeihung</string>
     <!--Attendance summary-->
-    <string name="attendance_summary_final">Schulbesuch</string>
     <string name="attendance_summary_total">Gesamt</string>
     <!--Exam-->
     <string name="exam_no_items">Diese Woche keine Prüfungen</string>
     <string name="exam_type">Form</string>
     <string name="exam_entry_date">Eintrittsdatum</string>
+    <plurals name="exam_notify_new_item_title">
+        <item quantity="one">New exam</item>
+        <item quantity="other">New exams</item>
+    </plurals>
+    <plurals name="exam_number_item">
+        <item quantity="one">%d exam</item>
+        <item quantity="other">%d exams</item>
+    </plurals>
     <!--Message-->
     <string name="message_inbox">Posteingang</string>
     <string name="message_sent">Gesendet</string>
     <string name="message_trash">Korb</string>
     <string name="message_no_subject">(kein Thema)</string>
     <string name="message_no_items">Keine Nachrichten</string>
-    <string name="message_preview_error">Beim Herunterladen des Nachrichteninhalts ist ein Fehler aufgetreten</string>
     <string name="message_from">Von:</string>
     <string name="message_to">An:</string>
     <string name="message_date">Datum: %s</string>
@@ -268,6 +265,14 @@
     <string name="homework_mark_as_done">Gemacht</string>
     <string name="homework_mark_as_undone">Unvollständig</string>
     <string name="homework_attachments">Anhänge</string>
+    <plurals name="homework_notify_new_item_title">
+        <item quantity="one">New homework</item>
+        <item quantity="other">New homework</item>
+    </plurals>
+    <plurals name="homework_number_item">
+        <item quantity="one">%d homework</item>
+        <item quantity="other">%d homework</item>
+    </plurals>
     <!--Lucky number-->
     <string name="lucky_number_title">Glückliche Nummer</string>
     <string name="lucky_number_header">Die heutige Glücksnummer ist </string>
@@ -313,8 +318,6 @@
     <string name="account_logout_student">Abmeldung von Student</string>
     <string name="account_type_student">Studentenkonto</string>
     <string name="account_type_parent">Elternkonto</string>
-    <string name="account_login_mobile_api">Mobiler API Modus</string>
-    <string name="account_login_hybrid">Hybrid Modus</string>
     <string name="account_details_edit">Daten bearbeiten</string>
     <string name="account_quick_manager">Konten-Manager</string>
     <string name="account_select_student">Schüler auswählen</string>
@@ -336,6 +339,8 @@
     <string name="about_facebook_summary">Gefällt unsere Facebook-Fanpage</string>
     <string name="about_privacy">Datenschutzerklärung</string>
     <string name="about_privacy_summary">Regeln für die Sammlung persönlicher Daten</string>
+    <string name="about_system">System settings</string>
+    <string name="about_system_summary">Open system settings</string>
     <string name="about_homepage">Startseite</string>
     <string name="about_homepage_summary">Besuchen Sie die Website und helfen Sie bei der Entwicklung der Anwendung</string>
     <string name="about_licenses">Lizenzen</string>
@@ -414,7 +419,6 @@
     <string name="pref_view_timetable_show_timers">Aktuelle Lektion markieren</string>
     <string name="pref_view_timetable_show_groups">Gruppen neben Schulfächen anzeigen</string>
     <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>
-    <string name="pref_view_timetable_show_whole_class">Unterricht der ganzen Klasse anzeigen</string>
     <string name="pref_view_subjects_without_grades">Schulfächer ohne Noten anzeigen</string>
     <string name="pref_view_grade_color_scheme">Farbschema der Noten</string>
     <string name="pref_view_grade_sorting_mode">Schulfachen sortieren</string>
@@ -422,6 +426,7 @@
     <string name="pref_notify_header">Benachrichtigungen</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>
     <string name="pref_notify_upcoming_lessons_switch">Benachrichtigungen über bevorstehende Lektionen anzeigen</string>
+    <string name="pref_notify_open_system_settings">Open system notification settings</string>
     <string name="pref_notify_fix_sync_issues">Synchronisierungs- und Benachrichtigungsprobleme reparieren</string>
     <string name="pref_notify_fix_sync_issues_message">Ihr Gerät hat möglicherweise Probleme mit der Datensynchronisierung und Benachrichtigungen.\n\nUm diese zu reparieren, fügen Sie Wulkanowy zum Autostart hinzu und deaktivieren Sie die Batterieoptimierung in den Systemeinstellungen des Geräts.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Gehe zu den Einstellungen</string>
@@ -439,6 +444,7 @@
     <string name="pref_other_grade_modifier_plus">Wert des Plus</string>
     <string name="pref_other_grade_modifier_minus">Wert des Minus</string>
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
+    <string name="pref_other_optional_arithmetic_average">Show arithmetic average when no weights provided</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>
@@ -458,18 +464,15 @@
     <string name="pref_advanced_category">Erweitert</string>
     <string name="pref_about_category_summary">App-Version, Mitarbeiter, soziale Portale, Lizenzen</string>
     <!--Notification Channels-->
-    <string name="channel_new_entries">Neue Einträge im Klassenbuch</string>
     <string name="channel_new_grades">Neue Noten</string>
+    <string name="channel_new_homework">New homework</string>
+    <string name="channel_new_exam">New exams</string>
     <string name="channel_lucky_number">Glückliche Nummer</string>
     <string name="channel_new_message">Neue Nachrichten</string>
     <string name="channel_new_notes">Neue Eintragen</string>
     <string name="channel_push">Push-Benachrichtigungen</string>
     <string name="channel_upcoming_lessons">Bevorstehende Lektionen</string>
     <string name="channel_debug">Debuggen</string>
-    <!--Drop kitkat alert dialog strings-->
-    <string name="drop_kitkat_title">Ende der Unterstützung</string>
-    <string name="drop_kitkat_content">Wir beenden die Unterstützung für dein Gerät. Es werden keine neuen Funktionen mehr in Wulkanowy erscheinen. Allerdings werden wir bis Ende 2021 kritische Patches veröffentlichen, so dass du Zeit hast, zu einem neueren Modell zu wechseln</string>
-    <string name="drop_kitkat_again">Nicht mehr fragen</string>
     <!--Colors-->
     <string name="all_black">Schwarz</string>
     <string name="all_red">Rot</string>

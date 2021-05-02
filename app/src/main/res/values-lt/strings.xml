@@ -36,7 +36,6 @@
     <string name="login_type_hybrid">Hibridas</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
-    <string name="login_api_key_hint">API raktas</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Prisijungti</string>
     <string name="login_invalid_password">Slaptažodis per trumpas</string>
@@ -62,7 +61,6 @@
     <string name="login_contact_email">El. paštas</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Send email</string>
-    <string name="login_email_details">Describe details of problem:</string>
     <string name="login_recover_warning">Make sure you select the correct UONET+ register variation!</string>
     <string name="login_recover_button">I forgot my password</string>
     <string name="login_recover_title">Recover your account</string>
@@ -81,13 +79,10 @@
     <string name="grade_weight">Svoris</string>
     <string name="grade_weight_value">Svoris: %s</string>
     <string name="grade_comment">Pastabos</string>
-    <string name="grade_no_new_items">Jokių naujų laipsnių</string>
     <string name="grade_number_new_items">Number of new ratings: %1$d</string>
     <string name="grade_average">Vidurkis: %1$.2f</string>
     <string name="grade_points_sum">Puantai: %s</string>
     <string name="grade_no_average">Jokiu vidurkis</string>
-    <string name="grade_predicted">Numatomas: %1$s</string>
-    <string name="grade_final">Galutinis: %1$s</string>
     <string name="grade_summary_points">Bendras punktų skaičius</string>
     <string name="grade_summary_final_grade">Galutinis laipsnis</string>
     <string name="grade_summary_predicted_grade">Numatomas laipsnis</string>
@@ -184,31 +179,35 @@
     <string name="attendance_unknown">Unknown</string>
     <string name="attendance_number">Number of lesson</string>
     <string name="attendance_no_items">No entries</string>
-    <plurals name="attendance_number_absences">
-        <item quantity="one">%1$d absence</item>
-        <item quantity="few">%1$d absences</item>
-        <item quantity="many">%1$d absences</item>
-        <item quantity="other">%1$d absences</item>
-    </plurals>
     <string name="attendance_excuse_dialog_reason">Absence reason (optional)</string>
     <string name="attendance_excuse_dialog_submit">Send</string>
     <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
     <string name="attendance_excuse_no_selection">You must select at least one absence!</string>
     <string name="attendance_excuse_title">Excuse</string>
     <!--Attendance summary-->
-    <string name="attendance_summary_final">Attendance</string>
     <string name="attendance_summary_total">Total</string>
     <!--Exam-->
     <string name="exam_no_items">No exams this week</string>
     <string name="exam_type">Type</string>
     <string name="exam_entry_date">Entry date</string>
+    <plurals name="exam_notify_new_item_title">
+        <item quantity="one">New exam</item>
+        <item quantity="few">New exams</item>
+        <item quantity="many">New exams</item>
+        <item quantity="other">New exams</item>
+    </plurals>
+    <plurals name="exam_number_item">
+        <item quantity="one">%d exam</item>
+        <item quantity="few">%d exams</item>
+        <item quantity="many">%d exams</item>
+        <item quantity="other">%d exams</item>
+    </plurals>
     <!--Message-->
     <string name="message_inbox">Inbox</string>
     <string name="message_sent">Sent</string>
     <string name="message_trash">Trash</string>
     <string name="message_no_subject">(no subject)</string>
     <string name="message_no_items">No messages</string>
-    <string name="message_preview_error">An error occurred while downloading message content</string>
     <string name="message_from">From:</string>
     <string name="message_to">To:</string>
     <string name="message_date">Date: %s</string>
@@ -308,6 +307,18 @@
     <string name="homework_mark_as_done">Mark as done</string>
     <string name="homework_mark_as_undone">Mark as undone</string>
     <string name="homework_attachments">Attachments</string>
+    <plurals name="homework_notify_new_item_title">
+        <item quantity="one">New homework</item>
+        <item quantity="few">New homework</item>
+        <item quantity="many">New homework</item>
+        <item quantity="other">New homework</item>
+    </plurals>
+    <plurals name="homework_number_item">
+        <item quantity="one">%d homework</item>
+        <item quantity="few">%d homework</item>
+        <item quantity="many">%d homework</item>
+        <item quantity="other">%d homework</item>
+    </plurals>
     <!--Lucky number-->
     <string name="lucky_number_title">Lucky number</string>
     <string name="lucky_number_header">Today\'s lucky number is</string>
@@ -353,8 +364,6 @@
     <string name="account_logout_student">Student logout</string>
     <string name="account_type_student">Student account</string>
     <string name="account_type_parent">Parent account</string>
-    <string name="account_login_mobile_api">Mobile API mode</string>
-    <string name="account_login_hybrid">Hybrid mode</string>
     <string name="account_details_edit">Edit data</string>
     <string name="account_quick_manager">Accounts manager</string>
     <string name="account_select_student">Select student</string>
@@ -376,6 +385,8 @@
     <string name="about_facebook_summary">Like our facebook fanpage</string>
     <string name="about_privacy">Privacy policy</string>
     <string name="about_privacy_summary">Rules for collecting personal data</string>
+    <string name="about_system">System settings</string>
+    <string name="about_system_summary">Open system settings</string>
     <string name="about_homepage">Homepage</string>
     <string name="about_homepage_summary">Visit the website and help develop the application</string>
     <string name="about_licenses">Licenses</string>
@@ -454,7 +465,6 @@
     <string name="pref_view_timetable_show_timers">Mark current lesson</string>
     <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
-    <string name="pref_view_timetable_show_whole_class">Show whole class lessons</string>
     <string name="pref_view_subjects_without_grades">Show subjects without grades</string>
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>
     <string name="pref_view_grade_sorting_mode">Subjects sorting</string>
@@ -462,6 +472,7 @@
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show notifications</string>
     <string name="pref_notify_upcoming_lessons_switch">Show upcoming lesson notifications</string>
+    <string name="pref_notify_open_system_settings">Open system notification settings</string>
     <string name="pref_notify_fix_sync_issues">Fix synchronization &amp; notifications issues</string>
     <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Go to settings</string>
@@ -479,6 +490,7 @@
     <string name="pref_other_grade_modifier_plus">Value of the plus</string>
     <string name="pref_other_grade_modifier_minus">Value of the minus</string>
     <string name="pref_other_fill_message_content">Reply with message history</string>
+    <string name="pref_other_optional_arithmetic_average">Show arithmetic average when no weights provided</string>
     <string name="pref_settings_advanced_title">Advanced</string>
     <string name="pref_settings_appearance_title">Appearance &amp; Behavior</string>
     <string name="pref_settings_notifications_title">Notifications</string>
@@ -498,18 +510,15 @@
     <string name="pref_advanced_category">Advanced</string>
     <string name="pref_about_category_summary">App version, contributors, social portals, licenses</string>
     <!--Notification Channels-->
-    <string name="channel_new_entries">New entries in register</string>
     <string name="channel_new_grades">New grades</string>
+    <string name="channel_new_homework">New homework</string>
+    <string name="channel_new_exam">New exams</string>
     <string name="channel_lucky_number">Lucky number</string>
     <string name="channel_new_message">New messages</string>
     <string name="channel_new_notes">New notes</string>
     <string name="channel_push">Push notifications</string>
     <string name="channel_upcoming_lessons">Upcoming lessons</string>
     <string name="channel_debug">Debug</string>
-    <!--Drop kitkat alert dialog strings-->
-    <string name="drop_kitkat_title">End of support</string>
-    <string name="drop_kitkat_content">We are ending support for your device. No more new features will appear for it in Wulkanowy. However, we will be releasing critical patches until the end of 2021 so you have time to switch to a newer model</string>
-    <string name="drop_kitkat_again">Don\'t show again</string>
     <!--Colors-->
     <string name="all_black">Black</string>
     <string name="all_red">Red</string>

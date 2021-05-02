@@ -36,7 +36,6 @@
     <string name="login_type_hybrid">Hybridní</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
-    <string name="login_api_key_hint">Klíč API</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Přihlásit</string>
     <string name="login_invalid_password">Toto heslo je příliš krátké</string>
@@ -62,7 +61,6 @@
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Poslat e-mail</string>
-    <string name="login_email_details">Popište podrobnosti problému:</string>
     <string name="login_recover_warning">Ujistěte se, že jste vybrali správnou variantu deníku UONET+!</string>
     <string name="login_recover_button">Zapomněl jsem své heslo</string>
     <string name="login_recover_title">Obnovte svůj účet</string>
@@ -81,13 +79,10 @@
     <string name="grade_weight">Váha</string>
     <string name="grade_weight_value">Váha: %s</string>
     <string name="grade_comment">Komentář</string>
-    <string name="grade_no_new_items">Žádné nové známky</string>
     <string name="grade_number_new_items">Počet nových známek: %1$d</string>
     <string name="grade_average">Průměr: %1$.2f</string>
     <string name="grade_points_sum">Body: %s</string>
     <string name="grade_no_average">Bez průměru</string>
-    <string name="grade_predicted">Předpokládaná: %1$s</string>
-    <string name="grade_final">Konečná: %1$s</string>
     <string name="grade_summary_points">Součet bodů</string>
     <string name="grade_summary_final_grade">Konečná známka</string>
     <string name="grade_summary_predicted_grade">Předpokládaná známka</string>
@@ -184,31 +179,35 @@
     <string name="attendance_unknown">Neznámý</string>
     <string name="attendance_number">Číslo lekce</string>
     <string name="attendance_no_items">Žádné položky</string>
-    <plurals name="attendance_number_absences">
-        <item quantity="one">%1$d nepřítomnost</item>
-        <item quantity="few">%1$d nepřítomnosti</item>
-        <item quantity="many">%1$d nepřítomnosti</item>
-        <item quantity="other">%1$d nepřítomnosti</item>
-    </plurals>
     <string name="attendance_excuse_dialog_reason">Důvod nepřítomnosti (volitelný)</string>
     <string name="attendance_excuse_dialog_submit">Poslat</string>
     <string name="attendance_excuse_success">Žádost o omluvu nepřítomnosti byla úspěšně odeslána!</string>
     <string name="attendance_excuse_no_selection">Musíte vybrat alespoň jednu nepřítomnost!</string>
     <string name="attendance_excuse_title">Ospravedlnit</string>
     <!--Attendance summary-->
-    <string name="attendance_summary_final">Docházka</string>
     <string name="attendance_summary_total">Společně</string>
     <!--Exam-->
     <string name="exam_no_items">Tento týden žádné testy</string>
     <string name="exam_type">Typ</string>
     <string name="exam_entry_date">Datum vstupu</string>
+    <plurals name="exam_notify_new_item_title">
+        <item quantity="one">Nová zkouška</item>
+        <item quantity="few">Nové zkoušky</item>
+        <item quantity="many">Nové zkoušky</item>
+        <item quantity="other">Nové zkoušky</item>
+    </plurals>
+    <plurals name="exam_number_item">
+        <item quantity="one">%d zkouška</item>
+        <item quantity="few">%d zkoušky</item>
+        <item quantity="many">%d zkoušek</item>
+        <item quantity="other">%d zkoušek</item>
+    </plurals>
     <!--Message-->
     <string name="message_inbox">Doručená pošta</string>
     <string name="message_sent">Odesláno</string>
     <string name="message_trash">Koš</string>
     <string name="message_no_subject">(žádný předmět)</string>
     <string name="message_no_items">Žádné zprávy</string>
-    <string name="message_preview_error">Při stahování obsahu zprávy došlo k chybě</string>
     <string name="message_from">Od:</string>
     <string name="message_to">Komu:</string>
     <string name="message_date">Datum: %s</string>
@@ -308,6 +307,18 @@
     <string name="homework_mark_as_done">Označit jako hotové</string>
     <string name="homework_mark_as_undone">Neudělané</string>
     <string name="homework_attachments">Přílohy</string>
+    <plurals name="homework_notify_new_item_title">
+        <item quantity="one">Nový domácí úkol</item>
+        <item quantity="few">Nové domácí úkoly</item>
+        <item quantity="many">Nové domácí úkoly</item>
+        <item quantity="other">Nové domácí úkoly</item>
+    </plurals>
+    <plurals name="homework_number_item">
+        <item quantity="one">%d domácí úkol</item>
+        <item quantity="few">%d domácí úkoly</item>
+        <item quantity="many">%d domácích úkolů</item>
+        <item quantity="other">%d domácích úkolů</item>
+    </plurals>
     <!--Lucky number-->
     <string name="lucky_number_title">Šťastné číslo</string>
     <string name="lucky_number_header">Dnešní šťastné číslo je</string>
@@ -353,8 +364,6 @@
     <string name="account_logout_student">Odhlášení žáků</string>
     <string name="account_type_student">Žákův účet</string>
     <string name="account_type_parent">Rodičovský účet</string>
-    <string name="account_login_mobile_api">Režim Mobilního API</string>
-    <string name="account_login_hybrid">Hybridní režim</string>
     <string name="account_details_edit">Upravit data</string>
     <string name="account_quick_manager">Manažer účtů</string>
     <string name="account_select_student">Vyberte žáka</string>
@@ -376,6 +385,8 @@
     <string name="about_facebook_summary">Stejně jako naše facebooková fanpage</string>
     <string name="about_privacy">Zásady ochrany osobních údajů</string>
     <string name="about_privacy_summary">Pravidla pro shromažďování osobních údajů</string>
+    <string name="about_system">Systemová nastavení</string>
+    <string name="about_system_summary">Otevřít systémová nastavení</string>
     <string name="about_homepage">Domovská stránka</string>
     <string name="about_homepage_summary">Navštivte stránku a pomozte s vývojem aplikace</string>
     <string name="about_licenses">Licence</string>
@@ -454,7 +465,6 @@
     <string name="pref_view_timetable_show_timers">Označit aktuální lekci</string>
     <string name="pref_view_timetable_show_groups">Zobrazit skupiny vedle předmětů</string>
     <string name="pref_view_grade_statistics_list">Zobrazit seznam grafů v známkách třídy</string>
-    <string name="pref_view_timetable_show_whole_class">Zobrazit lekce pro celou třídu</string>
     <string name="pref_view_subjects_without_grades">Zobrazit předměty bez známek</string>
     <string name="pref_view_grade_color_scheme">Známky barevné schéma</string>
     <string name="pref_view_grade_sorting_mode">Třídění předmětů</string>
@@ -462,6 +472,7 @@
     <string name="pref_notify_header">Upozornění</string>
     <string name="pref_notify_switch">Zobrazit upozornění</string>
     <string name="pref_notify_upcoming_lessons_switch">Zobrazit upozornění o nadcházející lekci</string>
+    <string name="pref_notify_open_system_settings">Otevřít systémová nastavení upozornění</string>
     <string name="pref_notify_fix_sync_issues">Opravte problémy se synchronizací a upozorněním</string>
     <string name="pref_notify_fix_sync_issues_message">Vaše zařízení může mít problémy se synchronizací dat as upozorněními.\n\nChcete-li je opravit, přidejte Wulkanového do funkce Autostart a vypněte optimalizaci/úsporu baterie v nastavení systému telefonu.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Přejít do nastavení</string>
@@ -479,6 +490,7 @@
     <string name="pref_other_grade_modifier_plus">Hodnota plusu</string>
     <string name="pref_other_grade_modifier_minus">Hodnota mínusu</string>
     <string name="pref_other_fill_message_content">Odpovědět s historií zpráv</string>
+    <string name="pref_other_optional_arithmetic_average">Vypočítat aritmetický průměr, pokud žádná známka nemá váhu</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhled a chování</string>
     <string name="pref_settings_notifications_title">Upozornění</string>
@@ -498,18 +510,15 @@
     <string name="pref_advanced_category">Pokročilé</string>
     <string name="pref_about_category_summary">Verze aplikace, tvůrci, sociální portály, licence</string>
     <!--Notification Channels-->
-    <string name="channel_new_entries">Nové položky v deníku</string>
     <string name="channel_new_grades">Nové známky</string>
+    <string name="channel_new_homework">Nové domácí úkoly</string>
+    <string name="channel_new_exam">Nové zkoušky</string>
     <string name="channel_lucky_number">Šťastné číslo</string>
     <string name="channel_new_message">Nové zprávy</string>
     <string name="channel_new_notes">Nové poznámky</string>
     <string name="channel_push">Push upozornění</string>
     <string name="channel_upcoming_lessons">Nadcházející lekce</string>
     <string name="channel_debug">Ladění</string>
-    <!--Drop kitkat alert dialog strings-->
-    <string name="drop_kitkat_title">Konec podpory</string>
-    <string name="drop_kitkat_content">Ukončujeme podporu pro vaše zařízení. V Wulkanovým už pro něj nebudou žádné nové funkce. Kritické opravy však budeme vydávat až do konce roku 2021, abyste měli čas přejít na novější model</string>
-    <string name="drop_kitkat_again">Nezobrazovat znovu</string>
     <!--Colors-->
     <string name="all_black">Černý</string>
     <string name="all_red">Červený</string>

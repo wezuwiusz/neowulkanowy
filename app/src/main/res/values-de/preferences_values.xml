@@ -45,9 +45,4 @@
         <item>Durchschnitt der Noten aus beiden Semestern</item>
         <item>Durchschnitt der Noten aus dem ganzen Jahr</item>
     </string-array>
-    <string-array name="timetable_show_whole_class_entries">
-        <item>Nicht zeigen</item>
-        <item>Alle zeigen</item>
-        <item>Zeigen die reduzierte</item>
-    </string-array>
 </resources>

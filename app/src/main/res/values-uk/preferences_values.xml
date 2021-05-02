@@ -45,9 +45,4 @@
         <item>Середнє оцінювання за обидва семестри</item>
         <item>Середнє оцінювання за весь рік</item>
     </string-array>
-    <string-array name="timetable_show_whole_class_entries">
-        <item>Не показувати</item>
-        <item>Показати все</item>
-        <item>Показати менше</item>
-    </string-array>
 </resources>

@@ -45,9 +45,4 @@
         <item>Priemer známok z oboch semestrov</item>
         <item>Priemer známok z celého roka</item>
     </string-array>
-    <string-array name="timetable_show_whole_class_entries">
-        <item>Nezobrazovať</item>
-        <item>Zobraziť všetko</item>
-        <item>Zobraziť menšie</item>
-    </string-array>
 </resources>

@@ -45,9 +45,4 @@
         <item>Abiejų semestrų laipsnių vidurkis</item>
         <item>Visų metų laipsnių vidurkis</item>
     </string-array>
-    <string-array name="timetable_show_whole_class_entries">
-        <item>Nerodyti</item>
-        <item>Rodyti viską</item>
-        <item>Rodyti mažesnį</item>
-    </string-array>
 </resources>
