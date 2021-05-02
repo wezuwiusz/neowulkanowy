@@ -15,10 +15,14 @@
         tools:itemCount="1"
         tools:listitem="@layout/item_homework_dialog_details" />
 
+    <View
+        android:layout_width="match_parent"
+        android:background="@drawable/ic_all_divider"
+        android:layout_height="1dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_all_divider"
         android:gravity="end"
         android:minHeight="52dp"
         android:orientation="horizontal">
