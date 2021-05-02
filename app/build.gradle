@@ -143,8 +143,7 @@ play {
 huaweiPublish {
     instances {
         hmsRelease {
-            clientId = System.getenv("AGC_CLIENT_ID")
-            clientSecret = System.getenv("AGC_CLIENT_SECRET")
+            credentialsPath = "$rootDir/app/src/release/agconnect-credentials.json"
             buildFormat = "apk"
             deployType = "draft"
         }
