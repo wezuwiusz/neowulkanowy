@@ -424,6 +424,7 @@
     <string name="student_info_male">Male</string>
     <string name="student_info_female">Female</string>
     <string name="student_info_last_name">Last name</string>
+    <string name="student_info_guardian">Guardian</string>
 
 
     <!--Account edit-->
