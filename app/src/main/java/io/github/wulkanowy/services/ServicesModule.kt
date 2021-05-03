@@ -33,6 +33,7 @@ import io.github.wulkanowy.services.sync.works.LuckyNumberWork
 import io.github.wulkanowy.services.sync.works.MessageWork
 import io.github.wulkanowy.services.sync.works.NoteWork
 import io.github.wulkanowy.services.sync.works.RecipientWork
+import io.github.wulkanowy.services.sync.works.SchoolAnnouncementWork
 import io.github.wulkanowy.services.sync.works.TeacherWork
 import io.github.wulkanowy.services.sync.works.TimetableWork
 import io.github.wulkanowy.services.sync.works.Work
@@ -46,15 +47,18 @@ abstract class ServicesModule {
     companion object {
 
         @Provides
-        fun provideWorkManager(@ApplicationContext context: Context) = WorkManager.getInstance(context)
+        fun provideWorkManager(@ApplicationContext context: Context) =
+            WorkManager.getInstance(context)
 
         @Singleton
         @Provides
-        fun provideNotificationManager(@ApplicationContext context: Context) = NotificationManagerCompat.from(context)
+        fun provideNotificationManager(@ApplicationContext context: Context) =
+            NotificationManagerCompat.from(context)
 
         @Singleton
         @Provides
-        fun provideAlarmManager(@ApplicationContext context: Context): AlarmManager = context.getSystemService()!!
+        fun provideAlarmManager(@ApplicationContext context: Context): AlarmManager =
+            context.getSystemService()!!
     }
 
     @Binds
@@ -108,6 +112,10 @@ abstract class ServicesModule {
     @Binds
     @IntoSet
     abstract fun provideGradeStatistics(work: GradeStatisticsWork): Work
+
+    @Binds
+    @IntoSet
+    abstract fun provideSchoolAnnouncementWork(work: SchoolAnnouncementWork): Work
 
     @Binds
     @IntoSet
