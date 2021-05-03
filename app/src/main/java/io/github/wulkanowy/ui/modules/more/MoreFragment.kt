@@ -51,9 +51,6 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
     override val luckyNumberRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.lucky_number_title) to getCompatDrawable(R.drawable.ic_more_lucky_number) }
 
-    override val mobileDevicesRes: Pair<String, Drawable?>?
-        get() = context?.run { getString(R.string.mobile_devices_title) to getCompatDrawable(R.drawable.ic_more_mobile_devices) }
-
     override val conferencesRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.conferences_title) to getCompatDrawable(R.drawable.ic_more_conferences) }
 
@@ -62,6 +59,9 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override val schoolAndTeachersRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.schoolandteachers_title) to getCompatDrawable((R.drawable.ic_more_schoolandteachers)) }
+
+    override val mobileDevicesRes: Pair<String, Drawable?>?
+        get() = context?.run { getString(R.string.mobile_devices_title) to getCompatDrawable(R.drawable.ic_more_mobile_devices) }
 
     override val settingsRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.settings_title) to getCompatDrawable(R.drawable.ic_more_settings) }
@@ -108,10 +108,6 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
         (activity as? MainActivity)?.pushView(LuckyNumberFragment.newInstance())
     }
 
-    override fun openMobileDevicesView() {
-        (activity as? MainActivity)?.pushView(MobileDeviceFragment.newInstance())
-    }
-
     override fun openSchoolAnnouncementView() {
         (activity as? MainActivity)?.pushView(SchoolAnnouncementFragment.newInstance())
     }
@@ -122,6 +118,10 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override fun openSchoolAndTeachersView() {
         (activity as? MainActivity)?.pushView(SchoolAndTeachersFragment.newInstance())
+    }
+
+    override fun openMobileDevicesView() {
+        (activity as? MainActivity)?.pushView(MobileDeviceFragment.newInstance())
     }
 
     override fun openSettingsView() {
