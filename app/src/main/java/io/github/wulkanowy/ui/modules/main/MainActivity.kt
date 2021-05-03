@@ -13,13 +13,10 @@ import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updateMargins
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
@@ -76,7 +73,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     private val overlayProvider by lazy { ElevationOverlayProvider(this) }
 
     private val navController =
-        FragNavController(supportFragmentManager, R.id.mainFragmentContainer)
+        FragNavController(supportFragmentManager, R.id.main_fragment_container)
 
     companion object {
         const val EXTRA_START_MENU = "extraStartMenu"
@@ -118,7 +115,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         super.onCreate(savedInstanceState)
         setContentView(ActivityMainBinding.inflate(layoutInflater).apply { binding = this }.root)
         setSupportActionBar(binding.mainToolbar)
-        messageContainer = binding.mainFragmentContainer
+        messageContainer = binding.mainMessageContainer
         updateHelper.messageContainer = binding.mainFragmentContainer
 
         val section = MainView.Section.values()
@@ -237,18 +234,12 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             setOnViewChangeListener { section, name ->
                 if (section == MainView.Section.ACCOUNT || section == MainView.Section.STUDENT_INFO) {
                     binding.mainBottomNav.isVisible = false
-                    binding.mainFragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                        updateMargins(bottom = 0)
-                    }
 
                     if (appInfo.systemVersion >= P) {
                         window.navigationBarColor = getThemeAttrColor(R.attr.colorSurface)
                     }
                 } else {
                     binding.mainBottomNav.isVisible = true
-                    binding.mainFragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                        updateMargins(bottom = dpToPx(56f).toInt())
-                    }
 
                     if (appInfo.systemVersion >= P) {
                         window.navigationBarColor =
