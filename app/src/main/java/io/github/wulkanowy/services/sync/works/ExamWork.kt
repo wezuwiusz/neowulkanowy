@@ -14,6 +14,7 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewExamChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.waitForResult
 import kotlinx.coroutines.flow.first
@@ -51,12 +52,13 @@ class ExamWork @Inject constructor(
             NotificationCompat.Builder(context, NewExamChannel.CHANNEL_ID)
                 .setContentTitle(
                     context.resources.getQuantityString(
-                        R.plurals.exam_notify_new_item_title,
-                        exam.size,
-                        exam.size
+                        R.plurals.exam_notify_new_item_title, exam.size, exam.size
                     )
                 )
-                .setSmallIcon(R.drawable.ic_main_exam)
+                .setSmallIcon(R.drawable.ic_stat_all)
+                .setLargeIcon(
+                    context.getCompatBitmap(R.drawable.ic_main_exam, R.color.colorPrimary)
+                )
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

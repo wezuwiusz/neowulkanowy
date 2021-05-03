@@ -17,6 +17,7 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.LuckyNumberChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.waitForResult
 import javax.inject.Inject
@@ -42,7 +43,10 @@ class LuckyNumberWork @Inject constructor(
         notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, LuckyNumberChannel.CHANNEL_ID)
             .setContentTitle(context.getString(R.string.lucky_number_notify_new_item_title))
             .setContentText(context.getString(R.string.lucky_number_notify_new_item, luckyNumber.luckyNumber))
-            .setSmallIcon(R.drawable.ic_stat_luckynumber)
+            .setSmallIcon(R.drawable.ic_stat_all)
+            .setLargeIcon(
+                context.getCompatBitmap(R.drawable.ic_stat_luckynumber, R.color.colorPrimary)
+            )
             .setAutoCancel(true)
             .setDefaults(DEFAULT_ALL)
             .setPriority(PRIORITY_HIGH)

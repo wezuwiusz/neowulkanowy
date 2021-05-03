@@ -6,6 +6,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.net.Uri
@@ -20,6 +22,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.core.graphics.drawable.toBitmap
 import io.github.wulkanowy.BuildConfig.APPLICATION_ID
 
 @ColorInt
@@ -42,6 +45,16 @@ fun Context.getCompatColor(@ColorRes colorRes: Int) = ContextCompat.getColor(thi
 
 fun Context.getCompatDrawable(@DrawableRes drawableRes: Int) =
     ContextCompat.getDrawable(this, drawableRes)
+
+fun Context.getCompatDrawable(@DrawableRes drawableRes: Int, @ColorRes colorRes: Int) =
+    getCompatDrawable(drawableRes)?.mutate()?.apply {
+        colorFilter = PorterDuffColorFilter(
+            getCompatColor(colorRes), PorterDuff.Mode.MULTIPLY
+        )
+    }
+
+fun Context.getCompatBitmap(@DrawableRes drawableRes: Int, @ColorRes colorRes: Int) =
+    getCompatDrawable(drawableRes, colorRes)?.toBitmap()
 
 fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -> Unit) {
     Intent.parseUri(uri, 0).let {

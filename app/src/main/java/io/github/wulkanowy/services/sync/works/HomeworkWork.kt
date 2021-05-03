@@ -14,6 +14,7 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewHomeworkChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.sunday
@@ -56,12 +57,13 @@ class HomeworkWork @Inject constructor(
             NotificationCompat.Builder(context, NewHomeworkChannel.CHANNEL_ID)
                 .setContentTitle(
                     context.resources.getQuantityString(
-                        R.plurals.homework_notify_new_item_title,
-                        homework.size,
-                        homework.size
+                        R.plurals.homework_notify_new_item_title, homework.size, homework.size
                     )
                 )
-                .setSmallIcon(R.drawable.ic_more_homework)
+                .setSmallIcon(R.drawable.ic_stat_all)
+                .setLargeIcon(
+                    context.getCompatBitmap(R.drawable.ic_more_homework, R.color.colorPrimary)
+                )
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -76,9 +78,7 @@ class HomeworkWork @Inject constructor(
                 .setStyle(NotificationCompat.InboxStyle().run {
                     setSummaryText(
                         context.resources.getQuantityString(
-                            R.plurals.homework_number_item,
-                            homework.size,
-                            homework.size
+                            R.plurals.homework_number_item, homework.size, homework.size
                         )
                     )
                     homework.forEach { addLine("${it.subject}: ${it.content}") }

@@ -81,7 +81,7 @@ class SyncWorker @AssistedInject constructor(
             Random.nextInt(Int.MAX_VALUE),
             NotificationCompat.Builder(applicationContext, DebugChannel.CHANNEL_ID)
                 .setContentTitle("Debug notification")
-                .setSmallIcon(R.drawable.ic_stat_push)
+                .setSmallIcon(R.drawable.ic_stat_all)
                 .setAutoCancel(true)
                 .setColor(applicationContext.getCompatColor(R.color.colorPrimary))
                 .setStyle(BigTextStyle().bigText("${SyncWorker::class.java.simpleName} result: $result"))

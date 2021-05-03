@@ -18,6 +18,7 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewMessagesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.waitForResult
 import kotlinx.coroutines.flow.first
@@ -44,7 +45,10 @@ class MessageWork @Inject constructor(
         notificationManager.notify(Random.nextInt(Int.MAX_VALUE), NotificationCompat.Builder(context, NewMessagesChannel.CHANNEL_ID)
             .setContentTitle(context.resources.getQuantityString(R.plurals.message_new_items, messages.size, messages.size))
             .setContentText(context.resources.getQuantityString(R.plurals.message_notify_new_items, messages.size, messages.size))
-            .setSmallIcon(R.drawable.ic_stat_message)
+            .setSmallIcon(R.drawable.ic_stat_all)
+            .setLargeIcon(
+                context.getCompatBitmap(R.drawable.ic_stat_message, R.color.colorPrimary)
+            )
             .setAutoCancel(true)
             .setDefaults(DEFAULT_ALL)
             .setPriority(PRIORITY_HIGH)

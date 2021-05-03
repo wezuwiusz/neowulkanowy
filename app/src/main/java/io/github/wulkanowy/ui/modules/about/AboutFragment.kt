@@ -21,10 +21,6 @@ import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.toLocalDateTime
 import javax.inject.Inject
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import android.util.Log
 
 @AndroidEntryPoint
 class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about), AboutView,

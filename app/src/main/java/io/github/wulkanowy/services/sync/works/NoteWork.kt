@@ -20,6 +20,7 @@ import io.github.wulkanowy.sdk.scrapper.notes.NoteCategory.POSITIVE
 import io.github.wulkanowy.services.sync.channels.NewNotesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.waitForResult
 import kotlinx.coroutines.flow.first
@@ -58,7 +59,10 @@ class NoteWork @Inject constructor(
                     else -> context.resources.getQuantityString(R.plurals.note_notify_new_items, notes.size, notes.size)
                 }
             )
-            .setSmallIcon(R.drawable.ic_stat_note)
+            .setSmallIcon(R.drawable.ic_stat_all)
+            .setLargeIcon(
+                context.getCompatBitmap(R.drawable.ic_stat_note, R.color.colorPrimary)
+            )
             .setAutoCancel(true)
             .setDefaults(DEFAULT_ALL)
             .setPriority(PRIORITY_HIGH)

@@ -18,6 +18,7 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.services.sync.channels.NewGradesChannel
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.waitForResult
 import kotlinx.coroutines.flow.first
@@ -48,18 +49,6 @@ class GradeWork @Inject constructor(
             if (it.isNotEmpty()) notifyFinal(it)
             gradeRepository.updateGradesSummary(it.onEach { grade -> grade.isFinalGradeNotified = true })
         }
-    }
-
-    private fun getNotificationBuilder(): NotificationCompat.Builder {
-        return NotificationCompat.Builder(context, NewGradesChannel.CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_stat_grade)
-            .setAutoCancel(true)
-            .setPriority(PRIORITY_HIGH)
-            .setDefaults(DEFAULT_ALL)
-            .setColor(context.getCompatColor(R.color.colorPrimary))
-            .setContentIntent(
-                PendingIntent.getActivity(context, MainView.Section.GRADE.id,
-                    MainActivity.getStartIntent(context, MainView.Section.GRADE, true), FLAG_UPDATE_CURRENT))
     }
 
     private fun notifyDetails(grades: List<Grade>) {
@@ -99,5 +88,24 @@ class GradeWork @Inject constructor(
             })
             .build()
         )
+    }
+
+    private fun getNotificationBuilder(): NotificationCompat.Builder {
+        return NotificationCompat.Builder(context, NewGradesChannel.CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_stat_all)
+            .setLargeIcon(
+                context.getCompatBitmap(R.drawable.ic_stat_grade, R.color.colorPrimary)
+            )
+            .setAutoCancel(true)
+            .setPriority(PRIORITY_HIGH)
+            .setDefaults(DEFAULT_ALL)
+            .setColor(context.getCompatColor(R.color.colorPrimary))
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    context, MainView.Section.GRADE.id,
+                    MainActivity.getStartIntent(context, MainView.Section.GRADE, true),
+                    FLAG_UPDATE_CURRENT
+                )
+            )
     }
 }
