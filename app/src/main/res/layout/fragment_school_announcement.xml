@@ -35,14 +35,6 @@
         android:visibility="gone"
         tools:ignore="UseCompoundDrawables">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/school_announcement_no_items"
-            android:textSize="20sp" />
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,6 +43,14 @@
             app:srcCompat="@drawable/ic_all_about"
             app:tint="?android:attr/textColorPrimary"
             tools:ignore="contentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/school_announcement_no_items"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
