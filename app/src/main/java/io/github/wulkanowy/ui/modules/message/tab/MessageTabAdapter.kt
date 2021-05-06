@@ -57,7 +57,7 @@ class MessageTabAdapter @Inject constructor() :
             messageItemAttachmentIcon.visibility = if (item.hasAttachments) View.VISIBLE else View.GONE
 
             root.setOnClickListener {
-                holder.adapterPosition.let { if (it != NO_POSITION) onClickListener(item, it) }
+                holder.bindingAdapterPosition.let { if (it != NO_POSITION) onClickListener(item, it) }
             }
         }
     }

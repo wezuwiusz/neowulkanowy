@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.xdrop.fuzzywuzzy.FuzzySearch
 import timber.log.Timber
-import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.pow
 
@@ -189,33 +188,30 @@ class MessageTabPresenter @Inject constructor(
     }
 
     private fun calculateMatchRatio(message: Message, query: String): Int {
-        val subjectRatio = FuzzySearch.tokenSortPartialRatio(
-            query.toLowerCase(Locale.getDefault()),
-            message.subject
-        )
+        val subjectRatio = FuzzySearch.tokenSortPartialRatio(query.lowercase(), message.subject)
 
         val senderOrRecipientRatio = FuzzySearch.tokenSortPartialRatio(
-            query.toLowerCase(Locale.getDefault()),
-            if (message.sender.isNotEmpty()) message.sender.toLowerCase(Locale.getDefault())
-            else message.recipient.toLowerCase(Locale.getDefault())
+            query.lowercase(),
+            if (message.sender.isNotEmpty()) message.sender.lowercase()
+            else message.recipient.lowercase()
         )
 
         val dateRatio = listOf(
             FuzzySearch.ratio(
-                query.toLowerCase(Locale.getDefault()),
-                message.date.toFormattedString("dd.MM").toLowerCase(Locale.getDefault())
+                query.lowercase(),
+                message.date.toFormattedString("dd.MM").lowercase()
             ),
             FuzzySearch.ratio(
-                query.toLowerCase(Locale.getDefault()),
-                message.date.toFormattedString("dd.MM.yyyy").toLowerCase(Locale.getDefault())
+                query.lowercase(),
+                message.date.toFormattedString("dd.MM.yyyy").lowercase()
             ),
             FuzzySearch.ratio(
-                query.toLowerCase(Locale.getDefault()),
-                message.date.toFormattedString("d MMMM").toLowerCase(Locale.getDefault())
+                query.lowercase(),
+                message.date.toFormattedString("d MMMM").lowercase()
             ),
             FuzzySearch.ratio(
-                query.toLowerCase(Locale.getDefault()),
-                message.date.toFormattedString("d MMMM yyyy").toLowerCase(Locale.getDefault())
+                query.lowercase(),
+                message.date.toFormattedString("d MMMM yyyy").lowercase()
             )
         ).maxOrNull() ?: 0
 

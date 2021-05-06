@@ -19,7 +19,7 @@ private inline val AttendanceSummary.allAbsences: Double
 fun AttendanceSummary.calculatePercentage() = calculatePercentage(allPresences, allAbsences)
 
 fun List<AttendanceSummary>.calculatePercentage(): Double {
-    return calculatePercentage(sumByDouble { it.allPresences }, sumByDouble { it.allAbsences })
+    return calculatePercentage(sumOf { it.allPresences }, sumOf { it.allAbsences })
 }
 
 private fun calculatePercentage(presence: Double, absence: Double): Double {

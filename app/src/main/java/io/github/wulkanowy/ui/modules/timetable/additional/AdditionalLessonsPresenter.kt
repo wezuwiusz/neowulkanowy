@@ -9,6 +9,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
@@ -164,7 +165,7 @@ class AdditionalLessonsPresenter @Inject constructor(
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
             showNextButton(!currentDate.plusDays(1).isHolidays)
-            updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalize())
+            updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalise())
         }
     }
 }

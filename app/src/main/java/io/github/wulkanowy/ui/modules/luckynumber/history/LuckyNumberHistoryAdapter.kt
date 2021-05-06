@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.databinding.ItemLuckyNumberHistoryBinding
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.weekDayName
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class LuckyNumberHistoryAdapter @Inject constructor() :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = items[position]
         with(holder.binding) {
-            luckyNumberHistoryWeekName.text = item.date.weekDayName.capitalize()
+            luckyNumberHistoryWeekName.text = item.date.weekDayName.capitalise()
             luckyNumberHistoryDate.text = item.date.toFormattedString()
             luckyNumberHistory.text = item.luckyNumber.toString()
         }

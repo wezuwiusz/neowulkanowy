@@ -27,6 +27,7 @@ import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
@@ -180,7 +181,7 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
             setTextViewText(
                 R.id.timetableWidgetDate,
-                date.toFormattedString("EEEE, dd.MM").capitalize()
+                date.toFormattedString("EEEE, dd.MM").capitalise()
             )
             setTextViewText(
                 R.id.timetableWidgetName,

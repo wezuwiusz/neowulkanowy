@@ -43,7 +43,7 @@ fun Month.getFormattedName(): String {
     val formatter = SimpleDateFormat("LLLL", Locale.getDefault())
 
     val date = now().withMonth(value)
-    return formatter.format(date.toInstant(ZoneOffset.UTC).toEpochMilli()).capitalize()
+    return formatter.format(date.toInstant(ZoneOffset.UTC).toEpochMilli()).capitalise()
 }
 
 inline val LocalDate.nextSchoolDay: LocalDate

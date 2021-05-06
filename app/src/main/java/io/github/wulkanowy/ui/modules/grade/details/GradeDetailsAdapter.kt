@@ -108,7 +108,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
 
     private fun bindHeaderViewHolder(holder: HeaderViewHolder, header: GradeDetailsHeader, position: Int) {
         val headerPosition = headers.indexOf(items[position])
-        val adapterPosition = holder.adapterPosition
+        val adapterPosition = holder.bindingAdapterPosition
 
         with(holder.binding) {
             gradeHeaderDivider.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
@@ -161,7 +161,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             gradeItemNote.visibility = if (!grade.isRead) View.VISIBLE else View.GONE
 
             root.setOnClickListener {
-                holder.adapterPosition.let { if (it != NO_POSITION) onClickListener(grade, it) }
+                holder.bindingAdapterPosition.let { if (it != NO_POSITION) onClickListener(grade, it) }
             }
         }
     }

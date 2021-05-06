@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.databinding.HeaderExamBinding
 import io.github.wulkanowy.databinding.ItemExamBinding
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.weekDayName
 import java.time.LocalDate
@@ -42,7 +43,7 @@ class ExamAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.View
     @SuppressLint("DefaultLocale")
     private fun bindHeaderViewHolder(binding: HeaderExamBinding, date: LocalDate) {
         with(binding) {
-            examHeaderDay.text = date.weekDayName.capitalize()
+            examHeaderDay.text = date.weekDayName.capitalise()
             examHeaderDate.text = date.toFormattedString()
         }
     }

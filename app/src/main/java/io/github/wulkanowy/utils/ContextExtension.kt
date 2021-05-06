@@ -126,7 +126,7 @@ fun Context.createNameInitialsDrawable(
     val firstCharFirstWord = words.getOrNull(0)?.firstOrNull() ?: ""
     val firstCharSecondWord = words.getOrNull(1)?.firstOrNull() ?: ""
 
-    val initials = "$firstCharFirstWord$firstCharSecondWord".toUpperCase()
+    val initials = "$firstCharFirstWord$firstCharSecondWord".uppercase()
 
     val bounds = Rect()
     val dimension = this.dpToPx(64f * scaleFactory).toInt()

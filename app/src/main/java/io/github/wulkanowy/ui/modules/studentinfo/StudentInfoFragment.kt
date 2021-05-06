@@ -23,6 +23,7 @@ import io.github.wulkanowy.databinding.FragmentStudentInfoBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
@@ -149,8 +150,8 @@ class StudentInfoFragment :
     override fun showFamilyTypeData(studentInfo: StudentInfo) {
         updateData(
             listOfNotNull(
-                studentInfo.firstGuardian?.let { it.kinship.capitalize() to it.fullName },
-                studentInfo.secondGuardian?.let { it.kinship.capitalize() to it.fullName },
+                studentInfo.firstGuardian?.let { it.kinship.capitalise() to it.fullName },
+                studentInfo.secondGuardian?.let { it.kinship.capitalise() to it.fullName },
             ).map { (title, value) ->
                 val updatedValue = value.ifBlank { getString(R.string.all_no_data) }
                 val updatedTitle = title.ifBlank { getString(R.string.all_no_data) }
