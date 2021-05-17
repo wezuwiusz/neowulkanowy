@@ -70,6 +70,8 @@ interface MainView : BaseView {
         ABOUT(10),
         SCHOOL(11),
         ACCOUNT(12),
-        STUDENT_INFO(13)
+        STUDENT_INFO(13),
+        CONFERENCE(14),
+        SCHOOL_ANNOUNCEMENT(15)
     }
 }
