@@ -107,7 +107,7 @@ class StudentInfoFragment :
         }
     }
 
-    override fun updateData(data: List<Pair<String, String>>) {
+    override fun updateData(data: List<StudentInfoItem>) {
         with(studentInfoAdapter) {
             items = data
             notifyDataSetChanged()
@@ -129,7 +129,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_family_name) to studentInfo.familyName,
                 getString(R.string.student_info_parents_name) to studentInfo.parentsNames
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
@@ -141,7 +145,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_cellphone) to studentInfo.cellPhoneNumber,
                 getString(R.string.student_info_email) to studentInfo.email
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
@@ -153,10 +161,11 @@ class StudentInfoFragment :
                 studentInfo.firstGuardian?.let { it.kinship.capitalise() to it.fullName },
                 studentInfo.secondGuardian?.let { it.kinship.capitalise() to it.fullName },
             ).map { (title, value) ->
-                val updatedValue = value.ifBlank { getString(R.string.all_no_data) }
-                val updatedTitle = title.ifBlank { getString(R.string.all_no_data) }
-
-                updatedTitle to updatedValue
+                StudentInfoItem(
+                    title.ifBlank { getString(R.string.all_no_data) },
+                    value.ifBlank { getString(R.string.all_no_data) },
+                    true,
+                )
             }
         )
     }
@@ -168,7 +177,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_registered_address) to studentInfo.registeredAddress,
                 getString(R.string.student_info_correspondence_address) to studentInfo.correspondenceAddress
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
@@ -182,7 +195,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_phones) to studentGuardian.phones,
                 getString(R.string.student_info_email) to studentGuardian.email
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
@@ -196,7 +213,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_phones) to studentGuardian.phones,
                 getString(R.string.student_info_email) to studentGuardian.email
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
