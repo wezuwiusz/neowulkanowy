@@ -27,8 +27,8 @@ jobs:
             key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
         - name: Unit tests
           run: |
-            ./gradlew --build-cache -Pcoverage testFdroidDebugUnitTest --stacktrace
-            ./gradlew --build-cache -Pcoverage jacocoTestReport --stacktrace
+            ./gradlew testFdroidDebugUnitTest --stacktrace
+            ./gradlew jacocoTestReport --stacktrace
         - uses: codecov/codecov-action@v1
           with:
               flags: unit
