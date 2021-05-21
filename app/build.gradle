@@ -22,8 +22,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 91
-        versionName "1.1.5"
+        versionCode 92
+        versionName "1.1.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -135,7 +135,7 @@ play {
     serviceAccountCredentials = file('key.p12')
     defaultToAppBundles = false
     track = 'production'
-    updatePriority = 1
+    updatePriority = 5
 }
 
 huaweiPublish {

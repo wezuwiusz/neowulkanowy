@@ -1,5 +1,6 @@
-Wersja 1.1.5
+Wersja 1.1.6
 
-Naprawiliśmy liczenie średniej wszystkich ocen z całego roku
+- naprawiliśmy błąd przy wysyłaniu wiadomości
+- naprawiliśmy oznaczanie odwołanych lekcji jako zastępstwa
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
