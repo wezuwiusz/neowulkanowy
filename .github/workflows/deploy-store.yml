@@ -62,14 +62,13 @@ jobs:
           gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/agconnect-services.json.gpg
           gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg
           gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg
-      - name: Build HMS version
+      - name: Prepare credentials
+        env:
+          AGC_CREDENTIALS: ${{ secrets.AGC_CREDENTIALS }}
+        run: echo $AGC_CREDENTIALS > ./app/src/release/agconnect-credentials.json
+      - name: Build and publish HMS version
         env:
           PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
           PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
           PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
-        run: ./gradlew assembleHmsRelease --stacktrace
-      - name: Upload APK to AppGallery
-        env:
-          AGC_CLIENT_ID: ${{ secrets.AGC_CLIENT_ID }}
-          AGC_CLIENT_SECRET: ${{ secrets.AGC_CLIENT_SECRET }}
-        run: ./gradlew publishHuaweiAppGalleryHmsRelease --stacktrace;
+        run: ./gradlew assembleHmsRelease --stacktrace && ./gradlew publishHuaweiAppGalleryHmsRelease --stacktrace

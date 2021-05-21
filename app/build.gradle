@@ -21,8 +21,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 91
-        versionName "1.1.5"
+        versionCode 92
+        versionName "1.1.6"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -138,14 +138,13 @@ play {
     serviceAccountCredentials = file('key.p12')
     defaultToAppBundles = false
     track = 'production'
-    updatePriority = 1
+    updatePriority = 5
 }
 
 huaweiPublish {
     instances {
         hmsRelease {
-            clientId = System.getenv("AGC_CLIENT_ID")
-            clientSecret = System.getenv("AGC_CLIENT_SECRET")
+            credentialsPath = "$rootDir/app/src/release/agconnect-credentials.json"
             buildFormat = "apk"
             deployType = "draft"
         }
@@ -162,7 +161,7 @@ ext {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:1.1.5"
+    implementation "io.github.wulkanowy:sdk:1.1.6"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
