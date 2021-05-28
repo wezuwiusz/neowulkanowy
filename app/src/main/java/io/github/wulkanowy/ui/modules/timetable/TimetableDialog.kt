@@ -18,7 +18,6 @@ import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 import io.github.wulkanowy.utils.toFormattedString
 import java.time.LocalDateTime
-import java.util.Locale
 
 class TimetableDialog : DialogFragment() {
 

@@ -51,7 +51,10 @@ private val keyStore: KeyStore
 
 private val cipher: Cipher
     get() {
-        return if (SDK_INT >= M) Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "AndroidKeyStoreBCWorkaround")
+        return if (SDK_INT >= M) Cipher.getInstance(
+            "RSA/ECB/OAEPWithSHA-256AndMGF1Padding",
+            "AndroidKeyStoreBCWorkaround"
+        )
         else Cipher.getInstance("RSA/ECB/PKCS1Padding", "AndroidOpenSSL")
     }
 
@@ -97,8 +100,8 @@ fun decrypt(cipherText: String): String {
 
             CipherInputStream(ByteArrayInputStream(decode(cipherText, DEFAULT)), it).let { input ->
                 val values = ArrayList<Byte>()
-                var nextByte = 0
-                while ({ nextByte = input.read(); nextByte }() != -1) {
+                var nextByte: Int
+                while (run { nextByte = input.read(); nextByte } != -1) {
                     values.add(nextByte.toByte())
                 }
                 val bytes = ByteArray(values.size)

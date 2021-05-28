@@ -1,13 +1,12 @@
 buildscript {
     ext {
-        kotlin_version = '1.5.0'
+        kotlin_version = '1.5.10'
         about_libraries = '8.8.5'
         hilt_version = "2.35.1"
     }
     repositories {
         mavenCentral()
         google()
-        jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://developer.huawei.com/repo/" }
     }
@@ -26,22 +25,10 @@ buildscript {
     }
 }
 
-project.ext.preDexLibs = !project.hasProperty("disablePreDex")
-subprojects {
-    project.plugins.whenPluginAdded { plugin ->
-        if ("com.android.build.gradle.AppPlugin" == plugin.class.name) {
-            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
-        } else if ("com.android.build.gradle.LibraryPlugin" == plugin.class.name) {
-            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
-        }
-    }
-}
-
 allprojects {
     repositories {
         mavenCentral()
         google()
-        jcenter()
         maven { url "https://jitpack.io" }
         maven { url "https://developer.huawei.com/repo/" }
     }
