@@ -126,6 +126,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 play {
     serviceAccountEmail = System.getenv("PLAY_SERVICE_ACCOUNT_EMAIL") ?: "jan@fakelog.cf"
     serviceAccountCredentials = file('key.p12')
