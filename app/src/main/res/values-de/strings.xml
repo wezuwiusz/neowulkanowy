@@ -278,7 +278,7 @@
     <string name="lucky_number_header">Die heutige Glücksnummer ist </string>
     <string name="lucky_number_empty">Keine Information über die Glücksnummer.</string>
     <string name="lucky_number_notify_new_item_title">Glücksnummer für heute</string>
-    <string name="lucky_number_notify_new_item">Die heutige Glücksnummer ist: %d</string>
+    <string name="lucky_number_notify_new_item">Die heutige Glücksnummer ist: %s</string>
     <string name="lucky_number_history_button">Verlauf anzeigen</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Glücksnummerverlauf</string>

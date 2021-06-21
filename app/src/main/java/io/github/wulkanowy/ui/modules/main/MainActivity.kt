@@ -32,6 +32,7 @@ import io.github.wulkanowy.databinding.ActivityMainBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
+import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
@@ -39,6 +40,7 @@ import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
+import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
@@ -107,7 +109,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         MainView.Section.MESSAGE.id to MessageFragment.newInstance(),
         MainView.Section.HOMEWORK.id to HomeworkFragment.newInstance(),
         MainView.Section.NOTE.id to NoteFragment.newInstance(),
-        MainView.Section.LUCKY_NUMBER.id to LuckyNumberFragment.newInstance()
+        MainView.Section.LUCKY_NUMBER.id to LuckyNumberFragment.newInstance(),
+        MainView.Section.SCHOOL_ANNOUNCEMENT.id to SchoolAnnouncementFragment.newInstance(),
+        MainView.Section.CONFERENCE.id to ConferenceFragment.newInstance(),
     )
 
     @SuppressLint("NewApi")

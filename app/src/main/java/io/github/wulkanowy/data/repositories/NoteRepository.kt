@@ -50,8 +50,8 @@ class NoteRepository @Inject constructor(
         }
     )
 
-    fun getNotNotifiedNotes(student: Student): Flow<List<Note>> {
-        return noteDb.loadAll(student.studentId).map { it.filter { note -> !note.isNotified } }
+    fun getNotesFromDatabase(student: Student): Flow<List<Note>> {
+        return noteDb.loadAll(student.studentId)
     }
 
     suspend fun updateNote(note: Note) {

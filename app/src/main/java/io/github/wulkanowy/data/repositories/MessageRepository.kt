@@ -77,8 +77,8 @@ class MessageRepository @Inject constructor(
         }
     )
 
-    fun getNotNotifiedMessages(student: Student): Flow<List<Message>> {
-        return messagesDb.loadAll(student.id.toInt(), RECEIVED.id).map { it.filter { message -> !message.isNotified && message.unread } }
+    fun getMessagesFromDatabase(student: Student): Flow<List<Message>> {
+        return messagesDb.loadAll(student.id.toInt(), RECEIVED.id)
     }
 
     suspend fun updateMessages(messages: List<Message>) {

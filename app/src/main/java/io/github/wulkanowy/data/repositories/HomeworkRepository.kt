@@ -13,7 +13,6 @@ import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.uniqueSubtract
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import java.time.LocalDate
 import javax.inject.Inject
@@ -31,12 +30,9 @@ class HomeworkRepository @Inject constructor(
     private val cacheKey = "homework"
 
     fun getHomework(
-        student: Student,
-        semester: Semester,
-        start: LocalDate,
-        end: LocalDate,
-        forceRefresh: Boolean,
-        notify: Boolean = false
+        student: Student, semester: Semester,
+        start: LocalDate, end: LocalDate,
+        forceRefresh: Boolean, notify: Boolean = false
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         shouldFetch = {
@@ -74,14 +70,8 @@ class HomeworkRepository @Inject constructor(
         }))
     }
 
-    fun getNotNotifiedHomework(
-        semester: Semester,
-        start: LocalDate,
-        end: LocalDate
-    ) = homeworkDb.loadAll(semester.semesterId, semester.studentId, start.monday, end.sunday)
-        .map {
-            it.filter { homework -> !homework.isNotified }
-        }
+    fun getHomeworkFromDatabase(semester: Semester, start: LocalDate, end: LocalDate) =
+        homeworkDb.loadAll(semester.semesterId, semester.studentId, start.monday, end.sunday)
 
     suspend fun updateHomework(homework: List<Homework>) = homeworkDb.updateAll(homework)
 }

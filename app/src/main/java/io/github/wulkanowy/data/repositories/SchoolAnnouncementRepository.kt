@@ -57,12 +57,8 @@ class SchoolAnnouncementRepository @Inject constructor(
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, student))
         }
     )
-    fun getNotNotifiedSchoolAnnouncement(semester: Semester): Flow<List<SchoolAnnouncement>> {
-        return schoolAnnouncementDb.loadAll(
-            studentId = semester.studentId
-        ).map {
-            it.filter { schoolAnnouncement -> !schoolAnnouncement.isNotified }
-        }
+    fun getSchoolAnnouncementFromDatabase(student: Student): Flow<List<SchoolAnnouncement>> {
+        return schoolAnnouncementDb.loadAll(student.studentId)
     }
 
     suspend fun updateSchoolAnnouncement(schoolAnnouncement: List<SchoolAnnouncement>) = schoolAnnouncementDb.updateAll(schoolAnnouncement)

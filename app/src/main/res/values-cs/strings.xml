@@ -324,7 +324,7 @@
     <string name="lucky_number_header">Dnešní šťastné číslo je</string>
     <string name="lucky_number_empty">Žádné informace o šťastném čísle</string>
     <string name="lucky_number_notify_new_item_title">Šťastné číslo pro dnešek</string>
-    <string name="lucky_number_notify_new_item">Dnes je šťastným číslem: %d</string>
+    <string name="lucky_number_notify_new_item">Dnes je šťastným číslem: %s</string>
     <string name="lucky_number_history_button">Zobrazit historii</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Historie šťastných čísel</string>

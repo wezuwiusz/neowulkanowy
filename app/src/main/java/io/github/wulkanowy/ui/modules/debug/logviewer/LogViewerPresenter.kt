@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.about.logviewer
+package io.github.wulkanowy.ui.modules.debug.logviewer
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.LoggerRepository

@@ -324,7 +324,7 @@
     <string name="lucky_number_header">Сьогоднішній щасливий номер</string>
     <string name="lucky_number_empty">Брак інформації о щасливому номері</string>
     <string name="lucky_number_notify_new_item_title">Сьогоднішній щасливий номер</string>
-    <string name="lucky_number_notify_new_item">Сьогоднішнім щасливим номером є %d</string>
+    <string name="lucky_number_notify_new_item">Сьогоднішнім щасливим номером є %s</string>
     <string name="lucky_number_history_button">Показати історію</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Історія щасливих чисел</string>

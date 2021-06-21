@@ -324,7 +324,7 @@
     <string name="lucky_number_header">Dzisiejszym szczęśliwym numerkiem jest</string>
     <string name="lucky_number_empty">Brak informacji o szczęśliwym numerku</string>
     <string name="lucky_number_notify_new_item_title">Szczęśliwy numerek na dzisiaj</string>
-    <string name="lucky_number_notify_new_item">Dziś szczęśliwym numerkiem jest: %d</string>
+    <string name="lucky_number_notify_new_item">Dziś szczęśliwym numerkiem jest: %s</string>
     <string name="lucky_number_history_button">Pokaż historię</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Historia numerków</string>

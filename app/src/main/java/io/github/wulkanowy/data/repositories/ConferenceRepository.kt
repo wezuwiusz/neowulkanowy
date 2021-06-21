@@ -12,7 +12,6 @@ import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -60,13 +59,9 @@ class ConferenceRepository @Inject constructor(
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester))
         }
     )
-    fun getNotNotifiedConference(semester: Semester): Flow<List<Conference>> {
-        return conferenceDb.loadAll(
-            diaryId = semester.diaryId,
-            studentId = semester.studentId
-        ).map {
-            it.filter { conference -> !conference.isNotified }
-        }
+
+    fun getConferenceFromDatabase(semester: Semester): Flow<List<Conference>> {
+        return conferenceDb.loadAll(semester.diaryId, semester.studentId)
     }
 
     suspend fun updateConference(conference: List<Conference>) = conferenceDb.updateAll(conference)

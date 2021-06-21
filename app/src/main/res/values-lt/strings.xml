@@ -324,7 +324,7 @@
     <string name="lucky_number_header">Today\'s lucky number is</string>
     <string name="lucky_number_empty">No info about the lucky number</string>
     <string name="lucky_number_notify_new_item_title">Lucky number for today</string>
-    <string name="lucky_number_notify_new_item">Today\'s lucky number is: %d</string>
+    <string name="lucky_number_notify_new_item">Today\'s lucky number is: %s</string>
     <string name="lucky_number_history_button">Show history</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Lucky number history</string>

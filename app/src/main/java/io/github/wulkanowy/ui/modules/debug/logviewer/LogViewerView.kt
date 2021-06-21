@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.about.logviewer
+package io.github.wulkanowy.ui.modules.debug.logviewer
 
 import io.github.wulkanowy.ui.base.BaseView
 import java.io.File

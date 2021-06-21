@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.about.logviewer
+package io.github.wulkanowy.ui.modules.debug.logviewer
 
 import android.view.ViewGroup
 import android.widget.TextView

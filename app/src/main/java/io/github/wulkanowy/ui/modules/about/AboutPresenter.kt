@@ -26,10 +26,10 @@ class AboutPresenter @Inject constructor(
         view?.run {
             when (name) {
                 versionRes?.first -> {
-                    Timber.i("Opening log viewer")
-                    if (appInfo.isDebug) openLogViewer()
+                    Timber.i("Opening debug screen")
+                    if (appInfo.isDebug) openDebugScreen()
                     else openAppInMarket()
-                    analytics.logEvent("about_open", "name" to "log_viewer")
+                    analytics.logEvent("about_open", "name" to "debug_screen")
                 }
                 feedbackRes?.first -> {
                     Timber.i("Opening email client")

@@ -10,7 +10,7 @@ import io.github.wulkanowy.databinding.FragmentAboutBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.contributor.ContributorFragment
 import io.github.wulkanowy.ui.modules.about.license.LicenseFragment
-import io.github.wulkanowy.ui.modules.about.logviewer.LogViewerFragment
+import io.github.wulkanowy.ui.modules.debug.DebugFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
@@ -37,34 +37,60 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
 
     override val versionRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            val buildTimestamp = appInfo.buildTimestamp.toLocalDateTime().toFormattedString("yyyy-MM-dd")
-            val versionSignature = "${appInfo.versionName}-${appInfo.buildFlavor} (${appInfo.versionCode}), $buildTimestamp"
-            Triple(getString(R.string.about_version), versionSignature, getCompatDrawable(R.drawable.ic_all_about))
+            val buildTimestamp =
+                appInfo.buildTimestamp.toLocalDateTime().toFormattedString("yyyy-MM-dd")
+            val versionSignature =
+                "${appInfo.versionName}-${appInfo.buildFlavor} (${appInfo.versionCode}), $buildTimestamp"
+            Triple(
+                getString(R.string.about_version),
+                versionSignature,
+                getCompatDrawable(R.drawable.ic_all_about)
+            )
         }
 
     override val creatorsRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_contributor), getString(R.string.about_contributor_summary), getCompatDrawable(R.drawable.ic_about_creator))
+            Triple(
+                getString(R.string.about_contributor),
+                getString(R.string.about_contributor_summary),
+                getCompatDrawable(R.drawable.ic_about_creator)
+            )
         }
 
     override val feedbackRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_feedback), getString(R.string.about_feedback_summary), getCompatDrawable(R.drawable.ic_about_feedback))
+            Triple(
+                getString(R.string.about_feedback),
+                getString(R.string.about_feedback_summary),
+                getCompatDrawable(R.drawable.ic_about_feedback)
+            )
         }
 
     override val faqRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_faq), getString(R.string.about_faq_summary), getCompatDrawable(R.drawable.ic_about_faq))
+            Triple(
+                getString(R.string.about_faq),
+                getString(R.string.about_faq_summary),
+                getCompatDrawable(R.drawable.ic_about_faq)
+            )
         }
 
     override val discordRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_discord), getString(R.string.about_discord_summary), getCompatDrawable(R.drawable.ic_about_discord))
+            Triple(
+                getString(R.string.about_discord),
+                getString(R.string.about_discord_summary),
+                getCompatDrawable(R.drawable.ic_about_discord)
+            )
         }
 
     override val facebookRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_facebook), getString(R.string.about_facebook_summary), getCompatDrawable(R.drawable.ic_about_facebook))
+            Triple(
+                getString(R.string.about_facebook),
+                getString(R.string.about_facebook_summary),
+                getCompatDrawable(R.drawable.ic_about_facebook)
+            )
         }
 
     override val homepageRes: Triple<String, String, Drawable?>?
@@ -78,12 +104,20 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
 
     override val licensesRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_licenses), getString(R.string.about_licenses_summary), getCompatDrawable(R.drawable.ic_about_licenses))
+            Triple(
+                getString(R.string.about_licenses),
+                getString(R.string.about_licenses_summary),
+                getCompatDrawable(R.drawable.ic_about_licenses)
+            )
         }
 
     override val privacyRes: Triple<String, String, Drawable?>?
         get() = context?.run {
-            Triple(getString(R.string.about_privacy), getString(R.string.about_privacy_summary), getCompatDrawable(R.drawable.ic_about_privacy))
+            Triple(
+                getString(R.string.about_privacy),
+                getString(R.string.about_privacy_summary),
+                getCompatDrawable(R.drawable.ic_about_privacy)
+            )
         }
 
     override val titleStringId get() = R.string.about_title
@@ -118,8 +152,8 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
         context?.openAppInMarket(::showMessage)
     }
 
-    override fun openLogViewer() {
-        (activity as? MainActivity)?.pushView(LogViewerFragment.newInstance())
+    override fun openDebugScreen() {
+        (activity as? MainActivity)?.pushView(DebugFragment.newInstance())
     }
 
     override fun openDiscordInvite() {
@@ -155,7 +189,10 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
     }
 
     override fun openFaqPage() {
-        context?.openInternetBrowser("https://wulkanowy.github.io/czesto-zadawane-pytania", ::showMessage)
+        context?.openInternetBrowser(
+            "https://wulkanowy.github.io/czesto-zadawane-pytania",
+            ::showMessage
+        )
     }
 
     override fun openLicenses() {
@@ -167,7 +204,10 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
     }
 
     override fun openPrivacyPolicy() {
-        context?.openInternetBrowser("https://wulkanowy.github.io/polityka-prywatnosci.html", ::showMessage)
+        context?.openInternetBrowser(
+            "https://wulkanowy.github.io/polityka-prywatnosci.html",
+            ::showMessage
+        )
     }
 
     override fun onDestroyView() {

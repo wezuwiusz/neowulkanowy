@@ -14,7 +14,6 @@ import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.startExamsDay
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import java.time.LocalDate
 import javax.inject.Inject
@@ -69,15 +68,13 @@ class ExamRepository @Inject constructor(
         filterResult = { it.filter { item -> item.date in start..end } }
     )
 
-    fun getNotNotifiedExam(semester: Semester, start: LocalDate): Flow<List<Exam>> {
+    fun getExamsFromDatabase(semester: Semester, start: LocalDate): Flow<List<Exam>> {
         return examDb.loadAll(
             diaryId = semester.diaryId,
             studentId = semester.studentId,
             from = start.startExamsDay,
             end = start.endExamsDay
-        ).map {
-            it.filter { exam -> !exam.isNotified }
-        }
+        )
     }
 
     suspend fun updateExam(exam: List<Exam>) = examDb.updateAll(exam)

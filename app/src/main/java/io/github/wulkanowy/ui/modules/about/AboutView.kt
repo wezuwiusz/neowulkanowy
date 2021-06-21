@@ -29,7 +29,7 @@ interface AboutView : BaseView {
 
     fun openAppInMarket()
 
-    fun openLogViewer()
+    fun openDebugScreen()
 
     fun openDiscordInvite()
 
