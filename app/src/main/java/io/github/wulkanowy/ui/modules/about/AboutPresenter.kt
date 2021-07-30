@@ -51,6 +51,11 @@ class AboutPresenter @Inject constructor(
                     openFacebookPage()
                     analytics.logEvent("about_open", "name" to "facebook")
                 }
+                twitterRes?.first -> {
+                    Timber.i("Opening twitter")
+                    openTwitterPage()
+                    analytics.logEvent("about_open", "name" to "twitter")
+                }
                 homepageRes?.first -> {
                     Timber.i("Opening homepage")
                     openHomepage()
@@ -84,6 +89,7 @@ class AboutPresenter @Inject constructor(
                 faqRes,
                 discordRes,
                 facebookRes,
+                twitterRes,
                 homepageRes,
                 licensesRes,
                 privacyRes

@@ -93,6 +93,15 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
             )
         }
 
+    override val twitterRes: Triple<String, String, Drawable?>?
+        get() = context?.run {
+            Triple(
+                getString(R.string.about_twitter),
+                getString(R.string.about_twitter_summary),
+                getCompatDrawable(R.drawable.ic_about_twitter)
+            )
+        }
+
     override val homepageRes: Triple<String, String, Drawable?>?
         get() = context?.run {
             Triple(
@@ -162,6 +171,10 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
 
     override fun openFacebookPage() {
         context?.openInternetBrowser("https://www.facebook.com/wulkanowy", ::showMessage)
+    }
+
+    override fun openTwitterPage() {
+        context?.openInternetBrowser("https://twitter.com/wulkanowy", ::showMessage)
     }
 
     override fun openHomepage() {

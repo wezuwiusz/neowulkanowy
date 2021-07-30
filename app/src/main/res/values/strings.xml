@@ -414,6 +414,8 @@
     <string name="about_discord">Discord server</string>
     <string name="about_discord_summary">Join the Wulkanowy community</string>
     <string name="about_facebook">Facebook fanpage</string>
+    <string name="about_twitter">Twitter page</string>
+    <string name="about_twitter_summary">Follow us on twitter</string>
     <string name="about_facebook_summary">Like our facebook fanpage</string>
     <string name="about_privacy">Privacy policy</string>
     <string name="about_privacy_summary">Rules for collecting personal data</string>
