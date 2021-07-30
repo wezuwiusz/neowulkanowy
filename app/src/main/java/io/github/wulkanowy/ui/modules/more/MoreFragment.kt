@@ -9,15 +9,15 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentMoreBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
-import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
+import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
-import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.mobiledevice.MobileDeviceFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersFragment
+import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
 import io.github.wulkanowy.ui.modules.settings.SettingsFragment
 import io.github.wulkanowy.utils.getCompatDrawable
 import javax.inject.Inject
@@ -48,9 +48,6 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
     override val noteRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.note_title) to getCompatDrawable(R.drawable.ic_more_note) }
 
-    override val luckyNumberRes: Pair<String, Drawable?>?
-        get() = context?.run { getString(R.string.lucky_number_title) to getCompatDrawable(R.drawable.ic_more_lucky_number) }
-
     override val conferencesRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.conferences_title) to getCompatDrawable(R.drawable.ic_more_conferences) }
 
@@ -65,6 +62,9 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override val settingsRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.settings_title) to getCompatDrawable(R.drawable.ic_more_settings) }
+
+    override val examRes: Pair<String, Drawable?>?
+        get() = context?.run { getString(R.string.exam_title) to getCompatDrawable(R.drawable.ic_main_exam) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -104,10 +104,6 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
         (activity as? MainActivity)?.pushView(NoteFragment.newInstance())
     }
 
-    override fun openLuckyNumberView() {
-        (activity as? MainActivity)?.pushView(LuckyNumberFragment.newInstance())
-    }
-
     override fun openSchoolAnnouncementView() {
         (activity as? MainActivity)?.pushView(SchoolAnnouncementFragment.newInstance())
     }
@@ -126,6 +122,10 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override fun openSettingsView() {
         (activity as? MainActivity)?.pushView(SettingsFragment.newInstance())
+    }
+
+    override fun openExamView() {
+        (activity as? MainActivity)?.pushView(ExamFragment.newInstance())
     }
 
     override fun popView(depth: Int) {

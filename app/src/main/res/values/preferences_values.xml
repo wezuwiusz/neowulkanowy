@@ -109,4 +109,27 @@
         <item>both_semesters</item>
         <item>all_year</item>
     </string-array>
+
+    <string-array name="dashboard_tile_entries">
+        <item>Lucky number</item>
+        <item>Unread messages</item>
+        <item>Attendance</item>
+        <item>Lessons</item>
+        <item>Grades</item>
+        <item>Homework</item>
+        <item>School announcements</item>
+        <item>Exams</item>
+        <item>Conferences</item>
+    </string-array>
+    <string-array name="dashboard_tile_values" translatable="false">
+        <item>LUCKY_NUMBER</item>
+        <item>MESSAGES</item>
+        <item>ATTENDANCE</item>
+        <item>LESSONS</item>
+        <item>GRADES</item>
+        <item>HOMEWORK</item>
+        <item>ANNOUNCEMENTS</item>
+        <item>EXAMS</item>
+        <item>CONFERENCES</item>
+    </string-array>
 </resources>

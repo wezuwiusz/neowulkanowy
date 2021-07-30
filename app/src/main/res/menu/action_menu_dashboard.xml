@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/dashboard_menu_tiles"
+        android:icon="@drawable/ic_more_settings"
+        android:orderInCategory="1"
+        android:title="@string/pref_dashboard_appearance_tiles_title"
+        app:iconTint="@color/material_on_surface_emphasis_medium"
+        app:showAsAction="ifRoom" />
+</menu>

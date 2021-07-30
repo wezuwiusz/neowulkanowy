@@ -23,6 +23,7 @@
     <string name="account_quick_title">Select account</string>
     <string name="account_details_title">Account details</string>
     <string name="student_info_title">Student info</string>
+    <string name="dashboard_title">Dashboard</string>
 
 
     <!--Subtitles-->
@@ -469,6 +470,74 @@
     <string name="logviewer_refresh">Refresh</string>
 
 
+    <!--Dashboard-->
+    <string name="dashboard_timetable_title">Lessons</string>
+    <string name="dashboard_timetable_title_tomorrow">(Tomorrow)</string>
+    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
+    <string name="dashboard_timetable_first_lesson_title_moment">In a moment:</string>
+    <string name="dashboard_timetable_first_lesson_title_soon">Soon:</string>
+    <string name="dashboard_timetable_first_lesson_title_first">First:</string>
+    <string name="dashboard_timetable_first_lesson_title_now">Now:</string>
+    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
+        <item quantity="one">in %1$d minute</item>
+        <item quantity="other">in %1$d minutes</item>
+    </plurals>
+    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
+        <item quantity="one">%1$d more minute</item>
+        <item quantity="other">%1$d more minutes</item>
+    </plurals>
+    <string name="dashboard_timetable_second_lesson_value_end">End of lessons</string>
+    <string name="dashboard_timetable_second_lessons_title">Next:</string>
+    <string name="dashboard_timetable_third_title">Later:</string>
+    <plurals name="dashboard_timetable_third_value">
+        <item quantity="one">%1$d more lesson</item>
+        <item quantity="other">%1$d more lessons</item>
+    </plurals>
+    <string name="dashboard_timetable_third_time">until %1$s</string>
+    <string name="dashboard_timetable_no_lessons">No lessons</string>
+    <string name="dashboard_timetable_error">An error occurred while loading the lesson</string>
+
+    <string name="dashboard_homework_title">Homework</string>
+    <string name="dashboard_homework_no_homework">No homework</string>
+    <string name="dashboard_homework_error">An error occurred while loading the homework</string>
+    <plurals name="dashboard_homework_more">
+        <item quantity="one">%1$d more homework</item>
+        <item quantity="other">%1$d more homework</item>
+    </plurals>
+    <string name="dashboard_homework_time">due %1$s</string>
+
+    <string name="dashboard_grade_title">Last grades</string>
+    <string name="dashboard_grade_no_grade">No new grades</string>
+    <string name="dashboard_grade_error">An error occurred while loading the grades</string>
+
+    <string name="dashboard_announcements_title">School announcements</string>
+    <string name="dashboard_announcements_no_announcements">No announcements</string>
+    <string name="dashboard_announcements_error">An error occurred while loading the announcements</string>
+    <plurals name="dashboard_announcements_more">
+        <item quantity="one">%1$d more announcement</item>
+        <item quantity="other">%1$d more announcements</item>
+    </plurals>
+
+    <string name="dashboard_exams_title">Exams</string>
+    <string name="dashboard_exams_no_exams">No exams</string>
+    <string name="dashboard_exams_error">An error occurred while loading the exams</string>
+    <plurals name="dashboard_exams_more">
+        <item quantity="one">%1$d more exam</item>
+        <item quantity="other">%1$d more exams</item>
+    </plurals>
+
+    <string name="dashboard_conferences_title">Conferences</string>
+    <string name="dashboard_conferences_no_conferences">No conferences</string>
+    <string name="dashboard_conferences_error">An error occurred while loading the conferences</string>
+    <plurals name="dashboard_conference_more">
+        <item quantity="one">%1$d more conference</item>
+        <item quantity="other">%1$d more conferences</item>
+    </plurals>
+
+    <string name="dashboard_horizontal_group_error">An error occurred while loading data</string>
+    <string name="dashboard_horizontal_group_no_lukcy_number">No</string>
+
+
     <!--Error dialog-->
     <string name="dialog_error_check_update">Check for updates</string>
     <string name="dialog_error_check_update_message">Before reporting a bug, check first if an update with the bug fix is available</string>
@@ -552,6 +621,8 @@
     <string name="pref_settings_sync_title">Synchronization</string>
 
     <string name="pref_grades_appearance_header">Grades</string>
+    <string name="pref_dashboard_appearance_header">Dashboard</string>
+    <string name="pref_dashboard_appearance_tiles_title">Tiles visibility</string>
     <string name="pref_attendance_appearance_view">Attendance</string>
     <string name="pref_timetable_appearance_view">Timetable</string>
     <string name="pref_grades_advanced_header">Grades</string>

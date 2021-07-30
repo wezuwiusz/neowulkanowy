@@ -33,7 +33,7 @@ import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
-import io.github.wulkanowy.ui.modules.exam.ExamFragment
+import io.github.wulkanowy.ui.modules.dashboard.DashboardFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
 import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
@@ -218,12 +218,12 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
         with(binding.mainBottomNav) {
             with(menu) {
-                add(Menu.NONE, 0, Menu.NONE, R.string.grade_title)
+                add(Menu.NONE, 0, Menu.NONE, R.string.dashboard_title)
+                    .setIcon(R.drawable.ic_main_dashboard)
+                add(Menu.NONE, 1, Menu.NONE, R.string.grade_title)
                     .setIcon(R.drawable.ic_main_grade)
-                add(Menu.NONE, 1, Menu.NONE, R.string.attendance_title)
+                add(Menu.NONE, 2, Menu.NONE, R.string.attendance_title)
                     .setIcon(R.drawable.ic_main_attendance)
-                add(Menu.NONE, 2, Menu.NONE, R.string.exam_title)
-                    .setIcon(R.drawable.ic_main_exam)
                 add(Menu.NONE, 3, Menu.NONE, R.string.timetable_title)
                     .setIcon(R.drawable.ic_main_timetable)
                 add(Menu.NONE, 4, Menu.NONE, R.string.more_title)
@@ -256,9 +256,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             }
             fragmentHideStrategy = HIDE
             rootFragments = listOf(
+                DashboardFragment.newInstance(),
                 GradeFragment.newInstance(),
                 AttendanceFragment.newInstance(),
-                ExamFragment.newInstance(),
                 TimetableFragment.newInstance(),
                 MoreFragment.newInstance()
             )

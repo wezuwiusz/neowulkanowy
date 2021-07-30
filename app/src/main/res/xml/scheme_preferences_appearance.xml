@@ -31,6 +31,17 @@
     </PreferenceCategory>
     <PreferenceCategory
         app:iconSpaceReserved="false"
+        app:title="@string/pref_dashboard_appearance_header">
+        <MultiSelectListPreference
+            app:entries="@array/dashboard_tile_entries"
+            app:entryValues="@array/dashboard_tile_values"
+            app:iconSpaceReserved="false"
+            app:defaultValue="@array/pref_default_dashboard_tiles"
+            app:key="@string/pref_key_dashboard_tiles"
+            app:title="@string/pref_dashboard_appearance_tiles_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
         app:title="@string/pref_grades_appearance_header">
         <ListPreference
             app:defaultValue="@string/pref_default_grade_color_scheme"
@@ -38,8 +49,7 @@
             app:entryValues="@array/grade_color_scheme_values"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_grade_color_scheme"
-            app:title="@string/pref_view_grade_color_scheme"
-            app:useSimpleSummaryProvider="true" />
+            app:title="@string/pref_view_grade_color_scheme" />
         <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_expand_grade"
             app:iconSpaceReserved="false"
@@ -90,15 +100,15 @@
             app:key="@string/pref_key_timetable_show_groups"
             app:singleLineTitle="false"
             app:title="@string/pref_view_timetable_show_groups" />
- <!--Hidden due to not functional hybrid/mobile api modes
-        <ListPreference
-            app:defaultValue="@string/pref_default_timetable_show_whole_class"
-            app:entries="@array/timetable_show_whole_class_entries"
-            app:entryValues="@array/timetable_show_whole_class_values"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_timetable_show_whole_class"
-            app:title="@string/pref_view_timetable_show_whole_class"
-            app:useSimpleSummaryProvider="true" />
- -->
+        <!--Hidden due to not functional hybrid/mobile api modes
+               <ListPreference
+                   app:defaultValue="@string/pref_default_timetable_show_whole_class"
+                   app:entries="@array/timetable_show_whole_class_entries"
+                   app:entryValues="@array/timetable_show_whole_class_values"
+                   app:iconSpaceReserved="false"
+                   app:key="@string/pref_key_timetable_show_whole_class"
+                   app:title="@string/pref_view_timetable_show_whole_class"
+                   app:useSimpleSummaryProvider="true" />
+        -->
     </PreferenceCategory>
 </PreferenceScreen>

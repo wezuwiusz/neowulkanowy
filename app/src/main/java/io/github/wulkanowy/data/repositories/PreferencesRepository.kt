@@ -2,16 +2,24 @@ package io.github.wulkanowy.data.repositories
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.fredporciuncula.flow.preferences.Preference
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
+import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class PreferencesRepository @Inject constructor(
     private val sharedPref: SharedPreferences,
+    private val flowSharedPref: FlowSharedPreferences,
     @ApplicationContext val context: Context
 ) {
     val startMenuIndex: Int
@@ -150,6 +158,36 @@ class PreferencesRepository @Inject constructor(
             R.string.pref_key_optional_arithmetic_average,
             R.bool.pref_default_optional_arithmetic_average
         )
+
+    val selectedDashboardTilesFlow: Flow<Set<DashboardItem.Tile>>
+        get() = selectedDashboardTilesPreference.asFlow()
+            .map { set ->
+                set.map { DashboardItem.Tile.valueOf(it) }
+                    .plus(DashboardItem.Tile.ACCOUNT)
+                    .toSet()
+            }
+
+    var selectedDashboardTiles: Set<DashboardItem.Tile>
+        get() = selectedDashboardTilesPreference.get()
+            .map { DashboardItem.Tile.valueOf(it) }
+            .plus(DashboardItem.Tile.ACCOUNT)
+            .toSet()
+        set(value) {
+            val filteredValue = value.filterNot { it == DashboardItem.Tile.ACCOUNT }
+                .map { it.name }
+                .toSet()
+
+            selectedDashboardTilesPreference.set(filteredValue)
+        }
+
+    private val selectedDashboardTilesPreference: Preference<Set<String>>
+        get() {
+            val defaultSet =
+                context.resources.getStringArray(R.array.pref_default_dashboard_tiles).toSet()
+            val prefKey = context.getString(R.string.pref_key_dashboard_tiles)
+
+            return flowSharedPref.getStringSet(prefKey, defaultSet)
+        }
 
     private fun getString(id: Int, default: Int) = getString(context.getString(id), default)
 

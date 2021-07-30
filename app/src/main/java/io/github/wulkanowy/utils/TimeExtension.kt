@@ -1,48 +1,46 @@
 package io.github.wulkanowy.utils
 
-import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek.FRIDAY
 import java.time.DayOfWeek.MONDAY
 import java.time.DayOfWeek.SATURDAY
 import java.time.DayOfWeek.SUNDAY
-import java.time.Instant.ofEpochMilli
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalDateTime.now
-import java.time.LocalDateTime.ofInstant
 import java.time.LocalTime
 import java.time.Month
 import java.time.ZoneId
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter.ofPattern
+import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters.firstInMonth
 import java.time.temporal.TemporalAdjusters.next
 import java.time.temporal.TemporalAdjusters.previous
 import java.util.Locale
 
-private const val DATE_PATTERN = "dd.MM.yyyy"
+private const val DEFAULT_DATE_PATTERN = "dd.MM.yyyy"
 
-fun String.toLocalDate(format: String = DATE_PATTERN): LocalDate =
-    LocalDate.parse(this, ofPattern(format))
+fun String.toLocalDate(format: String = DEFAULT_DATE_PATTERN): LocalDate =
+    LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
 
 fun LocalDateTime.toTimestamp() =
     atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC).toInstant().toEpochMilli()
 
-fun Long.toLocalDateTime(): LocalDateTime = ofInstant(ofEpochMilli(this), ZoneId.systemDefault())
+fun Long.toLocalDateTime(): LocalDateTime =
+    LocalDateTime.ofInstant(Instant.ofEpochMilli(this), ZoneId.systemDefault())
 
 fun LocalDate.toTimestamp() = atTime(LocalTime.now()).toTimestamp()
 
-fun LocalDate.toFormattedString(format: String = DATE_PATTERN): String = format(ofPattern(format))
+fun LocalDate.toFormattedString(pattern: String = DEFAULT_DATE_PATTERN): String =
+    format(DateTimeFormatter.ofPattern(pattern))
 
-fun LocalDateTime.toFormattedString(format: String = DATE_PATTERN): String =
-    format(ofPattern(format))
+fun LocalDateTime.toFormattedString(pattern: String = DEFAULT_DATE_PATTERN): String =
+    format(DateTimeFormatter.ofPattern(pattern))
 
-@SuppressLint("DefaultLocale")
 fun Month.getFormattedName(): String {
     val formatter = SimpleDateFormat("LLLL", Locale.getDefault())
 
-    val date = now().withMonth(value)
+    val date = LocalDateTime.now().withMonth(value)
     return formatter.format(date.toInstant(ZoneOffset.UTC).toEpochMilli()).capitalise()
 }
 
@@ -85,7 +83,7 @@ inline val LocalDate.previousOrSameSchoolDay: LocalDate
     }
 
 inline val LocalDate.weekDayName: String
-    get() = format(ofPattern("EEEE", Locale.getDefault()))
+    get() = format(DateTimeFormatter.ofPattern("EEEE", Locale.getDefault()))
 
 inline val LocalDate.monday: LocalDate
     get() = with(MONDAY)

@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,7 @@ import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AppInfo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import javax.inject.Singleton
 
@@ -76,6 +78,12 @@ internal class RepositoryModule {
     @Provides
     fun provideSharedPref(@ApplicationContext context: Context): SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Singleton
+    @Provides
+    fun provideFlowSharedPref(sharedPreferences: SharedPreferences) =
+        FlowSharedPreferences(sharedPreferences)
 
     @Singleton
     @Provides

@@ -3,6 +3,7 @@
     <string name="pref_key_start_menu">start_menu</string>
     <string name="pref_key_attendance_present">attendance_present</string>
     <string name="pref_key_app_theme">app_theme</string>
+    <string name="pref_key_dashboard_tiles">dashboard_tiles</string>
     <string name="pref_key_grade_color_scheme">grade_color_scheme</string>
     <string name="pref_key_expand_grade">expand_grade</string>
     <string name="pref_key_grade_average_mode">grade_average_mode</string>
