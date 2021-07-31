@@ -14,7 +14,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentDashboardBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.account.AccountFragment
-import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
+import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
@@ -76,7 +76,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
             }
             onMessageTileClickListener = { mainActivity.pushView(MessageFragment.newInstance()) }
             onAttendanceTileClickListener = {
-                mainActivity.pushView(AttendanceFragment.newInstance())
+                mainActivity.pushView(AttendanceSummaryFragment.newInstance())
             }
             onLessonsTileClickListener = { mainActivity.pushView(TimetableFragment.newInstance()) }
             onGradeTileClickListener = { mainActivity.pushView(GradeFragment.newInstance()) }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
+    android:layout_marginHorizontal="12dp"
     android:layout_marginVertical="2dp">
 
     <com.google.android.material.card.MaterialCardView
@@ -12,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
-        android:layout_marginStart="4dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/dashboard_horizontal_group_item_message_container"
@@ -64,13 +63,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/dashboard_horizontal_group_item_attendance_container"
         app:layout_constraintStart_toEndOf="@id/dashboard_horizontal_group_item_lucky_container"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginStart="4dp">
+        app:layout_goneMarginEnd="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -121,8 +120,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="4dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

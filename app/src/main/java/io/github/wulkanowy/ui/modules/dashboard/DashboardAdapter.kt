@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMarginsRelative
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -25,6 +26,7 @@ import io.github.wulkanowy.databinding.ItemDashboardHomeworkBinding
 import io.github.wulkanowy.databinding.ItemDashboardHorizontalGroupBinding
 import io.github.wulkanowy.databinding.ItemDashboardLessonsBinding
 import io.github.wulkanowy.utils.createNameInitialsDrawable
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.left
 import io.github.wulkanowy.utils.nickOrName
@@ -187,6 +189,16 @@ class DashboardAdapter @Inject constructor() :
             with(dashboardHorizontalGroupItemLuckyContainer) {
                 isVisible = error == null && !isLoading && luckyNumber != null
                 setOnClickListener { onLuckyNumberTileClickListener() }
+
+                updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    updateMarginsRelative(
+                        end = if (attendancePercentage == null && unreadMessagesCount == null && luckyNumber != null) {
+                            0
+                        } else {
+                            context.dpToPx(8f).toInt()
+                        }
+                    )
+                }
             }
 
             with(dashboardHorizontalGroupItemAttendanceContainer) {
