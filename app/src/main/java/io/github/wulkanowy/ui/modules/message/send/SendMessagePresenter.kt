@@ -1,8 +1,10 @@
 package io.github.wulkanowy.ui.modules.message.send
 
+import io.github.wulkanowy.R
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
+import io.github.wulkanowy.data.pojos.MessageDraft
 import io.github.wulkanowy.data.repositories.MessageRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.RecipientRepository
@@ -15,7 +17,14 @@ import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,12 +39,19 @@ class SendMessagePresenter @Inject constructor(
     private val analytics: AnalyticsHelper
 ) : BasePresenter<SendMessageView>(errorHandler, studentRepository) {
 
+    private val messageUpdateChannel = Channel<Unit>()
+
+    @FlowPreview
     fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean?) {
         super.onAttachView(view)
         view.initView()
+        initializeSubjectStream()
         Timber.i("Send message view was initialized")
         loadData(message, reply)
         with(view) {
+            if (messageRepository.draftMessage != null && reply == null) {
+                view.showMessageBackupDialog()
+            }
             message?.let {
                 setSubject(when (reply) {
                     true -> "RE: "
@@ -159,6 +175,7 @@ class SendMessagePresenter @Inject constructor(
                 }
                 Status.SUCCESS -> {
                     Timber.i("Sending message result: Success")
+                    view?.clearDraft()
                     view?.run {
                         showMessage(messageSuccess)
                         popView()
@@ -203,4 +220,51 @@ class SendMessagePresenter @Inject constructor(
             )
         }
     }
+
+    fun onMessageContentChange() {
+        launch {
+            messageUpdateChannel.send(Unit)
+        }
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun initializeSubjectStream() {
+        launch {
+            messageUpdateChannel.consumeAsFlow()
+                .debounce(250)
+                .catch { Timber.e(it) }
+                .collect {
+                    saveDraftMessage()
+                    Timber.i("Draft message was saved!")
+                }
+        }
+    }
+
+    private fun saveDraftMessage() {
+        messageRepository.draftMessage = MessageDraft(
+            view?.formRecipientsData!!,
+            view?.formSubjectValue!!,
+            view?.formContentValue!!
+        )
+    }
+
+    fun restoreMessageParts() {
+        val draftMessage = messageRepository.draftMessage ?: return
+        view?.setSelectedRecipients(draftMessage.recipients)
+        view?.setSubject(draftMessage.subject)
+        view?.setContent(draftMessage.content)
+        Timber.i("Continue work on draft")
+    }
+
+    fun getRecipientsNames(): String {
+        return messageRepository.draftMessage?.recipients.orEmpty().joinToString { it.recipient.name }
+    }
+
+    fun clearDraft() {
+        messageRepository.draftMessage = null
+        Timber.i("Draft cleared!")
+    }
+
+    fun getMessageBackupContent(recipients: String) = if (recipients.isEmpty()) view?.getMessageBackupDialogString()
+        else view?.getMessageBackupDialogStringWithRecipients(recipients)
 }

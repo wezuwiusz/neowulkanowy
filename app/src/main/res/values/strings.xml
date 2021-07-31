@@ -242,6 +242,8 @@
         <item quantity="one">New message</item>
         <item quantity="other">New messages</item>
     </plurals>
+    <string name="message_restore_dialog">Do you want to restore draft message?</string>
+    <string name="message_restore_dialog_with_recipients">Do you want to restore draft message with recipients: %s?</string>
     <plurals name="message_notify_new_items">
         <item quantity="one">You received %1$d message</item>
         <item quantity="other">You received %1$d messages</item>

@@ -4,14 +4,13 @@ import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.ui.base.BaseView
 
 interface SendMessageView : BaseView {
-
     val isDropdownListVisible: Boolean
 
-    val formRecipientsData: List<RecipientChipItem>
+    var formRecipientsData: List<RecipientChipItem>
 
-    val formSubjectValue: String
+    var formSubjectValue: String
 
-    val formContentValue: String
+    var formContentValue: String
 
     val messageRequiredRecipients: String
 
@@ -46,4 +45,12 @@ interface SendMessageView : BaseView {
     fun scrollToRecipients()
 
     fun popView()
+
+    fun showMessageBackupDialog()
+
+    fun getMessageBackupDialogString(): String
+
+    fun getMessageBackupDialogStringWithRecipients(recipients: String): String
+
+    fun clearDraft()
 }

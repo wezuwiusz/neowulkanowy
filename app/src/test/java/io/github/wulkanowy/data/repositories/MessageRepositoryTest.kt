@@ -1,6 +1,9 @@
 package io.github.wulkanowy.data.repositories
 
+import android.content.Context
+import com.squareup.moshi.Moshi
 import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
 import io.github.wulkanowy.data.db.dao.MessagesDao
 import io.github.wulkanowy.data.db.entities.Message
@@ -38,19 +41,28 @@ class MessageRepositoryTest {
     @MockK
     private lateinit var messageAttachmentDao: MessageAttachmentDao
 
+    @MockK
+    private lateinit var context: Context
+
     @MockK(relaxUnitFun = true)
     private lateinit var refreshHelper: AutoRefreshHelper
+
+    @MockK
+    private lateinit var sharedPrefProvider: SharedPrefProvider
 
     private val student = getStudentEntity()
 
     private lateinit var messageRepository: MessageRepository
+
+    @MockK
+    private lateinit var moshi: Moshi
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
         every { refreshHelper.isShouldBeRefreshed(any()) } returns false
 
-        messageRepository = MessageRepository(messageDb, messageAttachmentDao, sdk, refreshHelper)
+        messageRepository = MessageRepository(messageDb, messageAttachmentDao, sdk, context, refreshHelper, sharedPrefProvider, moshi)
     }
 
     @Test(expected = NoSuchElementException::class)

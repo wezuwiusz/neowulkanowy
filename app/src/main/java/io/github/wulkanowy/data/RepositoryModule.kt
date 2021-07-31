@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
+import com.squareup.moshi.Moshi
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import dagger.Module
 import dagger.Provides
@@ -84,6 +85,10 @@ internal class RepositoryModule {
     @Provides
     fun provideFlowSharedPref(sharedPreferences: SharedPreferences) =
         FlowSharedPreferences(sharedPreferences)
+
+    @Singleton
+    @Provides
+    fun provideMoshi() = Moshi.Builder().build()
 
     @Singleton
     @Provides
