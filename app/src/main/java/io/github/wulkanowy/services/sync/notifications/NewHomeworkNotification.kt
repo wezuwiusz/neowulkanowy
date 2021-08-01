@@ -18,6 +18,7 @@ class NewHomeworkNotification @Inject constructor(
     fun notify(items: List<Homework>) {
         val notification = MultipleNotifications(
             channelId = NewHomeworkChannel.CHANNEL_ID,
+            group = NewHomeworkChannel.GROUP_ID,
             icon = R.drawable.ic_more_homework,
             titleStringRes = R.plurals.homework_notify_new_item_title,
             contentStringRes = R.plurals.homework_notify_new_item_title, // todo: you received %d new homework

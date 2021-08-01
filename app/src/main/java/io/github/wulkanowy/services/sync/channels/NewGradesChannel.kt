@@ -18,6 +18,9 @@ class NewGradesChannel @Inject constructor(
 
     companion object {
         const val CHANNEL_ID = "new_grade_channel"
+        const val GROUP_DETAILS_ID = "new_grade_details_group"
+        const val GROUP_PREDICTED_ID = "new_grade_predicted_group"
+        const val GROUP_FINAL_ID = "new_grade_final_group"
     }
 
     override fun create() {

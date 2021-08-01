@@ -17,7 +17,8 @@ class NewSchoolAnnouncementsChannel @Inject constructor(
 ) : Channel {
 
     companion object {
-        const val CHANNEL_ID = "new_schoolAnnouncements_channel"
+        const val CHANNEL_ID = "new_school_announcements_channel"
+        const val GROUP_ID = "new_school_announcements_group"
     }
 
     override fun create() {

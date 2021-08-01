@@ -7,6 +7,7 @@ import io.github.wulkanowy.ui.modules.main.MainView
 
 sealed interface Notification {
     val channelId: String
+    val group: String
     val startMenu: MainView.Section
     val icon: Int
     val titleStringRes: Int
@@ -15,6 +16,7 @@ sealed interface Notification {
 
 data class MultipleNotifications(
     override val channelId: String,
+    override val group: String,
     override val startMenu: MainView.Section,
     @DrawableRes override val icon: Int,
     @PluralsRes override val titleStringRes: Int,
@@ -26,6 +28,7 @@ data class MultipleNotifications(
 
 data class OneNotification(
     override val channelId: String,
+    override val group: String,
     override val startMenu: MainView.Section,
     @DrawableRes override val icon: Int,
     @StringRes override val titleStringRes: Int,

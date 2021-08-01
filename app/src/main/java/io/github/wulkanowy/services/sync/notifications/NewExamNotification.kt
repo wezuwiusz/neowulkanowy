@@ -18,9 +18,10 @@ class NewExamNotification @Inject constructor(
     fun notify(items: List<Exam>) {
         val notification = MultipleNotifications(
             channelId = NewExamChannel.CHANNEL_ID,
+            group = NewExamChannel.GROUP_ID,
             icon = R.drawable.ic_main_exam,
             titleStringRes = R.plurals.exam_notify_new_item_title,
-            contentStringRes = R.plurals.grade_notify_new_items, // TODO add missing string
+            contentStringRes = R.plurals.exam_notify_new_item_title, // TODO add missing string
             summaryStringRes = R.plurals.exam_number_item,
             startMenu = MainView.Section.EXAM,
             lines = items.map {

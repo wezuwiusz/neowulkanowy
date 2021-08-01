@@ -18,6 +18,7 @@ class NewLuckyNumberNotification @Inject constructor(
     fun notify(item: LuckyNumber) {
         val notification = OneNotification(
             channelId = LuckyNumberChannel.CHANNEL_ID,
+            group = LuckyNumberChannel.GROUP_ID,
             icon = R.drawable.ic_stat_luckynumber,
             titleStringRes = R.string.lucky_number_notify_new_item_title,
             contentStringRes = R.string.lucky_number_notify_new_item,

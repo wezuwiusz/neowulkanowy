@@ -18,6 +18,7 @@ class NewConferenceNotification @Inject constructor(
     fun notify(items: List<Conference>) {
         val notification = MultipleNotifications(
             channelId = NewConferencesChannel.CHANNEL_ID,
+            group = NewConferencesChannel.GROUP_ID,
             icon = R.drawable.ic_more_conferences,
             titleStringRes = R.plurals.conference_notify_new_item_title,
             contentStringRes = R.plurals.conference_notify_new_items,

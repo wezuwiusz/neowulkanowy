@@ -18,6 +18,7 @@ class NewSchoolAnnouncementNotification @Inject constructor(
     fun notify(items: List<SchoolAnnouncement>) {
         val notification = MultipleNotifications(
             channelId = NewSchoolAnnouncementsChannel.CHANNEL_ID,
+            group = NewSchoolAnnouncementsChannel.GROUP_ID,
             icon = R.drawable.ic_all_about,
             titleStringRes = R.plurals.school_announcement_notify_new_item_title,
             contentStringRes = R.plurals.school_announcement_notify_new_items,

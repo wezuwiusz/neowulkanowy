@@ -18,6 +18,7 @@ class NewMessageNotification @Inject constructor(
     fun notify(items: List<Message>) {
         val notification = MultipleNotifications(
             channelId = NewMessagesChannel.CHANNEL_ID,
+            group = NewMessagesChannel.GROUP_ID,
             icon = R.drawable.ic_stat_message,
             titleStringRes = R.plurals.message_new_items,
             contentStringRes = R.plurals.message_notify_new_items,

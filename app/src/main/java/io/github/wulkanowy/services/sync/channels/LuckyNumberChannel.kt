@@ -18,6 +18,7 @@ class LuckyNumberChannel @Inject constructor(
 
     companion object {
         const val CHANNEL_ID = "lucky_number_channel"
+        const val GROUP_ID = "lucky_number_group"
     }
 
     override fun create() {

@@ -2,6 +2,8 @@ package io.github.wulkanowy.services.sync.notifications
 
 import android.app.PendingIntent
 import android.content.Context
+import android.os.Build
+import androidx.annotation.PluralsRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import io.github.wulkanowy.R
@@ -18,53 +20,68 @@ abstract class BaseNotification(
     private val notificationManager: NotificationManagerCompat,
 ) {
 
-    protected fun sendNotification(notification: Notification) {
+    protected fun sendNotification(notification: Notification) = when (notification) {
+        is OneNotification -> sendOneNotification(notification)
+        is MultipleNotifications -> sendMultipleNotifications(notification)
+    }
+
+    private fun sendOneNotification(notification: OneNotification) {
         notificationManager.notify(
             Random.nextInt(Int.MAX_VALUE),
-            NotificationCompat.Builder(context, notification.channelId)
-                .setLargeIcon(context.getCompatBitmap(notification.icon, R.color.colorPrimary))
-                .setSmallIcon(R.drawable.ic_stat_all)
-                .setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setColor(context.getCompatColor(R.color.colorPrimary))
-                .setContentIntent(
-                    PendingIntent.getActivity(
-                        context, notification.startMenu.id,
-                        MainActivity.getStartIntent(context, notification.startMenu, true),
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                    )
+            getNotificationBuilder(notification).apply {
+                val content = context.getString(
+                    notification.contentStringRes,
+                    *notification.contentValues.toTypedArray()
                 )
-                .apply {
-                    when (notification) {
-                        is OneNotification -> buildForOneNotification(notification)
-                        is MultipleNotifications -> buildForMultipleNotification(notification)
-                    }
-                }
-                .build()
+                setContentTitle(context.getString(notification.titleStringRes))
+                setContentText(content)
+                setStyle(NotificationCompat.BigTextStyle().bigText(content))
+            }.build()
         )
     }
 
-    private fun NotificationCompat.Builder.buildForOneNotification(n: OneNotification) {
-        val content = context.getString(n.contentStringRes, *n.contentValues.toTypedArray())
-        setContentTitle(context.getString(n.titleStringRes))
-        setContentText(content)
-        setStyle(NotificationCompat.BigTextStyle().run {
-            bigText(content)
-            this
-        })
+    private fun sendMultipleNotifications(notification: MultipleNotifications) {
+        notification.lines.forEach { item ->
+            notificationManager.notify(
+                Random.nextInt(Int.MAX_VALUE),
+                getNotificationBuilder(notification).apply {
+                    setContentTitle(getQuantityString(notification.titleStringRes, 1))
+                    setContentText(item)
+                    setStyle(NotificationCompat.BigTextStyle().bigText(item))
+                    setGroup(notification.group)
+                }.build()
+            )
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
+
+        notificationManager.notify(
+            notification.group.hashCode(),
+            getNotificationBuilder(notification).apply {
+                setSmallIcon(notification.icon)
+                setGroup(notification.group)
+                setGroupSummary(true)
+            }.build()
+        )
     }
 
-    private fun NotificationCompat.Builder.buildForMultipleNotification(n: MultipleNotifications) {
-        val lines = n.lines.size
-        setContentTitle(context.resources.getQuantityString(n.titleStringRes, lines, lines))
-        setContentText(context.resources.getQuantityString(n.contentStringRes, lines, lines))
-        setStyle(NotificationCompat.InboxStyle().run {
-            setSummaryText(
-                context.resources.getQuantityString(n.summaryStringRes, n.lines.size, n.lines.size)
+    private fun getNotificationBuilder(notification: Notification) = NotificationCompat
+        .Builder(context, notification.channelId)
+        .setLargeIcon(context.getCompatBitmap(notification.icon, R.color.colorPrimary))
+        .setSmallIcon(R.drawable.ic_stat_all)
+        .setAutoCancel(true)
+        .setDefaults(NotificationCompat.DEFAULT_ALL)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setColor(context.getCompatColor(R.color.colorPrimary))
+        .setContentIntent(
+            PendingIntent.getActivity(
+                context, notification.startMenu.id,
+                MainActivity.getStartIntent(context, notification.startMenu, true),
+                PendingIntent.FLAG_UPDATE_CURRENT
             )
-            n.lines.forEach(::addLine)
-            this
-        })
+        )
+
+    private fun getQuantityString(@PluralsRes id: Int, value: Int): String {
+        return context.resources.getQuantityString(id, value, value)
     }
 }

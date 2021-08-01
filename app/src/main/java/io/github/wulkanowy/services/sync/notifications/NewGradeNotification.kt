@@ -16,9 +16,10 @@ class NewGradeNotification @Inject constructor(
     notificationManager: NotificationManagerCompat,
 ) : BaseNotification(context, notificationManager) {
 
-     fun notifyDetails(items: List<Grade>) {
+    fun notifyDetails(items: List<Grade>) {
         val notification = MultipleNotifications(
             channelId = NewGradesChannel.CHANNEL_ID,
+            group = NewGradesChannel.GROUP_DETAILS_ID,
             icon = R.drawable.ic_stat_grade,
             titleStringRes = R.plurals.grade_new_items,
             contentStringRes = R.plurals.grade_notify_new_items,
@@ -32,9 +33,10 @@ class NewGradeNotification @Inject constructor(
         sendNotification(notification)
     }
 
-     fun notifyPredicted(items: List<GradeSummary>) {
+    fun notifyPredicted(items: List<GradeSummary>) {
         val notification = MultipleNotifications(
             channelId = NewGradesChannel.CHANNEL_ID,
+            group = NewGradesChannel.GROUP_PREDICTED_ID,
             icon = R.drawable.ic_stat_grade,
             titleStringRes = R.plurals.grade_new_items_predicted,
             contentStringRes = R.plurals.grade_notify_new_items_predicted,
@@ -48,9 +50,10 @@ class NewGradeNotification @Inject constructor(
         sendNotification(notification)
     }
 
-     fun notifyFinal(items: List<GradeSummary>) {
+    fun notifyFinal(items: List<GradeSummary>) {
         val notification = MultipleNotifications(
             channelId = NewGradesChannel.CHANNEL_ID,
+            group = NewGradesChannel.GROUP_FINAL_ID,
             icon = R.drawable.ic_stat_grade,
             titleStringRes = R.plurals.grade_new_items_final,
             contentStringRes = R.plurals.grade_notify_new_items_final,
