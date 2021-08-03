@@ -25,7 +25,7 @@ class SchoolAnnouncementWork @Inject constructor(
 
         schoolAnnouncementRepository.getSchoolAnnouncementFromDatabase(student).first()
             .filter { !it.isNotified }.let {
-                if (it.isNotEmpty()) newSchoolAnnouncementNotification.notify(it)
+                if (it.isNotEmpty()) newSchoolAnnouncementNotification.notify(it, student)
 
                 schoolAnnouncementRepository.updateSchoolAnnouncement(it.onEach { schoolAnnouncement ->
                     schoolAnnouncement.isNotified = true

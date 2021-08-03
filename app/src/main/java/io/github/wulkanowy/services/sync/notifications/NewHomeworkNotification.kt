@@ -5,8 +5,8 @@ import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.MultipleNotifications
-import io.github.wulkanowy.services.sync.channels.NewHomeworkChannel
 import io.github.wulkanowy.ui.modules.main.MainView
 import javax.inject.Inject
 
@@ -15,10 +15,9 @@ class NewHomeworkNotification @Inject constructor(
     notificationManager: NotificationManagerCompat,
 ) : BaseNotification(context, notificationManager) {
 
-    fun notify(items: List<Homework>) {
+    fun notify(items: List<Homework>, student: Student) {
         val notification = MultipleNotifications(
-            channelId = NewHomeworkChannel.CHANNEL_ID,
-            group = NewHomeworkChannel.GROUP_ID,
+            type = NotificationType.NEW_HOMEWORK,
             icon = R.drawable.ic_more_homework,
             titleStringRes = R.plurals.homework_notify_new_item_title,
             contentStringRes = R.plurals.homework_notify_new_item_title, // todo: you received %d new homework
@@ -29,6 +28,6 @@ class NewHomeworkNotification @Inject constructor(
             }
         )
 
-        sendNotification(notification)
+        sendNotification(notification, student)
     }
 }

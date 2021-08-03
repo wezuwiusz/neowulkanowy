@@ -25,7 +25,7 @@ class ConferenceWork @Inject constructor(
 
         conferenceRepository.getConferenceFromDatabase(semester).first()
             .filter { !it.isNotified }.let {
-                if (it.isNotEmpty()) newConferenceNotification.notify(it)
+                if (it.isNotEmpty()) newConferenceNotification.notify(it, student)
 
                 conferenceRepository.updateConference(it.onEach { conference ->
                     conference.isNotified = true

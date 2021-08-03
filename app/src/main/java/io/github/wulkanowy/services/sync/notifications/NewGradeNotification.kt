@@ -6,8 +6,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.MultipleNotifications
-import io.github.wulkanowy.services.sync.channels.NewGradesChannel
 import io.github.wulkanowy.ui.modules.main.MainView
 import javax.inject.Inject
 
@@ -16,10 +16,9 @@ class NewGradeNotification @Inject constructor(
     notificationManager: NotificationManagerCompat,
 ) : BaseNotification(context, notificationManager) {
 
-    fun notifyDetails(items: List<Grade>) {
+    fun notifyDetails(items: List<Grade>, student: Student) {
         val notification = MultipleNotifications(
-            channelId = NewGradesChannel.CHANNEL_ID,
-            group = NewGradesChannel.GROUP_DETAILS_ID,
+            type = NotificationType.NEW_GRADE_DETAILS,
             icon = R.drawable.ic_stat_grade,
             titleStringRes = R.plurals.grade_new_items,
             contentStringRes = R.plurals.grade_notify_new_items,
@@ -30,13 +29,12 @@ class NewGradeNotification @Inject constructor(
             }
         )
 
-        sendNotification(notification)
+        sendNotification(notification, student)
     }
 
-    fun notifyPredicted(items: List<GradeSummary>) {
+    fun notifyPredicted(items: List<GradeSummary>, student: Student) {
         val notification = MultipleNotifications(
-            channelId = NewGradesChannel.CHANNEL_ID,
-            group = NewGradesChannel.GROUP_PREDICTED_ID,
+            type = NotificationType.NEW_GRADE_PREDICTED,
             icon = R.drawable.ic_stat_grade,
             titleStringRes = R.plurals.grade_new_items_predicted,
             contentStringRes = R.plurals.grade_notify_new_items_predicted,
@@ -47,13 +45,12 @@ class NewGradeNotification @Inject constructor(
             }
         )
 
-        sendNotification(notification)
+        sendNotification(notification, student)
     }
 
-    fun notifyFinal(items: List<GradeSummary>) {
+    fun notifyFinal(items: List<GradeSummary>, student: Student) {
         val notification = MultipleNotifications(
-            channelId = NewGradesChannel.CHANNEL_ID,
-            group = NewGradesChannel.GROUP_FINAL_ID,
+            type = NotificationType.NEW_GRADE_FINAL,
             icon = R.drawable.ic_stat_grade,
             titleStringRes = R.plurals.grade_new_items_final,
             contentStringRes = R.plurals.grade_notify_new_items_final,
@@ -64,6 +61,6 @@ class NewGradeNotification @Inject constructor(
             }
         )
 
-        sendNotification(notification)
+        sendNotification(notification, student)
     }
 }

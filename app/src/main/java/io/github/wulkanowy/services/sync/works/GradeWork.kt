@@ -25,14 +25,14 @@ class GradeWork @Inject constructor(
 
         gradeRepository.getGradesFromDatabase(semester).first()
             .filter { !it.isNotified }.let {
-                if (it.isNotEmpty()) newGradeNotification.notifyDetails(it)
+                if (it.isNotEmpty()) newGradeNotification.notifyDetails(it, student)
 
                 gradeRepository.updateGrades(it.onEach { grade -> grade.isNotified = true })
             }
 
         gradeRepository.getGradesPredictedFromDatabase(semester).first()
             .filter { !it.isPredictedGradeNotified }.let {
-                if (it.isNotEmpty()) newGradeNotification.notifyPredicted(it)
+                if (it.isNotEmpty()) newGradeNotification.notifyPredicted(it, student)
 
                 gradeRepository.updateGradesSummary(it.onEach { grade ->
                     grade.isPredictedGradeNotified = true
@@ -41,7 +41,7 @@ class GradeWork @Inject constructor(
 
         gradeRepository.getGradesFinalFromDatabase(semester).first()
             .filter { !it.isFinalGradeNotified }.let {
-                if (it.isNotEmpty()) newGradeNotification.notifyFinal(it)
+                if (it.isNotEmpty()) newGradeNotification.notifyFinal(it, student)
 
                 gradeRepository.updateGradesSummary(it.onEach { grade ->
                     grade.isFinalGradeNotified = true

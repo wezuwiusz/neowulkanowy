@@ -3,11 +3,11 @@ package io.github.wulkanowy.data.pojos
 import androidx.annotation.DrawableRes
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
+import io.github.wulkanowy.services.sync.notifications.NotificationType
 import io.github.wulkanowy.ui.modules.main.MainView
 
 sealed interface Notification {
-    val channelId: String
-    val group: String
+    val type: NotificationType
     val startMenu: MainView.Section
     val icon: Int
     val titleStringRes: Int
@@ -15,8 +15,7 @@ sealed interface Notification {
 }
 
 data class MultipleNotifications(
-    override val channelId: String,
-    override val group: String,
+    override val type: NotificationType,
     override val startMenu: MainView.Section,
     @DrawableRes override val icon: Int,
     @PluralsRes override val titleStringRes: Int,
@@ -27,8 +26,7 @@ data class MultipleNotifications(
 ) : Notification
 
 data class OneNotification(
-    override val channelId: String,
-    override val group: String,
+    override val type: NotificationType,
     override val startMenu: MainView.Section,
     @DrawableRes override val icon: Int,
     @StringRes override val titleStringRes: Int,

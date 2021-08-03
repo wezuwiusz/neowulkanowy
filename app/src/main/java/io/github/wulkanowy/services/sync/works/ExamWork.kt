@@ -28,7 +28,7 @@ class ExamWork @Inject constructor(
 
         examRepository.getExamsFromDatabase(semester, now()).first()
             .filter { !it.isNotified }.let {
-                if (it.isNotEmpty()) newExamNotification.notify(it)
+                if (it.isNotEmpty()) newExamNotification.notify(it, student)
 
                 examRepository.updateExam(it.onEach { exam -> exam.isNotified = true })
             }

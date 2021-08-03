@@ -18,7 +18,6 @@ class NewNotesChannel @Inject constructor(
 
     companion object {
         const val CHANNEL_ID = "new_notes_channel"
-        const val GROUP_ID = "new_notes_group"
     }
 
     override fun create() {

@@ -22,7 +22,7 @@ class LuckyNumberWork @Inject constructor(
         ).waitForResult()
 
         luckyNumberRepository.getNotNotifiedLuckyNumber(student)?.let {
-            newLuckyNumberNotification.notify(it)
+            newLuckyNumberNotification.notify(it, student)
             luckyNumberRepository.updateLuckyNumber(it.apply { isNotified = true })
         }
     }

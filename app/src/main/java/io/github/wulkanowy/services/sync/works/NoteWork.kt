@@ -25,7 +25,7 @@ class NoteWork @Inject constructor(
 
         noteRepository.getNotesFromDatabase(student).first()
             .filter { !it.isNotified }.let {
-                if (it.isNotEmpty()) newNoteNotification.notify(it)
+                if (it.isNotEmpty()) newNoteNotification.notify(it, student)
 
                 noteRepository.updateNotes(it.onEach { note -> note.isNotified = true })
             }
