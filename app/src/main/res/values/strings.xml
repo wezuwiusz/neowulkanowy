@@ -498,11 +498,11 @@
         <item quantity="other">%1$d more lessons</item>
     </plurals>
     <string name="dashboard_timetable_third_time">until %1$s</string>
-    <string name="dashboard_timetable_no_lessons">No lessons</string>
+    <string name="dashboard_timetable_no_lessons">No upcoming lessons</string>
     <string name="dashboard_timetable_error">An error occurred while loading the lesson</string>
 
     <string name="dashboard_homework_title">Homework</string>
-    <string name="dashboard_homework_no_homework">No homework</string>
+    <string name="dashboard_homework_no_homework">No homework to do</string>
     <string name="dashboard_homework_error">An error occurred while loading the homework</string>
     <plurals name="dashboard_homework_more">
         <item quantity="one">%1$d more homework</item>
@@ -515,7 +515,7 @@
     <string name="dashboard_grade_error">An error occurred while loading the grades</string>
 
     <string name="dashboard_announcements_title">School announcements</string>
-    <string name="dashboard_announcements_no_announcements">No announcements</string>
+    <string name="dashboard_announcements_no_announcements">No current announcements</string>
     <string name="dashboard_announcements_error">An error occurred while loading the announcements</string>
     <plurals name="dashboard_announcements_more">
         <item quantity="one">%1$d more announcement</item>
@@ -523,7 +523,7 @@
     </plurals>
 
     <string name="dashboard_exams_title">Exams</string>
-    <string name="dashboard_exams_no_exams">No exams</string>
+    <string name="dashboard_exams_no_exams">No upcoming exams</string>
     <string name="dashboard_exams_error">An error occurred while loading the exams</string>
     <plurals name="dashboard_exams_more">
         <item quantity="one">%1$d more exam</item>
@@ -531,7 +531,7 @@
     </plurals>
 
     <string name="dashboard_conferences_title">Conferences</string>
-    <string name="dashboard_conferences_no_conferences">No conferences</string>
+    <string name="dashboard_conferences_no_conferences">No upcoming conferences</string>
     <string name="dashboard_conferences_error">An error occurred while loading the conferences</string>
     <plurals name="dashboard_conference_more">
         <item quantity="one">%1$d more conference</item>
@@ -539,7 +539,7 @@
     </plurals>
 
     <string name="dashboard_horizontal_group_error">An error occurred while loading data</string>
-    <string name="dashboard_horizontal_group_no_lukcy_number">No</string>
+    <string name="dashboard_horizontal_group_no_lukcy_number">None</string>
 
 
     <!--Error dialog-->
