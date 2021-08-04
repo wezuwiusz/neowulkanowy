@@ -5,7 +5,10 @@ import android.graphics.Canvas
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 
-class DividerItemDecoration(context: Context) : DividerItemDecoration(context, VERTICAL) {
+class DividerItemDecoration(
+    context: Context,
+    private val showDividerWithFirstItem: Boolean = true
+) : DividerItemDecoration(context, VERTICAL) {
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         canvas.save()
@@ -13,6 +16,8 @@ class DividerItemDecoration(context: Context) : DividerItemDecoration(context, V
         val dividerRight = parent.width - parent.paddingRight
 
         for (i in 0..parent.childCount - 2) {
+            if (!showDividerWithFirstItem && i == 0) continue
+
             val child = parent.getChildAt(i)
             val params = child.layoutParams as RecyclerView.LayoutParams
             val dividerTop = child.bottom + params.bottomMargin
