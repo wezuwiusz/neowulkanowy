@@ -185,7 +185,9 @@ class MessageTabPresenter @Inject constructor(
                 .debounce(250)
                 .map { query ->
                     lastSearchQuery = query
-                    getFilteredData(query)
+                    val isOnlyUnread = view?.onlyUnread == true
+                    val isOnlyWithAttachments = view?.onlyWithAttachments == true
+                    getFilteredData(query, isOnlyUnread, isOnlyWithAttachments)
                 }
                 .catch { Timber.e(it) }
                 .collect {
