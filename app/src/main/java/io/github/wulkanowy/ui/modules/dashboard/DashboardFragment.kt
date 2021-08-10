@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -68,6 +69,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
 
     override fun initView() {
         val mainActivity = requireActivity() as MainActivity
+        val itemTouchHelper = ItemTouchHelper(
+            DashboardItemMoveCallback(
+                dashboardAdapter,
+                presenter::onDragAndDropEnd
+            )
+        )
 
         dashboardAdapter.apply {
             onAccountTileClickListener = { mainActivity.pushView(AccountFragment.newInstance()) }
@@ -104,6 +111,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
                 adapter = dashboardAdapter
                 (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
             }
+
+            itemTouchHelper.attachToRecyclerView(dashboardRecycler)
         }
     }
 

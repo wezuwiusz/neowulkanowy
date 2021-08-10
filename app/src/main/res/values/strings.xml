@@ -501,7 +501,7 @@
     </plurals>
     <string name="dashboard_timetable_third_time">until %1$s</string>
     <string name="dashboard_timetable_no_lessons">No upcoming lessons</string>
-    <string name="dashboard_timetable_error">An error occurred while loading the lesson</string>
+    <string name="dashboard_timetable_error">An error occurred while loading the lessons</string>
 
     <string name="dashboard_homework_title">Homework</string>
     <string name="dashboard_homework_no_homework">No homework to do</string>

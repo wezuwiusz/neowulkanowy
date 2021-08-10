@@ -12,7 +12,6 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMarginsRelative
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
@@ -38,10 +37,9 @@ import java.util.Timer
 import javax.inject.Inject
 import kotlin.concurrent.timer
 
-class DashboardAdapter @Inject constructor() :
-    ListAdapter<DashboardItem, RecyclerView.ViewHolder>(DashboardAdapterDiffCallback()) {
+class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var lessonsTimer: Timer? = null
+    private var lessonsTimer: Timer? = null
 
     var onAccountTileClickListener: () -> Unit = {}
 
@@ -63,7 +61,23 @@ class DashboardAdapter @Inject constructor() :
 
     var onConferencesTileClickListener: () -> Unit = {}
 
-    override fun getItemViewType(position: Int) = getItem(position).type.ordinal
+    val items = mutableListOf<DashboardItem>()
+
+    fun submitList(newItems: List<DashboardItem>) {
+        val diffResult =
+            DiffUtil.calculateDiff(DiffCallback(newItems, items.toMutableList()))
+
+        with(items) {
+            clear()
+            addAll(newItems)
+        }
+
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    override fun getItemCount() = items.size
+
+    override fun getItemViewType(position: Int) = items[position].type.ordinal
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -119,7 +133,7 @@ class DashboardAdapter @Inject constructor() :
     }
 
     private fun bindAccountViewHolder(accountViewHolder: AccountViewHolder, position: Int) {
-        val item = getItem(position) as DashboardItem.Account
+        val item = items[position] as DashboardItem.Account
         val student = item.student
         val isLoading = item.isLoading
 
@@ -147,7 +161,7 @@ class DashboardAdapter @Inject constructor() :
         horizontalGroupViewHolder: HorizontalGroupViewHolder,
         position: Int
     ) {
-        val item = getItem(position) as DashboardItem.HorizontalGroup
+        val item = items[position] as DashboardItem.HorizontalGroup
         val unreadMessagesCount = item.unreadMessagesCount
         val attendancePercentage = item.attendancePercentage
         val luckyNumber = item.luckyNumber
@@ -221,7 +235,7 @@ class DashboardAdapter @Inject constructor() :
     }
 
     private fun bindGradesViewHolder(gradesViewHolder: GradesViewHolder, position: Int) {
-        val item = getItem(position) as DashboardItem.Grades
+        val item = items[position] as DashboardItem.Grades
         val subjectWithGrades = item.subjectWithGrades.orEmpty()
         val gradeTheme = item.gradeTheme
         val error = item.error
@@ -250,7 +264,7 @@ class DashboardAdapter @Inject constructor() :
     }
 
     private fun bindLessonsViewHolder(lessonsViewHolder: LessonsViewHolder, position: Int) {
-        val item = getItem(position) as DashboardItem.Lessons
+        val item = items[position] as DashboardItem.Lessons
         val timetableFull = item.lessons
         val binding = lessonsViewHolder.binding
 
@@ -519,7 +533,7 @@ class DashboardAdapter @Inject constructor() :
     }
 
     private fun bindHomeworkViewHolder(homeworkViewHolder: HomeworkViewHolder, position: Int) {
-        val item = getItem(position) as DashboardItem.Homework
+        val item = items[position] as DashboardItem.Homework
         val homeworkList = item.homework.orEmpty()
         val error = item.error
         val isLoading = item.isLoading
@@ -557,7 +571,7 @@ class DashboardAdapter @Inject constructor() :
         announcementsViewHolder: AnnouncementsViewHolder,
         position: Int
     ) {
-        val item = getItem(position) as DashboardItem.Announcements
+        val item = items[position] as DashboardItem.Announcements
         val schoolAnnouncementList = item.announcement.orEmpty()
         val error = item.error
         val isLoading = item.isLoading
@@ -594,7 +608,7 @@ class DashboardAdapter @Inject constructor() :
     }
 
     private fun bindExamsViewHolder(examsViewHolder: ExamsViewHolder, position: Int) {
-        val item = getItem(position) as DashboardItem.Exams
+        val item = items[position] as DashboardItem.Exams
         val exams = item.exams.orEmpty()
         val error = item.error
         val isLoading = item.isLoading
@@ -630,7 +644,7 @@ class DashboardAdapter @Inject constructor() :
         conferencesViewHolder: ConferencesViewHolder,
         position: Int
     ) {
-        val item = getItem(position) as DashboardItem.Conferences
+        val item = items[position] as DashboardItem.Conferences
         val conferences = item.conferences.orEmpty()
         val error = item.error
         val isLoading = item.isLoading
@@ -703,13 +717,20 @@ class DashboardAdapter @Inject constructor() :
         val adapter by lazy { DashboardConferencesAdapter() }
     }
 
-    class DashboardAdapterDiffCallback : DiffUtil.ItemCallback<DashboardItem>() {
+    private class DiffCallback(
+        private val newList: List<DashboardItem>,
+        private val oldList: List<DashboardItem>
+    ) : DiffUtil.Callback() {
 
-        override fun areItemsTheSame(oldItem: DashboardItem, newItem: DashboardItem) =
-            oldItem.type == newItem.type
+        override fun getNewListSize() = newList.size
 
-        override fun areContentsTheSame(oldItem: DashboardItem, newItem: DashboardItem) =
-            oldItem == newItem
+        override fun getOldListSize() = oldList.size
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            newList[newItemPosition] == oldList[oldItemPosition]
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            newList[newItemPosition].type == oldList[oldItemPosition].type
     }
 
     private companion object {

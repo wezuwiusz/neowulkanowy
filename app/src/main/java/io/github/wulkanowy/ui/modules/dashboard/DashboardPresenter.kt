@@ -68,6 +68,16 @@ class DashboardPresenter @Inject constructor(
             .launch("dashboard_pref")
     }
 
+    fun onDragAndDropEnd(list: List<DashboardItem>) {
+        dashboardItemLoadedList.clear()
+        dashboardItemLoadedList.addAll(list)
+
+        val positionList =
+            list.mapIndexed { index, dashboardItem -> Pair(dashboardItem.type, index) }.toMap()
+
+        preferencesRepository.dashboardItemsPosition = positionList
+    }
+
     fun loadData(forceRefresh: Boolean = false, tilesToLoad: Set<DashboardItem.Tile>) {
         val oldDashboardDataToLoad = dashboardTilesToLoad
 
@@ -622,6 +632,7 @@ class DashboardPresenter @Inject constructor(
 
     private fun updateData(dashboardItem: DashboardItem, forceRefresh: Boolean) {
         val isForceRefreshError = forceRefresh && dashboardItem.error != null
+        val dashboardItemsPosition = preferencesRepository.dashboardItemsPosition
 
         with(dashboardItemLoadedList) {
             removeAll { it.type == dashboardItem.type && !isForceRefreshError }
@@ -636,7 +647,12 @@ class DashboardPresenter @Inject constructor(
             }
         }
 
-        dashboardItemLoadedList.sortBy { tile -> dashboardItemsToLoad.single { it == tile.type }.ordinal }
+        dashboardItemLoadedList.sortBy { tile ->
+            dashboardItemsPosition?.getOrDefault(
+                tile.type,
+                tile.type.ordinal + 100
+            ) ?: tile.type.ordinal
+        }
 
         val isItemsLoaded =
             dashboardItemsToLoad.all { type -> dashboardItemLoadedList.any { it.type == type } }

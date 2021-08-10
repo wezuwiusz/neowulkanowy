@@ -2,9 +2,12 @@ package io.github.wulkanowy.data.repositories
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.squareup.moshi.Moshi
+import androidx.core.content.edit
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.fredporciuncula.flow.preferences.Preference
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapter
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
@@ -21,8 +24,13 @@ import javax.inject.Singleton
 class PreferencesRepository @Inject constructor(
     private val sharedPref: SharedPreferences,
     private val flowSharedPref: FlowSharedPreferences,
-    @ApplicationContext val context: Context
+    @ApplicationContext val context: Context,
+    moshi: Moshi
 ) {
+    @OptIn(ExperimentalStdlibApi::class)
+    private val dashboardItemsPositionAdapter: JsonAdapter<Map<DashboardItem.Type, Int>> =
+        moshi.adapter()
+
     val startMenuIndex: Int
         get() = getString(R.string.pref_key_start_menu, R.string.pref_default_startup).toInt()
 
@@ -160,6 +168,19 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_optional_arithmetic_average
         )
 
+    var dashboardItemsPosition: Map<DashboardItem.Type, Int>?
+        get() {
+            val json = sharedPref.getString(PREF_KEY_DASHBOARD_ITEMS_POSITION, null) ?: return null
+
+            return dashboardItemsPositionAdapter.fromJson(json)
+        }
+        set(value) = sharedPref.edit {
+            putString(
+                PREF_KEY_DASHBOARD_ITEMS_POSITION,
+                dashboardItemsPositionAdapter.toJson(value)
+            )
+        }
+
     val selectedDashboardTilesFlow: Flow<Set<DashboardItem.Tile>>
         get() = selectedDashboardTilesPreference.asFlow()
             .map { set ->
@@ -199,4 +220,9 @@ class PreferencesRepository @Inject constructor(
 
     private fun getBoolean(id: String, default: Int) =
         sharedPref.getBoolean(id, context.resources.getBoolean(default))
+
+    private companion object {
+
+        private const val PREF_KEY_DASHBOARD_ITEMS_POSITION = "dashboard_items_position"
+    }
 }
