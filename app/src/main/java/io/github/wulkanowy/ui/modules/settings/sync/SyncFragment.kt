@@ -39,6 +39,12 @@ class SyncFragment : PreferenceFragmentCompat(),
         }
     }
 
+    override fun setLastSyncDate(lastSyncDate: String) {
+        findPreference<Preference>(getString(R.string.pref_key_services_force_sync))?.run {
+            summary = getString(R.string.pref_services_last_full_sync_date, lastSyncDate)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.onAttachView(this)
