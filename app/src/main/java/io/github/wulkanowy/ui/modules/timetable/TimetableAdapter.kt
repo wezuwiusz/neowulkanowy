@@ -7,6 +7,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
@@ -26,31 +27,58 @@ import kotlin.concurrent.timer
 
 class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private enum class ViewType(val id: Int) {
-        ITEM_NORMAL(1),
-        ITEM_SMALL(2)
+    private enum class ViewType {
+        ITEM_NORMAL,
+        ITEM_SMALL
     }
-
-    var items = mutableListOf<Timetable>()
-        set(value) {
-            field = value
-            resetTimers()
-        }
 
     var onClickListener: (Timetable) -> Unit = {}
 
-    var showWholeClassPlan: String = "no"
+    private var showWholeClassPlan: String = "no"
 
-    var showGroupsInPlan: Boolean = false
+    private var showGroupsInPlan: Boolean = false
 
-    var showTimers: Boolean = false
+    private var showTimers: Boolean = false
 
-    private val timers = mutableMapOf<Int, Timer>()
+    private val timers = mutableMapOf<Int, Timer?>()
 
-    fun resetTimers() {
-        Timber.d("Timetable timers (${timers.size}) reset")
+    private val items = mutableListOf<Timetable>()
+
+    fun submitList(
+        newTimetable: List<Timetable>,
+        showWholeClassPlan: String = this.showWholeClassPlan,
+        showGroupsInPlan: Boolean = this.showGroupsInPlan,
+        showTimers: Boolean = this.showTimers
+    ) {
+        val isFlagsDifferent = this.showWholeClassPlan != showWholeClassPlan
+            || this.showGroupsInPlan != showGroupsInPlan
+            || this.showTimers != showTimers
+
+        val diffResult = DiffUtil.calculateDiff(
+            TimetableAdapterDiffCallback(
+                oldList = items.toMutableList(),
+                newList = newTimetable,
+                isFlagsDifferent = isFlagsDifferent
+            )
+        )
+
+        this.showGroupsInPlan = showGroupsInPlan
+        this.showTimers = showTimers
+        this.showWholeClassPlan = showWholeClassPlan
+
+        items.clear()
+        items.addAll(newTimetable)
+
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun clearTimers() {
+        Timber.d("Timetable timers (${timers.size}) cleared")
         with(timers) {
-            forEach { (_, timer) -> timer.cancel() }
+            forEach { (_, timer) ->
+                timer?.cancel()
+                timer?.purge()
+            }
             clear()
         }
     }
@@ -58,16 +86,20 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     override fun getItemCount() = items.size
 
     override fun getItemViewType(position: Int) = when {
-        !items[position].isStudentPlan && showWholeClassPlan == "small" -> ViewType.ITEM_SMALL.id
-        else -> ViewType.ITEM_NORMAL.id
+        !items[position].isStudentPlan && showWholeClassPlan == "small" -> ViewType.ITEM_SMALL.ordinal
+        else -> ViewType.ITEM_NORMAL.ordinal
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            ViewType.ITEM_NORMAL.id -> ItemViewHolder(ItemTimetableBinding.inflate(inflater, parent, false))
-            ViewType.ITEM_SMALL.id -> SmallItemViewHolder(ItemTimetableSmallBinding.inflate(inflater, parent, false))
+            ViewType.ITEM_NORMAL.ordinal -> ItemViewHolder(
+                ItemTimetableBinding.inflate(inflater, parent, false)
+            )
+            ViewType.ITEM_SMALL.ordinal -> SmallItemViewHolder(
+                ItemTimetableSmallBinding.inflate(inflater, parent, false)
+            )
             else -> throw IllegalStateException()
         }
     }
@@ -111,6 +143,12 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             bindNormalDescription(binding, lesson)
             bindNormalColors(binding, lesson)
 
+            timers[position]?.let {
+                it.cancel()
+                it.purge()
+            }
+            timers[position] = null
+
             if (lesson.isStudentPlan && showTimers) {
                 timers[position] = timer(period = 1000) {
                     if (ViewCompat.isAttachedToWindow(root)) {
@@ -128,10 +166,12 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     }
 
     private fun getPreviousLesson(position: Int): LocalDateTime? {
-        return items.filter { it.isStudentPlan }.getOrNull(position - 1 - items.filterIndexed { i, item -> i < position && !item.isStudentPlan }.size)?.let {
-            if (!it.canceled && it.isStudentPlan) it.end
-            else null
-        }
+        return items.filter { it.isStudentPlan }
+            .getOrNull(position - 1 - items.filterIndexed { i, item -> i < position && !item.isStudentPlan }.size)
+            ?.let {
+                if (!it.canceled && it.isStudentPlan) it.end
+                else null
+            }
     }
 
     private fun updateTimeLeft(binding: ItemTimetableBinding, lesson: Timetable, position: Int) {
@@ -148,11 +188,18 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                     timetableItemTimeLeft.visibility = GONE
                     with(timetableItemTimeUntil) {
                         visibility = VISIBLE
-                        text = context.getString(R.string.timetable_time_until,
+                        text = context.getString(
+                            R.string.timetable_time_until,
                             if (until.seconds <= 60) {
-                                context.getString(R.string.timetable_seconds, until.seconds.toString(10))
+                                context.getString(
+                                    R.string.timetable_seconds,
+                                    until.seconds.toString(10)
+                                )
                             } else {
-                                context.getString(R.string.timetable_minutes, until.toMinutes().toString(10))
+                                context.getString(
+                                    R.string.timetable_minutes,
+                                    until.toMinutes().toString(10)
+                                )
                             }
                         )
                     }
@@ -166,9 +213,15 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                         text = context.getString(
                             R.string.timetable_time_left,
                             if (left.seconds < 60) {
-                                context.getString(R.string.timetable_seconds, left.seconds.toString(10))
+                                context.getString(
+                                    R.string.timetable_seconds,
+                                    left.seconds.toString(10)
+                                )
                             } else {
-                                context.getString(R.string.timetable_minutes, left.toMinutes().toString(10))
+                                context.getString(
+                                    R.string.timetable_minutes,
+                                    left.toMinutes().toString(10)
+                                )
                             }
                         )
                     }
@@ -189,8 +242,9 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     }
 
     private fun bindSubjectStyle(subjectView: TextView, lesson: Timetable) {
-        subjectView.paintFlags = if (lesson.canceled) subjectView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-        else subjectView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        subjectView.paintFlags =
+            if (lesson.canceled) subjectView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            else subjectView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
     }
 
     private fun bindSmallDescription(binding: ItemTimetableSmallBinding, lesson: Timetable) {
@@ -202,10 +256,12 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 timetableSmallItemRoom.visibility = GONE
                 timetableSmallItemTeacher.visibility = GONE
 
-                timetableSmallItemDescription.setTextColor(root.context.getThemeAttrColor(
-                    if (lesson.canceled) R.attr.colorPrimary
-                    else R.attr.colorTimetableChange
-                ))
+                timetableSmallItemDescription.setTextColor(
+                    root.context.getThemeAttrColor(
+                        if (lesson.canceled) R.attr.colorPrimary
+                        else R.attr.colorTimetableChange
+                    )
+                )
             } else {
                 timetableSmallItemDescription.visibility = GONE
                 timetableSmallItemRoom.visibility = VISIBLE
@@ -224,14 +280,17 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 timetableItemGroup.visibility = GONE
                 timetableItemTeacher.visibility = GONE
 
-                timetableItemDescription.setTextColor(root.context.getThemeAttrColor(
-                    if (lesson.canceled) R.attr.colorPrimary
-                    else R.attr.colorTimetableChange
-                ))
+                timetableItemDescription.setTextColor(
+                    root.context.getThemeAttrColor(
+                        if (lesson.canceled) R.attr.colorPrimary
+                        else R.attr.colorTimetableChange
+                    )
+                )
             } else {
                 timetableItemDescription.visibility = GONE
                 timetableItemRoom.visibility = VISIBLE
-                timetableItemGroup.visibility = if (showGroupsInPlan && lesson.group.isNotBlank()) VISIBLE else GONE
+                timetableItemGroup.visibility =
+                    if (showGroupsInPlan && lesson.group.isNotBlank()) VISIBLE else GONE
                 timetableItemTeacher.visibility = VISIBLE
             }
         }
@@ -240,7 +299,10 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     private fun bindSmallColors(binding: ItemTimetableSmallBinding, lesson: Timetable) {
         with(binding) {
             if (lesson.canceled) {
-                updateNumberAndSubjectCanceledColor(timetableSmallItemNumber, timetableSmallItemSubject)
+                updateNumberAndSubjectCanceledColor(
+                    timetableSmallItemNumber,
+                    timetableSmallItemSubject
+                )
             } else {
                 updateNumberColor(timetableSmallItemNumber, lesson)
                 updateSubjectColor(timetableSmallItemSubject, lesson)
@@ -269,31 +331,39 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     }
 
     private fun updateNumberColor(numberView: TextView, lesson: Timetable) {
-        numberView.setTextColor(numberView.context.getThemeAttrColor(
-            if (lesson.changes || lesson.info.isNotBlank()) R.attr.colorTimetableChange
-            else android.R.attr.textColorPrimary
-        ))
+        numberView.setTextColor(
+            numberView.context.getThemeAttrColor(
+                if (lesson.changes || lesson.info.isNotBlank()) R.attr.colorTimetableChange
+                else android.R.attr.textColorPrimary
+            )
+        )
     }
 
     private fun updateSubjectColor(subjectView: TextView, lesson: Timetable) {
-        subjectView.setTextColor(subjectView.context.getThemeAttrColor(
-            if (lesson.subjectOld.isNotBlank() && lesson.subjectOld != lesson.subject) R.attr.colorTimetableChange
-            else android.R.attr.textColorPrimary
-        ))
+        subjectView.setTextColor(
+            subjectView.context.getThemeAttrColor(
+                if (lesson.subjectOld.isNotBlank() && lesson.subjectOld != lesson.subject) R.attr.colorTimetableChange
+                else android.R.attr.textColorPrimary
+            )
+        )
     }
 
     private fun updateRoomColor(roomView: TextView, lesson: Timetable) {
-        roomView.setTextColor(roomView.context.getThemeAttrColor(
-            if (lesson.roomOld.isNotBlank() && lesson.roomOld != lesson.room) R.attr.colorTimetableChange
-            else android.R.attr.textColorSecondary
-        ))
+        roomView.setTextColor(
+            roomView.context.getThemeAttrColor(
+                if (lesson.roomOld.isNotBlank() && lesson.roomOld != lesson.room) R.attr.colorTimetableChange
+                else android.R.attr.textColorSecondary
+            )
+        )
     }
 
     private fun updateTeacherColor(teacherTextView: TextView, lesson: Timetable) {
-        teacherTextView.setTextColor(teacherTextView.context.getThemeAttrColor(
-            if (lesson.teacherOld.isNotBlank() && lesson.teacherOld != lesson.teacher) R.attr.colorTimetableChange
-            else android.R.attr.textColorSecondary
-        ))
+        teacherTextView.setTextColor(
+            teacherTextView.context.getThemeAttrColor(
+                if (lesson.teacherOld.isNotBlank() && lesson.teacherOld != lesson.teacher) R.attr.colorTimetableChange
+                else android.R.attr.textColorSecondary
+            )
+        )
     }
 
     private class ItemViewHolder(val binding: ItemTimetableBinding) :
@@ -301,4 +371,21 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
     private class SmallItemViewHolder(val binding: ItemTimetableSmallBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    class TimetableAdapterDiffCallback(
+        private val oldList: List<Timetable>,
+        private val newList: List<Timetable>,
+        private val isFlagsDifferent: Boolean
+    ) : DiffUtil.Callback() {
+
+        override fun getOldListSize() = oldList.size
+
+        override fun getNewListSize() = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            oldList[oldItemPosition].id == newList[newItemPosition].id
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            oldList[oldItemPosition] == newList[newItemPosition] && !isFlagsDifferent
+    }
 }

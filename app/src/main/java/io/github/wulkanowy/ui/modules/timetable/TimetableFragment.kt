@@ -49,7 +49,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override val titleStringId get() = R.string.timetable_title
 
-    override val isViewEmpty get() = timetableAdapter.items.isEmpty()
+    override val isViewEmpty get() = timetableAdapter.itemCount > 0
 
     override val currentStackSize get() = (activity as? MainActivity)?.currentStackSize
 
@@ -109,20 +109,16 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         showGroupsInPlanType: Boolean,
         showTimetableTimers: Boolean
     ) {
-        with(timetableAdapter) {
-            items = data.toMutableList()
-            showTimers = showTimetableTimers
+        timetableAdapter.submitList(
+            newTimetable = data.toMutableList(),
+            showGroupsInPlan = showGroupsInPlanType,
+            showTimers = showTimetableTimers,
             showWholeClassPlan = showWholeClassPlanType
-            showGroupsInPlan = showGroupsInPlanType
-            notifyDataSetChanged()
-        }
+        )
     }
 
     override fun clearData() {
-        with(timetableAdapter) {
-            items = mutableListOf()
-            notifyDataSetChanged()
-        }
+        timetableAdapter.submitList(listOf())
     }
 
     override fun updateNavigationDay(date: String) {
@@ -226,7 +222,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     }
 
     override fun onDestroyView() {
-        timetableAdapter.resetTimers()
+        timetableAdapter.clearTimers()
         presenter.onDetachView()
         super.onDestroyView()
     }
