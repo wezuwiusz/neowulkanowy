@@ -6,12 +6,12 @@
     android:layout_height="wrap_content"
     android:minHeight="45dp"
     android:orientation="vertical"
+    android:background="@drawable/background_widget_item_timetable_dark"
     tools:context=".ui.modules.timetablewidget.TimetableWidgetFactory">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWidgetBackground"
         android:paddingStart="6dp"
         android:paddingTop="6dp"
         android:paddingEnd="12dp"
@@ -111,9 +111,4 @@
             tools:text="Lekcja odwołana: uczniowie zwolnieni do domu"
             tools:visibility="gone" />
     </RelativeLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDividerInverse" />
 </LinearLayout>
