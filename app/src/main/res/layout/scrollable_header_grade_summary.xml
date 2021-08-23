@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:minLines="2"
+            android:textStyle="bold"
             android:text="@string/grade_summary_calculated_average"
             android:textSize="16sp" />
 
@@ -30,6 +31,15 @@
             android:gravity="center_horizontal"
             android:textSize="21sp"
             tools:text="6,00" />
+
+        <TextView
+            android:id="@+id/gradeSummaryScrollableHeaderCalculatedSubjectCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:textSize="13sp"
+            tools:text="from 8 subjects" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,6 +53,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:minLines="2"
+            android:textStyle="bold"
             android:text="@string/grade_summary_final_average"
             android:textSize="16sp" />
 
@@ -53,5 +64,14 @@
             android:gravity="center_horizontal"
             android:textSize="21sp"
             tools:text="6,00" />
+
+        <TextView
+            android:id="@+id/gradeSummaryScrollableHeaderFinalSubjectCount"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="13sp"
+            tools:text="from 5 subjects" />
     </LinearLayout>
 </LinearLayout>
