@@ -79,6 +79,17 @@
         tools:text="@tools:sample/date/ddmmyy" />
 
     <TextView
+        android:id="@+id/messagePreviewRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messagePreviewDate"
+        tools:text="Read: Yes" />
+
+    <TextView
         android:id="@+id/messagePreviewContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -88,6 +99,6 @@
         android:textIsSelectable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/messagePreviewDate"
+        app:layout_constraintTop_toBottomOf="@+id/messagePreviewRead"
         tools:text="@tools:sample/lorem/random" />
 </androidx.constraintlayout.widget.ConstraintLayout>

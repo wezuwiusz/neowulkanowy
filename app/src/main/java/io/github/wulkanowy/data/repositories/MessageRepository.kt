@@ -20,14 +20,12 @@ import io.github.wulkanowy.data.pojos.MessageDraftJsonAdapter
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.sdk.pojo.SentMessage
-import io.github.wulkanowy.ui.modules.message.send.RecipientChipItem
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import timber.log.Timber
 import java.time.LocalDateTime.now
@@ -79,8 +77,9 @@ class MessageRepository @Inject constructor(
         },
         saveFetchResult = { old, (downloadedMessage, attachments) ->
             checkNotNull(old, { "Fetched message no longer exist!" })
-            messagesDb.updateAll(listOf(old.message.copy(unread = !markAsRead).apply {
+            messagesDb.updateAll(listOf(old.message.apply {
                 id = old.message.id
+                unread = !markAsRead
                 content = content.ifBlank { downloadedMessage }
             }))
             messageAttachmentDao.insertAttachments(attachments)

@@ -33,7 +33,8 @@ class MessagePreviewAdapter @Inject constructor() :
 
     private var attachments: List<MessageAttachment> = emptyList()
 
-    override fun getItemCount() = if (messageWithAttachment == null) 0 else attachments.size + 1 + if (attachments.isNotEmpty()) 1 else 0
+    override fun getItemCount() =
+        if (messageWithAttachment == null) 0 else attachments.size + 1 + if (attachments.isNotEmpty()) 1 else 0
 
     override fun getItemViewType(position: Int) = when (position) {
         0 -> ViewType.MESSAGE.id
@@ -45,25 +46,60 @@ class MessagePreviewAdapter @Inject constructor() :
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            ViewType.MESSAGE.id -> MessageViewHolder(ItemMessagePreviewBinding.inflate(inflater, parent, false))
-            ViewType.DIVIDER.id -> DividerViewHolder(ItemMessageDividerBinding.inflate(inflater, parent, false))
-            ViewType.ATTACHMENT.id -> AttachmentViewHolder(ItemMessageAttachmentBinding.inflate(inflater, parent, false))
+            ViewType.MESSAGE.id -> MessageViewHolder(
+                ItemMessagePreviewBinding.inflate(inflater, parent, false)
+            )
+            ViewType.DIVIDER.id -> DividerViewHolder(
+                ItemMessageDividerBinding.inflate(inflater, parent, false)
+            )
+            ViewType.ATTACHMENT.id -> AttachmentViewHolder(
+                ItemMessageAttachmentBinding.inflate(inflater, parent, false)
+            )
             else -> throw IllegalStateException()
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is MessageViewHolder -> bindMessage(holder, requireNotNull(messageWithAttachment).message)
-            is AttachmentViewHolder -> bindAttachment(holder, requireNotNull(messageWithAttachment).attachments[position - 2])
+            is MessageViewHolder -> bindMessage(
+                holder,
+                requireNotNull(messageWithAttachment).message
+            )
+            is AttachmentViewHolder -> bindAttachment(
+                holder,
+                requireNotNull(messageWithAttachment).attachments[position - 2]
+            )
         }
     }
 
     @SuppressLint("SetTextI18n")
     private fun bindMessage(holder: MessageViewHolder, message: Message) {
+        val context = holder.binding.root.context
+        val recipientCount = message.unreadBy + message.readBy
+
+        val readText = when {
+            recipientCount > 1 -> {
+                context.resources.getQuantityString(
+                    R.plurals.message_read_by,
+                    message.readBy,
+                    message.readBy,
+                    recipientCount
+                )
+            }
+            message.readBy == 1 -> {
+                context.getString(R.string.message_read, context.getString(R.string.all_yes))
+            }
+            else -> context.getString(R.string.message_read, context.getString(R.string.all_no))
+        }
+
         with(holder.binding) {
-            messagePreviewSubject.text = message.subject.ifBlank { root.context.getString(R.string.message_no_subject) }
-            messagePreviewDate.text = root.context.getString(R.string.message_date, message.date.toFormattedString("yyyy-MM-dd HH:mm:ss"))
+            messagePreviewSubject.text =
+                message.subject.ifBlank { root.context.getString(R.string.message_no_subject) }
+            messagePreviewDate.text = root.context.getString(
+                R.string.message_date,
+                message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")
+            )
+            messagePreviewRead.text = readText
             messagePreviewContent.text = message.content
             messagePreviewFromSender.text = message.sender
             messagePreviewToRecipient.text = message.recipient
