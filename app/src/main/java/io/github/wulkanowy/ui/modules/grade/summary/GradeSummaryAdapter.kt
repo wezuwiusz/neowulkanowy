@@ -59,6 +59,7 @@ class GradeSummaryAdapter @Inject constructor(
         val context = binding.root.context
         val finalItemsCount = items.count { it.finalGrade.matches("[0-6][+-]?".toRegex()) }
         val calculatedItemsCount = items.count { value -> value.average != 0.0 }
+        val allItemsCount = items.count { !it.subject.equals("zachowanie", true) }
         val finalAverage = items.calcAverage(
             preferencesRepository.gradePlusModifier,
             preferencesRepository.gradeMinusModifier
@@ -72,11 +73,15 @@ class GradeSummaryAdapter @Inject constructor(
             gradeSummaryScrollableHeaderFinal.text = formatAverage(finalAverage)
             gradeSummaryScrollableHeaderCalculated.text = formatAverage(calculatedAverage)
             gradeSummaryScrollableHeaderFinalSubjectCount.text =
-                context.getString(R.string.grade_summary_from_subjects, finalItemsCount, items.size)
+                context.getString(
+                    R.string.grade_summary_from_subjects,
+                    finalItemsCount,
+                    allItemsCount
+                )
             gradeSummaryScrollableHeaderCalculatedSubjectCount.text = context.getString(
                 R.string.grade_summary_from_subjects,
                 calculatedItemsCount,
-                items.size
+                allItemsCount
             )
         }
     }
