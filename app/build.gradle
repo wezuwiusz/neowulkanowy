@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'ru.cian.huawei-publish'
 apply plugin: 'com.mikepenz.aboutlibraries.plugin'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.huawei.agconnect'
 apply from: 'jacoco.gradle'
 apply from: 'sonarqube.gradle'
@@ -15,7 +15,6 @@ apply from: 'hooks.gradle'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "io.github.wulkanowy"
@@ -98,7 +97,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 
     testOptions.unitTests {
@@ -107,12 +106,12 @@ android {
 
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", "-Xjvm-default=all"]
     }
 
@@ -128,12 +127,6 @@ android {
 
 kapt {
     correctErrorTypes true
-
-    javacOptions {
-        //Bug workaround https://youtrack.jetbrains.com/issue/KT-47416
-        option("-Adagger.fastInit=ENABLED")
-        option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
-    }
 }
 
 play {
@@ -168,7 +161,6 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
 
     implementation "androidx.core:core-ktx:1.6.0"

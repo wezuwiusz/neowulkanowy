@@ -21,7 +21,6 @@ import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.getThemeAttrColor
-import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -58,7 +57,6 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         setHasOptionsMenu(true)
     }
 
-    @FlowPreview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMessageTabBinding.bind(view)

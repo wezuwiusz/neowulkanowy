@@ -23,8 +23,6 @@ import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.showSoftInput
-import kotlinx.coroutines.FlowPreview
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -67,7 +65,6 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
     override val messageSuccess: String
         get() = getString(R.string.message_send_successful)
 
-    @FlowPreview
     @Suppress("UNCHECKED_CAST")
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -221,6 +218,7 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
             .show()
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun clearDraft() {
         formRecipientsData = binding.sendMessageTo.addedChipItems as List<RecipientChipItem>
         presenter.clearDraft()

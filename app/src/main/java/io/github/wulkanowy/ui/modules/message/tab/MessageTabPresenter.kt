@@ -44,7 +44,6 @@ class MessageTabPresenter @Inject constructor(
 
     private val searchChannel = Channel<String>()
 
-    @FlowPreview
     fun onAttachView(view: MessageTabView, folder: MessageFolder) {
         super.onAttachView(view)
         view.initView()
@@ -178,7 +177,7 @@ class MessageTabPresenter @Inject constructor(
         }
     }
 
-    @FlowPreview
+    @OptIn(FlowPreview::class)
     private fun initializeSearchStream() {
         launch {
             searchChannel.consumeAsFlow()

@@ -35,6 +35,7 @@ import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.nickOrName
 import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -81,6 +82,7 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
             "timetable_widget_current_theme_$appWidgetId"
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         GlobalScope.launch {
