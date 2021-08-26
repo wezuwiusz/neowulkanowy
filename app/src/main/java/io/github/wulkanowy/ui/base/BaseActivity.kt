@@ -3,8 +3,6 @@ package io.github.wulkanowy.ui.base
 import android.app.ActivityManager
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -19,6 +17,7 @@ import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.FragmentLifecycleLogger
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
 
 abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
@@ -43,12 +42,10 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleLogger, true)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
-        if (SDK_INT >= LOLLIPOP) {
-            @Suppress("DEPRECATION")
-            setTaskDescription(
-                ActivityManager.TaskDescription(null, null, getThemeAttrColor(R.attr.colorSurface))
-            )
-        }
+        @Suppress("DEPRECATION")
+        setTaskDescription(
+            ActivityManager.TaskDescription(null, null, getThemeAttrColor(R.attr.colorSurface))
+        )
     }
 
     override fun showError(text: String, error: Throwable) {
@@ -75,6 +72,14 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
             .setPositiveButton(R.string.main_log_in) { _, _ -> presenter.onExpiredLoginSelected() }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()
+    }
+
+    override fun showChangePasswordSnackbar(redirectUrl: String) {
+        messageContainer?.let {
+            Snackbar.make(it, R.string.error_password_change_required, LENGTH_LONG)
+                .setAction(R.string.all_change) { openInternetBrowser(redirectUrl) }
+                .show()
+        }
     }
 
     override fun openClearLoginView() {

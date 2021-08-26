@@ -56,7 +56,7 @@ fun Context.getCompatDrawable(@DrawableRes drawableRes: Int, @ColorRes colorRes:
 fun Context.getCompatBitmap(@DrawableRes drawableRes: Int, @ColorRes colorRes: Int) =
     getCompatDrawable(drawableRes, colorRes)?.toBitmap()
 
-fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -> Unit) {
+fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -> Unit = {}) {
     Intent.parseUri(uri, 0).let {
         if (it.resolveActivity(packageManager) != null) startActivity(it)
         else onActivityNotFound(uri)

@@ -45,4 +45,8 @@ abstract class BaseFragment<VB : ViewBinding>(@LayoutRes layoutId: Int) : Fragme
     override fun openClearLoginView() {
         (activity as? BaseActivity<*, *>)?.openClearLoginView()
     }
+
+    override fun showChangePasswordSnackbar(redirectUrl: String) {
+        (activity as? BaseActivity<*, *>)?.showChangePasswordSnackbar(redirectUrl)
+    }
 }

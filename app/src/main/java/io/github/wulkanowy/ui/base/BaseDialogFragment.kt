@@ -30,6 +30,10 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment(), BaseView
         (activity as? BaseActivity<*, *>)?.openClearLoginView()
     }
 
+    override fun showChangePasswordSnackbar(redirectUrl: String) {
+        (activity as? BaseActivity<*, *>)?.showChangePasswordSnackbar(redirectUrl)
+    }
+
     override fun showErrorDetailsDialog(error: Throwable) {
         ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
     }

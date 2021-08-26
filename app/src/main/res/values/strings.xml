@@ -678,6 +678,7 @@
     <!--Others-->
     <string name="all_copied">Copied</string>
     <string name="all_undo">Undo</string>
+    <string name="all_change">Change</string>
 
 
     <!--Update helper-->

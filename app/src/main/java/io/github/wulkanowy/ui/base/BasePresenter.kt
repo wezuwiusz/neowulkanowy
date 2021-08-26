@@ -34,6 +34,7 @@ open class BasePresenter<T : BaseView>(
             showErrorMessage = view::showError
             onSessionExpired = view::showExpiredDialog
             onNoCurrentStudent = view::openClearLoginView
+            onPasswordChangeRequired = view::showChangePasswordSnackbar
         }
     }
 

@@ -86,6 +86,10 @@ class SyncFragment : PreferenceFragmentCompat(),
         (activity as? BaseActivity<*, *>)?.showExpiredDialog()
     }
 
+    override fun showChangePasswordSnackbar(redirectUrl: String) {
+        (activity as? BaseActivity<*, *>)?.showChangePasswordSnackbar(redirectUrl)
+    }
+
     override fun openClearLoginView() {
         (activity as? BaseActivity<*, *>)?.openClearLoginView()
     }
