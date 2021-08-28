@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="startup_tab_entries" translatable="false">
+        <item>@string/dashboard_title</item>
         <item>@string/grade_title</item>
         <item>@string/attendance_title</item>
-        <item>@string/exam_title</item>
         <item>@string/timetable_title</item>
     </string-array>
     <string-array name="startup_tab_value" translatable="false">

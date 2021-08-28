@@ -30,6 +30,7 @@ class PreferencesRepository @Inject constructor(
     @ApplicationContext val context: Context,
     moshi: Moshi
 ) {
+
     @OptIn(ExperimentalStdlibApi::class)
     private val dashboardItemsPositionAdapter: JsonAdapter<Map<DashboardItem.Type, Int>> =
         moshi.adapter()

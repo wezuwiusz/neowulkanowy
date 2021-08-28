@@ -82,16 +82,6 @@ class ExamPresenter @Inject constructor(
         view?.showExamDialog(exam)
     }
 
-    fun onViewReselected() {
-        Timber.i("Exam view is reselected")
-        baseDate.also {
-            if (currentDate != it) {
-                reloadView(it)
-                loadData()
-            } else if (view?.isViewEmpty == false) view?.resetView()
-        }
-    }
-
     private fun setBaseDateOnHolidays() {
         flow {
             val student = studentRepository.getCurrentStudent()

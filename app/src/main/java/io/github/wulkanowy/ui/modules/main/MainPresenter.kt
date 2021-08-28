@@ -118,11 +118,9 @@ class MainPresenter @Inject constructor(
         view?.showStudentAvatar(currentStudent)
     }
 
-    private fun getProperViewIndexes(initMenu: MainView.Section?): Pair<Int, Int> {
-        return when (initMenu?.id) {
-            in 0..3 -> initMenu!!.id to -1
-            in 4..10 -> 4 to initMenu!!.id
-            else -> prefRepository.startMenuIndex to -1
-        }
+    private fun getProperViewIndexes(initMenu: MainView.Section?) = when (initMenu?.id) {
+        in 0..3 -> initMenu!!.id to -1
+        in 4..100 -> 4 to initMenu!!.id
+        else -> prefRepository.startMenuIndex to -1
     }
 }

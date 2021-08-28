@@ -34,6 +34,7 @@ import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
 import io.github.wulkanowy.ui.modules.dashboard.DashboardFragment
+import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
 import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
@@ -107,11 +108,12 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     private val moreMenuFragments = mapOf<Int, Fragment>(
         MainView.Section.MESSAGE.id to MessageFragment.newInstance(),
+        MainView.Section.EXAM.id to ExamFragment.newInstance(),
         MainView.Section.HOMEWORK.id to HomeworkFragment.newInstance(),
         MainView.Section.NOTE.id to NoteFragment.newInstance(),
-        MainView.Section.LUCKY_NUMBER.id to LuckyNumberFragment.newInstance(),
-        MainView.Section.SCHOOL_ANNOUNCEMENT.id to SchoolAnnouncementFragment.newInstance(),
         MainView.Section.CONFERENCE.id to ConferenceFragment.newInstance(),
+        MainView.Section.SCHOOL_ANNOUNCEMENT.id to SchoolAnnouncementFragment.newInstance(),
+        MainView.Section.LUCKY_NUMBER.id to LuckyNumberFragment.newInstance(),
     )
 
     @SuppressLint("NewApi")
