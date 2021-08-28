@@ -40,6 +40,8 @@ interface MainView : BaseView {
 
     fun showStudentAvatar(student: Student)
 
+    fun showInAppReview()
+
     interface MainChildView {
 
         fun onFragmentReselected()

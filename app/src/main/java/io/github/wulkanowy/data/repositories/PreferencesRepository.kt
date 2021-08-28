@@ -10,14 +10,17 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
+import io.github.wulkanowy.sdk.toLocalDate
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode
+import io.github.wulkanowy.utils.toTimestamp
 import io.github.wulkanowy.utils.toLocalDateTime
 import io.github.wulkanowy.utils.toTimestamp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -222,6 +225,18 @@ class PreferencesRepository @Inject constructor(
             return flowSharedPref.getStringSet(prefKey, defaultSet)
         }
 
+    var inAppReviewCount: Int
+        get() = sharedPref.getInt(PREF_KEY_IN_APP_REVIEW_COUNT, 0)
+        set(value) = sharedPref.edit().putInt(PREF_KEY_IN_APP_REVIEW_COUNT, value).apply()
+
+    var inAppReviewDate: LocalDate?
+        get() = sharedPref.getLong(PREF_KEY_IN_APP_REVIEW_DATE, 0).takeIf { it != 0L }?.toLocalDate()
+        set(value) = sharedPref.edit().putLong(PREF_KEY_IN_APP_REVIEW_DATE, value!!.toTimestamp()).apply()
+
+    var isAppReviewDone: Boolean
+        get() = sharedPref.getBoolean(PREF_KEY_IN_APP_REVIEW_DONE, false)
+        set(value) = sharedPref.edit().putBoolean(PREF_KEY_IN_APP_REVIEW_DONE, value).apply()
+
     private fun getLong(id: Int, default: Int) = getLong(context.getString(id), default)
 
     private fun getLong(id: String, default: Int) =
@@ -240,5 +255,11 @@ class PreferencesRepository @Inject constructor(
     private companion object {
 
         private const val PREF_KEY_DASHBOARD_ITEMS_POSITION = "dashboard_items_position"
+
+        private const val PREF_KEY_IN_APP_REVIEW_COUNT = "in_app_review_count"
+
+        private const val PREF_KEY_IN_APP_REVIEW_DATE = "in_app_review_date"
+
+        private const val PREF_KEY_IN_APP_REVIEW_DONE = "in_app_review_done"
     }
 }

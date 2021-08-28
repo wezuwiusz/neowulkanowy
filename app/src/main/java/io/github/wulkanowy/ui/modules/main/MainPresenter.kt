@@ -14,6 +14,7 @@ import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import java.time.LocalDate
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
@@ -106,9 +107,25 @@ class MainPresenter @Inject constructor(
             } else {
                 notifyMenuViewChanged()
                 switchMenuView(index)
+                checkInAppReview()
                 true
             }
         } == true
+    }
+
+    private fun checkInAppReview() {
+        prefRepository.inAppReviewCount++
+
+        if (prefRepository.inAppReviewDate == null) {
+            prefRepository.inAppReviewDate = LocalDate.now()
+        }
+
+        if (!prefRepository.isAppReviewDone && prefRepository.inAppReviewCount >= 50 &&
+            LocalDate.now().minusDays(14).isAfter(prefRepository.inAppReviewDate)
+        ) {
+            view?.showInAppReview()
+            prefRepository.isAppReviewDone = true
+        }
     }
 
     private fun showCurrentStudentAvatar() {

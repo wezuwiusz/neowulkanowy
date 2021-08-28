@@ -45,6 +45,7 @@ import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragm
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
+import io.github.wulkanowy.utils.InAppReviewHelper
 import io.github.wulkanowy.utils.UpdateHelper
 import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.dpToPx
@@ -67,6 +68,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     @Inject
     lateinit var updateHelper: UpdateHelper
+
+    @Inject
+    lateinit var inAppReviewHelper: InAppReviewHelper
 
     @Inject
     lateinit var appInfo: AppInfo
@@ -360,6 +364,10 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             icon = createNameInitialsDrawable(student.nickOrName, student.avatarColor, 0.44f)
             title = getString(R.string.main_account_picker)
         }
+    }
+
+    override fun showInAppReview() {
+        inAppReviewHelper.showInAppReview(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
