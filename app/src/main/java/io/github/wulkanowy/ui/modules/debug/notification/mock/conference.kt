@@ -53,6 +53,6 @@ private fun generateConference(title: String, subject: String) = Conference(
     diaryId = 0,
     agenda = "",
     conferenceId = 0,
-    date = LocalDateTime.now(),
+    date = LocalDateTime.now().plusMinutes(10),
     presentOnConference = "",
 )

@@ -40,8 +40,10 @@ class ExamRepository @Inject constructor(
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         shouldFetch = {
-            it.isEmpty() || forceRefresh
-                || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end))
+            val isShouldBeRefreshed = refreshHelper.isShouldBeRefreshed(
+                key = getRefreshKey(cacheKey, semester, start, end)
+            )
+            it.isEmpty() || forceRefresh || isShouldBeRefreshed
         },
         query = {
             examDb.loadAll(

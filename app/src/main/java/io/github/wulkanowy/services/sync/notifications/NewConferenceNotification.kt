@@ -8,6 +8,8 @@ import io.github.wulkanowy.data.db.entities.Conference
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.MultipleNotifications
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.toFormattedString
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class NewConferenceNotification @Inject constructor(
@@ -16,6 +18,11 @@ class NewConferenceNotification @Inject constructor(
 ) : BaseNotification(context, notificationManager) {
 
     fun notify(items: List<Conference>, student: Student) {
+        val today = LocalDateTime.now()
+        val lines = items.filter { !it.date.isBefore(today) }.map {
+            "${it.date.toFormattedString("dd.MM")} - ${it.title}: ${it.subject}"
+        }.ifEmpty { return }
+
         val notification = MultipleNotifications(
             type = NotificationType.NEW_CONFERENCE,
             icon = R.drawable.ic_more_conferences,
@@ -23,9 +30,7 @@ class NewConferenceNotification @Inject constructor(
             contentStringRes = R.plurals.conference_notify_new_items,
             summaryStringRes = R.plurals.conference_number_item,
             startMenu = MainView.Section.CONFERENCE,
-            lines = items.map {
-                "${it.title}: ${it.subject}"
-            }
+            lines = lines
         )
 
         sendNotification(notification, student)
