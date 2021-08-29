@@ -9,25 +9,18 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Build
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updateMargins
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation.TitleState.ALWAYS_SHOW
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
@@ -39,6 +32,8 @@ import io.github.wulkanowy.databinding.ActivityMainBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
 import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
+import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
+import io.github.wulkanowy.ui.modules.dashboard.DashboardFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
@@ -46,9 +41,11 @@ import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.more.MoreFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
+import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
+import io.github.wulkanowy.utils.InAppReviewHelper
 import io.github.wulkanowy.utils.UpdateHelper
 import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.dpToPx
@@ -73,6 +70,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     lateinit var updateHelper: UpdateHelper
 
     @Inject
+    lateinit var inAppReviewHelper: InAppReviewHelper
+
+    @Inject
     lateinit var appInfo: AppInfo
 
     private var accountMenu: MenuItem? = null
@@ -80,7 +80,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     private val overlayProvider by lazy { ElevationOverlayProvider(this) }
 
     private val navController =
-        FragNavController(supportFragmentManager, R.id.mainFragmentContainer)
+        FragNavController(supportFragmentManager, R.id.main_fragment_container)
 
     companion object {
         const val EXTRA_START_MENU = "extraStartMenu"
@@ -112,9 +112,12 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     private val moreMenuFragments = mapOf<Int, Fragment>(
         MainView.Section.MESSAGE.id to MessageFragment.newInstance(),
+        MainView.Section.EXAM.id to ExamFragment.newInstance(),
         MainView.Section.HOMEWORK.id to HomeworkFragment.newInstance(),
         MainView.Section.NOTE.id to NoteFragment.newInstance(),
-        MainView.Section.LUCKY_NUMBER.id to LuckyNumberFragment.newInstance()
+        MainView.Section.CONFERENCE.id to ConferenceFragment.newInstance(),
+        MainView.Section.SCHOOL_ANNOUNCEMENT.id to SchoolAnnouncementFragment.newInstance(),
+        MainView.Section.LUCKY_NUMBER.id to LuckyNumberFragment.newInstance(),
     )
 
     @SuppressLint("NewApi")
@@ -122,7 +125,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         super.onCreate(savedInstanceState)
         setContentView(ActivityMainBinding.inflate(layoutInflater).apply { binding = this }.root)
         setSupportActionBar(binding.mainToolbar)
-        messageContainer = binding.mainFragmentContainer
+        messageContainer = binding.mainMessageContainer
         updateHelper.messageContainer = binding.mainFragmentContainer
 
         val section = MainView.Section.values()
@@ -213,57 +216,40 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     @SuppressLint("NewApi")
     override fun initView() {
         with(binding.mainToolbar) {
-            if (SDK_INT >= LOLLIPOP) stateListAnimator = null
+            stateListAnimator = null
             setBackgroundColor(
                 overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(4f))
             )
         }
 
         with(binding.mainBottomNav) {
-            addItems(
-                listOf(
-                    AHBottomNavigationItem(R.string.grade_title, R.drawable.ic_main_grade, 0),
-                    AHBottomNavigationItem(
-                        R.string.attendance_title,
-                        R.drawable.ic_main_attendance,
-                        0
-                    ),
-                    AHBottomNavigationItem(R.string.exam_title, R.drawable.ic_main_exam, 0),
-                    AHBottomNavigationItem(
-                        R.string.timetable_title,
-                        R.drawable.ic_main_timetable,
-                        0
-                    ),
-                    AHBottomNavigationItem(R.string.more_title, R.drawable.ic_main_more, 0)
-                )
-            )
-            accentColor = getThemeAttrColor(R.attr.colorPrimary)
-            inactiveColor = getThemeAttrColor(R.attr.colorOnSurface, 153)
-            defaultBackgroundColor =
-                overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(8f))
-            titleState = ALWAYS_SHOW
-            currentItem = startMenuIndex
-            isBehaviorTranslationEnabled = false
-            setTitleTextSizeInSp(10f, 10f)
-            setOnTabSelectedListener(presenter::onTabSelected)
+            with(menu) {
+                add(Menu.NONE, 0, Menu.NONE, R.string.dashboard_title)
+                    .setIcon(R.drawable.ic_main_dashboard)
+                add(Menu.NONE, 1, Menu.NONE, R.string.grade_title)
+                    .setIcon(R.drawable.ic_main_grade)
+                add(Menu.NONE, 2, Menu.NONE, R.string.attendance_title)
+                    .setIcon(R.drawable.ic_main_attendance)
+                add(Menu.NONE, 3, Menu.NONE, R.string.timetable_title)
+                    .setIcon(R.drawable.ic_main_timetable)
+                add(Menu.NONE, 4, Menu.NONE, R.string.more_title)
+                    .setIcon(R.drawable.ic_main_more)
+            }
+            selectedItemId = startMenuIndex
+            setOnItemSelectedListener { presenter.onTabSelected(it.itemId, false) }
+            setOnItemReselectedListener { presenter.onTabSelected(it.itemId, true) }
         }
 
         with(navController) {
             setOnViewChangeListener { section, name ->
                 if (section == MainView.Section.ACCOUNT || section == MainView.Section.STUDENT_INFO) {
                     binding.mainBottomNav.isVisible = false
-                    binding.mainFragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                        updateMargins(bottom = 0)
-                    }
 
                     if (appInfo.systemVersion >= P) {
                         window.navigationBarColor = getThemeAttrColor(R.attr.colorSurface)
                     }
                 } else {
                     binding.mainBottomNav.isVisible = true
-                    binding.mainFragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                        updateMargins(bottom = dpToPx(56f).toInt())
-                    }
 
                     if (appInfo.systemVersion >= P) {
                         window.navigationBarColor =
@@ -276,9 +262,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             }
             fragmentHideStrategy = HIDE
             rootFragments = listOf(
+                DashboardFragment.newInstance(),
                 GradeFragment.newInstance(),
                 AttendanceFragment.newInstance(),
-                ExamFragment.newInstance(),
                 TimetableFragment.newInstance(),
                 MoreFragment.newInstance()
             )
@@ -378,6 +364,10 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             icon = createNameInitialsDrawable(student.nickOrName, student.avatarColor, 0.44f)
             title = getString(R.string.main_account_picker)
         }
+    }
+
+    override fun showInAppReview() {
+        inAppReviewHelper.showInAppReview(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

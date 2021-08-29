@@ -67,7 +67,7 @@ class NotePresenter @Inject constructor(
                             showRefresh(true)
                             showProgress(false)
                             showContent(true)
-                            updateData(it.data)
+                            updateData(it.data.sortedByDescending { item -> item.date })
                         }
                     }
                 }

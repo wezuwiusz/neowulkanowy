@@ -14,7 +14,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AccountEditPresenter @Inject constructor(
-    private val appInfo: AppInfo,
+    appInfo: AppInfo,
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository
 ) : BasePresenter<AccountEditView>(errorHandler, studentRepository) {

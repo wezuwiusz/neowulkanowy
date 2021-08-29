@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="pref_key_start_menu">start_menu</string>
+    <string name="pref_key_start_menu">default_menu_index</string>
     <string name="pref_key_attendance_present">attendance_present</string>
     <string name="pref_key_app_theme">app_theme</string>
+    <string name="pref_key_dashboard_tiles">dashboard_tiles</string>
     <string name="pref_key_grade_color_scheme">grade_color_scheme</string>
     <string name="pref_key_expand_grade">expand_grade</string>
     <string name="pref_key_grade_average_mode">grade_average_mode</string>
@@ -14,6 +15,7 @@
     <string name="pref_key_services_wifi_only">services_disable_wifi_only</string>
     <string name="pref_key_services_force_sync">services_force_sync</string>
     <string name="pref_key_notifications_fix_issues">notifications_fix_issues</string>
+    <string name="pref_key_notifications_system_settings">notifications_system_settings</string>
     <string name="pref_key_notifications_enable">notifications_enable</string>
     <string name="pref_key_notifications_upcoming_lessons_enable">notifications_upcoming_lessons_enable</string>
     <string name="pref_key_notification_debug">notification_debug</string>
@@ -26,4 +28,8 @@
     <string name="pref_key_timetable_show_timers">timetable_show_timers</string>
     <string name="pref_key_homework_fullscreen">homework_fullscreen</string>
     <string name="pref_key_subjects_without_grades">subjects_without_grades</string>
+    <string name="pref_key_optional_arithmetic_average">optional_arithmetic_average</string>
+    <string name="pref_key_message_send_is_draft">message_send_is_draft</string>
+    <string name="pref_key_message_send_draft">message_send_recipients</string>
+    <string name="pref_key_last_sync_date">last_sync_date</string>
 </resources>

@@ -8,6 +8,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.isHolidays
+import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -27,6 +28,7 @@ class SyncPresenter @Inject constructor(
         Timber.i("Settings sync view was initialized")
         view.setServicesSuspended(preferencesRepository.serviceEnableKey, now().isHolidays)
         view.initView()
+        setSyncDateInView()
     }
 
     fun onSharedPreferenceChanged(key: String) {
@@ -63,10 +65,21 @@ class SyncPresenter @Inject constructor(
                     }
                     else -> Timber.d("Sync now state: ${workInfo.state}")
                 }
-                if (workInfo.state.isFinished) setSyncInProgress(false)
+                if (workInfo.state.isFinished) {
+                    setSyncInProgress(false)
+                    setSyncDateInView()
+                }
             }.catch {
                 Timber.e(it, "Sync now failed")
             }.launch("sync")
         }
+    }
+
+    private fun setSyncDateInView() {
+        val lastSyncDate = preferencesRepository.lasSyncDate
+
+        if (lastSyncDate.year == 1970) return
+
+        view?.setLastSyncDate(lastSyncDate.toFormattedString("dd.MM.yyyy HH:mm:ss"))
     }
 }

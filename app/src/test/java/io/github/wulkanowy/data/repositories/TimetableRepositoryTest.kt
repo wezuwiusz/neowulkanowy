@@ -2,10 +2,12 @@ package io.github.wulkanowy.data.repositories
 
 import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
 import io.github.wulkanowy.data.db.dao.TimetableDao
+import io.github.wulkanowy.data.db.dao.TimetableHeaderDao
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.sdk.pojo.TimetableFull
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.toFirstResult
@@ -41,6 +43,9 @@ class TimetableRepositoryTest {
     @MockK
     private lateinit var timetableAdditionalDao: TimetableAdditionalDao
 
+    @MockK
+    private lateinit var timetableHeaderDao: TimetableHeaderDao
+
     @MockK(relaxUnitFun = true)
     private lateinit var refreshHelper: AutoRefreshHelper
 
@@ -59,7 +64,7 @@ class TimetableRepositoryTest {
         MockKAnnotations.init(this)
         every { refreshHelper.isShouldBeRefreshed(any()) } returns false
 
-        timetableRepository = TimetableRepository(timetableDb, timetableAdditionalDao, sdk, timetableNotificationSchedulerHelper, refreshHelper)
+        timetableRepository = TimetableRepository(timetableDb, timetableAdditionalDao, timetableHeaderDao, sdk, timetableNotificationSchedulerHelper, refreshHelper)
     }
 
     @Test
@@ -71,7 +76,7 @@ class TimetableRepositoryTest {
             createTimetableRemote(of(2021, 1, 4, 9, 40), 3, "", "W-F"),
             createTimetableRemote(of(2021, 1, 4, 10, 30), 4, "", "W-F")
         )
-        coEvery { sdk.getTimetable(any(), any()) } returns (remoteList to emptyList())
+        coEvery { sdk.getTimetableFull(any(), any()) } returns TimetableFull(emptyList(), remoteList, emptyList())
 
         val localList = listOf(
             createTimetableRemote(of(2021, 1, 4, 8, 0), 1, "123", "Przyroda"),
@@ -87,13 +92,17 @@ class TimetableRepositoryTest {
         coEvery { timetableAdditionalDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
         coEvery { timetableAdditionalDao.deleteAll(emptyList()) } just Runs
 
+        coEvery { timetableHeaderDao.loadAll(1, 1, startDate, endDate) } returns flowOf(listOf())
+        coEvery { timetableHeaderDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
+        coEvery { timetableHeaderDao.deleteAll(emptyList()) } just Runs
+
         // execute
         val res = runBlocking {
             timetableRepository.getTimetable(student, semester, startDate, endDate, true).toFirstResult()
         }
 
         // verify
-        assertEquals(4, res.data?.first.orEmpty().size)
+        assertEquals(4, res.data?.lessons.orEmpty().size)
         coVerify {
             timetableDb.insertAll(withArg {
                 assertEquals(4, it.size)
@@ -124,7 +133,7 @@ class TimetableRepositoryTest {
             createTimetableRemote(of(2021, 1, 6, 9, 40), 3, "125", "Matematyka", "Paweł Środowski", false),
             createTimetableRemote(of(2021, 1, 6, 10, 40), 4, "126", "Matematyka", "Paweł Czwartkowski", true)
         )
-        coEvery { sdk.getTimetable(startDate, endDate) } returns (remoteList to emptyList())
+        coEvery { sdk.getTimetableFull(startDate, endDate) } returns TimetableFull(emptyList(), remoteList, emptyList())
 
         val localList = listOf(
             createTimetableRemote(of(2021, 1, 4, 8, 0), 1, "123", "Matematyka", "Paweł Poniedziałkowski", false),
@@ -150,12 +159,16 @@ class TimetableRepositoryTest {
         coEvery { timetableAdditionalDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
         coEvery { timetableAdditionalDao.deleteAll(emptyList()) } just Runs
 
+        coEvery { timetableHeaderDao.loadAll(1, 1, startDate, endDate) } returns flowOf(listOf())
+        coEvery { timetableHeaderDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
+        coEvery { timetableHeaderDao.deleteAll(emptyList()) } just Runs
+
         // execute
         val res = runBlocking { timetableRepository.getTimetable(student, semester, startDate, endDate, true).toFirstResult() }
 
         // verify
         assertEquals(null, res.error)
-        assertEquals(12, res.data!!.first.size)
+        assertEquals(12, res.data!!.lessons.size)
 
         coVerify {
             timetableDb.insertAll(withArg {
@@ -187,7 +200,7 @@ class TimetableRepositoryTest {
         )
 
         // prepare
-        coEvery { sdk.getTimetable(startDate, endDate) } returns (remoteList to emptyList())
+        coEvery { sdk.getTimetableFull(startDate, endDate) } returns TimetableFull(emptyList(), remoteList, emptyList())
         coEvery { timetableDb.loadAll(1, 1, startDate, endDate) } returnsMany listOf(
             flowOf(remoteList.mapToEntities(semester)),
             flowOf(remoteList.mapToEntities(semester))
@@ -199,13 +212,17 @@ class TimetableRepositoryTest {
         coEvery { timetableAdditionalDao.deleteAll(emptyList()) } just Runs
         coEvery { timetableAdditionalDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
 
+        coEvery { timetableHeaderDao.loadAll(1, 1, startDate, endDate) } returns flowOf(listOf())
+        coEvery { timetableHeaderDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
+        coEvery { timetableHeaderDao.deleteAll(emptyList()) } just Runs
+
         // execute
         val res = runBlocking { timetableRepository.getTimetable(student, semester, startDate, endDate, true).toFirstResult() }
 
         // verify
         assertEquals(null, res.error)
-        assertEquals(2, res.data?.first?.size)
-        coVerify { sdk.getTimetable(startDate, endDate) }
+        assertEquals(2, res.data?.lessons?.size)
+        coVerify { sdk.getTimetableFull(startDate, endDate) }
         coVerify { timetableDb.loadAll(1, 1, startDate, endDate) }
         coVerify { timetableDb.insertAll(match { it.isEmpty() }) }
         coVerify { timetableDb.deleteAll(match { it.isEmpty() }) }

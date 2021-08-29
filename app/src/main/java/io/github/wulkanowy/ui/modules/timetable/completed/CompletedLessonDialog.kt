@@ -42,39 +42,39 @@ class CompletedLessonDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            completedLessonDialogSubject.text = completedLesson.subject
-            completedLessonDialogTopic.text = completedLesson.topic
-            completedLessonDialogTeacher.text = completedLesson.teacher
-            completedLessonDialogAbsence.text = completedLesson.absence
-            completedLessonDialogChanges.text = completedLesson.substitution
-            completedLessonDialogResources.text = completedLesson.resources
+            completedLessonDialogSubjectValue.text = completedLesson.subject
+            completedLessonDialogTopicValue.text = completedLesson.topic
+            completedLessonDialogTeacherValue.text = completedLesson.teacher
+            completedLessonDialogAbsenceValue.text = completedLesson.absence
+            completedLessonDialogChangesValue.text = completedLesson.substitution
+            completedLessonDialogResourcesValue.text = completedLesson.resources
         }
 
         completedLesson.substitution.let {
             if (it.isBlank()) {
                 with(binding) {
                     completedLessonDialogChangesTitle.visibility = View.GONE
-                    completedLessonDialogChanges.visibility = View.GONE
+                    completedLessonDialogChangesValue.visibility = View.GONE
                 }
-            } else binding.completedLessonDialogChanges.text = it
+            } else binding.completedLessonDialogChangesValue.text = it
         }
 
         completedLesson.absence.let {
             if (it.isBlank()) {
                 with(binding) {
                     completedLessonDialogAbsenceTitle.visibility = View.GONE
-                    completedLessonDialogAbsence.visibility = View.GONE
+                    completedLessonDialogAbsenceValue.visibility = View.GONE
                 }
-            } else binding.completedLessonDialogAbsence.text = it
+            } else binding.completedLessonDialogAbsenceValue.text = it
         }
 
         completedLesson.resources.let {
             if (it.isBlank()) {
                 with(binding) {
                     completedLessonDialogResourcesTitle.visibility = View.GONE
-                    completedLessonDialogResources.visibility = View.GONE
+                    completedLessonDialogResourcesValue.visibility = View.GONE
                 }
-            } else binding.completedLessonDialogResources.text = it
+            } else binding.completedLessonDialogResourcesValue.text = it
         }
 
         binding.completedLessonDialogClose.setOnClickListener { dismiss() }

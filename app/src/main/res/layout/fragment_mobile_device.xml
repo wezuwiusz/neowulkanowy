@@ -111,5 +111,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:tint="?colorOnSecondary"
-        app:srcCompat="@drawable/ic_all_add" />
+        app:srcCompat="@drawable/ic_all_add"
+        tools:ignore="ContentDescription" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

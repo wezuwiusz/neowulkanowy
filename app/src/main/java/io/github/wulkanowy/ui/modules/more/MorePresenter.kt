@@ -23,12 +23,13 @@ class MorePresenter @Inject constructor(
         view?.run {
             when (title) {
                 messagesRes?.first -> openMessagesView()
+                examRes?.first -> openExamView()
                 homeworkRes?.first -> openHomeworkView()
                 noteRes?.first -> openNoteView()
-                luckyNumberRes?.first -> openLuckyNumberView()
-                mobileDevicesRes?.first -> openMobileDevicesView()
                 conferencesRes?.first -> openConferencesView()
+                schoolAnnouncementRes?.first -> openSchoolAnnouncementView()
                 schoolAndTeachersRes?.first -> openSchoolAndTeachersView()
+                mobileDevicesRes?.first -> openMobileDevicesView()
                 settingsRes?.first -> openSettingsView()
             }
         }
@@ -44,12 +45,13 @@ class MorePresenter @Inject constructor(
         view?.run {
             updateData(listOfNotNull(
                 messagesRes,
+                examRes,
                 homeworkRes,
                 noteRes,
-                luckyNumberRes,
-                mobileDevicesRes,
                 conferencesRes,
+                schoolAnnouncementRes,
                 schoolAndTeachersRes,
+                mobileDevicesRes,
                 settingsRes
             ))
         }

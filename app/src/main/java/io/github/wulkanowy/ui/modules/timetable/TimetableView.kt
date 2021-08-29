@@ -24,6 +24,8 @@ interface TimetableView : BaseView {
 
     fun showEmpty(show: Boolean)
 
+    fun setDayHeaderMessage(message: String?)
+
     fun showErrorView(show: Boolean)
 
     fun setErrorDetails(message: String)

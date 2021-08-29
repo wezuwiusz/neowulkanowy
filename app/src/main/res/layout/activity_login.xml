@@ -6,11 +6,11 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/loginToolbar"
-        android:background="@android:color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent" />
 
-    <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
+    <io.github.wulkanowy.ui.widgets.SwipeDisabledViewPager
         android:id="@+id/loginViewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

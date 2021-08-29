@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.widget.CompoundButton
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,6 @@ import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.getThemeAttrColor
-import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,36 +48,46 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
     override val isViewEmpty
         get() = tabAdapter.itemCount == 0
 
+    override var onlyUnread: Boolean? = false
+
+    override var onlyWithAttachments = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    @FlowPreview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMessageTabBinding.bind(view)
         messageContainer = binding.messageTabRecycler
-        presenter.onAttachView(this, MessageFolder.valueOf(
-            (savedInstanceState ?: arguments)?.getString(MESSAGE_TAB_FOLDER_ID).orEmpty()
-        ))
+
+        val folder = MessageFolder.valueOf(
+            (savedInstanceState ?: requireArguments()).getString(MESSAGE_TAB_FOLDER_ID).orEmpty()
+        )
+        presenter.onAttachView(this, folder)
     }
 
     override fun initView() {
         with(tabAdapter) {
-            onClickListener = presenter::onMessageItemSelected
+            onItemClickListener = presenter::onMessageItemSelected
+            onHeaderClickListener = ::onChipChecked
             onChangesDetectedListener = ::resetListPosition
         }
 
         with(binding.messageTabRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = tabAdapter
-            addItemDecoration(DividerItemDecoration(context))
+            addItemDecoration(DividerItemDecoration(context, false))
         }
         with(binding) {
             messageTabSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             messageTabSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
-            messageTabSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
+            messageTabSwipe.setProgressBackgroundColorSchemeColor(
+                requireContext().getThemeAttrColor(
+                    R.attr.colorSwipeRefresh
+                )
+            )
             messageTabErrorRetry.setOnClickListener { presenter.onRetry() }
             messageTabErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }
@@ -99,8 +109,9 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         })
     }
 
-    override fun updateData(data: List<Message>) {
-        tabAdapter.setDataItems(data)
+    override fun updateData(data: List<MessageTabDataItem>, hide: Boolean) {
+        if (hide) onlyUnread = null
+        tabAdapter.setDataItems(data, onlyUnread, onlyWithAttachments)
     }
 
     override fun showProgress(show: Boolean) {
@@ -143,8 +154,19 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         (parentFragment as? MessageFragment)?.onChildFragmentLoaded()
     }
 
-    fun onParentLoadData(forceRefresh: Boolean) {
-        presenter.onParentViewLoadData(forceRefresh)
+    fun onParentLoadData(
+        forceRefresh: Boolean,
+        onlyUnread: Boolean? = this.onlyUnread,
+        onlyWithAttachments: Boolean = this.onlyWithAttachments
+    ) {
+        presenter.onParentViewLoadData(forceRefresh, onlyUnread, onlyWithAttachments)
+    }
+
+    private fun onChipChecked(chip: CompoundButton, isChecked: Boolean) {
+        when (chip.id) {
+            R.id.chip_unread -> presenter.onUnreadFilterSelected(isChecked)
+            R.id.chip_attachments -> presenter.onAttachmentsFilterSelected(isChecked)
+        }
     }
 
     fun onParentDeleteMessage() {

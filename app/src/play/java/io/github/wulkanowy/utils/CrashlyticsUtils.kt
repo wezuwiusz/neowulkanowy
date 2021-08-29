@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import fr.bipi.tressence.base.FormatterPriorityTree
 import fr.bipi.tressence.common.StackTraceRecorder
+import fr.bipi.tressence.common.filters.Filter
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
 import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
 import java.io.InterruptedIOException
@@ -21,17 +22,9 @@ class CrashLogTree : FormatterPriorityTree(Log.VERBOSE) {
     }
 }
 
-class CrashLogExceptionTree : FormatterPriorityTree(Log.ERROR) {
+class CrashLogExceptionTree : FormatterPriorityTree(Log.ERROR, ExceptionFilter) {
 
     private val crashlytics by lazy { FirebaseCrashlytics.getInstance() }
-
-    override fun skipLog(priority: Int, tag: String?, message: String, t: Throwable?): Boolean {
-        if (t is FeatureDisabledException || t is FeatureNotAvailableException || t is UnknownHostException || t is SocketTimeoutException || t is InterruptedIOException) {
-            return true
-        }
-
-        return super.skipLog(priority, tag, message, t)
-    }
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (skipLog(priority, tag, message, t)) return

@@ -17,8 +17,6 @@ interface ExamView : BaseView {
 
     fun showRefresh(show: Boolean)
 
-    fun resetView()
-
     fun showEmpty(show: Boolean)
 
     fun showErrorView(show: Boolean)

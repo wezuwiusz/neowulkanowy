@@ -11,6 +11,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
@@ -138,32 +139,37 @@ class TimetablePresenter @Inject constructor(
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            timetableRepository.getTimetable(student, semester, currentDate, currentDate, forceRefresh)
+            timetableRepository.getTimetable(
+                student, semester, currentDate, currentDate, forceRefresh
+            )
         }.onEach {
             when (it.status) {
                 Status.LOADING -> {
-                    if (!it.data?.first.isNullOrEmpty()) {
+                    if (!it.data?.lessons.isNullOrEmpty()) {
                         view?.run {
                             enableSwipe(true)
                             showRefresh(true)
                             showProgress(false)
                             showContent(true)
-                            updateData(it.data!!.first)
+                            updateData(it.data!!.lessons)
                         }
                     }
                 }
                 Status.SUCCESS -> {
                     Timber.i("Loading timetable result: Success")
                     view?.apply {
-                        updateData(it.data!!.first)
-                        showEmpty(it.data.first.isEmpty())
+                        updateData(it.data!!.lessons)
+                        showEmpty(it.data.lessons.isEmpty())
+                        setDayHeaderMessage(it.data.headers.singleOrNull { header ->
+                            header.date == currentDate
+                        }?.content)
                         showErrorView(false)
-                        showContent(it.data.first.isNotEmpty())
+                        showContent(it.data.lessons.isNotEmpty())
                     }
                     analytics.logEvent(
                         "load_data",
                         "type" to "timetable",
-                        "items" to it.data!!.first.size
+                        "items" to it.data!!.lessons.size
                     )
                 }
                 Status.ERROR -> {
@@ -224,7 +230,7 @@ class TimetablePresenter @Inject constructor(
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
             showNextButton(!currentDate.plusDays(1).isHolidays)
-            updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalize())
+            updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalise())
         }
     }
 }

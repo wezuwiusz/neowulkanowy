@@ -10,6 +10,7 @@ import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.enums.SentExcuseStatus
 import io.github.wulkanowy.databinding.ItemAttendanceBinding
 import io.github.wulkanowy.utils.description
+import io.github.wulkanowy.utils.isExcusableOrNotExcused
 import javax.inject.Inject
 
 class AttendanceAdapter @Inject constructor() :
@@ -56,7 +57,7 @@ class AttendanceAdapter @Inject constructor() :
                     attendanceItemExcuseInfo.visibility = View.VISIBLE
                 }
                 else -> {
-                    if (item.excusable && excuseActionMode) {
+                    if (item.isExcusableOrNotExcused && excuseActionMode) {
                         attendanceItemNumber.visibility = View.GONE
                         attendanceItemExcuseCheckbox.visibility = View.VISIBLE
                     } else {

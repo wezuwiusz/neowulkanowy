@@ -52,15 +52,15 @@ class MobileDeviceTokenDialog : BaseDialogFragment<DialogMobileDeviceBinding>(),
     }
 
     override fun updateData(token: MobileDeviceToken) {
-        with(binding.mobileDeviceDialogToken) {
+        with(binding.mobileDeviceDialogTokenValue) {
             text = token.token
             setOnClickListener { clickCopy(token.token) }
         }
-        with(binding.mobileDeviceDialogSymbol) {
+        with(binding.mobileDeviceDialogSymbolValue) {
             text = token.symbol
             setOnClickListener { clickCopy(token.symbol) }
         }
-        with(binding.mobileDeviceDialogPin) {
+        with(binding.mobileDeviceDialogPinValue) {
             text = token.pin
             setOnClickListener { clickCopy(token.pin) }
         }

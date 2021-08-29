@@ -51,16 +51,15 @@ private val keyStore: KeyStore
 
 private val cipher: Cipher
     get() {
-        return if (SDK_INT >= M) Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding", "AndroidKeyStoreBCWorkaround")
+        return if (SDK_INT >= M) Cipher.getInstance(
+            "RSA/ECB/OAEPWithSHA-256AndMGF1Padding",
+            "AndroidKeyStoreBCWorkaround"
+        )
         else Cipher.getInstance("RSA/ECB/PKCS1Padding", "AndroidOpenSSL")
     }
 
 fun encrypt(plainText: String, context: Context): String {
     if (plainText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
-
-    if (SDK_INT < JELLY_BEAN_MR2) {
-        return String(encode(plainText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
-    }
 
     return try {
         if (!isKeyPairExists) generateKeyPair(context)
@@ -90,10 +89,6 @@ fun decrypt(cipherText: String): String {
     if (cipherText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
     return try {
-        if (SDK_INT < JELLY_BEAN_MR2 || cipherText.length < 250) {
-            return String(decode(cipherText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
-        }
-
         if (!isKeyPairExists) throw ScramblerException("KeyPair doesn't exist")
 
         cipher.let {
@@ -105,8 +100,8 @@ fun decrypt(cipherText: String): String {
 
             CipherInputStream(ByteArrayInputStream(decode(cipherText, DEFAULT)), it).let { input ->
                 val values = ArrayList<Byte>()
-                var nextByte = 0
-                while ({ nextByte = input.read(); nextByte }() != -1) {
+                var nextByte: Int
+                while (run { nextByte = input.read(); nextByte } != -1) {
                     values.add(nextByte.toByte())
                 }
                 val bytes = ByteArray(values.size)

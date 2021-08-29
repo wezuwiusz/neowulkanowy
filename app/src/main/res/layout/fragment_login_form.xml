@@ -81,6 +81,22 @@
                         app:icon="@drawable/ic_about_faq" />
                 </LinearLayout>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/loginFormRecoverLinkSecond"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/login_recover_button"
+                    app:fontFamily="sans-serif-medium"
+                    app:icon="@drawable/ic_all_about"
+                    app:layout_constraintBottom_toTopOf="@id/loginFormHostLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginFormPassLayout"
+                    tools:visibility="visible" />
+
                 <View
                     android:id="@+id/loginFormContactDivider"
                     android:layout_width="match_parent"
@@ -95,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginRight="32dp"
                 android:gravity="center_horizontal"
@@ -106,7 +122,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormContact"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_goneMarginTop="64dp" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -170,7 +188,6 @@
                     android:maxLines="1"
                     app:fontFamily="sans-serif"
                     tools:targetApi="o" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton

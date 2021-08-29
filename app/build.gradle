@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'ru.cian.huawei-publish'
 apply plugin: 'com.mikepenz.aboutlibraries.plugin'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.huawei.agconnect'
 apply from: 'jacoco.gradle'
 apply from: 'sonarqube.gradle'
@@ -14,16 +15,14 @@ apply from: 'hooks.gradle'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "io.github.wulkanowy"
         testApplicationId "io.github.tests.wulkanowy"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 30
-        versionCode 92
-        versionName "1.1.6"
-        multiDexEnabled true
+        versionCode 93
+        versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -68,7 +67,6 @@ android {
             resValue "string", "app_name", "Wulkanowy DEV " + defaultConfig.versionCode
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            testCoverageEnabled = project.hasProperty('coverage')
             ext.enableCrashlytics = project.hasProperty("enableFirebase")
         }
     }
@@ -78,7 +76,6 @@ android {
     productFlavors {
         hms {
             dimension "platform"
-            minSdkVersion 19
             manifestPlaceholders = [
                     install_channel: "AppGallery"
             ]
@@ -100,11 +97,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
-    }
-
-    lintOptions {
-        disable 'HardwareIds'
+        viewBinding true
     }
 
     testOptions.unitTests {
@@ -113,13 +106,12 @@ android {
 
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        useIR = true
-        jvmTarget = "1.8"
+        jvmTarget = "11"
         freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", "-Xjvm-default=all"]
     }
 
@@ -133,12 +125,16 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 play {
     serviceAccountEmail = System.getenv("PLAY_SERVICE_ACCOUNT_EMAIL") ?: "jan@fakelog.cf"
     serviceAccountCredentials = file('key.p12')
     defaultToAppBundles = false
-    track = 'production'
-    updatePriority = 5
+    track = 'beta'
+    updatePriority = 3
 }
 
 huaweiPublish {
@@ -153,39 +149,37 @@ huaweiPublish {
 
 ext {
     work_manager = "2.5.0"
-    work_hilt = "1.0.0-beta01"
-    room = "2.3.0-rc01"
-    chucker = "3.4.0"
-    mockk = "1.11.0"
-    moshi = "1.11.0"
+    android_hilt = "1.0.0"
+    room = "2.3.0"
+    chucker = "3.5.2"
+    mockk = "1.12.0"
+    moshi = "1.12.0"
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:1.1.6"
+    implementation "io.github.wulkanowy:sdk:1.2.0"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
 
-    implementation "androidx.core:core-ktx:1.3.2"
-    implementation "androidx.activity:activity-ktx:1.2.2"
-    implementation "androidx.appcompat:appcompat:1.2.0"
-    implementation "androidx.appcompat:appcompat-resources:1.2.0"
-    implementation "androidx.fragment:fragment-ktx:1.3.2"
+    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "androidx.activity:activity-ktx:1.3.1"
+    implementation "androidx.appcompat:appcompat:1.3.1"
+    implementation "androidx.appcompat:appcompat-resources:1.3.1"
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
     implementation "androidx.annotation:annotation:1.2.0"
-    implementation "androidx.multidex:multidex:2.0.1"
 
     implementation "androidx.preference:preference-ktx:1.1.1"
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.viewpager:viewpager:1.0.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.0"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
-    implementation "com.google.android.material:material:1.3.0"
+    implementation "com.google.android.material:material:1.4.0"
     implementation "com.github.wulkanowy:material-chips-input:2.2.0"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
-    implementation 'com.mikhaellopez:circularimageview:4.2.0'
+    implementation 'com.github.lopspower:CircularImageView:4.2.0'
 
     implementation "androidx.work:work-runtime-ktx:$work_manager"
     playImplementation "androidx.work:work-gcm:$work_manager"
@@ -198,55 +192,56 @@ dependencies {
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation "androidx.hilt:hilt-work:$work_hilt"
-    kapt "androidx.hilt:hilt-compiler:$work_hilt"
+    kapt "androidx.hilt:hilt-compiler:$android_hilt"
+    implementation "androidx.hilt:hilt-work:$android_hilt"
 
-    implementation "com.aurelhubert:ahbottomnavigation:2.3.4"
-    implementation "com.ncapdevi:frag-nav:3.3.0"
+    implementation 'com.github.ncapdevi:FragNav:3.3.0'
     implementation "com.github.YarikSOffice:lingver:1.3.0"
 
     implementation "com.squareup.moshi:moshi:$moshi"
     implementation "com.squareup.moshi:moshi-adapters:$moshi"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
-    implementation "com.jakewharton.timber:timber:4.7.1"
+
+    implementation "com.jakewharton.timber:timber:5.0.1"
     implementation "at.favre.lib:slf4j-timber:1.0.1"
-    implementation "fr.bipi.treessence:treessence:0.3.2"
+    implementation 'com.github.bastienpaulfr:Treessence:1.0.4'
     implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
-    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
-    implementation "io.coil-kt:coil:1.1.1"
+    implementation "io.coil-kt:coil:1.3.2"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
     implementation 'me.xdrop:fuzzywuzzy:1.3.1'
+    implementation 'com.fredporciuncula:flow-preferences:1.5.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:26.7.0')
+    playImplementation platform('com.google.firebase:firebase-bom:28.4.0')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-messaging:'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
+    playImplementation 'com.google.android.play:core:1.10.0'
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:5.2.0.301'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.5.1.200'
+    hmsImplementation 'com.huawei.hms:hianalytics:6.1.1.300'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.0.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
     debugImplementation "com.github.ChuckerTeam.Chucker:library:$chucker"
-    debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
+    debugImplementation 'com.github.amitshekhariitbhu.Android-Debug-Database:debug-db:v1.0.6'
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "io.mockk:mockk:$mockk"
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1'
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
-    testImplementation 'org.robolectric:robolectric:4.5.1'
-    testImplementation "androidx.test:runner:1.3.0"
-    testImplementation "androidx.test.ext:junit:1.1.2"
-    testImplementation "androidx.test:core:1.3.0"
+    testImplementation 'org.robolectric:robolectric:4.6.1'
+    testImplementation "androidx.test:runner:1.4.0"
+    testImplementation "androidx.test.ext:junit:1.1.3"
+    testImplementation "androidx.test:core:1.4.0"
     testImplementation "androidx.room:room-testing:$room"
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-    androidTestImplementation "androidx.test:core:1.3.0"
-    androidTestImplementation "androidx.test:runner:1.3.0"
-    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation "androidx.test:core:1.4.0"
+    androidTestImplementation "androidx.test:runner:1.4.0"
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
     androidTestImplementation "io.mockk:mockk-android:$mockk"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }

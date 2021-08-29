@@ -22,6 +22,8 @@ import io.github.wulkanowy.services.sync.works.Work
 import io.github.wulkanowy.utils.getCompatColor
 import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.ZoneId
 import kotlin.random.Random
 
 @HiltWorker
@@ -48,6 +50,7 @@ class SyncWorker @AssistedInject constructor(
                 Timber.i("${work::class.java.simpleName} is starting")
                 work.doWork(student, semester)
                 Timber.i("${work::class.java.simpleName} result: Success")
+                preferencesRepository.lasSyncDate = LocalDateTime.now(ZoneId.systemDefault())
                 null
             } catch (e: Throwable) {
                 Timber.w("${work::class.java.simpleName} result: An exception ${e.message} occurred")
@@ -81,7 +84,7 @@ class SyncWorker @AssistedInject constructor(
             Random.nextInt(Int.MAX_VALUE),
             NotificationCompat.Builder(applicationContext, DebugChannel.CHANNEL_ID)
                 .setContentTitle("Debug notification")
-                .setSmallIcon(R.drawable.ic_stat_push)
+                .setSmallIcon(R.drawable.ic_stat_all)
                 .setAutoCancel(true)
                 .setColor(applicationContext.getCompatColor(R.color.colorPrimary))
                 .setStyle(BigTextStyle().bigText("${SyncWorker::class.java.simpleName} result: $result"))

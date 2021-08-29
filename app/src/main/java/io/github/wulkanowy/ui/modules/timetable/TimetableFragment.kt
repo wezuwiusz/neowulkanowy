@@ -7,8 +7,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
@@ -19,9 +21,13 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.timetable.additional.AdditionalLessonsFragment
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.SchooldaysRangeLimiter
+import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.schoolYearEnd
+import io.github.wulkanowy.utils.schoolYearStart
+import io.github.wulkanowy.utils.toLocalDateTime
+import io.github.wulkanowy.utils.toTimestamp
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -43,7 +49,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override val titleStringId get() = R.string.timetable_title
 
-    override val isViewEmpty get() = timetableAdapter.items.isEmpty()
+    override val isViewEmpty get() = timetableAdapter.itemCount > 0
 
     override val currentStackSize get() = (activity as? MainActivity)?.currentStackSize
 
@@ -71,7 +77,9 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         with(binding) {
             timetableSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             timetableSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
-            timetableSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
+            timetableSwipe.setProgressBackgroundColorSchemeColor(
+                requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh)
+            )
             timetableErrorRetry.setOnClickListener { presenter.onRetry() }
             timetableErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
@@ -95,21 +103,22 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         }
     }
 
-    override fun updateData(data: List<Timetable>, showWholeClassPlanType: String, showGroupsInPlanType: Boolean, showTimetableTimers: Boolean) {
-        with(timetableAdapter) {
-            items = data.toMutableList()
-            showTimers = showTimetableTimers
+    override fun updateData(
+        data: List<Timetable>,
+        showWholeClassPlanType: String,
+        showGroupsInPlanType: Boolean,
+        showTimetableTimers: Boolean
+    ) {
+        timetableAdapter.submitList(
+            newTimetable = data.toMutableList(),
+            showGroupsInPlan = showGroupsInPlanType,
+            showTimers = showTimetableTimers,
             showWholeClassPlan = showWholeClassPlanType
-            showGroupsInPlan = showGroupsInPlanType
-            notifyDataSetChanged()
-        }
+        )
     }
 
     override fun clearData() {
-        with(timetableAdapter) {
-            items = mutableListOf()
-            notifyDataSetChanged()
-        }
+        timetableAdapter.submitList(listOf())
     }
 
     override fun updateNavigationDay(date: String) {
@@ -134,6 +143,13 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override fun showEmpty(show: Boolean) {
         binding.timetableEmpty.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun setDayHeaderMessage(message: String?) {
+        binding.timetableEmptyMessage.visibility = if (message.isNullOrEmpty()) GONE else VISIBLE
+        binding.timetableEmptyMessage.text = HtmlCompat.fromHtml(
+            message.orEmpty(), HtmlCompat.FROM_HTML_MODE_COMPACT
+        )
     }
 
     override fun showErrorView(show: Boolean) {
@@ -169,19 +185,26 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     }
 
     override fun showDatePickerDialog(currentDate: LocalDate) {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            presenter.onDateSet(year, month + 1, dayOfMonth)
-        }
-        val datePickerDialog = DatePickerDialog.newInstance(dateSetListener,
-            currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth)
+        val baseDate = currentDate.schoolYearStart
+        val rangeStart = baseDate.toTimestamp()
+        val rangeEnd = LocalDate.now().schoolYearEnd.toTimestamp()
 
-        with(datePickerDialog) {
-            setDateRangeLimiter(SchooldaysRangeLimiter())
-            version = DatePickerDialog.Version.VERSION_2
-            scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
-            vibrate(false)
-            show(this@TimetableFragment.parentFragmentManager, null)
+        val constraintsBuilder = CalendarConstraints.Builder().apply {
+            setValidator(SchoolDaysValidator(rangeStart, rangeEnd))
+            setStart(rangeStart)
+            setEnd(rangeEnd)
         }
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setCalendarConstraints(constraintsBuilder.build())
+            .setSelection(currentDate.toTimestamp())
+            .build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            val date = it.toLocalDateTime()
+            presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
+        }
+
+        datePicker.show(this@TimetableFragment.parentFragmentManager, null)
     }
 
     override fun openAdditionalLessonsView() {
@@ -198,7 +221,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     }
 
     override fun onDestroyView() {
-        timetableAdapter.resetTimers()
+        timetableAdapter.clearTimers()
         presenter.onDetachView()
         super.onDestroyView()
     }

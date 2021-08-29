@@ -23,6 +23,7 @@ import io.github.wulkanowy.databinding.FragmentStudentInfoBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
 
@@ -38,7 +39,15 @@ class StudentInfoFragment :
     lateinit var studentInfoAdapter: StudentInfoAdapter
 
     override val titleStringId: Int
-        get() = R.string.student_info_title
+        get() = when (requireArguments().getSerializable(INFO_TYPE_ARGUMENT_KEY) as? StudentInfoView.Type) {
+            StudentInfoView.Type.PERSONAL -> R.string.account_personal_data
+            StudentInfoView.Type.CONTACT -> R.string.account_contact
+            StudentInfoView.Type.ADDRESS -> R.string.account_address
+            StudentInfoView.Type.FAMILY -> R.string.account_family
+            StudentInfoView.Type.SECOND_GUARDIAN -> R.string.student_info_guardian
+            StudentInfoView.Type.FIRST_GUARDIAN -> R.string.student_info_guardian
+            else -> R.string.student_info_title
+        }
 
     override val isViewEmpty get() = studentInfoAdapter.items.isEmpty()
 
@@ -98,7 +107,7 @@ class StudentInfoFragment :
         }
     }
 
-    override fun updateData(data: List<Pair<String, String>>) {
+    override fun updateData(data: List<StudentInfoItem>) {
         with(studentInfoAdapter) {
             items = data
             notifyDataSetChanged()
@@ -120,7 +129,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_family_name) to studentInfo.familyName,
                 getString(R.string.student_info_parents_name) to studentInfo.parentsNames
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
@@ -132,7 +145,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_cellphone) to studentInfo.cellPhoneNumber,
                 getString(R.string.student_info_email) to studentInfo.email
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
@@ -141,13 +158,14 @@ class StudentInfoFragment :
     override fun showFamilyTypeData(studentInfo: StudentInfo) {
         updateData(
             listOfNotNull(
-                studentInfo.firstGuardian?.let { it.kinship.capitalize() to it.fullName },
-                studentInfo.secondGuardian?.let { it.kinship.capitalize() to it.fullName },
+                studentInfo.firstGuardian?.let { it.kinship.capitalise() to it.fullName },
+                studentInfo.secondGuardian?.let { it.kinship.capitalise() to it.fullName },
             ).map { (title, value) ->
-                val updatedValue = value.ifBlank { getString(R.string.all_no_data) }
-                val updatedTitle = title.ifBlank { getString(R.string.all_no_data) }
-
-                updatedTitle to updatedValue
+                StudentInfoItem(
+                    title.ifBlank { getString(R.string.all_no_data) },
+                    value.ifBlank { getString(R.string.all_no_data) },
+                    true,
+                )
             }
         )
     }
@@ -159,7 +177,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_registered_address) to studentInfo.registeredAddress,
                 getString(R.string.student_info_correspondence_address) to studentInfo.correspondenceAddress
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
@@ -173,7 +195,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_phones) to studentGuardian.phones,
                 getString(R.string.student_info_email) to studentGuardian.email
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }
@@ -187,7 +213,11 @@ class StudentInfoFragment :
                 getString(R.string.student_info_phones) to studentGuardian.phones,
                 getString(R.string.student_info_email) to studentGuardian.email
             ).map {
-                if (it.second.isBlank()) it.copy(second = getString(R.string.all_no_data)) else it
+                StudentInfoItem(
+                    it.first,
+                    it.second.ifBlank { getString(R.string.all_no_data) },
+                    false,
+                )
             }
         )
     }

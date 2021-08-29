@@ -15,7 +15,7 @@ interface StudentInfoView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<Pair<String, String>>)
+    fun updateData(data: List<StudentInfoItem>)
 
     fun showPersonalTypeData(studentInfo: StudentInfo)
 

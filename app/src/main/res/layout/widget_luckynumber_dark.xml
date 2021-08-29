@@ -21,7 +21,8 @@
         android:src="@drawable/ic_widget_clover"
         android:tint="@android:color/white"
         android:visibility="gone"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        tools:ignore="UseAppTint" />
 
     <TextView
         android:id="@+id/luckyNumberWidgetTitle"
@@ -46,7 +47,8 @@
         android:src="@drawable/ic_widget_clover"
         android:tint="@android:color/white"
         android:visibility="gone"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        tools:ignore="UseAppTint" />
 
     <TextView
         android:id="@+id/luckyNumberWidgetNumber"

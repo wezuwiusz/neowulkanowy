@@ -15,18 +15,32 @@
         tools:itemCount="1"
         tools:listitem="@layout/item_homework_dialog_details" />
 
+    <View
+        android:layout_width="match_parent"
+        android:background="@drawable/ic_all_divider"
+        android:layout_height="1dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_all_divider"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp">
+        android:gravity="end"
+        android:minHeight="52dp"
+        android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/homeworkDialogRead"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="88dp"
+            android:layout_gravity="center_vertical"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:text="@string/homework_mark_as_done"
@@ -35,9 +49,18 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/homeworkDialogClose"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="88dp"
+            android:layout_gravity="center_vertical"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:text="@string/all_close"

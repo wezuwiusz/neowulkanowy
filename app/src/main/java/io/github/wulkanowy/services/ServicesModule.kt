@@ -15,14 +15,19 @@ import dagger.multibindings.IntoSet
 import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.channels.LuckyNumberChannel
+import io.github.wulkanowy.services.sync.channels.NewConferencesChannel
+import io.github.wulkanowy.services.sync.channels.NewExamChannel
 import io.github.wulkanowy.services.sync.channels.NewGradesChannel
+import io.github.wulkanowy.services.sync.channels.NewHomeworkChannel
 import io.github.wulkanowy.services.sync.channels.NewMessagesChannel
 import io.github.wulkanowy.services.sync.channels.NewNotesChannel
+import io.github.wulkanowy.services.sync.channels.NewSchoolAnnouncementsChannel
 import io.github.wulkanowy.services.sync.channels.PushChannel
 import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel
 import io.github.wulkanowy.services.sync.works.AttendanceSummaryWork
 import io.github.wulkanowy.services.sync.works.AttendanceWork
 import io.github.wulkanowy.services.sync.works.CompletedLessonWork
+import io.github.wulkanowy.services.sync.works.ConferenceWork
 import io.github.wulkanowy.services.sync.works.ExamWork
 import io.github.wulkanowy.services.sync.works.GradeStatisticsWork
 import io.github.wulkanowy.services.sync.works.GradeWork
@@ -31,6 +36,7 @@ import io.github.wulkanowy.services.sync.works.LuckyNumberWork
 import io.github.wulkanowy.services.sync.works.MessageWork
 import io.github.wulkanowy.services.sync.works.NoteWork
 import io.github.wulkanowy.services.sync.works.RecipientWork
+import io.github.wulkanowy.services.sync.works.SchoolAnnouncementWork
 import io.github.wulkanowy.services.sync.works.TeacherWork
 import io.github.wulkanowy.services.sync.works.TimetableWork
 import io.github.wulkanowy.services.sync.works.Work
@@ -44,15 +50,18 @@ abstract class ServicesModule {
     companion object {
 
         @Provides
-        fun provideWorkManager(@ApplicationContext context: Context) = WorkManager.getInstance(context)
+        fun provideWorkManager(@ApplicationContext context: Context) =
+            WorkManager.getInstance(context)
 
         @Singleton
         @Provides
-        fun provideNotificationManager(@ApplicationContext context: Context) = NotificationManagerCompat.from(context)
+        fun provideNotificationManager(@ApplicationContext context: Context) =
+            NotificationManagerCompat.from(context)
 
         @Singleton
         @Provides
-        fun provideAlarmManager(@ApplicationContext context: Context): AlarmManager = context.getSystemService()!!
+        fun provideAlarmManager(@ApplicationContext context: Context): AlarmManager =
+            context.getSystemService()!!
     }
 
     @Binds
@@ -66,6 +75,10 @@ abstract class ServicesModule {
     @Binds
     @IntoSet
     abstract fun provideAttendanceWork(work: AttendanceWork): Work
+
+    @Binds
+    @IntoSet
+    abstract fun provideConferenceWork(work: ConferenceWork): Work
 
     @Binds
     @IntoSet
@@ -109,11 +122,27 @@ abstract class ServicesModule {
 
     @Binds
     @IntoSet
+    abstract fun provideSchoolAnnouncementWork(work: SchoolAnnouncementWork): Work
+
+    @Binds
+    @IntoSet
     abstract fun provideDebugChannel(channel: DebugChannel): Channel
 
     @Binds
     @IntoSet
     abstract fun provideLuckyNumberChannel(channel: LuckyNumberChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideNewConferenceChannel(channel: NewConferencesChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideNewExamChannel(channel: NewExamChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideNewHomeworkChannel(channel: NewHomeworkChannel): Channel
 
     @Binds
     @IntoSet
@@ -126,6 +155,10 @@ abstract class ServicesModule {
     @Binds
     @IntoSet
     abstract fun provideNewNotesChannel(channel: NewNotesChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideNewSchoolAnnouncementChannel(channel: NewSchoolAnnouncementsChannel): Channel
 
     @Binds
     @IntoSet

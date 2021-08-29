@@ -38,7 +38,6 @@
         android:id="@+id/gradeSummaryItemPointsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_all_divider"
         android:minHeight="35dp"
         android:orientation="horizontal">
 
@@ -63,10 +62,14 @@
             tools:text="123/150" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:background="@drawable/ic_all_divider"
+        android:layout_height="1dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_all_divider"
         android:minHeight="35dp"
         android:orientation="horizontal">
 
@@ -91,10 +94,14 @@
             tools:text="5" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:background="@drawable/ic_all_divider"
+        android:layout_height="1dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_all_divider"
         android:minHeight="35dp"
         android:orientation="horizontal">
 
@@ -118,4 +125,9 @@
             android:textSize="12sp"
             tools:text="5" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@drawable/ic_all_divider"
+        android:layout_height="1dp" />
 </LinearLayout>

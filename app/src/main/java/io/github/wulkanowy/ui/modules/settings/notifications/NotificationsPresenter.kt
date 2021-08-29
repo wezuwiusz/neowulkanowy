@@ -55,4 +55,8 @@ class NotificationsPresenter @Inject constructor(
     fun onFixSyncIssuesClicked() {
         view?.showFixSyncDialog()
     }
+
+    fun onOpenSystemSettingsClicked() {
+        view?.openSystemSettings()
+    }
 }

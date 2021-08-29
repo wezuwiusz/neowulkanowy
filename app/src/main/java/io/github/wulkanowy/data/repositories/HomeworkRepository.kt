@@ -29,18 +29,38 @@ class HomeworkRepository @Inject constructor(
 
     private val cacheKey = "homework"
 
-    fun getHomework(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean) = networkBoundResource(
+    fun getHomework(
+        student: Student, semester: Semester,
+        start: LocalDate, end: LocalDate,
+        forceRefresh: Boolean, notify: Boolean = false
+    ) = networkBoundResource(
         mutex = saveFetchResultMutex,
-        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end)) },
-        query = { homeworkDb.loadAll(semester.semesterId, semester.studentId, start.monday, end.sunday) },
+        shouldFetch = {
+            val isShouldBeRefreshed = refreshHelper.isShouldBeRefreshed(
+                key = getRefreshKey(cacheKey, semester, start, end)
+            )
+            it.isEmpty() || forceRefresh || isShouldBeRefreshed
+        },
+        query = {
+            homeworkDb.loadAll(
+                semesterId = semester.semesterId,
+                studentId = semester.studentId,
+                from = start.monday,
+                end = end.sunday
+            )
+        },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
                 .getHomework(start.monday, end.sunday)
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
+            val homeWorkToSave = (new uniqueSubtract old).onEach {
+                if (notify) it.isNotified = false
+            }
+
             homeworkDb.deleteAll(old uniqueSubtract new)
-            homeworkDb.insertAll(new uniqueSubtract old)
+            homeworkDb.insertAll(homeWorkToSave)
 
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester, start, end))
         }
@@ -51,4 +71,9 @@ class HomeworkRepository @Inject constructor(
             isDone = !isDone
         }))
     }
+
+    fun getHomeworkFromDatabase(semester: Semester, start: LocalDate, end: LocalDate) =
+        homeworkDb.loadAll(semester.semesterId, semester.studentId, start.monday, end.sunday)
+
+    suspend fun updateHomework(homework: List<Homework>) = homeworkDb.updateAll(homework)
 }

@@ -27,6 +27,7 @@ import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
@@ -34,6 +35,7 @@ import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.nickOrName
 import io.github.wulkanowy.utils.previousSchoolDay
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -80,6 +82,7 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
             "timetable_widget_current_theme_$appWidgetId"
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         GlobalScope.launch {
@@ -180,7 +183,7 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
             setTextViewText(
                 R.id.timetableWidgetDate,
-                date.toFormattedString("EEEE, dd.MM").capitalize()
+                date.toFormattedString("EEEE, dd.MM").capitalise()
             )
             setTextViewText(
                 R.id.timetableWidgetName,
@@ -230,7 +233,7 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
 
     private suspend fun getStudent(studentId: Long, appWidgetId: Int) = try {
         val students = studentRepository.getSavedStudents(false)
-        val student = students.singleOrNull { it -> it.student.id == studentId }?.student
+        val student = students.singleOrNull { it.student.id == studentId }?.student
         when {
             student != null -> student
             studentId != 0L && studentRepository.isCurrentStudentSet() -> {

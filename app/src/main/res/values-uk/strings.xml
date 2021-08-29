@@ -11,6 +11,8 @@
     <string name="more_title">Інше</string>
     <string name="about_title">Про додаток</string>
     <string name="logviewer_title">Переглядач журналів</string>
+    <string name="debug_title">Відладка</string>
+    <string name="notification_debug_title">Налагодження сповіщень</string>
     <string name="contributors_title">Розробники</string>
     <string name="license_title">Ліцензії</string>
     <string name="message_title">Повідомлення</string>
@@ -21,6 +23,7 @@
     <string name="account_quick_title">Виберіть обліковий запис</string>
     <string name="account_details_title">Деталі облікового запису</string>
     <string name="student_info_title">Інформація про учня</string>
+    <string name="dashboard_title">Дошка</string>
     <!--Subtitles-->
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
@@ -36,7 +39,6 @@
     <string name="login_type_hybrid">Hybrid</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
-    <string name="login_api_key_hint">Ключ API</string>
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Увійти</string>
     <string name="login_invalid_password">Занадто короткий пароль</string>
@@ -62,7 +64,6 @@
     <string name="login_contact_email">Електронна пошта</string>
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Відправити лист</string>
-    <string name="login_email_details">Опишіть деталі помилки:</string>
     <string name="login_recover_warning">Переконайтеся, що ви вибрали правильний варіант реєстрації UONET+!</string>
     <string name="login_recover_button">Забули пароль?</string>
     <string name="login_recover_title">Відновіть свій обліковий запис</string>
@@ -81,18 +82,16 @@
     <string name="grade_weight">Вартість</string>
     <string name="grade_weight_value">Вартість: %s</string>
     <string name="grade_comment">Коментар</string>
-    <string name="grade_no_new_items">Нові оцінки відсутні</string>
     <string name="grade_number_new_items">Кількість нових оцінок: %1$d</string>
     <string name="grade_average">Середня оцінка: %1$.2f</string>
     <string name="grade_points_sum">Балів: %s</string>
     <string name="grade_no_average">Відсутність середньої оцінки</string>
-    <string name="grade_predicted">Очікувана оцінка: %1$s</string>
-    <string name="grade_final">Підсумкова оцінка: %1$s</string>
     <string name="grade_summary_points">Сума балів</string>
     <string name="grade_summary_final_grade">Підсумкова оцінка</string>
     <string name="grade_summary_predicted_grade">Очікувана оцінка</string>
     <string name="grade_summary_calculated_average">Розрахована середня оцінка</string>
     <string name="grade_summary_final_average">Підсумкова середня оцінка</string>
+    <string name="grade_summary_from_subjects">з %1$d із %2$d тем</string>
     <string name="grade_menu_summary">Підсумок</string>
     <string name="grade_menu_statistics">Клас</string>
     <string name="grade_menu_read">Позначити як прочитане</string>
@@ -184,31 +183,41 @@
     <string name="attendance_unknown">Невідомо</string>
     <string name="attendance_number">Номер уроку</string>
     <string name="attendance_no_items">Брак записів</string>
-    <plurals name="attendance_number_absences">
-        <item quantity="one">%1$d відсутність</item>
-        <item quantity="few">%1$d відсутності</item>
-        <item quantity="many">%1$d відсутностей</item>
-        <item quantity="other">%1$d відсутностей</item>
-    </plurals>
     <string name="attendance_excuse_dialog_reason">Причина відсутності (необов’язково)</string>
     <string name="attendance_excuse_dialog_submit">Надіслати</string>
     <string name="attendance_excuse_success">Запит на виправдання відсутності успішно надіслано!</string>
     <string name="attendance_excuse_no_selection">Оберіть хоча б одну відсутність</string>
     <string name="attendance_excuse_title">Змінити статус</string>
     <!--Attendance summary-->
-    <string name="attendance_summary_final">Відвідуваність</string>
     <string name="attendance_summary_total">Загальна</string>
     <!--Exam-->
     <string name="exam_no_items">Брак тестів у цьому тижні</string>
     <string name="exam_type">Тип</string>
     <string name="exam_entry_date">Дата запису</string>
+    <plurals name="exam_notify_new_item_title">
+        <item quantity="one">Новий іспит</item>
+        <item quantity="few">Новий іспит</item>
+        <item quantity="many">Новий іспит</item>
+        <item quantity="other">Нові іспити</item>
+    </plurals>
+    <plurals name="exam_notify_new_item_content">
+        <item quantity="one">Ви отримали %d новий іспит</item>
+        <item quantity="few">Ви отримали %d новий іспит</item>
+        <item quantity="many">Ви отримали %d новий іспит</item>
+        <item quantity="other">Ви отримали %d нових іспитів</item>
+    </plurals>
+    <plurals name="exam_number_item">
+        <item quantity="one">%d екзамен</item>
+        <item quantity="few">%d екзамен</item>
+        <item quantity="many">%d екзамен</item>
+        <item quantity="other">%d іспити</item>
+    </plurals>
     <!--Message-->
     <string name="message_inbox">Отримані</string>
     <string name="message_sent">Відправлені</string>
     <string name="message_trash">Кошик</string>
     <string name="message_no_subject">(брак теми)</string>
     <string name="message_no_items">Нема повідомлень</string>
-    <string name="message_preview_error">З\'явилася помилка підчас завантаження змісту повідомлення</string>
     <string name="message_from">Від:</string>
     <string name="message_to">Кому:</string>
     <string name="message_date">Дата: %s</string>
@@ -226,6 +235,15 @@
     <string name="message_not_exists">Такого повідомлення не існує</string>
     <string name="message_required_recipients">Необхідно обрати принаймні 1 адресата</string>
     <string name="message_content_min_length">Зміст повідомлення мусить складатися принаймні з 3 знаків</string>
+    <string name="message_chip_only_unread">Лише непрочитані</string>
+    <string name="message_chip_only_with_attachments">Тільки з вкладеннями</string>
+    <string name="message_read">Читання: %s</string>
+    <plurals name="message_read_by">
+        <item quantity="one">Прочитані: %1$d з %2$d осіб</item>
+        <item quantity="few">Прочитані: %1$d з %2$d осіб</item>
+        <item quantity="many">Прочитані: %1$d з %2$d осіб</item>
+        <item quantity="other">Прочитані: %1$d з %2$d осіб</item>
+    </plurals>
     <plurals name="message_number_item">
         <item quantity="one">%d повідомлення</item>
         <item quantity="few">%d повідомлення</item>
@@ -238,6 +256,8 @@
         <item quantity="many">Нові повідомлення</item>
         <item quantity="other">Нові повідомлення</item>
     </plurals>
+    <string name="message_restore_dialog">Ви хочете відновити повідомлення в чернетці?</string>
+    <string name="message_restore_dialog_with_recipients">Ви хочете відновити чернетку повідомлення з отримувачами: %s?</string>
     <plurals name="message_notify_new_items">
         <item quantity="one">Ви отримали %1$d нове повідомлення</item>
         <item quantity="few">Ви отримали %1$d нових повідомлення</item>
@@ -308,12 +328,30 @@
     <string name="homework_mark_as_done">Позначити як зроблене</string>
     <string name="homework_mark_as_undone">Позначити як не зроблене</string>
     <string name="homework_attachments">Додатки</string>
+    <plurals name="homework_notify_new_item_title">
+        <item quantity="one">Нова домашня робота</item>
+        <item quantity="few">Нова домашня робота</item>
+        <item quantity="many">Нова домашня робота</item>
+        <item quantity="other">Нова домашня робота</item>
+    </plurals>
+    <plurals name="homework_notify_new_item_content">
+        <item quantity="one">Ви отримали %d нове домашнє завдання</item>
+        <item quantity="few">Ви отримали %d нове домашнє завдання</item>
+        <item quantity="many">Ви отримали %d нове домашнє завдання</item>
+        <item quantity="other">Ви отримали %d нове домашнє завдання</item>
+    </plurals>
+    <plurals name="homework_number_item">
+        <item quantity="one">%d домашнє завдання</item>
+        <item quantity="few">%d домашнє завдання</item>
+        <item quantity="many">%d домашнє завдання</item>
+        <item quantity="other">%d домашнє завдання</item>
+    </plurals>
     <!--Lucky number-->
     <string name="lucky_number_title">Щасливий номер</string>
     <string name="lucky_number_header">Сьогоднішній щасливий номер</string>
     <string name="lucky_number_empty">Брак інформації о щасливому номері</string>
     <string name="lucky_number_notify_new_item_title">Сьогоднішній щасливий номер</string>
-    <string name="lucky_number_notify_new_item">Сьогоднішнім щасливим номером є %d</string>
+    <string name="lucky_number_notify_new_item">Сьогоднішній щасливий номер: %s</string>
     <string name="lucky_number_history_button">Показати історію</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Історія щасливих чисел</string>
@@ -346,6 +384,45 @@
     <!--Conference-->
     <string name="conferences_title">Зустрічі</string>
     <string name="conference_no_items">Немає інформації про зустрічі</string>
+    <plurals name="conference_number_item">
+        <item quantity="one">%d конференція</item>
+        <item quantity="few">%d конференція</item>
+        <item quantity="many">%d конференція</item>
+        <item quantity="other">%d конференцій</item>
+    </plurals>
+    <plurals name="conference_notify_new_item_title">
+        <item quantity="one">Нова конференція</item>
+        <item quantity="few">Нова конференція</item>
+        <item quantity="many">Нова конференція</item>
+        <item quantity="other">Нові конференції</item>
+    </plurals>
+    <plurals name="conference_notify_new_items">
+        <item quantity="one">У вас є %1$d нова конференція</item>
+        <item quantity="few">У вас є %1$d нова конференція</item>
+        <item quantity="many">У вас є %1$d нова конференція</item>
+        <item quantity="other">У вас є %1$d нових конференцій</item>
+    </plurals>
+    <!--Director information-->
+    <string name="school_announcement_title">Оголошення школи</string>
+    <string name="school_announcement_no_items">Жодних навчальних оголошень</string>
+    <plurals name="school_announcement_number_item">
+        <item quantity="one">%d оголошення про школу</item>
+        <item quantity="few">%d оголошення про школу</item>
+        <item quantity="many">%d оголошення про школу</item>
+        <item quantity="other">Оголошення нової школи</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_item_title">
+        <item quantity="one">Оголошення нової школи</item>
+        <item quantity="few">Оголошення нової школи</item>
+        <item quantity="many">Нові шкільні оголошення</item>
+        <item quantity="other">Нові шкільні оголошення</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_items">
+        <item quantity="one">У вас є %1$d нове оголошення про школу</item>
+        <item quantity="few">У вас є %1$d нове оголошення про школу</item>
+        <item quantity="many">У вас є %1$d нове оголошення про школу</item>
+        <item quantity="other">У вас є %1$d нових оголошень про школи</item>
+    </plurals>
     <!--Account-->
     <string name="account_add_new">Додати аккаунт</string>
     <string name="account_logout">Вийти</string>
@@ -353,8 +430,6 @@
     <string name="account_logout_student">Вийти з аккаунту учня</string>
     <string name="account_type_student">Студентський рахунок</string>
     <string name="account_type_parent">Головний рахунок</string>
-    <string name="account_login_mobile_api">Режим мобільного API</string>
-    <string name="account_login_hybrid">Гібридний режим</string>
     <string name="account_details_edit">Редагувати дані</string>
     <string name="account_quick_manager">Менеджер аккаунтів</string>
     <string name="account_select_student">Виберіть учня</string>
@@ -373,9 +448,13 @@
     <string name="about_discord">Сервер Discord</string>
     <string name="about_discord_summary">Приєднатися до спільноти додатка</string>
     <string name="about_facebook">Фен-сторінка Facebook</string>
+    <string name="about_twitter">Сторінка Twitter</string>
+    <string name="about_twitter_summary">Стежте за нами у Твіттері</string>
     <string name="about_facebook_summary">Вподобати нашу фансторінку у Facebook</string>
     <string name="about_privacy">Політика конфіденційності</string>
     <string name="about_privacy_summary">Правила зберігання особистих даних</string>
+    <string name="about_system">Налаштування системи</string>
+    <string name="about_system_summary">Відкрити налаштування системи</string>
     <string name="about_homepage">Домашня сторінка</string>
     <string name="about_homepage_summary">Допомогти розвитку додатка</string>
     <string name="about_licenses">Ліцензії</string>
@@ -406,6 +485,7 @@
     <string name="student_info_male">Чоловіча</string>
     <string name="student_info_female">Жінка</string>
     <string name="student_info_last_name">Прізвище</string>
+    <string name="student_info_guardian">Охоронець</string>
     <!--Account edit-->
     <string name="account_edit_nick_hint">Псевдонім</string>
     <string name="account_edit_header">Додати псевдонім</string>
@@ -413,6 +493,80 @@
     <!--Log viewer-->
     <string name="logviewer_share">Поділитися логами</string>
     <string name="logviewer_refresh">Оновити</string>
+    <!--Dashboard-->
+    <string name="dashboard_timetable_title">Уроки</string>
+    <string name="dashboard_timetable_title_tomorrow">(Завтра)</string>
+    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
+    <string name="dashboard_timetable_first_lesson_title_moment">Через мить:</string>
+    <string name="dashboard_timetable_first_lesson_title_soon">Незабаром:</string>
+    <string name="dashboard_timetable_first_lesson_title_first">Перше:</string>
+    <string name="dashboard_timetable_first_lesson_title_now">Зараз:</string>
+    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
+        <item quantity="one">через %1$d хвилину</item>
+        <item quantity="few">через %1$d хвилину</item>
+        <item quantity="many">через %1$d хвилину</item>
+        <item quantity="other">через %1$d хвилин</item>
+    </plurals>
+    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
+        <item quantity="one">%1$d більше хвилини</item>
+        <item quantity="few">%1$d більше хвилини</item>
+        <item quantity="many">%1$d більше хвилини</item>
+        <item quantity="other">%1$d ще хвилин</item>
+    </plurals>
+    <string name="dashboard_timetable_second_lesson_value_end">Кінець уроків</string>
+    <string name="dashboard_timetable_second_lessons_title">Далі:</string>
+    <string name="dashboard_timetable_third_title">Пізніше :</string>
+    <plurals name="dashboard_timetable_third_value">
+        <item quantity="one">%1$d більше уроку</item>
+        <item quantity="few">%1$d більше уроку</item>
+        <item quantity="many">%1$d більше уроку</item>
+        <item quantity="other">%1$d більше уроків</item>
+    </plurals>
+    <string name="dashboard_timetable_third_time">до %1$s</string>
+    <string name="dashboard_timetable_no_lessons">Немає майбутніх уроків</string>
+    <string name="dashboard_timetable_error">Сталася помилка під час завантаження уроків</string>
+    <string name="dashboard_homework_title">Домашня робота</string>
+    <string name="dashboard_homework_no_homework">Немає домашнього завдання для виконання</string>
+    <string name="dashboard_homework_error">Помилка при завантаженні домашньої роботи</string>
+    <plurals name="dashboard_homework_more">
+        <item quantity="one">Ще %1$d домашнє завдання</item>
+        <item quantity="few">Ще %1$d домашнє завдання</item>
+        <item quantity="many">Ще %1$d домашнє завдання</item>
+        <item quantity="other">Ще %1$d домашнє завдання</item>
+    </plurals>
+    <string name="dashboard_homework_time">до %1$s</string>
+    <string name="dashboard_grade_title">Останні оцінки</string>
+    <string name="dashboard_grade_no_grade">Немає нових оцінок</string>
+    <string name="dashboard_grade_error">Помилка при завантаженні класів</string>
+    <string name="dashboard_announcements_title">Оголошення школи</string>
+    <string name="dashboard_announcements_no_announcements">Немає поточних оголошень</string>
+    <string name="dashboard_announcements_error">Помилка при завантаженні анонсів</string>
+    <plurals name="dashboard_announcements_more">
+        <item quantity="one">%1$d нових оголошень</item>
+        <item quantity="few">%1$d нових оголошень</item>
+        <item quantity="many">%1$d нових оголошень</item>
+        <item quantity="other">%1$d нових оголошень</item>
+    </plurals>
+    <string name="dashboard_exams_title">Іспити</string>
+    <string name="dashboard_exams_no_exams">Немає майбутніх іспитів</string>
+    <string name="dashboard_exams_error">Помилка при завантаженні іспитів</string>
+    <plurals name="dashboard_exams_more">
+        <item quantity="one">%1$d ще екзамен</item>
+        <item quantity="few">%1$d ще екзамен</item>
+        <item quantity="many">%1$d ще екзамен</item>
+        <item quantity="other">%1$d ще іспитів</item>
+    </plurals>
+    <string name="dashboard_conferences_title">Конференції</string>
+    <string name="dashboard_conferences_no_conferences">Немає майбутніх конференцій</string>
+    <string name="dashboard_conferences_error">Помилка при завантаженні конференцій</string>
+    <plurals name="dashboard_conference_more">
+        <item quantity="one">Ще %1$d конференція</item>
+        <item quantity="few">Ще %1$d конференція</item>
+        <item quantity="many">Ще %1$d конференція</item>
+        <item quantity="other">%1$d більше конференцій</item>
+    </plurals>
+    <string name="dashboard_horizontal_group_error">Помилка при завантаженні даних</string>
+    <string name="dashboard_horizontal_group_no_lukcy_number">Нічого</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Провірити наявність оновлень</string>
     <string name="dialog_error_check_update_message">Перед тим, як повідомлювати о помілці, перевірте наявність оновлень</string>
@@ -454,7 +608,6 @@
     <string name="pref_view_timetable_show_timers">Позначити поточний урок</string>
     <string name="pref_view_timetable_show_groups">Показувати групи поруч з темами</string>
     <string name="pref_view_grade_statistics_list">Показувати діаграми в оцінках класу</string>
-    <string name="pref_view_timetable_show_whole_class">Показати уроки всього класу</string>
     <string name="pref_view_subjects_without_grades">Показати предмети без оцінок</string>
     <string name="pref_view_grade_color_scheme">Схема кольорів оцінок</string>
     <string name="pref_view_grade_sorting_mode">Сортування предметів</string>
@@ -462,6 +615,7 @@
     <string name="pref_notify_header">Повідомлення</string>
     <string name="pref_notify_switch">Показувати повідомлення</string>
     <string name="pref_notify_upcoming_lessons_switch">Показувати повідомлення о наступних уроках</string>
+    <string name="pref_notify_open_system_settings">Відкрити налаштування сповіщень системи</string>
     <string name="pref_notify_fix_sync_issues">Виправити помилки з синхронізацією і повідомленнями</string>
     <string name="pref_notify_fix_sync_issues_message">На вашому пристрої можуть бути помилки з синхронізацією і повідомленнями\n\nЩоб виправити іх, вам необхідно додати Wulkanowy в авто-старт и вимкнути оптимізацію/экономію батареї в налаштуваннях пристрою.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Перейти до налаштувань</string>
@@ -476,14 +630,18 @@
     <string name="pref_services_message_sync_success">Синхронізовано!</string>
     <string name="pref_services_message_sync_failed">Синхронізація не вдалася</string>
     <string name="pref_services_sync_in_progress">Триває синхронізація</string>
+    <string name="pref_services_last_full_sync_date">Остання синхронізація: %s</string>
     <string name="pref_other_grade_modifier_plus">Вартість плюсу</string>
     <string name="pref_other_grade_modifier_minus">Вага мінуса</string>
     <string name="pref_other_fill_message_content">Відповісти з історією повідомлень</string>
+    <string name="pref_other_optional_arithmetic_average">Показувати в середньому арифметику, якщо немає ваги</string>
     <string name="pref_settings_advanced_title">Додатково</string>
     <string name="pref_settings_appearance_title">Вигляд &amp; Поведінка</string>
     <string name="pref_settings_notifications_title">Повідомлення</string>
     <string name="pref_settings_sync_title">Синхронізація</string>
     <string name="pref_grades_appearance_header">Оцінки</string>
+    <string name="pref_dashboard_appearance_header">Дошка</string>
+    <string name="pref_dashboard_appearance_tiles_title">Видимість плиток</string>
     <string name="pref_attendance_appearance_view">Відвідуваність</string>
     <string name="pref_timetable_appearance_view">Розклад</string>
     <string name="pref_grades_advanced_header">Класи</string>
@@ -498,18 +656,17 @@
     <string name="pref_advanced_category">Додатково</string>
     <string name="pref_about_category_summary">Версія програми, учасники, соціальні портали, ліцензії</string>
     <!--Notification Channels-->
-    <string name="channel_new_entries">Нові дані в щоденнику</string>
     <string name="channel_new_grades">Нові оцінки</string>
+    <string name="channel_new_homework">Нова домашня робота</string>
+    <string name="channel_new_conference">Нові конференції</string>
+    <string name="channel_new_exam">Нові іспити</string>
     <string name="channel_lucky_number">Щасливий номер</string>
     <string name="channel_new_message">Нові повідомлення</string>
     <string name="channel_new_notes">Нові нотатки</string>
+    <string name="channel_new_school_announcement">Оголошення нової школи</string>
     <string name="channel_push">Показувати push-повідомлення</string>
     <string name="channel_upcoming_lessons">Наступні уроки</string>
     <string name="channel_debug">Дебаг</string>
-    <!--Drop kitkat alert dialog strings-->
-    <string name="drop_kitkat_title">Кінець підтримки</string>
-    <string name="drop_kitkat_content">Ми завершуємо підтримку вашого пристрою. Більше нових функцій не з\'явиться у Wulkanowy. Однак ми виробляємо критичні патчі до кінця 2021, тому у вас буде час перейти на новішу модель</string>
-    <string name="drop_kitkat_again">Не показувати знову</string>
     <!--Colors-->
     <string name="all_black">Чорний</string>
     <string name="all_red">Червоний</string>
@@ -520,6 +677,7 @@
     <!--Others-->
     <string name="all_copied">Скопійовано</string>
     <string name="all_undo">Відмінити</string>
+    <string name="all_change">Змінити</string>
     <!--Update helper-->
     <string name="update_download_started">Завантаження оновлень розпочато…</string>
     <string name="update_download_success">Щойно завантажено оновлення.</string>

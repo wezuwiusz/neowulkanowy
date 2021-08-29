@@ -13,7 +13,8 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Attendance
@@ -23,15 +24,20 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.SchooldaysRangeLimiter
+import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.schoolYearStart
+import io.github.wulkanowy.utils.toLocalDateTime
+import io.github.wulkanowy.utils.toTimestamp
 import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.fragment_attendance), AttendanceView, MainView.MainChildView,
+class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.fragment_attendance),
+    AttendanceView, MainView.MainChildView,
     MainView.TitledView {
 
     @Inject
@@ -114,7 +120,11 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
         with(binding) {
             attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             attendanceSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
-            attendanceSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
+            attendanceSwipe.setProgressBackgroundColorSchemeColor(
+                requireContext().getThemeAttrColor(
+                    R.attr.colorSwipeRefresh
+                )
+            )
             attendanceErrorRetry.setOnClickListener { presenter.onRetry() }
             attendanceErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
@@ -204,7 +214,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
     }
 
     override fun showNextButton(show: Boolean) {
-        binding. attendanceNextButton.visibility = if (show) VISIBLE else INVISIBLE
+        binding.attendanceNextButton.visibility = if (show) VISIBLE else INVISIBLE
     }
 
     override fun showExcuseButton(show: Boolean) {
@@ -216,19 +226,26 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
     }
 
     override fun showDatePickerDialog(currentDate: LocalDate) {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            presenter.onDateSet(year, month + 1, dayOfMonth)
-        }
-        val datePickerDialog = DatePickerDialog.newInstance(dateSetListener,
-            currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth)
+        val baseDate = currentDate.schoolYearStart
+        val rangeStart = baseDate.toTimestamp()
+        val rangeEnd = LocalDate.now().plusWeeks(1).toTimestamp()
 
-        with(datePickerDialog) {
-            setDateRangeLimiter(SchooldaysRangeLimiter())
-            version = DatePickerDialog.Version.VERSION_2
-            scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
-            vibrate(false)
-            show(this@AttendanceFragment.parentFragmentManager, null)
+        val constraintsBuilder = CalendarConstraints.Builder().apply {
+            setValidator(SchoolDaysValidator(rangeStart, rangeEnd))
+            setStart(rangeStart)
+            setEnd(rangeEnd)
         }
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setCalendarConstraints(constraintsBuilder.build())
+            .setSelection(currentDate.toTimestamp())
+            .build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            val date = it.toLocalDateTime()
+            presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
+        }
+
+        datePicker.show(this@AttendanceFragment.parentFragmentManager, null)
     }
 
     override fun showExcuseDialog() {
@@ -239,8 +256,13 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .create()
             .apply {
-                setButton(BUTTON_POSITIVE, getString(R.string.attendance_excuse_dialog_submit)) { _, _ ->
-                    presenter.onExcuseDialogSubmit(dialogBinding.excuseReason.text?.toString().orEmpty())
+                setButton(
+                    BUTTON_POSITIVE,
+                    getString(R.string.attendance_excuse_dialog_submit)
+                ) { _, _ ->
+                    presenter.onExcuseDialogSubmit(
+                        dialogBinding.excuseReason.text?.toString().orEmpty()
+                    )
                 }
             }.show()
     }
@@ -251,6 +273,17 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
 
     override fun startActionMode() {
         actionMode = (activity as MainActivity?)?.startSupportActionMode(actionModeCallback)
+    }
+
+    override fun startSendMessageIntent(date: LocalDate, numbers: String, reason: String) {
+        val reasonFullText = getString(
+            R.string.attendance_excuse_formula,
+            date,
+            numbers,
+            if (reason.isNotBlank()) " ${getString(R.string.attendance_excuse_reason)} " else "",
+            reason.ifBlank { "" }
+        )
+        startActivity(SendMessageActivity.getStartIntent(requireContext(), reasonFullText))
     }
 
     override fun showExcuseCheckboxes(show: Boolean) {

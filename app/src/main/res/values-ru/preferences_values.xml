@@ -45,9 +45,15 @@
         <item>Средняя оценка с двух семестров</item>
         <item>Средняя оценок со всего года</item>
     </string-array>
-    <string-array name="timetable_show_whole_class_entries">
-        <item>Не показывать</item>
-        <item>Показать все</item>
-        <item>Показать меньше</item>
+    <string-array name="dashboard_tile_entries">
+        <item>Счастливый номер</item>
+        <item>Непрочитанные сообщения</item>
+        <item>Посещаемость</item>
+        <item>Уроки</item>
+        <item>Оценки</item>
+        <item>Домашняя работа</item>
+        <item>Объявления школ</item>
+        <item>Экзамены</item>
+        <item>Конференции</item>
     </string-array>
 </resources>

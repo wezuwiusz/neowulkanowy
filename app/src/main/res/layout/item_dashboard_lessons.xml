@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="8dp"
+            android:text="@string/dashboard_timetable_title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_main_timetable"
+            app:drawableTint="?colorOnSurface"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_title_tomorrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/dashboard_timetable_title_tomorrow"
+            android:textColor="?colorOnSurface"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/dashboard_lessons_item_title"
+            app:layout_constraintBottom_toBottomOf="@id/dashboard_lessons_item_title"
+            app:layout_constraintStart_toEndOf="@id/dashboard_lessons_item_title" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_first_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="?colorPrimary"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_lessons_item_title"
+            tools:text="Teraz:" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_first_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="?colorPrimary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/dashboard_lessons_item_first_time_barrier"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/dashboard_lessons_item_first_title"
+            app:layout_constraintTop_toTopOf="@id/dashboard_lessons_item_first_title"
+            tools:text="Matematyka, Sala 28" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/dashboard_lessons_item_first_time_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="dashboard_lessons_item_first_time, dashboard_lessons_item_first_time_range" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_first_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/background_timetable_time_left"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:paddingBottom="1dp"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            app:backgroundTint="?colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dashboard_lessons_item_first_title"
+            tools:text="jeszcze 15 minut" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_first_time_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dashboard_lessons_item_first_title"
+            tools:text="10:45 - 11:45"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_second_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/dashboard_timetable_second_lessons_title"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_lessons_item_first_value" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_second_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/dashboard_lessons_item_second_time"
+            app:layout_constraintStart_toEndOf="@id/dashboard_lessons_item_second_title"
+            app:layout_constraintTop_toTopOf="@id/dashboard_lessons_item_second_title"
+            app:layout_constraintVertical_bias="0"
+            tools:text="Matematyka (28)" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_second_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dashboard_lessons_item_second_title"
+            tools:text="10:45 - 11:45" />
+
+        <View
+            android:id="@+id/dashboard_lessons_item_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:background="?colorDivider"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_lessons_item_second_value" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_third_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/dashboard_timetable_third_title"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_lessons_item_divider"
+            tools:text="Poźniej" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_third_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="12dp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/dashboard_lessons_item_third_time"
+            app:layout_constraintStart_toEndOf="@id/dashboard_lessons_item_third_title"
+            app:layout_constraintTop_toTopOf="@id/dashboard_lessons_item_third_title"
+            tools:text="jeszcze 5 kolejnych lekcji" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_third_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/dashboard_lessons_item_third_title"
+            tools:text="do 15:55" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/dashboard_timetable_no_lessons"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_lessons_item_title" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_day_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_lessons_item_title"
+            tools:text="@tools:sample/lorem"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/dashboard_lessons_item_error"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="8dp"
+            android:text="@string/dashboard_timetable_error"
+            android:textColor="?colorError"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_error"
+            app:drawableTint="?colorError"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_lessons_item_title" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/dashboard_lessons_item_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_lessons_item_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

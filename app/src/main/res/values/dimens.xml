@@ -1,5 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!--BottomNav-->
-    <dimen name="bottom_navigation_margin_top_active" tools:override="true">8dp</dimen>
-    <dimen name="bottom_navigation_margin_top_inactive" tools:override="true">8dp</dimen>
-</resources>

@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.grade.details
 
-import android.annotation.SuppressLint
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.repositories.GradeRepository
@@ -202,8 +201,9 @@ class GradeDetailsPresenter @Inject constructor(
     }
 
     private fun updateNewGradesAmount(grades: List<GradeSubject>) {
-        newGradesAmount =
-            grades.sumBy { item -> item.grades.sumBy { grade -> if (!grade.isRead) 1 else 0 } }
+        newGradesAmount = grades.sumOf { item ->
+            item.grades.sumOf { grade -> (if (!grade.isRead) 1 else 0).toInt() }
+        }
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
@@ -217,7 +217,6 @@ class GradeDetailsPresenter @Inject constructor(
         }
     }
 
-    @SuppressLint("DefaultLocale")
     private fun createGradeItems(items: List<GradeSubject>): List<GradeDetailsItem> {
         return items
             .let { gradesWithAverages ->
@@ -228,7 +227,7 @@ class GradeDetailsPresenter @Inject constructor(
             .let {
                 when (preferencesRepository.gradeSortingMode) {
                     DATE -> it.sortedByDescending { gradeDetailsWithAverage -> gradeDetailsWithAverage.grades.firstOrNull()?.date }
-                    ALPHABETIC -> it.sortedBy { gradeDetailsWithAverage -> gradeDetailsWithAverage.subject.toLowerCase() }
+                    ALPHABETIC -> it.sortedBy { gradeDetailsWithAverage -> gradeDetailsWithAverage.subject.lowercase() }
                 }
             }
             .map { (subject, average, points, _, grades) ->

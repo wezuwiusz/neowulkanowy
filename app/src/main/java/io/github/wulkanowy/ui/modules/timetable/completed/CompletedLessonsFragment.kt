@@ -6,7 +6,8 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.CompletedLesson
@@ -15,10 +16,14 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.SchooldaysRangeLimiter
+import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.schoolYearEnd
+import io.github.wulkanowy.utils.schoolYearStart
+import io.github.wulkanowy.utils.toLocalDateTime
+import io.github.wulkanowy.utils.toTimestamp
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -62,7 +67,11 @@ class CompletedLessonsFragment :
         with(binding) {
             completedLessonsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             completedLessonsSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
-            completedLessonsSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
+            completedLessonsSwipe.setProgressBackgroundColorSchemeColor(
+                requireContext().getThemeAttrColor(
+                    R.attr.colorSwipeRefresh
+                )
+            )
             completedLessonErrorRetry.setOnClickListener { presenter.onRetry() }
             completedLessonErrorDetails.setOnClickListener { presenter.onDetailsClick() }
 
@@ -136,23 +145,35 @@ class CompletedLessonsFragment :
     }
 
     override fun showCompletedLessonDialog(completedLesson: CompletedLesson) {
-        (activity as? MainActivity)?.showDialogFragment(CompletedLessonDialog.newInstance(completedLesson))
+        (activity as? MainActivity)?.showDialogFragment(
+            CompletedLessonDialog.newInstance(
+                completedLesson
+            )
+        )
     }
 
     override fun showDatePickerDialog(currentDate: LocalDate) {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            presenter.onDateSet(year, month + 1, dayOfMonth)
-        }
-        val datePickerDialog = DatePickerDialog.newInstance(dateSetListener,
-            currentDate.year, currentDate.monthValue - 1, currentDate.dayOfMonth)
+        val now = LocalDate.now()
+        val startOfSchoolYear = now.schoolYearStart.toTimestamp()
+        val endOfSchoolYear = now.schoolYearEnd.toTimestamp()
 
-        with(datePickerDialog) {
-            setDateRangeLimiter(SchooldaysRangeLimiter())
-            version = DatePickerDialog.Version.VERSION_2
-            scrollOrientation = DatePickerDialog.ScrollOrientation.VERTICAL
-            vibrate(false)
-            show(this@CompletedLessonsFragment.parentFragmentManager, null)
+        val constraintsBuilder = CalendarConstraints.Builder().apply {
+            setValidator(SchoolDaysValidator(startOfSchoolYear, endOfSchoolYear))
+            setStart(startOfSchoolYear)
+            setEnd(endOfSchoolYear)
         }
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setCalendarConstraints(constraintsBuilder.build())
+                .setSelection(currentDate.toTimestamp())
+                .build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            val date = it.toLocalDateTime()
+            presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
+        }
+
+        datePicker.show(this@CompletedLessonsFragment.parentFragmentManager, null)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

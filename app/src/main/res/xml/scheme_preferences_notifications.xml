@@ -22,6 +22,10 @@
             app:title="@string/pref_notify_debug_switch" />
         <Preference
             app:iconSpaceReserved="false"
+            app:key="@string/pref_key_notifications_system_settings"
+            app:title="@string/pref_notify_open_system_settings" />
+        <Preference
+            app:iconSpaceReserved="false"
             app:isPreferenceVisible="false"
             app:key="@string/pref_key_notifications_fix_issues"
             app:title="@string/pref_notify_fix_sync_issues" />

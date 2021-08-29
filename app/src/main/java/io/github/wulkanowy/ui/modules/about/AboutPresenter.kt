@@ -26,10 +26,10 @@ class AboutPresenter @Inject constructor(
         view?.run {
             when (name) {
                 versionRes?.first -> {
-                    Timber.i("Opening log viewer")
-                    if (appInfo.isDebug) openLogViewer()
+                    Timber.i("Opening debug screen")
+                    if (appInfo.isDebug) openDebugScreen()
                     else openAppInMarket()
-                    analytics.logEvent("about_open", "name" to "log_viewer")
+                    analytics.logEvent("about_open", "name" to "debug_screen")
                 }
                 feedbackRes?.first -> {
                     Timber.i("Opening email client")
@@ -50,6 +50,11 @@ class AboutPresenter @Inject constructor(
                     Timber.i("Opening facebook")
                     openFacebookPage()
                     analytics.logEvent("about_open", "name" to "facebook")
+                }
+                twitterRes?.first -> {
+                    Timber.i("Opening twitter")
+                    openTwitterPage()
+                    analytics.logEvent("about_open", "name" to "twitter")
                 }
                 homepageRes?.first -> {
                     Timber.i("Opening homepage")
@@ -84,6 +89,7 @@ class AboutPresenter @Inject constructor(
                 faqRes,
                 discordRes,
                 facebookRes,
+                twitterRes,
                 homepageRes,
                 licensesRes,
                 privacyRes

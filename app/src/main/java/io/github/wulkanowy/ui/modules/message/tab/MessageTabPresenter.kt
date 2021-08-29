@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.xdrop.fuzzywuzzy.FuzzySearch
 import timber.log.Timber
-import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.pow
 
@@ -45,7 +44,6 @@ class MessageTabPresenter @Inject constructor(
 
     private val searchChannel = Channel<String>()
 
-    @FlowPreview
     fun onAttachView(view: MessageTabView, folder: MessageFolder) {
         super.onAttachView(view)
         view.initView()
@@ -56,15 +54,15 @@ class MessageTabPresenter @Inject constructor(
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the $folder message")
-        onParentViewLoadData(true)
+        view?.run { onParentViewLoadData(true, onlyUnread, onlyWithAttachments) }
     }
 
     fun onRetry() {
         view?.run {
             showErrorView(false)
             showProgress(true)
+            loadData(true, onlyUnread == true, onlyWithAttachments)
         }
-        loadData(true)
     }
 
     fun onDetailsClick() {
@@ -72,11 +70,15 @@ class MessageTabPresenter @Inject constructor(
     }
 
     fun onDeleteMessage() {
-        loadData(true)
+        view?.run { loadData(true, onlyUnread == true, onlyWithAttachments) }
     }
 
-    fun onParentViewLoadData(forceRefresh: Boolean) {
-        loadData(forceRefresh)
+    fun onParentViewLoadData(
+        forceRefresh: Boolean,
+        onlyUnread: Boolean? = view?.onlyUnread,
+        onlyWithAttachments: Boolean = view?.onlyWithAttachments == true
+    ) {
+        loadData(forceRefresh, onlyUnread == true, onlyWithAttachments)
     }
 
     fun onMessageItemSelected(message: Message, position: Int) {
@@ -84,7 +86,25 @@ class MessageTabPresenter @Inject constructor(
         view?.openMessage(message)
     }
 
-    private fun loadData(forceRefresh: Boolean) {
+    fun onUnreadFilterSelected(isChecked: Boolean) {
+        view?.run {
+            onlyUnread = isChecked
+            onParentViewLoadData(false, onlyUnread, onlyWithAttachments)
+        }
+    }
+
+    fun onAttachmentsFilterSelected(isChecked: Boolean) {
+        view?.run {
+            onlyWithAttachments = isChecked
+            onParentViewLoadData(false, onlyUnread, onlyWithAttachments)
+        }
+    }
+
+    private fun loadData(
+        forceRefresh: Boolean,
+        onlyUnread: Boolean,
+        onlyWithAttachments: Boolean
+    ) {
         Timber.i("Loading $folder message data started")
 
         flowWithResourceIn {
@@ -101,7 +121,15 @@ class MessageTabPresenter @Inject constructor(
                             showProgress(false)
                             showContent(true)
                             messages = it.data
-                            updateData(getFilteredData(lastSearchQuery))
+                            val filteredData = getFilteredData(
+                                lastSearchQuery,
+                                onlyUnread,
+                                onlyWithAttachments
+                            )
+                            val newItems = listOf(MessageTabDataItem.Header) + filteredData.map {
+                                MessageTabDataItem.MessageItem(it)
+                            }
+                            updateData(newItems, folder.id == MessageFolder.SENT.id)
                             notifyParentDataLoaded()
                         }
                     }
@@ -109,7 +137,7 @@ class MessageTabPresenter @Inject constructor(
                 Status.SUCCESS -> {
                     Timber.i("Loading $folder message result: Success")
                     messages = it.data!!
-                    updateData(getFilteredData(lastSearchQuery))
+                    updateData(getFilteredData(lastSearchQuery, onlyUnread, onlyWithAttachments))
                     analytics.logEvent(
                         "load_data",
                         "type" to "messages",
@@ -149,14 +177,16 @@ class MessageTabPresenter @Inject constructor(
         }
     }
 
-    @FlowPreview
+    @OptIn(FlowPreview::class)
     private fun initializeSearchStream() {
         launch {
             searchChannel.consumeAsFlow()
                 .debounce(250)
                 .map { query ->
                     lastSearchQuery = query
-                    getFilteredData(query)
+                    val isOnlyUnread = view?.onlyUnread == true
+                    val isOnlyWithAttachments = view?.onlyWithAttachments == true
+                    getFilteredData(query, isOnlyUnread, isOnlyWithAttachments)
                 }
                 .catch { Timber.e(it) }
                 .collect {
@@ -167,55 +197,62 @@ class MessageTabPresenter @Inject constructor(
         }
     }
 
-    private fun getFilteredData(query: String): List<Message> {
-        return if (query.trim().isEmpty()) {
-            messages.sortedByDescending { it.date }
+    private fun getFilteredData(
+        query: String,
+        onlyUnread: Boolean = false,
+        onlyWithAttachments: Boolean = false
+    ): List<Message> {
+        if (query.trim().isEmpty()) {
+            val sortedMessages = messages.sortedByDescending { it.date }
+            return when {
+                onlyUnread && onlyWithAttachments -> sortedMessages.filter { it.unread == onlyUnread && it.hasAttachments == onlyWithAttachments }
+                onlyUnread -> sortedMessages.filter { it.unread == onlyUnread }
+                onlyWithAttachments -> sortedMessages.filter { it.hasAttachments == onlyWithAttachments }
+                else -> sortedMessages
+            }
         } else {
-            messages
+            val sortedMessages = messages
                 .map { it to calculateMatchRatio(it, query) }
-                .sortedByDescending { it.second }
-                .filter { it.second > 5000 }
+                .sortedWith(compareBy<Pair<Message, Int>> { -it.second }.thenByDescending { it.first.date })
+                .filter { it.second > 6000 }
                 .map { it.first }
+            return when {
+                onlyUnread && onlyWithAttachments -> sortedMessages.filter { it.unread == onlyUnread && it.hasAttachments == onlyWithAttachments }
+                onlyUnread -> sortedMessages.filter { it.unread == onlyUnread }
+                onlyWithAttachments -> sortedMessages.filter { it.hasAttachments == onlyWithAttachments }
+                else -> sortedMessages
+            }
         }
     }
 
     private fun updateData(data: List<Message>) {
         view?.run {
             showEmpty(data.isEmpty())
-            showContent(data.isNotEmpty())
+            showContent(true)
             showErrorView(false)
-            updateData(data)
+            val newItems =
+                listOf(MessageTabDataItem.Header) + data.map { MessageTabDataItem.MessageItem(it) }
+            updateData(newItems, folder.id == MessageFolder.SENT.id)
         }
     }
 
     private fun calculateMatchRatio(message: Message, query: String): Int {
-        val subjectRatio = FuzzySearch.tokenSortPartialRatio(
-            query.toLowerCase(Locale.getDefault()),
-            message.subject
-        )
+        val subjectRatio = FuzzySearch.tokenSortPartialRatio(query.lowercase(), message.subject)
 
         val senderOrRecipientRatio = FuzzySearch.tokenSortPartialRatio(
-            query.toLowerCase(Locale.getDefault()),
-            if (message.sender.isNotEmpty()) message.sender.toLowerCase(Locale.getDefault())
-            else message.recipient.toLowerCase(Locale.getDefault())
+            query.lowercase(),
+            if (message.sender.isNotEmpty()) message.sender.lowercase()
+            else message.recipient.lowercase()
         )
 
         val dateRatio = listOf(
             FuzzySearch.ratio(
-                query.toLowerCase(Locale.getDefault()),
-                message.date.toFormattedString("dd.MM").toLowerCase(Locale.getDefault())
+                query.lowercase(),
+                message.date.toFormattedString("dd.MM").lowercase()
             ),
             FuzzySearch.ratio(
-                query.toLowerCase(Locale.getDefault()),
-                message.date.toFormattedString("dd.MM.yyyy").toLowerCase(Locale.getDefault())
-            ),
-            FuzzySearch.ratio(
-                query.toLowerCase(Locale.getDefault()),
-                message.date.toFormattedString("d MMMM").toLowerCase(Locale.getDefault())
-            ),
-            FuzzySearch.ratio(
-                query.toLowerCase(Locale.getDefault()),
-                message.date.toFormattedString("d MMMM yyyy").toLowerCase(Locale.getDefault())
+                query.lowercase(),
+                message.date.toFormattedString("dd.MM.yyyy").lowercase()
             )
         ).maxOrNull() ?: 0
 

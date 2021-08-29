@@ -79,7 +79,11 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
             loginFormFaq.setOnClickListener { presenter.onFaqClick() }
             loginFormContactEmail.setOnClickListener { presenter.onEmailClick() }
             loginFormRecoverLink.setOnClickListener { presenter.onRecoverClick() }
+            loginFormRecoverLinkSecond.setOnClickListener { presenter.onRecoverClick() }
             loginFormPass.setOnEditorDoneSignIn { loginFormSignIn.callOnClick() }
+            loginFormHost.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) requireActivity().hideSoftInput()
+            }
         }
 
         with(binding.loginFormHost) {
@@ -110,49 +114,42 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun setErrorUsernameRequired() {
         with(binding.loginFormUsernameLayout) {
-            requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorLoginRequired() {
         with(binding.loginFormUsernameLayout) {
-            requestFocus()
             error = getString(R.string.login_invalid_login)
         }
     }
 
     override fun setErrorEmailRequired() {
         with(binding.loginFormUsernameLayout) {
-            requestFocus()
             error = getString(R.string.login_invalid_email)
         }
     }
 
     override fun setErrorPassRequired(focus: Boolean) {
         with(binding.loginFormPassLayout) {
-            if (focus) requestFocus()
             error = getString(R.string.login_field_required)
         }
     }
 
     override fun setErrorPassInvalid(focus: Boolean) {
         with(binding.loginFormPassLayout) {
-            if (focus) requestFocus()
             error = getString(R.string.login_invalid_password)
         }
     }
 
     override fun setErrorPassIncorrect() {
         with(binding.loginFormPassLayout) {
-            requestFocus()
             error = getString(R.string.login_incorrect_password)
         }
     }
 
     override fun setErrorEmailInvalid(domain: String) {
         with(binding.loginFormUsernameLayout) {
-            requestFocus()
             error = getString(R.string.login_invalid_custom_email,domain)
         }
     }
@@ -196,6 +193,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun showContact(show: Boolean) {
         binding.loginFormContact.visibility = if (show) VISIBLE else GONE
+        binding.loginFormRecoverLink.visibility = if (show) GONE else VISIBLE
     }
 
     override fun openAdvancedLogin() {

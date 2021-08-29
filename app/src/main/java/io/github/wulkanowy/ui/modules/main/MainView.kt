@@ -40,6 +40,8 @@ interface MainView : BaseView {
 
     fun showStudentAvatar(student: Student)
 
+    fun showInAppReview()
+
     interface MainChildView {
 
         fun onFragmentReselected()
@@ -56,20 +58,24 @@ interface MainView : BaseView {
             set(_) {}
     }
 
-    enum class Section(val id: Int) {
-        GRADE(0),
-        ATTENDANCE(1),
-        EXAM(2),
-        TIMETABLE(3),
-        MORE(4),
-        MESSAGE(5),
-        HOMEWORK(6),
-        NOTE(7),
-        LUCKY_NUMBER(8),
-        SETTINGS(9),
-        ABOUT(10),
-        SCHOOL(11),
-        ACCOUNT(12),
-        STUDENT_INFO(13)
+    enum class Section {
+        DASHBOARD,
+        GRADE,
+        ATTENDANCE,
+        TIMETABLE,
+        MORE,
+        MESSAGE,
+        EXAM,
+        HOMEWORK,
+        NOTE,
+        CONFERENCE,
+        SCHOOL_ANNOUNCEMENT,
+        SCHOOL,
+        LUCKY_NUMBER,
+        ACCOUNT,
+        STUDENT_INFO,
+        SETTINGS;
+
+        val id get() = ordinal
     }
 }

@@ -121,7 +121,7 @@
         app:layout_constraintStart_toEndOf="@+id/timetableItemTeacher"
         app:layout_constraintTop_toTopOf="@+id/timetableItemTimeFinish"
         tools:text="Lekcja odwołana: uczniowie zwolnieni do domu"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/timetableItemTimeBarrier"

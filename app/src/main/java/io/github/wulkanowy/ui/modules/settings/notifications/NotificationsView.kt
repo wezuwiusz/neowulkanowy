@@ -8,5 +8,7 @@ interface NotificationsView : BaseView {
 
     fun showFixSyncDialog()
 
+    fun openSystemSettings()
+
     fun enableNotification(notificationKey: String, enable: Boolean)
 }

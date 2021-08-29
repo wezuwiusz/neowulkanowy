@@ -1,8 +1,8 @@
 apply plugin: "jacoco"
 
 jacoco {
-    toolVersion "0.8.5"
-    reportsDir = file("$buildDir/reports")
+    toolVersion "0.8.7"
+    reportsDirectory.set(file("$buildDir/reports"))
 }
 
 tasks.withType(Test) {
@@ -16,8 +16,8 @@ task jacocoTestReport(type: JacocoReport) {
     description = "Generate Jacoco coverage reports"
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required.set(true)
+        html.required.set(true)
     }
 
     def excludes = ['**/R.class',

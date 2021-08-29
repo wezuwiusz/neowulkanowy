@@ -76,13 +76,13 @@ class AttendanceSummaryAdapter @Inject constructor() :
 
     private fun getTotalItem() = AttendanceSummary(
         month = Month.APRIL,
-        presence = items.sumBy { it.presence },
-        absence = items.sumBy { it.absence },
-        absenceExcused = items.sumBy { it.absenceExcused },
-        absenceForSchoolReasons = items.sumBy { it.absenceForSchoolReasons },
-        exemption = items.sumBy { it.exemption },
-        lateness = items.sumBy { it.lateness },
-        latenessExcused = items.sumBy { it.latenessExcused },
+        presence = items.sumOf { it.presence },
+        absence = items.sumOf { it.absence },
+        absenceExcused = items.sumOf { it.absenceExcused },
+        absenceForSchoolReasons = items.sumOf { it.absenceForSchoolReasons },
+        exemption = items.sumOf { it.exemption },
+        lateness = items.sumOf { it.lateness },
+        latenessExcused = items.sumOf { it.latenessExcused },
         diaryId = -1,
         studentId = -1,
         subjectId = -1

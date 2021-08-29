@@ -14,6 +14,7 @@ import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import java.time.LocalDate
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
@@ -24,7 +25,7 @@ class MainPresenter @Inject constructor(
     private val analytics: AnalyticsHelper,
 ) : BasePresenter<MainView>(errorHandler, studentRepository) {
 
-    var studentsWitSemesters: List<StudentWithSemesters>? = null
+    private var studentsWitSemesters: List<StudentWithSemesters>? = null
 
     fun onAttachView(view: MainView, initMenu: MainView.Section?) {
         super.onAttachView(view)
@@ -106,9 +107,25 @@ class MainPresenter @Inject constructor(
             } else {
                 notifyMenuViewChanged()
                 switchMenuView(index)
+                checkInAppReview()
                 true
             }
         } == true
+    }
+
+    private fun checkInAppReview() {
+        prefRepository.inAppReviewCount++
+
+        if (prefRepository.inAppReviewDate == null) {
+            prefRepository.inAppReviewDate = LocalDate.now()
+        }
+
+        if (!prefRepository.isAppReviewDone && prefRepository.inAppReviewCount >= 50 &&
+            LocalDate.now().minusDays(14).isAfter(prefRepository.inAppReviewDate)
+        ) {
+            view?.showInAppReview()
+            prefRepository.isAppReviewDone = true
+        }
     }
 
     private fun showCurrentStudentAvatar() {
@@ -118,11 +135,9 @@ class MainPresenter @Inject constructor(
         view?.showStudentAvatar(currentStudent)
     }
 
-    private fun getProperViewIndexes(initMenu: MainView.Section?): Pair<Int, Int> {
-        return when (initMenu?.id) {
-            in 0..3 -> initMenu!!.id to -1
-            in 4..10 -> 4 to initMenu!!.id
-            else -> prefRepository.startMenuIndex to -1
-        }
+    private fun getProperViewIndexes(initMenu: MainView.Section?) = when (initMenu?.id) {
+        in 0..3 -> initMenu!!.id to -1
+        in 4..100 -> 4 to initMenu!!.id
+        else -> prefRepository.startMenuIndex to -1
     }
 }

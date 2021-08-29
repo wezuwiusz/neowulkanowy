@@ -10,6 +10,7 @@ import io.github.wulkanowy.data.db.dao.AttendanceDao
 import io.github.wulkanowy.data.db.dao.AttendanceSummaryDao
 import io.github.wulkanowy.data.db.dao.CompletedLessonsDao
 import io.github.wulkanowy.data.db.dao.ConferenceDao
+import io.github.wulkanowy.data.db.dao.SchoolAnnouncementDao
 import io.github.wulkanowy.data.db.dao.ExamDao
 import io.github.wulkanowy.data.db.dao.GradeDao
 import io.github.wulkanowy.data.db.dao.GradePartialStatisticsDao
@@ -32,10 +33,12 @@ import io.github.wulkanowy.data.db.dao.SubjectDao
 import io.github.wulkanowy.data.db.dao.TeacherDao
 import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
 import io.github.wulkanowy.data.db.dao.TimetableDao
+import io.github.wulkanowy.data.db.dao.TimetableHeaderDao
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.data.db.entities.Conference
+import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradePartialStatistics
@@ -58,6 +61,7 @@ import io.github.wulkanowy.data.db.entities.Subject
 import io.github.wulkanowy.data.db.entities.Teacher
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.entities.TimetableAdditional
+import io.github.wulkanowy.data.db.entities.TimetableHeader
 import io.github.wulkanowy.data.db.migrations.Migration10
 import io.github.wulkanowy.data.db.migrations.Migration11
 import io.github.wulkanowy.data.db.migrations.Migration12
@@ -86,6 +90,10 @@ import io.github.wulkanowy.data.db.migrations.Migration32
 import io.github.wulkanowy.data.db.migrations.Migration33
 import io.github.wulkanowy.data.db.migrations.Migration34
 import io.github.wulkanowy.data.db.migrations.Migration35
+import io.github.wulkanowy.data.db.migrations.Migration36
+import io.github.wulkanowy.data.db.migrations.Migration37
+import io.github.wulkanowy.data.db.migrations.Migration38
+import io.github.wulkanowy.data.db.migrations.Migration39
 import io.github.wulkanowy.data.db.migrations.Migration4
 import io.github.wulkanowy.data.db.migrations.Migration5
 import io.github.wulkanowy.data.db.migrations.Migration6
@@ -124,6 +132,8 @@ import javax.inject.Singleton
         Conference::class,
         TimetableAdditional::class,
         StudentInfo::class,
+        TimetableHeader::class,
+        SchoolAnnouncement::class,
     ],
     version = AppDatabase.VERSION_SCHEMA,
     exportSchema = true
@@ -132,7 +142,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 35
+        const val VERSION_SCHEMA = 39
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),
@@ -168,7 +178,11 @@ abstract class AppDatabase : RoomDatabase() {
             Migration32(),
             Migration33(),
             Migration34(),
-            Migration35(appInfo)
+            Migration35(appInfo),
+            Migration36(),
+            Migration37(),
+            Migration38(),
+            Migration39(),
         )
 
         fun newInstance(
@@ -234,4 +248,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val timetableAdditionalDao: TimetableAdditionalDao
 
     abstract val studentInfoDao: StudentInfoDao
+
+    abstract val timetableHeaderDao: TimetableHeaderDao
+
+    abstract val schoolAnnouncementDao: SchoolAnnouncementDao
 }

@@ -28,7 +28,7 @@ class GradeExtensionTest {
             createGrade(4.0, 1.0, 0.0),
             createGrade(1.0, 9.0, 0.5),
             createGrade(0.0, .0, 0.0)
-        ).calcAverage(), 0.005)
+        ).calcAverage(false), 0.005)
     }
 
     @Test

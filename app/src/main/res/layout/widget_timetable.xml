@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/background_widget_timetable"
     tools:context=".ui.modules.timetablewidget.TimetableWidgetProvider">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/background_widget_header_timetable">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -45,6 +45,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="4dp"
             android:background="?android:selectableItemBackground"
             android:contentDescription="@string/account_title"
             android:src="@drawable/ic_widget_account" />
@@ -77,7 +78,12 @@
         android:id="@+id/timetableWidgetList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:divider="#00ffffff"
+        android:dividerHeight="4dp"
         tools:listitem="@layout/item_widget_timetable" />
 
     <TextView
@@ -88,5 +94,6 @@
         android:text="@string/widget_timetable_no_items"
         android:textColor="@android:color/black"
         android:textSize="20sp"
+        android:translationY="28dp"
         tools:visibility="invisible" />
 </FrameLayout>

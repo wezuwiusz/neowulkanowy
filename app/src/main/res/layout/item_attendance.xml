@@ -52,7 +52,8 @@
             android:layout_height="32dp"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_excuse_waiting"
-            app:tint="?attr/colorOnSurface" />
+            app:tint="?attr/colorOnSurface"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -9,6 +9,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
+import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
 import io.github.wulkanowy.utils.isHolidays
@@ -110,15 +111,15 @@ class AdditionalLessonsPresenter @Inject constructor(
                 Status.SUCCESS -> {
                     Timber.i("Loading additional lessons lessons result: Success")
                     view?.apply {
-                        updateData(it.data!!.second.sortedBy { item -> item.date })
-                        showEmpty(it.data.second.isEmpty())
+                        updateData(it.data!!.additional.sortedBy { item -> item.date })
+                        showEmpty(it.data.additional.isEmpty())
                         showErrorView(false)
-                        showContent(it.data.second.isNotEmpty())
+                        showContent(it.data.additional.isNotEmpty())
                     }
                     analytics.logEvent(
                         "load_data",
                         "type" to "additional_lessons",
-                        "items" to it.data!!.second.size
+                        "items" to it.data!!.additional.size
                     )
                 }
                 Status.ERROR -> {
@@ -164,7 +165,7 @@ class AdditionalLessonsPresenter @Inject constructor(
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
             showNextButton(!currentDate.plusDays(1).isHolidays)
-            updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalize())
+            updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalise())
         }
     }
 }

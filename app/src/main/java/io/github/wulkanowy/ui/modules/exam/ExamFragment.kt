@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), ExamView,
-    MainView.MainChildView, MainView.TitledView {
+    MainView.TitledView {
 
     @Inject
     lateinit var presenter: ExamPresenter
@@ -88,14 +88,6 @@ class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), 
             items = emptyList()
             notifyDataSetChanged()
         }
-    }
-
-    override fun resetView() {
-        binding.examRecycler.scrollToPosition(0)
-    }
-
-    override fun onFragmentReselected() {
-        if (::presenter.isInitialized) presenter.onViewReselected()
     }
 
     override fun showEmpty(show: Boolean) {

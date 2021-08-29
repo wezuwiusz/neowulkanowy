@@ -11,4 +11,6 @@ interface BaseView {
     fun openClearLoginView()
 
     fun showErrorDetailsDialog(error: Throwable)
+
+    fun showChangePasswordSnackbar(redirectUrl: String)
 }

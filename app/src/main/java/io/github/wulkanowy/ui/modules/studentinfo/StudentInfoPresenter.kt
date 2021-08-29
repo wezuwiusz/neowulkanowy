@@ -61,11 +61,11 @@ class StudentInfoPresenter @Inject constructor(
     fun onItemSelected(position: Int) {
         if (infoType != StudentInfoView.Type.FAMILY) return
 
-        if (position == 0) {
-            view?.openStudentInfoView(StudentInfoView.Type.FIRST_GUARDIAN, studentWithSemesters)
-        } else {
-            view?.openStudentInfoView(StudentInfoView.Type.SECOND_GUARDIAN, studentWithSemesters)
-        }
+        view?.openStudentInfoView(
+            if (position == 0) StudentInfoView.Type.FIRST_GUARDIAN
+            else StudentInfoView.Type.SECOND_GUARDIAN,
+            studentWithSemesters
+        )
     }
 
     fun onItemLongClick(text: String) {
