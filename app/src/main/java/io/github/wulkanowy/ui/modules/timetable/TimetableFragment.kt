@@ -185,20 +185,19 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     }
 
     override fun showDatePickerDialog(currentDate: LocalDate) {
-        val now = LocalDate.now()
-        val startOfSchoolYear = now.schoolYearStart.toTimestamp()
-        val endOfSchoolYear = now.schoolYearEnd.toTimestamp()
+        val baseDate = currentDate.schoolYearStart
+        val rangeStart = baseDate.toTimestamp()
+        val rangeEnd = LocalDate.now().schoolYearEnd.toTimestamp()
 
         val constraintsBuilder = CalendarConstraints.Builder().apply {
-            setValidator(SchoolDaysValidator(startOfSchoolYear, endOfSchoolYear))
-            setStart(startOfSchoolYear)
-            setEnd(endOfSchoolYear)
+            setValidator(SchoolDaysValidator(rangeStart, rangeEnd))
+            setStart(rangeStart)
+            setEnd(rangeEnd)
         }
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setCalendarConstraints(constraintsBuilder.build())
-                .setSelection(currentDate.toTimestamp())
-                .build()
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setCalendarConstraints(constraintsBuilder.build())
+            .setSelection(currentDate.toTimestamp())
+            .build()
 
         datePicker.addOnPositiveButtonClickListener {
             val date = it.toLocalDateTime()
