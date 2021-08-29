@@ -1,6 +1,10 @@
-Wersja 1.1.6
+Wersja 1.2.0
 
-- naprawiliśmy błąd przy wysyłaniu wiadomości
-- naprawiliśmy oznaczanie odwołanych lekcji jako zastępstwa
+- dodaliśmy nowy ekran startowy 🎉
+- usprawniliśmy powiadomienia
+- dodaliśmy wersje robocze, filtrowanie oraz informację o odczytaniu przez odbiorcę w wiadomościach
+- dodaliśmy informacje o liczeniu średniej w podsumowaniu ocen
+- dodaliśmy opcję generowania wiadomości z usprawiedliwieniem dni w szkołach pozbawionych funkcji usprawiedliwiania przez zakładkę frekwencja
+- oraz wiele wiele innych ulepszeń i poprawek
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
