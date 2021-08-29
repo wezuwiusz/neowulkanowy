@@ -54,6 +54,8 @@ interface AttendanceView : BaseView {
 
     fun openSummaryView()
 
+    fun startSendMessageIntent(date: LocalDate, numbers: String, reason: String)
+
     fun startActionMode()
 
     fun showExcuseCheckboxes(show: Boolean)

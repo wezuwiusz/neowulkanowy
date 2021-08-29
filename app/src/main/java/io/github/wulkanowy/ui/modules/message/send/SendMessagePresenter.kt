@@ -40,7 +40,7 @@ class SendMessagePresenter @Inject constructor(
 
     private val messageUpdateChannel = Channel<Unit>()
 
-    fun onAttachView(view: SendMessageView, message: Message?, reply: Boolean?) {
+    fun onAttachView(view: SendMessageView, reason: String?, message: Message?, reply: Boolean?) {
         super.onAttachView(view)
         view.initView()
         initializeSubjectStream()
@@ -49,6 +49,10 @@ class SendMessagePresenter @Inject constructor(
         with(view) {
             if (messageRepository.draftMessage != null && reply == null) {
                 view.showMessageBackupDialog()
+            }
+            reason?.let {
+                setSubject("Usprawiedliwenie")
+                setContent(it)
             }
             message?.let {
                 setSubject(when (reply) {

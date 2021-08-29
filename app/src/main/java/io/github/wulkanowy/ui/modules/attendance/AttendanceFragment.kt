@@ -24,6 +24,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.dpToPx
@@ -120,7 +121,9 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
             attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             attendanceSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
             attendanceSwipe.setProgressBackgroundColorSchemeColor(
-                requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh)
+                requireContext().getThemeAttrColor(
+                    R.attr.colorSwipeRefresh
+                )
             )
             attendanceErrorRetry.setOnClickListener { presenter.onRetry() }
             attendanceErrorDetails.setOnClickListener { presenter.onDetailsClick() }
@@ -253,8 +256,13 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .create()
             .apply {
-                setButton(BUTTON_POSITIVE, getString(R.string.attendance_excuse_dialog_submit)) { _, _ ->
-                    presenter.onExcuseDialogSubmit(dialogBinding.excuseReason.text?.toString().orEmpty())
+                setButton(
+                    BUTTON_POSITIVE,
+                    getString(R.string.attendance_excuse_dialog_submit)
+                ) { _, _ ->
+                    presenter.onExcuseDialogSubmit(
+                        dialogBinding.excuseReason.text?.toString().orEmpty()
+                    )
                 }
             }.show()
     }
@@ -265,6 +273,17 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
 
     override fun startActionMode() {
         actionMode = (activity as MainActivity?)?.startSupportActionMode(actionModeCallback)
+    }
+
+    override fun startSendMessageIntent(date: LocalDate, numbers: String, reason: String) {
+        val reasonFullText = getString(
+            R.string.attendance_excuse_formula,
+            date,
+            numbers,
+            if (reason.isNotBlank()) " ${getString(R.string.attendance_excuse_reason)} " else "",
+            reason.ifBlank { "" }
+        )
+        startActivity(SendMessageActivity.getStartIntent(requireContext(), reasonFullText))
     }
 
     override fun showExcuseCheckboxes(show: Boolean) {

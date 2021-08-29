@@ -192,6 +192,8 @@
     <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
     <string name="attendance_excuse_no_selection">You must select at least one absence!</string>
     <string name="attendance_excuse_title">Excuse</string>
+    <string name="attendance_excuse_reason" translatable="false">z powodu</string>
+    <string name="attendance_excuse_formula" translatable="false">Dzień dobry,\nProszę o usprawiedliwienie mojego dziecka w dniu %s z lekcji %s%s%s.\n\nPozdrawiam.</string>
 
 
     <!--Attendance summary-->

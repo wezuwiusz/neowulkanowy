@@ -16,6 +16,9 @@ private inline val AttendanceSummary.allPresences: Double
 private inline val AttendanceSummary.allAbsences: Double
     get() = absence.toDouble() + absenceExcused
 
+inline val Attendance.isExcusableOrNotExcused: Boolean
+    get() = excusable || ((absence || lateness) && !excused)
+
 fun AttendanceSummary.calculatePercentage() = calculatePercentage(allPresences, allAbsences)
 
 fun List<AttendanceSummary>.calculatePercentage(): Double {

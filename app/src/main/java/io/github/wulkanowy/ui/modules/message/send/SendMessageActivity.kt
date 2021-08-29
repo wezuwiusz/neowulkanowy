@@ -35,6 +35,8 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
     companion object {
         private const val EXTRA_MESSAGE = "EXTRA_MESSAGE"
 
+        private const val EXTRA_REASON = "EXTRA_REASON"
+
         private const val EXTRA_REPLY = "EXTRA_REPLY"
 
         fun getStartIntent(context: Context) = Intent(context, SendMessageActivity::class.java)
@@ -43,6 +45,11 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
             return getStartIntent(context)
                 .putExtra(EXTRA_MESSAGE, message)
                 .putExtra(EXTRA_REPLY, reply)
+        }
+
+        fun getStartIntent(context: Context, reason: String): Intent {
+            return getStartIntent(context)
+                .putExtra(EXTRA_REASON, reason)
         }
     }
 
@@ -79,6 +86,7 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
 
         presenter.onAttachView(
             view = this,
+            reason = intent.getSerializableExtra(EXTRA_REASON) as? String,
             message = intent.getSerializableExtra(EXTRA_MESSAGE) as? Message,
             reply = intent.getSerializableExtra(EXTRA_REPLY) as? Boolean
         )
