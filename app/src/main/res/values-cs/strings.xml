@@ -11,6 +11,8 @@
     <string name="more_title">Více</string>
     <string name="about_title">O aplikaci</string>
     <string name="logviewer_title">Prohlížeč protokolů</string>
+    <string name="debug_title">Ladění</string>
+    <string name="notification_debug_title">Ladění oznámení</string>
     <string name="contributors_title">Tvůrci</string>
     <string name="license_title">Licence</string>
     <string name="message_title">Zprávy</string>
@@ -21,6 +23,7 @@
     <string name="account_quick_title">Vyberte účet</string>
     <string name="account_details_title">Podrobnosti účtu</string>
     <string name="student_info_title">Informace o žáku</string>
+    <string name="dashboard_title">Domů</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -88,6 +91,7 @@
     <string name="grade_summary_predicted_grade">Předpokládaná známka</string>
     <string name="grade_summary_calculated_average">Vypočítaný průměr</string>
     <string name="grade_summary_final_average">Konečný průměr</string>
+    <string name="grade_summary_from_subjects">z %1$d z %2$d předmětů</string>
     <string name="grade_menu_summary">Shrnutí</string>
     <string name="grade_menu_statistics">Třída</string>
     <string name="grade_menu_read">Označit jako přečtené</string>
@@ -196,6 +200,12 @@
         <item quantity="many">Nové zkoušky</item>
         <item quantity="other">Nové zkoušky</item>
     </plurals>
+    <plurals name="exam_notify_new_item_content">
+        <item quantity="one">Máte %d novou zkoušku</item>
+        <item quantity="few">Máte %d nové zkoušky</item>
+        <item quantity="many">Máte %d nových zkoušek</item>
+        <item quantity="other">Máte %d nových zkoušek</item>
+    </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d zkouška</item>
         <item quantity="few">%d zkoušky</item>
@@ -203,7 +213,7 @@
         <item quantity="other">%d zkoušek</item>
     </plurals>
     <!--Message-->
-    <string name="message_inbox">Doručená pošta</string>
+    <string name="message_inbox">Doručené</string>
     <string name="message_sent">Odesláno</string>
     <string name="message_trash">Koš</string>
     <string name="message_no_subject">(žádný předmět)</string>
@@ -225,6 +235,15 @@
     <string name="message_not_exists">Zpráva neexistuje</string>
     <string name="message_required_recipients">Musíte vybrat alespoň 1 příjemce</string>
     <string name="message_content_min_length">Obsah zprávy musí mít alespoň 3 znaky</string>
+    <string name="message_chip_only_unread">Pouze nepřečtené</string>
+    <string name="message_chip_only_with_attachments">Pouze s přílohami</string>
+    <string name="message_read">Přečtena: %s</string>
+    <plurals name="message_read_by">
+        <item quantity="one">Přečtena přes: %1$d z %2$d osob</item>
+        <item quantity="few">Přečtena přes: %1$d z %2$d osob</item>
+        <item quantity="many">Přečtena přes: %1$d z %2$d osob</item>
+        <item quantity="other">Přečtena přes: %1$d z %2$d osob</item>
+    </plurals>
     <plurals name="message_number_item">
         <item quantity="one">%d zpráva</item>
         <item quantity="few">%d zprávy</item>
@@ -237,6 +256,8 @@
         <item quantity="many">Nové zprávy</item>
         <item quantity="other">Nové zprávy</item>
     </plurals>
+    <string name="message_restore_dialog">Chcete obnovit koncept zprávy?</string>
+    <string name="message_restore_dialog_with_recipients">Chcete obnovit koncept zprávy s příjemci: %s?</string>
     <plurals name="message_notify_new_items">
         <item quantity="one">Máte %1$d novou zprávu</item>
         <item quantity="few">Máte %1$d nové zprávy</item>
@@ -313,6 +334,12 @@
         <item quantity="many">Nové domácí úkoly</item>
         <item quantity="other">Nové domácí úkoly</item>
     </plurals>
+    <plurals name="homework_notify_new_item_content">
+        <item quantity="one">Máte %d nový domácí úkol</item>
+        <item quantity="few">Máte %d nové domácí úkoly</item>
+        <item quantity="many">Máte %d nových domácích úkolů</item>
+        <item quantity="other">Máte %d nových domácích úkolů</item>
+    </plurals>
     <plurals name="homework_number_item">
         <item quantity="one">%d domácí úkol</item>
         <item quantity="few">%d domácí úkoly</item>
@@ -324,7 +351,7 @@
     <string name="lucky_number_header">Dnešní šťastné číslo je</string>
     <string name="lucky_number_empty">Žádné informace o šťastném čísle</string>
     <string name="lucky_number_notify_new_item_title">Šťastné číslo pro dnešek</string>
-    <string name="lucky_number_notify_new_item">Dnes je šťastným číslem: %s</string>
+    <string name="lucky_number_notify_new_item">Dnešní šťastné číslo je: %s</string>
     <string name="lucky_number_history_button">Zobrazit historii</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Historie šťastných čísel</string>
@@ -357,6 +384,45 @@
     <!--Conference-->
     <string name="conferences_title">Setkání</string>
     <string name="conference_no_items">Žádné informace o setkáních</string>
+    <plurals name="conference_number_item">
+        <item quantity="one">%d setkání</item>
+        <item quantity="few">%d setkání</item>
+        <item quantity="many">%d setkání</item>
+        <item quantity="other">%d setkání</item>
+    </plurals>
+    <plurals name="conference_notify_new_item_title">
+        <item quantity="one">Nové setkání</item>
+        <item quantity="few">Nová setkání</item>
+        <item quantity="many">Nová setkání</item>
+        <item quantity="other">Nová setkání</item>
+    </plurals>
+    <plurals name="conference_notify_new_items">
+        <item quantity="one">Máte %1$d nové setkání</item>
+        <item quantity="few">Máte %1$d nové setkání</item>
+        <item quantity="many">Máte %1$d nových setkání</item>
+        <item quantity="other">Máte %1$d nových setkání</item>
+    </plurals>
+    <!--Director information-->
+    <string name="school_announcement_title">Školní oznámení</string>
+    <string name="school_announcement_no_items">Žádná školní oznámení</string>
+    <plurals name="school_announcement_number_item">
+        <item quantity="one">%d školní oznámení</item>
+        <item quantity="few">%d školní oznámení</item>
+        <item quantity="many">%d školní oznámení</item>
+        <item quantity="other">%d školní oznámení</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_item_title">
+        <item quantity="one">Nové školní oznámení</item>
+        <item quantity="few">Nová školní oznámení</item>
+        <item quantity="many">Nová školní oznámení</item>
+        <item quantity="other">Nová školní oznámení</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_items">
+        <item quantity="one">Máte %1$d nové školní oznámení</item>
+        <item quantity="few">Máte %1$d nové školní oznámení</item>
+        <item quantity="many">Máte %1$d nových školních oznámení</item>
+        <item quantity="other">Máte %1$d nových školních oznámení</item>
+    </plurals>
     <!--Account-->
     <string name="account_add_new">Přidat účet</string>
     <string name="account_logout">Odhlásit</string>
@@ -382,6 +448,8 @@
     <string name="about_discord">Server Discord</string>
     <string name="about_discord_summary">Připojte se ke komunitě Wulkanového</string>
     <string name="about_facebook">Facebooková fanpage</string>
+    <string name="about_twitter">Twitter stránka</string>
+    <string name="about_twitter_summary">Sledujte nás na Twitteru</string>
     <string name="about_facebook_summary">Stejně jako naše facebooková fanpage</string>
     <string name="about_privacy">Zásady ochrany osobních údajů</string>
     <string name="about_privacy_summary">Pravidla pro shromažďování osobních údajů</string>
@@ -417,6 +485,7 @@
     <string name="student_info_male">Muž</string>
     <string name="student_info_female">Žena</string>
     <string name="student_info_last_name">Příjmení</string>
+    <string name="student_info_guardian">Opatrovník</string>
     <!--Account edit-->
     <string name="account_edit_nick_hint">Přezdívka</string>
     <string name="account_edit_header">Přidat přezdívku</string>
@@ -424,6 +493,80 @@
     <!--Log viewer-->
     <string name="logviewer_share">Sdílet protokoly</string>
     <string name="logviewer_refresh">Obnovit</string>
+    <!--Dashboard-->
+    <string name="dashboard_timetable_title">Lekce</string>
+    <string name="dashboard_timetable_title_tomorrow">(Zítra)</string>
+    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
+    <string name="dashboard_timetable_first_lesson_title_moment">Za chvíli:</string>
+    <string name="dashboard_timetable_first_lesson_title_soon">Brzy:</string>
+    <string name="dashboard_timetable_first_lesson_title_first">První:</string>
+    <string name="dashboard_timetable_first_lesson_title_now">Teď:</string>
+    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
+        <item quantity="one">za %1$d minutu</item>
+        <item quantity="few">za %1$d minuty</item>
+        <item quantity="many">za %1$d minut</item>
+        <item quantity="other">za %1$d minut</item>
+    </plurals>
+    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
+        <item quantity="one">ještě %1$d minutu</item>
+        <item quantity="few">ještě %1$d minuty</item>
+        <item quantity="many">ještě %1$d minut</item>
+        <item quantity="other">ještě %1$d minut</item>
+    </plurals>
+    <string name="dashboard_timetable_second_lesson_value_end">Konec lekcí</string>
+    <string name="dashboard_timetable_second_lessons_title">Další:</string>
+    <string name="dashboard_timetable_third_title">Později:</string>
+    <plurals name="dashboard_timetable_third_value">
+        <item quantity="one">ještě %1$d další lekce</item>
+        <item quantity="few">ještě %1$d další lekce</item>
+        <item quantity="many">ještě %1$d dalších lekcí</item>
+        <item quantity="other">ještě %1$d dalších lekcí</item>
+    </plurals>
+    <string name="dashboard_timetable_third_time">do %1$s</string>
+    <string name="dashboard_timetable_no_lessons">Žádné nadcházející lekce</string>
+    <string name="dashboard_timetable_error">Při načítání lekcí došlo k chybě</string>
+    <string name="dashboard_homework_title">Domácí úkoly</string>
+    <string name="dashboard_homework_no_homework">Žádné domácí úkoly do vykonána</string>
+    <string name="dashboard_homework_error">Při načítání domácích úkolů došlo k chybě</string>
+    <plurals name="dashboard_homework_more">
+        <item quantity="one">Ještě %1$d další domácí úkol</item>
+        <item quantity="few">Ještě %1$d další domácí úkoly</item>
+        <item quantity="many">Ještě %1$d dalších domácích úkolů</item>
+        <item quantity="other">Ještě %1$d dalších domácích úkolů</item>
+    </plurals>
+    <string name="dashboard_homework_time">do %1$s</string>
+    <string name="dashboard_grade_title">Poslední známky</string>
+    <string name="dashboard_grade_no_grade">Žádné nové známky</string>
+    <string name="dashboard_grade_error">Při načítání známek došlo k chybě</string>
+    <string name="dashboard_announcements_title">Školní oznámení</string>
+    <string name="dashboard_announcements_no_announcements">Žádná aktuální oznámení</string>
+    <string name="dashboard_announcements_error">Při načítání oznámení došlo k chybě</string>
+    <plurals name="dashboard_announcements_more">
+        <item quantity="one">Ještě %1$d další oznámení</item>
+        <item quantity="few">Ještě %1$d další oznámení</item>
+        <item quantity="many">Ještě %1$d dalších oznámení</item>
+        <item quantity="other">Ještě %1$d dalších oznámení</item>
+    </plurals>
+    <string name="dashboard_exams_title">Zkoušky</string>
+    <string name="dashboard_exams_no_exams">Žádné nadcházející zkoušky</string>
+    <string name="dashboard_exams_error">Při načítání zkoušek došlo k chybě</string>
+    <plurals name="dashboard_exams_more">
+        <item quantity="one">Ještě %1$d další zkouška</item>
+        <item quantity="few">Ještě %1$d další zkoušky</item>
+        <item quantity="many">Ještě %1$d dalších zkoušek</item>
+        <item quantity="other">Ještě %1$d dalších zkoušek</item>
+    </plurals>
+    <string name="dashboard_conferences_title">Setkání</string>
+    <string name="dashboard_conferences_no_conferences">Žádná nadcházející setkání</string>
+    <string name="dashboard_conferences_error">Při načítání setkání došlo k chybě</string>
+    <plurals name="dashboard_conference_more">
+        <item quantity="one">Ještě %1$d další setkání</item>
+        <item quantity="few">Ještě %1$d další setkání</item>
+        <item quantity="many">Ještě %1$d dalších setkání</item>
+        <item quantity="other">Ještě %1$d dalších setkání</item>
+    </plurals>
+    <string name="dashboard_horizontal_group_error">Při načítání dat došlo k chybě</string>
+    <string name="dashboard_horizontal_group_no_lukcy_number">Žádné</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Zkontrolovat aktualizace</string>
     <string name="dialog_error_check_update_message">Před hlášením chyby zkontrolujte, zda je k dispozici aktualizace s opravou chyb</string>
@@ -487,6 +630,7 @@
     <string name="pref_services_message_sync_success">Synchronizováno!</string>
     <string name="pref_services_message_sync_failed">Synchronizace selhala</string>
     <string name="pref_services_sync_in_progress">Probíhá synchronizace</string>
+    <string name="pref_services_last_full_sync_date">Poslední úplná synchronizace: %s</string>
     <string name="pref_other_grade_modifier_plus">Hodnota plusu</string>
     <string name="pref_other_grade_modifier_minus">Hodnota mínusu</string>
     <string name="pref_other_fill_message_content">Odpovědět s historií zpráv</string>
@@ -496,6 +640,8 @@
     <string name="pref_settings_notifications_title">Upozornění</string>
     <string name="pref_settings_sync_title">Synchronizace</string>
     <string name="pref_grades_appearance_header">Známky</string>
+    <string name="pref_dashboard_appearance_header">Domů</string>
+    <string name="pref_dashboard_appearance_tiles_title">Viditelnost dlaždic</string>
     <string name="pref_attendance_appearance_view">Docházka</string>
     <string name="pref_timetable_appearance_view">Plán lekce</string>
     <string name="pref_grades_advanced_header">Známky</string>
@@ -512,23 +658,26 @@
     <!--Notification Channels-->
     <string name="channel_new_grades">Nové známky</string>
     <string name="channel_new_homework">Nové domácí úkoly</string>
+    <string name="channel_new_conference">Nová setkání</string>
     <string name="channel_new_exam">Nové zkoušky</string>
     <string name="channel_lucky_number">Šťastné číslo</string>
     <string name="channel_new_message">Nové zprávy</string>
     <string name="channel_new_notes">Nové poznámky</string>
+    <string name="channel_new_school_announcement">Nové školní oznámení</string>
     <string name="channel_push">Push upozornění</string>
     <string name="channel_upcoming_lessons">Nadcházející lekce</string>
     <string name="channel_debug">Ladění</string>
     <!--Colors-->
-    <string name="all_black">Černý</string>
-    <string name="all_red">Červený</string>
-    <string name="all_blue">Modrý</string>
-    <string name="all_green">Zelený</string>
-    <string name="all_purple">Fialový</string>
+    <string name="all_black">Černá</string>
+    <string name="all_red">Červená</string>
+    <string name="all_blue">Modrá</string>
+    <string name="all_green">Zelená</string>
+    <string name="all_purple">Fialová</string>
     <string name="all_empty_color">Žádná barva</string>
     <!--Others-->
     <string name="all_copied">Zkopírováno</string>
     <string name="all_undo">Vrátit</string>
+    <string name="all_change">Změnit</string>
     <!--Update helper-->
     <string name="update_download_started">Stahování aktualizací začalo…</string>
     <string name="update_download_success">Aktualizace byla stažena.</string>

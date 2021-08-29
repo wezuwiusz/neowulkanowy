@@ -11,6 +11,8 @@
     <string name="more_title">Mehr</string>
     <string name="about_title">Über die Applikation</string>
     <string name="logviewer_title">Log Viewer</string>
+    <string name="debug_title">Debuggen</string>
+    <string name="notification_debug_title">Benachrichtigungen debuggen</string>
     <string name="contributors_title">Mitarbeiter</string>
     <string name="license_title">Lizenzen</string>
     <string name="message_title">Nachrichten</string>
@@ -21,6 +23,7 @@
     <string name="account_quick_title">Konto auswählen</string>
     <string name="account_details_title">Kontodetails</string>
     <string name="student_info_title">Schülerinfo</string>
+    <string name="dashboard_title">Übersicht</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -88,6 +91,7 @@
     <string name="grade_summary_predicted_grade">Vorhergesagte Note</string>
     <string name="grade_summary_calculated_average">Berechnender Durchschnitt</string>
     <string name="grade_summary_final_average">Finaler Durchschnitt</string>
+    <string name="grade_summary_from_subjects">aus %1$d von %2$d Schulfächern</string>
     <string name="grade_menu_summary">Zusammenfassung</string>
     <string name="grade_menu_statistics">Klasse</string>
     <string name="grade_menu_read">Als gelesen markieren</string>
@@ -177,12 +181,16 @@
     <string name="exam_type">Form</string>
     <string name="exam_entry_date">Eintrittsdatum</string>
     <plurals name="exam_notify_new_item_title">
-        <item quantity="one">New exam</item>
-        <item quantity="other">New exams</item>
+        <item quantity="one">Neue prüfung</item>
+        <item quantity="other">Neue prüfungen</item>
+    </plurals>
+    <plurals name="exam_notify_new_item_content">
+        <item quantity="one">You received %d new exam</item>
+        <item quantity="other">Du hast %d neue Prüfungen bekommen</item>
     </plurals>
     <plurals name="exam_number_item">
-        <item quantity="one">%d exam</item>
-        <item quantity="other">%d exams</item>
+        <item quantity="one">%d prüfung</item>
+        <item quantity="other">%d prüfungen</item>
     </plurals>
     <!--Message-->
     <string name="message_inbox">Posteingang</string>
@@ -207,6 +215,13 @@
     <string name="message_not_exists">Nachricht existiert nicht</string>
     <string name="message_required_recipients">Sie müssen mindestens 1 Empfänger auswählen.</string>
     <string name="message_content_min_length">Der Inhalt der Nachricht muss mindestens 3 Zeichen lang sein.</string>
+    <string name="message_chip_only_unread">Nur ungelesen</string>
+    <string name="message_chip_only_with_attachments">Nur mit Anhängen</string>
+    <string name="message_read">Lesen: %s</string>
+    <plurals name="message_read_by">
+        <item quantity="one">Read by: %1$d of %2$d people</item>
+        <item quantity="other">Read by: %1$d of %2$d people</item>
+    </plurals>
     <plurals name="message_number_item">
         <item quantity="one">%d nachricht</item>
         <item quantity="other">%d nachrichten</item>
@@ -215,6 +230,8 @@
         <item quantity="one">Neu nachricht</item>
         <item quantity="other">Neue nachrichten</item>
     </plurals>
+    <string name="message_restore_dialog">Do you want to restore draft message?</string>
+    <string name="message_restore_dialog_with_recipients">Do you want to restore draft message with recipients: %s?</string>
     <plurals name="message_notify_new_items">
         <item quantity="one">Du hast %1$d nachricht bekommen</item>
         <item quantity="other">Du hast %1$d nachrichten bekommen</item>
@@ -266,19 +283,23 @@
     <string name="homework_mark_as_undone">Unvollständig</string>
     <string name="homework_attachments">Anhänge</string>
     <plurals name="homework_notify_new_item_title">
-        <item quantity="one">New homework</item>
-        <item quantity="other">New homework</item>
+        <item quantity="one">Neue hausaufgaben</item>
+        <item quantity="other">Neue hausaufgaben</item>
+    </plurals>
+    <plurals name="homework_notify_new_item_content">
+        <item quantity="one">You received %d new homework</item>
+        <item quantity="other">Du hast %d neue Hausaufgaben bekommen</item>
     </plurals>
     <plurals name="homework_number_item">
-        <item quantity="one">%d homework</item>
-        <item quantity="other">%d homework</item>
+        <item quantity="one">%d hausaufgaben</item>
+        <item quantity="other">%d hausaufgaben</item>
     </plurals>
     <!--Lucky number-->
     <string name="lucky_number_title">Glückliche Nummer</string>
     <string name="lucky_number_header">Die heutige Glücksnummer ist </string>
     <string name="lucky_number_empty">Keine Information über die Glücksnummer.</string>
     <string name="lucky_number_notify_new_item_title">Glücksnummer für heute</string>
-    <string name="lucky_number_notify_new_item">Die heutige Glücksnummer ist: %s</string>
+    <string name="lucky_number_notify_new_item">Heutige Glückszahl ist: %s</string>
     <string name="lucky_number_history_button">Verlauf anzeigen</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Glücksnummerverlauf</string>
@@ -311,6 +332,33 @@
     <!--Conference-->
     <string name="conferences_title">Sitzungen</string>
     <string name="conference_no_items">Keine Informationen über Sitzungen</string>
+    <plurals name="conference_number_item">
+        <item quantity="one">%d konferenz</item>
+        <item quantity="other">%d konferenzen</item>
+    </plurals>
+    <plurals name="conference_notify_new_item_title">
+        <item quantity="one">Neue konferenz</item>
+        <item quantity="other">Neue konferenzen</item>
+    </plurals>
+    <plurals name="conference_notify_new_items">
+        <item quantity="one">Sie haben %1$d neue konferenz</item>
+        <item quantity="other">Sie haben %1$d neue konferenzen</item>
+    </plurals>
+    <!--Director information-->
+    <string name="school_announcement_title">Schulankündigungen</string>
+    <string name="school_announcement_no_items">Keine schulankündigungen</string>
+    <plurals name="school_announcement_number_item">
+        <item quantity="one">%d schulankündigung</item>
+        <item quantity="other">%d schulankündigungen</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_item_title">
+        <item quantity="one">Ankündigung der neuen schule</item>
+        <item quantity="other">Neue schulankündigungen</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_items">
+        <item quantity="one">Sie haben %1$d neue schulmitteilungen</item>
+        <item quantity="other">Sie haben %1$d neue schulankündigungen</item>
+    </plurals>
     <!--Account-->
     <string name="account_add_new">Konto hinzufügen</string>
     <string name="account_logout">Abmelden</string>
@@ -336,11 +384,13 @@
     <string name="about_discord">Discord server</string>
     <string name="about_discord_summary">Treten Sie der Wulkanowy-Gemeinschaft bei</string>
     <string name="about_facebook">Facebook fanpage</string>
+    <string name="about_twitter">Twitter-Seite</string>
+    <string name="about_twitter_summary">Folgen Sie uns bei Twitter</string>
     <string name="about_facebook_summary">Gefällt unsere Facebook-Fanpage</string>
     <string name="about_privacy">Datenschutzerklärung</string>
     <string name="about_privacy_summary">Regeln für die Sammlung persönlicher Daten</string>
-    <string name="about_system">System settings</string>
-    <string name="about_system_summary">Open system settings</string>
+    <string name="about_system">Systemeinstellungen</string>
+    <string name="about_system_summary">Systemeinstellungen öffnen</string>
     <string name="about_homepage">Startseite</string>
     <string name="about_homepage_summary">Besuchen Sie die Website und helfen Sie bei der Entwicklung der Anwendung</string>
     <string name="about_licenses">Lizenzen</string>
@@ -371,6 +421,7 @@
     <string name="student_info_male">Mann</string>
     <string name="student_info_female">Frau</string>
     <string name="student_info_last_name">Nachname</string>
+    <string name="student_info_guardian">Wächter</string>
     <!--Account edit-->
     <string name="account_edit_nick_hint">Nick</string>
     <string name="account_edit_header">Nick hinzufügen</string>
@@ -378,6 +429,66 @@
     <!--Log viewer-->
     <string name="logviewer_share">Logs teilen</string>
     <string name="logviewer_refresh">Aktualisieren</string>
+    <!--Dashboard-->
+    <string name="dashboard_timetable_title">Lektionen</string>
+    <string name="dashboard_timetable_title_tomorrow">(Morgen)</string>
+    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
+    <string name="dashboard_timetable_first_lesson_title_moment">Gleich:</string>
+    <string name="dashboard_timetable_first_lesson_title_soon">Bald:</string>
+    <string name="dashboard_timetable_first_lesson_title_first">Erstens:</string>
+    <string name="dashboard_timetable_first_lesson_title_now">Jetzt:</string>
+    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
+        <item quantity="one">in %1$d Minute</item>
+        <item quantity="other">in %1$d Minuten</item>
+    </plurals>
+    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
+        <item quantity="one">Noch %1$d Minute</item>
+        <item quantity="other">Noch %1$d Minuten</item>
+    </plurals>
+    <string name="dashboard_timetable_second_lesson_value_end">Ende der Lektion</string>
+    <string name="dashboard_timetable_second_lessons_title">Nächste:</string>
+    <string name="dashboard_timetable_third_title">Später:</string>
+    <plurals name="dashboard_timetable_third_value">
+        <item quantity="one">Noch %1$d Lektion</item>
+        <item quantity="other">%1$d more lessons</item>
+    </plurals>
+    <string name="dashboard_timetable_third_time">until %1$s</string>
+    <string name="dashboard_timetable_no_lessons">No upcoming lessons</string>
+    <string name="dashboard_timetable_error">An error occurred while loading the lessons</string>
+    <string name="dashboard_homework_title">Homework</string>
+    <string name="dashboard_homework_no_homework">No homework to do</string>
+    <string name="dashboard_homework_error">An error occurred while loading the homework</string>
+    <plurals name="dashboard_homework_more">
+        <item quantity="one">%1$d more homework</item>
+        <item quantity="other">%1$d more homework</item>
+    </plurals>
+    <string name="dashboard_homework_time">due %1$s</string>
+    <string name="dashboard_grade_title">Last grades</string>
+    <string name="dashboard_grade_no_grade">No new grades</string>
+    <string name="dashboard_grade_error">An error occurred while loading the grades</string>
+    <string name="dashboard_announcements_title">School announcements</string>
+    <string name="dashboard_announcements_no_announcements">No current announcements</string>
+    <string name="dashboard_announcements_error">An error occurred while loading the announcements</string>
+    <plurals name="dashboard_announcements_more">
+        <item quantity="one">%1$d more announcement</item>
+        <item quantity="other">%1$d more announcements</item>
+    </plurals>
+    <string name="dashboard_exams_title">Exams</string>
+    <string name="dashboard_exams_no_exams">No upcoming exams</string>
+    <string name="dashboard_exams_error">An error occurred while loading the exams</string>
+    <plurals name="dashboard_exams_more">
+        <item quantity="one">%1$d more exam</item>
+        <item quantity="other">%1$d more exams</item>
+    </plurals>
+    <string name="dashboard_conferences_title">Conferences</string>
+    <string name="dashboard_conferences_no_conferences">No upcoming conferences</string>
+    <string name="dashboard_conferences_error">An error occurred while loading the conferences</string>
+    <plurals name="dashboard_conference_more">
+        <item quantity="one">%1$d more conference</item>
+        <item quantity="other">%1$d more conferences</item>
+    </plurals>
+    <string name="dashboard_horizontal_group_error">An error occurred while loading data</string>
+    <string name="dashboard_horizontal_group_no_lukcy_number">None</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Auf Updates prüfen</string>
     <string name="dialog_error_check_update_message">Bevor Sie einen Fehler melden, prüfen Sie zuerst, ob ein Update mit der Fehlerbehebung verfügbar ist</string>
@@ -426,7 +537,7 @@
     <string name="pref_notify_header">Benachrichtigungen</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>
     <string name="pref_notify_upcoming_lessons_switch">Benachrichtigungen über bevorstehende Lektionen anzeigen</string>
-    <string name="pref_notify_open_system_settings">Open system notification settings</string>
+    <string name="pref_notify_open_system_settings">Systembenachrichtigungseinstellungen öffnen</string>
     <string name="pref_notify_fix_sync_issues">Synchronisierungs- und Benachrichtigungsprobleme reparieren</string>
     <string name="pref_notify_fix_sync_issues_message">Ihr Gerät hat möglicherweise Probleme mit der Datensynchronisierung und Benachrichtigungen.\n\nUm diese zu reparieren, fügen Sie Wulkanowy zum Autostart hinzu und deaktivieren Sie die Batterieoptimierung in den Systemeinstellungen des Geräts.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Gehe zu den Einstellungen</string>
@@ -441,15 +552,18 @@
     <string name="pref_services_message_sync_success">Synchronisiert!</string>
     <string name="pref_services_message_sync_failed">Synchronisierung fehlgeschlagen</string>
     <string name="pref_services_sync_in_progress">Synchronisierung läuft</string>
+    <string name="pref_services_last_full_sync_date">Last full sync: %s</string>
     <string name="pref_other_grade_modifier_plus">Wert des Plus</string>
     <string name="pref_other_grade_modifier_minus">Wert des Minus</string>
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
-    <string name="pref_other_optional_arithmetic_average">Show arithmetic average when no weights provided</string>
+    <string name="pref_other_optional_arithmetic_average">Arithmetisches Mittel anzeigen, wenn keine Gewichte angegeben sind</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>
     <string name="pref_settings_sync_title">Synchronisierung</string>
     <string name="pref_grades_appearance_header">Noten</string>
+    <string name="pref_dashboard_appearance_header">Dashboard</string>
+    <string name="pref_dashboard_appearance_tiles_title">Tiles visibility</string>
     <string name="pref_attendance_appearance_view">Schulbesuch</string>
     <string name="pref_timetable_appearance_view">Zeitplan</string>
     <string name="pref_grades_advanced_header">Noten</string>
@@ -465,11 +579,13 @@
     <string name="pref_about_category_summary">App-Version, Mitarbeiter, soziale Portale, Lizenzen</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Neue Noten</string>
-    <string name="channel_new_homework">New homework</string>
-    <string name="channel_new_exam">New exams</string>
+    <string name="channel_new_homework">Neue Hausaufgaben</string>
+    <string name="channel_new_conference">Neue Konferenzen</string>
+    <string name="channel_new_exam">Neue Prüfungen</string>
     <string name="channel_lucky_number">Glückliche Nummer</string>
     <string name="channel_new_message">Neue Nachrichten</string>
     <string name="channel_new_notes">Neue Eintragen</string>
+    <string name="channel_new_school_announcement">Neue Schulankündigungen</string>
     <string name="channel_push">Push-Benachrichtigungen</string>
     <string name="channel_upcoming_lessons">Bevorstehende Lektionen</string>
     <string name="channel_debug">Debuggen</string>
@@ -483,6 +599,7 @@
     <!--Others-->
     <string name="all_copied">Kopiert</string>
     <string name="all_undo">lösen</string>
+    <string name="all_change">Change</string>
     <!--Update helper-->
     <string name="update_download_started">Download der Updates wurde gestartet…</string>
     <string name="update_download_success">Ein Update wurde gerade heruntergeladen.</string>

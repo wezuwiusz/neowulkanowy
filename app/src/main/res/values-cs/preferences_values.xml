@@ -45,4 +45,15 @@
         <item>Průměr známek z obou semestrů</item>
         <item>Průměr známek z celého roku</item>
     </string-array>
+    <string-array name="dashboard_tile_entries">
+        <item>Šťastné číslo</item>
+        <item>Nepřečtené zprávy</item>
+        <item>Docházka</item>
+        <item>Lekce</item>
+        <item>Známky</item>
+        <item>Domácí úkoly</item>
+        <item>Školní oznámení</item>
+        <item>Zkoušky</item>
+        <item>Setkání</item>
+    </string-array>
 </resources>

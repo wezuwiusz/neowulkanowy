@@ -45,4 +45,15 @@
         <item>Durchschnitt der Noten aus beiden Semestern</item>
         <item>Durchschnitt der Noten aus dem ganzen Jahr</item>
     </string-array>
+    <string-array name="dashboard_tile_entries">
+        <item>Lucky number</item>
+        <item>Unread messages</item>
+        <item>Attendance</item>
+        <item>Lessons</item>
+        <item>Grades</item>
+        <item>Homework</item>
+        <item>School announcements</item>
+        <item>Exams</item>
+        <item>Conferences</item>
+    </string-array>
 </resources>

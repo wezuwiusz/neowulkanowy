@@ -45,4 +45,15 @@
         <item>Середнє оцінювання за обидва семестри</item>
         <item>Середнє оцінювання за весь рік</item>
     </string-array>
+    <string-array name="dashboard_tile_entries">
+        <item>Щасливий номер</item>
+        <item>Непрочитані повідомлення</item>
+        <item>Відвідуваність</item>
+        <item>Уроки</item>
+        <item>Оцінки</item>
+        <item>Домашні завдання</item>
+        <item>Оголошення школи</item>
+        <item>Тести</item>
+        <item>Конференції</item>
+    </string-array>
 </resources>

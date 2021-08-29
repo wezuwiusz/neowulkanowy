@@ -11,6 +11,8 @@
     <string name="more_title">Ещё</string>
     <string name="about_title">О приложении</string>
     <string name="logviewer_title">Просмотр журнала</string>
+    <string name="debug_title">Отладка</string>
+    <string name="notification_debug_title">Отладка уведомления</string>
     <string name="contributors_title">Разработчики</string>
     <string name="license_title">Лицензии</string>
     <string name="message_title">Сообщения</string>
@@ -21,6 +23,7 @@
     <string name="account_quick_title">Выбор учетной записи</string>
     <string name="account_details_title">Данные аккаунта</string>
     <string name="student_info_title">Информация о студенте</string>
+    <string name="dashboard_title">Панель</string>
     <!--Subtitles-->
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
@@ -88,6 +91,7 @@
     <string name="grade_summary_predicted_grade">Ожидаемая оценка</string>
     <string name="grade_summary_calculated_average">Рассчитанная средняя оценка</string>
     <string name="grade_summary_final_average">Итоговая средняя оценка</string>
+    <string name="grade_summary_from_subjects">от %1$d из %2$d субъектов</string>
     <string name="grade_menu_summary">Итоги</string>
     <string name="grade_menu_statistics">Класс</string>
     <string name="grade_menu_read">Пометить как \"прочитанное\"</string>
@@ -191,16 +195,22 @@
     <string name="exam_type">Тип</string>
     <string name="exam_entry_date">Дата записи</string>
     <plurals name="exam_notify_new_item_title">
-        <item quantity="one">New exam</item>
-        <item quantity="few">New exams</item>
-        <item quantity="many">New exams</item>
-        <item quantity="other">New exams</item>
+        <item quantity="one">Новый экзамен</item>
+        <item quantity="few">Новый экзамен</item>
+        <item quantity="many">Новый экзамен</item>
+        <item quantity="other">Новые экзамены</item>
+    </plurals>
+    <plurals name="exam_notify_new_item_content">
+        <item quantity="one">Вы получили %d новый экзамен</item>
+        <item quantity="few">Вы получили %d новый экзамен</item>
+        <item quantity="many">Вы получили %d новый экзамен</item>
+        <item quantity="other">Вы получили %d новых экзаменов</item>
     </plurals>
     <plurals name="exam_number_item">
-        <item quantity="one">%d exam</item>
-        <item quantity="few">%d exams</item>
-        <item quantity="many">%d exams</item>
-        <item quantity="other">%d exams</item>
+        <item quantity="one">%d экзамен</item>
+        <item quantity="few">%d экзамен</item>
+        <item quantity="many">%d экзамен</item>
+        <item quantity="other">%d экзаменов</item>
     </plurals>
     <!--Message-->
     <string name="message_inbox">Полученные</string>
@@ -225,6 +235,15 @@
     <string name="message_not_exists">Сообщения не существует</string>
     <string name="message_required_recipients">Вы должны выбрать как минимум одного получателя</string>
     <string name="message_content_min_length">Текст сообщения должен содержать как минимум 3 знака</string>
+    <string name="message_chip_only_unread">Только непрочитанные</string>
+    <string name="message_chip_only_with_attachments">Только с вложениями</string>
+    <string name="message_read">Чтение: %s</string>
+    <plurals name="message_read_by">
+        <item quantity="one">Прочитано: %1$d из %2$d человек</item>
+        <item quantity="few">Прочитано: %1$d из %2$d человек</item>
+        <item quantity="many">Прочитано: %1$d из %2$d человек</item>
+        <item quantity="other">Прочитано: %1$d из %2$d человек</item>
+    </plurals>
     <plurals name="message_number_item">
         <item quantity="one">%d сообщение</item>
         <item quantity="few">%d сообщения</item>
@@ -237,6 +256,8 @@
         <item quantity="many">Новые сообщения</item>
         <item quantity="other">Новые сообщения</item>
     </plurals>
+    <string name="message_restore_dialog">Вы хотите восстановить черновичное сообщение?</string>
+    <string name="message_restore_dialog_with_recipients">Вы хотите восстановить черновик сообщения с получателями: %s?</string>
     <plurals name="message_notify_new_items">
         <item quantity="one">Вы получили %1$d новое сообщение</item>
         <item quantity="few">Вы получили %1$d новых сообщения</item>
@@ -308,23 +329,29 @@
     <string name="homework_mark_as_undone">Отметить как невыполненное</string>
     <string name="homework_attachments">Вложения</string>
     <plurals name="homework_notify_new_item_title">
-        <item quantity="one">New homework</item>
-        <item quantity="few">New homework</item>
-        <item quantity="many">New homework</item>
-        <item quantity="other">New homework</item>
+        <item quantity="one">Новая домашняя работа</item>
+        <item quantity="few">Новая домашняя работа</item>
+        <item quantity="many">Новая домашняя работа</item>
+        <item quantity="other">Новая домашняя работа</item>
+    </plurals>
+    <plurals name="homework_notify_new_item_content">
+        <item quantity="one">Вы получили %d новых домашних заданий</item>
+        <item quantity="few">Вы получили %d новых домашних заданий</item>
+        <item quantity="many">Вы получили %d новых домашних заданий</item>
+        <item quantity="other">Вы получили %d новых домашних заданий</item>
     </plurals>
     <plurals name="homework_number_item">
-        <item quantity="one">%d homework</item>
-        <item quantity="few">%d homework</item>
-        <item quantity="many">%d homework</item>
-        <item quantity="other">%d homework</item>
+        <item quantity="one">%d домашних заданий</item>
+        <item quantity="few">%d домашних заданий</item>
+        <item quantity="many">%d домашних заданий</item>
+        <item quantity="other">%d домашних заданий</item>
     </plurals>
     <!--Lucky number-->
     <string name="lucky_number_title">Счастливый номер</string>
     <string name="lucky_number_header">Сегодняшний счастливый номер это</string>
     <string name="lucky_number_empty">Нет данных о счастливом номере</string>
     <string name="lucky_number_notify_new_item_title">Сегодняшний счастливый номер</string>
-    <string name="lucky_number_notify_new_item">Сегодняшний счастливый номер это: %s</string>
+    <string name="lucky_number_notify_new_item">Сегодняшний номер удачи: %s</string>
     <string name="lucky_number_history_button">Показать историю</string>
     <!--Lucky number history-->
     <string name="lucky_number_history_title">История удачных чисел</string>
@@ -357,6 +384,45 @@
     <!--Conference-->
     <string name="conferences_title">Встречи</string>
     <string name="conference_no_items">Нет информации о встречах</string>
+    <plurals name="conference_number_item">
+        <item quantity="one">%d конференция</item>
+        <item quantity="few">%d конференция</item>
+        <item quantity="many">%d конференция</item>
+        <item quantity="other">%d конференций</item>
+    </plurals>
+    <plurals name="conference_notify_new_item_title">
+        <item quantity="one">Новая конференция</item>
+        <item quantity="few">Новая конференция</item>
+        <item quantity="many">Новая конференция</item>
+        <item quantity="other">Новые конференции</item>
+    </plurals>
+    <plurals name="conference_notify_new_items">
+        <item quantity="one">У вас %1$d новая конференция</item>
+        <item quantity="few">У вас %1$d новая конференция</item>
+        <item quantity="many">У вас %1$d новая конференция</item>
+        <item quantity="other">У вас %1$d новых конференций</item>
+    </plurals>
+    <!--Director information-->
+    <string name="school_announcement_title">Объявления школ</string>
+    <string name="school_announcement_no_items">Нет объявлений о школе</string>
+    <plurals name="school_announcement_number_item">
+        <item quantity="one">Объявление о школе %d</item>
+        <item quantity="few">Объявление о школе %d</item>
+        <item quantity="many">Объявление о школе %d</item>
+        <item quantity="other">Объявления школы %d</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_item_title">
+        <item quantity="one">Объявление о новой школе</item>
+        <item quantity="few">New school announcements</item>
+        <item quantity="many">New school announcements</item>
+        <item quantity="other">New school announcements</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_items">
+        <item quantity="one">You have %1$d new school announcement</item>
+        <item quantity="few">You have %1$d new school announcements</item>
+        <item quantity="many">You have %1$d new school announcements</item>
+        <item quantity="other">You have %1$d new school announcements</item>
+    </plurals>
     <!--Account-->
     <string name="account_add_new">Добавить аккаунт</string>
     <string name="account_logout">Выйти</string>
@@ -382,6 +448,8 @@
     <string name="about_discord">Сервер Discord</string>
     <string name="about_discord_summary">Присоединиться к сообществу приложения</string>
     <string name="about_facebook">Facebook фан-страница</string>
+    <string name="about_twitter">Twitter page</string>
+    <string name="about_twitter_summary">Follow us on twitter</string>
     <string name="about_facebook_summary">Поставьте лайк на нашей странице в Facebook</string>
     <string name="about_privacy">Политика приватности</string>
     <string name="about_privacy_summary">Правила хранения личных данных</string>
@@ -417,6 +485,7 @@
     <string name="student_info_male">Муж</string>
     <string name="student_info_female">Женская</string>
     <string name="student_info_last_name">Фамилия</string>
+    <string name="student_info_guardian">Guardian</string>
     <!--Account edit-->
     <string name="account_edit_nick_hint">Ник</string>
     <string name="account_edit_header">Добавить ник</string>
@@ -424,6 +493,80 @@
     <!--Log viewer-->
     <string name="logviewer_share">Поделиться логами</string>
     <string name="logviewer_refresh">Обновить</string>
+    <!--Dashboard-->
+    <string name="dashboard_timetable_title">Lessons</string>
+    <string name="dashboard_timetable_title_tomorrow">(Tomorrow)</string>
+    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
+    <string name="dashboard_timetable_first_lesson_title_moment">In a moment:</string>
+    <string name="dashboard_timetable_first_lesson_title_soon">Soon:</string>
+    <string name="dashboard_timetable_first_lesson_title_first">First:</string>
+    <string name="dashboard_timetable_first_lesson_title_now">Now:</string>
+    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
+        <item quantity="one">in %1$d minute</item>
+        <item quantity="few">in %1$d minutes</item>
+        <item quantity="many">in %1$d minutes</item>
+        <item quantity="other">in %1$d minutes</item>
+    </plurals>
+    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
+        <item quantity="one">%1$d more minute</item>
+        <item quantity="few">%1$d more minutes</item>
+        <item quantity="many">%1$d more minutes</item>
+        <item quantity="other">%1$d more minutes</item>
+    </plurals>
+    <string name="dashboard_timetable_second_lesson_value_end">End of lessons</string>
+    <string name="dashboard_timetable_second_lessons_title">Next:</string>
+    <string name="dashboard_timetable_third_title">Later:</string>
+    <plurals name="dashboard_timetable_third_value">
+        <item quantity="one">%1$d more lesson</item>
+        <item quantity="few">%1$d more lessons</item>
+        <item quantity="many">%1$d more lessons</item>
+        <item quantity="other">%1$d more lessons</item>
+    </plurals>
+    <string name="dashboard_timetable_third_time">until %1$s</string>
+    <string name="dashboard_timetable_no_lessons">No upcoming lessons</string>
+    <string name="dashboard_timetable_error">An error occurred while loading the lessons</string>
+    <string name="dashboard_homework_title">Homework</string>
+    <string name="dashboard_homework_no_homework">No homework to do</string>
+    <string name="dashboard_homework_error">An error occurred while loading the homework</string>
+    <plurals name="dashboard_homework_more">
+        <item quantity="one">%1$d more homework</item>
+        <item quantity="few">%1$d more homework</item>
+        <item quantity="many">%1$d more homework</item>
+        <item quantity="other">%1$d more homework</item>
+    </plurals>
+    <string name="dashboard_homework_time">due %1$s</string>
+    <string name="dashboard_grade_title">Last grades</string>
+    <string name="dashboard_grade_no_grade">No new grades</string>
+    <string name="dashboard_grade_error">An error occurred while loading the grades</string>
+    <string name="dashboard_announcements_title">School announcements</string>
+    <string name="dashboard_announcements_no_announcements">No current announcements</string>
+    <string name="dashboard_announcements_error">An error occurred while loading the announcements</string>
+    <plurals name="dashboard_announcements_more">
+        <item quantity="one">%1$d more announcement</item>
+        <item quantity="few">%1$d more announcements</item>
+        <item quantity="many">%1$d more announcements</item>
+        <item quantity="other">%1$d more announcements</item>
+    </plurals>
+    <string name="dashboard_exams_title">Exams</string>
+    <string name="dashboard_exams_no_exams">No upcoming exams</string>
+    <string name="dashboard_exams_error">An error occurred while loading the exams</string>
+    <plurals name="dashboard_exams_more">
+        <item quantity="one">%1$d more exam</item>
+        <item quantity="few">%1$d more exams</item>
+        <item quantity="many">%1$d more exams</item>
+        <item quantity="other">%1$d more exams</item>
+    </plurals>
+    <string name="dashboard_conferences_title">Conferences</string>
+    <string name="dashboard_conferences_no_conferences">No upcoming conferences</string>
+    <string name="dashboard_conferences_error">An error occurred while loading the conferences</string>
+    <plurals name="dashboard_conference_more">
+        <item quantity="one">%1$d more conference</item>
+        <item quantity="few">%1$d more conferences</item>
+        <item quantity="many">%1$d more conferences</item>
+        <item quantity="other">%1$d more conferences</item>
+    </plurals>
+    <string name="dashboard_horizontal_group_error">An error occurred while loading data</string>
+    <string name="dashboard_horizontal_group_no_lukcy_number">None</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Проверить наличие обновлений</string>
     <string name="dialog_error_check_update_message">Прежде чем сообщать об ошибке, проверьте наличие обновлений</string>
@@ -487,6 +630,7 @@
     <string name="pref_services_message_sync_success">Синхронизировано!</string>
     <string name="pref_services_message_sync_failed">Синхронизация не удалась</string>
     <string name="pref_services_sync_in_progress">Идёт синхронизация</string>
+    <string name="pref_services_last_full_sync_date">Last full sync: %s</string>
     <string name="pref_other_grade_modifier_plus">Стоимость плюса</string>
     <string name="pref_other_grade_modifier_minus">Стоимость минуса</string>
     <string name="pref_other_fill_message_content">Отвечать с историей сообщений</string>
@@ -496,6 +640,8 @@
     <string name="pref_settings_notifications_title">Уведомления</string>
     <string name="pref_settings_sync_title">Синхронизация</string>
     <string name="pref_grades_appearance_header">Оценки</string>
+    <string name="pref_dashboard_appearance_header">Dashboard</string>
+    <string name="pref_dashboard_appearance_tiles_title">Tiles visibility</string>
     <string name="pref_attendance_appearance_view">Посещаемость</string>
     <string name="pref_timetable_appearance_view">Расписание</string>
     <string name="pref_grades_advanced_header">Оценки</string>
@@ -512,10 +658,12 @@
     <!--Notification Channels-->
     <string name="channel_new_grades">Новые оценки</string>
     <string name="channel_new_homework">New homework</string>
+    <string name="channel_new_conference">New conferences</string>
     <string name="channel_new_exam">New exams</string>
     <string name="channel_lucky_number">Счастливый номер</string>
     <string name="channel_new_message">Новые сообщения</string>
     <string name="channel_new_notes">Новые заметки</string>
+    <string name="channel_new_school_announcement">New school announcements</string>
     <string name="channel_push">Показывать push-уведомления</string>
     <string name="channel_upcoming_lessons">Будущие уроки</string>
     <string name="channel_debug">Дебаг</string>
@@ -529,6 +677,7 @@
     <!--Others-->
     <string name="all_copied">Скопировано</string>
     <string name="all_undo">Отменить</string>
+    <string name="all_change">Change</string>
     <!--Update helper-->
     <string name="update_download_started">Загрузка обновлений началась…</string>
     <string name="update_download_success">Только что было скачано обновление.</string>

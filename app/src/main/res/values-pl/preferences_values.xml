@@ -45,4 +45,15 @@
         <item>Średnia średnich z obu semestrów</item>
         <item>Średnia wszystkich ocen z całego roku</item>
     </string-array>
+    <string-array name="dashboard_tile_entries">
+        <item>Szczęśliwy numerek</item>
+        <item>Nieprzeczytane wiadomości</item>
+        <item>Frekwencja</item>
+        <item>Lekcje</item>
+        <item>Oceny</item>
+        <item>Zadania domowe</item>
+        <item>Ogłoszenia szkolne</item>
+        <item>Sprawdziany</item>
+        <item>Zebrania</item>
+    </string-array>
 </resources>
