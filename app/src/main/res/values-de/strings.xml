@@ -185,8 +185,8 @@
         <item quantity="other">Neue prüfungen</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">You received %d new exam</item>
-        <item quantity="other">Du hast %d neue Prüfungen bekommen</item>
+        <item quantity="one">Du hast %d neue Prüfung erhalten</item>
+        <item quantity="other">Sie haben %d neue Prüfungen erhalten</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d prüfung</item>
@@ -219,8 +219,8 @@
     <string name="message_chip_only_with_attachments">Nur mit Anhängen</string>
     <string name="message_read">Lesen: %s</string>
     <plurals name="message_read_by">
-        <item quantity="one">Read by: %1$d of %2$d people</item>
-        <item quantity="other">Read by: %1$d of %2$d people</item>
+        <item quantity="one">Lesen von: %1$d von %2$d Personen</item>
+        <item quantity="other">Lesen von: %1$d von %2$d Personen</item>
     </plurals>
     <plurals name="message_number_item">
         <item quantity="one">%d nachricht</item>
@@ -230,8 +230,8 @@
         <item quantity="one">Neu nachricht</item>
         <item quantity="other">Neue nachrichten</item>
     </plurals>
-    <string name="message_restore_dialog">Do you want to restore draft message?</string>
-    <string name="message_restore_dialog_with_recipients">Do you want to restore draft message with recipients: %s?</string>
+    <string name="message_restore_dialog">Möchten Sie den Entwurf der Nachricht wiederherstellen?</string>
+    <string name="message_restore_dialog_with_recipients">Möchten Sie die Entwurfsnachricht mit den Empfängern wiederherstellen: %s?</string>
     <plurals name="message_notify_new_items">
         <item quantity="one">Du hast %1$d nachricht bekommen</item>
         <item quantity="other">Du hast %1$d nachrichten bekommen</item>
@@ -287,8 +287,8 @@
         <item quantity="other">Neue hausaufgaben</item>
     </plurals>
     <plurals name="homework_notify_new_item_content">
-        <item quantity="one">You received %d new homework</item>
-        <item quantity="other">Du hast %d neue Hausaufgaben bekommen</item>
+        <item quantity="one">Du hast %d neue Hausaufgaben erhalten</item>
+        <item quantity="other">Du hast %d neue Hausaufgaben erhalten</item>
     </plurals>
     <plurals name="homework_number_item">
         <item quantity="one">%d hausaufgaben</item>
@@ -450,45 +450,45 @@
     <string name="dashboard_timetable_third_title">Später:</string>
     <plurals name="dashboard_timetable_third_value">
         <item quantity="one">Noch %1$d Lektion</item>
-        <item quantity="other">%1$d more lessons</item>
+        <item quantity="other">Noch %1$d Lektionen</item>
     </plurals>
-    <string name="dashboard_timetable_third_time">until %1$s</string>
-    <string name="dashboard_timetable_no_lessons">No upcoming lessons</string>
-    <string name="dashboard_timetable_error">An error occurred while loading the lessons</string>
-    <string name="dashboard_homework_title">Homework</string>
-    <string name="dashboard_homework_no_homework">No homework to do</string>
-    <string name="dashboard_homework_error">An error occurred while loading the homework</string>
+    <string name="dashboard_timetable_third_time">bis %1$s</string>
+    <string name="dashboard_timetable_no_lessons">Keine anstehenden Lektionen</string>
+    <string name="dashboard_timetable_error">Fehler beim Laden des Lektionen</string>
+    <string name="dashboard_homework_title">Hausaufgaben</string>
+    <string name="dashboard_homework_no_homework">Keine Hausaufgaben zu tun</string>
+    <string name="dashboard_homework_error">Fehler beim Laden der Hausaufgaben</string>
     <plurals name="dashboard_homework_more">
-        <item quantity="one">%1$d more homework</item>
-        <item quantity="other">%1$d more homework</item>
+        <item quantity="one">Noch %1$d Hausaufgabe</item>
+        <item quantity="other">Noch %1$d Hausaufgaben</item>
     </plurals>
-    <string name="dashboard_homework_time">due %1$s</string>
-    <string name="dashboard_grade_title">Last grades</string>
-    <string name="dashboard_grade_no_grade">No new grades</string>
-    <string name="dashboard_grade_error">An error occurred while loading the grades</string>
-    <string name="dashboard_announcements_title">School announcements</string>
-    <string name="dashboard_announcements_no_announcements">No current announcements</string>
-    <string name="dashboard_announcements_error">An error occurred while loading the announcements</string>
+    <string name="dashboard_homework_time">bis %1$s</string>
+    <string name="dashboard_grade_title">Letzte Noten</string>
+    <string name="dashboard_grade_no_grade">Keine neuen Noten</string>
+    <string name="dashboard_grade_error">Ein Fehler ist beim Laden der Noten</string>
+    <string name="dashboard_announcements_title">Schulankündigungen</string>
+    <string name="dashboard_announcements_no_announcements">Keine aktuellen Ankündigungen</string>
+    <string name="dashboard_announcements_error">Fehler beim Laden der Ankündigungen</string>
     <plurals name="dashboard_announcements_more">
-        <item quantity="one">%1$d more announcement</item>
-        <item quantity="other">%1$d more announcements</item>
+        <item quantity="one">Noch %1$d Schulankündigung</item>
+        <item quantity="other">Noch %1$d Schulankündigungen</item>
     </plurals>
-    <string name="dashboard_exams_title">Exams</string>
-    <string name="dashboard_exams_no_exams">No upcoming exams</string>
-    <string name="dashboard_exams_error">An error occurred while loading the exams</string>
+    <string name="dashboard_exams_title">Prüfungen</string>
+    <string name="dashboard_exams_no_exams">Keine bevorstehenden Prüfungen</string>
+    <string name="dashboard_exams_error">Fehler beim Laden der Prüfungen</string>
     <plurals name="dashboard_exams_more">
-        <item quantity="one">%1$d more exam</item>
-        <item quantity="other">%1$d more exams</item>
+        <item quantity="one">Noch %1$d Prüfung</item>
+        <item quantity="other">Noch %1$d Prüfungen</item>
     </plurals>
-    <string name="dashboard_conferences_title">Conferences</string>
-    <string name="dashboard_conferences_no_conferences">No upcoming conferences</string>
-    <string name="dashboard_conferences_error">An error occurred while loading the conferences</string>
+    <string name="dashboard_conferences_title">Sitzungen</string>
+    <string name="dashboard_conferences_no_conferences">Keine bevorstehenden Ankündigungen</string>
+    <string name="dashboard_conferences_error">Beim Laden der Konferenzen trat ein Fehler auf</string>
     <plurals name="dashboard_conference_more">
-        <item quantity="one">%1$d more conference</item>
-        <item quantity="other">%1$d more conferences</item>
+        <item quantity="one">%1$d weitere Konferenz</item>
+        <item quantity="other">%1$d weitere Konferenzen</item>
     </plurals>
-    <string name="dashboard_horizontal_group_error">An error occurred while loading data</string>
-    <string name="dashboard_horizontal_group_no_lukcy_number">None</string>
+    <string name="dashboard_horizontal_group_error">Fehler beim Laden der Daten</string>
+    <string name="dashboard_horizontal_group_no_lukcy_number">Keine</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Auf Updates prüfen</string>
     <string name="dialog_error_check_update_message">Bevor Sie einen Fehler melden, prüfen Sie zuerst, ob ein Update mit der Fehlerbehebung verfügbar ist</string>
@@ -552,7 +552,7 @@
     <string name="pref_services_message_sync_success">Synchronisiert!</string>
     <string name="pref_services_message_sync_failed">Synchronisierung fehlgeschlagen</string>
     <string name="pref_services_sync_in_progress">Synchronisierung läuft</string>
-    <string name="pref_services_last_full_sync_date">Last full sync: %s</string>
+    <string name="pref_services_last_full_sync_date">Letzte vollständige Synchronisierung: %s</string>
     <string name="pref_other_grade_modifier_plus">Wert des Plus</string>
     <string name="pref_other_grade_modifier_minus">Wert des Minus</string>
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
@@ -563,7 +563,7 @@
     <string name="pref_settings_sync_title">Synchronisierung</string>
     <string name="pref_grades_appearance_header">Noten</string>
     <string name="pref_dashboard_appearance_header">Dashboard</string>
-    <string name="pref_dashboard_appearance_tiles_title">Tiles visibility</string>
+    <string name="pref_dashboard_appearance_tiles_title">Sichtbarkeit der Kacheln</string>
     <string name="pref_attendance_appearance_view">Schulbesuch</string>
     <string name="pref_timetable_appearance_view">Zeitplan</string>
     <string name="pref_grades_advanced_header">Noten</string>
@@ -599,7 +599,7 @@
     <!--Others-->
     <string name="all_copied">Kopiert</string>
     <string name="all_undo">lösen</string>
-    <string name="all_change">Change</string>
+    <string name="all_change">Ändern</string>
     <!--Update helper-->
     <string name="update_download_started">Download der Updates wurde gestartet…</string>
     <string name="update_download_success">Ein Update wurde gerade heruntergeladen.</string>

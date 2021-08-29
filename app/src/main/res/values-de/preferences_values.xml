@@ -46,14 +46,14 @@
         <item>Durchschnitt der Noten aus dem ganzen Jahr</item>
     </string-array>
     <string-array name="dashboard_tile_entries">
-        <item>Lucky number</item>
-        <item>Unread messages</item>
-        <item>Attendance</item>
-        <item>Lessons</item>
-        <item>Grades</item>
-        <item>Homework</item>
-        <item>School announcements</item>
-        <item>Exams</item>
-        <item>Conferences</item>
+        <item>Glückszahl</item>
+        <item>Ungelesene Nachrichten</item>
+        <item>Schulbesuch</item>
+        <item>Lektionen</item>
+        <item>Noten</item>
+        <item>Hausaufgaben</item>
+        <item>Schulankündigungen</item>
+        <item>Prüfungen</item>
+        <item>Sitzungen</item>
     </string-array>
 </resources>

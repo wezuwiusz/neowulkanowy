@@ -201,10 +201,10 @@
         <item quantity="other">Nové skúšky</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">You received %d new exam</item>
-        <item quantity="few">You received %d new exams</item>
-        <item quantity="many">You received %d new exams</item>
-        <item quantity="other">You received %d new exams</item>
+        <item quantity="one">Máte %d novú skúšku</item>
+        <item quantity="few">Máte %d nové skúšky</item>
+        <item quantity="many">Máte %d nových skúšok</item>
+        <item quantity="other">Máte %d nových skúšok</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d skúška</item>
@@ -335,10 +335,10 @@
         <item quantity="other">Nové domáce úlohy</item>
     </plurals>
     <plurals name="homework_notify_new_item_content">
-        <item quantity="one">You received %d new homework</item>
-        <item quantity="few">You received %d new homework</item>
-        <item quantity="many">You received %d new homework</item>
-        <item quantity="other">You received %d new homework</item>
+        <item quantity="one">Máte %d novú domácu úlohu</item>
+        <item quantity="few">Máte %d nové domáce úlohy</item>
+        <item quantity="many">Máte %d nových domácich úloh</item>
+        <item quantity="other">Máte %d nových domácich úloh</item>
     </plurals>
     <plurals name="homework_number_item">
         <item quantity="one">%d domáci úloh</item>
