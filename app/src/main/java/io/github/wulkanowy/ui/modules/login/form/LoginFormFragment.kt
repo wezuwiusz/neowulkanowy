@@ -81,6 +81,9 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
             loginFormRecoverLink.setOnClickListener { presenter.onRecoverClick() }
             loginFormRecoverLinkSecond.setOnClickListener { presenter.onRecoverClick() }
             loginFormPass.setOnEditorDoneSignIn { loginFormSignIn.callOnClick() }
+            loginFormHost.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) requireActivity().hideSoftInput()
+            }
         }
 
         with(binding.loginFormHost) {
