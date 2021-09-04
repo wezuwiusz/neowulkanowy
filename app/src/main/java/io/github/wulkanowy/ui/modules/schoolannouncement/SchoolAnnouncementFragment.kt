@@ -8,6 +8,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
 import io.github.wulkanowy.databinding.FragmentSchoolAnnouncementBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -43,7 +44,9 @@ class SchoolAnnouncementFragment :
     override fun initView() {
         with(binding.directorInformationRecycler) {
             layoutManager = LinearLayoutManager(context)
-            adapter = schoolAnnouncementAdapter
+            adapter = schoolAnnouncementAdapter.apply {
+                onItemClickListener = presenter::onItemClickListener
+            }
             addItemDecoration(DividerItemDecoration(context))
         }
         with(binding) {
@@ -97,6 +100,10 @@ class SchoolAnnouncementFragment :
 
     override fun showRefresh(show: Boolean) {
         binding.directorInformationSwipe.isRefreshing = show
+    }
+
+    override fun openSchoolAnnouncementDialog(item: SchoolAnnouncement) {
+        (activity as? MainActivity)?.showDialogFragment(SchoolAnnouncementDialog.newInstance(item))
     }
 
     override fun onDestroyView() {
