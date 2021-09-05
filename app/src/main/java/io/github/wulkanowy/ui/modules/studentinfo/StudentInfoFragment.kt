@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.studentinfo
 
-import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
@@ -130,9 +129,9 @@ class StudentInfoFragment :
                 getString(R.string.student_info_parents_name) to studentInfo.parentsNames
             ).map {
                 StudentInfoItem(
-                    it.first,
-                    it.second.ifBlank { getString(R.string.all_no_data) },
-                    false,
+                    title = it.first,
+                    subtitle = it.second.ifBlank { getString(R.string.all_no_data) },
+                    showArrow = false,
                 )
             }
         )
@@ -146,25 +145,33 @@ class StudentInfoFragment :
                 getString(R.string.student_info_email) to studentInfo.email
             ).map {
                 StudentInfoItem(
-                    it.first,
-                    it.second.ifBlank { getString(R.string.all_no_data) },
-                    false,
+                    title = it.first,
+                    subtitle = it.second.ifBlank { getString(R.string.all_no_data) },
+                    showArrow = false,
                 )
             }
         )
     }
 
-    @SuppressLint("DefaultLocale")
+    @OptIn(ExperimentalStdlibApi::class)
     override fun showFamilyTypeData(studentInfo: StudentInfo) {
+        val items = buildList {
+            add(studentInfo.firstGuardian?.let {
+                Triple(it.kinship.capitalise(), it.fullName, StudentInfoView.Type.FIRST_GUARDIAN)
+            })
+
+            add(studentInfo.secondGuardian?.let {
+                Triple(it.kinship.capitalise(), it.fullName, StudentInfoView.Type.SECOND_GUARDIAN)
+            })
+        }.filterNotNull()
+
         updateData(
-            listOfNotNull(
-                studentInfo.firstGuardian?.let { it.kinship.capitalise() to it.fullName },
-                studentInfo.secondGuardian?.let { it.kinship.capitalise() to it.fullName },
-            ).map { (title, value) ->
+            items.map { (title, value, type) ->
                 StudentInfoItem(
-                    title.ifBlank { getString(R.string.all_no_data) },
-                    value.ifBlank { getString(R.string.all_no_data) },
-                    true,
+                    title = title.ifBlank { getString(R.string.all_no_data) },
+                    subtitle = value.ifBlank { getString(R.string.all_no_data) },
+                    showArrow = true,
+                    viewType = type,
                 )
             }
         )
@@ -178,15 +185,15 @@ class StudentInfoFragment :
                 getString(R.string.student_info_correspondence_address) to studentInfo.correspondenceAddress
             ).map {
                 StudentInfoItem(
-                    it.first,
-                    it.second.ifBlank { getString(R.string.all_no_data) },
-                    false,
+                    title = it.first,
+                    subtitle = it.second.ifBlank { getString(R.string.all_no_data) },
+                    showArrow = false,
                 )
             }
         )
     }
 
-    override fun showFirstGuardianTypeData(studentGuardian: StudentGuardian) {
+    override fun showGuardianTypeData(studentGuardian: StudentGuardian) {
         updateData(
             listOf(
                 getString(R.string.student_info_full_name) to studentGuardian.fullName,
@@ -196,27 +203,9 @@ class StudentInfoFragment :
                 getString(R.string.student_info_email) to studentGuardian.email
             ).map {
                 StudentInfoItem(
-                    it.first,
-                    it.second.ifBlank { getString(R.string.all_no_data) },
-                    false,
-                )
-            }
-        )
-    }
-
-    override fun showSecondGuardianTypeData(studentGuardian: StudentGuardian) {
-        updateData(
-            listOf(
-                getString(R.string.student_info_full_name) to studentGuardian.fullName,
-                getString(R.string.student_info_kinship) to studentGuardian.kinship,
-                getString(R.string.student_info_guardian_address) to studentGuardian.address,
-                getString(R.string.student_info_phones) to studentGuardian.phones,
-                getString(R.string.student_info_email) to studentGuardian.email
-            ).map {
-                StudentInfoItem(
-                    it.first,
-                    it.second.ifBlank { getString(R.string.all_no_data) },
-                    false,
+                    title = it.first,
+                    subtitle = it.second.ifBlank { getString(R.string.all_no_data) },
+                    showArrow = false,
                 )
             }
         )

@@ -13,7 +13,7 @@ class StudentInfoAdapter @Inject constructor() :
 
     var items = listOf<StudentInfoItem>()
 
-    var onItemClickListener: (position: Int) -> Unit = {}
+    var onItemClickListener: (StudentInfoView.Type?) -> Unit = {}
 
     var onItemLongClickListener: (text: String) -> Unit = {}
 
@@ -32,7 +32,7 @@ class StudentInfoAdapter @Inject constructor() :
             studentInfoItemArrow.visibility = if (item.showArrow) VISIBLE else GONE
 
             with(root) {
-                setOnClickListener { onItemClickListener(position) }
+                setOnClickListener { onItemClickListener(item.viewType) }
                 setOnLongClickListener {
                     onItemLongClickListener(studentInfoItemSubtitle.text.toString())
                     true

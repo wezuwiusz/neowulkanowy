@@ -25,9 +25,7 @@ interface StudentInfoView : BaseView {
 
     fun showFamilyTypeData(studentInfo: StudentInfo)
 
-    fun showFirstGuardianTypeData(studentGuardian: StudentGuardian)
-
-    fun showSecondGuardianTypeData(studentGuardian: StudentGuardian)
+    fun showGuardianTypeData(studentGuardian: StudentGuardian)
 
     fun openStudentInfoView(infoType: Type, studentWithSemesters: StudentWithSemesters)
 
