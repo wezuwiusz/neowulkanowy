@@ -496,7 +496,6 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Уроки</string>
     <string name="dashboard_timetable_title_tomorrow">(Завтра)</string>
-    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Сейчас:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Скоро:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Первый:</string>
@@ -566,7 +565,7 @@
         <item quantity="other">Еще %1$d конференций</item>
     </plurals>
     <string name="dashboard_horizontal_group_error">Произошла ошибка при загрузке данных</string>
-    <string name="dashboard_horizontal_group_no_lukcy_number">Отсутствует</string>
+    <string name="dashboard_horizontal_group_no_data">Отсутствует</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Проверить наличие обновлений</string>
     <string name="dialog_error_check_update_message">Прежде чем сообщать об ошибке, проверьте наличие обновлений</string>

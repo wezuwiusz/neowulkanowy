@@ -495,7 +495,6 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lessons</string>
     <string name="dashboard_timetable_title_tomorrow">(Tomorrow)</string>
-    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">In a moment:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Soon:</string>
     <string name="dashboard_timetable_first_lesson_title_first">First:</string>
@@ -557,7 +556,7 @@
     </plurals>
 
     <string name="dashboard_horizontal_group_error">An error occurred while loading data</string>
-    <string name="dashboard_horizontal_group_no_lukcy_number">None</string>
+    <string name="dashboard_horizontal_group_no_data">None</string>
 
 
     <!--Error dialog-->

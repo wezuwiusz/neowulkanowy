@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.account.accountdetails
 
 import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
@@ -27,9 +28,9 @@ class AccountDetailsPresenter @Inject constructor(
 
     private var studentId: Long? = null
 
-    fun onAttachView(view: AccountDetailsView, studentWithSemesters: StudentWithSemesters) {
+    fun onAttachView(view: AccountDetailsView, student: Student) {
         super.onAttachView(view)
-        studentId = studentWithSemesters.student.id
+        studentId = student.id
 
         view.initView()
         errorHandler.showErrorMessage = ::showErrorViewOnError

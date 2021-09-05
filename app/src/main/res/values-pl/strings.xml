@@ -496,7 +496,6 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lekcje</string>
     <string name="dashboard_timetable_title_tomorrow">(Jutro)</string>
-    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Za chwilę:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Wkrótce:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Pierwsza:</string>
@@ -566,7 +565,7 @@
         <item quantity="other">Jeszcze %1$d dodatkowych zebrań</item>
     </plurals>
     <string name="dashboard_horizontal_group_error">Wystąpił błąd podczas ładowania danych</string>
-    <string name="dashboard_horizontal_group_no_lukcy_number">Brak</string>
+    <string name="dashboard_horizontal_group_no_data">Brak</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Sprawdź dostępność aktualizacji</string>
     <string name="dialog_error_check_update_message">Przed zgłoszeniem błędu sprawdź wcześniej, czy dostępna jest już aktualizacja z poprawką błędu</string>

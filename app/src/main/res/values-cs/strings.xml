@@ -496,7 +496,6 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lekce</string>
     <string name="dashboard_timetable_title_tomorrow">(Zítra)</string>
-    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Za chvíli:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Brzy:</string>
     <string name="dashboard_timetable_first_lesson_title_first">První:</string>
@@ -566,7 +565,7 @@
         <item quantity="other">Ještě %1$d dalších setkání</item>
     </plurals>
     <string name="dashboard_horizontal_group_error">Při načítání dat došlo k chybě</string>
-    <string name="dashboard_horizontal_group_no_lukcy_number">Žádné</string>
+    <string name="dashboard_horizontal_group_no_data">Žádné</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Zkontrolovat aktualizace</string>
     <string name="dialog_error_check_update_message">Před hlášením chyby zkontrolujte, zda je k dispozici aktualizace s opravou chyb</string>

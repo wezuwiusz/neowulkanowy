@@ -496,7 +496,6 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Уроки</string>
     <string name="dashboard_timetable_title_tomorrow">(Завтра)</string>
-    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Через мить:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Незабаром:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Перше:</string>
@@ -566,7 +565,7 @@
         <item quantity="other">%1$d більше конференцій</item>
     </plurals>
     <string name="dashboard_horizontal_group_error">Помилка при завантаженні даних</string>
-    <string name="dashboard_horizontal_group_no_lukcy_number">Нічого</string>
+    <string name="dashboard_horizontal_group_no_data">Нічого</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Провірити наявність оновлень</string>
     <string name="dialog_error_check_update_message">Перед тим, як повідомлювати о помілці, перевірте наявність оновлень</string>

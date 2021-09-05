@@ -37,9 +37,9 @@ class AccountDetailsFragment :
 
         private const val ARGUMENT_KEY = "Data"
 
-        fun newInstance(studentWithSemesters: StudentWithSemesters) =
+        fun newInstance(student: Student) =
             AccountDetailsFragment().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, studentWithSemesters) }
+                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, student) }
             }
     }
 
@@ -51,7 +51,7 @@ class AccountDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAccountDetailsBinding.bind(view)
-        presenter.onAttachView(this, requireArguments()[ARGUMENT_KEY] as StudentWithSemesters)
+        presenter.onAttachView(this, requireArguments()[ARGUMENT_KEY] as Student)
     }
 
     override fun initView() {

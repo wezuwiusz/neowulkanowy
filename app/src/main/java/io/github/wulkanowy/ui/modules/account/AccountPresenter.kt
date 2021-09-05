@@ -28,7 +28,7 @@ class AccountPresenter @Inject constructor(
     }
 
     fun onItemSelected(studentWithSemesters: StudentWithSemesters) {
-        view?.openAccountDetailsView(studentWithSemesters)
+        view?.openAccountDetailsView(studentWithSemesters.student)
     }
 
     private fun loadData() {

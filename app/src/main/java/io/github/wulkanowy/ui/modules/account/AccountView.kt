@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.account
 
-import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.ui.base.BaseView
 
 interface AccountView : BaseView {
@@ -11,5 +11,5 @@ interface AccountView : BaseView {
 
     fun openLoginView()
 
-    fun openAccountDetailsView(studentWithSemesters: StudentWithSemesters)
+    fun openAccountDetailsView(student: Student)
 }

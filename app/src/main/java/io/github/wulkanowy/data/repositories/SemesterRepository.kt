@@ -22,7 +22,11 @@ class SemesterRepository @Inject constructor(
     private val dispatchers: DispatchersProvider
 ) {
 
-    suspend fun getSemesters(student: Student, forceRefresh: Boolean = false, refreshOnNoCurrent: Boolean = false) = withContext(dispatchers.backgroundThread) {
+    suspend fun getSemesters(
+        student: Student,
+        forceRefresh: Boolean = false,
+        refreshOnNoCurrent: Boolean = false
+    ) = withContext(dispatchers.backgroundThread) {
         val semesters = semesterDb.loadAll(student.studentId, student.classId)
 
         if (isShouldFetch(student, semesters, forceRefresh, refreshOnNoCurrent)) {
@@ -31,14 +35,21 @@ class SemesterRepository @Inject constructor(
         } else semesters
     }
 
-    private fun isShouldFetch(student: Student, semesters: List<Semester>, forceRefresh: Boolean, refreshOnNoCurrent: Boolean): Boolean {
+    private fun isShouldFetch(
+        student: Student,
+        semesters: List<Semester>,
+        forceRefresh: Boolean,
+        refreshOnNoCurrent: Boolean
+    ): Boolean {
         val isNoSemesters = semesters.isEmpty()
 
-        val isRefreshOnModeChangeRequired = if (Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.API) {
-            semesters.firstOrNull { it.isCurrent }?.diaryId == 0
-        } else false
+        val isRefreshOnModeChangeRequired =
+            if (Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.API) {
+                semesters.firstOrNull { it.isCurrent }?.diaryId == 0
+            } else false
 
-        val isRefreshOnNoCurrentAppropriate = refreshOnNoCurrent && !semesters.any { semester -> semester.isCurrent }
+        val isRefreshOnNoCurrentAppropriate =
+            refreshOnNoCurrent && !semesters.any { semester -> semester.isCurrent }
 
         return forceRefresh || isNoSemesters || isRefreshOnModeChangeRequired || isRefreshOnNoCurrentAppropriate
     }
@@ -52,7 +63,8 @@ class SemesterRepository @Inject constructor(
         semesterDb.insertSemesters(new.uniqueSubtract(old))
     }
 
-    suspend fun getCurrentSemester(student: Student, forceRefresh: Boolean = false) = withContext(dispatchers.backgroundThread) {
-        getSemesters(student, forceRefresh).getCurrentOrLast()
-    }
+    suspend fun getCurrentSemester(student: Student, forceRefresh: Boolean = false) =
+        withContext(dispatchers.backgroundThread) {
+            getSemesters(student, forceRefresh).getCurrentOrLast()
+        }
 }

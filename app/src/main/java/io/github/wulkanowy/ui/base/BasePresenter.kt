@@ -18,7 +18,7 @@ open class BasePresenter<T : BaseView>(
     protected val studentRepository: StudentRepository
 ) : CoroutineScope {
 
-    private var job: Job = Job()
+    private var job = Job()
 
     private val jobs = mutableMapOf<String, Job>()
 

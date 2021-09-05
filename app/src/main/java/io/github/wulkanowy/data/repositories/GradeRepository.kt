@@ -33,10 +33,16 @@ class GradeRepository @Inject constructor(
 
     private val cacheKey = "grade"
 
-    fun getGrades(student: Student, semester: Semester, forceRefresh: Boolean, notify: Boolean = false) = networkBoundResource(
+    fun getGrades(
+        student: Student,
+        semester: Semester,
+        forceRefresh: Boolean,
+        notify: Boolean = false
+    ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         shouldFetch = { (details, summaries) ->
-            val isShouldBeRefreshed = refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester))
+            val isShouldBeRefreshed =
+                refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester))
             details.isEmpty() || summaries.isEmpty() || forceRefresh || isShouldBeRefreshed
         },
         query = {
@@ -59,8 +65,14 @@ class GradeRepository @Inject constructor(
         }
     )
 
-    private suspend fun refreshGradeDetails(student: Student, oldGrades: List<Grade>, newDetails: List<Grade>, notify: Boolean) {
-        val notifyBreakDate = oldGrades.maxByOrNull { it.date }?.date ?: student.registrationDate.toLocalDate()
+    private suspend fun refreshGradeDetails(
+        student: Student,
+        oldGrades: List<Grade>,
+        newDetails: List<Grade>,
+        notify: Boolean
+    ) {
+        val notifyBreakDate =
+            oldGrades.maxByOrNull { it.date }?.date ?: student.registrationDate.toLocalDate()
         gradeDb.deleteAll(oldGrades uniqueSubtract newDetails)
         gradeDb.insertAll((newDetails uniqueSubtract oldGrades).onEach {
             if (it.date >= notifyBreakDate) it.apply {
@@ -70,10 +82,15 @@ class GradeRepository @Inject constructor(
         })
     }
 
-    private suspend fun refreshGradeSummaries(oldSummaries: List<GradeSummary>, newSummary: List<GradeSummary>, notify: Boolean) {
+    private suspend fun refreshGradeSummaries(
+        oldSummaries: List<GradeSummary>,
+        newSummary: List<GradeSummary>,
+        notify: Boolean
+    ) {
         gradeSummaryDb.deleteAll(oldSummaries uniqueSubtract newSummary)
         gradeSummaryDb.insertAll((newSummary uniqueSubtract oldSummaries).onEach { summary ->
-            val oldSummary = oldSummaries.find { oldSummary -> oldSummary.subject == summary.subject }
+            val oldSummary =
+                oldSummaries.find { oldSummary -> oldSummary.subject == summary.subject }
             summary.isPredictedGradeNotified = when {
                 summary.predictedGrade.isEmpty() -> true
                 notify && oldSummary?.predictedGrade != summary.predictedGrade -> false
