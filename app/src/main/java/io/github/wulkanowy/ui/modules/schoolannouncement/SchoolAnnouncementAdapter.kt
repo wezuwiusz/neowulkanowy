@@ -2,7 +2,7 @@ package io.github.wulkanowy.ui.modules.schoolannouncement
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
+import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
 import io.github.wulkanowy.databinding.ItemSchoolAnnouncementBinding
@@ -13,6 +13,8 @@ class SchoolAnnouncementAdapter @Inject constructor() :
     RecyclerView.Adapter<SchoolAnnouncementAdapter.ViewHolder>() {
 
     var items = emptyList<SchoolAnnouncement>()
+
+    var onItemClickListener: (SchoolAnnouncement) -> Unit = {}
 
     override fun getItemCount() = items.size
 
@@ -26,9 +28,9 @@ class SchoolAnnouncementAdapter @Inject constructor() :
         with(holder.binding) {
             schoolAnnouncementItemDate.text = item.date.toFormattedString()
             schoolAnnouncementItemType.text = item.subject
-            schoolAnnouncementItemContent.text = HtmlCompat.fromHtml(
-                item.content, HtmlCompat.FROM_HTML_MODE_COMPACT
-            )
+            schoolAnnouncementItemContent.text = item.content.parseAsHtml()
+
+            root.setOnClickListener { onItemClickListener(item) }
         }
     }
 

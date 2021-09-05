@@ -32,7 +32,22 @@ class TimetableExtensionTest {
         assertEquals(null, getTimetableEntity(canceled = true).left)
         assertEquals(null, getTimetableEntity(start = now().plusMinutes(5), end = now().plusMinutes(50)).left)
         assertEquals(null, getTimetableEntity(start = now().minusMinutes(1), end = now().plusMinutes(44), isStudentPlan = false).left)
-        assertNotEquals(null, getTimetableEntity(start = now().minusMinutes(1), end = now().plusMinutes(44), isStudentPlan = true).left)
+        assertNotEquals(
+            null,
+            getTimetableEntity(
+                start = now().minusMinutes(1),
+                end = now().plusMinutes(44),
+                isStudentPlan = true
+            ).left
+        )
+        assertNotEquals(
+            null,
+            getTimetableEntity(
+                start = now(),
+                end = now().plusMinutes(45),
+                isStudentPlan = true
+            ).left
+        )
     }
 
     @Test

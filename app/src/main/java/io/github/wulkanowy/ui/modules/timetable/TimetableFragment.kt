@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.core.text.HtmlCompat
+import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -49,7 +49,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override val titleStringId get() = R.string.timetable_title
 
-    override val isViewEmpty get() = timetableAdapter.itemCount > 0
+    override val isViewEmpty get() = timetableAdapter.itemCount == 0
 
     override val currentStackSize get() = (activity as? MainActivity)?.currentStackSize
 
@@ -147,9 +147,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override fun setDayHeaderMessage(message: String?) {
         binding.timetableEmptyMessage.visibility = if (message.isNullOrEmpty()) GONE else VISIBLE
-        binding.timetableEmptyMessage.text = HtmlCompat.fromHtml(
-            message.orEmpty(), HtmlCompat.FROM_HTML_MODE_COMPACT
-        )
+        binding.timetableEmptyMessage.text = message.orEmpty().parseAsHtml()
     }
 
     override fun showErrorView(show: Boolean) {

@@ -432,7 +432,6 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lektionen</string>
     <string name="dashboard_timetable_title_tomorrow">(Morgen)</string>
-    <string name="dashboard_timetable_lesson_value">%1$s (%2$s)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Gleich:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Bald:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Erstens:</string>
@@ -488,7 +487,7 @@
         <item quantity="other">%1$d weitere Konferenzen</item>
     </plurals>
     <string name="dashboard_horizontal_group_error">Fehler beim Laden der Daten</string>
-    <string name="dashboard_horizontal_group_no_lukcy_number">Keine</string>
+    <string name="dashboard_horizontal_group_no_data">Keine</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Auf Updates prüfen</string>
     <string name="dialog_error_check_update_message">Bevor Sie einen Fehler melden, prüfen Sie zuerst, ob ein Update mit der Fehlerbehebung verfügbar ist</string>

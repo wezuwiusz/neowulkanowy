@@ -18,7 +18,7 @@ inline val Timetable.left: Duration?
     get() = when {
         canceled -> null
         !isStudentPlan -> null
-        end.isAfter(now()) && start.isBefore(now()) -> between(now(), end)
+        end >= now() && start <= now() -> between(now(), end)
         else -> null
     }
 

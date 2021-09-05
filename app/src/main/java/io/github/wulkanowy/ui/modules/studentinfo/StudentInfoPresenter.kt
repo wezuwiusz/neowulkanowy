@@ -58,13 +58,12 @@ class StudentInfoPresenter @Inject constructor(
         view?.showErrorDetailsDialog(lastError)
     }
 
-    fun onItemSelected(position: Int) {
-        if (infoType != StudentInfoView.Type.FAMILY) return
+    fun onItemSelected(viewType: StudentInfoView.Type?) {
+        viewType ?: return
 
         view?.openStudentInfoView(
-            if (position == 0) StudentInfoView.Type.FIRST_GUARDIAN
-            else StudentInfoView.Type.SECOND_GUARDIAN,
-            studentWithSemesters
+            studentWithSemesters = studentWithSemesters,
+            infoType = viewType,
         )
     }
 
@@ -76,15 +75,19 @@ class StudentInfoPresenter @Inject constructor(
         flowWithResourceIn {
             val semester = studentWithSemesters.semesters.getCurrentOrLast()
             studentInfoRepository.getStudentInfo(
-                studentWithSemesters.student,
-                semester,
-                forceRefresh
+                student = studentWithSemesters.student,
+                semester = semester,
+                forceRefresh = forceRefresh
             )
         }.onEach {
             when (it.status) {
                 Status.LOADING -> Timber.i("Loading student info $infoType started")
                 Status.SUCCESS -> {
-                    if (it.data != null && !(infoType == StudentInfoView.Type.FAMILY && it.data.firstGuardian == null && it.data.secondGuardian == null)) {
+                    val isFamily = infoType == StudentInfoView.Type.FAMILY
+                    val isFirstGuardianEmpty = it.data?.firstGuardian == null
+                    val isSecondGuardianEmpty = it.data?.secondGuardian == null
+
+                    if (it.data != null && !(isFamily && isFirstGuardianEmpty && isSecondGuardianEmpty)) {
                         Timber.i("Loading student info $infoType result: Success")
                         showCorrectData(it.data)
                         view?.run {
@@ -122,8 +125,8 @@ class StudentInfoPresenter @Inject constructor(
             StudentInfoView.Type.CONTACT -> view?.showContactTypeData(studentInfo)
             StudentInfoView.Type.ADDRESS -> view?.showAddressTypeData(studentInfo)
             StudentInfoView.Type.FAMILY -> view?.showFamilyTypeData(studentInfo)
-            StudentInfoView.Type.SECOND_GUARDIAN -> view?.showSecondGuardianTypeData(studentInfo.secondGuardian!!)
-            StudentInfoView.Type.FIRST_GUARDIAN -> view?.showFirstGuardianTypeData(studentInfo.firstGuardian!!)
+            StudentInfoView.Type.SECOND_GUARDIAN -> view?.showGuardianTypeData(studentInfo.secondGuardian!!)
+            StudentInfoView.Type.FIRST_GUARDIAN -> view?.showGuardianTypeData(studentInfo.firstGuardian!!)
         }
     }
 

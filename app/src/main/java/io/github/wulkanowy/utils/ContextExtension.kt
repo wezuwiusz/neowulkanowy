@@ -1,6 +1,7 @@
 package io.github.wulkanowy.utils
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -58,8 +59,11 @@ fun Context.getCompatBitmap(@DrawableRes drawableRes: Int, @ColorRes colorRes: I
 
 fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -> Unit = {}) {
     Intent.parseUri(uri, 0).let {
-        if (it.resolveActivity(packageManager) != null) startActivity(it)
-        else onActivityNotFound(uri)
+        try {
+            startActivity(it)
+        } catch (e: ActivityNotFoundException) {
+            onActivityNotFound(uri)
+        }
     }
 }
 

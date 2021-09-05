@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.entities.TimetableHeader
 import io.github.wulkanowy.databinding.ItemDashboardAccountBinding
@@ -41,7 +42,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
     private var lessonsTimer: Timer? = null
 
-    var onAccountTileClickListener: () -> Unit = {}
+    var onAccountTileClickListener: (Student) -> Unit = {}
 
     var onLuckyNumberTileClickListener: () -> Unit = {}
 
@@ -152,7 +153,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             dashboardAccountItemName.text = student?.nickOrName.orEmpty()
             dashboardAccountItemSchoolName.text = student?.schoolName.orEmpty()
 
-            root.setOnClickListener { onAccountTileClickListener() }
+            root.setOnClickListener { student?.let(onAccountTileClickListener) }
         }
     }
 
@@ -170,38 +171,41 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         val binding = horizontalGroupViewHolder.binding
         val context = binding.root.context
         val attendanceColor = when {
-            attendancePercentage ?: 0.0 <= ATTENDANCE_SECOND_WARNING_THRESHOLD -> {
+            attendancePercentage == null || attendancePercentage == .0 -> {
+                context.getThemeAttrColor(R.attr.colorOnSurface)
+            }
+            attendancePercentage <= ATTENDANCE_SECOND_WARNING_THRESHOLD -> {
                 context.getThemeAttrColor(R.attr.colorPrimary)
             }
-            attendancePercentage ?: 0.0 <= ATTENDANCE_FIRST_WARNING_THRESHOLD -> {
+            attendancePercentage <= ATTENDANCE_FIRST_WARNING_THRESHOLD -> {
                 context.getThemeAttrColor(R.attr.colorTimetableChange)
             }
             else -> context.getThemeAttrColor(R.attr.colorOnSurface)
         }
+        val attendanceString = if (attendancePercentage == null || attendancePercentage == .0) {
+            context.getString(R.string.dashboard_horizontal_group_no_data)
+        } else {
+            "%.2f%%".format(attendancePercentage)
+        }
 
         with(binding.dashboardHorizontalGroupItemAttendanceValue) {
-            text = "%.2f%%".format(attendancePercentage)
+            text = attendanceString
             setTextColor(attendanceColor)
         }
 
         with(binding) {
             dashboardHorizontalGroupItemMessageValue.text = unreadMessagesCount.toString()
-            dashboardHorizontalGroupItemLuckyValue.text = if (luckyNumber == -1) {
-                context.getString(R.string.dashboard_horizontal_group_no_lukcy_number)
+            dashboardHorizontalGroupItemLuckyValue.text = if (luckyNumber == 0) {
+                context.getString(R.string.dashboard_horizontal_group_no_data)
             } else luckyNumber?.toString()
 
-            if (dashboardHorizontalGroupItemInfoContainer.isVisible != (error != null || isLoading)) {
-                dashboardHorizontalGroupItemInfoContainer.isVisible = error != null || isLoading
-            }
-
-            if (dashboardHorizontalGroupItemInfoProgress.isVisible != isLoading) {
-                dashboardHorizontalGroupItemInfoProgress.isVisible = isLoading
-            }
-
+            dashboardHorizontalGroupItemInfoContainer.isVisible = error != null || isLoading
+            dashboardHorizontalGroupItemInfoProgress.isVisible =
+                (isLoading && !item.isDataLoaded) || (isLoading && !item.isFullDataLoaded)
             dashboardHorizontalGroupItemInfoErrorText.isVisible = error != null
 
             with(dashboardHorizontalGroupItemLuckyContainer) {
-                isVisible = error == null && !isLoading && luckyNumber != null
+                isVisible = luckyNumber != null && luckyNumber != -1
                 setOnClickListener { onLuckyNumberTileClickListener() }
 
                 updateLayoutParams<ViewGroup.MarginLayoutParams> {
@@ -216,7 +220,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             }
 
             with(dashboardHorizontalGroupItemAttendanceContainer) {
-                isVisible = error == null && !isLoading && attendancePercentage != null
+                isVisible = attendancePercentage != null && attendancePercentage != -1.0
                 updateLayoutParams<ConstraintLayout.LayoutParams> {
                     matchConstraintPercentWidth = when {
                         luckyNumber == null && unreadMessagesCount == null -> 1.0f
@@ -228,7 +232,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             }
 
             with(dashboardHorizontalGroupItemMessageContainer) {
-                isVisible = error == null && !isLoading && unreadMessagesCount != null
+                isVisible = unreadMessagesCount != null && unreadMessagesCount != -1
                 setOnClickListener { onMessageTileClickListener() }
             }
         }
@@ -291,13 +295,13 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                     updateLessonView(item, currentTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
                 }
-                currentDayHeader != null && currentDayHeader.content.isNotBlank() -> {
-                    updateLessonView(item, emptyList(), binding, currentDayHeader)
-                    binding.dashboardLessonsItemTitleTomorrow.isVisible = false
-                }
                 tomorrowTimetable.isNotEmpty() -> {
                     updateLessonView(item, tomorrowTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
+                }
+                currentDayHeader != null && currentDayHeader.content.isNotBlank() -> {
+                    updateLessonView(item, emptyList(), binding, currentDayHeader)
+                    binding.dashboardLessonsItemTitleTomorrow.isVisible = false
                 }
                 tomorrowDayHeader != null && tomorrowDayHeader.content.isNotBlank() -> {
                     updateLessonView(item, emptyList(), binding, tomorrowDayHeader)
@@ -348,6 +352,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateFirstLessonView(
         binding: ItemDashboardLessonsBinding,
         firstLesson: Timetable?,
@@ -367,7 +372,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         firstLesson ?: return
 
         val minutesToStartLesson =
-            Duration.between(currentDateTime, firstLesson.start).toMinutes()
+            Duration.between(currentDateTime, firstLesson.start).toMinutes() + 1
         val isFirstTimeVisible: Boolean
         val isFirstTimeRangeVisible: Boolean
         val firstTimeText: String
@@ -376,12 +381,12 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         val firstTitleAndValueTextColor: Int
         val firstTitleAndValueTextFont: Typeface
 
-        if (currentDateTime.isBefore(firstLesson.start)) {
+        if (currentDateTime < firstLesson.start) {
             if (minutesToStartLesson > 60) {
                 val formattedStartTime = firstLesson.start.toFormattedString("HH:mm")
                 val formattedEndTime = firstLesson.end.toFormattedString("HH:mm")
 
-                firstTimeRangeText = "${formattedStartTime}-${formattedEndTime}"
+                firstTimeRangeText = "$formattedStartTime - $formattedEndTime"
                 firstTimeText = ""
 
                 isFirstTimeRangeVisible = true
@@ -421,7 +426,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 }
             }
         } else {
-            val minutesToEndLesson = firstLesson.left!!.toMinutes()
+            val minutesToEndLesson = firstLesson.left!!.toMinutes() + 1
 
             firstTimeText = context.resources.getQuantityString(
                 R.plurals.dashboard_timetable_first_lesson_time_more_minutes,
@@ -454,11 +459,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         with(binding.dashboardLessonsItemFirstValue) {
             setTextColor(firstTitleAndValueTextColor)
             typeface = firstTitleAndValueTextFont
-            text = context.getString(
-                R.string.dashboard_timetable_lesson_value,
-                firstLesson.subject,
-                firstLesson.room
-            )
+            text =
+                "${firstLesson.subject} ${if (firstLesson.room.isNotBlank()) "(${firstLesson.room})" else ""}"
         }
     }
 
@@ -472,13 +474,11 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         val formattedStartTime = secondLesson?.start?.toFormattedString("HH:mm")
         val formattedEndTime = secondLesson?.end?.toFormattedString("HH:mm")
 
-        val secondTimeText = "${formattedStartTime}-${formattedEndTime}"
+        val secondTimeText = "$formattedStartTime - $formattedEndTime"
         val secondValueText = if (secondLesson != null) {
-            context.getString(
-                R.string.dashboard_timetable_lesson_value,
-                secondLesson.subject,
-                secondLesson.room
-            )
+            val roomString = if (secondLesson.room.isNotBlank()) "(${secondLesson.room})" else ""
+
+            "${secondLesson.subject} $roomString"
         } else {
             context.getString(R.string.dashboard_timetable_second_lesson_value_end)
         }

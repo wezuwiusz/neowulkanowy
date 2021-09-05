@@ -8,7 +8,7 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.FragmentAccountBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsFragment
@@ -75,9 +75,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(R.layout.fragment_a
         }
     }
 
-    override fun openAccountDetailsView(studentWithSemesters: StudentWithSemesters) {
-        (activity as? MainActivity)?.pushView(
-            AccountDetailsFragment.newInstance(studentWithSemesters)
-        )
+    override fun openAccountDetailsView(student: Student) {
+        (activity as? MainActivity)?.pushView(AccountDetailsFragment.newInstance(student))
     }
 }

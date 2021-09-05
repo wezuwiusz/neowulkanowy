@@ -19,6 +19,8 @@ interface SchoolAnnouncementView : BaseView {
 
     fun setErrorDetails(message: String)
 
+    fun openSchoolAnnouncementDialog(item: SchoolAnnouncement)
+
     fun showProgress(show: Boolean)
 
     fun enableSwipe(enable: Boolean)

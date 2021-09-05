@@ -35,6 +35,9 @@ sealed class DashboardItem(val type: Type) {
 
         override val isDataLoaded
             get() = unreadMessagesCount != null || attendancePercentage != null || luckyNumber != null
+
+        val isFullDataLoaded
+            get() = luckyNumber != -1 && attendancePercentage != -1.0 && unreadMessagesCount != -1
     }
 
     data class Grades(
