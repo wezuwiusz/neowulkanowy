@@ -1,10 +1,7 @@
-Wersja 1.2.0
+Wersja 1.2.1
 
-- dodaliśmy nowy ekran startowy 🎉
-- usprawniliśmy powiadomienia
-- dodaliśmy wersje robocze, filtrowanie oraz informację o odczytaniu przez odbiorcę w wiadomościach
-- dodaliśmy informacje o liczeniu średniej w podsumowaniu ocen
-- dodaliśmy opcję generowania wiadomości z usprawiedliwieniem dni w szkołach pozbawionych funkcji usprawiedliwiania przez zakładkę frekwencja
-- oraz wiele wiele innych ulepszeń i poprawek
+- dodaliśmy brakujące okienka z podglądem szczegółów ogłoszeń szkolnych
+- naprawiliśmy rzucające się w oczy błędy na ekranie startowym
+- naprawiliśmy też inne drobne błędy w wyglądzie i stabilności aplikacji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
