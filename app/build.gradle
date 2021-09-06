@@ -141,7 +141,7 @@ huaweiPublish {
     instances {
         hmsRelease {
             credentialsPath = "$rootDir/app/src/release/agconnect-credentials.json"
-            buildFormat = "apk"
+            buildFormat = "aab"
             deployType = "draft"
         }
     }
