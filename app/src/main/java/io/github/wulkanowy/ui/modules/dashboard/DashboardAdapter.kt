@@ -31,6 +31,7 @@ import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.left
 import io.github.wulkanowy.utils.nickOrName
 import io.github.wulkanowy.utils.toFormattedString
+import timber.log.Timber
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -429,7 +430,10 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 }
             }
         } else {
-            val minutesToEndLesson = firstLesson.left!!.toMinutes() + 1
+            val minutesToEndLesson = firstLesson.left?.toMinutes()?.plus(1) ?: run {
+                Timber.e(IllegalArgumentException("Lesson left is null. START ${firstLesson.start} ; END ${firstLesson.end} ; CURRENT ${LocalDateTime.now()}"))
+                0
+            }
 
             firstTimeText = context.resources.getQuantityString(
                 R.plurals.dashboard_timetable_first_lesson_time_more_minutes,
