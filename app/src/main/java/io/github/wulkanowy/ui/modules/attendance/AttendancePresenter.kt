@@ -234,6 +234,7 @@ class AttendancePresenter @Inject constructor(
                             enableSwipe(true)
                             showRefresh(true)
                             showProgress(false)
+                            showErrorView(false)
                             showEmpty(filteredAttendance.isEmpty())
                             showContent(filteredAttendance.isNotEmpty())
                             updateData(filteredAttendance.sortedBy { item -> item.number })
