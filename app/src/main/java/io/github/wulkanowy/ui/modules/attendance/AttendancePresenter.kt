@@ -152,6 +152,8 @@ class AttendancePresenter @Inject constructor(
     fun onExcuseDialogSubmit(reason: String) {
         view?.finishActionMode()
 
+        if (attendanceToExcuseList.isEmpty()) return
+
         if (isVulcanExcusedFunctionEnabled) {
             excuseAbsence(
                 reason = reason.takeIf { it.isNotBlank() },
