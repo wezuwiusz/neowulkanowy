@@ -11,6 +11,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
+import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.MessageFragment
@@ -65,6 +66,9 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override val examRes: Pair<String, Drawable?>?
         get() = context?.run { getString(R.string.exam_title) to getCompatDrawable(R.drawable.ic_main_exam) }
+
+    override val luckyNumberRes: Pair<String, Drawable?>?
+        get() = context?.run { getString(R.string.lucky_number_title) to getCompatDrawable(R.drawable.ic_more_lucky_number) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -126,6 +130,10 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
 
     override fun openExamView() {
         (activity as? MainActivity)?.pushView(ExamFragment.newInstance())
+    }
+
+    override fun openLuckyNumberView() {
+        (activity as? MainActivity)?.pushView(LuckyNumberFragment.newInstance())
     }
 
     override fun popView(depth: Int) {
