@@ -131,7 +131,9 @@ class LuckyNumberHistoryFragment :
             presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
         }
 
-        datePicker.show(this@LuckyNumberHistoryFragment.parentFragmentManager, null)
+        if (!parentFragmentManager.isStateSaved) {
+            datePicker.show(parentFragmentManager, null)
+        }
     }
 
     override fun showContent(show: Boolean) {

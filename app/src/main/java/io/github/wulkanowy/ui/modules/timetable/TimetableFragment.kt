@@ -202,7 +202,9 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
             presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
         }
 
-        datePicker.show(this@TimetableFragment.parentFragmentManager, null)
+        if (!parentFragmentManager.isStateSaved) {
+            datePicker.show(parentFragmentManager, null)
+        }
     }
 
     override fun openAdditionalLessonsView() {
