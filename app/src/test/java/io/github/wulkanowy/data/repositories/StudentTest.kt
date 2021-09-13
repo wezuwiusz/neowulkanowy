@@ -37,7 +37,8 @@ class StudentTest {
             studentDb,
             semesterDb,
             mockSdk,
-            AppInfo()
+            AppInfo(),
+            mockk()
         )
     }
 

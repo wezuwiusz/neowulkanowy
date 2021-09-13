@@ -31,6 +31,7 @@ class MorePresenter @Inject constructor(
                 schoolAndTeachersRes?.first -> openSchoolAndTeachersView()
                 mobileDevicesRes?.first -> openMobileDevicesView()
                 settingsRes?.first -> openSettingsView()
+                luckyNumberRes?.first -> openLuckyNumberView()
             }
         }
     }
@@ -48,6 +49,7 @@ class MorePresenter @Inject constructor(
                 examRes,
                 homeworkRes,
                 noteRes,
+                luckyNumberRes,
                 conferencesRes,
                 schoolAnnouncementRes,
                 schoolAndTeachersRes,

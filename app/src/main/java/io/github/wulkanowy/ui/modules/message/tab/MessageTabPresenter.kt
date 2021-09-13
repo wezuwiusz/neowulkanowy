@@ -117,6 +117,7 @@ class MessageTabPresenter @Inject constructor(
                     if (!it.data.isNullOrEmpty()) {
                         view?.run {
                             enableSwipe(true)
+                            showErrorView(false)
                             showRefresh(true)
                             showProgress(false)
                             showContent(true)

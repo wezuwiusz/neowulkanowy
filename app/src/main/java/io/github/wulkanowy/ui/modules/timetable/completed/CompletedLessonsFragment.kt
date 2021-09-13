@@ -173,7 +173,9 @@ class CompletedLessonsFragment :
             presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
         }
 
-        datePicker.show(this@CompletedLessonsFragment.parentFragmentManager, null)
+        if (!parentFragmentManager.isStateSaved) {
+            datePicker.show(parentFragmentManager, null)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

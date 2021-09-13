@@ -90,10 +90,10 @@ class LoginFormPresenter @Inject constructor(
 
         flowWithResource {
             studentRepository.getStudentsScrapper(
-                email,
-                password,
-                host,
-                symbol
+                email = email,
+                password = password,
+                scrapperBaseUrl = host,
+                symbol = symbol
             )
         }.onEach {
             when (it.status) {

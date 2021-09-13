@@ -71,4 +71,4 @@ jobs:
           PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
           PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
           PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
-        run: ./gradlew assembleHmsRelease --stacktrace && ./gradlew publishHuaweiAppGalleryHmsRelease --stacktrace
+        run: ./gradlew bundleHmsRelease --stacktrace && ./gradlew publishHuaweiAppGalleryHmsRelease --stacktrace

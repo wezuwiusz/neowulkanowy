@@ -245,7 +245,9 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
             presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
         }
 
-        datePicker.show(this@AttendanceFragment.parentFragmentManager, null)
+        if (!parentFragmentManager.isStateSaved) {
+            datePicker.show(parentFragmentManager, null)
+        }
     }
 
     override fun showExcuseDialog() {

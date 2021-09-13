@@ -1,7 +1,8 @@
-Wersja 1.2.1
+Wersja 1.2.2
 
-- dodaliśmy brakujące okienka z podglądem szczegółów ogłoszeń szkolnych
-- naprawiliśmy rzucające się w oczy błędy na ekranie startowym
-- naprawiliśmy też inne drobne błędy w wyglądzie i stabilności aplikacji
+- naprawiliśmy problem z widocznością zadań w aplikacji gdy widoczne są one na stronie www dziennika (nadal pozostaje błąd z zadaniami widocznymi tylko w oficjalnej aplikacji - czekamy na poprawkę po stronie VULCANa)
+- odblokowaliśmy niedzielę w wyborze daty w planie lekcji i innych zakładkach
+- przywróciliśmy odnośnik do szczęśliwego numerka w menu Więcej
+- naprawiliśmy drobne błędy ze stabilnością i wyglądem
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

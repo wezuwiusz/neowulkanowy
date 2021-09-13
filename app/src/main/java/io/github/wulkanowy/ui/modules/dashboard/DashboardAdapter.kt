@@ -31,6 +31,7 @@ import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.left
 import io.github.wulkanowy.utils.nickOrName
 import io.github.wulkanowy.utils.toFormattedString
+import timber.log.Timber
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -170,6 +171,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         val isLoading = item.isLoading
         val binding = horizontalGroupViewHolder.binding
         val context = binding.root.context
+        val isLoadingVisible =
+            (isLoading && !item.isDataLoaded) || (isLoading && !item.isFullDataLoaded)
         val attendanceColor = when {
             attendancePercentage == null || attendancePercentage == .0 -> {
                 context.getThemeAttrColor(R.attr.colorOnSurface)
@@ -199,13 +202,12 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 context.getString(R.string.dashboard_horizontal_group_no_data)
             } else luckyNumber?.toString()
 
-            dashboardHorizontalGroupItemInfoContainer.isVisible = error != null || isLoading
-            dashboardHorizontalGroupItemInfoProgress.isVisible =
-                (isLoading && !item.isDataLoaded) || (isLoading && !item.isFullDataLoaded)
+            dashboardHorizontalGroupItemInfoContainer.isVisible = error != null || isLoadingVisible
+            dashboardHorizontalGroupItemInfoProgress.isVisible = isLoadingVisible
             dashboardHorizontalGroupItemInfoErrorText.isVisible = error != null
 
             with(dashboardHorizontalGroupItemLuckyContainer) {
-                isVisible = luckyNumber != null && luckyNumber != -1
+                isVisible = luckyNumber != null && luckyNumber != -1 && !isLoadingVisible
                 setOnClickListener { onLuckyNumberTileClickListener() }
 
                 updateLayoutParams<ViewGroup.MarginLayoutParams> {
@@ -220,7 +222,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             }
 
             with(dashboardHorizontalGroupItemAttendanceContainer) {
-                isVisible = attendancePercentage != null && attendancePercentage != -1.0
+                isVisible =
+                    attendancePercentage != null && attendancePercentage != -1.0 && !isLoadingVisible
                 updateLayoutParams<ConstraintLayout.LayoutParams> {
                     matchConstraintPercentWidth = when {
                         luckyNumber == null && unreadMessagesCount == null -> 1.0f
@@ -232,7 +235,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             }
 
             with(dashboardHorizontalGroupItemMessageContainer) {
-                isVisible = unreadMessagesCount != null && unreadMessagesCount != -1
+                isVisible =
+                    unreadMessagesCount != null && unreadMessagesCount != -1 && !isLoadingVisible
                 setOnClickListener { onMessageTileClickListener() }
             }
         }
@@ -426,7 +430,10 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 }
             }
         } else {
-            val minutesToEndLesson = firstLesson.left!!.toMinutes() + 1
+            val minutesToEndLesson = firstLesson.left?.toMinutes()?.plus(1) ?: run {
+                Timber.e(IllegalArgumentException("Lesson left is null. START ${firstLesson.start} ; END ${firstLesson.end} ; CURRENT ${LocalDateTime.now()}"))
+                0
+            }
 
             firstTimeText = context.resources.getQuantityString(
                 R.plurals.dashboard_timetable_first_lesson_time_more_minutes,

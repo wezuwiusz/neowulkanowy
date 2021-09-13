@@ -149,6 +149,7 @@ class TimetablePresenter @Inject constructor(
                         view?.run {
                             enableSwipe(true)
                             showRefresh(true)
+                            showErrorView(false)
                             showProgress(false)
                             showContent(true)
                             updateData(it.data!!.lessons)

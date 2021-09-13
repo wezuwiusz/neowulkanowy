@@ -82,7 +82,13 @@ class AttendanceSummaryPresenter @Inject constructor(
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            attendanceSummaryRepository.getAttendanceSummary(student, semester, subjectId, forceRefresh)
+
+            attendanceSummaryRepository.getAttendanceSummary(
+                student = student,
+                semester = semester,
+                subjectId = subjectId,
+                forceRefresh = forceRefresh
+            )
         }.onEach {
             when (it.status) {
                 Status.LOADING -> {
@@ -92,6 +98,7 @@ class AttendanceSummaryPresenter @Inject constructor(
                             showRefresh(true)
                             showProgress(false)
                             showContent(true)
+                            showErrorView(false)
                             updateDataSet(sortItems(it.data))
                         }
                     }
@@ -99,6 +106,7 @@ class AttendanceSummaryPresenter @Inject constructor(
                 Status.SUCCESS -> {
                     Timber.i("Loading attendance summary result: Success")
                     view?.apply {
+                        showErrorView(false)
                         showEmpty(it.data!!.isEmpty())
                         showContent(it.data.isNotEmpty())
                         updateDataSet(sortItems(it.data))

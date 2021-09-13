@@ -14,33 +14,39 @@ import javax.inject.Singleton
 
 @Singleton
 @Dao
-interface StudentDao {
+abstract class StudentDao {
 
     @Insert(onConflict = ABORT)
-    suspend fun insertAll(student: List<Student>): List<Long>
+    abstract suspend fun insertAll(student: List<Student>): List<Long>
 
     @Delete
-    suspend fun delete(student: Student)
+    abstract suspend fun delete(student: Student)
 
     @Update(entity = Student::class)
-    suspend fun update(studentNickAndAvatar: StudentNickAndAvatar)
+    abstract suspend fun update(studentNickAndAvatar: StudentNickAndAvatar)
 
     @Query("SELECT * FROM Students WHERE is_current = 1")
-    suspend fun loadCurrent(): Student?
+    abstract suspend fun loadCurrent(): Student?
 
     @Query("SELECT * FROM Students WHERE id = :id")
-    suspend fun loadById(id: Long): Student?
+    abstract suspend fun loadById(id: Long): Student?
 
     @Query("SELECT * FROM Students")
-    suspend fun loadAll(): List<Student>
+    abstract suspend fun loadAll(): List<Student>
 
     @Transaction
     @Query("SELECT * FROM Students")
-    suspend fun loadStudentsWithSemesters(): List<StudentWithSemesters>
+    abstract suspend fun loadStudentsWithSemesters(): List<StudentWithSemesters>
 
     @Query("UPDATE Students SET is_current = 1 WHERE id = :id")
-    suspend fun updateCurrent(id: Long)
+    abstract suspend fun updateCurrent(id: Long)
 
     @Query("UPDATE Students SET is_current = 0")
-    suspend fun resetCurrent()
+    abstract suspend fun resetCurrent()
+
+    @Transaction
+    open suspend fun switchCurrent(id: Long) {
+        resetCurrent()
+        updateCurrent(id)
+    }
 }

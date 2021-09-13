@@ -102,7 +102,9 @@ fun Context.openNavigation(location: String) {
 fun Context.openDialer(phone: String) {
     val intentUri = Uri.parse("tel:$phone")
     val intent = Intent(Intent.ACTION_DIAL, intentUri)
-    startActivity(intent)
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
 }
 
 fun Context.shareText(text: String, subject: String?) {
