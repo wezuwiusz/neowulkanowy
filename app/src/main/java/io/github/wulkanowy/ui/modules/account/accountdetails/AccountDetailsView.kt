@@ -15,7 +15,9 @@ interface AccountDetailsView : BaseView {
 
     fun showLogoutConfirmDialog()
 
-    fun popView()
+    fun popViewToMain()
+
+    fun popViewToAccounts()
 
     fun recreateMainView()
 

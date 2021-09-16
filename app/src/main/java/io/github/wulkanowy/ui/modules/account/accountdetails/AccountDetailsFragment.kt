@@ -121,8 +121,12 @@ class AccountDetailsFragment :
         }
     }
 
-    override fun popView() {
+    override fun popViewToMain() {
         (requireActivity() as MainActivity).popView(2)
+    }
+
+    override fun popViewToAccounts() {
+        (requireActivity() as MainActivity).popView(1)
     }
 
     override fun recreateMainView() {

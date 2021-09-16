@@ -119,7 +119,7 @@ class AccountDetailsPresenter @Inject constructor(
                     }
                 }
             }.afterLoading {
-                view?.popView()
+                view?.popViewToMain()
             }.launch("switch")
     }
 
@@ -152,11 +152,14 @@ class AccountDetailsPresenter @Inject constructor(
                             syncManager.stopSyncWorker()
                             openClearLoginView()
                         }
-                        studentWithSemesters!!.student.isCurrent -> {
+                        studentWithSemesters?.student?.isCurrent == true -> {
                             Timber.i("Logout result: Logout student and switch to another")
                             recreateMainView()
                         }
-                        else -> Timber.i("Logout result: Logout student")
+                        else -> {
+                            Timber.i("Logout result: Logout student")
+                            recreateMainView()
+                        }
                     }
                 }
                 Status.ERROR -> {
@@ -165,7 +168,11 @@ class AccountDetailsPresenter @Inject constructor(
                 }
             }
         }.afterLoading {
-            view?.popView()
+            if (studentWithSemesters?.student?.isCurrent == true) {
+                view?.popViewToMain()
+            } else {
+                view?.popViewToAccounts()
+            }
         }.launch("logout")
     }
 
