@@ -402,6 +402,8 @@
         <item quantity="many">Masz %1$d nowych zebrań</item>
         <item quantity="other">Masz %1$d nowych zebrań</item>
     </plurals>
+    <string name="conferences_present">Obecność na zebraniu</string>
+    <string name="conference_agenda">Agenda</string>
     <!--Director information-->
     <string name="school_announcement_title">Ogłoszenia szkolne</string>
     <string name="school_announcement_no_items">Brak ogłoszeń szkolnych</string>
@@ -516,10 +518,10 @@
     <string name="dashboard_timetable_second_lessons_title">Następnie:</string>
     <string name="dashboard_timetable_third_title">Później:</string>
     <plurals name="dashboard_timetable_third_value">
-        <item quantity="one">jeszcze %1$d dodatkowa lekcja</item>
-        <item quantity="few">jeszcze %1$d dodatkowe lekcje</item>
-        <item quantity="many">jeszcze %1$d dodatkowych lekcji</item>
-        <item quantity="other">jeszcze %1$d dodatkowych lekcji</item>
+        <item quantity="one">jeszcze %1$d lekcja</item>
+        <item quantity="few">jeszcze %1$d lekcje</item>
+        <item quantity="many">jeszcze %1$d lekcji</item>
+        <item quantity="other">jeszcze %1$d lekcji</item>
     </plurals>
     <string name="dashboard_timetable_third_time">do %1$s</string>
     <string name="dashboard_timetable_no_lessons">Brak nadchodzących lekcji</string>
@@ -528,10 +530,10 @@
     <string name="dashboard_homework_no_homework">Brak prac domowych do wykonania</string>
     <string name="dashboard_homework_error">Wystąpił błąd podczas ładowania zadań domowych</string>
     <plurals name="dashboard_homework_more">
-        <item quantity="one">Jeszcze %1$d dodatkowe zadanie domowe</item>
-        <item quantity="few">Jeszcze %1$d dodatkowe zadania domowe</item>
-        <item quantity="many">Jeszcze %1$d dodatkowych zadań domowych</item>
-        <item quantity="other">Jeszcze %1$d dodatkowych zadań domowych</item>
+        <item quantity="one">Jeszcze %1$d zadanie domowe</item>
+        <item quantity="few">Jeszcze %1$d zadania domowe</item>
+        <item quantity="many">Jeszcze %1$d zadań domowych</item>
+        <item quantity="other">Jeszcze %1$d zadań domowych</item>
     </plurals>
     <string name="dashboard_homework_time">do %1$s</string>
     <string name="dashboard_grade_title">Ostatnie oceny</string>
@@ -541,19 +543,19 @@
     <string name="dashboard_announcements_no_announcements">Brak aktualnych ogłoszeń</string>
     <string name="dashboard_announcements_error">Wystąpił błąd podczas ładowania ogłoszeń</string>
     <plurals name="dashboard_announcements_more">
-        <item quantity="one">Jeszcze %1$d dodatkowe ogłoszenie</item>
-        <item quantity="few">Jeszcze %1$d dodatkowe ogłoszenia</item>
-        <item quantity="many">Jeszcze %1$d dodatkowych ogłoszeń</item>
-        <item quantity="other">Jeszcze %1$d dodatkowych ogłoszeń</item>
+        <item quantity="one">Jeszcze %1$d ogłoszenie</item>
+        <item quantity="few">Jeszcze %1$d ogłoszenia</item>
+        <item quantity="many">Jeszcze %1$d ogłoszeń</item>
+        <item quantity="other">Jeszcze %1$d ogłoszeń</item>
     </plurals>
     <string name="dashboard_exams_title">Sprawdziany</string>
     <string name="dashboard_exams_no_exams">Brak nadchodzących sprawdzianów</string>
     <string name="dashboard_exams_error">Wystąpił błąd podczas ładowania sprawdzianów</string>
     <plurals name="dashboard_exams_more">
-        <item quantity="one">Jeszcze %1$d dodatkowy sprawdzian</item>
-        <item quantity="few">Jeszcze %1$d dodatkowe sprawdziany</item>
-        <item quantity="many">Jeszcze %1$d dodatkowych sprawdzianów</item>
-        <item quantity="other">Jeszcze %1$d dodatkowych sprawdzianów</item>
+        <item quantity="one">Jeszcze %1$d sprawdzian</item>
+        <item quantity="few">Jeszcze %1$d sprawdziany</item>
+        <item quantity="many">Jeszcze %1$d sprawdzianów</item>
+        <item quantity="other">Jeszcze %1$d sprawdzianów</item>
     </plurals>
     <string name="dashboard_conferences_title">Zebrania</string>
     <string name="dashboard_conferences_no_conferences">Brak nadchodzących zebrań</string>
@@ -562,7 +564,7 @@
         <item quantity="one">Jeszcze %1$d dodatkowe zebranie</item>
         <item quantity="few">Jeszcze %1$d dodatkowe zebrania</item>
         <item quantity="many">Jeszcze %1$d dodatkowych zebrań</item>
-        <item quantity="other">Jeszcze %1$d dodatkowych zebrań</item>
+        <item quantity="other">Jeszcze %1$d zebrań</item>
     </plurals>
     <string name="dashboard_horizontal_group_error">Wystąpił błąd podczas ładowania danych</string>
     <string name="dashboard_horizontal_group_no_data">Brak</string>
@@ -590,6 +592,7 @@
     <string name="all_yes">Tak</string>
     <string name="all_no">Nie</string>
     <string name="all_save">Zapisz</string>
+    <string name="all_title">Tytuł</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
     <string name="widget_timetable_theme_title">Wybierz motyw</string>
