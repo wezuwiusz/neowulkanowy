@@ -336,9 +336,11 @@
     <string name="lucky_number_notify_new_item">Today\'s lucky number is: %s</string>
     <string name="lucky_number_history_button">Show history</string>
 
+
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Lucky number history</string>
     <string name="lucky_number_history_empty">No info about lucky numbers</string>
+
 
     <!--Mobile devices-->
     <string name="mobile_devices_title">Mobile devices</string>
@@ -388,7 +390,8 @@
         <item quantity="one">You have %1$d new conference</item>
         <item quantity="other">You have %1$d new conferences</item>
     </plurals>
-
+    <string name="conferences_present">Present at conference</string>
+    <string name="conference_agenda">Agenda</string>
 
     <!--Director information-->
     <string name="school_announcement_title">School announcements</string>
@@ -585,6 +588,7 @@
     <string name="all_yes">Yes</string>
     <string name="all_no">No</string>
     <string name="all_save">Save</string>
+    <string name="all_title">Title</string>
 
 
     <!--Timetable Widget-->

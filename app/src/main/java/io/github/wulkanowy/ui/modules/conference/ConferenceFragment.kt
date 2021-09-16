@@ -8,6 +8,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Conference
 import io.github.wulkanowy.databinding.FragmentConferenceBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -41,6 +42,8 @@ class ConferenceFragment : BaseFragment<FragmentConferenceBinding>(R.layout.frag
     }
 
     override fun initView() {
+        conferencesAdapter.onItemClickListener = presenter::onItemSelected
+
         with(binding.conferenceRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = conferencesAdapter
@@ -50,7 +53,11 @@ class ConferenceFragment : BaseFragment<FragmentConferenceBinding>(R.layout.frag
         with(binding) {
             conferenceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             conferenceSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
-            conferenceSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
+            conferenceSwipe.setProgressBackgroundColorSchemeColor(
+                requireContext().getThemeAttrColor(
+                    R.attr.colorSwipeRefresh
+                )
+            )
             conferenceErrorRetry.setOnClickListener { presenter.onRetry() }
             conferenceErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }
@@ -96,6 +103,10 @@ class ConferenceFragment : BaseFragment<FragmentConferenceBinding>(R.layout.frag
 
     override fun showContent(show: Boolean) {
         binding.conferenceRecycler.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun openConferenceDialog(conference: Conference) {
+        (activity as? MainActivity)?.showDialogFragment(ConferenceDialog.newInstance(conference))
     }
 
     override fun onDestroyView() {

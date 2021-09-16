@@ -38,7 +38,7 @@ class SchoolAnnouncementDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = DialogSchoolAnnouncementBinding.inflate(inflater).apply { binding = this }.root
+    ) = DialogSchoolAnnouncementBinding.inflate(inflater).also { binding = it }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

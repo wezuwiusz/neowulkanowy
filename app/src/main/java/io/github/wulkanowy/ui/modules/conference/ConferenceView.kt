@@ -26,4 +26,6 @@ interface ConferenceView : BaseView {
     fun enableSwipe(enable: Boolean)
 
     fun showContent(show: Boolean)
+
+    fun openConferenceDialog(conference: Conference)
 }
