@@ -53,7 +53,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
     var onAttendanceTileClickListener: () -> Unit = {}
 
-    var onLessonsTileClickListener: () -> Unit = {}
+    var onLessonsTileClickListener: (LocalDate) -> Unit = {}
 
     var onHomeworkTileClickListener: () -> Unit = {}
 
@@ -275,10 +275,12 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         val item = items[position] as DashboardItem.Lessons
         val timetableFull = item.lessons
         val binding = lessonsViewHolder.binding
+        var dateToNavigate = LocalDate.now()
 
         fun updateLessonState() {
             val currentDateTime = LocalDateTime.now()
             val currentDate = LocalDate.now()
+            val tomorrowDate = currentDate.plusDays(1)
 
             val currentTimetable = timetableFull?.lessons
                 .orEmpty()
@@ -296,22 +298,27 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
             when {
                 currentTimetable.isNotEmpty() -> {
+                    dateToNavigate = currentDate
                     updateLessonView(item, currentTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
                 }
                 tomorrowTimetable.isNotEmpty() -> {
+                    dateToNavigate = tomorrowDate
                     updateLessonView(item, tomorrowTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
                 }
                 currentDayHeader != null && currentDayHeader.content.isNotBlank() -> {
+                    dateToNavigate = currentDate
                     updateLessonView(item, emptyList(), binding, currentDayHeader)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
                 }
                 tomorrowDayHeader != null && tomorrowDayHeader.content.isNotBlank() -> {
+                    dateToNavigate = tomorrowDate
                     updateLessonView(item, emptyList(), binding, tomorrowDayHeader)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
                 }
                 else -> {
+                    dateToNavigate = tomorrowDate
                     updateLessonView(item, emptyList(), binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible =
                         !(item.isLoading && item.error == null)
@@ -326,7 +333,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             Handler(Looper.getMainLooper()).post { updateLessonState() }
         }
 
-        binding.root.setOnClickListener { onLessonsTileClickListener() }
+        binding.root.setOnClickListener { onLessonsTileClickListener(dateToNavigate) }
     }
 
     private fun updateLessonView(
