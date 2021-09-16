@@ -44,7 +44,13 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     companion object {
         private const val SAVED_DATE_KEY = "CURRENT_DATE"
 
-        fun newInstance() = TimetableFragment()
+        private const val ARGUMENT_DATE_KEY = "ARGUMENT_DATE"
+
+        fun newInstance(date: LocalDate? = null) = TimetableFragment().apply {
+            arguments = Bundle().apply {
+                date?.let { putLong(ARGUMENT_DATE_KEY, it.toEpochDay()) }
+            }
+        }
     }
 
     override val titleStringId get() = R.string.timetable_title
@@ -62,7 +68,11 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTimetableBinding.bind(view)
         messageContainer = binding.timetableRecycler
-        presenter.onAttachView(this, savedInstanceState?.getLong(SAVED_DATE_KEY))
+
+        val initDate = savedInstanceState?.getLong(SAVED_DATE_KEY)
+            ?: arguments?.getLong(ARGUMENT_DATE_KEY)?.takeUnless { it == 0L }
+
+        presenter.onAttachView(this, initDate)
     }
 
     override fun initView() {

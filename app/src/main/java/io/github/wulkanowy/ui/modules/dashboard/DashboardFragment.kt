@@ -70,10 +70,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
     override fun initView() {
         val mainActivity = requireActivity() as MainActivity
         val itemTouchHelper = ItemTouchHelper(
-            DashboardItemMoveCallback(
-                dashboardAdapter,
-                presenter::onDragAndDropEnd
-            )
+            DashboardItemMoveCallback(dashboardAdapter, presenter::onDragAndDropEnd)
         )
 
         dashboardAdapter.apply {
@@ -87,7 +84,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
             onAttendanceTileClickListener = {
                 mainActivity.pushView(AttendanceSummaryFragment.newInstance())
             }
-            onLessonsTileClickListener = { mainActivity.pushView(TimetableFragment.newInstance()) }
+            onLessonsTileClickListener = {
+                mainActivity.pushView(TimetableFragment.newInstance(it))
+            }
             onGradeTileClickListener = { mainActivity.pushView(GradeFragment.newInstance()) }
             onHomeworkTileClickListener = { mainActivity.pushView(HomeworkFragment.newInstance()) }
             onAnnouncementsTileClickListener = {

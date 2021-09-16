@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.conference
 
 import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.db.entities.Conference
 import io.github.wulkanowy.data.repositories.ConferenceRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
@@ -41,6 +42,10 @@ class ConferencePresenter @Inject constructor(
             showProgress(true)
         }
         loadData(true)
+    }
+
+    fun onItemSelected(conference: Conference) {
+        view?.openConferenceDialog(conference)
     }
 
     fun onDetailsClick() {

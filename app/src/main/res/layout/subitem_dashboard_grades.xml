@@ -11,12 +11,13 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:includeFontPadding="false"
+        android:maxEms="15"
         android:maxLines="1"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@id/dashboard_grades_subitem_grade_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/dashboard_grades_subitem_grade_container"
-        tools:text="Urządzenia techniki kompu..." />
+        tools:text="Urządzenia techniki komputerowych" />
 
     <LinearLayout
         android:id="@+id/dashboard_grades_subitem_grade_container"
@@ -26,6 +27,7 @@
         android:layout_marginBottom="6dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dashboard_grades_subitem_title"
         app:layout_constraintTop_toTopOf="parent">
 

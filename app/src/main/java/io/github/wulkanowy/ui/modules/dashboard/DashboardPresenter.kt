@@ -492,31 +492,37 @@ class DashboardPresenter @Inject constructor(
                 end = LocalDate.now().plusDays(7),
                 forceRefresh = forceRefresh
             )
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> {
-                    Timber.i("Loading dashboard exams data started")
-                    if (forceRefresh) return@onEach
-                    updateData(
-                        DashboardItem.Exams(it.data.orEmpty(), isLoading = true),
-                        forceRefresh
-                    )
+        }
+            .map { examResource ->
+                val sortedExams = examResource.data?.sortedBy { it.date }
 
-                    if (!it.data.isNullOrEmpty()) {
-                        firstLoadedItemList += DashboardItem.Type.EXAMS
+                examResource.copy(data = sortedExams)
+            }
+            .onEach {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Timber.i("Loading dashboard exams data started")
+                        if (forceRefresh) return@onEach
+                        updateData(
+                            DashboardItem.Exams(it.data.orEmpty(), isLoading = true),
+                            forceRefresh
+                        )
+
+                        if (!it.data.isNullOrEmpty()) {
+                            firstLoadedItemList += DashboardItem.Type.EXAMS
+                        }
+                    }
+                    Status.SUCCESS -> {
+                        Timber.i("Loading dashboard exams result: Success")
+                        updateData(DashboardItem.Exams(it.data ?: emptyList()), forceRefresh)
+                    }
+                    Status.ERROR -> {
+                        Timber.i("Loading dashboard exams result: An exception occurred")
+                        errorHandler.dispatch(it.error!!)
+                        updateData(DashboardItem.Exams(error = it.error), forceRefresh)
                     }
                 }
-                Status.SUCCESS -> {
-                    Timber.i("Loading dashboard exams result: Success")
-                    updateData(DashboardItem.Exams(it.data ?: emptyList()), forceRefresh)
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading dashboard exams result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                    updateData(DashboardItem.Exams(error = it.error), forceRefresh)
-                }
-            }
-        }.launch("dashboard_exams")
+            }.launch("dashboard_exams")
     }
 
     private fun loadConferences(student: Student, forceRefresh: Boolean) {

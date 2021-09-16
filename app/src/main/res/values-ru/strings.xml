@@ -402,6 +402,8 @@
         <item quantity="many">У вас %1$d новая конференция</item>
         <item quantity="other">У вас %1$d новых конференций</item>
     </plurals>
+    <string name="conferences_present">Present at conference</string>
+    <string name="conference_agenda">Agenda</string>
     <!--Director information-->
     <string name="school_announcement_title">Объявления школ</string>
     <string name="school_announcement_no_items">Нет объявлений о школе</string>
@@ -590,6 +592,7 @@
     <string name="all_yes">Да</string>
     <string name="all_no">Нет</string>
     <string name="all_save">Сохранить</string>
+    <string name="all_title">Title</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Нет уроков</string>
     <string name="widget_timetable_theme_title">Выбрать тему</string>

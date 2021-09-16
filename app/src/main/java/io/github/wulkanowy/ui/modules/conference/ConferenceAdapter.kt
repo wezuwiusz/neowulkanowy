@@ -14,6 +14,8 @@ class ConferenceAdapter @Inject constructor() :
 
     var items = emptyList<Conference>()
 
+    var onItemClickListener: (Conference) -> Unit = {}
+
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ItemViewHolder(
@@ -28,7 +30,10 @@ class ConferenceAdapter @Inject constructor() :
             conferenceItemTitle.text = item.title
             conferenceItemSubject.text = item.subject
             conferenceItemContent.text = item.agenda
-            conferenceItemContent.visibility = if (item.agenda.isBlank()) View.GONE else View.VISIBLE
+            conferenceItemContent.visibility =
+                if (item.agenda.isBlank()) View.GONE else View.VISIBLE
+
+            root.setOnClickListener { onItemClickListener(item) }
         }
     }
 

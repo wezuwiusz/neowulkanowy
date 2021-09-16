@@ -34,13 +34,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/announcementDialogSubjectTitle"
+            android:id="@+id/conferenceDialogHeaderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/all_subject"
+            android:text="@string/all_title"
             android:textColor="?android:textColorSecondary"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@id/allDetailsHeader" />
 
         <TextView
-            android:id="@+id/announcementDialogSubjectValue"
+            android:id="@+id/conferenceDialogHeaderValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
@@ -62,25 +62,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/announcementDialogSubjectTitle" />
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogHeaderTitle" />
 
         <TextView
-            android:id="@+id/announcementDialogDateTitle"
+            android:id="@+id/conferenceDialogSubjectTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/exam_entry_date"
+            android:text="@string/all_subject"
             android:textColor="?android:textColorSecondary"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/announcementDialogSubjectValue" />
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogHeaderValue" />
 
         <TextView
-            android:id="@+id/announcementDialogDateValue"
+            android:id="@+id/conferenceDialogSubjectValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
@@ -93,43 +93,105 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/announcementDialogDateTitle" />
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogSubjectTitle" />
 
         <TextView
-            android:id="@+id/announcementDialogDescriptionTitle"
+            android:id="@+id/conferenceDialogDateTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/all_description"
+            android:text="@string/all_date"
             android:textColor="?android:textColorSecondary"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/announcementDialogDateValue" />
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogSubjectValue" />
 
         <TextView
-            android:id="@+id/announcementDialogDescriptionValue"
+            android:id="@+id/conferenceDialogDateValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="24dp"
             android:paddingStart="0dp"
             android:paddingEnd="16dp"
+            android:text="@string/all_no_data"
+            android:textIsSelectable="true"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogDateTitle" />
+
+        <TextView
+            android:id="@+id/conferenceDialogPresentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/conferences_present"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogDateValue" />
+
+        <TextView
+            android:id="@+id/conferenceDialogPresentValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="24dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp"
+            android:text="@string/all_no_data"
+            android:textIsSelectable="true"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogPresentTitle" />
+
+        <TextView
+            android:id="@+id/conferenceDialogAgendaTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/conference_agenda"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogPresentValue" />
+
+        <TextView
+            android:id="@+id/conferenceDialogAgendaValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="24dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="16dp"
+            android:text="@string/all_no_data"
+            android:textIsSelectable="true"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogAgendaTitle"
             tools:maxLines="5"
-            android:text="@string/all_no_data"
-            android:textIsSelectable="true"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/announcementDialogDescriptionTitle"
             tools:text="@tools:sample/lorem/random" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/announcementDialogClose"
+            android:id="@+id/conferenceDialogClose"
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
@@ -144,6 +206,6 @@
             android:text="@string/all_close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/announcementDialogDescriptionValue" />
+            app:layout_constraintTop_toBottomOf="@id/conferenceDialogAgendaValue" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
