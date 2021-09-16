@@ -1,8 +1,8 @@
-Wersja 1.2.2
+Wersja 1.2.3
 
-- naprawiliśmy problem z widocznością zadań w aplikacji gdy widoczne są one na stronie www dziennika (nadal pozostaje błąd z zadaniami widocznymi tylko w oficjalnej aplikacji - czekamy na poprawkę po stronie VULCANa)
-- odblokowaliśmy niedzielę w wyborze daty w planie lekcji i innych zakładkach
-- przywróciliśmy odnośnik do szczęśliwego numerka w menu Więcej
-- naprawiliśmy drobne błędy ze stabilnością i wyglądem
+- naprawiliśmy pomieszane imiona nauczycieli z salami w planie lekcji
+- dodaliśmy brakujące okienka ze szczegółami na ekranie zebrań
+- klikając w kafelek z lekcjami na jutro aplikacja teraz przekierowuje na ekran z planem na jutro
+- naprawiliśmy błąd przy wylogowywaniu innego niż bieżący uczeń
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
