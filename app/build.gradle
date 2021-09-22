@@ -104,6 +104,12 @@ android {
         viewBinding true
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     testOptions.unitTests {
         includeAndroidResources = true
     }
