@@ -30,7 +30,7 @@ class LoginFormPresenter @Inject constructor(
             showVersion()
 
             loginErrorHandler.onBadCredentials = {
-                setErrorPassIncorrect()
+                setErrorPassIncorrect(it)
                 showSoftKeyboard()
                 Timber.i("Entered wrong username or password")
             }

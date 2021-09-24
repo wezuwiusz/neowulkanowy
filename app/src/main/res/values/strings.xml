@@ -46,7 +46,8 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_invalid_password">Password too short</string>
-    <string name="login_incorrect_password">Login details are incorrect. Make sure the correct UONET+ register variation is selected in the field below</string>
+    <string name="login_incorrect_password_default">Login details are incorrect</string>
+    <string name="login_incorrect_password">%1$s. Make sure the correct UONET+ register variation is selected below</string>
     <string name="login_invalid_pin">Invalid PIN</string>
     <string name="login_invalid_token">Invalid token</string>
     <string name="login_expired_token">Token expired</string>

@@ -42,7 +42,8 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
-    <string name="login_incorrect_password">Dane logowania są niepoprawne. Upewnij się, że została wybrana odpowiednia odmiana dziennika UONET+ w polu poniżej</string>
+    <string name="login_incorrect_password_default">Dane logowania są niepoprawne</string>
+    <string name="login_incorrect_password">%1$s. Upewnij się, że poniżej została wybrana odpowiednia odmiana dziennika UONET+</string>
     <string name="login_invalid_pin">Nieprawidłowy PIN</string>
     <string name="login_invalid_token">Nieprawidłowy token</string>
     <string name="login_expired_token">Token stracił ważność</string>

@@ -37,7 +37,7 @@ interface LoginFormView : BaseView {
 
     fun setErrorPassInvalid(focus: Boolean)
 
-    fun setErrorPassIncorrect()
+    fun setErrorPassIncorrect(message: String?)
 
     fun setErrorEmailInvalid(domain: String)
 

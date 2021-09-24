@@ -42,7 +42,8 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Prihlásiť</string>
     <string name="login_invalid_password">Toto heslo je príliš krátke</string>
-    <string name="login_incorrect_password">Prihlasovacie údaje sú nesprávne. Uistite sa, že je v poli nižšie vybraná správna variácie denníka UONET+</string>
+    <string name="login_incorrect_password_default">Prihlasovacie údaje sú nesprávne</string>
+    <string name="login_incorrect_password">%1$s. Uistite sa, že je v poli nižšie vybraná správna variácie denníka UONET+</string>
     <string name="login_invalid_pin">Neplatný PIN</string>
     <string name="login_invalid_token">Neplatný token</string>
     <string name="login_expired_token">Platnosť tokenu vypršala</string>

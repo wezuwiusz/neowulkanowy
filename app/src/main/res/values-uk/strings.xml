@@ -42,7 +42,8 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Увійти</string>
     <string name="login_invalid_password">Занадто короткий пароль</string>
-    <string name="login_incorrect_password">Дані для входу неправильні. Переконайтеся, що у полі нижче вказано правильний варіант реєстрації UONET+</string>
+    <string name="login_incorrect_password_default">Дані для входу неправильні</string>
+    <string name="login_incorrect_password">%1$s. Переконайтеся, що у полі нижче вказано правильний варіант реєстрації UONET+</string>
     <string name="login_invalid_pin">Неправильний PIN</string>
     <string name="login_invalid_token">Неправильний token</string>
     <string name="login_expired_token">Минув термін дії токену</string>
