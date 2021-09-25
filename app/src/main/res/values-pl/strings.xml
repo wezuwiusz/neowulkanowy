@@ -624,6 +624,10 @@
     <string name="pref_notify_fix_sync_issues_settings_button">Przejdź do ustawień</string>
     <string name="pref_notify_debug_switch">Pokazuj powiadomienia debugowania</string>
     <string name="pref_notify_disabled_summary">Synchronizacja jest wyłączona</string>
+    <string name="pref_notify_notifications_piggyback">Przechwytywanie powiadomień oficjalnej aplikacji</string>
+    <string name="pref_notification_piggyback_popup_title">Przechwytywanie powiadomień</string>
+    <string name="pref_notification_piggyback_popup_description">Dzięki tej funkcji możesz zyskać namiastkę powiadomień push takich, jak w oficjalnej aplikacji. Wystarczy że zezwolisz Wulkanowemu na odbieranie wszystkich powiadomień w ustawieniach systemowych.\n\nJak to działa?\nGdy dostaniesz powiadomienie w Dzienniczku VULCANa Wulkanowy zostanie o tym powiadomiony (po to te dodatkowe uprawnienia) i uruchomi synchronizację, dzięki czemu będzie mógł wysłać własne powiadomienie.\n\nTYLKO DLA ZAAWANSOWANYCH UŻYTKOWNIKÓW</string>
+    <string name="pref_notification_piggyback_popup_positive">Przejdź do ustawień</string>
     <string name="pref_services_header">Synchronizacja</string>
     <string name="pref_services_switch">Automatyczna aktualizacja</string>
     <string name="pref_services_suspended">Zawieszona na wakacjach</string>

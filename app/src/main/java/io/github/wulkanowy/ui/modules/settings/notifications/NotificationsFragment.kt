@@ -10,9 +10,12 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationManagerCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.thelittlefireman.appkillermanager.AppKillerManager
 import com.thelittlefireman.appkillermanager.exceptions.NoActionFoundException
@@ -43,6 +46,21 @@ class NotificationsFragment : PreferenceFragmentCompat(),
 
     override val titleStringId get() = R.string.pref_settings_notifications_title
 
+    override val isNotificationPermissionGranted: Boolean
+        get() {
+            val packageNameList =
+                NotificationManagerCompat.getEnabledListenerPackages(requireContext())
+            val appPackageName = requireContext().packageName
+
+            return appPackageName in packageNameList
+        }
+
+    private val notificationSettingsContract =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+            presenter.onNotificationPermissionResult()
+        }
+
     override fun initView(showDebugNotificationSwitch: Boolean) {
         findPreference<Preference>(getString(R.string.pref_key_notification_debug))?.isVisible =
             showDebugNotificationSwitch
@@ -57,12 +75,11 @@ class NotificationsFragment : PreferenceFragmentCompat(),
             }
         }
 
-        findPreference<Preference>(getString(R.string.pref_key_notifications_system_settings))?.run {
-            setOnPreferenceClickListener {
+        findPreference<Preference>(getString(R.string.pref_key_notifications_system_settings))
+            ?.setOnPreferenceClickListener {
                 presenter.onOpenSystemSettingsClicked()
                 true
             }
-        }
     }
 
     override fun onCreateRecyclerView(
@@ -155,6 +172,24 @@ class NotificationsFragment : PreferenceFragmentCompat(),
         } catch (e: Exception) {
             Timber.e(e)
         }
+    }
+
+    override fun openNotificationPermissionDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.pref_notification_piggyback_popup_title))
+            .setMessage(getString(R.string.pref_notification_piggyback_popup_description))
+            .setPositiveButton(getString(R.string.pref_notification_piggyback_popup_positive)) { _, _ ->
+                notificationSettingsContract.launch(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                setNotificationPiggybackPreferenceChecked(false)
+            }
+            .show()
+    }
+
+    override fun setNotificationPiggybackPreferenceChecked(isChecked: Boolean) {
+        findPreference<SwitchPreferenceCompat>(getString(R.string.pref_key_notifications_piggyback))?.isChecked =
+            isChecked
     }
 
     override fun onResume() {

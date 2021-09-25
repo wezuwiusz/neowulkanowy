@@ -57,14 +57,20 @@ class SyncManager @Inject constructor(
 
     fun startPeriodicSyncWorker(restart: Boolean = false) {
         if (preferencesRepository.isServiceEnabled && !now().isHolidays) {
-            workManager.enqueueUniquePeriodicWork(SyncWorker::class.java.simpleName, if (restart) REPLACE else KEEP,
-                PeriodicWorkRequestBuilder<SyncWorker>(preferencesRepository.servicesInterval, MINUTES)
+            val serviceInterval = preferencesRepository.servicesInterval
+
+            workManager.enqueueUniquePeriodicWork(
+                SyncWorker::class.java.simpleName, if (restart) REPLACE else KEEP,
+                PeriodicWorkRequestBuilder<SyncWorker>(serviceInterval, MINUTES)
                     .setInitialDelay(10, MINUTES)
                     .setBackoffCriteria(EXPONENTIAL, 30, MINUTES)
-                    .setConstraints(Constraints.Builder()
-                        .setRequiredNetworkType(if (preferencesRepository.isServicesOnlyWifi) UNMETERED else CONNECTED)
-                        .build())
-                    .build())
+                    .setConstraints(
+                        Constraints.Builder()
+                            .setRequiredNetworkType(if (preferencesRepository.isServicesOnlyWifi) UNMETERED else CONNECTED)
+                            .build()
+                    )
+                    .build()
+            )
         }
     }
 
@@ -77,7 +83,11 @@ class SyncManager @Inject constructor(
             )
             .build()
 
-        workManager.enqueueUniqueWork("${SyncWorker::class.java.simpleName}_one_time", ExistingWorkPolicy.REPLACE, work)
+        workManager.enqueueUniqueWork(
+            "${SyncWorker::class.java.simpleName}_one_time",
+            ExistingWorkPolicy.REPLACE,
+            work
+        )
 
         return workManager.getWorkInfoByIdLiveData(work.id).asFlow()
     }

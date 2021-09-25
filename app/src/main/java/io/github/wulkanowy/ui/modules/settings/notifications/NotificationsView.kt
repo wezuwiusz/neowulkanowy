@@ -4,6 +4,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface NotificationsView : BaseView {
 
+    val isNotificationPermissionGranted: Boolean
+
     fun initView(showDebugNotificationSwitch: Boolean)
 
     fun showFixSyncDialog()
@@ -11,4 +13,8 @@ interface NotificationsView : BaseView {
     fun openSystemSettings()
 
     fun enableNotification(notificationKey: String, enable: Boolean)
+
+    fun openNotificationPermissionDialog()
+
+    fun setNotificationPiggybackPreferenceChecked(isChecked: Boolean)
 }

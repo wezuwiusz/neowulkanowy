@@ -32,4 +32,5 @@
     <string name="pref_key_message_send_is_draft">message_send_is_draft</string>
     <string name="pref_key_message_send_draft">message_send_recipients</string>
     <string name="pref_key_last_sync_date">last_sync_date</string>
+    <string name="pref_key_notifications_piggyback">notifications_piggyback</string>
 </resources>

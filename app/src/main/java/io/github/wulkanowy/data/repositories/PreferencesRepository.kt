@@ -14,7 +14,6 @@ import io.github.wulkanowy.sdk.toLocalDate
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode
-import io.github.wulkanowy.utils.toTimestamp
 import io.github.wulkanowy.utils.toLocalDateTime
 import io.github.wulkanowy.utils.toTimestamp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -108,6 +107,14 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_notification_upcoming_lessons_enable
         )
 
+    val isNotificationPiggybackEnabledKey =
+        context.getString(R.string.pref_key_notifications_piggyback)
+    val isNotificationPiggybackEnabled: Boolean
+        get() = getBoolean(
+            R.string.pref_key_notifications_piggyback,
+            R.bool.pref_default_notification_piggyback
+        )
+
     val isDebugNotificationEnableKey = context.getString(R.string.pref_key_notification_debug)
     val isDebugNotificationEnable: Boolean
         get() = getBoolean(isDebugNotificationEnableKey, R.bool.pref_default_notification_debug)
@@ -176,10 +183,8 @@ class PreferencesRepository @Inject constructor(
         )
 
     var lasSyncDate: LocalDateTime
-        get() = getLong(
-            R.string.pref_key_last_sync_date,
-            R.string.pref_default_last_sync_date
-        ).toLocalDateTime()
+        get() = getLong(R.string.pref_key_last_sync_date, R.string.pref_default_last_sync_date)
+            .toLocalDateTime()
         set(value) = sharedPref.edit().putLong("last_sync_date", value.toTimestamp()).apply()
 
     var dashboardItemsPosition: Map<DashboardItem.Type, Int>?
@@ -230,8 +235,10 @@ class PreferencesRepository @Inject constructor(
         set(value) = sharedPref.edit().putInt(PREF_KEY_IN_APP_REVIEW_COUNT, value).apply()
 
     var inAppReviewDate: LocalDate?
-        get() = sharedPref.getLong(PREF_KEY_IN_APP_REVIEW_DATE, 0).takeIf { it != 0L }?.toLocalDate()
-        set(value) = sharedPref.edit().putLong(PREF_KEY_IN_APP_REVIEW_DATE, value!!.toTimestamp()).apply()
+        get() = sharedPref.getLong(PREF_KEY_IN_APP_REVIEW_DATE, 0).takeIf { it != 0L }
+            ?.toLocalDate()
+        set(value) = sharedPref.edit().putLong(PREF_KEY_IN_APP_REVIEW_DATE, value!!.toTimestamp())
+            .apply()
 
     var isAppReviewDone: Boolean
         get() = sharedPref.getBoolean(PREF_KEY_IN_APP_REVIEW_DONE, false)

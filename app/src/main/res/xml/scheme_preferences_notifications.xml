@@ -15,6 +15,12 @@
             app:singleLineTitle="false"
             app:title="@string/pref_notify_upcoming_lessons_switch" />
         <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_notification_piggyback"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_notifications_piggyback"
+            app:singleLineTitle="false"
+            app:title="@string/pref_notify_notifications_piggyback" />
+        <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_notification_debug"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notification_debug"

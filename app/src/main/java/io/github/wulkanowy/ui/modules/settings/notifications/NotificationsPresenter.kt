@@ -31,6 +31,9 @@ class NotificationsPresenter @Inject constructor(
             )
             initView(appInfo.isDebug)
         }
+
+        checkNotificationPiggybackState()
+
         Timber.i("Settings notifications view was initialized")
     }
 
@@ -47,6 +50,11 @@ class NotificationsPresenter @Inject constructor(
                 isDebugNotificationEnableKey -> {
                     chuckerCollector.showNotification = isDebugNotificationEnable
                 }
+                isNotificationPiggybackEnabledKey -> {
+                    if (isNotificationPiggybackEnabled && view?.isNotificationPermissionGranted == false) {
+                        view?.openNotificationPermissionDialog()
+                    }
+                }
             }
         }
         analytics.logEvent("setting_changed", "name" to key)
@@ -58,5 +66,19 @@ class NotificationsPresenter @Inject constructor(
 
     fun onOpenSystemSettingsClicked() {
         view?.openSystemSettings()
+    }
+
+    fun onNotificationPermissionResult() {
+        view?.run {
+            setNotificationPiggybackPreferenceChecked(isNotificationPermissionGranted)
+        }
+    }
+
+    private fun checkNotificationPiggybackState() {
+        if (preferencesRepository.isNotificationPiggybackEnabled) {
+            view?.run {
+                setNotificationPiggybackPreferenceChecked(isNotificationPermissionGranted)
+            }
+        }
     }
 }
