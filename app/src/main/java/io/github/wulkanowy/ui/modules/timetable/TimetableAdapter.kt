@@ -360,7 +360,7 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     private fun updateTeacherColor(teacherTextView: TextView, lesson: Timetable) {
         teacherTextView.setTextColor(
             teacherTextView.context.getThemeAttrColor(
-                if (lesson.teacherOld.isNotBlank() && lesson.teacherOld != lesson.teacher) R.attr.colorTimetableChange
+                if (lesson.teacherOld.isNotBlank()) R.attr.colorTimetableChange
                 else android.R.attr.textColorSecondary
             )
         )
