@@ -79,12 +79,7 @@ class MessagePreviewAdapter @Inject constructor() :
 
         val readText = when {
             recipientCount > 1 -> {
-                context.resources.getQuantityString(
-                    R.plurals.message_read_by,
-                    message.readBy,
-                    message.readBy,
-                    recipientCount
-                )
+                context.getString(R.string.message_read_by, message.readBy, recipientCount)
             }
             message.readBy == 1 -> {
                 context.getString(R.string.message_read, context.getString(R.string.all_yes))

@@ -91,7 +91,11 @@
     <string name="grade_summary_final_grade">Ocena końcowa</string>
     <string name="grade_summary_predicted_grade">Przewidywana ocena</string>
     <string name="grade_summary_calculated_average">Obliczona średnia</string>
+    <string name="grade_summary_calculated_average_help_dialog_title">Jak działa Obliczona średnia?</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Obliczona średnia to średnia arytmetyczna wyliczona ze średnich przedmiotów. Pozwala ona na poznanie przybliżonej średniej końcowej. Jest obliczana w sposób wybrany przez użytkownika w ustawieniach aplikacji. Zalecane jest, aby wybrać odpowiednią opcję. Wynika to z tego, że sposoby obliczania średnich w szkołach różnią się. Dodatkowo jeśli twoja szkoła podaje średnią z przedmiotów na stronie dziennika aplikacja pobiera je i nie wylicza tych średnich. Można to zmienić wymuszając liczenie średniej w ustawieniach aplikacji.\n\n<b>Średnia ocen z aktualnie wybranego semestru</b>:\n1. Obliczanie średniej ważonej dla każdego przedmiotu w danym semestrze\n2. Sumowanie obliczonych średnich\n3. Obliczenie średniej arytmetycznej z zsumowanych średnich\n\n<b>Średnia średnich z obu semestrów</b>:\n1. Obliczanie średniej ważonej dla każdego przedmiotu w semestrze 1 i 2\n2. Obliczanie średniej arytmetycznej z obliczonych średnich semestrów 1 i 2 dla każdego przedmiotu.\n3. Sumowanie obliczonych średnich\n4. Obliczenie średniej arytmetycznej z zsumowanych średnich\n\n<b>Średnia wszystkich ocen z całego roku:</b>\n1. Obliczanie średniej ważonej z całego roku dla każdego przedmiotu. Średnia końcowa w 1 semestrze jest bez znaczenia.\n3. Sumowanie obliczonych średnich\n4. Obliczenie średniej arytmetycznej z zsumowanych średnich</string>
     <string name="grade_summary_final_average">Końcowa średnia</string>
+    <string name="grade_summary_final_average_help_dialog_title">Jak działa Końcowa średnia?</string>
+    <string name="grade_summary_final_average_help_dialog_message">Końcowa średnia to średnia arytmetyczna wyliczona ze wszystkich aktualnie dostępnych ocen końcowych w danym semestrze.\n\nSchemat obliczania składa się z następujących kroków:\n1. Zsumowanie ocen końcowych wystawionych przez nauczycieli\n2. Podzielenie przez liczbę przedmiotów, z których oceny zostały już wystawione</string>
     <string name="grade_summary_from_subjects">z %1$d na %2$d przedmiotów</string>
     <string name="grade_menu_summary">Podsumowanie</string>
     <string name="grade_menu_statistics">Klasa</string>
@@ -603,7 +607,7 @@
     <!--Preferences-->
     <string name="pref_view_header">Wygląd i zachowanie aplikacji</string>
     <string name="pref_view_list">Domyślny widok</string>
-    <string name="pref_view_grade_average_mode">Obliczanie średniej końcoworocznej</string>
+    <string name="pref_view_grade_average_mode">Opcje średniej obliczonej</string>
     <string name="pref_view_grade_average_force_calc">Wymuś obliczanie średniej przez aplikację</string>
     <string name="pref_view_present">Pokazuj obecność</string>
     <string name="pref_view_app_theme">Motyw</string>

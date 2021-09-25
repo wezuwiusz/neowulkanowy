@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,7 +13,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="15dp"
         android:orientation="vertical">
 
         <TextView
@@ -24,13 +25,30 @@
             android:text="@string/grade_summary_calculated_average"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/gradeSummaryScrollableHeaderCalculated"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="21sp"
-            tools:text="6,00" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/gradeSummaryScrollableHeaderCalculated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="21sp"
+                tools:text="6,00" />
+
+            <ImageButton
+                android:id="@+id/gradeSummaryCalculatedAverageHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@+string/grade_summary_calculated_average_help_dialog_title"
+                app:srcCompat="@drawable/ic_help"
+                app:tint="?colorOnBackground" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/gradeSummaryScrollableHeaderCalculatedSubjectCount"
@@ -57,13 +75,30 @@
             android:text="@string/grade_summary_final_average"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/gradeSummaryScrollableHeaderFinal"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="21sp"
-            tools:text="6,00" />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/gradeSummaryScrollableHeaderFinal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="21sp"
+                tools:text="6,00" />
+
+            <ImageButton
+                android:id="@+id/gradeSummaryFinalAverageHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@+string/grade_summary_calculated_average_help_dialog_title"
+                app:srcCompat="@drawable/ic_help"
+                app:tint="?colorOnBackground" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/gradeSummaryScrollableHeaderFinalSubjectCount"
