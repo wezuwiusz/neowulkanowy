@@ -6,7 +6,7 @@ import androidx.annotation.StringRes
 import io.github.wulkanowy.services.sync.notifications.NotificationType
 import io.github.wulkanowy.ui.modules.main.MainView
 
-sealed interface Notification {
+sealed interface NotificationData {
     val type: NotificationType
     val startMenu: MainView.Section
     val icon: Int
@@ -14,7 +14,7 @@ sealed interface Notification {
     val contentStringRes: Int
 }
 
-data class MultipleNotifications(
+data class MultipleNotificationsData(
     override val type: NotificationType,
     override val startMenu: MainView.Section,
     @DrawableRes override val icon: Int,
@@ -23,9 +23,9 @@ data class MultipleNotifications(
 
     @PluralsRes val summaryStringRes: Int,
     val lines: List<String>,
-) : Notification
+) : NotificationData
 
-data class OneNotification(
+data class OneNotificationData(
     override val type: NotificationType,
     override val startMenu: MainView.Section,
     @DrawableRes override val icon: Int,
@@ -33,4 +33,4 @@ data class OneNotification(
     @StringRes override val contentStringRes: Int,
 
     val contentValues: List<String>,
-) : Notification
+) : NotificationData

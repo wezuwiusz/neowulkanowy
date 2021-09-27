@@ -209,6 +209,11 @@ class DashboardPresenter @Inject constructor(
         view?.showErrorDetailsDialog(lastError)
     }
 
+    fun onNotificationsCenterSelected(): Boolean {
+        view?.openNotificationsCenterView()
+        return true
+    }
+
     fun onDashboardTileSettingsSelected(): Boolean {
         view?.showDashboardTileSettings(preferencesRepository.selectedDashboardTiles.toList())
         return true

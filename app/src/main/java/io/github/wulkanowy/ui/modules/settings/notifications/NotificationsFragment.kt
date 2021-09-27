@@ -184,6 +184,7 @@ class NotificationsFragment : PreferenceFragmentCompat(),
             .setNegativeButton(android.R.string.cancel) { _, _ ->
                 setNotificationPiggybackPreferenceChecked(false)
             }
+            .setOnDismissListener { setNotificationPiggybackPreferenceChecked(false) }
             .show()
     }
 
