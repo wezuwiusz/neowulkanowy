@@ -1,12 +1,13 @@
 package io.github.wulkanowy.ui.modules.timetable
 
 import android.graphics.Paint
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
@@ -151,8 +152,8 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
             if (lesson.isStudentPlan && showTimers) {
                 timers[position] = timer(period = 1000) {
-                    if (ViewCompat.isAttachedToWindow(root)) {
-                        root.post { updateTimeLeft(binding, lesson, position) }
+                    Handler(Looper.getMainLooper()).post {
+                        updateTimeLeft(binding, lesson, position)
                     }
                 }
             } else {
@@ -176,8 +177,8 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
     private fun updateTimeLeft(binding: ItemTimetableBinding, lesson: Timetable, position: Int) {
         val isShowTimeUntil = lesson.isShowTimeUntil(getPreviousLesson(position))
-        val until = lesson.until
-        val left = lesson.left
+        val until = lesson.until.plusMinutes(1)
+        val left = lesson.left?.plusMinutes(1)
         val isJustFinished = lesson.isJustFinished
 
         with(binding) {
@@ -190,17 +191,10 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                         visibility = VISIBLE
                         text = context.getString(
                             R.string.timetable_time_until,
-                            if (until.seconds <= 60) {
-                                context.getString(
-                                    R.string.timetable_seconds,
-                                    until.seconds.toString(10)
-                                )
-                            } else {
-                                context.getString(
-                                    R.string.timetable_minutes,
-                                    until.toMinutes().toString(10)
-                                )
-                            }
+                            context.getString(
+                                R.string.timetable_minutes,
+                                until.toMinutes().toString(10)
+                            )
                         )
                     }
                 }
@@ -212,17 +206,10 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                         visibility = VISIBLE
                         text = context.getString(
                             R.string.timetable_time_left,
-                            if (left.seconds < 60) {
-                                context.getString(
-                                    R.string.timetable_seconds,
-                                    left.seconds.toString(10)
-                                )
-                            } else {
-                                context.getString(
-                                    R.string.timetable_minutes,
-                                    left.toMinutes().toString(10)
-                                )
-                            }
+                            context.getString(
+                                R.string.timetable_minutes,
+                                left.toMinutes().toString()
+                            )
                         )
                     }
                 }
