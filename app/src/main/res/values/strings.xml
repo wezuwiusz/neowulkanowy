@@ -621,6 +621,8 @@
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_switch">Show notifications</string>
     <string name="pref_notify_upcoming_lessons_switch">Show upcoming lesson notifications</string>
+    <string name="pref_notify_upcoming_lessons_persistent_switch">Make upcoming lesson notification persistent</string>
+    <string name="pref_notify_upcoming_lessons_persistent_summary">Turn off when notification is not showing in your watch/band</string>
     <string name="pref_notify_open_system_settings">Open system notification settings</string>
     <string name="pref_notify_fix_sync_issues">Fix synchronization &amp; notifications issues</string>
     <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>

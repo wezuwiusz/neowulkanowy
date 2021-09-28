@@ -42,7 +42,7 @@ class NotificationsPresenter @Inject constructor(
 
         preferencesRepository.apply {
             when (key) {
-                isUpcomingLessonsNotificationsEnableKey -> {
+                isUpcomingLessonsNotificationsEnableKey, isUpcomingLessonsNotificationsPersistentKey -> {
                     if (!isUpcomingLessonsNotificationsEnable) {
                         timetableNotificationHelper.cancelNotification()
                     }

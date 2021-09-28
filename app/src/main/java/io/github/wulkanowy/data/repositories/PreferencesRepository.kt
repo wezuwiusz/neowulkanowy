@@ -107,6 +107,14 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_notification_upcoming_lessons_enable
         )
 
+    val isUpcomingLessonsNotificationsPersistentKey =
+        context.getString(R.string.pref_key_notifications_upcoming_lessons_persistent)
+    val isUpcomingLessonsNotificationsPersistent: Boolean
+        get() = getBoolean(
+            isUpcomingLessonsNotificationsPersistentKey,
+            R.bool.pref_default_notification_upcoming_lessons_persistent
+        )
+
     val isNotificationPiggybackEnabledKey =
         context.getString(R.string.pref_key_notifications_piggyback)
     val isNotificationPiggybackEnabled: Boolean
