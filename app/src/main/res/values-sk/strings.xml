@@ -12,7 +12,7 @@
     <string name="about_title">O aplikácii</string>
     <string name="logviewer_title">Prehliadač protokolov</string>
     <string name="debug_title">Ladenie</string>
-    <string name="notification_debug_title">Ladenie oznámení</string>
+    <string name="notification_debug_title">Ladenie upozornení</string>
     <string name="contributors_title">Prispievatelia</string>
     <string name="license_title">Licencie</string>
     <string name="message_title">Správy</string>
@@ -24,6 +24,7 @@
     <string name="account_details_title">Podrobnosti účtu</string>
     <string name="student_info_title">Informácie o žiakovi</string>
     <string name="dashboard_title">Domov</string>
+    <string name="notifications_center_title">Centrum upozornení</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -43,7 +44,7 @@
     <string name="login_sign_in">Prihlásiť</string>
     <string name="login_invalid_password">Toto heslo je príliš krátke</string>
     <string name="login_incorrect_password_default">Prihlasovacie údaje sú nesprávne</string>
-    <string name="login_incorrect_password">%1$s. Uistite sa, že je v poli nižšie vybraná správna variácie denníka UONET+</string>
+    <string name="login_incorrect_password">%1$s. Skontrolujte, či je nižšie vybratá správna variácie denníka UONET+</string>
     <string name="login_invalid_pin">Neplatný PIN</string>
     <string name="login_invalid_token">Neplatný token</string>
     <string name="login_expired_token">Platnosť tokenu vypršala</string>
@@ -91,6 +92,10 @@
     <string name="grade_summary_final_grade">Konečná známka</string>
     <string name="grade_summary_predicted_grade">Predpokladaná známka</string>
     <string name="grade_summary_calculated_average">Vypočítaný priemer</string>
+    <string name="grade_summary_calculated_average_help_dialog_title">Ako funguje vypočítaný priemer?</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný priemer je aritmetický priemer vypočítaný z priemerov predmetov. Umožňuje vám to poznať približný konečný priemer. Vypočítava sa spôsobom zvoleným užívateľom v nastaveniach aplikácii. Odporúča sa vybrať príslušnú možnosť. Dôvodom je rozdielny výpočet školských priemerov. Ak vaša škola navyše uvádza priemer predmetov na stránke denníka Vulcan, aplikácia si ich stiahne a tieto priemery nepočíta. To možno zmeniť vynútením výpočtu priemeru v nastavení aplikácii.\n\n<b>Priemer známok iba z vybraného semestra</b>:\n1. Výpočet váženého priemeru pre každý predmet v danom semestri\n2. Sčítanie vypočítaných priemerov\n3. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer priemerov z oboch semestrov</b>:\n1. Výpočet váženého priemeru pre každý predmet v semestri 1 a 2\n2. Výpočet aritmetického priemeru vypočítaných priemerov za semestre 1 a 2 pre každý predmet.\n3. Sčítanie vypočítaných priemerov\n4. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer známok z celého roka:</b>\n1. Výpočet váženého priemeru za rok pre každý predmet. Konečný priemer v 1. semestri je nepodstatný.\n3. Sčítanie vypočítaných priemerov\n4. Výpočet aritmetického priemeru součtených priemerov</string>
+    <string name="grade_summary_final_average_help_dialog_title">Ako funguje konečný priemer?</string>
+    <string name="grade_summary_final_average_help_dialog_message">Konečný priemer je aritmetický priemer vypočítaný zo všetkých aktuálne dostupných konečných známok v danom semestri.\n\nSchéma výpočtu sa skladá z nasledujúcich krokov:\n1. Sčítanie konečných známok zadaných učiteľmi\n2. Delené počtom predmetov, pre ktoré už boli vydané známky</string>
     <string name="grade_summary_final_average">Konečný priemer</string>
     <string name="grade_summary_from_subjects">z %1$d z %2$d predmetov</string>
     <string name="grade_menu_summary">Zhrnutie</string>
@@ -239,12 +244,7 @@
     <string name="message_chip_only_unread">Iba neprečítané</string>
     <string name="message_chip_only_with_attachments">Iba s prílohami</string>
     <string name="message_read">Prečítaná: %s</string>
-    <plurals name="message_read_by">
-        <item quantity="one">Prečítaná cez: %1$d z %2$d osôb</item>
-        <item quantity="few">Prečítaná cez: %1$d z %2$d osôb</item>
-        <item quantity="many">Prečítaná cez: %1$d z %2$d osôb</item>
-        <item quantity="other">Prečítaná cez: %1$d z %2$d osôb</item>
-    </plurals>
+    <string name="message_read_by">Prečítaná cez: %1$d z %2$d osôb</string>
     <plurals name="message_number_item">
         <item quantity="one">%d správa</item>
         <item quantity="few">%d správy</item>
@@ -403,7 +403,7 @@
         <item quantity="many">Máte %1$d nových stretnutí</item>
         <item quantity="other">Máte %1$d nových stretnutí</item>
     </plurals>
-    <string name="conferences_present">Present at conference</string>
+    <string name="conferences_present">Prítomnosť na stretnutí</string>
     <string name="conference_agenda">Agenda</string>
     <!--Director information-->
     <string name="school_announcement_title">Školské oznámenia</string>
@@ -593,7 +593,7 @@
     <string name="all_yes">Áno</string>
     <string name="all_no">Nie</string>
     <string name="all_save">Uložiť</string>
-    <string name="all_title">Title</string>
+    <string name="all_title">Titul</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Žiadne lekcie</string>
     <string name="widget_timetable_theme_title">Vybrať motív</string>
@@ -603,7 +603,7 @@
     <!--Preferences-->
     <string name="pref_view_header">Vzhľad a správanie aplikácií</string>
     <string name="pref_view_list">Predvolené zobrazenie</string>
-    <string name="pref_view_grade_average_mode">Výpočet koncoročního priemeru</string>
+    <string name="pref_view_grade_average_mode">Možnosti vypočítaného priemeru</string>
     <string name="pref_view_grade_average_force_calc">Vynútiť priemerný výpočet podľa aplikácie</string>
     <string name="pref_view_present">Zobraziť prítomnosť</string>
     <string name="pref_view_app_theme">Motív</string>
@@ -618,12 +618,18 @@
     <string name="pref_notify_header">Upozornenia</string>
     <string name="pref_notify_switch">Zobraziť upozornenia</string>
     <string name="pref_notify_upcoming_lessons_switch">Zobraziť upozornenia o nadchádzajúcej lekciu</string>
+    <string name="pref_notify_upcoming_lessons_persistent_switch">Nastaviť upozornenia o nadchádzajúcej lekcii ako trvalé</string>
+    <string name="pref_notify_upcoming_lessons_persistent_summary">Vypnúť, keď upozornenia nie je vo vašom hodinkách/náramku viditeľné</string>
     <string name="pref_notify_open_system_settings">Otvoriť systémové nastavenia upozornení</string>
     <string name="pref_notify_fix_sync_issues">Opravte problémy so synchronizáciou a upozornením</string>
     <string name="pref_notify_fix_sync_issues_message">Vaše zariadenie môže mať problémy so synchronizáciou dát as upozorneniami.\n\nAk ich chcete opraviť, pridajte Wulkanového do funkcie Autostart a vypnite optimalizáciu/úsporu batérie v nastavení systému telefóne.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Prejsť do nastavení</string>
     <string name="pref_notify_debug_switch">Zobraziť upozornenia o ladení</string>
     <string name="pref_notify_disabled_summary">Synchronizácia je vypnutá</string>
+    <string name="pref_notify_notifications_piggyback">Zachytiť upozornenia oficiálnej aplikácie</string>
+    <string name="pref_notification_piggyback_popup_title">Zachytiť upozornenia</string>
+    <string name="pref_notification_piggyback_popup_description">S touto funkciou môžete získať náhradu push upozornení ako v oficiálnej aplikácii. Všetko, čo musíte urobiť, je povoliť Wulkanowému čítať všetky vaše upozornenia v nastaveniach systému.\n\nAko to funguje?\nKeď dostanete oznámenie v Deníčku VULCAN, Wulkanowy bude o tom informovaný (k tomu je to dodatočné povolenie) a spustí synchronizáciu, aby mohol zaslať vlastné upozornenie.\n\nLEN PRE POKROČILÝCH POUŽĺVATEĹOV</string>
+    <string name="pref_notification_piggyback_popup_positive">Prejsť do nastavení</string>
     <string name="pref_services_header">Synchronizácia</string>
     <string name="pref_services_switch">Automatická aktualizácia</string>
     <string name="pref_services_suspended">Pozastavený počas dovolenky</string>

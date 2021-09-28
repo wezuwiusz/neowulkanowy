@@ -41,8 +41,8 @@
         <item>Farben der Bewertungen im Logbuch</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
-        <item>Durchschnittsnote für das 2. Semester</item>
         <item>Durchschnitt der Noten aus beiden Semestern</item>
+        <item>Durchschnittswert der Durchschnittswerte beider Semester</item>
         <item>Durchschnitt der Noten aus dem ganzen Jahr</item>
     </string-array>
     <string-array name="dashboard_tile_entries">

@@ -24,6 +24,7 @@
     <string name="account_details_title">Kontodetails</string>
     <string name="student_info_title">Schülerinfo</string>
     <string name="dashboard_title">Übersicht</string>
+    <string name="notifications_center_title">Benachrichtigungszentrum</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -43,7 +44,7 @@
     <string name="login_sign_in">Anmelden</string>
     <string name="login_invalid_password">Passwort ist zu kurz</string>
     <string name="login_incorrect_password_default">Anmeldedaten sind falsch</string>
-    <string name="login_incorrect_password">%1$s. Stellen Sie sicher, dass die richtige UONET+ Registervariation im unteren Feld ausgewählt ist</string>
+    <string name="login_incorrect_password">%1$s. Stellen Sie sicher, dass die korrekte UONET+ Registervariation unten ausgewählt ist</string>
     <string name="login_invalid_pin">Ungültige PIN</string>
     <string name="login_invalid_token">Ungültige token</string>
     <string name="login_expired_token">Token ist nicht mehr gültig</string>
@@ -91,6 +92,10 @@
     <string name="grade_summary_final_grade">Finaler Note</string>
     <string name="grade_summary_predicted_grade">Vorhergesagte Note</string>
     <string name="grade_summary_calculated_average">Berechnender Durchschnitt</string>
+    <string name="grade_summary_calculated_average_help_dialog_title">Wie funktioniert der berechnete Durchschnitt?</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">The Calculated Average is the arithmetic average calculated from the subjects averages. It allows you to know the approximate final average. It is calculated in a way selected by the user in the application settings. It is recommended that you choose the appropriate option. This is because the calculation of school averages differs. Additionally, if your school reports the average of the subjects on the Vulcan page, the application downloads them and does not calculate these averages. This can be changed by forcing the calculation of the average in the application settings.\n\n<b>Average of grades only from selected semester</b>:\n1. Calculating the weighted average for each subject in a given semester\n2.Adding calculated averages\n3. Calculation of the arithmetic average of the summed averages\n\n<b>Average of averages from both semesters</b>:\n1.Calculating the weighted average for each subject in semester 1 and 2\n2. Calculating the arithmetic average of the calculated averages for semesters 1 and 2 for each subject.\n3. Adding calculated averages\n4. Calculation of the arithmetic average of the summed averages\n\n<b>Average of grades from the whole year:</b>\n1. Calculating weighted average over the year for each subject. The final average in the 1st semester is irrelevant.\n3. Adding calculated averages\n4. Calculating the arithmetic average of summed averages</string>
+    <string name="grade_summary_final_average_help_dialog_title">Wie funktioniert der endgültige Durchschnitt?</string>
+    <string name="grade_summary_final_average_help_dialog_message">The Final Average is the arithmetic average calculated from all currently available final grades in the given semester.\n\nThe calculation scheme consists of the following steps:\n1. Summing up the final grades given by teachers\n2. Divide by the number of subjects that have already been graded</string>
     <string name="grade_summary_final_average">Finaler Durchschnitt</string>
     <string name="grade_summary_from_subjects">aus %1$d von %2$d Schulfächern</string>
     <string name="grade_menu_summary">Zusammenfassung</string>
@@ -156,7 +161,7 @@
     <!--Additional lessons-->
     <string name="additional_lessons_title">Zusätzliche Lektionen</string>
     <string name="additional_lessons_button">Zusätzliche Lektionen anzeigen</string>
-    <string name="additional_lessons_no_items">Keine Infos zu zusätzlichen Lektionen</string>
+    <string name="additional_lessons_no_items">Keine Informationen über zusätzlichen Lektionen</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Übersicht über die Schulbesuch</string>
     <string name="attendance_absence_school">Aus schulischen Gründen abwesend</string>
@@ -186,8 +191,8 @@
         <item quantity="other">Neue prüfungen</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">Du hast %d neue Prüfung erhalten</item>
-        <item quantity="other">Sie haben %d neue Prüfungen erhalten</item>
+        <item quantity="one">Du hast %d neue Prüfung</item>
+        <item quantity="other">Du hast %d neue Prüfungen</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d prüfung</item>
@@ -213,16 +218,13 @@
     <string name="message_subject">Thema</string>
     <string name="message_content">Inhalt</string>
     <string name="message_send_successful">Nachricht erfolgreich gesendet</string>
-    <string name="message_not_exists">Nachricht existiert nicht</string>
+    <string name="message_not_exists">Nachricht nicht vorhanden</string>
     <string name="message_required_recipients">Sie müssen mindestens 1 Empfänger auswählen.</string>
     <string name="message_content_min_length">Der Inhalt der Nachricht muss mindestens 3 Zeichen lang sein.</string>
     <string name="message_chip_only_unread">Nur ungelesen</string>
     <string name="message_chip_only_with_attachments">Nur mit Anhängen</string>
     <string name="message_read">Lesen: %s</string>
-    <plurals name="message_read_by">
-        <item quantity="one">Lesen von: %1$d von %2$d Personen</item>
-        <item quantity="other">Lesen von: %1$d von %2$d Personen</item>
-    </plurals>
+    <string name="message_read_by">Lesen von: %1$d von %2$d Personen</string>
     <plurals name="message_number_item">
         <item quantity="one">%d nachricht</item>
         <item quantity="other">%d nachrichten</item>
@@ -345,7 +347,7 @@
         <item quantity="one">Sie haben %1$d neue konferenz</item>
         <item quantity="other">Sie haben %1$d neue konferenzen</item>
     </plurals>
-    <string name="conferences_present">Present at conference</string>
+    <string name="conferences_present">Teilnahme an einem Meeting</string>
     <string name="conference_agenda">Agenda</string>
     <!--Director information-->
     <string name="school_announcement_title">Schulankündigungen</string>
@@ -515,7 +517,7 @@
     <string name="all_yes">Ja</string>
     <string name="all_no">Nein</string>
     <string name="all_save">Speichern</string>
-    <string name="all_title">Title</string>
+    <string name="all_title">Titel</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Keine Lektionen</string>
     <string name="widget_timetable_theme_title">Thema wählen</string>
@@ -525,7 +527,7 @@
     <!--Preferences-->
     <string name="pref_view_header">Aussehen &amp; Verhalten</string>
     <string name="pref_view_list">Standard Ansicht</string>
-    <string name="pref_view_grade_average_mode">Berechnung des Jahresenddurchschnitts</string>
+    <string name="pref_view_grade_average_mode">Berechnete Durchschnittsoptionen</string>
     <string name="pref_view_grade_average_force_calc">Mittelwertberechnung durch App erzwingen</string>
     <string name="pref_view_present">Anwesendheit zeigen</string>
     <string name="pref_view_app_theme">Thema</string>
@@ -540,12 +542,18 @@
     <string name="pref_notify_header">Benachrichtigungen</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>
     <string name="pref_notify_upcoming_lessons_switch">Benachrichtigungen über bevorstehende Lektionen anzeigen</string>
+    <string name="pref_notify_upcoming_lessons_persistent_switch">Festlegen einer Benachrichtigung über die bevorstehende Lektion dauerhaft</string>
+    <string name="pref_notify_upcoming_lessons_persistent_summary">Deaktivieren wenn die Benachrichtigung nicht in deiner Uhr/Band angezeigt wird</string>
     <string name="pref_notify_open_system_settings">Systembenachrichtigungseinstellungen öffnen</string>
     <string name="pref_notify_fix_sync_issues">Synchronisierungs- und Benachrichtigungsprobleme reparieren</string>
     <string name="pref_notify_fix_sync_issues_message">Ihr Gerät hat möglicherweise Probleme mit der Datensynchronisierung und Benachrichtigungen.\n\nUm diese zu reparieren, fügen Sie Wulkanowy zum Autostart hinzu und deaktivieren Sie die Batterieoptimierung in den Systemeinstellungen des Geräts.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Gehe zu den Einstellungen</string>
     <string name="pref_notify_debug_switch">Debug-Benachrichtigungen anzeigen</string>
     <string name="pref_notify_disabled_summary">Synchronisierung ist deaktiviert</string>
+    <string name="pref_notify_notifications_piggyback">Offizielle App-Benachrichtigungen erfassen</string>
+    <string name="pref_notification_piggyback_popup_title">Benachrichtigungen erfassen</string>
+    <string name="pref_notification_piggyback_popup_description">With this feature you can gain a substitute of push notifications like in the official app. All you need to do is allow Wulkanowy to receive all notifications in your system settings.\n\nHow it works?\nWhen you get a notification in Dziennik VULCAN, Wulkanowy will be notified (that\'s what these extra permissions are for) and will trigger a sync so that can send its own notification.\n\nFOR ADVANCED USERS ONLY</string>
+    <string name="pref_notification_piggyback_popup_positive">Gehe zu Einstellungen</string>
     <string name="pref_services_header">Synchronisierung</string>
     <string name="pref_services_switch">Automatische Aktualisierung</string>
     <string name="pref_services_suspended">An Feiertagen suspendiert</string>

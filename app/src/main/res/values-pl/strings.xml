@@ -24,6 +24,7 @@
     <string name="account_details_title">Szczegóły konta</string>
     <string name="student_info_title">Informacje o uczniu</string>
     <string name="dashboard_title">Start</string>
+    <string name="notifications_center_title">Centrum powiadomień</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -43,7 +44,7 @@
     <string name="login_sign_in">Zaloguj</string>
     <string name="login_invalid_password">To hasło jest za krótkie</string>
     <string name="login_incorrect_password_default">Dane logowania są niepoprawne</string>
-    <string name="login_incorrect_password">%1$s. Upewnij się, że poniżej została wybrana odpowiednia odmiana dziennika UONET+</string>
+    <string name="login_incorrect_password">%1$s. Upewnij się, że wybrano poprawną odmianę dziennika UONET+ poniżej</string>
     <string name="login_invalid_pin">Nieprawidłowy PIN</string>
     <string name="login_invalid_token">Nieprawidłowy token</string>
     <string name="login_expired_token">Token stracił ważność</string>
@@ -91,11 +92,11 @@
     <string name="grade_summary_final_grade">Ocena końcowa</string>
     <string name="grade_summary_predicted_grade">Przewidywana ocena</string>
     <string name="grade_summary_calculated_average">Obliczona średnia</string>
-    <string name="grade_summary_calculated_average_help_dialog_title">Jak działa Obliczona średnia?</string>
-    <string name="grade_summary_calculated_average_help_dialog_message">Obliczona średnia to średnia arytmetyczna wyliczona ze średnich przedmiotów. Pozwala ona na poznanie przybliżonej średniej końcowej. Jest obliczana w sposób wybrany przez użytkownika w ustawieniach aplikacji. Zalecane jest, aby wybrać odpowiednią opcję. Wynika to z tego, że sposoby obliczania średnich w szkołach różnią się. Dodatkowo jeśli twoja szkoła podaje średnią z przedmiotów na stronie dziennika aplikacja pobiera je i nie wylicza tych średnich. Można to zmienić wymuszając liczenie średniej w ustawieniach aplikacji.\n\n<b>Średnia ocen z aktualnie wybranego semestru</b>:\n1. Obliczanie średniej ważonej dla każdego przedmiotu w danym semestrze\n2. Sumowanie obliczonych średnich\n3. Obliczenie średniej arytmetycznej z zsumowanych średnich\n\n<b>Średnia średnich z obu semestrów</b>:\n1. Obliczanie średniej ważonej dla każdego przedmiotu w semestrze 1 i 2\n2. Obliczanie średniej arytmetycznej z obliczonych średnich semestrów 1 i 2 dla każdego przedmiotu.\n3. Sumowanie obliczonych średnich\n4. Obliczenie średniej arytmetycznej z zsumowanych średnich\n\n<b>Średnia wszystkich ocen z całego roku:</b>\n1. Obliczanie średniej ważonej z całego roku dla każdego przedmiotu. Średnia końcowa w 1 semestrze jest bez znaczenia.\n3. Sumowanie obliczonych średnich\n4. Obliczenie średniej arytmetycznej z zsumowanych średnich</string>
+    <string name="grade_summary_calculated_average_help_dialog_title">Jak działa obliczona średnia?</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Obliczona średnia jest średnią arytmetyczną obliczoną ze średnich przedmiotów. Pozwala ona na poznanie przybliżonej średniej końcowej. Jest obliczana w sposób wybrany przez użytkownika w ustawieniach aplikacji. Zaleca się wybranie odpowiedniej opcji. Dzieje się tak dlatego, że obliczanie średnich w szkołach różni się. Dodatkowo, jeśli twoja szkoła ma włączone średnie przedmiotów na stronie dziennika Vulcan, aplikacja pobiera je i ich nie oblicza. Można to zmienić, wymuszając obliczanie średniej w ustawieniach aplikacji.\n\n<b>Średnia ocen tylko z wybranego semestru</b>:\n1. Obliczanie średniej arytmetycznej każdego przedmiotu w danym semestrze\n2. Zsumowanie obliczonych średnich\n3. Obliczanie średniej arytmetycznej zsumowanych średnich\n\n<b>Średnia ze średnich z obu semestrów</b>:\n1.Obliczanie średniej arytmetycznej każdego przedmiotu w semestrze 1 i 2\n2. Obliczanie średniej arytmetycznej obliczonych średnich w semetrze 1 i 2 każdego przedmiotu.\n3. Zsumowanie obliczonych średnich\n4. Obliczanie średniej arytmetycznej zsumowanych średnich\n\n<b>Średnia wszystkich ocen z całego roku:</b>\n1. Obliczanie średniej arytmetycznej z każdego przedmiotu w ciągu całego roku. Końcowa ocena w 1 semestrze jest bez znaczenia.\n3. Zsumowanie obliczonych średnich\n4. Obliczanie średniej arytmetycznej z zsumowanych średnich</string>
+    <string name="grade_summary_final_average_help_dialog_title">Jak działa końcowa średnia?</string>
+    <string name="grade_summary_final_average_help_dialog_message">Średnią końcową jest średnia arytmetyczna obliczona na podstawie wszystkich obecnie dostępnych ocen końcowych w danym semestrze.\n\nSchemat obliczeń składa się z następujących kroków:\n1. Sumowanie końcowych ocen wpisanych przez nauczycieli\n2. Dzielenie przez liczbę przedmiotów, z których oceny zostały już wystawione</string>
     <string name="grade_summary_final_average">Końcowa średnia</string>
-    <string name="grade_summary_final_average_help_dialog_title">Jak działa Końcowa średnia?</string>
-    <string name="grade_summary_final_average_help_dialog_message">Końcowa średnia to średnia arytmetyczna wyliczona ze wszystkich aktualnie dostępnych ocen końcowych w danym semestrze.\n\nSchemat obliczania składa się z następujących kroków:\n1. Zsumowanie ocen końcowych wystawionych przez nauczycieli\n2. Podzielenie przez liczbę przedmiotów, z których oceny zostały już wystawione</string>
     <string name="grade_summary_from_subjects">z %1$d na %2$d przedmiotów</string>
     <string name="grade_menu_summary">Podsumowanie</string>
     <string name="grade_menu_statistics">Klasa</string>
@@ -243,12 +244,7 @@
     <string name="message_chip_only_unread">Tylko nieprzeczytane</string>
     <string name="message_chip_only_with_attachments">Tylko z załącznikami</string>
     <string name="message_read">Przeczytana: %s</string>
-    <plurals name="message_read_by">
-        <item quantity="one">Przeczytana przez: %1$d z %2$d osób</item>
-        <item quantity="few">Przeczytana przez: %1$d z %2$d osób</item>
-        <item quantity="many">Przeczytana przez: %1$d z %2$d osób</item>
-        <item quantity="other">Przeczytana przez: %1$d z %2$d osób</item>
-    </plurals>
+    <string name="message_read_by">Przeczytana przez: %1$d z %2$d osób</string>
     <plurals name="message_number_item">
         <item quantity="one">%d wiadomość</item>
         <item quantity="few">%d wiadomości</item>
@@ -607,7 +603,7 @@
     <!--Preferences-->
     <string name="pref_view_header">Wygląd i zachowanie aplikacji</string>
     <string name="pref_view_list">Domyślny widok</string>
-    <string name="pref_view_grade_average_mode">Opcje średniej obliczonej</string>
+    <string name="pref_view_grade_average_mode">Opcje obliczonej średniej</string>
     <string name="pref_view_grade_average_force_calc">Wymuś obliczanie średniej przez aplikację</string>
     <string name="pref_view_present">Pokazuj obecność</string>
     <string name="pref_view_app_theme">Motyw</string>
@@ -622,6 +618,8 @@
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
     <string name="pref_notify_upcoming_lessons_switch">Pokazuj powiadomienia o nadchodzących lekcjach</string>
+    <string name="pref_notify_upcoming_lessons_persistent_switch">Ustaw powiadomienie o nadchodzącej lekcji jako trwałe</string>
+    <string name="pref_notify_upcoming_lessons_persistent_summary">Wyłącz, gdy powiadomienie nie jest widoczne na zegarku/opasce</string>
     <string name="pref_notify_open_system_settings">Otwórz systemowe ustawienia powiadomień</string>
     <string name="pref_notify_fix_sync_issues">Napraw problemy z synchronizacją i powiadomieniami</string>
     <string name="pref_notify_fix_sync_issues_message">Na twoim urządzeniu mogą występować problemy z synchronizacją danych i powiadomieniami.\n\nBy je naprawić, dodaj Wulkanowego do autostartu i wyłącz optymalizację/oszczędzanie baterii w ustawieniach systemowych telefonu.</string>
@@ -630,7 +628,7 @@
     <string name="pref_notify_disabled_summary">Synchronizacja jest wyłączona</string>
     <string name="pref_notify_notifications_piggyback">Przechwytywanie powiadomień oficjalnej aplikacji</string>
     <string name="pref_notification_piggyback_popup_title">Przechwytywanie powiadomień</string>
-    <string name="pref_notification_piggyback_popup_description">Dzięki tej funkcji możesz zyskać namiastkę powiadomień push takich, jak w oficjalnej aplikacji. Wystarczy że zezwolisz Wulkanowemu na odbieranie wszystkich powiadomień w ustawieniach systemowych.\n\nJak to działa?\nGdy dostaniesz powiadomienie w Dzienniczku VULCANa Wulkanowy zostanie o tym powiadomiony (po to te dodatkowe uprawnienia) i uruchomi synchronizację, dzięki czemu będzie mógł wysłać własne powiadomienie.\n\nTYLKO DLA ZAAWANSOWANYCH UŻYTKOWNIKÓW</string>
+    <string name="pref_notification_piggyback_popup_description">Dzięki tej funkcji możesz uzyskać namiastkę powiadomień push, takich jak w oficjalnej aplikacji. Wszystko, co musisz zrobić, to zezwolić Wulkanowemu na odczytywanie wszystkich powiadomień w ustawieniach systemowych.\n\nJak to działa?\nKiedy otrzymasz powiadomienie w Dzienniczku VULCAN, Wulkanowy zostanie o tym powiadomiony (do tego jest to dodatkowe uprawnienie) i uruchomi synchronizację, aby mógł wysłać własne powiadomienie.\n\nWYŁĄCZNIE DLA ZAAWANSOWANYCH UŻYTKOWNIKÓW</string>
     <string name="pref_notification_piggyback_popup_positive">Przejdź do ustawień</string>
     <string name="pref_services_header">Synchronizacja</string>
     <string name="pref_services_switch">Automatyczna aktualizacja</string>

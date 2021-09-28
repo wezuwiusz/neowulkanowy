@@ -24,6 +24,7 @@
     <string name="account_details_title">Данные аккаунта</string>
     <string name="student_info_title">Информация о студенте</string>
     <string name="dashboard_title">Панель</string>
+    <string name="notifications_center_title">Центр уведомлений</string>
     <!--Subtitles-->
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
@@ -42,8 +43,8 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Войти</string>
     <string name="login_invalid_password">Слишком короткий пароль</string>
-    <string name="login_incorrect_password_default">Данные для входа неверны</string>
-    <string name="login_incorrect_password">%1$s. Убедитесь, что в поле ниже выбран правильный вариант регистра UONET+</string>
+    <string name="login_incorrect_password_default">Данные для входа указаны неверно</string>
+    <string name="login_incorrect_password">%1$s. Убедитесь, что ниже выбран правильный UONET+ вариант регистра</string>
     <string name="login_invalid_pin">Неправильный PIN</string>
     <string name="login_invalid_token">Неверный token</string>
     <string name="login_expired_token">Token просрочен</string>
@@ -91,6 +92,10 @@
     <string name="grade_summary_final_grade">Итоговая оценка</string>
     <string name="grade_summary_predicted_grade">Ожидаемая оценка</string>
     <string name="grade_summary_calculated_average">Рассчитанная средняя оценка</string>
+    <string name="grade_summary_calculated_average_help_dialog_title">Как рассчитывается средняя работа?</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Расчетное среднее - это среднее арифметическое, рассчитанное на основе средних значений испытуемых. Это позволяет узнать приблизительное итоговое среднее значение. Он рассчитывается способом, выбранным пользователем в настройках приложения. Рекомендуется выбрать подходящий вариант. Это потому, что расчет средних показателей школы отличается. Кроме того, если ваша школа сообщает среднее значение по предметам на странице Vulcan, приложение загружает их и не вычисляет эти средние значения. Это можно изменить, принудительно вычисляя среднее значение в настройках приложения. \ N \ n <b> Среднее значение только за выбранный семестр </b>: \ n1. Вычисление средневзвешенного значения по каждому предмету за семестр \ n2.Добавление вычисленных средних \ n3. Вычисление среднего арифметического суммарных средних \ n \ n <b> Среднее из средних значений за оба семестра </b>: \ n1.Расчет средневзвешенного значения для каждого предмета в семестрах 1 и 2 \ n2. Вычисление среднего арифметического рассчитанных средних значений для семестров 1 и 2 по каждому предмету. \ N3. Добавление вычисленных средних \ n4. Расчет среднего арифметического суммированных средних \ n \ n <b> Среднее значение оценок за весь год: </b> \ n1. Расчет средневзвешенного значения за год по каждому предмету. Итоговое среднее значение за 1 семестр не имеет значения. \ N3. Добавление вычисленных средних \ n4. Расчет среднего арифметического</string>
+    <string name="grade_summary_final_average_help_dialog_title">Как работает окончательный средний показатель?</string>
+    <string name="grade_summary_final_average_help_dialog_message">Среднее арифметическое - это среднее арифметическое, рассчитанное по всем имеющимся на данный момент итоговым классам данного семестра.\n\nСхема расчета состоит из следующих шагов:\n1. Суммирование итоговых классов преподавателей\n2. Деление по количеству уже оцененных предметов</string>
     <string name="grade_summary_final_average">Итоговая средняя оценка</string>
     <string name="grade_summary_from_subjects">от %1$d из %2$d субъектов</string>
     <string name="grade_menu_summary">Итоги</string>
@@ -239,12 +244,7 @@
     <string name="message_chip_only_unread">Только непрочитанные</string>
     <string name="message_chip_only_with_attachments">Только с вложениями</string>
     <string name="message_read">Чтение: %s</string>
-    <plurals name="message_read_by">
-        <item quantity="one">Прочитано: %1$d из %2$d человек</item>
-        <item quantity="few">Прочитано: %1$d из %2$d человек</item>
-        <item quantity="many">Прочитано: %1$d из %2$d человек</item>
-        <item quantity="other">Прочитано: %1$d из %2$d человек</item>
-    </plurals>
+    <string name="message_read_by">Прочитано: %1$d из %2$d человек</string>
     <plurals name="message_number_item">
         <item quantity="one">%d сообщение</item>
         <item quantity="few">%d сообщения</item>
@@ -403,8 +403,8 @@
         <item quantity="many">У вас %1$d новая конференция</item>
         <item quantity="other">У вас %1$d новых конференций</item>
     </plurals>
-    <string name="conferences_present">Present at conference</string>
-    <string name="conference_agenda">Agenda</string>
+    <string name="conferences_present">Присутствует на конференции</string>
+    <string name="conference_agenda">Повестка дня</string>
     <!--Director information-->
     <string name="school_announcement_title">Объявления школ</string>
     <string name="school_announcement_no_items">Нет объявлений о школе</string>
@@ -593,7 +593,7 @@
     <string name="all_yes">Да</string>
     <string name="all_no">Нет</string>
     <string name="all_save">Сохранить</string>
-    <string name="all_title">Title</string>
+    <string name="all_title">Тема</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Нет уроков</string>
     <string name="widget_timetable_theme_title">Выбрать тему</string>
@@ -603,7 +603,7 @@
     <!--Preferences-->
     <string name="pref_view_header">Внешний вид приложения &amp; поведение</string>
     <string name="pref_view_list">Окно по умолчанию</string>
-    <string name="pref_view_grade_average_mode">Способ определения средней годовой оценки</string>
+    <string name="pref_view_grade_average_mode">Рассчитанные средние параметры</string>
     <string name="pref_view_grade_average_force_calc">Принудительно высчитать среднюю оценку через приложение</string>
     <string name="pref_view_present">Показать присутствие</string>
     <string name="pref_view_app_theme">Тема</string>
@@ -618,12 +618,18 @@
     <string name="pref_notify_header">Уведомления</string>
     <string name="pref_notify_switch">Показывать уведомления</string>
     <string name="pref_notify_upcoming_lessons_switch">Показывать уведомления о будущих уроках</string>
+    <string name="pref_notify_upcoming_lessons_persistent_switch">Сделать уведомления о предстоящем уроке постоянным</string>
+    <string name="pref_notify_upcoming_lessons_persistent_summary">Выключить, когда уведомление не отображается в чата/полосе</string>
     <string name="pref_notify_open_system_settings">Открыть настройки уведомлений системы</string>
     <string name="pref_notify_fix_sync_issues">Исправить проблемы с синхронизацией и уведомлениями</string>
     <string name="pref_notify_fix_sync_issues_message">На вашем устройстве могут быть проблемы с синхронизацией данных и уведомлениями.\n\nЧтобы их исправить, вам необходимо добавить Wulkanowy в авто-старт и выключить оптимизацию/экономию батареи в настройках устройства.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Перейти в настройски</string>
     <string name="pref_notify_debug_switch">Показывать дебаг-уведомления</string>
     <string name="pref_notify_disabled_summary">Синхронизация отключена</string>
+    <string name="pref_notify_notifications_piggyback">Записывать официальные уведомления</string>
+    <string name="pref_notification_piggyback_popup_title">Показывать push-уведомления</string>
+    <string name="pref_notification_piggyback_popup_description">С помощью этой функции вы можете получить замену push-уведомлений, как в официальном приложении. Все, что вам нужно сделать, это разрешить Wulkanowy получать все уведомления в настройках системы.\n\nКак это работает?\nКогда вы получаете уведомление в Dziennik VULCAN, Wulkanowy будет уведомлен (это требует дополнительных прав) и запустит синхронизацию, чтобы отправить свое уведомление.\n\nТОЛЬКО ДЛЯ ПОЛЬЗОВАТЕЛЯ</string>
+    <string name="pref_notification_piggyback_popup_positive">Перейти к настройкам</string>
     <string name="pref_services_header">Синхронизация</string>
     <string name="pref_services_switch">Автоматическая синхронизация</string>
     <string name="pref_services_suspended">Приостановить синхронизации во время каникул</string>

@@ -24,6 +24,7 @@
     <string name="account_details_title">Деталі облікового запису</string>
     <string name="student_info_title">Інформація про учня</string>
     <string name="dashboard_title">Дошка</string>
+    <string name="notifications_center_title">Журнал сповіщень</string>
     <!--Subtitles-->
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
@@ -42,8 +43,8 @@
     <string name="login_symbol_hint">Symbol</string>
     <string name="login_sign_in">Увійти</string>
     <string name="login_invalid_password">Занадто короткий пароль</string>
-    <string name="login_incorrect_password_default">Дані для входу неправильні</string>
-    <string name="login_incorrect_password">%1$s. Переконайтеся, що у полі нижче вказано правильний варіант реєстрації UONET+</string>
+    <string name="login_incorrect_password_default">Вказані невірні дані</string>
+    <string name="login_incorrect_password">%1$s. Переконайтеся, що обрано правильну варіацію запису UONET+</string>
     <string name="login_invalid_pin">Неправильний PIN</string>
     <string name="login_invalid_token">Неправильний token</string>
     <string name="login_expired_token">Минув термін дії токену</string>
@@ -91,6 +92,10 @@
     <string name="grade_summary_final_grade">Підсумкова оцінка</string>
     <string name="grade_summary_predicted_grade">Очікувана оцінка</string>
     <string name="grade_summary_calculated_average">Розрахована середня оцінка</string>
+    <string name="grade_summary_calculated_average_help_dialog_title">Як розраховується середньо?</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Розрахункове середнє - це середнє арифметичне, обчислене з середніх показників для випробуваних. Це дозволяє дізнатися приблизну кінцеву середню величину. Він розраховується способом, обраним користувачем у налаштуваннях програми. Рекомендується вибрати відповідний варіант. Це пояснюється тим, що розрахунок середніх показників за школою відрізняється. Крім того, якщо у вашій школі повідомляється середнє значення предметів на сторінці Вулкан, програма завантажує їх і не обчислює ці середні значення. Це можна змінити шляхом примусового розрахунку середнього значення в налаштуваннях програми. \ N \ n <b> Середні оцінки лише за вибраний семестр </b>: \ n1. Розрахунок середньозваженого для кожного предмета в даному семестрі \ n2.Додавання розрахункових середніх \ n3. Розрахунок середнього арифметичного підсумованих середніх значень \ n \ n <b> Середнє значення середніх показників за обидва семестри </b>: \ n1.Обчислення середньозваженого значення для кожного предмета у 1 та 2 семестрах \ n2. Обчислення середнього арифметичного розрахункових середніх показників за 1 та 2 семестри для кожного предмета. \ N3. Додавання розрахункових середніх \ n4. Розрахунок середнього арифметичного підсумованих середніх значень \ n \ n <b> Середнє значення оцінок за весь рік: </b> \ n1. Розрахунок середньозваженого показника за рік для кожного предмета. Остаточний середній показник у 1 -му семестрі не має значення. \ N3. Додавання розрахункових середніх \ n4. Обчислення середнього арифметичного середніх суммованих середніх</string>
+    <string name="grade_summary_final_average_help_dialog_title">Як працює кінцевий середній показник?</string>
+    <string name="grade_summary_final_average_help_dialog_message">Підсумкове середнє значення - це середнє арифметичне, обчислене з усіх наявних наразі підсумкових оцінок у даному семестрі. \ N \ nСхема обчислення складається з таких кроків: \ n1. Підбиття підсумкових оцінок викладачів \ n2. Поділіть на кількість предметів, які вже оцінені</string>
     <string name="grade_summary_final_average">Підсумкова середня оцінка</string>
     <string name="grade_summary_from_subjects">з %1$d із %2$d тем</string>
     <string name="grade_menu_summary">Підсумок</string>
@@ -239,12 +244,7 @@
     <string name="message_chip_only_unread">Лише непрочитані</string>
     <string name="message_chip_only_with_attachments">Тільки з вкладеннями</string>
     <string name="message_read">Читання: %s</string>
-    <plurals name="message_read_by">
-        <item quantity="one">Прочитані: %1$d з %2$d осіб</item>
-        <item quantity="few">Прочитані: %1$d з %2$d осіб</item>
-        <item quantity="many">Прочитані: %1$d з %2$d осіб</item>
-        <item quantity="other">Прочитані: %1$d з %2$d осіб</item>
-    </plurals>
+    <string name="message_read_by">Прочитанно:%1$d через %2$d людей</string>
     <plurals name="message_number_item">
         <item quantity="one">%d повідомлення</item>
         <item quantity="few">%d повідомлення</item>
@@ -403,8 +403,8 @@
         <item quantity="many">У вас є %1$d нова конференція</item>
         <item quantity="other">У вас є %1$d нових конференцій</item>
     </plurals>
-    <string name="conferences_present">Present at conference</string>
-    <string name="conference_agenda">Agenda</string>
+    <string name="conferences_present">Присутність на конференції</string>
+    <string name="conference_agenda">Порядок денний</string>
     <!--Director information-->
     <string name="school_announcement_title">Оголошення школи</string>
     <string name="school_announcement_no_items">Жодних навчальних оголошень</string>
@@ -593,7 +593,7 @@
     <string name="all_yes">Так</string>
     <string name="all_no">Ні</string>
     <string name="all_save">Зберегти</string>
-    <string name="all_title">Title</string>
+    <string name="all_title">Титул</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Брак уроків</string>
     <string name="widget_timetable_theme_title">Увібрати тему</string>
@@ -603,7 +603,7 @@
     <!--Preferences-->
     <string name="pref_view_header">Поява додатка &amp; amp; поведінки</string>
     <string name="pref_view_list">Вікно за замовчуванням</string>
-    <string name="pref_view_grade_average_mode">Спосіб облічування оцінки на кінець року</string>
+    <string name="pref_view_grade_average_mode">Розрахункові середні параметри</string>
     <string name="pref_view_grade_average_force_calc">Примусово розрахувати середню оцінку через додаток</string>
     <string name="pref_view_present">Показати присутність</string>
     <string name="pref_view_app_theme">Тема</string>
@@ -618,12 +618,18 @@
     <string name="pref_notify_header">Повідомлення</string>
     <string name="pref_notify_switch">Показувати повідомлення</string>
     <string name="pref_notify_upcoming_lessons_switch">Показувати повідомлення о наступних уроках</string>
+    <string name="pref_notify_upcoming_lessons_persistent_switch">Зробити сповіщення майбутнього уроку нестійкими</string>
+    <string name="pref_notify_upcoming_lessons_persistent_summary">Вимкнути коли сповіщення не показуються у відстежувачі/темпі</string>
     <string name="pref_notify_open_system_settings">Відкрити налаштування сповіщень системи</string>
     <string name="pref_notify_fix_sync_issues">Виправити помилки з синхронізацією і повідомленнями</string>
     <string name="pref_notify_fix_sync_issues_message">На вашому пристрої можуть бути помилки з синхронізацією і повідомленнями\n\nЩоб виправити іх, вам необхідно додати Wulkanowy в авто-старт и вимкнути оптимізацію/экономію батареї в налаштуваннях пристрою.</string>
     <string name="pref_notify_fix_sync_issues_settings_button">Перейти до налаштувань</string>
     <string name="pref_notify_debug_switch">Показувати дебаг-повідомлення</string>
     <string name="pref_notify_disabled_summary">Синхронізація вимкнена</string>
+    <string name="pref_notify_notifications_piggyback">Захоплювати офіційні сповіщення програм</string>
+    <string name="pref_notification_piggyback_popup_title">Показувати push-повідомлення</string>
+    <string name="pref_notification_piggyback_popup_description">За допомогою цієї функції ви можете отримати заміну push -повідомлень, як у офіційному додатку. Все, що вам потрібно зробити, це дозволити Wulkanowy отримувати всі сповіщення у налаштуваннях вашої системи. \ N \ nЯк це працює? \ NКоли ви отримаєте сповіщення у Dziennik VULCAN, Wulkanowy отримає сповіщення (для цього призначені ці додаткові дозволи) і запустить синхронізація, яка може надсилати власне сповіщення. \ n \ n ТІЛЬКИ ДЛЯ РОЗШИРЕНИХ КОРИСТУВАЧІВ</string>
+    <string name="pref_notification_piggyback_popup_positive">Перейти до налаштувань</string>
     <string name="pref_services_header">Синхронізація</string>
     <string name="pref_services_switch">Автоматична синхронізація</string>
     <string name="pref_services_suspended">Призупинено на час канікул</string>
