@@ -41,8 +41,8 @@
         <item>Farby známok v denníku</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
-        <item>Priemer známok až od druhého semestra</item>
-        <item>Priemer známok z oboch semestrov</item>
+        <item>Priemer známok iba z vybraného semestra</item>
+        <item>Priemer z priemerov z oboch semestrov</item>
         <item>Priemer známok z celého roka</item>
     </string-array>
     <string-array name="dashboard_tile_entries">

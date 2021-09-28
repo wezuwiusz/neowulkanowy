@@ -23,11 +23,17 @@ class LuckyNumberRepository @Inject constructor(
 
     private val saveFetchResultMutex = Mutex()
 
-    fun getLuckyNumber(student: Student, forceRefresh: Boolean, notify: Boolean = false) = networkBoundResource(
+    fun getLuckyNumber(
+        student: Student,
+        forceRefresh: Boolean,
+        notify: Boolean = false,
+    ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         shouldFetch = { it == null || forceRefresh },
         query = { luckyNumberDb.load(student.studentId, now()) },
-        fetch = { sdk.init(student).getLuckyNumber(student.schoolShortName)?.mapToEntity(student) },
+        fetch = {
+            sdk.init(student).getLuckyNumber(student.schoolShortName)?.mapToEntity(student)
+        },
         saveFetchResult = { old, new ->
             if (new != old) {
                 old?.let { luckyNumberDb.deleteAll(listOfNotNull(it)) }
@@ -41,9 +47,11 @@ class LuckyNumberRepository @Inject constructor(
     fun getLuckyNumberHistory(student: Student, start: LocalDate, end: LocalDate) =
         luckyNumberDb.getAll(student.studentId, start, end)
 
-    suspend fun getNotNotifiedLuckyNumber(student: Student) = luckyNumberDb.load(student.studentId, now()).map {
-        if (it?.isNotified == false) it else null
-    }.first()
+    suspend fun getNotNotifiedLuckyNumber(student: Student) =
+        luckyNumberDb.load(student.studentId, now()).map {
+            if (it?.isNotified == false) it else null
+        }.first()
 
-    suspend fun updateLuckyNumber(luckyNumber: LuckyNumber?) = luckyNumberDb.updateAll(listOfNotNull(luckyNumber))
+    suspend fun updateLuckyNumber(luckyNumber: LuckyNumber?) =
+        luckyNumberDb.updateAll(listOfNotNull(luckyNumber))
 }

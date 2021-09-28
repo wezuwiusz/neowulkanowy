@@ -51,14 +51,18 @@ class MessageRepository @Inject constructor(
 
     @Suppress("UNUSED_PARAMETER")
     fun getMessages(
-        student: Student, semester: Semester,
-        folder: MessageFolder, forceRefresh: Boolean, notify: Boolean = false
+        student: Student,
+        semester: Semester,
+        folder: MessageFolder,
+        forceRefresh: Boolean,
+        notify: Boolean = false,
     ): Flow<Resource<List<Message>>> = networkBoundResource(
         mutex = saveFetchResultMutex,
         shouldFetch = {
-            it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(
-                getRefreshKey(cacheKey, student, folder)
+            val isExpired = refreshHelper.shouldBeRefreshed(
+                key = getRefreshKey(cacheKey, student, folder)
             )
+            it.isEmpty() || forceRefresh || isExpired
         },
         query = { messagesDb.loadAll(student.id.toInt(), folder.id) },
         fetch = {
@@ -77,7 +81,8 @@ class MessageRepository @Inject constructor(
     )
 
     private fun getMessagesWithReadByChange(
-        old: List<Message>, new: List<Message>,
+        old: List<Message>,
+        new: List<Message>,
         setNotified: Boolean
     ): List<Message> {
         val oldMeta = old.map { Triple(it, it.readBy, it.unreadBy) }
@@ -96,7 +101,9 @@ class MessageRepository @Inject constructor(
     }
 
     fun getMessage(
-        student: Student, message: Message, markAsRead: Boolean = false
+        student: Student,
+        message: Message,
+        markAsRead: Boolean = false,
     ): Flow<Resource<MessageWithAttachment?>> = networkBoundResource(
         shouldFetch = {
             checkNotNull(it, { "This message no longer exist!" })
@@ -135,8 +142,10 @@ class MessageRepository @Inject constructor(
     }
 
     suspend fun sendMessage(
-        student: Student, subject: String, content: String,
-        recipients: List<Recipient>
+        student: Student,
+        subject: String,
+        content: String,
+        recipients: List<Recipient>,
     ): SentMessage = sdk.init(student).sendMessage(
         subject = subject,
         content = content,

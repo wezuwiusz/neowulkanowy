@@ -33,7 +33,7 @@ class AutoRefreshHelper @Inject constructor(
     private val sharedPref: SharedPrefProvider
 ) {
 
-    fun isShouldBeRefreshed(key: String): Boolean {
+    fun shouldBeRefreshed(key: String): Boolean {
         val timestamp = sharedPref.getLong(key, 0).toLocalDateTime()
         val servicesInterval = sharedPref.getString(context.getString(R.string.pref_key_services_interval), context.getString(R.string.pref_default_services_interval)).toLong()
 

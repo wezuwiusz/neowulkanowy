@@ -9,9 +9,12 @@ import io.github.wulkanowy.utils.waitForResult
 import java.time.LocalDate.now
 import javax.inject.Inject
 
-class AttendanceWork @Inject constructor(private val attendanceRepository: AttendanceRepository) : Work {
+class AttendanceWork @Inject constructor(
+    private val attendanceRepository: AttendanceRepository
+) : Work {
 
     override suspend fun doWork(student: Student, semester: Semester) {
-        attendanceRepository.getAttendance(student, semester, now().monday, now().sunday, true).waitForResult()
+        attendanceRepository.getAttendance(student, semester, now().monday, now().sunday, true)
+            .waitForResult()
     }
 }

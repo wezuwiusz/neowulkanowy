@@ -1,8 +1,9 @@
-Wersja 1.2.3
+Wersja 1.3.0
 
-- naprawiliśmy pomieszane imiona nauczycieli z salami w planie lekcji
-- dodaliśmy brakujące okienka ze szczegółami na ekranie zebrań
-- klikając w kafelek z lekcjami na jutro aplikacja teraz przekierowuje na ekran z planem na jutro
-- naprawiliśmy błąd przy wylogowywaniu innego niż bieżący uczeń
+- naprawiliśmy logowanie na platformę Opolskiej eSzkoły
+- dodaliśmy centrum powiadomień i opcję odbierania pushy z oficjalnej aplikacji (dla zaawansowanych)
+- dodaliśmy objaśnienie do informacji o obliczonych średnich w podsumowaniu
+- poprawiliśmy wyświetlanie zmian w planie lekcji
+- dokonaliśmy też kilka innych zmian i kosmetycznych poprawek poprawiających komfort używania aplikacji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

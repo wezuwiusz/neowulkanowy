@@ -173,7 +173,7 @@ class TimetableWidgetFactory(
             updateNotCanceledLessonNumberColor(this, lesson)
             updateNotCanceledSubjectColor(this, lesson)
 
-            val teacherChange = lesson.teacherOld.isNotBlank() && lesson.teacher != lesson.teacherOld
+            val teacherChange = lesson.teacherOld.isNotBlank()
             updateNotCanceledRoom(this, lesson, teacherChange)
             updateNotCanceledTeacher(this, lesson, teacherChange)
         }

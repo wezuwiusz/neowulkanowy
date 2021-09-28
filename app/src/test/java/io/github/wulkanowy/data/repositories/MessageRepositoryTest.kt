@@ -69,7 +69,7 @@ class MessageRepositoryTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
+        every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
         repository = MessageRepository(
             messagesDb = messageDb,

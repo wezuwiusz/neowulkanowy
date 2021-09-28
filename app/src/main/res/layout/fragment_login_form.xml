@@ -110,10 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
                 android:gravity="center_horizontal"
                 android:text="@string/login_header_default"
                 android:textSize="16sp"
@@ -126,6 +124,20 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_goneMarginTop="64dp" />
 
+            <TextView
+                android:id="@+id/loginFormErrorBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:textAppearance="?attr/textAppearanceCaption"
+                android:textColor="@color/mtrl_error"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/loginFormHeader"
+                tools:text="Nazwa użytkownika lub hasło są niepoprawne albo hasło do konta wygasło"
+                tools:visibility="visible" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginFormUsernameLayout"
@@ -134,15 +146,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:hint="@string/login_nickname_hint"
                 app:errorEnabled="true"
-                app:layout_constraintBottom_toTopOf="@+id/loginFormPassLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormHeader">
+                app:layout_constraintTop_toBottomOf="@+id/loginFormErrorBox"
+                app:layout_goneMarginTop="48dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginFormUsername"
@@ -170,7 +182,6 @@
                 android:hint="@string/login_password_hint"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
-                app:layout_constraintBottom_toTopOf="@+id/loginFormRecoverLink"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormUsernameLayout"
@@ -200,7 +211,6 @@
                 android:textAppearance="?android:textAppearance"
                 app:backgroundTint="?android:windowBackground"
                 app:fontFamily="sans-serif-medium"
-                app:layout_constraintBottom_toTopOf="@id/loginFormHostLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormPassLayout"
                 tools:visibility="visible" />
@@ -217,7 +227,6 @@
                 android:layout_marginRight="24dp"
                 android:hint="@string/login_host_hint"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/loginFormAdvancedButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormRecoverLink">
@@ -262,14 +271,13 @@
                 android:id="@+id/loginFormPrivacyLink"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:gravity="start|center_vertical"
                 android:text="@string/login_privacy_policy"
                 android:textColor="?android:textColorSecondary"
                 android:textSize="12sp"
                 app:fontFamily="sans-serif-medium"
                 app:layout_constraintStart_toStartOf="@id/loginFormAdvancedButton"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormAdvancedButton"
+                app:layout_constraintTop_toTopOf="@+id/loginFormVersion"
                 tools:visibility="visible" />
 
             <TextView

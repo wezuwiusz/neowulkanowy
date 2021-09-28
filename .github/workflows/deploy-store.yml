@@ -28,15 +28,14 @@ jobs:
           SERVICES_ENCRYPT_KEY: ${{ secrets.SERVICES_ENCRYPT_KEY }}
         run: |
           gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/google-services.json.gpg
-          gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg
           gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg
       - name: Upload apk to google play
         env:
+          PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
           PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
           PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
-          PLAY_SERVICE_ACCOUNT_EMAIL: ${{ secrets.PLAY_SERVICE_ACCOUNT_EMAIL }}
-          PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
-        run: ./gradlew publishPlayRelease -PenableFirebase --stacktrace;
+          ANDROID_PUBLISHER_CREDENTIALS: ${{ secrets.ANDROID_PUBLISHER_CREDENTIALS }}
+        run: ./gradlew publishPlayReleaseApps -PenableFirebase --stacktrace;
 
   deploy-app-gallery:
     name: Deploy to AppGallery
@@ -60,7 +59,6 @@ jobs:
           SERVICES_ENCRYPT_KEY: ${{ secrets.SERVICES_ENCRYPT_KEY }}
         run: |
           gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/agconnect-services.json.gpg
-          gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg
           gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg
       - name: Prepare credentials
         env:
@@ -68,7 +66,7 @@ jobs:
         run: echo $AGC_CREDENTIALS > ./app/src/release/agconnect-credentials.json
       - name: Build and publish HMS version
         env:
+          PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
           PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
           PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
-          PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
         run: ./gradlew bundleHmsRelease --stacktrace && ./gradlew publishHuaweiAppGalleryHmsRelease --stacktrace

@@ -54,7 +54,7 @@ class ExamRemoteTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
+        every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
         examRepository = ExamRepository(examDb, sdk, refreshHelper)
     }

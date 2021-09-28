@@ -35,12 +35,12 @@ class ConferenceRepository @Inject constructor(
         semester: Semester,
         forceRefresh: Boolean,
         notify: Boolean = false,
-        startDate: LocalDateTime = LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC)
+        startDate: LocalDateTime = LocalDateTime.ofInstant(Instant.EPOCH, ZoneOffset.UTC),
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         shouldFetch = {
-            it.isEmpty() || forceRefresh
-                || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester))
+            val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, semester))
+            it.isEmpty() || forceRefresh || isExpired
         },
         query = {
             conferenceDb.loadAll(semester.diaryId, student.studentId, startDate)

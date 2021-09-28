@@ -45,6 +45,7 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <activity
             android:name=".ui.modules.splash.SplashActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/WulkanowyTheme.SplashScreen"
             tools:ignore="LockedOrientationActivity">
@@ -74,6 +75,7 @@
         <activity
             android:name=".ui.modules.timetablewidget.TimetableWidgetConfigureActivity"
             android:excludeFromRecents="true"
+            android:exported="true"
             android:noHistory="true"
             android:theme="@style/WulkanowyTheme.WidgetAccountSwitcher">
             <intent-filter>
@@ -83,6 +85,7 @@
         <activity
             android:name=".ui.modules.luckynumberwidget.LuckyNumberWidgetConfigureActivity"
             android:excludeFromRecents="true"
+            android:exported="true"
             android:noHistory="true"
             android:theme="@style/WulkanowyTheme.WidgetAccountSwitcher">
             <intent-filter>
@@ -93,6 +96,22 @@
         <service
             android:name=".services.widgets.TimetableWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name=".services.piggyback.VulcanNotificationListenerService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".services.messaging.AppMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
 
         <receiver
             android:name=".ui.modules.timetablewidget.TimetableWidgetProvider"
@@ -107,6 +126,7 @@
         </receiver>
         <receiver
             android:name=".ui.modules.luckynumberwidget.LuckyNumberWidgetProvider"
+            android:exported="true"
             android:label="@string/lucky_number_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

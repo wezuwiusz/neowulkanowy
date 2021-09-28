@@ -41,18 +41,22 @@ class TimetableRepository @Inject constructor(
     private val cacheKey = "timetable"
 
     fun getTimetable(
-        student: Student, semester: Semester, start: LocalDate, end: LocalDate,
-        forceRefresh: Boolean, refreshAdditional: Boolean = false
+        student: Student,
+        semester: Semester,
+        start: LocalDate,
+        end: LocalDate,
+        forceRefresh: Boolean,
+        refreshAdditional: Boolean = false,
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         shouldFetch = { (timetable, additional, headers) ->
             val refreshKey = getRefreshKey(cacheKey, semester, start, end)
-            val isShouldRefresh = refreshHelper.isShouldBeRefreshed(refreshKey)
+            val isExpired = refreshHelper.shouldBeRefreshed(refreshKey)
             val isRefreshAdditional = additional.isEmpty() && refreshAdditional
 
             val isNoData = timetable.isEmpty() || isRefreshAdditional || headers.isEmpty()
 
-            isNoData || forceRefresh || isShouldRefresh
+            isNoData || forceRefresh || isExpired
         },
         query = { getFullTimetableFromDatabase(student, semester, start, end) },
         fetch = {
@@ -79,8 +83,10 @@ class TimetableRepository @Inject constructor(
     )
 
     private fun getFullTimetableFromDatabase(
-        student: Student, semester: Semester,
-        start: LocalDate, end: LocalDate
+        student: Student,
+        semester: Semester,
+        start: LocalDate,
+        end: LocalDate,
     ): Flow<TimetableFull> {
         val timetableFlow = timetableDb.loadAll(
             diaryId = semester.diaryId,
@@ -113,20 +119,11 @@ class TimetableRepository @Inject constructor(
 
     private suspend fun refreshTimetable(
         student: Student,
-        lessonsOld: List<Timetable>, lessonsNew: List<Timetable>
+        lessonsOld: List<Timetable>,
+        lessonsNew: List<Timetable>,
     ) {
         val lessonsToRemove = lessonsOld uniqueSubtract lessonsNew
-        val lessonsToAdd = (lessonsNew uniqueSubtract lessonsOld).map { new ->
-            val matchingOld = lessonsOld.singleOrNull { new.start == it.start }
-            if (matchingOld != null) {
-                val useOldTeacher = new.teacher.isEmpty() && !new.changes && !matchingOld.changes
-                new.copy(
-                    room = if (new.room.isEmpty()) matchingOld.room else new.room,
-                    teacher = if (useOldTeacher) matchingOld.teacher
-                    else new.teacher
-                )
-            } else new
-        }
+        val lessonsToAdd = lessonsNew uniqueSubtract lessonsOld
 
         timetableDb.deleteAll(lessonsToRemove)
         timetableDb.insertAll(lessonsToAdd)

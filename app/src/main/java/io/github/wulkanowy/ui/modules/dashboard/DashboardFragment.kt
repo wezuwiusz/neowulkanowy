@@ -24,6 +24,7 @@ import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.MessageFragment
+import io.github.wulkanowy.ui.modules.notificationscenter.NotificationsCenterFragment
 import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.capitalise
@@ -120,6 +121,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.dashboard_menu_tiles -> presenter.onDashboardTileSettingsSelected()
+            R.id.dashboard_menu_notifaction_list -> presenter.onNotificationsCenterSelected()
             else -> false
         }
     }
@@ -180,6 +182,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
 
     override fun onFragmentReselected() {
         if (::presenter.isInitialized) presenter.onViewReselected()
+    }
+
+    override fun openNotificationsCenterView() {
+        (requireActivity() as MainActivity).pushView(NotificationsCenterFragment.newInstance())
     }
 
     override fun onDestroyView() {

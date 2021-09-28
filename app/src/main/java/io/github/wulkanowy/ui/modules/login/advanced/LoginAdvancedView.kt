@@ -49,7 +49,7 @@ interface LoginAdvancedView : BaseView {
 
     fun setErrorPassInvalid(focus: Boolean)
 
-    fun setErrorPassIncorrect()
+    fun setErrorPassIncorrect(message: String?)
 
     fun clearUsernameError()
 

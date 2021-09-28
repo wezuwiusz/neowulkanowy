@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -41,10 +42,12 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         get() = binding.loginFormPass.text.toString()
 
     override val formHostValue: String
-        get() = hostValues.getOrNull(hostKeys.indexOf(binding.loginFormHost.text.toString())).orEmpty()
+        get() = hostValues.getOrNull(hostKeys.indexOf(binding.loginFormHost.text.toString()))
+            .orEmpty()
 
     override val formHostSymbol: String
-        get() = hostSymbols.getOrNull(hostKeys.indexOf(binding.loginFormHost.text.toString())).orEmpty()
+        get() = hostSymbols.getOrNull(hostKeys.indexOf(binding.loginFormHost.text.toString()))
+            .orEmpty()
 
     override val nicknameLabel: String
         get() = getString(R.string.login_nickname_hint)
@@ -88,7 +91,13 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
         with(binding.loginFormHost) {
             setText(hostKeys.getOrNull(0).orEmpty())
-            setAdapter(LoginSymbolAdapter(context, R.layout.support_simple_spinner_dropdown_item, hostKeys))
+            setAdapter(
+                LoginSymbolAdapter(
+                    context,
+                    R.layout.support_simple_spinner_dropdown_item,
+                    hostKeys
+                )
+            )
             setOnClickListener { if (binding.loginFormContainer.visibility == GONE) dismissDropDown() }
         }
     }
@@ -142,24 +151,31 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         }
     }
 
-    override fun setErrorPassIncorrect() {
-        with(binding.loginFormPassLayout) {
-            error = getString(R.string.login_incorrect_password)
+    override fun setErrorPassIncorrect(message: String?) {
+        val error = message ?: getString(R.string.login_incorrect_password_default)
+
+        with(binding) {
+            loginFormUsernameLayout.error = " "
+            loginFormPassLayout.error = " "
+            loginFormErrorBox.text = getString(R.string.login_incorrect_password, error)
+            loginFormErrorBox.isVisible = true
         }
     }
 
     override fun setErrorEmailInvalid(domain: String) {
         with(binding.loginFormUsernameLayout) {
-            error = getString(R.string.login_invalid_custom_email,domain)
+            error = getString(R.string.login_invalid_custom_email, domain)
         }
     }
 
     override fun clearUsernameError() {
         binding.loginFormUsernameLayout.error = null
+        binding.loginFormErrorBox.isVisible = false
     }
 
     override fun clearPassError() {
         binding.loginFormPassLayout.error = null
+        binding.loginFormErrorBox.isVisible = false
     }
 
     override fun showSoftKeyboard() {
@@ -183,12 +199,18 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         binding.loginFormVersion.text = "v${appInfo.versionName}"
     }
 
-    override fun notifyParentAccountLogged(studentsWithSemesters: List<StudentWithSemesters>, loginData: Triple<String, String, String>) {
+    override fun notifyParentAccountLogged(
+        studentsWithSemesters: List<StudentWithSemesters>,
+        loginData: Triple<String, String, String>
+    ) {
         (activity as? LoginActivity)?.onFormFragmentAccountLogged(studentsWithSemesters, loginData)
     }
 
     override fun openPrivacyPolicyPage() {
-        context?.openInternetBrowser("https://wulkanowy.github.io/polityka-prywatnosci.html", ::showMessage)
+        context?.openInternetBrowser(
+            "https://wulkanowy.github.io/polityka-prywatnosci.html",
+            ::showMessage
+        )
     }
 
     override fun showContact(show: Boolean) {
@@ -210,7 +232,10 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
     }
 
     override fun openFaqPage() {
-        context?.openInternetBrowser("https://wulkanowy.github.io/czesto-zadawane-pytania/dlaczego-nie-moge-sie-zalogowac", ::showMessage)
+        context?.openInternetBrowser(
+            "https://wulkanowy.github.io/czesto-zadawane-pytania/dlaczego-nie-moge-sie-zalogowac",
+            ::showMessage
+        )
     }
 
     override fun onResume() {
@@ -223,7 +248,8 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
             chooserTitle = requireContext().getString(R.string.login_email_intent_title),
             email = "wulkanowyinc@gmail.com",
             subject = requireContext().getString(R.string.login_email_subject),
-            body = requireContext().getString(R.string.login_email_text,
+            body = requireContext().getString(
+                R.string.login_email_text,
                 "${appInfo.systemManufacturer} ${appInfo.systemModel}",
                 appInfo.systemVersion.toString(),
                 appInfo.versionName,

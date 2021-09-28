@@ -41,8 +41,8 @@
         <item>Цвета оценок в дневнике</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
-        <item>Средняя оценка со 2 семестра</item>
-        <item>Средняя оценка с двух семестров</item>
+        <item>Средние оценки только с выбранного семестра</item>
+        <item>Средние значения для обоих семестров</item>
         <item>Средняя оценок со всего года</item>
     </string-array>
     <string-array name="dashboard_tile_entries">

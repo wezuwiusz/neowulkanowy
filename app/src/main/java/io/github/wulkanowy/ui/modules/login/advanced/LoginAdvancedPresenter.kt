@@ -34,9 +34,9 @@ class LoginAdvancedPresenter @Inject constructor(
         }
     }
 
-    private fun onBadCredentials() {
+    private fun onBadCredentials(message: String?) {
         view?.run {
-            setErrorPassIncorrect()
+            setErrorPassIncorrect(message)
             showSoftKeyboard()
             Timber.i("Entered wrong username or password")
         }

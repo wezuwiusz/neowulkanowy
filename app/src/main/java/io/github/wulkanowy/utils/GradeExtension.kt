@@ -3,7 +3,7 @@ package io.github.wulkanowy.utils
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
-import io.github.wulkanowy.sdk.scrapper.grades.*
+import io.github.wulkanowy.sdk.scrapper.grades.isGradeValid
 
 fun List<Grade>.calcAverage(isOptionalArithmeticAverage: Boolean): Double {
     val isArithmeticAverage = isOptionalArithmeticAverage && !any { it.weightValue != .0 }
@@ -18,8 +18,7 @@ fun List<Grade>.calcAverage(isOptionalArithmeticAverage: Boolean): Double {
     return if (denominator != 0.0) counter / denominator else 0.0
 }
 
-@JvmName("calcSummaryAverage")
-fun List<GradeSummary>.calcAverage(plusModifier: Double, minusModifier: Double) = asSequence()
+fun List<GradeSummary>.calcFinalAverage(plusModifier: Double, minusModifier: Double) = asSequence()
     .mapNotNull {
         if (it.finalGrade.matches("[0-6][+-]?".toRegex())) {
             when {

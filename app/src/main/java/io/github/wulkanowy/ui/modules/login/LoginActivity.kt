@@ -103,9 +103,8 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
     }
 
     override fun notifyInitSymbolFragment(loginData: Triple<String, String, String>) {
-        (loginAdapter.getFragmentInstance(1) as? LoginSymbolFragment)?.onParentInitSymbolFragment(
-            loginData
-        )
+        (loginAdapter.getFragmentInstance(1) as? LoginSymbolFragment)
+            ?.onParentInitSymbolFragment(loginData)
     }
 
     override fun notifyInitStudentSelectFragment(studentsWithSemesters: List<StudentWithSemesters>) {

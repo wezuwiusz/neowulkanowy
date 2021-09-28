@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class LoginErrorHandler @Inject constructor(resources: Resources) : ErrorHandler(resources) {
 
-    var onBadCredentials: () -> Unit = {}
+    var onBadCredentials: (String?) -> Unit = {}
 
     var onInvalidToken: (String) -> Unit = {}
 
@@ -25,7 +25,7 @@ class LoginErrorHandler @Inject constructor(resources: Resources) : ErrorHandler
 
     override fun proceed(error: Throwable) {
         when (error) {
-            is BadCredentialsException -> onBadCredentials()
+            is BadCredentialsException -> onBadCredentials(error.message)
             is SQLiteConstraintException -> onStudentDuplicate(resources.getString(R.string.login_duplicate_student))
             is TokenDeadException -> onInvalidToken(resources.getString(R.string.login_expired_token))
             is InvalidTokenException -> onInvalidToken(resources.getString(R.string.login_invalid_token))

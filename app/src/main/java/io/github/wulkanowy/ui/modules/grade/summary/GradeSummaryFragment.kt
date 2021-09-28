@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -48,6 +49,11 @@ class GradeSummaryFragment :
     }
 
     override fun initView() {
+        with(gradeSummaryAdapter) {
+            onCalculatedHelpClickListener = presenter::onCalculatedAverageHelpClick
+            onFinalHelpClickListener = presenter::onFinalAverageHelpClick
+        }
+
         with(binding.gradeSummaryRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = gradeSummaryAdapter
@@ -55,7 +61,11 @@ class GradeSummaryFragment :
         with(binding) {
             gradeSummarySwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             gradeSummarySwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
-            gradeSummarySwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
+            gradeSummarySwipe.setProgressBackgroundColorSchemeColor(
+                requireContext().getThemeAttrColor(
+                    R.attr.colorSwipeRefresh
+                )
+            )
             gradeSummaryErrorRetry.setOnClickListener { presenter.onRetry() }
             gradeSummaryErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }
@@ -105,6 +115,22 @@ class GradeSummaryFragment :
 
     override fun showRefresh(show: Boolean) {
         binding.gradeSummarySwipe.isRefreshing = show
+    }
+
+    override fun showCalculatedAverageHelpDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.grade_summary_calculated_average_help_dialog_title)
+            .setMessage(R.string.grade_summary_calculated_average_help_dialog_message)
+            .setPositiveButton(R.string.all_close) { _, _ -> }
+            .show()
+    }
+
+    override fun showFinalAverageHelpDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.grade_summary_final_average_help_dialog_title)
+            .setMessage(R.string.grade_summary_final_average_help_dialog_message)
+            .setPositiveButton(R.string.all_close) { _, _ -> }
+            .show()
     }
 
     override fun onParentLoadData(semesterId: Int, forceRefresh: Boolean) {

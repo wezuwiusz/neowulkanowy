@@ -131,7 +131,9 @@ class GradeAverageProvider @Inject constructor(
         val updatedFirstSemesterGrades =
             firstSemesterSubject?.grades?.updateModifiers(student).orEmpty()
 
-        (updatedSecondSemesterGrades + updatedFirstSemesterGrades).calcAverage(isOptionalArithmeticAverage)
+        (updatedSecondSemesterGrades + updatedFirstSemesterGrades).calcAverage(
+            isOptionalArithmeticAverage
+        )
     } else {
         secondSemesterSubject.average
     }
@@ -147,7 +149,8 @@ class GradeAverageProvider @Inject constructor(
 
         return if (!isAnyVulcanAverage || isGradeAverageForceCalc) {
             val secondSemesterAverage =
-                secondSemesterSubject.grades.updateModifiers(student).calcAverage(isOptionalArithmeticAverage)
+                secondSemesterSubject.grades.updateModifiers(student)
+                    .calcAverage(isOptionalArithmeticAverage)
             val firstSemesterAverage = firstSemesterSubject?.grades?.updateModifiers(student)
                 ?.calcAverage(isOptionalArithmeticAverage) ?: secondSemesterAverage
 
@@ -213,7 +216,8 @@ class GradeAverageProvider @Inject constructor(
                 proposedPoints = "",
                 finalPoints = "",
                 pointsSum = "",
-                average = if (calcAverage) details.updateModifiers(student).calcAverage(isOptionalArithmeticAverage) else .0
+                average = if (calcAverage) details.updateModifiers(student)
+                    .calcAverage(isOptionalArithmeticAverage) else .0
             )
         }
     }

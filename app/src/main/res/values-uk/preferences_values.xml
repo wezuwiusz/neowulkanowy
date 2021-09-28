@@ -41,8 +41,8 @@
         <item>Кольори оцінок в щоденнику</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
-        <item>Середня оцінка з 2 семестру</item>
-        <item>Середнє оцінювання за обидва семестри</item>
+        <item>Середні оцінки тільки від обраного семестру</item>
+        <item>Середнє значення для обох семестів</item>
         <item>Середнє оцінювання за весь рік</item>
     </string-array>
     <string-array name="dashboard_tile_entries">

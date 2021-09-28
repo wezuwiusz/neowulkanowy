@@ -37,13 +37,12 @@ class GradeRepository @Inject constructor(
         student: Student,
         semester: Semester,
         forceRefresh: Boolean,
-        notify: Boolean = false
+        notify: Boolean = false,
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         shouldFetch = { (details, summaries) ->
-            val isShouldBeRefreshed =
-                refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester))
-            details.isEmpty() || summaries.isEmpty() || forceRefresh || isShouldBeRefreshed
+            val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, semester))
+            details.isEmpty() || summaries.isEmpty() || forceRefresh || isExpired
         },
         query = {
             val detailsFlow = gradeDb.loadAll(semester.semesterId, semester.studentId)
@@ -71,8 +70,8 @@ class GradeRepository @Inject constructor(
         newDetails: List<Grade>,
         notify: Boolean
     ) {
-        val notifyBreakDate =
-            oldGrades.maxByOrNull { it.date }?.date ?: student.registrationDate.toLocalDate()
+        val notifyBreakDate = oldGrades.maxByOrNull {it.date }
+            ?.date ?: student.registrationDate.toLocalDate()
         gradeDb.deleteAll(oldGrades uniqueSubtract newDetails)
         gradeDb.insertAll((newDetails uniqueSubtract oldGrades).onEach {
             if (it.date >= notifyBreakDate) it.apply {
@@ -89,8 +88,7 @@ class GradeRepository @Inject constructor(
     ) {
         gradeSummaryDb.deleteAll(oldSummaries uniqueSubtract newSummary)
         gradeSummaryDb.insertAll((newSummary uniqueSubtract oldSummaries).onEach { summary ->
-            val oldSummary =
-                oldSummaries.find { oldSummary -> oldSummary.subject == summary.subject }
+            val oldSummary = oldSummaries.find { old -> old.subject == summary.subject }
             summary.isPredictedGradeNotified = when {
                 summary.predictedGrade.isEmpty() -> true
                 notify && oldSummary?.predictedGrade != summary.predictedGrade -> false

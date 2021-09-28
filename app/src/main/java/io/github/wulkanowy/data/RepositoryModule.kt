@@ -8,8 +8,8 @@ import androidx.preference.PreferenceManager
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
-import com.squareup.moshi.Moshi
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -202,4 +202,8 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideSchoolAnnouncementDao(database: AppDatabase) = database.schoolAnnouncementDao
+
+    @Singleton
+    @Provides
+    fun provideNotificationDao(database: AppDatabase) = database.notificationDao
 }

@@ -31,6 +31,9 @@ class NotificationsPresenter @Inject constructor(
             )
             initView(appInfo.isDebug)
         }
+
+        checkNotificationPiggybackState()
+
         Timber.i("Settings notifications view was initialized")
     }
 
@@ -39,13 +42,18 @@ class NotificationsPresenter @Inject constructor(
 
         preferencesRepository.apply {
             when (key) {
-                isUpcomingLessonsNotificationsEnableKey -> {
+                isUpcomingLessonsNotificationsEnableKey, isUpcomingLessonsNotificationsPersistentKey -> {
                     if (!isUpcomingLessonsNotificationsEnable) {
                         timetableNotificationHelper.cancelNotification()
                     }
                 }
                 isDebugNotificationEnableKey -> {
                     chuckerCollector.showNotification = isDebugNotificationEnable
+                }
+                isNotificationPiggybackEnabledKey -> {
+                    if (isNotificationPiggybackEnabled && view?.isNotificationPermissionGranted == false) {
+                        view?.openNotificationPermissionDialog()
+                    }
                 }
             }
         }
@@ -58,5 +66,19 @@ class NotificationsPresenter @Inject constructor(
 
     fun onOpenSystemSettingsClicked() {
         view?.openSystemSettings()
+    }
+
+    fun onNotificationPermissionResult() {
+        view?.run {
+            setNotificationPiggybackPreferenceChecked(isNotificationPermissionGranted)
+        }
+    }
+
+    private fun checkNotificationPiggybackState() {
+        if (preferencesRepository.isNotificationPiggybackEnabled) {
+            view?.run {
+                setNotificationPiggybackPreferenceChecked(isNotificationPermissionGranted)
+            }
+        }
     }
 }

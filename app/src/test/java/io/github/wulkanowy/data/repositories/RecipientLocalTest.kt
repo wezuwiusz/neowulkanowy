@@ -5,10 +5,12 @@ import io.github.wulkanowy.data.db.entities.ReportingUnit
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.just
@@ -26,6 +28,9 @@ class RecipientLocalTest {
     @MockK
     private lateinit var recipientDb: RecipientDao
 
+    @MockK(relaxUnitFun = true)
+    private lateinit var refreshHelper: AutoRefreshHelper
+
     private val student = getStudentEntity()
 
     private lateinit var recipientRepository: RecipientRepository
@@ -39,8 +44,9 @@ class RecipientLocalTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
+        every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
-        recipientRepository = RecipientRepository(recipientDb, sdk)
+        recipientRepository = RecipientRepository(recipientDb, sdk, refreshHelper)
     }
 
     @Test

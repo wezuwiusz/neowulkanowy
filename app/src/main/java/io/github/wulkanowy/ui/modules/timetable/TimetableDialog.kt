@@ -89,14 +89,22 @@ class TimetableDialog : DialogFragment() {
                                 R.attr.colorPrimary
                             )
                         )
-                        timetableDialogChangesValue.setTextColor(requireContext().getThemeAttrColor(R.attr.colorPrimary))
+                        timetableDialogChangesValue.setTextColor(
+                            requireContext().getThemeAttrColor(
+                                R.attr.colorPrimary
+                            )
+                        )
                     } else {
                         timetableDialogChangesTitle.setTextColor(
                             requireContext().getThemeAttrColor(
                                 R.attr.colorTimetableChange
                             )
                         )
-                        timetableDialogChangesValue.setTextColor(requireContext().getThemeAttrColor(R.attr.colorTimetableChange))
+                        timetableDialogChangesValue.setTextColor(
+                            requireContext().getThemeAttrColor(
+                                R.attr.colorTimetableChange
+                            )
+                        )
                     }
 
                     timetableDialogChangesValue.text = when {
@@ -126,6 +134,15 @@ class TimetableDialog : DialogFragment() {
                             visibility = VISIBLE
                             text = teacher
                         }
+                    }
+                }
+                teacherOld.isNotBlank() && teacherOld == teacher -> {
+                    timetableDialogTeacherValue.run {
+                        visibility = GONE
+                    }
+                    timetableDialogTeacherNewValue.run {
+                        visibility = VISIBLE
+                        text = teacher
                     }
                 }
                 teacher.isNotBlank() -> timetableDialogTeacherValue.text = teacher

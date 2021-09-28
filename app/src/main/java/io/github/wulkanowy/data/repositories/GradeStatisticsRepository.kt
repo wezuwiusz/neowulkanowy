@@ -39,9 +39,19 @@ class GradeStatisticsRepository @Inject constructor(
     private val semesterCacheKey = "grade_stats_semester"
     private val pointsCacheKey = "grade_stats_points"
 
-    fun getGradesPartialStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
+    fun getGradesPartialStatistics(
+        student: Student,
+        semester: Semester,
+        subjectName: String,
+        forceRefresh: Boolean,
+    ) = networkBoundResource(
         mutex = partialMutex,
-        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(partialCacheKey, semester)) },
+        shouldFetch = {
+            val isExpired = refreshHelper.shouldBeRefreshed(
+                key = getRefreshKey(partialCacheKey, semester)
+            )
+            it.isEmpty() || forceRefresh || isExpired
+        },
         query = { gradePartialStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
@@ -76,9 +86,19 @@ class GradeStatisticsRepository @Inject constructor(
         }
     )
 
-    fun getGradesSemesterStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
+    fun getGradesSemesterStatistics(
+        student: Student,
+        semester: Semester,
+        subjectName: String,
+        forceRefresh: Boolean,
+    ) = networkBoundResource(
         mutex = semesterMutex,
-        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(semesterCacheKey, semester)) },
+        shouldFetch = {
+            val isExpired = refreshHelper.shouldBeRefreshed(
+                key = getRefreshKey(semesterCacheKey, semester)
+            )
+            it.isEmpty() || forceRefresh || isExpired
+        },
         query = { gradeSemesterStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
@@ -94,10 +114,12 @@ class GradeStatisticsRepository @Inject constructor(
             val itemsWithAverage = items.map { item ->
                 item.copy().apply {
                     val denominator = item.amounts.sum()
-                    average = if (denominator == 0) "" else (item.amounts.mapIndexed { gradeValue, amount ->
-                        (gradeValue + 1) * amount
-                    }.sum().toDouble() / denominator).let {
-                        "%.2f".format(Locale.FRANCE, it)
+                    average = if (denominator == 0) "" else {
+                        (item.amounts.mapIndexed { gradeValue, amount ->
+                            (gradeValue + 1) * amount
+                        }.sum().toDouble() / denominator).let {
+                            "%.2f".format(Locale.FRANCE, it)
+                        }
                     }
                 }
             }
@@ -109,7 +131,9 @@ class GradeStatisticsRepository @Inject constructor(
                     amounts = itemsWithAverage.map { it.amounts }.sumGradeAmounts(),
                     studentGrade = 0
                 ).apply {
-                    average = itemsWithAverage.mapNotNull { it.average.replace(",", ".").toDoubleOrNull() }.average().let {
+                    average = itemsWithAverage.mapNotNull {
+                        it.average.replace(",", ".").toDoubleOrNull()
+                    }.average().let {
                         "%.2f".format(Locale.FRANCE, it)
                     }
                 }).reversed()
@@ -118,9 +142,17 @@ class GradeStatisticsRepository @Inject constructor(
         }
     )
 
-    fun getGradesPointsStatistics(student: Student, semester: Semester, subjectName: String, forceRefresh: Boolean) = networkBoundResource(
+    fun getGradesPointsStatistics(
+        student: Student,
+        semester: Semester,
+        subjectName: String,
+        forceRefresh: Boolean,
+    ) = networkBoundResource(
         mutex = pointsMutex,
-        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(pointsCacheKey, semester)) },
+        shouldFetch = {
+            val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(pointsCacheKey, semester))
+            it.isEmpty() || forceRefresh || isExpired
+        },
         query = { gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
