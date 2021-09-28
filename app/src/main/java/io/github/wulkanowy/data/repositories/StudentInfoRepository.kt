@@ -19,24 +19,27 @@ class StudentInfoRepository @Inject constructor(
 
     private val saveFetchResultMutex = Mutex()
 
-    fun getStudentInfo(student: Student, semester: Semester, forceRefresh: Boolean) =
-        networkBoundResource(
-            mutex = saveFetchResultMutex,
-            shouldFetch = { it == null || forceRefresh },
-            query = { studentInfoDao.loadStudentInfo(student.studentId) },
-            fetch = {
-                sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
-                    .getStudentInfo().mapToEntity(semester)
-            },
-            saveFetchResult = { old, new ->
-                if (old != null && new != old) {
-                    with(studentInfoDao) {
-                        deleteAll(listOf(old))
-                        insertAll(listOf(new))
-                    }
-                } else if (old == null) {
-                    studentInfoDao.insertAll(listOf(new))
+    fun getStudentInfo(
+        student: Student,
+        semester: Semester,
+        forceRefresh: Boolean,
+    ) = networkBoundResource(
+        mutex = saveFetchResultMutex,
+        shouldFetch = { it == null || forceRefresh },
+        query = { studentInfoDao.loadStudentInfo(student.studentId) },
+        fetch = {
+            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+                .getStudentInfo().mapToEntity(semester)
+        },
+        saveFetchResult = { old, new ->
+            if (old != null && new != old) {
+                with(studentInfoDao) {
+                    deleteAll(listOf(old))
+                    insertAll(listOf(new))
                 }
+            } else if (old == null) {
+                studentInfoDao.insertAll(listOf(new))
             }
-        )
+        }
+    )
 }

@@ -56,7 +56,7 @@ class GradeStatisticsRepositoryTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
+        every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
         gradeStatisticsRepository = GradeStatisticsRepository(gradePartialStatisticsDb, gradePointsStatisticsDb, gradeSemesterStatisticsDb, sdk, refreshHelper)
     }

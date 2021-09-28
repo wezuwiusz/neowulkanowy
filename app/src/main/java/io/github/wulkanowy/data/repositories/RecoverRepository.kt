@@ -11,7 +11,7 @@ class RecoverRepository @Inject constructor(private val sdk: Sdk) {
         return sdk.getPasswordResetCaptchaCode(host, symbol)
     }
 
-    suspend fun sendRecoverRequest(url: String, symbol: String, email: String, reCaptchaResponse: String): String {
-        return sdk.sendPasswordResetRequest(url, symbol, email, reCaptchaResponse)
-    }
+    suspend fun sendRecoverRequest(
+        url: String, symbol: String, email: String, reCaptchaResponse: String
+    ): String = sdk.sendPasswordResetRequest(url, symbol, email, reCaptchaResponse)
 }

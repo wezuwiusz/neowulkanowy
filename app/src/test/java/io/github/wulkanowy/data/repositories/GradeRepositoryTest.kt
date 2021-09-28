@@ -50,7 +50,7 @@ class GradeRepositoryTest {
     @Before
     fun initApi() {
         MockKAnnotations.init(this)
-        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
+        every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
         gradeRepository = GradeRepository(gradeDb, gradeSummaryDb, sdk, refreshHelper)
 

@@ -28,10 +28,28 @@ class CompletedLessonsRepository @Inject constructor(
 
     private val cacheKey = "completed"
 
-    fun getCompletedLessons(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean) = networkBoundResource(
+    fun getCompletedLessons(
+        student: Student,
+        semester: Semester,
+        start: LocalDate,
+        end: LocalDate,
+        forceRefresh: Boolean,
+    ) = networkBoundResource(
         mutex = saveFetchResultMutex,
-        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end)) },
-        query = { completedLessonsDb.loadAll(semester.studentId, semester.diaryId, start.monday, end.sunday) },
+        shouldFetch = {
+            val isExpired = refreshHelper.shouldBeRefreshed(
+                key = getRefreshKey(cacheKey, semester, start, end)
+            )
+            it.isEmpty() || forceRefresh || isExpired
+        },
+        query = {
+            completedLessonsDb.loadAll(
+                studentId = semester.studentId,
+                diaryId = semester.diaryId,
+                from = start.monday,
+                end = end.sunday
+            )
+        },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
                 .getCompletedLessons(start.monday, end.sunday)

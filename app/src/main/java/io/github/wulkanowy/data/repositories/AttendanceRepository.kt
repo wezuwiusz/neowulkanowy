@@ -32,10 +32,23 @@ class AttendanceRepository @Inject constructor(
 
     private val cacheKey = "attendance"
 
-    fun getAttendance(student: Student, semester: Semester, start: LocalDate, end: LocalDate, forceRefresh: Boolean) = networkBoundResource(
+    fun getAttendance(
+        student: Student,
+        semester: Semester,
+        start: LocalDate,
+        end: LocalDate,
+        forceRefresh: Boolean,
+    ) = networkBoundResource(
         mutex = saveFetchResultMutex,
-        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, semester, start, end)) },
-        query = { attendanceDb.loadAll(semester.diaryId, semester.studentId, start.monday, end.sunday) },
+        shouldFetch = {
+            val isExpired = refreshHelper.shouldBeRefreshed(
+                key = getRefreshKey(cacheKey, semester, start, end)
+            )
+            it.isEmpty() || forceRefresh || isExpired
+        },
+        query = {
+            attendanceDb.loadAll(semester.diaryId, semester.studentId, start.monday, end.sunday)
+        },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
                 .getAttendance(start.monday, end.sunday, semester.semesterId)
@@ -50,12 +63,17 @@ class AttendanceRepository @Inject constructor(
         filterResult = { it.filter { item -> item.date in start..end } }
     )
 
-    suspend fun excuseForAbsence(student: Student, semester: Semester, absenceList: List<Attendance>, reason: String? = null) {
-        sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear).excuseForAbsence(absenceList.map { attendance ->
+    suspend fun excuseForAbsence(
+        student: Student, semester: Semester,
+        absenceList: List<Attendance>, reason: String? = null
+    ) {
+        val items = absenceList.map { attendance ->
             Absent(
                 date = LocalDateTime.of(attendance.date, LocalTime.of(0, 0)),
                 timeId = attendance.timeId
             )
-        }, reason)
+        }
+        sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            .excuseForAbsence(items, reason)
     }
 }

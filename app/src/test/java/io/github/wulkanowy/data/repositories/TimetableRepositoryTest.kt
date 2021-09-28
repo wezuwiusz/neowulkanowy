@@ -62,7 +62,7 @@ class TimetableRepositoryTest {
     @Before
     fun initApi() {
         MockKAnnotations.init(this)
-        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
+        every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
         timetableRepository = TimetableRepository(timetableDb, timetableAdditionalDao, timetableHeaderDao, sdk, timetableNotificationSchedulerHelper, refreshHelper)
     }

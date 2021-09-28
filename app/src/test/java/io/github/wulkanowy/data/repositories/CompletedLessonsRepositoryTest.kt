@@ -53,7 +53,7 @@ class CompletedLessonsRepositoryTest {
     @Before
     fun initApi() {
         MockKAnnotations.init(this)
-        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
+        every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
         completedLessonRepository = CompletedLessonsRepository(completedLessonDb, sdk, refreshHelper)
     }

@@ -48,7 +48,7 @@ class MobileDeviceRepositoryTest {
     @Before
     fun initTest() {
         MockKAnnotations.init(this)
-        every { refreshHelper.isShouldBeRefreshed(any()) } returns false
+        every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
         mobileDeviceRepository = MobileDeviceRepository(mobileDeviceDb, sdk, refreshHelper)
     }

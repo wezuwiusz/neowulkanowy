@@ -6,7 +6,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NotificationRepository @Inject constructor(private val notificationDao: NotificationDao) {
+class NotificationRepository @Inject constructor(
+    private val notificationDao: NotificationDao,
+) {
 
     fun getNotifications(studentId: Long) = notificationDao.loadAll(studentId)
 

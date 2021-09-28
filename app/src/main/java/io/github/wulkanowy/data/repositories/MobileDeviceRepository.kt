@@ -28,9 +28,16 @@ class MobileDeviceRepository @Inject constructor(
 
     private val cacheKey = "devices"
 
-    fun getDevices(student: Student, semester: Semester, forceRefresh: Boolean) = networkBoundResource(
+    fun getDevices(
+        student: Student,
+        semester: Semester,
+        forceRefresh: Boolean,
+    ) = networkBoundResource(
         mutex = saveFetchResultMutex,
-        shouldFetch = { it.isEmpty() || forceRefresh || refreshHelper.isShouldBeRefreshed(getRefreshKey(cacheKey, student)) },
+        shouldFetch = {
+            val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, student))
+            it.isEmpty() || forceRefresh || isExpired
+        },
         query = { mobileDb.loadAll(student.userLoginId.takeIf { it != 0 } ?: student.studentId) },
         fetch = {
             sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
