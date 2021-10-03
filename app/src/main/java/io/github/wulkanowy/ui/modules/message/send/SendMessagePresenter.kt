@@ -224,14 +224,14 @@ class SendMessagePresenter @Inject constructor(
     }
 
     fun onMessageContentChange() {
-        launch {
+        presenterScope.launch {
             messageUpdateChannel.send(Unit)
         }
     }
 
     @OptIn(FlowPreview::class)
     private fun initializeSubjectStream() {
-        launch {
+        presenterScope.launch {
             messageUpdateChannel.consumeAsFlow()
                 .debounce(250)
                 .catch { Timber.e(it) }

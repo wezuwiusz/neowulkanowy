@@ -15,7 +15,7 @@ class SchoolAndTeachersPresenter @Inject constructor(
 
     override fun onAttachView(view: SchoolAndTeachersView) {
         super.onAttachView(view)
-        launch {
+        presenterScope.launch {
             delay(150)
             view.initView()
             Timber.i("Message view was initialized")

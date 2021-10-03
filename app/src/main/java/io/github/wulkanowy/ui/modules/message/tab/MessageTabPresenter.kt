@@ -173,14 +173,14 @@ class MessageTabPresenter @Inject constructor(
     }
 
     fun onSearchQueryTextChange(query: String) {
-        launch {
+        presenterScope.launch {
             searchChannel.send(query)
         }
     }
 
     @OptIn(FlowPreview::class)
     private fun initializeSearchStream() {
-        launch {
+        presenterScope.launch {
             searchChannel.consumeAsFlow()
                 .debounce(250)
                 .map { query ->

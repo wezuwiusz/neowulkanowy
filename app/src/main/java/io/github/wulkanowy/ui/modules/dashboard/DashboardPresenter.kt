@@ -149,7 +149,7 @@ class DashboardPresenter @Inject constructor(
         tileList: List<DashboardItem.Type>,
         forceRefresh: Boolean
     ) {
-        launch {
+        presenterScope.launch {
             Timber.i("Loading dashboard account data started")
             val student = runCatching { studentRepository.getCurrentStudent(true) }
                 .onFailure {

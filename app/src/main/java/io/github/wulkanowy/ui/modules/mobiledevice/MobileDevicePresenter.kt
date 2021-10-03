@@ -11,7 +11,6 @@ import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -148,6 +147,6 @@ class MobileDevicePresenter @Inject constructor(
                     errorHandler.dispatch(it.error!!)
                 }
             }
-        }.launchIn(this)
+        }.launch("unregister")
     }
 }

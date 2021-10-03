@@ -11,7 +11,6 @@ import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -123,15 +122,17 @@ class NotePresenter @Inject constructor(
     }
 
     private fun updateNote(note: Note) {
-        flowWithResource { noteRepository.updateNote(note) }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Attempt to update note ${note.id}")
-                Status.SUCCESS -> Timber.i("Update note result: Success")
-                Status.ERROR -> {
-                    Timber.i("Update note result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+        flowWithResource { noteRepository.updateNote(note) }
+            .onEach {
+                when (it.status) {
+                    Status.LOADING -> Timber.i("Attempt to update note ${note.id}")
+                    Status.SUCCESS -> Timber.i("Update note result: Success")
+                    Status.ERROR -> {
+                        Timber.i("Update note result: An exception occurred")
+                        errorHandler.dispatch(it.error!!)
+                    }
                 }
             }
-        }.launchIn(this)
+            .launch("update_note")
     }
 }

@@ -6,29 +6,27 @@ import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
 open class BasePresenter<T : BaseView>(
     protected val errorHandler: ErrorHandler,
     protected val studentRepository: StudentRepository
-) : CoroutineScope {
+) {
+    private val job = SupervisorJob()
 
-    private var job = Job()
+    protected val presenterScope = CoroutineScope(job + Dispatchers.Main)
 
-    private val jobs = mutableMapOf<String, Job>()
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+    private val childrenJobs = mutableMapOf<String, Job>()
 
     var view: T? = null
 
     open fun onAttachView(view: T) {
-        job = Job()
         this.view = view
         errorHandler.apply {
             showErrorMessage = view::showError
@@ -64,22 +62,22 @@ open class BasePresenter<T : BaseView>(
     }
 
     fun <T> Flow<T>.launch(individualJobTag: String = "load"): Job {
-        jobs[individualJobTag]?.cancel()
-        val job = catch { errorHandler.dispatch(it) }.launchIn(this@BasePresenter)
-        jobs[individualJobTag] = job
+        childrenJobs[individualJobTag]?.cancel()
+        val job = catch { errorHandler.dispatch(it) }.launchIn(presenterScope)
+        childrenJobs[individualJobTag] = job
         Timber.d("Job $individualJobTag launched in ${this@BasePresenter.javaClass.simpleName}: $job")
         return job
     }
 
     fun cancelJobs(vararg names: String) {
         names.forEach {
-            jobs[it]?.cancel()
+            childrenJobs[it]?.cancel()
         }
     }
 
     open fun onDetachView() {
-        view = null
-        job.cancel()
+        job.cancelChildren()
         errorHandler.clear()
+        view = null
     }
 }
