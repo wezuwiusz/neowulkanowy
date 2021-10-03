@@ -27,10 +27,10 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         resValue "string", "app_name", "Wulkanowy"
-        buildConfigField "long", "BUILD_TIMESTAMP", String.valueOf(System.currentTimeMillis())
 
         manifestPlaceholders = [
-                firebase_enabled: project.hasProperty("enableFirebase")
+                firebase_enabled: project.hasProperty("enableFirebase"),
+                buildTimestamp: String.valueOf(System.currentTimeMillis())
         ]
         javaCompileOptions {
             annotationProcessorOptions {
