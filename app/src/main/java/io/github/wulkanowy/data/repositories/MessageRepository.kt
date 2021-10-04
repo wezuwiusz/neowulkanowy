@@ -1,7 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
 import android.content.Context
-import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.Resource
@@ -18,7 +17,6 @@ import io.github.wulkanowy.data.enums.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.mappers.mapFromEntities
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.pojos.MessageDraft
-import io.github.wulkanowy.data.pojos.MessageDraftJsonAdapter
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.sdk.pojo.SentMessage
@@ -29,6 +27,9 @@ import io.github.wulkanowy.utils.networkBoundResource
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.time.LocalDateTime.now
 import javax.inject.Inject
@@ -42,7 +43,7 @@ class MessageRepository @Inject constructor(
     @ApplicationContext private val context: Context,
     private val refreshHelper: AutoRefreshHelper,
     private val sharedPrefProvider: SharedPrefProvider,
-    private val moshi: Moshi,
+    private val json: Json,
 ) {
 
     private val saveFetchResultMutex = Mutex()
@@ -168,9 +169,9 @@ class MessageRepository @Inject constructor(
 
     var draftMessage: MessageDraft?
         get() = sharedPrefProvider.getString(context.getString(R.string.pref_key_message_send_draft))
-            ?.let { MessageDraftJsonAdapter(moshi).fromJson(it) }
+            ?.let { json.decodeFromString(it) }
         set(value) = sharedPrefProvider.putString(
             context.getString(R.string.pref_key_message_send_draft),
-            value?.let { MessageDraftJsonAdapter(moshi).toJson(it) }
+            value?.let { json.encodeToString(it) }
         )
 }

@@ -1,8 +1,8 @@
 package io.github.wulkanowy.data.pojos
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Contributor(
     val displayName: String,
     val githubUsername: String

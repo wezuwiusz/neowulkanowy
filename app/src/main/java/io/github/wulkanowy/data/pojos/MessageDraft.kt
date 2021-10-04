@@ -1,9 +1,9 @@
 package io.github.wulkanowy.data.pojos
 
-import com.squareup.moshi.JsonClass
 import io.github.wulkanowy.ui.modules.message.send.RecipientChipItem
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class MessageDraft(
     val recipients: List<RecipientChipItem>,
     val subject: String,

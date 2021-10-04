@@ -1,7 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
 import android.content.Context
-import com.squareup.moshi.Moshi
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
@@ -30,6 +29,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -63,9 +63,6 @@ class MessageRepositoryTest {
 
     private lateinit var repository: MessageRepository
 
-    @MockK
-    private lateinit var moshi: Moshi
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
@@ -78,7 +75,7 @@ class MessageRepositoryTest {
             context = context,
             refreshHelper = refreshHelper,
             sharedPrefProvider = sharedPrefProvider,
-            moshi = moshi,
+            json = Json,
         )
     }
 

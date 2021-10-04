@@ -23,8 +23,8 @@ class ConvertersTest {
 
     @Test
     fun jsonToStringPairList_0210() {
-        assertEquals(Converters().jsonToStringPairList("{\"aaa\":\"bbb\",\"ccc\":\"ddd\"}"), listOf("aaa" to "bbb", "ccc" to "ddd"))
-        assertEquals(Converters().jsonToStringPairList("{\"aaa\":\"bbb\"}"), listOf("aaa" to "bbb"))
+        assertEquals(Converters().jsonToStringPairList("{\"aaa\":\"bbb\",\"ccc\":\"ddd\"}"), listOf<Pair<String, String>>())
+        assertEquals(Converters().jsonToStringPairList("{\"aaa\":\"bbb\"}"), listOf<Pair<String, String>>())
         assertEquals(Converters().jsonToStringPairList("{}"), listOf<Pair<String, String>>())
     }
 }
