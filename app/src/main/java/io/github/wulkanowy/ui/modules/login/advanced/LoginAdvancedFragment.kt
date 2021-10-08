@@ -170,7 +170,7 @@ class LoginAdvancedFragment :
     override fun setErrorUsernameRequired() {
         with(binding.loginFormUsernameLayout) {
             requestFocus()
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.error_field_required)
         }
     }
 
@@ -191,7 +191,7 @@ class LoginAdvancedFragment :
     override fun setErrorPassRequired(focus: Boolean) {
         with(binding.loginFormPassLayout) {
             if (focus) requestFocus()
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.error_field_required)
         }
     }
 
@@ -212,7 +212,7 @@ class LoginAdvancedFragment :
     override fun setErrorPinRequired() {
         with(binding.loginFormPinLayout) {
             requestFocus()
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.error_field_required)
         }
     }
 
@@ -226,7 +226,7 @@ class LoginAdvancedFragment :
     override fun setErrorSymbolRequired() {
         with(binding.loginFormSymbolLayout) {
             requestFocus()
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.error_field_required)
         }
     }
 
@@ -240,7 +240,7 @@ class LoginAdvancedFragment :
     override fun setErrorTokenRequired() {
         with(binding.loginFormTokenLayout) {
             requestFocus()
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.error_field_required)
         }
     }
 

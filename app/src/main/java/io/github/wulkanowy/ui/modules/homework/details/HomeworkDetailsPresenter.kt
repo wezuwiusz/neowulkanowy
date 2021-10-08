@@ -33,6 +33,25 @@ class HomeworkDetailsPresenter @Inject constructor(
         Timber.i("Homework details view was initialized")
     }
 
+    fun deleteHomework(homework: Homework) {
+        flowWithResource { homeworkRepository.deleteHomework(homework) }.onEach {
+            when (it.status) {
+                Status.LOADING -> Timber.i("Homework delete start")
+                Status.SUCCESS -> {
+                    Timber.i("Homework delete: Success")
+                    view?.run {
+                        showMessage(homeworkDeleteSuccess)
+                        closeDialog()
+                    }
+                }
+                Status.ERROR -> {
+                    Timber.i("Homework delete result: An exception occurred")
+                    errorHandler.dispatch(it.error!!)
+                }
+            }
+        }.launch("delete")
+    }
+
     fun toggleDone(homework: Homework) {
         flowWithResource { homeworkRepository.toggleDone(homework) }.onEach {
             when (it.status) {

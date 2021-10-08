@@ -10,6 +10,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.databinding.FragmentHomeworkBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.homework.add.HomeworkAddDialog
 import io.github.wulkanowy.ui.modules.homework.details.HomeworkDetailsDialog
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
@@ -63,6 +64,8 @@ class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment
 
             homeworkPreviousButton.setOnClickListener { presenter.onPreviousDay() }
             homeworkNextButton.setOnClickListener { presenter.onNextDay() }
+
+            openAddHomeworkButton.setOnClickListener { presenter.onHomeworkAddButtonClicked() }
 
             homeworkNavContainer.setElevationCompat(requireContext().dpToPx(8f))
         }
@@ -122,8 +125,12 @@ class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment
         binding.homeworkNextButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
 
-    override fun showTimetableDialog(homework: Homework) {
+    override fun showHomeworkDialog(homework: Homework) {
         (activity as? MainActivity)?.showDialogFragment(HomeworkDetailsDialog.newInstance(homework))
+    }
+
+    override fun showAddHomeworkDialog() {
+        (activity as? MainActivity)?.showDialogFragment(HomeworkAddDialog())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

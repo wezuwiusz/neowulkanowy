@@ -17,6 +17,7 @@
     <string name="license_title">Licenses</string>
     <string name="message_title">Messages</string>
     <string name="send_message_title">New message</string>
+    <string name="add_homework_title">New homework</string>
     <string name="note_title">Notes and achievements</string>
     <string name="homework_title">Homework</string>
     <string name="account_title">Accounts manager</string>
@@ -57,7 +58,6 @@
     <string name="login_invalid_custom_email">Use the assigned login or email in @%1$s</string>
     <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Validate the symbol and the chosen variation of the UONET+ register</string>
-    <string name="login_field_required">This field is required</string>
     <string name="login_duplicate_student">Selected student is already logged in</string>
     <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the previous screen. Wulkanowy does not detect pre-school students at the moment</string>
     <string name="login_select_student">Select students to log in to the application</string>
@@ -316,6 +316,9 @@
     <string name="homework_no_items">No info about homework</string>
     <string name="homework_mark_as_done">Mark as done</string>
     <string name="homework_mark_as_undone">Mark as undone</string>
+    <string name="homework_add">Add homework</string>
+    <string name="homework_add_success">Homework added successfully</string>
+    <string name="homework_delete_success">Homework deleted successfully</string>
     <string name="homework_attachments">Attachments</string>
     <plurals name="homework_notify_new_item_title">
         <item quantity="one">New homework</item>
@@ -592,6 +595,10 @@
     <string name="all_no">No</string>
     <string name="all_save">Save</string>
     <string name="all_title">Title</string>
+    <string name="all_add">Add</string>
+    <string name="all_copied">Copied</string>
+    <string name="all_undo">Undo</string>
+    <string name="all_change">Change</string>
 
 
     <!--Timetable Widget-->
@@ -697,12 +704,6 @@
     <string name="all_empty_color">No color</string>
 
 
-    <!--Others-->
-    <string name="all_copied">Copied</string>
-    <string name="all_undo">Undo</string>
-    <string name="all_change">Change</string>
-
-
     <!--Update helper-->
     <string name="update_download_started">Download of updates has started…</string>
     <string name="update_download_success">An update has just been downloaded.</string>
@@ -721,4 +722,5 @@
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
+    <string name="error_field_required">This field is required</string>
 </resources>

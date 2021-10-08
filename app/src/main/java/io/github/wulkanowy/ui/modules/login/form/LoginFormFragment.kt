@@ -123,7 +123,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun setErrorUsernameRequired() {
         with(binding.loginFormUsernameLayout) {
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.error_field_required)
         }
     }
 
@@ -141,7 +141,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun setErrorPassRequired(focus: Boolean) {
         with(binding.loginFormPassLayout) {
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.error_field_required)
         }
     }
 
