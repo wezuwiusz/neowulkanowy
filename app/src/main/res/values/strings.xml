@@ -668,6 +668,7 @@
     <string name="pref_attendance_appearance_view">Attendance</string>
     <string name="pref_timetable_appearance_view">Timetable</string>
     <string name="pref_grades_advanced_header">Grades</string>
+    <string name="pref_counted_average_advanced_header">Calculated average</string>
     <string name="pref_messages_advanced_header">Messages</string>
 
     <string name="pref_appearance_category">Appearance &amp; Behavior</string>
