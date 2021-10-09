@@ -153,14 +153,6 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <meta-data
-            android:name="buildTimestamp"
-            android:value="${buildTimestamp}" />
-
-        <meta-data
-            android:name="install_channel"
-            android:value="${install_channel}" />
-
         <!-- workaround for https://github.com/firebase/firebase-android-sdk/issues/473 enabled:false -->
         <!-- https://firebase.googleblog.com/2017/03/take-control-of-your-firebase-init-on.html -->
         <provider
@@ -169,6 +161,10 @@
             android:enabled="${firebase_enabled}"
             android:exported="false"
             tools:ignore="MissingClass" />
+
+        <meta-data
+            android:name="install_channel"
+            android:value="${install_channel}" />
 
         <meta-data
             android:name="firebase_analytics_collection_enabled"

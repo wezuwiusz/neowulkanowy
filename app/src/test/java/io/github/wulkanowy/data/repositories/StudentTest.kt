@@ -37,7 +37,7 @@ class StudentTest {
             studentDb = studentDb,
             semesterDb = semesterDb,
             sdk = mockSdk,
-            appInfo = AppInfo(mockk()),
+            appInfo = AppInfo(),
             appDatabase = mockk()
         )
     }

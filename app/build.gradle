@@ -29,10 +29,7 @@ android {
 
         resValue "string", "app_name", "Wulkanowy"
 
-        manifestPlaceholders = [
-                firebase_enabled: project.hasProperty("enableFirebase"),
-                buildTimestamp: String.valueOf(System.currentTimeMillis())
-        ]
+        manifestPlaceholders = [firebase_enabled: project.hasProperty("enableFirebase")]
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
@@ -40,6 +37,12 @@ android {
                         "room.incremental"   : "true"
                 ]
             }
+        }
+
+        if (System.env.SET_BUILD_TIMESTAMP) {
+            buildConfigField "long", "BUILD_TIMESTAMP", String.valueOf(System.currentTimeMillis())
+        } else {
+            buildConfigField "long", "BUILD_TIMESTAMP", "1486235849000"
         }
     }
 
