@@ -301,26 +301,31 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                     dateToNavigate = currentDate
                     updateLessonView(item, currentTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
                 tomorrowTimetable.isNotEmpty() -> {
                     dateToNavigate = tomorrowDate
                     updateLessonView(item, tomorrowTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
                 currentDayHeader != null && currentDayHeader.content.isNotBlank() -> {
                     dateToNavigate = currentDate
                     updateLessonView(item, emptyList(), binding, currentDayHeader)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
                 tomorrowDayHeader != null && tomorrowDayHeader.content.isNotBlank() -> {
                     dateToNavigate = tomorrowDate
                     updateLessonView(item, emptyList(), binding, tomorrowDayHeader)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
                 else -> {
-                    dateToNavigate = tomorrowDate
+                    dateToNavigate = currentDate
                     updateLessonView(item, emptyList(), binding)
-                    binding.dashboardLessonsItemTitleTomorrow.isVisible =
+                    binding.dashboardLessonsItemTitleTomorrow.isVisible = false
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible =
                         !(item.isLoading && item.error == null)
                 }
             }

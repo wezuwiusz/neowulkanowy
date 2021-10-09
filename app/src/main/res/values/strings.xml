@@ -504,6 +504,7 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lessons</string>
     <string name="dashboard_timetable_title_tomorrow">(Tomorrow)</string>
+    <string name="dashboard_timetable_title_today_and_tomorrow">(Today and tomorrow)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">In a moment:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Soon:</string>
     <string name="dashboard_timetable_first_lesson_title_first">First:</string>

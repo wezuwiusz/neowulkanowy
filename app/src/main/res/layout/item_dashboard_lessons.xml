@@ -43,6 +43,19 @@
             app:layout_constraintStart_toEndOf="@id/dashboard_lessons_item_title" />
 
         <TextView
+            android:id="@+id/dashboard_lessons_item_title_today_and_tomorrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/dashboard_timetable_title_today_and_tomorrow"
+            android:textColor="?colorOnSurface"
+            android:textSize="14sp"
+            tools:visibility="invisible"
+            app:layout_constraintBaseline_toBaselineOf="@id/dashboard_lessons_item_title"
+            app:layout_constraintBottom_toBottomOf="@id/dashboard_lessons_item_title"
+            app:layout_constraintStart_toEndOf="@id/dashboard_lessons_item_title" />
+
+        <TextView
             android:id="@+id/dashboard_lessons_item_first_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
