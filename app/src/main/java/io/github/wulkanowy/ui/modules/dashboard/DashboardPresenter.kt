@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder
+import io.github.wulkanowy.data.repositories.AdminMessageRepository
 import io.github.wulkanowy.data.repositories.AttendanceSummaryRepository
 import io.github.wulkanowy.data.repositories.ConferenceRepository
 import io.github.wulkanowy.data.repositories.ExamRepository
@@ -50,7 +51,8 @@ class DashboardPresenter @Inject constructor(
     private val examRepository: ExamRepository,
     private val conferenceRepository: ConferenceRepository,
     private val preferencesRepository: PreferencesRepository,
-    private val schoolAnnouncementRepository: SchoolAnnouncementRepository
+    private val schoolAnnouncementRepository: SchoolAnnouncementRepository,
+    private val adminMessageRepository: AdminMessageRepository
 ) : BasePresenter<DashboardView>(errorHandler, studentRepository) {
 
     private val dashboardItemLoadedList = mutableListOf<DashboardItem>()
@@ -179,6 +181,7 @@ class DashboardPresenter @Inject constructor(
                         loadConferences(student, forceRefresh)
                     }
                     DashboardItem.Type.ADS -> TODO()
+                    DashboardItem.Type.ADMIN_MESSAGE -> loadAdminMessage(student, forceRefresh)
                 }
             }
         }
@@ -223,6 +226,10 @@ class DashboardPresenter @Inject constructor(
         preferencesRepository.selectedDashboardTiles = selectedItems.map {
             DashboardItem.Tile.valueOf(it)
         }.toSet()
+    }
+
+    fun onAdminMessageSelected(url: String?) {
+        url?.let { view?.openInternetBrowser(it) }
     }
 
     private fun loadHorizontalGroup(student: Student, forceRefresh: Boolean) {
@@ -567,6 +574,38 @@ class DashboardPresenter @Inject constructor(
         }.launch("dashboard_conferences")
     }
 
+    private fun loadAdminMessage(student: Student, forceRefresh: Boolean) {
+        flowWithResourceIn { adminMessageRepository.getAdminMessages(student, forceRefresh) }
+            .onEach {
+                when (it.status) {
+                    Status.LOADING -> {
+                        Timber.i("Loading dashboard admin message data started")
+                        if (forceRefresh) return@onEach
+                        updateData(DashboardItem.AdminMessages(), forceRefresh)
+                    }
+                    Status.SUCCESS -> {
+                        Timber.i("Loading dashboard admin message result: Success")
+                        updateData(
+                            dashboardItem = DashboardItem.AdminMessages(adminMessage = it.data),
+                            forceRefresh = forceRefresh
+                        )
+                    }
+                    Status.ERROR -> {
+                        Timber.i("Loading dashboard admin message result: An exception occurred")
+                        errorHandler.dispatch(it.error!!)
+                        updateData(
+                            dashboardItem = DashboardItem.AdminMessages(
+                                adminMessage = it.data,
+                                error = it.error
+                            ),
+                            forceRefresh = forceRefresh
+                        )
+                    }
+                }
+            }
+            .launch("dashboard_admin_messages")
+    }
+
     private fun updateData(dashboardItem: DashboardItem, forceRefresh: Boolean) {
         val isForceRefreshError = forceRefresh && dashboardItem.error != null
         val isFirstRunDataLoadedError =
@@ -578,6 +617,11 @@ class DashboardPresenter @Inject constructor(
         }
 
         sortDashboardItems()
+
+        if (dashboardItem is DashboardItem.AdminMessages && !dashboardItem.isDataLoaded) {
+            dashboardItemsToLoad = dashboardItemsToLoad - DashboardItem.Type.ADMIN_MESSAGE
+            dashboardItemLoadedList.removeAll { it.type == DashboardItem.Type.ADMIN_MESSAGE }
+        }
 
         if (forceRefresh) {
             updateForceRefreshData(dashboardItem)
@@ -644,7 +688,9 @@ class DashboardPresenter @Inject constructor(
         itemsLoadedList: List<DashboardItem>,
         forceRefresh: Boolean
     ) {
-        val filteredItems = itemsLoadedList.filterNot { it.type == DashboardItem.Type.ACCOUNT }
+        val filteredItems = itemsLoadedList.filterNot {
+            it.type == DashboardItem.Type.ACCOUNT || it.type == DashboardItem.Type.ADMIN_MESSAGE
+        }
         val isAccountItemError =
             itemsLoadedList.find { it.type == DashboardItem.Type.ACCOUNT }?.error != null
         val isGeneralError =
@@ -676,10 +722,13 @@ class DashboardPresenter @Inject constructor(
         val dashboardItemsPosition = preferencesRepository.dashboardItemsPosition
 
         dashboardItemLoadedList.sortBy { tile ->
-            dashboardItemsPosition?.getOrDefault(
-                tile.type,
+            val defaultPosition = if (tile is DashboardItem.AdminMessages) {
+                -1
+            } else {
                 tile.type.ordinal + 100
-            ) ?: tile.type.ordinal
+            }
+
+            dashboardItemsPosition?.getOrDefault(tile.type, defaultPosition) ?: tile.type.ordinal
         }
     }
 }

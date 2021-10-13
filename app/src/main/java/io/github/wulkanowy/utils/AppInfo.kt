@@ -1,35 +1,31 @@
 package io.github.wulkanowy.utils
 
 import android.content.res.Resources
-import android.os.Build.MANUFACTURER
-import android.os.Build.MODEL
-import android.os.Build.VERSION.SDK_INT
-import io.github.wulkanowy.BuildConfig.BUILD_TIMESTAMP
-import io.github.wulkanowy.BuildConfig.DEBUG
-import io.github.wulkanowy.BuildConfig.FLAVOR
-import io.github.wulkanowy.BuildConfig.VERSION_CODE
-import io.github.wulkanowy.BuildConfig.VERSION_NAME
+import android.os.Build
+import io.github.wulkanowy.BuildConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 open class AppInfo @Inject constructor() {
 
-    open val isDebug get() = DEBUG
+    open val isDebug get() = BuildConfig.DEBUG
 
-    open val versionCode get() = VERSION_CODE
+    open val versionCode get() = BuildConfig.VERSION_CODE
 
-    open val buildTimestamp get() = BUILD_TIMESTAMP
+    open val buildTimestamp get() = BuildConfig.BUILD_TIMESTAMP
 
-    open val buildFlavor get() = FLAVOR
+    open val buildFlavor get() = BuildConfig.FLAVOR
 
-    open val versionName get() = VERSION_NAME
+    open val versionName get() = BuildConfig.VERSION_NAME
 
-    open val systemVersion get() = SDK_INT
+    open val systemVersion get() = Build.VERSION.SDK_INT
 
-    open val systemManufacturer: String get() = MANUFACTURER
+    open val systemManufacturer: String get() = Build.MANUFACTURER
 
-    open val systemModel: String get() = MODEL
+    open val systemModel: String get() = Build.MODEL
+
+    open val messagesBaseUrl = BuildConfig.MESSAGES_BASE_URL
 
     @Suppress("DEPRECATION")
     open val systemLanguage: String

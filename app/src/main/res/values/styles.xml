@@ -11,6 +11,7 @@
         <item name="colorError">@color/colorError</item>
         <item name="colorDivider">@color/colorDivider</item>
         <item name="colorSwipeRefresh">@color/colorSwipeRefresh</item>
+        <item name="colorMessageMedium">@color/dashboard_message_medium_dark</item>
         <item name="android:statusBarColor">@android:color/darker_gray</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:preferenceStyle">@style/PreferenceThemeOverlay</item>
