@@ -74,7 +74,7 @@ class SyncManager @Inject constructor(
         }
     }
 
-    fun startOneTimeSyncWorker(): Flow<WorkInfo> {
+    fun startOneTimeSyncWorker(): Flow<WorkInfo?> {
         val work = OneTimeWorkRequestBuilder<SyncWorker>()
             .setInputData(
                 Data.Builder()
