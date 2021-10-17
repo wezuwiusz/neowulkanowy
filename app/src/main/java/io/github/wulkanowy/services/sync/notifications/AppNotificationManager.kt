@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
+import androidx.annotation.PluralsRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -68,7 +69,8 @@ class AppNotificationManager @Inject constructor(
     ) {
         val groupType = notificationData.type.group ?: return
         val group = "${groupType}_${student.id}"
-        val groupId = student.id * 100 + notificationData.type.ordinal
+
+        notificationData.sendSummaryNotification(group, student)
 
         notificationData.lines.forEach { item ->
             val title = context.resources.getQuantityString(notificationData.titleStringRes, 1)
@@ -88,16 +90,26 @@ class AppNotificationManager @Inject constructor(
 
             saveNotification(title, item, notificationData, student)
         }
+    }
 
+    private fun MultipleNotificationsData.sendSummaryNotification(group: String, student: Student) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
 
-        val summaryNotification = getDefaultNotificationBuilder(notificationData)
-            .setSmallIcon(notificationData.icon)
+        val summaryNotification = getDefaultNotificationBuilder(this)
+            .setSmallIcon(icon)
+            .setContentTitle(getQuantityString(titleStringRes, lines.size))
+            .setContentText(getQuantityString(contentStringRes, lines.size))
+            .setStyle(
+                NotificationCompat.InboxStyle()
+                    .setSummaryText(student.nickOrName)
+                    .also { builder -> lines.forEach { builder.addLine(it) } }
+            )
+            .setLocalOnly(true)
             .setGroup(group)
-            .setStyle(NotificationCompat.InboxStyle().setSummaryText(student.nickOrName))
             .setGroupSummary(true)
             .build()
 
+        val groupId = student.id * 100 + type.ordinal
         notificationManager.notify(groupId.toInt(), summaryNotification)
     }
 
@@ -116,6 +128,7 @@ class AppNotificationManager @Inject constructor(
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setColor(context.getCompatColor(R.color.colorPrimary))
+            .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_SUMMARY)
             .setContentIntent(
                 PendingIntent.getActivity(
                     context,
@@ -141,5 +154,9 @@ class AppNotificationManager @Inject constructor(
         )
 
         notificationRepository.saveNotification(notificationEntity)
+    }
+
+    private fun getQuantityString(@PluralsRes res: Int, arg: Int): String {
+        return context.resources.getQuantityString(res, arg, arg)
     }
 }
