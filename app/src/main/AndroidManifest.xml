@@ -165,33 +165,32 @@
         <meta-data
             android:name="install_channel"
             android:value="${install_channel}" />
-
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="${firebase_enabled}" />
-
         <meta-data
             android:name="google_analytics_adid_collection_enabled"
             android:value="${firebase_enabled}" />
-
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${firebase_enabled}" />
-
         <meta-data
             android:name="firebase_messaging_auto_init_enabled"
             android:value="${firebase_enabled}" />
-
         <meta-data
             android:name="firebase_inapp_messaging_auto_data_collection_enabled"
             android:value="${firebase_enabled}" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_all" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="push_channel" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${admob_project_id}" />
+        <meta-data
+            android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+            android:value="true" />
     </application>
 </manifest>

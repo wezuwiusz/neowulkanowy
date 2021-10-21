@@ -658,10 +658,19 @@
     <string name="pref_other_fill_message_content">Reply with message history</string>
     <string name="pref_other_optional_arithmetic_average">Show arithmetic average when no weights provided</string>
 
+    <string name="pref_ads_support_category_name">Support</string>
+    <string name="pref_ads_support">Watch single ad to support project</string>
+    <string name="pref_ads_privacy_title">Consent to data processing</string>
+    <string name="pref_ads_privacy_description">To view an advertisement you must agree to the data processing terms of our Privacy Policy</string>
+    <string name="pref_ads_privacy_agree">Agree</string>
+    <string name="pref_ads_privacy_link">Privacy policy</string>
+    <string name="pref_ads_loading">Ad is loading</string>
+
     <string name="pref_settings_advanced_title">Advanced</string>
     <string name="pref_settings_appearance_title">Appearance &amp; Behavior</string>
     <string name="pref_settings_notifications_title">Notifications</string>
     <string name="pref_settings_sync_title">Synchronization</string>
+    <string name="pref_settings_ads_title">Advertisements</string>
 
     <string name="pref_grades_appearance_header">Grades</string>
     <string name="pref_dashboard_appearance_header">Dashboard</string>
@@ -681,6 +690,7 @@
     <string name="pref_advanced_category_summary">Plus and minus values, average calculation</string>
     <string name="pref_advanced_category">Advanced</string>
     <string name="pref_about_category_summary">App version, contributors, social portals, licenses</string>
+    <string name="pref_ads_category_summary">Displaying advertisements, project support</string>
 
 
     <!--Notification Channels-->

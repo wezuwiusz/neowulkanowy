@@ -20,10 +20,6 @@ class SyncFragment : PreferenceFragmentCompat(),
     @Inject
     lateinit var presenter: SyncPresenter
 
-    companion object {
-        fun newInstance() = SyncFragment()
-    }
-
     override val titleStringId get() = R.string.pref_settings_sync_title
 
     override val syncSuccessString get() = getString(R.string.pref_services_message_sync_success)

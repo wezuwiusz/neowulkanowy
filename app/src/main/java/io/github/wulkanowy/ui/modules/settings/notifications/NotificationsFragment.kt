@@ -40,10 +40,6 @@ class NotificationsFragment : PreferenceFragmentCompat(),
     @Inject
     lateinit var appInfo: AppInfo
 
-    companion object {
-        fun newInstance() = NotificationsFragment()
-    }
-
     override val titleStringId get() = R.string.pref_settings_notifications_title
 
     override val isNotificationPermissionGranted: Boolean

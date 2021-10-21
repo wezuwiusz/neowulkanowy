@@ -299,7 +299,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             val currentDayHeader =
                 timetableFull?.headers.orEmpty().singleOrNull { it.date == currentDate }
 
-            val tomorrowTimetable = timetableFull?.lessons.orEmpty()
+            val tomorrowTimetable = timetableFull?.lessons
+                .orEmpty()
                 .filter { it.date == currentDate.plusDays(1) }
                 .filterNot { it.canceled }
             val tomorrowDayHeader =

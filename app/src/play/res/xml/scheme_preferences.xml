@@ -19,6 +19,12 @@
         app:summary="@string/pref_sync_category_summary"
         app:title="@string/pref_sync_category" />
     <Preference
+        app:fragment="io.github.wulkanowy.ui.modules.settings.ads.AdsFragment"
+        app:icon="@drawable/ic_settings_ads"
+        app:key="ads"
+        app:summary="@string/pref_ads_category_summary"
+        app:title="@string/pref_settings_ads_title" />
+    <Preference
         app:fragment="io.github.wulkanowy.ui.modules.settings.advanced.AdvancedFragment"
         app:icon="@drawable/ic_settings_advanced"
         app:key="advanced"
