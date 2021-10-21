@@ -15,24 +15,23 @@ class LoggerRepository @Inject constructor(
 
     suspend fun getLastLogLines() = getLastModified().readText().split("\n")
 
-    suspend fun getLogFiles() = withContext(dispatchers.backgroundThread) {
-        File(context.filesDir.absolutePath).listFiles(File::isFile)?.filter {
-            it.name.endsWith(".log")
-        }!!
+    suspend fun getLogFiles() = withContext(dispatchers.io) {
+        File(context.filesDir.absolutePath).listFiles(File::isFile)
+            ?.filter { it.name.endsWith(".log") }!!
     }
 
-    private suspend fun getLastModified(): File {
-        return withContext(dispatchers.backgroundThread) {
-            var lastModifiedTime = Long.MIN_VALUE
-            var chosenFile: File? = null
-            File(context.filesDir.absolutePath).listFiles(File::isFile)?.forEach { file ->
+    private suspend fun getLastModified() = withContext(dispatchers.io) {
+        var lastModifiedTime = Long.MIN_VALUE
+        var chosenFile: File? = null
+
+        File(context.filesDir.absolutePath).listFiles(File::isFile)
+            ?.forEach { file ->
                 if (file.lastModified() > lastModifiedTime) {
                     lastModifiedTime = file.lastModified()
                     chosenFile = file
                 }
             }
-            if (chosenFile == null) throw FileNotFoundException("Log file not found")
-            chosenFile!!
-        }
+
+        chosenFile ?: throw FileNotFoundException("Log file not found")
     }
 }

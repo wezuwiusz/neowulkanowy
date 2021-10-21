@@ -20,7 +20,7 @@ class AppCreatorRepository @Inject constructor(
 
     @OptIn(ExperimentalSerializationApi::class)
     @Suppress("BlockingMethodInNonBlockingContext")
-    suspend fun getAppCreators() = withContext(dispatchers.backgroundThread) {
+    suspend fun getAppCreators() = withContext(dispatchers.io) {
         val inputStream = context.assets.open("contributors.json").buffered()
         json.decodeFromStream<List<Contributor>>(inputStream)
     }

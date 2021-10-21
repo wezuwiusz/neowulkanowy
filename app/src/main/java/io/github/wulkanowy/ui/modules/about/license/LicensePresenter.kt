@@ -31,7 +31,7 @@ class LicensePresenter @Inject constructor(
 
     private fun loadData() {
         flowWithResource {
-            withContext(dispatchers.backgroundThread) {
+            withContext(dispatchers.io) {
                 view?.appLibraries.orEmpty()
             }
         }.onEach {
