@@ -10,6 +10,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.sdk.toLocalDate
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
+import io.github.wulkanowy.ui.modules.grade.GradeExpandMode
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode
 import io.github.wulkanowy.utils.toLocalDateTime
 import io.github.wulkanowy.utils.toTimestamp
@@ -19,6 +20,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.lang.ClassCastException
+import java.lang.IllegalStateException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -56,8 +59,13 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_grade_average_force_calc
         )
 
-    val isGradeExpandable: Boolean
-        get() = !getBoolean(R.string.pref_key_expand_grade, R.bool.pref_default_expand_grade)
+    val gradeExpandMode: GradeExpandMode
+        get() = GradeExpandMode.getByValue(
+            getString(
+                R.string.pref_key_expand_grade_mode,
+                R.string.pref_default_expand_grade_mode
+            )
+        )
 
     val showAllSubjectsOnStatisticsList: Boolean
         get() = getBoolean(
@@ -264,6 +272,9 @@ class PreferencesRepository @Inject constructor(
 
     private fun getBoolean(id: String, default: Int) =
         sharedPref.getBoolean(id, context.resources.getBoolean(default))
+
+    private fun getBoolean(id: Int, default: Boolean) =
+        sharedPref.getBoolean(context.getString(id), default)
 
     private companion object {
 

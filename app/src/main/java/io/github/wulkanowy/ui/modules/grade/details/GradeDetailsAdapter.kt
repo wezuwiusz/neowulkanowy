@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
@@ -13,9 +14,11 @@ import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.databinding.HeaderGradeDetailsBinding
 import io.github.wulkanowy.databinding.ItemGradeDetailsBinding
 import io.github.wulkanowy.ui.base.BaseExpandableAdapter
+import io.github.wulkanowy.ui.modules.grade.GradeExpandMode
 import io.github.wulkanowy.utils.getBackgroundColor
 import io.github.wulkanowy.utils.toFormattedString
 import timber.log.Timber
+import java.util.BitSet
 import javax.inject.Inject
 
 class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<RecyclerView.ViewHolder>() {
@@ -24,19 +27,20 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
 
     private var items = mutableListOf<GradeDetailsItem>()
 
-    private var expandedPosition = NO_POSITION
+    private val expandedPositions = BitSet(items.size)
 
-    private var isExpandable = false
+    private var expandMode = GradeExpandMode.ONE
 
     var onClickListener: (Grade, position: Int) -> Unit = { _, _ -> }
 
     var colorTheme = ""
 
-    fun setDataItems(data: List<GradeDetailsItem>, isExpanded: Boolean = isExpandable) {
+    fun setDataItems(data: List<GradeDetailsItem>, expandMode: GradeExpandMode = this.expandMode) {
         headers = data.filter { it.viewType == ViewType.HEADER }.toMutableList()
-        items = if (isExpanded) headers else data.toMutableList()
-        isExpandable = isExpanded
-        expandedPosition = NO_POSITION
+        items =
+            (if (expandMode != GradeExpandMode.ALWAYS_EXPANDED) headers else data).toMutableList()
+        this.expandMode = expandMode
+        expandedPositions.clear()
     }
 
     fun updateDetailsItem(position: Int, grade: Grade) {
@@ -48,7 +52,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
         val candidates = headers.filter { (it.value as GradeDetailsHeader).subject == subject }
 
         if (candidates.size > 1) {
-            Timber.e("Header with subject $subject found ${candidates.size} times! Expanded: $expandedPosition. Items: $candidates")
+            Timber.e("Header with subject $subject found ${candidates.size} times! Expanded: $expandedPositions. Items: $candidates")
         }
 
         return candidates.first()
@@ -64,9 +68,9 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
     }
 
     fun collapseAll() {
-        if (expandedPosition != -1) {
-            refreshList(headers)
-            expandedPosition = NO_POSITION
+        if (!expandedPositions.isEmpty) {
+            refreshList(headers.toMutableList())
+            expandedPositions.clear()
         }
     }
 
@@ -86,8 +90,12 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            ViewType.HEADER.id -> HeaderViewHolder(HeaderGradeDetailsBinding.inflate(inflater, parent, false))
-            ViewType.ITEM.id -> ItemViewHolder(ItemGradeDetailsBinding.inflate(inflater, parent, false))
+            ViewType.HEADER.id -> HeaderViewHolder(
+                HeaderGradeDetailsBinding.inflate(inflater, parent, false)
+            )
+            ViewType.ITEM.id -> ItemViewHolder(
+                ItemGradeDetailsBinding.inflate(inflater, parent, false)
+            )
             else -> throw IllegalStateException()
         }
     }
@@ -106,46 +114,91 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
         }
     }
 
-    private fun bindHeaderViewHolder(holder: HeaderViewHolder, header: GradeDetailsHeader, position: Int) {
-        val headerPosition = headers.indexOf(items[position])
-        val adapterPosition = holder.bindingAdapterPosition
+    private fun bindHeaderViewHolder(
+        holder: HeaderViewHolder,
+        header: GradeDetailsHeader,
+        position: Int
+    ) {
+        val context = holder.binding.root.context
+        val item = items[position]
+        val headerPosition = headers.indexOf(item)
 
         with(holder.binding) {
-            gradeHeaderDivider.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
+            gradeHeaderDivider.isVisible = holder.bindingAdapterPosition != 0
             with(gradeHeaderSubject) {
                 text = header.subject
-                maxLines = if (headerPosition == expandedPosition) 2 else 1
+                maxLines = if (expandedPositions[headerPosition]) 2 else 1
             }
             gradeHeaderAverage.text = formatAverage(header.average, root.context.resources)
-            gradeHeaderPointsSum.text = root.context.getString(R.string.grade_points_sum, header.pointsSum)
-            gradeHeaderPointsSum.visibility = if (!header.pointsSum.isNullOrEmpty()) View.VISIBLE else View.GONE
-            gradeHeaderNumber.text = root.context.resources.getQuantityString(R.plurals.grade_number_item, header.grades.size, header.grades.size)
-            gradeHeaderNote.visibility = if (header.newGrades > 0) View.VISIBLE else View.GONE
-            if (header.newGrades > 0) gradeHeaderNote.text = header.newGrades.toString(10)
+            gradeHeaderPointsSum.text =
+                context.getString(R.string.grade_points_sum, header.pointsSum)
+            gradeHeaderPointsSum.isVisible = !header.pointsSum.isNullOrEmpty()
+            gradeHeaderNumber.text = context.resources.getQuantityString(
+                R.plurals.grade_number_item,
+                header.grades.size,
+                header.grades.size
+            )
+            gradeHeaderNote.isVisible = header.newGrades > 0
 
-            gradeHeaderContainer.isEnabled = isExpandable
+            if (header.newGrades > 0) {
+                gradeHeaderNote.text = header.newGrades.toString()
+            }
+
+            gradeHeaderContainer.isEnabled = expandMode != GradeExpandMode.ALWAYS_EXPANDED
             gradeHeaderContainer.setOnClickListener {
-                expandedPosition = if (expandedPosition == adapterPosition) -1 else adapterPosition
-
-                if (expandedPosition != NO_POSITION) {
-                    refreshList(headers.toMutableList().apply {
-                        addAll(headerPosition + 1, header.grades)
-                    })
-                    scrollToHeaderWithSubItems(headerPosition, header.grades.size)
-                } else {
-                    refreshList(headers)
-                }
+                expandGradeHeader(headerPosition, header, holder)
             }
         }
     }
 
-    private fun formatAverage(average: Double?, resources: Resources): String {
-        return if (average == null || average == .0) resources.getString(R.string.grade_no_average)
-        else resources.getString(R.string.grade_average, average)
+    private fun expandGradeHeader(
+        headerPosition: Int,
+        header: GradeDetailsHeader,
+        holder: HeaderViewHolder
+    ) {
+        if (expandMode == GradeExpandMode.ONE) {
+            val isHeaderExpanded = expandedPositions[headerPosition]
+
+            expandedPositions.clear()
+
+            if (!isHeaderExpanded) {
+                val updatedItemList = headers.toMutableList()
+                    .apply { addAll(headerPosition + 1, header.grades) }
+
+                expandedPositions.set(headerPosition)
+                refreshList(updatedItemList)
+                scrollToHeaderWithSubItems(headerPosition, header.grades.size)
+            } else {
+                refreshList(headers.toMutableList())
+            }
+        } else if (expandMode == GradeExpandMode.UNLIMITED) {
+            val headerAdapterPosition = holder.bindingAdapterPosition
+            val isHeaderExpanded = expandedPositions[headerPosition]
+
+            expandedPositions.flip(headerPosition)
+
+            if (!isHeaderExpanded) {
+                val updatedList = items.toMutableList()
+                    .apply { addAll(headerAdapterPosition + 1, header.grades) }
+
+                refreshList(updatedList)
+                scrollToHeaderWithSubItems(headerAdapterPosition, header.grades.size)
+            } else {
+                val startPosition = headerAdapterPosition + 1
+                val updatedList = items.toMutableList()
+                    .apply {
+                        subList(startPosition, startPosition + header.grades.size).clear()
+                    }
+
+                refreshList(updatedList)
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun bindItemViewHolder(holder: ItemViewHolder, grade: Grade) {
+        val context = holder.binding.root.context
+
         with(holder.binding) {
             gradeItemValue.run {
                 text = grade.entry
@@ -154,17 +207,26 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             gradeItemDescription.text = when {
                 grade.description.isNotBlank() -> grade.description
                 grade.gradeSymbol.isNotBlank() -> grade.gradeSymbol
-                else -> root.context.getString(R.string.all_no_description)
+                else -> context.getString(R.string.all_no_description)
             }
             gradeItemDate.text = grade.date.toFormattedString()
-            gradeItemWeight.text = "${root.context.getString(R.string.grade_weight)}: ${grade.weight}"
+            gradeItemWeight.text = "${context.getString(R.string.grade_weight)}: ${grade.weight}"
             gradeItemNote.visibility = if (!grade.isRead) View.VISIBLE else View.GONE
 
             root.setOnClickListener {
-                holder.bindingAdapterPosition.let { if (it != NO_POSITION) onClickListener(grade, it) }
+                holder.bindingAdapterPosition.let {
+                    if (it != NO_POSITION) onClickListener(grade, it)
+                }
             }
         }
     }
+
+    private fun formatAverage(average: Double?, resources: Resources) =
+        if (average == null || average == .0) {
+            resources.getString(R.string.grade_no_average)
+        } else {
+            resources.getString(R.string.grade_average, average)
+        }
 
     private class HeaderViewHolder(val binding: HeaderGradeDetailsBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -172,8 +234,10 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
     private class ItemViewHolder(val binding: ItemGradeDetailsBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    class GradeDetailsDiffUtil(private val old: List<GradeDetailsItem>, private val new: List<GradeDetailsItem>) :
-        DiffUtil.Callback() {
+    private class GradeDetailsDiffUtil(
+        private val old: List<GradeDetailsItem>,
+        private val new: List<GradeDetailsItem>
+    ) : DiffUtil.Callback() {
 
         override fun getOldListSize() = old.size
 

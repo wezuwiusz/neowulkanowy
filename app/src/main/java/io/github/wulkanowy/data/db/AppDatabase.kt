@@ -193,7 +193,7 @@ abstract class AppDatabase : RoomDatabase() {
             Migration38(),
             Migration39(),
             Migration40(),
-            Migration41(),
+            Migration41(sharedPrefProvider),
             Migration42()
         )
 

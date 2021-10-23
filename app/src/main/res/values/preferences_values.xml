@@ -99,6 +99,17 @@
         <item>grade_color</item>
     </string-array>
 
+    <string-array name="default_expand_grade_entries">
+        <item>Up to 1 at once</item>
+        <item>Always expanded</item>
+        <item>Unlimited expansions</item>
+    </string-array>
+    <string-array name="default_expand_grade_values" translatable="false">
+        <item>one</item>
+        <item>always</item>
+        <item>any</item>
+    </string-array>
+
     <string-array name="grade_average_mode_entries">
         <item>Average of grades only from selected semester</item>
         <item>Average of averages from both semesters</item>

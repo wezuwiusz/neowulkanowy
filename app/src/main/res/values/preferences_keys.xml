@@ -5,7 +5,8 @@
     <string name="pref_key_app_theme">app_theme</string>
     <string name="pref_key_dashboard_tiles">dashboard_tiles</string>
     <string name="pref_key_grade_color_scheme">grade_color_scheme</string>
-    <string name="pref_key_expand_grade">expand_grade</string>
+    <string name="pref_key_expand_grade">expand_grade</string> <!-- replaced by expand_grade_mode -->
+    <string name="pref_key_expand_grade_mode">expand_grade_mode</string>
     <string name="pref_key_grade_average_mode">grade_average_mode</string>
     <string name="pref_key_grade_average_force_calc">grade_average_always_calc</string>
     <string name="pref_key_grade_statistics_list">grade_statistics_list</string>

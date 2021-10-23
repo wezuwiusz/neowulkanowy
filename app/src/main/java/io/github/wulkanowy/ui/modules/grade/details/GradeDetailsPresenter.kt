@@ -9,6 +9,7 @@ import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
+import io.github.wulkanowy.ui.modules.grade.GradeExpandMode
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode.ALPHABETIC
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode.DATE
 import io.github.wulkanowy.ui.modules.grade.GradeSubject
@@ -113,7 +114,7 @@ class GradeDetailsPresenter @Inject constructor(
     fun onParentViewReselected() {
         view?.run {
             if (!isViewEmpty) {
-                if (preferencesRepository.isGradeExpandable) collapseAllItems()
+                if (preferencesRepository.gradeExpandMode != GradeExpandMode.ALWAYS_EXPANDED) collapseAllItems()
                 scrollToStart()
             }
         }
@@ -157,7 +158,7 @@ class GradeDetailsPresenter @Inject constructor(
                             showContent(true)
                             updateData(
                                 data = items,
-                                isGradeExpandable = preferencesRepository.isGradeExpandable,
+                                expandMode = preferencesRepository.gradeExpandMode,
                                 gradeColorTheme = preferencesRepository.gradeColorTheme
                             )
                             notifyParentDataLoaded(semesterId)
@@ -175,7 +176,7 @@ class GradeDetailsPresenter @Inject constructor(
                         showContent(items.isNotEmpty())
                         updateData(
                             data = items,
-                            isGradeExpandable = preferencesRepository.isGradeExpandable,
+                            expandMode = preferencesRepository.gradeExpandMode,
                             gradeColorTheme = preferencesRepository.gradeColorTheme
                         )
                     }
@@ -235,14 +236,24 @@ class GradeDetailsPresenter @Inject constructor(
                     .sortedByDescending { it.date }
                     .map { GradeDetailsItem(it, ViewType.ITEM) }
 
-                listOf(GradeDetailsItem(GradeDetailsHeader(
-                    subject = subject,
-                    average = average,
-                    pointsSum = points,
-                    grades = subItems
-                ).apply {
-                    newGrades = grades.filter { grade -> !grade.isRead }.size
-                }, ViewType.HEADER)) + if (preferencesRepository.isGradeExpandable) emptyList() else subItems
+                val gradeDetailsItems = listOf(
+                    GradeDetailsItem(
+                        GradeDetailsHeader(
+                            subject = subject,
+                            average = average,
+                            pointsSum = points,
+                            grades = subItems
+                        ).apply {
+                            newGrades = grades.filter { grade -> !grade.isRead }.size
+                        }, ViewType.HEADER
+                    )
+                )
+
+                if (preferencesRepository.gradeExpandMode == GradeExpandMode.ALWAYS_EXPANDED) {
+                    gradeDetailsItems + subItems
+                } else {
+                    gradeDetailsItems
+                }
             }.flatten()
     }
 
