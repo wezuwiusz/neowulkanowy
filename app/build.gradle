@@ -239,7 +239,7 @@ dependencies {
     playImplementation 'com.google.android.gms:play-services-ads:20.4.0'
 
     hmsImplementation 'com.huawei.hms:hianalytics:6.3.0.301'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.1.200'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.1.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
