@@ -46,7 +46,7 @@ class AttendanceAdapter @Inject constructor() :
                 onExcuseCheckboxSelect(item, checked)
             }
 
-            when (if (item.excuseStatus != null) SentExcuseStatus.valueOf(item.excuseStatus) else null) {
+            when (item.excuseStatus?.let { SentExcuseStatus.valueOf(it)}) {
                 SentExcuseStatus.WAITING -> {
                     attendanceItemExcuseInfo.setImageResource(R.drawable.ic_excuse_waiting)
                     attendanceItemExcuseInfo.visibility = View.VISIBLE

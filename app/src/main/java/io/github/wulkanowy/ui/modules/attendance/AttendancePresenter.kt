@@ -259,9 +259,8 @@ class AttendancePresenter @Inject constructor(
                         showEmpty(filteredAttendance.isEmpty())
                         showErrorView(false)
                         showContent(filteredAttendance.isNotEmpty())
-                        showExcuseButton(filteredAttendance.any { item ->
-                            (!isParent && isVulcanExcusedFunctionEnabled) || (isParent && item.isExcusableOrNotExcused)
-                        })
+                        val anyExcusables = filteredAttendance.any { it.isExcusableOrNotExcused }
+                        showExcuseButton(anyExcusables && (isParent || isVulcanExcusedFunctionEnabled))
                     }
                     analytics.logEvent(
                         "load_data",
