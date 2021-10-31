@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minWidth="300dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.base.ErrorDialog">
 
     <TextView
         android:layout_width="match_parent"
@@ -16,12 +17,22 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/errorDialogMessage"
+        android:id="@+id/errorDialogHumanizedMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
         android:textSize="21sp"
+        tools:text="@tools:sample/lorem" />
+
+    <TextView
+        android:id="@+id/errorDialogErrorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="10dp"
+        android:textColor="?android:textColorSecondary"
         tools:text="@tools:sample/lorem" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,6 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
+                    android:textColor="?android:textColorTertiary"
                     android:textIsSelectable="true"
                     android:textSize="12sp"
                     tools:text="@tools:sample/lorem/random" />
