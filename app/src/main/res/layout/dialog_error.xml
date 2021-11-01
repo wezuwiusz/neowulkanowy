@@ -32,6 +32,7 @@
         android:layout_marginBottom="5dp"
         android:paddingHorizontal="20dp"
         android:paddingTop="10dp"
+        android:textIsSelectable="true"
         android:textColor="?android:textColorSecondary"
         tools:text="@tools:sample/lorem" />
 
