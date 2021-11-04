@@ -23,17 +23,21 @@
             app:summary="@string/pref_notify_upcoming_lessons_persistent_summary"
             app:title="@string/pref_notify_upcoming_lessons_persistent_switch" />
         <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_notification_piggyback"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_notifications_piggyback"
-            app:singleLineTitle="false"
-            app:title="@string/pref_notify_notifications_piggyback" />
-        <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_notification_debug"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notification_debug"
             app:singleLineTitle="false"
             app:title="@string/pref_notify_debug_switch" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_notify_header_other">
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_notification_piggyback"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_notifications_piggyback"
+            app:singleLineTitle="false"
+            app:title="@string/pref_notify_notifications_piggyback" />
         <Preference
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notifications_system_settings"
