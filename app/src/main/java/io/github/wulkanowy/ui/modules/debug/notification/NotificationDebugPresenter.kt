@@ -3,6 +3,8 @@ package io.github.wulkanowy.ui.modules.debug.notification
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.services.sync.notifications.ChangeTimetableNotification
+import io.github.wulkanowy.services.sync.notifications.NewAttendanceNotification
 import io.github.wulkanowy.services.sync.notifications.NewConferenceNotification
 import io.github.wulkanowy.services.sync.notifications.NewExamNotification
 import io.github.wulkanowy.services.sync.notifications.NewGradeNotification
@@ -13,6 +15,7 @@ import io.github.wulkanowy.services.sync.notifications.NewNoteNotification
 import io.github.wulkanowy.services.sync.notifications.NewSchoolAnnouncementNotification
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.ui.modules.debug.notification.mock.debugAttendanceItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugConferenceItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugExamItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugGradeDetailsItems
@@ -22,6 +25,7 @@ import io.github.wulkanowy.ui.modules.debug.notification.mock.debugLuckyNumber
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugMessageItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugNoteItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugSchoolAnnouncementItems
+import io.github.wulkanowy.ui.modules.debug.notification.mock.debugTimetableItems
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -37,6 +41,8 @@ class NotificationDebugPresenter @Inject constructor(
     private val newNoteNotification: NewNoteNotification,
     private val newSchoolAnnouncementNotification: NewSchoolAnnouncementNotification,
     private val newLuckyNumberNotification: NewLuckyNumberNotification,
+    private val changeTimetableNotification: ChangeTimetableNotification,
+    private val newAttendanceNotification: NewAttendanceNotification,
 ) : BasePresenter<NotificationDebugView>(errorHandler, studentRepository) {
 
     private val items = listOf(
@@ -63,6 +69,12 @@ class NotificationDebugPresenter @Inject constructor(
         },
         NotificationDebugItem(R.string.note_title) { n ->
             withStudent { newNoteNotification.notify(debugNoteItems.take(n), it) }
+        },
+        NotificationDebugItem(R.string.attendance_title) { n ->
+            withStudent { newAttendanceNotification.notify(debugAttendanceItems.take(n), it) }
+        },
+        NotificationDebugItem(R.string.timetable_title) { n ->
+            withStudent { changeTimetableNotification.notify(debugTimetableItems.take(n), it) }
         },
         NotificationDebugItem(R.string.school_announcement_title) { n ->
             withStudent {

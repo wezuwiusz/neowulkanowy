@@ -1,34 +1,52 @@
 package io.github.wulkanowy.services.sync.notifications
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.pojos.MultipleNotificationsData
-import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.data.pojos.GroupNotificationData
+import io.github.wulkanowy.data.pojos.NotificationData
+import io.github.wulkanowy.ui.modules.Destination
+import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.utils.getPlural
 import io.github.wulkanowy.utils.toFormattedString
 import java.time.LocalDate
 import javax.inject.Inject
 
 class NewHomeworkNotification @Inject constructor(
-    private val appNotificationManager: AppNotificationManager
+    private val appNotificationManager: AppNotificationManager,
+    @ApplicationContext private val context: Context
 ) {
 
     suspend fun notify(items: List<Homework>, student: Student) {
         val today = LocalDate.now()
-        val lines = items.filter { !it.date.isBefore(today) }.map {
-            "${it.date.toFormattedString("dd.MM")} - ${it.subject}: ${it.content}"
-        }.ifEmpty { return }
+        val lines = items.filter { !it.date.isBefore(today) }
+            .map {
+                "${it.date.toFormattedString("dd.MM")} - ${it.subject}: ${it.content}"
+            }
+            .ifEmpty { return }
 
-        val notification = MultipleNotificationsData(
+        val notificationDataList = lines.map {
+            NotificationData(
+                title = context.getPlural(R.plurals.homework_notify_new_item_title, 1),
+                content = it,
+                intentToStart = MainActivity.getStartIntent(context, Destination.Homework, true),
+            )
+        }
+
+        val groupNotificationData = GroupNotificationData(
+            title = context.getPlural(R.plurals.homework_notify_new_item_title, lines.size),
+            content = context.getPlural(
+                R.plurals.homework_notify_new_item_content,
+                lines.size,
+                lines.size
+            ),
+            intentToStart = MainActivity.getStartIntent(context, Destination.Homework, true),
             type = NotificationType.NEW_HOMEWORK,
-            icon = R.drawable.ic_more_homework,
-            titleStringRes = R.plurals.homework_notify_new_item_title,
-            contentStringRes = R.plurals.homework_notify_new_item_content,
-            summaryStringRes = R.plurals.homework_number_item,
-            startMenu = MainView.Section.HOMEWORK,
-            lines = lines
+            notificationDataList = notificationDataList
         )
 
-        appNotificationManager.sendNotification(notification, student)
+        appNotificationManager.sendMultipleNotifications(groupNotificationData, student)
     }
 }

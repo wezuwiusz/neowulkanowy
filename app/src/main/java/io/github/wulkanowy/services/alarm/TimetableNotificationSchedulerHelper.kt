@@ -25,7 +25,6 @@ import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companio
 import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companion.NOTIFICATION_TYPE_UPCOMING
 import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companion.STUDENT_ID
 import io.github.wulkanowy.services.alarm.TimetableNotificationReceiver.Companion.STUDENT_NAME
-import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.DispatchersProvider
 import io.github.wulkanowy.utils.nickOrName
 import io.github.wulkanowy.utils.toTimestamp
@@ -79,7 +78,7 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
     }
 
     fun cancelNotification() =
-        NotificationManagerCompat.from(context).cancel(MainView.Section.TIMETABLE.id)
+        NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID)
 
     suspend fun scheduleNotifications(lessons: List<Timetable>, student: Student) {
         if (!preferencesRepository.isUpcomingLessonsNotificationsEnable) {
@@ -156,7 +155,6 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
             AlarmManagerCompat.setExactAndAllowWhileIdle(
                 alarmManager, RTC_WAKEUP, time.toTimestamp(),
                 PendingIntent.getBroadcast(context, getRequestCode(time, studentId), intent.also {
-                    it.putExtra(NOTIFICATION_ID, MainView.Section.TIMETABLE.id)
                     it.putExtra(LESSON_TYPE, notificationType)
                 }, FLAG_UPDATE_CURRENT)
             )

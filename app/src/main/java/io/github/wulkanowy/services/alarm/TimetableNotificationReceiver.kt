@@ -15,8 +15,8 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.HiltBroadcastReceiver
 import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel.Companion.CHANNEL_ID
+import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toLocalDateTime
@@ -41,7 +41,7 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
         const val NOTIFICATION_TYPE_UPCOMING = 2
         const val NOTIFICATION_TYPE_LAST_LESSON_CANCELLATION = 3
 
-        const val NOTIFICATION_ID = "id"
+        const val NOTIFICATION_ID = 2137
 
         const val STUDENT_NAME = "student_name"
         const val STUDENT_ID = "student_id"
@@ -71,11 +71,10 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
 
     private fun prepareNotification(context: Context, intent: Intent) {
         val type = intent.getIntExtra(LESSON_TYPE, 0)
-        val notificationId = intent.getIntExtra(NOTIFICATION_ID, MainView.Section.TIMETABLE.id)
         val isPersistent = preferencesRepository.isUpcomingLessonsNotificationsPersistent
 
         if (type == NOTIFICATION_TYPE_LAST_LESSON_CANCELLATION) {
-            return NotificationManagerCompat.from(context).cancel(notificationId)
+            return NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID)
         }
 
         val studentId = intent.getIntExtra(STUDENT_ID, 0)
@@ -92,7 +91,8 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
 
         Timber.d("TimetableNotification receive: type: $type, subject: $subject, start: ${start.toLocalDateTime()}, student: $studentId")
 
-        showNotification(context, notificationId, isPersistent, studentName,
+        showNotification(
+            context, isPersistent, studentName,
             if (type == NOTIFICATION_TYPE_CURRENT) end else start, end - start,
             context.getString(
                 if (type == NOTIFICATION_TYPE_CURRENT) R.string.timetable_now else R.string.timetable_next,
@@ -109,7 +109,6 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
 
     private fun showNotification(
         context: Context,
-        notificationId: Int,
         isPersistent: Boolean,
         studentName: String?,
         countDown: Long,
@@ -118,7 +117,7 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
         next: String?
     ) {
         NotificationManagerCompat.from(context)
-            .notify(notificationId, NotificationCompat.Builder(context, CHANNEL_ID)
+            .notify(NOTIFICATION_ID, NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(next)
                 .setAutoCancel(false)
@@ -138,8 +137,8 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
                 .setContentIntent(
                     PendingIntent.getActivity(
                         context,
-                        MainView.Section.TIMETABLE.id,
-                        MainActivity.getStartIntent(context, MainView.Section.TIMETABLE, true),
+                        NOTIFICATION_ID,
+                        MainActivity.getStartIntent(context, Destination.Timetable(), true),
                         FLAG_UPDATE_CURRENT
                     )
                 )

@@ -3,48 +3,51 @@ package io.github.wulkanowy.services.sync.notifications
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.Exam
+import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.utils.descriptionRes
 import io.github.wulkanowy.utils.getPlural
 import io.github.wulkanowy.utils.toFormattedString
-import java.time.LocalDate
 import javax.inject.Inject
 
-class NewExamNotification @Inject constructor(
+class NewAttendanceNotification @Inject constructor(
     private val appNotificationManager: AppNotificationManager,
     @ApplicationContext private val context: Context
 ) {
 
-    suspend fun notify(items: List<Exam>, student: Student) {
-        val today = LocalDate.now()
-        val lines = items.filter { !it.date.isBefore(today) }
+    suspend fun notify(items: List<Attendance>, student: Student) {
+        val lines = items.filterNot { it.presence || it.name == "UNKNOWN" }
             .map {
-                "${it.date.toFormattedString("dd.MM")} - ${it.subject}: ${it.description}"
+                val description = context.getString(it.descriptionRes)
+                "${it.date.toFormattedString("dd.MM")} - ${it.subject}: $description"
             }
             .ifEmpty { return }
 
         val notificationDataList = lines.map {
             NotificationData(
-                title = context.getPlural(R.plurals.exam_notify_new_item_title, 1),
+                title = context.getPlural(R.plurals.attendance_notify_new_items_title, 1),
                 content = it,
-                intentToStart = MainActivity.getStartIntent(context, Destination.Exam, true),
+                intentToStart = MainActivity.getStartIntent(context, Destination.Attendance, true)
             )
         }
 
         val groupNotificationData = GroupNotificationData(
             notificationDataList = notificationDataList,
-            title = context.getPlural(R.plurals.exam_notify_new_item_title, lines.size),
-            content = context.getPlural(
-                R.plurals.exam_notify_new_item_content,
-                lines.size,
-                lines.size
+            title = context.getPlural(
+                R.plurals.attendance_notify_new_items_title,
+                notificationDataList.size
             ),
-            intentToStart = MainActivity.getStartIntent(context, Destination.Exam, true),
-            type = NotificationType.NEW_EXAM
+            content = context.getPlural(
+                R.plurals.attendance_notify_new_items,
+                notificationDataList.size,
+                notificationDataList.size
+            ),
+            intentToStart = MainActivity.getStartIntent(context, Destination.Attendance, true),
+            type = NotificationType.NEW_ATTENDANCE
         )
 
         appNotificationManager.sendMultipleNotifications(groupNotificationData, student)

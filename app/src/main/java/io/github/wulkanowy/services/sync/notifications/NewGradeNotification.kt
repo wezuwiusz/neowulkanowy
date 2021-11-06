@@ -1,62 +1,88 @@
 package io.github.wulkanowy.services.sync.notifications
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.pojos.MultipleNotificationsData
-import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.data.pojos.GroupNotificationData
+import io.github.wulkanowy.data.pojos.NotificationData
+import io.github.wulkanowy.ui.modules.Destination
+import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.utils.getPlural
 import javax.inject.Inject
 
 class NewGradeNotification @Inject constructor(
-    private val appNotificationManager: AppNotificationManager
+    private val appNotificationManager: AppNotificationManager,
+    @ApplicationContext private val context: Context
 ) {
 
     suspend fun notifyDetails(items: List<Grade>, student: Student) {
-        val notification = MultipleNotificationsData(
-            type = NotificationType.NEW_GRADE_DETAILS,
-            icon = R.drawable.ic_stat_grade,
-            titleStringRes = R.plurals.grade_new_items,
-            contentStringRes = R.plurals.grade_notify_new_items,
-            summaryStringRes = R.plurals.grade_number_item,
-            startMenu = MainView.Section.GRADE,
-            lines = items.map {
-                "${it.subject}: ${it.entry}"
-            }
+        val notificationDataList = items.map {
+            NotificationData(
+                title = context.getPlural(R.plurals.grade_new_items, 1),
+                content = "${it.subject}: ${it.entry}",
+                intentToStart = MainActivity.getStartIntent(context, Destination.Grade, true),
+            )
+        }
+
+        val groupNotificationData = GroupNotificationData(
+            notificationDataList = notificationDataList,
+            title = context.getPlural(R.plurals.grade_new_items, items.size),
+            content = context.getPlural(R.plurals.grade_notify_new_items, items.size, items.size),
+            intentToStart = MainActivity.getStartIntent(context, Destination.Grade, true),
+            type = NotificationType.NEW_GRADE_DETAILS
         )
 
-        appNotificationManager.sendNotification(notification, student)
+        appNotificationManager.sendMultipleNotifications(groupNotificationData, student)
     }
 
     suspend fun notifyPredicted(items: List<GradeSummary>, student: Student) {
-        val notification = MultipleNotificationsData(
-            type = NotificationType.NEW_GRADE_PREDICTED,
-            icon = R.drawable.ic_stat_grade,
-            titleStringRes = R.plurals.grade_new_items_predicted,
-            contentStringRes = R.plurals.grade_notify_new_items_predicted,
-            summaryStringRes = R.plurals.grade_number_item,
-            startMenu = MainView.Section.GRADE,
-            lines = items.map {
-                "${it.subject}: ${it.predictedGrade}"
-            }
+        val notificationDataList = items.map {
+            NotificationData(
+                title = context.getPlural(R.plurals.grade_new_items_predicted, 1),
+                content = "${it.subject}: ${it.predictedGrade}",
+                intentToStart = MainActivity.getStartIntent(context, Destination.Grade, true),
+            )
+        }
+
+        val groupNotificationData = GroupNotificationData(
+            notificationDataList = notificationDataList,
+            title = context.getPlural(R.plurals.grade_new_items_predicted, items.size),
+            content = context.getPlural(
+                R.plurals.grade_notify_new_items_predicted,
+                items.size,
+                items.size
+            ),
+            intentToStart = MainActivity.getStartIntent(context, Destination.Grade, true),
+            type = NotificationType.NEW_GRADE_PREDICTED
         )
 
-        appNotificationManager.sendNotification(notification, student)
+        appNotificationManager.sendMultipleNotifications(groupNotificationData, student)
     }
 
     suspend fun notifyFinal(items: List<GradeSummary>, student: Student) {
-        val notification = MultipleNotificationsData(
-            type = NotificationType.NEW_GRADE_FINAL,
-            icon = R.drawable.ic_stat_grade,
-            titleStringRes = R.plurals.grade_new_items_final,
-            contentStringRes = R.plurals.grade_notify_new_items_final,
-            summaryStringRes = R.plurals.grade_number_item,
-            startMenu = MainView.Section.GRADE,
-            lines = items.map {
-                "${it.subject}: ${it.finalGrade}"
-            }
+        val notificationDataList = items.map {
+            NotificationData(
+                title = context.getPlural(R.plurals.grade_new_items_final, 1),
+                content = "${it.subject}: ${it.finalGrade}",
+                intentToStart = MainActivity.getStartIntent(context, Destination.Grade, true),
+            )
+        }
+
+        val groupNotificationData = GroupNotificationData(
+            notificationDataList = notificationDataList,
+            title = context.getPlural(R.plurals.grade_new_items_final, items.size),
+            content = context.getPlural(
+                R.plurals.grade_notify_new_items_final,
+                items.size,
+                items.size
+            ),
+            intentToStart = MainActivity.getStartIntent(context, Destination.Grade, true),
+            type = NotificationType.NEW_GRADE_FINAL
         )
 
-        appNotificationManager.sendNotification(notification, student)
+        appNotificationManager.sendMultipleNotifications(groupNotificationData, student)
     }
 }

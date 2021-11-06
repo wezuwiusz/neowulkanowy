@@ -1,29 +1,39 @@
 package io.github.wulkanowy.services.sync.notifications
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.pojos.MultipleNotificationsData
-import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.data.pojos.GroupNotificationData
+import io.github.wulkanowy.data.pojos.NotificationData
+import io.github.wulkanowy.ui.modules.Destination
+import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.utils.getPlural
 import javax.inject.Inject
 
 class NewMessageNotification @Inject constructor(
-    private val appNotificationManager: AppNotificationManager
+    private val appNotificationManager: AppNotificationManager,
+    @ApplicationContext private val context: Context
 ) {
 
     suspend fun notify(items: List<Message>, student: Student) {
-        val notification = MultipleNotificationsData(
-            type = NotificationType.NEW_MESSAGE,
-            icon = R.drawable.ic_stat_message,
-            titleStringRes = R.plurals.message_new_items,
-            contentStringRes = R.plurals.message_notify_new_items,
-            summaryStringRes = R.plurals.message_number_item,
-            startMenu = MainView.Section.MESSAGE,
-            lines = items.map {
-                "${it.sender}: ${it.subject}"
-            }
+        val notificationDataList = items.map {
+            NotificationData(
+                title = context.getPlural(R.plurals.message_new_items, 1),
+                content = "${it.sender}: ${it.subject}",
+                intentToStart = MainActivity.getStartIntent(context, Destination.Message, true),
+            )
+        }
+
+        val groupNotificationData = GroupNotificationData(
+            notificationDataList = notificationDataList,
+            title = context.getPlural(R.plurals.message_new_items, items.size),
+            content = context.getPlural(R.plurals.message_notify_new_items, items.size, items.size),
+            intentToStart = MainActivity.getStartIntent(context, Destination.Message, true),
+            type = NotificationType.NEW_MESSAGE
         )
 
-        appNotificationManager.sendNotification(notification, student)
+        appNotificationManager.sendMultipleNotifications(groupNotificationData, student)
     }
 }

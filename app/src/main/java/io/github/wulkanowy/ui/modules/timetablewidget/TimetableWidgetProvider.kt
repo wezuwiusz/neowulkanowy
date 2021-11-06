@@ -24,8 +24,8 @@ import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.HiltBroadcastReceiver
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
+import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.main.MainActivity
-import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.createNameInitialsDrawable
@@ -59,6 +59,8 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
     lateinit var analytics: AnalyticsHelper
 
     companion object {
+
+        private const val TIMETABLE_PENDING_INTENT_ID = 201
 
         private const val EXTRA_TOGGLED_WIDGET_ID = "extraToggledWidget"
 
@@ -174,8 +176,8 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
         )
         val appIntent = PendingIntent.getActivity(
             context,
-            MainView.Section.TIMETABLE.id,
-            MainActivity.getStartIntent(context, MainView.Section.TIMETABLE, true),
+            TIMETABLE_PENDING_INTENT_ID,
+            MainActivity.getStartIntent(context, Destination.Timetable(), true),
             FLAG_UPDATE_CURRENT
         )
 

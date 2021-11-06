@@ -66,7 +66,14 @@ class LoginStudentSelectFragment :
     }
 
     override fun openMainView() {
-        activity?.let { startActivity(MainActivity.getStartIntent(context = it, clear = true)) }
+        activity?.let {
+            startActivity(
+                MainActivity.getStartIntent(
+                    context = it,
+                    startNewTask = true
+                )
+            )
+        }
     }
 
     override fun showProgress(show: Boolean) {
