@@ -101,7 +101,6 @@ class GradePresenter @Inject constructor(
     private fun loadData() {
         flowWithResource {
             val student = studentRepository.getCurrentStudent()
-            delay(200)
             semesterRepository.getSemesters(student, refreshOnNoCurrent = true)
         }.onEach {
             when (it.status) {
