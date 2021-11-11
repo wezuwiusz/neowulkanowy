@@ -121,9 +121,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
             attendanceSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             attendanceSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
             attendanceSwipe.setProgressBackgroundColorSchemeColor(
-                requireContext().getThemeAttrColor(
-                    R.attr.colorSwipeRefresh
-                )
+                requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh)
             )
             attendanceErrorRetry.setOnClickListener { presenter.onRetry() }
             attendanceErrorDetails.setOnClickListener { presenter.onDetailsClick() }
@@ -134,7 +132,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
 
             attendanceExcuseButton.setOnClickListener { presenter.onExcuseButtonClick() }
 
-            attendanceNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            attendanceNavContainer.elevation = requireContext().dpToPx(8f)
         }
     }
 

@@ -5,11 +5,4 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@android:color/darker_gray</item>
     </style>
-
-    <style name="WulkanowyTheme.SplashScreen" parent="WulkanowyTheme.NoActionBar">
-        <item name="android:windowBackground">@drawable/layer_splash_background</item>
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
-        <item name="android:windowLightStatusBar">false</item>
-    </style>
 </resources>

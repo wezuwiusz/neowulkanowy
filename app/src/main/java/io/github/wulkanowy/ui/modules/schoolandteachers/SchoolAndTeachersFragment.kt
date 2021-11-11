@@ -77,9 +77,7 @@ class SchoolAndTeachersFragment :
             ).attach()
         }
 
-        with(binding.schoolandteachersTabLayout) {
-            setElevationCompat(context.dpToPx(4f))
-        }
+        binding.schoolandteachersTabLayout.elevation = requireContext().dpToPx(4f)
     }
 
     override fun showContent(show: Boolean) {

@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.luckynumberwidget
 
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT
 import android.appwidget.AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH
@@ -19,7 +18,8 @@ import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
+import io.github.wulkanowy.utils.PendingIntentCompat
 import io.github.wulkanowy.utils.toFirstResult
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -62,8 +62,8 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
             val appIntent = PendingIntent.getActivity(
                 context,
                 LUCKY_NUMBER_PENDING_INTENT_ID,
-                MainActivity.getStartIntent(context, Destination.LuckyNumber, true),
-                FLAG_UPDATE_CURRENT
+                SplashActivity.getStartIntent(context, Destination.LuckyNumber, true),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
             )
 
             val remoteView =

@@ -127,10 +127,13 @@ class MessageTabPresenter @Inject constructor(
                                 onlyUnread,
                                 onlyWithAttachments
                             )
-                            val newItems = listOf(MessageTabDataItem.Header) + filteredData.map {
-                                MessageTabDataItem.MessageItem(it)
+                            val messageItems = filteredData.map { message ->
+                                MessageTabDataItem.MessageItem(message)
                             }
-                            updateData(newItems, folder.id == MessageFolder.SENT.id)
+                            val messageItemsWithHeader =
+                                listOf(MessageTabDataItem.Header) + messageItems
+
+                            updateData(messageItemsWithHeader, folder.id == MessageFolder.SENT.id)
                             notifyParentDataLoaded()
                         }
                     }

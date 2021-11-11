@@ -35,12 +35,12 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
     @Inject
     lateinit var updateHelper: UpdateHelper
 
+    override val currentViewIndex get() = binding.loginViewpager.currentItem
+
     companion object {
 
         fun getStartIntent(context: Context) = Intent(context, LoginActivity::class.java)
     }
-
-    override val currentViewIndex get() = binding.loginViewpager.currentItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

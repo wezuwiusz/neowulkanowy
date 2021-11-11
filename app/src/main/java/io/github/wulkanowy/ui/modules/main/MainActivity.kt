@@ -3,8 +3,6 @@ package io.github.wulkanowy.ui.modules.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.view.Menu
@@ -23,7 +21,6 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.ActivityMainBinding
-import io.github.wulkanowy.services.shortcuts.ShortcutsHelper
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
@@ -59,9 +56,6 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     @Inject
     lateinit var appInfo: AppInfo
 
-    @Inject
-    lateinit var shortcutsHelper: ShortcutsHelper
-
     private var accountMenu: MenuItem? = null
 
     private val overlayProvider by lazy { ElevationOverlayProvider(this) }
@@ -76,13 +70,8 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         fun getStartIntent(
             context: Context,
             destination: Destination? = null,
-            startNewTask: Boolean = false
         ) = Intent(context, MainActivity::class.java).apply {
             putExtra(EXTRA_START_DESTINATION, destination)
-
-            if (startNewTask) {
-                flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-            }
         }
     }
 
@@ -109,7 +98,6 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         updateHelper.messageContainer = binding.mainFragmentContainer
 
         val destination = intent.getSerializableExtra(EXTRA_START_DESTINATION) as Destination?
-            ?: shortcutsHelper.getDestination(intent)
 
         presenter.onAttachView(this, destination)
         updateHelper.checkAndInstallUpdates(this)

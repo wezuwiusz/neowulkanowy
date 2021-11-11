@@ -7,7 +7,7 @@ import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import javax.inject.Inject
 
 class NewLuckyNumberNotification @Inject constructor(
@@ -22,7 +22,7 @@ class NewLuckyNumberNotification @Inject constructor(
                 R.string.lucky_number_notify_new_item,
                 item.luckyNumber.toString()
             ),
-            intentToStart = MainActivity.getStartIntent(context, Destination.LuckyNumber, true)
+            intentToStart = SplashActivity.getStartIntent(context, Destination.LuckyNumber, true)
         )
 
         appNotificationManager.sendSingleNotification(

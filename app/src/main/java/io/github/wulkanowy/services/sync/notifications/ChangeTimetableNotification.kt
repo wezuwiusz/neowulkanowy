@@ -8,7 +8,7 @@ import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.getPlural
 import io.github.wulkanowy.utils.toFormattedString
 import java.time.LocalDate
@@ -32,7 +32,7 @@ class ChangeTimetableNotification @Inject constructor(
                             1
                         ),
                         content = it,
-                        intentToStart = MainActivity.getStartIntent(
+                        intentToStart = SplashActivity.getStartIntent(
                             context = context,
                             destination = Destination.Timetable(date),
                             startNewTask = true
@@ -54,7 +54,7 @@ class ChangeTimetableNotification @Inject constructor(
                 changedLessons.size,
                 changedLessons.size
             ),
-            intentToStart = MainActivity.getStartIntent(context, Destination.Timetable(), true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Timetable(), true),
             type = NotificationType.CHANGE_TIMETABLE
         )
 

@@ -65,7 +65,7 @@ class LuckyNumberHistoryFragment :
             luckyNumberHistoryPreviousButton.setOnClickListener { presenter.onPreviousWeek() }
             luckyNumberHistoryNextButton.setOnClickListener { presenter.onNextWeek() }
 
-            luckyNumberHistoryNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            luckyNumberHistoryNavContainer.elevation = requireContext().dpToPx(8f)
         }
     }
 

@@ -15,17 +15,16 @@ apply from: 'sonarqube.gradle'
 apply from: 'hooks.gradle'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "io.github.wulkanowy"
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 97
         versionName "1.3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
 
         resValue "string", "app_name", "Wulkanowy"
 
@@ -166,7 +165,7 @@ huaweiPublish {
 }
 
 ext {
-    work_manager = "2.6.0"
+    work_manager = "2.7.0"
     android_hilt = "1.0.0"
     room = "2.3.0"
     chucker = "3.5.2"
@@ -183,9 +182,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     implementation "androidx.core:core-ktx:1.6.0"
+    implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
     implementation "androidx.activity:activity-ktx:1.3.1"
-    implementation "androidx.appcompat:appcompat:1.3.1"
-    implementation "androidx.appcompat:appcompat-resources:1.3.1"
+    implementation "androidx.appcompat:appcompat:1.4.0-beta01"
     implementation "androidx.fragment:fragment-ktx:1.3.6"
     implementation "androidx.annotation:annotation:1.2.0"
 

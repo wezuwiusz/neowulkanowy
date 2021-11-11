@@ -8,7 +8,7 @@ import androidx.core.graphics.drawable.IconCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,7 +35,7 @@ class ShortcutsHelper @Inject constructor(@ApplicationContext private val contex
                 .setShortLabel(context.getString(R.string.grade_title))
                 .setLongLabel(context.getString(R.string.grade_title))
                 .setIcon(IconCompat.createWithResource(context, R.drawable.ic_shortcut_grade))
-                .setIntent(MainActivity.getStartIntent(context, startNewTask = true)
+                .setIntent(SplashActivity.getStartIntent(context, startNewTask = true)
                     .apply {
                         action = Intent.ACTION_VIEW
                         putExtra(EXTRA_SHORTCUT_DESTINATION_ID, "grade")
@@ -47,7 +47,7 @@ class ShortcutsHelper @Inject constructor(@ApplicationContext private val contex
                 .setShortLabel(context.getString(R.string.attendance_title))
                 .setLongLabel(context.getString(R.string.attendance_title))
                 .setIcon(IconCompat.createWithResource(context, R.drawable.ic_shortcut_attendance))
-                .setIntent(MainActivity.getStartIntent(context, startNewTask = true)
+                .setIntent(SplashActivity.getStartIntent(context, startNewTask = true)
                     .apply {
                         action = Intent.ACTION_VIEW
                         putExtra(EXTRA_SHORTCUT_DESTINATION_ID, "attendance")
@@ -59,7 +59,7 @@ class ShortcutsHelper @Inject constructor(@ApplicationContext private val contex
                 .setShortLabel(context.getString(R.string.exam_title))
                 .setLongLabel(context.getString(R.string.exam_title))
                 .setIcon(IconCompat.createWithResource(context, R.drawable.ic_shortcut_exam))
-                .setIntent(MainActivity.getStartIntent(context, startNewTask = true)
+                .setIntent(SplashActivity.getStartIntent(context, startNewTask = true)
                     .apply {
                         action = Intent.ACTION_VIEW
                         putExtra(EXTRA_SHORTCUT_DESTINATION_ID, "exam")
@@ -71,7 +71,7 @@ class ShortcutsHelper @Inject constructor(@ApplicationContext private val contex
                 .setShortLabel(context.getString(R.string.timetable_title))
                 .setLongLabel(context.getString(R.string.timetable_title))
                 .setIcon(IconCompat.createWithResource(context, R.drawable.ic_shortcut_timetable))
-                .setIntent(MainActivity.getStartIntent(context, startNewTask = true)
+                .setIntent(SplashActivity.getStartIntent(context, startNewTask = true)
                     .apply {
                         action = Intent.ACTION_VIEW
                         putExtra(EXTRA_SHORTCUT_DESTINATION_ID, "timetable")

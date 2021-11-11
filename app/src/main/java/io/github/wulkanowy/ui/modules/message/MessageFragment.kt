@@ -77,9 +77,8 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
             TabLayoutMediator(binding.messageTabLayout, binding.messageViewPager, this).attach()
         }
 
-        with(binding.messageTabLayout) {
-            setElevationCompat(context.dpToPx(4f))
-        }
+        binding.messageTabLayout.elevation = requireContext().dpToPx(4f)
+
 
         binding.openSendMessageButton.setOnClickListener { presenter.onSendMessageButtonClicked() }
     }

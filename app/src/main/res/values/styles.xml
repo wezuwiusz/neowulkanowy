@@ -23,10 +23,11 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <style name="WulkanowyTheme.SplashScreen" parent="WulkanowyTheme.NoActionBar">
-        <item name="android:windowBackground">@drawable/layer_splash_background</item>
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+    <style name="WulkanowyTheme.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/colorPrimaryDark</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+        <item name="postSplashScreenTheme">@style/WulkanowyTheme.NoActionBar</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.MaterialComponents.Light.Dialog">
@@ -38,7 +39,6 @@
     </style>
 
     <style name="Widget.Wulkanowy.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
-        ...
         <item name="materialThemeOverlay">@style/ThemeOverlay.Wulkanowy.Chip.Choice</item>
     </style>
 
@@ -49,8 +49,6 @@
     <style name="WulkanowyTheme.TextAppearanceBottomNavigation">
         <item name="android:textSize">11sp</item>
     </style>
-
-    <style name="mdtp_ActionButton.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog" />
 
     <style name="WulkanowyTheme.Login" parent="WulkanowyTheme.NoActionBar" />
 

@@ -13,6 +13,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.data.repositories.NotificationRepository
+import io.github.wulkanowy.utils.PendingIntentCompat
 import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.nickOrName
@@ -45,7 +46,7 @@ class AppNotificationManager @Inject constructor(
                     context,
                     Random.nextInt(),
                     notificationData.intentToStart,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
                 )
             )
             .setContentTitle(notificationData.title)
@@ -86,7 +87,7 @@ class AppNotificationManager @Inject constructor(
                         context,
                         Random.nextInt(),
                         notificationData.intentToStart,
-                        PendingIntent.FLAG_UPDATE_CURRENT
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
                     )
                 )
                 .setContentTitle(notificationData.title)
@@ -134,7 +135,7 @@ class AppNotificationManager @Inject constructor(
                         context,
                         Random.nextInt(),
                         groupNotificationData.intentToStart,
-                        PendingIntent.FLAG_UPDATE_CURRENT
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
                     )
                 )
                 .setLocalOnly(true)

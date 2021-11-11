@@ -20,7 +20,7 @@ open class BasePresenter<T : BaseView>(
 ) {
     private val job = SupervisorJob()
 
-    protected val presenterScope = CoroutineScope(job + Dispatchers.Main)
+    protected val presenterScope = CoroutineScope(job + Dispatchers.Main.immediate)
 
     private val childrenJobs = mutableMapOf<String, Job>()
 

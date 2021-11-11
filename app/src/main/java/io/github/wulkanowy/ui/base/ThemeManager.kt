@@ -41,14 +41,15 @@ class ThemeManager @Inject constructor(private val preferencesRepository: Prefer
         )
     }
 
-    private fun isThemeApplicable(activity: AppCompatActivity): Boolean {
-        return activity.packageManager
+    private fun isThemeApplicable(activity: AppCompatActivity) =
+        activity.packageManager
             .getPackageInfo(activity.packageName, GET_ACTIVITIES)
-            .activities.singleOrNull { it.name == activity::class.java.canonicalName }
-            ?.theme.let {
+            .activities
+            .singleOrNull { it.name == activity::class.java.canonicalName }
+            ?.theme
+            .let {
                 it == R.style.WulkanowyTheme_Black || it == R.style.WulkanowyTheme_NoActionBar
                     || it == R.style.WulkanowyTheme_Login || it == R.style.WulkanowyTheme_Login_Black
                     || it == R.style.WulkanowyTheme_MessageSend || it == R.style.WulkanowyTheme_MessageSend_Black
             }
-    }
 }

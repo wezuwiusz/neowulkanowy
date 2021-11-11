@@ -96,9 +96,7 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
             TabLayoutMediator(binding.gradeTabLayout, binding.gradeViewPager, this).attach()
         }
 
-        with(binding.gradeTabLayout) {
-            setElevationCompat(context.dpToPx(4f))
-        }
+        binding.gradeTabLayout.elevation = requireContext().dpToPx(4f)
 
         with(binding) {
             gradeErrorRetry.setOnClickListener { presenter.onRetry() }

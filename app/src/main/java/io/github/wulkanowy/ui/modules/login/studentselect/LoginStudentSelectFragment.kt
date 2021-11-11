@@ -66,14 +66,8 @@ class LoginStudentSelectFragment :
     }
 
     override fun openMainView() {
-        activity?.let {
-            startActivity(
-                MainActivity.getStartIntent(
-                    context = it,
-                    startNewTask = true
-                )
-            )
-        }
+        startActivity(MainActivity.getStartIntent(requireContext()))
+        requireActivity().finish()
     }
 
     override fun showProgress(show: Boolean) {
@@ -115,7 +109,8 @@ class LoginStudentSelectFragment :
             chooserTitle = requireContext().getString(R.string.login_email_intent_title),
             email = "wulkanowyinc@gmail.com",
             subject = requireContext().getString(R.string.login_email_subject),
-            body = requireContext().getString(R.string.login_email_text, appInfo.systemModel,
+            body = requireContext().getString(
+                R.string.login_email_text, appInfo.systemModel,
                 appInfo.systemVersion.toString(),
                 appInfo.versionName,
                 "Select users to log in",

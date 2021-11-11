@@ -67,7 +67,7 @@ class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment
 
             openAddHomeworkButton.setOnClickListener { presenter.onHomeworkAddButtonClicked() }
 
-            homeworkNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            homeworkNavContainer.elevation = requireContext().dpToPx(8f)
         }
     }
 

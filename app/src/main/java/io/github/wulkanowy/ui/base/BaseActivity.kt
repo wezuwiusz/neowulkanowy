@@ -1,14 +1,11 @@
 package io.github.wulkanowy.ui.base
 
 import android.app.ActivityManager
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
@@ -40,7 +37,6 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
         themeManager.applyActivityTheme(this)
         super.onCreate(savedInstanceState)
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleLogger, true)
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         @Suppress("DEPRECATION")
         setTaskDescription(
@@ -83,8 +79,8 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
     }
 
     override fun openClearLoginView() {
-        startActivity(LoginActivity.getStartIntent(this)
-            .apply { addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK) })
+        startActivity(LoginActivity.getStartIntent(this))
+        finishAffinity()
     }
 
     override fun onDestroy() {

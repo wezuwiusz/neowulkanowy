@@ -8,7 +8,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.getPlural
 import io.github.wulkanowy.utils.toFormattedString
 import java.time.LocalDate
@@ -31,7 +31,7 @@ class NewExamNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.exam_notify_new_item_title, 1),
                 content = it,
-                intentToStart = MainActivity.getStartIntent(context, Destination.Exam, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Exam, true),
             )
         }
 
@@ -43,7 +43,7 @@ class NewExamNotification @Inject constructor(
                 lines.size,
                 lines.size
             ),
-            intentToStart = MainActivity.getStartIntent(context, Destination.Exam, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Exam, true),
             type = NotificationType.NEW_EXAM
         )
 

@@ -8,7 +8,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.getPlural
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class NewSchoolAnnouncementNotification @Inject constructor(
     suspend fun notify(items: List<SchoolAnnouncement>, student: Student) {
         val notificationDataList = items.map {
             NotificationData(
-                intentToStart = MainActivity.getStartIntent(
+                intentToStart = SplashActivity.getStartIntent(
                     context = context,
                     destination = Destination.SchoolAnnouncement,
                     startNewTask = true
@@ -34,7 +34,7 @@ class NewSchoolAnnouncementNotification @Inject constructor(
         }
         val groupNotificationData = GroupNotificationData(
             type = NotificationType.NEW_ANNOUNCEMENT,
-            intentToStart = MainActivity.getStartIntent(
+            intentToStart = SplashActivity.getStartIntent(
                 context = context,
                 destination = Destination.SchoolAnnouncement,
                 startNewTask = true

@@ -5,5 +5,3 @@ inline fun String?.ifNullOrBlank(defaultValue: () -> String) =
 
 fun String.capitalise() =
     replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
-
-fun String.decapitalise() = replaceFirstChar { it.lowercase() }

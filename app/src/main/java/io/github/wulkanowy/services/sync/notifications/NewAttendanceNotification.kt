@@ -8,7 +8,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.descriptionRes
 import io.github.wulkanowy.utils.getPlural
 import io.github.wulkanowy.utils.toFormattedString
@@ -31,7 +31,7 @@ class NewAttendanceNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.attendance_notify_new_items_title, 1),
                 content = it,
-                intentToStart = MainActivity.getStartIntent(context, Destination.Attendance, true)
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Attendance, true)
             )
         }
 
@@ -46,7 +46,7 @@ class NewAttendanceNotification @Inject constructor(
                 notificationDataList.size,
                 notificationDataList.size
             ),
-            intentToStart = MainActivity.getStartIntent(context, Destination.Attendance, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Attendance, true),
             type = NotificationType.NEW_ATTENDANCE
         )
 

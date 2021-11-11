@@ -2,10 +2,8 @@
 
 package io.github.wulkanowy.utils.security
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.JELLY_BEAN_MR2
 import android.os.Build.VERSION_CODES.M
 import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
@@ -116,7 +114,6 @@ fun decrypt(cipherText: String): String {
     }
 }
 
-@TargetApi(JELLY_BEAN_MR2)
 private fun generateKeyPair(context: Context) {
     (if (SDK_INT >= M) {
         KeyGenParameterSpec.Builder(KEY_ALIAS, PURPOSE_DECRYPT or PURPOSE_ENCRYPT)

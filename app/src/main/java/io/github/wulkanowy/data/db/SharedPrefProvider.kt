@@ -22,11 +22,14 @@ class SharedPrefProvider @Inject constructor(
 
     fun getString(key: String) = sharedPref.getString(key, null)
 
-    fun getString(key: String, defaultValue: String): String = sharedPref.getString(key, defaultValue) ?: defaultValue
+    fun getString(key: String, defaultValue: String): String =
+        sharedPref.getString(key, defaultValue) ?: defaultValue
 
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean = sharedPref.getBoolean(key, defaultValue)
+    fun getBoolean(key: String, defaultValue: Boolean): Boolean =
+        sharedPref.getBoolean(key, defaultValue)
 
-    fun putBoolean(key: String, value: Boolean, sync: Boolean = false) = sharedPref.edit(sync) { putBoolean(key, value) }
+    fun putBoolean(key: String, value: Boolean, sync: Boolean = false) =
+        sharedPref.edit(sync) { putBoolean(key, value) }
 
     fun putString(key: String, value: String?, sync: Boolean = false) {
         sharedPref.edit(sync) { putString(key, value) }

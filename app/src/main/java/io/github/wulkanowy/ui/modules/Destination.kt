@@ -19,6 +19,10 @@ import java.time.LocalDate
 
 sealed interface Destination : Serializable {
 
+    /*
+    Type in children classes have to be as getter to avoid null in enums
+    https://stackoverflow.com/questions/68866453/kotlin-enum-val-is-returning-null-despite-being-set-at-compile-time
+    */
     val type: Type
 
     val fragment: Fragment
@@ -41,91 +45,91 @@ sealed interface Destination : Serializable {
 
     object Dashboard : Destination {
 
-        override val type = Type.DASHBOARD
+        override val type get() = Type.DASHBOARD
 
         override val fragment get() = DashboardFragment.newInstance()
     }
 
     object Grade : Destination {
 
-        override val type = Type.GRADE
+        override val type get() = Type.GRADE
 
         override val fragment get() = GradeFragment.newInstance()
     }
 
     object Attendance : Destination {
 
-        override val type = Type.ATTENDANCE
+        override val type get() = Type.ATTENDANCE
 
         override val fragment get() = AttendanceFragment.newInstance()
     }
 
     object Exam : Destination {
 
-        override val type = Type.EXAM
+        override val type get() = Type.EXAM
 
         override val fragment get() = ExamFragment.newInstance()
     }
 
     data class Timetable(val date: LocalDate? = null) : Destination {
 
-        override val type = Type.TIMETABLE
+        override val type get() = Type.TIMETABLE
 
         override val fragment get() = TimetableFragment.newInstance(date)
     }
 
     object Homework : Destination {
 
-        override val type = Type.HOMEWORK
+        override val type get() = Type.HOMEWORK
 
         override val fragment get() = HomeworkFragment.newInstance()
     }
 
     object Note : Destination {
 
-        override val type = Type.NOTE
+        override val type get() = Type.NOTE
 
         override val fragment get() = NoteFragment.newInstance()
     }
 
     object Conference : Destination {
 
-        override val type = Type.CONFERENCE
+        override val type get() = Type.CONFERENCE
 
         override val fragment get() = ConferenceFragment.newInstance()
     }
 
     object SchoolAnnouncement : Destination {
 
-        override val type = Type.SCHOOL_ANNOUNCEMENT
+        override val type get() = Type.SCHOOL_ANNOUNCEMENT
 
         override val fragment get() = SchoolAnnouncementFragment.newInstance()
     }
 
     object School : Destination {
 
-        override val type = Type.SCHOOL
+        override val type get() = Type.SCHOOL
 
         override val fragment get() = SchoolFragment.newInstance()
     }
 
     object LuckyNumber : Destination {
 
-        override val type = Type.LUCKY_NUMBER
+        override val type get() = Type.LUCKY_NUMBER
 
         override val fragment get() = LuckyNumberFragment.newInstance()
     }
 
     object More : Destination {
 
-        override val type = Type.MORE
+        override val type get() = Type.MORE
 
         override val fragment get() = MoreFragment.newInstance()
     }
 
     object Message : Destination {
 
-        override val type = Type.MESSAGE
+        override val type get() = Type.MESSAGE
 
         override val fragment get() = MessageFragment.newInstance()
     }

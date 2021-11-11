@@ -9,7 +9,7 @@ import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.sdk.scrapper.notes.NoteCategory
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.getPlural
 import javax.inject.Inject
 
@@ -29,13 +29,13 @@ class NewNoteNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(titleRes, 1),
                 content = "${it.teacher}: ${it.category}",
-                intentToStart = MainActivity.getStartIntent(context, Destination.Note, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Note, true),
             )
         }
 
         val groupNotificationData = GroupNotificationData(
             notificationDataList = notificationDataList,
-            intentToStart = MainActivity.getStartIntent(context, Destination.Note, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Note, true),
             title = context.getPlural(R.plurals.note_new_items, items.size),
             content = context.getPlural(R.plurals.note_notify_new_items, items.size, items.size),
             type = NotificationType.NEW_NOTE
