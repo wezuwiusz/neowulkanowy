@@ -40,6 +40,11 @@
         <item>Wulkanowy</item>
         <item>Barvy známek v deníku</item>
     </string-array>
+    <string-array name="default_expand_grade_entries">
+        <item>Až 1 najednou</item>
+        <item>Vždy rozbalené</item>
+        <item>Neomezené rozbalené</item>
+    </string-array>
     <string-array name="grade_average_mode_entries">
         <item>Průměr známek pouze z vybraného semestru</item>
         <item>Průměr z průměrů z obou semestrů</item>
@@ -48,7 +53,7 @@
     <string-array name="dashboard_tile_entries">
         <item>Šťastné číslo</item>
         <item>Nepřečtené zprávy</item>
-        <item>Docházka</item>
+        <item>Frekvence</item>
         <item>Lekce</item>
         <item>Známky</item>
         <item>Domácí úkoly</item>

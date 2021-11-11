@@ -6,7 +6,7 @@
     <string name="grade_title">Noten</string>
     <string name="attendance_title">Schulbesuch</string>
     <string name="exam_title">Prüfungen</string>
-    <string name="timetable_title">Zeitplan</string>
+    <string name="timetable_title">Stundenplan</string>
     <string name="settings_title">Einstellungen</string>
     <string name="more_title">Mehr</string>
     <string name="about_title">Über die Applikation</string>
@@ -17,6 +17,7 @@
     <string name="license_title">Lizenzen</string>
     <string name="message_title">Nachrichten</string>
     <string name="send_message_title">neue Nachricht</string>
+    <string name="add_homework_title">New homework</string>
     <string name="note_title">Eintragen und Erfolgen</string>
     <string name="homework_title">Hausaufgaben</string>
     <string name="account_title">Konten-Manager</string>
@@ -53,7 +54,6 @@
     <string name="login_invalid_custom_email">Benutze den zugewiesenen Login oder E-Mail in @%1$s</string>
     <string name="login_invalid_symbol">Ungültige symbol</string>
     <string name="login_incorrect_symbol">Schüler nicht gefunden. Überprüfen Sie das Symbol und die gewählte Variation des UONET+ Registers</string>
-    <string name="login_field_required">Dieses Datenfeld ist erforderlich</string>
     <string name="login_duplicate_student">Ausgewählter Student ist bereits angemeldet.</string>
     <string name="login_symbol_helper">Das Symbol kann auf der Registerseite in&#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>gefunden werden.\n\nStellen Sie sicher, dass Sie die entsprechende Registervariante im Feld <b>UONET+ Registervariante</b> auf dem vorherigen Bildschirm festgelegt haben. Wulkanowy erkennt zur Zeit keine Vorschulstudenten</string>
     <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen.</string>
@@ -151,6 +151,26 @@
     <string name="timetable_now">Jetzt: %s</string>
     <string name="timetable_next">In einem Moment: %s</string>
     <string name="timetable_later">Später: %s</string>
+    <string name="timetable_notify_lesson">%1$s lesson %2$d - %3$s</string>
+    <string name="timetable_notify_change_room">Change of room from %1$s to %2$s</string>
+    <string name="timetable_notify_change_teacher">Change of teacher from %1$s to %2$s</string>
+    <string name="timetable_notify_change_subject">Change of subject from %1$s to %2$s</string>
+    <plurals name="timetable_notify_new_items_title">
+        <item quantity="one">Timetable change</item>
+        <item quantity="other">Timetable changes</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items">
+        <item quantity="one">%1$s - %2$d change in timetable</item>
+        <item quantity="other">%1$s - %2$d  changes in timetable</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items_group">
+        <item quantity="one">%1$d change in timetable</item>
+        <item quantity="other">%1$d changes in timetable</item>
+    </plurals>
+    <plurals name="timetable_number_item">
+        <item quantity="one">%d change</item>
+        <item quantity="other">%d changes</item>
+    </plurals>
     <!--Completed lessons-->
     <string name="completed_lessons_title">Beendete Lektionen</string>
     <string name="completed_lessons_button">Beendete Lektionen anzeigen</string>
@@ -180,6 +200,18 @@
     <string name="attendance_excuse_success">Abwesenheitsentschuldigungsanfrage erfolgreich gesendet!</string>
     <string name="attendance_excuse_no_selection">Sie müssen mindestens eine Abwesenheit auswählen!</string>
     <string name="attendance_excuse_title">Verzeihung</string>
+    <plurals name="attendance_notify_new_items_title">
+        <item quantity="one">New attendance</item>
+        <item quantity="other">New attendance</item>
+    </plurals>
+    <plurals name="attendance_notify_new_items">
+        <item quantity="one">%1$d new attendance</item>
+        <item quantity="other">%1$d attendance</item>
+    </plurals>
+    <plurals name="attendance_number_item">
+        <item quantity="one">%d attendance</item>
+        <item quantity="other">%d attendance</item>
+    </plurals>
     <!--Attendance summary-->
     <string name="attendance_summary_total">Gesamt</string>
     <!--Exam-->
@@ -284,6 +316,9 @@
     <string name="homework_no_items">Keine Informationen über Hausaufgaben</string>
     <string name="homework_mark_as_done">Gemacht</string>
     <string name="homework_mark_as_undone">Unvollständig</string>
+    <string name="homework_add">Add homework</string>
+    <string name="homework_add_success">Homework added successfully</string>
+    <string name="homework_delete_success">Homework deleted successfully</string>
     <string name="homework_attachments">Anhänge</string>
     <plurals name="homework_notify_new_item_title">
         <item quantity="one">Neue hausaufgaben</item>
@@ -437,6 +472,7 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lektionen</string>
     <string name="dashboard_timetable_title_tomorrow">(Morgen)</string>
+    <string name="dashboard_timetable_title_today_and_tomorrow">(Today and tomorrow)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Gleich:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Bald:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Erstens:</string>
@@ -518,6 +554,10 @@
     <string name="all_no">Nein</string>
     <string name="all_save">Speichern</string>
     <string name="all_title">Titel</string>
+    <string name="all_add">Add</string>
+    <string name="all_copied">Kopiert</string>
+    <string name="all_undo">lösen</string>
+    <string name="all_change">Ändern</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Keine Lektionen</string>
     <string name="widget_timetable_theme_title">Thema wählen</string>
@@ -525,13 +565,13 @@
     <string name="widget_timetable_theme_dark">Dunkel</string>
     <string name="widget_timetable_theme_system">Systemthema</string>
     <!--Preferences-->
-    <string name="pref_view_header">Aussehen &amp; Verhalten</string>
+    <string name="pref_view_header">App</string>
     <string name="pref_view_list">Standard Ansicht</string>
     <string name="pref_view_grade_average_mode">Berechnete Durchschnittsoptionen</string>
     <string name="pref_view_grade_average_force_calc">Mittelwertberechnung durch App erzwingen</string>
     <string name="pref_view_present">Anwesendheit zeigen</string>
     <string name="pref_view_app_theme">Thema</string>
-    <string name="pref_view_expand_grade">Noten erweitern</string>
+    <string name="pref_view_expand_grade">Grades expanding</string>
     <string name="pref_view_timetable_show_timers">Aktuelle Lektion markieren</string>
     <string name="pref_view_timetable_show_groups">Gruppen neben Schulfächen anzeigen</string>
     <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>
@@ -540,6 +580,7 @@
     <string name="pref_view_grade_sorting_mode">Schulfachen sortieren</string>
     <string name="pref_view_app_language">Sprache</string>
     <string name="pref_notify_header">Benachrichtigungen</string>
+    <string name="pref_notify_header_other">Other</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>
     <string name="pref_notify_upcoming_lessons_switch">Benachrichtigungen über bevorstehende Lektionen anzeigen</string>
     <string name="pref_notify_upcoming_lessons_persistent_switch">Festlegen einer Benachrichtigung über die bevorstehende Lektion dauerhaft</string>
@@ -568,16 +609,25 @@
     <string name="pref_other_grade_modifier_minus">Wert des Minus</string>
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
     <string name="pref_other_optional_arithmetic_average">Arithmetisches Mittel anzeigen, wenn keine Gewichte angegeben sind</string>
+    <string name="pref_ads_support_category_name">Support</string>
+    <string name="pref_ads_support">Watch single ad to support project</string>
+    <string name="pref_ads_privacy_title">Consent to data processing</string>
+    <string name="pref_ads_privacy_description">To view an advertisement you must agree to the data processing terms of our Privacy Policy</string>
+    <string name="pref_ads_privacy_agree">Agree</string>
+    <string name="pref_ads_privacy_link">Privacy policy</string>
+    <string name="pref_ads_loading">Ad is loading</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>
     <string name="pref_settings_sync_title">Synchronisierung</string>
+    <string name="pref_settings_ads_title">Advertisements</string>
     <string name="pref_grades_appearance_header">Noten</string>
     <string name="pref_dashboard_appearance_header">Dashboard</string>
     <string name="pref_dashboard_appearance_tiles_title">Sichtbarkeit der Kacheln</string>
     <string name="pref_attendance_appearance_view">Schulbesuch</string>
-    <string name="pref_timetable_appearance_view">Zeitplan</string>
+    <string name="pref_timetable_appearance_view">Stundenplan</string>
     <string name="pref_grades_advanced_header">Noten</string>
+    <string name="pref_counted_average_advanced_header">Calculated average</string>
     <string name="pref_messages_advanced_header">Nachrichten</string>
     <string name="pref_appearance_category">Aussehen &amp; Verhalten</string>
     <string name="pref_appearance_category_summary">Sprachen, Themen, Schulfachen sortieren</string>
@@ -587,7 +637,8 @@
     <string name="pref_sync_category_summary">Automatisches Update, Synchronisierungsintervall</string>
     <string name="pref_advanced_category_summary">Plus und Minus Werte, Durchschnittsberechnung</string>
     <string name="pref_advanced_category">Erweitert</string>
-    <string name="pref_about_category_summary">App-Version, Mitarbeiter, soziale Portale, Lizenzen</string>
+    <string name="pref_about_category_summary">App version, contributors, social portals</string>
+    <string name="pref_ads_category_summary">Displaying advertisements, project support</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Neue Noten</string>
     <string name="channel_new_homework">Neue Hausaufgaben</string>
@@ -600,6 +651,8 @@
     <string name="channel_push">Push-Benachrichtigungen</string>
     <string name="channel_upcoming_lessons">Bevorstehende Lektionen</string>
     <string name="channel_debug">Debuggen</string>
+    <string name="channel_change_timetable">Timetable change</string>
+    <string name="channel_new_attendance">New attendance</string>
     <!--Colors-->
     <string name="all_black">Schwarz</string>
     <string name="all_red">Rot</string>
@@ -607,10 +660,6 @@
     <string name="all_green">Grün</string>
     <string name="all_purple">Violett</string>
     <string name="all_empty_color">Keine Farbe</string>
-    <!--Others-->
-    <string name="all_copied">Kopiert</string>
-    <string name="all_undo">lösen</string>
-    <string name="all_change">Ändern</string>
     <!--Update helper-->
     <string name="update_download_started">Download der Updates wurde gestartet…</string>
     <string name="update_download_success">Ein Update wurde gerade heruntergeladen.</string>
@@ -627,4 +676,5 @@
     <string name="error_unknown">Ein unerwarteter Fehler ist aufgetreten</string>
     <string name="error_feature_disabled">Funktion, die von Ihrer Schule deaktiviert wurde</string>
     <string name="error_feature_not_available">Feature in diesem Modus nicht verfügbar</string>
+    <string name="error_field_required">This field is required</string>
 </resources>

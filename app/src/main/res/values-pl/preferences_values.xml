@@ -40,6 +40,11 @@
         <item>Wulkanowy</item>
         <item>Kolory ocen w dzienniku</item>
     </string-array>
+    <string-array name="default_expand_grade_entries">
+        <item>Do 1 na raz</item>
+        <item>Zawsze rozwinięte</item>
+        <item>Nieograniczone rozwijanie</item>
+    </string-array>
     <string-array name="grade_average_mode_entries">
         <item>Średnia ocen tylko z wybranego semestru</item>
         <item>Średnia ze średnich z obu semestrów</item>

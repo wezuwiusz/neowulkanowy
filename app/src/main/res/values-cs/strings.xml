@@ -4,7 +4,7 @@
     <string name="login_title">Přihlášení</string>
     <string name="main_title">Wulkanowy</string>
     <string name="grade_title">Známky</string>
-    <string name="attendance_title">Docházka</string>
+    <string name="attendance_title">Frekvence</string>
     <string name="exam_title">Zkoušky</string>
     <string name="timetable_title">Plán lekce</string>
     <string name="settings_title">Nastavení</string>
@@ -17,6 +17,7 @@
     <string name="license_title">Licence</string>
     <string name="message_title">Zprávy</string>
     <string name="send_message_title">Nová zpráva</string>
+    <string name="add_homework_title">Nový domácí úkol</string>
     <string name="note_title">Poznámky a úspěchy</string>
     <string name="homework_title">Domácí úkoly</string>
     <string name="account_title">Manažer účtů</string>
@@ -53,15 +54,14 @@
     <string name="login_invalid_custom_email">Použijte přiřazené přihlašovací nebo e-mail v @%1$s</string>
     <string name="login_invalid_symbol">Neplatný symbol</string>
     <string name="login_incorrect_symbol">Žák nebyl nalezen. Zkontrolujte správnost symbolu a vybrané varianty deníku UONET+</string>
-    <string name="login_field_required">Toto pole je povinné</string>
     <string name="login_duplicate_student">Vybraný žák je už přihlášen</string>
     <string name="login_symbol_helper">Symbol najdete na stránce deníku v &#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUjistěte se, že jste na předchozí obrazovce nastavili správnou variantu deníku do pole <b>Variace deníku UONET+</b>. Wulkanowy v tuto chvíli nezjistí předškolní żaków</string>
     <string name="login_select_student">Vyberte žáky, kteří se mají do aplikace přihlásit</string>
     <string name="login_advanced">Jiné možnosti</string>
-    <string name="login_advanced_warning_mobile_api">V tomto režimu nefungují následující: šťastné číslo, statistiky třídy, shrnutí docházky, ospravedlnění nepřítomnosti, dokončené lekce, informace o škole a prohlížení seznamu registrovaných zařízení</string>
+    <string name="login_advanced_warning_mobile_api">V tomto režimu nefungují následující: šťastné číslo, statistiky třídy, shrnutí frekvencí, ospravedlnění nepřítomnosti, dokončené lekce, informace o škole a prohlížení seznamu registrovaných zařízení</string>
     <string name="login_advanced_warning_scraper">Tento režim zobrazuje stejná data, která se zobrazují na webových stránkách deníka</string>
     <string name="login_advanced_warning_hybrid">Kombinace nejlepších vlastností ostatních dvou režimů. Funguje rychleji než scraper a poskytuje funkce, které nejsou k dispozici v režimu Mobile API. Je to v experimentální fázi</string>
-    <string name="login_privacy_policy">Zásady ochrany osobních údajů</string>
+    <string name="login_privacy_policy">Ochrana osobních údajů</string>
     <string name="login_contact_header">Problémy s přihlášením? Napište nám!</string>
     <string name="login_contact_email">Email</string>
     <string name="login_contact_discord">Discord</string>
@@ -165,6 +165,34 @@
     <string name="timetable_now">Teď: %s</string>
     <string name="timetable_next">Za chvíli: %s</string>
     <string name="timetable_later">Později: %s</string>
+    <string name="timetable_notify_lesson">%1$s lekce %2$d - %3$s</string>
+    <string name="timetable_notify_change_room">Změna učebny z %1$s na %2$s</string>
+    <string name="timetable_notify_change_teacher">Změna učitele z %1$s na %2$s</string>
+    <string name="timetable_notify_change_subject">Změna předmětu z %1$s na %2$s</string>
+    <plurals name="timetable_notify_new_items_title">
+        <item quantity="one">Změna plánu lekcí</item>
+        <item quantity="few">Změny plánu lekcí</item>
+        <item quantity="many">Změny plánu lekcí</item>
+        <item quantity="other">Změny plánu lekcí</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items">
+        <item quantity="one">%1$s - %2$d změna plánu lekcí</item>
+        <item quantity="few">%1$s - %2$d změny plánu lekcí</item>
+        <item quantity="many">%1$s - %2$d změn plánu lekcí</item>
+        <item quantity="other">%1$s - %2$d změn plánu lekcí</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items_group">
+        <item quantity="one">%1$d změna plánu lekcí</item>
+        <item quantity="few">%1$d změny plánu lekcí</item>
+        <item quantity="many">%1$d změn plánu lekcí</item>
+        <item quantity="other">%1$d změn plánu lekcí</item>
+    </plurals>
+    <plurals name="timetable_number_item">
+        <item quantity="one">%d změna</item>
+        <item quantity="few">%d změny</item>
+        <item quantity="many">%d změn</item>
+        <item quantity="other">%d změn</item>
+    </plurals>
     <!--Completed lessons-->
     <string name="completed_lessons_title">Dokončené lekce</string>
     <string name="completed_lessons_button">Zobrazit dokončené lekce</string>
@@ -177,7 +205,7 @@
     <string name="additional_lessons_button">Zobrazit další lekce</string>
     <string name="additional_lessons_no_items">Žádné informace o dalších lekcích</string>
     <!--Attendance-->
-    <string name="attendance_summary_button">Shrnutí docházky</string>
+    <string name="attendance_summary_button">Shrnutí frekvencí</string>
     <string name="attendance_absence_school">Neprítomnosť zo školských dôvodov</string>
     <string name="attendance_absence_excused">Omluvená nepřítomnost</string>
     <string name="attendance_absence_unexcused">Neomluvená nepřítomnost</string>
@@ -194,6 +222,24 @@
     <string name="attendance_excuse_success">Žádost o omluvu nepřítomnosti byla úspěšně odeslána!</string>
     <string name="attendance_excuse_no_selection">Musíte vybrat alespoň jednu nepřítomnost!</string>
     <string name="attendance_excuse_title">Ospravedlnit</string>
+    <plurals name="attendance_notify_new_items_title">
+        <item quantity="one">Nové frekvence</item>
+        <item quantity="few">Nové frekvence</item>
+        <item quantity="many">Nové frekvence</item>
+        <item quantity="other">Nové frekvence</item>
+    </plurals>
+    <plurals name="attendance_notify_new_items">
+        <item quantity="one">%1$d nové frekvence</item>
+        <item quantity="few">%1$d nové frekvence</item>
+        <item quantity="many">%1$d nových frekvencí</item>
+        <item quantity="other">%1$d nových frekvencí</item>
+    </plurals>
+    <plurals name="attendance_number_item">
+        <item quantity="one">%d frekvence</item>
+        <item quantity="few">%d frekvence</item>
+        <item quantity="many">%d frekvencí</item>
+        <item quantity="other">%d frekvencí</item>
+    </plurals>
     <!--Attendance summary-->
     <string name="attendance_summary_total">Společně</string>
     <!--Exam-->
@@ -328,6 +374,9 @@
     <string name="homework_no_items">Žádné informace o domácích úkolech</string>
     <string name="homework_mark_as_done">Označit jako hotové</string>
     <string name="homework_mark_as_undone">Neudělané</string>
+    <string name="homework_add">Přidat domácí úkol</string>
+    <string name="homework_add_success">Domácí úkol byl úspěšně přidán</string>
+    <string name="homework_delete_success">Domácí úkol byl úspěšně odstraněn</string>
     <string name="homework_attachments">Přílohy</string>
     <plurals name="homework_notify_new_item_title">
         <item quantity="one">Nový domácí úkol</item>
@@ -450,11 +499,11 @@
     <string name="about_faq_summary">Přečtěte si často kladené otázky</string>
     <string name="about_discord">Server Discord</string>
     <string name="about_discord_summary">Připojte se ke komunitě Wulkanového</string>
-    <string name="about_facebook">Facebooková fanpage</string>
+    <string name="about_facebook">Stránka na Facebooku</string>
     <string name="about_twitter">Twitter stránka</string>
     <string name="about_twitter_summary">Sledujte nás na Twitteru</string>
-    <string name="about_facebook_summary">Stejně jako naše facebooková fanpage</string>
-    <string name="about_privacy">Zásady ochrany osobních údajů</string>
+    <string name="about_facebook_summary">Dejte like naší stránce na Facebooku</string>
+    <string name="about_privacy">Ochrana osobních údajů</string>
     <string name="about_privacy_summary">Pravidla pro shromažďování osobních údajů</string>
     <string name="about_system">Systemová nastavení</string>
     <string name="about_system_summary">Otevřít systémová nastavení</string>
@@ -499,6 +548,7 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lekce</string>
     <string name="dashboard_timetable_title_tomorrow">(Zítra)</string>
+    <string name="dashboard_timetable_title_today_and_tomorrow">(Dnes a zítra)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Za chvíli:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Brzy:</string>
     <string name="dashboard_timetable_first_lesson_title_first">První:</string>
@@ -594,6 +644,10 @@
     <string name="all_no">Ne</string>
     <string name="all_save">Uložit</string>
     <string name="all_title">Titul</string>
+    <string name="all_add">Přidat</string>
+    <string name="all_copied">Zkopírováno</string>
+    <string name="all_undo">Vrátit</string>
+    <string name="all_change">Změnit</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Žádné lekce</string>
     <string name="widget_timetable_theme_title">Vybrat motiv</string>
@@ -601,13 +655,13 @@
     <string name="widget_timetable_theme_dark">Tmavý</string>
     <string name="widget_timetable_theme_system">Motiv systému</string>
     <!--Preferences-->
-    <string name="pref_view_header">Vzhled a chování aplikací</string>
+    <string name="pref_view_header">Aplikace</string>
     <string name="pref_view_list">Výchozí zobrazení</string>
     <string name="pref_view_grade_average_mode">Možnosti vypočítaného průměru</string>
     <string name="pref_view_grade_average_force_calc">Vynutit průměrný výpočet podle aplikace</string>
     <string name="pref_view_present">Zobrazit přítomnost</string>
     <string name="pref_view_app_theme">Motiv</string>
-    <string name="pref_view_expand_grade">Rozbalit známky</string>
+    <string name="pref_view_expand_grade">Rozvíjení známek</string>
     <string name="pref_view_timetable_show_timers">Označit aktuální lekci</string>
     <string name="pref_view_timetable_show_groups">Zobrazit skupiny vedle předmětů</string>
     <string name="pref_view_grade_statistics_list">Zobrazit seznam grafů v známkách třídy</string>
@@ -616,6 +670,7 @@
     <string name="pref_view_grade_sorting_mode">Třídění předmětů</string>
     <string name="pref_view_app_language">Jazyk</string>
     <string name="pref_notify_header">Upozornění</string>
+    <string name="pref_notify_header_other">Jiné</string>
     <string name="pref_notify_switch">Zobrazit upozornění</string>
     <string name="pref_notify_upcoming_lessons_switch">Zobrazit upozornění o nadcházející lekci</string>
     <string name="pref_notify_upcoming_lessons_persistent_switch">Nastavit upozornění o nadcházející lekci jako trvalé</string>
@@ -644,16 +699,25 @@
     <string name="pref_other_grade_modifier_minus">Hodnota mínusu</string>
     <string name="pref_other_fill_message_content">Odpovědět s historií zpráv</string>
     <string name="pref_other_optional_arithmetic_average">Vypočítat aritmetický průměr, pokud žádná známka nemá váhu</string>
+    <string name="pref_ads_support_category_name">Podpora</string>
+    <string name="pref_ads_support">Podívejte se na jednu reklamu pro podporu projektu</string>
+    <string name="pref_ads_privacy_title">Souhlas se zpracováním dat</string>
+    <string name="pref_ads_privacy_description">Jestli chcete sledovat reklamu, musíte souhlasit s podmínkami zpracování údajů v našich Zásadách Ochrany Osobních Údajů</string>
+    <string name="pref_ads_privacy_agree">Souhlasím</string>
+    <string name="pref_ads_privacy_link">Ochrana osobních údajů</string>
+    <string name="pref_ads_loading">Reklama se načítá</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhled a chování</string>
     <string name="pref_settings_notifications_title">Upozornění</string>
     <string name="pref_settings_sync_title">Synchronizace</string>
+    <string name="pref_settings_ads_title">Reklamy</string>
     <string name="pref_grades_appearance_header">Známky</string>
     <string name="pref_dashboard_appearance_header">Domů</string>
     <string name="pref_dashboard_appearance_tiles_title">Viditelnost dlaždic</string>
-    <string name="pref_attendance_appearance_view">Docházka</string>
+    <string name="pref_attendance_appearance_view">Frekvence</string>
     <string name="pref_timetable_appearance_view">Plán lekce</string>
     <string name="pref_grades_advanced_header">Známky</string>
+    <string name="pref_counted_average_advanced_header">Vypočítaný průměr</string>
     <string name="pref_messages_advanced_header">Zprávy</string>
     <string name="pref_appearance_category">Vzhled a chování</string>
     <string name="pref_appearance_category_summary">Jazyky, motivy, třídění předmětů</string>
@@ -663,7 +727,8 @@
     <string name="pref_sync_category_summary">Automatická aktualizace, interval aktualizací</string>
     <string name="pref_advanced_category_summary">Hodnota plusu a mínusu, výpočet průměru</string>
     <string name="pref_advanced_category">Pokročilé</string>
-    <string name="pref_about_category_summary">Verze aplikace, tvůrci, sociální portály, licence</string>
+    <string name="pref_about_category_summary">Verze aplikace, tvůrci, sociální portály</string>
+    <string name="pref_ads_category_summary">Zobrazování reklam, podpora projektu</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Nové známky</string>
     <string name="channel_new_homework">Nové domácí úkoly</string>
@@ -676,6 +741,8 @@
     <string name="channel_push">Push upozornění</string>
     <string name="channel_upcoming_lessons">Nadcházející lekce</string>
     <string name="channel_debug">Ladění</string>
+    <string name="channel_change_timetable">Změny plánu lekcí</string>
+    <string name="channel_new_attendance">Nové frekvence</string>
     <!--Colors-->
     <string name="all_black">Černá</string>
     <string name="all_red">Červená</string>
@@ -683,10 +750,6 @@
     <string name="all_green">Zelená</string>
     <string name="all_purple">Fialová</string>
     <string name="all_empty_color">Žádná barva</string>
-    <!--Others-->
-    <string name="all_copied">Zkopírováno</string>
-    <string name="all_undo">Vrátit</string>
-    <string name="all_change">Změnit</string>
     <!--Update helper-->
     <string name="update_download_started">Stahování aktualizací začalo…</string>
     <string name="update_download_success">Aktualizace byla stažena.</string>
@@ -703,4 +766,5 @@
     <string name="error_unknown">Vyskytla se neočekávaná chyba</string>
     <string name="error_feature_disabled">Funkce je deaktivována přes vaší školou</string>
     <string name="error_feature_not_available">Funkce není k dispozici. Přihlaste se v jiném režimu než Mobile API</string>
+    <string name="error_field_required">Toto pole je povinné</string>
 </resources>
