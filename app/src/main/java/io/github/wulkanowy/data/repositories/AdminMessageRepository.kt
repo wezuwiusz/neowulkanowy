@@ -5,7 +5,6 @@ import io.github.wulkanowy.data.db.dao.AdminMessageDao
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.networkBoundResource
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
@@ -27,7 +26,7 @@ class AdminMessageRepository @Inject constructor(
         query = { adminMessageDao.loadAll() },
         fetch = { adminMessageService.getAdminMessages() },
         shouldFetch = {
-            refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, student)) || forceRefresh
+            refreshHelper.shouldBeRefreshed(cacheKey) || forceRefresh
         },
         saveFetchResult = { oldItems, newItems ->
             adminMessageDao.removeOldAndSaveNew(oldItems, newItems)
