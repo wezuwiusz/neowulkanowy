@@ -115,9 +115,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         updateHelper.onActivityResult(requestCode, resultCode)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.action_menu_main, menu)
-        accountMenu = menu?.findItem(R.id.mainMenuAccount)
+        accountMenu = menu.findItem(R.id.mainMenuAccount)
 
         presenter.onActionMenuCreated()
         return true
