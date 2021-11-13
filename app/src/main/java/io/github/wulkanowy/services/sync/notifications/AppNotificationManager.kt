@@ -13,6 +13,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.data.repositories.NotificationRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.utils.PendingIntentCompat
 import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
@@ -24,6 +25,7 @@ import kotlin.random.Random
 class AppNotificationManager @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
     @ApplicationContext private val context: Context,
+    private val studentRepository: StudentRepository,
     private val notificationRepository: NotificationRepository
 ) {
 
@@ -53,8 +55,12 @@ class AppNotificationManager @Inject constructor(
             .setContentText(notificationData.content)
             .setStyle(
                 NotificationCompat.BigTextStyle()
-                    .setSummaryText(student.nickOrName)
                     .bigText(notificationData.content)
+                    .also { builder ->
+                        if (shouldShowStudentName()) {
+                            builder.setSummaryText(student.nickOrName)
+                        }
+                    }
             )
             .build()
 
@@ -94,8 +100,12 @@ class AppNotificationManager @Inject constructor(
                 .setContentText(notificationData.content)
                 .setStyle(
                     NotificationCompat.BigTextStyle()
-                        .setSummaryText(student.nickOrName)
                         .bigText(notificationData.content)
+                        .also { builder ->
+                            if (shouldShowStudentName()) {
+                                builder.setSummaryText(student.nickOrName)
+                            }
+                        }
                 )
                 .setGroup(group)
                 .build()
@@ -105,7 +115,7 @@ class AppNotificationManager @Inject constructor(
         }
     }
 
-    private fun sendSummaryNotification(
+    private suspend fun sendSummaryNotification(
         groupNotificationData: GroupNotificationData,
         group: String,
         student: Student
@@ -123,8 +133,10 @@ class AppNotificationManager @Inject constructor(
                 .setColor(context.getCompatColor(R.color.colorPrimary))
                 .setStyle(
                     NotificationCompat.InboxStyle()
-                        .setSummaryText(student.nickOrName)
                         .also { builder ->
+                            if (shouldShowStudentName()) {
+                                builder.setSummaryText(student.nickOrName)
+                            }
                             groupNotificationData.notificationDataList.forEach {
                                 builder.addLine(it.content)
                             }
@@ -162,4 +174,7 @@ class AppNotificationManager @Inject constructor(
 
         notificationRepository.saveNotification(notificationEntity)
     }
+
+    private suspend fun shouldShowStudentName(): Boolean =
+        studentRepository.getSavedStudents(decryptPass = false).size > 1
 }
