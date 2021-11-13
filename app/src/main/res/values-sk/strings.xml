@@ -201,7 +201,7 @@
     <string name="completed_lessons_absence">Neprítomnosť</string>
     <string name="completed_lessons_resources">Zdroje</string>
     <!--Additional lessons-->
-    <string name="additional_lessons_title">Ďalší lekcie</string>
+    <string name="additional_lessons_title">Ďalšie lekcie</string>
     <string name="additional_lessons_button">Zobraziť ďalšie lekcie</string>
     <string name="additional_lessons_no_items">Žiadne informácie o ďalších lekciách</string>
     <!--Attendance-->

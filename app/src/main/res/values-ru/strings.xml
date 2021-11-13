@@ -17,7 +17,7 @@
     <string name="license_title">Лицензии</string>
     <string name="message_title">Сообщения</string>
     <string name="send_message_title">Новое сообщение</string>
-    <string name="add_homework_title">New homework</string>
+    <string name="add_homework_title">Новая домашняя работа</string>
     <string name="note_title">Предупреждения и свершения</string>
     <string name="homework_title">Домашние задания</string>
     <string name="account_title">Менеджер аккаунтов</string>
@@ -165,33 +165,33 @@
     <string name="timetable_now">Сейчас: %s</string>
     <string name="timetable_next">Следующий: %s</string>
     <string name="timetable_later">Позже: %s</string>
-    <string name="timetable_notify_lesson">%1$s lesson %2$d - %3$s</string>
-    <string name="timetable_notify_change_room">Change of room from %1$s to %2$s</string>
-    <string name="timetable_notify_change_teacher">Change of teacher from %1$s to %2$s</string>
-    <string name="timetable_notify_change_subject">Change of subject from %1$s to %2$s</string>
+    <string name="timetable_notify_lesson">%1$s урок %2$d - %3$s</string>
+    <string name="timetable_notify_change_room">Изменить комнату с %1$s на %2$s</string>
+    <string name="timetable_notify_change_teacher">Изменить учителя с %1$s на %2$s</string>
+    <string name="timetable_notify_change_subject">Изменить тему с %1$s на %2$s</string>
     <plurals name="timetable_notify_new_items_title">
-        <item quantity="one">Timetable change</item>
-        <item quantity="few">Timetable changes</item>
-        <item quantity="many">Timetable changes</item>
-        <item quantity="other">Timetable changes</item>
+        <item quantity="one">Изменение расписания</item>
+        <item quantity="few">Изменение расписания</item>
+        <item quantity="many">Изменение расписания</item>
+        <item quantity="other">Изменение расписания</item>
     </plurals>
     <plurals name="timetable_notify_new_items">
-        <item quantity="one">%1$s - %2$d change in timetable</item>
-        <item quantity="few">%1$s - %2$d  changes in timetable</item>
-        <item quantity="many">%1$s - %2$d  changes in timetable</item>
-        <item quantity="other">%1$s - %2$d  changes in timetable</item>
+        <item quantity="one">%1$s - %2$d изменений в расписании</item>
+        <item quantity="few">%1$s - %2$d изменений в расписании</item>
+        <item quantity="many">%1$s - %2$d изменений в расписании</item>
+        <item quantity="other">%1$s - %2$d  изменений в расписании</item>
     </plurals>
     <plurals name="timetable_notify_new_items_group">
-        <item quantity="one">%1$d change in timetable</item>
-        <item quantity="few">%1$d changes in timetable</item>
-        <item quantity="many">%1$d changes in timetable</item>
-        <item quantity="other">%1$d changes in timetable</item>
+        <item quantity="one">%1$d - изменений в расписании</item>
+        <item quantity="few">%1$d изменение в расписании</item>
+        <item quantity="many">%1$d изменение в расписании</item>
+        <item quantity="other">%1$d изменений в расписании</item>
     </plurals>
     <plurals name="timetable_number_item">
-        <item quantity="one">%d change</item>
-        <item quantity="few">%d changes</item>
-        <item quantity="many">%d changes</item>
-        <item quantity="other">%d changes</item>
+        <item quantity="one">%d изменение</item>
+        <item quantity="few">%d изменение</item>
+        <item quantity="many">%d изменение</item>
+        <item quantity="other">%d изменений</item>
     </plurals>
     <!--Completed lessons-->
     <string name="completed_lessons_title">Проведённые уроки</string>
@@ -223,22 +223,22 @@
     <string name="attendance_excuse_no_selection">Выберите хотя-бы одно отсутствие</string>
     <string name="attendance_excuse_title">Изменить статус</string>
     <plurals name="attendance_notify_new_items_title">
-        <item quantity="one">New attendance</item>
-        <item quantity="few">New attendance</item>
-        <item quantity="many">New attendance</item>
-        <item quantity="other">New attendance</item>
+        <item quantity="one">Новое посещение</item>
+        <item quantity="few">Новое посещение</item>
+        <item quantity="many">Новое посещение</item>
+        <item quantity="other">Новое посещение</item>
     </plurals>
     <plurals name="attendance_notify_new_items">
-        <item quantity="one">%1$d new attendance</item>
-        <item quantity="few">%1$d attendance</item>
-        <item quantity="many">%1$d attendance</item>
-        <item quantity="other">%1$d attendance</item>
+        <item quantity="one">%1$d новое посещения</item>
+        <item quantity="few">%1$d новое посещение</item>
+        <item quantity="many">%1$d новое посещение</item>
+        <item quantity="other">%1$d новое посещения</item>
     </plurals>
     <plurals name="attendance_number_item">
-        <item quantity="one">%d attendance</item>
-        <item quantity="few">%d attendance</item>
-        <item quantity="many">%d attendance</item>
-        <item quantity="other">%d attendance</item>
+        <item quantity="one">%d посещаемость</item>
+        <item quantity="few">%d посещаемость</item>
+        <item quantity="many">%d посещаемость</item>
+        <item quantity="other">%d посещаемость</item>
     </plurals>
     <!--Attendance summary-->
     <string name="attendance_summary_total">Общая</string>
@@ -374,9 +374,9 @@
     <string name="homework_no_items">Нет домашних заданий</string>
     <string name="homework_mark_as_done">Отметить как выполненное</string>
     <string name="homework_mark_as_undone">Отметить как невыполненное</string>
-    <string name="homework_add">Add homework</string>
-    <string name="homework_add_success">Homework added successfully</string>
-    <string name="homework_delete_success">Homework deleted successfully</string>
+    <string name="homework_add">Добавить домашнюю работу</string>
+    <string name="homework_add_success">Домашняя работа успешно добавлена</string>
+    <string name="homework_delete_success">Домашняя работа успешно удалена</string>
     <string name="homework_attachments">Вложения</string>
     <plurals name="homework_notify_new_item_title">
         <item quantity="one">Новая домашняя работа</item>
@@ -548,7 +548,7 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Уроки</string>
     <string name="dashboard_timetable_title_tomorrow">(Завтра)</string>
-    <string name="dashboard_timetable_title_today_and_tomorrow">(Today and tomorrow)</string>
+    <string name="dashboard_timetable_title_today_and_tomorrow">(Сегодня и завтра)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Сейчас:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Скоро:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Первый:</string>
@@ -644,7 +644,7 @@
     <string name="all_no">Нет</string>
     <string name="all_save">Сохранить</string>
     <string name="all_title">Тема</string>
-    <string name="all_add">Add</string>
+    <string name="all_add">Добавить</string>
     <string name="all_copied">Скопировано</string>
     <string name="all_undo">Отменить</string>
     <string name="all_change">Изменить</string>
@@ -655,13 +655,13 @@
     <string name="widget_timetable_theme_dark">Тёмная</string>
     <string name="widget_timetable_theme_system">Тема системы</string>
     <!--Preferences-->
-    <string name="pref_view_header">App</string>
+    <string name="pref_view_header">Приложение</string>
     <string name="pref_view_list">Окно по умолчанию</string>
     <string name="pref_view_grade_average_mode">Рассчитанные средние параметры</string>
     <string name="pref_view_grade_average_force_calc">Принудительно высчитать среднюю оценку через приложение</string>
     <string name="pref_view_present">Показать присутствие</string>
     <string name="pref_view_app_theme">Тема</string>
-    <string name="pref_view_expand_grade">Grades expanding</string>
+    <string name="pref_view_expand_grade">Расширяется оценка</string>
     <string name="pref_view_timetable_show_timers">Отметить текущий урок</string>
     <string name="pref_view_timetable_show_groups">Показать группы рядом с темами</string>
     <string name="pref_view_grade_statistics_list">Показывать диаграммы в оценках класса</string>
@@ -670,7 +670,7 @@
     <string name="pref_view_grade_sorting_mode">Сортировка уроков</string>
     <string name="pref_view_app_language">Язык</string>
     <string name="pref_notify_header">Уведомления</string>
-    <string name="pref_notify_header_other">Other</string>
+    <string name="pref_notify_header_other">Прочее</string>
     <string name="pref_notify_switch">Показывать уведомления</string>
     <string name="pref_notify_upcoming_lessons_switch">Показывать уведомления о будущих уроках</string>
     <string name="pref_notify_upcoming_lessons_persistent_switch">Сделать уведомления о предстоящем уроке постоянным</string>
@@ -699,25 +699,25 @@
     <string name="pref_other_grade_modifier_minus">Стоимость минуса</string>
     <string name="pref_other_fill_message_content">Отвечать с историей сообщений</string>
     <string name="pref_other_optional_arithmetic_average">Показывать среднее арифметическое при отсутствии весов</string>
-    <string name="pref_ads_support_category_name">Support</string>
-    <string name="pref_ads_support">Watch single ad to support project</string>
-    <string name="pref_ads_privacy_title">Consent to data processing</string>
-    <string name="pref_ads_privacy_description">To view an advertisement you must agree to the data processing terms of our Privacy Policy</string>
-    <string name="pref_ads_privacy_agree">Agree</string>
-    <string name="pref_ads_privacy_link">Privacy policy</string>
-    <string name="pref_ads_loading">Ad is loading</string>
+    <string name="pref_ads_support_category_name">Поддержка</string>
+    <string name="pref_ads_support">Смотреть одиночную рекламу для поддержки проекта</string>
+    <string name="pref_ads_privacy_title">Согласие на обработку данных</string>
+    <string name="pref_ads_privacy_description">Для просмотра рекламы вы должны согласиться с условиями обработки данных нашей Политики конфиденциальности</string>
+    <string name="pref_ads_privacy_agree">Согласен</string>
+    <string name="pref_ads_privacy_link">Политика конфиденциальности</string>
+    <string name="pref_ads_loading">Объявление загружается</string>
     <string name="pref_settings_advanced_title">Расширенные</string>
     <string name="pref_settings_appearance_title">Внешний вид &amp; Поведение</string>
     <string name="pref_settings_notifications_title">Уведомления</string>
     <string name="pref_settings_sync_title">Синхронизация</string>
-    <string name="pref_settings_ads_title">Advertisements</string>
+    <string name="pref_settings_ads_title">Реклама</string>
     <string name="pref_grades_appearance_header">Оценки</string>
     <string name="pref_dashboard_appearance_header">Панель</string>
     <string name="pref_dashboard_appearance_tiles_title">Видимость плиток</string>
     <string name="pref_attendance_appearance_view">Посещаемость</string>
     <string name="pref_timetable_appearance_view">Расписание</string>
     <string name="pref_grades_advanced_header">Оценки</string>
-    <string name="pref_counted_average_advanced_header">Calculated average</string>
+    <string name="pref_counted_average_advanced_header">Расчетное среднее</string>
     <string name="pref_messages_advanced_header">Сообщения</string>
     <string name="pref_appearance_category">Внешний вид &amp; Поведение</string>
     <string name="pref_appearance_category_summary">Языки, темы, темы сортировки темы</string>
@@ -727,8 +727,8 @@
     <string name="pref_sync_category_summary">Автоматическое обновление, интервал синхронизации</string>
     <string name="pref_advanced_category_summary">Значения плюс и минус, средний расчет</string>
     <string name="pref_advanced_category">Расширенные</string>
-    <string name="pref_about_category_summary">App version, contributors, social portals</string>
-    <string name="pref_ads_category_summary">Displaying advertisements, project support</string>
+    <string name="pref_about_category_summary">Версия приложения, участники, социальные порталы</string>
+    <string name="pref_ads_category_summary">Отображение объявлений, поддержка проекта</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Новые оценки</string>
     <string name="channel_new_homework">Новая домашняя работа</string>
@@ -741,8 +741,8 @@
     <string name="channel_push">Показывать push-уведомления</string>
     <string name="channel_upcoming_lessons">Будущие уроки</string>
     <string name="channel_debug">Дебаг</string>
-    <string name="channel_change_timetable">Timetable change</string>
-    <string name="channel_new_attendance">New attendance</string>
+    <string name="channel_change_timetable">Изменение расписания</string>
+    <string name="channel_new_attendance">Новое посещение</string>
     <!--Colors-->
     <string name="all_black">Чёрный</string>
     <string name="all_red">Красный</string>
@@ -766,5 +766,5 @@
     <string name="error_unknown">Произошла неожиданная ошибка</string>
     <string name="error_feature_disabled">Функция была выключена школой</string>
     <string name="error_feature_not_available">Функция не доступна в этом режиме</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_field_required">Это поле является обязательным</string>
 </resources>

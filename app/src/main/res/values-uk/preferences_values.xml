@@ -41,9 +41,9 @@
         <item>Кольори оцінок в щоденнику</item>
     </string-array>
     <string-array name="default_expand_grade_entries">
-        <item>Up to 1 at once</item>
-        <item>Always expanded</item>
-        <item>Unlimited expansions</item>
+        <item>Раз до 1</item>
+        <item>Завжди розгорнутий</item>
+        <item>Необмежена кількість розширень</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
         <item>Середні оцінки тільки від обраного семестру</item>

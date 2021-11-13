@@ -41,9 +41,9 @@
         <item>Цвета оценок в дневнике</item>
     </string-array>
     <string-array name="default_expand_grade_entries">
-        <item>Up to 1 at once</item>
-        <item>Always expanded</item>
-        <item>Unlimited expansions</item>
+        <item>До 1 за раз</item>
+        <item>Всегда развернуто</item>
+        <item>Неограниченные расширения</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
         <item>Средние оценки только с выбранного семестра</item>
