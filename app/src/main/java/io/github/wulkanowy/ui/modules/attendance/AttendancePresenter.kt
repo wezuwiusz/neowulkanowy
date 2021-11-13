@@ -174,6 +174,8 @@ class AttendancePresenter @Inject constructor(
         view?.apply {
             showExcuseCheckboxes(true)
             showExcuseButton(false)
+            enableSwipe(false)
+            showDayNavigation(false)
         }
         attendanceToExcuseList.clear()
         return true
@@ -183,6 +185,8 @@ class AttendancePresenter @Inject constructor(
         view?.apply {
             showExcuseCheckboxes(false)
             showExcuseButton(true)
+            enableSwipe(true)
+            showDayNavigation(true)
         }
     }
 
