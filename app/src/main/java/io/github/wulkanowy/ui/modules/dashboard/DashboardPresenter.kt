@@ -316,18 +316,17 @@ class DashboardPresenter @Inject constructor(
 
             gradeRepository.getGrades(student, semester, forceRefresh)
         }.map { originalResource ->
-            val filteredSubjectWithGrades = originalResource.data?.first.orEmpty()
-                .filter { grade ->
-                    grade.date.isAfter(LocalDate.now().minusDays(7))
-                }
-                .groupBy { grade -> grade.subject }
+            val filteredSubjectWithGrades = originalResource.data?.first
+                .orEmpty()
+                .filter { it.date >= LocalDate.now().minusDays(7) }
+                .groupBy { it.subject }
                 .mapValues { entry ->
                     entry.value
                         .take(5)
-                        .sortedBy { grade -> grade.date }
+                        .sortedByDescending { it.date }
                 }
                 .toList()
-                .sortedBy { subjectWithGrades -> subjectWithGrades.second[0].date }
+                .sortedByDescending { (_, grades) -> grades[0].date }
                 .toMap()
 
             Resource(
@@ -431,9 +430,9 @@ class DashboardPresenter @Inject constructor(
         }.map { homeworkResource ->
             val currentDate = LocalDate.now()
 
-            val filteredHomework = homeworkResource.data?.filter {
-                (it.date.isAfter(currentDate) || it.date == currentDate) && !it.isDone
-            }
+            val filteredHomework = homeworkResource.data
+                ?.filter { (it.date.isAfter(currentDate) || it.date == currentDate) && !it.isDone }
+                ?.sortedBy { it.date }
 
             homeworkResource.copy(data = filteredHomework)
         }.onEach {
