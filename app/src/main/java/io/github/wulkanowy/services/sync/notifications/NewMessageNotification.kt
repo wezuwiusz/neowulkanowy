@@ -22,7 +22,7 @@ class NewMessageNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.message_new_items, 1),
                 content = "${it.sender}: ${it.subject}",
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Message, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Message),
             )
         }
 
@@ -30,7 +30,7 @@ class NewMessageNotification @Inject constructor(
             notificationDataList = notificationDataList,
             title = context.getPlural(R.plurals.message_new_items, items.size),
             content = context.getPlural(R.plurals.message_notify_new_items, items.size, items.size),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Message, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Message),
             type = NotificationType.NEW_MESSAGE
         )
 

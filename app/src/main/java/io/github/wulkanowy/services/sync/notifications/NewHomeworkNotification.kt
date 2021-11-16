@@ -31,7 +31,7 @@ class NewHomeworkNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.homework_notify_new_item_title, 1),
                 content = it,
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Homework, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Homework),
             )
         }
 
@@ -42,7 +42,7 @@ class NewHomeworkNotification @Inject constructor(
                 lines.size,
                 lines.size
             ),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Homework, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Homework),
             type = NotificationType.NEW_HOMEWORK,
             notificationDataList = notificationDataList
         )

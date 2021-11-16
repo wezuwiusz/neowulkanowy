@@ -1,6 +1,5 @@
 package io.github.wulkanowy
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log.DEBUG
 import android.util.Log.INFO
@@ -40,7 +39,6 @@ class WulkanowyApp : Application(), Configuration.Provider {
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
 
-    @SuppressLint("UnsafeOptInUsageWarning")
     override fun onCreate() {
         super.onCreate()
         initializeAppLanguage()

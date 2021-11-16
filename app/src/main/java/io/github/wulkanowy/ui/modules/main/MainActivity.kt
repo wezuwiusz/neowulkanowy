@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.main
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build.VERSION_CODES.P
@@ -88,7 +87,6 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     private var savedInstanceState: Bundle? = null
 
-    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMainBinding.inflate(layoutInflater).apply { binding = this }.root)
@@ -97,7 +95,8 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         messageContainer = binding.mainMessageContainer
         updateHelper.messageContainer = binding.mainFragmentContainer
 
-        val destination = intent.getSerializableExtra(EXTRA_START_DESTINATION) as Destination?
+        val destination = (intent.getSerializableExtra(EXTRA_START_DESTINATION) as Destination?)
+            ?.takeIf { savedInstanceState == null }
 
         presenter.onAttachView(this, destination)
         updateHelper.checkAndInstallUpdates(this)
@@ -143,6 +142,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
             initialize(startMenuIndex, savedInstanceState)
         }
+        savedInstanceState = null
     }
 
     private fun initializeToolbar() {
@@ -292,6 +292,5 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         navController.onSaveInstanceState(outState)
-        intent.removeExtra(EXTRA_START_DESTINATION)
     }
 }

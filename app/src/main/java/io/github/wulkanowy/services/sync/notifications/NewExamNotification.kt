@@ -31,7 +31,7 @@ class NewExamNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.exam_notify_new_item_title, 1),
                 content = it,
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Exam, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Exam),
             )
         }
 
@@ -43,7 +43,7 @@ class NewExamNotification @Inject constructor(
                 lines.size,
                 lines.size
             ),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Exam, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Exam),
             type = NotificationType.NEW_EXAM
         )
 

@@ -62,7 +62,7 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
             val appIntent = PendingIntent.getActivity(
                 context,
                 LUCKY_NUMBER_PENDING_INTENT_ID,
-                SplashActivity.getStartIntent(context, Destination.LuckyNumber, true),
+                SplashActivity.getStartIntent(context, Destination.LuckyNumber),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
             )
 

@@ -34,8 +34,7 @@ class ChangeTimetableNotification @Inject constructor(
                         content = it,
                         intentToStart = SplashActivity.getStartIntent(
                             context = context,
-                            destination = Destination.Timetable(date),
-                            startNewTask = true
+                            destination = Destination.Timetable(date)
                         )
                     )
                 }
@@ -54,7 +53,7 @@ class ChangeTimetableNotification @Inject constructor(
                 changedLessons.size,
                 changedLessons.size
             ),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Timetable(), true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Timetable()),
             type = NotificationType.CHANGE_TIMETABLE
         )
 

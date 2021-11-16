@@ -23,7 +23,7 @@ class NewGradeNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.grade_new_items, 1),
                 content = "${it.subject}: ${it.entry}",
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Grade, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Grade),
             )
         }
 
@@ -31,7 +31,7 @@ class NewGradeNotification @Inject constructor(
             notificationDataList = notificationDataList,
             title = context.getPlural(R.plurals.grade_new_items, items.size),
             content = context.getPlural(R.plurals.grade_notify_new_items, items.size, items.size),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Grade, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Grade),
             type = NotificationType.NEW_GRADE_DETAILS
         )
 
@@ -43,7 +43,7 @@ class NewGradeNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.grade_new_items_predicted, 1),
                 content = "${it.subject}: ${it.predictedGrade}",
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Grade, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Grade),
             )
         }
 
@@ -55,7 +55,7 @@ class NewGradeNotification @Inject constructor(
                 items.size,
                 items.size
             ),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Grade, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Grade),
             type = NotificationType.NEW_GRADE_PREDICTED
         )
 
@@ -67,7 +67,7 @@ class NewGradeNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.grade_new_items_final, 1),
                 content = "${it.subject}: ${it.finalGrade}",
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Grade, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Grade),
             )
         }
 
@@ -79,7 +79,7 @@ class NewGradeNotification @Inject constructor(
                 items.size,
                 items.size
             ),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Grade, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Grade),
             type = NotificationType.NEW_GRADE_FINAL
         )
 

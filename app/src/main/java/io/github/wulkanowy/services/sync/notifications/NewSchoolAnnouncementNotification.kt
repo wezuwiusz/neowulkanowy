@@ -22,8 +22,7 @@ class NewSchoolAnnouncementNotification @Inject constructor(
             NotificationData(
                 intentToStart = SplashActivity.getStartIntent(
                     context = context,
-                    destination = Destination.SchoolAnnouncement,
-                    startNewTask = true
+                    destination = Destination.SchoolAnnouncement
                 ),
                 title = context.getPlural(
                     R.plurals.school_announcement_notify_new_item_title,
@@ -36,8 +35,7 @@ class NewSchoolAnnouncementNotification @Inject constructor(
             type = NotificationType.NEW_ANNOUNCEMENT,
             intentToStart = SplashActivity.getStartIntent(
                 context = context,
-                destination = Destination.SchoolAnnouncement,
-                startNewTask = true
+                destination = Destination.SchoolAnnouncement
             ),
             title = context.getPlural(
                 R.plurals.school_announcement_notify_new_item_title,

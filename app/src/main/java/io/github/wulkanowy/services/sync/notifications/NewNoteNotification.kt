@@ -29,13 +29,13 @@ class NewNoteNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(titleRes, 1),
                 content = "${it.teacher}: ${it.category}",
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Note, true),
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Note),
             )
         }
 
         val groupNotificationData = GroupNotificationData(
             notificationDataList = notificationDataList,
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Note, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Note),
             title = context.getPlural(R.plurals.note_new_items, items.size),
             content = context.getPlural(R.plurals.note_notify_new_items, items.size, items.size),
             type = NotificationType.NEW_NOTE

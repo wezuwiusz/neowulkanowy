@@ -31,7 +31,7 @@ class NewConferenceNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.conference_notify_new_item_title, 1),
                 content = it,
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Conference, true)
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Conference)
             )
         }
 
@@ -43,7 +43,7 @@ class NewConferenceNotification @Inject constructor(
                 lines.size,
                 lines.size
             ),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Conference, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Conference),
             type = NotificationType.NEW_CONFERENCE
         )
 

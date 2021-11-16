@@ -22,7 +22,7 @@ class NewLuckyNumberNotification @Inject constructor(
                 R.string.lucky_number_notify_new_item,
                 item.luckyNumber.toString()
             ),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.LuckyNumber, true)
+            intentToStart = SplashActivity.getStartIntent(context, Destination.LuckyNumber)
         )
 
         appNotificationManager.sendSingleNotification(

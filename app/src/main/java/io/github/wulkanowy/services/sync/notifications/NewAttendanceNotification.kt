@@ -31,7 +31,7 @@ class NewAttendanceNotification @Inject constructor(
             NotificationData(
                 title = context.getPlural(R.plurals.attendance_notify_new_items_title, 1),
                 content = it,
-                intentToStart = SplashActivity.getStartIntent(context, Destination.Attendance, true)
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Attendance)
             )
         }
 
@@ -46,7 +46,7 @@ class NewAttendanceNotification @Inject constructor(
                 notificationDataList.size,
                 notificationDataList.size
             ),
-            intentToStart = SplashActivity.getStartIntent(context, Destination.Attendance, true),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Attendance),
             type = NotificationType.NEW_ATTENDANCE
         )
 
