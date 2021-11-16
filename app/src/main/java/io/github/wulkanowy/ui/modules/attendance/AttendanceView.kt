@@ -60,6 +60,8 @@ interface AttendanceView : BaseView {
 
     fun showExcuseCheckboxes(show: Boolean)
 
+    fun showDayNavigation(show: Boolean)
+
     fun finishActionMode()
 
     fun popView()

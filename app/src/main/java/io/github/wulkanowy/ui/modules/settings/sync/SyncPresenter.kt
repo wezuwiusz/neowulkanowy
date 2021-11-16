@@ -46,7 +46,7 @@ class SyncPresenter @Inject constructor(
     fun onSyncNowClicked() {
         view?.run {
             syncManager.startOneTimeSyncWorker().onEach { workInfo ->
-                when (workInfo.state) {
+                when (workInfo?.state) {
                     WorkInfo.State.ENQUEUED -> {
                         setSyncInProgress(true)
                         Timber.i("Setting sync now started")
@@ -63,9 +63,9 @@ class SyncPresenter @Inject constructor(
                         )
                         analytics.logEvent("sync_now", "status" to "failed")
                     }
-                    else -> Timber.d("Sync now state: ${workInfo.state}")
+                    else -> Timber.d("Sync now state: ${workInfo?.state}")
                 }
-                if (workInfo.state.isFinished) {
+                if (workInfo?.state?.isFinished == true) {
                     setSyncInProgress(false)
                     setSyncDateInView()
                 }

@@ -1,26 +1,34 @@
 package io.github.wulkanowy.services.sync.notifications
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.pojos.OneNotificationData
-import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.data.pojos.NotificationData
+import io.github.wulkanowy.ui.modules.Destination
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import javax.inject.Inject
 
 class NewLuckyNumberNotification @Inject constructor(
-    private val appNotificationManager: AppNotificationManager
+    private val appNotificationManager: AppNotificationManager,
+    @ApplicationContext private val context: Context
 ) {
 
-   suspend fun notify(item: LuckyNumber, student: Student) {
-       val notification = OneNotificationData(
-           type = NotificationType.NEW_LUCKY_NUMBER,
-           icon = R.drawable.ic_stat_luckynumber,
-           titleStringRes = R.string.lucky_number_notify_new_item_title,
-           contentStringRes = R.string.lucky_number_notify_new_item,
-           startMenu = MainView.Section.LUCKY_NUMBER,
-           contentValues = listOf(item.luckyNumber.toString())
-       )
+    suspend fun notify(item: LuckyNumber, student: Student) {
+        val notificationData = NotificationData(
+            title = context.getString(R.string.lucky_number_notify_new_item_title),
+            content = context.getString(
+                R.string.lucky_number_notify_new_item,
+                item.luckyNumber.toString()
+            ),
+            intentToStart = SplashActivity.getStartIntent(context, Destination.LuckyNumber)
+        )
 
-       appNotificationManager.sendNotification(notification, student)
+        appNotificationManager.sendSingleNotification(
+            notificationData = notificationData,
+            notificationType = NotificationType.NEW_LUCKY_NUMBER,
+            student = student
+        )
     }
 }

@@ -25,6 +25,9 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
     @Inject
     lateinit var detailsAdapter: HomeworkDetailsAdapter
 
+    override val homeworkDeleteSuccess: String
+        get() = getString(R.string.homework_delete_success)
+
     private lateinit var homework: Homework
 
     companion object {
@@ -82,10 +85,15 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
                     dialog?.window?.setLayout(WRAP_CONTENT, WRAP_CONTENT)
                     presenter.isHomeworkFullscreen = false
                 }
+                onDeleteClickListener = { homework -> presenter.deleteHomework(homework) }
                 isHomeworkFullscreen = presenter.isHomeworkFullscreen
                 homework = this@HomeworkDetailsDialog.homework
             }
         }
+    }
+
+    override fun closeDialog() {
+        dismiss()
     }
 
     override fun updateMarkAsDoneLabel(isDone: Boolean) {

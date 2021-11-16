@@ -12,6 +12,9 @@
     <color name="colorStatusBarLight">#1C1C1C</color>
     <color name="colorStatusBarBlack">#0D0D0D</color>
 
+    <color name="dashboard_message_medium_light">#FFD980</color>
+    <color name="dashboard_message_medium_dark">#ffd54f</color>
+
     <color name="timetable_change_light">#ffd54f</color>
     <color name="timetable_change_dark">#ff8f00</color>
 

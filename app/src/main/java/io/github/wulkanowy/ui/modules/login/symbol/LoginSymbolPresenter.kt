@@ -32,6 +32,16 @@ class LoginSymbolPresenter @Inject constructor(
         }
         if (savedLoginData is Triple<*, *, *>) {
             loginData = savedLoginData as Triple<String, String, String>
+            view.setLoginToHeading(requireNotNull(loginData?.first))
+        }
+    }
+
+    fun onParentInitSymbolView(loginData: Triple<String, String, String>) {
+        this.loginData = loginData
+        view?.apply {
+            setLoginToHeading(loginData.first)
+            clearAndFocusSymbol()
+            showSoftKeyboard()
         }
     }
 
@@ -47,7 +57,14 @@ class LoginSymbolPresenter @Inject constructor(
             return
         }
 
-        flowWithResource { studentRepository.getStudentsScrapper(loginData!!.first, loginData!!.second, loginData!!.third, symbol) }.onEach {
+        flowWithResource {
+            studentRepository.getStudentsScrapper(
+                email = loginData!!.first,
+                password = loginData!!.second,
+                scrapperBaseUrl = loginData!!.third,
+                symbol = symbol,
+            )
+        }.onEach {
             when (it.status) {
                 Status.LOADING -> view?.run {
                     Timber.i("Login with symbol started")
@@ -96,14 +113,6 @@ class LoginSymbolPresenter @Inject constructor(
                 showContent(true)
             }
         }.launch("login")
-    }
-
-    fun onParentInitSymbolView(loginData: Triple<String, String, String>) {
-        this.loginData = loginData
-        view?.apply {
-            clearAndFocusSymbol()
-            showSoftKeyboard()
-        }
     }
 
     fun onFaqClick() {

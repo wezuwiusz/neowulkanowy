@@ -1,0 +1,14 @@
+Aplikace je určena pro uživatele deníku VULCAN UONET+.
+
+Zvýrazněné vlastnosti a funkce:
+- výpočet váženého průměru,
+- procentuální zobrazení docházky,
+- šťastné číslo,
+- náhled na další a dokončené lekce,
+- tmavý motiv,
+- žádné reklamy,
+- offline režim,
+- upozornění.
+
+GitHub: https://github.com/wulkanowy/wulkanowy
+Discord: https://discord.gg/vccAQBr

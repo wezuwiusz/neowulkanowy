@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
-        app:key="appearance"
+        app:fragment="io.github.wulkanowy.ui.modules.settings.appearance.AppearanceFragment"
         app:icon="@drawable/ic_settings_appearance"
+        app:key="appearance"
         app:summary="@string/pref_appearance_category_summary"
-        app:title="@string/pref_appearance_category"
-        app:fragment="io.github.wulkanowy.ui.modules.settings.appearance.AppearanceFragment" />
+        app:title="@string/pref_appearance_category" />
     <Preference
-        app:key="notifications"
+        app:fragment="io.github.wulkanowy.ui.modules.settings.notifications.NotificationsFragment"
         app:icon="@drawable/ic_settings_notifications"
+        app:key="notifications"
         app:summary="@string/pref_notifications_category_summary"
-        app:title="@string/pref_notifications_category"
-        app:fragment="io.github.wulkanowy.ui.modules.settings.notifications.NotificationsFragment" />
+        app:title="@string/pref_notifications_category" />
     <Preference
-        app:key="sync"
+        app:fragment="io.github.wulkanowy.ui.modules.settings.sync.SyncFragment"
         app:icon="@drawable/ic_settings_sync"
+        app:key="sync"
         app:summary="@string/pref_sync_category_summary"
-        app:title="@string/pref_sync_category"
-        app:fragment="io.github.wulkanowy.ui.modules.settings.sync.SyncFragment" />
+        app:title="@string/pref_sync_category" />
     <Preference
-        app:key="advanced"
+        app:fragment="io.github.wulkanowy.ui.modules.settings.advanced.AdvancedFragment"
         app:icon="@drawable/ic_settings_advanced"
+        app:key="advanced"
         app:summary="@string/pref_advanced_category_summary"
-        app:title="@string/pref_advanced_category"
-        app:fragment="io.github.wulkanowy.ui.modules.settings.advanced.AdvancedFragment" />
+        app:title="@string/pref_advanced_category" />
     <Preference
-        app:key="about"
+        app:fragment="io.github.wulkanowy.ui.modules.about.AboutFragment"
         app:icon="@drawable/ic_all_about"
+        app:key="about"
         app:summary="@string/pref_about_category_summary"
-        app:title="@string/about_title"
-        app:fragment="io.github.wulkanowy.ui.modules.about.AboutFragment" />
+        app:title="@string/about_title" />
 </PreferenceScreen>

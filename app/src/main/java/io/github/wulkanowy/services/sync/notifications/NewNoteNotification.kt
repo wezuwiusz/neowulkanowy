@@ -1,42 +1,46 @@
 package io.github.wulkanowy.services.sync.notifications
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.pojos.MultipleNotificationsData
+import io.github.wulkanowy.data.pojos.GroupNotificationData
+import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.sdk.scrapper.notes.NoteCategory
-import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.Destination
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
+import io.github.wulkanowy.utils.getPlural
 import javax.inject.Inject
 
 class NewNoteNotification @Inject constructor(
-    private val appNotificationManager: AppNotificationManager
+    private val appNotificationManager: AppNotificationManager,
+    @ApplicationContext private val context: Context
 ) {
 
     suspend fun notify(items: List<Note>, student: Student) {
-        val notification = MultipleNotificationsData(
-            type = NotificationType.NEW_NOTE,
-            icon = R.drawable.ic_stat_note,
-            titleStringRes = when (NoteCategory.getByValue(items.first().categoryType)) {
+        val notificationDataList = items.map {
+            val titleRes = when (NoteCategory.getByValue(it.categoryType)) {
                 NoteCategory.POSITIVE -> R.plurals.praise_new_items
                 NoteCategory.NEUTRAL -> R.plurals.neutral_note_new_items
                 else -> R.plurals.note_new_items
-            },
-            contentStringRes = when (NoteCategory.getByValue(items.first().categoryType)) {
-                NoteCategory.POSITIVE -> R.plurals.praise_notify_new_items
-                NoteCategory.NEUTRAL -> R.plurals.neutral_note_notify_new_items
-                else -> R.plurals.note_notify_new_items
-            },
-            summaryStringRes = when (NoteCategory.getByValue(items.first().categoryType)) {
-                NoteCategory.POSITIVE -> R.plurals.praise_number_item
-                NoteCategory.NEUTRAL -> R.plurals.neutral_note_number_item
-                else -> R.plurals.note_number_item
-            },
-            startMenu = MainView.Section.NOTE,
-            lines = items.map {
-                "${it.teacher}: ${it.category}"
             }
+
+            NotificationData(
+                title = context.getPlural(titleRes, 1),
+                content = "${it.teacher}: ${it.category}",
+                intentToStart = SplashActivity.getStartIntent(context, Destination.Note),
+            )
+        }
+
+        val groupNotificationData = GroupNotificationData(
+            notificationDataList = notificationDataList,
+            intentToStart = SplashActivity.getStartIntent(context, Destination.Note),
+            title = context.getPlural(R.plurals.note_new_items, items.size),
+            content = context.getPlural(R.plurals.note_notify_new_items, items.size, items.size),
+            type = NotificationType.NEW_NOTE
         )
 
-        appNotificationManager.sendNotification(notification, student)
+        appNotificationManager.sendMultipleNotifications(groupNotificationData, student)
     }
 }

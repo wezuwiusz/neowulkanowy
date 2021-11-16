@@ -99,7 +99,7 @@ class LoginRecoverFragment :
     override fun setErrorNameRequired() {
         with(bindingLocal.loginRecoverNameLayout) {
             requestFocus()
-            error = getString(R.string.login_field_required)
+            error = getString(R.string.error_field_required)
         }
     }
 

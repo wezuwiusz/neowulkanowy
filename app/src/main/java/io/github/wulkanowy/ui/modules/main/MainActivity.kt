@@ -1,20 +1,11 @@
 package io.github.wulkanowy.ui.modules.main
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
-import android.graphics.drawable.Icon
-import android.os.Build
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.annotation.RequiresApi
-import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -30,19 +21,8 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.ActivityMainBinding
 import io.github.wulkanowy.ui.base.BaseActivity
+import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
-import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
-import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
-import io.github.wulkanowy.ui.modules.dashboard.DashboardFragment
-import io.github.wulkanowy.ui.modules.exam.ExamFragment
-import io.github.wulkanowy.ui.modules.grade.GradeFragment
-import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
-import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
-import io.github.wulkanowy.ui.modules.message.MessageFragment
-import io.github.wulkanowy.ui.modules.more.MoreFragment
-import io.github.wulkanowy.ui.modules.note.NoteFragment
-import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
-import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.InAppReviewHelper
@@ -83,15 +63,14 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         FragNavController(supportFragmentManager, R.id.main_fragment_container)
 
     companion object {
-        const val EXTRA_START_MENU = "extraStartMenu"
+
+        private const val EXTRA_START_DESTINATION = "start_destination"
 
         fun getStartIntent(
             context: Context,
-            startMenu: MainView.Section? = null,
-            clear: Boolean = false
+            destination: Destination? = null,
         ) = Intent(context, MainActivity::class.java).apply {
-            if (clear) flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-            startMenu?.let { putExtra(EXTRA_START_MENU, it.id) }
+            putExtra(EXTRA_START_DESTINATION, destination)
         }
     }
 
@@ -106,42 +85,20 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     override val currentViewSubtitle get() = (navController.currentFrag as? MainView.TitledView)?.subtitleString
 
-    override var startMenuIndex = 0
+    private var savedInstanceState: Bundle? = null
 
-    override var startMenuMoreIndex = -1
-
-    private val moreMenuFragments = mapOf<Int, Fragment>(
-        MainView.Section.MESSAGE.id to MessageFragment.newInstance(),
-        MainView.Section.EXAM.id to ExamFragment.newInstance(),
-        MainView.Section.HOMEWORK.id to HomeworkFragment.newInstance(),
-        MainView.Section.NOTE.id to NoteFragment.newInstance(),
-        MainView.Section.CONFERENCE.id to ConferenceFragment.newInstance(),
-        MainView.Section.SCHOOL_ANNOUNCEMENT.id to SchoolAnnouncementFragment.newInstance(),
-        MainView.Section.LUCKY_NUMBER.id to LuckyNumberFragment.newInstance(),
-    )
-
-    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityMainBinding.inflate(layoutInflater).apply { binding = this }.root)
         setSupportActionBar(binding.mainToolbar)
+        this.savedInstanceState = savedInstanceState
         messageContainer = binding.mainMessageContainer
         updateHelper.messageContainer = binding.mainFragmentContainer
 
-        val section = MainView.Section.values()
-            .singleOrNull { it.id == intent.getIntExtra(EXTRA_START_MENU, -1) }
+        val destination = (intent.getSerializableExtra(EXTRA_START_DESTINATION) as Destination?)
+            ?.takeIf { savedInstanceState == null }
 
-        presenter.onAttachView(this, section)
-
-        with(navController) {
-            initialize(startMenuIndex, savedInstanceState)
-            pushFragment(moreMenuFragments[startMenuMoreIndex])
-        }
-
-        if (appInfo.systemVersion >= Build.VERSION_CODES.N_MR1) {
-            initShortcuts()
-        }
-
+        presenter.onAttachView(this, destination)
         updateHelper.checkAndInstallUpdates(this)
     }
 
@@ -157,71 +114,47 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         updateHelper.onActivityResult(requestCode, resultCode)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
-    fun initShortcuts() {
-        val shortcutsList = mutableListOf<ShortcutInfo>()
-
-        listOf(
-            Triple(
-                getString(R.string.grade_title),
-                R.drawable.ic_shortcut_grade,
-                MainView.Section.GRADE
-            ),
-            Triple(
-                getString(R.string.attendance_title),
-                R.drawable.ic_shortcut_attendance,
-                MainView.Section.ATTENDANCE
-            ),
-            Triple(
-                getString(R.string.exam_title),
-                R.drawable.ic_shortcut_exam,
-                MainView.Section.EXAM
-            ),
-            Triple(
-                getString(R.string.timetable_title),
-                R.drawable.ic_shortcut_timetable,
-                MainView.Section.TIMETABLE
-            )
-        ).forEach { (title, icon, enum) ->
-            shortcutsList.add(
-                ShortcutInfo.Builder(applicationContext, title)
-                    .setShortLabel(title)
-                    .setLongLabel(title)
-                    .setIcon(Icon.createWithResource(applicationContext, icon))
-                    .setIntents(
-                        arrayOf(
-                            Intent(applicationContext, MainActivity::class.java)
-                                .setAction(Intent.ACTION_VIEW),
-                            Intent(applicationContext, MainActivity::class.java)
-                                .putExtra(EXTRA_START_MENU, enum.id)
-                                .setAction(Intent.ACTION_VIEW)
-                                .addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
-                        )
-                    )
-                    .build()
-            )
-        }
-
-        getSystemService<ShortcutManager>()?.dynamicShortcuts = shortcutsList
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.action_menu_main, menu)
-        accountMenu = menu?.findItem(R.id.mainMenuAccount)
+        accountMenu = menu.findItem(R.id.mainMenuAccount)
 
         presenter.onActionMenuCreated()
         return true
     }
 
-    @SuppressLint("NewApi")
-    override fun initView() {
+    override fun initView(startMenuIndex: Int, rootDestinations: List<Destination>) {
+        initializeToolbar()
+        initializeBottomNavigation(startMenuIndex)
+        initializeNavController(startMenuIndex, rootDestinations)
+    }
+
+    private fun initializeNavController(startMenuIndex: Int, rootDestinations: List<Destination>) {
+        with(navController) {
+            setOnViewChangeListener { destinationView ->
+                presenter.onViewChange(destinationView)
+                analytics.setCurrentScreen(
+                    this@MainActivity,
+                    destinationView::class.java.simpleName
+                )
+            }
+            fragmentHideStrategy = HIDE
+            rootFragments = rootDestinations.map { it.fragment }
+
+            initialize(startMenuIndex, savedInstanceState)
+        }
+        savedInstanceState = null
+    }
+
+    private fun initializeToolbar() {
         with(binding.mainToolbar) {
             stateListAnimator = null
             setBackgroundColor(
                 overlayProvider.compositeOverlayWithThemeSurfaceColorIfNeeded(dpToPx(4f))
             )
         }
+    }
 
+    private fun initializeBottomNavigation(startMenuIndex: Int) {
         with(binding.mainBottomNav) {
             with(menu) {
                 add(Menu.NONE, 0, Menu.NONE, R.string.dashboard_title)
@@ -238,36 +171,6 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             selectedItemId = startMenuIndex
             setOnItemSelectedListener { presenter.onTabSelected(it.itemId, false) }
             setOnItemReselectedListener { presenter.onTabSelected(it.itemId, true) }
-        }
-
-        with(navController) {
-            setOnViewChangeListener { section, name ->
-                if (section == MainView.Section.ACCOUNT || section == MainView.Section.STUDENT_INFO) {
-                    binding.mainBottomNav.isVisible = false
-
-                    if (appInfo.systemVersion >= P) {
-                        window.navigationBarColor = getThemeAttrColor(R.attr.colorSurface)
-                    }
-                } else {
-                    binding.mainBottomNav.isVisible = true
-
-                    if (appInfo.systemVersion >= P) {
-                        window.navigationBarColor =
-                            getThemeAttrColor(android.R.attr.navigationBarColor)
-                    }
-                }
-
-                analytics.setCurrentScreen(this@MainActivity, name)
-                presenter.onViewChange(section)
-            }
-            fragmentHideStrategy = HIDE
-            rootFragments = listOf(
-                DashboardFragment.newInstance(),
-                GradeFragment.newInstance(),
-                AttendanceFragment.newInstance(),
-                TimetableFragment.newInstance(),
-                MoreFragment.newInstance()
-            )
         }
     }
 
@@ -315,6 +218,22 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     override fun showActionBarElevation(show: Boolean) {
         ViewCompat.setElevation(binding.mainToolbar, if (show) dpToPx(4f) else 0f)
+    }
+
+    override fun showBottomNavigation(show: Boolean) {
+        binding.mainBottomNav.isVisible = show
+
+        if (appInfo.systemVersion >= P) {
+            window.navigationBarColor = if (show) {
+                getThemeAttrColor(android.R.attr.navigationBarColor)
+            } else {
+                getThemeAttrColor(R.attr.colorSurface)
+            }
+        }
+    }
+
+    override fun openMoreDestination(destination: Destination) {
+        pushView(destination.fragment)
     }
 
     override fun notifyMenuViewReselected() {
@@ -373,6 +292,5 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         navController.onSaveInstanceState(outState)
-        intent.removeExtra(EXTRA_START_MENU)
     }
 }

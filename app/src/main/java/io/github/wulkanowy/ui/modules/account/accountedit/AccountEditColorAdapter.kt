@@ -3,12 +3,9 @@ package io.github.wulkanowy.ui.modules.account.accountedit
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RippleDrawable
-import android.graphics.drawable.StateListDrawable
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -52,30 +49,13 @@ class AccountEditColorAdapter @Inject constructor() :
         }
     }
 
-    private fun Int.createForegroundDrawable(): Drawable =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val mask = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(Color.BLACK)
-            }
-            RippleDrawable(ColorStateList.valueOf(this.rippleColor), null, mask)
-        } else {
-            val foreground = StateListDrawable().apply {
-                alpha = 80
-                setEnterFadeDuration(250)
-                setExitFadeDuration(250)
-            }
-
-            val mask = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(this@createForegroundDrawable.rippleColor)
-            }
-
-            foreground.apply {
-                addState(intArrayOf(android.R.attr.state_pressed), mask)
-                addState(intArrayOf(), ColorDrawable(Color.TRANSPARENT))
-            }
+    private fun Int.createForegroundDrawable(): Drawable {
+        val mask = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(Color.BLACK)
         }
+        return RippleDrawable(ColorStateList.valueOf(this.rippleColor), null, mask)
+    }
 
     private inline val Int.rippleColor: Int
         get() {

@@ -97,7 +97,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
             timetableNavDate.setOnClickListener { presenter.onPickDate() }
             timetableNextButton.setOnClickListener { presenter.onNextDay() }
 
-            timetableNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            timetableNavContainer.elevation = requireContext().dpToPx(8f)
         }
     }
 

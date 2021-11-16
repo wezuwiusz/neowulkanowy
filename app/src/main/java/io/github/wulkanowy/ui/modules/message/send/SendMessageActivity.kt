@@ -118,7 +118,7 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
         presenter.onMessageContentChange()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.action_menu_send_message, menu)
         return true
     }

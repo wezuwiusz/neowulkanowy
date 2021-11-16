@@ -1,12 +1,10 @@
 package io.github.wulkanowy
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log.DEBUG
 import android.util.Log.INFO
 import android.util.Log.VERBOSE
 import android.webkit.WebView
-import androidx.fragment.app.FragmentManager
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.yariksoffice.lingver.Lingver
@@ -41,10 +39,8 @@ class WulkanowyApp : Application(), Configuration.Provider {
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
 
-    @SuppressLint("UnsafeOptInUsageWarning")
     override fun onCreate() {
         super.onCreate()
-        FragmentManager.enableNewStateManager(false)
         initializeAppLanguage()
         themeManager.applyDefaultTheme()
         initLogging()

@@ -42,18 +42,10 @@ class MainPresenterTest {
         MockKAnnotations.init(this)
         clearMocks(mainView)
 
-        every { mainView.startMenuIndex = any() } just Runs
-        every { mainView.startMenuMoreIndex = any() } just Runs
-        every { mainView.startMenuIndex } returns 1
-        every { mainView.startMenuMoreIndex } returns 1
-        every { mainView.initView() } just Runs
-        presenter = MainPresenter(errorHandler, studentRepository, prefRepository, syncManager, analytics)
+        every { mainView.initView(any(), any()) } just Runs
+        presenter =
+            MainPresenter(errorHandler, studentRepository, prefRepository, syncManager, analytics)
         presenter.onAttachView(mainView, null)
-    }
-
-    @Test
-    fun initMenuTest() {
-        verify { mainView.initView() }
     }
 
     @Test

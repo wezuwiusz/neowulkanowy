@@ -19,11 +19,11 @@ import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
 import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
 import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.works.Work
+import io.github.wulkanowy.utils.DispatchersProvider
 import io.github.wulkanowy.utils.getCompatColor
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.time.LocalDateTime
-import java.time.ZoneId
 import kotlin.random.Random
 
 @HiltWorker
@@ -34,13 +34,14 @@ class SyncWorker @AssistedInject constructor(
     private val semesterRepository: SemesterRepository,
     private val works: Set<@JvmSuppressWildcards Work>,
     private val preferencesRepository: PreferencesRepository,
-    private val notificationManager: NotificationManagerCompat
+    private val notificationManager: NotificationManagerCompat,
+    private val dispatchersProvider: DispatchersProvider
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork() = coroutineScope {
+    override suspend fun doWork() = withContext(dispatchersProvider.io) {
         Timber.i("SyncWorker is starting")
 
-        if (!studentRepository.isCurrentStudentSet()) return@coroutineScope Result.failure()
+        if (!studentRepository.isCurrentStudentSet()) return@withContext Result.failure()
 
         val student = studentRepository.getCurrentStudent()
         val semester = semesterRepository.getCurrentSemester(student, true)
@@ -50,12 +51,12 @@ class SyncWorker @AssistedInject constructor(
                 Timber.i("${work::class.java.simpleName} is starting")
                 work.doWork(student, semester)
                 Timber.i("${work::class.java.simpleName} result: Success")
-                preferencesRepository.lasSyncDate = LocalDateTime.now(ZoneId.systemDefault())
                 null
             } catch (e: Throwable) {
                 Timber.w("${work::class.java.simpleName} result: An exception ${e.message} occurred")
-                if (e is FeatureDisabledException || e is FeatureNotAvailableException) null
-                else {
+                if (e is FeatureDisabledException || e is FeatureNotAvailableException) {
+                    null
+                } else {
                     Timber.e(e)
                     e
                 }
@@ -70,13 +71,16 @@ class SyncWorker @AssistedInject constructor(
                 )
             }
             exceptions.isNotEmpty() -> Result.retry()
-            else -> Result.success()
+            else -> {
+                preferencesRepository.lasSyncDate = LocalDateTime.now()
+                Result.success()
+            }
         }
 
         if (preferencesRepository.isDebugNotificationEnable) notify(result)
         Timber.i("SyncWorker result: $result")
 
-        result
+        return@withContext result
     }
 
     private fun notify(result: Result) {

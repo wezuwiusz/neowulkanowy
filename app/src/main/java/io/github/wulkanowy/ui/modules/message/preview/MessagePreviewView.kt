@@ -1,7 +1,5 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.ui.base.BaseView
@@ -42,8 +40,7 @@ interface MessagePreviewView : BaseView {
 
     fun shareText(text: String, subject: String)
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun printDocument(html: String, jobName: String)
-
     fun popView()
+
+    fun printDocument(html: String, jobName: String)
 }

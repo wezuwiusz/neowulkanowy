@@ -5,7 +5,8 @@
     <string name="pref_key_app_theme">app_theme</string>
     <string name="pref_key_dashboard_tiles">dashboard_tiles</string>
     <string name="pref_key_grade_color_scheme">grade_color_scheme</string>
-    <string name="pref_key_expand_grade">expand_grade</string>
+    <string name="pref_key_expand_grade">expand_grade</string> <!-- replaced by expand_grade_mode -->
+    <string name="pref_key_expand_grade_mode">expand_grade_mode</string>
     <string name="pref_key_grade_average_mode">grade_average_mode</string>
     <string name="pref_key_grade_average_force_calc">grade_average_always_calc</string>
     <string name="pref_key_grade_statistics_list">grade_statistics_list</string>
@@ -34,4 +35,5 @@
     <string name="pref_key_message_send_draft">message_send_recipients</string>
     <string name="pref_key_last_sync_date">last_sync_date</string>
     <string name="pref_key_notifications_piggyback">notifications_piggyback</string>
+    <string name="pref_key_ads_single_support">single_ad_support</string>
 </resources>

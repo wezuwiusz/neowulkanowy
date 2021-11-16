@@ -21,7 +21,7 @@ class DashboardItemMoveCallback(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        val dragFlags = if (viewHolder.bindingAdapterPosition != 0) {
+        val dragFlags = if (!viewHolder.isAdminMessageOrAccountItem) {
             ItemTouchHelper.UP or ItemTouchHelper.DOWN
         } else 0
 
@@ -32,7 +32,7 @@ class DashboardItemMoveCallback(
         recyclerView: RecyclerView,
         current: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
-    ) = target.bindingAdapterPosition != 0
+    ) = !target.isAdminMessageOrAccountItem
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -52,4 +52,7 @@ class DashboardItemMoveCallback(
 
         onUserInteractionEndListener(dashboardAdapter.items.toList())
     }
+
+    private val RecyclerView.ViewHolder.isAdminMessageOrAccountItem: Boolean
+        get() = this is DashboardAdapter.AdminMessageViewHolder || this is DashboardAdapter.AccountViewHolder
 }

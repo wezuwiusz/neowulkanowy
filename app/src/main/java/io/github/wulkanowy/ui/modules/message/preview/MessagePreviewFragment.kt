@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
-import android.os.Build
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
@@ -13,7 +12,6 @@ import android.view.View.VISIBLE
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +23,6 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.send.SendMessageActivity
-import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.shareText
 import javax.inject.Inject
 
@@ -39,9 +36,6 @@ class MessagePreviewFragment :
 
     @Inject
     lateinit var previewAdapter: MessagePreviewAdapter
-
-    @Inject
-    lateinit var appInfo: AppInfo
 
     private var menuReplyButton: MenuItem? = null
 
@@ -140,7 +134,7 @@ class MessagePreviewFragment :
         menuForwardButton?.isVisible = show
         menuDeleteButton?.isVisible = show
         menuShareButton?.isVisible = show
-        menuPrintButton?.isVisible = show && appInfo.systemVersion >= Build.VERSION_CODES.LOLLIPOP
+        menuPrintButton?.isVisible = show
     }
 
     override fun setDeletedOptionsLabels() {
@@ -175,7 +169,6 @@ class MessagePreviewFragment :
         context?.shareText(text, subject)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun printDocument(html: String, jobName: String) {
         val webView = WebView(requireContext())
         webView.webViewClient = object : WebViewClient() {
@@ -190,7 +183,6 @@ class MessagePreviewFragment :
         webView.loadDataWithBaseURL("file:///android_asset/", html, "text/HTML", "UTF-8", null)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun createWebPrintJob(webView: WebView, jobName: String) {
         activity?.getSystemService<PrintManager>()?.let { printManager ->
             val printAdapter = webView.createPrintDocumentAdapter(jobName)

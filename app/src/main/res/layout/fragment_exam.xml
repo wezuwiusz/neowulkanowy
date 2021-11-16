@@ -128,8 +128,8 @@
             android:paddingRight="12dp"
             android:paddingBottom="8dp"
             android:scaleType="fitStart"
-            android:tint="?colorPrimary"
-            app:srcCompat="@drawable/ic_chevron_left" />
+            app:srcCompat="@drawable/ic_chevron_left"
+            app:tint="?colorPrimary" />
 
         <TextView
             android:id="@+id/examNavDate"
@@ -152,7 +152,7 @@
             android:paddingRight="12dp"
             android:paddingBottom="8dp"
             android:scaleType="fitEnd"
-            android:tint="?colorPrimary"
-            app:srcCompat="@drawable/ic_chevron_right" />
+            app:srcCompat="@drawable/ic_chevron_right"
+            app:tint="?colorPrimary" />
     </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 </FrameLayout>

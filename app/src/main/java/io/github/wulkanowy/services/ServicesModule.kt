@@ -15,6 +15,7 @@ import dagger.multibindings.IntoSet
 import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.channels.LuckyNumberChannel
+import io.github.wulkanowy.services.sync.channels.NewAttendanceChannel
 import io.github.wulkanowy.services.sync.channels.NewConferencesChannel
 import io.github.wulkanowy.services.sync.channels.NewExamChannel
 import io.github.wulkanowy.services.sync.channels.NewGradesChannel
@@ -23,6 +24,7 @@ import io.github.wulkanowy.services.sync.channels.NewMessagesChannel
 import io.github.wulkanowy.services.sync.channels.NewNotesChannel
 import io.github.wulkanowy.services.sync.channels.NewSchoolAnnouncementsChannel
 import io.github.wulkanowy.services.sync.channels.PushChannel
+import io.github.wulkanowy.services.sync.channels.TimetableChangeChannel
 import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel
 import io.github.wulkanowy.services.sync.works.AttendanceSummaryWork
 import io.github.wulkanowy.services.sync.works.AttendanceWork
@@ -167,4 +169,12 @@ abstract class ServicesModule {
     @Binds
     @IntoSet
     abstract fun provideUpcomingLessonsChannel(channel: UpcomingLessonsChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideChangeTimetableChannel(channel: TimetableChangeChannel): Channel
+
+    @Binds
+    @IntoSet
+    abstract fun provideNewAttendanceChannel(channel: NewAttendanceChannel): Channel
 }

@@ -79,7 +79,7 @@ class CompletedLessonsFragment :
             completedLessonsNavDate.setOnClickListener { presenter.onPickDate() }
             completedLessonsNextButton.setOnClickListener { presenter.onNextDay() }
 
-            completedLessonsNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            completedLessonsNavContainer.elevation = requireContext().dpToPx(8f)
         }
     }
 

@@ -3,12 +3,9 @@ package io.github.wulkanowy.ui.modules.main
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.ui.base.BaseView
+import io.github.wulkanowy.ui.modules.Destination
 
 interface MainView : BaseView {
-
-    var startMenuIndex: Int
-
-    var startMenuMoreIndex: Int
 
     val isRootView: Boolean
 
@@ -18,7 +15,7 @@ interface MainView : BaseView {
 
     val currentStackSize: Int?
 
-    fun initView()
+    fun initView(startMenuIndex: Int, rootDestinations: List<Destination>)
 
     fun switchMenuView(position: Int)
 
@@ -27,6 +24,8 @@ interface MainView : BaseView {
     fun showAccountPicker(studentWithSemesters: List<StudentWithSemesters>)
 
     fun showActionBarElevation(show: Boolean)
+
+    fun showBottomNavigation(show: Boolean)
 
     fun notifyMenuViewReselected()
 
@@ -42,6 +41,8 @@ interface MainView : BaseView {
 
     fun showInAppReview()
 
+    fun openMoreDestination(destination: Destination)
+
     interface MainChildView {
 
         fun onFragmentReselected()
@@ -56,26 +57,5 @@ interface MainView : BaseView {
         var subtitleString: String
             get() = ""
             set(_) {}
-    }
-
-    enum class Section {
-        DASHBOARD,
-        GRADE,
-        ATTENDANCE,
-        TIMETABLE,
-        MORE,
-        MESSAGE,
-        EXAM,
-        HOMEWORK,
-        NOTE,
-        CONFERENCE,
-        SCHOOL_ANNOUNCEMENT,
-        SCHOOL,
-        LUCKY_NUMBER,
-        ACCOUNT,
-        STUDENT_INFO,
-        SETTINGS;
-
-        val id get() = ordinal
     }
 }

@@ -3,17 +3,15 @@ package io.github.wulkanowy.ui.widgets
 import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup
+import com.google.android.material.tabs.TabLayout
 
 /**
  * @see <a href="https://stackoverflow.com/a/50382854">Tabs don't fit to screen with tabmode=scrollable, Even with a Custom Tab Layout</a>
  */
-class FittedScrollableTabLayout : MaterialTabLayout {
-
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+class FittedScrollableTabLayout @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : TabLayout(context, attrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec)

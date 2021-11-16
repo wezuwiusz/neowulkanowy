@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:minHeight="104dp"
     android:orientation="vertical"
+    android:paddingHorizontal="20dp"
     tools:context=".ui.modules.about.AboutAdapter">
 
     <ImageView
@@ -23,12 +24,13 @@
 
     <TextView
         android:id="@+id/aboutScrollableHeaderName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@id/aboutScrollableHeaderIcon"
         app:layout_constraintLeft_toRightOf="@id/aboutScrollableHeaderIcon"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/aboutScrollableHeaderIcon" />
+        app:layout_constraintTop_toTopOf="@id/aboutScrollableHeaderIcon"
+        app:layout_constraintWidth_max="wrap" />
 </androidx.constraintlayout.widget.ConstraintLayout>

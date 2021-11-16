@@ -10,26 +10,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/allDetailsHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="0dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
+            android:layout_weight="1"
             android:text="@string/all_details"
             android:textSize="21sp"
             android:textStyle="bold" />
 
         <ImageButton
+            android:id="@+id/homework_dialog_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_menu_message_delete"
+            app:tint="?colorPrimary"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
             android:id="@+id/homework_dialog_full_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_marginTop="24dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:padding="5dp"
             app:srcCompat="@drawable/ic_fullscreen"
             app:tint="?colorOnBackground"
@@ -39,8 +50,8 @@
             android:id="@+id/homework_dialog_full_screen_exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_marginTop="24dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:padding="5dp"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_fullscreen_exit"
@@ -153,13 +164,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="24dp"
-        android:paddingStart="0dp"
-        android:paddingEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:autoLink="web"
         android:lineSpacingMultiplier="1.2"
+        android:paddingStart="0dp"
+        android:paddingEnd="16dp"
         android:text="@string/all_no_data"
         android:textIsSelectable="true"
         android:textSize="16sp"
+        tools:maxLines="7"
         tools:text="@tools:sample/lorem/random" />
-
 </LinearLayout>

@@ -17,7 +17,7 @@ private inline val AttendanceSummary.allAbsences: Double
     get() = absence.toDouble() + absenceExcused
 
 inline val Attendance.isExcusableOrNotExcused: Boolean
-    get() = excusable || ((absence || lateness) && !excused)
+    get() = (excusable || ((absence || lateness) && !excused)) && excuseStatus == null
 
 fun AttendanceSummary.calculatePercentage() = calculatePercentage(allPresences, allAbsences)
 
@@ -29,7 +29,7 @@ private fun calculatePercentage(presence: Double, absence: Double): Double {
     return if ((presence + absence) == 0.0) 0.0 else (presence / (presence + absence)) * 100
 }
 
-inline val Attendance.description
+inline val Attendance.descriptionRes
     get() = when (AttendanceCategory.getCategoryByName(name)) {
         AttendanceCategory.PRESENCE -> R.string.attendance_present
         AttendanceCategory.ABSENCE_UNEXCUSED -> R.string.attendance_absence_unexcused

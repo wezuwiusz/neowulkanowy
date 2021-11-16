@@ -1,9 +1,10 @@
 package io.github.wulkanowy.data.db
 
 import androidx.room.TypeConverter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import io.github.wulkanowy.data.db.adapters.PairAdapterFactory
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -13,15 +14,7 @@ import java.util.Date
 
 class Converters {
 
-    private val moshi by lazy { Moshi.Builder().add(PairAdapterFactory).build() }
-
-    private val integerListAdapter by lazy {
-        moshi.adapter<List<Int>>(Types.newParameterizedType(List::class.java, Integer::class.java))
-    }
-
-    private val stringListPairAdapter by lazy {
-        moshi.adapter<List<Pair<String, String>>>(Types.newParameterizedType(List::class.java, Pair::class.java, String::class.java, String::class.java))
-    }
+    private val json = Json
 
     @TypeConverter
     fun timestampToDate(value: Long?): LocalDate? = value?.run {
@@ -51,21 +44,25 @@ class Converters {
 
     @TypeConverter
     fun intListToJson(list: List<Int>): String {
-        return integerListAdapter.toJson(list)
+        return json.encodeToString(list)
     }
 
     @TypeConverter
     fun jsonToIntList(value: String): List<Int> {
-        return integerListAdapter.fromJson(value).orEmpty()
+        return json.decodeFromString(value)
     }
 
     @TypeConverter
     fun stringPairListToJson(list: List<Pair<String, String>>): String {
-        return stringListPairAdapter.toJson(list)
+        return json.encodeToString(list)
     }
 
     @TypeConverter
     fun jsonToStringPairList(value: String): List<Pair<String, String>> {
-        return stringListPairAdapter.fromJson(value).orEmpty()
+        return try {
+            json.decodeFromString(value)
+        } catch (e: SerializationException) {
+            emptyList() // handle errors from old gson Pair serialized data
+        }
     }
 }

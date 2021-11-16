@@ -64,7 +64,7 @@ class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), 
             examPreviousButton.setOnClickListener { presenter.onPreviousWeek() }
             examNextButton.setOnClickListener { presenter.onNextWeek() }
 
-            examNavContainer.setElevationCompat(requireContext().dpToPx(8f))
+            examNavContainer.elevation = requireContext().dpToPx(8f)
         }
     }
 

@@ -6,7 +6,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.modules.main.MainView
 import timber.log.Timber
 
-class SettingsFragment : PreferenceFragmentCompat(), MainView.TitledView {
+class SettingsFragment : PreferenceFragmentCompat(), MainView.TitledView, SettingsView {
 
     companion object {
 
@@ -19,4 +19,16 @@ class SettingsFragment : PreferenceFragmentCompat(), MainView.TitledView {
         setPreferencesFromResource(R.xml.scheme_preferences, rootKey)
         Timber.i("Settings view was initialized")
     }
+
+    override fun showError(text: String, error: Throwable) {}
+
+    override fun showMessage(text: String) {}
+
+    override fun showExpiredDialog() {}
+
+    override fun openClearLoginView() {}
+
+    override fun showErrorDetailsDialog(error: Throwable) {}
+
+    override fun showChangePasswordSnackbar(redirectUrl: String) {}
 }

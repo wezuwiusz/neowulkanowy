@@ -1,6 +1,8 @@
 package io.github.wulkanowy.ui.modules.dashboard
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Handler
 import android.os.Looper
@@ -18,6 +20,7 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.entities.TimetableHeader
 import io.github.wulkanowy.databinding.ItemDashboardAccountBinding
+import io.github.wulkanowy.databinding.ItemDashboardAdminMessageBinding
 import io.github.wulkanowy.databinding.ItemDashboardAnnouncementsBinding
 import io.github.wulkanowy.databinding.ItemDashboardConferencesBinding
 import io.github.wulkanowy.databinding.ItemDashboardExamsBinding
@@ -62,6 +65,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     var onExamsTileClickListener: () -> Unit = {}
 
     var onConferencesTileClickListener: () -> Unit = {}
+
+    var onAdminMessageClickListener: (String?) -> Unit = {}
 
     val items = mutableListOf<DashboardItem>()
 
@@ -109,6 +114,9 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             DashboardItem.Type.CONFERENCES.ordinal -> ConferencesViewHolder(
                 ItemDashboardConferencesBinding.inflate(inflater, parent, false)
             )
+            DashboardItem.Type.ADMIN_MESSAGE.ordinal -> AdminMessageViewHolder(
+                ItemDashboardAdminMessageBinding.inflate(inflater, parent, false)
+            )
             else -> throw IllegalArgumentException()
         }
     }
@@ -123,6 +131,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             is AnnouncementsViewHolder -> bindAnnouncementsViewHolder(holder, position)
             is ExamsViewHolder -> bindExamsViewHolder(holder, position)
             is ConferencesViewHolder -> bindConferencesViewHolder(holder, position)
+            is AdminMessageViewHolder -> bindAdminMessage(holder, position)
         }
     }
 
@@ -290,7 +299,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             val currentDayHeader =
                 timetableFull?.headers.orEmpty().singleOrNull { it.date == currentDate }
 
-            val tomorrowTimetable = timetableFull?.lessons.orEmpty()
+            val tomorrowTimetable = timetableFull?.lessons
+                .orEmpty()
                 .filter { it.date == currentDate.plusDays(1) }
                 .filterNot { it.canceled }
             val tomorrowDayHeader =
@@ -301,26 +311,31 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                     dateToNavigate = currentDate
                     updateLessonView(item, currentTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
                 tomorrowTimetable.isNotEmpty() -> {
                     dateToNavigate = tomorrowDate
                     updateLessonView(item, tomorrowTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
                 currentDayHeader != null && currentDayHeader.content.isNotBlank() -> {
                     dateToNavigate = currentDate
                     updateLessonView(item, emptyList(), binding, currentDayHeader)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
                 tomorrowDayHeader != null && tomorrowDayHeader.content.isNotBlank() -> {
                     dateToNavigate = tomorrowDate
                     updateLessonView(item, emptyList(), binding, tomorrowDayHeader)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
                 else -> {
-                    dateToNavigate = tomorrowDate
+                    dateToNavigate = currentDate
                     updateLessonView(item, emptyList(), binding)
-                    binding.dashboardLessonsItemTitleTomorrow.isVisible =
+                    binding.dashboardLessonsItemTitleTomorrow.isVisible = false
+                    binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible =
                         !(item.isLoading && item.error == null)
                 }
             }
@@ -692,6 +707,34 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         }
     }
 
+    private fun bindAdminMessage(adminMessageViewHolder: AdminMessageViewHolder, position: Int) {
+        val item = (items[position] as DashboardItem.AdminMessages).adminMessage ?: return
+        val context = adminMessageViewHolder.binding.root.context
+        val (backgroundColor, textColor) = when (item.priority) {
+            "HIGH" -> {
+                context.getThemeAttrColor(R.attr.colorPrimary) to
+                    context.getThemeAttrColor(R.attr.colorOnPrimary)
+            }
+            "MEDIUM" -> {
+                context.getThemeAttrColor(R.attr.colorMessageMedium) to Color.BLACK
+            }
+            else -> null to context.getThemeAttrColor(R.attr.colorOnSurface)
+        }
+
+        with(adminMessageViewHolder.binding) {
+            dashboardAdminMessageItemTitle.text = item.title
+            dashboardAdminMessageItemTitle.setTextColor(textColor)
+            dashboardAdminMessageItemDescription.text = item.content
+            dashboardAdminMessageItemDescription.setTextColor(textColor)
+            dashboardAdminMessageItemIcon.setColorFilter(textColor)
+
+            root.setCardBackgroundColor(backgroundColor?.let { ColorStateList.valueOf(it) })
+            item.destinationUrl?.let { url ->
+                root.setOnClickListener { onAdminMessageClickListener(url) }
+            }
+        }
+    }
+
     class AccountViewHolder(val binding: ItemDashboardAccountBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -730,6 +773,9 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
         val adapter by lazy { DashboardConferencesAdapter() }
     }
+
+    class AdminMessageViewHolder(val binding: ItemDashboardAdminMessageBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     private class DiffCallback(
         private val newList: List<DashboardItem>,

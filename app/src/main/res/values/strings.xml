@@ -17,6 +17,7 @@
     <string name="license_title">Licenses</string>
     <string name="message_title">Messages</string>
     <string name="send_message_title">New message</string>
+    <string name="add_homework_title">New homework</string>
     <string name="note_title">Notes and achievements</string>
     <string name="homework_title">Homework</string>
     <string name="account_title">Accounts manager</string>
@@ -33,7 +34,7 @@
 
     <!--Login-->
     <string name="login_header_default">Sign in with the student or parent account</string>
-    <string name="login_header_symbol">Enter the symbol from the register page</string>
+    <string name="login_header_symbol">Enter the symbol from the register page for account: &lt;b>%1$s&lt;/b></string>
     <string name="login_nickname_hint">Username</string>
     <string name="login_email_hint">Email</string>
     <string name="login_login_pesel_email_hint">Login, PESEL or e-mail</string>
@@ -57,7 +58,6 @@
     <string name="login_invalid_custom_email">Use the assigned login or email in @%1$s</string>
     <string name="login_invalid_symbol">Invalid symbol</string>
     <string name="login_incorrect_symbol">Student not found. Validate the symbol and the chosen variation of the UONET+ register</string>
-    <string name="login_field_required">This field is required</string>
     <string name="login_duplicate_student">Selected student is already logged in</string>
     <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the previous screen. Wulkanowy does not detect pre-school students at the moment</string>
     <string name="login_select_student">Select students to log in to the application</string>
@@ -71,7 +71,7 @@
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Send email</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
-    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nOstatni błąd: %5$s\n\nOpis problemu (pełna nazwa szkoły, klasa ucznia): </string>
+    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nOstatni błąd: %5$s\n\nPełna nazwa szkoły i klasa ucznia: </string>
     <string name="login_recover_warning">Make sure you select the correct UONET+ register variation!</string>
     <string name="login_recover_button">I forgot my password</string>
     <string name="login_recover_title">Recover your account</string>
@@ -163,6 +163,26 @@
     <string name="timetable_now">Now: %s</string>
     <string name="timetable_next">Next: %s</string>
     <string name="timetable_later">Later: %s</string>
+    <string name="timetable_notify_lesson">%1$s lesson %2$d - %3$s</string>
+    <string name="timetable_notify_change_room">Change of room from %1$s to %2$s</string>
+    <string name="timetable_notify_change_teacher">Change of teacher from %1$s to %2$s</string>
+    <string name="timetable_notify_change_subject">Change of subject from %1$s to %2$s</string>
+    <plurals name="timetable_notify_new_items_title">
+        <item quantity="one">Timetable change</item>
+        <item quantity="other">Timetable changes</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items">
+        <item quantity="one">%1$s - %2$d change in timetable</item>
+        <item quantity="other">%1$s - %2$d  changes in timetable</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items_group">
+        <item quantity="one">%1$d change in timetable</item>
+        <item quantity="other">%1$d changes in timetable</item>
+    </plurals>
+    <plurals name="timetable_number_item">
+        <item quantity="one">%d change</item>
+        <item quantity="other">%d changes</item>
+    </plurals>
 
 
     <!--Completed lessons-->
@@ -200,6 +220,18 @@
     <string name="attendance_excuse_title">Excuse</string>
     <string name="attendance_excuse_reason" translatable="false">z powodu</string>
     <string name="attendance_excuse_formula" translatable="false">Dzień dobry,\nProszę o usprawiedliwienie mojego dziecka w dniu %s z lekcji %s%s%s.\n\nPozdrawiam.</string>
+    <plurals name="attendance_notify_new_items_title">
+        <item quantity="one">New attendance</item>
+        <item quantity="other">New attendance</item>
+    </plurals>
+    <plurals name="attendance_notify_new_items">
+        <item quantity="one">%1$d new attendance</item>
+        <item quantity="other">%1$d attendance</item>
+    </plurals>
+    <plurals name="attendance_number_item">
+        <item quantity="one">%d attendance</item>
+        <item quantity="other">%d attendance</item>
+    </plurals>
 
 
     <!--Attendance summary-->
@@ -316,6 +348,9 @@
     <string name="homework_no_items">No info about homework</string>
     <string name="homework_mark_as_done">Mark as done</string>
     <string name="homework_mark_as_undone">Mark as undone</string>
+    <string name="homework_add">Add homework</string>
+    <string name="homework_add_success">Homework added successfully</string>
+    <string name="homework_delete_success">Homework deleted successfully</string>
     <string name="homework_attachments">Attachments</string>
     <plurals name="homework_notify_new_item_title">
         <item quantity="one">New homework</item>
@@ -501,6 +536,7 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lessons</string>
     <string name="dashboard_timetable_title_tomorrow">(Tomorrow)</string>
+    <string name="dashboard_timetable_title_today_and_tomorrow">(Today and tomorrow)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">In a moment:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Soon:</string>
     <string name="dashboard_timetable_first_lesson_title_first">First:</string>
@@ -592,6 +628,10 @@
     <string name="all_no">No</string>
     <string name="all_save">Save</string>
     <string name="all_title">Title</string>
+    <string name="all_add">Add</string>
+    <string name="all_copied">Copied</string>
+    <string name="all_undo">Undo</string>
+    <string name="all_change">Change</string>
 
 
     <!--Timetable Widget-->
@@ -603,13 +643,13 @@
 
 
     <!--Preferences-->
-    <string name="pref_view_header">App appearance &amp; behavior</string>
+    <string name="pref_view_header">App</string>
     <string name="pref_view_list">Default view</string>
     <string name="pref_view_grade_average_mode">Calculated average options</string>
     <string name="pref_view_grade_average_force_calc">Force average calculation by app</string>
     <string name="pref_view_present">Show presence</string>
     <string name="pref_view_app_theme">Theme</string>
-    <string name="pref_view_expand_grade">Expand grades</string>
+    <string name="pref_view_expand_grade">Grades expanding</string>
     <string name="pref_view_timetable_show_timers">Mark current lesson</string>
     <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
@@ -619,6 +659,7 @@
     <string name="pref_view_app_language">Language</string>
 
     <string name="pref_notify_header">Notifications</string>
+    <string name="pref_notify_header_other">Other</string>
     <string name="pref_notify_switch">Show notifications</string>
     <string name="pref_notify_upcoming_lessons_switch">Show upcoming lesson notifications</string>
     <string name="pref_notify_upcoming_lessons_persistent_switch">Make upcoming lesson notification persistent</string>
@@ -650,10 +691,19 @@
     <string name="pref_other_fill_message_content">Reply with message history</string>
     <string name="pref_other_optional_arithmetic_average">Show arithmetic average when no weights provided</string>
 
+    <string name="pref_ads_support_category_name">Support</string>
+    <string name="pref_ads_support">Watch single ad to support project</string>
+    <string name="pref_ads_privacy_title">Consent to data processing</string>
+    <string name="pref_ads_privacy_description">To view an advertisement you must agree to the data processing terms of our Privacy Policy</string>
+    <string name="pref_ads_privacy_agree">Agree</string>
+    <string name="pref_ads_privacy_link">Privacy policy</string>
+    <string name="pref_ads_loading">Ad is loading</string>
+
     <string name="pref_settings_advanced_title">Advanced</string>
     <string name="pref_settings_appearance_title">Appearance &amp; Behavior</string>
     <string name="pref_settings_notifications_title">Notifications</string>
     <string name="pref_settings_sync_title">Synchronization</string>
+    <string name="pref_settings_ads_title">Advertisements</string>
 
     <string name="pref_grades_appearance_header">Grades</string>
     <string name="pref_dashboard_appearance_header">Dashboard</string>
@@ -661,6 +711,7 @@
     <string name="pref_attendance_appearance_view">Attendance</string>
     <string name="pref_timetable_appearance_view">Timetable</string>
     <string name="pref_grades_advanced_header">Grades</string>
+    <string name="pref_counted_average_advanced_header">Calculated average</string>
     <string name="pref_messages_advanced_header">Messages</string>
 
     <string name="pref_appearance_category">Appearance &amp; Behavior</string>
@@ -671,7 +722,8 @@
     <string name="pref_sync_category_summary">Automatic update, synchronization interval</string>
     <string name="pref_advanced_category_summary">Plus and minus values, average calculation</string>
     <string name="pref_advanced_category">Advanced</string>
-    <string name="pref_about_category_summary">App version, contributors, social portals, licenses</string>
+    <string name="pref_about_category_summary">App version, contributors, social portals</string>
+    <string name="pref_ads_category_summary">Displaying advertisements, project support</string>
 
 
     <!--Notification Channels-->
@@ -686,6 +738,8 @@
     <string name="channel_push">Push notifications</string>
     <string name="channel_upcoming_lessons">Upcoming lessons</string>
     <string name="channel_debug">Debug</string>
+    <string name="channel_change_timetable">Timetable change</string>
+    <string name="channel_new_attendance">New attendance</string>
 
 
     <!--Colors-->
@@ -695,12 +749,6 @@
     <string name="all_green">Green</string>
     <string name="all_purple">Purple</string>
     <string name="all_empty_color">No color</string>
-
-
-    <!--Others-->
-    <string name="all_copied">Copied</string>
-    <string name="all_undo">Undo</string>
-    <string name="all_change">Change</string>
 
 
     <!--Update helper-->
@@ -721,4 +769,5 @@
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
+    <string name="error_field_required">This field is required</string>
 </resources>

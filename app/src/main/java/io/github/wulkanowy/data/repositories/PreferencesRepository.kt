@@ -5,20 +5,23 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.fredporciuncula.flow.preferences.Preference
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.sdk.toLocalDate
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
+import io.github.wulkanowy.ui.modules.grade.GradeExpandMode
 import io.github.wulkanowy.ui.modules.grade.GradeSortingMode
 import io.github.wulkanowy.utils.toLocalDateTime
 import io.github.wulkanowy.utils.toTimestamp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.lang.ClassCastException
+import java.lang.IllegalStateException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -27,15 +30,11 @@ import javax.inject.Singleton
 @OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class PreferencesRepository @Inject constructor(
+    @ApplicationContext val context: Context,
     private val sharedPref: SharedPreferences,
     private val flowSharedPref: FlowSharedPreferences,
-    @ApplicationContext val context: Context,
-    moshi: Moshi
+    private val json: Json,
 ) {
-
-    @OptIn(ExperimentalStdlibApi::class)
-    private val dashboardItemsPositionAdapter: JsonAdapter<Map<DashboardItem.Type, Int>> =
-        moshi.adapter()
 
     val startMenuIndex: Int
         get() = getString(R.string.pref_key_start_menu, R.string.pref_default_startup).toInt()
@@ -60,8 +59,13 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_grade_average_force_calc
         )
 
-    val isGradeExpandable: Boolean
-        get() = !getBoolean(R.string.pref_key_expand_grade, R.bool.pref_default_expand_grade)
+    val gradeExpandMode: GradeExpandMode
+        get() = GradeExpandMode.getByValue(
+            getString(
+                R.string.pref_key_expand_grade_mode,
+                R.string.pref_default_expand_grade_mode
+            )
+        )
 
     val showAllSubjectsOnStatisticsList: Boolean
         get() = getBoolean(
@@ -197,14 +201,14 @@ class PreferencesRepository @Inject constructor(
 
     var dashboardItemsPosition: Map<DashboardItem.Type, Int>?
         get() {
-            val json = sharedPref.getString(PREF_KEY_DASHBOARD_ITEMS_POSITION, null) ?: return null
+            val value = sharedPref.getString(PREF_KEY_DASHBOARD_ITEMS_POSITION, null) ?: return null
 
-            return dashboardItemsPositionAdapter.fromJson(json)
+            return json.decodeFromString(value)
         }
         set(value) = sharedPref.edit {
             putString(
                 PREF_KEY_DASHBOARD_ITEMS_POSITION,
-                dashboardItemsPositionAdapter.toJson(value)
+                json.encodeToString(value)
             )
         }
 
@@ -213,6 +217,7 @@ class PreferencesRepository @Inject constructor(
             .map { set ->
                 set.map { DashboardItem.Tile.valueOf(it) }
                     .plus(DashboardItem.Tile.ACCOUNT)
+                    .plus(DashboardItem.Tile.ADMIN_MESSAGE)
                     .toSet()
             }
 
@@ -220,6 +225,7 @@ class PreferencesRepository @Inject constructor(
         get() = selectedDashboardTilesPreference.get()
             .map { DashboardItem.Tile.valueOf(it) }
             .plus(DashboardItem.Tile.ACCOUNT)
+            .plus(DashboardItem.Tile.ADMIN_MESSAGE)
             .toSet()
         set(value) {
             val filteredValue = value.filterNot { it == DashboardItem.Tile.ACCOUNT }
@@ -266,6 +272,9 @@ class PreferencesRepository @Inject constructor(
 
     private fun getBoolean(id: String, default: Int) =
         sharedPref.getBoolean(id, context.resources.getBoolean(default))
+
+    private fun getBoolean(id: Int, default: Boolean) =
+        sharedPref.getBoolean(context.getString(id), default)
 
     private companion object {
 

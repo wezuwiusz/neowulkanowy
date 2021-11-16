@@ -2,32 +2,33 @@ package io.github.wulkanowy.ui.base
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-//TODO  Use ViewPager2
-class BaseFragmentPagerAdapter(private val fragmentManager: FragmentManager) :
-    FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class BaseFragmentPagerAdapter(
+    private val fragmentManager: FragmentManager,
+    private val pagesCount: Int,
+    lifecycle: Lifecycle,
+) : FragmentStateAdapter(fragmentManager, lifecycle), TabLayoutMediator.TabConfigurationStrategy {
 
-    private val pages = mutableMapOf<Fragment, String?>()
+    lateinit var itemFactory: (position: Int) -> Fragment
+
+    var titleFactory: (position: Int) -> String? = { "" }
 
     var containerId = 0
 
     fun getFragmentInstance(position: Int): Fragment? {
         require(containerId != 0) { "Container id is 0" }
-        return fragmentManager.findFragmentByTag("android:switcher:$containerId:$position")
+        return fragmentManager.findFragmentByTag("f$position")
     }
 
-    fun addFragments(fragments: List<Fragment>) {
-        fragments.forEach { pages[it] = null }
+    override fun createFragment(position: Int): Fragment = itemFactory(position)
+
+    override fun getItemCount() = pagesCount
+
+    override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
+        tab.text = titleFactory(position)
     }
-
-    fun addFragmentsWithTitle(pages: Map<Fragment, String>) {
-        this.pages.putAll(pages)
-    }
-
-    override fun getItem(position: Int) = pages.keys.elementAt(position)
-
-    override fun getCount() = pages.size
-
-    override fun getPageTitle(position: Int) = pages.values.elementAt(position)
 }

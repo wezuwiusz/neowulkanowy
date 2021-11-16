@@ -11,6 +11,7 @@ import io.github.wulkanowy.data.db.entities.Notification
 import io.github.wulkanowy.databinding.FragmentNotificationsCenterBinding
 import io.github.wulkanowy.services.sync.notifications.NotificationType
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.attendance.AttendanceFragment
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
@@ -21,6 +22,7 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.note.NoteFragment
 import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
+import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -104,5 +106,7 @@ class NotificationsCenterFragment :
         NotificationType.NEW_NOTE -> NoteFragment.newInstance()
         NotificationType.NEW_ANNOUNCEMENT -> SchoolAnnouncementFragment.newInstance()
         NotificationType.PUSH -> null
+        NotificationType.CHANGE_TIMETABLE -> TimetableFragment.newInstance()
+        NotificationType.NEW_ATTENDANCE -> AttendanceFragment.newInstance()
     }
 }

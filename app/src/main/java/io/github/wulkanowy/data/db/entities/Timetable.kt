@@ -50,4 +50,7 @@ data class Timetable(
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    @ColumnInfo(name = "is_notified")
+    var isNotified: Boolean = true
 }

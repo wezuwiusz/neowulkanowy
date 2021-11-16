@@ -82,18 +82,20 @@ class AboutPresenter @Inject constructor(
 
     private fun loadData() {
         view?.run {
-            updateData(listOfNotNull(
-                versionRes,
-                creatorsRes,
-                feedbackRes,
-                faqRes,
-                discordRes,
-                facebookRes,
-                twitterRes,
-                homepageRes,
-                licensesRes,
-                privacyRes
-            ))
+            updateData(
+                listOfNotNull(
+                    versionRes,
+                    creatorsRes,
+                    feedbackRes,
+                    faqRes,
+                    discordRes,
+                    facebookRes,
+                    twitterRes,
+                    homepageRes,
+                    licensesRes,
+                    privacyRes
+                )
+            )
         }
     }
 }

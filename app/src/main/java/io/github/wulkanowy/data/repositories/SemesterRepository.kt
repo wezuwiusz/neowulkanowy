@@ -26,7 +26,7 @@ class SemesterRepository @Inject constructor(
         student: Student,
         forceRefresh: Boolean = false,
         refreshOnNoCurrent: Boolean = false
-    ) = withContext(dispatchers.backgroundThread) {
+    ) = withContext(dispatchers.io) {
         val semesters = semesterDb.loadAll(student.studentId, student.classId)
 
         if (isShouldFetch(student, semesters, forceRefresh, refreshOnNoCurrent)) {
@@ -64,7 +64,7 @@ class SemesterRepository @Inject constructor(
     }
 
     suspend fun getCurrentSemester(student: Student, forceRefresh: Boolean = false) =
-        withContext(dispatchers.backgroundThread) {
+        withContext(dispatchers.io) {
             getSemesters(student, forceRefresh).getCurrentOrLast()
         }
 }

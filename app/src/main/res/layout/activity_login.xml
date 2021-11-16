@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent" />
 
-    <io.github.wulkanowy.ui.widgets.SwipeDisabledViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/loginViewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

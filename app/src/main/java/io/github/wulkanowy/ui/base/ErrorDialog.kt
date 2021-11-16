@@ -11,6 +11,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
+import androidx.core.view.isGone
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogErrorBinding
@@ -24,8 +25,6 @@ import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import okhttp3.internal.http2.StreamResetException
 import java.io.InterruptedIOException
-import java.io.PrintWriter
-import java.io.StringWriter
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -64,26 +63,26 @@ class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val stringWriter = StringWriter().apply {
-            error.printStackTrace(PrintWriter(this))
-        }
+        val errorStacktrace = error.stackTraceToString()
 
         with(binding) {
-            errorDialogContent.text = stringWriter.toString()
+            errorDialogContent.text = errorStacktrace.replace(": ${error.localizedMessage}", "")
             with(errorDialogHorizontalScroll) {
                 post { fullScroll(HorizontalScrollView.FOCUS_LEFT) }
             }
             errorDialogCopy.setOnClickListener {
-                val clip = ClipData.newPlainText("wulkanowy", stringWriter.toString())
+                val clip = ClipData.newPlainText("Error details", errorStacktrace)
                 activity?.getSystemService<ClipboardManager>()?.setPrimaryClip(clip)
 
                 Toast.makeText(context, R.string.all_copied, LENGTH_LONG).show()
             }
             errorDialogCancel.setOnClickListener { dismiss() }
             errorDialogReport.setOnClickListener {
-                openConfirmDialog { openEmailClient(stringWriter.toString()) }
+                openConfirmDialog { openEmailClient(errorStacktrace) }
             }
-            errorDialogMessage.text = resources.getString(error)
+            errorDialogHumanizedMessage.text = resources.getString(error)
+            errorDialogErrorMessage.text = error.localizedMessage
+            errorDialogErrorMessage.isGone = error.localizedMessage.isNullOrBlank()
             errorDialogReport.isEnabled = when (error) {
                 is UnknownHostException,
                 is InterruptedIOException,

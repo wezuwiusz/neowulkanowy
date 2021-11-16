@@ -1,29 +1,54 @@
 package io.github.wulkanowy.services.sync.notifications
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
 import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.pojos.MultipleNotificationsData
-import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.data.pojos.GroupNotificationData
+import io.github.wulkanowy.data.pojos.NotificationData
+import io.github.wulkanowy.ui.modules.Destination
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
+import io.github.wulkanowy.utils.getPlural
 import javax.inject.Inject
 
 class NewSchoolAnnouncementNotification @Inject constructor(
-    private val appNotificationManager: AppNotificationManager
+    private val appNotificationManager: AppNotificationManager,
+    @ApplicationContext private val context: Context
 ) {
 
-   suspend fun notify(items: List<SchoolAnnouncement>, student: Student) {
-       val notification = MultipleNotificationsData(
-           type = NotificationType.NEW_ANNOUNCEMENT,
-           icon = R.drawable.ic_all_about,
-           titleStringRes = R.plurals.school_announcement_notify_new_item_title,
-           contentStringRes = R.plurals.school_announcement_notify_new_items,
-           summaryStringRes = R.plurals.school_announcement_number_item,
-           startMenu = MainView.Section.SCHOOL_ANNOUNCEMENT,
-           lines = items.map {
-               "${it.subject}: ${it.content}"
-           }
+    suspend fun notify(items: List<SchoolAnnouncement>, student: Student) {
+        val notificationDataList = items.map {
+            NotificationData(
+                intentToStart = SplashActivity.getStartIntent(
+                    context = context,
+                    destination = Destination.SchoolAnnouncement
+                ),
+                title = context.getPlural(
+                    R.plurals.school_announcement_notify_new_item_title,
+                    1
+                ),
+                content = "${it.subject}: ${it.content}"
+            )
+        }
+        val groupNotificationData = GroupNotificationData(
+            type = NotificationType.NEW_ANNOUNCEMENT,
+            intentToStart = SplashActivity.getStartIntent(
+                context = context,
+                destination = Destination.SchoolAnnouncement
+            ),
+            title = context.getPlural(
+                R.plurals.school_announcement_notify_new_item_title,
+                items.size
+            ),
+            content = context.getPlural(
+                R.plurals.school_announcement_notify_new_items,
+                items.size,
+                items.size
+            ),
+            notificationDataList = notificationDataList
         )
 
-        appNotificationManager.sendNotification(notification, student)
+        appNotificationManager.sendMultipleNotifications(groupNotificationData, student)
     }
 }

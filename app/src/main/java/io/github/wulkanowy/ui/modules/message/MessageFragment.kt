@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.enums.MessageFolder.RECEIVED
@@ -26,7 +27,13 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
     @Inject
     lateinit var presenter: MessagePresenter
 
-    private val pagerAdapter by lazy { BaseFragmentPagerAdapter(childFragmentManager) }
+    private val pagerAdapter by lazy {
+        BaseFragmentPagerAdapter(
+            fragmentManager = childFragmentManager,
+            pagesCount = 3,
+            lifecycle = lifecycle,
+        )
+    }
 
     companion object {
         fun newInstance() = MessageFragment()
@@ -43,25 +50,34 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
     }
 
     override fun initView() {
-        with(pagerAdapter) {
-            containerId = binding.messageViewPager.id
-            addFragmentsWithTitle(mapOf(
-                MessageTabFragment.newInstance(RECEIVED) to getString(R.string.message_inbox),
-                MessageTabFragment.newInstance(SENT) to getString(R.string.message_sent),
-                MessageTabFragment.newInstance(TRASHED) to getString(R.string.message_trash)
-            ))
-        }
-
         with(binding.messageViewPager) {
             adapter = pagerAdapter
             offscreenPageLimit = 2
             setOnSelectPageListener(presenter::onPageSelected)
         }
 
-        with(binding.messageTabLayout) {
-            setupWithViewPager(binding.messageViewPager)
-            setElevationCompat(context.dpToPx(4f))
+        with(pagerAdapter) {
+            containerId = binding.messageViewPager.id
+            titleFactory = {
+                when (it) {
+                    0 -> getString(R.string.message_inbox)
+                    1 -> getString(R.string.message_sent)
+                    2 -> getString(R.string.message_trash)
+                    else -> throw IllegalStateException()
+                }
+            }
+            itemFactory = {
+                when (it) {
+                    0 -> MessageTabFragment.newInstance(RECEIVED)
+                    1 -> MessageTabFragment.newInstance(SENT)
+                    2 -> MessageTabFragment.newInstance(TRASHED)
+                    else -> throw IllegalStateException()
+                }
+            }
+            TabLayoutMediator(binding.messageTabLayout, binding.messageViewPager, this).attach()
         }
+
+        binding.messageTabLayout.elevation = requireContext().dpToPx(4f)
 
         binding.openSendMessageButton.setOnClickListener { presenter.onSendMessageButtonClicked() }
     }
@@ -86,7 +102,8 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
     }
 
     override fun notifyChildLoadData(index: Int, forceRefresh: Boolean) {
-        (pagerAdapter.getFragmentInstance(index) as? MessageTabFragment)?.onParentLoadData(forceRefresh)
+        (pagerAdapter.getFragmentInstance(index) as? MessageTabFragment)
+            ?.onParentLoadData(forceRefresh)
     }
 
     override fun openSendMessage() {

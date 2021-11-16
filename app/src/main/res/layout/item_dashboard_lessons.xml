@@ -43,6 +43,19 @@
             app:layout_constraintStart_toEndOf="@id/dashboard_lessons_item_title" />
 
         <TextView
+            android:id="@+id/dashboard_lessons_item_title_today_and_tomorrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/dashboard_timetable_title_today_and_tomorrow"
+            android:textColor="?colorOnSurface"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/dashboard_lessons_item_title"
+            app:layout_constraintBottom_toBottomOf="@id/dashboard_lessons_item_title"
+            app:layout_constraintStart_toEndOf="@id/dashboard_lessons_item_title"
+            tools:visibility="invisible" />
+
+        <TextView
             android:id="@+id/dashboard_lessons_item_first_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +99,7 @@
             android:paddingStart="6dp"
             android:paddingEnd="6dp"
             android:paddingBottom="1dp"
-            android:textColor="@android:color/white"
+            android:textColor="?colorOnPrimary"
             android:textSize="13sp"
             app:backgroundTint="?colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
@@ -224,8 +237,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:gravity="center_vertical"
             android:drawablePadding="8dp"
+            android:gravity="center_vertical"
             android:text="@string/dashboard_timetable_error"
             android:textColor="?colorError"
             android:textSize="14sp"

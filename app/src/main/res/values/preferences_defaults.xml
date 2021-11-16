@@ -4,7 +4,7 @@
     <bool name="pref_default_attendance_present">true</bool>
     <string name="pref_default_grade_average_mode">only_one_semester</string>
     <bool name="pref_default_grade_average_force_calc">false</bool>
-    <bool name="pref_default_expand_grade">false</bool>
+    <string name="pref_default_expand_grade_mode">one</string>
     <bool name="pref_default_grade_statistics_list">false</bool>
     <string name="pref_default_app_theme">light</string>
     <string name="pref_default_grade_color_scheme">vulcan</string>

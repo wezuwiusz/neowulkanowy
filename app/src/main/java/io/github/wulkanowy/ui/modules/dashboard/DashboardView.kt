@@ -25,4 +25,6 @@ interface DashboardView : BaseView {
     fun popViewToRoot()
 
     fun openNotificationsCenterView()
+
+    fun openInternetBrowser(url: String)
 }

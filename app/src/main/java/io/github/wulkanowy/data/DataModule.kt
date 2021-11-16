@@ -2,62 +2,100 @@ package io.github.wulkanowy.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.AssetManager
-import android.content.res.Resources
 import androidx.preference.PreferenceManager
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.squareup.moshi.Moshi
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.wulkanowy.data.api.AdminMessageService
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AppInfo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.create
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class RepositoryModule {
+internal class DataModule {
 
     @Singleton
     @Provides
-    fun provideSdk(chuckerCollector: ChuckerCollector, @ApplicationContext context: Context): Sdk {
-        return Sdk().apply {
+    fun provideSdk(chuckerInterceptor: ChuckerInterceptor) =
+        Sdk().apply {
             androidVersion = android.os.Build.VERSION.RELEASE
             buildTag = android.os.Build.MODEL
             setSimpleHttpLogger { Timber.d(it) }
 
             // for debug only
-            addInterceptor(
-                ChuckerInterceptor.Builder(context)
-                    .collector(chuckerCollector)
-                    .alwaysReadResponseBody(true)
-                    .build(), network = true
-            )
+            addInterceptor(chuckerInterceptor, network = true)
         }
-    }
 
     @Singleton
     @Provides
     fun provideChuckerCollector(
         @ApplicationContext context: Context,
         prefRepository: PreferencesRepository
-    ): ChuckerCollector {
-        return ChuckerCollector(
-            context = context,
-            showNotification = prefRepository.isDebugNotificationEnable,
-            retentionPeriod = RetentionManager.Period.ONE_HOUR
-        )
-    }
+    ) = ChuckerCollector(
+        context = context,
+        showNotification = prefRepository.isDebugNotificationEnable,
+        retentionPeriod = RetentionManager.Period.ONE_HOUR
+    )
+
+    @Singleton
+    @Provides
+    fun provideChuckerInterceptor(
+        @ApplicationContext context: Context,
+        chuckerCollector: ChuckerCollector
+    ) = ChuckerInterceptor.Builder(context)
+        .collector(chuckerCollector)
+        .alwaysReadResponseBody(true)
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(chuckerInterceptor: ChuckerInterceptor): OkHttpClient =
+        OkHttpClient.Builder()
+            .addNetworkInterceptor(chuckerInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BASIC
+            })
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+    @OptIn(ExperimentalSerializationApi::class)
+    @Singleton
+    @Provides
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        json: Json,
+        appInfo: AppInfo
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(appInfo.messagesBaseUrl)
+        .client(okHttpClient)
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideAdminMessageService(retrofit: Retrofit): AdminMessageService = retrofit.create()
 
     @Singleton
     @Provides
@@ -66,14 +104,6 @@ internal class RepositoryModule {
         sharedPrefProvider: SharedPrefProvider,
         appInfo: AppInfo
     ) = AppDatabase.newInstance(context, sharedPrefProvider, appInfo)
-
-    @Singleton
-    @Provides
-    fun provideResources(@ApplicationContext context: Context): Resources = context.resources
-
-    @Singleton
-    @Provides
-    fun provideAssets(@ApplicationContext context: Context): AssetManager = context.assets
 
     @Singleton
     @Provides
@@ -88,7 +118,9 @@ internal class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMoshi() = Moshi.Builder().build()
+    fun provideJson() = Json {
+        ignoreUnknownKeys = true
+    }
 
     @Singleton
     @Provides
@@ -206,4 +238,8 @@ internal class RepositoryModule {
     @Singleton
     @Provides
     fun provideNotificationDao(database: AppDatabase) = database.notificationDao
+
+    @Singleton
+    @Provides
+    fun provideAdminMessageDao(database: AppDatabase) = database.adminMessagesDao
 }

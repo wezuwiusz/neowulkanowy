@@ -61,8 +61,9 @@ class HomeworkRepository @Inject constructor(
             val homeWorkToSave = (new uniqueSubtract old).onEach {
                 if (notify) it.isNotified = false
             }
+            val filteredOld = old.filterNot { it.isAddedByUser }
 
-            homeworkDb.deleteAll(old uniqueSubtract new)
+            homeworkDb.deleteAll(filteredOld uniqueSubtract new)
             homeworkDb.insertAll(homeWorkToSave)
 
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester, start, end))
@@ -79,4 +80,8 @@ class HomeworkRepository @Inject constructor(
         homeworkDb.loadAll(semester.semesterId, semester.studentId, start.monday, end.sunday)
 
     suspend fun updateHomework(homework: List<Homework>) = homeworkDb.updateAll(homework)
+
+    suspend fun saveHomework(homework: Homework) = homeworkDb.insertAll(listOf(homework))
+
+    suspend fun deleteHomework(homework: Homework) = homeworkDb.deleteAll(listOf(homework))
 }

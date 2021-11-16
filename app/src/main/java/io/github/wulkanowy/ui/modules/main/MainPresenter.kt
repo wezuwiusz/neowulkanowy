@@ -6,10 +6,15 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
+import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.ui.modules.main.MainView.Section.GRADE
-import io.github.wulkanowy.ui.modules.main.MainView.Section.MESSAGE
-import io.github.wulkanowy.ui.modules.main.MainView.Section.SCHOOL
+import io.github.wulkanowy.ui.modules.Destination
+import io.github.wulkanowy.ui.modules.account.AccountView
+import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsView
+import io.github.wulkanowy.ui.modules.grade.GradeView
+import io.github.wulkanowy.ui.modules.message.MessageView
+import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersView
+import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.flow.onEach
@@ -27,19 +32,40 @@ class MainPresenter @Inject constructor(
 
     private var studentsWitSemesters: List<StudentWithSemesters>? = null
 
-    fun onAttachView(view: MainView, initMenu: MainView.Section?) {
-        super.onAttachView(view)
-        view.apply {
-            getProperViewIndexes(initMenu).let { (main, more) ->
-                startMenuIndex = main
-                startMenuMoreIndex = more
+    private val rootDestinationTypeList = listOf(
+        Destination.Type.DASHBOARD,
+        Destination.Type.GRADE,
+        Destination.Type.ATTENDANCE,
+        Destination.Type.TIMETABLE,
+        Destination.Type.MORE
+    )
+
+    private val Destination?.startMenuIndex
+        get() = when {
+            this == null -> prefRepository.startMenuIndex
+            type in rootDestinationTypeList -> {
+                rootDestinationTypeList.indexOf(type)
             }
-            initView()
-            Timber.i("Main view was initialized with $startMenuIndex menu index and $startMenuMoreIndex more index")
+            else -> 4
+        }
+
+    fun onAttachView(view: MainView, initDestination: Destination?) {
+        super.onAttachView(view)
+
+        val startMenuIndex = initDestination.startMenuIndex
+        val destinations = rootDestinationTypeList.map {
+            if (it == initDestination?.type) initDestination else it.defaultDestination
+        }
+
+        view.initView(startMenuIndex, destinations)
+        if (initDestination != null && startMenuIndex == 4) {
+            view.openMoreDestination(initDestination)
         }
 
         syncManager.startPeriodicSyncWorker()
-        analytics.logEvent("app_open", "destination" to initMenu?.name)
+
+        analytics.logEvent("app_open", "destination" to initDestination.toString())
+        Timber.i("Main view was initialized with $initDestination")
     }
 
     fun onActionMenuCreated() {
@@ -64,9 +90,10 @@ class MainPresenter @Inject constructor(
             }.launch("avatar")
     }
 
-    fun onViewChange(section: MainView.Section?) {
+    fun onViewChange(destinationView: BaseView) {
         view?.apply {
-            showActionBarElevation(section != GRADE && section != MESSAGE && section != SCHOOL)
+            showBottomNavigation(shouldShowBottomNavigation(destinationView))
+            showActionBarElevation(shouldShowActionBarElevation(destinationView))
             currentViewTitle?.let { setViewTitle(it) }
             currentViewSubtitle?.let { setViewSubTitle(it.ifBlank { null }) }
             currentStackSize?.let {
@@ -74,6 +101,20 @@ class MainPresenter @Inject constructor(
                 else showHomeArrow(false)
             }
         }
+    }
+
+    private fun shouldShowActionBarElevation(destination: BaseView) = when (destination) {
+        is GradeView,
+        is MessageView,
+        is SchoolAndTeachersView -> false
+        else -> true
+    }
+
+    private fun shouldShowBottomNavigation(destination: BaseView) = when (destination) {
+        is AccountView,
+        is StudentInfoView,
+        is AccountDetailsView -> false
+        else -> true
     }
 
     fun onAccountManagerSelected(): Boolean {
@@ -133,11 +174,5 @@ class MainPresenter @Inject constructor(
             studentsWitSemesters?.singleOrNull { it.student.isCurrent }?.student ?: return
 
         view?.showStudentAvatar(currentStudent)
-    }
-
-    private fun getProperViewIndexes(initMenu: MainView.Section?) = when (initMenu?.id) {
-        in 0..3 -> initMenu!!.id to -1
-        in 4..100 -> 4 to initMenu!!.id
-        else -> prefRepository.startMenuIndex to -1
     }
 }

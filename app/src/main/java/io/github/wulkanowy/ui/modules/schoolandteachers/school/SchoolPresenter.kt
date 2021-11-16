@@ -9,6 +9,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResourceIn
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -100,6 +101,9 @@ class SchoolPresenter @Inject constructor(
                 enableSwipe(true)
                 notifyParentDataLoaded()
             }
+        }.catch {
+            errorHandler.dispatch(it)
+            view?.notifyParentDataLoaded()
         }.launch()
     }
 
@@ -111,6 +115,7 @@ class SchoolPresenter @Inject constructor(
                 showErrorView(true)
                 showEmpty(false)
                 showContent(false)
+                showProgress(false)
             } else showError(message, error)
         }
     }

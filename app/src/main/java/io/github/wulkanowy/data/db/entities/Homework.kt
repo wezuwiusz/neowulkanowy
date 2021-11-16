@@ -40,4 +40,7 @@ data class Homework(
 
     @ColumnInfo(name = "is_notified")
     var isNotified: Boolean = true
+
+    @ColumnInfo(name = "is_added_by_user")
+    var isAddedByUser: Boolean = false
 }

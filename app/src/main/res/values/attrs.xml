@@ -3,4 +3,5 @@
     <attr name="colorDivider" format="color" />
     <attr name="colorSwipeRefresh" format="color" />
     <attr name="colorTimetableChange" format="color" />
+    <attr name="colorMessageMedium" format="color" />
 </resources>

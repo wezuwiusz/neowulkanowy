@@ -5,10 +5,12 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.databinding.ItemHomeworkDialogAttachmentBinding
 import io.github.wulkanowy.databinding.ItemHomeworkDialogAttachmentsHeaderBinding
 import io.github.wulkanowy.databinding.ItemHomeworkDialogDetailsBinding
+import io.github.wulkanowy.utils.ifNullOrBlank
 import io.github.wulkanowy.utils.toFormattedString
 import javax.inject.Inject
 
@@ -37,6 +39,8 @@ class HomeworkDetailsAdapter @Inject constructor() :
 
     var onFullScreenExitClickListener = {}
 
+    var onDeleteClickListener: (homework: Homework) -> Unit = {}
+
     override fun getItemCount() = 1 + if (attachments.isNotEmpty()) attachments.size + 1 else 0
 
     override fun getItemViewType(position: Int) = when (position) {
@@ -49,9 +53,15 @@ class HomeworkDetailsAdapter @Inject constructor() :
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            ViewType.ATTACHMENTS_HEADER.id -> AttachmentsHeaderViewHolder(ItemHomeworkDialogAttachmentsHeaderBinding.inflate(inflater, parent, false))
-            ViewType.ATTACHMENT.id -> AttachmentViewHolder(ItemHomeworkDialogAttachmentBinding.inflate(inflater, parent, false))
-            else -> DetailsViewHolder(ItemHomeworkDialogDetailsBinding.inflate(inflater, parent, false))
+            ViewType.ATTACHMENTS_HEADER.id -> AttachmentsHeaderViewHolder(
+                ItemHomeworkDialogAttachmentsHeaderBinding.inflate(inflater, parent, false)
+            )
+            ViewType.ATTACHMENT.id -> AttachmentViewHolder(
+                ItemHomeworkDialogAttachmentBinding.inflate(inflater, parent, false)
+            )
+            else -> DetailsViewHolder(
+                ItemHomeworkDialogDetailsBinding.inflate(inflater, parent, false)
+            )
         }
     }
 
@@ -63,12 +73,15 @@ class HomeworkDetailsAdapter @Inject constructor() :
     }
 
     private fun bindDetailsViewHolder(holder: DetailsViewHolder) {
+        val noDataString = holder.binding.root.context.getString(R.string.all_no_data)
+
         with(holder.binding) {
             homeworkDialogDate.text = homework?.date?.toFormattedString()
             homeworkDialogEntryDate.text = homework?.entryDate?.toFormattedString()
-            homeworkDialogSubject.text = homework?.subject
-            homeworkDialogTeacher.text = homework?.teacher
-            homeworkDialogContent.text = homework?.content
+            homeworkDialogSubject.text = homework?.subject.ifNullOrBlank { noDataString }
+            homeworkDialogTeacher.text = homework?.teacher.ifNullOrBlank { noDataString }
+            homeworkDialogContent.text = homework?.content.ifNullOrBlank { noDataString }
+            homeworkDialogDelete.visibility = if (homework?.isAddedByUser == true) VISIBLE else GONE
             homeworkDialogFullScreen.visibility = if (isHomeworkFullscreen) GONE else VISIBLE
             homeworkDialogFullScreenExit.visibility = if (isHomeworkFullscreen) VISIBLE else GONE
             homeworkDialogFullScreen.setOnClickListener {
@@ -80,6 +93,9 @@ class HomeworkDetailsAdapter @Inject constructor() :
                 homeworkDialogFullScreen.visibility = VISIBLE
                 homeworkDialogFullScreenExit.visibility = GONE
                 onFullScreenExitClickListener()
+            }
+            homeworkDialogDelete.setOnClickListener {
+                onDeleteClickListener(homework!!)
             }
         }
     }

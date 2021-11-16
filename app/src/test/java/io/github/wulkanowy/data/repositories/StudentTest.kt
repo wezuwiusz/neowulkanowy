@@ -32,13 +32,13 @@ class StudentTest {
     fun initApi() {
         MockKAnnotations.init(this)
         studentRepository = StudentRepository(
-            mockk(),
-            TestDispatchersProvider(),
-            studentDb,
-            semesterDb,
-            mockSdk,
-            AppInfo(),
-            mockk()
+            context = mockk(),
+            dispatchers = TestDispatchersProvider(),
+            studentDb = studentDb,
+            semesterDb = semesterDb,
+            sdk = mockSdk,
+            appInfo = AppInfo(),
+            appDatabase = mockk()
         )
     }
 

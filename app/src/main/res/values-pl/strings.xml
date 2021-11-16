@@ -17,6 +17,7 @@
     <string name="license_title">Licencje</string>
     <string name="message_title">Wiadomości</string>
     <string name="send_message_title">Nowa wiadomość</string>
+    <string name="add_homework_title">Nowe zadanie domowe</string>
     <string name="note_title">Uwagi i osiągnięcia</string>
     <string name="homework_title">Zadania domowe</string>
     <string name="account_title">Menadżer kont</string>
@@ -29,10 +30,10 @@
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
-    <string name="login_header_symbol">Podaj symbol ze strony dziennika</string>
+    <string name="login_header_symbol">Podaj symbol ze strony dziennika dla konta: &lt;b&gt;%1$s&lt;/b&gt;</string>
     <string name="login_nickname_hint">Nazwa użytkownika</string>
-    <string name="login_email_hint">Email</string>
-    <string name="login_login_pesel_email_hint">Login, PESEL lub e-mail</string>
+    <string name="login_email_hint">Adres e-mail</string>
+    <string name="login_login_pesel_email_hint">Login, PESEL lub adres e-mail</string>
     <string name="login_password_hint">Hasło</string>
     <string name="login_host_hint">Odmiana dziennika UONET+</string>
     <string name="login_type_api">Mobilne API</string>
@@ -48,12 +49,11 @@
     <string name="login_invalid_pin">Nieprawidłowy PIN</string>
     <string name="login_invalid_token">Nieprawidłowy token</string>
     <string name="login_expired_token">Token stracił ważność</string>
-    <string name="login_invalid_email">Niepoprawny adres email</string>
-    <string name="login_invalid_login">Użyj przydzielonego loginu zamiast emaila</string>
-    <string name="login_invalid_custom_email">Użyj przypisanego loginu lub adresu e-mail w @%1$s</string>
-    <string name="login_invalid_symbol">Niepoprawny symbol</string>
+    <string name="login_invalid_email">Nieprawidłowy adres e-mail</string>
+    <string name="login_invalid_login">Użyj loginu zamiast adresu e-mail</string>
+    <string name="login_invalid_custom_email">Użyj loginu lub adresu e-mail w @%1$s</string>
+    <string name="login_invalid_symbol">Nieprawidłowy symbol</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź poprawność symbolu i wybranej odmiany dziennika UONET+</string>
-    <string name="login_field_required">To pole jest wymagane</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
     <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUpewnij się, że w polu <b>Dziennik UONET+</b> na poprzednim ekranie została ustawiona odpowiednia odmiana dziennika.\n\n<b>Wulkanowy na chwilę obecną nie wykrywa uczniów przedszkolnych (z zerówki)</b></string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
@@ -63,9 +63,9 @@
     <string name="login_advanced_warning_hybrid">Połączenie najlepszych cech dwóch pozostałych trybów. Działa szybciej niż scraper i zapewnia funkcje niedostępne w trybie Mobilne API. Jest w fazie eksperymentalnej</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
     <string name="login_contact_header">Problemy z logowaniem? Napisz do nas!</string>
-    <string name="login_contact_email">Email</string>
+    <string name="login_contact_email">E-mail</string>
     <string name="login_contact_discord">Discord</string>
-    <string name="login_email_intent_title">Wyślij email</string>
+    <string name="login_email_intent_title">Wyślij wiadomość e-mail</string>
     <string name="login_recover_warning">Upewnij się, że została wybrana odpowiednia odmiana dziennika UONET+!</string>
     <string name="login_recover_button">Nie pamiętam hasła</string>
     <string name="login_recover_title">Przywróć swoje konto</string>
@@ -165,6 +165,34 @@
     <string name="timetable_now">Teraz: %s</string>
     <string name="timetable_next">Za chwilę: %s</string>
     <string name="timetable_later">Później: %s</string>
+    <string name="timetable_notify_lesson">%1$s lekcja %2$d - %3$s</string>
+    <string name="timetable_notify_change_room">Zmiana sali z %1$s na %2$s</string>
+    <string name="timetable_notify_change_teacher">Zmiana nauczyciela z %1$s na %2$s</string>
+    <string name="timetable_notify_change_subject">Zmiana przedmiotu z %1$s na %2$s</string>
+    <plurals name="timetable_notify_new_items_title">
+        <item quantity="one">Zmiana planu lekcji</item>
+        <item quantity="few">Zmiany planu lekcji</item>
+        <item quantity="many">Zmiany planu lekcji</item>
+        <item quantity="other">Zmiany planu lekcji</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items">
+        <item quantity="one">%1$s - %2$d zmiana planu lekcji</item>
+        <item quantity="few">%1$s - %2$d zmiany planu lekcji</item>
+        <item quantity="many">%1$s - %2$d zmian planu lekcji</item>
+        <item quantity="other">%1$s - %2$d zmian planu lekcji</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items_group">
+        <item quantity="one">%1$d zmiana planu lekcji</item>
+        <item quantity="few">%1$d zmiany planu lekcji</item>
+        <item quantity="many">%1$d zmian planu lekcji</item>
+        <item quantity="other">%1$d zmian planu lekcji</item>
+    </plurals>
+    <plurals name="timetable_number_item">
+        <item quantity="one">%d zmiana</item>
+        <item quantity="few">%d zmiany</item>
+        <item quantity="many">%d zmian</item>
+        <item quantity="other">%d zmian</item>
+    </plurals>
     <!--Completed lessons-->
     <string name="completed_lessons_title">Lekcje zrealizowane</string>
     <string name="completed_lessons_button">Zobacz lekcje zrealizowane</string>
@@ -194,6 +222,24 @@
     <string name="attendance_excuse_success">Prośba o usprawiedliwienie została pomyślnie wysłana!</string>
     <string name="attendance_excuse_no_selection">Musisz wybrać co najmniej jedną nieobecność!</string>
     <string name="attendance_excuse_title">Usprawiedliw</string>
+    <plurals name="attendance_notify_new_items_title">
+        <item quantity="one">Nowa frekwencja</item>
+        <item quantity="few">Nowe frekwencje</item>
+        <item quantity="many">Nowe frekwencje</item>
+        <item quantity="other">Nowe frekwencje</item>
+    </plurals>
+    <plurals name="attendance_notify_new_items">
+        <item quantity="one">%1$d nowa frekwencja</item>
+        <item quantity="few">%1$d nowe frekwencje</item>
+        <item quantity="many">%1$d nowych frekwencji</item>
+        <item quantity="other">%1$d nowych frekwencji</item>
+    </plurals>
+    <plurals name="attendance_number_item">
+        <item quantity="one">%d frekwencja</item>
+        <item quantity="few">%d frekwencje</item>
+        <item quantity="many">%d frekwencji</item>
+        <item quantity="other">%d frekwencji</item>
+    </plurals>
     <!--Attendance summary-->
     <string name="attendance_summary_total">Razem</string>
     <!--Exam-->
@@ -328,6 +374,9 @@
     <string name="homework_no_items">Brak zadań domowych</string>
     <string name="homework_mark_as_done">Wykonane</string>
     <string name="homework_mark_as_undone">Niewykonane</string>
+    <string name="homework_add">Dodaj zadanie domowe</string>
+    <string name="homework_add_success">Zadanie domowe pomyślnie dodane</string>
+    <string name="homework_delete_success">Zadanie domowe pomyślnie usunięte</string>
     <string name="homework_attachments">Załączniki</string>
     <plurals name="homework_notify_new_item_title">
         <item quantity="one">Nowe zadanie domowe</item>
@@ -477,7 +526,7 @@
     <string name="student_info_parents_name">Imiona matki i ojca</string>
     <string name="student_info_phone">Telefon</string>
     <string name="student_info_cellphone">Telefon komórkowy</string>
-    <string name="student_info_email">E-mail</string>
+    <string name="student_info_email">Adres e-mail</string>
     <string name="student_info_address">Adres zamieszkania</string>
     <string name="student_info_registered_address">Adres zameldowania</string>
     <string name="student_info_correspondence_address">Adres korespondencyjny</string>
@@ -499,6 +548,7 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lekcje</string>
     <string name="dashboard_timetable_title_tomorrow">(Jutro)</string>
+    <string name="dashboard_timetable_title_today_and_tomorrow">(Dzisiaj i jutro)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Za chwilę:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Wkrótce:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Pierwsza:</string>
@@ -594,6 +644,10 @@
     <string name="all_no">Nie</string>
     <string name="all_save">Zapisz</string>
     <string name="all_title">Tytuł</string>
+    <string name="all_add">Dodaj</string>
+    <string name="all_copied">Skopiowano</string>
+    <string name="all_undo">Cofnij</string>
+    <string name="all_change">Zmień</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
     <string name="widget_timetable_theme_title">Wybierz motyw</string>
@@ -601,13 +655,13 @@
     <string name="widget_timetable_theme_dark">Ciemny</string>
     <string name="widget_timetable_theme_system">Motyw systemu</string>
     <!--Preferences-->
-    <string name="pref_view_header">Wygląd i zachowanie aplikacji</string>
+    <string name="pref_view_header">Aplikacja</string>
     <string name="pref_view_list">Domyślny widok</string>
     <string name="pref_view_grade_average_mode">Opcje obliczonej średniej</string>
     <string name="pref_view_grade_average_force_calc">Wymuś obliczanie średniej przez aplikację</string>
     <string name="pref_view_present">Pokazuj obecność</string>
     <string name="pref_view_app_theme">Motyw</string>
-    <string name="pref_view_expand_grade">Rozwiń oceny</string>
+    <string name="pref_view_expand_grade">Rozwijanie ocen</string>
     <string name="pref_view_timetable_show_timers">Oznaczaj bieżącą lekcję</string>
     <string name="pref_view_timetable_show_groups">Pokazuj grupę obok przedmiotu</string>
     <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>
@@ -616,6 +670,7 @@
     <string name="pref_view_grade_sorting_mode">Sortowanie przedmiotów</string>
     <string name="pref_view_app_language">Język</string>
     <string name="pref_notify_header">Powiadomienia</string>
+    <string name="pref_notify_header_other">Inne</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
     <string name="pref_notify_upcoming_lessons_switch">Pokazuj powiadomienia o nadchodzących lekcjach</string>
     <string name="pref_notify_upcoming_lessons_persistent_switch">Ustaw powiadomienie o nadchodzącej lekcji jako trwałe</string>
@@ -644,16 +699,25 @@
     <string name="pref_other_grade_modifier_minus">Wartość minusa</string>
     <string name="pref_other_fill_message_content">Odpowiadaj z historią wiadomości</string>
     <string name="pref_other_optional_arithmetic_average">Licz średnią arytmetyczną, gdy żadna ocena nie ma wagi</string>
+    <string name="pref_ads_support_category_name">Wsparcie</string>
+    <string name="pref_ads_support">Obejrzyj pojedynczą reklamę, aby wesprzeć projekt</string>
+    <string name="pref_ads_privacy_title">Zgoda na przetwarzanie danych</string>
+    <string name="pref_ads_privacy_description">Aby obejrzeć reklamę, musisz zaakceptować warunki przetwarzania danych zawarte w naszej Polityce Prywatności</string>
+    <string name="pref_ads_privacy_agree">Akceptuję</string>
+    <string name="pref_ads_privacy_link">Polityka prywatności</string>
+    <string name="pref_ads_loading">Ładowanie reklamy</string>
     <string name="pref_settings_advanced_title">Zaawansowane</string>
     <string name="pref_settings_appearance_title">Wygląd i zachowanie</string>
     <string name="pref_settings_notifications_title">Powiadomienia</string>
     <string name="pref_settings_sync_title">Synchronizacja</string>
+    <string name="pref_settings_ads_title">Reklamy</string>
     <string name="pref_grades_appearance_header">Oceny</string>
     <string name="pref_dashboard_appearance_header">Start</string>
     <string name="pref_dashboard_appearance_tiles_title">Widoczność kafelków</string>
     <string name="pref_attendance_appearance_view">Frekwencja</string>
     <string name="pref_timetable_appearance_view">Plan lekcji</string>
     <string name="pref_grades_advanced_header">Oceny</string>
+    <string name="pref_counted_average_advanced_header">Obliczona średnia</string>
     <string name="pref_messages_advanced_header">Wiadomości</string>
     <string name="pref_appearance_category">Wygląd i zachowanie</string>
     <string name="pref_appearance_category_summary">Języki, motywy, sortowanie przedmiotów</string>
@@ -663,7 +727,8 @@
     <string name="pref_sync_category_summary">Automatyczna aktualizacja, interwał synchronizacji</string>
     <string name="pref_advanced_category_summary">Wartości plusa i minusa, obliczanie średniej</string>
     <string name="pref_advanced_category">Zaawansowane</string>
-    <string name="pref_about_category_summary">Wersja aplikacji, twórcy, media społecznościowe, licencje</string>
+    <string name="pref_about_category_summary">Wersja aplikacji, twórcy, media społecznościowe</string>
+    <string name="pref_ads_category_summary">Wyświetlanie reklam, wsparcie projektu</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Nowe oceny</string>
     <string name="channel_new_homework">Nowe zadania domowe</string>
@@ -676,6 +741,8 @@
     <string name="channel_push">Powiadomienia push</string>
     <string name="channel_upcoming_lessons">Nadchodzące lekcje</string>
     <string name="channel_debug">Debugowanie</string>
+    <string name="channel_change_timetable">Zmiany planu lekcji</string>
+    <string name="channel_new_attendance">Nowe frekwencje</string>
     <!--Colors-->
     <string name="all_black">Czarny</string>
     <string name="all_red">Czerwony</string>
@@ -683,10 +750,6 @@
     <string name="all_green">Zielony</string>
     <string name="all_purple">Fioletowy</string>
     <string name="all_empty_color">Brak koloru</string>
-    <!--Others-->
-    <string name="all_copied">Skopiowano</string>
-    <string name="all_undo">Cofnij</string>
-    <string name="all_change">Zmień</string>
     <!--Update helper-->
     <string name="update_download_started">Rozpoczęto pobieranie aktualizacji…</string>
     <string name="update_download_success">Aktualizacja została pobrana.</string>
@@ -703,4 +766,5 @@
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w trybie innym niż Mobilne API</string>
+    <string name="error_field_required">To pole jest wymagane</string>
 </resources>

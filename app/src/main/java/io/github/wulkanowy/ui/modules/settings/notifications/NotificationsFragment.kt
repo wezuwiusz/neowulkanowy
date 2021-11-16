@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.settings.notifications
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -39,10 +38,6 @@ class NotificationsFragment : PreferenceFragmentCompat(),
 
     @Inject
     lateinit var appInfo: AppInfo
-
-    companion object {
-        fun newInstance() = NotificationsFragment()
-    }
 
     override val titleStringId get() = R.string.pref_settings_notifications_title
 
@@ -156,7 +151,6 @@ class NotificationsFragment : PreferenceFragmentCompat(),
             .show()
     }
 
-    @SuppressLint("InlinedApi")
     override fun openSystemSettings() {
         val intent = if (appInfo.systemVersion >= Build.VERSION_CODES.O) {
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {

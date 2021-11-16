@@ -33,5 +33,7 @@ interface HomeworkView : BaseView {
 
     fun showNextButton(show: Boolean)
 
-    fun showTimetableDialog(homework: Homework)
+    fun showHomeworkDialog(homework: Homework)
+
+    fun showAddHomeworkDialog()
 }

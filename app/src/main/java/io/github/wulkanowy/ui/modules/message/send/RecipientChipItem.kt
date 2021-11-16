@@ -1,10 +1,10 @@
 package io.github.wulkanowy.ui.modules.message.send
 
-import com.squareup.moshi.JsonClass
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.materialchipsinput.ChipItem
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class RecipientChipItem(
 
     override val title: String,

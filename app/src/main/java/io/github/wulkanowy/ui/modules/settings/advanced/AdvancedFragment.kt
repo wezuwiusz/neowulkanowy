@@ -27,10 +27,6 @@ class AdvancedFragment : PreferenceFragmentCompat(),
     @Inject
     lateinit var lingver: Lingver
 
-    companion object {
-        fun newInstance() = AdvancedFragment()
-    }
-
     override val titleStringId get() = R.string.pref_settings_advanced_title
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

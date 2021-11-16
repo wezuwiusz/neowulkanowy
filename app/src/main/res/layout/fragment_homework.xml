@@ -26,6 +26,8 @@
                 android:id="@+id/homeworkRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="64dp"
                 tools:listitem="@layout/item_homework" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -105,6 +107,18 @@
                     android:text="@string/all_retry" />
             </LinearLayout>
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/openAddHomeworkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/add_homework_title"
+            android:tint="?colorOnSecondary"
+            app:icon="@drawable/ic_all_add" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <io.github.wulkanowy.ui.widgets.MaterialLinearLayout
@@ -128,8 +142,8 @@
             android:paddingRight="12dp"
             android:paddingBottom="8dp"
             android:scaleType="fitStart"
-            android:tint="?colorPrimary"
-            app:srcCompat="@drawable/ic_chevron_left" />
+            app:srcCompat="@drawable/ic_chevron_left"
+            app:tint="?colorPrimary" />
 
         <TextView
             android:id="@+id/homeworkNavDate"
@@ -152,7 +166,7 @@
             android:paddingRight="12dp"
             android:paddingBottom="8dp"
             android:scaleType="fitEnd"
-            android:tint="?colorPrimary"
-            app:srcCompat="@drawable/ic_chevron_right" />
+            app:srcCompat="@drawable/ic_chevron_right"
+            app:tint="?colorPrimary" />
     </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 </FrameLayout>

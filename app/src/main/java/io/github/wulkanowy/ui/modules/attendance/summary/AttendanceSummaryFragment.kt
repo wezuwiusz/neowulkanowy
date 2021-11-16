@@ -71,7 +71,7 @@ class AttendanceSummaryFragment :
             setOnItemSelectedListener<TextView> { presenter.onSubjectSelected(it?.text?.toString()) }
         }
 
-        binding.attendanceSummarySubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
+        binding.attendanceSummarySubjectsContainer.elevation = requireContext().dpToPx(1f)
     }
 
     override fun updateSubjects(data: ArrayList<String>) {

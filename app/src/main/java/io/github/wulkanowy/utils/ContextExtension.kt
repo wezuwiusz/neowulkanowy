@@ -18,6 +18,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.PluralsRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.applyCanvas
@@ -56,6 +57,9 @@ fun Context.getCompatDrawable(@DrawableRes drawableRes: Int, @ColorRes colorRes:
 
 fun Context.getCompatBitmap(@DrawableRes drawableRes: Int, @ColorRes colorRes: Int) =
     getCompatDrawable(drawableRes, colorRes)?.toBitmap()
+
+fun Context.getPlural(@PluralsRes pluralRes: Int, quantity: Int, vararg arguments: Any) =
+    resources.getQuantityString(pluralRes, quantity, *arguments)
 
 fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -> Unit = {}) {
     Intent.parseUri(uri, 0).let {

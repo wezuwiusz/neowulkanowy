@@ -68,7 +68,7 @@ class GradeStatisticsFragment :
         }
 
         with(binding) {
-            gradeStatisticsSubjectsContainer.setElevationCompat(requireContext().dpToPx(1f))
+            gradeStatisticsSubjectsContainer.elevation = requireContext().dpToPx(1f)
 
             gradeStatisticsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             gradeStatisticsSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
