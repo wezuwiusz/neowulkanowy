@@ -152,12 +152,11 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
     }
 
     override fun setErrorPassIncorrect(message: String?) {
-        val error = message ?: getString(R.string.login_incorrect_password_default)
-
         with(binding) {
             loginFormUsernameLayout.error = " "
             loginFormPassLayout.error = " "
-            loginFormErrorBox.text = getString(R.string.login_incorrect_password, error)
+            loginFormHostLayout.error = " "
+            loginFormErrorBox.text = message ?: getString(R.string.login_incorrect_password_default)
             loginFormErrorBox.isVisible = true
         }
     }
@@ -175,6 +174,11 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun clearPassError() {
         binding.loginFormPassLayout.error = null
+        binding.loginFormErrorBox.isVisible = false
+    }
+
+    override fun clearHostError() {
+        binding.loginFormHostLayout.error = null
         binding.loginFormErrorBox.isVisible = false
     }
 

@@ -205,7 +205,7 @@ class LoginAdvancedFragment :
     override fun setErrorPassIncorrect(message: String?) {
         with(binding.loginFormPassLayout) {
             requestFocus()
-            error = message ?: getString(R.string.login_incorrect_password)
+            error = message ?: getString(R.string.login_incorrect_password_default)
         }
     }
 

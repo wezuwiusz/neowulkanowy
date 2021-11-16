@@ -30,7 +30,7 @@
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
-    <string name="login_header_symbol">Podaj symbol ze strony dziennika</string>
+    <string name="login_header_symbol">Podaj symbol ze strony dziennika dla konta: &lt;b>%1$s&lt;/b></string>
     <string name="login_nickname_hint">Nazwa użytkownika</string>
     <string name="login_email_hint">Adres e-mail</string>
     <string name="login_login_pesel_email_hint">Login, PESEL lub adres e-mail</string>

@@ -9,6 +9,8 @@ interface LoginSymbolView : BaseView {
 
     fun initView()
 
+    fun setLoginToHeading(login: String)
+
     fun setErrorSymbolIncorrect()
 
     fun setErrorSymbolRequire()

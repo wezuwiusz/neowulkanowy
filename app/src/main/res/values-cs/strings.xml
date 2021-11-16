@@ -30,7 +30,7 @@
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Přihlaste se pomocí studentského nebo rodičovského účtu</string>
-    <string name="login_header_symbol">Zadejte symbol ze stránky deníku</string>
+    <string name="login_header_symbol">Zadejte symbol ze stránky deníku: &lt;b>%1$s&lt;/b></string>
     <string name="login_nickname_hint">Uživatelské jméno</string>
     <string name="login_email_hint">Email</string>
     <string name="login_login_pesel_email_hint">Přihlášení, číslo PESEL nebo e-mail</string>

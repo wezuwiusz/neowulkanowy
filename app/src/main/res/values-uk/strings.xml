@@ -30,7 +30,7 @@
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Авторизуйтеся за допомогою аккаунта учня або батьків</string>
-    <string name="login_header_symbol">Введіть символ зі сторінки реєстру</string>
+    <string name="login_header_symbol">Введіть символ зі сторінки реєстру: &lt;b>%1$s&lt;/b></string>
     <string name="login_nickname_hint">Ім\'я користувача</string>
     <string name="login_email_hint">Електронна пошта</string>
     <string name="login_login_pesel_email_hint">Логін, PESEL або електронна пошта</string>
