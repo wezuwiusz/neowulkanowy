@@ -79,7 +79,6 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
 
         binding.messageTabLayout.elevation = requireContext().dpToPx(4f)
 
-
         binding.openSendMessageButton.setOnClickListener { presenter.onSendMessageButtonClicked() }
     }
 
@@ -103,7 +102,8 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
     }
 
     override fun notifyChildLoadData(index: Int, forceRefresh: Boolean) {
-        (pagerAdapter.getFragmentInstance(index) as? MessageTabFragment)?.onParentLoadData(forceRefresh)
+        (pagerAdapter.getFragmentInstance(index) as? MessageTabFragment)
+            ?.onParentLoadData(forceRefresh)
     }
 
     override fun openSendMessage() {

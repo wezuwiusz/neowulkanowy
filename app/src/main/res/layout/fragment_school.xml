@@ -15,19 +15,18 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/schoolSwipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="8dp"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="12dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="8dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/schoolContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingVertical="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="12dp"
+            android:visibility="invisible"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -92,14 +92,14 @@
                     android:id="@+id/schoolAddressButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_school_directions"
-                    android:contentDescription="@string/school_address_button"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="4dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/school_address_button"
+                    android:padding="4dp"
+                    app:srcCompat="@drawable/ic_school_directions"
                     app:tint="?colorPrimary" />
             </LinearLayout>
 
@@ -107,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -139,14 +140,14 @@
                     android:id="@+id/schoolTelephoneButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_all_phone"
-                    android:contentDescription="@string/school_telephone_button"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="4dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/school_telephone_button"
+                    android:padding="4dp"
+                    app:srcCompat="@drawable/ic_all_phone"
                     app:tint="?colorPrimary" />
             </LinearLayout>
 
