@@ -17,6 +17,7 @@ import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.flowWithResourceIn
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -47,8 +48,8 @@ class GradeDetailsPresenter @Inject constructor(
     fun onParentViewLoadData(semesterId: Int, forceRefresh: Boolean) {
         currentSemesterId = semesterId
 
-        loadData(semesterId, forceRefresh)
         if (!forceRefresh) view?.showErrorView(false)
+        loadData(semesterId, forceRefresh)
     }
 
     fun onGradeItemSelected(grade: Grade, position: Int) {
@@ -198,6 +199,9 @@ class GradeDetailsPresenter @Inject constructor(
                 enableSwipe(true)
                 notifyParentDataLoaded(semesterId)
             }
+        }.catch {
+            errorHandler.dispatch(it)
+            view?.notifyParentDataLoaded(semesterId)
         }.launch()
     }
 
@@ -214,6 +218,7 @@ class GradeDetailsPresenter @Inject constructor(
                 setErrorDetails(message)
                 showErrorView(true)
                 showEmpty(false)
+                showProgress(false)
             } else showError(message, error)
         }
     }
