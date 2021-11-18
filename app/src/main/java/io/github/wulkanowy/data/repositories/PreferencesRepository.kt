@@ -105,7 +105,10 @@ class PreferencesRepository @Inject constructor(
 
     val isUpcomingLessonsNotificationsEnableKey =
         context.getString(R.string.pref_key_notifications_upcoming_lessons_enable)
-    val isUpcomingLessonsNotificationsEnable: Boolean
+    var isUpcomingLessonsNotificationsEnable: Boolean
+        set(value) {
+            sharedPref.edit { putBoolean(isUpcomingLessonsNotificationsEnableKey, value) }
+        }
         get() = getBoolean(
             isUpcomingLessonsNotificationsEnableKey,
             R.bool.pref_default_notification_upcoming_lessons_enable

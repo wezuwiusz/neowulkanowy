@@ -45,6 +45,8 @@ class NotificationsPresenter @Inject constructor(
                 isUpcomingLessonsNotificationsEnableKey, isUpcomingLessonsNotificationsPersistentKey -> {
                     if (!isUpcomingLessonsNotificationsEnable) {
                         timetableNotificationHelper.cancelNotification()
+                    } else if (!timetableNotificationHelper.canScheduleExactAlarms()) {
+                        view?.openNotificationExactAlarmSettings()
                     }
                 }
                 isDebugNotificationEnableKey -> {
@@ -68,10 +70,14 @@ class NotificationsPresenter @Inject constructor(
         view?.openSystemSettings()
     }
 
-    fun onNotificationPermissionResult() {
+    fun onNotificationPiggybackPermissionResult() {
         view?.run {
             setNotificationPiggybackPreferenceChecked(isNotificationPermissionGranted)
         }
+    }
+
+    fun onNotificationExactAlarmPermissionResult() {
+        view?.setUpcomingLessonsNotificationPreferenceChecked(timetableNotificationHelper.canScheduleExactAlarms())
     }
 
     private fun checkNotificationPiggybackState() {

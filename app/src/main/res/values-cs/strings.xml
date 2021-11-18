@@ -678,13 +678,12 @@
     <string name="pref_notify_open_system_settings">Otevřít systémová nastavení upozornění</string>
     <string name="pref_notify_fix_sync_issues">Opravte problémy se synchronizací a upozorněním</string>
     <string name="pref_notify_fix_sync_issues_message">Vaše zařízení může mít problémy se synchronizací dat as upozorněními.\n\nChcete-li je opravit, přidejte Wulkanového do funkce Autostart a vypněte optimalizaci/úsporu baterie v nastavení systému telefonu.</string>
-    <string name="pref_notify_fix_sync_issues_settings_button">Přejít do nastavení</string>
     <string name="pref_notify_debug_switch">Zobrazit upozornění o ladění</string>
     <string name="pref_notify_disabled_summary">Synchronizace je vypnutá</string>
     <string name="pref_notify_notifications_piggyback">Zachytit upozornění oficiální aplikací</string>
     <string name="pref_notification_piggyback_popup_title">Zachytit upozornění</string>
     <string name="pref_notification_piggyback_popup_description">S touto funkcí můžete získat náhradu push upozornění jako v oficiální aplikaci. Vše, co musíte udělat, je povolit Wulkanowému číst všechna vaše upozornění v nastaveních systému.\n\nJak to funguje?\nKdyž obdržíte oznámení v Deníčku VULCAN, Wulkanowy bude o tom informován (k tomu je to dodatečné povolení) a spustí synchronizaci, aby mohl zaslat vlastní upozornění.\n\nPOUZE PRO POKROČILÉ UŽIVATELE</string>
-    <string name="pref_notification_piggyback_popup_positive">Přejít do nastavení</string>
+    <string name="pref_notification_go_to_settings">Přejít do nastavení</string>
     <string name="pref_services_header">Synchronizace</string>
     <string name="pref_services_switch">Automatická aktualizace</string>
     <string name="pref_services_suspended">Pozastaveno na dovolené</string>
