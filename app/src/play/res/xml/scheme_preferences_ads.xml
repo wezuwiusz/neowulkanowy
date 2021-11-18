@@ -6,7 +6,7 @@
         <Preference
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_ads_single_support"
-            app:singleLineTitle="true"
+            app:singleLineTitle="false"
             app:title="@string/pref_ads_support" />
     </PreferenceCategory>
 </PreferenceScreen>
