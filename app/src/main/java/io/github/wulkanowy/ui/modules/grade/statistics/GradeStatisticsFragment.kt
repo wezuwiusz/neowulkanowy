@@ -43,7 +43,7 @@ class GradeStatisticsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGradeStatisticsBinding.bind(view)
-        messageContainer = binding.gradeStatisticsSwipe
+        messageContainer = binding.gradeStatisticsRecycler
         presenter.onAttachView(
             this,
             savedInstanceState?.getSerializable(SAVED_CHART_TYPE) as? GradeStatisticsItem.DataType
