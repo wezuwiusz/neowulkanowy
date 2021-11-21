@@ -33,5 +33,8 @@ data class AdminMessage(
 
     val priority: String,
 
-    val type: String
+    val type: String,
+
+    @ColumnInfo(name = "is_dismissible")
+    val isDismissible: Boolean = false
 )

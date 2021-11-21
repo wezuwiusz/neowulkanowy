@@ -1,10 +1,6 @@
 [Polska wersja README](README.md)
 
-[Deutsche Version von README](README.de.md)
-
-[Česká verze README](README.cs.md)
-
-[Slovenská verzia README](README.sk.md)
+[English version of README](README.en.md)
 
 # Wulkanowy
 
@@ -14,36 +10,36 @@
 [![F-Droid](https://img.shields.io/f-droid/v/io.github.wulkanowy.svg?style=flat-square)](https://f-droid.org/packages/io.github.wulkanowy/)
 [![Last release](https://img.shields.io/github/release/wulkanowy/wulkanowy.svg?logo=github&style=flat-square)](https://github.com/wulkanowy/wulkanowy/releases)
 
-Unofficial android VULCAN UONET+ register client for both students and their parents
+Inoffizieller Android VULCAN UONET+ Registrierungsclient für Schüler und ihre Eltern
 
-## Features
+## Merkmale
 
-* logging in using the email and password
-* functions from the register website:
-    * grades
-    * grade statistics
-    * attendance
-    * percentage of attendance
-    * exams
-    * timetable
-    * completed lessons
-    * messages
-    * homework
-    * notes
-    * lucky number
-    * additional lessons
-    * school conferences
-    * student and school information
-* calculation of the average independently of school's preferences
-* notifications, e.g. about a new grade
-* support for multiple accounts with the ability to rename students 
-* dark and black (AMOLED) theme
-* offline mode
-* no ads
+* Einloggen mit E-Mail und Passwort
+* Funktionen von der Registerwebsite:
+    * Noten
+    * Notenstatistik
+    * Anwesenheit
+    * Prozentsatz der Anwesenheit
+    * Prüfungen
+    * Stundenplan
+    * Unterricht abgeschlossen
+    * Nachrichten
+    * Hausaufgaben
+    * Anmerkungen
+    * Glückszahl
+    * Zusätzliche Lektionen
+    * Schulkonferenzen
+    * Schüler- und Schulinformationen
+* Berechnung des Durchschnitts unabhängig von den Präferenzen der Schule
+* Benachrichtigungen, z. B. über eine neue Note
+* Unterstützung für mehrere Konten mit der Möglichkeit, den Namen des Schülers zu ändern
+* dunkles und schwarzes (AMOLED) Thema
+* Offline-Modus
+* keine Werbung
 
-## Download
+## Herunterladen
 
-You can download the current version from the Google Play, F-Droid or Huawei AppGallery store
+Die aktuelle Version können Sie von der Google Play, F-Droid oder Huawei AppGallery store herunterladen
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
     alt="Get it on Google Play"
@@ -55,9 +51,9 @@ You can download the current version from the Google Play, F-Droid or Huawei App
     alt="Explore it on AppGallery"
     height="80">](https://appgallery.cloud.huawei.com/ag/n/app/C101440411?channelId=Badge&id=1b3f7fbb700849a9be0dba6b520b2282&s=EB1D3BF9ED9D1564D869B7B94B18016D3CABFCA5AEFB8E29F675FA04E0DC131D&detailType=0&v=)
     
-You can also download a [development version](https://wulkanowy.github.io/#download) that includes new features being prepared for the next release
+Sie können auch ein [Entwicklungsversion herunterladen](https://wulkanowy.github.io/#download) das beinhaltet neue Funktionen, die für die nächste Version vorbereitet werden
 
-## Built With
+## Gebaut mit
 
 
 * [Wulkanowy SDK](https://github.com/wulkanowy/sdk)
@@ -66,13 +62,13 @@ You can also download a [development version](https://wulkanowy.github.io/#downl
 * [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) 
 
-## Contributing
+## Beitragen
 
-Please contribute to the project either by creating a PR or submitting an issue on GitHub.
+Bitte tragen Sie zum Projekt bei, indem Sie entweder eine PR erstellen oder ein Issue auf GitHub einreichen.
 
-For people interested in translating the application into different languages, we provide Crowdin
+Für Personen, die daran interessiert sind, die Anwendung in verschiedene Sprachen zu übersetzen, bieten wir Crowdin
 https://crowdin.com/project/wulkanowy2
 
-## License
+## Lizenz
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details
+Dieses Projekt ist unter der Apache License 2.0 lizenziert - siehe die [LIZENZ](LICENSE) Datei für Details

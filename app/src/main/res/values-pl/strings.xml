@@ -678,13 +678,14 @@
     <string name="pref_notify_open_system_settings">Otwórz systemowe ustawienia powiadomień</string>
     <string name="pref_notify_fix_sync_issues">Napraw problemy z synchronizacją i powiadomieniami</string>
     <string name="pref_notify_fix_sync_issues_message">Na twoim urządzeniu mogą występować problemy z synchronizacją danych i powiadomieniami.\n\nBy je naprawić, dodaj Wulkanowego do autostartu i wyłącz optymalizację/oszczędzanie baterii w ustawieniach systemowych telefonu.</string>
-    <string name="pref_notify_fix_sync_issues_settings_button">Przejdź do ustawień</string>
     <string name="pref_notify_debug_switch">Pokazuj powiadomienia debugowania</string>
     <string name="pref_notify_disabled_summary">Synchronizacja jest wyłączona</string>
     <string name="pref_notify_notifications_piggyback">Przechwytywanie powiadomień oficjalnej aplikacji</string>
     <string name="pref_notification_piggyback_popup_title">Przechwytywanie powiadomień</string>
     <string name="pref_notification_piggyback_popup_description">Dzięki tej funkcji możesz uzyskać namiastkę powiadomień push, takich jak w oficjalnej aplikacji. Wszystko, co musisz zrobić, to zezwolić Wulkanowemu na odczytywanie wszystkich powiadomień w ustawieniach systemowych.\n\nJak to działa?\nKiedy otrzymasz powiadomienie w Dzienniczku VULCAN, Wulkanowy zostanie o tym powiadomiony (do tego jest to dodatkowe uprawnienie) i uruchomi synchronizację, aby mógł wysłać własne powiadomienie.\n\nWYŁĄCZNIE DLA ZAAWANSOWANYCH UŻYTKOWNIKÓW</string>
-    <string name="pref_notification_piggyback_popup_positive">Przejdź do ustawień</string>
+    <string name="pref_notification_exact_alarm_popup_title">Powiadomienia o nadchodzących lekcjach</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">Musisz pozwolić Wulkanowemu na tworzenie alarmów i przypomnień w ustawieniach Twojego systemu, aby użyć tej funkcji.</string>
+    <string name="pref_notification_go_to_settings">Przejdź do ustawień</string>
     <string name="pref_services_header">Synchronizacja</string>
     <string name="pref_services_switch">Automatyczna aktualizacja</string>
     <string name="pref_services_suspended">Zawieszona na wakacjach</string>
@@ -706,6 +707,7 @@
     <string name="pref_ads_privacy_agree">Akceptuję</string>
     <string name="pref_ads_privacy_link">Polityka prywatności</string>
     <string name="pref_ads_loading">Ładowanie reklamy</string>
+    <string name="pref_ads_once_per_visit">Dziękujemy za wsparcie, wróć później po więcej reklam</string>
     <string name="pref_settings_advanced_title">Zaawansowane</string>
     <string name="pref_settings_appearance_title">Wygląd i zachowanie</string>
     <string name="pref_settings_notifications_title">Powiadomienia</string>

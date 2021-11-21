@@ -1,6 +1,8 @@
 package io.github.wulkanowy.utils
 
 import android.content.Context
+import android.os.Bundle
+import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
@@ -18,7 +20,10 @@ class AdsHelper @Inject constructor(@ApplicationContext private val context: Con
     suspend fun getSupportAd(): RewardedInterstitialAd? {
         MobileAds.initialize(context)
 
-        val adRequest = AdRequest.Builder().build()
+        val extra = Bundle().apply { putString("npa", "1") }
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdMobAdapter::class.java, extra)
+            .build()
 
         return suspendCoroutine {
             RewardedInterstitialAd.load(

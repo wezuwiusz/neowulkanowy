@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.dashboard
 
 import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder
@@ -81,6 +82,12 @@ class DashboardPresenter @Inject constructor(
             .launch("dashboard_pref")
     }
 
+    fun onAdminMessageDismissed(adminMessage: AdminMessage) {
+        preferencesRepository.dismissedAdminMessageIds += adminMessage.id
+
+        loadData(preferencesRepository.selectedDashboardTiles)
+    }
+
     fun onDragAndDropEnd(list: List<DashboardItem>) {
         with(dashboardItemLoadedList) {
             clear()
@@ -117,6 +124,7 @@ class DashboardPresenter @Inject constructor(
         forceRefresh: Boolean
     ) = dashboardTilesToLoad.filter { newItemToLoad ->
         dashboardLoadedTiles.none { it == newItemToLoad } || forceRefresh
+            || newItemToLoad == DashboardItem.Tile.ADMIN_MESSAGE
     }
 
     private fun removeUnselectedTiles(tilesToLoad: List<DashboardItem.Tile>) {
@@ -575,6 +583,10 @@ class DashboardPresenter @Inject constructor(
 
     private fun loadAdminMessage(student: Student, forceRefresh: Boolean) {
         flowWithResourceIn { adminMessageRepository.getAdminMessages(student, forceRefresh) }
+            .map {
+                val isDismissed = it.data?.id in preferencesRepository.dismissedAdminMessageIds
+                it.copy(data = it.data.takeUnless { isDismissed })
+            }
             .onEach {
                 when (it.status) {
                     Status.LOADING -> {
@@ -617,11 +629,16 @@ class DashboardPresenter @Inject constructor(
 
         sortDashboardItems()
 
-        if (dashboardItem is DashboardItem.AdminMessages && !dashboardItem.isDataLoaded) {
-            dashboardItemsToLoad = dashboardItemsToLoad - DashboardItem.Type.ADMIN_MESSAGE
-            dashboardTileLoadedList = dashboardTileLoadedList - DashboardItem.Tile.ADMIN_MESSAGE
+        if (dashboardItem is DashboardItem.AdminMessages) {
+            if (!dashboardItem.isDataLoaded) {
+                dashboardItemsToLoad = dashboardItemsToLoad - DashboardItem.Type.ADMIN_MESSAGE
+                dashboardTileLoadedList = dashboardTileLoadedList - DashboardItem.Tile.ADMIN_MESSAGE
 
-            dashboardItemLoadedList.removeAll { it.type == DashboardItem.Type.ADMIN_MESSAGE }
+                dashboardItemLoadedList.removeAll { it.type == DashboardItem.Type.ADMIN_MESSAGE }
+            } else {
+                dashboardItemsToLoad = dashboardItemsToLoad + DashboardItem.Type.ADMIN_MESSAGE
+                dashboardTileLoadedList = dashboardTileLoadedList + DashboardItem.Tile.ADMIN_MESSAGE
+            }
         }
 
         if (forceRefresh) {

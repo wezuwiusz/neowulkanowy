@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.entities.TimetableHeader
@@ -67,6 +68,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     var onConferencesTileClickListener: () -> Unit = {}
 
     var onAdminMessageClickListener: (String?) -> Unit = {}
+
+    var onAdminMessageDismissClickListener: (AdminMessage) -> Unit = {}
 
     val items = mutableListOf<DashboardItem>()
 
@@ -727,6 +730,10 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             dashboardAdminMessageItemDescription.text = item.content
             dashboardAdminMessageItemDescription.setTextColor(textColor)
             dashboardAdminMessageItemIcon.setColorFilter(textColor)
+            dashboardAdminMessageItemDismiss.isVisible = item.isDismissible
+            dashboardAdminMessageItemDismiss.setOnClickListener {
+                onAdminMessageDismissClickListener(item)
+            }
 
             root.setCardBackgroundColor(backgroundColor?.let { ColorStateList.valueOf(it) })
             item.destinationUrl?.let { url ->

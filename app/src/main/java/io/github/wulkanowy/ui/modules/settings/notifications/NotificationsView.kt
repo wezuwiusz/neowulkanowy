@@ -16,5 +16,9 @@ interface NotificationsView : BaseView {
 
     fun openNotificationPermissionDialog()
 
+    fun openNotificationExactAlarmSettings()
+
     fun setNotificationPiggybackPreferenceChecked(isChecked: Boolean)
+
+    fun setUpcomingLessonsNotificationPreferenceChecked(isChecked: Boolean)
 }
