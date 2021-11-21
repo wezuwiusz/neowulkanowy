@@ -20,8 +20,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.lang.ClassCastException
-import java.lang.IllegalStateException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -247,6 +245,14 @@ class PreferencesRepository @Inject constructor(
             return flowSharedPref.getStringSet(prefKey, defaultSet)
         }
 
+    var dismissedAdminMessageIds: List<Int>
+        get() = sharedPref.getStringSet(PREF_KEY_ADMIN_DISMISSED_MESSAGE_IDS, emptySet())
+            .orEmpty()
+            .map { it.toInt() }
+        set(value) = sharedPref.edit {
+            putStringSet(PREF_KEY_ADMIN_DISMISSED_MESSAGE_IDS, value.map { it.toString() }.toSet())
+        }
+
     var inAppReviewCount: Int
         get() = sharedPref.getInt(PREF_KEY_IN_APP_REVIEW_COUNT, 0)
         set(value) = sharedPref.edit().putInt(PREF_KEY_IN_APP_REVIEW_COUNT, value).apply()
@@ -288,5 +294,7 @@ class PreferencesRepository @Inject constructor(
         private const val PREF_KEY_IN_APP_REVIEW_DATE = "in_app_review_date"
 
         private const val PREF_KEY_IN_APP_REVIEW_DONE = "in_app_review_done"
+
+        private const val PREF_KEY_ADMIN_DISMISSED_MESSAGE_IDS = "admin_message_dismissed_ids"
     }
 }

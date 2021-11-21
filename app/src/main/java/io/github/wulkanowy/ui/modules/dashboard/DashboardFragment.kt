@@ -100,6 +100,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
                 mainActivity.pushView(ConferenceFragment.newInstance())
             }
             onAdminMessageClickListener = presenter::onAdminMessageSelected
+            onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed
 
             registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
