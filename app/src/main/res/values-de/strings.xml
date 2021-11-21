@@ -593,7 +593,9 @@
     <string name="pref_notify_notifications_piggyback">Offizielle App-Benachrichtigungen erfassen</string>
     <string name="pref_notification_piggyback_popup_title">Benachrichtigungen erfassen</string>
     <string name="pref_notification_piggyback_popup_description">With this feature you can gain a substitute of push notifications like in the official app. All you need to do is allow Wulkanowy to receive all notifications in your system settings.\n\nHow it works?\nWhen you get a notification in Dziennik VULCAN, Wulkanowy will be notified (that\'s what these extra permissions are for) and will trigger a sync so that can send its own notification.\n\nFOR ADVANCED USERS ONLY</string>
-    <string name="pref_notification_go_to_settings">Gehe zu Einstellungen</string>
+    <string name="pref_notification_exact_alarm_popup_title">Upcoming lesson notifications</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">You must allow the Wulkanowy app to set alarms and reminders in your system settings to use this feature.</string>
+    <string name="pref_notification_go_to_settings">Go to settings</string>
     <string name="pref_services_header">Synchronisierung</string>
     <string name="pref_services_switch">Automatische Aktualisierung</string>
     <string name="pref_services_suspended">An Feiertagen suspendiert</string>
@@ -615,6 +617,7 @@
     <string name="pref_ads_privacy_agree">Agree</string>
     <string name="pref_ads_privacy_link">Privacy policy</string>
     <string name="pref_ads_loading">Ad is loading</string>
+    <string name="pref_ads_once_per_visit">Thank you for your support, come back later for more ads</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>

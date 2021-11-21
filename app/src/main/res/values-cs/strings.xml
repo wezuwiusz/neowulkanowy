@@ -683,6 +683,8 @@
     <string name="pref_notify_notifications_piggyback">Zachytit upozornění oficiální aplikací</string>
     <string name="pref_notification_piggyback_popup_title">Zachytit upozornění</string>
     <string name="pref_notification_piggyback_popup_description">S touto funkcí můžete získat náhradu push upozornění jako v oficiální aplikaci. Vše, co musíte udělat, je povolit Wulkanowému číst všechna vaše upozornění v nastaveních systému.\n\nJak to funguje?\nKdyž obdržíte oznámení v Deníčku VULCAN, Wulkanowy bude o tom informován (k tomu je to dodatečné povolení) a spustí synchronizaci, aby mohl zaslat vlastní upozornění.\n\nPOUZE PRO POKROČILÉ UŽIVATELE</string>
+    <string name="pref_notification_exact_alarm_popup_title">Upozornění o nadcházející lekci</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">Musíte povolit Wulkanovému nastavit budíky a připomenutí v nastavení vašeho systému pro použití této funkce.</string>
     <string name="pref_notification_go_to_settings">Přejít do nastavení</string>
     <string name="pref_services_header">Synchronizace</string>
     <string name="pref_services_switch">Automatická aktualizace</string>
@@ -705,6 +707,7 @@
     <string name="pref_ads_privacy_agree">Souhlasím</string>
     <string name="pref_ads_privacy_link">Ochrana osobních údajů</string>
     <string name="pref_ads_loading">Reklama se načítá</string>
+    <string name="pref_ads_once_per_visit">Thank you for your support, come back later for more ads</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhled a chování</string>
     <string name="pref_settings_notifications_title">Upozornění</string>
