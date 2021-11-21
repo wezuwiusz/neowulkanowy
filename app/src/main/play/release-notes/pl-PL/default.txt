@@ -1,4 +1,4 @@
-Wersja 1.4.0
+Wersja 1.4.2
 
 - dodaliśmy możliwość dodawania własnych zadań domowych
 - dodaliśmy kafelek z wiadomościami od twórców

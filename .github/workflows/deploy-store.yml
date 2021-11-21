@@ -37,6 +37,7 @@ jobs:
           ANDROID_PUBLISHER_CREDENTIALS: ${{ secrets.ANDROID_PUBLISHER_CREDENTIALS }}
           ADMOB_PROJECT_ID: ${{ secrets.ADMOB_PROJECT_ID }}
           SINGLE_SUPPORT_AD_ID: ${{ secrets.SINGLE_SUPPORT_AD_ID }}
+          SET_BUILD_TIMESTAMP: ${{ secrets.SET_BUILD_TIMESTAMP }}
         run: ./gradlew publishPlayReleaseApps -PenableFirebase --stacktrace;
 
   deploy-app-gallery:
@@ -71,4 +72,5 @@ jobs:
           PLAY_STORE_PASSWORD: ${{ secrets.PLAY_STORE_PASSWORD }}
           PLAY_KEY_ALIAS: ${{ secrets.PLAY_KEY_ALIAS }}
           PLAY_KEY_PASSWORD: ${{ secrets.PLAY_KEY_PASSWORD }}
+          SET_BUILD_TIMESTAMP: ${{ secrets.SET_BUILD_TIMESTAMP }}
         run: ./gradlew bundleHmsRelease --stacktrace && ./gradlew publishHuaweiAppGalleryHmsRelease --stacktrace
