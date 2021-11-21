@@ -14,4 +14,6 @@ interface AdsView : BaseView {
     fun openPrivacyPolicy()
 
     fun showLoadingSupportAd(show: Boolean)
+
+    fun showWatchAdOncePerVisit(show: Boolean)
 }

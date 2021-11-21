@@ -35,7 +35,10 @@ class AdsPresenter @Inject constructor(
                 .onFailure(errorHandler::dispatch)
                 .onSuccess { it?.let { view?.showAd(it) } }
 
-            view?.showLoadingSupportAd(false)
+            view?.run {
+                showLoadingSupportAd(false)
+                showWatchAdOncePerVisit(true)
+            }
         }
     }
 }

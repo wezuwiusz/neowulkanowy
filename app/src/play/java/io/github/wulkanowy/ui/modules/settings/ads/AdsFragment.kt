@@ -68,6 +68,13 @@ class AdsFragment : PreferenceFragmentCompat(), MainView.TitledView, AdsView {
         }
     }
 
+    override fun showWatchAdOncePerVisit(show: Boolean) {
+        findPreference<Preference>(getString(R.string.pref_key_ads_single_support))?.run {
+            isEnabled = !show
+            summary = if (show) getString(R.string.pref_ads_once_per_visit) else null
+        }
+    }
+
     override fun showError(text: String, error: Throwable) {
         (activity as? BaseActivity<*, *>)?.showError(text, error)
     }
