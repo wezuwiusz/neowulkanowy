@@ -74,6 +74,7 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         with(binding.loginViewpager) {
             adapter = pagerAdapter
             isUserInputEnabled = false
+            offscreenPageLimit = 2
             setOnSelectPageListener(presenter::onViewSelected)
         }
 
