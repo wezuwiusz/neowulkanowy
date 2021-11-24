@@ -190,7 +190,7 @@ dependencies {
 
     implementation "androidx.preference:preference-ktx:1.1.1"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
-    implementation "androidx.viewpager:viewpager:1.0.0"
+    implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.2"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
