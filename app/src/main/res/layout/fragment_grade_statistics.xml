@@ -1,158 +1,164 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <io.github.wulkanowy.ui.widgets.MaterialLinearLayout
-        android:id="@+id/gradeStatisticsSubjectsContainer"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:windowBackground"
-        android:padding="5dp"
-        android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="UnusedAttribute"
-        tools:listitem="@layout/item_attendance_summary"
-        tools:visibility="visible">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
-        <Spinner
-            android:id="@+id/gradeStatisticsSubjects"
+        <io.github.wulkanowy.ui.widgets.MaterialLinearLayout
+            android:id="@+id/gradeStatisticsSubjectsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="middle"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="30dp"
-            android:paddingRight="30dp"
-            android:paddingBottom="10dp"
-            android:spinnerMode="dialog" />
-    </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
+            android:background="?android:windowBackground"
+            android:padding="5dp"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UnusedAttribute"
+            tools:listitem="@layout/item_attendance_summary"
+            tools:visibility="visible">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/gradeStatisticsSwipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <Spinner
+                android:id="@+id/gradeStatisticsSubjects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp"
+                android:spinnerMode="dialog" />
+        </io.github.wulkanowy.ui.widgets.MaterialLinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/gradeStatisticsSwipe"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/gradeStatisticsProgress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="gone" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/gradeStatisticsRecycler"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_grade_statistics_pie"
-                tools:visibility="visible" />
+                android:layout_height="match_parent">
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="12dp"
-                android:fillViewport="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/gradeStatisticsRecycler">
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/gradeStatisticsProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/gradeStatisticsRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_grade_statistics_pie"
+                    tools:visibility="visible" />
 
-                    <LinearLayout
-                        android:id="@+id/gradeStatisticsEmpty"
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    android:fillViewport="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/gradeStatisticsRecycler">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="UseCompoundDrawables"
-                        tools:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            app:srcCompat="@drawable/ic_main_grade"
-                            app:tint="?colorOnBackground"
-                            tools:ignore="contentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center"
-                            android:text="@string/grade_no_items"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/gradeStatisticsError"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="UseCompoundDrawables"
-                        tools:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            app:srcCompat="@drawable/ic_error"
-                            app:tint="?colorOnBackground"
-                            tools:ignore="contentDescription" />
-
-                        <TextView
-                            android:id="@+id/gradeStatisticsErrorMessage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:gravity="center"
-                            android:padding="8dp"
-                            android:text="@string/error_unknown"
-                            android:textSize="20sp" />
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
+                            android:id="@+id/gradeStatisticsEmpty"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:orientation="vertical"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="UseCompoundDrawables"
+                            tools:visibility="gone">
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/gradeStatisticsErrorDetails"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/ic_main_grade"
+                                app:tint="?colorOnBackground"
+                                tools:ignore="contentDescription" />
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:text="@string/all_details" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/gradeStatisticsErrorRetry"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/all_retry" />
+                                android:layout_marginTop="20dp"
+                                android:gravity="center"
+                                android:text="@string/grade_no_items"
+                                android:textSize="20sp" />
                         </LinearLayout>
-                    </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.core.widget.NestedScrollView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/gradeStatisticsError"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="UseCompoundDrawables"
+                            tools:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:srcCompat="@drawable/ic_error"
+                                app:tint="?colorOnBackground"
+                                tools:ignore="contentDescription" />
+
+                            <TextView
+                                android:id="@+id/gradeStatisticsErrorMessage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:text="@string/error_unknown"
+                                android:textSize="20sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/gradeStatisticsErrorDetails"
+                                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:text="@string/all_details" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/gradeStatisticsErrorRetry"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/all_retry" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.core.widget.NestedScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</FrameLayout>

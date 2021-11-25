@@ -123,14 +123,6 @@ class FragmentLifecycleLogger @Inject constructor() :
         Timber.d("${f::class.java.simpleName} VIEW DESTROYED")
     }
 
-    override fun onFragmentActivityCreated(
-        fm: FragmentManager,
-        f: Fragment,
-        savedInstanceState: Bundle?
-    ) {
-        Timber.d("${f::class.java.simpleName} ACTIVITY CREATED ${savedInstanceState.checkSavedState()}")
-    }
-
     override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
         Timber.d("${f::class.java.simpleName} PAUSED")
     }
@@ -141,5 +133,5 @@ class FragmentLifecycleLogger @Inject constructor() :
 }
 
 private fun Bundle?.checkSavedState() =
-    if (this == null) "(STATE IS NULL)" else "(STATE IS NOT NULL)"
+    if (this == null) "(STATE IS NULL)" else "(RESTORE STATE)"
 
