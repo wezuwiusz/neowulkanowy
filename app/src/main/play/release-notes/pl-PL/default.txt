@@ -1,10 +1,6 @@
-Wersja 1.4.2
+Wersja 1.4.3
 
-- dodaliśmy możliwość dodawania własnych zadań domowych
-- dodaliśmy kafelek z wiadomościami od twórców
-- dodaliśmy dodatkowy tryb rozwijania szczegółów ocen
-- dodaliśmy wsparcie dla Androida 12
-- ulepszyliśmy powiadomienia na Mi Bandzie
-- dokonaliśmy też kilka innych zmian i kosmetycznych poprawek poprawiających komfort używania aplikacji
+Naprawiliśmy drobne problemy ze stabilnością oraz małą usterkę w wyszukiwarce wiadomości.
+Wszystko po to, aby jeszcze bardziej podnieść komfort z używania aplikacji!
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
