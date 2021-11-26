@@ -707,7 +707,7 @@
     <string name="pref_ads_privacy_agree">Súhlasím</string>
     <string name="pref_ads_privacy_link">Ochrana osobných údajov</string>
     <string name="pref_ads_loading">Reklama sa načítava</string>
-    <string name="pref_ads_once_per_visit">Thank you for your support, come back later for more ads</string>
+    <string name="pref_ads_once_per_visit">Ďakujeme za vašu podporu, vráťte sa neskôr pre viac reklám</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhľad a správanie</string>
     <string name="pref_settings_notifications_title">Upozornenia</string>
