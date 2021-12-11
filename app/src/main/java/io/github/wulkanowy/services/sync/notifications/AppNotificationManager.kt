@@ -74,7 +74,7 @@ class AppNotificationManager @Inject constructor(
         student: Student
     ) {
         val notificationType = groupNotificationData.type
-        val groupType = notificationType.group ?: return
+        val groupType = notificationType.channel
         val group = "${groupType}_${student.id}"
 
         sendSummaryNotification(groupNotificationData, group, student)
