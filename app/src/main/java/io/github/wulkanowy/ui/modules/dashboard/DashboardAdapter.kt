@@ -422,10 +422,12 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 isFirstTimeRangeVisible = true
                 isFirstTimeVisible = false
             } else {
-                firstTimeText = context.resources.getQuantityString(
-                    R.plurals.dashboard_timetable_first_lesson_time_in_minutes,
-                    minutesToStartLesson.toInt(),
-                    minutesToStartLesson
+                firstTimeText = context.getString(
+                    R.string.timetable_time_until,
+                    context.getString(
+                        R.string.timetable_minutes,
+                        minutesToStartLesson.toString()
+                    )
                 )
                 firstTimeRangeText = ""
 
@@ -461,10 +463,12 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 0
             }
 
-            firstTimeText = context.resources.getQuantityString(
-                R.plurals.dashboard_timetable_first_lesson_time_more_minutes,
-                minutesToEndLesson.toInt(),
-                minutesToEndLesson
+            firstTimeText = context.getString(
+                R.string.timetable_time_left,
+                context.getString(
+                    R.string.timetable_minutes,
+                    minutesToEndLesson.toString()
+                )
             )
             firstTimeRangeText = ""
 

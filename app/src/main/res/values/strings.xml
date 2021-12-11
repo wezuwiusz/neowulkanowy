@@ -247,8 +247,8 @@
         <item quantity="other">New exams</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">You received %d new exam</item>
-        <item quantity="other">You received %d new exams</item>
+        <item quantity="one">%d new exam</item>
+        <item quantity="other">%d new exams</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d exam</item>
@@ -541,14 +541,6 @@
     <string name="dashboard_timetable_first_lesson_title_soon">Soon:</string>
     <string name="dashboard_timetable_first_lesson_title_first">First:</string>
     <string name="dashboard_timetable_first_lesson_title_now">Now:</string>
-    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
-        <item quantity="one">in %1$d minute</item>
-        <item quantity="other">in %1$d minutes</item>
-    </plurals>
-    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
-        <item quantity="one">%1$d more minute</item>
-        <item quantity="other">%1$d more minutes</item>
-    </plurals>
     <string name="dashboard_timetable_second_lesson_value_end">End of lessons</string>
     <string name="dashboard_timetable_second_lessons_title">Next:</string>
     <string name="dashboard_timetable_third_title">Later:</string>

@@ -553,18 +553,6 @@
     <string name="dashboard_timetable_first_lesson_title_soon">Čoskoro:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Prvá:</string>
     <string name="dashboard_timetable_first_lesson_title_now">Teraz:</string>
-    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
-        <item quantity="one">za %1$d minútu</item>
-        <item quantity="few">za %1$d minúty</item>
-        <item quantity="many">za %1$d minút</item>
-        <item quantity="other">za %1$d minút</item>
-    </plurals>
-    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
-        <item quantity="one">ešte %1$d minútu</item>
-        <item quantity="few">ešte %1$d minúty</item>
-        <item quantity="many">ešte %1$d minút</item>
-        <item quantity="other">ešte %1$d minút</item>
-    </plurals>
     <string name="dashboard_timetable_second_lesson_value_end">Koniec lekcií</string>
     <string name="dashboard_timetable_second_lessons_title">Ďalej:</string>
     <string name="dashboard_timetable_third_title">Neskôr:</string>

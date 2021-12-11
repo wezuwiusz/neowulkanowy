@@ -477,14 +477,6 @@
     <string name="dashboard_timetable_first_lesson_title_soon">Bald:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Erstens:</string>
     <string name="dashboard_timetable_first_lesson_title_now">Jetzt:</string>
-    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
-        <item quantity="one">in %1$d Minute</item>
-        <item quantity="other">in %1$d Minuten</item>
-    </plurals>
-    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
-        <item quantity="one">Noch %1$d Minute</item>
-        <item quantity="other">Noch %1$d Minuten</item>
-    </plurals>
     <string name="dashboard_timetable_second_lesson_value_end">Ende der Lektion</string>
     <string name="dashboard_timetable_second_lessons_title">Nächste:</string>
     <string name="dashboard_timetable_third_title">Später:</string>

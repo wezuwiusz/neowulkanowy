@@ -553,18 +553,6 @@
     <string name="dashboard_timetable_first_lesson_title_soon">Brzy:</string>
     <string name="dashboard_timetable_first_lesson_title_first">První:</string>
     <string name="dashboard_timetable_first_lesson_title_now">Teď:</string>
-    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
-        <item quantity="one">za %1$d minutu</item>
-        <item quantity="few">za %1$d minuty</item>
-        <item quantity="many">za %1$d minut</item>
-        <item quantity="other">za %1$d minut</item>
-    </plurals>
-    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
-        <item quantity="one">ještě %1$d minutu</item>
-        <item quantity="few">ještě %1$d minuty</item>
-        <item quantity="many">ještě %1$d minut</item>
-        <item quantity="other">ještě %1$d minut</item>
-    </plurals>
     <string name="dashboard_timetable_second_lesson_value_end">Konec lekcí</string>
     <string name="dashboard_timetable_second_lessons_title">Další:</string>
     <string name="dashboard_timetable_third_title">Později:</string>
