@@ -230,10 +230,14 @@ class GradeDetailsPresenter @Inject constructor(
                     gradesWithAverages.filter { it.grades.isNotEmpty() }
                 } else gradesWithAverages
             }
-            .let {
+            .let { gradeSubjects ->
                 when (preferencesRepository.gradeSortingMode) {
-                    DATE -> it.sortedByDescending { gradeDetailsWithAverage -> gradeDetailsWithAverage.grades.firstOrNull()?.date }
-                    ALPHABETIC -> it.sortedBy { gradeDetailsWithAverage -> gradeDetailsWithAverage.subject.lowercase() }
+                    DATE -> gradeSubjects.sortedByDescending { gradeDetailsWithAverage ->
+                        gradeDetailsWithAverage.grades.maxByOrNull { it.date }?.date
+                    }
+                    ALPHABETIC -> gradeSubjects.sortedBy { gradeDetailsWithAverage ->
+                        gradeDetailsWithAverage.subject.lowercase()
+                    }
                 }
             }
             .map { (subject, average, points, _, grades) ->
