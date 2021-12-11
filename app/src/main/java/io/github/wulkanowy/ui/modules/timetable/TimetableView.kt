@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.timetable
 
 import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.data.enums.TimetableMode
 import io.github.wulkanowy.ui.base.BaseView
 import java.time.LocalDate
 
@@ -12,7 +13,12 @@ interface TimetableView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<Timetable>, showWholeClassPlanType: String, showGroupsInPlanType: Boolean, showTimetableTimers: Boolean)
+    fun updateData(
+        data: List<Timetable>,
+        showWholeClassPlanType: TimetableMode,
+        showGroupsInPlanType: Boolean,
+        showTimetableTimers: Boolean
+    )
 
     fun updateNavigationDay(date: String)
 
