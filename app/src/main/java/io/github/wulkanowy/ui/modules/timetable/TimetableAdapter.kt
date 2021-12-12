@@ -36,7 +36,7 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
     var onClickListener: (Timetable) -> Unit = {}
 
-    private lateinit var showWholeClassPlan: TimetableMode
+    private var showWholeClassPlan = TimetableMode.ONLY_CURRENT_GROUP
 
     private var showGroupsInPlan: Boolean = false
 
