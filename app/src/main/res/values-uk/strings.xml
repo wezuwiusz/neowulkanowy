@@ -253,10 +253,10 @@
         <item quantity="other">Нові іспити</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">Ви отримали %d новий іспит</item>
-        <item quantity="few">Ви отримали %d новий іспит</item>
-        <item quantity="many">Ви отримали %d новий іспит</item>
-        <item quantity="other">Ви отримали %d нових іспитів</item>
+        <item quantity="one">%d new exam</item>
+        <item quantity="few">%d new exams</item>
+        <item quantity="many">%d new exams</item>
+        <item quantity="other">%d new exams</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d екзамен</item>
@@ -671,9 +671,9 @@
     <string name="pref_notify_notifications_piggyback">Захоплювати офіційні сповіщення програм</string>
     <string name="pref_notification_piggyback_popup_title">Показувати push-повідомлення</string>
     <string name="pref_notification_piggyback_popup_description">За допомогою цієї функції ви можете отримати заміну push -повідомлень, як у офіційному додатку. Все, що вам потрібно зробити, це дозволити Wulkanowy отримувати всі сповіщення у налаштуваннях вашої системи. \ N \ nЯк це працює? \ NКоли ви отримаєте сповіщення у Dziennik VULCAN, Wulkanowy отримає сповіщення (для цього призначені ці додаткові дозволи) і запустить синхронізація, яка може надсилати власне сповіщення. \ n \ n ТІЛЬКИ ДЛЯ РОЗШИРЕНИХ КОРИСТУВАЧІВ</string>
-    <string name="pref_notification_exact_alarm_popup_title">Upcoming lesson notifications</string>
-    <string name="pref_notification_exact_alarm_popup_descriptions">You must allow the Wulkanowy app to set alarms and reminders in your system settings to use this feature.</string>
-    <string name="pref_notification_go_to_settings">Go to settings</string>
+    <string name="pref_notification_exact_alarm_popup_title">Показувати повідомлення о наступних уроках</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">Ви повинні дозволити Wulkanowy встановити будильник та нагадування у налаштуваннях вашої системи для використання цієї функції.</string>
+    <string name="pref_notification_go_to_settings">Перейти до налаштувань</string>
     <string name="pref_services_header">Синхронізація</string>
     <string name="pref_services_switch">Автоматична синхронізація</string>
     <string name="pref_services_suspended">Призупинено на час канікул</string>
@@ -695,7 +695,7 @@
     <string name="pref_ads_privacy_agree">Погоджуюсь</string>
     <string name="pref_ads_privacy_link">Політика конфіденційності</string>
     <string name="pref_ads_loading">Реклама завантажується</string>
-    <string name="pref_ads_once_per_visit">Thank you for your support, come back later for more ads</string>
+    <string name="pref_ads_once_per_visit">Дякуємо за вашу підтримку, повертайтеся пізніше для більшої кількості оголошень</string>
     <string name="pref_settings_advanced_title">Додатково</string>
     <string name="pref_settings_appearance_title">Вигляд &amp; Поведінка</string>
     <string name="pref_settings_notifications_title">Повідомлення</string>

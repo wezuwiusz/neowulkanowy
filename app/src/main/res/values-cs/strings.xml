@@ -253,10 +253,10 @@
         <item quantity="other">Nové zkoušky</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">Máte %d novou zkoušku</item>
-        <item quantity="few">Máte %d nové zkoušky</item>
-        <item quantity="many">Máte %d nových zkoušek</item>
-        <item quantity="other">Máte %d nových zkoušek</item>
+        <item quantity="one">%d nová zkouška</item>
+        <item quantity="few">%d nové zkoušky</item>
+        <item quantity="many">%d nových zkoušek</item>
+        <item quantity="other">%d nových zkoušek</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d zkouška</item>
@@ -750,8 +750,8 @@
     <string name="error_timeout">Nelze se připojit ke deníku. Servery mohou být přetíženy. Prosím zkuste to znovu později</string>
     <string name="error_login_failed">Načítání dat se nezdařilo. Prosím zkuste to znovu později</string>
     <string name="error_password_change_required">Je vyžadována změna hesla pro deník</string>
-    <string name="error_service_unavailable">Probíhá údržba UONET+ deník. Zkuste to později znovu</string>
-    <string name="error_unknown_uonet">Neznámá chyba denika UONET+. Prosím zkuste to znovu později</string>
+    <string name="error_service_unavailable">Probíhá údržba deníku UONET+. Zkuste to později znovu</string>
+    <string name="error_unknown_uonet">Neznámá chyba deniku UONET+. Prosím zkuste to znovu později</string>
     <string name="error_unknown_app">Neznámá chyba aplikace. Prosím zkuste to znovu později</string>
     <string name="error_unknown">Vyskytla se neočekávaná chyba</string>
     <string name="error_feature_disabled">Funkce je deaktivována přes vaší školou</string>

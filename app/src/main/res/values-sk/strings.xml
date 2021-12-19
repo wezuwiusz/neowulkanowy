@@ -253,10 +253,10 @@
         <item quantity="other">Nové skúšky</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">Máte %d novú skúšku</item>
-        <item quantity="few">Máte %d nové skúšky</item>
-        <item quantity="many">Máte %d nových skúšok</item>
-        <item quantity="other">Máte %d nových skúšok</item>
+        <item quantity="one">%d nová skúška</item>
+        <item quantity="few">%d nové skúšky</item>
+        <item quantity="many">%d nových skúšok</item>
+        <item quantity="other">%d nových skúšok</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d skúška</item>
@@ -750,7 +750,7 @@
     <string name="error_timeout">Nedá sa pripojiť ku denníku. Servery môžu byť preťažené. Prosím skúste to znova neskôr</string>
     <string name="error_login_failed">Načítanie údajov zlyhalo. Skúste neskôr prosím</string>
     <string name="error_password_change_required">Je vyžadovaná zmena hesla pre denník</string>
-    <string name="error_service_unavailable">Prebieha údržba UONET+ denník. Skúste to neskôr znova</string>
+    <string name="error_service_unavailable">Prebieha údržba denníka UONET+. Skúste to neskôr znova</string>
     <string name="error_unknown_uonet">Neznáma chyba dennika UONET+. Prosím skúste to znova neskôr</string>
     <string name="error_unknown_app">Neznáma chyba aplikácie. Prosím skúste to znova neskôr</string>
     <string name="error_unknown">Vyskytla sa neočakávaná chyba</string>

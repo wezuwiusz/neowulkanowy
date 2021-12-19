@@ -223,8 +223,8 @@
         <item quantity="other">Neue prüfungen</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">Du hast %d neue Prüfung</item>
-        <item quantity="other">Du hast %d neue Prüfungen</item>
+        <item quantity="one">%d new exam</item>
+        <item quantity="other">%d new exams</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d prüfung</item>

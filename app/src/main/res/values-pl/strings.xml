@@ -253,10 +253,10 @@
         <item quantity="other">Nowe sprawdziany</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">Masz %d nowy sprawdzian</item>
-        <item quantity="few">Masz %d nowe sprawdziany</item>
-        <item quantity="many">Masz %d nowych sprawdzianów</item>
-        <item quantity="other">Masz %d nowych sprawdzianów</item>
+        <item quantity="one">%d nowy sprawdzian</item>
+        <item quantity="few">%d nowe sprawdziany</item>
+        <item quantity="many">%d nowych sprawdzianów</item>
+        <item quantity="other">%d nowych sprawdzianów</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d sprawdzian</item>
