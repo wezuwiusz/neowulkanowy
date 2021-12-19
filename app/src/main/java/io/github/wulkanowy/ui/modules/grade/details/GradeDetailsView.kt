@@ -1,7 +1,8 @@
 package io.github.wulkanowy.ui.modules.grade.details
 
 import io.github.wulkanowy.data.db.entities.Grade
-import io.github.wulkanowy.ui.modules.grade.GradeExpandMode
+import io.github.wulkanowy.data.enums.GradeColorTheme
+import io.github.wulkanowy.data.enums.GradeExpandMode
 import io.github.wulkanowy.ui.base.BaseView
 
 interface GradeDetailsView : BaseView {
@@ -10,7 +11,7 @@ interface GradeDetailsView : BaseView {
 
     fun initView()
 
-    fun updateData(data: List<GradeDetailsItem>, expandMode: GradeExpandMode, gradeColorTheme: String)
+    fun updateData(data: List<GradeDetailsItem>, expandMode: GradeExpandMode, gradeColorTheme: GradeColorTheme)
 
     fun updateItem(item: Grade, position: Int)
 
@@ -22,7 +23,7 @@ interface GradeDetailsView : BaseView {
 
     fun collapseAllItems()
 
-    fun showGradeDialog(grade: Grade, colorScheme: String)
+    fun showGradeDialog(grade: Grade, colorTheme: GradeColorTheme)
 
     fun showContent(show: Boolean)
 

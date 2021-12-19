@@ -14,6 +14,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.data.enums.TimetableMode
 import io.github.wulkanowy.databinding.FragmentTimetableBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -115,7 +116,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override fun updateData(
         data: List<Timetable>,
-        showWholeClassPlanType: String,
+        showWholeClassPlanType: TimetableMode,
         showGroupsInPlanType: Boolean,
         showTimetableTimers: Boolean
     ) {

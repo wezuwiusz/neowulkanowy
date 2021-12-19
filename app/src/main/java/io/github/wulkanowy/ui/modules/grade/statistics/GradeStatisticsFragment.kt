@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
 import io.github.wulkanowy.databinding.FragmentGradeStatisticsBinding
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -90,12 +91,12 @@ class GradeStatisticsFragment :
 
     override fun updateData(
         newItems: List<GradeStatisticsItem>,
-        newTheme: String,
+        newTheme: GradeColorTheme,
         showAllSubjectsOnStatisticsList: Boolean
     ) {
         with(statisticsAdapter) {
             showAllSubjectsOnList = showAllSubjectsOnStatisticsList
-            theme = newTheme
+            gradeColorTheme = newTheme
             items = newItems
             notifyDataSetChanged()
         }

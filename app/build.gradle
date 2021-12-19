@@ -22,8 +22,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 101
-        versionName "1.4.3"
+        versionCode 102
+        versionName "1.4.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -150,7 +150,7 @@ kapt {
 play {
     defaultToAppBundles = false
     track = 'beta'
-    updatePriority = 1
+    updatePriority = 4
     enabled.set(false)
 }
 
@@ -174,7 +174,7 @@ ext {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:1.4.3"
+    implementation "io.github.wulkanowy:sdk:1.4.4"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
@@ -229,7 +229,7 @@ dependencies {
     implementation 'me.xdrop:fuzzywuzzy:1.3.1'
     implementation 'com.fredporciuncula:flow-preferences:1.6.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:29.0.0')
+    playImplementation platform('com.google.firebase:firebase-bom:29.0.2')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-messaging:'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
@@ -238,7 +238,7 @@ dependencies {
     playImplementation 'com.google.android.gms:play-services-ads:20.5.0'
 
     hmsImplementation 'com.huawei.hms:hianalytics:6.3.2.300'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.2.200'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.2.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
@@ -250,7 +250,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
-    testImplementation 'org.robolectric:robolectric:4.7.2'
+    testImplementation 'org.robolectric:robolectric:4.7.3'
     testImplementation "androidx.test:runner:1.4.0"
     testImplementation "androidx.test.ext:junit:1.1.3"
     testImplementation "androidx.test:core:1.4.0"

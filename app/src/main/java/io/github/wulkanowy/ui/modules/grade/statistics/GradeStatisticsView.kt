@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.grade.statistics
 
+import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.data.pojos.GradeStatisticsItem
 import io.github.wulkanowy.ui.base.BaseView
 
@@ -15,7 +16,7 @@ interface GradeStatisticsView : BaseView {
 
     fun updateData(
         newItems: List<GradeStatisticsItem>,
-        newTheme: String,
+        newTheme: GradeColorTheme,
         showAllSubjectsOnStatisticsList: Boolean
     )
 

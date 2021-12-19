@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.enums.AppTheme
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -20,7 +21,7 @@ class ThemeManager @Inject constructor(private val preferencesRepository: Prefer
     fun applyActivityTheme(activity: AppCompatActivity) {
         if (isThemeApplicable(activity)) {
             applyDefaultTheme()
-            if (preferencesRepository.appTheme == "black") {
+            if (preferencesRepository.appTheme == AppTheme.BLACK) {
                 when (activity) {
                     is MainActivity -> activity.setTheme(R.style.WulkanowyTheme_Black)
                     is LoginActivity -> activity.setTheme(R.style.WulkanowyTheme_Login_Black)
@@ -32,11 +33,10 @@ class ThemeManager @Inject constructor(private val preferencesRepository: Prefer
 
     fun applyDefaultTheme() {
         AppCompatDelegate.setDefaultNightMode(
-            when (val theme = preferencesRepository.appTheme) {
-                "light" -> MODE_NIGHT_NO
-                "dark", "black" -> MODE_NIGHT_YES
-                "system" -> MODE_NIGHT_FOLLOW_SYSTEM
-                else -> throw IllegalArgumentException("Wrong theme: $theme")
+            when (preferencesRepository.appTheme) {
+                AppTheme.LIGHT -> MODE_NIGHT_NO
+                AppTheme.DARK, AppTheme.BLACK -> MODE_NIGHT_YES
+                AppTheme.SYSTEM -> MODE_NIGHT_FOLLOW_SYSTEM
             }
         )
     }

@@ -2,6 +2,9 @@ package io.github.wulkanowy.ui.modules.grade.details
 
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.enums.GradeExpandMode
+import io.github.wulkanowy.data.enums.GradeSortingMode.ALPHABETIC
+import io.github.wulkanowy.data.enums.GradeSortingMode.DATE
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
@@ -9,9 +12,6 @@ import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
-import io.github.wulkanowy.ui.modules.grade.GradeExpandMode
-import io.github.wulkanowy.ui.modules.grade.GradeSortingMode.ALPHABETIC
-import io.github.wulkanowy.ui.modules.grade.GradeSortingMode.DATE
 import io.github.wulkanowy.ui.modules.grade.GradeSubject
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.afterLoading
@@ -230,10 +230,14 @@ class GradeDetailsPresenter @Inject constructor(
                     gradesWithAverages.filter { it.grades.isNotEmpty() }
                 } else gradesWithAverages
             }
-            .let {
+            .let { gradeSubjects ->
                 when (preferencesRepository.gradeSortingMode) {
-                    DATE -> it.sortedByDescending { gradeDetailsWithAverage -> gradeDetailsWithAverage.grades.firstOrNull()?.date }
-                    ALPHABETIC -> it.sortedBy { gradeDetailsWithAverage -> gradeDetailsWithAverage.subject.lowercase() }
+                    DATE -> gradeSubjects.sortedByDescending { gradeDetailsWithAverage ->
+                        gradeDetailsWithAverage.grades.maxByOrNull { it.date }?.date
+                    }
+                    ALPHABETIC -> gradeSubjects.sortedBy { gradeDetailsWithAverage ->
+                        gradeDetailsWithAverage.subject.lowercase()
+                    }
                 }
             }
             .map { (subject, average, points, _, grades) ->

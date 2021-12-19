@@ -3,7 +3,7 @@ package io.github.wulkanowy.data.db.migrations
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import io.github.wulkanowy.data.db.SharedPrefProvider
-import io.github.wulkanowy.ui.modules.grade.GradeExpandMode
+import io.github.wulkanowy.data.enums.GradeExpandMode
 
 class Migration41(private val sharedPrefProvider: SharedPrefProvider) : Migration(40, 41) {
 

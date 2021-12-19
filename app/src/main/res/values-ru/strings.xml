@@ -553,18 +553,6 @@
     <string name="dashboard_timetable_first_lesson_title_soon">Скоро:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Первый:</string>
     <string name="dashboard_timetable_first_lesson_title_now">Сейчас:</string>
-    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
-        <item quantity="one">через %1$d минуту</item>
-        <item quantity="few">через %1$d минуту</item>
-        <item quantity="many">через %1$d минуту</item>
-        <item quantity="other">через %1$d минут</item>
-    </plurals>
-    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
-        <item quantity="one">Еще %1$d минута</item>
-        <item quantity="few">Еще %1$d минута</item>
-        <item quantity="many">Еще %1$d минута</item>
-        <item quantity="other">Ещё %1$d минут</item>
-    </plurals>
     <string name="dashboard_timetable_second_lesson_value_end">Окончание уроков</string>
     <string name="dashboard_timetable_second_lessons_title">Далее:</string>
     <string name="dashboard_timetable_third_title">Позднее:</string>

@@ -74,7 +74,7 @@ class SchoolAnnouncementPresenter @Inject constructor(
                 Status.SUCCESS -> {
                     Timber.i("Loading School announcement result: Success")
                     view?.apply {
-                        updateData(it.data!!.sortedByDescending { item -> item.date })
+                        updateData(it.data!!)
                         showEmpty(it.data.isEmpty())
                         showErrorView(false)
                         showContent(it.data.isNotEmpty())

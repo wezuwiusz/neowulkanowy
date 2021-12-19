@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.timetable
 import android.annotation.SuppressLint
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.data.enums.TimetableMode
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
@@ -197,7 +198,7 @@ class TimetablePresenter @Inject constructor(
     }
 
     private fun createItems(items: List<Timetable>) = items.filter { item ->
-        if (prefRepository.showWholeClassPlan == "no") item.isStudentPlan else true
+        if (prefRepository.showWholeClassPlan == TimetableMode.ONLY_CURRENT_GROUP) item.isStudentPlan else true
     }.sortedWith(compareBy({ item -> item.number }, { item -> !item.isStudentPlan }))
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

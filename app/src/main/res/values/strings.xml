@@ -71,7 +71,7 @@
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Send email</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
-    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nOstatni błąd: %5$s\n\nPełna nazwa szkoły i klasa ucznia: </string>
+    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nOstatni błąd: %5$s\n\nNazwa szkoły wraz z miejscowością i numer klasy: </string>
     <string name="login_recover_warning">Make sure you select the correct UONET+ register variation!</string>
     <string name="login_recover_button">I forgot my password</string>
     <string name="login_recover_title">Recover your account</string>
@@ -247,8 +247,8 @@
         <item quantity="other">New exams</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">You received %d new exam</item>
-        <item quantity="other">You received %d new exams</item>
+        <item quantity="one">%d new exam</item>
+        <item quantity="other">%d new exams</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d exam</item>
@@ -541,14 +541,6 @@
     <string name="dashboard_timetable_first_lesson_title_soon">Soon:</string>
     <string name="dashboard_timetable_first_lesson_title_first">First:</string>
     <string name="dashboard_timetable_first_lesson_title_now">Now:</string>
-    <plurals name="dashboard_timetable_first_lesson_time_in_minutes">
-        <item quantity="one">in %1$d minute</item>
-        <item quantity="other">in %1$d minutes</item>
-    </plurals>
-    <plurals name="dashboard_timetable_first_lesson_time_more_minutes">
-        <item quantity="one">%1$d more minute</item>
-        <item quantity="other">%1$d more minutes</item>
-    </plurals>
     <string name="dashboard_timetable_second_lesson_value_end">End of lessons</string>
     <string name="dashboard_timetable_second_lessons_title">Next:</string>
     <string name="dashboard_timetable_third_title">Later:</string>
