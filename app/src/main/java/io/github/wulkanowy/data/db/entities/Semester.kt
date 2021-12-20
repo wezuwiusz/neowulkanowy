@@ -42,7 +42,6 @@ data class Semester(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 
-
     @ColumnInfo(name = "is_current")
     var current: Boolean = false
 }

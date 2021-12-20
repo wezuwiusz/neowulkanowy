@@ -18,10 +18,10 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.firstSchoolDayInSchoolYear
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.getThemeAttrColor
-import io.github.wulkanowy.utils.schoolYearEnd
-import io.github.wulkanowy.utils.schoolYearStart
+import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
 import io.github.wulkanowy.utils.toLocalDateTime
 import io.github.wulkanowy.utils.toTimestamp
 import java.time.LocalDate
@@ -68,9 +68,7 @@ class CompletedLessonsFragment :
             completedLessonsSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             completedLessonsSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
             completedLessonsSwipe.setProgressBackgroundColorSchemeColor(
-                requireContext().getThemeAttrColor(
-                    R.attr.colorSwipeRefresh
-                )
+                requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh)
             )
             completedLessonErrorRetry.setOnClickListener { presenter.onRetry() }
             completedLessonErrorDetails.setOnClickListener { presenter.onDetailsClick() }
@@ -154,19 +152,18 @@ class CompletedLessonsFragment :
 
     override fun showDatePickerDialog(currentDate: LocalDate) {
         val now = LocalDate.now()
-        val startOfSchoolYear = now.schoolYearStart.toTimestamp()
-        val endOfSchoolYear = now.schoolYearEnd.toTimestamp()
+        val startOfSchoolYear = now.firstSchoolDayInSchoolYear.toTimestamp()
+        val endOfSchoolYear = now.lastSchoolDayInSchoolYear.toTimestamp()
 
         val constraintsBuilder = CalendarConstraints.Builder().apply {
             setValidator(SchoolDaysValidator(startOfSchoolYear, endOfSchoolYear))
             setStart(startOfSchoolYear)
             setEnd(endOfSchoolYear)
         }
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setCalendarConstraints(constraintsBuilder.build())
-                .setSelection(currentDate.toTimestamp())
-                .build()
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setCalendarConstraints(constraintsBuilder.build())
+            .setSelection(currentDate.toTimestamp())
+            .build()
 
         datePicker.addOnPositiveButtonClickListener {
             val date = it.toLocalDateTime()

@@ -198,6 +198,17 @@
     <string name="additional_lessons_title">Additional lessons</string>
     <string name="additional_lessons_button">Show additional lessons</string>
     <string name="additional_lessons_no_items">No info about additional lessons</string>
+    <string name="additional_lessons_add">New lesson</string>
+    <string name="additional_lessons_add_title">New additional lesson</string>
+    <string name="additional_lessons_add_success">Additional lesson added successfully</string>
+    <string name="additional_lessons_delete_success">Additional lesson deleted successfully</string>
+    <string name="additional_lessons_repeat">Repeat weekly</string>
+    <string name="additional_lessons_delete_title">Delete additional lesson</string>
+    <string name="additional_lessons_delete_one">Just this lesson</string>
+    <string name="additional_lessons_delete_series">All in the series</string>
+    <string name="additional_lessons_start">Start time</string>
+    <string name="additional_lessons_end">End time</string>
+    <string name="additional_lessons_end_time_error">End time must be greater than start time</string>
 
 
     <!--Attendance-->

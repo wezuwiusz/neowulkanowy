@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Entity(tableName = "TimetableAdditional")
 data class TimetableAdditional(
@@ -27,4 +28,10 @@ data class TimetableAdditional(
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    @ColumnInfo(name = "repeat_id", defaultValue = "NULL")
+    var repeatId: UUID? = null
+
+    @ColumnInfo(name = "is_added_by_user", defaultValue = "0")
+    var isAddedByUser: Boolean = false
 }

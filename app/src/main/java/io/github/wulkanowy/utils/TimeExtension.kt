@@ -85,35 +85,31 @@ inline val LocalDate.previousOrSameSchoolDay: LocalDate
 inline val LocalDate.weekDayName: String
     get() = format(DateTimeFormatter.ofPattern("EEEE", Locale.getDefault()))
 
-inline val LocalDate.monday: LocalDate
-    get() = with(MONDAY)
+inline val LocalDate.monday: LocalDate get() = with(MONDAY)
 
-inline val LocalDate.sunday: LocalDate
-    get() = with(SUNDAY)
+inline val LocalDate.sunday: LocalDate get() = with(SUNDAY)
 
 /**
  * [Dz.U. 2016 poz. 1335](http://prawo.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20160001335)
  */
-inline val LocalDate.isHolidays: Boolean
-    get() = isBefore(firstSchoolDay) && isAfter(lastSchoolDay)
+val LocalDate.isHolidays: Boolean
+    get() = isBefore(firstSchoolDayInCalendarYear) && isAfter(lastSchoolDayInCalendarYear)
 
-inline val LocalDate.firstSchoolDay: LocalDate
-    get() = LocalDate.of(year, 9, 1).run {
-        when (dayOfWeek) {
-            FRIDAY, SATURDAY, SUNDAY -> with(firstInMonth(MONDAY))
-            else -> this
-        }
+val LocalDate.firstSchoolDayInSchoolYear: LocalDate
+    get() = withYear(if (this.monthValue <= 6) this.year - 1 else this.year).firstSchoolDayInCalendarYear
+
+val LocalDate.lastSchoolDayInSchoolYear: LocalDate
+    get() = withYear(if (this.monthValue > 6) this.year + 1 else this.year).lastSchoolDayInCalendarYear
+
+fun LocalDate.getLastSchoolDayIfHoliday(schoolYear: Int): LocalDate {
+    val date = LocalDate.of(schoolYear.getSchoolYearByMonth(monthValue), monthValue, dayOfMonth)
+
+    if (date.isHolidays) {
+        return date.lastSchoolDayInCalendarYear
     }
 
-inline val LocalDate.lastSchoolDay: LocalDate
-    get() = LocalDate.of(year, 6, 20)
-        .with(next(FRIDAY))
-
-inline val LocalDate.schoolYearStart: LocalDate
-    get() = withYear(if (this.monthValue <= 6) this.year - 1 else this.year).firstSchoolDay
-
-inline val LocalDate.schoolYearEnd: LocalDate
-    get() = withYear(if (this.monthValue > 6) this.year + 1 else this.year).lastSchoolDay
+    return date
+}
 
 private fun Int.getSchoolYearByMonth(monthValue: Int): Int {
     return when (monthValue) {
@@ -122,12 +118,15 @@ private fun Int.getSchoolYearByMonth(monthValue: Int): Int {
     }
 }
 
-fun LocalDate.getLastSchoolDayIfHoliday(schoolYear: Int): LocalDate {
-    val date = LocalDate.of(schoolYear.getSchoolYearByMonth(monthValue), monthValue, dayOfMonth)
-
-    if (date.isHolidays) {
-        return date.lastSchoolDay
+private inline val LocalDate.firstSchoolDayInCalendarYear: LocalDate
+    get() = LocalDate.of(year, 9, 1).run {
+        when (dayOfWeek) {
+            FRIDAY, SATURDAY, SUNDAY -> with(firstInMonth(MONDAY))
+            else -> this
+        }
     }
 
-    return date
-}
+private inline val LocalDate.lastSchoolDayInCalendarYear: LocalDate
+    get() = LocalDate.of(year, 6, 20)
+        .with(next(FRIDAY))
+

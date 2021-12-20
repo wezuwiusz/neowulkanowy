@@ -114,7 +114,6 @@
             </intent-filter>
         </service>
 
-
         <receiver
             android:name=".ui.modules.timetablewidget.TimetableWidgetProvider"
             android:exported="true"

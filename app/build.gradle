@@ -167,7 +167,7 @@ huaweiPublish {
 ext {
     work_manager = "2.7.1"
     android_hilt = "1.0.0"
-    room = "2.3.0"
+    room = "2.4.0"
     chucker = "3.5.2"
     mockk = "1.12.1"
     coroutines = "1.5.2"

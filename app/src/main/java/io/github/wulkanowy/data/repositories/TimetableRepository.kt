@@ -152,7 +152,8 @@ class TimetableRepository @Inject constructor(
         old: List<TimetableAdditional>,
         new: List<TimetableAdditional>
     ) {
-        timetableAdditionalDb.deleteAll(old uniqueSubtract new)
+        val oldFiltered = old.filter { !it.isAddedByUser }
+        timetableAdditionalDb.deleteAll(oldFiltered uniqueSubtract new)
         timetableAdditionalDb.insertAll(new uniqueSubtract old)
     }
 
@@ -160,4 +161,14 @@ class TimetableRepository @Inject constructor(
         timetableHeaderDb.deleteAll(old uniqueSubtract new)
         timetableHeaderDb.insertAll(new uniqueSubtract old)
     }
+
+    suspend fun saveAdditionalList(additionalList: List<TimetableAdditional>) =
+        timetableAdditionalDb.insertAll(additionalList)
+
+    suspend fun deleteAdditional(additional: TimetableAdditional, deleteSeries: Boolean) =
+        if (deleteSeries) {
+            timetableAdditionalDb.deleteAllByRepeatId(additional.repeatId!!)
+        } else {
+            timetableAdditionalDb.deleteAll(listOf(additional))
+        }
 }
