@@ -31,16 +31,22 @@ class GradeStatisticsPresenter @Inject constructor(
 
     private var currentSemesterId = 0
 
-    private var currentSubjectName: String = "Wszystkie"
+    var currentSubjectName: String = "Wszystkie"
+        private set
 
     private lateinit var lastError: Throwable
 
     var currentType: GradeStatisticsItem.DataType = GradeStatisticsItem.DataType.PARTIAL
         private set
 
-    fun onAttachView(view: GradeStatisticsView, type: GradeStatisticsItem.DataType?) {
+    fun onAttachView(
+        view: GradeStatisticsView,
+        type: GradeStatisticsItem.DataType?,
+        subjectName: String?
+    ) {
         super.onAttachView(view)
         currentType = type ?: GradeStatisticsItem.DataType.PARTIAL
+        currentSubjectName = subjectName ?: currentSubjectName
         view.initView()
         errorHandler.showErrorMessage = ::showErrorViewOnError
     }
@@ -127,12 +133,17 @@ class GradeStatisticsPresenter @Inject constructor(
             when (it.status) {
                 Status.LOADING -> Timber.i("Loading grade stats subjects started")
                 Status.SUCCESS -> {
-                    subjects = it.data!!
-
+                    subjects = requireNotNull(it.data)
                     Timber.i("Loading grade stats subjects result: Success")
+
                     view?.run {
-                        view?.updateSubjects(ArrayList(it.data.map { subject -> subject.name }))
                         showSubjects(!preferencesRepository.showAllSubjectsOnStatisticsList)
+                        updateSubjects(
+                            data = it.data.map { subject -> subject.name },
+                            selectedIndex = it.data.indexOfFirst { subject ->
+                                subject.name == currentSubjectName
+                            },
+                        )
                     }
                 }
                 Status.ERROR -> {
@@ -151,9 +162,11 @@ class GradeStatisticsPresenter @Inject constructor(
     ) {
         Timber.i("Loading grade stats data started")
 
-        currentSubjectName =
-            if (preferencesRepository.showAllSubjectsOnStatisticsList) "Wszystkie" else subjectName
         currentType = type
+        currentSubjectName = when {
+            preferencesRepository.showAllSubjectsOnStatisticsList -> "Wszystkie"
+            else -> subjectName
+        }
 
         flowWithResourceIn {
             val student = studentRepository.getCurrentStudent()
@@ -200,9 +213,9 @@ class GradeStatisticsPresenter @Inject constructor(
                             showRefresh(true)
                             showProgress(false)
                             updateData(
-                                if (isNoContent) emptyList() else it.data!!,
-                                preferencesRepository.gradeColorTheme,
-                                preferencesRepository.showAllSubjectsOnStatisticsList
+                                newItems = if (isNoContent) emptyList() else it.data!!,
+                                newTheme = preferencesRepository.gradeColorTheme,
+                                showAllSubjectsOnStatisticsList = preferencesRepository.showAllSubjectsOnStatisticsList,
                             )
                             showSubjects(!preferencesRepository.showAllSubjectsOnStatisticsList)
                         }
@@ -215,9 +228,9 @@ class GradeStatisticsPresenter @Inject constructor(
                         showEmpty(isNoContent)
                         showErrorView(false)
                         updateData(
-                            if (isNoContent) emptyList() else it.data,
-                            preferencesRepository.gradeColorTheme,
-                            preferencesRepository.showAllSubjectsOnStatisticsList
+                            newItems = if (isNoContent) emptyList() else it.data,
+                            newTheme = preferencesRepository.gradeColorTheme,
+                            showAllSubjectsOnStatisticsList = preferencesRepository.showAllSubjectsOnStatisticsList,
                         )
                         showSubjects(!preferencesRepository.showAllSubjectsOnStatisticsList)
                     }
