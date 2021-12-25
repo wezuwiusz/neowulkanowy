@@ -22,12 +22,14 @@ import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getCurrentThemeWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getDateWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getTodayLastLessonEndDateTimeWidgetKey
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toFirstResult
 import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.time.LocalDate
+import java.time.ZoneOffset
 
 class TimetableWidgetFactory(
     private val timetableRepository: TimetableRepository,
@@ -70,6 +72,16 @@ class TimetableWidgetFactory(
 
             updateTheme(appWidgetId)
             lessons = getLessons(date, studentId)
+
+            if (date == LocalDate.now()) {
+                val todayLastLessonEndTimestamp =
+                    lessons.maxOf { it.end }.toEpochSecond(ZoneOffset.UTC)
+                sharedPref.putLong(
+                    getTodayLastLessonEndDateTimeWidgetKey(appWidgetId),
+                    todayLastLessonEndTimestamp,
+                    true
+                )
+            }
         }
     }
 
