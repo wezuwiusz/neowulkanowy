@@ -69,6 +69,8 @@ class LoginRecoverFragment :
     }
 
     override fun initView() {
+        (requireActivity() as LoginActivity).showActionBar(true)
+
         hostKeys = resources.getStringArray(R.array.hosts_keys)
         hostValues = resources.getStringArray(R.array.hosts_values)
         hostSymbols = resources.getStringArray(R.array.hosts_symbols)
@@ -80,7 +82,7 @@ class LoginRecoverFragment :
             loginRecoverButton.setOnClickListener { presenter.onRecoverClick() }
             loginRecoverErrorRetry.setOnClickListener { presenter.onRecoverClick() }
             loginRecoverErrorDetails.setOnClickListener { presenter.onDetailsClick() }
-            loginRecoverLogin.setOnClickListener { (activity as LoginActivity).switchView(0) }
+            loginRecoverLogin.setOnClickListener { (activity as LoginActivity).onBackPressed() }
         }
 
         with(bindingLocal.loginRecoverHost) {

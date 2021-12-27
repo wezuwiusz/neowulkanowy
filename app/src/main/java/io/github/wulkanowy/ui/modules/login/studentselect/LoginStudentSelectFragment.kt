@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
-import java.io.Serializable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,18 +33,27 @@ class LoginStudentSelectFragment :
     lateinit var appInfo: AppInfo
 
     companion object {
-        const val SAVED_STUDENTS = "STUDENTS"
+        const val ARG_STUDENTS = "STUDENTS"
 
-        fun newInstance() = LoginStudentSelectFragment()
+        fun newInstance(studentsWithSemesters: List<StudentWithSemesters>) =
+            LoginStudentSelectFragment().apply {
+                arguments = bundleOf(ARG_STUDENTS to studentsWithSemesters)
+            }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentLoginStudentSelectBinding.bind(view)
-        presenter.onAttachView(this, savedInstanceState?.getSerializable(SAVED_STUDENTS))
+        presenter.onAttachView(
+            view = this,
+            students = requireArguments().getSerializable(ARG_STUDENTS) as List<StudentWithSemesters>,
+        )
     }
 
     override fun initView() {
+        (requireActivity() as LoginActivity).showActionBar(true)
+
         loginAdapter.onClickListener = presenter::onItemSelected
 
         with(binding) {
@@ -80,15 +90,6 @@ class LoginStudentSelectFragment :
 
     override fun enableSignIn(enable: Boolean) {
         binding.loginStudentSelectSignIn.isEnabled = enable
-    }
-
-    fun onParentInitStudentSelectFragment(studentsWithSemesters: List<StudentWithSemesters>) {
-        presenter.onParentInitStudentSelectView(studentsWithSemesters)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable(SAVED_STUDENTS, presenter.students as Serializable)
     }
 
     override fun showContact(show: Boolean) {

@@ -11,7 +11,6 @@ import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
-import java.io.Serializable
 import javax.inject.Inject
 
 class LoginStudentSelectPresenter @Inject constructor(
@@ -22,11 +21,9 @@ class LoginStudentSelectPresenter @Inject constructor(
 
     private var lastError: Throwable? = null
 
-    var students = emptyList<StudentWithSemesters>()
-
     private val selectedStudents = mutableListOf<StudentWithSemesters>()
 
-    fun onAttachView(view: LoginStudentSelectView, students: Serializable?) {
+    fun onAttachView(view: LoginStudentSelectView, students: List<StudentWithSemesters>) {
         super.onAttachView(view)
         with(view) {
             initView()
@@ -38,18 +35,12 @@ class LoginStudentSelectPresenter @Inject constructor(
             }
         }
 
-        if (students is List<*> && students.isNotEmpty()) {
-            loadData(students.filterIsInstance<StudentWithSemesters>())
-        }
+        if (students.size == 1) registerStudents(students)
+        loadData(students)
     }
 
     fun onSignIn() {
         registerStudents(selectedStudents)
-    }
-
-    fun onParentInitStudentSelectView(studentsWithSemesters: List<StudentWithSemesters>) {
-        loadData(studentsWithSemesters)
-        if (studentsWithSemesters.size == 1) registerStudents(studentsWithSemesters)
     }
 
     fun onItemSelected(studentWithSemester: StudentWithSemesters, alreadySaved: Boolean) {
@@ -72,7 +63,6 @@ class LoginStudentSelectPresenter @Inject constructor(
 
     private fun loadData(studentsWithSemesters: List<StudentWithSemesters>) {
         resetSelectedState()
-        this.students = studentsWithSemesters
 
         flowWithResource { studentRepository.getSavedStudents(false) }.onEach {
             when (it.status) {
@@ -143,7 +133,8 @@ class LoginStudentSelectPresenter @Inject constructor(
                 "success" to (error != null),
                 "scrapperBaseUrl" to student.student.scrapperBaseUrl,
                 "symbol" to student.student.symbol,
-                "error" to (error?.message?.ifBlank { "No message" } ?: "No error"))
+                "error" to (error?.message?.ifBlank { "No message" } ?: "No error")
+            )
         }
     }
 }

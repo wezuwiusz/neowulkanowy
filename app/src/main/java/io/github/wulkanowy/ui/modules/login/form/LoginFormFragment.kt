@@ -13,6 +13,7 @@ import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.FragmentLoginFormBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
+import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.openEmailClient
@@ -68,6 +69,8 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
     }
 
     override fun initView() {
+        (requireActivity() as LoginActivity).showActionBar(false)
+
         hostKeys = resources.getStringArray(R.array.hosts_keys)
         hostValues = resources.getStringArray(R.array.hosts_values)
         hostSymbols = resources.getStringArray(R.array.hosts_symbols)
@@ -203,11 +206,9 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         binding.loginFormVersion.text = "v${appInfo.versionName}"
     }
 
-    override fun notifyParentAccountLogged(
-        studentsWithSemesters: List<StudentWithSemesters>,
-        loginData: Triple<String, String, String>
-    ) {
-        (activity as? LoginActivity)?.onFormFragmentAccountLogged(studentsWithSemesters, loginData)
+    override fun showContact(show: Boolean) {
+        binding.loginFormContact.visibility = if (show) VISIBLE else GONE
+        binding.loginFormRecoverLink.visibility = if (show) GONE else VISIBLE
     }
 
     override fun openPrivacyPolicyPage() {
@@ -217,9 +218,12 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         )
     }
 
-    override fun showContact(show: Boolean) {
-        binding.loginFormContact.visibility = if (show) VISIBLE else GONE
-        binding.loginFormRecoverLink.visibility = if (show) GONE else VISIBLE
+    override fun navigateToSymbol(loginData: LoginData) {
+        (activity as? LoginActivity)?.navigateToSymbolFragment(loginData)
+    }
+
+    override fun navigateToStudentSelect(studentsWithSemesters: List<StudentWithSemesters>) {
+        (activity as? LoginActivity)?.navigateToStudentSelect(studentsWithSemesters)
     }
 
     override fun openAdvancedLogin() {
