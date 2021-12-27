@@ -133,6 +133,12 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_notification_piggyback
         )
 
+    val isNotificationPiggybackRemoveOriginalEnabled: Boolean
+        get() = getBoolean(
+            R.string.pref_key_notifications_piggyback_cancel_original,
+            R.bool.pref_default_notification_piggyback_cancel_original
+        )
+
     val isDebugNotificationEnableKey = context.getString(R.string.pref_key_notification_debug)
     val isDebugNotificationEnable: Boolean
         get() = getBoolean(isDebugNotificationEnableKey, R.bool.pref_default_notification_debug)
