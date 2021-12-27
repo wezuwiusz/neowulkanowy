@@ -48,7 +48,7 @@ interface TimetableView : BaseView {
 
     fun showTimetableDialog(lesson: Timetable)
 
-    fun showDatePickerDialog(currentDate: LocalDate)
+    fun showDatePickerDialog(selectedDate: LocalDate)
 
     fun popView()
 

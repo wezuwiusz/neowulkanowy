@@ -8,7 +8,6 @@ import java.time.DayOfWeek.SUNDAY
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.Month
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -23,13 +22,13 @@ private const val DEFAULT_DATE_PATTERN = "dd.MM.yyyy"
 fun String.toLocalDate(format: String = DEFAULT_DATE_PATTERN): LocalDate =
     LocalDate.parse(this, DateTimeFormatter.ofPattern(format))
 
-fun LocalDateTime.toTimestamp() =
-    atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC).toInstant().toEpochMilli()
+fun LocalDateTime.toTimestamp(tz: ZoneId = ZoneId.systemDefault()) =
+    atZone(tz).withZoneSameInstant(ZoneOffset.UTC).toInstant().toEpochMilli()
 
-fun Long.toLocalDateTime(): LocalDateTime =
-    LocalDateTime.ofInstant(Instant.ofEpochMilli(this), ZoneId.systemDefault())
+fun Long.toLocalDateTime(tz: ZoneId = ZoneId.systemDefault()): LocalDateTime =
+    LocalDateTime.ofInstant(Instant.ofEpochMilli(this), tz)
 
-fun LocalDate.toTimestamp() = atTime(LocalTime.now()).toTimestamp()
+fun LocalDate.toTimestamp(tz: ZoneId = ZoneId.systemDefault()) = atStartOfDay().toTimestamp(tz)
 
 fun LocalDate.toFormattedString(pattern: String = DEFAULT_DATE_PATTERN): String =
     format(DateTimeFormatter.ofPattern(pattern))

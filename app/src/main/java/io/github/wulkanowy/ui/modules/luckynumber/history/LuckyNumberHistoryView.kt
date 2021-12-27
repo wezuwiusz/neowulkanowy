@@ -28,7 +28,7 @@ interface LuckyNumberHistoryView : BaseView {
 
     fun showNextButton(show: Boolean)
 
-    fun showDatePickerDialog(currentDate: LocalDate)
+    fun showDatePickerDialog(selectedDate: LocalDate)
 
     fun showContent(show: Boolean)
 

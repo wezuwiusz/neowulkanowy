@@ -5,19 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogAdditionalAddBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
-import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
+import io.github.wulkanowy.utils.openMaterialDatePicker
 import io.github.wulkanowy.utils.toFormattedString
-import io.github.wulkanowy.utils.toLocalDateTime
-import io.github.wulkanowy.utils.toTimestamp
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
@@ -128,27 +124,15 @@ class AdditionalLessonAddDialog : BaseDialogFragment<DialogAdditionalAddBinding>
     }
 
     override fun showDatePickerDialog(selectedDate: LocalDate) {
-        val rangeStart = LocalDate.now().toTimestamp()
-        val rangeEnd = LocalDate.now().lastSchoolDayInSchoolYear.toTimestamp()
-        val constraintsBuilder = CalendarConstraints.Builder().apply {
-            setStart(rangeStart)
-            setEnd(rangeEnd)
-            setValidator(SchoolDaysValidator(rangeStart, rangeEnd))
-        }
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setCalendarConstraints(constraintsBuilder.build())
-            .setSelection(selectedDate.toTimestamp())
-            .build()
-
-        datePicker.addOnPositiveButtonClickListener {
-            val date = it.toLocalDateTime().toLocalDate()
-            presenter.onDateSelected(date)
-            binding.additionalLessonDialogDateEdit.setText(date.toFormattedString())
-        }
-
-        if (!parentFragmentManager.isStateSaved) {
-            datePicker.show(parentFragmentManager, null)
-        }
+        openMaterialDatePicker(
+            selected = selectedDate,
+            rangeStart = LocalDate.now(),
+            rangeEnd = LocalDate.now().lastSchoolDayInSchoolYear,
+            onDateSelected = {
+                presenter.onDateSelected(it)
+                binding.additionalLessonDialogDateEdit.setText(it.toFormattedString())
+            }
+        )
     }
 
     override fun showStartTimePickerDialog(selectedTime: LocalTime) {

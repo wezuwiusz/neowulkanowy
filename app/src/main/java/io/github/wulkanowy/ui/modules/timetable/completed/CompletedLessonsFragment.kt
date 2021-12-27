@@ -6,8 +6,6 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.CompletedLesson
@@ -16,14 +14,12 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.firstSchoolDayInSchoolYear
 import io.github.wulkanowy.utils.getCompatDrawable
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
-import io.github.wulkanowy.utils.toLocalDateTime
-import io.github.wulkanowy.utils.toTimestamp
+import io.github.wulkanowy.utils.openMaterialDatePicker
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -150,29 +146,17 @@ class CompletedLessonsFragment :
         )
     }
 
-    override fun showDatePickerDialog(currentDate: LocalDate) {
+    override fun showDatePickerDialog(selectedDate: LocalDate) {
         val now = LocalDate.now()
-        val startOfSchoolYear = now.firstSchoolDayInSchoolYear.toTimestamp()
-        val endOfSchoolYear = now.lastSchoolDayInSchoolYear.toTimestamp()
 
-        val constraintsBuilder = CalendarConstraints.Builder().apply {
-            setValidator(SchoolDaysValidator(startOfSchoolYear, endOfSchoolYear))
-            setStart(startOfSchoolYear)
-            setEnd(endOfSchoolYear)
-        }
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setCalendarConstraints(constraintsBuilder.build())
-            .setSelection(currentDate.toTimestamp())
-            .build()
-
-        datePicker.addOnPositiveButtonClickListener {
-            val date = it.toLocalDateTime()
-            presenter.onDateSet(date.year, date.monthValue, date.dayOfMonth)
-        }
-
-        if (!parentFragmentManager.isStateSaved) {
-            datePicker.show(parentFragmentManager, null)
-        }
+        openMaterialDatePicker(
+            selected = selectedDate,
+            rangeStart = now.firstSchoolDayInSchoolYear,
+            rangeEnd = now.lastSchoolDayInSchoolYear,
+            onDateSelected = {
+                presenter.onDateSet(it.year, it.monthValue, it.dayOfMonth)
+            }
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

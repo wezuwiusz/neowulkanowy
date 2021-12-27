@@ -7,6 +7,7 @@ import org.junit.Test
 import java.time.LocalDate.of
 import java.time.LocalDateTime
 import java.time.Month.JANUARY
+import java.time.ZoneOffset
 import java.util.Locale
 
 class TimeExtensionTest {
@@ -25,7 +26,10 @@ class TimeExtensionTest {
     @Test
     fun toFormattedStringLocalDateTimeTest() {
         assertEquals("01.10.2018", LocalDateTime.of(2018, 10, 1, 10, 0, 0).toFormattedString())
-        assertEquals("2018-10-01 10:00:00", LocalDateTime.of(2018, 10, 1, 10, 0, 0).toFormattedString("uuuu-MM-dd HH:mm:ss"))
+        assertEquals(
+            "2018-10-01 10:00:00",
+            LocalDateTime.of(2018, 10, 1, 10, 0, 0).toFormattedString("uuuu-MM-dd HH:mm:ss")
+        )
     }
 
     @Test
@@ -221,5 +225,19 @@ class TimeExtensionTest {
             assertEquals(of(2020, 9, 21), startExamsDay)
             assertEquals(of(2020, 10, 18), endExamsDay)
         }
+    }
+
+    @Test
+    fun getLocalDateToTimestampUTC() {
+        assertEquals(0L, of(1970, 1, 1).toTimestamp(ZoneOffset.UTC))
+        assertEquals(946684800000L, of(2000, 1, 1).toTimestamp(ZoneOffset.UTC))
+        assertEquals(1640131200000L, of(2021, 12, 22).toTimestamp(ZoneOffset.UTC))
+    }
+
+    @Test
+    fun getLocalDateTimeToUtcTimestamp() {
+        assertEquals(0L, LocalDateTime.of(1970, 1, 1, 0, 0, 0).toTimestamp(ZoneOffset.UTC))
+        assertEquals(946684800000L, LocalDateTime.of(2000, 1, 1, 0, 0, 0).toTimestamp(ZoneOffset.UTC))
+        assertEquals(1640131200000L, LocalDateTime.of(2021, 12, 22, 0, 0, 0).toTimestamp(ZoneOffset.UTC))
     }
 }

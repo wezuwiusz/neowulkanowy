@@ -17,5 +17,5 @@ interface HomeworkAddView : BaseView {
 
     fun closeDialog()
 
-    fun showDatePickerDialog(currentDate: LocalDate)
+    fun showDatePickerDialog(selectedDate: LocalDate)
 }

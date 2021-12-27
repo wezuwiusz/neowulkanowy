@@ -5,17 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogHomeworkAddBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
-import io.github.wulkanowy.utils.SchoolDaysValidator
 import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
+import io.github.wulkanowy.utils.openMaterialDatePicker
 import io.github.wulkanowy.utils.toFormattedString
-import io.github.wulkanowy.utils.toLocalDateTime
-import io.github.wulkanowy.utils.toTimestamp
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -25,6 +21,7 @@ class HomeworkAddDialog : BaseDialogFragment<DialogHomeworkAddBinding>(), Homewo
     @Inject
     lateinit var presenter: HomeworkAddPresenter
 
+    // todo: move it to presenter
     private var date: LocalDate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,27 +96,16 @@ class HomeworkAddDialog : BaseDialogFragment<DialogHomeworkAddBinding>(), Homewo
         dismiss()
     }
 
-    override fun showDatePickerDialog(currentDate: LocalDate) {
-        val rangeStart = LocalDate.now().toTimestamp()
-        val rangeEnd = LocalDate.now().lastSchoolDayInSchoolYear.toTimestamp()
-        val constraintsBuilder = CalendarConstraints.Builder().apply {
-            setStart(rangeStart)
-            setEnd(rangeEnd)
-            setValidator(SchoolDaysValidator(rangeStart, rangeEnd))
-        }
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setCalendarConstraints(constraintsBuilder.build())
-            .setSelection(currentDate.toTimestamp())
-            .build()
-
-        datePicker.addOnPositiveButtonClickListener {
-            date = it.toLocalDateTime().toLocalDate()
-            binding.homeworkDialogDate.editText?.setText(date!!.toFormattedString())
-        }
-
-        if (!parentFragmentManager.isStateSaved) {
-            datePicker.show(this.parentFragmentManager, null)
-        }
+    override fun showDatePickerDialog(selectedDate: LocalDate) {
+        openMaterialDatePicker(
+            selected = selectedDate,
+            rangeStart = LocalDate.now(),
+            rangeEnd = LocalDate.now().lastSchoolDayInSchoolYear,
+            onDateSelected = {
+                date = it
+                binding.homeworkDialogDate.editText?.setText(date!!.toFormattedString())
+            }
+        )
     }
 
     override fun onDestroyView() {
