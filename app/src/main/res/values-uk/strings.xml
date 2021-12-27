@@ -204,6 +204,17 @@
     <string name="additional_lessons_title">Додаткові уроки</string>
     <string name="additional_lessons_button">Показати додаткові уроки</string>
     <string name="additional_lessons_no_items">Немає інформації про додаткових уроків</string>
+    <string name="additional_lessons_add">New lesson</string>
+    <string name="additional_lessons_add_title">New additional lesson</string>
+    <string name="additional_lessons_add_success">Additional lesson added successfully</string>
+    <string name="additional_lessons_delete_success">Additional lesson deleted successfully</string>
+    <string name="additional_lessons_repeat">Repeat weekly</string>
+    <string name="additional_lessons_delete_title">Delete additional lesson</string>
+    <string name="additional_lessons_delete_one">Just this lesson</string>
+    <string name="additional_lessons_delete_series">All in the series</string>
+    <string name="additional_lessons_start">Start time</string>
+    <string name="additional_lessons_end">End time</string>
+    <string name="additional_lessons_end_time_error">End time must be greater than start time</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Підсумок відвідуваності</string>
     <string name="attendance_absence_school">Відсутність зі шкільних причин</string>
@@ -668,7 +679,9 @@
     <string name="pref_notify_fix_sync_issues_message">На вашому пристрої можуть бути помилки з синхронізацією і повідомленнями\n\nЩоб виправити іх, вам необхідно додати Wulkanowy в авто-старт и вимкнути оптимізацію/экономію батареї в налаштуваннях пристрою.</string>
     <string name="pref_notify_debug_switch">Показувати дебаг-повідомлення</string>
     <string name="pref_notify_disabled_summary">Синхронізація вимкнена</string>
+    <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
     <string name="pref_notify_notifications_piggyback">Захоплювати офіційні сповіщення програм</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
     <string name="pref_notification_piggyback_popup_title">Показувати push-повідомлення</string>
     <string name="pref_notification_piggyback_popup_description">За допомогою цієї функції ви можете отримати заміну push -повідомлень, як у офіційному додатку. Все, що вам потрібно зробити, це дозволити Wulkanowy отримувати всі сповіщення у налаштуваннях вашої системи. \ N \ nЯк це працює? \ NКоли ви отримаєте сповіщення у Dziennik VULCAN, Wulkanowy отримає сповіщення (для цього призначені ці додаткові дозволи) і запустить синхронізація, яка може надсилати власне сповіщення. \ n \ n ТІЛЬКИ ДЛЯ РОЗШИРЕНИХ КОРИСТУВАЧІВ</string>
     <string name="pref_notification_exact_alarm_popup_title">Показувати повідомлення о наступних уроках</string>

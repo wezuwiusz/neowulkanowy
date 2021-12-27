@@ -204,6 +204,17 @@
     <string name="additional_lessons_title">Další lekce</string>
     <string name="additional_lessons_button">Zobrazit další lekce</string>
     <string name="additional_lessons_no_items">Žádné informace o dalších lekcích</string>
+    <string name="additional_lessons_add">Nová lekce</string>
+    <string name="additional_lessons_add_title">Nová další lekce</string>
+    <string name="additional_lessons_add_success">Další lekce byla úspěšně přidána</string>
+    <string name="additional_lessons_delete_success">Další lekce byla úspěšně odstraněna</string>
+    <string name="additional_lessons_repeat">Opakovat každý týden</string>
+    <string name="additional_lessons_delete_title">Odstranit další lekci</string>
+    <string name="additional_lessons_delete_one">Pouze tato lekce</string>
+    <string name="additional_lessons_delete_series">Všechny v sérii</string>
+    <string name="additional_lessons_start">Čas zahájení</string>
+    <string name="additional_lessons_end">Čas ukončení</string>
+    <string name="additional_lessons_end_time_error">Čas ukončení musí být pozdější než čas zahájení</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Shrnutí frekvencí</string>
     <string name="attendance_absence_school">Neprítomnosť zo školských dôvodov</string>
@@ -668,7 +679,9 @@
     <string name="pref_notify_fix_sync_issues_message">Vaše zařízení může mít problémy se synchronizací dat as upozorněními.\n\nChcete-li je opravit, přidejte Wulkanového do funkce Autostart a vypněte optimalizaci/úsporu baterie v nastavení systému telefonu.</string>
     <string name="pref_notify_debug_switch">Zobrazit upozornění o ladění</string>
     <string name="pref_notify_disabled_summary">Synchronizace je vypnutá</string>
+    <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
     <string name="pref_notify_notifications_piggyback">Zachytit upozornění oficiální aplikací</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
     <string name="pref_notification_piggyback_popup_title">Zachytit upozornění</string>
     <string name="pref_notification_piggyback_popup_description">S touto funkcí můžete získat náhradu push upozornění jako v oficiální aplikaci. Vše, co musíte udělat, je povolit Wulkanowému číst všechna vaše upozornění v nastaveních systému.\n\nJak to funguje?\nKdyž obdržíte oznámení v Deníčku VULCAN, Wulkanowy bude o tom informován (k tomu je to dodatečné povolení) a spustí synchronizaci, aby mohl zaslat vlastní upozornění.\n\nPOUZE PRO POKROČILÉ UŽIVATELE</string>
     <string name="pref_notification_exact_alarm_popup_title">Upozornění o nadcházející lekci</string>
