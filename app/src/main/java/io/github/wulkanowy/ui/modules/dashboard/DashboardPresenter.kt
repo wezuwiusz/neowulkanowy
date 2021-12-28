@@ -6,33 +6,13 @@ import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder
-import io.github.wulkanowy.data.repositories.AdminMessageRepository
-import io.github.wulkanowy.data.repositories.AttendanceSummaryRepository
-import io.github.wulkanowy.data.repositories.ConferenceRepository
-import io.github.wulkanowy.data.repositories.ExamRepository
-import io.github.wulkanowy.data.repositories.GradeRepository
-import io.github.wulkanowy.data.repositories.HomeworkRepository
-import io.github.wulkanowy.data.repositories.LuckyNumberRepository
-import io.github.wulkanowy.data.repositories.MessageRepository
-import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.SchoolAnnouncementRepository
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.data.repositories.TimetableRepository
+import io.github.wulkanowy.data.repositories.*
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDate
@@ -582,7 +562,7 @@ class DashboardPresenter @Inject constructor(
     }
 
     private fun loadAdminMessage(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn { adminMessageRepository.getAdminMessages(student, forceRefresh) }
+        flowWithResourceIn { adminMessageRepository.getAdminMessages(student) }
             .map {
                 val isDismissed = it.data?.id in preferencesRepository.dismissedAdminMessageIds
                 it.copy(data = it.data.takeUnless { isDismissed })

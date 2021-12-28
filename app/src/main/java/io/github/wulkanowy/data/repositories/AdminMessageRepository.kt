@@ -4,7 +4,6 @@ import io.github.wulkanowy.data.api.AdminMessageService
 import io.github.wulkanowy.data.db.dao.AdminMessageDao
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.networkBoundResource
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
@@ -14,23 +13,17 @@ import javax.inject.Singleton
 class AdminMessageRepository @Inject constructor(
     private val adminMessageService: AdminMessageService,
     private val adminMessageDao: AdminMessageDao,
-    private val appInfo: AppInfo,
-    private val refreshHelper: AutoRefreshHelper,
+    private val appInfo: AppInfo
 ) {
     private val saveFetchResultMutex = Mutex()
 
-    private val cacheKey = "admin_messages"
-
-    suspend fun getAdminMessages(student: Student, forceRefresh: Boolean) = networkBoundResource(
+    suspend fun getAdminMessages(student: Student) = networkBoundResource(
         mutex = saveFetchResultMutex,
         query = { adminMessageDao.loadAll() },
         fetch = { adminMessageService.getAdminMessages() },
-        shouldFetch = {
-            refreshHelper.shouldBeRefreshed(cacheKey) || forceRefresh
-        },
+        shouldFetch = { true },
         saveFetchResult = { oldItems, newItems ->
             adminMessageDao.removeOldAndSaveNew(oldItems, newItems)
-            refreshHelper.updateLastRefreshTimestamp(cacheKey)
         },
         showSavedOnLoading = false,
         mapResult = { adminMessages ->
