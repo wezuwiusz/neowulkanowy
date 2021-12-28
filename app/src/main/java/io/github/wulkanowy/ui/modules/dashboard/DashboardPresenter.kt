@@ -716,7 +716,7 @@ class DashboardPresenter @Inject constructor(
             itemsLoadedList.find { it.type == DashboardItem.Type.ACCOUNT }?.error != null
         val isGeneralError =
             filteredItems.none { it.error == null } && filteredItems.isNotEmpty() || isAccountItemError
-        val errorMessage = itemsLoadedList.map { it.error?.stackTraceToString() }.toString()
+        val firstError = itemsLoadedList.mapNotNull { it.error }.firstOrNull()
 
         val filteredOriginalLoadedList =
             dashboardItemLoadedList.filterNot { it.type == DashboardItem.Type.ACCOUNT }
@@ -726,7 +726,7 @@ class DashboardPresenter @Inject constructor(
             filteredOriginalLoadedList.none { it.error == null } && filteredOriginalLoadedList.isNotEmpty() || wasAccountItemError
 
         if (isGeneralError && isItemsLoaded) {
-            lastError = Exception(errorMessage)
+            lastError = requireNotNull(firstError)
 
             view?.run {
                 showProgress(false)

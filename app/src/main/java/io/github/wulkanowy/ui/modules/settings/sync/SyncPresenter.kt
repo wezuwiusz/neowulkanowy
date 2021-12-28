@@ -59,7 +59,10 @@ class SyncPresenter @Inject constructor(
                     WorkInfo.State.FAILED -> {
                         showError(
                             syncFailedString,
-                            Throwable(workInfo.outputData.getString("error"))
+                            Throwable(
+                                message = workInfo.outputData.getString("error_message"),
+                                cause = Throwable(workInfo.outputData.getString("error_stack"))
+                            )
                         )
                         analytics.logEvent("sync_now", "status" to "failed")
                     }
