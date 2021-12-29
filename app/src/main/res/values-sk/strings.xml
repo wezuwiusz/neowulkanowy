@@ -12,7 +12,7 @@
     <string name="about_title">O aplikácii</string>
     <string name="logviewer_title">Prehliadač protokolov</string>
     <string name="debug_title">Ladenie</string>
-    <string name="notification_debug_title">Ladenie upozornení</string>
+    <string name="notification_debug_title">Ladenie oznámení</string>
     <string name="contributors_title">Tvorcovia</string>
     <string name="license_title">Licencie</string>
     <string name="message_title">Správy</string>
@@ -25,7 +25,7 @@
     <string name="account_details_title">Podrobnosti účtu</string>
     <string name="student_info_title">Informácie o žiakovi</string>
     <string name="dashboard_title">Domov</string>
-    <string name="notifications_center_title">Centrum upozornení</string>
+    <string name="notifications_center_title">Centrum oznámení</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -668,23 +668,23 @@
     <string name="pref_view_grade_color_scheme">Známky farebnú schému</string>
     <string name="pref_view_grade_sorting_mode">Triedenie predmetov</string>
     <string name="pref_view_app_language">Jazyk</string>
-    <string name="pref_notify_header">Upozornenia</string>
+    <string name="pref_notify_header">Oznámenia</string>
     <string name="pref_notify_header_other">Iné</string>
-    <string name="pref_notify_switch">Zobraziť upozornenia</string>
-    <string name="pref_notify_upcoming_lessons_switch">Zobraziť upozornenia o nadchádzajúcej lekciu</string>
-    <string name="pref_notify_upcoming_lessons_persistent_switch">Nastaviť upozornenia o nadchádzajúcej lekcii ako trvalé</string>
-    <string name="pref_notify_upcoming_lessons_persistent_summary">Vypnúť, keď upozornenia nie je vo vašom hodinkách/náramku viditeľné</string>
-    <string name="pref_notify_open_system_settings">Otvoriť systémové nastavenia upozornení</string>
-    <string name="pref_notify_fix_sync_issues">Opravte problémy so synchronizáciou a upozornením</string>
-    <string name="pref_notify_fix_sync_issues_message">Vaše zariadenie môže mať problémy so synchronizáciou dát as upozorneniami.\n\nAk ich chcete opraviť, pridajte Wulkanového do funkcie Autostart a vypnite optimalizáciu/úsporu batérie v nastavení systému telefóne.</string>
-    <string name="pref_notify_debug_switch">Zobraziť upozornenia o ladení</string>
+    <string name="pref_notify_switch">Zobraziť oznámenia</string>
+    <string name="pref_notify_upcoming_lessons_switch">Zobraziť oznámenia o nadchádzajúcich lekciách</string>
+    <string name="pref_notify_upcoming_lessons_persistent_switch">Nastaviť oznámenia o nadchádzajúcej lekcií ako trvalé</string>
+    <string name="pref_notify_upcoming_lessons_persistent_summary">Vypnúť, keď oznámenia nie je vo vašom hodinkách/náramku viditeľné</string>
+    <string name="pref_notify_open_system_settings">Otvoriť systémové nastavenia oznámení</string>
+    <string name="pref_notify_fix_sync_issues">Opravte problémy so synchronizáciou a oznámeniami</string>
+    <string name="pref_notify_fix_sync_issues_message">Vaše zariadenie môže mať problémy so synchronizáciou dát as oznámeniami.\n\nAk ich chcete opraviť, pridajte Wulkanového do funkcie Autostart a vypnite optimalizáciu/úsporu batérie v nastavení systému telefóne.</string>
+    <string name="pref_notify_debug_switch">Zobraziť oznámenia o ladení</string>
     <string name="pref_notify_disabled_summary">Synchronizácia je vypnutá</string>
-    <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
+    <string name="pref_notify_notifications_piggyback_header">Oznámenia oficiálnej aplikácie</string>
     <string name="pref_notify_notifications_piggyback">Zachytiť upozornenia oficiálnej aplikácie</string>
-    <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
-    <string name="pref_notification_piggyback_popup_title">Zachytiť upozornenia</string>
-    <string name="pref_notification_piggyback_popup_description">S touto funkciou môžete získať náhradu push upozornení ako v oficiálnej aplikácii. Všetko, čo musíte urobiť, je povoliť Wulkanowému čítať všetky vaše upozornenia v nastaveniach systému.\n\nAko to funguje?\nKeď dostanete oznámenie v Deníčku VULCAN, Wulkanowy bude o tom informovaný (k tomu je to dodatočné povolenie) a spustí synchronizáciu, aby mohol zaslať vlastné upozornenie.\n\nLEN PRE POKROČILÝCH POUŽĺVATEĹOV</string>
-    <string name="pref_notification_exact_alarm_popup_title">Upozornenia o nadchádzajúcej lekciu</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Odstrániť oznámenia oficiálnej aplikácie po zachytení</string>
+    <string name="pref_notification_piggyback_popup_title">Zachytiť oznámení</string>
+    <string name="pref_notification_piggyback_popup_description">S touto funkciou môžete získať náhradu push oznámení ako v oficiálnej aplikácii. Všetko, čo musíte urobiť, je povoliť Wulkanowému čítať všetky vaše oznámenia v nastaveniach systému.\n\nAko to funguje?\nKeď dostanete oznámenie v Deníčku VULCAN, Wulkanowy bude o tom informovaný (k tomu je to dodatočné povolenie) a spustí synchronizáciu, aby mohol zaslať vlastné oznámenie.\n\nLEN PRE POKROČILÝCH POUŽĺVATEĹOV</string>
+    <string name="pref_notification_exact_alarm_popup_title">Oznámenia o nadchádzajúcej lekcií</string>
     <string name="pref_notification_exact_alarm_popup_descriptions">Musíte povoliť Wulkanovému nastaviť budíky a pripomenutie v nastavení vášho systému pre použitie tejto funkcie.</string>
     <string name="pref_notification_go_to_settings">Prejsť do nastavení</string>
     <string name="pref_services_header">Synchronizácia</string>
@@ -711,7 +711,7 @@
     <string name="pref_ads_once_per_visit">Ďakujeme za vašu podporu, vráťte sa neskôr pre viac reklám</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhľad a správanie</string>
-    <string name="pref_settings_notifications_title">Upozornenia</string>
+    <string name="pref_settings_notifications_title">Oznámenia</string>
     <string name="pref_settings_sync_title">Synchronizácia</string>
     <string name="pref_settings_ads_title">Reklamy</string>
     <string name="pref_grades_appearance_header">Známky</string>
@@ -724,8 +724,8 @@
     <string name="pref_messages_advanced_header">Správy</string>
     <string name="pref_appearance_category">Vzhľad a správanie</string>
     <string name="pref_appearance_category_summary">Jazyky, motívy, triedenie predmetov</string>
-    <string name="pref_notifications_category_summary">Upozornenia aplikácie, oprava problémov</string>
-    <string name="pref_notifications_category">Upozornenia</string>
+    <string name="pref_notifications_category_summary">Oznámenia aplikácie, oprava problémov</string>
+    <string name="pref_notifications_category">Oznámenia</string>
     <string name="pref_sync_category">Synchronizácia</string>
     <string name="pref_sync_category_summary">Automatická aktualizácia, interval aktualizácií</string>
     <string name="pref_advanced_category_summary">Hodnota plusu a mínusu, výpočet priemeru</string>
@@ -741,7 +741,7 @@
     <string name="channel_new_message">Nové správy</string>
     <string name="channel_new_notes">Nové poznámky</string>
     <string name="channel_new_school_announcement">Nové školské oznámenia</string>
-    <string name="channel_push">Push upozornenia</string>
+    <string name="channel_push">Push oznámenia</string>
     <string name="channel_upcoming_lessons">Nadchádzajúce lekcie</string>
     <string name="channel_debug">Ladenie</string>
     <string name="channel_change_timetable">Zmeny plánu lekcií</string>

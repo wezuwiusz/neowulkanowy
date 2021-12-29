@@ -679,9 +679,9 @@
     <string name="pref_notify_fix_sync_issues_message">Na twoim urządzeniu mogą występować problemy z synchronizacją danych i powiadomieniami.\n\nBy je naprawić, dodaj Wulkanowego do autostartu i wyłącz optymalizację/oszczędzanie baterii w ustawieniach systemowych telefonu.</string>
     <string name="pref_notify_debug_switch">Pokazuj powiadomienia debugowania</string>
     <string name="pref_notify_disabled_summary">Synchronizacja jest wyłączona</string>
-    <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
+    <string name="pref_notify_notifications_piggyback_header">Powiadomienia oficjalnej aplikacji</string>
     <string name="pref_notify_notifications_piggyback">Przechwytywanie powiadomień oficjalnej aplikacji</string>
-    <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Usuwaj powiadomienia oficjalnej aplikacji po przechwyceniu</string>
     <string name="pref_notification_piggyback_popup_title">Przechwytywanie powiadomień</string>
     <string name="pref_notification_piggyback_popup_description">Dzięki tej funkcji możesz uzyskać namiastkę powiadomień push, takich jak w oficjalnej aplikacji. Wszystko, co musisz zrobić, to zezwolić Wulkanowemu na odczytywanie wszystkich powiadomień w ustawieniach systemowych.\n\nJak to działa?\nKiedy otrzymasz powiadomienie w Dzienniczku VULCAN, Wulkanowy zostanie o tym powiadomiony (do tego jest to dodatkowe uprawnienie) i uruchomi synchronizację, aby mógł wysłać własne powiadomienie.\n\nWYŁĄCZNIE DLA ZAAWANSOWANYCH UŻYTKOWNIKÓW</string>
     <string name="pref_notification_exact_alarm_popup_title">Powiadomienia o nadchodzących lekcjach</string>
