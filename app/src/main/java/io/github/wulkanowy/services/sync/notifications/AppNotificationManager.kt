@@ -57,7 +57,7 @@ class AppNotificationManager @Inject constructor(
                 NotificationCompat.BigTextStyle()
                     .bigText(notificationData.content)
                     .also { builder ->
-                        if (shouldShowStudentName()) {
+                        if (!studentRepository.isOneUniqueStudent()) {
                             builder.setSummaryText(student.nickOrName)
                         }
                     }
@@ -102,7 +102,7 @@ class AppNotificationManager @Inject constructor(
                     NotificationCompat.BigTextStyle()
                         .bigText(notificationData.content)
                         .also { builder ->
-                            if (shouldShowStudentName()) {
+                            if (!studentRepository.isOneUniqueStudent()) {
                                 builder.setSummaryText(student.nickOrName)
                             }
                         }
@@ -134,7 +134,7 @@ class AppNotificationManager @Inject constructor(
                 .setStyle(
                     NotificationCompat.InboxStyle()
                         .also { builder ->
-                            if (shouldShowStudentName()) {
+                            if (!studentRepository.isOneUniqueStudent()) {
                                 builder.setSummaryText(student.nickOrName)
                             }
                             groupNotificationData.notificationDataList.forEach {
@@ -174,7 +174,4 @@ class AppNotificationManager @Inject constructor(
 
         notificationRepository.saveNotification(notificationEntity)
     }
-
-    private suspend fun shouldShowStudentName(): Boolean =
-        studentRepository.getSavedStudents(decryptPass = false).size > 1
 }

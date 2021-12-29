@@ -128,4 +128,7 @@ class StudentRepository @Inject constructor(
 
     suspend fun updateStudentNickAndAvatar(studentNickAndAvatar: StudentNickAndAvatar) =
         studentDb.update(studentNickAndAvatar)
+
+    suspend fun isOneUniqueStudent() = getSavedStudents(false)
+        .distinctBy { it.student.studentName }.size == 1
 }
