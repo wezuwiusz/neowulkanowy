@@ -4,6 +4,7 @@ import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.mockk.MockKAnnotations
@@ -35,6 +36,9 @@ class LoginStudentSelectPresenterTest {
 
     @MockK(relaxed = true)
     lateinit var analytics: AnalyticsHelper
+
+    @MockK(relaxed = true)
+    lateinit var syncManager: SyncManager
 
     private lateinit var presenter: LoginStudentSelectPresenter
 
@@ -77,7 +81,7 @@ class LoginStudentSelectPresenterTest {
         every { loginStudentSelectView.showProgress(any()) } just Runs
         every { loginStudentSelectView.showContent(any()) } just Runs
 
-        presenter = LoginStudentSelectPresenter(studentRepository, errorHandler, analytics)
+        presenter = LoginStudentSelectPresenter(studentRepository, errorHandler, syncManager, analytics)
         presenter.onAttachView(loginStudentSelectView, emptyList())
     }
 

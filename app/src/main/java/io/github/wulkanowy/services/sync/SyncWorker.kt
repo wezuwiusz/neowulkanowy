@@ -54,7 +54,7 @@ class SyncWorker @AssistedInject constructor(
         val exceptions = works.mapNotNull { work ->
             try {
                 Timber.i("${work::class.java.simpleName} is starting")
-                work.doWork(student, semester)
+                work.doWork(student, semester, isNotificationsEnabled())
                 Timber.i("${work::class.java.simpleName} result: Success")
                 null
             } catch (e: Throwable) {
@@ -73,6 +73,11 @@ class SyncWorker @AssistedInject constructor(
         Timber.i("SyncWorker result: $result")
 
         return@withContext result
+    }
+
+    private fun isNotificationsEnabled(): Boolean {
+        val quiet = inputData.getBoolean("quiet", false)
+        return preferencesRepository.isNotificationsEnable && !quiet
     }
 
     private fun getResultFromErrors(errors: List<Throwable>): Result = when {

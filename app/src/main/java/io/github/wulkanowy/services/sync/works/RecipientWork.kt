@@ -11,7 +11,7 @@ class RecipientWork @Inject constructor(
     private val recipientRepository: RecipientRepository
 ) : Work {
 
-    override suspend fun doWork(student: Student, semester: Semester) {
+    override suspend fun doWork(student: Student, semester: Semester, notify: Boolean) {
         reportingUnitRepository.refreshReportingUnits(student)
 
         reportingUnitRepository.getReportingUnits(student).let { units ->

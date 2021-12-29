@@ -4,6 +4,7 @@ import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class LoginStudentSelectPresenter @Inject constructor(
     studentRepository: StudentRepository,
     private val loginErrorHandler: LoginErrorHandler,
+    private val syncManager: SyncManager,
     private val analytics: AnalyticsHelper
 ) : BasePresenter<LoginStudentSelectView>(loginErrorHandler, studentRepository) {
 
@@ -97,6 +99,7 @@ class LoginStudentSelectPresenter @Inject constructor(
                     }
                     Status.SUCCESS -> {
                         Timber.i("Registration result: Success")
+                        syncManager.startOneTimeSyncWorker(quiet = true)
                         view?.openMainView()
                         logRegisterEvent(studentsWithSemesters)
                     }

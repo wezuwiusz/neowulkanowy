@@ -5,5 +5,5 @@ import io.github.wulkanowy.data.db.entities.Student
 
 interface Work {
 
-    suspend fun doWork(student: Student, semester: Semester)
+    suspend fun doWork(student: Student, semester: Semester, notify: Boolean)
 }

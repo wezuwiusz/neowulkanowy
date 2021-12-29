@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class TeacherWork @Inject constructor(private val teacherRepository: TeacherRepository) : Work {
 
-    override suspend fun doWork(student: Student, semester: Semester) {
+    override suspend fun doWork(student: Student, semester: Semester, notify: Boolean) {
         teacherRepository.getTeachers(student, semester, true).waitForResult()
     }
 }
