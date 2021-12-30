@@ -1,6 +1,7 @@
 package io.github.wulkanowy.services.alarm
 
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -12,7 +13,6 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.services.HiltBroadcastReceiver
 import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel.Companion.CHANNEL_ID
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.splash.SplashActivity
@@ -28,7 +28,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TimetableNotificationReceiver : HiltBroadcastReceiver() {
+class TimetableNotificationReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var studentRepository: StudentRepository
@@ -58,7 +58,6 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
         Timber.d("Receiving intent... ${intent.toUri(0)}")
 
         flowWithResource {

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetManager.*
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -18,7 +19,6 @@ import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.services.HiltBroadcastReceiver
 import io.github.wulkanowy.services.widgets.TimetableWidgetService
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.splash.SplashActivity
@@ -33,7 +33,7 @@ import java.time.ZoneOffset
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TimetableWidgetProvider : HiltBroadcastReceiver() {
+class TimetableWidgetProvider : BroadcastReceiver() {
 
     @Inject
     lateinit var appWidgetManager: AppWidgetManager
@@ -78,7 +78,6 @@ class TimetableWidgetProvider : HiltBroadcastReceiver() {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
         GlobalScope.launch {
             when (intent.action) {
                 ACTION_APPWIDGET_UPDATE -> onUpdate(context, intent)
