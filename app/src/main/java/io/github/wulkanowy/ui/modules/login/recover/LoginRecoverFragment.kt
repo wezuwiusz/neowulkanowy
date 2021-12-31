@@ -11,8 +11,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import com.yariksoffice.lingver.Lingver
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginRecoverBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
@@ -31,6 +33,12 @@ class LoginRecoverFragment :
 
     @Inject
     lateinit var presenter: LoginRecoverPresenter
+
+    @Inject
+    lateinit var lingver: Lingver
+
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
 
     companion object {
         fun newInstance() = LoginRecoverFragment()
@@ -64,8 +72,18 @@ class LoginRecoverFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        restoreCorrectLocale()
         _binding = FragmentLoginRecoverBinding.bind(view)
         presenter.onAttachView(this)
+    }
+
+    // https://issuetracker.google.com/issues/37113860
+    private fun restoreCorrectLocale() {
+        if (preferencesRepository.appLanguage == "system") {
+            lingver.setFollowSystemLocale(requireContext())
+        } else {
+            lingver.setLocale(requireContext(), lingver.getLocale())
+        }
     }
 
     override fun initView() {
