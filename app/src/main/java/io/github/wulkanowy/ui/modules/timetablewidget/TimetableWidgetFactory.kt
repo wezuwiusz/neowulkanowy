@@ -73,13 +73,12 @@ class TimetableWidgetFactory(
             updateTheme(appWidgetId)
             lessons = getLessons(date, studentId)
 
-            if (date == LocalDate.now()) {
-                val todayLastLessonEndTimestamp =
-                    lessons.maxOf { it.end }.toEpochSecond(ZoneOffset.UTC)
+            val todayLastLessonEndTimestamp = lessons.maxOfOrNull { it.end }
+            if (date == LocalDate.now() && todayLastLessonEndTimestamp != null) {
                 sharedPref.putLong(
-                    getTodayLastLessonEndDateTimeWidgetKey(appWidgetId),
-                    todayLastLessonEndTimestamp,
-                    true
+                    key = getTodayLastLessonEndDateTimeWidgetKey(appWidgetId),
+                    value = todayLastLessonEndTimestamp.toEpochSecond(ZoneOffset.UTC),
+                    sync = true
                 )
             }
         }
