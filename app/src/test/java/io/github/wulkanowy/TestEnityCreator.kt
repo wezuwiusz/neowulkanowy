@@ -10,6 +10,7 @@ import io.github.wulkanowy.sdk.pojo.Semester as SdkSemester
 fun getSemesterEntity(diaryId: Int = 1, semesterId: Int = 1, start: LocalDate = LocalDate.now(), end: LocalDate = LocalDate.now(), semesterName: Int = 1) = Semester(
     studentId = 1,
     diaryId = diaryId,
+    kindergartenDiaryId = 0,
     semesterId = semesterId,
     diaryName = "$semesterId",
     schoolYear = 1970,
@@ -22,6 +23,7 @@ fun getSemesterEntity(diaryId: Int = 1, semesterId: Int = 1, start: LocalDate = 
 
 fun getSemesterPojo(diaryId: Int, semesterId: Int, start: LocalDate, end: LocalDate, semesterName: Int = 1) = SdkSemester(
     diaryId = diaryId,
+    kindergartenDiaryId = 0,
     semesterId = semesterId,
     diaryName = "$semesterId",
     schoolYear = 1970,

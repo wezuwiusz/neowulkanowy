@@ -7,6 +7,7 @@ fun List<SdkSemester>.mapToEntities(studentId: Int) = map {
     Semester(
         studentId = studentId,
         diaryId = it.diaryId,
+        kindergartenDiaryId = it.kindergartenDiaryId,
         diaryName = it.diaryName,
         schoolYear = it.schoolYear,
         semesterId = it.semesterId,

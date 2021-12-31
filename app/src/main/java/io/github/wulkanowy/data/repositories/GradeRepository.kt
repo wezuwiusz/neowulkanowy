@@ -47,7 +47,7 @@ class GradeRepository @Inject constructor(
         },
         fetch = {
             val (details, summary) = sdk.init(student)
-                .switchDiary(semester.diaryId, semester.schoolYear)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getGrades(semester.semesterId)
 
             details.mapToEntities(semester) to summary.mapToEntities(semester)

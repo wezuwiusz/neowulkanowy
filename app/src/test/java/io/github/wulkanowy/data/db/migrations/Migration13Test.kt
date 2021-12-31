@@ -159,6 +159,7 @@ class Migration13Test : AbstractMigrationTest() {
                     semesters.add(Semester(
                         studentId = it.getInt(1),
                         diaryId = it.getInt(2),
+                        kindergartenDiaryId = 0,
                         diaryName = it.getString(3),
                         semesterId = it.getInt(4),
                         semesterName = it.getInt(5),

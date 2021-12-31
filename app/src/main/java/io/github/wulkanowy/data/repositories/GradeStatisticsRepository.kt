@@ -12,13 +12,9 @@ import io.github.wulkanowy.data.mappers.mapPointsToStatisticsItems
 import io.github.wulkanowy.data.mappers.mapSemesterToStatisticItems
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.networkBoundResource
-import io.github.wulkanowy.utils.uniqueSubtract
+import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.sync.Mutex
-import java.util.Locale
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,7 +50,8 @@ class GradeStatisticsRepository @Inject constructor(
         },
         query = { gradePartialStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getGradesPartialStatistics(semester.semesterId)
                 .mapToEntities(semester)
         },
@@ -101,7 +98,8 @@ class GradeStatisticsRepository @Inject constructor(
         },
         query = { gradeSemesterStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getGradesSemesterStatistics(semester.semesterId)
                 .mapToEntities(semester)
         },
@@ -155,7 +153,8 @@ class GradeStatisticsRepository @Inject constructor(
         },
         query = { gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getGradesPointsStatistics(semester.semesterId)
                 .mapToEntities(semester)
         },

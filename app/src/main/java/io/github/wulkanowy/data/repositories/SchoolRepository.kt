@@ -38,7 +38,9 @@ class SchoolRepository @Inject constructor(
         },
         query = { schoolDb.load(semester.studentId, semester.classId) },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear).getSchool()
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .getSchool()
                 .mapToEntity(semester)
         },
         saveFetchResult = { old, new ->

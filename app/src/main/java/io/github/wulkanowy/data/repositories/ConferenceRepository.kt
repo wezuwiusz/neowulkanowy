@@ -40,7 +40,8 @@ class ConferenceRepository @Inject constructor(
             conferenceDb.loadAll(semester.diaryId, student.studentId, startDate)
         },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getConferences()
                 .mapToEntities(semester)
                 .filter { it.date >= startDate }

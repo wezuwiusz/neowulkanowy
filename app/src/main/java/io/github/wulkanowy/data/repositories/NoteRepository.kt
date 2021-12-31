@@ -38,7 +38,8 @@ class NoteRepository @Inject constructor(
         },
         query = { noteDb.loadAll(student.studentId) },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getNotes(semester.semesterId)
                 .mapToEntities(semester)
         },

@@ -7,7 +7,12 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.time.LocalDate
 
-@Entity(tableName = "Semesters", indices = [Index(value = ["student_id", "diary_id", "semester_id"], unique = true)])
+@Entity(
+    tableName = "Semesters", indices = [Index(
+        value = ["student_id", "diary_id", "kindergarten_diary_id", "semester_id"],
+        unique = true
+    )]
+)
 data class Semester(
 
     @ColumnInfo(name = "student_id")
@@ -15,6 +20,9 @@ data class Semester(
 
     @ColumnInfo(name = "diary_id")
     val diaryId: Int,
+
+    @ColumnInfo(name = "kindergarten_diary_id", defaultValue = "0")
+    val kindergartenDiaryId: Int,
 
     @ColumnInfo(name = "diary_name")
     val diaryName: String,
@@ -37,7 +45,7 @@ data class Semester(
 
     @ColumnInfo(name = "unit_id")
     val unitId: Int
-): Serializable {
+) : Serializable {
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

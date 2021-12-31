@@ -3,22 +3,12 @@ package io.github.wulkanowy.data.repositories
 import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
 import io.github.wulkanowy.data.db.dao.TimetableDao
 import io.github.wulkanowy.data.db.dao.TimetableHeaderDao
-import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.data.db.entities.TimetableAdditional
-import io.github.wulkanowy.data.db.entities.TimetableHeader
+import io.github.wulkanowy.data.db.entities.*
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.pojos.TimetableFull
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
-import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.monday
-import io.github.wulkanowy.utils.networkBoundResource
-import io.github.wulkanowy.utils.sunday
-import io.github.wulkanowy.utils.uniqueSubtract
+import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.sync.Mutex
@@ -62,7 +52,7 @@ class TimetableRepository @Inject constructor(
         query = { getFullTimetableFromDatabase(student, semester, start, end) },
         fetch = {
             val timetableFull = sdk.init(student)
-                .switchDiary(semester.diaryId, semester.schoolYear)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getTimetableFull(start.monday, end.sunday)
 
             timetableFull.mapToEntities(semester)
