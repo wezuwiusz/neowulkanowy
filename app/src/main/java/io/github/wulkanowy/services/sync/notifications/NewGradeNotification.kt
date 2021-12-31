@@ -22,7 +22,10 @@ class NewGradeNotification @Inject constructor(
         val notificationDataList = items.map {
             NotificationData(
                 title = context.getPlural(R.plurals.grade_new_items, 1),
-                content = "${it.subject}: ${it.entry}",
+                content = buildString {
+                    append("${it.subject}: ${it.entry}")
+                    if (it.comment.isNotBlank()) append(" (${it.comment})")
+                },
                 intentToStart = SplashActivity.getStartIntent(context, Destination.Grade),
             )
         }

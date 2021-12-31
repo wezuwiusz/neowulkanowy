@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 val debugGradeDetailsItems = listOf(
     generateGrade("Matematyka", "+"),
-    generateGrade("Matematyka", "2="),
+    generateGrade("Matematyka", "120", comment = "%"),
     generateGrade("Fizyka", "-"),
     generateGrade("Geografia", "4+"),
     generateGrade("Sieci komputerowe", "1"),
@@ -17,14 +17,14 @@ val debugGradeDetailsItems = listOf(
     generateGrade("Wychowanie fizyczne", "5"),
 )
 
-private fun generateGrade(subject: String, entry: String) = Grade(
+private fun generateGrade(subject: String, entry: String, comment: String = "") = Grade(
     subject = subject,
     entry = entry,
     semesterId = 0,
     studentId = 0,
     value = 0.0,
     modifier = 0.0,
-    comment = "",
+    comment = comment,
     color = "",
     gradeSymbol = "",
     description = "",
