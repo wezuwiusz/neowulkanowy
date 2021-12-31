@@ -43,12 +43,14 @@ class Migration12 : Migration(11, 12) {
 
     private fun getStudentsIds(database: SupportSQLiteDatabase): List<Int> {
         val students = mutableListOf<Int>()
-        val studentsCursor = database.query("SELECT student_id FROM Students")
-        if (studentsCursor.moveToFirst()) {
-            do {
-                students.add(studentsCursor.getInt(0))
-            } while (studentsCursor.moveToNext())
+        database.query("SELECT student_id FROM Students").use {
+            if (it.moveToFirst()) {
+                do {
+                    students.add(it.getInt(0))
+                } while (it.moveToNext())
+            }
         }
+
         return students
     }
 

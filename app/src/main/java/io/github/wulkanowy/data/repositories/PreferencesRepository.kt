@@ -7,24 +7,16 @@ import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.fredporciuncula.flow.preferences.Preference
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.enums.AppTheme
-import io.github.wulkanowy.data.enums.GradeColorTheme
-import io.github.wulkanowy.data.enums.GradeExpandMode
-import io.github.wulkanowy.data.enums.GradeSortingMode
-import io.github.wulkanowy.data.enums.TimetableMode
-import io.github.wulkanowy.sdk.toLocalDate
+import io.github.wulkanowy.data.enums.*
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
-import io.github.wulkanowy.utils.toLocalDateTime
-import io.github.wulkanowy.utils.toTimestamp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.time.LocalDate
-import java.time.LocalDateTime
+import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -208,10 +200,10 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_optional_arithmetic_average
         )
 
-    var lasSyncDate: LocalDateTime
+    var lasSyncDate: Instant?
         get() = getLong(R.string.pref_key_last_sync_date, R.string.pref_default_last_sync_date)
-            .toLocalDateTime()
-        set(value) = sharedPref.edit().putLong("last_sync_date", value.toTimestamp()).apply()
+            .takeIf { it != 0L }?.let(Instant::ofEpochMilli)
+        set(value) = sharedPref.edit().putLong("last_sync_date", value?.toEpochMilli() ?: 0).apply()
 
     var dashboardItemsPosition: Map<DashboardItem.Type, Int>?
         get() {
@@ -270,11 +262,12 @@ class PreferencesRepository @Inject constructor(
         get() = sharedPref.getInt(PREF_KEY_IN_APP_REVIEW_COUNT, 0)
         set(value) = sharedPref.edit().putInt(PREF_KEY_IN_APP_REVIEW_COUNT, value).apply()
 
-    var inAppReviewDate: LocalDate?
+    var inAppReviewDate: Instant?
         get() = sharedPref.getLong(PREF_KEY_IN_APP_REVIEW_DATE, 0).takeIf { it != 0L }
-            ?.toLocalDate()
-        set(value) = sharedPref.edit().putLong(PREF_KEY_IN_APP_REVIEW_DATE, value!!.toTimestamp())
-            .apply()
+            ?.let(Instant::ofEpochMilli)
+        set(value) = sharedPref.edit {
+            putLong(PREF_KEY_IN_APP_REVIEW_DATE, value?.toEpochMilli() ?: 0)
+        }
 
     var isAppReviewDone: Boolean
         get() = sharedPref.getBoolean(PREF_KEY_IN_APP_REVIEW_DONE, false)

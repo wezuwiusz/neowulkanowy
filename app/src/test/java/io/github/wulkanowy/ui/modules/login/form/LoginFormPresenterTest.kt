@@ -6,18 +6,13 @@ import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.mockk.MockKAnnotations
-import io.mockk.Runs
-import io.mockk.coEvery
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.just
-import io.mockk.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
-import java.time.LocalDateTime.now
+import java.time.Instant
 
 class LoginFormPresenterTest {
 
@@ -121,7 +116,7 @@ class LoginFormPresenterTest {
             classId = 1,
             isCurrent = false,
             symbol = "",
-            registrationDate = now(),
+            registrationDate = Instant.now(),
             className = "",
             mobileBaseUrl = "",
             privateKey = "",

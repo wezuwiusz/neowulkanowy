@@ -11,7 +11,7 @@ import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.getPlural
 import io.github.wulkanowy.utils.toFormattedString
-import java.time.LocalDateTime
+import java.time.Instant
 import javax.inject.Inject
 
 class NewConferenceNotification @Inject constructor(
@@ -20,7 +20,7 @@ class NewConferenceNotification @Inject constructor(
 ) {
 
     suspend fun notify(items: List<Conference>, student: Student) {
-        val today = LocalDateTime.now()
+        val today = Instant.now()
         val lines = items.filter { !it.date.isBefore(today) }
             .map {
                 "${it.date.toFormattedString("dd.MM")} - ${it.title}: ${it.subject}"

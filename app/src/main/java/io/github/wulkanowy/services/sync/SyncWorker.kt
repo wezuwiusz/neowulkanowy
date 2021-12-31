@@ -23,7 +23,7 @@ import io.github.wulkanowy.utils.DispatchersProvider
 import io.github.wulkanowy.utils.getCompatColor
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.time.LocalDateTime
+import java.time.Instant
 import kotlin.random.Random
 
 @HiltWorker
@@ -91,7 +91,7 @@ class SyncWorker @AssistedInject constructor(
         }
         errors.isNotEmpty() -> Result.retry()
         else -> {
-            preferencesRepository.lasSyncDate = LocalDateTime.now()
+            preferencesRepository.lasSyncDate = Instant.now()
             Result.success()
         }
     }

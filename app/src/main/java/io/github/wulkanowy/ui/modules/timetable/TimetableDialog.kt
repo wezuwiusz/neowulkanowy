@@ -16,7 +16,7 @@ import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 import io.github.wulkanowy.utils.toFormattedString
-import java.time.LocalDateTime
+import java.time.Instant
 
 class TimetableDialog : DialogFragment() {
 
@@ -192,7 +192,7 @@ class TimetableDialog : DialogFragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setTime(start: LocalDateTime, end: LocalDateTime) {
+    private fun setTime(start: Instant, end: Instant) {
         binding.timetableDialogTimeValue.text =
             "${start.toFormattedString("HH:mm")} - ${end.toFormattedString("HH:mm")}"
     }

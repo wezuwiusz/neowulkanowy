@@ -7,18 +7,12 @@ import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.mockk.MockKAnnotations
-import io.mockk.Runs
-import io.mockk.clearMocks
-import io.mockk.coEvery
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.just
-import io.mockk.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.time.LocalDateTime.now
+import java.time.Instant
 
 class LoginStudentSelectPresenterTest {
 
@@ -55,7 +49,7 @@ class LoginStudentSelectPresenterTest {
             schoolSymbol = "",
             classId = 1,
             studentName = "",
-            registrationDate = now(),
+            registrationDate = Instant.now(),
             className = "",
             loginMode = "",
             certificateKey = "",

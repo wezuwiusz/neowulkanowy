@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
-import java.time.LocalDateTime
+import java.time.Instant
 
 @Entity(tableName = "Conferences")
 data class Conference(
@@ -27,7 +27,7 @@ data class Conference(
     @ColumnInfo(name = "conference_id")
     val conferenceId: Int,
 
-    val date: LocalDateTime
+    val date: Instant,
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

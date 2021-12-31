@@ -5,7 +5,6 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
-import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
 
 fun Fragment.openMaterialDatePicker(
@@ -16,17 +15,17 @@ fun Fragment.openMaterialDatePicker(
 ) {
     val constraintsBuilder = CalendarConstraints.Builder().apply {
         setValidator(CalendarDayRangeValidator(rangeStart, rangeEnd))
-        setStart(rangeStart.toTimestamp(ZoneOffset.UTC))
-        setEnd(rangeEnd.toTimestamp(ZoneOffset.UTC))
+        setStart(rangeStart.toTimestamp())
+        setEnd(rangeEnd.toTimestamp())
     }
 
     val datePicker = MaterialDatePicker.Builder.datePicker()
         .setCalendarConstraints(constraintsBuilder.build())
-        .setSelection(selected.toTimestamp(ZoneOffset.UTC))
+        .setSelection(selected.toTimestamp())
         .build()
 
     datePicker.addOnPositiveButtonClickListener {
-        val date = it.toLocalDateTime(ZoneOffset.UTC).toLocalDate()
+        val date = it.toLocalDateTime().toLocalDate()
         onDateSelected(date)
     }
 

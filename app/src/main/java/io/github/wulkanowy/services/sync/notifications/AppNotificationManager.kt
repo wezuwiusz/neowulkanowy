@@ -18,7 +18,7 @@ import io.github.wulkanowy.utils.PendingIntentCompat
 import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.nickOrName
-import java.time.LocalDateTime
+import java.time.Instant
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -169,7 +169,7 @@ class AppNotificationManager @Inject constructor(
             title = notificationData.title,
             content = notificationData.content,
             type = notificationType,
-            date = LocalDateTime.now()
+            date = Instant.now(),
         )
 
         notificationRepository.saveNotification(notificationEntity)

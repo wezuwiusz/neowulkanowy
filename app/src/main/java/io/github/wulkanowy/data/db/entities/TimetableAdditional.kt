@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
+import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 @Entity(tableName = "TimetableAdditional")
 data class TimetableAdditional(
@@ -17,9 +17,9 @@ data class TimetableAdditional(
     @ColumnInfo(name = "diary_id")
     val diaryId: Int,
 
-    val start: LocalDateTime,
+    val start: Instant,
 
-    val end: LocalDateTime,
+    val end: Instant,
 
     val date: LocalDate,
 

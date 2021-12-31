@@ -10,11 +10,9 @@ import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
 import io.github.wulkanowy.utils.toLocalDate
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import java.time.*
 import java.time.temporal.ChronoUnit
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
 class AdditionalLessonAddPresenter @Inject constructor(
@@ -138,8 +136,8 @@ class AdditionalLessonAddPresenter @Inject constructor(
                 TimetableAdditional(
                     studentId = semester.studentId,
                     diaryId = semester.diaryId,
-                    start = LocalDateTime.of(date, start),
-                    end = LocalDateTime.of(date, end),
+                    start = ZonedDateTime.of(date, start, ZoneId.systemDefault()).toInstant(),
+                    end = ZonedDateTime.of(date, end, ZoneId.systemDefault()).toInstant(),
                     date = date.plusWeeks(it),
                     subject = subject
                 ).apply {

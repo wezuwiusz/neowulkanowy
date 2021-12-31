@@ -15,8 +15,8 @@ import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 class DashboardPresenter @Inject constructor(
@@ -532,7 +532,7 @@ class DashboardPresenter @Inject constructor(
                 student = student,
                 semester = semester,
                 forceRefresh = forceRefresh,
-                startDate = LocalDateTime.now()
+                startDate = Instant.now(),
             )
         }.onEach {
             when (it.status) {

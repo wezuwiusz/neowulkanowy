@@ -23,9 +23,9 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.time.Instant
 import java.time.LocalDate.now
 import java.time.LocalDate.of
-import java.time.LocalDateTime
 
 class GradeAverageProviderTest {
 
@@ -63,7 +63,7 @@ class GradeAverageProviderTest {
         className = "",
         classId = 1,
         isCurrent = true,
-        registrationDate = LocalDateTime.now()
+        registrationDate = Instant.now()
     )
 
     private val semesters = mutableListOf(
