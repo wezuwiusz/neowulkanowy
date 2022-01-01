@@ -18,7 +18,7 @@ interface DashboardView : BaseView {
 
     fun showErrorView(show: Boolean)
 
-    fun setErrorDetails(message: String)
+    fun setErrorDetails(error: Throwable)
 
     fun resetView()
 

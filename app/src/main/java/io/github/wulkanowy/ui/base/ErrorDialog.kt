@@ -16,15 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogErrorBinding
-import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
-import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
-import io.github.wulkanowy.sdk.scrapper.exception.ServiceUnavailableException
 import io.github.wulkanowy.utils.*
-import okhttp3.internal.http2.StreamResetException
-import java.io.InterruptedIOException
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -67,7 +59,7 @@ class ErrorDialog : DialogFragment() {
 
     private fun DialogErrorBinding.bindErrorDetails(error: Throwable) {
         return with(this) {
-            errorDialogHumanizedMessage.text = resources.getString(error)
+            errorDialogHumanizedMessage.text = resources.getErrorString(error)
             errorDialogErrorMessage.text = error.localizedMessage
             errorDialogErrorMessage.isGone = error.localizedMessage.isNullOrBlank()
             errorDialogContent.text = error.stackTraceToString()
@@ -77,20 +69,8 @@ class ErrorDialog : DialogFragment() {
 
     private fun AlertDialog.enableReportButtonIfErrorIsReportable(error: Throwable) {
         setOnShowListener {
-            getButton(AlertDialog.BUTTON_NEUTRAL).isEnabled = isErrorShouldBeReported(error)
+            getButton(AlertDialog.BUTTON_NEUTRAL).isEnabled = error.isShouldBeReported()
         }
-    }
-
-    private fun isErrorShouldBeReported(error: Throwable): Boolean = when (error) {
-        is UnknownHostException,
-        is InterruptedIOException,
-        is ConnectException,
-        is StreamResetException,
-        is SocketTimeoutException,
-        is ServiceUnavailableException,
-        is FeatureDisabledException,
-        is FeatureNotAvailableException -> false
-        else -> true
     }
 
     private fun copyErrorToClipboard(errorStacktrace: String) {

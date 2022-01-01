@@ -714,6 +714,7 @@ class DashboardPresenter @Inject constructor(
                 if ((forceRefresh && wasGeneralError) || !forceRefresh) {
                     showContent(false)
                     showErrorView(true)
+                    setErrorDetails(lastError)
                 }
             }
         }
