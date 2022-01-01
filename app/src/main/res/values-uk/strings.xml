@@ -760,6 +760,7 @@
     <string name="update_failed">Помилка оновлення! Wulkanowy може не працювати належним чином. Подумайте про оновлення</string>
     <!--Errors-->
     <string name="error_no_internet">Брак з\'єднання з інтернетом</string>
+    <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>
     <string name="error_timeout">Помилка підключення до реєстрації. Сервери можуть бути перевантажені. Будь-ласка спробуйте пізніше</string>
     <string name="error_login_failed">Помилка завантаження даних. Будь-ласка спробуйте пізніше</string>
     <string name="error_password_change_required">Потрібна реєстрація зміни пароля</string>

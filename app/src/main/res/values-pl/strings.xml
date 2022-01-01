@@ -760,6 +760,7 @@
     <string name="update_failed">Aktualizacja nie powiodła się! Wulkanowy może nie działać prawidłowo. Rozważ aktualizację</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
+    <string name="error_invalid_device_datetime">Wystąpił błąd. Sprawdź poprawność daty w urządzeniu</string>
     <string name="error_timeout">Nie udało się połączyć z dziennikiem. Serwery mogą być przeciążone. Spróbuj ponownie później</string>
     <string name="error_login_failed">Ładowanie danych nie powiodło się. Spróbuj ponownie później</string>
     <string name="error_password_change_required">Wymagana zmiana hasła do dziennika</string>

@@ -760,6 +760,7 @@
     <string name="update_failed">Не удалось обновить! Wulkanowy может работать некорректно. Рассмотрите возможность обновления</string>
     <!--Errors-->
     <string name="error_no_internet">Нет интернет-подключения</string>
+    <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>
     <string name="error_timeout">Не удалось подключиться к регистрации. Серверы могут быть перегружены. Пожалуйста, повторите попытку позже</string>
     <string name="error_login_failed">Не удалось загрузить данные. Пожалуйста, повторите попытку позже</string>
     <string name="error_password_change_required">Необходимо изменить пароль реестра</string>
