@@ -8,8 +8,9 @@ import io.github.wulkanowy.sdk.scrapper.exception.NoAccountFoundException
 import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 
-class RecoverErrorHandler @Inject constructor(@ApplicationContext context: Context) :
-    ErrorHandler(context) {
+class RecoverErrorHandler @Inject constructor(
+    @ApplicationContext context: Context,
+) : ErrorHandler(context) {
 
     var onInvalidUsername: (String) -> Unit = {}
 

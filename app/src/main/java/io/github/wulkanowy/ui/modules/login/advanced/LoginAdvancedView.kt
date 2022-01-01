@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.login.advanced
 
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.ui.base.BaseView
+import io.github.wulkanowy.ui.modules.login.LoginData
 
 interface LoginAdvancedView : BaseView {
 
@@ -69,7 +70,9 @@ interface LoginAdvancedView : BaseView {
 
     fun showContent(show: Boolean)
 
-    fun notifyParentAccountLogged(studentsWithSemesters: List<StudentWithSemesters>)
+    fun navigateToSymbol(loginData: LoginData)
+
+    fun navigateToStudentSelect(studentsWithSemesters: List<StudentWithSemesters>)
 
     fun setErrorPinRequired()
 

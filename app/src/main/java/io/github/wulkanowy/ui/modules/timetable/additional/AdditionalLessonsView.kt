@@ -34,5 +34,11 @@ interface AdditionalLessonsView : BaseView {
 
     fun showNextButton(show: Boolean)
 
-    fun showDatePickerDialog(currentDate: LocalDate)
+    fun showDatePickerDialog(selectedDate: LocalDate)
+
+    fun showAddAdditionalLessonDialog()
+
+    fun showSuccessMessage()
+
+    fun showDeleteLessonDialog(timetableAdditional: TimetableAdditional)
 }

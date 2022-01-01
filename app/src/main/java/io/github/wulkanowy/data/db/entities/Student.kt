@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.io.Serializable
-import java.time.LocalDateTime
+import java.time.Instant
 
 @Entity(
     tableName = "Students",
@@ -74,7 +74,7 @@ data class Student(
     val isCurrent: Boolean,
 
     @ColumnInfo(name = "registration_date")
-    val registrationDate: LocalDateTime
+    val registrationDate: Instant,
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

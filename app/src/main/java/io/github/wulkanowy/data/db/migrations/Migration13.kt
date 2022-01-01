@@ -25,12 +25,14 @@ class Migration13 : Migration(12, 13) {
 
     private fun getStudentsIds(database: SupportSQLiteDatabase): MutableList<Pair<Int, String>> {
         val students = mutableListOf<Pair<Int, String>>()
-        val studentsCursor = database.query("SELECT id, school_name FROM Students")
-        if (studentsCursor.moveToFirst()) {
-            do {
-                students.add(studentsCursor.getInt(0) to studentsCursor.getString(1))
-            } while (studentsCursor.moveToNext())
+        database.query("SELECT id, school_name FROM Students").use {
+            if (it.moveToFirst()) {
+                do {
+                    students.add(it.getInt(0) to it.getString(1))
+                } while (it.moveToNext())
+            }
         }
+
         return students
     }
 
@@ -42,12 +44,14 @@ class Migration13 : Migration(12, 13) {
 
     private fun getStudentsAndClassIds(database: SupportSQLiteDatabase): List<Pair<Int, Int>> {
         val students = mutableListOf<Pair<Int, Int>>()
-        val studentsCursor = database.query("SELECT student_id, class_id FROM Students")
-        if (studentsCursor.moveToFirst()) {
-            do {
-                students.add(studentsCursor.getInt(0) to studentsCursor.getInt(1))
-            } while (studentsCursor.moveToNext())
+        database.query("SELECT student_id, class_id FROM Students").use {
+            if (it.moveToFirst()) {
+                do {
+                    students.add(it.getInt(0) to it.getInt(1))
+                } while (it.moveToNext())
+            }
         }
+
         return students
     }
 

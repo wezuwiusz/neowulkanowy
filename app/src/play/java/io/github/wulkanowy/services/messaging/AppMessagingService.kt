@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.time.LocalDateTime
+import java.time.Instant
 import javax.inject.Inject
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
@@ -36,7 +36,7 @@ class AppMessagingService : FirebaseMessagingService() {
             title = title,
             content = content,
             data = customData,
-            date = LocalDateTime.now(),
+            date = Instant.now(),
             type = NotificationType.PUSH,
             studentId = -1
         )

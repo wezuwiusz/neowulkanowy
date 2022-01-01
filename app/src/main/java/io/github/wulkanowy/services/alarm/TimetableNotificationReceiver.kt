@@ -1,6 +1,7 @@
 package io.github.wulkanowy.services.alarm
 
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -12,14 +13,12 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.services.HiltBroadcastReceiver
 import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel.Companion.CHANNEL_ID
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.PendingIntentCompat
 import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.getCompatColor
-import io.github.wulkanowy.utils.toLocalDateTime
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.launchIn
@@ -28,7 +27,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TimetableNotificationReceiver : HiltBroadcastReceiver() {
+class TimetableNotificationReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var studentRepository: StudentRepository
@@ -41,6 +40,8 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
         const val NOTIFICATION_TYPE_UPCOMING = 2
         const val NOTIFICATION_TYPE_LAST_LESSON_CANCELLATION = 3
 
+        // FIXME only shows one notification even if there are multiple students.
+        //       Probably want to fix after #721 is merged.
         const val NOTIFICATION_ID = 2137
 
         const val STUDENT_NAME = "student_name"
@@ -56,20 +57,24 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
         Timber.d("Receiving intent... ${intent.toUri(0)}")
 
         flowWithResource {
+            val showStudentName = !studentRepository.isOneUniqueStudent()
             val student = studentRepository.getCurrentStudent(false)
             val studentId = intent.getIntExtra(STUDENT_ID, 0)
-            if (student.studentId == studentId) prepareNotification(context, intent)
-            else Timber.d("Notification studentId($studentId) differs from current(${student.studentId})")
+
+            if (student.studentId == studentId) {
+                prepareNotification(context, intent, showStudentName)
+            } else {
+                Timber.d("Notification studentId($studentId) differs from current(${student.studentId})")
+            }
         }.onEach {
             if (it.status == Status.ERROR) Timber.e(it.error!!)
         }.launchIn(GlobalScope)
     }
 
-    private fun prepareNotification(context: Context, intent: Intent) {
+    private fun prepareNotification(context: Context, intent: Intent, showStudentName: Boolean) {
         val type = intent.getIntExtra(LESSON_TYPE, 0)
         val isPersistent = preferencesRepository.isUpcomingLessonsNotificationsPersistent
 
@@ -78,7 +83,7 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
         }
 
         val studentId = intent.getIntExtra(STUDENT_ID, 0)
-        val studentName = intent.getStringExtra(STUDENT_NAME)
+        val studentName = intent.getStringExtra(STUDENT_NAME).takeIf { showStudentName }
 
         val subject = intent.getStringExtra(LESSON_TITLE)
         val room = intent.getStringExtra(LESSON_ROOM)
@@ -89,21 +94,28 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
         val nextSubject = intent.getStringExtra(LESSON_NEXT_TITLE)
         val nextRoom = intent.getStringExtra(LESSON_NEXT_ROOM)
 
-        Timber.d("TimetableNotification receive: type: $type, subject: $subject, start: ${start.toLocalDateTime()}, student: $studentId")
+        Timber.d("TimetableNotification receive: type: $type, subject: $subject, start: $start, student: $studentId")
+
+        val notificationTitleResId =
+            if (type == NOTIFICATION_TYPE_CURRENT) R.string.timetable_now else R.string.timetable_next
+        val notificationTitle =
+            context.getString(notificationTitleResId, "($room) $subject".removePrefix("()"))
+
+        val nextLessonText = nextSubject?.let {
+            context.getString(
+                R.string.timetable_later,
+                "($nextRoom) $nextSubject".removePrefix("()")
+            )
+        }
 
         showNotification(
-            context, isPersistent, studentName,
-            if (type == NOTIFICATION_TYPE_CURRENT) end else start, end - start,
-            context.getString(
-                if (type == NOTIFICATION_TYPE_CURRENT) R.string.timetable_now else R.string.timetable_next,
-                "($room) $subject".removePrefix("()")
-            ),
-            nextSubject?.let {
-                context.getString(
-                    R.string.timetable_later,
-                    "($nextRoom) $nextSubject".removePrefix("()")
-                )
-            }
+            context = context,
+            isPersistent = isPersistent,
+            studentName = studentName,
+            countDown = if (type == NOTIFICATION_TYPE_CURRENT) end else start,
+            timeout = end - start,
+            title = notificationTitle,
+            next = nextLessonText
         )
     }
 
@@ -130,10 +142,11 @@ class TimetableNotificationReceiver : HiltBroadcastReceiver() {
                 .setTimeoutAfter(timeout)
                 .setSmallIcon(R.drawable.ic_stat_timetable)
                 .setColor(context.getCompatColor(R.color.colorPrimary))
-                .setStyle(NotificationCompat.InboxStyle().also {
-                    it.setSummaryText(studentName)
-                    it.addLine(next)
-                })
+                .setStyle(NotificationCompat.InboxStyle()
+                    .addLine(next)
+                    .also { inboxStyle ->
+                        studentName?.let { inboxStyle.setSummaryText(it) }
+                    })
                 .setContentIntent(
                     PendingIntent.getActivity(
                         context,

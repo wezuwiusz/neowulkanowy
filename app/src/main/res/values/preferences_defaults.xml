@@ -28,6 +28,7 @@
     <bool name="pref_default_optional_arithmetic_average">false</bool>
     <string name="pref_default_last_sync_date">0</string>
     <bool name="pref_default_notification_piggyback">false</bool>
+    <bool name="pref_default_notification_piggyback_cancel_original">false</bool>
     <string-array name="pref_default_dashboard_tiles">
         <item>LUCKY_NUMBER</item>
         <item>MESSAGES</item>

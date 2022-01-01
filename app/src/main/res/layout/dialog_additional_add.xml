@@ -1,0 +1,156 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:minWidth="300dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="300dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/addadditionalLessonHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/additional_lessons_add_title"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/additionalLessonDialogDate"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="28dp"
+            android:hint="@string/all_date"
+            app:startIconDrawable="@drawable/ic_calendat_all">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/additionalLessonDialogDateEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:focusable="false"
+                android:inputType="text"
+                tools:ignore="Deprecated" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/additionalLessonDialogRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/additional_lessons_repeat" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/additionalLessonDialogStart"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="6dp"
+            android:hint="@string/additional_lessons_start"
+            app:startIconDrawable="@drawable/ic_all_clock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/additionalLessonDialogStartEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:focusable="false"
+                android:inputType="text"
+                tools:ignore="Deprecated" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/additionalLessonDialogEnd"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/additional_lessons_end"
+            app:startIconDrawable="@drawable/ic_all_clock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/additionalLessonDialogEndEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:focusable="false"
+                android:inputType="text"
+                tools:ignore="Deprecated" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/additionalLessonDialogContent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/all_subject">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/additionalLessonDialogContentEdit"
+                android:layout_width="match_parent"
+                android:inputType="text"
+                android:layout_height="wrap_content"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:minHeight="52dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/additionalLessonDialogClose"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginBottom="8dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="88dp"
+                android:text="@string/all_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/additionalLessonDialogAdd"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="88dp"
+                android:text="@string/all_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>

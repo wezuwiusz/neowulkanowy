@@ -12,8 +12,9 @@ import io.github.wulkanowy.sdk.scrapper.login.BadCredentialsException
 import io.github.wulkanowy.ui.base.ErrorHandler
 import javax.inject.Inject
 
-class LoginErrorHandler @Inject constructor(@ApplicationContext context: Context) :
-    ErrorHandler(context) {
+class LoginErrorHandler @Inject constructor(
+    @ApplicationContext context: Context,
+) : ErrorHandler(context) {
 
     var onBadCredentials: (String?) -> Unit = {}
 

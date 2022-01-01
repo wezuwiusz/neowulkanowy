@@ -5,11 +5,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.DispatchersProvider
-import io.github.wulkanowy.utils.getCurrentOrLast
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.isCurrent
-import io.github.wulkanowy.utils.uniqueSubtract
+import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
@@ -43,10 +39,14 @@ class SemesterRepository @Inject constructor(
     ): Boolean {
         val isNoSemesters = semesters.isEmpty()
 
-        val isRefreshOnModeChangeRequired =
-            if (Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.API) {
-                semesters.firstOrNull { it.isCurrent }?.diaryId == 0
-            } else false
+        val isRefreshOnModeChangeRequired = when {
+            Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.API -> {
+                semesters.firstOrNull { it.isCurrent }?.let {
+                    0 == it.diaryId && 0 == it.kindergartenDiaryId
+                } == true
+            }
+            else -> false
+        }
 
         val isRefreshOnNoCurrentAppropriate =
             refreshOnNoCurrent && !semesters.any { semester -> semester.isCurrent }

@@ -198,6 +198,17 @@
     <string name="additional_lessons_title">Additional lessons</string>
     <string name="additional_lessons_button">Show additional lessons</string>
     <string name="additional_lessons_no_items">No info about additional lessons</string>
+    <string name="additional_lessons_add">New lesson</string>
+    <string name="additional_lessons_add_title">New additional lesson</string>
+    <string name="additional_lessons_add_success">Additional lesson added successfully</string>
+    <string name="additional_lessons_delete_success">Additional lesson deleted successfully</string>
+    <string name="additional_lessons_repeat">Repeat weekly</string>
+    <string name="additional_lessons_delete_title">Delete additional lesson</string>
+    <string name="additional_lessons_delete_one">Just this lesson</string>
+    <string name="additional_lessons_delete_series">All in the series</string>
+    <string name="additional_lessons_start">Start time</string>
+    <string name="additional_lessons_end">End time</string>
+    <string name="additional_lessons_end_time_error">End time must be greater than start time</string>
 
 
     <!--Attendance-->
@@ -661,7 +672,9 @@
     <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
     <string name="pref_notify_debug_switch">Show debug notifications</string>
     <string name="pref_notify_disabled_summary">Synchronization is disabled</string>
+    <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
     <string name="pref_notify_notifications_piggyback">Capture official app notifications</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
     <string name="pref_notification_piggyback_popup_title">Capture notifications</string>
     <string name="pref_notification_piggyback_popup_description">With this feature you can gain a substitute of push notifications like in the official app. All you need to do is allow Wulkanowy to receive all notifications in your system settings.\n\nHow it works?\nWhen you get a notification in Dziennik VULCAN, Wulkanowy will be notified (that\'s what these extra permissions are for) and will trigger a sync so that can send its own notification.\n\nFOR ADVANCED USERS ONLY</string>
     <string name="pref_notification_exact_alarm_popup_title">Upcoming lesson notifications</string>
@@ -754,6 +767,7 @@
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>
+    <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>
     <string name="error_timeout">Connection to register failed. Servers can be overloaded. Please try again later</string>
     <string name="error_login_failed">Loading data failed. Please try again later</string>
     <string name="error_password_change_required">Register password change required</string>

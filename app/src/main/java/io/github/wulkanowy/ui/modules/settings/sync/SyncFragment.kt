@@ -91,7 +91,7 @@ class SyncFragment : PreferenceFragmentCompat(),
     }
 
     override fun showErrorDetailsDialog(error: Throwable) {
-        ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
+        ErrorDialog.newInstance(error).show(childFragmentManager, "error_details")
     }
 
     override fun onResume() {

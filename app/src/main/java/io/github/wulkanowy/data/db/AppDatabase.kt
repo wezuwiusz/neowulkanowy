@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -66,49 +67,7 @@ import io.github.wulkanowy.data.db.entities.Teacher
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.entities.TimetableAdditional
 import io.github.wulkanowy.data.db.entities.TimetableHeader
-import io.github.wulkanowy.data.db.migrations.Migration10
-import io.github.wulkanowy.data.db.migrations.Migration11
-import io.github.wulkanowy.data.db.migrations.Migration12
-import io.github.wulkanowy.data.db.migrations.Migration13
-import io.github.wulkanowy.data.db.migrations.Migration14
-import io.github.wulkanowy.data.db.migrations.Migration15
-import io.github.wulkanowy.data.db.migrations.Migration16
-import io.github.wulkanowy.data.db.migrations.Migration17
-import io.github.wulkanowy.data.db.migrations.Migration18
-import io.github.wulkanowy.data.db.migrations.Migration19
-import io.github.wulkanowy.data.db.migrations.Migration2
-import io.github.wulkanowy.data.db.migrations.Migration20
-import io.github.wulkanowy.data.db.migrations.Migration21
-import io.github.wulkanowy.data.db.migrations.Migration22
-import io.github.wulkanowy.data.db.migrations.Migration23
-import io.github.wulkanowy.data.db.migrations.Migration24
-import io.github.wulkanowy.data.db.migrations.Migration25
-import io.github.wulkanowy.data.db.migrations.Migration26
-import io.github.wulkanowy.data.db.migrations.Migration27
-import io.github.wulkanowy.data.db.migrations.Migration28
-import io.github.wulkanowy.data.db.migrations.Migration29
-import io.github.wulkanowy.data.db.migrations.Migration3
-import io.github.wulkanowy.data.db.migrations.Migration30
-import io.github.wulkanowy.data.db.migrations.Migration31
-import io.github.wulkanowy.data.db.migrations.Migration32
-import io.github.wulkanowy.data.db.migrations.Migration33
-import io.github.wulkanowy.data.db.migrations.Migration34
-import io.github.wulkanowy.data.db.migrations.Migration35
-import io.github.wulkanowy.data.db.migrations.Migration36
-import io.github.wulkanowy.data.db.migrations.Migration37
-import io.github.wulkanowy.data.db.migrations.Migration38
-import io.github.wulkanowy.data.db.migrations.Migration39
-import io.github.wulkanowy.data.db.migrations.Migration4
-import io.github.wulkanowy.data.db.migrations.Migration40
-import io.github.wulkanowy.data.db.migrations.Migration41
-import io.github.wulkanowy.data.db.migrations.Migration42
-import io.github.wulkanowy.data.db.migrations.Migration43
-import io.github.wulkanowy.data.db.migrations.Migration44
-import io.github.wulkanowy.data.db.migrations.Migration5
-import io.github.wulkanowy.data.db.migrations.Migration6
-import io.github.wulkanowy.data.db.migrations.Migration7
-import io.github.wulkanowy.data.db.migrations.Migration8
-import io.github.wulkanowy.data.db.migrations.Migration9
+import io.github.wulkanowy.data.db.migrations.*
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Singleton
 
@@ -146,6 +105,10 @@ import javax.inject.Singleton
         Notification::class,
         AdminMessage::class
     ],
+    autoMigrations = [
+        AutoMigration(from = 44, to = 45),
+        AutoMigration(from = 46, to = 47),
+    ],
     version = AppDatabase.VERSION_SCHEMA,
     exportSchema = true
 )
@@ -153,7 +116,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 44
+        const val VERSION_SCHEMA = 47
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),
@@ -198,7 +161,8 @@ abstract class AppDatabase : RoomDatabase() {
             Migration41(sharedPrefProvider),
             Migration42(),
             Migration43(),
-            Migration44()
+            Migration44(),
+            Migration46(),
         )
 
         fun newInstance(

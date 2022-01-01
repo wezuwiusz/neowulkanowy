@@ -204,6 +204,17 @@
     <string name="additional_lessons_title">Dodatkowe lekcje</string>
     <string name="additional_lessons_button">Pokaż dodatkowe lekcje</string>
     <string name="additional_lessons_no_items">Brak informacji o dodatkowych lekcjach</string>
+    <string name="additional_lessons_add">Nowa lekcja</string>
+    <string name="additional_lessons_add_title">Nowa dodatkowa lekcja</string>
+    <string name="additional_lessons_add_success">Dodatkowa lekcja dodana pomyślnie</string>
+    <string name="additional_lessons_delete_success">Dodatkowa lekcja usunięta pomyślnie</string>
+    <string name="additional_lessons_repeat">Powtarzaj co tydzień</string>
+    <string name="additional_lessons_delete_title">Usuń dodatkową lekcję</string>
+    <string name="additional_lessons_delete_one">Tylko ta lekcja</string>
+    <string name="additional_lessons_delete_series">Wszystkie w serii</string>
+    <string name="additional_lessons_start">Godzina rozpoczęcia</string>
+    <string name="additional_lessons_end">Godzina zakończenia</string>
+    <string name="additional_lessons_end_time_error">Godzina zakończenia musi być późniejsza niż godzina rozpoczęcia</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
     <string name="attendance_absence_school">Nieobecność z przyczyn szkolnych</string>
@@ -253,10 +264,10 @@
         <item quantity="other">Nowe sprawdziany</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">Masz %d nowy sprawdzian</item>
-        <item quantity="few">Masz %d nowe sprawdziany</item>
-        <item quantity="many">Masz %d nowych sprawdzianów</item>
-        <item quantity="other">Masz %d nowych sprawdzianów</item>
+        <item quantity="one">%d nowy sprawdzian</item>
+        <item quantity="few">%d nowe sprawdziany</item>
+        <item quantity="many">%d nowych sprawdzianów</item>
+        <item quantity="other">%d nowych sprawdzianów</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d sprawdzian</item>
@@ -668,7 +679,9 @@
     <string name="pref_notify_fix_sync_issues_message">Na twoim urządzeniu mogą występować problemy z synchronizacją danych i powiadomieniami.\n\nBy je naprawić, dodaj Wulkanowego do autostartu i wyłącz optymalizację/oszczędzanie baterii w ustawieniach systemowych telefonu.</string>
     <string name="pref_notify_debug_switch">Pokazuj powiadomienia debugowania</string>
     <string name="pref_notify_disabled_summary">Synchronizacja jest wyłączona</string>
+    <string name="pref_notify_notifications_piggyback_header">Powiadomienia oficjalnej aplikacji</string>
     <string name="pref_notify_notifications_piggyback">Przechwytywanie powiadomień oficjalnej aplikacji</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Usuwaj powiadomienia oficjalnej aplikacji po przechwyceniu</string>
     <string name="pref_notification_piggyback_popup_title">Przechwytywanie powiadomień</string>
     <string name="pref_notification_piggyback_popup_description">Dzięki tej funkcji możesz uzyskać namiastkę powiadomień push, takich jak w oficjalnej aplikacji. Wszystko, co musisz zrobić, to zezwolić Wulkanowemu na odczytywanie wszystkich powiadomień w ustawieniach systemowych.\n\nJak to działa?\nKiedy otrzymasz powiadomienie w Dzienniczku VULCAN, Wulkanowy zostanie o tym powiadomiony (do tego jest to dodatkowe uprawnienie) i uruchomi synchronizację, aby mógł wysłać własne powiadomienie.\n\nWYŁĄCZNIE DLA ZAAWANSOWANYCH UŻYTKOWNIKÓW</string>
     <string name="pref_notification_exact_alarm_popup_title">Powiadomienia o nadchodzących lekcjach</string>
@@ -747,6 +760,7 @@
     <string name="update_failed">Aktualizacja nie powiodła się! Wulkanowy może nie działać prawidłowo. Rozważ aktualizację</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
+    <string name="error_invalid_device_datetime">Wystąpił błąd. Sprawdź poprawność daty w urządzeniu</string>
     <string name="error_timeout">Nie udało się połączyć z dziennikiem. Serwery mogą być przeciążone. Spróbuj ponownie później</string>
     <string name="error_login_failed">Ładowanie danych nie powiodło się. Spróbuj ponownie później</string>
     <string name="error_password_change_required">Wymagana zmiana hasła do dziennika</string>

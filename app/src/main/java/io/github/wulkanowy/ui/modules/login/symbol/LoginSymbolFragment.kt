@@ -7,6 +7,7 @@ import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.IME_NULL
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +16,7 @@ import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.FragmentLoginSymbolBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
+import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.openEmailClient
@@ -35,7 +37,9 @@ class LoginSymbolFragment :
     companion object {
         private const val SAVED_LOGIN_DATA = "LOGIN_DATA"
 
-        fun newInstance() = LoginSymbolFragment()
+        fun newInstance(loginData: LoginData) = LoginSymbolFragment().apply {
+            arguments = bundleOf(SAVED_LOGIN_DATA to loginData)
+        }
     }
 
     override val symbolNameError: CharSequence?
@@ -44,10 +48,15 @@ class LoginSymbolFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentLoginSymbolBinding.bind(view)
-        presenter.onAttachView(this, savedInstanceState?.getSerializable(SAVED_LOGIN_DATA))
+        presenter.onAttachView(
+            view = this,
+            loginData = requireArguments().getSerializable(SAVED_LOGIN_DATA) as LoginData,
+        )
     }
 
     override fun initView() {
+        (requireActivity() as LoginActivity).showActionBar(true)
+
         with(binding) {
             loginSymbolSignIn.setOnClickListener { presenter.attemptLogin(loginSymbolName.text.toString()) }
             loginSymbolFaq.setOnClickListener { presenter.onFaqClick() }
@@ -70,12 +79,9 @@ class LoginSymbolFragment :
         }
     }
 
-    fun onParentInitSymbolFragment(loginData: Triple<String, String, String>) {
-        presenter.onParentInitSymbolView(loginData)
-    }
-
     override fun setLoginToHeading(login: String) {
-        binding.loginSymbolHeader.text = getString(R.string.login_header_symbol, login).parseAsHtml()
+        binding.loginSymbolHeader.text =
+            getString(R.string.login_header_symbol, login).parseAsHtml()
     }
 
     override fun setErrorSymbolIncorrect() {
@@ -119,8 +125,8 @@ class LoginSymbolFragment :
         binding.loginSymbolContainer.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun notifyParentAccountLogged(studentsWithSemesters: List<StudentWithSemesters>) {
-        (activity as? LoginActivity)?.onSymbolFragmentAccountLogged(studentsWithSemesters)
+    override fun navigateToStudentSelect(studentsWithSemesters: List<StudentWithSemesters>) {
+        (activity as? LoginActivity)?.navigateToStudentSelect(studentsWithSemesters)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

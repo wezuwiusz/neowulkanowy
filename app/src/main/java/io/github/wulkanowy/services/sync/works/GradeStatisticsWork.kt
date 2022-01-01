@@ -10,7 +10,7 @@ class GradeStatisticsWork @Inject constructor(
     private val gradeStatisticsRepository: GradeStatisticsRepository
 ) : Work {
 
-    override suspend fun doWork(student: Student, semester: Semester) {
+    override suspend fun doWork(student: Student, semester: Semester, notify: Boolean) {
         with(gradeStatisticsRepository) {
             getGradesPartialStatistics(student, semester, "Wszystkie", forceRefresh = true).waitForResult()
             getGradesSemesterStatistics(student, semester, "Wszystkie", forceRefresh = true).waitForResult()

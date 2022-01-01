@@ -13,13 +13,8 @@ import io.github.wulkanowy.ui.modules.about.license.LicenseFragment
 import io.github.wulkanowy.ui.modules.debug.DebugFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
-import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.getCompatDrawable
-import io.github.wulkanowy.utils.openAppInMarket
-import io.github.wulkanowy.utils.openEmailClient
-import io.github.wulkanowy.utils.openInternetBrowser
-import io.github.wulkanowy.utils.toFormattedString
-import io.github.wulkanowy.utils.toLocalDateTime
+import io.github.wulkanowy.utils.*
+import java.time.Instant
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,7 +33,7 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
     override val versionRes: Triple<String, String, Drawable?>?
         get() = context?.run {
             val buildTimestamp =
-                appInfo.buildTimestamp.toLocalDateTime().toFormattedString("yyyy-MM-dd")
+                Instant.ofEpochMilli(appInfo.buildTimestamp).toFormattedString("yyyy-MM-dd")
             val versionSignature =
                 "${appInfo.versionName}-${appInfo.buildFlavor} (${appInfo.versionCode}), $buildTimestamp"
             Triple(

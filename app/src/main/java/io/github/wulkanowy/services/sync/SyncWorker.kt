@@ -23,7 +23,7 @@ import io.github.wulkanowy.utils.DispatchersProvider
 import io.github.wulkanowy.utils.getCompatColor
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.time.LocalDateTime
+import java.time.Instant
 import kotlin.random.Random
 
 @HiltWorker
@@ -38,18 +38,23 @@ class SyncWorker @AssistedInject constructor(
     private val dispatchersProvider: DispatchersProvider
 ) : CoroutineWorker(appContext, workerParameters) {
 
-    override suspend fun doWork() = withContext(dispatchersProvider.io) {
+    override suspend fun doWork(): Result = withContext(dispatchersProvider.io) {
         Timber.i("SyncWorker is starting")
 
         if (!studentRepository.isCurrentStudentSet()) return@withContext Result.failure()
 
-        val student = studentRepository.getCurrentStudent()
-        val semester = semesterRepository.getCurrentSemester(student, true)
+        val (student, semester) = try {
+            val student = studentRepository.getCurrentStudent()
+            val semester = semesterRepository.getCurrentSemester(student, true)
+            student to semester
+        } catch (e: Throwable) {
+            return@withContext getResultFromErrors(listOf(e))
+        }
 
         val exceptions = works.mapNotNull { work ->
             try {
                 Timber.i("${work::class.java.simpleName} is starting")
-                work.doWork(student, semester)
+                work.doWork(student, semester, isNotificationsEnabled())
                 Timber.i("${work::class.java.simpleName} result: Success")
                 null
             } catch (e: Throwable) {
@@ -62,25 +67,33 @@ class SyncWorker @AssistedInject constructor(
                 }
             }
         }
-        val result = when {
-            exceptions.isNotEmpty() && inputData.getBoolean("one_time", false) -> {
-                Result.failure(
-                    Data.Builder()
-                        .putString("error", exceptions.map { it.stackTraceToString() }.toString())
-                        .build()
-                )
-            }
-            exceptions.isNotEmpty() -> Result.retry()
-            else -> {
-                preferencesRepository.lasSyncDate = LocalDateTime.now()
-                Result.success()
-            }
-        }
+        val result = getResultFromErrors(exceptions)
 
         if (preferencesRepository.isDebugNotificationEnable) notify(result)
         Timber.i("SyncWorker result: $result")
 
         return@withContext result
+    }
+
+    private fun isNotificationsEnabled(): Boolean {
+        val quiet = inputData.getBoolean("quiet", false)
+        return preferencesRepository.isNotificationsEnable && !quiet
+    }
+
+    private fun getResultFromErrors(errors: List<Throwable>): Result = when {
+        errors.isNotEmpty() && inputData.getBoolean("one_time", false) -> {
+            Result.failure(
+                Data.Builder()
+                    .putString("error_message", errors.joinToString { it.message.toString() })
+                    .putString("error_stack", errors.map { it.stackTraceToString() }.toString())
+                    .build()
+            )
+        }
+        errors.isNotEmpty() -> Result.retry()
+        else -> {
+            preferencesRepository.lasSyncDate = Instant.now()
+            Result.success()
+        }
     }
 
     private fun notify(result: Result) {

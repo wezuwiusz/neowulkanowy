@@ -16,27 +16,25 @@ import io.github.wulkanowy.sdk.pojo.MessageDetails
 import io.github.wulkanowy.sdk.pojo.Sender
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.toFirstResult
-import io.mockk.MockKAnnotations
-import io.mockk.Runs
-import io.mockk.checkEquals
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
-import io.mockk.just
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.net.UnknownHostException
-import java.time.LocalDateTime
+import java.time.Instant
+import java.time.ZoneOffset
 import kotlin.test.assertTrue
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class MessageRepositoryTest {
 
     @SpyK
@@ -80,7 +78,7 @@ class MessageRepositoryTest {
     }
 
     @Test
-    fun `get messages when read by values was changed on already read message`() = runBlocking {
+    fun `get messages when read by values was changed on already read message`() = runTest {
         every { messageDb.loadAll(any(), any()) } returns flow {
             val dbMessage = getMessageEntity(3, "", false).apply {
                 unreadBy = 10
@@ -239,7 +237,7 @@ class MessageRepositoryTest {
         senderId = 0,
         recipient = "Wielu adresatów",
         subject = "",
-        date = LocalDateTime.MAX,
+        date = Instant.EPOCH,
         folderId = 1,
         unread = unread,
         removed = false,
@@ -261,7 +259,8 @@ class MessageRepositoryTest {
         recipients = listOf(),
         subject = "",
         content = content,
-        date = LocalDateTime.MAX,
+        date = Instant.EPOCH.atZone(ZoneOffset.UTC).toLocalDateTime(),
+        dateZoned = Instant.EPOCH.atZone(ZoneOffset.UTC),
         folderId = 1,
         unread = unread,
         unreadBy = 0,

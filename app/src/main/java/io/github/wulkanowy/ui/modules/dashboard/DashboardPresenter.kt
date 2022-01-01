@@ -6,37 +6,17 @@ import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder
-import io.github.wulkanowy.data.repositories.AdminMessageRepository
-import io.github.wulkanowy.data.repositories.AttendanceSummaryRepository
-import io.github.wulkanowy.data.repositories.ConferenceRepository
-import io.github.wulkanowy.data.repositories.ExamRepository
-import io.github.wulkanowy.data.repositories.GradeRepository
-import io.github.wulkanowy.data.repositories.HomeworkRepository
-import io.github.wulkanowy.data.repositories.LuckyNumberRepository
-import io.github.wulkanowy.data.repositories.MessageRepository
-import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.SchoolAnnouncementRepository
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
-import io.github.wulkanowy.data.repositories.TimetableRepository
+import io.github.wulkanowy.data.repositories.*
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 class DashboardPresenter @Inject constructor(
@@ -552,7 +532,7 @@ class DashboardPresenter @Inject constructor(
                 student = student,
                 semester = semester,
                 forceRefresh = forceRefresh,
-                startDate = LocalDateTime.now()
+                startDate = Instant.now(),
             )
         }.onEach {
             when (it.status) {
@@ -582,7 +562,7 @@ class DashboardPresenter @Inject constructor(
     }
 
     private fun loadAdminMessage(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn { adminMessageRepository.getAdminMessages(student, forceRefresh) }
+        flowWithResourceIn { adminMessageRepository.getAdminMessages(student) }
             .map {
                 val isDismissed = it.data?.id in preferencesRepository.dismissedAdminMessageIds
                 it.copy(data = it.data.takeUnless { isDismissed })
@@ -716,7 +696,7 @@ class DashboardPresenter @Inject constructor(
             itemsLoadedList.find { it.type == DashboardItem.Type.ACCOUNT }?.error != null
         val isGeneralError =
             filteredItems.none { it.error == null } && filteredItems.isNotEmpty() || isAccountItemError
-        val errorMessage = itemsLoadedList.map { it.error?.stackTraceToString() }.toString()
+        val firstError = itemsLoadedList.mapNotNull { it.error }.firstOrNull()
 
         val filteredOriginalLoadedList =
             dashboardItemLoadedList.filterNot { it.type == DashboardItem.Type.ACCOUNT }
@@ -726,7 +706,7 @@ class DashboardPresenter @Inject constructor(
             filteredOriginalLoadedList.none { it.error == null } && filteredOriginalLoadedList.isNotEmpty() || wasAccountItemError
 
         if (isGeneralError && isItemsLoaded) {
-            lastError = Exception(errorMessage)
+            lastError = requireNotNull(firstError)
 
             view?.run {
                 showProgress(false)
@@ -734,6 +714,7 @@ class DashboardPresenter @Inject constructor(
                 if ((forceRefresh && wasGeneralError) || !forceRefresh) {
                     showContent(false)
                     showErrorView(true)
+                    setErrorDetails(lastError)
                 }
             }
         }

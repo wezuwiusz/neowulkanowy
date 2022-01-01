@@ -6,7 +6,7 @@
     <string name="grade_title">Noten</string>
     <string name="attendance_title">Schulbesuch</string>
     <string name="exam_title">Prüfungen</string>
-    <string name="timetable_title">Stundenplan</string>
+    <string name="timetable_title">Zeitplan</string>
     <string name="settings_title">Einstellungen</string>
     <string name="more_title">Mehr</string>
     <string name="about_title">Über die Applikation</string>
@@ -17,7 +17,7 @@
     <string name="license_title">Lizenzen</string>
     <string name="message_title">Nachrichten</string>
     <string name="send_message_title">neue Nachricht</string>
-    <string name="add_homework_title">New homework</string>
+    <string name="add_homework_title">Neue Hausaufgaben</string>
     <string name="note_title">Eintragen und Erfolgen</string>
     <string name="homework_title">Hausaufgaben</string>
     <string name="account_title">Konten-Manager</string>
@@ -56,7 +56,7 @@
     <string name="login_incorrect_symbol">Schüler nicht gefunden. Überprüfen Sie das Symbol und die gewählte Variation des UONET+ Registers</string>
     <string name="login_duplicate_student">Ausgewählter Student ist bereits angemeldet.</string>
     <string name="login_symbol_helper">Das Symbol kann auf der Registerseite in&#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>gefunden werden.\n\nStellen Sie sicher, dass Sie die entsprechende Registervariante im Feld <b>UONET+ Registervariante</b> auf dem vorherigen Bildschirm festgelegt haben. Wulkanowy erkennt zur Zeit keine Vorschulstudenten</string>
-    <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen.</string>
+    <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen</string>
     <string name="login_advanced">Andere Optionen</string>
     <string name="login_advanced_warning_mobile_api">In diesem Modus funktioniert eine Glücknummer, eine Klassenstatistik, eine Zusammenfassung der Anwesenheit, eine Entschuldigung für die Abwesenheit, abgeschlossene Lektionen, Schulinformationen und eine Vorschau der Liste der registrierten Geräte nicht</string>
     <string name="login_advanced_warning_scraper">In diesem Modus werden dieselben Daten angezeigt, die auf der Klassenbuch-Website angezeigt werden</string>
@@ -95,7 +95,7 @@
     <string name="grade_summary_calculated_average_help_dialog_title">Wie funktioniert der berechnete Durchschnitt?</string>
     <string name="grade_summary_calculated_average_help_dialog_message">The Calculated Average is the arithmetic average calculated from the subjects averages. It allows you to know the approximate final average. It is calculated in a way selected by the user in the application settings. It is recommended that you choose the appropriate option. This is because the calculation of school averages differs. Additionally, if your school reports the average of the subjects on the Vulcan page, the application downloads them and does not calculate these averages. This can be changed by forcing the calculation of the average in the application settings.\n\n<b>Average of grades only from selected semester</b>:\n1. Calculating the weighted average for each subject in a given semester\n2.Adding calculated averages\n3. Calculation of the arithmetic average of the summed averages\n\n<b>Average of averages from both semesters</b>:\n1.Calculating the weighted average for each subject in semester 1 and 2\n2. Calculating the arithmetic average of the calculated averages for semesters 1 and 2 for each subject.\n3. Adding calculated averages\n4. Calculation of the arithmetic average of the summed averages\n\n<b>Average of grades from the whole year:</b>\n1. Calculating weighted average over the year for each subject. The final average in the 1st semester is irrelevant.\n3. Adding calculated averages\n4. Calculating the arithmetic average of summed averages</string>
     <string name="grade_summary_final_average_help_dialog_title">Wie funktioniert der endgültige Durchschnitt?</string>
-    <string name="grade_summary_final_average_help_dialog_message">The Final Average is the arithmetic average calculated from all currently available final grades in the given semester.\n\nThe calculation scheme consists of the following steps:\n1. Summing up the final grades given by teachers\n2. Divide by the number of subjects that have already been graded</string>
+    <string name="grade_summary_final_average_help_dialog_message">Der Final Average ist das arithmetische Mittel, das aus allen derzeit verfügbaren Abschlussnoten des jeweiligen Semesters berechnet wird. \n\nDas Berechnungsschema besteht aus folgenden Schritten:\n1. Zusammenfassung der von den Lehrern gegebenen Abschlussnoten\n2. Division durch die Anzahl der Fächer, die bereits bewertet wurden</string>
     <string name="grade_summary_final_average">Finaler Durchschnitt</string>
     <string name="grade_summary_from_subjects">aus %1$d von %2$d Schulfächern</string>
     <string name="grade_menu_summary">Zusammenfassung</string>
@@ -151,25 +151,25 @@
     <string name="timetable_now">Jetzt: %s</string>
     <string name="timetable_next">In einem Moment: %s</string>
     <string name="timetable_later">Später: %s</string>
-    <string name="timetable_notify_lesson">%1$s lesson %2$d - %3$s</string>
-    <string name="timetable_notify_change_room">Change of room from %1$s to %2$s</string>
-    <string name="timetable_notify_change_teacher">Change of teacher from %1$s to %2$s</string>
-    <string name="timetable_notify_change_subject">Change of subject from %1$s to %2$s</string>
+    <string name="timetable_notify_lesson">%1$s Lektion %2$d - %3$s</string>
+    <string name="timetable_notify_change_room">Änderung des Raumes von %1$s zu %2$s</string>
+    <string name="timetable_notify_change_teacher">Wechsel des Lehrers von %1$s zu %2$s</string>
+    <string name="timetable_notify_change_subject">Thema von %1$s zu %2$s wechseln</string>
     <plurals name="timetable_notify_new_items_title">
-        <item quantity="one">Timetable change</item>
-        <item quantity="other">Timetable changes</item>
+        <item quantity="one">Änderung des Zeitplans</item>
+        <item quantity="other">Änderungen des Zeitplans</item>
     </plurals>
     <plurals name="timetable_notify_new_items">
-        <item quantity="one">%1$s - %2$d change in timetable</item>
-        <item quantity="other">%1$s - %2$d  changes in timetable</item>
+        <item quantity="one">%1$s – %2$d Änderung im Zeitplan</item>
+        <item quantity="other">%1$s - %2$d Änderungen im Zeitplan</item>
     </plurals>
     <plurals name="timetable_notify_new_items_group">
-        <item quantity="one">%1$d change in timetable</item>
-        <item quantity="other">%1$d changes in timetable</item>
+        <item quantity="one">%1$d Änderung im Zeitplan</item>
+        <item quantity="other">%1$d Änderungen im Zeitplan</item>
     </plurals>
     <plurals name="timetable_number_item">
-        <item quantity="one">%d change</item>
-        <item quantity="other">%d changes</item>
+        <item quantity="one">%d Änderung</item>
+        <item quantity="other">%d Änderungen</item>
     </plurals>
     <!--Completed lessons-->
     <string name="completed_lessons_title">Beendete Lektionen</string>
@@ -182,6 +182,17 @@
     <string name="additional_lessons_title">Zusätzliche Lektionen</string>
     <string name="additional_lessons_button">Zusätzliche Lektionen anzeigen</string>
     <string name="additional_lessons_no_items">Keine Informationen über zusätzlichen Lektionen</string>
+    <string name="additional_lessons_add">Neue Lektion</string>
+    <string name="additional_lessons_add_title">Neue zusätzliche Lektion</string>
+    <string name="additional_lessons_add_success">Zusätzliche Lektion erfolgreich hinzugefügt</string>
+    <string name="additional_lessons_delete_success">Zusätzliche Lektion erfolgreich gelöscht</string>
+    <string name="additional_lessons_repeat">Wöchentlich wiederholen</string>
+    <string name="additional_lessons_delete_title">Zusätzliche Lektion löschen</string>
+    <string name="additional_lessons_delete_one">Nur diese Lektion</string>
+    <string name="additional_lessons_delete_series">Alle in der Reihe</string>
+    <string name="additional_lessons_start">Startzeit</string>
+    <string name="additional_lessons_end">Endzeit</string>
+    <string name="additional_lessons_end_time_error">Endzeit muss grösser sein als Startzeit</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Übersicht über die Schulbesuch</string>
     <string name="attendance_absence_school">Aus schulischen Gründen abwesend</string>
@@ -201,16 +212,16 @@
     <string name="attendance_excuse_no_selection">Sie müssen mindestens eine Abwesenheit auswählen!</string>
     <string name="attendance_excuse_title">Verzeihung</string>
     <plurals name="attendance_notify_new_items_title">
-        <item quantity="one">New attendance</item>
-        <item quantity="other">New attendance</item>
+        <item quantity="one">Neue Teilnehmerzahl</item>
+        <item quantity="other">Neue Teilnehmerzahl</item>
     </plurals>
     <plurals name="attendance_notify_new_items">
-        <item quantity="one">%1$d new attendance</item>
-        <item quantity="other">%1$d attendance</item>
+        <item quantity="one">%1$d neue Teilnahme</item>
+        <item quantity="other">%1$d Teilnahme</item>
     </plurals>
     <plurals name="attendance_number_item">
-        <item quantity="one">%d attendance</item>
-        <item quantity="other">%d attendance</item>
+        <item quantity="one">%d Teilnahme</item>
+        <item quantity="other">%d Teilnahme</item>
     </plurals>
     <!--Attendance summary-->
     <string name="attendance_summary_total">Gesamt</string>
@@ -223,8 +234,8 @@
         <item quantity="other">Neue prüfungen</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">Du hast %d neue Prüfung</item>
-        <item quantity="other">Du hast %d neue Prüfungen</item>
+        <item quantity="one">%d neue Prüfung</item>
+        <item quantity="other">%d neue Prüfungen</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d prüfung</item>
@@ -316,9 +327,9 @@
     <string name="homework_no_items">Keine Informationen über Hausaufgaben</string>
     <string name="homework_mark_as_done">Gemacht</string>
     <string name="homework_mark_as_undone">Unvollständig</string>
-    <string name="homework_add">Add homework</string>
-    <string name="homework_add_success">Homework added successfully</string>
-    <string name="homework_delete_success">Homework deleted successfully</string>
+    <string name="homework_add">Hausaufgaben hinzufügen</string>
+    <string name="homework_add_success">Hausaufgaben erfolgreich hinzugefügt</string>
+    <string name="homework_delete_success">Heimarbeit erfolgreich gelöscht</string>
     <string name="homework_attachments">Anhänge</string>
     <plurals name="homework_notify_new_item_title">
         <item quantity="one">Neue hausaufgaben</item>
@@ -472,7 +483,7 @@
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lektionen</string>
     <string name="dashboard_timetable_title_tomorrow">(Morgen)</string>
-    <string name="dashboard_timetable_title_today_and_tomorrow">(Today and tomorrow)</string>
+    <string name="dashboard_timetable_title_today_and_tomorrow">(Heute und morgen)</string>
     <string name="dashboard_timetable_first_lesson_title_moment">Gleich:</string>
     <string name="dashboard_timetable_first_lesson_title_soon">Bald:</string>
     <string name="dashboard_timetable_first_lesson_title_first">Erstens:</string>
@@ -546,7 +557,7 @@
     <string name="all_no">Nein</string>
     <string name="all_save">Speichern</string>
     <string name="all_title">Titel</string>
-    <string name="all_add">Add</string>
+    <string name="all_add">Hinzufügen</string>
     <string name="all_copied">Kopiert</string>
     <string name="all_undo">lösen</string>
     <string name="all_change">Ändern</string>
@@ -563,7 +574,7 @@
     <string name="pref_view_grade_average_force_calc">Mittelwertberechnung durch App erzwingen</string>
     <string name="pref_view_present">Anwesendheit zeigen</string>
     <string name="pref_view_app_theme">Thema</string>
-    <string name="pref_view_expand_grade">Grades expanding</string>
+    <string name="pref_view_expand_grade">Steigende Sorten</string>
     <string name="pref_view_timetable_show_timers">Aktuelle Lektion markieren</string>
     <string name="pref_view_timetable_show_groups">Gruppen neben Schulfächen anzeigen</string>
     <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>
@@ -572,7 +583,7 @@
     <string name="pref_view_grade_sorting_mode">Schulfachen sortieren</string>
     <string name="pref_view_app_language">Sprache</string>
     <string name="pref_notify_header">Benachrichtigungen</string>
-    <string name="pref_notify_header_other">Other</string>
+    <string name="pref_notify_header_other">Sonstiges</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>
     <string name="pref_notify_upcoming_lessons_switch">Benachrichtigungen über bevorstehende Lektionen anzeigen</string>
     <string name="pref_notify_upcoming_lessons_persistent_switch">Festlegen einer Benachrichtigung über die bevorstehende Lektion dauerhaft</string>
@@ -582,12 +593,14 @@
     <string name="pref_notify_fix_sync_issues_message">Ihr Gerät hat möglicherweise Probleme mit der Datensynchronisierung und Benachrichtigungen.\n\nUm diese zu reparieren, fügen Sie Wulkanowy zum Autostart hinzu und deaktivieren Sie die Batterieoptimierung in den Systemeinstellungen des Geräts.</string>
     <string name="pref_notify_debug_switch">Debug-Benachrichtigungen anzeigen</string>
     <string name="pref_notify_disabled_summary">Synchronisierung ist deaktiviert</string>
+    <string name="pref_notify_notifications_piggyback_header">Offizielle Benachrichtigungen</string>
     <string name="pref_notify_notifications_piggyback">Offizielle App-Benachrichtigungen erfassen</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Entfernen Sie offizielle App-Benachrichtigungen nach der Erfassung</string>
     <string name="pref_notification_piggyback_popup_title">Benachrichtigungen erfassen</string>
     <string name="pref_notification_piggyback_popup_description">With this feature you can gain a substitute of push notifications like in the official app. All you need to do is allow Wulkanowy to receive all notifications in your system settings.\n\nHow it works?\nWhen you get a notification in Dziennik VULCAN, Wulkanowy will be notified (that\'s what these extra permissions are for) and will trigger a sync so that can send its own notification.\n\nFOR ADVANCED USERS ONLY</string>
-    <string name="pref_notification_exact_alarm_popup_title">Upcoming lesson notifications</string>
-    <string name="pref_notification_exact_alarm_popup_descriptions">You must allow the Wulkanowy app to set alarms and reminders in your system settings to use this feature.</string>
-    <string name="pref_notification_go_to_settings">Go to settings</string>
+    <string name="pref_notification_exact_alarm_popup_title">Bevorstehende Unterrichtsbenachrichtigungen</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">Sie müssen der Wulkanowy-App erlauben, in Ihren Systemeinstellungen Alarme und Erinnerungen einzustellen, damit diese Funktion verwendet werden kann.</string>
+    <string name="pref_notification_go_to_settings">Gehe zu den Einstellungen</string>
     <string name="pref_services_header">Synchronisierung</string>
     <string name="pref_services_switch">Automatische Aktualisierung</string>
     <string name="pref_services_suspended">An Feiertagen suspendiert</string>
@@ -602,26 +615,26 @@
     <string name="pref_other_grade_modifier_minus">Wert des Minus</string>
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
     <string name="pref_other_optional_arithmetic_average">Arithmetisches Mittel anzeigen, wenn keine Gewichte angegeben sind</string>
-    <string name="pref_ads_support_category_name">Support</string>
-    <string name="pref_ads_support">Watch single ad to support project</string>
-    <string name="pref_ads_privacy_title">Consent to data processing</string>
-    <string name="pref_ads_privacy_description">To view an advertisement you must agree to the data processing terms of our Privacy Policy</string>
-    <string name="pref_ads_privacy_agree">Agree</string>
-    <string name="pref_ads_privacy_link">Privacy policy</string>
-    <string name="pref_ads_loading">Ad is loading</string>
-    <string name="pref_ads_once_per_visit">Thank you for your support, come back later for more ads</string>
+    <string name="pref_ads_support_category_name">Unterstützung</string>
+    <string name="pref_ads_support">Einzelanzeige ansehen, um Projekt zu unterstützen</string>
+    <string name="pref_ads_privacy_title">Einwilligung in die Datenverarbeitung</string>
+    <string name="pref_ads_privacy_description">Um eine Anzeige zu sehen, müssen Sie mit den Datenverarbeitungsbedingungen unserer Datenschutzerklärung einverstanden sein</string>
+    <string name="pref_ads_privacy_agree">Einverstanden</string>
+    <string name="pref_ads_privacy_link">Datenschutzerklärung</string>
+    <string name="pref_ads_loading">Anzeige wird geladen</string>
+    <string name="pref_ads_once_per_visit">Vielen Dank für Ihre Unterstützung, kommen Sie später wieder für weitere Anzeigen</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>
     <string name="pref_settings_sync_title">Synchronisierung</string>
-    <string name="pref_settings_ads_title">Advertisements</string>
+    <string name="pref_settings_ads_title">Werbung</string>
     <string name="pref_grades_appearance_header">Noten</string>
     <string name="pref_dashboard_appearance_header">Dashboard</string>
     <string name="pref_dashboard_appearance_tiles_title">Sichtbarkeit der Kacheln</string>
     <string name="pref_attendance_appearance_view">Schulbesuch</string>
     <string name="pref_timetable_appearance_view">Stundenplan</string>
     <string name="pref_grades_advanced_header">Noten</string>
-    <string name="pref_counted_average_advanced_header">Calculated average</string>
+    <string name="pref_counted_average_advanced_header">Berechneter Durchschnitt</string>
     <string name="pref_messages_advanced_header">Nachrichten</string>
     <string name="pref_appearance_category">Aussehen &amp; Verhalten</string>
     <string name="pref_appearance_category_summary">Sprachen, Themen, Schulfachen sortieren</string>
@@ -631,8 +644,8 @@
     <string name="pref_sync_category_summary">Automatisches Update, Synchronisierungsintervall</string>
     <string name="pref_advanced_category_summary">Plus und Minus Werte, Durchschnittsberechnung</string>
     <string name="pref_advanced_category">Erweitert</string>
-    <string name="pref_about_category_summary">App version, contributors, social portals</string>
-    <string name="pref_ads_category_summary">Displaying advertisements, project support</string>
+    <string name="pref_about_category_summary">App-Version, Mitwirkende, soziale Portale</string>
+    <string name="pref_ads_category_summary">Anzeigen, Projektunterstützung</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Neue Noten</string>
     <string name="channel_new_homework">Neue Hausaufgaben</string>
@@ -645,8 +658,8 @@
     <string name="channel_push">Push-Benachrichtigungen</string>
     <string name="channel_upcoming_lessons">Bevorstehende Lektionen</string>
     <string name="channel_debug">Debuggen</string>
-    <string name="channel_change_timetable">Timetable change</string>
-    <string name="channel_new_attendance">New attendance</string>
+    <string name="channel_change_timetable">Änderung des Zeitplans</string>
+    <string name="channel_new_attendance">Neue Teilnehmerzahl</string>
     <!--Colors-->
     <string name="all_black">Schwarz</string>
     <string name="all_red">Rot</string>
@@ -661,6 +674,7 @@
     <string name="update_failed">Update fehlgeschlagen! Wulkanowy funktioniert möglicherweise nicht richtig. Überlegen Sie die Aktualisierung</string>
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
+    <string name="error_invalid_device_datetime">Es ist ein Fehler aufgetreten. Überprüfen Sie Ihre Geräteuhr</string>
     <string name="error_timeout">Registrierungsverbindung fehlgeschlagen. Server können überlastet sein. Bitte versuchen Sie es später noch einmal</string>
     <string name="error_login_failed">Das Laden der Daten ist fehlgeschlagen. Bitte versuchen Sie es später noch einmal</string>
     <string name="error_password_change_required">Passwortänderung für Registrierung erforderlich</string>
@@ -670,5 +684,5 @@
     <string name="error_unknown">Ein unerwarteter Fehler ist aufgetreten</string>
     <string name="error_feature_disabled">Funktion, die von Ihrer Schule deaktiviert wurde</string>
     <string name="error_feature_not_available">Feature in diesem Modus nicht verfügbar</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_field_required">Dieses Feld ist erforderlich</string>
 </resources>

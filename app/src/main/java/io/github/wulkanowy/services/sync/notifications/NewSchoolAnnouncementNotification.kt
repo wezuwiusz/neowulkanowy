@@ -1,6 +1,7 @@
 package io.github.wulkanowy.services.sync.notifications
 
 import android.content.Context
+import androidx.core.text.parseAsHtml
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
@@ -28,7 +29,7 @@ class NewSchoolAnnouncementNotification @Inject constructor(
                     R.plurals.school_announcement_notify_new_item_title,
                     1
                 ),
-                content = "${it.subject}: ${it.content}"
+                content = "${it.subject}: ${it.content.parseAsHtml()}"
             )
         }
         val groupNotificationData = GroupNotificationData(

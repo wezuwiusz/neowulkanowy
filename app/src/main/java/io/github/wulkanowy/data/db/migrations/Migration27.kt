@@ -22,23 +22,27 @@ class Migration27 : Migration(26, 27) {
 
     private fun getStudentsIdsAndNames(database: SupportSQLiteDatabase): MutableList<Triple<Long, Int, String>> {
         val students = mutableListOf<Triple<Long, Int, String>>()
-        val studentsCursor = database.query("SELECT id, user_login_id, student_name FROM Students")
-        if (studentsCursor.moveToFirst()) {
-            do {
-                students.add(Triple(studentsCursor.getLong(0), studentsCursor.getInt(1), studentsCursor.getString(2)))
-            } while (studentsCursor.moveToNext())
+        database.query("SELECT id, user_login_id, student_name FROM Students").use {
+            if (it.moveToFirst()) {
+                do {
+                    students.add(Triple(it.getLong(0), it.getInt(1), it.getString(2)))
+                } while (it.moveToNext())
+            }
         }
+
         return students
     }
 
     private fun getReportingUnits(database: SupportSQLiteDatabase): MutableList<Pair<Int, String>> {
         val units = mutableListOf<Pair<Int, String>>()
-        val unitsCursor = database.query("SELECT sender_id, sender_name FROM ReportingUnits")
-        if (unitsCursor.moveToFirst()) {
-            do {
-                units.add(unitsCursor.getInt(0) to unitsCursor.getString(1))
-            } while (unitsCursor.moveToNext())
+        database.query("SELECT sender_id, sender_name FROM ReportingUnits").use {
+            if (it.moveToFirst()) {
+                do {
+                    units.add(it.getInt(0) to it.getString(1))
+                } while (it.moveToNext())
+            }
         }
+
 
         return units
     }

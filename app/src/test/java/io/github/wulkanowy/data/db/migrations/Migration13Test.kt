@@ -153,23 +153,26 @@ class Migration13Test : AbstractMigrationTest() {
     private fun getSemesters(db: SupportSQLiteDatabase, query: String): List<Pair<Semester, Boolean>> {
         val semesters = mutableListOf<Pair<Semester, Boolean>>()
 
-        val cursor = db.query(query)
-        if (cursor.moveToFirst()) {
-            do {
-                semesters.add(Semester(
-                    studentId = cursor.getInt(1),
-                    diaryId = cursor.getInt(2),
-                    diaryName = cursor.getString(3),
-                    semesterId = cursor.getInt(4),
-                    semesterName = cursor.getInt(5),
-                    classId = cursor.getInt(7),
-                    unitId = cursor.getInt(8),
-                    schoolYear = cursor.getInt(9),
-                    start = Converters().timestampToDate(cursor.getLong(10))!!,
-                    end = Converters().timestampToDate(cursor.getLong(11))!!
-                ) to (cursor.getInt(6) == 1))
-            } while (cursor.moveToNext())
+        db.query(query).use {
+            if (it.moveToFirst()) {
+                do {
+                    semesters.add(Semester(
+                        studentId = it.getInt(1),
+                        diaryId = it.getInt(2),
+                        kindergartenDiaryId = 0,
+                        diaryName = it.getString(3),
+                        semesterId = it.getInt(4),
+                        semesterName = it.getInt(5),
+                        classId = it.getInt(7),
+                        unitId = it.getInt(8),
+                        schoolYear = it.getInt(9),
+                        start = Converters().timestampToLocalDate(it.getLong(10))!!,
+                        end = Converters().timestampToLocalDate(it.getLong(11))!!
+                    ) to (it.getInt(6) == 1))
+                } while (it.moveToNext())
+            }
         }
+
         return semesters.toList()
     }
 

@@ -74,10 +74,12 @@ class SyncManager @Inject constructor(
         }
     }
 
-    fun startOneTimeSyncWorker(): Flow<WorkInfo?> {
+    // if quiet, no notifications will be sent
+    fun startOneTimeSyncWorker(quiet: Boolean = false): Flow<WorkInfo?> {
         val work = OneTimeWorkRequestBuilder<SyncWorker>()
             .setInputData(
                 Data.Builder()
+                    .putBoolean("quiet", quiet)
                     .putBoolean("one_time", true)
                     .build()
             )

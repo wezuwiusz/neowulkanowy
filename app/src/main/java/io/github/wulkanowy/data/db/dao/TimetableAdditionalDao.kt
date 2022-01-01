@@ -5,6 +5,7 @@ import androidx.room.Query
 import io.github.wulkanowy.data.db.entities.TimetableAdditional
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
+import java.util.UUID
 import javax.inject.Singleton
 
 @Dao
@@ -12,5 +13,13 @@ import javax.inject.Singleton
 interface TimetableAdditionalDao : BaseDao<TimetableAdditional> {
 
     @Query("SELECT * FROM TimetableAdditional WHERE diary_id = :diaryId AND student_id = :studentId AND date >= :from AND date <= :end")
-    fun loadAll(diaryId: Int, studentId: Int, from: LocalDate, end: LocalDate): Flow<List<TimetableAdditional>>
+    fun loadAll(
+        diaryId: Int,
+        studentId: Int,
+        from: LocalDate,
+        end: LocalDate
+    ): Flow<List<TimetableAdditional>>
+
+    @Query("DELETE FROM TimetableAdditional WHERE repeat_id = :repeatId")
+    suspend fun deleteAllByRepeatId(repeatId: UUID)
 }

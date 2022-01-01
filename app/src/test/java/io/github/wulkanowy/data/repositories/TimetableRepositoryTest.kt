@@ -27,6 +27,7 @@ import org.junit.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalDateTime.of
+import java.time.ZoneId
 import io.github.wulkanowy.sdk.pojo.Timetable as SdkTimetable
 
 class TimetableRepositoryTest {
@@ -107,6 +108,8 @@ class TimetableRepositoryTest {
         number = number,
         start = start,
         end = start.plusMinutes(45),
+        startZoned = start.atZone(ZoneId.systemDefault()),
+        endZoned = start.plusMinutes(45).atZone(ZoneId.systemDefault()),
         date = start.toLocalDate(),
         subject = subject,
         group = "",

@@ -22,6 +22,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime.of
+import java.time.ZoneId
 
 class MobileDeviceRepositoryTest {
 
@@ -137,6 +138,8 @@ class MobileDeviceRepositoryTest {
         name = "",
         deviceId = "",
         createDate = of(2019, 5, day, 0, 0, 0),
-        modificationDate = of(2019, 5, day, 0, 0, 0)
+        modificationDate = of(2019, 5, day, 0, 0, 0),
+        createDateZoned = of(2019, 5, day, 0, 0, 0).atZone(ZoneId.systemDefault()),
+        modificationDateZoned = of(2019, 5, day, 0, 0, 0).atZone(ZoneId.systemDefault())
     )
 }

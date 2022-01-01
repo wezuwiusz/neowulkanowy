@@ -28,7 +28,8 @@ class StudentInfoRepository @Inject constructor(
         shouldFetch = { it == null || forceRefresh },
         query = { studentInfoDao.loadStudentInfo(student.studentId) },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getStudentInfo().mapToEntity(semester)
         },
         saveFetchResult = { old, new ->

@@ -4,6 +4,7 @@ import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -11,22 +12,20 @@ import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
-import java.io.Serializable
 import javax.inject.Inject
 
 class LoginStudentSelectPresenter @Inject constructor(
     studentRepository: StudentRepository,
     private val loginErrorHandler: LoginErrorHandler,
+    private val syncManager: SyncManager,
     private val analytics: AnalyticsHelper
 ) : BasePresenter<LoginStudentSelectView>(loginErrorHandler, studentRepository) {
 
     private var lastError: Throwable? = null
 
-    var students = emptyList<StudentWithSemesters>()
-
     private val selectedStudents = mutableListOf<StudentWithSemesters>()
 
-    fun onAttachView(view: LoginStudentSelectView, students: Serializable?) {
+    fun onAttachView(view: LoginStudentSelectView, students: List<StudentWithSemesters>) {
         super.onAttachView(view)
         with(view) {
             initView()
@@ -38,18 +37,12 @@ class LoginStudentSelectPresenter @Inject constructor(
             }
         }
 
-        if (students is List<*> && students.isNotEmpty()) {
-            loadData(students.filterIsInstance<StudentWithSemesters>())
-        }
+        if (students.size == 1) registerStudents(students)
+        loadData(students)
     }
 
     fun onSignIn() {
         registerStudents(selectedStudents)
-    }
-
-    fun onParentInitStudentSelectView(studentsWithSemesters: List<StudentWithSemesters>) {
-        loadData(studentsWithSemesters)
-        if (studentsWithSemesters.size == 1) registerStudents(studentsWithSemesters)
     }
 
     fun onItemSelected(studentWithSemester: StudentWithSemesters, alreadySaved: Boolean) {
@@ -72,7 +65,6 @@ class LoginStudentSelectPresenter @Inject constructor(
 
     private fun loadData(studentsWithSemesters: List<StudentWithSemesters>) {
         resetSelectedState()
-        this.students = studentsWithSemesters
 
         flowWithResource { studentRepository.getSavedStudents(false) }.onEach {
             when (it.status) {
@@ -107,6 +99,7 @@ class LoginStudentSelectPresenter @Inject constructor(
                     }
                     Status.SUCCESS -> {
                         Timber.i("Registration result: Success")
+                        syncManager.startOneTimeSyncWorker(quiet = true)
                         view?.openMainView()
                         logRegisterEvent(studentsWithSemesters)
                     }
@@ -143,7 +136,8 @@ class LoginStudentSelectPresenter @Inject constructor(
                 "success" to (error != null),
                 "scrapperBaseUrl" to student.student.scrapperBaseUrl,
                 "symbol" to student.student.symbol,
-                "error" to (error?.message?.ifBlank { "No message" } ?: "No error"))
+                "error" to (error?.message?.ifBlank { "No message" } ?: "No error")
+            )
         }
     }
 }

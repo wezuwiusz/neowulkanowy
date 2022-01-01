@@ -33,6 +33,7 @@ class GradeStatisticsFragment :
 
     companion object {
         private const val SAVED_CHART_TYPE = "CURRENT_TYPE"
+        private const val SAVED_SUBJECT_NAME = "SUBJECT_NAME"
 
         fun newInstance() = GradeStatisticsFragment()
     }
@@ -46,8 +47,9 @@ class GradeStatisticsFragment :
         binding = FragmentGradeStatisticsBinding.bind(view)
         messageContainer = binding.gradeStatisticsRecycler
         presenter.onAttachView(
-            this,
-            savedInstanceState?.getSerializable(SAVED_CHART_TYPE) as? GradeStatisticsItem.DataType
+            view = this,
+            type = savedInstanceState?.getSerializable(SAVED_CHART_TYPE) as? GradeStatisticsItem.DataType,
+            subjectName = savedInstanceState?.getSerializable(SAVED_SUBJECT_NAME) as? String,
         )
     }
 
@@ -56,6 +58,7 @@ class GradeStatisticsFragment :
 
         with(binding.gradeStatisticsRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
+            statisticsAdapter.currentDataType = presenter.currentType
             adapter = statisticsAdapter
         }
 
@@ -81,7 +84,8 @@ class GradeStatisticsFragment :
         }
     }
 
-    override fun updateSubjects(data: ArrayList<String>) {
+    override fun updateSubjects(data: List<String>, selectedIndex: Int) {
+        binding.gradeStatisticsSubjects.setSelection(selectedIndex)
         with(subjectsAdapter) {
             clear()
             addAll(data)
@@ -161,6 +165,7 @@ class GradeStatisticsFragment :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putSerializable(SAVED_CHART_TYPE, presenter.currentType)
+        outState.putSerializable(SAVED_SUBJECT_NAME, presenter.currentSubjectName)
     }
 
     override fun onDestroyView() {

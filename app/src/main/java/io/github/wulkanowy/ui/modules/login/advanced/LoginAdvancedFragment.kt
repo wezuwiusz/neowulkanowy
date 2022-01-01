@@ -13,6 +13,7 @@ import io.github.wulkanowy.databinding.FragmentLoginAdvancedBinding
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
+import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.form.LoginSymbolAdapter
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.setOnEditorDoneSignIn
@@ -80,6 +81,8 @@ class LoginAdvancedFragment :
     }
 
     override fun initView() {
+        (requireActivity() as LoginActivity).showActionBar(true)
+
         hostKeys = resources.getStringArray(R.array.hosts_keys)
         hostValues = resources.getStringArray(R.array.hosts_values)
         hostSymbols = resources.getStringArray(R.array.hosts_symbols)
@@ -320,14 +323,12 @@ class LoginAdvancedFragment :
         binding.loginFormContainer.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun notifyParentAccountLogged(studentsWithSemesters: List<StudentWithSemesters>) {
-        (activity as? LoginActivity)?.onFormFragmentAccountLogged(
-            studentsWithSemesters, Triple(
-                binding.loginFormUsername.text.toString(),
-                binding.loginFormPass.text.toString(),
-                resources.getStringArray(R.array.hosts_values)[1]
-            )
-        )
+    override fun navigateToSymbol(loginData: LoginData) {
+        (activity as? LoginActivity)?.navigateToSymbolFragment(loginData)
+    }
+
+    override fun navigateToStudentSelect(studentsWithSemesters: List<StudentWithSemesters>) {
+        (activity as? LoginActivity)?.navigateToStudentSelect(studentsWithSemesters)
     }
 
     override fun onResume() {

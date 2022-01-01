@@ -10,7 +10,12 @@ class AttendanceSummaryWork @Inject constructor(
     private val attendanceSummaryRepository: AttendanceSummaryRepository
 ) : Work {
 
-    override suspend fun doWork(student: Student, semester: Semester) {
-        attendanceSummaryRepository.getAttendanceSummary(student, semester, -1, true).waitForResult()
+    override suspend fun doWork(student: Student, semester: Semester, notify: Boolean) {
+        attendanceSummaryRepository.getAttendanceSummary(
+            student = student,
+            semester = semester,
+            subjectId = -1,
+            forceRefresh = true,
+        ).waitForResult()
     }
 }

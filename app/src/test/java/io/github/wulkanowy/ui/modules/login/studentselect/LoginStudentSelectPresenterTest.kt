@@ -4,20 +4,15 @@ import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.mockk.MockKAnnotations
-import io.mockk.Runs
-import io.mockk.clearMocks
-import io.mockk.coEvery
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.just
-import io.mockk.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.time.LocalDateTime.now
+import java.time.Instant
 
 class LoginStudentSelectPresenterTest {
 
@@ -36,6 +31,9 @@ class LoginStudentSelectPresenterTest {
     @MockK(relaxed = true)
     lateinit var analytics: AnalyticsHelper
 
+    @MockK(relaxed = true)
+    lateinit var syncManager: SyncManager
+
     private lateinit var presenter: LoginStudentSelectPresenter
 
     private val testStudent by lazy {
@@ -51,7 +49,7 @@ class LoginStudentSelectPresenterTest {
             schoolSymbol = "",
             classId = 1,
             studentName = "",
-            registrationDate = now(),
+            registrationDate = Instant.now(),
             className = "",
             loginMode = "",
             certificateKey = "",
@@ -77,8 +75,8 @@ class LoginStudentSelectPresenterTest {
         every { loginStudentSelectView.showProgress(any()) } just Runs
         every { loginStudentSelectView.showContent(any()) } just Runs
 
-        presenter = LoginStudentSelectPresenter(studentRepository, errorHandler, analytics)
-        presenter.onAttachView(loginStudentSelectView, null)
+        presenter = LoginStudentSelectPresenter(studentRepository, errorHandler, syncManager, analytics)
+        presenter.onAttachView(loginStudentSelectView, emptyList())
     }
 
     @Test

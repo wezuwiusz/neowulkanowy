@@ -16,9 +16,9 @@
             app:title="@string/pref_notify_upcoming_lessons_switch" />
         <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_notification_upcoming_lessons_persistent"
+            app:dependency="@string/pref_key_notifications_upcoming_lessons_enable"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notifications_upcoming_lessons_persistent"
-            app:dependency="@string/pref_key_notifications_upcoming_lessons_enable"
             app:singleLineTitle="false"
             app:summary="@string/pref_notify_upcoming_lessons_persistent_summary"
             app:title="@string/pref_notify_upcoming_lessons_persistent_switch" />
@@ -31,13 +31,24 @@
     </PreferenceCategory>
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/pref_notify_header_other">
+        app:title="@string/pref_notify_notifications_piggyback_header">
         <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_notification_piggyback"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notifications_piggyback"
             app:singleLineTitle="false"
             app:title="@string/pref_notify_notifications_piggyback" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_notification_piggyback_cancel_original"
+            app:dependency="@string/pref_key_notifications_piggyback"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_notifications_piggyback_cancel_original"
+            app:singleLineTitle="false"
+            app:title="@string/pref_notify_notifications_piggyback_cancel_original" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_notify_header_other">
         <Preference
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_notifications_system_settings"

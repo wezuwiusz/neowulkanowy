@@ -3,7 +3,7 @@ package io.github.wulkanowy.data.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDateTime
+import java.time.Instant
 
 @Entity(tableName = "GradesSummary")
 data class GradeSummary(
@@ -45,8 +45,8 @@ data class GradeSummary(
     var isFinalGradeNotified: Boolean = true
 
     @ColumnInfo(name = "predicted_grade_last_change")
-    var predictedGradeLastChange: LocalDateTime = LocalDateTime.now()
+    var predictedGradeLastChange: Instant = Instant.now()
 
     @ColumnInfo(name = "final_grade_last_change")
-    var finalGradeLastChange: LocalDateTime = LocalDateTime.now()
+    var finalGradeLastChange: Instant = Instant.now()
 }

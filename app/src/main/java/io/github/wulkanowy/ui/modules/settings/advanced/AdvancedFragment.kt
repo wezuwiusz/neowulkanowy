@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.preference.PreferenceFragmentCompat
-import com.yariksoffice.lingver.Lingver
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
@@ -23,9 +22,6 @@ class AdvancedFragment : PreferenceFragmentCompat(),
 
     @Inject
     lateinit var appInfo: AppInfo
-
-    @Inject
-    lateinit var lingver: Lingver
 
     override val titleStringId get() = R.string.pref_settings_advanced_title
 

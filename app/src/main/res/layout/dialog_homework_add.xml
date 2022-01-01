@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:minWidth="300dp"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp">
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:id="@+id/addHomeworkHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:text="@string/homework_add"
@@ -30,10 +30,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="28dp"
             android:hint="@string/all_date"
-            app:startIconDrawable="@drawable/ic_main_timetable">
+            app:startIconDrawable="@drawable/ic_calendat_all">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/homeworkDialogDateEdit"
@@ -51,7 +51,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:hint="@string/all_subject">
 
@@ -66,7 +66,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:hint="@string/all_teacher">
 
@@ -81,7 +81,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:hint="@string/all_content">
@@ -105,13 +105,12 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
+                android:minWidth="88dp"
                 android:text="@string/all_close"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -126,6 +125,7 @@
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
+                android:minWidth="88dp"
                 android:text="@string/all_add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

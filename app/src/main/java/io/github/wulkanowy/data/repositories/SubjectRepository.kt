@@ -5,11 +5,7 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.networkBoundResource
-import io.github.wulkanowy.utils.uniqueSubtract
+import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,7 +33,8 @@ class SubjectRepository @Inject constructor(
         },
         query = { subjectDao.loadAll(semester.diaryId, semester.studentId) },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getSubjects().mapToEntities(semester)
         },
         saveFetchResult = { old, new ->

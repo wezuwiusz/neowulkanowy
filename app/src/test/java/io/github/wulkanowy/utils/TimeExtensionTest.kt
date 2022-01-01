@@ -1,13 +1,13 @@
 package io.github.wulkanowy.utils
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Test
+import java.time.Instant
 import java.time.LocalDate.of
 import java.time.LocalDateTime
 import java.time.Month.JANUARY
-import java.util.Locale
+import java.time.ZoneOffset
+import java.util.*
 
 class TimeExtensionTest {
 
@@ -23,9 +23,16 @@ class TimeExtensionTest {
     }
 
     @Test
-    fun toFormattedStringLocalDateTimeTest() {
-        assertEquals("01.10.2018", LocalDateTime.of(2018, 10, 1, 10, 0, 0).toFormattedString())
-        assertEquals("2018-10-01 10:00:00", LocalDateTime.of(2018, 10, 1, 10, 0, 0).toFormattedString("uuuu-MM-dd HH:mm:ss"))
+    fun toFormattedStringFromInstantTest() {
+        assertEquals(
+            "01.10.2018",
+            LocalDateTime.of(2018, 10, 1, 10, 0, 0).toInstant(ZoneOffset.UTC).toFormattedString()
+        )
+        assertEquals(
+            "2018-10-01 10:00:00",
+            LocalDateTime.of(2018, 10, 1, 10, 0, 0).toInstant(ZoneOffset.UTC)
+                .toFormattedString("uuuu-MM-dd HH:mm:ss", ZoneOffset.UTC)
+        )
     }
 
     @Test
@@ -221,5 +228,26 @@ class TimeExtensionTest {
             assertEquals(of(2020, 9, 21), startExamsDay)
             assertEquals(of(2020, 10, 18), endExamsDay)
         }
+    }
+
+    @Test
+    fun getLocalDateToTimestamp() {
+        assertEquals(0L, of(1970, 1, 1).toTimestamp())
+        assertEquals(946684800000L, of(2000, 1, 1).toTimestamp())
+        assertEquals(1640131200000L, of(2021, 12, 22).toTimestamp())
+    }
+
+    @Test
+    fun getLocalDateFromInstant() {
+        assertEquals(of(1970, 1, 1), Instant.ofEpochMilli(0).toLocalDate())
+        assertEquals(of(2000, 1, 1), Instant.ofEpochMilli(946684800000).toLocalDate())
+        assertEquals(of(2021, 12, 22), Instant.ofEpochMilli(1640131200000L).toLocalDate())
+    }
+
+    @Test
+    fun timestampToLocalDateTime() {
+        assertEquals(LocalDateTime.of(1970, 1, 1, 0, 0, 0), 0L.toLocalDateTime())
+        assertEquals(LocalDateTime.of(2000, 1, 1, 0, 0, 0), 946684800000.toLocalDateTime())
+        assertEquals(LocalDateTime.of(2021, 12, 22, 0, 0, 0), 1640131200000L.toLocalDateTime())
     }
 }

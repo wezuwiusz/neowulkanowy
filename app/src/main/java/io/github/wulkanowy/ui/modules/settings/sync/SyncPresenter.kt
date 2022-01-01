@@ -59,7 +59,10 @@ class SyncPresenter @Inject constructor(
                     WorkInfo.State.FAILED -> {
                         showError(
                             syncFailedString,
-                            Throwable(workInfo.outputData.getString("error"))
+                            Throwable(
+                                message = workInfo.outputData.getString("error_message"),
+                                cause = Throwable(workInfo.outputData.getString("error_stack"))
+                            )
                         )
                         analytics.logEvent("sync_now", "status" to "failed")
                     }
@@ -76,9 +79,7 @@ class SyncPresenter @Inject constructor(
     }
 
     private fun setSyncDateInView() {
-        val lastSyncDate = preferencesRepository.lasSyncDate
-
-        if (lastSyncDate.year == 1970) return
+        val lastSyncDate = preferencesRepository.lasSyncDate ?: return
 
         view?.setLastSyncDate(lastSyncDate.toFormattedString("dd.MM.yyyy HH:mm:ss"))
     }

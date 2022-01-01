@@ -8,11 +8,7 @@ import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.mappers.mapToMobileDeviceToken
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.networkBoundResource
-import io.github.wulkanowy.utils.uniqueSubtract
+import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,7 +36,8 @@ class MobileDeviceRepository @Inject constructor(
         },
         query = { mobileDb.loadAll(student.userLoginId.takeIf { it != 0 } ?: student.studentId) },
         fetch = {
-            sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+            sdk.init(student)
+                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getRegisteredDevices()
                 .mapToEntities(semester)
         },
@@ -53,14 +50,16 @@ class MobileDeviceRepository @Inject constructor(
     )
 
     suspend fun unregisterDevice(student: Student, semester: Semester, device: MobileDevice) {
-        sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+        sdk.init(student)
+            .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
             .unregisterDevice(device.deviceId)
 
         mobileDb.deleteAll(listOf(device))
     }
 
     suspend fun getToken(student: Student, semester: Semester): MobileDeviceToken {
-        return sdk.init(student).switchDiary(semester.diaryId, semester.schoolYear)
+        return sdk.init(student)
+            .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
             .getToken()
             .mapToMobileDeviceToken()
     }

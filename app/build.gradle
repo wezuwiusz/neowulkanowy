@@ -22,8 +22,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 102
-        versionName "1.4.4"
+        versionCode 103
+        versionName "1.5.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -149,8 +149,10 @@ kapt {
 
 play {
     defaultToAppBundles = false
-    track = 'beta'
-    updatePriority = 4
+    track = 'production'
+    releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
+    userFraction = 0.25d
+    updatePriority = 1
     enabled.set(false)
 }
 
@@ -167,18 +169,18 @@ huaweiPublish {
 ext {
     work_manager = "2.7.1"
     android_hilt = "1.0.0"
-    room = "2.3.0"
+    room = "2.4.0"
     chucker = "3.5.2"
     mockk = "1.12.1"
-    coroutines = "1.5.2"
+    coroutines = "1.6.0"
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:1.4.4"
+    implementation "io.github.wulkanowy:sdk:1.5.0"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     implementation "androidx.core:core-ktx:1.7.0"
@@ -229,7 +231,7 @@ dependencies {
     implementation 'me.xdrop:fuzzywuzzy:1.3.1'
     implementation 'com.fredporciuncula:flow-preferences:1.6.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:29.0.2')
+    playImplementation platform('com.google.firebase:firebase-bom:29.0.3')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-messaging:'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
@@ -238,7 +240,7 @@ dependencies {
     playImplementation 'com.google.android.gms:play-services-ads:20.5.0'
 
     hmsImplementation 'com.huawei.hms:hianalytics:6.3.2.300'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.2.300'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.3.200'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 

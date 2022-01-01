@@ -41,9 +41,9 @@
         <item>Farben der Bewertungen im Logbuch</item>
     </string-array>
     <string-array name="default_expand_grade_entries">
-        <item>Up to 1 at once</item>
-        <item>Always expanded</item>
-        <item>Unlimited expansions</item>
+        <item>Bis zu 1 auf einmal</item>
+        <item>Immer erweitert</item>
+        <item>Unbegrenzte Erweiterungen</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
         <item>Durchschnitt der Noten aus beiden Semestern</item>

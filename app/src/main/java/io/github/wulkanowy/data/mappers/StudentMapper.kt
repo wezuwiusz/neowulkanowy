@@ -2,7 +2,7 @@ package io.github.wulkanowy.data.mappers
 
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
-import java.time.LocalDateTime
+import java.time.Instant
 import io.github.wulkanowy.sdk.pojo.Student as SdkStudent
 
 fun List<SdkStudent>.mapToEntities(password: String = "", colors: List<Long>) = map {
@@ -24,7 +24,7 @@ fun List<SdkStudent>.mapToEntities(password: String = "", colors: List<Long>) = 
             scrapperBaseUrl = it.scrapperBaseUrl,
             loginType = it.loginType.name,
             isCurrent = false,
-            registrationDate = LocalDateTime.now(),
+            registrationDate = Instant.now(),
             mobileBaseUrl = it.mobileBaseUrl,
             privateKey = it.privateKey,
             certificateKey = it.certificateKey,

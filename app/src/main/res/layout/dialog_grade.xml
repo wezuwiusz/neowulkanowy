@@ -204,7 +204,6 @@
                 android:insetBottom="0dp"
                 android:minWidth="88dp"
                 android:text="@string/all_close" />
-
         </RelativeLayout>
 
     </LinearLayout>

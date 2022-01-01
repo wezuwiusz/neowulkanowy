@@ -13,7 +13,13 @@ class CompletedLessonWork @Inject constructor(
     private val completedLessonsRepository: CompletedLessonsRepository
 ) : Work {
 
-    override suspend fun doWork(student: Student, semester: Semester) {
-        completedLessonsRepository.getCompletedLessons(student, semester, now().monday, now().sunday, true).waitForResult()
+    override suspend fun doWork(student: Student, semester: Semester, notify: Boolean) {
+        completedLessonsRepository.getCompletedLessons(
+            student = student,
+            semester = semester,
+            start = now().monday,
+            end = now().sunday,
+            forceRefresh = true,
+        ).waitForResult()
     }
 }

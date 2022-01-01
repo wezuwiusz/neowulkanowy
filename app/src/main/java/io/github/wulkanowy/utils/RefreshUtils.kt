@@ -8,8 +8,9 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder
 import timber.log.Timber
+import java.time.Duration.ofMinutes
+import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 fun getRefreshKey(name: String, semester: Semester, start: LocalDate, end: LocalDate): String {
@@ -34,10 +35,10 @@ class AutoRefreshHelper @Inject constructor(
 ) {
 
     fun shouldBeRefreshed(key: String): Boolean {
-        val timestamp = sharedPref.getLong(key, 0).toLocalDateTime()
+        val timestamp = sharedPref.getLong(key, 0).let(Instant::ofEpochMilli)
         val servicesInterval = sharedPref.getString(context.getString(R.string.pref_key_services_interval), context.getString(R.string.pref_default_services_interval)).toLong()
 
-        val shouldBeRefreshed = timestamp < LocalDateTime.now().minusMinutes(servicesInterval)
+        val shouldBeRefreshed = timestamp < Instant.now().minus(ofMinutes(servicesInterval))
 
         Timber.d("Check if $key need to be refreshed: $shouldBeRefreshed (last refresh: $timestamp, interval: $servicesInterval min)")
 
@@ -45,6 +46,6 @@ class AutoRefreshHelper @Inject constructor(
     }
 
     fun updateLastRefreshTimestamp(key: String) {
-        sharedPref.putLong(key, LocalDateTime.now().toTimestamp())
+        sharedPref.putLong(key, Instant.now().toEpochMilli())
     }
 }
