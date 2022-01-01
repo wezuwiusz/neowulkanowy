@@ -22,8 +22,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 102
-        versionName "1.4.4"
+        versionCode 103
+        versionName "1.5.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -149,8 +149,10 @@ kapt {
 
 play {
     defaultToAppBundles = false
-    track = 'beta'
-    updatePriority = 4
+    track = 'production'
+    releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
+    userFraction = 0.25d
+    updatePriority = 1
     enabled.set(false)
 }
 
@@ -174,7 +176,7 @@ ext {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:6e1b8eb26a"
+    implementation "io.github.wulkanowy:sdk:1.5.0"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
