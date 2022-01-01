@@ -1,6 +1,8 @@
-Wersja 1.4.4
+Wersja 1.5.0
 
-- naprawiliśmy logowanie do Gdańskiej Platformy Edukacyjnej
-- naprawiliśmy sortowanie ocen oraz ogłoszeń
+- dodaliśmy możliwość dodawania własnych lekcji dodatkowych
+- dodaliśmy wsparcie dla różnych stref czasowych
+- dodaliśmy eksperymentalne wsparcie dla przedszkola
+- wprowadziliśmy też wiele innych mniejszych poprawek, poprawiających komfort używania aplikacji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
