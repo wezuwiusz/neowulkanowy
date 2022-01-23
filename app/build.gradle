@@ -228,7 +228,7 @@ dependencies {
     implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
     implementation "io.coil-kt:coil:1.4.0"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
-    implementation 'me.xdrop:fuzzywuzzy:1.3.1'
+    implementation 'me.xdrop:fuzzywuzzy:1.3.3'
     implementation 'com.fredporciuncula:flow-preferences:1.6.0'
 
     playImplementation platform('com.google.firebase:firebase-bom:29.0.3')
