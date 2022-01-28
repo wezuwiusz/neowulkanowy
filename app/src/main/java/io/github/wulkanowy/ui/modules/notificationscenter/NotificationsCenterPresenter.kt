@@ -48,7 +48,7 @@ class NotificationsCenterPresenter @Inject constructor(
             emitAll(notificationRepository.getNotifications(studentId))
         }
             .map { notificationList -> notificationList.sortedByDescending { it.date } }
-            .catch { Timber.i("Loading notifications result: An exception occurred") }
+            .catch { Timber.i("Loading notifications result: An exception occurred: `$it`") }
             .onEach {
                 Timber.i("Loading notifications result: Success")
 

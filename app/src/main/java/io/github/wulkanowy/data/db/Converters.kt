@@ -1,11 +1,14 @@
 package io.github.wulkanowy.data.db
 
 import androidx.room.TypeConverter
+import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.utils.toTimestamp
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.time.*
+import java.util.*
 import java.time.Instant
 import java.time.LocalDate
 import java.time.Month
@@ -58,4 +61,11 @@ class Converters {
             emptyList() // handle errors from old gson Pair serialized data
         }
     }
+
+    @TypeConverter
+    fun destinationToString(destination: Destination) = json.encodeToString(destination)
+
+    @TypeConverter
+    fun stringToDestination(destination: String): Destination = json.decodeFromString(destination)
+
 }
