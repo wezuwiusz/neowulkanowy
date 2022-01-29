@@ -83,10 +83,10 @@ class NotificationsFragment : PreferenceFragmentCompat(),
     }
 
     override fun onCreateRecyclerView(
-        inflater: LayoutInflater?,
-        parent: ViewGroup?,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
         state: Bundle?
-    ): RecyclerView? = super.onCreateRecyclerView(inflater, parent, state)
+    ): RecyclerView = super.onCreateRecyclerView(inflater, parent, state)
         .also {
             it.itemAnimator = null
             it.layoutAnimation = null
@@ -214,11 +214,11 @@ class NotificationsFragment : PreferenceFragmentCompat(),
 
     override fun onResume() {
         super.onResume()
-        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPause() {
         super.onPause()
-        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
     }
 }

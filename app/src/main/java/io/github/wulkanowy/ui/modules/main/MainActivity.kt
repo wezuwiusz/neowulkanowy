@@ -173,8 +173,10 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         caller: PreferenceFragmentCompat,
         pref: Preference
     ): Boolean {
-        val fragment =
-            supportFragmentManager.fragmentFactory.instantiate(classLoader, pref.fragment)
+        val fragment = supportFragmentManager.fragmentFactory.instantiate(
+            classLoader,
+            pref.fragment.toString()
+        )
         pushView(fragment)
         return true
     }
