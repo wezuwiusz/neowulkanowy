@@ -104,7 +104,7 @@ class DashboardPresenter @Inject constructor(
         forceRefresh: Boolean
     ) = dashboardTilesToLoad.filter { newItemToLoad ->
         dashboardLoadedTiles.none { it == newItemToLoad } || forceRefresh
-            || newItemToLoad == DashboardItem.Tile.ADMIN_MESSAGE
+                || newItemToLoad == DashboardItem.Tile.ADMIN_MESSAGE
     }
 
     private fun removeUnselectedTiles(tilesToLoad: List<DashboardItem.Tile>) {
@@ -254,7 +254,8 @@ class DashboardPresenter @Inject constructor(
                     attendanceFlow
                 ) { luckyNumberResource, messageResource, attendanceResource ->
                     val error =
-                        luckyNumberResource?.error ?: messageResource?.error ?: attendanceResource?.error
+                        luckyNumberResource?.error ?: messageResource?.error
+                        ?: attendanceResource?.error
                     error?.let { throw it }
 
                     val luckyNumber = luckyNumberResource?.data?.luckyNumber
@@ -295,7 +296,7 @@ class DashboardPresenter @Inject constructor(
                 )
                 errorHandler.dispatch(it)
             }
-            .launch("horizontal_group")
+            .launch("horizontal_group ${if (forceRefresh) "-forceRefresh" else ""}")
     }
 
     private fun loadGrades(student: Student, forceRefresh: Boolean) {
@@ -356,7 +357,7 @@ class DashboardPresenter @Inject constructor(
                     updateData(DashboardItem.Grades(error = it.error), forceRefresh)
                 }
             }
-        }.launch("dashboard_grades")
+        }.launchWithUniqueRefreshJob("dashboard_grades", forceRefresh)
     }
 
     private fun loadLessons(student: Student, forceRefresh: Boolean) {
@@ -400,7 +401,7 @@ class DashboardPresenter @Inject constructor(
                     )
                 }
             }
-        }.launch("dashboard_lessons")
+        }.launchWithUniqueRefreshJob("dashboard_lessons", forceRefresh)
     }
 
     private fun loadHomework(student: Student, forceRefresh: Boolean) {
@@ -447,7 +448,7 @@ class DashboardPresenter @Inject constructor(
                     updateData(DashboardItem.Homework(error = it.error), forceRefresh)
                 }
             }
-        }.launch("dashboard_homework")
+        }.launchWithUniqueRefreshJob("dashboard_homework", forceRefresh)
     }
 
     private fun loadSchoolAnnouncements(student: Student, forceRefresh: Boolean) {
@@ -477,7 +478,7 @@ class DashboardPresenter @Inject constructor(
                     updateData(DashboardItem.Announcements(error = it.error), forceRefresh)
                 }
             }
-        }.launch("dashboard_announcements")
+        }.launchWithUniqueRefreshJob("dashboard_announcements", forceRefresh)
     }
 
     private fun loadExams(student: Student, forceRefresh: Boolean) {
@@ -521,7 +522,7 @@ class DashboardPresenter @Inject constructor(
                         updateData(DashboardItem.Exams(error = it.error), forceRefresh)
                     }
                 }
-            }.launch("dashboard_exams")
+            }.launchWithUniqueRefreshJob("dashboard_exams", forceRefresh)
     }
 
     private fun loadConferences(student: Student, forceRefresh: Boolean) {
@@ -558,7 +559,7 @@ class DashboardPresenter @Inject constructor(
                     updateData(DashboardItem.Conferences(error = it.error), forceRefresh)
                 }
             }
-        }.launch("dashboard_conferences")
+        }.launchWithUniqueRefreshJob("dashboard_conferences", forceRefresh)
     }
 
     private fun loadAdminMessage(student: Student, forceRefresh: Boolean) {
@@ -594,7 +595,7 @@ class DashboardPresenter @Inject constructor(
                     }
                 }
             }
-            .launch("dashboard_admin_messages")
+            .launchWithUniqueRefreshJob("dashboard_admin_messages", forceRefresh)
     }
 
     private fun updateData(dashboardItem: DashboardItem, forceRefresh: Boolean) {
@@ -731,6 +732,20 @@ class DashboardPresenter @Inject constructor(
             }
 
             dashboardItemsPosition?.getOrDefault(tile.type, defaultPosition) ?: tile.type.ordinal
+        }
+    }
+
+    private fun Flow<Resource<*>>.launchWithUniqueRefreshJob(name: String, forceRefresh: Boolean) {
+        val jobName = if (forceRefresh) "$name-forceRefresh" else name
+
+        if (forceRefresh) {
+            onEach {
+                if (it.status == Status.SUCCESS) {
+                    cancelJobs(jobName)
+                }
+            }.launch(jobName)
+        } else {
+            launch(jobName)
         }
     }
 }
