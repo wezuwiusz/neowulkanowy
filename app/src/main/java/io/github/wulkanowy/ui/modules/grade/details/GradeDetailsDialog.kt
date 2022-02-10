@@ -10,11 +10,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.databinding.DialogGradeBinding
-import io.github.wulkanowy.utils.colorStringId
-import io.github.wulkanowy.utils.getBackgroundColor
-import io.github.wulkanowy.utils.getGradeColor
-import io.github.wulkanowy.utils.lifecycleAwareVariable
-import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.*
 
 class GradeDetailsDialog : DialogFragment() {
 
@@ -80,9 +76,7 @@ class GradeDetailsDialog : DialogFragment() {
                 setBackgroundResource(grade.getBackgroundColor(gradeColorTheme))
             }
 
-            gradeDialogTeacherValue.text = if (grade.teacher.isBlank()) {
-                getString(R.string.all_no_data)
-            } else grade.teacher
+            gradeDialogTeacherValue.text = grade.teacher.ifBlank { getString(R.string.all_no_data) }
 
             gradeDialogDescriptionValue.text = grade.run {
                 when {

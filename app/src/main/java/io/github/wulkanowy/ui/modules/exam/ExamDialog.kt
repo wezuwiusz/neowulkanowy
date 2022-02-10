@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.databinding.DialogExamBinding
 import io.github.wulkanowy.utils.lifecycleAwareVariable
@@ -47,7 +48,9 @@ class ExamDialog : DialogFragment() {
             examDialogTypeValue.text = exam.type
             examDialogTeacherValue.text = exam.teacher
             examDialogDateValue.text = exam.entryDate.toFormattedString()
-            examDialogDescriptionValue.text = exam.description
+            examDialogDescriptionValue.text = exam.description.ifBlank {
+                getString(R.string.all_no_data)
+            }
 
             examDialogClose.setOnClickListener { dismiss() }
         }
