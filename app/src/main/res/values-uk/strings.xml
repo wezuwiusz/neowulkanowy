@@ -204,17 +204,17 @@
     <string name="additional_lessons_title">Додаткові уроки</string>
     <string name="additional_lessons_button">Показати додаткові уроки</string>
     <string name="additional_lessons_no_items">Немає інформації про додаткових уроків</string>
-    <string name="additional_lessons_add">New lesson</string>
-    <string name="additional_lessons_add_title">New additional lesson</string>
-    <string name="additional_lessons_add_success">Additional lesson added successfully</string>
-    <string name="additional_lessons_delete_success">Additional lesson deleted successfully</string>
-    <string name="additional_lessons_repeat">Repeat weekly</string>
-    <string name="additional_lessons_delete_title">Delete additional lesson</string>
-    <string name="additional_lessons_delete_one">Just this lesson</string>
-    <string name="additional_lessons_delete_series">All in the series</string>
-    <string name="additional_lessons_start">Start time</string>
-    <string name="additional_lessons_end">End time</string>
-    <string name="additional_lessons_end_time_error">End time must be greater than start time</string>
+    <string name="additional_lessons_add">Новий урок</string>
+    <string name="additional_lessons_add_title">Новий додатковий урок</string>
+    <string name="additional_lessons_add_success">Додатковий урок успішно додано</string>
+    <string name="additional_lessons_delete_success">Успішно видалено додаткове заняття</string>
+    <string name="additional_lessons_repeat">Повторювати щотижня</string>
+    <string name="additional_lessons_delete_title">Видалити додатковий урок</string>
+    <string name="additional_lessons_delete_one">Тільки цей урок</string>
+    <string name="additional_lessons_delete_series">Все в серії</string>
+    <string name="additional_lessons_start">Час початку</string>
+    <string name="additional_lessons_end">Час завершення</string>
+    <string name="additional_lessons_end_time_error">Час завершення має бути більшим, ніж час початку</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Підсумок відвідуваності</string>
     <string name="attendance_absence_school">Відсутність зі шкільних причин</string>
@@ -264,10 +264,10 @@
         <item quantity="other">Нові іспити</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">%d new exam</item>
-        <item quantity="few">%d new exams</item>
-        <item quantity="many">%d new exams</item>
-        <item quantity="other">%d new exams</item>
+        <item quantity="one">%d новий екзамен</item>
+        <item quantity="few">%d новий екзамен</item>
+        <item quantity="many">%d новий екзамен</item>
+        <item quantity="other">%d нових іспитів</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d екзамен</item>
@@ -679,9 +679,9 @@
     <string name="pref_notify_fix_sync_issues_message">На вашому пристрої можуть бути помилки з синхронізацією і повідомленнями\n\nЩоб виправити іх, вам необхідно додати Wulkanowy в авто-старт и вимкнути оптимізацію/экономію батареї в налаштуваннях пристрою.</string>
     <string name="pref_notify_debug_switch">Показувати дебаг-повідомлення</string>
     <string name="pref_notify_disabled_summary">Синхронізація вимкнена</string>
-    <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
+    <string name="pref_notify_notifications_piggyback_header">Офіційні сповіщення додатків</string>
     <string name="pref_notify_notifications_piggyback">Захоплювати офіційні сповіщення програм</string>
-    <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Видалити офіційні сповіщення програм після захоплення</string>
     <string name="pref_notification_piggyback_popup_title">Показувати push-повідомлення</string>
     <string name="pref_notification_piggyback_popup_description">За допомогою цієї функції ви можете отримати заміну push -повідомлень, як у офіційному додатку. Все, що вам потрібно зробити, це дозволити Wulkanowy отримувати всі сповіщення у налаштуваннях вашої системи. \ N \ nЯк це працює? \ NКоли ви отримаєте сповіщення у Dziennik VULCAN, Wulkanowy отримає сповіщення (для цього призначені ці додаткові дозволи) і запустить синхронізація, яка може надсилати власне сповіщення. \ n \ n ТІЛЬКИ ДЛЯ РОЗШИРЕНИХ КОРИСТУВАЧІВ</string>
     <string name="pref_notification_exact_alarm_popup_title">Показувати повідомлення о наступних уроках</string>
@@ -760,7 +760,7 @@
     <string name="update_failed">Помилка оновлення! Wulkanowy може не працювати належним чином. Подумайте про оновлення</string>
     <!--Errors-->
     <string name="error_no_internet">Брак з\'єднання з інтернетом</string>
-    <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>
+    <string name="error_invalid_device_datetime">Сталася помилка. Перевірте годинник пристрою</string>
     <string name="error_timeout">Помилка підключення до реєстрації. Сервери можуть бути перевантажені. Будь-ласка спробуйте пізніше</string>
     <string name="error_login_failed">Помилка завантаження даних. Будь-ласка спробуйте пізніше</string>
     <string name="error_password_change_required">Потрібна реєстрація зміни пароля</string>
