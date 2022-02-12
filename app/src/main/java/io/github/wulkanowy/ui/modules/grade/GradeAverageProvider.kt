@@ -10,9 +10,7 @@ import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.ALL_YEAR
-import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.BOTH_SEMESTERS
-import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.ONE_SEMESTER
+import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.*
 import io.github.wulkanowy.utils.calcAverage
 import io.github.wulkanowy.utils.changeModifier
 import io.github.wulkanowy.utils.flowWithResourceIn
@@ -144,20 +142,20 @@ class GradeAverageProvider @Inject constructor(
         isGradeAverageForceCalc: Boolean,
         secondSemesterSubject: GradeSubject,
         firstSemesterSubject: GradeSubject?
-    ): Double {
+    ): Double = if (!isAnyVulcanAverage || isGradeAverageForceCalc) {
         val divider = if (secondSemesterSubject.grades.any { it.weightValue > .0 }) 2 else 1
 
-        return if (!isAnyVulcanAverage || isGradeAverageForceCalc) {
-            val secondSemesterAverage =
-                secondSemesterSubject.grades.updateModifiers(student)
-                    .calcAverage(isOptionalArithmeticAverage)
-            val firstSemesterAverage = firstSemesterSubject?.grades?.updateModifiers(student)
-                ?.calcAverage(isOptionalArithmeticAverage) ?: secondSemesterAverage
+        val secondSemesterAverage = secondSemesterSubject.grades.updateModifiers(student)
+            .calcAverage(isOptionalArithmeticAverage)
+        val firstSemesterAverage = firstSemesterSubject?.grades?.updateModifiers(student)
+            ?.calcAverage(isOptionalArithmeticAverage) ?: secondSemesterAverage
 
-            (secondSemesterAverage + firstSemesterAverage) / divider
-        } else {
-            (secondSemesterSubject.average + (firstSemesterSubject?.average ?: secondSemesterSubject.average)) / divider
-        }
+        (secondSemesterAverage + firstSemesterAverage) / divider
+    } else {
+        val divider = if (secondSemesterSubject.average > 0) 2 else 1
+
+        (secondSemesterSubject.average + (firstSemesterSubject?.average
+            ?: secondSemesterSubject.average)) / divider
     }
 
     private fun getGradeSubjects(

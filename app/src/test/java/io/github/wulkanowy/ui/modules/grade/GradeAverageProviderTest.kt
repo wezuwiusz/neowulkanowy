@@ -859,12 +859,51 @@ class GradeAverageProviderTest {
             ) to listOf(getSummary(semesterId = 23, subject = "Fizyka", average = .0))
         }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
 
-        assertEquals(5.5555, items.single { it.subject == "Fizyka" }.average, .0001) // (from details): 5.72727272  + 4,8 → .average()
+        assertEquals(
+            5.5555,
+            items.single { it.subject == "Fizyka" }.average,
+            .0001
+        ) // (from details): 5.72727272  + 4,8 → .average()
     }
 
-    private fun getGrade(semesterId: Int, subject: String, value: Double, modifier: Double = 0.0, weight: Double = 1.0, entry: String = ""): Grade {
+    @Test
+    fun `calc both semesters average when both summary have same average from vulcan and second semester has no grades`() {
+        every { preferencesRepository.gradeAverageForceCalc } returns false
+        every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
+        every { preferencesRepository.isOptionalArithmeticAverage } returns false
+
+        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns
+                flowWithResource { firstGrades to firstSummaries }
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns
+                flowWithResource { listOf<Grade>() to firstSummaries }
+
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
+
+        assertEquals(3.1, items.single { it.subject == "Fizyka" }.average, .0001)
+    }
+
+    private fun getGrade(
+        semesterId: Int,
+        subject: String,
+        value: Double,
+        modifier: Double = 0.0,
+        weight: Double = 1.0,
+        entry: String = ""
+    ): Grade {
         return Grade(
             studentId = 101,
             semesterId = semesterId,
