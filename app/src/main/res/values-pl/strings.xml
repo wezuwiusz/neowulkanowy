@@ -105,7 +105,7 @@
     <string name="grade_statistics_semester">Semestralne</string>
     <string name="grade_statistics_points">Punkty</string>
     <string name="grade_statistics_legend">Legenda</string>
-    <string name="grade_statistics_average">Średnia: %1$s</string>
+    <string name="grade_statistics_class_average">Średnia: %1$s</string>
     <string name="grade_statistics_average_class">Klasa</string>
     <string name="grade_statistics_average_student">Uczeń</string>
     <plurals name="grade_number_item">

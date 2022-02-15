@@ -115,7 +115,9 @@
     <string name="grade_statistics_semester">Semester</string>
     <string name="grade_statistics_points">Points</string>
     <string name="grade_statistics_legend">Legend</string>
-    <string name="grade_statistics_average">Average: %1$s</string>
+    <string name="grade_statistics_class_average">Class average: %1$s</string>
+    <string name="grade_statistics_student_average">Your average: %1$s</string>
+    <string name="grade_statistics_student_grade">Your grade: %1$s</string>
     <string name="grade_statistics_average_class">Class</string>
     <string name="grade_statistics_average_student">Student</string>
     <plurals name="grade_number_item">

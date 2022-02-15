@@ -11,14 +11,9 @@ import io.github.wulkanowy.sdk.pojo.GradeStatisticsItem
 import io.github.wulkanowy.sdk.pojo.GradeStatisticsSubject
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.toFirstResult
-import io.mockk.MockKAnnotations
-import io.mockk.Runs
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
-import io.mockk.just
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -48,22 +43,27 @@ class GradeStatisticsRepositoryTest {
 
     private lateinit var gradeStatisticsRepository: GradeStatisticsRepository
 
-    private val remotePartialList = listOf(
-        getGradeStatisticsPartialSubject("Fizyka"),
-        getGradeStatisticsPartialSubject("Matematyka")
-    )
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
         every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
-        gradeStatisticsRepository = GradeStatisticsRepository(gradePartialStatisticsDb, gradePointsStatisticsDb, gradeSemesterStatisticsDb, sdk, refreshHelper)
+        gradeStatisticsRepository = GradeStatisticsRepository(
+            gradePartialStatisticsDb = gradePartialStatisticsDb,
+            gradePointsStatisticsDb = gradePointsStatisticsDb,
+            gradeSemesterStatisticsDb = gradeSemesterStatisticsDb,
+            sdk = sdk,
+            refreshHelper = refreshHelper,
+        )
     }
 
     @Test
     fun `force refresh without difference`() {
         // prepare
+        val remotePartialList = listOf(
+            getGradeStatisticsPartialSubject("Fizyka"),
+            getGradeStatisticsPartialSubject("Matematyka")
+        )
         coEvery { sdk.getGradesPartialStatistics(1) } returns remotePartialList
         coEvery { gradePartialStatisticsDb.loadAll(1, 1) } returnsMany listOf(
             flowOf(remotePartialList.mapToEntities(semester)),
@@ -73,21 +73,74 @@ class GradeStatisticsRepositoryTest {
         coEvery { gradePartialStatisticsDb.deleteAll(any()) } just Runs
 
         // execute
-        val res = runBlocking { gradeStatisticsRepository.getGradesPartialStatistics(student, semester, "Wszystkie", true).toFirstResult() }
+        val res = runBlocking {
+            gradeStatisticsRepository.getGradesPartialStatistics(
+                student = student,
+                semester = semester,
+                subjectName = "Wszystkie",
+                forceRefresh = true,
+            ).toFirstResult()
+        }
+        val items = res.data.orEmpty()
 
         // verify
         assertEquals(null, res.error)
         assertEquals(2 + 1, res.data?.size)
+        assertEquals("", items[0].partial?.studentAverage)
+        assertEquals("", items[1].partial?.studentAverage)
+        assertEquals("", items[2].partial?.studentAverage)
         coVerify { sdk.getGradesPartialStatistics(1) }
         coVerify { gradePartialStatisticsDb.loadAll(1, 1) }
         coVerify { gradePartialStatisticsDb.insertAll(match { it.isEmpty() }) }
         coVerify { gradePartialStatisticsDb.deleteAll(match { it.isEmpty() }) }
     }
 
-    private fun getGradeStatisticsPartialSubject(subjectName: String) = GradeStatisticsSubject(
+    @Test
+    fun `force refresh without difference with filled up items`() {
+        // prepare
+        val remotePartialList = listOf(
+            getGradeStatisticsPartialSubject("Fizyka", "1.0"),
+            getGradeStatisticsPartialSubject("Matematyka", "5.0")
+        )
+        coEvery { sdk.getGradesPartialStatistics(1) } returns remotePartialList
+        coEvery { gradePartialStatisticsDb.loadAll(1, 1) } returnsMany listOf(
+            flowOf(remotePartialList.mapToEntities(semester)),
+            flowOf(remotePartialList.mapToEntities(semester))
+        )
+        coEvery { gradePartialStatisticsDb.insertAll(any()) } returns listOf(1, 2, 3)
+        coEvery { gradePartialStatisticsDb.deleteAll(any()) } just Runs
+
+        // execute
+        val res = runBlocking {
+            gradeStatisticsRepository.getGradesPartialStatistics(
+                student = student,
+                semester = semester,
+                subjectName = "Wszystkie",
+                forceRefresh = true,
+            ).toFirstResult()
+        }
+        val items = res.data.orEmpty()
+
+        // verify
+        assertEquals(null, res.error)
+        assertEquals(2 + 1, res.data?.size)
+        assertEquals("3,00", items[0].partial?.studentAverage)
+        assertEquals("1.0", items[1].partial?.studentAverage)
+        assertEquals("5.0", items[2].partial?.studentAverage)
+        coVerify { sdk.getGradesPartialStatistics(1) }
+        coVerify { gradePartialStatisticsDb.loadAll(1, 1) }
+        coVerify { gradePartialStatisticsDb.insertAll(match { it.isEmpty() }) }
+        coVerify { gradePartialStatisticsDb.deleteAll(match { it.isEmpty() }) }
+    }
+
+    private fun getGradeStatisticsPartialSubject(
+        subjectName: String,
+        studentAverage: String = "",
+        classAverage: String = "",
+    ) = GradeStatisticsSubject(
         subject = subjectName,
-        studentAverage = "",
-        classAverage = "",
+        studentAverage = studentAverage,
+        classAverage = classAverage,
         classItems = listOf(
             GradeStatisticsItem(
                 subject = subjectName,

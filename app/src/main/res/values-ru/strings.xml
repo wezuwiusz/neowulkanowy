@@ -105,7 +105,7 @@
     <string name="grade_statistics_semester">За семестр</string>
     <string name="grade_statistics_points">Баллы</string>
     <string name="grade_statistics_legend">Легенда</string>
-    <string name="grade_statistics_average">Средняя: %1$s</string>
+    <string name="grade_statistics_class_average">Средняя: %1$s</string>
     <string name="grade_statistics_average_class">Класс</string>
     <string name="grade_statistics_average_student">Студент</string>
     <plurals name="grade_number_item">

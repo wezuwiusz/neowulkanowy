@@ -73,6 +73,8 @@ android {
             buildConfigField "String", "MESSAGES_BASE_URL", "\"https://messages.wulkanowy.net.pl\""
         }
         debug {
+            minifyEnabled false
+            shrinkResources false
             resValue "string", "app_name", "Wulkanowy DEV"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"

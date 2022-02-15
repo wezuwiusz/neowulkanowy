@@ -105,7 +105,7 @@
     <string name="grade_statistics_semester">Semestr</string>
     <string name="grade_statistics_points">Body</string>
     <string name="grade_statistics_legend">Vysvětlivky</string>
-    <string name="grade_statistics_average">Průměr: %1$s</string>
+    <string name="grade_statistics_class_average">Průměr: %1$s</string>
     <string name="grade_statistics_average_class">Třída</string>
     <string name="grade_statistics_average_student">Žák</string>
     <plurals name="grade_number_item">
