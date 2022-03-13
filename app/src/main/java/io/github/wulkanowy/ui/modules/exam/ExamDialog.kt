@@ -47,7 +47,8 @@ class ExamDialog : DialogFragment() {
             examDialogSubjectValue.text = exam.subject
             examDialogTypeValue.text = exam.type
             examDialogTeacherValue.text = exam.teacher
-            examDialogDateValue.text = exam.entryDate.toFormattedString()
+            examDialogEntryDateValue.text = exam.entryDate.toFormattedString()
+            examDialogDeadlineDateValue.text = exam.date.toFormattedString()
             examDialogDescriptionValue.text = exam.description.ifBlank {
                 getString(R.string.all_no_data)
             }
