@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.data.enums.TimetableMode
 import io.github.wulkanowy.databinding.FragmentTimetableBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
@@ -20,11 +19,7 @@ import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.timetable.additional.AdditionalLessonsFragment
 import io.github.wulkanowy.ui.modules.timetable.completed.CompletedLessonsFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.dpToPx
-import io.github.wulkanowy.utils.firstSchoolDayInSchoolYear
-import io.github.wulkanowy.utils.getThemeAttrColor
-import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
-import io.github.wulkanowy.utils.openMaterialDatePicker
+import io.github.wulkanowy.utils.*
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -73,8 +68,6 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     }
 
     override fun initView() {
-        timetableAdapter.onClickListener = presenter::onTimetableItemSelected
-
         with(binding.timetableRecycler) {
             layoutManager = LinearLayoutManager(context)
             adapter = timetableAdapter
@@ -110,18 +103,8 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         }
     }
 
-    override fun updateData(
-        data: List<Timetable>,
-        showWholeClassPlanType: TimetableMode,
-        showGroupsInPlanType: Boolean,
-        showTimetableTimers: Boolean
-    ) {
-        timetableAdapter.submitList(
-            newTimetable = data.toMutableList(),
-            showGroupsInPlan = showGroupsInPlanType,
-            showTimers = showTimetableTimers,
-            showWholeClassPlan = showWholeClassPlanType
-        )
+    override fun updateData(data: List<TimetableItem>) {
+        timetableAdapter.submitList(data)
     }
 
     override fun clearData() {
@@ -214,7 +197,6 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
     }
 
     override fun onDestroyView() {
-        timetableAdapter.clearTimers()
         presenter.onDetachView()
         super.onDestroyView()
     }

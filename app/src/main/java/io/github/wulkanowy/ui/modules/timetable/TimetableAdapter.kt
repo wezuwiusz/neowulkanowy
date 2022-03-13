@@ -1,116 +1,69 @@
 package io.github.wulkanowy.ui.modules.timetable
 
-import android.graphics.Paint
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.data.enums.TimetableMode
 import io.github.wulkanowy.databinding.ItemTimetableBinding
 import io.github.wulkanowy.databinding.ItemTimetableSmallBinding
-import io.github.wulkanowy.utils.*
-import timber.log.Timber
-import java.time.Instant
-import java.util.*
+import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.toFormattedString
 import javax.inject.Inject
-import kotlin.concurrent.timer
 
-class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TimetableAdapter @Inject constructor() :
+    ListAdapter<TimetableItem, RecyclerView.ViewHolder>(differ) {
 
-    private enum class ViewType {
-        ITEM_NORMAL,
-        ITEM_SMALL
-    }
-
-    var onClickListener: (Timetable) -> Unit = {}
-
-    private var showWholeClassPlan = TimetableMode.ONLY_CURRENT_GROUP
-
-    private var showGroupsInPlan: Boolean = false
-
-    private var showTimers: Boolean = false
-
-    private val timers = mutableMapOf<Int, Timer?>()
-
-    private val items = mutableListOf<Timetable>()
-
-    fun submitList(
-        newTimetable: List<Timetable>,
-        showWholeClassPlan: TimetableMode = this.showWholeClassPlan,
-        showGroupsInPlan: Boolean = this.showGroupsInPlan,
-        showTimers: Boolean = this.showTimers
-    ) {
-        val isFlagsDifferent = this.showWholeClassPlan != showWholeClassPlan
-            || this.showGroupsInPlan != showGroupsInPlan
-            || this.showTimers != showTimers
-
-        val diffResult = DiffUtil.calculateDiff(
-            TimetableAdapterDiffCallback(
-                oldList = items.toMutableList(),
-                newList = newTimetable,
-                isFlagsDifferent = isFlagsDifferent
-            )
-        )
-
-        this.showGroupsInPlan = showGroupsInPlan
-        this.showTimers = showTimers
-        this.showWholeClassPlan = showWholeClassPlan
-
-        items.clear()
-        items.addAll(newTimetable)
-
-        diffResult.dispatchUpdatesTo(this)
-    }
-
-    fun clearTimers() {
-        Timber.d("Timetable timers (${timers.size}) cleared")
-        with(timers) {
-            forEach { (_, timer) ->
-                timer?.cancel()
-                timer?.purge()
-            }
-            clear()
-        }
-    }
-
-    override fun getItemCount() = items.size
-
-    override fun getItemViewType(position: Int) = when {
-        !items[position].isStudentPlan && showWholeClassPlan == TimetableMode.SMALL_OTHER_GROUP -> ViewType.ITEM_SMALL.ordinal
-        else -> ViewType.ITEM_NORMAL.ordinal
-    }
+    override fun getItemViewType(position: Int): Int = getItem(position).type.ordinal
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
-        return when (viewType) {
-            ViewType.ITEM_NORMAL.ordinal -> ItemViewHolder(
-                ItemTimetableBinding.inflate(inflater, parent, false)
-            )
-            ViewType.ITEM_SMALL.ordinal -> SmallItemViewHolder(
+        return when (TimetableItemType.values()[viewType]) {
+            TimetableItemType.SMALL -> SmallViewHolder(
                 ItemTimetableSmallBinding.inflate(inflater, parent, false)
             )
-            else -> throw IllegalStateException()
+            TimetableItemType.NORMAL -> NormalViewHolder(
+                ItemTimetableBinding.inflate(inflater, parent, false)
+            )
         }
+    }
+
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) return super.onBindViewHolder(holder, position, payloads)
+
+        if (holder is NormalViewHolder) updateTimeLeft(
+            binding = holder.binding,
+            timeLeft = (getItem(position) as TimetableItem.Normal).timeLeft,
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val lesson = items[position]
-
         when (holder) {
-            is ItemViewHolder -> bindNormalView(holder.binding, lesson, position)
-            is SmallItemViewHolder -> bindSmallView(holder.binding, lesson)
+            is SmallViewHolder -> bindSmallView(
+                binding = holder.binding,
+                item = getItem(position) as TimetableItem.Small,
+            )
+            is NormalViewHolder -> bindNormalView(
+                binding = holder.binding,
+                item = getItem(position) as TimetableItem.Normal,
+            )
         }
     }
 
-    private fun bindSmallView(binding: ItemTimetableSmallBinding, lesson: Timetable) {
+    private fun bindSmallView(binding: ItemTimetableSmallBinding, item: TimetableItem.Small) {
+        val lesson = item.lesson
+
         with(binding) {
             timetableSmallItemNumber.text = lesson.number.toString()
             timetableSmallItemSubject.text = lesson.subject
@@ -122,11 +75,13 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             bindSmallDescription(binding, lesson)
             bindSmallColors(binding, lesson)
 
-            root.setOnClickListener { onClickListener(lesson) }
+            root.setOnClickListener { item.onClick(lesson) }
         }
     }
 
-    private fun bindNormalView(binding: ItemTimetableBinding, lesson: Timetable, position: Int) {
+    private fun bindNormalView(binding: ItemTimetableBinding, item: TimetableItem.Normal) {
+        val lesson = item.lesson
+
         with(binding) {
             timetableItemNumber.text = lesson.number.toString()
             timetableItemSubject.text = lesson.subject
@@ -137,51 +92,19 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             timetableItemTimeFinish.text = lesson.end.toFormattedString("HH:mm")
 
             bindSubjectStyle(timetableItemSubject, lesson)
-            bindNormalDescription(binding, lesson)
+            bindNormalDescription(binding, item)
             bindNormalColors(binding, lesson)
+            updateTimeLeft(binding, item.timeLeft)
 
-            timers[position]?.let {
-                it.cancel()
-                it.purge()
-            }
-            timers[position] = null
-
-            if (lesson.isStudentPlan && showTimers) {
-                timers[position] = timer(period = 1000) {
-                    Handler(Looper.getMainLooper()).post {
-                        updateTimeLeft(binding, lesson, position)
-                    }
-                }
-            } else {
-                // reset item on set changed
-                timetableItemTimeUntil.visibility = GONE
-                timetableItemTimeLeft.visibility = GONE
-            }
-
-            root.setOnClickListener { onClickListener(lesson) }
+            root.setOnClickListener { item.onClick(lesson) }
         }
     }
 
-    private fun getPreviousLesson(position: Int): Instant? {
-        return items.filter { it.isStudentPlan }
-            .getOrNull(position - 1 - items.filterIndexed { i, item -> i < position && !item.isStudentPlan }.size)
-            ?.let {
-                if (!it.canceled && it.isStudentPlan) it.end
-                else null
-            }
-    }
-
-    private fun updateTimeLeft(binding: ItemTimetableBinding, lesson: Timetable, position: Int) {
-        val isShowTimeUntil = lesson.isShowTimeUntil(getPreviousLesson(position))
-        val until = lesson.until.plusMinutes(1)
-        val left = lesson.left?.plusMinutes(1)
-        val isJustFinished = lesson.isJustFinished
-
+    private fun updateTimeLeft(binding: ItemTimetableBinding, timeLeft: TimeLeft?) {
         with(binding) {
             when {
                 // before lesson
-                isShowTimeUntil -> {
-                    Timber.d("Show time until lesson: $position")
+                timeLeft?.until != null -> {
                     timetableItemTimeLeft.visibility = GONE
                     with(timetableItemTimeUntil) {
                         visibility = VISIBLE
@@ -189,14 +112,13 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                             R.string.timetable_time_until,
                             context.getString(
                                 R.string.timetable_minutes,
-                                until.toMinutes().toString(10)
+                                timeLeft.until.toMinutes().toString(10)
                             )
                         )
                     }
                 }
                 // after lesson start
-                left != null -> {
-                    Timber.d("Show time left lesson: $position")
+                timeLeft?.left != null -> {
                     timetableItemTimeUntil.visibility = GONE
                     with(timetableItemTimeLeft) {
                         visibility = VISIBLE
@@ -204,14 +126,13 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                             R.string.timetable_time_left,
                             context.getString(
                                 R.string.timetable_minutes,
-                                left.toMinutes().toString()
+                                timeLeft.left.toMinutes().toString()
                             )
                         )
                     }
                 }
                 // right after lesson finish
-                isJustFinished -> {
-                    Timber.d("Show just finished lesson: $position")
+                timeLeft?.isJustFinished == true -> {
                     timetableItemTimeUntil.visibility = GONE
                     timetableItemTimeLeft.visibility = VISIBLE
                     timetableItemTimeLeft.text = root.context.getString(R.string.timetable_finished)
@@ -225,9 +146,7 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     }
 
     private fun bindSubjectStyle(subjectView: TextView, lesson: Timetable) {
-        subjectView.paintFlags =
-            if (lesson.canceled) subjectView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            else subjectView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        subjectView.paint.isStrikeThruText = lesson.canceled
     }
 
     private fun bindSmallDescription(binding: ItemTimetableSmallBinding, lesson: Timetable) {
@@ -253,7 +172,8 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         }
     }
 
-    private fun bindNormalDescription(binding: ItemTimetableBinding, lesson: Timetable) {
+    private fun bindNormalDescription(binding: ItemTimetableBinding, item: TimetableItem.Normal) {
+        val lesson = item.lesson
         with(binding) {
             if (lesson.info.isNotBlank() && !lesson.changes) {
                 timetableItemDescription.visibility = VISIBLE
@@ -272,8 +192,7 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             } else {
                 timetableItemDescription.visibility = GONE
                 timetableItemRoom.visibility = VISIBLE
-                timetableItemGroup.visibility =
-                    if (showGroupsInPlan && lesson.group.isNotBlank()) VISIBLE else GONE
+                timetableItemGroup.isVisible = item.showGroupsInPlan && lesson.group.isNotBlank()
                 timetableItemTeacher.visibility = VISIBLE
             }
         }
@@ -349,26 +268,35 @@ class TimetableAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         )
     }
 
-    private class ItemViewHolder(val binding: ItemTimetableBinding) :
+    private class NormalViewHolder(val binding: ItemTimetableBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private class SmallItemViewHolder(val binding: ItemTimetableSmallBinding) :
+    private class SmallViewHolder(val binding: ItemTimetableSmallBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    class TimetableAdapterDiffCallback(
-        private val oldList: List<Timetable>,
-        private val newList: List<Timetable>,
-        private val isFlagsDifferent: Boolean
-    ) : DiffUtil.Callback() {
+    companion object {
+        private val differ = object : DiffUtil.ItemCallback<TimetableItem>() {
+            override fun areItemsTheSame(oldItem: TimetableItem, newItem: TimetableItem): Boolean =
+                when {
+                    oldItem is TimetableItem.Small && newItem is TimetableItem.Small -> {
+                        oldItem.lesson.start == newItem.lesson.start
+                    }
+                    oldItem is TimetableItem.Normal && newItem is TimetableItem.Normal -> {
+                        oldItem.lesson.start == newItem.lesson.start
+                    }
+                    else -> oldItem == newItem
+                }
 
-        override fun getOldListSize() = oldList.size
+            override fun areContentsTheSame(oldItem: TimetableItem, newItem: TimetableItem) =
+                oldItem == newItem
 
-        override fun getNewListSize() = newList.size
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            oldList[oldItemPosition].id == newList[newItemPosition].id
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            oldList[oldItemPosition] == newList[newItemPosition] && !isFlagsDifferent
+            override fun getChangePayload(oldItem: TimetableItem, newItem: TimetableItem): Any? {
+                return if (oldItem is TimetableItem.Normal && newItem is TimetableItem.Normal) {
+                    if (oldItem.lesson == newItem.lesson && oldItem.timeLeft != newItem.timeLeft) {
+                        "time_left"
+                    } else super.getChangePayload(oldItem, newItem)
+                } else super.getChangePayload(oldItem, newItem)
+            }
+        }
     }
 }
