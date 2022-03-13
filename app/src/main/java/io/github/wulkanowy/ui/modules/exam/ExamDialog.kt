@@ -9,7 +9,9 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.databinding.DialogExamBinding
 import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.utils.openCalendarEventAdd
 import io.github.wulkanowy.utils.toFormattedString
+import java.time.LocalTime
 
 class ExamDialog : DialogFragment() {
 
@@ -54,6 +56,14 @@ class ExamDialog : DialogFragment() {
             }
 
             examDialogClose.setOnClickListener { dismiss() }
+            examDialogAddToCalendar.setOnClickListener {
+                requireContext().openCalendarEventAdd(
+                    title = "${exam.subject} - ${exam.type}",
+                    description = exam.description,
+                    start = exam.date.atTime(LocalTime.of(8, 0)),
+                    end = exam.date.atTime(LocalTime.of(8, 45)),
+                )
+            }
         }
     }
 }
