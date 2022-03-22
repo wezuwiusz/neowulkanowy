@@ -248,7 +248,7 @@ dependencies {
 
     debugImplementation "com.github.ChuckerTeam.Chucker:library:$chucker"
     debugImplementation 'com.github.amitshekhariitbhu.Android-Debug-Database:debug-db:1.0.6'
-    debugImplementation 'com.github.haroldadmin:WhatTheStack:1.0.0-alpha03'
+    debugImplementation 'com.github.haroldadmin:WhatTheStack:1.0.0-alpha04'
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "io.mockk:mockk:$mockk"
