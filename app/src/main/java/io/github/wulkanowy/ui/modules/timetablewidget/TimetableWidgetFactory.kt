@@ -12,6 +12,7 @@ import android.widget.AdapterView.INVALID_POSITION
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.enums.TimetableMode
@@ -19,12 +20,12 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
+import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getCurrentThemeWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getDateWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getTodayLastLessonEndDateTimeWidgetKey
 import io.github.wulkanowy.utils.getCompatColor
-import io.github.wulkanowy.utils.toFirstResult
 import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -118,7 +119,7 @@ class TimetableWidgetFactory(
 
             val semester = semesterRepository.getCurrentSemester(student)
             timetableRepository.getTimetable(student, semester, date, date, false)
-                .toFirstResult().data?.lessons.orEmpty()
+                .toFirstResult().dataOrNull?.lessons.orEmpty()
                 .sortedWith(compareBy({ it.number }, { !it.isStudentPlan }))
                 .filter {
                     if (prefRepository.showWholeClassPlan == TimetableMode.ONLY_CURRENT_GROUP) {

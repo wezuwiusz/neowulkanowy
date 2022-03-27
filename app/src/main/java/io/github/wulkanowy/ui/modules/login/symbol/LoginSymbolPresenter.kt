@@ -1,13 +1,13 @@
 package io.github.wulkanowy.ui.modules.login.symbol
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.onResourceNotLoading
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -45,7 +45,7 @@ class LoginSymbolPresenter @Inject constructor(
             return
         }
 
-        flowWithResource {
+        resourceFlow {
             studentRepository.getStudentsScrapper(
                 email = loginData.login,
                 password = loginData.password,
@@ -53,15 +53,15 @@ class LoginSymbolPresenter @Inject constructor(
                 symbol = symbol,
             )
         }.onEach {
-            when (it.status) {
-                Status.LOADING -> view?.run {
+            when (it) {
+                is Resource.Loading -> view?.run {
                     Timber.i("Login with symbol started")
                     hideSoftKeyboard()
                     showProgress(true)
                     showContent(false)
                 }
-                Status.SUCCESS -> {
-                    when (it.data?.size) {
+                is Resource.Success -> {
+                    when (it.data.size) {
                         0 -> {
                             Timber.i("Login with symbol result: Empty student list")
                             view?.run {
@@ -77,13 +77,13 @@ class LoginSymbolPresenter @Inject constructor(
                     analytics.logEvent(
                         "registration_symbol",
                         "success" to true,
-                        "students" to it.data!!.size,
+                        "students" to it.data.size,
                         "scrapperBaseUrl" to loginData.baseUrl,
                         "symbol" to symbol,
                         "error" to "No error"
                     )
                 }
-                Status.ERROR -> {
+                is Resource.Error -> {
                     Timber.i("Login with symbol result: An exception occurred")
                     analytics.logEvent(
                         "registration_symbol",
@@ -91,14 +91,14 @@ class LoginSymbolPresenter @Inject constructor(
                         "students" to -1,
                         "scrapperBaseUrl" to loginData.baseUrl,
                         "symbol" to symbol,
-                        "error" to it.error!!.message.ifNullOrBlank { "No message" }
+                        "error" to it.error.message.ifNullOrBlank { "No message" }
                     )
                     loginErrorHandler.dispatch(it.error)
                     lastError = it.error
                     view?.showContact(true)
                 }
             }
-        }.afterLoading {
+        }.onResourceNotLoading {
             view?.apply {
                 showProgress(false)
                 showContent(true)

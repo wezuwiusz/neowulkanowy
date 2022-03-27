@@ -11,8 +11,12 @@ import io.github.wulkanowy.data.mappers.mapPartialToStatisticItems
 import io.github.wulkanowy.data.mappers.mapPointsToStatisticsItems
 import io.github.wulkanowy.data.mappers.mapSemesterToStatisticItems
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
+import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.sync.Mutex
 import java.util.*
 import javax.inject.Inject
@@ -42,6 +46,7 @@ class GradeStatisticsRepository @Inject constructor(
         forceRefresh: Boolean,
     ) = networkBoundResource(
         mutex = partialMutex,
+        isResultEmpty = { it.isEmpty() },
         shouldFetch = {
             val isExpired = refreshHelper.shouldBeRefreshed(
                 key = getRefreshKey(partialCacheKey, semester)
@@ -86,6 +91,7 @@ class GradeStatisticsRepository @Inject constructor(
         forceRefresh: Boolean,
     ) = networkBoundResource(
         mutex = semesterMutex,
+        isResultEmpty = { it.isEmpty() },
         shouldFetch = {
             val isExpired = refreshHelper.shouldBeRefreshed(
                 key = getRefreshKey(semesterCacheKey, semester)
@@ -143,6 +149,7 @@ class GradeStatisticsRepository @Inject constructor(
         forceRefresh: Boolean,
     ) = networkBoundResource(
         mutex = pointsMutex,
+        isResultEmpty = { it.isEmpty() },
         shouldFetch = {
             val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(pointsCacheKey, semester))
             it.isEmpty() || forceRefresh || isExpired

@@ -1,25 +1,20 @@
 package io.github.wulkanowy.ui.modules.message.send
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceNotLoading
 import io.github.wulkanowy.data.pojos.MessageDraft
-import io.github.wulkanowy.data.repositories.MessageRepository
-import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.RecipientRepository
-import io.github.wulkanowy.data.repositories.ReportingUnitRepository
-import io.github.wulkanowy.data.repositories.SemesterRepository
-import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.*
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.onEach
@@ -55,10 +50,12 @@ class SendMessagePresenter @Inject constructor(
                 setContent(it)
             }
             message?.let {
-                setSubject(when (reply) {
-                    true -> "Re: "
-                    else -> "FW: "
-                } + message.subject)
+                setSubject(
+                    when (reply) {
+                        true -> "Re: "
+                        else -> "FW: "
+                    } + message.subject
+                )
                 if (preferencesRepository.fillMessageContent || reply != true) {
                     setContent(
                         when (reply) {
@@ -67,7 +64,8 @@ class SendMessagePresenter @Inject constructor(
                         } + when (message.sender.isNotEmpty()) {
                             true -> "Od: ${message.sender}\n"
                             false -> "Do: ${message.recipient}\n"
-                        } + "Data: ${message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")}\n\n${message.content}")
+                        } + "Data: ${message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")}\n\n${message.content}"
+                    )
                 }
             }
         }
@@ -111,7 +109,7 @@ class SendMessagePresenter @Inject constructor(
     }
 
     private fun loadData(message: Message?, reply: Boolean?) {
-        flowWithResource {
+        resourceFlow {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             val unit = reportingUnitRepository.getReportingUnit(student, semester.unitId)
@@ -125,58 +123,64 @@ class SendMessagePresenter @Inject constructor(
 
             Timber.i("Loading message recipients started")
             val messageRecipients = when {
-                message != null && reply == true -> recipientRepository.getMessageRecipients(student, message)
+                message != null && reply == true -> recipientRepository.getMessageRecipients(
+                    student,
+                    message
+                )
                 else -> emptyList()
             }.let { createChips(it) }
-            Timber.i("Loaded message recipients to reply result: Success, fetched %d recipients", messageRecipients.size)
+            Timber.i(
+                "Loaded message recipients to reply result: Success, fetched %d recipients",
+                messageRecipients.size
+            )
 
             Triple(unit, recipients, messageRecipients)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> view?.run {
-                    Timber.i("Loading recipients started")
-                    showProgress(true)
-                    showContent(false)
-                }
-                Status.SUCCESS -> it.data!!.let { (reportingUnit, recipientChips, selectedRecipientChips) ->
-                    view?.run {
-                        if (reportingUnit != null) {
-                            setReportingUnit(reportingUnit)
-                            setRecipients(recipientChips)
-                            if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(selectedRecipientChips)
-                            showContent(true)
-                        } else {
-                            Timber.i("Loading recipients result: Can't find the reporting unit")
-                            view?.showEmpty(true)
+        }
+            .logResourceStatus("load recipients")
+            .onEach {
+                when (it) {
+                    is Resource.Loading -> view?.run {
+                        showProgress(true)
+                        showContent(false)
+                    }
+                    is Resource.Success -> it.data.let { (reportingUnit, recipientChips, selectedRecipientChips) ->
+                        view?.run {
+                            if (reportingUnit != null) {
+                                setReportingUnit(reportingUnit)
+                                setRecipients(recipientChips)
+                                if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(
+                                    selectedRecipientChips
+                                )
+                                showContent(true)
+                            } else {
+                                Timber.i("Loading recipients result: Can't find the reporting unit")
+                                view?.showEmpty(true)
+                            }
                         }
                     }
+                    is Resource.Error -> {
+                        view?.showContent(true)
+                        errorHandler.dispatch(it.error)
+                    }
                 }
-                Status.ERROR -> {
-                    Timber.i("Loading recipients result: An exception occurred")
-                    view?.showContent(true)
-                    errorHandler.dispatch(it.error!!)
-                }
-            }
-        }.afterLoading {
-            view?.run { showProgress(false) }
-        }.launch()
+            }.onResourceNotLoading {
+                view?.run { showProgress(false) }
+            }.launch()
     }
 
     private fun sendMessage(subject: String, content: String, recipients: List<Recipient>) {
-        flowWithResource {
+        resourceFlow {
             val student = studentRepository.getCurrentStudent()
             messageRepository.sendMessage(student, subject, content, recipients)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> view?.run {
-                    Timber.i("Sending message started")
+        }.logResourceStatus("sending message").onEach {
+            when (it) {
+                is Resource.Loading -> view?.run {
                     showSoftInput(false)
                     showContent(false)
                     showProgress(true)
                     showActionBar(false)
                 }
-                Status.SUCCESS -> {
-                    Timber.i("Sending message result: Success")
+                is Resource.Success -> {
                     view?.clearDraft()
                     view?.run {
                         showMessage(messageSuccess)
@@ -184,14 +188,13 @@ class SendMessagePresenter @Inject constructor(
                     }
                     analytics.logEvent("send_message", "recipients" to recipients.size)
                 }
-                Status.ERROR -> {
-                    Timber.i("Sending message result: An exception occurred")
+                is Resource.Error -> {
                     view?.run {
                         showContent(true)
                         showProgress(false)
                         showActionBar(true)
                     }
-                    errorHandler.dispatch(it.error!!)
+                    errorHandler.dispatch(it.error)
                 }
             }
         }.launch("send")
@@ -259,7 +262,8 @@ class SendMessagePresenter @Inject constructor(
     }
 
     fun getRecipientsNames(): String {
-        return messageRepository.draftMessage?.recipients.orEmpty().joinToString { it.recipient.name }
+        return messageRepository.draftMessage?.recipients.orEmpty()
+            .joinToString { it.recipient.name }
     }
 
     fun clearDraft() {
@@ -267,6 +271,7 @@ class SendMessagePresenter @Inject constructor(
         Timber.i("Draft cleared!")
     }
 
-    fun getMessageBackupContent(recipients: String) = if (recipients.isEmpty()) view?.getMessageBackupDialogString()
+    fun getMessageBackupContent(recipients: String) =
+        if (recipients.isEmpty()) view?.getMessageBackupDialogString()
         else view?.getMessageBackupDialogStringWithRecipients(recipients)
 }

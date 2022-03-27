@@ -1,4 +1,4 @@
-package io.github.wulkanowy.utils
+package io.github.wulkanowy.data
 
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,7 +13,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class FlowUtilsKtTest {
+class ResourceTest {
 
     private val testScope = TestScope(UnconfinedTestDispatcher())
 
@@ -41,6 +41,7 @@ class FlowUtilsKtTest {
 
         // first
         networkBoundResource(
+            isResultEmpty = { false },
             showSavedOnLoading = false,
             query = { repo.query() },
             fetch = {
@@ -55,6 +56,7 @@ class FlowUtilsKtTest {
 
         // second
         networkBoundResource(
+            isResultEmpty = { false },
             showSavedOnLoading = false,
             query = { repo.query() },
             fetch = {
@@ -120,6 +122,7 @@ class FlowUtilsKtTest {
 
         // first
         networkBoundResource(
+            isResultEmpty = { false },
             mutex = saveResultMutex,
             showSavedOnLoading = false,
             query = { repo.query() },
@@ -138,6 +141,7 @@ class FlowUtilsKtTest {
 
         // second
         networkBoundResource(
+            isResultEmpty = { false },
             mutex = saveResultMutex,
             showSavedOnLoading = false,
             query = { repo.query() },

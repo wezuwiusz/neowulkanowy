@@ -1,12 +1,13 @@
 package io.github.wulkanowy.ui.modules.account
 
-import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.flowWithResource
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,20 +33,10 @@ class AccountPresenter @Inject constructor(
     }
 
     private fun loadData() {
-        flowWithResource { studentRepository.getSavedStudents(false) }
-            .onEach {
-                when (it.status) {
-                    Status.LOADING -> Timber.i("Loading account data started")
-                    Status.SUCCESS -> {
-                        Timber.i("Loading account result: Success")
-                        view?.updateData(createAccountItems(it.data!!))
-                    }
-                    Status.ERROR -> {
-                        Timber.i("Loading account result: An exception occurred")
-                        errorHandler.dispatch(it.error!!)
-                    }
-                }
-            }
+        resourceFlow { studentRepository.getSavedStudents(false) }
+            .logResourceStatus("load account data")
+            .onResourceSuccess { view?.updateData(createAccountItems(it)) }
+            .onResourceError(errorHandler::dispatch)
             .launch("load")
     }
 

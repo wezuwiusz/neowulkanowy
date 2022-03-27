@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.grade.summary
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -8,9 +8,6 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
 import io.github.wulkanowy.ui.modules.grade.GradeSubject
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResourceIn
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -37,56 +34,40 @@ class GradeSummaryPresenter @Inject constructor(
     }
 
     private fun loadData(semesterId: Int, forceRefresh: Boolean) {
-        Timber.i("Loading grade summary started")
-
-        flowWithResourceIn {
+        flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
             averageProvider.getGradesDetailsWithAverage(student, semesterId, forceRefresh)
-        }.onEach {
-            Timber.d("Loading grade summary status: ${it.status}, data: ${it.data != null}")
-            when (it.status) {
-                Status.LOADING -> {
-                    val items = createGradeSummaryItems(it.data.orEmpty())
-                    if (items.isNotEmpty()) {
-                        Timber.i("Loading grade summary result: load cached data")
-                        view?.run {
-                            enableSwipe(true)
-                            showRefresh(true)
-                            showProgress(false)
-                            showEmpty(false)
-                            showContent(true)
-                            updateData(items)
-                        }
-                    }
-                }
-                Status.SUCCESS -> {
-                    Timber.i("Loading grade summary result: Success")
-                    val items = createGradeSummaryItems(it.data!!)
-                    view?.run {
-                        showEmpty(items.isEmpty())
-                        showContent(items.isNotEmpty())
-                        showErrorView(false)
-                        updateData(items)
-                    }
-                    analytics.logEvent(
-                        "load_data",
-                        "type" to "grade_summary",
-                        "items" to it.data.size
-                    )
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading grade summary result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+        }
+            .logResourceStatus("load grade summary", showData = true)
+            .mapResourceData { createGradeSummaryItems(it) }
+            .onResourceData {
+                view?.run {
+                    enableSwipe(true)
+                    showProgress(false)
+                    showErrorView(false)
+                    showContent(it.isNotEmpty())
+                    showEmpty(it.isEmpty())
+                    updateData(it)
                 }
             }
-        }.afterLoading {
-            view?.run {
-                showRefresh(false)
-                showProgress(false)
-                enableSwipe(true)
-                notifyParentDataLoaded(semesterId)
+            .onResourceIntermediate { view?.showRefresh(true) }
+            .onResourceSuccess {
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "grade_summary",
+                    "items" to it.size
+                )
             }
-        }.launch()
+            .onResourceNotLoading {
+                view?.run {
+                    enableSwipe(true)
+                    showRefresh(false)
+                    showProgress(false)
+                    notifyParentDataLoaded(semesterId)
+                }
+            }
+            .onResourceError(errorHandler::dispatch)
+            .launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
@@ -153,9 +134,9 @@ class GradeSummaryPresenter @Inject constructor(
     private fun checkEmpty(gradeSummary: GradeSubject): Boolean {
         return gradeSummary.run {
             summary.finalGrade.isBlank()
-                && summary.predictedGrade.isBlank()
-                && average == .0
-                && points.isBlank()
+                    && summary.predictedGrade.isBlank()
+                    && average == .0
+                    && points.isBlank()
         }
     }
 }

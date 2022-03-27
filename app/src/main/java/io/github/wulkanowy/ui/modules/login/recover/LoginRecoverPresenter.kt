@@ -1,12 +1,12 @@
 package io.github.wulkanowy.ui.modules.login.recover
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.onResourceNotLoading
 import io.github.wulkanowy.data.repositories.RecoverRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -57,24 +57,28 @@ class LoginRecoverPresenter @Inject constructor(
 
         if (!validateInput(username, host)) return
 
-        flowWithResource { recoverRepository.getReCaptchaSiteKey(host, symbol.ifBlank { "Default" }) }.onEach {
-            when (it.status) {
-                Status.LOADING -> view?.run {
+        resourceFlow {
+            recoverRepository.getReCaptchaSiteKey(
+                host,
+                symbol.ifBlank { "Default" })
+        }.onEach {
+            when (it) {
+                is Resource.Loading -> view?.run {
                     hideSoftKeyboard()
                     showRecoverForm(false)
                     showProgress(true)
                     showErrorView(false)
                     showCaptcha(false)
                 }
-                Status.SUCCESS -> view?.run {
-                    loadReCaptcha(url = it.data!!.first, siteKey = it.data.second)
+                is Resource.Success -> view?.run {
+                    loadReCaptcha(url = it.data.first, siteKey = it.data.second)
                     showProgress(false)
                     showErrorView(false)
                     showCaptcha(true)
                 }
-                Status.ERROR -> {
+                is Resource.Error -> {
                     Timber.i("Obtain captcha site key result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+                    errorHandler.dispatch(it.error)
                 }
             }
         }.launch("captcha")
@@ -101,26 +105,43 @@ class LoginRecoverPresenter @Inject constructor(
         val host = view?.recoverHostValue.orEmpty()
         val symbol = view?.formHostSymbol.ifNullOrBlank { "Default" }
 
-        flowWithResource { recoverRepository.sendRecoverRequest(host, symbol, username, reCaptchaResponse) }.onEach {
-            when (it.status) {
-                Status.LOADING -> view?.run {
+        resourceFlow {
+            recoverRepository.sendRecoverRequest(
+                host,
+                symbol,
+                username,
+                reCaptchaResponse
+            )
+        }.onEach {
+            when (it) {
+                is Resource.Loading -> view?.run {
                     showProgress(true)
                     showRecoverForm(false)
                     showCaptcha(false)
                 }
-                Status.SUCCESS -> view?.run {
+                is Resource.Success -> view?.run {
                     showSuccessView(true)
-                    setSuccessTitle(it.data!!.substringBefore(". "))
+                    setSuccessTitle(it.data.substringBefore(". "))
                     setSuccessMessage(it.data.substringAfter(". "))
-                    analytics.logEvent("account_recover", "register" to host, "symbol" to symbol, "success" to true)
+                    analytics.logEvent(
+                        "account_recover",
+                        "register" to host,
+                        "symbol" to symbol,
+                        "success" to true
+                    )
                 }
-                Status.ERROR -> {
+                is Resource.Error -> {
                     Timber.i("Send recover request result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                    analytics.logEvent("account_recover", "register" to host, "symbol" to symbol, "success" to false)
+                    errorHandler.dispatch(it.error)
+                    analytics.logEvent(
+                        "account_recover",
+                        "register" to host,
+                        "symbol" to symbol,
+                        "success" to false
+                    )
                 }
             }
-        }.afterLoading {
+        }.onResourceNotLoading {
             view?.showProgress(false)
         }.launch("verified")
     }

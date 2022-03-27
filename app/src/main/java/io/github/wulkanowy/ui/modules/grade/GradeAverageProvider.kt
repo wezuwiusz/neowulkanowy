@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.grade
 
-import io.github.wulkanowy.data.Resource
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
@@ -13,12 +12,10 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.*
 import io.github.wulkanowy.utils.calcAverage
 import io.github.wulkanowy.utils.changeModifier
-import io.github.wulkanowy.utils.flowWithResourceIn
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
@@ -35,7 +32,7 @@ class GradeAverageProvider @Inject constructor(
     private val isOptionalArithmeticAverage get() = preferencesRepository.isOptionalArithmeticAverage
 
     fun getGradesDetailsWithAverage(student: Student, semesterId: Int, forceRefresh: Boolean) =
-        flowWithResourceIn {
+        flatResourceFlow {
             val semesters = semesterRepository.getSemesters(student)
 
             when (preferencesRepository.gradeAverageMode) {
@@ -81,17 +78,17 @@ class GradeAverageProvider @Inject constructor(
         val firstSemesterGradeSubjects = getGradeSubjects(student, firstSemester, forceRefresh)
 
         return selectedSemesterGradeSubjects.combine(firstSemesterGradeSubjects) { secondSemesterGradeSubject, firstSemesterGradeSubject ->
-            if (firstSemesterGradeSubject.status == Status.ERROR) {
+            if (firstSemesterGradeSubject.errorOrNull != null) {
                 return@combine firstSemesterGradeSubject
             }
 
             val isAnyVulcanAverageInFirstSemester =
-                firstSemesterGradeSubject.data.orEmpty().any { it.isVulcanAverage }
+                firstSemesterGradeSubject.dataOrNull.orEmpty().any { it.isVulcanAverage }
             val isAnyVulcanAverageInSecondSemester =
-                secondSemesterGradeSubject.data.orEmpty().any { it.isVulcanAverage }
+                secondSemesterGradeSubject.dataOrNull.orEmpty().any { it.isVulcanAverage }
 
-            val updatedData = secondSemesterGradeSubject.data?.map { secondSemesterSubject ->
-                val firstSemesterSubject = firstSemesterGradeSubject.data.orEmpty()
+            val updatedData = secondSemesterGradeSubject.dataOrNull?.map { secondSemesterSubject ->
+                val firstSemesterSubject = firstSemesterGradeSubject.dataOrNull.orEmpty()
                     .singleOrNull { it.subject == secondSemesterSubject.subject }
 
                 val updatedAverage = if (averageMode == ALL_YEAR) {
@@ -113,7 +110,7 @@ class GradeAverageProvider @Inject constructor(
                 }
                 secondSemesterSubject.copy(average = updatedAverage)
             }
-            secondSemesterGradeSubject.copy(data = updatedData)
+            secondSemesterGradeSubject.mapData { updatedData!! }
         }
     }
 
@@ -166,17 +163,17 @@ class GradeAverageProvider @Inject constructor(
         val isGradeAverageForceCalc = preferencesRepository.gradeAverageForceCalc
 
         return gradeRepository.getGrades(student, semester, forceRefresh = forceRefresh)
-            .map { res ->
-                val (details, summaries) = res.data ?: null to null
-                val isAnyAverage = summaries.orEmpty().any { it.average != .0 }
-                val allGrades = details.orEmpty().groupBy { it.subject }
+            .mapResourceData { res ->
+                val (details, summaries) = res
+                val isAnyAverage = summaries.any { it.average != .0 }
+                val allGrades = details.groupBy { it.subject }
 
-                val items = summaries?.emulateEmptySummaries(
+                val items = summaries.emulateEmptySummaries(
                     student = student,
                     semester = semester,
                     grades = allGrades.toList(),
                     calcAverage = isAnyAverage
-                )?.map { summary ->
+                ).map { summary ->
                     val grades = allGrades[summary.subject].orEmpty()
                     GradeSubject(
                         subject = summary.subject,
@@ -190,7 +187,7 @@ class GradeAverageProvider @Inject constructor(
                     )
                 }
 
-                Resource(res.status, items, res.error)
+                items
             }
     }
 

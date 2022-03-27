@@ -1,13 +1,11 @@
 package io.github.wulkanowy.ui.modules.about.contributor
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.pojos.Contributor
 import io.github.wulkanowy.data.repositories.AppCreatorRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.flowWithResource
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ContributorPresenter @Inject constructor(
@@ -31,15 +29,11 @@ class ContributorPresenter @Inject constructor(
     }
 
     private fun loadData() {
-        flowWithResource { appCreatorRepository.getAppCreators() }.onEach {
-            when (it.status) {
-                Status.LOADING -> view?.showProgress(true)
-                Status.SUCCESS -> view?.run {
-                    showProgress(false)
-                    updateData(it.data!!)
-                }
-                Status.ERROR -> errorHandler.dispatch(it.error!!)
-            }
-        }.launch()
+        resourceFlow { appCreatorRepository.getAppCreators() }
+            .onResourceLoading { view?.showProgress(true) }
+            .onResourceSuccess { view?.updateData(it) }
+            .onResourceNotLoading { view?.showProgress(false) }
+            .onResourceError { errorHandler.dispatch(it) }
+            .launch()
     }
 }

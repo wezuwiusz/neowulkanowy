@@ -12,6 +12,7 @@ import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.databinding.DialogGradeBinding
 import io.github.wulkanowy.utils.*
 
+
 class GradeDetailsDialog : DialogFragment() {
 
     private var binding: DialogGradeBinding by lifecycleAwareVariable()

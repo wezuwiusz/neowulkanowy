@@ -3,8 +3,8 @@ package io.github.wulkanowy.services.sync.works
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.ConferenceRepository
+import io.github.wulkanowy.data.waitForResult
 import io.github.wulkanowy.services.sync.notifications.NewConferenceNotification
-import io.github.wulkanowy.utils.waitForResult
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 

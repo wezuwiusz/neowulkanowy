@@ -1,21 +1,18 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.MobileDeviceDao
+import io.github.wulkanowy.data.errorOrNull
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Device
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.toFirstResult
-import io.mockk.MockKAnnotations
-import io.mockk.Runs
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
-import io.mockk.just
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -69,8 +66,8 @@ class MobileDeviceRepositoryTest {
         val res = runBlocking { mobileDeviceRepository.getDevices(student, semester, true).toFirstResult() }
 
         // verify
-        Assert.assertEquals(null, res.error)
-        Assert.assertEquals(2, res.data?.size)
+        Assert.assertEquals(null, res.errorOrNull)
+        Assert.assertEquals(2, res.dataOrNull?.size)
         coVerify { sdk.getRegisteredDevices() }
         coVerify { mobileDeviceDb.loadAll(1) }
         coVerify { mobileDeviceDb.insertAll(match { it.isEmpty() }) }
@@ -93,8 +90,8 @@ class MobileDeviceRepositoryTest {
         val res = runBlocking { mobileDeviceRepository.getDevices(student, semester, true).toFirstResult() }
 
         // verify
-        Assert.assertEquals(null, res.error)
-        Assert.assertEquals(2, res.data?.size)
+        Assert.assertEquals(null, res.errorOrNull)
+        Assert.assertEquals(2, res.dataOrNull?.size)
         coVerify { sdk.getRegisteredDevices() }
         coVerify { mobileDeviceDb.loadAll(1) }
         coVerify {
@@ -121,8 +118,8 @@ class MobileDeviceRepositoryTest {
         val res = runBlocking { mobileDeviceRepository.getDevices(student, semester, true).toFirstResult() }
 
         // verify
-        Assert.assertEquals(null, res.error)
-        Assert.assertEquals(1, res.data?.size)
+        Assert.assertEquals(null, res.errorOrNull)
+        Assert.assertEquals(1, res.dataOrNull?.size)
         coVerify { sdk.getRegisteredDevices() }
         coVerify { mobileDeviceDb.loadAll(1) }
         coVerify { mobileDeviceDb.insertAll(match { it.isEmpty() }) }

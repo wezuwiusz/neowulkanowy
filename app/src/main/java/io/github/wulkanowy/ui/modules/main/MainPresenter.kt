@@ -1,9 +1,12 @@
 package io.github.wulkanowy.ui.modules.main
 
-import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.BaseView
@@ -16,8 +19,6 @@ import io.github.wulkanowy.ui.modules.message.MessageView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.flowWithResource
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import java.time.Duration
 import java.time.Instant
@@ -75,20 +76,14 @@ class MainPresenter @Inject constructor(
             return
         }
 
-        flowWithResource { studentRepository.getSavedStudents(false) }
-            .onEach { resource ->
-                when (resource.status) {
-                    Status.LOADING -> Timber.i("Loading student avatar data started")
-                    Status.SUCCESS -> {
-                        studentsWitSemesters = resource.data
-                        showCurrentStudentAvatar()
-                    }
-                    Status.ERROR -> {
-                        Timber.i("Loading student avatar result: An exception occurred")
-                        errorHandler.dispatch(resource.error!!)
-                    }
-                }
-            }.launch("avatar")
+        resourceFlow { studentRepository.getSavedStudents(false) }
+            .logResourceStatus("load student avatar")
+            .onResourceSuccess {
+                studentsWitSemesters = it
+                showCurrentStudentAvatar()
+            }
+            .onResourceError(errorHandler::dispatch)
+            .launch("avatar")
     }
 
     fun onViewChange(destinationView: BaseView) {

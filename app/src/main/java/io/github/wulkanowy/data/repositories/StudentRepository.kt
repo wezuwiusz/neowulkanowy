@@ -73,6 +73,15 @@ class StudentRepository @Inject constructor(
                 }
             }
 
+    suspend fun getSavedStudentById(id: Long, decryptPass: Boolean = true) =
+        studentDb.loadStudentWithSemestersById(id)?.apply {
+            if (decryptPass && Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.API) {
+                student.password = withContext(dispatchers.io) {
+                    decrypt(student.password)
+                }
+            }
+        }
+
     suspend fun getStudentById(id: Long, decryptPass: Boolean = true): Student {
         val student = studentDb.loadById(id) ?: throw NoCurrentStudentException()
 

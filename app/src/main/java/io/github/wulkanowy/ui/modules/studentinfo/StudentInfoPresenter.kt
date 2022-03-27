@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.studentinfo
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.StudentInfo
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.repositories.StudentInfoRepository
@@ -8,10 +8,7 @@ import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.getCurrentOrLast
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -72,51 +69,50 @@ class StudentInfoPresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
-        flowWithResourceIn {
+        flatResourceFlow {
             val semester = studentWithSemesters.semesters.getCurrentOrLast()
             studentInfoRepository.getStudentInfo(
                 student = studentWithSemesters.student,
                 semester = semester,
                 forceRefresh = forceRefresh
             )
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Loading student info $infoType started")
-                Status.SUCCESS -> {
-                    val isFamily = infoType == StudentInfoView.Type.FAMILY
-                    val isFirstGuardianEmpty = it.data?.firstGuardian == null
-                    val isSecondGuardianEmpty = it.data?.secondGuardian == null
-
-                    if (it.data != null && !(isFamily && isFirstGuardianEmpty && isSecondGuardianEmpty)) {
-                        Timber.i("Loading student info $infoType result: Success")
-                        showCorrectData(it.data)
-                        view?.run {
-                            showContent(true)
-                            showEmpty(false)
-                            showErrorView(false)
-                        }
-                        analytics.logEvent("load_item", "type" to "student_info")
-                    } else {
-                        Timber.i("Loading student info $infoType result: No student or family info found")
-                        view?.run {
-                            showContent(!isViewEmpty)
-                            showEmpty(isViewEmpty)
-                            showErrorView(false)
-                        }
+        }
+            .logResourceStatus("load student info $infoType")
+            .onResourceData {
+                val isFamily = infoType == StudentInfoView.Type.FAMILY
+                val isFirstGuardianEmpty = it?.firstGuardian == null
+                val isSecondGuardianEmpty = it?.secondGuardian == null
+                if (it != null && !(isFamily && isFirstGuardianEmpty && isSecondGuardianEmpty)) {
+                    Timber.i("Loading student info $infoType result: Success")
+                    showCorrectData(it)
+                    view?.run {
+                        showContent(true)
+                        showEmpty(false)
+                        showErrorView(false)
+                    }
+                } else {
+                    Timber.i("Loading student info $infoType result: No student or family info found")
+                    view?.run {
+                        showContent(!isViewEmpty)
+                        showEmpty(isViewEmpty)
+                        showErrorView(false)
                     }
                 }
-                Status.ERROR -> {
-                    Timber.i("Loading student info $infoType result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+            }
+            .onResourceSuccess {
+                if (it != null) {
+                    analytics.logEvent("load_item", "type" to "student_info")
                 }
             }
-        }.afterLoading {
-            view?.run {
-                hideRefresh()
-                showProgress(false)
-                enableSwipe(true)
+            .onResourceNotLoading {
+                view?.run {
+                    hideRefresh()
+                    showProgress(false)
+                    enableSwipe(true)
+                }
             }
-        }.launch()
+            .onResourceError(errorHandler::dispatch)
+            .launch()
     }
 
     private fun showCorrectData(studentInfo: StudentInfo) {

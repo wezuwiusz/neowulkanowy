@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.db.dao.TimetableDao
 import io.github.wulkanowy.data.db.dao.TimetableHeaderDao
 import io.github.wulkanowy.data.db.entities.*
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.data.pojos.TimetableFull
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
@@ -30,6 +31,10 @@ class TimetableRepository @Inject constructor(
 
     private val cacheKey = "timetable"
 
+    enum class TimetableType {
+        NORMAL, ADDITIONAL
+    }
+
     fun getTimetable(
         student: Student,
         semester: Semester,
@@ -37,9 +42,16 @@ class TimetableRepository @Inject constructor(
         end: LocalDate,
         forceRefresh: Boolean,
         refreshAdditional: Boolean = false,
-        notify: Boolean = false
+        notify: Boolean = false,
+        timetableType: TimetableType = TimetableType.NORMAL
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
+        isResultEmpty = {
+            when (timetableType) {
+                TimetableType.NORMAL -> it.lessons.isEmpty()
+                TimetableType.ADDITIONAL -> it.additional.isEmpty()
+            }
+        },
         shouldFetch = { (timetable, additional, headers) ->
             val refreshKey = getRefreshKey(cacheKey, semester, start, end)
             val isExpired = refreshHelper.shouldBeRefreshed(refreshKey)

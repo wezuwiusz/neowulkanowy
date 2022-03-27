@@ -10,19 +10,18 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.onResourceError
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.services.sync.channels.UpcomingLessonsChannel.Companion.CHANNEL_ID
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.PendingIntentCompat
-import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.getCompatColor
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -59,7 +58,7 @@ class TimetableNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Timber.d("Receiving intent... ${intent.toUri(0)}")
 
-        flowWithResource {
+        resourceFlow {
             val showStudentName = !studentRepository.isOneUniqueStudent()
             val student = studentRepository.getCurrentStudent(false)
             val studentId = intent.getIntExtra(STUDENT_ID, 0)
@@ -69,9 +68,9 @@ class TimetableNotificationReceiver : BroadcastReceiver() {
             } else {
                 Timber.d("Notification studentId($studentId) differs from current(${student.studentId})")
             }
-        }.onEach {
-            if (it.status == Status.ERROR) Timber.e(it.error!!)
-        }.launchIn(GlobalScope)
+        }
+            .onResourceError { Timber.e(it) }
+            .launchIn(GlobalScope)
     }
 
     private fun prepareNotification(context: Context, intent: Intent, showStudentName: Boolean) {
