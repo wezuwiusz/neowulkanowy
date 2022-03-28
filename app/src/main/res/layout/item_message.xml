@@ -5,22 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
-    android:paddingLeft="16dp"
     android:paddingTop="10dp"
-    android:paddingRight="16dp"
+    android:paddingEnd="16dp"
     android:paddingBottom="10dp"
     tools:context=".ui.modules.message.tab.MessageTabAdapter">
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/messageItemCheckbox"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:text="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/messageItemAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="10dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/messageItemDate"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/messageItemCheckbox"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/lorem/random" />
 
@@ -45,6 +57,7 @@
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@id/messageItemAttachmentIcon"
+        app:layout_constraintStart_toEndOf="@id/messageItemCheckbox"
         app:layout_constraintStart_toStartOf="@id/messageItemAuthor"
         app:layout_constraintTop_toBottomOf="@+id/messageItemAuthor"
         app:layout_goneMarginEnd="0dp"

@@ -3,12 +3,13 @@ package io.github.wulkanowy.ui.modules.message.tab
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import android.view.View.GONE
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.CompoundButton
+import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -20,7 +21,9 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
+import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.hideSoftInput
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,9 +34,10 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
     lateinit var presenter: MessageTabPresenter
 
     @Inject
-    lateinit var tabAdapter: MessageTabAdapter
+    lateinit var messageTabAdapter: MessageTabAdapter
 
     companion object {
+
         const val MESSAGE_TAB_FOLDER_ID = "message_tab_folder_id"
 
         fun newInstance(folder: MessageFolder): MessageTabFragment {
@@ -46,11 +50,38 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
     }
 
     override val isViewEmpty
-        get() = tabAdapter.itemCount == 0
+        get() = messageTabAdapter.itemCount == 0
 
-    override var onlyUnread: Boolean? = false
+    private var actionMode: ActionMode? = null
 
-    override var onlyWithAttachments = false
+    private val actionModeCallback = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            val inflater = mode.menuInflater
+            inflater.inflate(R.menu.context_menu_message_tab, menu)
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+            if (presenter.folder == MessageFolder.TRASHED) {
+                val menuItem = menu.findItem(R.id.messageTabContextMenuDelete)
+                menuItem.setTitle(R.string.message_delete_forever)
+            }
+            return presenter.onPrepareActionMode()
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode) {
+            presenter.onDestroyActionMode()
+            actionMode = null
+        }
+
+        override fun onActionItemClicked(mode: ActionMode, menu: MenuItem): Boolean {
+            when (menu.itemId) {
+                R.id.messageTabContextMenuDelete -> presenter.onActionModeSelectDelete()
+                R.id.messageTabContextMenuSelectAll -> presenter.onActionModeSelectCheckAll()
+            }
+            return true
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,24 +100,25 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
     }
 
     override fun initView() {
-        with(tabAdapter) {
+        with(messageTabAdapter) {
             onItemClickListener = presenter::onMessageItemSelected
+            onLongItemClickListener = presenter::onMessageItemLongSelected
             onHeaderClickListener = ::onChipChecked
             onChangesDetectedListener = ::resetListPosition
         }
 
         with(binding.messageTabRecycler) {
             layoutManager = LinearLayoutManager(context)
-            adapter = tabAdapter
+            adapter = messageTabAdapter
             addItemDecoration(DividerItemDecoration(context, false))
+            itemAnimator = null
         }
+
         with(binding) {
             messageTabSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             messageTabSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
             messageTabSwipe.setProgressBackgroundColorSchemeColor(
-                requireContext().getThemeAttrColor(
-                    R.attr.colorSwipeRefresh
-                )
+                requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh)
             )
             messageTabErrorRetry.setOnClickListener { presenter.onRetry() }
             messageTabErrorDetails.setOnClickListener { presenter.onDetailsClick() }
@@ -109,9 +141,28 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         })
     }
 
-    override fun updateData(data: List<MessageTabDataItem>, hide: Boolean) {
-        if (hide) onlyUnread = null
-        tabAdapter.setDataItems(data, onlyUnread, onlyWithAttachments)
+    override fun updateData(data: List<MessageTabDataItem>) {
+        messageTabAdapter.submitData(data)
+    }
+
+    override fun updateActionModeTitle(selectedMessagesSize: Int) {
+        actionMode?.title = resources.getQuantityString(
+            R.plurals.message_selected_messages_count,
+            selectedMessagesSize,
+            selectedMessagesSize
+        )
+    }
+
+    override fun updateSelectAllMenu(isAllSelected: Boolean) {
+        val menuItem = actionMode?.menu?.findItem(R.id.messageTabContextMenuSelectAll) ?: return
+
+        if (isAllSelected) {
+            menuItem.setTitle(R.string.message_unselect_all)
+            menuItem.setIcon(R.drawable.ic_message_unselect_all)
+        } else {
+            menuItem.setTitle(R.string.message_select_all)
+            menuItem.setIcon(R.drawable.ic_message_select_all)
+        }
     }
 
     override fun showProgress(show: Boolean) {
@@ -146,6 +197,14 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         binding.messageTabSwipe.isRefreshing = show
     }
 
+    override fun showMessagesDeleted() {
+        showMessage(getString(R.string.message_messages_deleted))
+    }
+
+    override fun notifyParentShowNewMessage(show: Boolean) {
+        (parentFragment as? MessageFragment)?.onChildFragmentShowNewMessage(show)
+    }
+
     override fun openMessage(message: Message) {
         (activity as? MainActivity)?.pushView(MessagePreviewFragment.newInstance(message))
     }
@@ -154,12 +213,16 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         (parentFragment as? MessageFragment)?.onChildFragmentLoaded()
     }
 
-    fun onParentLoadData(
-        forceRefresh: Boolean,
-        onlyUnread: Boolean? = this.onlyUnread,
-        onlyWithAttachments: Boolean = this.onlyWithAttachments
-    ) {
-        presenter.onParentViewLoadData(forceRefresh, onlyUnread, onlyWithAttachments)
+    override fun notifyParentShowActionMode(show: Boolean) {
+        (parentFragment as? MessageFragment)?.onChildFragmentShowActionMode(show)
+    }
+
+    fun onParentLoadData(forceRefresh: Boolean) {
+        presenter.onParentViewLoadData(forceRefresh)
+    }
+
+    fun onParentFinishActionMode() {
+        presenter.onParentFinishActionMode()
     }
 
     private fun onChipChecked(chip: CompoundButton, isChecked: Boolean) {
@@ -169,8 +232,22 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         }
     }
 
-    fun onParentDeleteMessage() {
-        presenter.onDeleteMessage()
+    override fun showActionMode(show: Boolean) {
+        if (show) {
+            actionMode = (activity as MainActivity?)?.startSupportActionMode(actionModeCallback)
+        } else {
+            actionMode?.finish()
+        }
+    }
+
+    override fun showRecyclerBottomPadding(show: Boolean) {
+        binding.messageTabRecycler.updatePadding(
+            bottom = if (show) requireContext().dpToPx(64f).toInt() else 0
+        )
+    }
+
+    override fun hideKeyboard() {
+        activity?.hideSoftInput()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

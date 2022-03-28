@@ -103,7 +103,7 @@ class MessageRepository @Inject constructor(
         message: Message,
         markAsRead: Boolean = false,
     ): Flow<Resource<MessageWithAttachment?>> = networkBoundResource(
-        isResultEmpty = { it == null },
+        isResultEmpty = { it?.message?.content.isNullOrBlank() },
         shouldFetch = {
             checkNotNull(it) { "This message no longer exist!" }
             Timber.d("Message content in db empty: ${it.message.content.isEmpty()}")
@@ -151,19 +151,26 @@ class MessageRepository @Inject constructor(
         recipients = recipients.mapFromEntities()
     )
 
-    suspend fun deleteMessage(student: Student, message: Message) {
-        val isDeleted = sdk.init(student).deleteMessages(
-            messages = listOf(message.messageId), message.folderId
-        )
+    suspend fun deleteMessages(student: Student, messages: List<Message>) {
+        val folderId = messages.first().folderId
+        val isDeleted = sdk.init(student)
+            .deleteMessages(messages = messages.map { it.messageId }, folderId = folderId)
 
-        if (message.folderId != MessageFolder.TRASHED.id && isDeleted) {
-            val deletedMessage = message.copy(folderId = MessageFolder.TRASHED.id).apply {
-                id = message.id
-                content = message.content
+        if (folderId != MessageFolder.TRASHED.id && isDeleted) {
+            val deletedMessages = messages.map {
+                it.copy(folderId = MessageFolder.TRASHED.id)
+                    .apply {
+                        id = it.id
+                        content = it.content
+                    }
             }
-            messagesDb.updateAll(listOf(deletedMessage))
-        } else messagesDb.deleteAll(listOf(message))
+
+            messagesDb.updateAll(deletedMessages)
+        } else messagesDb.deleteAll(messages)
     }
+
+    suspend fun deleteMessage(student: Student, message: Message) =
+        deleteMessages(student, listOf(message))
 
     var draftMessage: MessageDraft?
         get() = sharedPrefProvider.getString(context.getString(R.string.pref_key_message_send_draft))

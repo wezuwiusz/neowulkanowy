@@ -89,6 +89,11 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more), 
         if (::presenter.isInitialized) presenter.onViewReselected()
     }
 
+    override fun onFragmentChanged() {
+        (parentFragmentManager.fragments.find { it is MessageFragment } as MessageFragment?)
+            ?.onFragmentChanged()
+    }
+
     override fun updateData(data: List<Pair<String, Drawable?>>) {
         with(moreAdapter) {
             items = data

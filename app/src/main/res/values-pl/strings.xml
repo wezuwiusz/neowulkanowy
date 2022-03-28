@@ -287,7 +287,7 @@
     <string name="message_reply">Odpowiedz</string>
     <string name="message_forward">Prześlij dalej</string>
     <string name="message_delete">Usuń</string>
-    <string name="message_move_to_bin">Przenieś do kosza</string>
+    <string name="message_move_to_trash">Przenieś do kosza</string>
     <string name="message_delete_forever">Usuń trwale</string>
     <string name="message_delete_success">Wiadomość usunięta pomyślnie</string>
     <string name="message_share">Udostępnij</string>

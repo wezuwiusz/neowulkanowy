@@ -287,7 +287,7 @@
     <string name="message_reply">Ответ</string>
     <string name="message_forward">Переслать</string>
     <string name="message_delete">Удалить</string>
-    <string name="message_move_to_bin">Перенести в корзину</string>
+    <string name="message_move_to_trash">Перенести в корзину</string>
     <string name="message_delete_forever">Удалить навсегда</string>
     <string name="message_delete_success">Сообщение успешно удалено</string>
     <string name="message_share">Поделиться</string>

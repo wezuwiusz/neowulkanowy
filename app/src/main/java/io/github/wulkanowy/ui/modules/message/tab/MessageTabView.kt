@@ -7,15 +7,15 @@ interface MessageTabView : BaseView {
 
     val isViewEmpty: Boolean
 
-    var onlyUnread: Boolean?
-
-    var onlyWithAttachments: Boolean
-
     fun initView()
 
     fun resetListPosition()
 
-    fun updateData(data: List<MessageTabDataItem>, hide: Boolean)
+    fun updateData(data: List<MessageTabDataItem>)
+
+    fun updateActionModeTitle(selectedMessagesSize: Int)
+
+    fun updateSelectAllMenu(isAllSelected: Boolean)
 
     fun showProgress(show: Boolean)
 
@@ -25,7 +25,11 @@ interface MessageTabView : BaseView {
 
     fun showEmpty(show: Boolean)
 
+    fun showMessagesDeleted()
+
     fun showErrorView(show: Boolean)
+
+    fun notifyParentShowNewMessage(show: Boolean)
 
     fun setErrorDetails(message: String)
 
@@ -34,4 +38,12 @@ interface MessageTabView : BaseView {
     fun openMessage(message: Message)
 
     fun notifyParentDataLoaded()
+
+    fun notifyParentShowActionMode(show: Boolean)
+
+    fun hideKeyboard()
+
+    fun showActionMode(show: Boolean)
+
+    fun showRecyclerBottomPadding(show: Boolean)
 }

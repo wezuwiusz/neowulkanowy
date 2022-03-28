@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/messageTabContextMenuDelete"
+        android:icon="@drawable/ic_menu_message_delete"
+        android:orderInCategory="1"
+        android:title="@string/message_move_to_trash"
+        app:iconTint="@color/material_on_surface_emphasis_medium"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/messageTabContextMenuSelectAll"
+        android:icon="@drawable/ic_message_select_all"
+        android:orderInCategory="2"
+        android:title="@string/message_select_all"
+        app:iconTint="@color/material_on_surface_emphasis_medium"
+        app:showAsAction="ifRoom" />
+</menu>

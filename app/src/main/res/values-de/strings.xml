@@ -253,7 +253,7 @@
     <string name="message_reply">Antwort</string>
     <string name="message_forward">Weiterleiten</string>
     <string name="message_delete">Löschen</string>
-    <string name="message_move_to_bin">In den Korb wandern</string>
+    <string name="message_move_to_trash">In den Korb wandern</string>
     <string name="message_delete_forever">Dauerhaft löschen</string>
     <string name="message_delete_success">Nachricht erfolgreich gelöscht</string>
     <string name="message_share">Teilen</string>

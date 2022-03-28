@@ -287,7 +287,7 @@
     <string name="message_reply">Odpověď</string>
     <string name="message_forward">Poslat dále</string>
     <string name="message_delete">Odstranit</string>
-    <string name="message_move_to_bin">Přesunout do koše</string>
+    <string name="message_move_to_trash">Přesunout do koše</string>
     <string name="message_delete_forever">Odstranit natrvalo</string>
     <string name="message_delete_success">Zpráva byla úspěšně odstraněna</string>
     <string name="message_share">Sdílet</string>
