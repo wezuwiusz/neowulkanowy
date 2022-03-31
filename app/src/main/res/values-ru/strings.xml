@@ -105,7 +105,9 @@
     <string name="grade_statistics_semester">За семестр</string>
     <string name="grade_statistics_points">Баллы</string>
     <string name="grade_statistics_legend">Легенда</string>
-    <string name="grade_statistics_class_average">Средняя: %1$s</string>
+    <string name="grade_statistics_class_average">Средняя класса: %1$s</string>
+    <string name="grade_statistics_student_average">Ваша средний: %1$s</string>
+    <string name="grade_statistics_student_grade">Ваша оценка: %1$s</string>
     <string name="grade_statistics_average_class">Класс</string>
     <string name="grade_statistics_average_student">Студент</string>
     <plurals name="grade_number_item">
@@ -283,10 +285,11 @@
     <string name="message_no_items">Нет сообщений</string>
     <string name="message_from">От:</string>
     <string name="message_to">Кому:</string>
-    <string name="message_date">Дата: %s</string>
+    <string name="message_date">Дата: %1$s</string>
     <string name="message_reply">Ответ</string>
     <string name="message_forward">Переслать</string>
-    <string name="message_delete">Удалить</string>
+    <string name="message_select_all">Выбрать всё</string>
+    <string name="message_unselect_all">Снять выбор</string>
     <string name="message_move_to_trash">Перенести в корзину</string>
     <string name="message_delete_forever">Удалить навсегда</string>
     <string name="message_delete_success">Сообщение успешно удалено</string>
@@ -303,10 +306,10 @@
     <string name="message_read">Чтение: %s</string>
     <string name="message_read_by">Прочитано: %1$d из %2$d человек</string>
     <plurals name="message_number_item">
-        <item quantity="one">%d сообщение</item>
-        <item quantity="few">%d сообщения</item>
-        <item quantity="many">%d сообщений</item>
-        <item quantity="other">%d сообщений</item>
+        <item quantity="one">%1$d сообщение</item>
+        <item quantity="few">%1$d сообщений</item>
+        <item quantity="many">%1$d сообщений</item>
+        <item quantity="other">%1$d сообщений</item>
     </plurals>
     <plurals name="message_new_items">
         <item quantity="one">Новое сообщение</item>
@@ -322,6 +325,13 @@
         <item quantity="many">Вы получили %1$d новых сообщений</item>
         <item quantity="other">Вы получили %1$d новых сообщений</item>
     </plurals>
+    <plurals name="message_selected_messages_count">
+        <item quantity="one">%1$d выбрано</item>
+        <item quantity="few">%1$d выбрано</item>
+        <item quantity="many">%1$d выбрано</item>
+        <item quantity="other">%1$d выбрано</item>
+    </plurals>
+    <string name="message_messages_deleted">Сообщение удалено</string>
     <!--Note-->
     <string name="note_no_items">Нет информации о заметках</string>
     <string name="note_points">Баллы</string>
@@ -383,8 +393,8 @@
     </plurals>
     <!--Homework-->
     <string name="homework_no_items">Нет домашних заданий</string>
-    <string name="homework_mark_as_done">Отметить как выполненное</string>
-    <string name="homework_mark_as_undone">Отметить как невыполненное</string>
+    <string name="homework_mark_as_done">Завершено</string>
+    <string name="homework_mark_as_undone">Не завершено</string>
     <string name="homework_add">Добавить домашнюю работу</string>
     <string name="homework_add_success">Домашняя работа успешно добавлена</string>
     <string name="homework_delete_success">Домашняя работа успешно удалена</string>
@@ -647,6 +657,7 @@
     <string name="all_copied">Скопировано</string>
     <string name="all_undo">Отменить</string>
     <string name="all_change">Изменить</string>
+    <string name="all_add_to_calendar">Добавить в календарь</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Нет уроков</string>
     <string name="widget_timetable_theme_title">Выбрать тему</string>

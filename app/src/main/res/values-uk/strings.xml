@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Неправильний симбвол</string>
     <string name="login_incorrect_symbol">Студента не знайдено Перевірте символ та обраний варіант реєстру UONET+</string>
     <string name="login_duplicate_student">Даного учня вже авторизовано</string>
-    <string name="login_symbol_helper">Символ можна знайти на сторінці реєстру в &#160; <b> Учень </b> → &#160; <b> Мобільний доступ </b> → &#160; <b> Додайте мобільне приладдя </b>.\n\nПереконайтесь, що ви встановили відповідний варіант реєстру в полі <b> UONET + варіант реєстрації </b> на попередньому екрані. На даний момент Wulkanowy не виявляє учнів дошкільних закладів</string>
+    <string name="login_symbol_helper">Символ можна знайти на сторінці реєстрації в &#160; <b> Учень </b> → &#160; <b> Мобільний доступ </b> → &#160; <b> Додайте мобільне приладдя </b>.\n\nПереконайтесь, що ви встановили відповідний варіант реєстру в полі <b> UONET + варіант реєстрації </b> на попередньому екрані. На даний момент Wulkanowy не виявляє учнів дошкільних закладів</string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_advanced_warning_mobile_api">У цьому режимі не працюють: щасливий номер, статистика класу по оцінкам, статистика відвідуваності і уроків, інформація про школу і список зареєстрованних пристроїв</string>
@@ -105,7 +105,9 @@
     <string name="grade_statistics_semester">Семестрові</string>
     <string name="grade_statistics_points">Бали</string>
     <string name="grade_statistics_legend">Умовні позначення</string>
-    <string name="grade_statistics_class_average">Середня оцінка: %1$s</string>
+    <string name="grade_statistics_class_average">Середня классу: %1$s</string>
+    <string name="grade_statistics_student_average">Ваша середня: %1$s</string>
+    <string name="grade_statistics_student_grade">Ваша оцінка: %1$s</string>
     <string name="grade_statistics_average_class">Клас</string>
     <string name="grade_statistics_average_student">Учень</string>
     <plurals name="grade_number_item">
@@ -283,11 +285,12 @@
     <string name="message_no_items">Нема повідомлень</string>
     <string name="message_from">Від:</string>
     <string name="message_to">Кому:</string>
-    <string name="message_date">Дата: %s</string>
+    <string name="message_date">Дата: %1$s</string>
     <string name="message_reply">Відповісти</string>
     <string name="message_forward">Переслати</string>
-    <string name="message_delete">Видалити</string>
-    <string name="message_move_to_trash">Перемістити у кошик</string>
+    <string name="message_select_all">Вибрати все</string>
+    <string name="message_unselect_all">Відмінити вибір</string>
+    <string name="message_move_to_trash">Перемістити до кошика</string>
     <string name="message_delete_forever">Видалити назавжди</string>
     <string name="message_delete_success">Повідомлення було успішно видалено</string>
     <string name="message_share">Поділіться</string>
@@ -303,10 +306,10 @@
     <string name="message_read">Читання: %s</string>
     <string name="message_read_by">Прочитанно:%1$d через %2$d людей</string>
     <plurals name="message_number_item">
-        <item quantity="one">%d повідомлення</item>
-        <item quantity="few">%d повідомлення</item>
-        <item quantity="many">%d повідомлень</item>
-        <item quantity="other">%d повідомлень</item>
+        <item quantity="one">%1$d повідомлення</item>
+        <item quantity="few">%1$d повідомлень</item>
+        <item quantity="many">%1$d повідомлень</item>
+        <item quantity="other">%1$d повідомлень</item>
     </plurals>
     <plurals name="message_new_items">
         <item quantity="one">Нове повідомлення</item>
@@ -322,6 +325,13 @@
         <item quantity="many">Ви отримали %1$d нових повідомлень</item>
         <item quantity="other">Ви отримали %1$d нових повідомлень</item>
     </plurals>
+    <plurals name="message_selected_messages_count">
+        <item quantity="one">%1$d вибрано</item>
+        <item quantity="few">вибрано %1$d</item>
+        <item quantity="many">вибрано %1$d</item>
+        <item quantity="other">%1$d вибрано</item>
+    </plurals>
+    <string name="message_messages_deleted">Повідомлення видалені</string>
     <!--Note-->
     <string name="note_no_items">Брак інформації о зауваженнях</string>
     <string name="note_points">Бали</string>
@@ -647,6 +657,7 @@
     <string name="all_copied">Скопійовано</string>
     <string name="all_undo">Відмінити</string>
     <string name="all_change">Змінити</string>
+    <string name="all_add_to_calendar">Додати у календар</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Брак уроків</string>
     <string name="widget_timetable_theme_title">Увібрати тему</string>

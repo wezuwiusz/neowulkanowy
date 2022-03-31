@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Ungültige symbol</string>
     <string name="login_incorrect_symbol">Schüler nicht gefunden. Überprüfen Sie das Symbol und die gewählte Variation des UONET+ Registers</string>
     <string name="login_duplicate_student">Ausgewählter Student ist bereits angemeldet.</string>
-    <string name="login_symbol_helper">Das Symbol kann auf der Registerseite in&#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>gefunden werden.\n\nStellen Sie sicher, dass Sie die entsprechende Registervariante im Feld <b>UONET+ Registervariante</b> auf dem vorherigen Bildschirm festgelegt haben. Wulkanowy erkennt zur Zeit keine Vorschulstudenten</string>
+    <string name="login_symbol_helper">Das Symbol kann auf der Registerseite in&#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>gefunden werden.\n\nStellen Sie sicher, dass Sie die entsprechende Registervariante im Feld <b>UONET+ Registervariante</b> auf dem vorherigen Bildschirm festgelegt haben</string>
     <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen</string>
     <string name="login_advanced">Andere Optionen</string>
     <string name="login_advanced_warning_mobile_api">In diesem Modus funktioniert eine Glücknummer, eine Klassenstatistik, eine Zusammenfassung der Anwesenheit, eine Entschuldigung für die Abwesenheit, abgeschlossene Lektionen, Schulinformationen und eine Vorschau der Liste der registrierten Geräte nicht</string>
@@ -105,7 +105,9 @@
     <string name="grade_statistics_semester">Semester</string>
     <string name="grade_statistics_points">Punkte</string>
     <string name="grade_statistics_legend">Legende</string>
-    <string name="grade_statistics_class_average">Durchschnitt: %1$s</string>
+    <string name="grade_statistics_class_average">Klassendurchschnitt: %1$s</string>
+    <string name="grade_statistics_student_average">Dein Durchschnitt: %1$s</string>
+    <string name="grade_statistics_student_grade">Deine Note: %1$s</string>
     <string name="grade_statistics_average_class">Klasse</string>
     <string name="grade_statistics_average_student">Schüler</string>
     <plurals name="grade_number_item">
@@ -249,11 +251,12 @@
     <string name="message_no_items">Keine Nachrichten</string>
     <string name="message_from">Von:</string>
     <string name="message_to">An:</string>
-    <string name="message_date">Datum: %s</string>
+    <string name="message_date">Datum: %1$s</string>
     <string name="message_reply">Antwort</string>
     <string name="message_forward">Weiterleiten</string>
-    <string name="message_delete">Löschen</string>
-    <string name="message_move_to_trash">In den Korb wandern</string>
+    <string name="message_select_all">Alle auswählen</string>
+    <string name="message_unselect_all">Alle abwählen</string>
+    <string name="message_move_to_trash">In Papierkorb verschieben</string>
     <string name="message_delete_forever">Dauerhaft löschen</string>
     <string name="message_delete_success">Nachricht erfolgreich gelöscht</string>
     <string name="message_share">Teilen</string>
@@ -269,8 +272,8 @@
     <string name="message_read">Lesen: %s</string>
     <string name="message_read_by">Lesen von: %1$d von %2$d Personen</string>
     <plurals name="message_number_item">
-        <item quantity="one">%d nachricht</item>
-        <item quantity="other">%d nachrichten</item>
+        <item quantity="one">%1$d Nachricht</item>
+        <item quantity="other">%1$d Nachrichten</item>
     </plurals>
     <plurals name="message_new_items">
         <item quantity="one">Neu nachricht</item>
@@ -282,6 +285,11 @@
         <item quantity="one">Du hast %1$d nachricht bekommen</item>
         <item quantity="other">Du hast %1$d nachrichten bekommen</item>
     </plurals>
+    <plurals name="message_selected_messages_count">
+        <item quantity="one">%1$d ausgewählt</item>
+        <item quantity="other">%1$d ausgewählt</item>
+    </plurals>
+    <string name="message_messages_deleted">Nachrichten gelöscht</string>
     <!--Note-->
     <string name="note_no_items">Keine Informationen über Eintragen</string>
     <string name="note_points">Punkte</string>
@@ -561,6 +569,7 @@
     <string name="all_copied">Kopiert</string>
     <string name="all_undo">lösen</string>
     <string name="all_change">Ändern</string>
+    <string name="all_add_to_calendar">Zum Kalender hinzufügen</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Keine Lektionen</string>
     <string name="widget_timetable_theme_title">Thema wählen</string>
@@ -597,7 +606,7 @@
     <string name="pref_notify_notifications_piggyback">Offizielle App-Benachrichtigungen erfassen</string>
     <string name="pref_notify_notifications_piggyback_cancel_original">Entfernen Sie offizielle App-Benachrichtigungen nach der Erfassung</string>
     <string name="pref_notification_piggyback_popup_title">Benachrichtigungen erfassen</string>
-    <string name="pref_notification_piggyback_popup_description">With this feature you can gain a substitute of push notifications like in the official app. All you need to do is allow Wulkanowy to receive all notifications in your system settings.\n\nHow it works?\nWhen you get a notification in Dziennik VULCAN, Wulkanowy will be notified (that\'s what these extra permissions are for) and will trigger a sync so that can send its own notification.\n\nFOR ADVANCED USERS ONLY</string>
+    <string name="pref_notification_piggyback_popup_description">Mit dieser Funktion können Sie einen Ersatz für Push-Benachrichtigungen erhalten, wie in der offiziellen App. Alles, was Sie tun müssen, ist es Wulkanowy erlauben, alle Benachrichtigungen in Ihren Systemeinstellungen zu erhalten.\n\nWie funktioniert es?\nWenn Sie eine Benachrichtigung in Dziennik VULCAN erhalten, Wulkanowy wird benachrichtigt (dafür sind diese zusätzlichen Berechtigungen) und wird eine Synchronisierung auslösen, so dass eine eigene Benachrichtigung gesendet werden kann.\n\nNUR FÜR FORTGESCHRITTENE BENUTZER</string>
     <string name="pref_notification_exact_alarm_popup_title">Bevorstehende Unterrichtsbenachrichtigungen</string>
     <string name="pref_notification_exact_alarm_popup_descriptions">Sie müssen der Wulkanowy-App erlauben, in Ihren Systemeinstellungen Alarme und Erinnerungen einzustellen, damit diese Funktion verwendet werden kann.</string>
     <string name="pref_notification_go_to_settings">Gehe zu den Einstellungen</string>

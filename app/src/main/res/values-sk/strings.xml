@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Neplatný symbol</string>
     <string name="login_incorrect_symbol">Žiak nebol nájdený. Skontrolujte správnosť symbolu a vybrané varianty denníka UONET+</string>
     <string name="login_duplicate_student">Vybraný žiak už je prihlásený</string>
-    <string name="login_symbol_helper">Symbol nájdete na stránke denníka v &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUistite sa, že ste na predchádzajúcu obrazovke nastaviť správny variant denníka do poľa <b>Variácie denníka UONET+</b>. Wulkanowy v túto chvíľu nezistí predškolské żaków</string>
+    <string name="login_symbol_helper">Symbol nájdete na stránke denníka v &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUistite sa, že ste na predchádzajúcu obrazovke nastaviť správny variant denníka do poľa <b>Variácie denníka UONET+</b></string>
     <string name="login_select_student">Vyberte žiakov, ktorí sa majú do aplikácie prihlásiť</string>
     <string name="login_advanced">Iné možnosti</string>
     <string name="login_advanced_warning_mobile_api">V tomto režime nefungujú nasledovné: šťastné číslo, štatistiky triedy, zhrnutie frekvencií, ospravedlnenie neprítomnosti, dokončené lekcie, informácie o škole a prezeranie zoznamu registrovaných zariadení</string>
@@ -105,7 +105,9 @@
     <string name="grade_statistics_semester">Semester</string>
     <string name="grade_statistics_points">Body</string>
     <string name="grade_statistics_legend">Vysvetlivky</string>
-    <string name="grade_statistics_class_average">Priemer: %1$s</string>
+    <string name="grade_statistics_class_average">Priemer triedy: %1$s</string>
+    <string name="grade_statistics_student_average">Váš priemer: %1$s</string>
+    <string name="grade_statistics_student_grade">Vaša známka: %1$s</string>
     <string name="grade_statistics_average_class">Trieda</string>
     <string name="grade_statistics_average_student">Žiák</string>
     <plurals name="grade_number_item">
@@ -283,10 +285,11 @@
     <string name="message_no_items">Žiadne správy</string>
     <string name="message_from">Od:</string>
     <string name="message_to">Komu:</string>
-    <string name="message_date">Dátum: %s</string>
+    <string name="message_date">Dátum: %1$s</string>
     <string name="message_reply">Odpoveď</string>
     <string name="message_forward">Poslať ďalej</string>
-    <string name="message_delete">Odstrániť</string>
+    <string name="message_select_all">Vybrať všetko</string>
+    <string name="message_unselect_all">Odznačiť všetko</string>
     <string name="message_move_to_trash">Presunúť do koša</string>
     <string name="message_delete_forever">Odstrániť natrvalo</string>
     <string name="message_delete_success">Správa bola úspešne odstránená</string>
@@ -303,10 +306,10 @@
     <string name="message_read">Prečítaná: %s</string>
     <string name="message_read_by">Prečítaná cez: %1$d z %2$d osôb</string>
     <plurals name="message_number_item">
-        <item quantity="one">%d správa</item>
-        <item quantity="few">%d správy</item>
-        <item quantity="many">%d správ</item>
-        <item quantity="other">%d správ</item>
+        <item quantity="one">%1$d správa</item>
+        <item quantity="few">%1$d správy</item>
+        <item quantity="many">%1$d správ</item>
+        <item quantity="other">%1$d správ</item>
     </plurals>
     <plurals name="message_new_items">
         <item quantity="one">Nová správa</item>
@@ -322,6 +325,13 @@
         <item quantity="many">Máte %1$d nových správ</item>
         <item quantity="other">Máte %1$d nových správ</item>
     </plurals>
+    <plurals name="message_selected_messages_count">
+        <item quantity="one">%1$d vybraná</item>
+        <item quantity="few">%1$d vybrané</item>
+        <item quantity="many">%1$d vybraných</item>
+        <item quantity="other">%1$d vybraných</item>
+    </plurals>
+    <string name="message_messages_deleted">Správy odstránené</string>
     <!--Note-->
     <string name="note_no_items">Žiadne informácie o poznámkach</string>
     <string name="note_points">Body</string>
@@ -383,8 +393,8 @@
     </plurals>
     <!--Homework-->
     <string name="homework_no_items">Žiadne informácie o domácich úlohách</string>
-    <string name="homework_mark_as_done">Označiť ako hotové</string>
-    <string name="homework_mark_as_undone">Nevyrobené</string>
+    <string name="homework_mark_as_done">Vykonané</string>
+    <string name="homework_mark_as_undone">Nevykonané</string>
     <string name="homework_add">Pridať domácu úlohu</string>
     <string name="homework_add_success">Domáca úloha bola úspešně pridaná</string>
     <string name="homework_delete_success">Domáca úloha bola úspešně odstránená</string>
@@ -647,6 +657,7 @@
     <string name="all_copied">Skopírované</string>
     <string name="all_undo">Vrátiť</string>
     <string name="all_change">Zmeniť</string>
+    <string name="all_add_to_calendar">Pridať do kalendára</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Žiadne lekcie</string>
     <string name="widget_timetable_theme_title">Vybrať motív</string>
