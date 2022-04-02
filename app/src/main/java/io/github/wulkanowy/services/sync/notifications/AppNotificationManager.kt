@@ -14,6 +14,7 @@ import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.data.repositories.NotificationRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.PendingIntentCompat
 import io.github.wulkanowy.utils.getCompatBitmap
 import io.github.wulkanowy.utils.getCompatColor
@@ -47,7 +48,7 @@ class AppNotificationManager @Inject constructor(
                 PendingIntent.getActivity(
                     context,
                     Random.nextInt(),
-                    notificationData.intentToStart,
+                    SplashActivity.getStartIntent(context, notificationData.destination),
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
                 )
             )
@@ -92,7 +93,7 @@ class AppNotificationManager @Inject constructor(
                     PendingIntent.getActivity(
                         context,
                         Random.nextInt(),
-                        notificationData.intentToStart,
+                        SplashActivity.getStartIntent(context, notificationData.destination),
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
                     )
                 )
@@ -146,7 +147,7 @@ class AppNotificationManager @Inject constructor(
                     PendingIntent.getActivity(
                         context,
                         Random.nextInt(),
-                        groupNotificationData.intentToStart,
+                        SplashActivity.getStartIntent(context, groupNotificationData.destination),
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
                     )
                 )
@@ -168,6 +169,7 @@ class AppNotificationManager @Inject constructor(
             studentId = student.id,
             title = notificationData.title,
             content = notificationData.content,
+            destination = notificationData.destination,
             type = notificationType,
             date = Instant.now(),
         )

@@ -1,20 +1,17 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.ExamDao
+import io.github.wulkanowy.data.errorOrNull
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.toFirstResult
-import io.mockk.MockKAnnotations
-import io.mockk.Runs
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
-import io.mockk.just
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -74,8 +71,8 @@ class ExamRemoteTest {
         val res = runBlocking { examRepository.getExams(student, semester, startDate, endDate, true).toFirstResult() }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(2, res.data?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(2, res.dataOrNull?.size)
         coVerify { sdk.getExams(startDate, realEndDate, 1) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
         coVerify { examDb.insertAll(match { it.isEmpty() }) }
@@ -98,8 +95,8 @@ class ExamRemoteTest {
         val res = runBlocking { examRepository.getExams(student, semester, startDate, endDate, true).toFirstResult() }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(2, res.data?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(2, res.dataOrNull?.size)
         coVerify { sdk.getExams(startDate, realEndDate, 1) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
         coVerify {
@@ -126,8 +123,8 @@ class ExamRemoteTest {
         val res = runBlocking { examRepository.getExams(student, semester, startDate, endDate, true).toFirstResult() }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(1, res.data?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(1, res.dataOrNull?.size)
         coVerify { sdk.getExams(startDate, realEndDate, 1) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
         coVerify { examDb.insertAll(match { it.isEmpty() }) }

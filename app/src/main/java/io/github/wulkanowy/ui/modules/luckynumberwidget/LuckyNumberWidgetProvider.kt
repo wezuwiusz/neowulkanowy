@@ -13,14 +13,17 @@ import android.view.View.VISIBLE
 import android.widget.RemoteViews
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.SharedPrefProvider
+import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.repositories.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.PendingIntentCompat
-import io.github.wulkanowy.utils.toFirstResult
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
@@ -66,12 +69,16 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
             )
 
+            if (luckyNumber is Resource.Error) {
+                Timber.e("Error loading lucky number for widget", luckyNumber.error)
+            }
+
             val remoteView =
                 RemoteViews(context.packageName, getCorrectLayoutId(appWidgetId, context))
                     .apply {
                         setTextViewText(
                             R.id.luckyNumberWidgetNumber,
-                            luckyNumber?.luckyNumber?.toString() ?: "#"
+                            luckyNumber.dataOrNull?.toString() ?: "#"
                         )
                         setOnClickPendingIntent(R.id.luckyNumberWidgetContainer, appIntent)
                     }
@@ -167,14 +174,17 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
                 else -> null
             }
 
-            currentStudent?.let {
-                luckyNumberRepository.getLuckyNumber(it, false).toFirstResult().data
+            if (currentStudent != null) {
+                luckyNumberRepository.getLuckyNumber(currentStudent, forceRefresh = false)
+                    .toFirstResult()
+            } else {
+                Resource.Success<LuckyNumber?>(null)
             }
         } catch (e: Exception) {
             if (e.cause !is NoCurrentStudentException) {
                 Timber.e(e, "An error has occurred in lucky number provider")
             }
-            null
+            Resource.Error(e)
         }
     }
 

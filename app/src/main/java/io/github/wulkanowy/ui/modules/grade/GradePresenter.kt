@@ -1,16 +1,16 @@
 package io.github.wulkanowy.ui.modules.grade
 
-import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceData
+import io.github.wulkanowy.data.onResourceError
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.getCurrentOrLast
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -99,32 +99,26 @@ class GradePresenter @Inject constructor(
     }
 
     private fun loadData() {
-        flowWithResource {
+        resourceFlow {
             val student = studentRepository.getCurrentStudent()
             semesterRepository.getSemesters(student, refreshOnNoCurrent = true)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Loading grade data started")
-                Status.SUCCESS -> {
-                    val current = it.data!!.getCurrentOrLast()
-                    selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
-                    schoolYear = current.schoolYear
-                    semesters = it.data.filter { semester -> semester.diaryId == current.diaryId }
-                    view?.setCurrentSemesterName(current.semesterName, schoolYear)
-
-                    view?.run {
-                        Timber.i("Loading grade result: Attempt load index $currentPageIndex")
-                        loadChild(currentPageIndex)
-                        showErrorView(false)
-                        showSemesterSwitch(true)
-                    }
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading grade result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+        }
+            .logResourceStatus("load grade data")
+            .onResourceData {
+                val current = it.getCurrentOrLast()
+                selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
+                schoolYear = current.schoolYear
+                semesters = it.filter { semester -> semester.diaryId == current.diaryId }
+                view?.setCurrentSemesterName(current.semesterName, schoolYear)
+                view?.run {
+                    Timber.i("Loading grade data: Attempt load index $currentPageIndex")
+                    loadChild(currentPageIndex)
+                    showErrorView(false)
+                    showSemesterSwitch(true)
                 }
             }
-        }.launch()
+            .onResourceError(errorHandler::dispatch)
+            .launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

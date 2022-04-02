@@ -33,6 +33,10 @@ abstract class StudentDao {
     @Query("SELECT * FROM Students")
     abstract suspend fun loadStudentsWithSemesters(): List<StudentWithSemesters>
 
+    @Transaction
+    @Query("SELECT * FROM Students WHERE id = :id")
+    abstract suspend fun loadStudentWithSemestersById(id: Long): StudentWithSemesters?
+
     @Query("UPDATE Students SET is_current = 1 WHERE id = :id")
     abstract suspend fun updateCurrent(id: Long)
 

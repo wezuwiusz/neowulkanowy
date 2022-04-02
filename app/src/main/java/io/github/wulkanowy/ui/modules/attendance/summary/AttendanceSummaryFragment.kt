@@ -74,7 +74,7 @@ class AttendanceSummaryFragment :
         binding.attendanceSummarySubjectsContainer.elevation = requireContext().dpToPx(1f)
     }
 
-    override fun updateSubjects(data: ArrayList<String>) {
+    override fun updateSubjects(data: Collection<String>) {
         with(subjectsAdapter) {
             clear()
             addAll(data)

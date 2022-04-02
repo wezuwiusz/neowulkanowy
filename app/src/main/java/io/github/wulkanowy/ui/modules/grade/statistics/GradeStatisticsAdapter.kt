@@ -9,12 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LegendEntry
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.GradePartialStatistics
@@ -136,20 +131,50 @@ class GradeStatisticsAdapter @Inject constructor() :
         binding: ItemGradeStatisticsPieBinding,
         partials: GradePartialStatistics
     ) {
-        bindPieChart(binding, partials.subject, partials.classAverage, partials.classAmounts)
+        val studentAverage = partials.studentAverage.takeIf { it.isNotEmpty() }?.let {
+            binding.root.context.getString(R.string.grade_statistics_student_average, it)
+        }
+        bindPieChart(
+            binding = binding,
+            subject = partials.subject,
+            average = partials.classAverage,
+            studentValue = studentAverage,
+            amounts = partials.classAmounts
+        )
     }
 
     private fun bindSemesterChart(
         binding: ItemGradeStatisticsPieBinding,
         semester: GradeSemesterStatistics
     ) {
-        bindPieChart(binding, semester.subject, semester.average, semester.amounts)
+        val studentAverage = semester.studentAverage.takeIf { it.isNotBlank() }
+        val studentGrade = semester.studentGrade.takeIf { it != 0 }
+
+        val studentValue = when {
+            studentAverage != null -> binding.root.context.getString(
+                R.string.grade_statistics_student_average,
+                studentAverage
+            )
+            studentGrade != null -> binding.root.context.getString(
+                R.string.grade_statistics_student_grade,
+                studentGrade.toString()
+            )
+            else -> null
+        }
+        bindPieChart(
+            binding = binding,
+            subject = semester.subject,
+            average = semester.classAverage,
+            studentValue = studentValue,
+            amounts = semester.amounts
+        )
     }
 
     private fun bindPieChart(
         binding: ItemGradeStatisticsPieBinding,
         subject: String,
         average: String,
+        studentValue: String?,
         amounts: List<Int>
     ) {
         with(binding.gradeStatisticsPieTitle) {
@@ -208,13 +233,13 @@ class GradeStatisticsAdapter @Inject constructor() :
             val numberOfGradesString = amounts.fold(0) { acc, it -> acc + it }
                 .let { resources.getQuantityString(R.plurals.grade_number_item, it, it) }
             val averageString =
-                binding.root.context.getString(R.string.grade_statistics_average, average)
+                binding.root.context.getString(R.string.grade_statistics_class_average, average)
 
             minAngleForSlices = 25f
             description.isEnabled = false
             centerText =
                 numberOfGradesString + ("\n\n" + averageString).takeIf { average.isNotBlank() }
-                    .orEmpty()
+                    .orEmpty() + studentValue?.let { "\n$it" }.orEmpty()
 
             setHoleColor(context.getThemeAttrColor(android.R.attr.windowBackground))
             setCenterTextColor(context.getThemeAttrColor(android.R.attr.textColorPrimary))

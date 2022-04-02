@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +31,7 @@ class NoteRepository @Inject constructor(
         notify: Boolean = false,
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
+        isResultEmpty = { it.isEmpty() },
         shouldFetch = {
             val isExpired = refreshHelper.shouldBeRefreshed(
                 getRefreshKey(cacheKey, semester)

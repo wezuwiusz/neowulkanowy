@@ -1,24 +1,12 @@
 package io.github.wulkanowy.ui.modules.luckynumber.history
 
-import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.repositories.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResource
-import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
-import io.github.wulkanowy.utils.isHolidays
-import io.github.wulkanowy.utils.monday
-import io.github.wulkanowy.utils.previousOrSameSchoolDay
-import io.github.wulkanowy.utils.sunday
-import io.github.wulkanowy.utils.toFormattedString
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
+import io.github.wulkanowy.utils.*
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
@@ -52,55 +40,51 @@ class LuckyNumberHistoryPresenter @Inject constructor(
         flow {
             val student = studentRepository.getCurrentStudent()
             emit(semesterRepository.getCurrentSemester(student))
-        }.catch {
-            Timber.i("Loading semester result: An exception occurred")
-        }.onEach {
-            currentDate = currentDate.getLastSchoolDayIfHoliday(it.schoolYear)
-            reloadNavigation()
-        }.launch("holidays")
+        }
+            .catch { Timber.i("Loading semester result: An exception occurred") }
+            .onEach {
+                currentDate = currentDate.getLastSchoolDayIfHoliday(it.schoolYear)
+                reloadNavigation()
+            }
+            .launch("holidays")
     }
 
     private fun loadData() {
-        flowWithResource {
+        flow {
             val student = studentRepository.getCurrentStudent()
-            luckyNumberRepository.getLuckyNumberHistory(student, currentDate.monday, currentDate.sunday)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Loading lucky number history started")
-                Status.SUCCESS -> {
-                    if (!it.data?.first().isNullOrEmpty()) {
-                        Timber.i("Loading lucky number result: Success")
-                        view?.apply {
-                            updateData(it.data!!.first())
-                            showContent(true)
-                            showEmpty(false)
-                            showErrorView(false)
-                            showProgress(false)
-                        }
-                        analytics.logEvent(
-                            "load_items",
-                            "type" to "lucky_number_history",
-                            "numbers" to it.data
-                        )
-                    } else {
-                        Timber.i("Loading lucky number history result: No lucky numbers found")
-                        view?.run {
-                            showContent(false)
-                            showEmpty(true)
-                            showErrorView(false)
-                        }
+            emitAll(
+                luckyNumberRepository.getLuckyNumberHistory(
+                    student = student,
+                    start = currentDate.monday,
+                    end = currentDate.sunday
+                )
+            )
+        }
+            .onEach {
+                if (!it.isNullOrEmpty()) {
+                    view?.apply {
+                        updateData(it)
+                        showContent(true)
+                        showEmpty(false)
+                        showErrorView(false)
+                        showProgress(false)
+                    }
+                } else {
+                    view?.run {
+                        showContent(false)
+                        showEmpty(true)
+                        showErrorView(false)
+                        showProgress(false)
                     }
                 }
-                Status.ERROR -> {
-                    Timber.i("Loading lucky number history result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                }
+
+                analytics.logEvent(
+                    "load_items",
+                    "type" to "lucky_number_history",
+                )
             }
-        }.afterLoading {
-            view?.run {
-                showProgress(false)
-            }
-        }.launch()
+            .catch { errorHandler.dispatch(it) }
+            .launchIn(presenterScope)
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
@@ -143,8 +127,10 @@ class LuckyNumberHistoryPresenter @Inject constructor(
         view?.apply {
             showPreButton(!currentDate.minusDays(7).isHolidays)
             showNextButton(!currentDate.plusDays(7).isHolidays)
-            updateNavigationWeek("${currentDate.monday.toFormattedString("dd.MM")} - " +
-                currentDate.sunday.toFormattedString("dd.MM"))
+            updateNavigationWeek(
+                "${currentDate.monday.toFormattedString("dd.MM")} - " +
+                    currentDate.sunday.toFormattedString("dd.MM")
+            )
         }
     }
 

@@ -1,16 +1,13 @@
 package io.github.wulkanowy.ui.modules.schoolandteachers.teacher
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TeacherRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResourceIn
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -53,43 +50,41 @@ class TeacherPresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
-        flowWithResourceIn {
+        flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             teacherRepository.getTeachers(student, semester, forceRefresh)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Loading teachers data started")
-                Status.SUCCESS -> {
-                    Timber.i("Loading teachers result: Success")
-                    view?.run {
-                        updateData(it.data!!.filter { item -> item.name.isNotBlank() })
-                        showContent(it.data.isNotEmpty())
-                        showEmpty(it.data.isEmpty())
-                        showErrorView(false)
-                    }
-                    analytics.logEvent(
-                        "load_data",
-                        "type" to "teachers",
-                        "items" to it.data!!.size
-                    )
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading teachers result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+        }
+            .logResourceStatus("load teachers data")
+            .onResourceData {
+                view?.run {
+                    updateData(it.filter { item -> item.name.isNotBlank() })
+                    showContent(it.isNotEmpty())
+                    showEmpty(it.isEmpty())
+                    showErrorView(false)
                 }
             }
-        }.afterLoading {
-            view?.run {
-                hideRefresh()
-                showProgress(false)
-                enableSwipe(true)
-                notifyParentDataLoaded()
+            .onResourceSuccess {
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "teachers",
+                    "items" to it.size
+                )
             }
-        }.catch {
-            errorHandler.dispatch(it)
-            view?.notifyParentDataLoaded()
-        }.launch()
+            .onResourceNotLoading {
+                view?.run {
+                    hideRefresh()
+                    showProgress(false)
+                    enableSwipe(true)
+                    notifyParentDataLoaded()
+                }
+            }
+            .onResourceError(errorHandler::dispatch)
+            .catch {
+                errorHandler.dispatch(it)
+                view?.notifyParentDataLoaded()
+            }
+            .launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

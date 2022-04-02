@@ -4,8 +4,8 @@ import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.repositories.MessageRepository
+import io.github.wulkanowy.data.waitForResult
 import io.github.wulkanowy.services.sync.notifications.NewMessageNotification
-import io.github.wulkanowy.utils.waitForResult
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 

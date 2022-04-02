@@ -33,7 +33,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="28dp"
             android:hint="@string/all_date"
-            app:startIconDrawable="@drawable/ic_calendat_all">
+            app:startIconDrawable="@drawable/ic_calendar_all">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/homeworkDialogDateEdit"

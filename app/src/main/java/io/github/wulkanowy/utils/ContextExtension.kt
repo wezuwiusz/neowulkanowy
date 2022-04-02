@@ -1,31 +1,17 @@
 package io.github.wulkanowy.utils
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.Rect
-import android.graphics.Typeface
-import android.net.Uri
+import android.graphics.*
 import android.text.TextPaint
 import android.util.DisplayMetrics.DENSITY_DEFAULT
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.PluralsRes
+import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.graphics.drawable.toBitmap
-import io.github.wulkanowy.BuildConfig.APPLICATION_ID
 
 @ColorInt
 fun Context.getThemeAttrColor(@AttrRes colorAttr: Int): Int {
@@ -60,69 +46,6 @@ fun Context.getCompatBitmap(@DrawableRes drawableRes: Int, @ColorRes colorRes: I
 
 fun Context.getPlural(@PluralsRes pluralRes: Int, quantity: Int, vararg arguments: Any) =
     resources.getQuantityString(pluralRes, quantity, *arguments)
-
-fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -> Unit = {}) {
-    Intent.parseUri(uri, 0).let {
-        try {
-            startActivity(it)
-        } catch (e: ActivityNotFoundException) {
-            onActivityNotFound(uri)
-        }
-    }
-}
-
-fun Context.openAppInMarket(onActivityNotFound: (uri: String) -> Unit) {
-    openInternetBrowser("market://details?id=${APPLICATION_ID}") {
-        openInternetBrowser("https://github.com/wulkanowy/wulkanowy/releases", onActivityNotFound)
-    }
-}
-
-fun Context.openEmailClient(
-    chooserTitle: String,
-    email: String,
-    subject: String,
-    body: String,
-    onActivityNotFound: () -> Unit = {}
-) {
-    val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")).apply {
-        putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, body)
-    }
-
-    if (intent.resolveActivity(packageManager) != null) {
-        startActivity(Intent.createChooser(intent, chooserTitle))
-    } else onActivityNotFound()
-}
-
-fun Context.openNavigation(location: String) {
-    val intentUri = Uri.parse("geo:0,0?q=${Uri.encode(location)}")
-    val intent = Intent(Intent.ACTION_VIEW, intentUri)
-    if (intent.resolveActivity(packageManager) != null) {
-        startActivity(intent)
-    }
-}
-
-fun Context.openDialer(phone: String) {
-    val intentUri = Uri.parse("tel:$phone")
-    val intent = Intent(Intent.ACTION_DIAL, intentUri)
-    if (intent.resolveActivity(packageManager) != null) {
-        startActivity(intent)
-    }
-}
-
-fun Context.shareText(text: String, subject: String?) {
-    val sendIntent: Intent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, text)
-        if (subject != null) {
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-        }
-        type = "text/plain"
-    }
-    val shareIntent = Intent.createChooser(sendIntent, null)
-    startActivity(shareIntent)
-}
 
 fun Context.dpToPx(dp: Float) = dp * resources.displayMetrics.densityDpi / DENSITY_DEFAULT
 

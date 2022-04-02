@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Nieprawidłowy symbol</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź poprawność symbolu i wybranej odmiany dziennika UONET+</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
-    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUpewnij się, że w polu <b>Dziennik UONET+</b> na poprzednim ekranie została ustawiona odpowiednia odmiana dziennika.\n\n<b>Wulkanowy na chwilę obecną nie wykrywa uczniów przedszkolnych (z zerówki)</b></string>
+    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUpewnij się, że w polu <b>Dziennik UONET+</b> na poprzednim ekranie została ustawiona odpowiednia odmiana dziennika</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_advanced">Inne opcje</string>
     <string name="login_advanced_warning_mobile_api">W tym trybie nie działa szczęśliwy numerek, uczeń na tle klasy, podsumowanie frekwencji, usprawiedliwianie nieobecności, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń</string>
@@ -105,7 +105,9 @@
     <string name="grade_statistics_semester">Semestralne</string>
     <string name="grade_statistics_points">Punkty</string>
     <string name="grade_statistics_legend">Legenda</string>
-    <string name="grade_statistics_average">Średnia: %1$s</string>
+    <string name="grade_statistics_class_average">Średnia klasy: %1$s</string>
+    <string name="grade_statistics_student_average">Twoja średnia: %1$s</string>
+    <string name="grade_statistics_student_grade">Twoja ocena: %1$s</string>
     <string name="grade_statistics_average_class">Klasa</string>
     <string name="grade_statistics_average_student">Uczeń</string>
     <plurals name="grade_number_item">
@@ -283,11 +285,12 @@
     <string name="message_no_items">Brak wiadomości</string>
     <string name="message_from">Od:</string>
     <string name="message_to">Do:</string>
-    <string name="message_date">Data: %s</string>
+    <string name="message_date">Data: %1$s</string>
     <string name="message_reply">Odpowiedz</string>
     <string name="message_forward">Prześlij dalej</string>
-    <string name="message_delete">Usuń</string>
-    <string name="message_move_to_bin">Przenieś do kosza</string>
+    <string name="message_select_all">Zaznacz wszystkie</string>
+    <string name="message_unselect_all">Odznacz wszystkie</string>
+    <string name="message_move_to_trash">Przenieś do kosza</string>
     <string name="message_delete_forever">Usuń trwale</string>
     <string name="message_delete_success">Wiadomość usunięta pomyślnie</string>
     <string name="message_share">Udostępnij</string>
@@ -303,10 +306,10 @@
     <string name="message_read">Przeczytana: %s</string>
     <string name="message_read_by">Przeczytana przez: %1$d z %2$d osób</string>
     <plurals name="message_number_item">
-        <item quantity="one">%d wiadomość</item>
-        <item quantity="few">%d wiadomości</item>
-        <item quantity="many">%d wiadomości</item>
-        <item quantity="other">%d wiadomości</item>
+        <item quantity="one">%1$d wiadomość</item>
+        <item quantity="few">%1$d wiadomości</item>
+        <item quantity="many">%1$d wiadomości</item>
+        <item quantity="other">%1$d wiadomości</item>
     </plurals>
     <plurals name="message_new_items">
         <item quantity="one">Nowa wiadomość</item>
@@ -322,6 +325,13 @@
         <item quantity="many">Masz %1$d nowych wiadomości</item>
         <item quantity="other">Masz %1$d nowych wiadomości</item>
     </plurals>
+    <plurals name="message_selected_messages_count">
+        <item quantity="one">%1$d wybrana</item>
+        <item quantity="few">%1$d wybrane</item>
+        <item quantity="many">%1$d wybranych</item>
+        <item quantity="other">%1$d wybranych</item>
+    </plurals>
+    <string name="message_messages_deleted">Wiadomości zostały usunięte</string>
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
     <string name="note_points">Punkty</string>
@@ -647,6 +657,7 @@
     <string name="all_copied">Skopiowano</string>
     <string name="all_undo">Cofnij</string>
     <string name="all_change">Zmień</string>
+    <string name="all_add_to_calendar">Dodaj do kalendarza</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
     <string name="widget_timetable_theme_title">Wybierz motyw</string>

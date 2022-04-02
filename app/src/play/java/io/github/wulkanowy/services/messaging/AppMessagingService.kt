@@ -7,6 +7,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.entities.Notification
 import io.github.wulkanowy.data.repositories.NotificationRepository
 import io.github.wulkanowy.services.sync.notifications.NotificationType
+import io.github.wulkanowy.ui.modules.Destination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -38,6 +39,7 @@ class AppMessagingService : FirebaseMessagingService() {
             data = customData,
             date = Instant.now(),
             type = NotificationType.PUSH,
+            destination = Destination.Dashboard,
             studentId = -1
         )
 

@@ -142,7 +142,7 @@ class MessagePreviewFragment :
     }
 
     override fun setNotDeletedOptionsLabels() {
-        menuDeleteButton?.setTitle(R.string.message_move_to_bin)
+        menuDeleteButton?.setTitle(R.string.message_move_to_trash)
     }
 
     override fun showErrorView(show: Boolean) {

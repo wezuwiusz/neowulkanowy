@@ -1,13 +1,15 @@
 package io.github.wulkanowy.data.repositories
 
 import android.content.Context
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
 import io.github.wulkanowy.data.db.dao.MessagesDao
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.data.enums.MessageFolder
+import io.github.wulkanowy.data.errorOrNull
+import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
@@ -15,7 +17,8 @@ import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.sdk.pojo.MessageDetails
 import io.github.wulkanowy.sdk.pojo.Sender
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.toFirstResult
+import io.github.wulkanowy.utils.Status
+import io.github.wulkanowy.utils.status
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
@@ -102,7 +105,7 @@ class MessageRepositoryTest {
             folder = MessageFolder.RECEIVED,
             forceRefresh = true,
             notify = true, // all new messages will be marked as not notified
-        ).toFirstResult().data.orEmpty()
+        ).toFirstResult().dataOrNull.orEmpty()
 
         coVerify(exactly = 1) { messageDb.deleteAll(emptyList()) }
         coVerify(exactly = 1) { messageDb.insertAll(emptyList()) }
@@ -133,7 +136,7 @@ class MessageRepositoryTest {
             folder = MessageFolder.RECEIVED,
             forceRefresh = true,
             notify = false,
-        ).toFirstResult().data.orEmpty()
+        ).toFirstResult().dataOrNull.orEmpty()
 
         coVerify(exactly = 1) { messageDb.deleteAll(withArg { checkEquals(emptyList<Message>()) }) }
         coVerify {
@@ -165,9 +168,9 @@ class MessageRepositoryTest {
 
         val res = runBlocking { repository.getMessage(student, testMessage).toFirstResult() }
 
-        assertEquals(null, res.error)
+        assertEquals(null, res.errorOrNull)
         assertEquals(Status.SUCCESS, res.status)
-        assertEquals("Test", res.data!!.message.content)
+        assertEquals("Test", res.dataOrNull!!.message.content)
     }
 
     @Test
@@ -197,9 +200,9 @@ class MessageRepositoryTest {
 
         val res = runBlocking { repository.getMessage(student, testMessage).toFirstResult() }
 
-        assertEquals(null, res.error)
+        assertEquals(null, res.errorOrNull)
         assertEquals(Status.SUCCESS, res.status)
-        assertEquals("Test", res.data!!.message.content)
+        assertEquals("Test", res.dataOrNull!!.message.content)
         coVerify { messageDb.updateAll(listOf(testMessageWithContent)) }
     }
 

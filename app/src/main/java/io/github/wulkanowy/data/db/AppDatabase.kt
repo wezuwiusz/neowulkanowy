@@ -1,72 +1,10 @@
 package io.github.wulkanowy.data.db
 
 import android.content.Context
-import androidx.room.AutoMigration
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import androidx.room.RoomDatabase.JournalMode.TRUNCATE
-import androidx.room.TypeConverters
-import io.github.wulkanowy.data.db.dao.AdminMessageDao
-import io.github.wulkanowy.data.db.dao.AttendanceDao
-import io.github.wulkanowy.data.db.dao.AttendanceSummaryDao
-import io.github.wulkanowy.data.db.dao.CompletedLessonsDao
-import io.github.wulkanowy.data.db.dao.ConferenceDao
-import io.github.wulkanowy.data.db.dao.ExamDao
-import io.github.wulkanowy.data.db.dao.GradeDao
-import io.github.wulkanowy.data.db.dao.GradePartialStatisticsDao
-import io.github.wulkanowy.data.db.dao.GradePointsStatisticsDao
-import io.github.wulkanowy.data.db.dao.GradeSemesterStatisticsDao
-import io.github.wulkanowy.data.db.dao.GradeSummaryDao
-import io.github.wulkanowy.data.db.dao.HomeworkDao
-import io.github.wulkanowy.data.db.dao.LuckyNumberDao
-import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
-import io.github.wulkanowy.data.db.dao.MessagesDao
-import io.github.wulkanowy.data.db.dao.MobileDeviceDao
-import io.github.wulkanowy.data.db.dao.NoteDao
-import io.github.wulkanowy.data.db.dao.NotificationDao
-import io.github.wulkanowy.data.db.dao.RecipientDao
-import io.github.wulkanowy.data.db.dao.ReportingUnitDao
-import io.github.wulkanowy.data.db.dao.SchoolAnnouncementDao
-import io.github.wulkanowy.data.db.dao.SchoolDao
-import io.github.wulkanowy.data.db.dao.SemesterDao
-import io.github.wulkanowy.data.db.dao.StudentDao
-import io.github.wulkanowy.data.db.dao.StudentInfoDao
-import io.github.wulkanowy.data.db.dao.SubjectDao
-import io.github.wulkanowy.data.db.dao.TeacherDao
-import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
-import io.github.wulkanowy.data.db.dao.TimetableDao
-import io.github.wulkanowy.data.db.dao.TimetableHeaderDao
-import io.github.wulkanowy.data.db.entities.AdminMessage
-import io.github.wulkanowy.data.db.entities.Attendance
-import io.github.wulkanowy.data.db.entities.AttendanceSummary
-import io.github.wulkanowy.data.db.entities.CompletedLesson
-import io.github.wulkanowy.data.db.entities.Conference
-import io.github.wulkanowy.data.db.entities.Exam
-import io.github.wulkanowy.data.db.entities.Grade
-import io.github.wulkanowy.data.db.entities.GradePartialStatistics
-import io.github.wulkanowy.data.db.entities.GradePointsStatistics
-import io.github.wulkanowy.data.db.entities.GradeSemesterStatistics
-import io.github.wulkanowy.data.db.entities.GradeSummary
-import io.github.wulkanowy.data.db.entities.Homework
-import io.github.wulkanowy.data.db.entities.LuckyNumber
-import io.github.wulkanowy.data.db.entities.Message
-import io.github.wulkanowy.data.db.entities.MessageAttachment
-import io.github.wulkanowy.data.db.entities.MobileDevice
-import io.github.wulkanowy.data.db.entities.Note
-import io.github.wulkanowy.data.db.entities.Notification
-import io.github.wulkanowy.data.db.entities.Recipient
-import io.github.wulkanowy.data.db.entities.ReportingUnit
-import io.github.wulkanowy.data.db.entities.School
-import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
-import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.db.entities.StudentInfo
-import io.github.wulkanowy.data.db.entities.Subject
-import io.github.wulkanowy.data.db.entities.Teacher
-import io.github.wulkanowy.data.db.entities.Timetable
-import io.github.wulkanowy.data.db.entities.TimetableAdditional
-import io.github.wulkanowy.data.db.entities.TimetableHeader
+import io.github.wulkanowy.data.db.dao.*
+import io.github.wulkanowy.data.db.entities.*
 import io.github.wulkanowy.data.db.migrations.*
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Singleton
@@ -108,6 +46,7 @@ import javax.inject.Singleton
     autoMigrations = [
         AutoMigration(from = 44, to = 45),
         AutoMigration(from = 46, to = 47),
+        AutoMigration(from = 47, to = 48),
     ],
     version = AppDatabase.VERSION_SCHEMA,
     exportSchema = true
@@ -116,7 +55,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 47
+        const val VERSION_SCHEMA = 48
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),

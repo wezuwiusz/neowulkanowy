@@ -1,16 +1,18 @@
 package io.github.wulkanowy.ui.modules.grade
 
 import io.github.wulkanowy.data.Resource
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.flowWithResource
+import io.github.wulkanowy.utils.Status
+import io.github.wulkanowy.utils.status
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -29,7 +31,7 @@ import java.time.LocalDate.of
 
 class GradeAverageProviderTest {
 
-    private suspend fun <T> Flow<Resource<T>>.getResult() = toList()[1].data!!
+    private suspend fun <T> Flow<Resource<T>>.getResult() = toList()[1].dataOrNull!!
 
     @MockK
     lateinit var preferencesRepository: PreferencesRepository
@@ -144,7 +146,13 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageForceCalc } returns false
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { noWeightGrades to noWeightGradesSummary }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { noWeightGrades to noWeightGradesSummary }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
 
@@ -156,7 +164,13 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageForceCalc } returns false
         every { preferencesRepository.isOptionalArithmeticAverage } returns true
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { noWeightGrades to noWeightGradesArithmeticSummary }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { noWeightGrades to noWeightGradesArithmeticSummary }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
 
@@ -170,27 +184,27 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
         coEvery { semesterRepository.getSemesters(student) } returns semesters
         coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flow {
-            emit(Resource.loading())
-            emit(Resource.loading(secondGradeWithModifier to secondSummariesWithModifier))
-            emit(Resource.success(secondGradeWithModifier to secondSummariesWithModifier))
+            emit(Resource.Loading())
+            emit(Resource.Intermediate(secondGradeWithModifier to secondSummariesWithModifier))
+            emit(Resource.Success(secondGradeWithModifier to secondSummariesWithModifier))
         }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).toList() }
 
         with(items[0]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(null, data)
+            assertEquals(null, dataOrNull)
         }
         with(items[1]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(1, data!!.size)
+            assertEquals(1, dataOrNull?.size)
         }
         with(items[2]) {
             assertEquals(Status.SUCCESS, status)
-            assertEquals(1, data!!.size)
+            assertEquals(1, dataOrNull?.size)
         }
 
-        assertEquals(3.5, items[1].data?.single { it.subject == "Język polski" }!!.average, .0) // from details and after set custom plus/minus
+        assertEquals(3.5, items[1].dataOrNull?.single { it.subject == "Język polski" }?.average ?: 0.0, .0) // from details and after set custom plus/minus
     }
 
     @Test
@@ -201,27 +215,27 @@ class GradeAverageProviderTest {
 
         coEvery { semesterRepository.getSemesters(student) } returns semesters
         coEvery { gradeRepository.getGrades(student, semesters[2], false) } returns flow {
-            emit(Resource.loading())
+            emit(Resource.Loading())
             delay(1000)
-            emit(Resource.success(secondGradeWithModifier to secondSummariesWithModifier))
+            emit(Resource.Success(secondGradeWithModifier to secondSummariesWithModifier))
         }
         coEvery { gradeRepository.getGrades(student, semesters[1], false) } returns flow {
-            emit(Resource.loading())
-            emit(Resource.success(secondGradeWithModifier to secondSummariesWithModifier))
+            emit(Resource.Loading())
+            emit(Resource.Success(secondGradeWithModifier to secondSummariesWithModifier))
         }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, false).toList() }
 
         with(items[0]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(null, data)
+            assertEquals(null, dataOrNull)
         }
         with(items[1]) {
             assertEquals(Status.SUCCESS, status)
-            assertEquals(1, data!!.size)
+            assertEquals(1, dataOrNull?.size)
         }
 
-        assertEquals(3.5, items[1].data?.single { it.subject == "Język polski" }!!.average, .0) // from details and after set custom plus/minus
+        assertEquals(3.5, items[1].dataOrNull?.single { it.subject == "Język polski" }?.average ?: 0.0, .0) // from details and after set custom plus/minus
     }
 
     @Test
@@ -230,12 +244,26 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], false) } returns flowWithResource { secondGradeWithModifier to secondSummariesWithModifier }
-        coEvery { gradeRepository.getGrades(student, semesters[2], false) } returns flowWithResource {
-            listOf(getGrade(semesters[2].semesterId, "Język polski", .0, .0, .0)) to listOf(getSummary(semesters[2].semesterId, "Język polski", 2.5))
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                false
+            )
+        } returns resourceFlow { secondGradeWithModifier to secondSummariesWithModifier }
+        coEvery { gradeRepository.getGrades(student, semesters[2], false) } returns resourceFlow {
+            listOf(getGrade(semesters[2].semesterId, "Język polski", .0, .0, .0)) to listOf(
+                getSummary(semesters[2].semesterId, "Język polski", 2.5)
+            )
         }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, false).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                false
+            ).getResult()
+        }
 
         assertEquals(3.5, items.single { it.subject == "Język polski" }.average, .0)
     }
@@ -246,10 +274,28 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], false) } returns flowWithResource { secondGradeWithModifier to secondSummariesWithModifier }
-        coEvery { gradeRepository.getGrades(student, semesters[2], false) } returns flowWithResource { emptyList<Grade>() to listOf(getSummary(24, "Język polski", .0))}
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                false
+            )
+        } returns resourceFlow { secondGradeWithModifier to secondSummariesWithModifier }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                false
+            )
+        } returns resourceFlow { emptyList<Grade>() to listOf(getSummary(24, "Język polski", .0)) }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, false).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                false
+            ).getResult()
+        }
 
         assertEquals(3.49, items.single { it.subject == "Język polski" }.average, .0)
     }
@@ -260,10 +306,28 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource { emptyList<Grade>() to emptyList() }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { emptyList<Grade>() to emptyList() }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                true
+            )
+        } returns resourceFlow { emptyList<Grade>() to emptyList() }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { emptyList<Grade>() to emptyList() }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
 
         assertEquals(0, items.size)
     }
@@ -274,7 +338,13 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
         coEvery { semesterRepository.getSemesters(student) } returns semesters
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGradeWithModifier to secondSummariesWithModifier }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGradeWithModifier to secondSummariesWithModifier }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
 
@@ -292,7 +362,13 @@ class GradeAverageProviderTest {
 
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
         coEvery { semesterRepository.getSemesters(student) } returns semesters
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGradeWithModifier to secondSummariesWithModifier }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGradeWithModifier to secondSummariesWithModifier }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
 
@@ -310,7 +386,13 @@ class GradeAverageProviderTest {
 
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
         coEvery { semesterRepository.getSemesters(student) } returns semesters
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGradeWithModifier to secondSummariesWithModifier }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGradeWithModifier to secondSummariesWithModifier }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
 
@@ -328,7 +410,13 @@ class GradeAverageProviderTest {
 
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
         coEvery { semesterRepository.getSemesters(student) } returns semesters
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGradeWithModifier to secondSummariesWithModifier }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGradeWithModifier to secondSummariesWithModifier }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
 
@@ -340,7 +428,13 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageForceCalc } returns false
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGrades to secondSummaries }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGrades to secondSummaries }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
 
@@ -354,7 +448,13 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageForceCalc } returns true
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ONE_SEMESTER
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGrades to secondSummaries }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGrades to secondSummaries }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
 
@@ -368,7 +468,13 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageForceCalc } returns true
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource { firstGrades to firstSummaries }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                true
+            )
+        } returns resourceFlow { firstGrades to firstSummaries }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[1].semesterId, true).getResult() }
 
@@ -384,29 +490,29 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
         coEvery { semesterRepository.getSemesters(student) } returns semesters
         coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flow {
-            emit(Resource.loading())
-            emit(Resource.loading(firstGrades to firstSummaries))
-            emit(Resource.success(firstGrades to firstSummaries))
+            emit(Resource.Loading())
+            emit(Resource.Intermediate(firstGrades to firstSummaries))
+            emit(Resource.Success(firstGrades to firstSummaries))
         }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[1].semesterId, true).toList() }
 
         with(items[0]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(null, data)
+            assertEquals(null, dataOrNull)
         }
         with(items[1]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(2, data!!.size)
+            assertEquals(2, dataOrNull?.size)
         }
         with(items[2]) {
             assertEquals(Status.SUCCESS, status)
-            assertEquals(2, data!!.size)
+            assertEquals(2, dataOrNull?.size)
         }
 
-        assertEquals(2, items[2].data!!.size)
-        assertEquals(3.5, items[2].data!!.single { it.subject == "Matematyka" }.average, .0) // (from summary): 3,5
-        assertEquals(3.5, items[2].data!!.single { it.subject == "Fizyka" }.average, .0) // (from summary): 3,5
+        assertEquals(2, items[2].dataOrNull?.size)
+        assertEquals(3.5, items[2].dataOrNull?.single { it.subject == "Matematyka" }?.average ?: 0.0, .0) // (from summary): 3,5
+        assertEquals(3.5, items[2].dataOrNull?.single { it.subject == "Fizyka" }?.average ?: 0.0, .0) // (from summary): 3,5
     }
 
     @Test
@@ -414,13 +520,13 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
         every { preferencesRepository.gradeAverageForceCalc } returns false
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns resourceFlow {
             firstGrades to listOf(
                 getSummary(22, "Matematyka", 3.0),
                 getSummary(22, "Fizyka", 3.5)
             )
         }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns resourceFlow {
             secondGrades to listOf(
                 getSummary(22, "Matematyka", 3.5),
                 getSummary(22, "Fizyka", 4.0)
@@ -440,46 +546,62 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageForceCalc } returns false
         coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flow {
-            emit(Resource.loading())
-            emit(Resource.loading(firstGrades to listOf(
-                getSummary(22, "Matematyka", 3.0),
-                getSummary(22, "Fizyka", 3.5)
-            )))
-            emit(Resource.success(firstGrades to listOf(
-                getSummary(22, "Matematyka", 3.0),
-                getSummary(22, "Fizyka", 3.5)
-            )))
+            emit(Resource.Loading())
+            emit(
+                Resource.Intermediate(
+                    firstGrades to listOf(
+                        getSummary(22, "Matematyka", 3.0),
+                        getSummary(22, "Fizyka", 3.5)
+                    )
+                )
+            )
+            emit(
+                Resource.Success(
+                    firstGrades to listOf(
+                        getSummary(22, "Matematyka", 3.0),
+                        getSummary(22, "Fizyka", 3.5)
+                    )
+                )
+            )
         }
         coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flow {
-            emit(Resource.loading())
-            emit(Resource.loading(secondGrades to listOf(
-                getSummary(22, "Matematyka", 3.5),
-                getSummary(22, "Fizyka", 4.0)
-            )))
-            emit(Resource.success(secondGrades to listOf(
-                getSummary(22, "Matematyka", 3.5),
-                getSummary(22, "Fizyka", 4.0)
-            )))
+            emit(Resource.Loading())
+            emit(
+                Resource.Intermediate(
+                    secondGrades to listOf(
+                        getSummary(22, "Matematyka", 3.5),
+                        getSummary(22, "Fizyka", 4.0)
+                    )
+                )
+            )
+            emit(
+                Resource.Success(
+                    secondGrades to listOf(
+                        getSummary(22, "Matematyka", 3.5),
+                        getSummary(22, "Fizyka", 4.0)
+                    )
+                )
+            )
         }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).toList() }
 
         with(items[0]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(null, data)
+            assertEquals(null, dataOrNull)
         }
         with(items[1]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(2, data!!.size)
+            assertEquals(2, dataOrNull?.size)
         }
         with(items[2]) {
             assertEquals(Status.SUCCESS, status)
-            assertEquals(2, data!!.size)
+            assertEquals(2, dataOrNull?.size)
         }
 
-        assertEquals(2, items[2].data!!.size)
-        assertEquals(3.25, items[2].data!!.single { it.subject == "Matematyka" }.average, .0) // (from summaries ↑): 3,0 + 3,5 → 3,25
-        assertEquals(3.75, items[2].data!!.single { it.subject == "Fizyka" }.average, .0) // (from summaries ↑): 3,5 + 4,0 → 3,75
+        assertEquals(2, items[2].dataOrNull?.size)
+        assertEquals(3.25, items[2].dataOrNull?.single { it.subject == "Matematyka" }?.average ?: 0.0, .0) // (from summaries ↑): 3,0 + 3,5 → 3,25
+        assertEquals(3.75, items[2].dataOrNull?.single { it.subject == "Fizyka" }?.average ?: 0.0, .0) // (from summaries ↑): 3,5 + 4,0 → 3,75
     }
 
     @Test
@@ -487,8 +609,14 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageForceCalc } returns true
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource { firstGrades to firstSummaries }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource {
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                true
+            )
+        } returns resourceFlow { firstGrades to firstSummaries }
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns resourceFlow {
             secondGrades to listOf(
                 getSummary(22, "Matematyka", 1.1),
                 getSummary(22, "Fizyka", 7.26)
@@ -527,7 +655,7 @@ class GradeAverageProviderTest {
                 semesters[1],
                 true
             )
-        } returns flowWithResource {
+        } returns resourceFlow {
             firstGrades to listOf(
                 getSummary(22, "Matematyka", .0),
                 getSummary(22, "Fizyka", .0)
@@ -539,7 +667,7 @@ class GradeAverageProviderTest {
                 semesters[2],
                 true
             )
-        } returns flowWithResource {
+        } returns resourceFlow {
             secondGrades to listOf(
                 getSummary(22, "Matematyka", .0),
                 getSummary(22, "Fizyka", .0)
@@ -566,40 +694,48 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
         coEvery { semesterRepository.getSemesters(student) } returns semesters
         coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flow {
-            emit(Resource.loading())
-            emit(Resource.loading(firstGrades to firstSummaries))
-            emit(Resource.success(firstGrades to firstSummaries))
+            emit(Resource.Loading())
+            emit(Resource.Intermediate(firstGrades to firstSummaries))
+            emit(Resource.Success(firstGrades to firstSummaries))
         }
         coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flow {
-            emit(Resource.loading())
-            emit(Resource.loading(secondGrades to listOf(
-                getSummary(22, "Matematyka", 1.1),
-                getSummary(22, "Fizyka", 7.26)
-            )))
-            emit(Resource.success(secondGrades to listOf(
-                getSummary(22, "Matematyka", 1.1),
-                getSummary(22, "Fizyka", 7.26)
-            )))
+            emit(Resource.Loading())
+            emit(
+                Resource.Intermediate(
+                    secondGrades to listOf(
+                        getSummary(22, "Matematyka", 1.1),
+                        getSummary(22, "Fizyka", 7.26)
+                    )
+                )
+            )
+            emit(
+                Resource.Success(
+                    secondGrades to listOf(
+                        getSummary(22, "Matematyka", 1.1),
+                        getSummary(22, "Fizyka", 7.26)
+                    )
+                )
+            )
         }
 
         val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).toList() }
 
         with(items[0]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(null, data)
+            assertEquals(null, dataOrNull)
         }
         with(items[1]) {
             assertEquals(Status.LOADING, status)
-            assertEquals(2, data!!.size)
+            assertEquals(2, dataOrNull?.size)
         }
         with(items[2]) {
             assertEquals(Status.SUCCESS, status)
-            assertEquals(2, data!!.size)
+            assertEquals(2, dataOrNull?.size)
         }
 
-        assertEquals(2, items[2].data!!.size)
-        assertEquals(3.0, items[2].data!!.single { it.subject == "Matematyka" }.average, .0) // (from details): 3,5 + 2,5 → 3,0
-        assertEquals(3.25, items[2].data!!.single { it.subject == "Fizyka" }.average, .0) // (from details): 3,5  + 3,0 → 3,25
+        assertEquals(2, items[2].dataOrNull?.size)
+        assertEquals(3.0, items[2].dataOrNull?.single { it.subject == "Matematyka" }?.average ?: 0.0, .0) // (from details): 3,5 + 2,5 → 3,0
+        assertEquals(3.25, items[2].dataOrNull?.single { it.subject == "Fizyka" }?.average ?: 0.0, .0) // (from details): 3,5  + 3,0 → 3,25
     }
 
     @Test
@@ -614,14 +750,14 @@ class GradeAverageProviderTest {
                 semesters[1],
                 true
             )
-        } returns flowWithResource { firstGrades to emptyList() }
+        } returns resourceFlow { firstGrades to emptyList() }
         coEvery {
             gradeRepository.getGrades(
                 student,
                 semesters[2],
                 true
             )
-        } returns flowWithResource { secondGrades to emptyList() }
+        } returns resourceFlow { secondGrades to emptyList() }
 
         val items = runBlocking {
             gradeAverageProvider.getGradesDetailsWithAverage(
@@ -646,14 +782,40 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource { firstGrades to emptyList() }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGrades to emptyList() }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                true
+            )
+        } returns resourceFlow { firstGrades to emptyList() }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGrades to emptyList() }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
 
         assertEquals(2, items.size)
-        assertEquals(3.0, items.single { it.subject == "Matematyka" }.average, .0) // (from details): 3,5 + 2,5 → 3,0
-        assertEquals(3.25, items.single { it.subject == "Fizyka" }.average, .0) // (from details): 3,5  + 3,0 → 3,25
+        assertEquals(
+            3.0,
+            items.single { it.subject == "Matematyka" }.average,
+            .0
+        ) // (from details): 3,5 + 2,5 → 3,0
+        assertEquals(
+            3.25,
+            items.single { it.subject == "Fizyka" }.average,
+            .0
+        ) // (from details): 3,5  + 3,0 → 3,25
     }
 
     @Test
@@ -662,12 +824,12 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns resourceFlow {
             firstGrades to listOf(
                 getSummary(22, "Matematyka", 4.0)
             )
         }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns resourceFlow {
             secondGrades to listOf(
                 getSummary(23, "Matematyka", 3.0)
             )
@@ -686,14 +848,40 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource { firstGrades to firstSummaries }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGrades to secondSummaries.dropLast(1) }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                true
+            )
+        } returns resourceFlow { firstGrades to firstSummaries }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGrades to secondSummaries.dropLast(1) }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
 
         assertEquals(2, items.size)
-        assertEquals(3.4, items.single { it.subject == "Matematyka" }.average, .0) // (from summaries): 3,9 + 2,9 → 3,4
-        assertEquals(3.05, items.single { it.subject == "Fizyka" }.average, .0) // 3,1 (from summary) + 3,0 (from details) → 3,05
+        assertEquals(
+            3.4,
+            items.single { it.subject == "Matematyka" }.average,
+            .0
+        ) // (from summaries): 3,9 + 2,9 → 3,4
+        assertEquals(
+            3.05,
+            items.single { it.subject == "Fizyka" }.average,
+            .0
+        ) // 3,1 (from summary) + 3,0 (from details) → 3,05
     }
 
     @Test
@@ -702,14 +890,40 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource { firstGrades to firstSummaries.dropLast(1) }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGrades to secondSummaries }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                true
+            )
+        } returns resourceFlow { firstGrades to firstSummaries.dropLast(1) }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGrades to secondSummaries }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
 
         assertEquals(2, items.size)
-        assertEquals(3.4, items.single { it.subject == "Matematyka" }.average, .0) // (from summaries): 3,9 + 2,9 → 3,4
-        assertEquals(3.45, items.single { it.subject == "Fizyka" }.average, .0) // 3,5 (from details) + 3,4 (from summary) → 3,45
+        assertEquals(
+            3.4,
+            items.single { it.subject == "Matematyka" }.average,
+            .0
+        ) // (from summaries): 3,9 + 2,9 → 3,4
+        assertEquals(
+            3.45,
+            items.single { it.subject == "Fizyka" }.average,
+            .0
+        ) // 3,5 (from details) + 3,4 (from summary) → 3,45
     }
 
     @Test
@@ -718,14 +932,40 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource { firstGrades to firstSummaries.dropLast(1) }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource { secondGrades to secondSummaries }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[1],
+                true
+            )
+        } returns resourceFlow { firstGrades to firstSummaries.dropLast(1) }
+        coEvery {
+            gradeRepository.getGrades(
+                student,
+                semesters[2],
+                true
+            )
+        } returns resourceFlow { secondGrades to secondSummaries }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
 
         assertEquals(2, items.size)
-        assertEquals(3.0, items.single { it.subject == "Matematyka" }.average, .0) // (from details): 3,5 + 2,5 → 3,0
-        assertEquals(3.25, items.single { it.subject == "Fizyka" }.average, .0) // (from details): 3,5  + 3,0 → 3,25
+        assertEquals(
+            3.0,
+            items.single { it.subject == "Matematyka" }.average,
+            .0
+        ) // (from details): 3,5 + 2,5 → 3,0
+        assertEquals(
+            3.25,
+            items.single { it.subject == "Fizyka" }.average,
+            .0
+        ) // (from details): 3,5  + 3,0 → 3,25
     }
 
     @Test
@@ -734,7 +974,7 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns resourceFlow {
             listOf(
                 getGrade(22, "Fizyka", 5.0, weight = 2.0),
                 getGrade(22, "Fizyka", 6.0, weight = 2.0),
@@ -746,7 +986,7 @@ class GradeAverageProviderTest {
                 getGrade(22, "Fizyka", 6.0, weight = 2.0)
             ) to listOf(getSummary(semesterId = 22, subject = "Fizyka", average = .0))
         }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns resourceFlow {
             listOf(
                 getGrade(23, "Fizyka", 5.0, weight = 1.0),
                 getGrade(23, "Fizyka", 5.0, weight = 2.0),
@@ -765,7 +1005,7 @@ class GradeAverageProviderTest {
         every { preferencesRepository.isOptionalArithmeticAverage } returns false
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns resourceFlow {
             listOf(
                 getGrade(22, "Fizyka", 5.0, weight = 2.0),
                 getGrade(22, "Fizyka", 6.0, weight = 2.0),
@@ -777,7 +1017,7 @@ class GradeAverageProviderTest {
                 getGrade(22, "Fizyka", 6.0, weight = 2.0)
             ) to listOf(getSummary(semesterId = 22, subject = "Fizyka", average = .0))
         }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns resourceFlow {
             listOf(
                 getGrade(23, "Fizyka", 5.0, weight = 1.0),
                 getGrade(23, "Fizyka", 5.0, weight = 2.0),
@@ -802,7 +1042,7 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
         coEvery { semesterRepository.getSemesters(student) } returns semesters
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns resourceFlow {
             listOf(
                 getGrade(22, "Fizyka", 5.0, weight = 2.0),
                 getGrade(22, "Fizyka", 6.0, weight = 2.0),
@@ -814,7 +1054,7 @@ class GradeAverageProviderTest {
                 getGrade(22, "Fizyka", 6.0, weight = 2.0)
             ) to listOf(getSummary(semesterId = 22, subject = "Fizyka", average = .0))
         }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns resourceFlow {
             listOf(
                 getGrade(23, "Fizyka", 5.0, weight = 1.0),
                 getGrade(23, "Fizyka", 5.0, weight = 2.0),
@@ -839,7 +1079,7 @@ class GradeAverageProviderTest {
         every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.ALL_YEAR
         coEvery { semesterRepository.getSemesters(student) } returns semesters
 
-        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns resourceFlow {
             listOf(
                 getGrade(22, "Fizyka", 5.0, weight = 2.0),
                 getGrade(22, "Fizyka", 6.0, weight = 2.0),
@@ -851,7 +1091,7 @@ class GradeAverageProviderTest {
                 getGrade(22, "Fizyka", 6.0, weight = 2.0)
             ) to listOf(getSummary(semesterId = 22, subject = "Fizyka", average = .0))
         }
-        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns flowWithResource {
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns resourceFlow {
             listOf(
                 getGrade(23, "Fizyka", 5.0, weight = 1.0),
                 getGrade(23, "Fizyka", 5.0, weight = 2.0),
@@ -859,12 +1099,51 @@ class GradeAverageProviderTest {
             ) to listOf(getSummary(semesterId = 23, subject = "Fizyka", average = .0))
         }
 
-        val items = runBlocking { gradeAverageProvider.getGradesDetailsWithAverage(student, semesters[2].semesterId, true).getResult() }
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
 
-        assertEquals(5.5555, items.single { it.subject == "Fizyka" }.average, .0001) // (from details): 5.72727272  + 4,8 → .average()
+        assertEquals(
+            5.5555,
+            items.single { it.subject == "Fizyka" }.average,
+            .0001
+        ) // (from details): 5.72727272  + 4,8 → .average()
     }
 
-    private fun getGrade(semesterId: Int, subject: String, value: Double, modifier: Double = 0.0, weight: Double = 1.0, entry: String = ""): Grade {
+    @Test
+    fun `calc both semesters average when both summary have same average from vulcan and second semester has no grades`() {
+        every { preferencesRepository.gradeAverageForceCalc } returns false
+        every { preferencesRepository.gradeAverageMode } returns GradeAverageMode.BOTH_SEMESTERS
+        every { preferencesRepository.isOptionalArithmeticAverage } returns false
+
+        coEvery { gradeRepository.getGrades(student, semesters[1], true) } returns
+                resourceFlow { firstGrades to firstSummaries }
+        coEvery { gradeRepository.getGrades(student, semesters[2], true) } returns
+            resourceFlow { listOf<Grade>() to firstSummaries }
+
+        val items = runBlocking {
+            gradeAverageProvider.getGradesDetailsWithAverage(
+                student,
+                semesters[2].semesterId,
+                true
+            ).getResult()
+        }
+
+        assertEquals(3.1, items.single { it.subject == "Fizyka" }.average, .0001)
+    }
+
+    private fun getGrade(
+        semesterId: Int,
+        subject: String,
+        value: Double,
+        modifier: Double = 0.0,
+        weight: Double = 1.0,
+        entry: String = ""
+    ): Grade {
         return Grade(
             studentId = 101,
             semesterId = semesterId,

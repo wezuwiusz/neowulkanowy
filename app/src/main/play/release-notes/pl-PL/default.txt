@@ -1,8 +1,9 @@
-Wersja 1.5.0
+Wersja 1.6.0
 
-- dodaliśmy możliwość dodawania własnych lekcji dodatkowych
-- dodaliśmy wsparcie dla różnych stref czasowych
-- dodaliśmy eksperymentalne wsparcie dla przedszkola
-- wprowadziliśmy też wiele innych mniejszych poprawek, poprawiających komfort używania aplikacji
+- dodaliśmy możliwość usuwania wielu wiadomości jednocześnie
+- dodaliśmy opcję szybkiego dodawania sprawdzianów do kalendarza
+- dodaliśmy średnią ucznia w wykresach ocen klasy
+- naprawiliśmy rzadki błąd dotyczący problemów z automatycznym odświeżaniem ekranu startowego
+- naprawiliśmy błąd z liczeniem średniej w drugim semestrze
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

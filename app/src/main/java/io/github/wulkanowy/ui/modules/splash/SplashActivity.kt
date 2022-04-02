@@ -42,7 +42,7 @@ class SplashActivity : BaseActivity<SplashPresenter, ViewBinding>(), SplashView 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().setKeepVisibleCondition { true }
+        installSplashScreen().setKeepOnScreenCondition { true }
 
         val externalLink = intent?.getStringExtra(EXTRA_EXTERNAL_URL)
         val startDestination = intent?.getSerializableExtra(EXTRA_START_DESTINATION) as Destination?

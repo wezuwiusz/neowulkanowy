@@ -105,7 +105,9 @@
     <string name="grade_statistics_semester">За семестр</string>
     <string name="grade_statistics_points">Баллы</string>
     <string name="grade_statistics_legend">Легенда</string>
-    <string name="grade_statistics_average">Средняя: %1$s</string>
+    <string name="grade_statistics_class_average">Средняя класса: %1$s</string>
+    <string name="grade_statistics_student_average">Ваша средний: %1$s</string>
+    <string name="grade_statistics_student_grade">Ваша оценка: %1$s</string>
     <string name="grade_statistics_average_class">Класс</string>
     <string name="grade_statistics_average_student">Студент</string>
     <plurals name="grade_number_item">
@@ -204,17 +206,17 @@
     <string name="additional_lessons_title">Дополнительные уроки</string>
     <string name="additional_lessons_button">Показать дополнительные уроки</string>
     <string name="additional_lessons_no_items">Нет информации о дополнительных уроках</string>
-    <string name="additional_lessons_add">New lesson</string>
-    <string name="additional_lessons_add_title">New additional lesson</string>
-    <string name="additional_lessons_add_success">Additional lesson added successfully</string>
-    <string name="additional_lessons_delete_success">Additional lesson deleted successfully</string>
-    <string name="additional_lessons_repeat">Repeat weekly</string>
-    <string name="additional_lessons_delete_title">Delete additional lesson</string>
-    <string name="additional_lessons_delete_one">Just this lesson</string>
-    <string name="additional_lessons_delete_series">All in the series</string>
-    <string name="additional_lessons_start">Start time</string>
-    <string name="additional_lessons_end">End time</string>
-    <string name="additional_lessons_end_time_error">End time must be greater than start time</string>
+    <string name="additional_lessons_add">Новый урок</string>
+    <string name="additional_lessons_add_title">Новый дополнительный урок</string>
+    <string name="additional_lessons_add_success">Дополнительный урок успешно добавлен</string>
+    <string name="additional_lessons_delete_success">Дополнительный урок успешно удален</string>
+    <string name="additional_lessons_repeat">Повторять еженедельно</string>
+    <string name="additional_lessons_delete_title">Удалить дополнительный урок</string>
+    <string name="additional_lessons_delete_one">Просто этот урок</string>
+    <string name="additional_lessons_delete_series">Все в серии</string>
+    <string name="additional_lessons_start">Время начала</string>
+    <string name="additional_lessons_end">Время окончания</string>
+    <string name="additional_lessons_end_time_error">Время окончания должно быть больше, чем время начала</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Итоговая посещаемость</string>
     <string name="attendance_absence_school">Отсутствие по школьным причинам</string>
@@ -264,10 +266,10 @@
         <item quantity="other">Новые экзамены</item>
     </plurals>
     <plurals name="exam_notify_new_item_content">
-        <item quantity="one">%d new exam</item>
-        <item quantity="few">%d new exams</item>
-        <item quantity="many">%d new exams</item>
-        <item quantity="other">%d new exams</item>
+        <item quantity="one">%d новый экзамен</item>
+        <item quantity="few">%d новый экзамен</item>
+        <item quantity="many">%d новый экзамен</item>
+        <item quantity="other">%d новых экзаменов</item>
     </plurals>
     <plurals name="exam_number_item">
         <item quantity="one">%d экзамен</item>
@@ -283,11 +285,12 @@
     <string name="message_no_items">Нет сообщений</string>
     <string name="message_from">От:</string>
     <string name="message_to">Кому:</string>
-    <string name="message_date">Дата: %s</string>
+    <string name="message_date">Дата: %1$s</string>
     <string name="message_reply">Ответ</string>
     <string name="message_forward">Переслать</string>
-    <string name="message_delete">Удалить</string>
-    <string name="message_move_to_bin">Перенести в корзину</string>
+    <string name="message_select_all">Выбрать всё</string>
+    <string name="message_unselect_all">Снять выбор</string>
+    <string name="message_move_to_trash">Перенести в корзину</string>
     <string name="message_delete_forever">Удалить навсегда</string>
     <string name="message_delete_success">Сообщение успешно удалено</string>
     <string name="message_share">Поделиться</string>
@@ -303,10 +306,10 @@
     <string name="message_read">Чтение: %s</string>
     <string name="message_read_by">Прочитано: %1$d из %2$d человек</string>
     <plurals name="message_number_item">
-        <item quantity="one">%d сообщение</item>
-        <item quantity="few">%d сообщения</item>
-        <item quantity="many">%d сообщений</item>
-        <item quantity="other">%d сообщений</item>
+        <item quantity="one">%1$d сообщение</item>
+        <item quantity="few">%1$d сообщений</item>
+        <item quantity="many">%1$d сообщений</item>
+        <item quantity="other">%1$d сообщений</item>
     </plurals>
     <plurals name="message_new_items">
         <item quantity="one">Новое сообщение</item>
@@ -322,6 +325,13 @@
         <item quantity="many">Вы получили %1$d новых сообщений</item>
         <item quantity="other">Вы получили %1$d новых сообщений</item>
     </plurals>
+    <plurals name="message_selected_messages_count">
+        <item quantity="one">%1$d выбрано</item>
+        <item quantity="few">%1$d выбрано</item>
+        <item quantity="many">%1$d выбрано</item>
+        <item quantity="other">%1$d выбрано</item>
+    </plurals>
+    <string name="message_messages_deleted">Сообщение удалено</string>
     <!--Note-->
     <string name="note_no_items">Нет информации о заметках</string>
     <string name="note_points">Баллы</string>
@@ -383,8 +393,8 @@
     </plurals>
     <!--Homework-->
     <string name="homework_no_items">Нет домашних заданий</string>
-    <string name="homework_mark_as_done">Отметить как выполненное</string>
-    <string name="homework_mark_as_undone">Отметить как невыполненное</string>
+    <string name="homework_mark_as_done">Завершено</string>
+    <string name="homework_mark_as_undone">Не завершено</string>
     <string name="homework_add">Добавить домашнюю работу</string>
     <string name="homework_add_success">Домашняя работа успешно добавлена</string>
     <string name="homework_delete_success">Домашняя работа успешно удалена</string>
@@ -647,6 +657,7 @@
     <string name="all_copied">Скопировано</string>
     <string name="all_undo">Отменить</string>
     <string name="all_change">Изменить</string>
+    <string name="all_add_to_calendar">Добавить в календарь</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Нет уроков</string>
     <string name="widget_timetable_theme_title">Выбрать тему</string>
@@ -679,9 +690,9 @@
     <string name="pref_notify_fix_sync_issues_message">На вашем устройстве могут быть проблемы с синхронизацией данных и уведомлениями.\n\nЧтобы их исправить, вам необходимо добавить Wulkanowy в авто-старт и выключить оптимизацию/экономию батареи в настройках устройства.</string>
     <string name="pref_notify_debug_switch">Показывать дебаг-уведомления</string>
     <string name="pref_notify_disabled_summary">Синхронизация отключена</string>
-    <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
+    <string name="pref_notify_notifications_piggyback_header">Официальные уведомления приложения</string>
     <string name="pref_notify_notifications_piggyback">Записывать официальные уведомления</string>
-    <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Удалить уведомления от официального приложения после захвата</string>
     <string name="pref_notification_piggyback_popup_title">Показывать push-уведомления</string>
     <string name="pref_notification_piggyback_popup_description">С помощью этой функции вы можете получить замену push-уведомлений, как в официальном приложении. Все, что вам нужно сделать, это разрешить Wulkanowy получать все уведомления в настройках системы.\n\nКак это работает?\nКогда вы получаете уведомление в Dziennik VULCAN, Wulkanowy будет уведомлен (это требует дополнительных прав) и запустит синхронизацию, чтобы отправить свое уведомление.\n\nТОЛЬКО ДЛЯ ПОЛЬЗОВАТЕЛЯ</string>
     <string name="pref_notification_exact_alarm_popup_title">Показывать уведомления о будущих уроках</string>
@@ -760,7 +771,7 @@
     <string name="update_failed">Не удалось обновить! Wulkanowy может работать некорректно. Рассмотрите возможность обновления</string>
     <!--Errors-->
     <string name="error_no_internet">Нет интернет-подключения</string>
-    <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>
+    <string name="error_invalid_device_datetime">Произошла ошибка. Проверьте часы вашего устройства</string>
     <string name="error_timeout">Не удалось подключиться к регистрации. Серверы могут быть перегружены. Пожалуйста, повторите попытку позже</string>
     <string name="error_login_failed">Не удалось загрузить данные. Пожалуйста, повторите попытку позже</string>
     <string name="error_password_change_required">Необходимо изменить пароль реестра</string>

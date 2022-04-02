@@ -11,8 +11,12 @@ import io.github.wulkanowy.data.mappers.mapPartialToStatisticItems
 import io.github.wulkanowy.data.mappers.mapPointsToStatisticsItems
 import io.github.wulkanowy.data.mappers.mapSemesterToStatisticItems
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
+import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.sync.Mutex
 import java.util.*
 import javax.inject.Inject
@@ -42,6 +46,7 @@ class GradeStatisticsRepository @Inject constructor(
         forceRefresh: Boolean,
     ) = networkBoundResource(
         mutex = partialMutex,
+        isResultEmpty = { it.isEmpty() },
         shouldFetch = {
             val isExpired = refreshHelper.shouldBeRefreshed(
                 key = getRefreshKey(partialCacheKey, semester)
@@ -63,20 +68,16 @@ class GradeStatisticsRepository @Inject constructor(
         mapResult = { items ->
             when (subjectName) {
                 "Wszystkie" -> {
-                    val numerator = items.map {
-                        it.classAverage.replace(",", ".").toDoubleOrNull() ?: .0
-                    }.filterNot { it == .0 }
-                    (items.reversed() + GradePartialStatistics(
+                    val summaryItem = GradePartialStatistics(
                         studentId = semester.studentId,
                         semesterId = semester.semesterId,
                         subject = subjectName,
-                        classAverage = if (numerator.isEmpty()) "" else numerator.average().let {
-                            "%.2f".format(Locale.FRANCE, it)
-                        },
-                        studentAverage = "",
+                        classAverage = items.map { it.classAverage }.getSummaryAverage(),
+                        studentAverage = items.map { it.studentAverage }.getSummaryAverage(),
                         classAmounts = items.map { it.classAmounts }.sumGradeAmounts(),
                         studentAmounts = items.map { it.studentAmounts }.sumGradeAmounts()
-                    )).reversed()
+                    )
+                    listOf(summaryItem) + items
                 }
                 else -> items.filter { it.subject == subjectName }
             }.mapPartialToStatisticItems()
@@ -90,6 +91,7 @@ class GradeStatisticsRepository @Inject constructor(
         forceRefresh: Boolean,
     ) = networkBoundResource(
         mutex = semesterMutex,
+        isResultEmpty = { it.isEmpty() },
         shouldFetch = {
             val isExpired = refreshHelper.shouldBeRefreshed(
                 key = getRefreshKey(semesterCacheKey, semester)
@@ -112,29 +114,29 @@ class GradeStatisticsRepository @Inject constructor(
             val itemsWithAverage = items.map { item ->
                 item.copy().apply {
                     val denominator = item.amounts.sum()
-                    average = if (denominator == 0) "" else {
+                    classAverage = if (denominator == 0) "" else {
                         (item.amounts.mapIndexed { gradeValue, amount ->
                             (gradeValue + 1) * amount
-                        }.sum().toDouble() / denominator).let {
-                            "%.2f".format(Locale.FRANCE, it)
-                        }
+                        }.sum().toDouble() / denominator).asAverageString()
                     }
                 }
             }
             when (subjectName) {
-                "Wszystkie" -> (itemsWithAverage.reversed() + GradeSemesterStatistics(
-                    studentId = semester.studentId,
-                    semesterId = semester.semesterId,
-                    subject = subjectName,
-                    amounts = itemsWithAverage.map { it.amounts }.sumGradeAmounts(),
-                    studentGrade = 0
-                ).apply {
-                    average = itemsWithAverage.mapNotNull {
-                        it.average.replace(",", ".").toDoubleOrNull()
-                    }.average().let {
-                        "%.2f".format(Locale.FRANCE, it)
+                "Wszystkie" -> {
+                    val summaryItem = GradeSemesterStatistics(
+                        studentId = semester.studentId,
+                        semesterId = semester.semesterId,
+                        subject = subjectName,
+                        amounts = itemsWithAverage.map { it.amounts }.sumGradeAmounts(),
+                        studentGrade = 0,
+                    ).apply {
+                        classAverage = itemsWithAverage.map { it.classAverage }.getSummaryAverage()
+                        studentAverage = items
+                            .mapNotNull { summary -> summary.studentGrade.takeIf { it != 0 } }
+                            .average().asAverageString()
                     }
-                }).reversed()
+                    listOf(summaryItem) + itemsWithAverage
+                }
                 else -> itemsWithAverage.filter { it.subject == subjectName }
             }.mapSemesterToStatisticItems()
         }
@@ -147,6 +149,7 @@ class GradeStatisticsRepository @Inject constructor(
         forceRefresh: Boolean,
     ) = networkBoundResource(
         mutex = pointsMutex,
+        isResultEmpty = { it.isEmpty() },
         shouldFetch = {
             val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(pointsCacheKey, semester))
             it.isEmpty() || forceRefresh || isExpired
@@ -170,6 +173,19 @@ class GradeStatisticsRepository @Inject constructor(
             }.mapPointsToStatisticsItems()
         }
     )
+
+    private fun List<String>.getSummaryAverage(): String {
+        val averages = mapNotNull {
+            it.replace(",", ".").toDoubleOrNull()
+        }
+
+        return averages.average()
+            .asAverageString()
+            .takeIf { averages.isNotEmpty() }
+            .orEmpty()
+    }
+
+    private fun Double.asAverageString(): String = "%.2f".format(Locale.FRANCE, this)
 
     private fun List<List<Int>>.sumGradeAmounts(): List<Int> {
         val result = mutableListOf(0, 0, 0, 0, 0, 0)

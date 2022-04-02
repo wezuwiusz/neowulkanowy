@@ -1,7 +1,6 @@
 package io.github.wulkanowy.ui.modules.dashboard
 
-import io.github.wulkanowy.data.Resource
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
@@ -10,7 +9,6 @@ import io.github.wulkanowy.data.repositories.*
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.calculatePercentage
-import io.github.wulkanowy.utils.flowWithResourceIn
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -225,27 +223,26 @@ class DashboardPresenter @Inject constructor(
             val semester = semesterRepository.getCurrentSemester(student)
             val selectedTiles = preferencesRepository.selectedDashboardTiles
 
+            val flowSuccess = flowOf(Resource.Success(null))
             val luckyNumberFlow = luckyNumberRepository.getLuckyNumber(student, forceRefresh)
-                .map {
-                    if (it.data == null) {
-                        it.copy(data = LuckyNumber(0, LocalDate.now(), 0))
-                    } else it
+                .mapResourceData {
+                    it ?: LuckyNumber(0, LocalDate.now(), 0)
                 }
-                .takeIf { DashboardItem.Tile.LUCKY_NUMBER in selectedTiles } ?: flowOf(null)
+                .takeIf { DashboardItem.Tile.LUCKY_NUMBER in selectedTiles } ?: flowSuccess
 
             val messageFLow = messageRepository.getMessages(
                 student = student,
                 semester = semester,
                 folder = MessageFolder.RECEIVED,
                 forceRefresh = forceRefresh
-            ).takeIf { DashboardItem.Tile.MESSAGES in selectedTiles } ?: flowOf(null)
+            ).takeIf { DashboardItem.Tile.MESSAGES in selectedTiles } ?: flowSuccess
 
             val attendanceFlow = attendanceSummaryRepository.getAttendanceSummary(
                 student = student,
                 semester = semester,
                 subjectId = -1,
                 forceRefresh = forceRefresh
-            ).takeIf { DashboardItem.Tile.ATTENDANCE in selectedTiles } ?: flowOf(null)
+            ).takeIf { DashboardItem.Tile.ATTENDANCE in selectedTiles } ?: flowSuccess
 
             emitAll(
                 combine(
@@ -253,16 +250,13 @@ class DashboardPresenter @Inject constructor(
                     messageFLow,
                     attendanceFlow
                 ) { luckyNumberResource, messageResource, attendanceResource ->
-                    val error =
-                        luckyNumberResource?.error ?: messageResource?.error ?: attendanceResource?.error
-                    error?.let { throw it }
+                    val resList = listOf(luckyNumberResource, messageResource, attendanceResource)
+                    resList.firstNotNullOfOrNull { it.errorOrNull }?.let { throw it }
+                    val isLoading = resList.any { it is Resource.Loading }
 
-                    val luckyNumber = luckyNumberResource?.data?.luckyNumber
-                    val messageCount = messageResource?.data?.count { it.unread }
-                    val attendancePercentage = attendanceResource?.data?.calculatePercentage()
-
-                    val isLoading =
-                        luckyNumberResource?.status == Status.LOADING || messageResource?.status == Status.LOADING || attendanceResource?.status == Status.LOADING
+                    val luckyNumber = luckyNumberResource.dataOrNull?.luckyNumber
+                    val messageCount = messageResource.dataOrNull?.count { it.unread }
+                    val attendancePercentage = attendanceResource.dataOrNull?.calculatePercentage()
 
                     DashboardItem.HorizontalGroup(
                         isLoading = isLoading,
@@ -295,72 +289,69 @@ class DashboardPresenter @Inject constructor(
                 )
                 errorHandler.dispatch(it)
             }
-            .launch("horizontal_group")
+            .launch("horizontal_group ${if (forceRefresh) "-forceRefresh" else ""}")
     }
 
     private fun loadGrades(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn {
+        flatResourceFlow {
             val semester = semesterRepository.getCurrentSemester(student)
 
             gradeRepository.getGrades(student, semester, forceRefresh)
-        }.map { originalResource ->
-            val filteredSubjectWithGrades = originalResource.data?.first
-                .orEmpty()
-                .filter { it.date >= LocalDate.now().minusDays(7) }
-                .groupBy { it.subject }
-                .mapValues { entry ->
-                    entry.value
-                        .take(5)
-                        .sortedByDescending { it.date }
-                }
-                .toList()
-                .sortedByDescending { (_, grades) -> grades[0].date }
-                .toMap()
+        }
+            .mapResourceData { (details, _) ->
+                val filteredSubjectWithGrades = details
+                    .filter { it.date >= LocalDate.now().minusDays(7) }
+                    .groupBy { it.subject }
+                    .mapValues { entry ->
+                        entry.value
+                            .take(5)
+                            .sortedByDescending { it.date }
+                    }
+                    .toList()
+                    .sortedByDescending { (_, grades) -> grades[0].date }
+                    .toMap()
 
-            Resource(
-                status = originalResource.status,
-                data = filteredSubjectWithGrades.takeIf { originalResource.data != null },
-                error = originalResource.error
-            )
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> {
-                    Timber.i("Loading dashboard grades data started")
-                    if (forceRefresh) return@onEach
+                filteredSubjectWithGrades
+            }
+            .onEach {
+                when (it) {
+                    is Resource.Loading -> {
+                        Timber.i("Loading dashboard grades data started")
+                        if (forceRefresh) return@onEach
+                        updateData(
+                            DashboardItem.Grades(
+                                subjectWithGrades = it.dataOrNull,
+                                gradeTheme = preferencesRepository.gradeColorTheme,
+                                isLoading = true
+                            ), forceRefresh
+                        )
 
-                    updateData(
-                        DashboardItem.Grades(
-                            subjectWithGrades = it.data,
-                            gradeTheme = preferencesRepository.gradeColorTheme,
-                            isLoading = true
-                        ), forceRefresh
-                    )
-
-                    if (!it.data.isNullOrEmpty()) {
-                        firstLoadedItemList += DashboardItem.Type.GRADES
+                        if (!it.dataOrNull.isNullOrEmpty()) {
+                            firstLoadedItemList += DashboardItem.Type.GRADES
+                        }
+                    }
+                    is Resource.Success -> {
+                        Timber.i("Loading dashboard grades result: Success")
+                        updateData(
+                            DashboardItem.Grades(
+                                subjectWithGrades = it.data,
+                                gradeTheme = preferencesRepository.gradeColorTheme
+                            ),
+                            forceRefresh
+                        )
+                    }
+                    is Resource.Error -> {
+                        Timber.i("Loading dashboard grades result: An exception occurred")
+                        errorHandler.dispatch(it.error)
+                        updateData(DashboardItem.Grades(error = it.error), forceRefresh)
                     }
                 }
-                Status.SUCCESS -> {
-                    Timber.i("Loading dashboard grades result: Success")
-                    updateData(
-                        DashboardItem.Grades(
-                            subjectWithGrades = it.data,
-                            gradeTheme = preferencesRepository.gradeColorTheme
-                        ),
-                        forceRefresh
-                    )
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading dashboard grades result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                    updateData(DashboardItem.Grades(error = it.error), forceRefresh)
-                }
             }
-        }.launch("dashboard_grades")
+            .launchWithUniqueRefreshJob("dashboard_grades", forceRefresh)
     }
 
     private fun loadLessons(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn {
+        flatResourceFlow {
             val semester = semesterRepository.getCurrentSemester(student)
             val date = LocalDate.now().nextOrSameSchoolDay
 
@@ -371,40 +362,41 @@ class DashboardPresenter @Inject constructor(
                 end = date.plusDays(1),
                 forceRefresh = forceRefresh
             )
+        }
+            .onEach {
+                when (it) {
+                    is Resource.Loading -> {
+                        Timber.i("Loading dashboard lessons data started")
+                        if (forceRefresh) return@onEach
+                        updateData(
+                            DashboardItem.Lessons(it.dataOrNull, isLoading = true),
+                            forceRefresh
+                        )
 
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> {
-                    Timber.i("Loading dashboard lessons data started")
-                    if (forceRefresh) return@onEach
-                    updateData(
-                        DashboardItem.Lessons(it.data, isLoading = true),
-                        forceRefresh
-                    )
-
-                    if (!it.data?.lessons.isNullOrEmpty()) {
-                        firstLoadedItemList += DashboardItem.Type.LESSONS
+                        if (!it.dataOrNull?.lessons.isNullOrEmpty()) {
+                            firstLoadedItemList += DashboardItem.Type.LESSONS
+                        }
+                    }
+                    is Resource.Success -> {
+                        Timber.i("Loading dashboard lessons result: Success")
+                        updateData(
+                            DashboardItem.Lessons(it.data), forceRefresh
+                        )
+                    }
+                    is Resource.Error -> {
+                        Timber.i("Loading dashboard lessons result: An exception occurred")
+                        errorHandler.dispatch(it.error)
+                        updateData(
+                            DashboardItem.Lessons(error = it.error), forceRefresh
+                        )
                     }
                 }
-                Status.SUCCESS -> {
-                    Timber.i("Loading dashboard lessons result: Success")
-                    updateData(
-                        DashboardItem.Lessons(it.data), forceRefresh
-                    )
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading dashboard lessons result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                    updateData(
-                        DashboardItem.Lessons(error = it.error), forceRefresh
-                    )
-                }
             }
-        }.launch("dashboard_lessons")
+            .launchWithUniqueRefreshJob("dashboard_lessons", forceRefresh)
     }
 
     private fun loadHomework(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn {
+        flatResourceFlow {
             val semester = semesterRepository.getCurrentSemester(student)
             val date = LocalDate.now().nextOrSameSchoolDay
 
@@ -415,73 +407,79 @@ class DashboardPresenter @Inject constructor(
                 end = date,
                 forceRefresh = forceRefresh
             )
-        }.map { homeworkResource ->
-            val currentDate = LocalDate.now()
+        }
+            .mapResourceData { homework ->
+                val currentDate = LocalDate.now()
 
-            val filteredHomework = homeworkResource.data
-                ?.filter { (it.date.isAfter(currentDate) || it.date == currentDate) && !it.isDone }
-                ?.sortedBy { it.date }
+                val filteredHomework = homework.filter {
+                    (it.date.isAfter(currentDate) || it.date == currentDate) && !it.isDone
+                }.sortedBy { it.date }
 
-            homeworkResource.copy(data = filteredHomework)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> {
-                    Timber.i("Loading dashboard homework data started")
-                    if (forceRefresh) return@onEach
-                    updateData(
-                        DashboardItem.Homework(it.data ?: emptyList(), isLoading = true),
-                        forceRefresh
-                    )
+                filteredHomework
+            }
+            .onEach {
+                when (it) {
+                    is Resource.Loading -> {
+                        Timber.i("Loading dashboard homework data started")
+                        if (forceRefresh) return@onEach
+                        val data = it.dataOrNull.orEmpty()
+                        updateData(
+                            DashboardItem.Homework(data, isLoading = true),
+                            forceRefresh
+                        )
 
-                    if (!it.data.isNullOrEmpty()) {
-                        firstLoadedItemList += DashboardItem.Type.HOMEWORK
+                        if (data.isNotEmpty()) {
+                            firstLoadedItemList += DashboardItem.Type.HOMEWORK
+                        }
+                    }
+                    is Resource.Success -> {
+                        Timber.i("Loading dashboard homework result: Success")
+                        updateData(DashboardItem.Homework(it.data), forceRefresh)
+                    }
+                    is Resource.Error -> {
+                        Timber.i("Loading dashboard homework result: An exception occurred")
+                        errorHandler.dispatch(it.error)
+                        updateData(DashboardItem.Homework(error = it.error), forceRefresh)
                     }
                 }
-                Status.SUCCESS -> {
-                    Timber.i("Loading dashboard homework result: Success")
-                    updateData(DashboardItem.Homework(it.data ?: emptyList()), forceRefresh)
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading dashboard homework result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                    updateData(DashboardItem.Homework(error = it.error), forceRefresh)
-                }
             }
-        }.launch("dashboard_homework")
+            .launchWithUniqueRefreshJob("dashboard_homework", forceRefresh)
     }
 
     private fun loadSchoolAnnouncements(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn {
+        flatResourceFlow {
             schoolAnnouncementRepository.getSchoolAnnouncements(student, forceRefresh)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> {
-                    Timber.i("Loading dashboard announcements data started")
-                    if (forceRefresh) return@onEach
-                    updateData(
-                        DashboardItem.Announcements(it.data ?: emptyList(), isLoading = true),
-                        forceRefresh
-                    )
+        }
+            .onEach {
+                when (it) {
+                    is Resource.Loading -> {
+                        Timber.i("Loading dashboard announcements data started")
+                        if (forceRefresh) return@onEach
+                        updateData(
+                            DashboardItem.Announcements(it.dataOrNull.orEmpty(), isLoading = true),
+                            forceRefresh
+                        )
 
-                    if (!it.data.isNullOrEmpty()) {
-                        firstLoadedItemList += DashboardItem.Type.ANNOUNCEMENTS
+                        if (!it.dataOrNull.isNullOrEmpty()) {
+                            firstLoadedItemList += DashboardItem.Type.ANNOUNCEMENTS
+                        }
+                    }
+                    is Resource.Success -> {
+                        Timber.i("Loading dashboard announcements result: Success")
+                        updateData(DashboardItem.Announcements(it.data), forceRefresh)
+                    }
+                    is Resource.Error -> {
+                        Timber.i("Loading dashboard announcements result: An exception occurred")
+                        errorHandler.dispatch(it.error)
+                        updateData(DashboardItem.Announcements(error = it.error), forceRefresh)
                     }
                 }
-                Status.SUCCESS -> {
-                    Timber.i("Loading dashboard announcements result: Success")
-                    updateData(DashboardItem.Announcements(it.data ?: emptyList()), forceRefresh)
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading dashboard announcements result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                    updateData(DashboardItem.Announcements(error = it.error), forceRefresh)
-                }
             }
-        }.launch("dashboard_announcements")
+            .launchWithUniqueRefreshJob("dashboard_announcements", forceRefresh)
     }
 
     private fun loadExams(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn {
+        flatResourceFlow {
             val semester = semesterRepository.getCurrentSemester(student)
 
             examRepository.getExams(
@@ -492,40 +490,37 @@ class DashboardPresenter @Inject constructor(
                 forceRefresh = forceRefresh
             )
         }
-            .map { examResource ->
-                val sortedExams = examResource.data?.sortedBy { it.date }
-
-                examResource.copy(data = sortedExams)
-            }
+            .mapResourceData { exams -> exams.sortedBy { exam -> exam.date } }
             .onEach {
-                when (it.status) {
-                    Status.LOADING -> {
+                when (it) {
+                    is Resource.Loading -> {
                         Timber.i("Loading dashboard exams data started")
                         if (forceRefresh) return@onEach
                         updateData(
-                            DashboardItem.Exams(it.data.orEmpty(), isLoading = true),
+                            DashboardItem.Exams(it.dataOrNull.orEmpty(), isLoading = true),
                             forceRefresh
                         )
 
-                        if (!it.data.isNullOrEmpty()) {
+                        if (!it.dataOrNull.isNullOrEmpty()) {
                             firstLoadedItemList += DashboardItem.Type.EXAMS
                         }
                     }
-                    Status.SUCCESS -> {
+                    is Resource.Success -> {
                         Timber.i("Loading dashboard exams result: Success")
-                        updateData(DashboardItem.Exams(it.data ?: emptyList()), forceRefresh)
+                        updateData(DashboardItem.Exams(it.data), forceRefresh)
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         Timber.i("Loading dashboard exams result: An exception occurred")
-                        errorHandler.dispatch(it.error!!)
+                        errorHandler.dispatch(it.error)
                         updateData(DashboardItem.Exams(error = it.error), forceRefresh)
                     }
                 }
-            }.launch("dashboard_exams")
+            }
+            .launchWithUniqueRefreshJob("dashboard_exams", forceRefresh)
     }
 
     private fun loadConferences(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn {
+        flatResourceFlow {
             val semester = semesterRepository.getCurrentSemester(student)
 
             conferenceRepository.getConferences(
@@ -534,59 +529,62 @@ class DashboardPresenter @Inject constructor(
                 forceRefresh = forceRefresh,
                 startDate = Instant.now(),
             )
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> {
-                    Timber.i("Loading dashboard conferences data started")
-                    if (forceRefresh) return@onEach
-                    updateData(
-                        DashboardItem.Conferences(it.data ?: emptyList(), isLoading = true),
-                        forceRefresh
-                    )
+        }
+            .onEach {
+                when (it) {
+                    is Resource.Loading -> {
+                        Timber.i("Loading dashboard conferences data started")
+                        if (forceRefresh) return@onEach
+                        updateData(
+                            DashboardItem.Conferences(it.dataOrNull.orEmpty(), isLoading = true),
+                            forceRefresh
+                        )
 
-                    if (!it.data.isNullOrEmpty()) {
-                        firstLoadedItemList += DashboardItem.Type.CONFERENCES
+                        if (!it.dataOrNull.isNullOrEmpty()) {
+                            firstLoadedItemList += DashboardItem.Type.CONFERENCES
+                        }
+                    }
+                    is Resource.Success -> {
+                        Timber.i("Loading dashboard conferences result: Success")
+                        updateData(DashboardItem.Conferences(it.data), forceRefresh)
+                    }
+                    is Resource.Error -> {
+                        Timber.i("Loading dashboard conferences result: An exception occurred")
+                        errorHandler.dispatch(it.error)
+                        updateData(DashboardItem.Conferences(error = it.error), forceRefresh)
                     }
                 }
-                Status.SUCCESS -> {
-                    Timber.i("Loading dashboard conferences result: Success")
-                    updateData(DashboardItem.Conferences(it.data ?: emptyList()), forceRefresh)
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading dashboard conferences result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
-                    updateData(DashboardItem.Conferences(error = it.error), forceRefresh)
-                }
             }
-        }.launch("dashboard_conferences")
+            .launchWithUniqueRefreshJob("dashboard_conferences", forceRefresh)
     }
 
     private fun loadAdminMessage(student: Student, forceRefresh: Boolean) {
-        flowWithResourceIn { adminMessageRepository.getAdminMessages(student) }
-            .map {
-                val isDismissed = it.data?.id in preferencesRepository.dismissedAdminMessageIds
-                it.copy(data = it.data.takeUnless { isDismissed })
+        flatResourceFlow { adminMessageRepository.getAdminMessages(student) }
+            .filter {
+                val data = it.dataOrNull ?: return@filter true
+                val isDismissed = data.id in preferencesRepository.dismissedAdminMessageIds
+                !isDismissed
             }
             .onEach {
-                when (it.status) {
-                    Status.LOADING -> {
+                when (it) {
+                    is Resource.Loading -> {
                         Timber.i("Loading dashboard admin message data started")
                         if (forceRefresh) return@onEach
                         updateData(DashboardItem.AdminMessages(), forceRefresh)
                     }
-                    Status.SUCCESS -> {
+                    is Resource.Success -> {
                         Timber.i("Loading dashboard admin message result: Success")
                         updateData(
                             dashboardItem = DashboardItem.AdminMessages(adminMessage = it.data),
                             forceRefresh = forceRefresh
                         )
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         Timber.i("Loading dashboard admin message result: An exception occurred")
-                        errorHandler.dispatch(it.error!!)
+                        errorHandler.dispatch(it.error)
                         updateData(
                             dashboardItem = DashboardItem.AdminMessages(
-                                adminMessage = it.data,
+                                adminMessage = null,
                                 error = it.error
                             ),
                             forceRefresh = forceRefresh
@@ -594,7 +592,7 @@ class DashboardPresenter @Inject constructor(
                     }
                 }
             }
-            .launch("dashboard_admin_messages")
+            .launchWithUniqueRefreshJob("dashboard_admin_messages", forceRefresh)
     }
 
     private fun updateData(dashboardItem: DashboardItem, forceRefresh: Boolean) {
@@ -731,6 +729,20 @@ class DashboardPresenter @Inject constructor(
             }
 
             dashboardItemsPosition?.getOrDefault(tile.type, defaultPosition) ?: tile.type.ordinal
+        }
+    }
+
+    private fun Flow<Resource<*>>.launchWithUniqueRefreshJob(name: String, forceRefresh: Boolean) {
+        val jobName = if (forceRefresh) "$name-forceRefresh" else name
+
+        if (forceRefresh) {
+            onEach {
+                if (it is Resource.Success) {
+                    cancelJobs(jobName)
+                }
+            }.launch(jobName)
+        } else {
+            launch(jobName)
         }
     }
 }

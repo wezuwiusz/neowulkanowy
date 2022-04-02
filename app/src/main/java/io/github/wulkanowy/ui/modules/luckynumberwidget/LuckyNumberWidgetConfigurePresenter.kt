@@ -1,14 +1,14 @@
 package io.github.wulkanowy.ui.modules.luckynumberwidget
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetProvider.Companion.getStudentWidgetKey
 import io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetProvider.Companion.getThemeWidgetKey
-import io.github.wulkanowy.utils.flowWithResource
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -47,16 +47,15 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
     }
 
     private fun loadData() {
-        flowWithResource { studentRepository.getSavedStudents(false) }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.d("Lucky number widget configure students data load")
-                Status.SUCCESS -> {
+        resourceFlow { studentRepository.getSavedStudents(false) }.onEach {
+            when (it) {
+                is Resource.Loading -> Timber.d("Lucky number widget configure students data load")
+                is Resource.Success -> {
                     val selectedStudentId = appWidgetId?.let { id ->
                         sharedPref.getLong(getStudentWidgetKey(id), 0)
                     } ?: -1
-
                     when {
-                        it.data!!.isEmpty() -> view?.openLoginView()
+                        it.data.isEmpty() -> view?.openLoginView()
                         it.data.size == 1 -> {
                             selectedStudent = it.data.single().student
                             view?.showThemeDialog()
@@ -64,7 +63,7 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
                         else -> view?.updateData(it.data, selectedStudentId)
                     }
                 }
-                Status.ERROR -> errorHandler.dispatch(it.error!!)
+                is Resource.Error -> errorHandler.dispatch(it.error)
             }
         }.launch()
     }

@@ -22,8 +22,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 103
-        versionName "1.5.0"
+        versionCode 104
+        versionName "1.6.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -73,6 +73,8 @@ android {
             buildConfigField "String", "MESSAGES_BASE_URL", "\"https://messages.wulkanowy.net.pl\""
         }
         debug {
+            minifyEnabled false
+            shrinkResources false
             resValue "string", "app_name", "Wulkanowy DEV"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
@@ -169,14 +171,14 @@ huaweiPublish {
 ext {
     work_manager = "2.7.1"
     android_hilt = "1.0.0"
-    room = "2.4.0"
+    room = "2.4.2"
     chucker = "3.5.2"
-    mockk = "1.12.1"
+    mockk = "1.12.2"
     coroutines = "1.6.0"
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:1.5.0"
+    implementation "io.github.wulkanowy:sdk:1.6.0"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
@@ -184,19 +186,19 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     implementation "androidx.core:core-ktx:1.7.0"
-    implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
     implementation "androidx.activity:activity-ktx:1.4.0"
-    implementation "androidx.appcompat:appcompat:1.4.0"
-    implementation "androidx.fragment:fragment-ktx:1.4.0"
+    implementation "androidx.appcompat:appcompat:1.4.1"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation "androidx.annotation:annotation:1.3.0"
 
-    implementation "androidx.preference:preference-ktx:1.1.1"
+    implementation "androidx.preference:preference-ktx:1.2.0"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.2"
-    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
-    implementation "com.google.android.material:material:1.4.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.3"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
+    implementation "com.google.android.material:material:1.5.0"
     implementation "com.github.wulkanowy:material-chips-input:2.3.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
     implementation 'com.github.lopspower:CircularImageView:4.2.0'
@@ -204,7 +206,7 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_manager"
     playImplementation "androidx.work:work-gcm:$work_manager"
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-ktx:$room"
@@ -228,24 +230,25 @@ dependencies {
     implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
     implementation "io.coil-kt:coil:1.4.0"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
-    implementation 'me.xdrop:fuzzywuzzy:1.3.1'
+    implementation 'me.xdrop:fuzzywuzzy:1.4.0'
     implementation 'com.fredporciuncula:flow-preferences:1.6.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:29.0.3')
+    playImplementation platform('com.google.firebase:firebase-bom:29.3.0')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-messaging:'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
-    playImplementation 'com.google.android.play:core:1.10.2'
+    playImplementation 'com.google.android.play:core:1.10.3'
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
-    playImplementation 'com.google.android.gms:play-services-ads:20.5.0'
+    playImplementation 'com.google.android.gms:play-services-ads:20.6.0'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:6.3.2.300'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.3.200'
+    hmsImplementation 'com.huawei.hms:hianalytics:6.4.1.300'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.5.200'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
     debugImplementation "com.github.ChuckerTeam.Chucker:library:$chucker"
     debugImplementation 'com.github.amitshekhariitbhu.Android-Debug-Database:debug-db:1.0.6'
+    debugImplementation 'com.github.haroldadmin:WhatTheStack:1.0.0-alpha04'
 
     testImplementation "junit:junit:4.13.2"
     testImplementation "io.mockk:mockk:$mockk"

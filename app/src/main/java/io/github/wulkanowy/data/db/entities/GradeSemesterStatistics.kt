@@ -24,5 +24,8 @@ data class GradeSemesterStatistics(
     var id: Long = 0
 
     @Transient
-    var average: String = ""
+    var classAverage: String = ""
+
+    @Transient
+    var studentAverage: String = ""
 }

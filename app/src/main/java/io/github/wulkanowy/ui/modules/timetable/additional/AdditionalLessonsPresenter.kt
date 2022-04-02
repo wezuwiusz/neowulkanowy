@@ -1,23 +1,14 @@
 package io.github.wulkanowy.ui.modules.timetable.additional
 
 import android.annotation.SuppressLint
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.TimetableAdditional
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.capitalise
-import io.github.wulkanowy.utils.flowWithResourceIn
-import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
-import io.github.wulkanowy.utils.isHolidays
-import io.github.wulkanowy.utils.nextOrSameSchoolDay
-import io.github.wulkanowy.utils.nextSchoolDay
-import io.github.wulkanowy.utils.previousSchoolDay
-import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
@@ -137,39 +128,44 @@ class AdditionalLessonsPresenter @Inject constructor(
     private fun loadData(date: LocalDate, forceRefresh: Boolean = false) {
         currentDate = date
 
-        flowWithResourceIn {
+        flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            timetableRepository.getTimetable(student, semester, date, date, forceRefresh, true)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Loading additional lessons data started")
-                Status.SUCCESS -> {
-                    Timber.i("Loading additional lessons lessons result: Success")
-                    view?.apply {
-                        updateData(it.data!!.additional.sortedBy { item -> item.start })
-                        showEmpty(it.data.additional.isEmpty())
-                        showErrorView(false)
-                        showContent(it.data.additional.isNotEmpty())
-                    }
-                    analytics.logEvent(
-                        "load_data",
-                        "type" to "additional_lessons",
-                        "items" to it.data!!.additional.size
-                    )
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading additional lessons result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+            timetableRepository.getTimetable(
+                student = student,
+                semester = semester,
+                start = date,
+                end = date,
+                forceRefresh = forceRefresh,
+                refreshAdditional = true,
+                timetableType = TimetableRepository.TimetableType.ADDITIONAL
+            )
+        }
+            .logResourceStatus("load additional lessons")
+            .onResourceData {
+                view?.apply {
+                    updateData(it.additional.sortedBy { item -> item.start })
+                    showEmpty(it.additional.isEmpty())
+                    showErrorView(false)
+                    showContent(it.additional.isNotEmpty())
                 }
             }
-        }.afterLoading {
-            view?.run {
-                hideRefresh()
-                showProgress(false)
-                enableSwipe(true)
+            .onResourceSuccess {
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "additional_lessons",
+                    "items" to it.additional.size
+                )
             }
-        }.launch()
+            .onResourceNotLoading {
+                view?.run {
+                    hideRefresh()
+                    showProgress(false)
+                    enableSwipe(true)
+                }
+            }
+            .onResourceError(errorHandler::dispatch)
+            .launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

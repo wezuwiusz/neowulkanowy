@@ -21,10 +21,7 @@ class NewSchoolAnnouncementNotification @Inject constructor(
     suspend fun notify(items: List<SchoolAnnouncement>, student: Student) {
         val notificationDataList = items.map {
             NotificationData(
-                intentToStart = SplashActivity.getStartIntent(
-                    context = context,
-                    destination = Destination.SchoolAnnouncement
-                ),
+                destination = Destination.SchoolAnnouncement,
                 title = context.getPlural(
                     R.plurals.school_announcement_notify_new_item_title,
                     1
@@ -34,10 +31,7 @@ class NewSchoolAnnouncementNotification @Inject constructor(
         }
         val groupNotificationData = GroupNotificationData(
             type = NotificationType.NEW_ANNOUNCEMENT,
-            intentToStart = SplashActivity.getStartIntent(
-                context = context,
-                destination = Destination.SchoolAnnouncement
-            ),
+            destination = Destination.SchoolAnnouncement,
             title = context.getPlural(
                 R.plurals.school_announcement_notify_new_item_title,
                 items.size

@@ -2,14 +2,8 @@ package io.github.wulkanowy.ui.modules.attendance
 
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.View.GONE
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.*
+import android.view.View.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ActionMode
 import androidx.core.view.isVisible
@@ -68,7 +62,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
-            inflater.inflate(R.menu.context_menu_excuse, menu)
+            inflater.inflate(R.menu.context_menu_attendance, menu)
             return true
         }
 

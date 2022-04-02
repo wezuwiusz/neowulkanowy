@@ -1,21 +1,13 @@
 package io.github.wulkanowy.ui.modules.homework
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.data.repositories.HomeworkRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResourceIn
-import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
-import io.github.wulkanowy.utils.isHolidays
-import io.github.wulkanowy.utils.monday
-import io.github.wulkanowy.utils.nextOrSameSchoolDay
-import io.github.wulkanowy.utils.sunday
-import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
@@ -89,61 +81,59 @@ class HomeworkPresenter @Inject constructor(
         flow {
             val student = studentRepository.getCurrentStudent()
             emit(semesterRepository.getCurrentSemester(student))
-        }.catch {
-            Timber.i("Loading semester result: An exception occurred")
-        }.onEach {
-            baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
-            currentDate = baseDate
-            reloadNavigation()
-        }.launch("holidays")
+        }
+            .catch { Timber.i("Loading semester result: An exception occurred") }
+            .onEach {
+                baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
+                currentDate = baseDate
+                reloadNavigation()
+            }
+            .launch("holidays")
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading homework data started")
 
-        flowWithResourceIn {
+        flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
-            homeworkRepository.getHomework(student, semester, currentDate, currentDate, forceRefresh)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> {
-                    if (!it.data.isNullOrEmpty()) {
-                        view?.run {
-                            enableSwipe(true)
-                            showRefresh(true)
-                            showProgress(false)
-                            showContent(true)
-                            updateData(createHomeworkItem(it.data))
-                        }
-                    }
-                }
-                Status.SUCCESS -> {
-                    Timber.i("Loading homework result: Success")
-                    view?.apply {
-                        updateData(createHomeworkItem(it.data!!))
-                        showEmpty(it.data.isEmpty())
-                        showErrorView(false)
-                        showContent(it.data.isNotEmpty())
-                    }
-                    analytics.logEvent(
-                        "load_data",
-                        "type" to "homework",
-                        "items" to it.data!!.size
-                    )
-                }
-                Status.ERROR -> {
-                    Timber.i("Loading homework result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+            homeworkRepository.getHomework(
+                student = student,
+                semester = semester,
+                start = currentDate,
+                end = currentDate,
+                forceRefresh = forceRefresh
+            )
+        }
+            .logResourceStatus("loading homework")
+            .mapResourceData { createHomeworkItem(it) }
+            .onResourceData {
+                view?.run {
+                    enableSwipe(true)
+                    showProgress(false)
+                    showErrorView(false)
+                    showContent(it.isNotEmpty())
+                    showEmpty(it.isEmpty())
+                    updateData(it)
                 }
             }
-        }.afterLoading {
-            view?.run {
-                showRefresh(false)
-                showProgress(false)
-                enableSwipe(true)
+            .onResourceIntermediate { view?.showRefresh(true) }
+            .onResourceSuccess {
+                analytics.logEvent(
+                    "load_data",
+                    "type" to "homework",
+                    "items" to it.size
+                )
             }
-        }.launch()
+            .onResourceNotLoading {
+                view?.run {
+                    enableSwipe(true)
+                    showProgress(false)
+                    showRefresh(false)
+                }
+            }
+            .onResourceError(errorHandler::dispatch)
+            .launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {
@@ -159,9 +149,10 @@ class HomeworkPresenter @Inject constructor(
 
     private fun createHomeworkItem(items: List<Homework>): List<HomeworkItem<*>> {
         return items.groupBy { it.date }.toSortedMap().map { (date, exams) ->
-            listOf(HomeworkItem(date, HomeworkItem.ViewType.HEADER)) + exams.reversed().map { exam ->
-                HomeworkItem(exam, HomeworkItem.ViewType.ITEM)
-            }
+            listOf(HomeworkItem(date, HomeworkItem.ViewType.HEADER)) + exams.reversed()
+                .map { exam ->
+                    HomeworkItem(exam, HomeworkItem.ViewType.ITEM)
+                }
         }.flatten()
     }
 
@@ -184,8 +175,10 @@ class HomeworkPresenter @Inject constructor(
         view?.apply {
             showPreButton(!currentDate.minusDays(7).isHolidays)
             showNextButton(!currentDate.plusDays(7).isHolidays)
-            updateNavigationWeek("${currentDate.monday.toFormattedString("dd.MM")} - " +
-                currentDate.sunday.toFormattedString("dd.MM"))
+            updateNavigationWeek(
+                "${currentDate.monday.toFormattedString("dd.MM")} - " +
+                        currentDate.sunday.toFormattedString("dd.MM")
+            )
         }
     }
 }

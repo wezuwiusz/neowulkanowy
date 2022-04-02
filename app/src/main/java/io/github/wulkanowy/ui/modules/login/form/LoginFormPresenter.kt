@@ -1,16 +1,13 @@
 package io.github.wulkanowy.ui.modules.login.form
 
 import androidx.core.net.toUri
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.ifNullOrBlank
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import java.net.URL
 import javax.inject.Inject
@@ -75,7 +72,7 @@ class LoginFormPresenter @Inject constructor(
 
         val username = view?.formUsernameValue.orEmpty().trim()
         if ("@" in username && "@vulcan" !in username) {
-            val hosts = view?.getHostsValues().orEmpty().map { it.toUri().host to it }.toMap()
+            val hosts = view?.getHostsValues().orEmpty().associateBy { it.toUri().host }
             val usernameHost = username.substringAfter("@")
 
             hosts[usernameHost]?.let {
@@ -95,54 +92,54 @@ class LoginFormPresenter @Inject constructor(
 
         if (!validateCredentials(email, password, host)) return
 
-        flowWithResource {
+        resourceFlow {
             studentRepository.getStudentsScrapper(
                 email = email,
                 password = password,
                 scrapperBaseUrl = host,
                 symbol = symbol
             )
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> view?.run {
-                    Timber.i("Login started")
+        }
+            .logResourceStatus("login")
+            .onResourceLoading {
+                view?.run {
                     hideSoftKeyboard()
                     showProgress(true)
                     showContent(false)
                 }
-                Status.SUCCESS -> {
-                    Timber.i("Login result: Success")
-                    analytics.logEvent(
-                        "registration_form",
-                        "success" to true,
-                        "students" to it.data!!.size,
-                        "scrapperBaseUrl" to host,
-                        "error" to "No error"
-                    )
-                    when (it.data.size) {
-                        0 -> view?.navigateToSymbol(LoginData(email, password, host))
-                        else -> view?.navigateToStudentSelect(it.data)
-                    }
+            }
+            .onResourceSuccess {
+                when (it.size) {
+                    0 -> view?.navigateToSymbol(LoginData(email, password, host))
+                    else -> view?.navigateToStudentSelect(it)
                 }
-                Status.ERROR -> {
-                    Timber.i("Login result: An exception occurred")
-                    analytics.logEvent(
-                        "registration_form",
-                        "success" to false,
-                        "students" to -1,
-                        "scrapperBaseUrl" to host,
-                        "error" to it.error!!.message.ifNullOrBlank { "No message" })
-                    loginErrorHandler.dispatch(it.error)
-                    lastError = it.error
-                    view?.showContact(true)
+                analytics.logEvent(
+                    "registration_form",
+                    "success" to true,
+                    "students" to it.size,
+                    "scrapperBaseUrl" to host,
+                    "error" to "No error"
+                )
+            }
+            .onResourceNotLoading {
+                view?.apply {
+                    showProgress(false)
+                    showContent(true)
                 }
             }
-        }.afterLoading {
-            view?.apply {
-                showProgress(false)
-                showContent(true)
+            .onResourceError {
+                loginErrorHandler.dispatch(it)
+                lastError = it
+                view?.showContact(true)
+                analytics.logEvent(
+                    "registration_form",
+                    "success" to false,
+                    "students" to -1,
+                    "scrapperBaseUrl" to host,
+                    "error" to it.message.ifNullOrBlank { "No message" }
+                )
             }
-        }.launch("login")
+            .launch("login")
     }
 
     fun onFaqClick() {

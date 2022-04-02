@@ -1,15 +1,16 @@
 package io.github.wulkanowy.ui.modules.homework.add
 
-import io.github.wulkanowy.data.Status
 import io.github.wulkanowy.data.db.entities.Homework
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.HomeworkRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.flowWithResource
 import io.github.wulkanowy.utils.toLocalDate
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
@@ -55,7 +56,7 @@ class HomeworkAddPresenter @Inject constructor(
     }
 
     private fun saveHomework(subject: String, teacher: String, date: LocalDate, content: String) {
-        flowWithResource {
+        resourceFlow {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
             val entryDate = LocalDate.now()
@@ -72,21 +73,15 @@ class HomeworkAddPresenter @Inject constructor(
                     attachments = emptyList(),
                 ).apply { isAddedByUser = true }
             )
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Homework insert start")
-                Status.SUCCESS -> {
-                    Timber.i("Homework insert: Success")
-                    view?.run {
-                        showSuccessMessage()
-                        closeDialog()
-                    }
-                }
-                Status.ERROR -> {
-                    Timber.i("Homework insert result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+        }
+            .logResourceStatus("homework insert")
+            .onResourceSuccess {
+                view?.run {
+                    showSuccessMessage()
+                    closeDialog()
                 }
             }
-        }.launch("add_homework")
+            .onResourceError(errorHandler::dispatch)
+            .launch("add_homework")
     }
 }

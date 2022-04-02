@@ -25,7 +25,7 @@ interface AttendanceSummaryView : BaseView {
 
     fun updateDataSet(data: List<AttendanceSummary>)
 
-    fun updateSubjects(data: ArrayList<String>)
+    fun updateSubjects(data: Collection<String>)
 
     fun showSubjects(show: Boolean)
 

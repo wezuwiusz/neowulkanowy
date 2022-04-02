@@ -1,13 +1,15 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.GradeDao
 import io.github.wulkanowy.data.db.dao.GradeSummaryDao
+import io.github.wulkanowy.data.errorOrNull
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.github.wulkanowy.utils.toFirstResult
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
@@ -88,8 +90,8 @@ class GradeRepositoryTest {
         }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(4, res.data?.first?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(4, res.dataOrNull?.first?.size)
         coVerify {
             gradeDb.insertAll(withArg {
                 assertEquals(4, it.size)
@@ -142,8 +144,8 @@ class GradeRepositoryTest {
         val res = runBlocking { gradeRepository.getGrades(student, semester, true).toFirstResult() }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(4, res.data?.first?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(4, res.dataOrNull?.first?.size)
         coVerify {
             gradeDb.insertAll(withArg {
                 assertEquals(3, it.size)
@@ -184,8 +186,8 @@ class GradeRepositoryTest {
         val res = runBlocking { gradeRepository.getGrades(student, semester, true).toFirstResult() }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(2, res.data?.first?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(2, res.dataOrNull?.first?.size)
         coVerify { gradeDb.insertAll(match { it.isEmpty() }) }
         coVerify { gradeDb.deleteAll(match { it.size == 1 }) } // ... here
     }
@@ -214,8 +216,8 @@ class GradeRepositoryTest {
         val res = runBlocking { gradeRepository.getGrades(student, semester, true).toFirstResult() }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(3, res.data?.first?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(3, res.dataOrNull?.first?.size)
         coVerify { gradeDb.insertAll(match { it.size == 1 }) } // ... here
         coVerify { gradeDb.deleteAll(match { it.isEmpty() }) }
     }
@@ -240,8 +242,8 @@ class GradeRepositoryTest {
         val res = runBlocking { gradeRepository.getGrades(student, semester, true).toFirstResult() }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(3, res.data?.first?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(3, res.dataOrNull?.first?.size)
     }
 
     @Test
@@ -263,8 +265,8 @@ class GradeRepositoryTest {
         val res = runBlocking { gradeRepository.getGrades(student, semester, true).toFirstResult() }
 
         // verify
-        assertEquals(null, res.error)
-        assertEquals(0, res.data?.first?.size)
+        assertEquals(null, res.errorOrNull)
+        assertEquals(0, res.dataOrNull?.first?.size)
     }
 
     private fun createGradeApi(value: Int, weight: Double, date: LocalDate, desc: String) =

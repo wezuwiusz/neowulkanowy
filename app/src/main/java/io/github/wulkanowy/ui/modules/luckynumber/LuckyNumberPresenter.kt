@@ -1,14 +1,11 @@
 package io.github.wulkanowy.ui.modules.luckynumber
 
-import io.github.wulkanowy.data.Status
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.repositories.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.github.wulkanowy.utils.afterLoading
-import io.github.wulkanowy.utils.flowWithResourceIn
-import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,47 +31,45 @@ class LuckyNumberPresenter @Inject constructor(
     }
 
     private fun loadData(forceRefresh: Boolean = false) {
-        flowWithResourceIn {
+        flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
             luckyNumberRepository.getLuckyNumber(student, forceRefresh)
-        }.onEach {
-            when (it.status) {
-                Status.LOADING -> Timber.i("Loading lucky number started")
-                Status.SUCCESS -> {
-                    if (it.data != null) {
-                        Timber.i("Loading lucky number result: Success")
-                        view?.apply {
-                            updateData(it.data)
-                            showContent(true)
-                            showEmpty(false)
-                            showErrorView(false)
-                        }
-                        analytics.logEvent(
-                            "load_item",
-                            "type" to "lucky_number",
-                            "number" to it.data.luckyNumber
-                        )
-                    } else {
-                        Timber.i("Loading lucky number result: No lucky number found")
-                        view?.run {
-                            showContent(false)
-                            showEmpty(true)
-                            showErrorView(false)
-                        }
+        }
+            .logResourceStatus("load lucky number")
+            .onResourceData {
+                if (it != null) {
+                    view?.apply {
+                        updateData(it)
+                        showContent(true)
+                        showEmpty(false)
+                        showErrorView(false)
+                    }
+                } else {
+                    view?.run {
+                        showContent(false)
+                        showEmpty(true)
+                        showErrorView(false)
                     }
                 }
-                Status.ERROR -> {
-                    Timber.i("Loading lucky number result: An exception occurred")
-                    errorHandler.dispatch(it.error!!)
+            }
+            .onResourceSuccess {
+                if (it != null) {
+                    analytics.logEvent(
+                        "load_item",
+                        "type" to "lucky_number",
+                        "number" to it.luckyNumber
+                    )
                 }
             }
-        }.afterLoading {
-            view?.run {
-                hideRefresh()
-                showProgress(false)
-                enableSwipe(true)
+            .onResourceNotLoading {
+                view?.run {
+                    hideRefresh()
+                    showProgress(false)
+                    enableSwipe(true)
+                }
             }
-        }.launch()
+            .onResourceError(errorHandler::dispatch)
+            .launch()
     }
 
     private fun showErrorViewOnError(message: String, error: Throwable) {

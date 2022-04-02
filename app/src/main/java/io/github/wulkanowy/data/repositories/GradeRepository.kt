@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +37,10 @@ class GradeRepository @Inject constructor(
         notify: Boolean = false,
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
+        isResultEmpty = {
+            //When details is empty and summary is not, app will not use summary cache - edge case
+            it.first.isEmpty()
+        },
         shouldFetch = { (details, summaries) ->
             val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, semester))
             details.isEmpty() || summaries.isEmpty() || forceRefresh || isExpired
