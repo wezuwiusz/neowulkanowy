@@ -71,6 +71,7 @@
     <string name="login_recover_title">Відновіть свій обліковий запис</string>
     <string name="login_recover">Відновити</string>
     <string name="login_signed_in">Учень вже увійшов до системи</string>
+    <string name="login_host_standard">Стандартний</string>
     <!--Main-->
     <string name="main_account_picker">Менеджер аккаунтів</string>
     <string name="main_log_in">Увійти</string>
