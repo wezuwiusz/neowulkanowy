@@ -45,7 +45,7 @@ class SplashActivity : BaseActivity<SplashPresenter, ViewBinding>(), SplashView 
         installSplashScreen().setKeepOnScreenCondition { true }
 
         val externalLink = intent?.getStringExtra(EXTRA_EXTERNAL_URL)
-        val startDestination = intent?.getSerializableExtra(EXTRA_START_DESTINATION) as Destination?
+        val startDestination = intent?.getParcelableExtra(EXTRA_START_DESTINATION) as Destination?
             ?: shortcutsHelper.getDestination(intent)
 
         presenter.onAttachView(this, externalLink, startDestination)

@@ -71,6 +71,7 @@
     <string name="login_recover_title">Obnovte svůj účet</string>
     <string name="login_recover">Obnovit</string>
     <string name="login_signed_in">Žák je už přihlášen</string>
+    <string name="login_host_standard">Standardní</string>
     <!--Main-->
     <string name="main_account_picker">Manažer účtů</string>
     <string name="main_log_in">Přihlásit se</string>
@@ -93,9 +94,9 @@
     <string name="grade_summary_predicted_grade">Předpokládaná známka</string>
     <string name="grade_summary_calculated_average">Vypočítaný průměr</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Jak funguje vypočítaný průměr?</string>
-    <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný průměr je aritmetický průměr vypočítaný z průměrů předmětů. Umožňuje vám to znát přibližný konečný průměr. Vypočítává se způsobem zvoleným uživatelem v nastavení aplikaci. Doporučuje se vybrat příslušnou možnost. Důvodem je rozdílný výpočet školních průměrů. Pokud vaše škola navíc uvádí průměr předmětů na stránce deníku Vulcan, aplikace si je stáhne a tyto průměry nepočítá. To lze změnit vynucením výpočtu průměru v nastavení aplikaci.\n\n<b>Průměr známek pouze z vybraného semestru</b>:\n1. Výpočet váženého průměru pro každý předmět v daném semestru\n2. Sčítání vypočítaných průměrů\n3. Výpočet aritmetického průměru součtených průměrů\n\n<b>Průměr průměrů z obou semestrů</b>:\n1. Výpočet váženého průměru pro každý předmět v semestru 1 a 2\n2. Výpočet aritmetického průměru vypočítaných průměrů za semestry 1 a 2 pro každý předmět.\n3. Sčítání vypočítaných průměrů\n4. Výpočet aritmetického průměru součtených průměrů\n\n<b>Průměr známek z celého roku:</b>\n1. Výpočet váženého průměru za rok pro každý předmět. Konečný průměr v 1. semestru je nepodstatný.\n3. Sčítání vypočítaných průměrů\n4. Výpočet aritmetického průměru součtených průměrů</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný průměr je aritmetický průměr vypočítaný z průměrů předmětů. Umožňuje vám to znát přibližný konečný průměr. Vypočítává se způsobem zvoleným uživatelem v nastavení aplikaci. Doporučuje se vybrat příslušnou možnost. Důvodem je rozdílný výpočet školních průměrů. Pokud vaše škola navíc uvádí průměr předmětů na stránce deníku Vulcan, aplikace si je stáhne a tyto průměry nepočítá. To lze změnit vynucením výpočtu průměru v nastavení aplikaci.\n\n<b>Průměr známek pouze z vybraného semestru</b>:\n1. Výpočet váženého průměru pro každý předmět v daném semestru\n2. Sčítání vypočítaných průměrů\n3. Výpočet aritmetického průměru součtených průměrů\n\n<b>Průměr průměrů z obou semestrů</b>:\n1. Výpočet váženého průměru pro každý předmět v semestru 1 a 2\n2. Výpočet aritmetického průměru vypočítaných průměrů za semestry 1 a 2 pro každý předmět.\n3. Sčítání vypočítaných průměrů\n4. Výpočet aritmetického průměru sečtených průměrů\n\n<b>Průměr známek z celého roku:</b>\n1. Výpočet váženého průměru za rok pro každý předmět. Konečný průměr v 1. semestru je nepodstatný.\n3. Sčítání vypočítaných průměrů\n4. Výpočet aritmetického průměru součtených průměrů</string>
     <string name="grade_summary_final_average_help_dialog_title">Jak funguje konečný průměr?</string>
-    <string name="grade_summary_final_average_help_dialog_message">Konečný průměr je aritmetický průměr vypočítaný ze všech aktuálně dostupných konečných známek v daném semestru.\n\nSchéma výpočtu se skládá z následujících kroků:\n1. Sčítání konečných známek zadaných učiteli\n2. Děleno počtem předmětů, pro které už byly vydány známky</string>
+    <string name="grade_summary_final_average_help_dialog_message">Konečný průměr je aritmetický průměr vypočítaný ze všech aktuálně dostupných konečných známek v daném semestru.\n\nSchéma výpočtu se skládá z následujících kroků:\n1. Sčítání konečných známek zadaných učiteli\n2. Děleno počtem předmětů, pro které už byly uděleny známky</string>
     <string name="grade_summary_final_average">Konečný průměr</string>
     <string name="grade_summary_from_subjects">z %1$d z %2$d předmětů</string>
     <string name="grade_menu_summary">Shrnutí</string>
@@ -219,7 +220,7 @@
     <string name="additional_lessons_end_time_error">Čas ukončení musí být pozdější než čas zahájení</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Shrnutí frekvencí</string>
-    <string name="attendance_absence_school">Neprítomnosť zo školských dôvodov</string>
+    <string name="attendance_absence_school">Nepřítomnost ze školních důvodů</string>
     <string name="attendance_absence_excused">Omluvená nepřítomnost</string>
     <string name="attendance_absence_unexcused">Neomluvená nepřítomnost</string>
     <string name="attendance_exemption">Osvobození</string>

@@ -78,7 +78,7 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
                     .apply {
                         setTextViewText(
                             R.id.luckyNumberWidgetNumber,
-                            luckyNumber.dataOrNull?.toString() ?: "#"
+                            luckyNumber.dataOrNull?.luckyNumber?.toString() ?: "#"
                         )
                         setOnClickPendingIntent(R.id.luckyNumberWidgetContainer, appIntent)
                     }

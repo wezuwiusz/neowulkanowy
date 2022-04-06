@@ -71,6 +71,7 @@
     <string name="login_recover_title">Obnovte svoj účet</string>
     <string name="login_recover">Obnoviť</string>
     <string name="login_signed_in">Žiak je už prihlásený</string>
+    <string name="login_host_standard">Štandardná</string>
     <!--Main-->
     <string name="main_account_picker">Manažér účtov</string>
     <string name="main_log_in">Prihlásiť sa</string>

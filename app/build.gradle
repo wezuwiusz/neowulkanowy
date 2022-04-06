@@ -22,8 +22,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 104
-        versionName "1.6.0"
+        versionCode 105
+        versionName "1.6.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -241,7 +241,7 @@ dependencies {
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
     playImplementation 'com.google.android.gms:play-services-ads:20.6.0'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:6.4.1.300'
+    hmsImplementation 'com.huawei.hms:hianalytics:6.4.1.301'
     hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.5.200'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
