@@ -129,7 +129,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
                 )
             }
             fragmentHideStrategy = HIDE
-            rootFragments = rootDestinations.map { it.fragment }
+            rootFragments = rootDestinations.map { it.destinationFragment }
 
             initialize(startMenuIndex, savedInstanceState)
         }
@@ -230,7 +230,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     override fun openMoreDestination(destination: Destination) {
-        pushView(destination.fragment)
+        pushView(destination.destinationFragment)
     }
 
     override fun notifyMenuViewReselected() {

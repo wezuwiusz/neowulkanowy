@@ -45,8 +45,8 @@ class MainPresenter @Inject constructor(
     private val Destination?.startMenuIndex
         get() = when {
             this == null -> prefRepository.startMenuIndex
-            type in rootDestinationTypeList -> {
-                rootDestinationTypeList.indexOf(type)
+            destinationType in rootDestinationTypeList -> {
+                rootDestinationTypeList.indexOf(destinationType)
             }
             else -> 4
         }
@@ -56,7 +56,7 @@ class MainPresenter @Inject constructor(
 
         val startMenuIndex = initDestination.startMenuIndex
         val destinations = rootDestinationTypeList.map {
-            if (it == initDestination?.type) initDestination else it.defaultDestination
+            if (it == initDestination?.destinationType) initDestination else it.defaultDestination
         }
 
         view.initView(startMenuIndex, destinations)

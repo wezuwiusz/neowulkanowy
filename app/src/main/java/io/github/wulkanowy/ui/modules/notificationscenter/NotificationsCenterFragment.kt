@@ -43,7 +43,7 @@ class NotificationsCenterFragment :
 
     override fun initView() {
         notificationsCenterAdapter.onItemClickListener = { notification ->
-            (requireActivity() as MainActivity).pushView(notification.destination.fragment)
+            (requireActivity() as MainActivity).pushView(notification.destination.destinationFragment)
         }
 
         with(binding.notificationsCenterRecycler) {
