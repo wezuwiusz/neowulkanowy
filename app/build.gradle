@@ -22,8 +22,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 105
-        versionName "1.6.1"
+        versionCode 106
+        versionName "1.6.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -153,7 +153,7 @@ play {
     defaultToAppBundles = false
     track = 'production'
     releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
-    userFraction = 0.25d
+    userFraction = 0.50d
     updatePriority = 1
     enabled.set(false)
 }
