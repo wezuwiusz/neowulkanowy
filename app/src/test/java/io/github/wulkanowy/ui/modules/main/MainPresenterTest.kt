@@ -5,13 +5,9 @@ import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
-import io.mockk.MockKAnnotations
-import io.mockk.Runs
-import io.mockk.clearMocks
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.just
-import io.mockk.verify
+import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Test
 
@@ -43,8 +39,14 @@ class MainPresenterTest {
         clearMocks(mainView)
 
         every { mainView.initView(any(), any()) } just Runs
-        presenter =
-            MainPresenter(errorHandler, studentRepository, prefRepository, syncManager, analytics)
+        presenter = MainPresenter(
+            errorHandler = errorHandler,
+            studentRepository = studentRepository,
+            prefRepository = prefRepository,
+            syncManager = syncManager,
+            analytics = analytics,
+            json = Json
+        )
         presenter.onAttachView(mainView, null)
     }
 

@@ -15,6 +15,8 @@ import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.utils.openInternetBrowser
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")
@@ -29,13 +31,13 @@ class SplashActivity : BaseActivity<SplashPresenter, ViewBinding>(), SplashView 
 
     companion object {
 
-        private const val EXTRA_START_DESTINATION = "start_destination"
+        private const val EXTRA_START_DESTINATION = "start_destination_json"
 
         private const val EXTRA_EXTERNAL_URL = "external_url"
 
         fun getStartIntent(context: Context, destination: Destination? = null) =
             Intent(context, SplashActivity::class.java).apply {
-                putExtra(EXTRA_START_DESTINATION, destination)
+                destination?.let { putExtra(EXTRA_START_DESTINATION, Json.encodeToString(it)) }
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
     }
@@ -43,12 +45,12 @@ class SplashActivity : BaseActivity<SplashPresenter, ViewBinding>(), SplashView 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition { true }
+        shortcutsHelper.initializeShortcuts()
 
         val externalLink = intent?.getStringExtra(EXTRA_EXTERNAL_URL)
-        val startDestination = intent?.getParcelableExtra(EXTRA_START_DESTINATION) as Destination?
-            ?: shortcutsHelper.getDestination(intent)
+        val startDestinationJson = intent?.getStringExtra(EXTRA_START_DESTINATION)
 
-        presenter.onAttachView(this, externalLink, startDestination)
+        presenter.onAttachView(this, externalLink, startDestinationJson)
     }
 
     override fun openLoginView() {

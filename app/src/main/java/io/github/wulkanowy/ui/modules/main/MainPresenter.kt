@@ -19,6 +19,8 @@ import io.github.wulkanowy.ui.modules.message.MessageView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
 import io.github.wulkanowy.utils.AnalyticsHelper
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.time.Duration
 import java.time.Instant
@@ -30,6 +32,7 @@ class MainPresenter @Inject constructor(
     private val prefRepository: PreferencesRepository,
     private val syncManager: SyncManager,
     private val analytics: AnalyticsHelper,
+    private val json: Json
 ) : BasePresenter<MainView>(errorHandler, studentRepository) {
 
     private var studentsWitSemesters: List<StudentWithSemesters>? = null
@@ -51,8 +54,10 @@ class MainPresenter @Inject constructor(
             else -> 4
         }
 
-    fun onAttachView(view: MainView, initDestination: Destination?) {
+    fun onAttachView(view: MainView, initDestinationJson: String?) {
         super.onAttachView(view)
+
+        val initDestination: Destination? = initDestinationJson?.let { json.decodeFromString(it) }
 
         val startMenuIndex = initDestination.startMenuIndex
         val destinations = rootDestinationTypeList.map {
