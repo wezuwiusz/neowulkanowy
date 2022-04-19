@@ -1,4 +1,4 @@
-Wersja 1.6.2
+Wersja 1.6.3
 
 - dodaliśmy możliwość usuwania wielu wiadomości jednocześnie
 - dodaliśmy opcję szybkiego dodawania sprawdzianów do kalendarza

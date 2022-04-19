@@ -24,6 +24,8 @@ import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
 import io.github.wulkanowy.utils.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -55,13 +57,13 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     companion object {
 
-        private const val EXTRA_START_DESTINATION = "start_destination"
+        private const val EXTRA_START_DESTINATION = "start_destination_json"
 
         fun getStartIntent(
             context: Context,
             destination: Destination? = null,
         ) = Intent(context, MainActivity::class.java).apply {
-            putExtra(EXTRA_START_DESTINATION, destination)
+            destination?.let { putExtra(EXTRA_START_DESTINATION, Json.encodeToString(it)) }
         }
     }
 
@@ -70,9 +72,8 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     override val currentStackSize get() = navController.currentStack?.size
 
     override val currentViewTitle
-        get() = (navController.currentFrag as? MainView.TitledView)?.titleStringId?.let {
-            getString(it)
-        }
+        get() = (navController.currentFrag as? MainView.TitledView)?.titleStringId
+            ?.let { getString(it) }
 
     override val currentViewSubtitle get() = (navController.currentFrag as? MainView.TitledView)?.subtitleString
 
@@ -86,7 +87,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         messageContainer = binding.mainMessageContainer
         updateHelper.messageContainer = binding.mainFragmentContainer
 
-        val destination = (intent.getParcelableExtra(EXTRA_START_DESTINATION) as Destination?)
+        val destination = intent.getStringExtra(EXTRA_START_DESTINATION)
             ?.takeIf { savedInstanceState == null }
 
         presenter.onAttachView(this, destination)
