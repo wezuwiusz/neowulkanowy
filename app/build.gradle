@@ -132,7 +132,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "11"
-        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", "-Xjvm-default=all"]
+        freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn", "-Xjvm-default=all"]
     }
 
     packagingOptions {

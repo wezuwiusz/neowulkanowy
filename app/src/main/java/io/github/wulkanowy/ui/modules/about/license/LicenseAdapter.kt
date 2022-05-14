@@ -23,8 +23,9 @@ class LicenseAdapter @Inject constructor() : RecyclerView.Adapter<LicenseAdapter
         val item = items[position]
 
         with(holder.binding) {
-            licenseItemName.text = item.libraryName
-            licenseItemSummary.text = item.licenses?.firstOrNull()?.licenseName?.takeIf { it.isNotBlank() } ?: item.libraryVersion
+            licenseItemName.text = item.name
+            licenseItemSummary.text = item.licenses.firstOrNull()?.name?.takeIf { it.isNotBlank() }
+                ?: item.artifactVersion
 
             root.setOnClickListener { onClickListener(item) }
         }
