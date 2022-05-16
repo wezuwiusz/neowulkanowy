@@ -35,9 +35,11 @@ class AttendanceAdapter @Inject constructor() :
 
         with(holder.binding) {
             attendanceItemNumber.text = item.number.toString()
-            attendanceItemSubject.text = item.subject
+            attendanceItemSubject.text = item.subject.ifBlank {
+                root.context.getString(R.string.all_no_data)
+            }
             attendanceItemDescription.setText(item.descriptionRes)
-            attendanceItemAlert.visibility = item.run { if (absence && !excused) View.VISIBLE else View.INVISIBLE }
+            attendanceItemAlert.isVisible = item.let { it.absence && !it.excused }
             attendanceItemNumber.visibility = View.GONE
             attendanceItemExcuseInfo.visibility = View.GONE
             attendanceItemExcuseCheckbox.visibility = View.GONE
@@ -46,7 +48,7 @@ class AttendanceAdapter @Inject constructor() :
                 onExcuseCheckboxSelect(item, checked)
             }
 
-            when (item.excuseStatus?.let { SentExcuseStatus.valueOf(it)}) {
+            when (item.excuseStatus?.let { SentExcuseStatus.valueOf(it) }) {
                 SentExcuseStatus.WAITING -> {
                     attendanceItemExcuseInfo.setImageResource(R.drawable.ic_excuse_waiting)
                     attendanceItemExcuseInfo.visibility = View.VISIBLE
