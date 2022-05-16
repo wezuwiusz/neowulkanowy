@@ -1,9 +1,5 @@
-Wersja 1.6.3
+Wersja 1.6.4
 
-- dodaliśmy możliwość usuwania wielu wiadomości jednocześnie
-- dodaliśmy opcję szybkiego dodawania sprawdzianów do kalendarza
-- dodaliśmy średnią ucznia w wykresach ocen klasy
-- naprawiliśmy rzadki błąd dotyczący problemów z automatycznym odświeżaniem ekranu startowego
-- naprawiliśmy błąd z liczeniem średniej w drugim semestrze
+- naprawiliśmy błąd ładowania frekwencji na GPE i Lubelskim Portalu Oświatowym
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

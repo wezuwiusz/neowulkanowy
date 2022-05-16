@@ -22,7 +22,7 @@ class LicensePresenter @Inject constructor(
     }
 
     fun onItemSelected(library: Library) {
-        view?.run { library.licenses?.firstOrNull()?.licenseDescription?.let { openLicense(it) } }
+        view?.run { library.licenses.firstOrNull()?.licenseContent?.let { openLicense(it) } }
     }
 
     private fun loadData() {

@@ -32,7 +32,7 @@
         <item>0,75</item>
     </string-array>
     <string-array name="grade_sorting_mode_entries">
-        <item>Алфавитный</item>
+        <item>В алфавитном порядке</item>
         <item>По дате</item>
     </string-array>
     <string-array name="grade_color_scheme_entries">
@@ -43,22 +43,22 @@
     <string-array name="default_expand_grade_entries">
         <item>До 1 за раз</item>
         <item>Всегда развернуто</item>
-        <item>Неограниченные расширения</item>
+        <item>Неограниченно</item>
     </string-array>
     <string-array name="grade_average_mode_entries">
-        <item>Средние оценки только с выбранного семестра</item>
-        <item>Средние значения для обоих семестров</item>
-        <item>Средняя оценок со всего года</item>
+        <item>Средняя из оценок выбранного семестра</item>
+        <item>Средняя из средних оценок семестров</item>
+        <item>Средняя из оценок со всего года</item>
     </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Счастливый номер</item>
-        <item>Непрочитанные сообщения</item>
+        <item>Непрочитанные письма</item>
         <item>Посещаемость</item>
         <item>Уроки</item>
         <item>Оценки</item>
         <item>Домашняя работа</item>
-        <item>Объявления школ</item>
-        <item>Экзамены</item>
-        <item>Конференции</item>
+        <item>Объявления школы</item>
+        <item>Тесты</item>
+        <item>Встречи</item>
     </string-array>
 </resources>

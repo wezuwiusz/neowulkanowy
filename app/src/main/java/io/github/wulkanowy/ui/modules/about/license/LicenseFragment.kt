@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
+import com.mikepenz.aboutlibraries.util.withContext
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentLicenseBinding
@@ -28,7 +29,9 @@ class LicenseFragment : BaseFragment<FragmentLicenseBinding>(R.layout.fragment_l
 
     override val titleStringId get() = R.string.license_title
 
-    override val appLibraries by lazy { Libs(requireContext()).libraries }
+    override val appLibraries by lazy {
+        Libs.Builder().withContext(requireContext()).build().libraries
+    }
 
     companion object {
         fun newInstance() = LicenseFragment()

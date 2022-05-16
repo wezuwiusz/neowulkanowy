@@ -7,6 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@Suppress("UNUSED_PARAMETER", "unused")
 class InAppReviewHelper @Inject constructor(
     @ApplicationContext private val context: Context
 )  {
