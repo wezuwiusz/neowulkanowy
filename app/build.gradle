@@ -15,6 +15,7 @@ apply from: 'sonarqube.gradle'
 apply from: 'hooks.gradle'
 
 android {
+    namespace 'io.github.wulkanowy'
     compileSdkVersion 31
 
     defaultConfig {
@@ -136,8 +137,10 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/library_release.kotlin_module'
-        exclude 'META-INF/library-core_release.kotlin_module'
+        resources {
+            excludes += ['META-INF/library_release.kotlin_module',
+                         'META-INF/library-core_release.kotlin_module']
+        }
     }
 
     aboutLibraries {
