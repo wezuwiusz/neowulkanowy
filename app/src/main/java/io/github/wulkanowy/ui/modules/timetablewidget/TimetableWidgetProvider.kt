@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.timetablewidget
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetManager.*
@@ -132,7 +131,6 @@ class TimetableWidgetProvider : BroadcastReceiver() {
         }
     }
 
-    @SuppressLint("DefaultLocale")
     private fun updateWidget(
         context: Context,
         appWidgetId: Int,
