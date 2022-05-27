@@ -3,8 +3,8 @@ package io.github.wulkanowy.ui.modules.grade.details
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.enums.GradeExpandMode
-import io.github.wulkanowy.data.enums.GradeSortingMode.ALPHABETIC
-import io.github.wulkanowy.data.enums.GradeSortingMode.DATE
+import io.github.wulkanowy.data.enums.GradeSortingMode
+import io.github.wulkanowy.data.enums.GradeSortingMode.*
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
@@ -204,6 +204,7 @@ class GradeDetailsPresenter @Inject constructor(
                     ALPHABETIC -> gradeSubjects.sortedBy { gradeDetailsWithAverage ->
                         gradeDetailsWithAverage.subject.lowercase()
                     }
+                    AVERAGE -> gradeSubjects.sortedByDescending { it.average }
                 }
             }
             .map { (subject, average, points, _, grades) ->
