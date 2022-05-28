@@ -57,7 +57,8 @@ class MessagePreviewFragment :
         get() = getString(R.string.message_no_subject)
 
     override val printHTML: String
-        get() = requireContext().assets.open("message-print-page.html").bufferedReader().use { it.readText() }
+        get() = requireContext().assets.open("message-print-page.html").bufferedReader()
+            .use { it.readText() }
 
     override val messageNotExists: String
         get() = getString(R.string.message_not_exists)
@@ -81,7 +82,10 @@ class MessagePreviewFragment :
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMessagePreviewBinding.bind(view)
         messageContainer = binding.messagePreviewContainer
-        presenter.onAttachView(this, (savedInstanceState ?: arguments)?.getSerializable(MESSAGE_ID_KEY) as? Message)
+        presenter.onAttachView(
+            this,
+            (savedInstanceState ?: arguments)?.getSerializable(MESSAGE_ID_KEY) as? Message
+        )
     }
 
     override fun initView() {
@@ -101,6 +105,8 @@ class MessagePreviewFragment :
         menuShareButton = menu.findItem(R.id.messagePreviewMenuShare)
         menuPrintButton = menu.findItem(R.id.messagePreviewMenuPrint)
         presenter.onCreateOptionsMenu()
+
+        menu.findItem(R.id.mainMenuAccount).isVisible = false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -173,7 +179,8 @@ class MessagePreviewFragment :
         val webView = WebView(requireContext())
         webView.webViewClient = object : WebViewClient() {
 
-            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest) = false
+            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest) =
+                false
 
             override fun onPageFinished(view: WebView, url: String) {
                 createWebPrintJob(view, jobName)
