@@ -16,13 +16,13 @@ apply from: 'hooks.gradle'
 
 android {
     namespace 'io.github.wulkanowy'
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "io.github.wulkanowy"
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 108
         versionName "1.6.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
