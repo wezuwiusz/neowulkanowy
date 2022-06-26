@@ -222,17 +222,31 @@ class PreferencesRepository @Inject constructor(
         get() = selectedDashboardTilesPreference.asFlow()
             .map { set ->
                 set.map { DashboardItem.Tile.valueOf(it) }
-                    .plus(listOf(DashboardItem.Tile.ACCOUNT, DashboardItem.Tile.ADMIN_MESSAGE))
+                    .plus(
+                        listOfNotNull(
+                            DashboardItem.Tile.ACCOUNT,
+                            DashboardItem.Tile.ADMIN_MESSAGE,
+                            DashboardItem.Tile.ADS.takeIf { isAdsEnabled }
+                        )
+                    )
                     .toSet()
             }
 
     var selectedDashboardTiles: Set<DashboardItem.Tile>
         get() = selectedDashboardTilesPreference.get()
             .map { DashboardItem.Tile.valueOf(it) }
-            .plus(listOf(DashboardItem.Tile.ACCOUNT, DashboardItem.Tile.ADMIN_MESSAGE))
+            .plus(
+                listOfNotNull(
+                    DashboardItem.Tile.ACCOUNT,
+                    DashboardItem.Tile.ADMIN_MESSAGE,
+                    DashboardItem.Tile.ADS.takeIf { isAdsEnabled }
+                )
+            )
             .toSet()
         set(value) {
-            val filteredValue = value.filterNot { it == DashboardItem.Tile.ACCOUNT }
+            val filteredValue = value.filterNot {
+                it == DashboardItem.Tile.ACCOUNT || it == DashboardItem.Tile.ADMIN_MESSAGE
+            }
                 .map { it.name }
                 .toSet()
 
@@ -287,6 +301,11 @@ class PreferencesRepository @Inject constructor(
     var isPersonalizedAdsEnabled: Boolean
         get() = sharedPref.getBoolean(PREF_KEY_PERSONALIZED_ADS_ENABLED, false)
         set(value) = sharedPref.edit { putBoolean(PREF_KEY_PERSONALIZED_ADS_ENABLED, value) }
+
+    val isAdsEnabledFlow = flowSharedPref.getBoolean(
+        context.getString(R.string.pref_key_ads_enabled),
+        context.resources.getBoolean(R.bool.pref_default_ads_enabled)
+    ).asFlow()
 
     var isAdsEnabled: Boolean
         get() = getBoolean(

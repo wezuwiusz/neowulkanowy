@@ -14,7 +14,6 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.AccountView
 import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsView
-import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.ui.modules.message.MessageView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersView
@@ -168,13 +167,12 @@ class MainPresenter @Inject constructor(
     }
 
     fun onPrivacyAgree(isPersonalizedAds: Boolean) {
-        preferencesRepository.isAdsEnabled = true
         preferencesRepository.isAgreeToProcessData = true
         preferencesRepository.isPersonalizedAdsEnabled = isPersonalizedAds
 
         adsHelper.initialize()
 
-        preferencesRepository.selectedDashboardTiles += DashboardItem.Tile.ADS
+        preferencesRepository.isAdsEnabled = true
     }
 
     fun onPrivacySelected() {

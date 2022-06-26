@@ -66,7 +66,7 @@ class AdsHelper @Inject constructor(
 
         return suspendCoroutine {
             val adView = AdView(context).apply {
-                adSize = AdSize.getPortraitAnchoredAdaptiveBannerAdSize(context, width)
+                setAdSize(AdSize.getPortraitAnchoredAdaptiveBannerAdSize(context, width))
                 adUnitId = BuildConfig.DASHBOARD_TILE_AD_ID
                 adListener = object : AdListener() {
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {

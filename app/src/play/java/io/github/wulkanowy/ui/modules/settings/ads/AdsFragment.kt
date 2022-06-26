@@ -50,11 +50,6 @@ class AdsFragment : PreferenceFragmentCompat(), MainView.TitledView, AdsView {
                 presenter.onConsentSelected(newValue as Boolean)
                 true
             }
-
-        findPreference<SwitchPreferenceCompat>(getString(R.string.pref_key_ads_enabled))?.setOnPreferenceChangeListener { _, newValue ->
-            presenter.onAddEnabled(newValue as Boolean)
-            true
-        }
     }
 
     override fun showAd(ad: RewardedInterstitialAd) {
