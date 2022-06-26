@@ -85,6 +85,9 @@
     <string name="main_log_in">Log in</string>
     <string name="main_session_expired">Session expired</string>
     <string name="main_session_relogin">Session expired, log in again</string>
+    <string name="main_support_title">Application support</string>
+    <string name="main_support_description">Do you like this app? Support its development by enabling non-invasive ads that you can disable at any time</string>
+    <string name="main_support_positive">Enable ads</string>
 
 
     <!--Grade-->
@@ -715,6 +718,10 @@
     <string name="pref_ads_privacy_link">Privacy policy</string>
     <string name="pref_ads_loading">Ad is loading</string>
     <string name="pref_ads_once_per_visit">Thank you for your support, come back later for more ads</string>
+    <string name="pref_ads_consent_title">Can we use your data to display ads?</string>
+    <string name="pref_ads_consent_description">You can change your choice anytime in the app settings. We may use your data to display ads tailored to you or, using less of your data, display non-personalized ads. Please see our Privacy Policy for details</string>
+    <string name="pref_ads_summary_personalized">Personalized ads</string>
+    <string name="pref_ads_summary_non_personalized">Non-personalized ads</string>
 
     <string name="pref_settings_advanced_title">Advanced</string>
     <string name="pref_settings_appearance_title">Appearance &amp; Behavior</string>

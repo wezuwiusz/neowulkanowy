@@ -2,8 +2,31 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/pref_ads_support_category_name">
+        app:title="Agreements">
         <Preference
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_ads_privacy_policy"
+            app:singleLineTitle="false"
+            app:title="Privacy Policy" />
+        <CheckBoxPreference
+            app:defaultValue="@bool/pref_default_ads_consent_data_processing"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_ads_consent_data_processing"
+            app:singleLineTitle="false"
+            app:title="Consent to processing of data related to ads" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_ads_support_category_name">
+        <SwitchPreferenceCompat
+            app:defaultValue="@string/pref_key_ads_enabled"
+            app:dependency="@string/pref_key_ads_consent_data_processing"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_ads_enabled"
+            app:singleLineTitle="false"
+            app:title="Show ads in app" />
+        <Preference
+            app:dependency="@string/pref_key_ads_consent_data_processing"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_ads_single_support"
             app:singleLineTitle="false"

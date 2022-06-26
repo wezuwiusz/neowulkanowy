@@ -8,6 +8,7 @@ import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.repositories.*
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import kotlinx.coroutines.flow.*
@@ -31,7 +32,8 @@ class DashboardPresenter @Inject constructor(
     private val conferenceRepository: ConferenceRepository,
     private val preferencesRepository: PreferencesRepository,
     private val schoolAnnouncementRepository: SchoolAnnouncementRepository,
-    private val adminMessageRepository: AdminMessageRepository
+    private val adminMessageRepository: AdminMessageRepository,
+    private val adsHelper: AdsHelper
 ) : BasePresenter<DashboardView>(errorHandler, studentRepository) {
 
     private val dashboardItemLoadedList = mutableListOf<DashboardItem>()
@@ -166,7 +168,7 @@ class DashboardPresenter @Inject constructor(
                     DashboardItem.Type.CONFERENCES -> {
                         loadConferences(student, forceRefresh)
                     }
-                    DashboardItem.Type.ADS -> TODO()
+                    DashboardItem.Type.ADS -> loadAds(forceRefresh)
                     DashboardItem.Type.ADMIN_MESSAGE -> loadAdminMessage(student, forceRefresh)
                 }
             }
@@ -595,6 +597,23 @@ class DashboardPresenter @Inject constructor(
             .launchWithUniqueRefreshJob("dashboard_admin_messages", forceRefresh)
     }
 
+    private fun loadAds(forceRefresh: Boolean) {
+        presenterScope.launch {
+            if (!forceRefresh) {
+                updateData(DashboardItem.Ads(), forceRefresh)
+            }
+
+            val dashboardAdItem =
+                runCatching {
+                    DashboardItem.Ads(adsHelper.getDashboardTileAdBanner(view!!.tileWidth))
+                }
+                    .onFailure { Timber.e(it) }
+                    .getOrElse { DashboardItem.Ads(error = it) }
+
+            updateData(dashboardAdItem, forceRefresh)
+        }
+    }
+
     private fun updateData(dashboardItem: DashboardItem, forceRefresh: Boolean) {
         val isForceRefreshError = forceRefresh && dashboardItem.error != null
         val isFirstRunDataLoadedError =
@@ -616,6 +635,18 @@ class DashboardPresenter @Inject constructor(
             } else {
                 dashboardItemsToLoad = dashboardItemsToLoad + DashboardItem.Type.ADMIN_MESSAGE
                 dashboardTileLoadedList = dashboardTileLoadedList + DashboardItem.Tile.ADMIN_MESSAGE
+            }
+        }
+
+        if (dashboardItem is DashboardItem.Ads) {
+            if (!dashboardItem.isDataLoaded) {
+                dashboardItemsToLoad = dashboardItemsToLoad - DashboardItem.Type.ADS
+                dashboardTileLoadedList = dashboardTileLoadedList - DashboardItem.Tile.ADS
+
+                dashboardItemLoadedList.removeAll { it.type == DashboardItem.Type.ADS }
+            } else {
+                dashboardItemsToLoad = dashboardItemsToLoad + DashboardItem.Type.ADS
+                dashboardTileLoadedList = dashboardTileLoadedList + DashboardItem.Tile.ADS
             }
         }
 

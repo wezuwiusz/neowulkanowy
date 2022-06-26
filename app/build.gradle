@@ -43,6 +43,7 @@ android {
         }
 
         buildConfigField "String", "SINGLE_SUPPORT_AD_ID", "null"
+        buildConfigField "String", "DASHBOARD_TILE_AD_ID", "null"
 
         if (System.env.SET_BUILD_TIMESTAMP) {
             buildConfigField "long", "BUILD_TIMESTAMP", String.valueOf(System.currentTimeMillis())
@@ -99,6 +100,8 @@ android {
                     admob_project_id: System.getenv("ADMOB_PROJECT_ID") ?: "ca-app-pub-3940256099942544~3347511713"
             ]
             buildConfigField "String", "SINGLE_SUPPORT_AD_ID", "\"${System.getenv("SINGLE_SUPPORT_AD_ID") ?: "ca-app-pub-3940256099942544/5354046379"}\""
+            buildConfigField "String", "DASHBOARD_TILE_AD_ID", "\"${System.getenv("DASHBOARD_TILE_AD_ID") ?: "ca-app-pub-3940256099942544/6300978111"}\""
+
         }
 
         fdroid {

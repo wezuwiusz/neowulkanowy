@@ -1,13 +1,9 @@
 package io.github.wulkanowy.ui.modules.dashboard
 
-import io.github.wulkanowy.data.db.entities.AdminMessage
-import io.github.wulkanowy.data.db.entities.Conference
-import io.github.wulkanowy.data.db.entities.Exam
-import io.github.wulkanowy.data.db.entities.Grade
-import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
-import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.*
 import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.data.pojos.TimetableFull
+import io.github.wulkanowy.utils.AdBanner
 import io.github.wulkanowy.data.db.entities.Homework as EntitiesHomework
 
 sealed class DashboardItem(val type: Type) {
@@ -106,17 +102,26 @@ sealed class DashboardItem(val type: Type) {
         override val isDataLoaded get() = conferences != null
     }
 
+    data class Ads(
+        val adBanner: AdBanner? = null,
+        override val error: Throwable? = null,
+        override val isLoading: Boolean = false
+    ) : DashboardItem(Type.ADS) {
+
+        override val isDataLoaded get() = adBanner != null
+    }
+
     enum class Type {
         ADMIN_MESSAGE,
         ACCOUNT,
         HORIZONTAL_GROUP,
         LESSONS,
+        ADS,
         GRADES,
         HOMEWORK,
         ANNOUNCEMENTS,
         EXAMS,
         CONFERENCES,
-        ADS
     }
 
     enum class Tile {
@@ -126,12 +131,12 @@ sealed class DashboardItem(val type: Type) {
         MESSAGES,
         ATTENDANCE,
         LESSONS,
+        ADS,
         GRADES,
         HOMEWORK,
         ANNOUNCEMENTS,
         EXAMS,
         CONFERENCES,
-        ADS
     }
 }
 

@@ -4,7 +4,9 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.serialization.json.Json
@@ -31,6 +33,12 @@ class MainPresenterTest {
     @MockK(relaxed = true)
     lateinit var analytics: AnalyticsHelper
 
+    @MockK(relaxed = true)
+    lateinit var appInfo: AppInfo
+
+    @MockK(relaxed = true)
+    lateinit var adsHelper: AdsHelper
+
     private lateinit var presenter: MainPresenter
 
     @Before
@@ -42,10 +50,12 @@ class MainPresenterTest {
         presenter = MainPresenter(
             errorHandler = errorHandler,
             studentRepository = studentRepository,
-            prefRepository = prefRepository,
+            preferencesRepository = prefRepository,
             syncManager = syncManager,
             analytics = analytics,
-            json = Json
+            json = Json,
+            appInfo = appInfo,
+            adsHelper = adsHelper
         )
         presenter.onAttachView(mainView, null)
     }

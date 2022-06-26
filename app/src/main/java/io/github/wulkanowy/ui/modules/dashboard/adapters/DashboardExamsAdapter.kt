@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.dashboard
+package io.github.wulkanowy.ui.modules.dashboard.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

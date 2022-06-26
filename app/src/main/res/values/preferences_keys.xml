@@ -37,4 +37,8 @@
     <string name="pref_key_notifications_piggyback">notifications_piggyback</string>
     <string name="pref_key_notifications_piggyback_cancel_original">notifications_piggyback_cancel_original</string>
     <string name="pref_key_ads_single_support">single_ad_support</string>
+    <string name="pref_key_ads_enabled">ads_enabled</string>
+    <string name="pref_key_ads_privacy_policy">ads_privacy_policy</string>
+    <string name="pref_key_ads_consent_data_processing">ads_consent_data_processing</string>
+    <string name="pref_key_ads_over_eighteen">ads_over_eighteen</string>
 </resources>

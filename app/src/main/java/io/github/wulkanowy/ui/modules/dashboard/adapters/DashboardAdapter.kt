@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.dashboard
+package io.github.wulkanowy.ui.modules.dashboard.adapters
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -22,24 +22,15 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.entities.TimetableHeader
 import io.github.wulkanowy.data.enums.GradeColorTheme
-import io.github.wulkanowy.databinding.ItemDashboardAccountBinding
-import io.github.wulkanowy.databinding.ItemDashboardAdminMessageBinding
-import io.github.wulkanowy.databinding.ItemDashboardAnnouncementsBinding
-import io.github.wulkanowy.databinding.ItemDashboardConferencesBinding
-import io.github.wulkanowy.databinding.ItemDashboardExamsBinding
-import io.github.wulkanowy.databinding.ItemDashboardGradesBinding
-import io.github.wulkanowy.databinding.ItemDashboardHomeworkBinding
-import io.github.wulkanowy.databinding.ItemDashboardHorizontalGroupBinding
-import io.github.wulkanowy.databinding.ItemDashboardLessonsBinding
-import io.github.wulkanowy.utils.createNameInitialsDrawable
-import io.github.wulkanowy.utils.dpToPx
-import io.github.wulkanowy.utils.getThemeAttrColor
-import io.github.wulkanowy.utils.left
-import io.github.wulkanowy.utils.nickOrName
-import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.databinding.*
+import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
+import io.github.wulkanowy.utils.*
 import timber.log.Timber
-import java.time.*
-import java.util.Timer
+import java.time.Duration
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.timer
 
@@ -120,6 +111,9 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             DashboardItem.Type.ADMIN_MESSAGE.ordinal -> AdminMessageViewHolder(
                 ItemDashboardAdminMessageBinding.inflate(inflater, parent, false)
             )
+            DashboardItem.Type.ADS.ordinal -> AdsViewHolder(
+                ItemDashboardAdsBinding.inflate(inflater, parent, false)
+            )
             else -> throw IllegalArgumentException()
         }
     }
@@ -135,6 +129,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             is ExamsViewHolder -> bindExamsViewHolder(holder, position)
             is ConferencesViewHolder -> bindConferencesViewHolder(holder, position)
             is AdminMessageViewHolder -> bindAdminMessage(holder, position)
+            is AdsViewHolder -> bindAdsViewHolder(holder, position)
         }
     }
 
@@ -746,6 +741,20 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         }
     }
 
+    private fun bindAdsViewHolder(adsViewHolder: AdsViewHolder, position: Int) {
+        val item = (items[position] as DashboardItem.Ads).adBanner ?: return
+        val binding = adsViewHolder.binding
+
+        binding.dashboardAdminMessageItemContent.removeAllViews()
+        binding.dashboardAdminMessageItemContent.addView(
+            item.view,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        )
+    }
+
     class AccountViewHolder(val binding: ItemDashboardAccountBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -786,6 +795,9 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
     }
 
     class AdminMessageViewHolder(val binding: ItemDashboardAdminMessageBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    class AdsViewHolder(val binding: ItemDashboardAdsBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     private class DiffCallback(
