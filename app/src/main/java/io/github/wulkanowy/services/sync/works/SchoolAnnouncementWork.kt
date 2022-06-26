@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.repositories.SchoolAnnouncementRepository
 import io.github.wulkanowy.data.waitForResult
 import io.github.wulkanowy.services.sync.notifications.NewSchoolAnnouncementNotification
 import kotlinx.coroutines.flow.first
+import java.time.LocalDate
 import javax.inject.Inject
 
 class SchoolAnnouncementWork @Inject constructor(
@@ -20,10 +21,13 @@ class SchoolAnnouncementWork @Inject constructor(
             notify = notify,
         ).waitForResult()
 
-
-        schoolAnnouncementRepository.getSchoolAnnouncementFromDatabase(student).first()
-            .filter { !it.isNotified }.let {
-                if (it.isNotEmpty()) newSchoolAnnouncementNotification.notify(it, student)
+        schoolAnnouncementRepository.getSchoolAnnouncementFromDatabase(student)
+            .first()
+            .filter { !it.isNotified && it.date >= LocalDate.now() }
+            .let {
+                if (it.isNotEmpty()) {
+                    newSchoolAnnouncementNotification.notify(it, student)
+                }
 
                 schoolAnnouncementRepository.updateSchoolAnnouncement(it.onEach { schoolAnnouncement ->
                     schoolAnnouncement.isNotified = true

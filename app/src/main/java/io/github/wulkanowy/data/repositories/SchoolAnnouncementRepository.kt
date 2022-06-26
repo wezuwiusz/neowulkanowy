@@ -28,7 +28,8 @@ class SchoolAnnouncementRepository @Inject constructor(
 
     fun getSchoolAnnouncements(
         student: Student,
-        forceRefresh: Boolean, notify: Boolean = false
+        forceRefresh: Boolean,
+        notify: Boolean = false
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         isResultEmpty = { it.isEmpty() },
@@ -37,7 +38,7 @@ class SchoolAnnouncementRepository @Inject constructor(
             it.isEmpty() || forceRefresh || isExpired
         },
         query = {
-            schoolAnnouncementDb.loadAll(student.studentId)
+            schoolAnnouncementDb.loadAll(student.userLoginId)
         },
         fetch = {
             sdk.init(student)
@@ -56,7 +57,7 @@ class SchoolAnnouncementRepository @Inject constructor(
     )
 
     fun getSchoolAnnouncementFromDatabase(student: Student): Flow<List<SchoolAnnouncement>> {
-        return schoolAnnouncementDb.loadAll(student.studentId)
+        return schoolAnnouncementDb.loadAll(student.userLoginId)
     }
 
     suspend fun updateSchoolAnnouncement(schoolAnnouncement: List<SchoolAnnouncement>) =
