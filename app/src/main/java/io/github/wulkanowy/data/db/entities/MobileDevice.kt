@@ -9,7 +9,7 @@ import java.time.Instant
 @Entity(tableName = "MobileDevices")
 data class MobileDevice(
 
-    @ColumnInfo(name = "student_id")
+    @ColumnInfo(name = "user_login_id")
     val userLoginId: Int,
 
     @ColumnInfo(name = "device_id")

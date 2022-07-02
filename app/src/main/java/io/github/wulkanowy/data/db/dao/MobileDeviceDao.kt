@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MobileDeviceDao : BaseDao<MobileDevice> {
 
-    @Query("SELECT * FROM MobileDevices WHERE student_id = :userLoginId ORDER BY date DESC")
+    @Query("SELECT * FROM MobileDevices WHERE user_login_id = :userLoginId ORDER BY date DESC")
     fun loadAll(userLoginId: Int): Flow<List<MobileDevice>>
 }
