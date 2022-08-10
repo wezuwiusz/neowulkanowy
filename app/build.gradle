@@ -30,14 +30,14 @@ android {
         resValue "string", "app_name", "Wulkanowy"
 
         manifestPlaceholders = [
-                firebase_enabled: project.hasProperty("enableFirebase"),
-                admob_project_id: ""
+            firebase_enabled: project.hasProperty("enableFirebase"),
+            admob_project_id: ""
         ]
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
-                        "room.schemaLocation": "$projectDir/schemas".toString(),
-                        "room.incremental"   : "true"
+                    "room.schemaLocation": "$projectDir/schemas".toString(),
+                    "room.incremental"   : "true"
                 ]
             }
         }
@@ -96,8 +96,8 @@ android {
         play {
             dimension "platform"
             manifestPlaceholders = [
-                    install_channel : "Google Play",
-                    admob_project_id: System.getenv("ADMOB_PROJECT_ID") ?: "ca-app-pub-3940256099942544~3347511713"
+                install_channel : "Google Play",
+                admob_project_id: System.getenv("ADMOB_PROJECT_ID") ?: "ca-app-pub-3940256099942544~3347511713"
             ]
             buildConfigField "String", "SINGLE_SUPPORT_AD_ID", "\"${System.getenv("SINGLE_SUPPORT_AD_ID") ?: "ca-app-pub-3940256099942544/5354046379"}\""
             buildConfigField "String", "DASHBOARD_TILE_AD_ID", "\"${System.getenv("DASHBOARD_TILE_AD_ID") ?: "ca-app-pub-3940256099942544/6300978111"}\""
@@ -126,6 +126,8 @@ android {
 
     testOptions.unitTests {
         includeAndroidResources = true
+        // workaround HMS test errors https://github.com/robolectric/robolectric/issues/2750
+        all { jvmArgs '-noverify' }
     }
 
     compileOptions {
@@ -184,7 +186,7 @@ ext {
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:16811fbe90"
+    implementation "io.github.wulkanowy:sdk:9032e33686"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
