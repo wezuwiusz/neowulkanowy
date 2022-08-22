@@ -714,8 +714,8 @@
     <string name="pref_other_optional_arithmetic_average">Show arithmetic average when no weights provided</string>
 
     <string name="pref_ads_support_category_name">Support</string>
-    <string name="pref_ads_agreements">Privacy Policy</string>
-    <string name="pref_ads_privacy_policy">Agreements</string>
+    <string name="pref_ads_privacy_policy">Privacy Policy</string>
+    <string name="pref_ads_agreements">Agreements</string>
     <string name="pref_ads_consent">Consent to processing of data related to ads</string>
     <string name="pref_ads_show_in_app">Show ads in app</string>
     <string name="pref_ads_support">Watch single ad to support project</string>

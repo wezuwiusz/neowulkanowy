@@ -720,6 +720,10 @@
     <string name="pref_other_fill_message_content">Отвечать с историей сообщений</string>
     <string name="pref_other_optional_arithmetic_average">Показывать среднее арифметическое при отсутствии стоимости</string>
     <string name="pref_ads_support_category_name">Поддержка</string>
+    <string name="pref_ads_privacy_policy">Privacy Policy</string>
+    <string name="pref_ads_agreements">Agreements</string>
+    <string name="pref_ads_consent">Consent to processing of data related to ads</string>
+    <string name="pref_ads_show_in_app">Show ads in app</string>
     <string name="pref_ads_support">Посмотреть рекламу для поддержки проекта</string>
     <string name="pref_ads_privacy_title">Согласие на обработку данных</string>
     <string name="pref_ads_privacy_description">Для просмотра рекламы вы должны согласиться с условиями обработки данных нашей Политики конфиденциальности</string>
@@ -731,6 +735,9 @@
     <string name="pref_ads_consent_description">You can change your choice anytime in the app settings. We may use your data to display ads tailored to you or, using less of your data, display non-personalized ads. Please see our Privacy Policy for details</string>
     <string name="pref_ads_summary_personalized">Personalized ads</string>
     <string name="pref_ads_summary_non_personalized">Non-personalized ads</string>
+    <string name="pref_ads_over_18_years_old">I am over 18 years old</string>
+    <string name="pref_ads_option_personalized">Yes, personalized ads</string>
+    <string name="pref_ads_option_non_personalized">Yes, non-personalized ads</string>
     <string name="pref_settings_advanced_title">Расширенные</string>
     <string name="pref_settings_appearance_title">Внешний вид и поведение</string>
     <string name="pref_settings_notifications_title">Уведомления</string>

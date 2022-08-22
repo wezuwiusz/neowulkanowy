@@ -720,6 +720,10 @@
     <string name="pref_other_fill_message_content">Відповісти з історією повідомлень</string>
     <string name="pref_other_optional_arithmetic_average">Вилічити середню аритметичну, якщо оцінка немає вартості</string>
     <string name="pref_ads_support_category_name">Підтримка</string>
+    <string name="pref_ads_privacy_policy">Privacy Policy</string>
+    <string name="pref_ads_agreements">Agreements</string>
+    <string name="pref_ads_consent">Consent to processing of data related to ads</string>
+    <string name="pref_ads_show_in_app">Show ads in app</string>
     <string name="pref_ads_support">Подивіться одну рекламу для підтримки проєкту</string>
     <string name="pref_ads_privacy_title">Згода в обробці даних</string>
     <string name="pref_ads_privacy_description">Щоб переглянути рекламу, ви повинні погодитися з умовами обробки даних нашої Політики конфіденційності</string>
@@ -731,6 +735,9 @@
     <string name="pref_ads_consent_description">You can change your choice anytime in the app settings. We may use your data to display ads tailored to you or, using less of your data, display non-personalized ads. Please see our Privacy Policy for details</string>
     <string name="pref_ads_summary_personalized">Personalized ads</string>
     <string name="pref_ads_summary_non_personalized">Non-personalized ads</string>
+    <string name="pref_ads_over_18_years_old">I am over 18 years old</string>
+    <string name="pref_ads_option_personalized">Yes, personalized ads</string>
+    <string name="pref_ads_option_non_personalized">Yes, non-personalized ads</string>
     <string name="pref_settings_advanced_title">Додатково</string>
     <string name="pref_settings_appearance_title">Вигляд та поведінка</string>
     <string name="pref_settings_notifications_title">Сповіщення</string>

@@ -720,6 +720,10 @@
     <string name="pref_other_fill_message_content">Odpovědět s historií zpráv</string>
     <string name="pref_other_optional_arithmetic_average">Vypočítat aritmetický průměr, pokud žádná známka nemá váhu</string>
     <string name="pref_ads_support_category_name">Podpora</string>
+    <string name="pref_ads_privacy_policy">Ochrana osobních údajů</string>
+    <string name="pref_ads_agreements">Souhlasy</string>
+    <string name="pref_ads_consent">Souhlas se zpracováním údajů souvisejících s reklamami</string>
+    <string name="pref_ads_show_in_app">Zobrazit reklamy v aplikaci</string>
     <string name="pref_ads_support">Podívejte se na jednu reklamu pro podporu projektu</string>
     <string name="pref_ads_privacy_title">Souhlas se zpracováním dat</string>
     <string name="pref_ads_privacy_description">Jestli chcete sledovat reklamu, musíte souhlasit s podmínkami zpracování údajů v našich Zásadách Ochrany Osobních Údajů</string>
@@ -731,6 +735,9 @@
     <string name="pref_ads_consent_description">Volbu můžete kdykoliv změnit v nastavení aplikace. Můžeme použít Vaše data k zobrazení reklam šitých pro vás nebo pomocí méně vašich dat zobrazovat nepřizpůsobené reklamy. Podrobnosti naleznete v našich Zásadách ochrany osobních údajů</string>
     <string name="pref_ads_summary_personalized">Přizpůsobené reklamy</string>
     <string name="pref_ads_summary_non_personalized">Nepřizpůsobené reklamy</string>
+    <string name="pref_ads_over_18_years_old">Mám ukončené 18 let</string>
+    <string name="pref_ads_option_personalized">Ano, přizpůsobené reklamy</string>
+    <string name="pref_ads_option_non_personalized">Ano, nepřizpůsobené reklamy</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhled a chování</string>
     <string name="pref_settings_notifications_title">Oznámení</string>

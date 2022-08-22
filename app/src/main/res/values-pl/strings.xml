@@ -720,6 +720,10 @@
     <string name="pref_other_fill_message_content">Odpowiadaj z historią wiadomości</string>
     <string name="pref_other_optional_arithmetic_average">Licz średnią arytmetyczną, gdy żadna ocena nie ma wagi</string>
     <string name="pref_ads_support_category_name">Wsparcie</string>
+    <string name="pref_ads_privacy_policy">Polityka prywatności</string>
+    <string name="pref_ads_agreements">Zgody</string>
+    <string name="pref_ads_consent">Zgoda na przetwarzanie danych związanych z reklamami</string>
+    <string name="pref_ads_show_in_app">Pokazuj reklamy w aplikacji</string>
     <string name="pref_ads_support">Obejrzyj pojedynczą reklamę, aby wesprzeć projekt</string>
     <string name="pref_ads_privacy_title">Zgoda na przetwarzanie danych</string>
     <string name="pref_ads_privacy_description">Aby obejrzeć reklamę, musisz zaakceptować warunki przetwarzania danych zawarte w naszej Polityce Prywatności</string>
@@ -731,6 +735,9 @@
     <string name="pref_ads_consent_description">Możesz zmienić swój wybór w dowolnym momencie w ustawieniach aplikacji. Możemy wykorzystać Twoje dane do wyświetlania reklam dostosowanych do Ciebie lub, przy użyciu mniejszej ilości danych, wyświetlić niepersonalizowane reklamy. Zobacz naszą Politykę Prywatności, aby uzyskać więcej informacji</string>
     <string name="pref_ads_summary_personalized">Spersonalizowane reklamy</string>
     <string name="pref_ads_summary_non_personalized">Niespersonalizowane reklamy</string>
+    <string name="pref_ads_over_18_years_old">Mam ukończone 18 lat</string>
+    <string name="pref_ads_option_personalized">Tak, spersonalizowane reklamy</string>
+    <string name="pref_ads_option_non_personalized">Tak, niespersonalizowane reklamy</string>
     <string name="pref_settings_advanced_title">Zaawansowane</string>
     <string name="pref_settings_appearance_title">Wygląd i zachowanie</string>
     <string name="pref_settings_notifications_title">Powiadomienia</string>
