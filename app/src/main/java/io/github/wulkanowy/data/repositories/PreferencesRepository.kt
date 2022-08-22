@@ -222,19 +222,31 @@ class PreferencesRepository @Inject constructor(
         get() = selectedDashboardTilesPreference.asFlow()
             .map { set ->
                 set.map { DashboardItem.Tile.valueOf(it) }
-                    .plus(DashboardItem.Tile.ACCOUNT)
-                    .plus(DashboardItem.Tile.ADMIN_MESSAGE)
+                    .plus(
+                        listOfNotNull(
+                            DashboardItem.Tile.ACCOUNT,
+                            DashboardItem.Tile.ADMIN_MESSAGE,
+                            DashboardItem.Tile.ADS.takeIf { isAdsEnabled }
+                        )
+                    )
                     .toSet()
             }
 
     var selectedDashboardTiles: Set<DashboardItem.Tile>
         get() = selectedDashboardTilesPreference.get()
             .map { DashboardItem.Tile.valueOf(it) }
-            .plus(DashboardItem.Tile.ACCOUNT)
-            .plus(DashboardItem.Tile.ADMIN_MESSAGE)
+            .plus(
+                listOfNotNull(
+                    DashboardItem.Tile.ACCOUNT,
+                    DashboardItem.Tile.ADMIN_MESSAGE,
+                    DashboardItem.Tile.ADS.takeIf { isAdsEnabled }
+                )
+            )
             .toSet()
         set(value) {
-            val filteredValue = value.filterNot { it == DashboardItem.Tile.ACCOUNT }
+            val filteredValue = value.filterNot {
+                it == DashboardItem.Tile.ACCOUNT || it == DashboardItem.Tile.ADMIN_MESSAGE
+            }
                 .map { it.name }
                 .toSet()
 
@@ -271,7 +283,38 @@ class PreferencesRepository @Inject constructor(
 
     var isAppReviewDone: Boolean
         get() = sharedPref.getBoolean(PREF_KEY_IN_APP_REVIEW_DONE, false)
-        set(value) = sharedPref.edit().putBoolean(PREF_KEY_IN_APP_REVIEW_DONE, value).apply()
+        set(value) = sharedPref.edit { putBoolean(PREF_KEY_IN_APP_REVIEW_DONE, value) }
+
+    var isAppSupportShown: Boolean
+        get() = sharedPref.getBoolean(PREF_KEY_APP_SUPPORT_SHOWN, false)
+        set(value) = sharedPref.edit { putBoolean(PREF_KEY_APP_SUPPORT_SHOWN, value) }
+
+    var isAgreeToProcessData: Boolean
+        get() = getBoolean(
+            R.string.pref_key_ads_consent_data_processing,
+            R.bool.pref_default_ads_consent_data_processing
+        )
+        set(value) = sharedPref.edit {
+            putBoolean(context.getString(R.string.pref_key_ads_consent_data_processing), value)
+        }
+
+    var isPersonalizedAdsEnabled: Boolean
+        get() = sharedPref.getBoolean(PREF_KEY_PERSONALIZED_ADS_ENABLED, false)
+        set(value) = sharedPref.edit { putBoolean(PREF_KEY_PERSONALIZED_ADS_ENABLED, value) }
+
+    val isAdsEnabledFlow = flowSharedPref.getBoolean(
+        context.getString(R.string.pref_key_ads_enabled),
+        context.resources.getBoolean(R.bool.pref_default_ads_enabled)
+    ).asFlow()
+
+    var isAdsEnabled: Boolean
+        get() = getBoolean(
+            R.string.pref_key_ads_enabled,
+            R.bool.pref_default_ads_enabled
+        )
+        set(value) = sharedPref.edit {
+            putBoolean(context.getString(R.string.pref_key_ads_enabled), value)
+        }
 
     private fun getLong(id: Int, default: Int) = getLong(context.getString(id), default)
 
@@ -300,6 +343,10 @@ class PreferencesRepository @Inject constructor(
         private const val PREF_KEY_IN_APP_REVIEW_DATE = "in_app_review_date"
 
         private const val PREF_KEY_IN_APP_REVIEW_DONE = "in_app_review_done"
+
+        private const val PREF_KEY_APP_SUPPORT_SHOWN = "app_support_shown"
+
+        private const val PREF_KEY_PERSONALIZED_ADS_ENABLED = "personalized_ads_enabled"
 
         private const val PREF_KEY_ADMIN_DISMISSED_MESSAGE_IDS = "admin_message_dismissed_ids"
     }

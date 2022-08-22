@@ -6,7 +6,7 @@ import io.github.wulkanowy.sdk.pojo.DirectorInformation as SdkDirectorInformatio
 
 fun List<SdkDirectorInformation>.mapToEntities(student: Student) = map {
     SchoolAnnouncement(
-        studentId = student.userLoginId,
+        userLoginId = student.userLoginId,
         date = it.date,
         subject = it.subject,
         content = it.content,

@@ -51,7 +51,7 @@ Die aktuelle Version können Sie von der Google Play, F-Droid oder Huawei AppGal
     alt="Explore it on AppGallery"
     height="80">](https://appgallery.cloud.huawei.com/ag/n/app/C101440411?channelId=Badge&id=1b3f7fbb700849a9be0dba6b520b2282&s=EB1D3BF9ED9D1564D869B7B94B18016D3CABFCA5AEFB8E29F675FA04E0DC131D&detailType=0&v=)
     
-Sie können auch ein [Entwicklungsversion herunterladen](https://wulkanowy.github.io/#download) das beinhaltet neue Funktionen, die für die nächste Version vorbereitet werden
+Sie können auch eine [Entwicklungsversion herunterladen](https://wulkanowy.github.io/#download) die beinhaltet neue Funktionen, die für die nächste Version vorbereitet werden
 
 ## Gebaut mit
 

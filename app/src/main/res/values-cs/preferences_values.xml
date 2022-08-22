@@ -34,6 +34,7 @@
     <string-array name="grade_sorting_mode_entries">
         <item>Abecedně</item>
         <item>Podle data</item>
+        <item>Podle průměru</item>
     </string-array>
     <string-array name="grade_color_scheme_entries">
         <item>Dzienniczek+</item>

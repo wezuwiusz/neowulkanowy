@@ -56,8 +56,8 @@ class MobileDeviceRepositoryTest {
         // prepare
         coEvery { sdk.getRegisteredDevices() } returns remoteList
         coEvery { mobileDeviceDb.loadAll(student.studentId) } returnsMany listOf(
-            flowOf(remoteList.mapToEntities(semester)),
-            flowOf(remoteList.mapToEntities(semester))
+            flowOf(remoteList.mapToEntities(student)),
+            flowOf(remoteList.mapToEntities(student))
         )
         coEvery { mobileDeviceDb.insertAll(any()) } returns listOf(1, 2, 3)
         coEvery { mobileDeviceDb.deleteAll(any()) } just Runs
@@ -79,9 +79,9 @@ class MobileDeviceRepositoryTest {
         // prepare
         coEvery { sdk.getRegisteredDevices() } returns remoteList
         coEvery { mobileDeviceDb.loadAll(1) } returnsMany listOf(
-            flowOf(remoteList.dropLast(1).mapToEntities(semester)),
-            flowOf(remoteList.dropLast(1).mapToEntities(semester)), // after fetch end before save result
-            flowOf(remoteList.mapToEntities(semester))
+            flowOf(remoteList.dropLast(1).mapToEntities(student)),
+            flowOf(remoteList.dropLast(1).mapToEntities(student)), // after fetch end before save result
+            flowOf(remoteList.mapToEntities(student))
         )
         coEvery { mobileDeviceDb.insertAll(any()) } returns listOf(1, 2, 3)
         coEvery { mobileDeviceDb.deleteAll(any()) } just Runs
@@ -96,7 +96,7 @@ class MobileDeviceRepositoryTest {
         coVerify { mobileDeviceDb.loadAll(1) }
         coVerify {
             mobileDeviceDb.insertAll(match {
-                it.size == 1 && it[0] == remoteList.mapToEntities(semester)[1]
+                it.size == 1 && it[0] == remoteList.mapToEntities(student)[1]
             })
         }
         coVerify { mobileDeviceDb.deleteAll(match { it.isEmpty() }) }
@@ -107,9 +107,9 @@ class MobileDeviceRepositoryTest {
         // prepare
         coEvery { sdk.getRegisteredDevices() } returns remoteList.dropLast(1)
         coEvery { mobileDeviceDb.loadAll(1) } returnsMany listOf(
-            flowOf(remoteList.mapToEntities(semester)),
-            flowOf(remoteList.mapToEntities(semester)), // after fetch end before save result
-            flowOf(remoteList.dropLast(1).mapToEntities(semester))
+            flowOf(remoteList.mapToEntities(student)),
+            flowOf(remoteList.mapToEntities(student)), // after fetch end before save result
+            flowOf(remoteList.dropLast(1).mapToEntities(student))
         )
         coEvery { mobileDeviceDb.insertAll(any()) } returns listOf(1, 2, 3)
         coEvery { mobileDeviceDb.deleteAll(any()) } just Runs
@@ -125,7 +125,7 @@ class MobileDeviceRepositoryTest {
         coVerify { mobileDeviceDb.insertAll(match { it.isEmpty() }) }
         coVerify {
             mobileDeviceDb.deleteAll(match {
-                it.size == 1 && it[0] == remoteList.mapToEntities(semester)[1]
+                it.size == 1 && it[0] == remoteList.mapToEntities(student)[1]
             })
         }
     }

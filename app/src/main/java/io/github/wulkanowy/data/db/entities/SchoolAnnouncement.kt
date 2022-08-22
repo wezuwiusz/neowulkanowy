@@ -9,8 +9,8 @@ import java.time.LocalDate
 @Entity(tableName = "SchoolAnnouncements")
 data class SchoolAnnouncement(
 
-    @ColumnInfo(name = "student_id")
-    val studentId: Int,
+    @ColumnInfo(name = "user_login_id")
+    val userLoginId: Int,
 
     val date: LocalDate,
 

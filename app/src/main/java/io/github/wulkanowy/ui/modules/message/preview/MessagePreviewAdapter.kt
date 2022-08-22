@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
+import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Message
@@ -75,29 +77,25 @@ class MessagePreviewAdapter @Inject constructor() :
     @SuppressLint("SetTextI18n")
     private fun bindMessage(holder: MessageViewHolder, message: Message) {
         val context = holder.binding.root.context
-        val recipientCount = message.unreadBy + message.readBy
 
-        val readText = when {
-            recipientCount > 1 -> {
-                context.getString(R.string.message_read_by, message.readBy, recipientCount)
-            }
-            message.readBy == 1 -> {
-                context.getString(R.string.message_read, context.getString(R.string.all_yes))
-            }
-            else -> context.getString(R.string.message_read, context.getString(R.string.all_no))
+        val readTextValue = when {
+            !message.unread -> R.string.all_yes
+            else -> R.string.all_no
         }
+        val readText = context.getString(R.string.message_read, context.getString(readTextValue))
 
         with(holder.binding) {
-            messagePreviewSubject.text =
-                message.subject.ifBlank { root.context.getString(R.string.message_no_subject) }
-            messagePreviewDate.text = root.context.getString(
+            messagePreviewSubject.text = message.subject.ifBlank {
+                context.getString(R.string.message_no_subject)
+            }
+            messagePreviewDate.text = context.getString(
                 R.string.message_date,
                 message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")
             )
             messagePreviewRead.text = readText
-            messagePreviewContent.text = message.content
+            messagePreviewContent.text = message.content.parseAsHtml(FROM_HTML_MODE_COMPACT)
             messagePreviewFromSender.text = message.sender
-            messagePreviewToRecipient.text = message.recipient
+            messagePreviewToRecipient.text = message.recipients
         }
     }
 

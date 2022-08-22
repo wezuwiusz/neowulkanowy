@@ -16,4 +16,10 @@ interface AdsView : BaseView {
     fun showLoadingSupportAd(show: Boolean)
 
     fun showWatchAdOncePerVisit(show: Boolean)
+
+    fun setCheckedAdsEnabled(checked: Boolean)
+
+    fun setCheckedProcessingData(checked: Boolean)
+
+    fun showProcessingDataSummary(isPersonalized: Boolean?)
 }

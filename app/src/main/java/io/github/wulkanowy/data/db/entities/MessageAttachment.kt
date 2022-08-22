@@ -12,11 +12,8 @@ data class MessageAttachment(
     @ColumnInfo(name = "real_id")
     val realId: Int,
 
-    @ColumnInfo(name = "message_id")
-    val messageId: Int,
-
-    @ColumnInfo(name = "one_drive_id")
-    val oneDriveId: String,
+    @ColumnInfo(name = "message_global_key")
+    val messageGlobalKey: String,
 
     @ColumnInfo(name = "url")
     val url: String,

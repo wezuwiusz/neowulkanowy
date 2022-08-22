@@ -9,23 +9,16 @@ import java.time.Instant
 @Entity(tableName = "Messages")
 data class Message(
 
-    @ColumnInfo(name = "student_id")
-    val studentId: Long,
+    @ColumnInfo(name = "message_global_key")
+    val messageGlobalKey: String,
 
-    @ColumnInfo(name = "real_id")
-    val realId: Int,
+    @ColumnInfo(name = "mailbox_key")
+    val mailboxKey: String,
 
     @ColumnInfo(name = "message_id")
     val messageId: Int,
 
-    @ColumnInfo(name = "sender_name")
-    val sender: String,
-
-    @ColumnInfo(name = "sender_id")
-    val senderId: Int,
-
-    @ColumnInfo(name = "recipient_name")
-    val recipient: String,
+    val correspondents: String,
 
     val subject: String,
 
@@ -35,8 +28,6 @@ data class Message(
     val folderId: Int,
 
     var unread: Boolean,
-
-    val removed: Boolean,
 
     @ColumnInfo(name = "has_attachments")
     val hasAttachments: Boolean
@@ -48,11 +39,7 @@ data class Message(
     @ColumnInfo(name = "is_notified")
     var isNotified: Boolean = true
 
-    @ColumnInfo(name = "unread_by")
-    var unreadBy: Int = 0
-
-    @ColumnInfo(name = "read_by")
-    var readBy: Int = 0
-
     var content: String = ""
+    var sender: String? = null
+    var recipients: String? = null
 }

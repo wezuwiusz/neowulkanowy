@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
@@ -20,6 +21,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.ActivityMainBinding
+import io.github.wulkanowy.databinding.DialogAdsConsentBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
@@ -100,6 +102,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     }
 
     //https://developer.android.com/guide/playcore/in-app-updates#status_callback
+    @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -285,6 +288,50 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     override fun showInAppReview() {
         inAppReviewHelper.showInAppReview(this)
+    }
+
+    override fun showAppSupport() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.main_support_title)
+            .setMessage(R.string.main_support_description)
+            .setPositiveButton(R.string.main_support_positive) { _, _ -> presenter.onEnableAdsSelected() }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .setOnDismissListener { }
+            .show()
+    }
+
+    override fun showPrivacyPolicyDialog() {
+        val dialogAdsConsentBinding = DialogAdsConsentBinding.inflate(layoutInflater)
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.pref_ads_consent_title)
+            .setMessage(R.string.pref_ads_consent_description)
+            .setView(dialogAdsConsentBinding.root)
+            .show()
+
+        dialogAdsConsentBinding.adsConsentOver.setOnCheckedChangeListener { _, isChecked ->
+            dialogAdsConsentBinding.adsConsentPersonalised.isEnabled = isChecked
+        }
+
+        dialogAdsConsentBinding.adsConsentPersonalised.setOnClickListener {
+            presenter.onPrivacyAgree(true)
+            dialog.dismiss()
+        }
+
+        dialogAdsConsentBinding.adsConsentNonPersonalised.setOnClickListener {
+            presenter.onPrivacyAgree(false)
+            dialog.dismiss()
+        }
+
+        dialogAdsConsentBinding.adsConsentPrivacy.setOnClickListener { presenter.onPrivacySelected() }
+        dialogAdsConsentBinding.adsConsentCancel.setOnClickListener { dialog.cancel() }
+    }
+
+    override fun openPrivacyPolicy() {
+        openInternetBrowser(
+            "https://wulkanowy.github.io/polityka-prywatnosci.html",
+            ::showMessage
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

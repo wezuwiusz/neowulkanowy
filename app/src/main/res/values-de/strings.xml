@@ -77,6 +77,9 @@
     <string name="main_log_in">Anmelden</string>
     <string name="main_session_expired">Die Sitzung ist abgelaufen</string>
     <string name="main_session_relogin">Die Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein</string>
+    <string name="main_support_title">Anwendungsunterstützung</string>
+    <string name="main_support_description">Gefällt Ihnen diese App? Unterstützen Sie ihre Entwicklung, indem Sie nicht-invasive Werbung aktivieren, die Sie jederzeit deaktivieren können</string>
+    <string name="main_support_positive">Werbung aktivieren</string>
     <!--Grade-->
     <string name="grade_header">Note</string>
     <string name="grade_semester">Semester %d</string>
@@ -94,7 +97,7 @@
     <string name="grade_summary_predicted_grade">Vorhergesagte Note</string>
     <string name="grade_summary_calculated_average">Berechnender Durchschnitt</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Wie funktioniert der berechnete Durchschnitt?</string>
-    <string name="grade_summary_calculated_average_help_dialog_message">Der berechnete Mittelwert ist das arithmetische Mittel, das aus den Durchschnittswerten der Probanden errechnet wird. Es erlaubt Ihnen, den ungefähre endgültigen Durchschnitt zu kennen. Sie wird auf eine vom Anwender in den Anwendungseinstellungen gewählte Weise berechnet. Es wird empfohlen, die entsprechende Option zu wählen. Das liegt daran, dass die Berechnung der Schuldurchschnitte unterschiedlich ist. Wenn Ihre Schule den Durchschnitt der Fächer auf der Vulcan-Seite angibt, lädt die Anwendung diese Fächer herunter und berechnet nicht den Durchschnitt. Dies kann geändert werden, indem die Berechnung des Durchschnitts in den Anwendungseinstellungen erzwungen wird. \n\n<b>Durchschnitt der Noten nur aus dem ausgewählten Semester </b>:\n1. Berechnung des gewichteten Durchschnitts für jedes Fach in einem bestimmten Semester\n2. Addition der berechneten Durchschnittswerte\n3. Berechnung des arithmetischen Mittels der summierten Durchschnitte\n<b>Durchschnitt der Durchschnitte aus beiden Semestern</b>:\n1. Berechnung des gewichteten Durchschnitts für jedes Fach in Semester 1 und 2\n2. Berechnung des arithmetischen Mittels der berechneten Durchschnitte für Semester 1 und 2 für jedes Fach. \n3. Hinzufügen von berechneten Durchschnittswerten\n4. Berechnung des arithmetischen Mittels der summierten Durchschnitte\n<b>Durchschnitt der Noten aus dem ganzen Jahr:</b>\n1. Berechnung des gewichteten Jahresdurchschnitts für jedes Fach. Der Abschlussdurchschnitt im 1. Semester ist irrelevant. \n3. Addition der berechneten Durchschnittswerte\n4. Berechnung des arithmetischen Mittels der summierten Mittelwerte</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Der berechnete Mittelwert ist das arithmetische Mittel, das aus den Durchschnittswerten der Probanden errechnet wird. Es erlaubt Ihnen, den ungefähre endgültigen Durchschnitt zu kennen. Sie wird auf eine vom Anwender in den Anwendungseinstellungen gewählte Weise berechnet. Es wird empfohlen, die entsprechende Option zu wählen. Das liegt daran, dass die Berechnung der Schuldurchschnitte unterschiedlich ist. Wenn Ihre Schule den Durchschnitt der Fächer auf der Vulcan-Seite angibt, lädt die Anwendung diese Fächer herunter und berechnet nicht den Durchschnitt. Dies kann geändert werden, indem die Berechnung des Durchschnitts in den Anwendungseinstellungen erzwungen wird. \n\n<b>Durchschnitt der Noten nur aus dem ausgewählten Semester </b>:\n1. Berechnung des gewichteten Durchschnitts für jedes Fach in einem bestimmten Semester\n2. Addition der berechneten Durchschnittswerte\n3. Berechnung des arithmetischen Mittels der summierten Durchschnitte\n<b>Durchschnitt der Durchschnitte aus beiden Semestern</b>:\n1. Berechnung des gewichteten Durchschnitts für jedes Fach in Semester 1 und 2\n2. Berechnung des arithmetischen Mittels der berechneten Durchschnitte für Semester 1 und 2 für jedes Fach. \n3. Hinzufügen von berechneten Durchschnittswerten\n4. Berechnung des arithmetischen Mittels der summierten Durchschnitte\n<b>Durchschnitt der Noten aus dem ganzen Jahr:</b>\n1. Berechnung des gewichteten Jahresdurchschnitts für jedes Fach. Der Abschlussdurchschnitt im 1. Semester ist irrelevant. \n2. Addition der berechneten Durchschnittswerte\n3. Berechnung des arithmetischen Mittels der summierten Mittelwerte</string>
     <string name="grade_summary_final_average_help_dialog_title">Wie funktioniert der endgültige Durchschnitt?</string>
     <string name="grade_summary_final_average_help_dialog_message">Der Final Average ist das arithmetische Mittel, das aus allen derzeit verfügbaren Abschlussnoten des jeweiligen Semesters berechnet wird. \n\nDas Berechnungsschema besteht aus folgenden Schritten:\n1. Zusammenfassung der von den Lehrern gegebenen Abschlussnoten\n2. Division durch die Anzahl der Fächer, die bereits bewertet wurden</string>
     <string name="grade_summary_final_average">Finaler Durchschnitt</string>
@@ -260,6 +263,10 @@
     <string name="message_move_to_trash">In Papierkorb verschieben</string>
     <string name="message_delete_forever">Dauerhaft löschen</string>
     <string name="message_delete_success">Nachricht erfolgreich gelöscht</string>
+    <string name="message_mailbox_type_student">schüler</string>
+    <string name="message_mailbox_type_parent">Eltern</string>
+    <string name="message_mailbox_type_guardian">Betreuer</string>
+    <string name="message_mailbox_type_employee">Mitarbeiter</string>
     <string name="message_share">Teilen</string>
     <string name="message_print">Drucken</string>
     <string name="message_subject">Thema</string>
@@ -271,7 +278,6 @@
     <string name="message_chip_only_unread">Nur ungelesen</string>
     <string name="message_chip_only_with_attachments">Nur mit Anhängen</string>
     <string name="message_read">Lesen: %s</string>
-    <string name="message_read_by">Lesen von: %1$d von %2$d Personen</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d Nachricht</item>
         <item quantity="other">%1$d Nachrichten</item>
@@ -633,6 +639,10 @@
     <string name="pref_ads_privacy_link">Datenschutzerklärung</string>
     <string name="pref_ads_loading">Anzeige wird geladen</string>
     <string name="pref_ads_once_per_visit">Vielen Dank für Ihre Unterstützung, kommen Sie später wieder für weitere Anzeigen</string>
+    <string name="pref_ads_consent_title">Können wir Ihre Daten zur Anzeige von Werbung verwenden?</string>
+    <string name="pref_ads_consent_description">Sie können Ihre Wahl jederzeit in den App-Einstellungen ändern. Wir verwenden Ihre Daten, um auf Sie zugeschnittene Anzeigen anzuzeigen oder unter Verwendung weniger Ihrer Daten nicht personalisierte Werbung anzuzeigen. Bitte lesen Sie unsere Datenschutzerklärung für Details</string>
+    <string name="pref_ads_summary_personalized">Personalisierte Werbung</string>
+    <string name="pref_ads_summary_non_personalized">keine personalisierte Werbung</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>

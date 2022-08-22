@@ -1,8 +1,6 @@
 package io.github.wulkanowy.ui.modules.timetablewidget
 
-import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
-import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
-import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS
+import android.appwidget.AppWidgetManager.*
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +15,7 @@ import io.github.wulkanowy.databinding.ActivityWidgetConfigureBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.WidgetConfigureAdapter
 import io.github.wulkanowy.ui.modules.login.LoginActivity
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.EXTRA_FROM_CONFIGURE
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.EXTRA_FROM_PROVIDER
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
@@ -92,6 +91,7 @@ class TimetableWidgetConfigureActivity :
             .apply {
                 action = ACTION_APPWIDGET_UPDATE
                 putExtra(EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
+                putExtra(EXTRA_FROM_CONFIGURE, true)
             })
     }
 

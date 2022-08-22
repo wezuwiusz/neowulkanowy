@@ -2,12 +2,15 @@ package io.github.wulkanowy.ui.modules.settings.ads
 
 import android.os.Bundle
 import android.view.View
+import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.databinding.DialogAdsConsentBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.main.MainView
@@ -36,6 +39,17 @@ class AdsFragment : PreferenceFragmentCompat(), MainView.TitledView, AdsView {
             presenter.onWatchSingleAdSelected()
             true
         }
+
+        findPreference<Preference>(getString(R.string.pref_key_ads_privacy_policy))?.setOnPreferenceClickListener {
+            presenter.onPrivacySelected()
+            true
+        }
+
+        findPreference<CheckBoxPreference>(getString(R.string.pref_key_ads_consent_data_processing))
+            ?.setOnPreferenceChangeListener { _, newValue ->
+                presenter.onConsentSelected(newValue as Boolean)
+                true
+            }
     }
 
     override fun showAd(ad: RewardedInterstitialAd) {
@@ -45,13 +59,50 @@ class AdsFragment : PreferenceFragmentCompat(), MainView.TitledView, AdsView {
     }
 
     override fun showPrivacyPolicyDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.pref_ads_privacy_title))
-            .setMessage(getString(R.string.pref_ads_privacy_description))
-            .setPositiveButton(getString(R.string.pref_ads_privacy_agree)) { _, _ -> presenter.onAgreedPrivacy() }
-            .setNegativeButton(android.R.string.cancel) { _, _ -> }
-            .setNeutralButton(getString(R.string.pref_ads_privacy_link)) { _, _ -> presenter.onPrivacySelected() }
+        val dialogAdsConsentBinding = DialogAdsConsentBinding.inflate(layoutInflater)
+
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.pref_ads_consent_title)
+            .setMessage(R.string.pref_ads_consent_description)
+            .setView(dialogAdsConsentBinding.root)
+            .setOnCancelListener { presenter.onPrivacyDialogCanceled() }
             .show()
+
+        dialogAdsConsentBinding.adsConsentOver.setOnCheckedChangeListener { _, isChecked ->
+            dialogAdsConsentBinding.adsConsentPersonalised.isEnabled = isChecked
+        }
+
+        dialogAdsConsentBinding.adsConsentPersonalised.setOnClickListener {
+            presenter.onPersonalizedAgree()
+            dialog.dismiss()
+        }
+
+        dialogAdsConsentBinding.adsConsentNonPersonalised.setOnClickListener {
+            presenter.onNonPersonalizedAgree()
+            dialog.dismiss()
+        }
+
+        dialogAdsConsentBinding.adsConsentPrivacy.setOnClickListener { presenter.onPrivacySelected() }
+        dialogAdsConsentBinding.adsConsentCancel.setOnClickListener { dialog.cancel() }
+    }
+
+    override fun showProcessingDataSummary(isPersonalized: Boolean?) {
+        val summaryText = isPersonalized?.let {
+            getString(if (it) R.string.pref_ads_summary_personalized else R.string.pref_ads_summary_non_personalized)
+        }
+
+        findPreference<CheckBoxPreference>(getString(R.string.pref_key_ads_consent_data_processing))
+            ?.summary = summaryText
+    }
+
+    override fun setCheckedProcessingData(checked: Boolean) {
+        findPreference<CheckBoxPreference>(getString(R.string.pref_key_ads_consent_data_processing))
+            ?.isChecked = checked
+    }
+
+    override fun setCheckedAdsEnabled(checked: Boolean) {
+        findPreference<SwitchPreferenceCompat>(getString(R.string.pref_key_ads_enabled))
+            ?.isChecked = checked
     }
 
     override fun openPrivacyPolicy() {

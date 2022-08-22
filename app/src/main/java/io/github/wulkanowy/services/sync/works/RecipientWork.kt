@@ -1,23 +1,22 @@
 package io.github.wulkanowy.services.sync.works
 
+import io.github.wulkanowy.data.db.entities.MailboxType
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.repositories.MailboxRepository
 import io.github.wulkanowy.data.repositories.RecipientRepository
-import io.github.wulkanowy.data.repositories.ReportingUnitRepository
 import javax.inject.Inject
 
 class RecipientWork @Inject constructor(
-    private val reportingUnitRepository: ReportingUnitRepository,
+    private val mailboxRepository: MailboxRepository,
     private val recipientRepository: RecipientRepository
 ) : Work {
 
     override suspend fun doWork(student: Student, semester: Semester, notify: Boolean) {
-        reportingUnitRepository.refreshReportingUnits(student)
+        mailboxRepository.refreshMailboxes(student)
 
-        reportingUnitRepository.getReportingUnits(student).let { units ->
-            units.map {
-                recipientRepository.refreshRecipients(student, it, 2)
-            }
-        }
+        val mailbox = mailboxRepository.getMailbox(student)
+
+        recipientRepository.refreshRecipients(student, mailbox, MailboxType.EMPLOYEE)
     }
 }

@@ -31,10 +31,14 @@ class WulkanowyApp : Application(), Configuration.Provider {
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
 
+    @Inject
+    lateinit var adsHelper: AdsHelper
+
     override fun onCreate() {
         super.onCreate()
         initializeAppLanguage()
         themeManager.applyDefaultTheme()
+        adsHelper.initialize()
         initLogging()
     }
 

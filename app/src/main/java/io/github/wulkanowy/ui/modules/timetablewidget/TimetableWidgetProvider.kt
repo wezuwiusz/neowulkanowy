@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.timetablewidget
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetManager.*
@@ -61,6 +60,8 @@ class TimetableWidgetProvider : BroadcastReceiver() {
 
         private const val BUTTON_RESET = "buttonReset"
 
+        const val EXTRA_FROM_CONFIGURE = "extraFromConfigure"
+
         const val EXTRA_FROM_PROVIDER = "extraFromProvider"
 
         fun getDateWidgetKey(appWidgetId: Int) = "timetable_widget_date_$appWidgetId"
@@ -87,12 +88,22 @@ class TimetableWidgetProvider : BroadcastReceiver() {
     }
 
     private suspend fun onUpdate(context: Context, intent: Intent) {
-        if (intent.getStringExtra(EXTRA_BUTTON_TYPE) === null) {
-            intent.getIntArrayExtra(EXTRA_APPWIDGET_IDS)?.forEach { appWidgetId ->
+        if (intent.getStringExtra(EXTRA_BUTTON_TYPE) == null) {
+            val isFromConfigure = intent.getBooleanExtra(EXTRA_FROM_CONFIGURE, false)
+            val appWidgetIds = intent.getIntArrayExtra(EXTRA_APPWIDGET_IDS) ?: return
+
+            appWidgetIds.forEach { appWidgetId ->
                 val student =
                     getStudent(sharedPref.getLong(getStudentWidgetKey(appWidgetId), 0), appWidgetId)
+                val savedDataEpochDay = sharedPref.getLong(getDateWidgetKey(appWidgetId), 0)
 
-                updateWidget(context, appWidgetId, getWidgetDateToLoad(appWidgetId), student)
+                val dateToLoad = if (isFromConfigure && savedDataEpochDay != 0L) {
+                    LocalDate.ofEpochDay(savedDataEpochDay)
+                } else {
+                    getWidgetDefaultDateToLoad(appWidgetId)
+                }
+
+                updateWidget(context, appWidgetId, dateToLoad, student)
             }
         } else {
             val buttonType = intent.getStringExtra(EXTRA_BUTTON_TYPE)
@@ -104,10 +115,10 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             val savedDate =
                 LocalDate.ofEpochDay(sharedPref.getLong(getDateWidgetKey(toggledWidgetId), 0))
             val date = when (buttonType) {
-                BUTTON_RESET -> getWidgetDateToLoad(toggledWidgetId)
+                BUTTON_RESET -> getWidgetDefaultDateToLoad(toggledWidgetId)
                 BUTTON_NEXT -> savedDate.nextSchoolDay
                 BUTTON_PREV -> savedDate.previousSchoolDay
-                else -> getWidgetDateToLoad(toggledWidgetId)
+                else -> getWidgetDefaultDateToLoad(toggledWidgetId)
             }
             if (!buttonType.isNullOrBlank()) {
                 analytics.logEvent(
@@ -132,7 +143,6 @@ class TimetableWidgetProvider : BroadcastReceiver() {
         }
     }
 
-    @SuppressLint("DefaultLocale")
     private fun updateWidget(
         context: Context,
         appWidgetId: Int,
@@ -273,7 +283,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
         return avatarBitmap
     }
 
-    private fun getWidgetDateToLoad(appWidgetId: Int): LocalDate {
+    private fun getWidgetDefaultDateToLoad(appWidgetId: Int): LocalDate {
         val lastLessonEndTimestamp =
             sharedPref.getLong(getTodayLastLessonEndDateTimeWidgetKey(appWidgetId), 0)
         val lastLessonEndDateTime =

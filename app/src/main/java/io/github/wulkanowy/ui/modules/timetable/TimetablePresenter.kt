@@ -87,15 +87,19 @@ class TimetablePresenter @Inject constructor(
 
     fun onViewReselected() {
         Timber.i("Timetable view is reselected")
-        view?.also { view ->
+        view?.let { view ->
             if (view.currentStackSize == 1) {
-                baseDate.also {
-                    if (currentDate != it) {
-                        reloadView(it)
-                        loadData()
-                    } else if (!view.isViewEmpty) view.resetView()
+                baseDate = now().nextOrSameSchoolDay
+
+                if (currentDate != baseDate) {
+                    reloadView(baseDate)
+                    loadData()
+                } else if (!view.isViewEmpty) {
+                    view.resetView()
                 }
-            } else view.popView()
+            } else {
+                view.popView()
+            }
         }
     }
 

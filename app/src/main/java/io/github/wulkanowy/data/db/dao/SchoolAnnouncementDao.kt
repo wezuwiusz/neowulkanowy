@@ -10,6 +10,6 @@ import javax.inject.Singleton
 @Singleton
 interface SchoolAnnouncementDao : BaseDao<SchoolAnnouncement> {
 
-    @Query("SELECT * FROM SchoolAnnouncements WHERE student_id = :studentId ORDER BY date DESC")
-    fun loadAll(studentId: Int): Flow<List<SchoolAnnouncement>>
+    @Query("SELECT * FROM SchoolAnnouncements WHERE user_login_id = :userLoginId ORDER BY date DESC")
+    fun loadAll(userLoginId: Int): Flow<List<SchoolAnnouncement>>
 }

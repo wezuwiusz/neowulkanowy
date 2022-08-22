@@ -18,7 +18,10 @@ import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.ui.modules.message.MessageView
 import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
+import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
+import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
@@ -29,10 +32,12 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
-    private val prefRepository: PreferencesRepository,
+    private val preferencesRepository: PreferencesRepository,
     private val syncManager: SyncManager,
     private val analytics: AnalyticsHelper,
-    private val json: Json
+    private val json: Json,
+    private val adsHelper: AdsHelper,
+    private val appInfo: AppInfo
 ) : BasePresenter<MainView>(errorHandler, studentRepository) {
 
     private var studentsWitSemesters: List<StudentWithSemesters>? = null
@@ -47,7 +52,7 @@ class MainPresenter @Inject constructor(
 
     private val Destination?.startMenuIndex
         get() = when {
-            this == null -> prefRepository.startMenuIndex
+            this == null -> preferencesRepository.startMenuIndex
             destinationType in rootDestinationTypeList -> {
                 rootDestinationTypeList.indexOf(destinationType)
             }
@@ -70,6 +75,8 @@ class MainPresenter @Inject constructor(
         }
 
         syncManager.startPeriodicSyncWorker()
+
+        checkAppSupport()
 
         analytics.logEvent("app_open", "destination" to initDestination.toString())
         Timber.i("Main view was initialized with $initDestination")
@@ -155,18 +162,52 @@ class MainPresenter @Inject constructor(
         } == true
     }
 
-    private fun checkInAppReview() {
-        prefRepository.inAppReviewCount++
+    fun onEnableAdsSelected() {
+        view?.showPrivacyPolicyDialog()
+    }
 
-        if (prefRepository.inAppReviewDate == null) {
-            prefRepository.inAppReviewDate = Instant.now()
+    fun onPrivacyAgree(isPersonalizedAds: Boolean) {
+        preferencesRepository.isAgreeToProcessData = true
+        preferencesRepository.isPersonalizedAdsEnabled = isPersonalizedAds
+
+        adsHelper.initialize()
+
+        preferencesRepository.isAdsEnabled = true
+    }
+
+    fun onPrivacySelected() {
+        view?.openPrivacyPolicy()
+    }
+
+    private fun checkInAppReview() {
+        preferencesRepository.inAppReviewCount++
+
+        if (preferencesRepository.inAppReviewDate == null) {
+            preferencesRepository.inAppReviewDate = Instant.now()
         }
 
-        if (!prefRepository.isAppReviewDone && prefRepository.inAppReviewCount >= 50 &&
-            Instant.now().minus(Duration.ofDays(14)).isAfter(prefRepository.inAppReviewDate)
+        if (!preferencesRepository.isAppReviewDone && preferencesRepository.inAppReviewCount >= 50 &&
+            Instant.now().minus(Duration.ofDays(14)).isAfter(preferencesRepository.inAppReviewDate)
         ) {
             view?.showInAppReview()
-            prefRepository.isAppReviewDone = true
+            preferencesRepository.isAppReviewDone = true
+        }
+    }
+
+    private fun checkAppSupport() {
+        if (!preferencesRepository.isAppSupportShown && !preferencesRepository.isAdsEnabled
+            && appInfo.buildFlavor == "play"
+        ) {
+            presenterScope.launch {
+                val student = runCatching { studentRepository.getCurrentStudent(false) }
+                    .onFailure { Timber.e(it) }
+                    .getOrElse { return@launch }
+
+                if (Instant.now().minus(Duration.ofDays(28)).isAfter(student.registrationDate)) {
+                    view?.showAppSupport()
+                    preferencesRepository.isAppSupportShown = true
+                }
+            }
         }
     }
 

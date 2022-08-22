@@ -37,4 +37,6 @@
         <item>GRADES</item>
         <item>ANNOUNCEMENTS</item>
     </string-array>
+    <bool name="pref_default_ads_enabled">false</bool>
+    <bool name="pref_default_ads_consent_data_processing">false</bool>
 </resources>

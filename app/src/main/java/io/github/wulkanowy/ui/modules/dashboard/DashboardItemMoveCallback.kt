@@ -2,7 +2,8 @@ package io.github.wulkanowy.ui.modules.dashboard
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import java.util.Collections
+import io.github.wulkanowy.ui.modules.dashboard.adapters.DashboardAdapter
+import java.util.*
 
 class DashboardItemMoveCallback(
     private val dashboardAdapter: DashboardAdapter,

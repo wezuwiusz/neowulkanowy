@@ -1,5 +1,7 @@
 package io.github.wulkanowy
 
+import io.github.wulkanowy.data.db.entities.Mailbox
+import io.github.wulkanowy.data.db.entities.MailboxType
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
@@ -19,6 +21,16 @@ fun getSemesterEntity(diaryId: Int = 1, semesterId: Int = 1, start: LocalDate = 
     unitId = 1,
     start = start,
     end = end
+)
+
+fun getMailboxEntity() = Mailbox(
+    globalKey = "v4",
+    fullName = "",
+    userName = "",
+    userLoginId = 0,
+    studentName = "",
+    schoolNameShort = "",
+    type = MailboxType.UNKNOWN,
 )
 
 fun getSemesterPojo(diaryId: Int, semesterId: Int, start: LocalDate, end: LocalDate, semesterName: Int = 1) = SdkSemester(

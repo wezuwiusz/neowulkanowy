@@ -172,7 +172,7 @@ class LoginFormPresenter @Inject constructor(
             if ("@" in login && "||" !in login && "login" !in host && "email" !in host) {
                 val emailHost = login.substringAfter("@")
                 val emailDomain = URL(host).host
-                if (emailHost != emailDomain) {
+                if (!emailHost.equals(emailDomain, true)) {
                     view?.setErrorEmailInvalid(domain = emailDomain)
                     isCorrect = false
                 }

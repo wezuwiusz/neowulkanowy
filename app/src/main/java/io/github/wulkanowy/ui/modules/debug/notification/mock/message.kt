@@ -17,16 +17,13 @@ val debugMessageItems = listOf(
 )
 
 private fun generateMessage(sender: String, subject: String) = Message(
-    sender = sender,
     subject = subject,
-    studentId = 0,
-    realId = 0,
-    messageId = 0,
-    senderId = 0,
-    recipient = "",
+    messageId = 123,
     date = Instant.now(),
     folderId = 0,
     unread = true,
-    removed = false,
-    hasAttachments = false
+    hasAttachments = false,
+    messageGlobalKey = "",
+    correspondents = sender,
+    mailboxKey = "",
 )

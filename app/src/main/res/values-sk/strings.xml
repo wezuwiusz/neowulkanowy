@@ -77,6 +77,9 @@
     <string name="main_log_in">Prihlásiť sa</string>
     <string name="main_session_expired">Relácia vypršala</string>
     <string name="main_session_relogin">Relácia vypršala. Prihláste sa prosím znovu</string>
+    <string name="main_support_title">Podpora aplikácie</string>
+    <string name="main_support_description">Páči sa Vám táto aplikácia? Podporte jej vývoj tým, že povolíte neinvazívne reklamy, ktoré môžete kedykoľvek vypnúť</string>
+    <string name="main_support_positive">Zapnúť reklamy</string>
     <!--Grade-->
     <string name="grade_header">Známka</string>
     <string name="grade_semester">Semester %d</string>
@@ -94,7 +97,7 @@
     <string name="grade_summary_predicted_grade">Predpokladaná známka</string>
     <string name="grade_summary_calculated_average">Vypočítaný priemer</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Ako funguje vypočítaný priemer?</string>
-    <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný priemer je aritmetický priemer vypočítaný z priemerov predmetov. Umožňuje vám to poznať približný konečný priemer. Vypočítava sa spôsobom zvoleným užívateľom v nastaveniach aplikácii. Odporúča sa vybrať príslušnú možnosť. Dôvodom je rozdielny výpočet školských priemerov. Ak vaša škola navyše uvádza priemer predmetov na stránke denníka Vulcan, aplikácia si ich stiahne a tieto priemery nepočíta. To možno zmeniť vynútením výpočtu priemeru v nastavení aplikácii.\n\n<b>Priemer známok iba z vybraného semestra</b>:\n1. Výpočet váženého priemeru pre každý predmet v danom semestri\n2. Sčítanie vypočítaných priemerov\n3. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer priemerov z oboch semestrov</b>:\n1. Výpočet váženého priemeru pre každý predmet v semestri 1 a 2\n2. Výpočet aritmetického priemeru vypočítaných priemerov za semestre 1 a 2 pre každý predmet.\n3. Sčítanie vypočítaných priemerov\n4. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer známok z celého roka:</b>\n1. Výpočet váženého priemeru za rok pre každý predmet. Konečný priemer v 1. semestri je nepodstatný.\n3. Sčítanie vypočítaných priemerov\n4. Výpočet aritmetického priemeru součtených priemerov</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný priemer je aritmetický priemer vypočítaný z priemerov predmetov. Umožňuje vám to poznať približný konečný priemer. Vypočítava sa spôsobom zvoleným užívateľom v nastaveniach aplikácii. Odporúča sa vybrať príslušnú možnosť. Dôvodom je rozdielny výpočet školských priemerov. Ak vaša škola navyše uvádza priemer predmetov na stránke denníka Vulcan, aplikácia si ich stiahne a tieto priemery nepočíta. To možno zmeniť vynútením výpočtu priemeru v nastavení aplikácii.\n\n<b>Priemer známok iba z vybraného semestra</b>:\n1. Výpočet váženého priemeru pre každý predmet v danom semestri\n2. Sčítanie vypočítaných priemerov\n3. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer priemerov z oboch semestrov</b>:\n1. Výpočet váženého priemeru pre každý predmet v semestri 1 a 2\n2. Výpočet aritmetického priemeru vypočítaných priemerov za semestre 1 a 2 pre každý predmet.\n3. Sčítanie vypočítaných priemerov\n4. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer známok z celého roka:</b>\n1. Výpočet váženého priemeru za rok pre každý predmet. Konečný priemer v 1. semestri je nepodstatný.\n2. Sčítanie vypočítaných priemerov\n3. Výpočet aritmetického priemeru součtených priemerov</string>
     <string name="grade_summary_final_average_help_dialog_title">Ako funguje konečný priemer?</string>
     <string name="grade_summary_final_average_help_dialog_message">Konečný priemer je aritmetický priemer vypočítaný zo všetkých aktuálne dostupných konečných známok v danom semestri.\n\nSchéma výpočtu sa skladá z nasledujúcich krokov:\n1. Sčítanie konečných známok zadaných učiteľmi\n2. Delené počtom predmetov, pre ktoré už boli vydané známky</string>
     <string name="grade_summary_final_average">Konečný priemer</string>
@@ -110,7 +113,7 @@
     <string name="grade_statistics_student_average">Váš priemer: %1$s</string>
     <string name="grade_statistics_student_grade">Vaša známka: %1$s</string>
     <string name="grade_statistics_average_class">Trieda</string>
-    <string name="grade_statistics_average_student">Žiák</string>
+    <string name="grade_statistics_average_student">Žiak</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d známka</item>
         <item quantity="few">%d známky</item>
@@ -294,6 +297,10 @@
     <string name="message_move_to_trash">Presunúť do koša</string>
     <string name="message_delete_forever">Odstrániť natrvalo</string>
     <string name="message_delete_success">Správa bola úspešne odstránená</string>
+    <string name="message_mailbox_type_student">žiak</string>
+    <string name="message_mailbox_type_parent">rodič</string>
+    <string name="message_mailbox_type_guardian">opatrovník</string>
+    <string name="message_mailbox_type_employee">pracovník</string>
     <string name="message_share">Zdieľať</string>
     <string name="message_print">Vytlačiť</string>
     <string name="message_subject">Predmet</string>
@@ -305,7 +312,6 @@
     <string name="message_chip_only_unread">Iba neprečítané</string>
     <string name="message_chip_only_with_attachments">Iba s prílohami</string>
     <string name="message_read">Prečítaná: %s</string>
-    <string name="message_read_by">Prečítaná cez: %1$d z %2$d osôb</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d správa</item>
         <item quantity="few">%1$d správy</item>
@@ -721,6 +727,10 @@
     <string name="pref_ads_privacy_link">Ochrana osobných údajov</string>
     <string name="pref_ads_loading">Reklama sa načítava</string>
     <string name="pref_ads_once_per_visit">Ďakujeme za vašu podporu, vráťte sa neskôr pre viac reklám</string>
+    <string name="pref_ads_consent_title">Môžeme použiť Vaše údaje na zobrazenie reklám?</string>
+    <string name="pref_ads_consent_description">Voľbu môžete kedykoľvek zmeniť v nastavení aplikácie. Môžeme použiť vaše údaje na zobrazenie reklám šitých pre vás alebo pomocou menej vašich dát zobrazovať neprispôsobené reklamy. Podrobnosti nájdete v našich Zásadách ochrany osobných údajov</string>
+    <string name="pref_ads_summary_personalized">Prispôsobené reklamy</string>
+    <string name="pref_ads_summary_non_personalized">Neprispôsobené reklamy</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhľad a správanie</string>
     <string name="pref_settings_notifications_title">Oznámenia</string>

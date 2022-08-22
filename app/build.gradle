@@ -15,33 +15,35 @@ apply from: 'sonarqube.gradle'
 apply from: 'hooks.gradle'
 
 android {
-    compileSdkVersion 31
+    namespace 'io.github.wulkanowy'
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "io.github.wulkanowy"
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 108
-        versionName "1.6.4"
+        targetSdkVersion 32
+        versionCode 109
+        versionName "1.7.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
 
         manifestPlaceholders = [
-                firebase_enabled: project.hasProperty("enableFirebase"),
-                admob_project_id: ""
+            firebase_enabled: project.hasProperty("enableFirebase"),
+            admob_project_id: ""
         ]
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
-                        "room.schemaLocation": "$projectDir/schemas".toString(),
-                        "room.incremental"   : "true"
+                    "room.schemaLocation": "$projectDir/schemas".toString(),
+                    "room.incremental"   : "true"
                 ]
             }
         }
 
         buildConfigField "String", "SINGLE_SUPPORT_AD_ID", "null"
+        buildConfigField "String", "DASHBOARD_TILE_AD_ID", "null"
 
         if (System.env.SET_BUILD_TIMESTAMP) {
             buildConfigField "long", "BUILD_TIMESTAMP", String.valueOf(System.currentTimeMillis())
@@ -94,10 +96,12 @@ android {
         play {
             dimension "platform"
             manifestPlaceholders = [
-                    install_channel : "Google Play",
-                    admob_project_id: System.getenv("ADMOB_PROJECT_ID") ?: "ca-app-pub-3940256099942544~3347511713"
+                install_channel : "Google Play",
+                admob_project_id: System.getenv("ADMOB_PROJECT_ID") ?: "ca-app-pub-3940256099942544~3347511713"
             ]
             buildConfigField "String", "SINGLE_SUPPORT_AD_ID", "\"${System.getenv("SINGLE_SUPPORT_AD_ID") ?: "ca-app-pub-3940256099942544/5354046379"}\""
+            buildConfigField "String", "DASHBOARD_TILE_AD_ID", "\"${System.getenv("DASHBOARD_TILE_AD_ID") ?: "ca-app-pub-3940256099942544/6300978111"}\""
+
         }
 
         fdroid {
@@ -122,6 +126,8 @@ android {
 
     testOptions.unitTests {
         includeAndroidResources = true
+        // workaround HMS test errors https://github.com/robolectric/robolectric/issues/2750
+        all { jvmArgs '-noverify' }
     }
 
     compileOptions {
@@ -136,8 +142,10 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/library_release.kotlin_module'
-        exclude 'META-INF/library-core_release.kotlin_module'
+        resources {
+            excludes += ['META-INF/library_release.kotlin_module',
+                         'META-INF/library-core_release.kotlin_module']
+        }
     }
 
     aboutLibraries {
@@ -153,8 +161,8 @@ play {
     defaultToAppBundles = false
     track = 'production'
     releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
-    userFraction = 0.50d
-    updatePriority = 3
+    userFraction = 0.05d
+    updatePriority = 5
     enabled.set(false)
 }
 
@@ -171,34 +179,34 @@ huaweiPublish {
 ext {
     work_manager = "2.7.1"
     android_hilt = "1.0.0"
-    room = "2.4.2"
+    room = "2.4.3"
     chucker = "3.5.2"
-    mockk = "1.12.4"
-    coroutines = "1.6.1"
+    mockk = "1.12.5"
+    coroutines = "1.6.4"
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:1.6.4"
+    implementation "io.github.wulkanowy:sdk:1.7.0"
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.6'
 
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
-    implementation "androidx.core:core-ktx:1.7.0"
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
-    implementation "androidx.activity:activity-ktx:1.4.0"
-    implementation "androidx.appcompat:appcompat:1.4.1"
-    implementation "androidx.fragment:fragment-ktx:1.4.1"
-    implementation "androidx.annotation:annotation:1.3.0"
+    implementation "androidx.core:core-ktx:1.8.0"
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation "androidx.activity:activity-ktx:1.5.1"
+    implementation "androidx.appcompat:appcompat:1.5.0"
+    implementation "androidx.fragment:fragment-ktx:1.5.2"
+    implementation "androidx.annotation:annotation:1.4.0"
 
     implementation "androidx.preference:preference-ktx:1.2.0"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.3"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
-    implementation "com.google.android.material:material:1.5.0"
+    implementation "com.google.android.material:material:1.6.1"
     implementation "com.github.wulkanowy:material-chips-input:2.3.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
     implementation 'com.github.lopspower:CircularImageView:4.2.0'
@@ -206,7 +214,7 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_manager"
     playImplementation "androidx.work:work-gcm:$work_manager"
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-ktx:$room"
@@ -222,27 +230,27 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
 
     implementation "com.jakewharton.timber:timber:5.0.1"
     implementation "at.favre.lib:slf4j-timber:1.0.1"
     implementation 'com.github.bastienpaulfr:Treessence:1.0.5'
     implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
-    implementation "io.coil-kt:coil:2.0.0"
+    implementation "io.coil-kt:coil:2.2.0"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
     implementation 'me.xdrop:fuzzywuzzy:1.4.0'
-    implementation 'com.fredporciuncula:flow-preferences:1.7.0'
+    implementation 'com.fredporciuncula:flow-preferences:1.8.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:30.0.1')
+    playImplementation platform('com.google.firebase:firebase-bom:30.3.2')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-messaging:'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
     playImplementation 'com.google.android.play:core:1.10.3'
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
-    playImplementation 'com.google.android.gms:play-services-ads:20.6.0'
+    playImplementation 'com.google.android.gms:play-services-ads:21.1.0'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:6.5.0.300'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.6.6.200'
+    hmsImplementation 'com.huawei.hms:hianalytics:6.7.0.300'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.7.1.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 

@@ -13,6 +13,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.graphics.drawable.toBitmap
 
+
 @ColorInt
 fun Context.getThemeAttrColor(@AttrRes colorAttr: Int): Int {
     val array = obtainStyledAttributes(null, intArrayOf(colorAttr))

@@ -1,6 +1,6 @@
 package io.github.wulkanowy.ui.modules.message.send
 
-import io.github.wulkanowy.data.db.entities.ReportingUnit
+import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.ui.base.BaseView
 
 interface SendMessageView : BaseView {
@@ -18,9 +18,17 @@ interface SendMessageView : BaseView {
 
     val messageSuccess: String
 
+    val mailboxStudent: String
+
+    val mailboxParent: String
+
+    val mailboxGuardian: String
+
+    val mailboxEmployee: String
+
     fun initView()
 
-    fun setReportingUnit(unit: ReportingUnit)
+    fun setMailbox(mailbox: String)
 
     fun setRecipients(recipients: List<RecipientChipItem>)
 

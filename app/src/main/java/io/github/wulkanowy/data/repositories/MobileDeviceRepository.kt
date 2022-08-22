@@ -39,12 +39,12 @@ class MobileDeviceRepository @Inject constructor(
             val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, student))
             it.isEmpty() || forceRefresh || isExpired
         },
-        query = { mobileDb.loadAll(student.userLoginId.takeIf { it != 0 } ?: student.studentId) },
+        query = { mobileDb.loadAll(student.userLoginId) },
         fetch = {
             sdk.init(student)
                 .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getRegisteredDevices()
-                .mapToEntities(semester)
+                .mapToEntities(student)
         },
         saveFetchResult = { old, new ->
             mobileDb.deleteAll(old uniqueSubtract new)

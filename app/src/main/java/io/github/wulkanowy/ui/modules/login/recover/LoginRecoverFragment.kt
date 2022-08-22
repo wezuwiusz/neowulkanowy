@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.webkit.JavascriptInterface
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import com.yariksoffice.lingver.Lingver
@@ -206,10 +204,9 @@ class LoginRecoverFragment :
                 }
 
                 override fun onReceivedError(
-                    view: WebView,
-                    errorCode: Int,
-                    description: String,
-                    failingUrl: String
+                    view: WebView?,
+                    request: WebResourceRequest?,
+                    error: WebResourceError?
                 ) {
                     recoverWebViewSuccess = false
                 }

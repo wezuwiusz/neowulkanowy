@@ -4,6 +4,8 @@ import io.github.wulkanowy.ui.base.BaseView
 
 interface DashboardView : BaseView {
 
+    val tileWidth: Int
+
     fun initView()
 
     fun updateData(data: List<DashboardItem>)

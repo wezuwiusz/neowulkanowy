@@ -18,6 +18,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsFragment
 import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
+import io.github.wulkanowy.ui.modules.dashboard.adapters.DashboardAdapter
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
@@ -46,6 +47,14 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
 
     override var subtitleString =
         LocalDate.now().toFormattedString("EEEE, d MMMM yyyy").capitalise()
+
+    override val tileWidth: Int
+        get() {
+            val recyclerWidth = binding.dashboardRecycler.width
+            val margin = requireContext().dpToPx(24f).toInt()
+
+            return ((recyclerWidth - margin) / resources.displayMetrics.density).toInt()
+        }
 
     companion object {
 

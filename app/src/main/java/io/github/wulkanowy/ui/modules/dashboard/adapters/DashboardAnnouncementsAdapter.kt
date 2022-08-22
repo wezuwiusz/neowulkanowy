@@ -1,4 +1,4 @@
-package io.github.wulkanowy.ui.modules.dashboard
+package io.github.wulkanowy.ui.modules.dashboard.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

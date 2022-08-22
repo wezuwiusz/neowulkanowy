@@ -28,7 +28,7 @@ interface MessagePreviewView : BaseView {
 
     fun setErrorRetryCallback(callback: () -> Unit)
 
-    fun showOptions(show: Boolean)
+    fun showOptions(show: Boolean, isReplayable: Boolean)
 
     fun setDeletedOptionsLabels()
 

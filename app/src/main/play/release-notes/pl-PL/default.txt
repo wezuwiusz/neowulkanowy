@@ -1,5 +1,9 @@
-Wersja 1.6.4
+Wersja 1.7.0
 
-- naprawiliśmy błąd ładowania frekwencji na GPE i Lubelskim Portalu Oświatowym
+- naprawiliśmy logowanie do aplikacji
+- dodaliśmy wsparcie nowego modułu Wiadomości Plus
+- dodaliśmy nową możliwość wsparcia naszego projektu przez opcjonalne reklamy
+- dodaliśmy sortowanie po średniej
+- naprawiliśmy też kilka usterek wpływających na komfort używania aplikacji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

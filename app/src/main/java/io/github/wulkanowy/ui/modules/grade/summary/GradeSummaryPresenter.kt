@@ -2,6 +2,9 @@ package io.github.wulkanowy.ui.modules.grade.summary
 
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.GradeSummary
+import io.github.wulkanowy.data.enums.GradeSortingMode
+import io.github.wulkanowy.data.enums.GradeSortingMode.*
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -14,6 +17,7 @@ import javax.inject.Inject
 class GradeSummaryPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
+    private val preferencesRepository: PreferencesRepository,
     private val averageProvider: GradeAverageProvider,
     private val analytics: AnalyticsHelper
 ) : BasePresenter<GradeSummaryView>(errorHandler, studentRepository) {
@@ -127,7 +131,17 @@ class GradeSummaryPresenter @Inject constructor(
     private fun createGradeSummaryItems(items: List<GradeSubject>): List<GradeSummary> {
         return items
             .filter { !checkEmpty(it) }
-            .sortedBy { it.subject }
+            .let { gradeSubjects ->
+                when (preferencesRepository.gradeSortingMode) {
+                    DATE -> gradeSubjects.sortedByDescending { gradeDetailsWithAverage ->
+                        gradeDetailsWithAverage.grades.maxByOrNull { it.date }?.date
+                    }
+                    ALPHABETIC -> gradeSubjects.sortedBy { gradeDetailsWithAverage ->
+                        gradeDetailsWithAverage.subject.lowercase()
+                    }
+                    AVERAGE -> gradeSubjects.sortedByDescending { it.average }
+                }
+            }
             .map { it.summary.copy(average = it.average) }
     }
 

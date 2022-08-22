@@ -16,8 +16,7 @@
         app:layout_constraintBottom_toTopOf="@id/sendMessageScroll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="lollipop" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <io.github.wulkanowy.materialchipsinput.ConsumedNestedScrollView
         android:id="@+id/sendMessageScroll"

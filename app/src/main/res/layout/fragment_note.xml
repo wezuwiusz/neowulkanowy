@@ -19,7 +19,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/noteRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_note" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout

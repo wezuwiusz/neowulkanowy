@@ -1,10 +1,12 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
 import android.annotation.SuppressLint
+import androidx.core.text.parseAsHtml
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageAttachment
 import io.github.wulkanowy.data.enums.MessageFolder
+import io.github.wulkanowy.data.repositories.MailboxRepository
 import io.github.wulkanowy.data.repositories.MessageRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -19,6 +21,7 @@ class MessagePreviewPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
+    private val mailboxRepository: MailboxRepository,
     private val analytics: AnalyticsHelper
 ) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository) {
 
@@ -52,7 +55,7 @@ class MessagePreviewPresenter @Inject constructor(
 
     private fun loadData(messageToLoad: Message) {
         flatResourceFlow {
-            val student = studentRepository.getStudentById(messageToLoad.studentId)
+            val student = studentRepository.getCurrentStudent()
             messageRepository.getMessage(student, messageToLoad, true)
         }
             .logResourceStatus("message ${messageToLoad.messageId} preview")
@@ -104,62 +107,69 @@ class MessagePreviewPresenter @Inject constructor(
     }
 
     fun onShare(): Boolean {
-        message?.let {
-            var text =
-                "Temat: ${it.subject.ifBlank { view?.messageNoSubjectString.orEmpty() }}\n" + when (it.sender.isNotEmpty()) {
-                    true -> "Od: ${it.sender}\n"
-                    false -> "Do: ${it.recipient}\n"
-                } + "Data: ${it.date.toFormattedString("yyyy-MM-dd HH:mm:ss")}\n\n${it.content}"
+        val message = message ?: return false
+        val subject = message.subject.ifBlank { view?.messageNoSubjectString.orEmpty() }
 
-            attachments?.let { attachments ->
-                if (attachments.isNotEmpty()) {
-                    text += "\n\nZałączniki:"
+        val text = buildString {
+            appendLine("Temat: $subject")
+            appendLine("Od: ${message.sender}")
+            appendLine("Do: ${message.recipients}")
+            appendLine("Data: ${message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")}")
 
-                    attachments.forEach { attachment ->
-                        text += "\n${attachment.filename}: ${attachment.url}"
-                    }
-                }
+            appendLine()
+
+            appendLine(message.content.parseAsHtml())
+
+            if (!attachments.isNullOrEmpty()) {
+                appendLine()
+                appendLine("Załączniki:")
+
+                append(attachments.orEmpty().joinToString(separator = "\n") { attachment ->
+                    "${attachment.filename}: ${attachment.url}"
+                })
             }
-
-            view?.shareText(
-                text,
-                "FW: ${it.subject.ifBlank { view?.messageNoSubjectString.orEmpty() }}"
-            )
-            return true
         }
-        return false
+
+        view?.shareText(
+            subject = "FW: $subject",
+            text = text,
+        )
+        return true
     }
 
     @SuppressLint("NewApi")
     fun onPrint(): Boolean {
-        message?.let {
-            val dateString = it.date.toFormattedString("yyyy-MM-dd HH:mm:ss")
-            val infoContent = "<div><h4>Data wysłania</h4>$dateString</div>" + when {
-                it.sender.isNotEmpty() -> "<div><h4>Od</h4>${it.sender}</div>"
-                else -> "<div><h4>Do</h4>${it.recipient}</div>"
-            }
+        val message = message ?: return false
+        val subject = message.subject.ifBlank { view?.messageNoSubjectString.orEmpty() }
 
-            val messageContent = "<p>${it.content}</p>"
-                .replace(Regex("[\\n\\r]{2,}"), "</p><p>")
-                .replace(Regex("[\\n\\r]"), "<br>")
+        val dateString = message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")
 
-            val jobName = "Wiadomość " + when {
-                it.sender.isNotEmpty() -> "od ${it.sender}"
-                else -> "do ${it.recipient}"
-            } + " $dateString: ${it.subject.ifBlank { view?.messageNoSubjectString.orEmpty() }} | Wulkanowy"
+        val infoContent = buildString {
+            append("<div><h4>Data wysłania</h4>$dateString</div>")
 
-            view?.apply {
-                val html = printHTML
-                    .replace(
-                        "%SUBJECT%",
-                        it.subject.ifBlank { view?.messageNoSubjectString.orEmpty() })
-                    .replace("%CONTENT%", messageContent)
-                    .replace("%INFO%", infoContent)
-                printDocument(html, jobName)
-            }
-            return true
+            append("<div><h4>Od</h4>${message.sender}</div>")
+            append("<div><h4>DO</h4>${message.recipients}</div>")
         }
-        return false
+        val messageContent = "<p>${message.content}</p>"
+            .replace(Regex("[\\n\\r]{2,}"), "</p><p>")
+            .replace(Regex("[\\n\\r]"), "<br>")
+
+        val jobName = buildString {
+            append("Wiadomość ")
+            append("od ${message.correspondents}")
+            append("do ${message.correspondents}")
+            append(" $dateString: $subject | Wulkanowy")
+        }
+
+        view?.apply {
+            val html = printHTML
+                .replace("%SUBJECT%", subject)
+                .replace("%CONTENT%", messageContent)
+                .replace("%INFO%", infoContent)
+            printDocument(html, jobName)
+        }
+
+        return true
     }
 
     private fun deleteMessage() {
@@ -168,16 +178,17 @@ class MessagePreviewPresenter @Inject constructor(
         view?.run {
             showContent(false)
             showProgress(true)
-            showOptions(false)
+            showOptions(show = false, isReplayable = false)
             showErrorView(false)
         }
 
-        Timber.i("Delete message ${message?.id}")
+        Timber.i("Delete message ${message?.messageGlobalKey}")
 
         presenterScope.launch {
             runCatching {
-                val student = studentRepository.getCurrentStudent()
-                messageRepository.deleteMessage(student, message!!)
+                val student = studentRepository.getCurrentStudent(decryptPass = true)
+                val mailbox = mailboxRepository.getMailbox(student)
+                messageRepository.deleteMessage(student, mailbox, message!!)
             }
                 .onFailure {
                     retryCallback = { onMessageDelete() }
@@ -211,7 +222,10 @@ class MessagePreviewPresenter @Inject constructor(
 
     private fun initOptions() {
         view?.apply {
-            showOptions(message != null)
+            showOptions(
+                show = message != null,
+                isReplayable = message?.folderId != MessageFolder.SENT.id,
+            )
             message?.let {
                 when (it.folderId == MessageFolder.TRASHED.id) {
                     true -> setDeletedOptionsLabels()
