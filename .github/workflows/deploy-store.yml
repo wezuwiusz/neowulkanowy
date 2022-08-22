@@ -38,6 +38,7 @@ jobs:
           ANDROID_PUBLISHER_CREDENTIALS: ${{ secrets.ANDROID_PUBLISHER_CREDENTIALS }}
           ADMOB_PROJECT_ID: ${{ secrets.ADMOB_PROJECT_ID }}
           SINGLE_SUPPORT_AD_ID: ${{ secrets.SINGLE_SUPPORT_AD_ID }}
+          DASHBOARD_TILE_AD_ID: ${{ secrets.DASHBOARD_TILE_AD_ID }}
           SET_BUILD_TIMESTAMP: ${{ secrets.SET_BUILD_TIMESTAMP }}
         run: ./gradlew publishPlayReleaseApps -PenableFirebase --stacktrace;
 

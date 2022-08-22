@@ -15,7 +15,7 @@
         android:insetRight="0dp"
         android:insetBottom="0dp"
         android:padding="0dp"
-        android:text="Privacy Policy"
+        android:text="@string/pref_ads_privacy_policy"
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="17dp"
         android:layout_marginTop="8dp"
-        android:text="I am over 18 years old"
+        android:text="@string/pref_ads_over_18_years_old"
         android:textColor="?android:textColorSecondary"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/ads_consent_privacy" />
 
     <com.google.android.material.button.MaterialButton
@@ -42,7 +42,7 @@
         android:insetTop="0dp"
         android:insetRight="0dp"
         android:insetBottom="0dp"
-        android:text="Yes, personalized ads"
+        android:text="@string/pref_ads_option_personalized"
         app:layout_constraintTop_toBottomOf="@id/ads_consent_over" />
 
     <com.google.android.material.button.MaterialButton
@@ -56,7 +56,7 @@
         android:insetTop="0dp"
         android:insetRight="0dp"
         android:insetBottom="0dp"
-        android:text="Yes, non-personalized ads"
+        android:text="@string/pref_ads_option_non_personalized"
         app:layout_constraintBottom_toTopOf="@id/ads_consent_cancel"
         app:layout_constraintTop_toBottomOf="@id/ads_consent_personalised"
         app:layout_constraintVertical_bias="0" />
@@ -73,7 +73,7 @@
         android:insetTop="0dp"
         android:insetRight="0dp"
         android:insetBottom="0dp"
-        android:text="Cancel"
+        android:text="@android:string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
