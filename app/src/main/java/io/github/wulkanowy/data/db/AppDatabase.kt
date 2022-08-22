@@ -30,7 +30,7 @@ import javax.inject.Singleton
         Subject::class,
         LuckyNumber::class,
         CompletedLesson::class,
-        ReportingUnit::class,
+        Mailbox::class,
         Recipient::class,
         MobileDevice::class,
         Teacher::class,
@@ -55,7 +55,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 50
+        const val VERSION_SCHEMA = 51
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),
@@ -103,7 +103,8 @@ abstract class AppDatabase : RoomDatabase() {
             Migration44(),
             Migration46(),
             Migration49(),
-            Migration50()
+            Migration50(),
+            Migration51(),
         )
 
         fun newInstance(
@@ -154,7 +155,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract val completedLessonsDao: CompletedLessonsDao
 
-    abstract val reportingUnitDao: ReportingUnitDao
+    abstract val mailboxDao: MailboxDao
 
     abstract val recipientDao: RecipientDao
 

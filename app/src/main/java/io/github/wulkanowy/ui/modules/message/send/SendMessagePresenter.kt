@@ -1,6 +1,8 @@
 package io.github.wulkanowy.ui.modules.message.send
 
 import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.db.entities.Mailbox
+import io.github.wulkanowy.data.db.entities.MailboxType
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.logResourceStatus
@@ -25,9 +27,8 @@ import javax.inject.Inject
 class SendMessagePresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
-    private val semesterRepository: SemesterRepository,
     private val messageRepository: MessageRepository,
-    private val reportingUnitRepository: ReportingUnitRepository,
+    private val mailboxRepository: MailboxRepository,
     private val recipientRepository: RecipientRepository,
     private val preferencesRepository: PreferencesRepository,
     private val analytics: AnalyticsHelper
@@ -52,20 +53,21 @@ class SendMessagePresenter @Inject constructor(
             message?.let {
                 setSubject(
                     when (reply) {
-                        true -> "Re: "
+                        true -> "RE: "
                         else -> "FW: "
                     } + message.subject
                 )
                 if (preferencesRepository.fillMessageContent || reply != true) {
-                    setContent(
-                        when (reply) {
-                            true -> "\n\n"
-                            else -> ""
-                        } + when (message.sender.isNotEmpty()) {
-                            true -> "Od: ${message.sender}\n"
-                            false -> "Do: ${message.recipient}\n"
-                        } + "Data: ${message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")}\n\n${message.content}"
-                    )
+                    setContent(buildString {
+                        if (reply == true) {
+                            append("<br><br>")
+                        }
+
+                        append("Od: ${message.sender}<br>")
+                        append("Do: ${message.recipients}<br>")
+                        append("Data: ${message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")}<br><br>")
+                        append(message.content)
+                    })
                 }
             }
         }
@@ -111,21 +113,24 @@ class SendMessagePresenter @Inject constructor(
     private fun loadData(message: Message?, reply: Boolean?) {
         resourceFlow {
             val student = studentRepository.getCurrentStudent()
-            val semester = semesterRepository.getCurrentSemester(student)
-            val unit = reportingUnitRepository.getReportingUnit(student, semester.unitId)
+            val mailbox = mailboxRepository.getMailbox(student)
 
             Timber.i("Loading recipients started")
-            val recipients = when {
-                unit != null -> recipientRepository.getRecipients(student, unit, 2)
-                else -> listOf()
-            }.let { createChips(it) }
+            val recipients = createChips(
+                recipients = recipientRepository.getRecipients(
+                    student = student,
+                    mailbox = mailbox,
+                    type = MailboxType.EMPLOYEE,
+                )
+            )
             Timber.i("Loading recipients result: Success, fetched %d recipients", recipients.size)
 
             Timber.i("Loading message recipients started")
             val messageRecipients = when {
-                message != null && reply == true -> recipientRepository.getMessageRecipients(
-                    student,
-                    message
+                message != null && reply == true -> recipientRepository.getMessageSender(
+                    student = student,
+                    message = message,
+                    mailbox = mailbox,
                 )
                 else -> emptyList()
             }.let { createChips(it) }
@@ -134,7 +139,7 @@ class SendMessagePresenter @Inject constructor(
                 messageRecipients.size
             )
 
-            Triple(unit, recipients, messageRecipients)
+            Triple(mailbox, recipients, messageRecipients)
         }
             .logResourceStatus("load recipients")
             .onEach {
@@ -143,19 +148,14 @@ class SendMessagePresenter @Inject constructor(
                         showProgress(true)
                         showContent(false)
                     }
-                    is Resource.Success -> it.data.let { (reportingUnit, recipientChips, selectedRecipientChips) ->
+                    is Resource.Success -> it.data.let { (mailbox, recipientChips, selectedRecipientChips) ->
                         view?.run {
-                            if (reportingUnit != null) {
-                                setReportingUnit(reportingUnit)
-                                setRecipients(recipientChips)
-                                if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(
-                                    selectedRecipientChips
-                                )
-                                showContent(true)
-                            } else {
-                                Timber.i("Loading recipients result: Can't find the reporting unit")
-                                view?.showEmpty(true)
-                            }
+                            setMailbox(getMailboxName(mailbox))
+                            setRecipients(recipientChips)
+                            if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(
+                                selectedRecipientChips
+                            )
+                            showContent(true)
                         }
                     }
                     is Resource.Error -> {
@@ -171,7 +171,14 @@ class SendMessagePresenter @Inject constructor(
     private fun sendMessage(subject: String, content: String, recipients: List<Recipient>) {
         resourceFlow {
             val student = studentRepository.getCurrentStudent()
-            messageRepository.sendMessage(student, subject, content, recipients)
+            val mailbox = mailboxRepository.getMailbox(student)
+            messageRepository.sendMessage(
+                student = student,
+                subject = subject,
+                content = content,
+                recipients = recipients,
+                mailboxId = mailbox.globalKey,
+            )
         }.logResourceStatus("sending message").onEach {
             when (it) {
                 is Resource.Loading -> view?.run {
@@ -201,29 +208,42 @@ class SendMessagePresenter @Inject constructor(
     }
 
     private fun createChips(recipients: List<Recipient>): List<RecipientChipItem> {
-        fun generateCorrectSummary(recipientRealName: String): String {
-            val substring = recipientRealName.substringBeforeLast("-")
-            return when {
-                substring == recipientRealName -> recipientRealName
-                substring.indexOf("(") != -1 -> {
-                    recipientRealName.indexOf("(")
-                        .let { recipientRealName.substring(if (it != -1) it else 0) }
-                }
-                substring.indexOf("[") != -1 -> {
-                    recipientRealName.indexOf("[")
-                        .let { recipientRealName.substring(if (it != -1) it else 0) }
-                }
-                else -> recipientRealName.substringAfter("-")
-            }.trim()
-        }
-
         return recipients.map {
             RecipientChipItem(
-                title = it.name,
-                summary = generateCorrectSummary(it.realName),
+                title = it.userName,
+                summary = buildString {
+                    getMailboxType(it.type)?.let(::append)
+                    if (isNotBlank()) append(" ")
+
+                    append("(${it.schoolShortName})")
+                },
                 recipient = it
             )
         }
+    }
+
+    private fun getMailboxName(mailbox: Mailbox): String {
+        return buildString {
+            append(mailbox.userName)
+            append(" - ")
+            append(getMailboxType(mailbox.type))
+
+            if (mailbox.type == MailboxType.PARENT) {
+                append(" - ")
+                append(mailbox.studentName)
+            }
+
+            append(" - ")
+            append("(${mailbox.schoolNameShort})")
+        }
+    }
+
+    private fun getMailboxType(type: MailboxType): String? = when (type) {
+        MailboxType.STUDENT -> view?.mailboxStudent
+        MailboxType.PARENT -> view?.mailboxParent
+        MailboxType.GUARDIAN -> view?.mailboxGuardian
+        MailboxType.EMPLOYEE -> view?.mailboxEmployee
+        MailboxType.UNKNOWN -> null
     }
 
     fun onMessageContentChange() {
@@ -263,7 +283,7 @@ class SendMessagePresenter @Inject constructor(
 
     fun getRecipientsNames(): String {
         return messageRepository.draftMessage?.recipients.orEmpty()
-            .joinToString { it.recipient.name }
+            .joinToString { it.recipient.userName }
     }
 
     fun clearDraft() {

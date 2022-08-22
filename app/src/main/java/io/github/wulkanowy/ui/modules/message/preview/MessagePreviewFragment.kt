@@ -135,8 +135,8 @@ class MessagePreviewFragment :
         binding.messagePreviewRecycler.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun showOptions(show: Boolean) {
-        menuReplyButton?.isVisible = show
+    override fun showOptions(show: Boolean, isReplayable: Boolean) {
+        menuReplyButton?.isVisible = isReplayable
         menuForwardButton?.isVisible = show
         menuDeleteButton?.isVisible = show
         menuShareButton?.isVisible = show

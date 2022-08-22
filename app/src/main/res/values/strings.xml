@@ -289,6 +289,10 @@
     <string name="message_move_to_trash">Move to trash</string>
     <string name="message_delete_forever">Delete permanently</string>
     <string name="message_delete_success">Message deleted successfully</string>
+    <string name="message_mailbox_type_student">student</string>
+    <string name="message_mailbox_type_parent">parent</string>
+    <string name="message_mailbox_type_guardian">guardian</string>
+    <string name="message_mailbox_type_employee">employee</string>
     <string name="message_share">Share</string>
     <string name="message_print">Print</string>
     <string name="message_subject">Subject</string>
@@ -300,7 +304,6 @@
     <string name="message_chip_only_unread">Only unread</string>
     <string name="message_chip_only_with_attachments">Only with attachments</string>
     <string name="message_read">Read: %s</string>
-    <string name="message_read_by">Read by: %1$d of %2$d people</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d message</item>
         <item quantity="other">%1$d messages</item>

@@ -21,7 +21,7 @@ class NewMessageNotification @Inject constructor(
         val notificationDataList = items.map {
             NotificationData(
                 title = context.getPlural(R.plurals.message_new_items, 1),
-                content = "${it.sender}: ${it.subject}",
+                content = "${it.correspondents}: ${it.subject}",
                 destination = Destination.Message,
             )
         }
