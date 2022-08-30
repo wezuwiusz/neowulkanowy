@@ -167,10 +167,10 @@ class MessageRepository @Inject constructor(
     }
 
     var draftMessage: MessageDraft?
-        get() = sharedPrefProvider.getString(context.getString(R.string.pref_key_message_send_draft))
+        get() = sharedPrefProvider.getString(context.getString(R.string.pref_key_message_draft))
             ?.let { json.decodeFromString(it) }
         set(value) = sharedPrefProvider.putString(
-            context.getString(R.string.pref_key_message_send_draft),
+            context.getString(R.string.pref_key_message_draft),
             value?.let { json.encodeToString(it) }
         )
 }
