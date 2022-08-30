@@ -1,9 +1,5 @@
-Wersja 1.7.1
+Wersja 1.7.2
 
-- naprawiliśmy logowanie do aplikacji
-- dodaliśmy wsparcie nowego modułu Wiadomości Plus
-- dodaliśmy nową możliwość wsparcia naszego projektu przez opcjonalne reklamy
-- dodaliśmy sortowanie po średniej
-- naprawiliśmy też kilka usterek wpływających na komfort używania aplikacji
+- naprawiliśmy kilka błędów w obsłudze nowego modułu wiadomości
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
