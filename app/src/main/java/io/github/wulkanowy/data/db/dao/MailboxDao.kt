@@ -11,7 +11,4 @@ interface MailboxDao : BaseDao<Mailbox> {
 
     @Query("SELECT * FROM Mailboxes WHERE userLoginId = :userLoginId ")
     suspend fun loadAll(userLoginId: Int): List<Mailbox>
-
-    @Query("SELECT * FROM Mailboxes WHERE userLoginId = :userLoginId AND studentName = :studentName ")
-    suspend fun load(userLoginId: Int, studentName: String): Mailbox?
 }

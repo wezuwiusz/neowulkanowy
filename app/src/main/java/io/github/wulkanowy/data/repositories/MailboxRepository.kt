@@ -32,17 +32,22 @@ class MailboxRepository @Inject constructor(
 
     suspend fun getMailbox(student: Student): Mailbox {
         val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, student))
-        val mailbox = mailboxDao.load(student.userLoginId, student.studentName)
+        val mailboxes = mailboxDao.loadAll(student.userLoginId)
+        val mailbox = mailboxes.filterByStudent(student)
 
         return if (isExpired || mailbox == null) {
             refreshMailboxes(student)
-            val newMailbox = mailboxDao.load(student.userLoginId, student.studentName)
+            val newMailbox = mailboxDao.loadAll(student.userLoginId).filterByStudent(student)
 
             requireNotNull(newMailbox) {
-                "Mailbox for ${student.userName} - ${student.studentName} not found!"
+                "Mailbox for ${student.userName} - ${student.studentName} not found! Saved mailboxes: $mailboxes"
             }
 
             newMailbox
         } else mailbox
+    }
+
+    private fun List<Mailbox>.filterByStudent(student: Student): Mailbox? = find {
+        it.studentName.trim() == student.studentName.trim()
     }
 }
