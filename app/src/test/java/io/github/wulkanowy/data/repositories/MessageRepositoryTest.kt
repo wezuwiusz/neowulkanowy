@@ -141,7 +141,7 @@ class MessageRepositoryTest {
             messageDb.loadMessageWithAttachment("v4")
         } returnsMany listOf(flowOf(mWa), flowOf(mWaWithContent))
         coEvery {
-            sdk.getMessageDetails("v4")
+            sdk.getMessageDetails("v4", any())
         } returns mockk {
             every { sender } returns ""
             every { recipients } returns listOf("")

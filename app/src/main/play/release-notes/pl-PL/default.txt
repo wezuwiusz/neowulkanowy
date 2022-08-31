@@ -1,4 +1,4 @@
-Wersja 1.7.2
+Wersja 1.7.3
 
 - naprawiliśmy kilka błędów w obsłudze nowego modułu wiadomości
 
