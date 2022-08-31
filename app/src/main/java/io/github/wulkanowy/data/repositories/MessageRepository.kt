@@ -64,7 +64,10 @@ class MessageRepository @Inject constructor(
         },
         query = { messagesDb.loadAll(mailbox.globalKey, folder.id) },
         fetch = {
-            sdk.init(student).getMessages(Folder.valueOf(folder.name)).mapToEntities(mailbox)
+            sdk.init(student).getMessages(
+                folder = Folder.valueOf(folder.name),
+                mailboxKey = mailbox.globalKey,
+            ).mapToEntities(mailbox)
         },
         saveFetchResult = { old, new ->
             messagesDb.deleteAll(old uniqueSubtract new)
@@ -89,7 +92,7 @@ class MessageRepository @Inject constructor(
         },
         query = { messagesDb.loadMessageWithAttachment(message.messageGlobalKey) },
         fetch = {
-            sdk.init(student).getMessageDetails(it!!.message.messageGlobalKey)
+            sdk.init(student).getMessageDetails(it!!.message.messageGlobalKey, markAsRead)
         },
         saveFetchResult = { old, new ->
             checkNotNull(old) { "Fetched message no longer exist!" }
@@ -98,7 +101,7 @@ class MessageRepository @Inject constructor(
                     id = message.id
                     unread = !markAsRead
                     sender = new.sender
-                    recipients = new.recipients.firstOrNull() ?: "Wielu adresoatów"
+                    recipients = new.recipients.singleOrNull() ?: "Wielu adresatów"
                     content = content.ifBlank { new.content }
                 })
             )
