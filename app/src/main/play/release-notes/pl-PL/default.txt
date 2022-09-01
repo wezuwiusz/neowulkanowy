@@ -1,5 +1,6 @@
-Wersja 1.7.3
+Wersja 1.7.4
 
 - naprawiliśmy kilka błędów w obsłudze nowego modułu wiadomości
+- naprawiliśmy wyświetlanie napisu "Brak ocen", jesli uczeń nie zdobył w danym semestrze jeszcze żadnych ocen
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

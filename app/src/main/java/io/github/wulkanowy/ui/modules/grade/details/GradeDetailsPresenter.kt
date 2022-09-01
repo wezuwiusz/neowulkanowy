@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.modules.grade.details
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.enums.GradeExpandMode
-import io.github.wulkanowy.data.enums.GradeSortingMode
 import io.github.wulkanowy.data.enums.GradeSortingMode.*
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
@@ -132,16 +131,17 @@ class GradeDetailsPresenter @Inject constructor(
         }
             .logResourceStatus("load grade details")
             .onResourceData {
+                val gradeItems = createGradeItems(it)
                 view?.run {
                     enableSwipe(true)
                     showProgress(false)
                     showErrorView(false)
-                    showContent(it.isNotEmpty())
-                    showEmpty(it.isEmpty())
+                    showContent(gradeItems.isNotEmpty())
+                    showEmpty(gradeItems.isEmpty())
                     updateNewGradesAmount(it)
                     updateMarkAsDoneButton()
                     updateData(
-                        data = createGradeItems(it),
+                        data = gradeItems,
                         expandMode = preferencesRepository.gradeExpandMode,
                         preferencesRepository.gradeColorTheme
                     )
