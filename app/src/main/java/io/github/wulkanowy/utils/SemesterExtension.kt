@@ -15,5 +15,8 @@ fun List<Semester>.getCurrentOrLast(): Semester {
     // when there is more than one current semester - find one with higher id
     singleOrNull { semester -> semester.semesterId == maxByOrNull { it.semesterId }?.semesterId }?.let { return it }
 
+    // when there is no active kindergarten semester - get one from last year
+    singleOrNull { semester -> semester.schoolYear == maxByOrNull { it.schoolYear }?.schoolYear }?.let { return it }
+
     throw IllegalArgumentException("Duplicated last semester! Semesters: ${joinToString(separator = "\n")}")
 }
