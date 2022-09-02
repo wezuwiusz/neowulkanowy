@@ -1,6 +1,7 @@
-Wersja 1.7.4
+Wersja 1.7.5
 
 - naprawiliśmy kilka błędów w obsłudze nowego modułu wiadomości
 - naprawiliśmy wyświetlanie napisu "Brak ocen", jesli uczeń nie zdobył w danym semestrze jeszcze żadnych ocen
+- naprawiliśmy logowanie do aplikacji rodzicom będącym jednocześnie nauczycielami
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
