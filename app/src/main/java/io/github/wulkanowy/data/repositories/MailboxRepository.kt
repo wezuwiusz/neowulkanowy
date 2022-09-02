@@ -60,16 +60,18 @@ class MailboxRepository @Inject constructor(
     }
 
     private fun String.normalizeStudentName(): String {
-        return trim().split(" ").joinToString(" ") { part ->
-            part.lowercase().replaceFirstChar { it.uppercase() }
-        }
+        return trim().split(" ")
+            .filter { it.isNotBlank() }
+            .joinToString(" ") { part ->
+                part.lowercase().replaceFirstChar { it.uppercase() }
+            }
     }
 
     private fun String.getFirstAndLastPart(): String {
         val parts = normalizeStudentName().split(" ")
 
         val endParts = parts.filterIndexed { i, _ ->
-            i == 0 || parts.size == i - 1
+            i == 0 || parts.size - 1 == i
         }
         return endParts.joinToString(" ")
     }
