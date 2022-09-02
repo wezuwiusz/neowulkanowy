@@ -8,7 +8,6 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.descriptionRes
 import io.github.wulkanowy.utils.getPlural
 import io.github.wulkanowy.utils.toFormattedString
@@ -22,8 +21,9 @@ class NewAttendanceNotification @Inject constructor(
     suspend fun notify(items: List<Attendance>, student: Student) {
         val lines = items.filterNot { it.presence || it.name == "UNKNOWN" }
             .map {
+                val lesson = it.subject.ifBlank { "Lekcja ${it.number}" }
                 val description = context.getString(it.descriptionRes)
-                "${it.date.toFormattedString("dd.MM")} - ${it.subject}: $description"
+                "${it.date.toFormattedString("dd.MM")} - $lesson: $description"
             }
             .ifEmpty { return }
 
