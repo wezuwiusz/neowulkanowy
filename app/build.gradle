@@ -241,7 +241,7 @@ dependencies {
     implementation 'me.xdrop:fuzzywuzzy:1.4.0'
     implementation 'com.fredporciuncula:flow-preferences:1.8.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:30.4.0')
+    playImplementation platform('com.google.firebase:firebase-bom:30.4.1')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-messaging:'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
