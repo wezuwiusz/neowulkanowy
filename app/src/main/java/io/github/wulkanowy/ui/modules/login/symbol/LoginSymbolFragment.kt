@@ -13,6 +13,7 @@ import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginSymbolBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
@@ -33,6 +34,9 @@ class LoginSymbolFragment :
 
     @Inject
     lateinit var appInfo: AppInfo
+
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
 
     companion object {
         private const val SAVED_LOGIN_DATA = "LOGIN_DATA"
@@ -159,8 +163,9 @@ class LoginSymbolFragment :
                 R.string.login_email_text,
                 "${appInfo.systemManufacturer} ${appInfo.systemModel}",
                 appInfo.systemVersion.toString(),
-                appInfo.versionName,
+                "${appInfo.versionName}-${appInfo.buildFlavor}",
                 "$host/${binding.loginSymbolName.text}",
+                preferencesRepository.installationId,
                 lastError
             )
         )

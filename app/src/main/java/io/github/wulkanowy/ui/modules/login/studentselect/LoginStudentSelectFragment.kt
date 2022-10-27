@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
@@ -31,6 +32,9 @@ class LoginStudentSelectFragment :
 
     @Inject
     lateinit var appInfo: AppInfo
+
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
 
     companion object {
         const val ARG_STUDENTS = "STUDENTS"
@@ -111,10 +115,12 @@ class LoginStudentSelectFragment :
             email = "wulkanowyinc@gmail.com",
             subject = requireContext().getString(R.string.login_email_subject),
             body = requireContext().getString(
-                R.string.login_email_text, appInfo.systemModel,
+                R.string.login_email_text,
+                "${appInfo.systemManufacturer} ${appInfo.systemModel}",
                 appInfo.systemVersion.toString(),
-                appInfo.versionName,
+                "${appInfo.versionName}-${appInfo.buildFlavor}",
                 "Select users to log in",
+                preferencesRepository.installationId,
                 lastError
             )
         )

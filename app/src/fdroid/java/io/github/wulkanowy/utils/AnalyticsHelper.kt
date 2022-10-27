@@ -8,15 +8,7 @@ import javax.inject.Singleton
 @Suppress("UNUSED_PARAMETER")
 class AnalyticsHelper @Inject constructor() {
 
-    fun logEvent(name: String, vararg params: Pair<String, Any?>) {
-        // do nothing
-    }
-
-    fun setCurrentScreen(activity: Activity, name: String?) {
-        // do nothing
-    }
-
-    fun popCurrentScreen(name: String?) {
-        // do nothing
-    }
+    fun logEvent(name: String, vararg params: Pair<String, Any?>) = Unit
+    fun setCurrentScreen(activity: Activity, name: String?) = Unit
+    fun popCurrentScreen(name: String?) = Unit
 }

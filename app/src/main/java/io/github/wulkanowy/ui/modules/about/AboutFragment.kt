@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentAboutBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.about.contributor.ContributorFragment
@@ -29,6 +30,9 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
 
     @Inject
     lateinit var appInfo: AppInfo
+
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
 
     override val versionRes: Triple<String, String, Drawable?>?
         get() = context?.run {
@@ -185,7 +189,8 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
                 R.string.about_feedback_template,
                 "${appInfo.systemManufacturer} ${appInfo.systemModel}",
                 appInfo.systemVersion.toString(),
-                "${appInfo.versionName}-${appInfo.buildFlavor}"
+                "${appInfo.versionName}-${appInfo.buildFlavor}",
+                preferencesRepository.installationId,
             ),
             onActivityNotFound = {
                 requireContext().openInternetBrowser(

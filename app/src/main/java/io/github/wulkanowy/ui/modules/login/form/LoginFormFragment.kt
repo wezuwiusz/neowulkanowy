@@ -10,6 +10,7 @@ import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginFormBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
@@ -31,6 +32,9 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     @Inject
     lateinit var appInfo: AppInfo
+
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
 
     companion object {
         fun newInstance() = LoginFormFragment()
@@ -260,8 +264,9 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
                 R.string.login_email_text,
                 "${appInfo.systemManufacturer} ${appInfo.systemModel}",
                 appInfo.systemVersion.toString(),
-                appInfo.versionName,
+                "${appInfo.versionName}-${appInfo.buildFlavor}",
                 "$formHostValue/$formHostSymbol",
+                preferencesRepository.installationId,
                 lastError
             )
         )
