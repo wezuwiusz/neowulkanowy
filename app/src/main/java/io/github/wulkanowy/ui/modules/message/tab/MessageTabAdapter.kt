@@ -1,15 +1,18 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.core.view.isVisible
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.ItemMessageBinding
 import io.github.wulkanowy.databinding.ItemMessageChipsBinding
+import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.toFormattedString
 import javax.inject.Inject
 
@@ -85,21 +88,35 @@ class MessageTabAdapter @Inject constructor() :
         val message = item.message
 
         with(holder.binding) {
-            val style = if (message.unread) Typeface.BOLD else Typeface.NORMAL
+            val normalFont = Typeface.create("sans-serif", Typeface.NORMAL)
+            val boldFont = Typeface.create("sans-serif-black", Typeface.NORMAL)
+
+            val primaryColor = root.context.getThemeAttrColor(android.R.attr.textColorPrimary)
+            val secondaryColor = root.context.getThemeAttrColor(android.R.attr.textColorSecondary)
+
+            val currentFont = if (message.unread) boldFont else normalFont
+            val currentTextColor = if (message.unread) primaryColor else secondaryColor
 
             with(messageItemAuthor) {
                 text = message.correspondents
-                setTypeface(null, style)
+                setTextColor(currentTextColor)
+                typeface = currentFont
             }
-            messageItemSubject.run {
+            with(messageItemSubject) {
                 text = message.subject.ifBlank { context.getString(R.string.message_no_subject) }
-                setTypeface(null, style)
+                setTextColor(currentTextColor)
+                typeface = currentFont
             }
-            messageItemDate.run {
+            with(messageItemDate) {
                 text = message.date.toFormattedString()
-                setTypeface(null, style)
+                setTextColor(currentTextColor)
+                typeface = currentFont
             }
-            messageItemAttachmentIcon.isVisible = message.hasAttachments
+            with(messageItemAttachmentIcon) {
+                ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(currentTextColor))
+                isVisible = message.hasAttachments
+            }
+            messageItemUnreadIndicator.isVisible = message.unread
 
             root.setOnClickListener {
                 holder.bindingAdapterPosition.let {
@@ -111,7 +128,7 @@ class MessageTabAdapter @Inject constructor() :
 
             root.setOnLongClickListener {
                 onLongItemClickListener(item)
-                return@setOnLongClickListener true
+                true
             }
 
             with(messageItemCheckbox) {
