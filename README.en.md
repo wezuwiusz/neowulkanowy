@@ -13,6 +13,7 @@
 [![Discord](https://img.shields.io/discord/390889354199040011.svg?style=flat-square)](https://discord.gg/vccAQBr)
 [![F-Droid](https://img.shields.io/f-droid/v/io.github.wulkanowy.svg?style=flat-square)](https://f-droid.org/packages/io.github.wulkanowy/)
 [![Last release](https://img.shields.io/github/release/wulkanowy/wulkanowy.svg?logo=github&style=flat-square)](https://github.com/wulkanowy/wulkanowy/releases)
+[![Crowdin](https://badges.crowdin.net/wulkanowy2/localized.svg)](https://translate.wulkanowy.net.pl)
 
 Unofficial android VULCAN UONET+ register client for both students and their parents
 
