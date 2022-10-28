@@ -191,7 +191,7 @@ class TimetableAdapter @Inject constructor() :
                 )
             } else {
                 timetableItemDescription.visibility = GONE
-                timetableItemRoom.visibility = VISIBLE
+                timetableItemRoom.isVisible = lesson.room.isNotBlank() || lesson.roomOld.isNotBlank()
                 timetableItemGroup.isVisible = item.showGroupsInPlan && lesson.group.isNotBlank()
                 timetableItemTeacher.visibility = VISIBLE
             }
