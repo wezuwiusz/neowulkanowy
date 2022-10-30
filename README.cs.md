@@ -1,10 +1,4 @@
-[English version of README](README.en.md)
-
-[Deutsche Version von README](README.de.md)
-
-[Polska wersja README](README.md)
-
-[Slovenská verzia README](README.sk.md)
+Česká verze / [Deutsche Version](README.de.md) / [English version](README.en.md) / [Polska wersja](README.md) / [Slovenská verzia](README.sk.md)
 
 # Wulkanowy
 
@@ -58,7 +52,7 @@ Aktuální verzi si můžete stáhnout z Google Play, F-Droid nebo Huawei AppGal
 
 Můžete si také stáhnout [vývojovou verzi](https://wulkanowy.github.io/#download), která zahrnuje nové funkce připravované pro příští vydání
 
-## Postaveno s
+## Postaveno s pomocí
 
 
 * [Wulkanowy SDK](https://github.com/wulkanowy/sdk)
