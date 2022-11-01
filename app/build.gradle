@@ -209,7 +209,7 @@ dependencies {
     implementation "com.google.android.material:material:1.7.0"
     implementation "com.github.wulkanowy:material-chips-input:2.3.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
-    implementation 'com.github.lopspower:CircularImageView:4.2.0'
+    implementation 'com.github.lopspower:CircularImageView:4.3.0'
 
     implementation "androidx.work:work-runtime-ktx:$work_manager"
     playImplementation "androidx.work:work-gcm:$work_manager"
