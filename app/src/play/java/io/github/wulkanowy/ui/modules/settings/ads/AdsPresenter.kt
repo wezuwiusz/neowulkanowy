@@ -31,13 +31,22 @@ class AdsPresenter @Inject constructor(
         view?.showLoadingSupportAd(true)
         presenterScope.launch {
             runCatching { adsHelper.getSupportAd() }
-                .onFailure(errorHandler::dispatch)
-                .onSuccess { it?.let { view?.showAd(it) } }
+                .onFailure {
+                    errorHandler.dispatch(it)
 
-            view?.run {
-                showLoadingSupportAd(false)
-                showWatchAdOncePerVisit(true)
-            }
+                    view?.run {
+                        showLoadingSupportAd(false)
+                        showWatchAdOncePerVisit(false)
+                    }
+                }
+                .onSuccess {
+                    it?.let { view?.showAd(it) }
+
+                    view?.run {
+                        showLoadingSupportAd(false)
+                        showWatchAdOncePerVisit(true)
+                    }
+                }
         }
     }
 
