@@ -1,7 +1,9 @@
-Wersja 1.7.5
+Wersja 1.8.0
 
-- naprawiliśmy kilka błędów w obsłudze nowego modułu wiadomości
-- naprawiliśmy wyświetlanie napisu "Brak ocen", jesli uczeń nie zdobył w danym semestrze jeszcze żadnych ocen
-- naprawiliśmy logowanie do aplikacji rodzicom będącym jednocześnie nauczycielami
+- naprawiliśmy liczenie średniej ucznia w ocenach klasy dla wykresu "Wszystkie"
+- zmieniliśmy kolejność przycisków akcji w podglądzie wiadomości
+- ulepszyliśmy oznaczenie nieodczytanych wiadomości
+- naprawiliśmy pokazywanie informacji o odczytanej wiadomości w wysłanych
+- dodaliśmy opcję ręcznego wybierania skrzynki pocztowej
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
