@@ -47,6 +47,7 @@ import javax.inject.Singleton
         AutoMigration(from = 44, to = 45),
         AutoMigration(from = 46, to = 47),
         AutoMigration(from = 47, to = 48),
+        AutoMigration(from = 51, to = 52),
     ],
     version = AppDatabase.VERSION_SCHEMA,
     exportSchema = true
@@ -55,7 +56,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 51
+        const val VERSION_SCHEMA = 52
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),

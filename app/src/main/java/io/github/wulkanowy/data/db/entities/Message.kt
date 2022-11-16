@@ -29,6 +29,12 @@ data class Message(
 
     var unread: Boolean,
 
+    @ColumnInfo(name = "read_by")
+    val readBy: Int?,
+
+    @ColumnInfo(name = "unread_by")
+    val unreadBy: Int?,
+
     @ColumnInfo(name = "has_attachments")
     val hasAttachments: Boolean
 ) : Serializable {

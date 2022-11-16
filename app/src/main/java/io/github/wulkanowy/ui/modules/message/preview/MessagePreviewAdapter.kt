@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.message.preview
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,15 +73,20 @@ class MessagePreviewAdapter @Inject constructor() :
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun bindMessage(holder: MessageViewHolder, message: Message) {
         val context = holder.binding.root.context
+        val recipientCount = (message.unreadBy ?: 0) + (message.readBy ?: 0)
+        val isReceived = message.unreadBy == null
 
-        val readTextValue = when {
-            !message.unread -> R.string.all_yes
-            else -> R.string.all_no
+        val readText = when {
+            recipientCount > 1 -> {
+                context.getString(R.string.message_read_by, message.readBy, recipientCount)
+            }
+            message.readBy == 1 || (isReceived && !message.unread) -> {
+                context.getString(R.string.message_read, context.getString(R.string.all_yes))
+            }
+            else -> context.getString(R.string.message_read, context.getString(R.string.all_no))
         }
-        val readText = context.getString(R.string.message_read, context.getString(readTextValue))
 
         with(holder.binding) {
             messagePreviewSubject.text = message.subject.ifBlank {

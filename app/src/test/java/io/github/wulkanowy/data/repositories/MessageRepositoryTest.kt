@@ -193,7 +193,9 @@ class MessageRepositoryTest {
         date = Instant.EPOCH,
         folderId = 1,
         unread = unread,
-        hasAttachments = false
+        readBy = 1,
+        unreadBy = 1,
+        hasAttachments = false,
     ).apply {
         this.content = content
     }
@@ -209,6 +211,8 @@ class MessageRepositoryTest {
         dateZoned = Instant.EPOCH.atZone(ZoneOffset.UTC),
         folderId = 1,
         unread = true,
+        readBy = 1,
+        unreadBy = 1,
         hasAttachments = false,
     )
 }
