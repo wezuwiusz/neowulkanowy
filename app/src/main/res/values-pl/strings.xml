@@ -309,9 +309,11 @@
     <string name="message_not_exists">Wiadomość nie istnieje</string>
     <string name="message_required_recipients">Musisz wybrać co najmniej 1 adresata</string>
     <string name="message_content_min_length">Treść wiadomości musi zawierać co najmniej 3 znaki</string>
+    <string name="message_chip_all_mailboxes">Wszystkie skrzynki</string>
     <string name="message_chip_only_unread">Tylko nieprzeczytane</string>
     <string name="message_chip_only_with_attachments">Tylko z załącznikami</string>
     <string name="message_read">Przeczytana: %s</string>
+    <string name="message_read_by">Przeczytana przez: %1$d z %2$d osób</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d wiadomość</item>
         <item quantity="few">%1$d wiadomości</item>
@@ -339,6 +341,7 @@
         <item quantity="other">%1$d wybranych</item>
     </plurals>
     <string name="message_messages_deleted">Wiadomości zostały usunięte</string>
+    <string name="message_mailbox_chooser_title">Wybierz skrzynkę</string>
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
     <string name="note_points">Punkty</string>

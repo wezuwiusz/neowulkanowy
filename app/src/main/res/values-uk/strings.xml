@@ -77,8 +77,8 @@
     <string name="main_log_in">Увійти</string>
     <string name="main_session_expired">Минув термін дії сесії</string>
     <string name="main_session_relogin">Минув термін дії сесії, авторизуйтеся знову</string>
-    <string name="main_support_title">Підтримка додатків</string>
-    <string name="main_support_description">Вам подобається цей додаток? Підтримуйте його розвиток, увімкнувши неінвазивну рекламу, яку ви можете будь-коли вимкнути</string>
+    <string name="main_support_title">Підтримка додатку</string>
+    <string name="main_support_description">Вам подобається цей додаток? Підтримайте його розвиток, увімкнувши неінвазивну рекламу, яку ви можете відключити в будь-який час</string>
     <string name="main_support_positive">Увімкнути рекламу</string>
     <!--Grade-->
     <string name="grade_header">Оцінка</string>
@@ -97,7 +97,7 @@
     <string name="grade_summary_predicted_grade">Передбачувана оцінка</string>
     <string name="grade_summary_calculated_average">Розрахована середня оцінка</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Як працює \"Розрахована середня оцінка\"?</string>
-    <string name="grade_summary_calculated_average_help_dialog_message">Розрахована середня оцінка - це середнє арифметичне, обчислене з середніх оцінок з предметів.Це дозволяє дізнатися приблизну кінцеву середню оцінку.Вона розраховується способом, обраним користувачем у налаштуваннях програми.Рекомендується вибрати відповідний варіант, тому що кожна школа по різному розраховує середню оцінку.Крім того, якщо у вашій школі повідомляється середня оцінка з предметів на сторінці Vulcan, програма тільки завантажує ці оцінки.Це можна змінити шляхом примусового розрахунку середньоЇ оцінки в налаштуваннях програми.\n\n<b>Середні оцінки тільки за обраний семестр</b>:\n1. Розрахунок середньозваженого числа для кожного предмета в даному семестрі\n2. Сумування розрахованих числ\n3. Розрахунок середнього арифметичного з сумованих чисел\n\n<b>Середнє значення з обох семестрів</b>:\n1. Обчислення середньозваженого числа для кожного предмета у 1 та 2 семестрі\n2. Обчислення середнього арифметичного з розрахованих середньозважених числ за 1 та 2 семестри для кожного предмета.\n3. Додавання розрахованих середніх\n4. Розрахунок середнього арифметичного підсумованих середніх значень\n\n<b>Середнє значення оцінок за весь рік: </b>\n1. Розрахунок середньозваженого числа за рік для кожного предмета. Підсумковий середній показник у 1-му семестрі не має значення.\n2. Сумування розрахованих середніх\n3. Обчислення середнього арифметичного з суммованих середніх</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Розрахована середня оцінка - це середнє арифметичне, обчислене з середніх оцінок з предметів. Це дозволяє дізнатися приблизну кінцеву середню оцінку. Вона розраховується спосібом, обраним користувачем у налаштуваннях програми. Рекомендується вибрати відповідний варіант, тому що кожна школа по різному розраховує середню оцінку. Крім того, якщо у вашій школі повідомляється середня оцінка з предметів на сторінці Vulcan, програма тільки завантажує ці оцінки і не розраховує їх самостійно. Це можна змінити шляхом примусового розрахунку середньоЇ оцінки в налаштуваннях програми.\n\n<b>Середні оцінки тільки за обраний семестр</b>:\n1. Розрахунок середньозваженого числа для кожного предмета в даному семестрі\n2. Сумування розрахованих числ\n3. Розрахунок середнього арифметичного з сумованих чисел\n\n<b>Середнє значення з обох семестрів</b>:\n1. Обчислення середньозваженого числа для кожного предмета у 1 та 2 семестрі\n2. Обчислення середнього арифметичного з розрахованих середньозважених числ за 1 та 2 семестри для кожного предмета.\n3. Додавання розрахованих середніх\n4. Розрахунок середнього арифметичного підсумованих середніх значень\n\n<b>Середнє значення оцінок за весь рік: </b>\n1. Розрахунок середньозваженого числа за рік для кожного предмета. Підсумковий середній показник у 1-му семестрі не має значення.\n2. Сумування розрахованих середніх\n3. Обчислення середнього арифметичного з суммованих середніх</string>
     <string name="grade_summary_final_average_help_dialog_title">Як працює \"Підсумкова середня оцінка\"?</string>
     <string name="grade_summary_final_average_help_dialog_message">Підсумкове середнє значення - це середнє арифметичне, обчислене з усіх наявних наразі підсумкових оцінок у даному семестрі. \n\nСхема обчислення складається з таких кроків:\n1. Сумування підсумкових оцінок, виставленних викладачами\n2. Ділення на кількість предметів, з яких виставлені ці оцінки</string>
     <string name="grade_summary_final_average">Підсумкова середня оцінка</string>
@@ -220,7 +220,7 @@
     <string name="additional_lessons_delete_series">Всі в серії</string>
     <string name="additional_lessons_start">Час початку</string>
     <string name="additional_lessons_end">Час завершення</string>
-    <string name="additional_lessons_end_time_error">Час завершення має бути більшим, ніж час початку</string>
+    <string name="additional_lessons_end_time_error">Час завершення має бути пізніше часу початку</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Підсумок відвідуваності</string>
     <string name="attendance_absence_school">Відсутність зі шкільних причин</string>
@@ -297,8 +297,8 @@
     <string name="message_move_to_trash">Перемістити до кошика</string>
     <string name="message_delete_forever">Видалити назавжди</string>
     <string name="message_delete_success">Лист було успішно видалено</string>
-    <string name="message_mailbox_type_student">студент</string>
-    <string name="message_mailbox_type_parent">батькові</string>
+    <string name="message_mailbox_type_student">учень</string>
+    <string name="message_mailbox_type_parent">родич</string>
     <string name="message_mailbox_type_guardian">опікун</string>
     <string name="message_mailbox_type_employee">працівник</string>
     <string name="message_share">Поділитись</string>
@@ -309,9 +309,11 @@
     <string name="message_not_exists">Такого листа не існує</string>
     <string name="message_required_recipients">Необхідно обрати принаймні 1 адресата</string>
     <string name="message_content_min_length">Зміст листа повинен складатися принаймні з 3 знаків</string>
+    <string name="message_chip_all_mailboxes">Усі поштові скриньки</string>
     <string name="message_chip_only_unread">Лише непрочитані</string>
     <string name="message_chip_only_with_attachments">Тільки з вкладеннями</string>
     <string name="message_read">Прочитаний: %s</string>
+    <string name="message_read_by">Прочитано: %1$d з %2$d осіб</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d лист</item>
         <item quantity="few">%1$d листи</item>
@@ -338,7 +340,8 @@
         <item quantity="many">%1$d вибрано</item>
         <item quantity="other">%1$d вибрано</item>
     </plurals>
-    <string name="message_messages_deleted">Листи видалені</string>
+    <string name="message_messages_deleted">Листи видалено</string>
+    <string name="message_mailbox_chooser_title">Вибрати поштову скриньку</string>
     <!--Note-->
     <string name="note_no_items">Немає інформації о зауваженнях</string>
     <string name="note_points">Бали</string>
@@ -722,7 +725,7 @@
     <string name="pref_ads_support_category_name">Підтримка</string>
     <string name="pref_ads_privacy_policy">Політика конфіденційності</string>
     <string name="pref_ads_agreements">Угоди</string>
-    <string name="pref_ads_consent">Згода на обробку даних, пов’язаних з оголошеннями</string>
+    <string name="pref_ads_consent">Згода на обробку даних, пов\'язаних з рекламою</string>
     <string name="pref_ads_show_in_app">Показувати рекламу в додатку</string>
     <string name="pref_ads_support">Подивіться одну рекламу для підтримки проєкту</string>
     <string name="pref_ads_privacy_title">Згода в обробці даних</string>
@@ -731,9 +734,9 @@
     <string name="pref_ads_privacy_link">Політика конфіденційності</string>
     <string name="pref_ads_loading">Реклама завантажується</string>
     <string name="pref_ads_once_per_visit">Дякуємо за вашу підтримку, повертайтеся пізніше для більшої кількості реклам</string>
-    <string name="pref_ads_consent_title">Чи можемо ми використовувати ваші дані для відбивання реклами?</string>
-    <string name="pref_ads_consent_description">Ви можете змінити свій вибір в будь-який час в налаштуваннях додатку. Ми можемо використовувати ваші дані для відбивання оголошень, адаптованої до вас або, використовуючи менше ваших даних, відбивати неперсоналізовані оголошення. Перегляньте нашу Політику конфіденційності для деталей</string>
-    <string name="pref_ads_summary_personalized">Персоналізовані оголошення</string>
+    <string name="pref_ads_consent_title">Чи можемо ми використовувати ваші дані для висвітлювання реклами?</string>
+    <string name="pref_ads_consent_description">Ви можете змінити свій вибір в будь-який час в налаштуваннях додатку. Ми можемо використовувати ваші дані для висвітлювання реклами, адаптованої до вас або, використовуючи менше ваших даних, висвітлювати неперсоналізовану рекламу. Перегляньте нашу Політику конфіденційності для подробиць</string>
+    <string name="pref_ads_summary_personalized">Персоналізована реклама</string>
     <string name="pref_ads_summary_non_personalized">Неперсоналізована реклама</string>
     <string name="pref_ads_over_18_years_old">Мені більше 18 років</string>
     <string name="pref_ads_option_personalized">Так, персоналізована реклама</string>
