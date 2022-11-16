@@ -301,6 +301,7 @@
     <string name="message_not_exists">Message does not exist</string>
     <string name="message_required_recipients">You need to choose at least 1 recipient</string>
     <string name="message_content_min_length">The message content must be at least 3 characters</string>
+    <string name="message_chip_all_mailboxes">Wszystkie skrzynki</string>
     <string name="message_chip_only_unread">Only unread</string>
     <string name="message_chip_only_with_attachments">Only with attachments</string>
     <string name="message_read">Read: %s</string>
@@ -324,6 +325,7 @@
         <item quantity="other">%1$d selected</item>
     </plurals>
     <string name="message_messages_deleted">Messages deleted</string>
+    <string name="message_mailbox_chooser_title">Choose mailbox</string>
 
 
     <!--Note-->

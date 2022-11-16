@@ -5,6 +5,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.db.SharedPrefProvider
+import io.github.wulkanowy.data.db.dao.MailboxDao
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
 import io.github.wulkanowy.data.db.dao.MessagesDao
 import io.github.wulkanowy.data.db.entities.*
@@ -15,6 +16,8 @@ import io.github.wulkanowy.data.mappers.mapFromEntities
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.data.pojos.MessageDraft
+import io.github.wulkanowy.data.toFirstResult
+import io.github.wulkanowy.domain.messages.GetMailboxByStudentUseCase
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.utils.AutoRefreshHelper
@@ -40,16 +43,18 @@ class MessageRepository @Inject constructor(
     private val refreshHelper: AutoRefreshHelper,
     private val sharedPrefProvider: SharedPrefProvider,
     private val json: Json,
+    private val mailboxDao: MailboxDao,
+    private val getMailboxByStudentUseCase: GetMailboxByStudentUseCase,
 ) {
 
     private val saveFetchResultMutex = Mutex()
 
-    private val cacheKey = "message"
+    private val messagesCacheKey = "message"
+    private val mailboxCacheKey = "mailboxes"
 
-    @Suppress("UNUSED_PARAMETER")
     fun getMessages(
         student: Student,
-        mailbox: Mailbox,
+        mailbox: Mailbox?,
         folder: MessageFolder,
         forceRefresh: Boolean,
         notify: Boolean = false,
@@ -58,16 +63,20 @@ class MessageRepository @Inject constructor(
         isResultEmpty = { it.isEmpty() },
         shouldFetch = {
             val isExpired = refreshHelper.shouldBeRefreshed(
-                key = getRefreshKey(cacheKey, student, folder)
+                key = getRefreshKey(messagesCacheKey, mailbox, folder)
             )
             it.isEmpty() || forceRefresh || isExpired
         },
-        query = { messagesDb.loadAll(mailbox.globalKey, folder.id) },
+        query = {
+            if (mailbox == null) {
+                messagesDb.loadAll(folder.id, student.email)
+            } else messagesDb.loadAll(mailbox.globalKey, folder.id)
+        },
         fetch = {
             sdk.init(student).getMessages(
                 folder = Folder.valueOf(folder.name),
-                mailboxKey = mailbox.globalKey,
-            ).mapToEntities(mailbox)
+                mailboxKey = mailbox?.globalKey,
+            ).mapToEntities(student, mailbox, mailboxDao.loadAll(student.email))
         },
         saveFetchResult = { old, new ->
             messagesDb.deleteAll(old uniqueSubtract new)
@@ -75,7 +84,9 @@ class MessageRepository @Inject constructor(
                 it.isNotified = !notify
             })
 
-            refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, student, folder))
+            refreshHelper.updateLastRefreshTimestamp(
+                getRefreshKey(messagesCacheKey, mailbox, folder)
+            )
         }
     )
 
@@ -90,7 +101,9 @@ class MessageRepository @Inject constructor(
             Timber.d("Message content in db empty: ${it.message.content.isBlank()}")
             it.message.unread || it.message.content.isBlank()
         },
-        query = { messagesDb.loadMessageWithAttachment(message.messageGlobalKey) },
+        query = {
+            messagesDb.loadMessageWithAttachment(message.messageGlobalKey)
+        },
         fetch = {
             sdk.init(student).getMessageDetails(it!!.message.messageGlobalKey, markAsRead)
         },
@@ -113,8 +126,10 @@ class MessageRepository @Inject constructor(
         }
     )
 
-    fun getMessagesFromDatabase(mailbox: Mailbox): Flow<List<Message>> {
-        return messagesDb.loadAll(mailbox.globalKey, RECEIVED.id)
+    fun getMessagesFromDatabase(student: Student, mailbox: Mailbox?): Flow<List<Message>> {
+        return if (mailbox == null) {
+            messagesDb.loadAll(RECEIVED.id, student.email)
+        } else messagesDb.loadAll(mailbox.globalKey, RECEIVED.id)
     }
 
     suspend fun updateMessages(messages: List<Message>) {
@@ -136,7 +151,7 @@ class MessageRepository @Inject constructor(
         )
     }
 
-    suspend fun deleteMessages(student: Student, mailbox: Mailbox, messages: List<Message>) {
+    suspend fun deleteMessages(student: Student, mailbox: Mailbox?, messages: List<Message>) {
         val firstMessage = messages.first()
         sdk.init(student).deleteMessages(
             messages = messages.map { it.messageGlobalKey },
@@ -167,6 +182,34 @@ class MessageRepository @Inject constructor(
 
     suspend fun deleteMessage(student: Student, mailbox: Mailbox, message: Message) {
         deleteMessages(student, mailbox, listOf(message))
+    }
+
+    suspend fun getMailboxes(student: Student, forceRefresh: Boolean) = networkBoundResource(
+        mutex = saveFetchResultMutex,
+        isResultEmpty = { it.isEmpty() },
+        shouldFetch = {
+            val isExpired = refreshHelper.shouldBeRefreshed(
+                key = getRefreshKey(mailboxCacheKey, student),
+            )
+            it.isEmpty() || isExpired || forceRefresh
+        },
+        query = { mailboxDao.loadAll(student.email, student.symbol, student.schoolSymbol) },
+        fetch = { sdk.init(student).getMailboxes().mapToEntities(student) },
+        saveFetchResult = { old, new ->
+            mailboxDao.deleteAll(old uniqueSubtract new)
+            mailboxDao.insertAll(new uniqueSubtract old)
+
+            refreshHelper.updateLastRefreshTimestamp(getRefreshKey(mailboxCacheKey, student))
+        }
+    )
+
+    suspend fun getMailboxByStudent(student: Student): Mailbox? {
+        val mailbox = getMailboxByStudentUseCase(student)
+
+        return if (mailbox == null) {
+            getMailboxes(student, forceRefresh = true).toFirstResult()
+            getMailboxByStudentUseCase(student)
+        } else mailbox
     }
 
     var draftMessage: MessageDraft?

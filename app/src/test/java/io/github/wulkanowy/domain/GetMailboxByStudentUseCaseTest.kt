@@ -1,65 +1,52 @@
-package io.github.wulkanowy.data.repositories
+package io.github.wulkanowy.domain
 
 import io.github.wulkanowy.data.db.dao.MailboxDao
 import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.data.db.entities.MailboxType
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.domain.messages.GetMailboxByStudentUseCase
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.mockk.just
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.Instant
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MailboxRepositoryTest {
-
-    @SpyK
-    private var sdk = Sdk()
+class GetMailboxByStudentUseCaseTest {
 
     @MockK
     private lateinit var mailboxDao: MailboxDao
 
-    @MockK
-    private lateinit var refreshHelper: AutoRefreshHelper
-
-    private lateinit var systemUnderTest: MailboxRepository
+    private lateinit var systemUnderTest: GetMailboxByStudentUseCase
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
 
-        coEvery { refreshHelper.shouldBeRefreshed(any()) } returns false
-        coEvery { refreshHelper.updateLastRefreshTimestamp(any()) } just Runs
         coEvery { mailboxDao.deleteAll(any()) } just Runs
         coEvery { mailboxDao.insertAll(any()) } returns emptyList()
         coEvery { mailboxDao.loadAll(any()) } returns emptyList()
-        coEvery { sdk.getMailboxes() } returns emptyList()
 
-        systemUnderTest = MailboxRepository(
-            mailboxDao = mailboxDao,
-            sdk = sdk,
-            refreshHelper = refreshHelper,
-        )
+        systemUnderTest = GetMailboxByStudentUseCase(mailboxDao = mailboxDao)
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `get mailbox that doesn't exist`() = runTest {
         val student = getStudentEntity(
             userName = "Stanisław Kowalski",
             studentName = "Jan Kowalski",
         )
-        coEvery { sdk.getMailboxes() } returns emptyList()
+        coEvery { mailboxDao.loadAll(any()) } returns emptyList()
 
-        systemUnderTest.getMailbox(student)
+        assertNull(systemUnderTest(student))
     }
 
     @Test
@@ -73,7 +60,7 @@ class MailboxRepositoryTest {
             expectedMailbox,
         )
 
-        val selectedMailbox = systemUnderTest.getMailbox(student)
+        val selectedMailbox = systemUnderTest(student)
         assertEquals(expectedMailbox, selectedMailbox)
     }
 
@@ -88,7 +75,7 @@ class MailboxRepositoryTest {
             expectedMailbox,
         )
 
-        assertEquals(expectedMailbox, systemUnderTest.getMailbox(student))
+        assertEquals(expectedMailbox, systemUnderTest(student))
     }
 
     @Test
@@ -102,10 +89,10 @@ class MailboxRepositoryTest {
             expectedMailbox,
         )
 
-        assertEquals(expectedMailbox, systemUnderTest.getMailbox(student))
+        assertEquals(expectedMailbox, systemUnderTest(student))
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `get mailbox for not-unique non-authorized student`() = runTest {
         val student = getStudentEntity(
             userName = "Stanisław Kowalski",
@@ -116,7 +103,7 @@ class MailboxRepositoryTest {
             getMailboxEntity("Jan Kurowski"),
         )
 
-        systemUnderTest.getMailbox(student)
+        assertNull(systemUnderTest(student))
     }
 
     @Test
@@ -130,7 +117,7 @@ class MailboxRepositoryTest {
             expectedMailbox,
         )
 
-        assertEquals(expectedMailbox, systemUnderTest.getMailbox(student))
+        assertEquals(expectedMailbox, systemUnderTest(student))
     }
 
     @Test
@@ -144,7 +131,7 @@ class MailboxRepositoryTest {
             expectedMailbox,
         )
 
-        assertEquals(expectedMailbox, systemUnderTest.getMailbox(student))
+        assertEquals(expectedMailbox, systemUnderTest(student))
     }
 
     @Test
@@ -158,7 +145,7 @@ class MailboxRepositoryTest {
             expectedMailbox,
         )
 
-        assertEquals(expectedMailbox, systemUnderTest.getMailbox(student))
+        assertEquals(expectedMailbox, systemUnderTest(student))
     }
 
     private fun getMailboxEntity(
@@ -167,7 +154,9 @@ class MailboxRepositoryTest {
         globalKey = "",
         fullName = "",
         userName = "",
-        userLoginId = 123,
+        email = "",
+        schoolId = "",
+        symbol = "",
         studentName = studentName,
         schoolNameShort = "",
         type = MailboxType.STUDENT,

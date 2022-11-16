@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefProvider
+import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder
@@ -25,8 +26,8 @@ fun getRefreshKey(name: String, student: Student): String {
     return "${name}_${student.userLoginId}"
 }
 
-fun getRefreshKey(name: String, student: Student, folder: MessageFolder): String {
-    return "${name}_${student.id}_${folder.id}"
+fun getRefreshKey(name: String, mailbox: Mailbox?, folder: MessageFolder): String {
+    return "${name}_${mailbox?.globalKey ?: "all"}_${folder.id}"
 }
 
 class AutoRefreshHelper @Inject constructor(

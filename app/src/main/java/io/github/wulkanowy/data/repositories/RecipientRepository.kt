@@ -33,9 +33,11 @@ class RecipientRepository @Inject constructor(
 
     suspend fun getRecipients(
         student: Student,
-        mailbox: Mailbox,
-        type: MailboxType
+        mailbox: Mailbox?,
+        type: MailboxType,
     ): List<Recipient> {
+        mailbox ?: return emptyList()
+
         val cached = recipientDb.loadAll(type, mailbox.globalKey)
 
         val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, student))
@@ -47,11 +49,15 @@ class RecipientRepository @Inject constructor(
 
     suspend fun getMessageSender(
         student: Student,
-        mailbox: Mailbox,
-        message: Message
-    ): List<Recipient> = sdk.init(student)
-        .getMessageReplayDetails(message.messageGlobalKey)
-        .sender
-        .let(::listOf)
-        .mapToEntities(mailbox.globalKey)
+        mailbox: Mailbox?,
+        message: Message,
+    ): List<Recipient> {
+        mailbox ?: return emptyList()
+
+        return sdk.init(student)
+            .getMessageReplayDetails(message.messageGlobalKey)
+            .sender
+            .let(::listOf)
+            .mapToEntities(mailbox.globalKey)
+    }
 }

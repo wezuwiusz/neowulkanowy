@@ -55,16 +55,28 @@
                     android:id="@+id/sendMessageFrom"
                     android:layout_width="0dp"
                     android:layout_height="58dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?selectableItemBackground"
                     android:gravity="center_vertical"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="32dp"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/sendMessageFromHint"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Jan Kowalski" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:rotation="270"
+                    android:src="@drawable/ic_chevron_left"
+                    app:layout_constraintBottom_toBottomOf="@id/sendMessageFrom"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/sendMessageFrom"
+                    app:tint="?android:textColorSecondary"
+                    tools:ignore="ContentDescription" />
 
                 <View
                     android:id="@+id/sendMessageFromDivider"

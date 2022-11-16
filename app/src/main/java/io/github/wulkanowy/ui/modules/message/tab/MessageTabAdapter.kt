@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.ItemMessageBinding
 import io.github.wulkanowy.databinding.ItemMessageChipsBinding
+import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.toFormattedString
 import javax.inject.Inject
@@ -19,13 +20,15 @@ import javax.inject.Inject
 class MessageTabAdapter @Inject constructor() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var onItemClickListener: (MessageTabDataItem.MessageItem, position: Int) -> Unit = { _, _ -> }
+    lateinit var onItemClickListener: (MessageTabDataItem.MessageItem, position: Int) -> Unit
 
-    var onLongItemClickListener: (MessageTabDataItem.MessageItem) -> Unit = {}
+    lateinit var onLongItemClickListener: (MessageTabDataItem.MessageItem) -> Unit
 
-    var onHeaderClickListener: (CompoundButton, Boolean) -> Unit = { _, _ -> }
+    lateinit var onHeaderClickListener: (CompoundButton, Boolean) -> Unit
 
-    var onChangesDetectedListener = {}
+    lateinit var onMailboxClickListener: () -> Unit
+
+    lateinit var onChangesDetectedListener: () -> Unit
 
     private var items = mutableListOf<MessageTabDataItem>()
 
@@ -49,11 +52,11 @@ class MessageTabAdapter @Inject constructor() :
         val inflater = LayoutInflater.from(parent.context)
 
         return when (MessageItemViewType.values()[viewType]) {
-            MessageItemViewType.MESSAGE -> ItemViewHolder(
-                ItemMessageBinding.inflate(inflater, parent, false)
-            )
             MessageItemViewType.FILTERS -> HeaderViewHolder(
                 ItemMessageChipsBinding.inflate(inflater, parent, false)
+            )
+            MessageItemViewType.MESSAGE -> ItemViewHolder(
+                ItemMessageBinding.inflate(inflater, parent, false)
             )
         }
     }
@@ -69,6 +72,20 @@ class MessageTabAdapter @Inject constructor() :
         val item = items[position] as MessageTabDataItem.FilterHeader
 
         with(holder.binding) {
+            chipMailbox.text = item.selectedMailbox
+                ?: root.context.getString(R.string.message_chip_all_mailboxes)
+            chipMailbox.chipBackgroundColor = ColorStateList.valueOf(
+                if (item.selectedMailbox == null) {
+                    root.context.getCompatColor(R.color.mtrl_choice_chip_background_color)
+                } else root.context.getThemeAttrColor(android.R.attr.colorPrimary, 64)
+            )
+            chipMailbox.setTextColor(
+                if (item.selectedMailbox == null) {
+                    root.context.getThemeAttrColor(android.R.attr.textColorPrimary)
+                } else root.context.getThemeAttrColor(android.R.attr.colorPrimary)
+            )
+            chipMailbox.setOnClickListener { onMailboxClickListener() }
+
             if (item.onlyUnread == null) {
                 chipUnread.isVisible = false
             } else {
@@ -77,6 +94,7 @@ class MessageTabAdapter @Inject constructor() :
                 chipUnread.setOnCheckedChangeListener(onHeaderClickListener)
             }
             chipUnread.isEnabled = item.isEnabled
+
             chipAttachments.isEnabled = item.isEnabled
             chipAttachments.isChecked = item.onlyWithAttachments
             chipAttachments.setOnCheckedChangeListener(onHeaderClickListener)

@@ -25,7 +25,6 @@ class DashboardPresenter @Inject constructor(
     private val gradeRepository: GradeRepository,
     private val semesterRepository: SemesterRepository,
     private val messageRepository: MessageRepository,
-    private val mailboxRepository: MailboxRepository,
     private val attendanceSummaryRepository: AttendanceSummaryRepository,
     private val timetableRepository: TimetableRepository,
     private val homeworkRepository: HomeworkRepository,
@@ -228,7 +227,7 @@ class DashboardPresenter @Inject constructor(
     private fun loadHorizontalGroup(student: Student, forceRefresh: Boolean) {
         flow {
             val semester = semesterRepository.getCurrentSemester(student)
-            val mailbox = mailboxRepository.getMailbox(student)
+            val mailbox = messageRepository.getMailboxByStudent(student)
             val selectedTiles = preferencesRepository.selectedDashboardTiles
 
             val flowSuccess = flowOf(Resource.Success(null))

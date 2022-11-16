@@ -6,10 +6,13 @@ import io.github.wulkanowy.sdk.pojo.Message as SdkMessage
 import io.github.wulkanowy.sdk.pojo.MessageAttachment as SdkMessageAttachment
 import io.github.wulkanowy.sdk.pojo.Recipient as SdkRecipient
 
-fun List<SdkMessage>.mapToEntities(mailbox: Mailbox) = map {
+fun List<SdkMessage>.mapToEntities(student: Student, mailbox: Mailbox?, allMailboxes: List<Mailbox>) = map {
     Message(
         messageGlobalKey = it.globalKey,
-        mailboxKey = mailbox.globalKey,
+        mailboxKey = mailbox?.globalKey ?: allMailboxes.find { box ->
+            box.fullName == it.mailbox
+        }?.globalKey!!,
+        email = student.email,
         messageId = it.id,
         correspondents = it.correspondents,
         subject = it.subject.trim(),

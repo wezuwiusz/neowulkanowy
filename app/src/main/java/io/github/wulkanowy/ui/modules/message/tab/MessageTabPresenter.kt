@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
 import io.github.wulkanowy.data.*
+import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.enums.MessageFolder
-import io.github.wulkanowy.data.repositories.MailboxRepository
 import io.github.wulkanowy.data.repositories.MessageRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -26,7 +26,6 @@ class MessageTabPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
-    private val mailboxRepository: MailboxRepository,
     private val analytics: AnalyticsHelper
 ) : BasePresenter<MessageTabView>(errorHandler, studentRepository) {
 
@@ -35,6 +34,9 @@ class MessageTabPresenter @Inject constructor(
     private lateinit var lastError: Throwable
 
     private var lastSearchQuery = ""
+
+    private var mailboxes: List<Mailbox> = emptyList()
+    private var selectedMailbox: Mailbox? = null
 
     private var messages = emptyList<Message>()
 
@@ -122,8 +124,7 @@ class MessageTabPresenter @Inject constructor(
 
             runCatching {
                 val student = studentRepository.getCurrentStudent(true)
-                val mailbox = mailboxRepository.getMailbox(student)
-                messageRepository.deleteMessages(student, mailbox, messageList)
+                messageRepository.deleteMessages(student, selectedMailbox, messageList)
             }
                 .onFailure(errorHandler::dispatch)
                 .onSuccess { view?.showMessagesDeleted() }
@@ -202,13 +203,28 @@ class MessageTabPresenter @Inject constructor(
         }
     }
 
+    fun onMailboxFilterSelected() {
+        view?.showMailboxChooser(mailboxes)
+    }
+
+    fun onMailboxSelected(mailbox: Mailbox?) {
+        selectedMailbox = mailbox
+        loadData(false)
+    }
+
     private fun loadData(forceRefresh: Boolean) {
         Timber.i("Loading $folder message data started")
 
         flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
-            val mailbox = mailboxRepository.getMailbox(student)
-            messageRepository.getMessages(student, mailbox, folder, forceRefresh)
+
+            if (selectedMailbox == null && mailboxes.isEmpty()) {
+                selectedMailbox = messageRepository.getMailboxByStudent(student)
+                mailboxes = messageRepository.getMailboxes(student, forceRefresh).toFirstResult()
+                    .dataOrNull.orEmpty()
+            }
+
+            messageRepository.getMessages(student, selectedMailbox, folder, forceRefresh)
         }
             .logResourceStatus("load $folder message")
             .onResourceData {
@@ -327,7 +343,16 @@ class MessageTabPresenter @Inject constructor(
                 MessageTabDataItem.FilterHeader(
                     onlyUnread = onlyUnread.takeIf { folder != MessageFolder.SENT },
                     onlyWithAttachments = onlyWithAttachments,
-                    isEnabled = !isActionMode
+                    isEnabled = !isActionMode,
+                    selectedMailbox = selectedMailbox?.let {
+                        buildString {
+                            if (it.studentName.isNotBlank() && it.studentName != it.userName) {
+                                append(it.studentName)
+                                append(" - ")
+                            }
+                            append(it.userName)
+                        }
+                    },
                 )
             )
 

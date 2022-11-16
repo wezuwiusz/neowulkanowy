@@ -56,7 +56,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 52
+        const val VERSION_SCHEMA = 53
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),
@@ -106,6 +106,7 @@ abstract class AppDatabase : RoomDatabase() {
             Migration49(),
             Migration50(),
             Migration51(),
+            Migration53(),
         )
 
         fun newInstance(
