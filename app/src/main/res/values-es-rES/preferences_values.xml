@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Black (AMOLED)</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>System language</item>
+        <item>Polski</item>
+        <item>English</item>
+        <item>Pусский</item>
+        <item>Українська</item>
+        <item>Deutsch</item>
+        <item>Čeština</item>
+        <item>Slovenčina</item>
+    </string-array>
+    <string-array name="services_interval_entries">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>24 hours</item>
+    </string-array>
+    <string-array name="grade_modifier_entries">
+        <item>0,00</item>
+        <item>0,25</item>
+        <item>0,33</item>
+        <item>0,5</item>
+        <item>0,75</item>
+    </string-array>
+    <string-array name="grade_sorting_mode_entries">
+        <item>Alphabetically</item>
+        <item>By date</item>
+        <item>By average</item>
+    </string-array>
+    <string-array name="grade_color_scheme_entries">
+        <item>Dzienniczek+</item>
+        <item>Wulkanowy</item>
+        <item>Grade colors in register</item>
+    </string-array>
+    <string-array name="default_expand_grade_entries">
+        <item>Up to 1 at once</item>
+        <item>Always expanded</item>
+        <item>Unlimited expansions</item>
+    </string-array>
+    <string-array name="grade_average_mode_entries">
+        <item>Average of grades only from selected semester</item>
+        <item>Average of averages from both semesters</item>
+        <item>Average of grades from the whole year</item>
+    </string-array>
+    <string-array name="dashboard_tile_entries">
+        <item>Lucky number</item>
+        <item>Unread messages</item>
+        <item>Attendance</item>
+        <item>Lessons</item>
+        <item>Grades</item>
+        <item>Homework</item>
+        <item>School announcements</item>
+        <item>Exams</item>
+        <item>Conferences</item>
+    </string-array>
+</resources>

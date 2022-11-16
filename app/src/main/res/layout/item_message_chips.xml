@@ -1,21 +1,30 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/messageChipsLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingTop="10dp"
-    android:paddingRight="16dp"
     tools:context=".ui.modules.message.tab.MessageTabAdapter">
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/messageChipGroup"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingLeft="16dp"
+        android:paddingTop="10dp"
+        android:paddingRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleLine="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_mailbox"
+            style="@style/Widget.MaterialComponents.Chip.Action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_chip_all_mailboxes" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_unread"
@@ -37,4 +46,4 @@
             app:checkedIconEnabled="true"
             app:checkedIconTint="@color/mtrl_choice_chip_text_color" />
     </com.google.android.material.chip.ChipGroup>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</HorizontalScrollView>

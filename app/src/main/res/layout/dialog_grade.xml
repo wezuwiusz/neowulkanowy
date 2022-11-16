@@ -21,7 +21,7 @@
             <LinearLayout
                 android:id="@+id/gradeDialogValueLayout"
                 android:layout_width="101dp"
-                android:layout_height="121dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"

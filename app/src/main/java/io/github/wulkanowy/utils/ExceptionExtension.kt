@@ -15,16 +15,17 @@ import java.net.ConnectException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.security.cert.CertPathValidatorException
 import java.security.cert.CertificateExpiredException
 import java.security.cert.CertificateNotYetValidException
 import javax.net.ssl.SSLHandshakeException
 
 fun Resources.getErrorString(error: Throwable): String = when (error) {
     is UnknownHostException -> R.string.error_no_internet
+    is ConnectException,
     is SocketException,
     is SocketTimeoutException,
     is InterruptedIOException,
-    is ConnectException,
     is StreamResetException -> R.string.error_timeout
     is NotLoggedInException -> R.string.error_login_failed
     is PasswordChangeRequiredException -> R.string.error_password_change_required
@@ -42,10 +43,10 @@ fun Resources.getErrorString(error: Throwable): String = when (error) {
 
 fun Throwable.isShouldBeReported(): Boolean = when (this) {
     is UnknownHostException,
+    is ConnectException,
     is SocketException,
     is SocketTimeoutException,
     is InterruptedIOException,
-    is ConnectException,
     is StreamResetException,
     is ServiceUnavailableException,
     is FeatureDisabledException,
@@ -70,5 +71,6 @@ private fun Throwable?.isCausedByCertificateNotValidNow(): Boolean {
 private fun Throwable?.isCertificateNotValidNow(): Boolean {
     val isNotYetValid = this is CertificateNotYetValidException
     val isExpired = this is CertificateExpiredException
-    return isNotYetValid || isExpired
+    val isInvalidPath = this is CertPathValidatorException
+    return isNotYetValid || isExpired || isInvalidPath
 }

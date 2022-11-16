@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Activity/Fragment title-->
+    <string name="login_title">Login</string>
+    <string name="main_title">Wulkanowy</string>
+    <string name="grade_title">Grades</string>
+    <string name="attendance_title">Attendance</string>
+    <string name="exam_title">Exams</string>
+    <string name="timetable_title">Timetable</string>
+    <string name="settings_title">Settings</string>
+    <string name="more_title">More</string>
+    <string name="about_title">About</string>
+    <string name="logviewer_title">Log viewer</string>
+    <string name="debug_title">Debug</string>
+    <string name="notification_debug_title">Notification debug</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="license_title">Licenses</string>
+    <string name="message_title">Messages</string>
+    <string name="send_message_title">New message</string>
+    <string name="add_homework_title">New homework</string>
+    <string name="note_title">Notes and achievements</string>
+    <string name="homework_title">Homework</string>
+    <string name="account_title">Accounts manager</string>
+    <string name="account_quick_title">Select account</string>
+    <string name="account_details_title">Account details</string>
+    <string name="student_info_title">Student info</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="notifications_center_title">Notifications center</string>
+    <!--Subtitles-->
+    <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
+    <!--Login-->
+    <string name="login_header_default">Sign in with the student or parent account</string>
+    <string name="login_header_symbol">Enter the symbol from the register page for account: &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="login_nickname_hint">Username</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_login_pesel_email_hint">Login, PESEL or e-mail</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_host_hint">UONET+ register variant</string>
+    <string name="login_type_api">Mobile API</string>
+    <string name="login_type_scrapper">Scraper</string>
+    <string name="login_type_hybrid">Hybrid</string>
+    <string name="login_token_hint">Token</string>
+    <string name="login_pin_hint">PIN</string>
+    <string name="login_symbol_hint">Symbol</string>
+    <string name="login_sign_in">Sign in</string>
+    <string name="login_invalid_password">Password too short</string>
+    <string name="login_incorrect_password_default">Login details are incorrect</string>
+    <string name="login_incorrect_password">%1$s. Make sure the correct UONET+ register variation is selected below</string>
+    <string name="login_invalid_pin">Invalid PIN</string>
+    <string name="login_invalid_token">Invalid token</string>
+    <string name="login_expired_token">Token expired</string>
+    <string name="login_invalid_email">Invalid email</string>
+    <string name="login_invalid_login">Use the assigned login instead of email</string>
+    <string name="login_invalid_custom_email">Use the assigned login or email in @%1$s</string>
+    <string name="login_invalid_symbol">Invalid symbol</string>
+    <string name="login_incorrect_symbol">Student not found. Validate the symbol and the chosen variation of the UONET+ register</string>
+    <string name="login_duplicate_student">Selected student is already logged in</string>
+    <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the previous screen</string>
+    <string name="login_select_student">Select students to log in to the application</string>
+    <string name="login_advanced">Other options</string>
+    <string name="login_advanced_warning_mobile_api">In this mode, a lucky number does not work, a class grade stats, summary of attendance, excuse for absence, completed lessons, school information and preview of the list of registered devices</string>
+    <string name="login_advanced_warning_scraper">This mode displays the same data as it appears on the register website</string>
+    <string name="login_advanced_warning_hybrid">The combination of the best features of the other two modes. It works faster than scraper and provides features not available in the Mobile API mode. It is in the experimental phase</string>
+    <string name="login_privacy_policy">Privacy policy</string>
+    <string name="login_contact_header">Trouble signing in? Contact us!</string>
+    <string name="login_contact_email">Email</string>
+    <string name="login_contact_discord">Discord</string>
+    <string name="login_email_intent_title">Send email</string>
+    <string name="login_recover_warning">Make sure you select the correct UONET+ register variation!</string>
+    <string name="login_recover_button">I forgot my password</string>
+    <string name="login_recover_title">Recover your account</string>
+    <string name="login_recover">Recover</string>
+    <string name="login_signed_in">Student is already signed in</string>
+    <string name="login_host_standard">Standard</string>
+    <!--Main-->
+    <string name="main_account_picker">Account manager</string>
+    <string name="main_log_in">Log in</string>
+    <string name="main_session_expired">Session expired</string>
+    <string name="main_session_relogin">Session expired, log in again</string>
+    <string name="main_support_title">Application support</string>
+    <string name="main_support_description">Do you like this app? Support its development by enabling non-invasive ads that you can disable at any time</string>
+    <string name="main_support_positive">Enable ads</string>
+    <!--Grade-->
+    <string name="grade_header">Grade</string>
+    <string name="grade_semester">Semester %d</string>
+    <string name="grade_switch_semester">Change semester</string>
+    <string name="grade_no_items">No grades</string>
+    <string name="grade_weight">Weight</string>
+    <string name="grade_weight_value">Weight: %s</string>
+    <string name="grade_comment">Comment</string>
+    <string name="grade_number_new_items">Number of new ratings: %1$d</string>
+    <string name="grade_average">Average: %1$.2f</string>
+    <string name="grade_points_sum">Points: %s</string>
+    <string name="grade_no_average">No average</string>
+    <string name="grade_summary_points">Total points</string>
+    <string name="grade_summary_final_grade">Final grade</string>
+    <string name="grade_summary_predicted_grade">Predicted grade</string>
+    <string name="grade_summary_calculated_average">Calculated average</string>
+    <string name="grade_summary_calculated_average_help_dialog_title">How does Calculated Average work?</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">The Calculated Average is the arithmetic average calculated from the subjects averages. It allows you to know the approximate final average. It is calculated in a way selected by the user in the application settings. It is recommended that you choose the appropriate option. This is because the calculation of school averages differs. Additionally, if your school reports the average of the subjects on the Vulcan page, the application downloads them and does not calculate these averages. This can be changed by forcing the calculation of the average in the application settings.\n\n<b>Average of grades only from selected semester</b>:\n1. Calculating the weighted average for each subject in a given semester\n2.Adding calculated averages\n3. Calculation of the arithmetic average of the summed averages\n\n<b>Average of averages from both semesters</b>:\n1.Calculating the weighted average for each subject in semester 1 and 2\n2. Calculating the arithmetic average of the calculated averages for semesters 1 and 2 for each subject.\n3. Adding calculated averages\n4. Calculation of the arithmetic average of the summed averages\n\n<b>Average of grades from the whole year:</b>\n1. Calculating weighted average over the year for each subject. The final average in the 1st semester is irrelevant.\n2. Adding calculated averages\n3. Calculating the arithmetic average of summed averages</string>
+    <string name="grade_summary_final_average_help_dialog_title">How does the Final Average work?</string>
+    <string name="grade_summary_final_average_help_dialog_message">The Final Average is the arithmetic average calculated from all currently available final grades in the given semester.\n\nThe calculation scheme consists of the following steps:\n1. Summing up the final grades given by teachers\n2. Divide by the number of subjects that have already been graded</string>
+    <string name="grade_summary_final_average">Final average</string>
+    <string name="grade_summary_from_subjects">from %1$d of %2$d subjects</string>
+    <string name="grade_menu_summary">Summary</string>
+    <string name="grade_menu_statistics">Class</string>
+    <string name="grade_menu_read">Mark as read</string>
+    <string name="grade_statistics_partial">Partial</string>
+    <string name="grade_statistics_semester">Semester</string>
+    <string name="grade_statistics_points">Points</string>
+    <string name="grade_statistics_legend">Legend</string>
+    <string name="grade_statistics_class_average">Class average: %1$s</string>
+    <string name="grade_statistics_student_average">Your average: %1$s</string>
+    <string name="grade_statistics_student_grade">Your grade: %1$s</string>
+    <string name="grade_statistics_average_class">Class</string>
+    <string name="grade_statistics_average_student">Student</string>
+    <plurals name="grade_number_item">
+        <item quantity="one">%d grade</item>
+        <item quantity="other">%d grades</item>
+    </plurals>
+    <plurals name="grade_new_items">
+        <item quantity="one">New grade</item>
+        <item quantity="other">New grades</item>
+    </plurals>
+    <plurals name="grade_new_items_predicted">
+        <item quantity="one">New predicted grade</item>
+        <item quantity="other">New predicted grades</item>
+    </plurals>
+    <plurals name="grade_new_items_final">
+        <item quantity="one">New final grade</item>
+        <item quantity="other">New final grades</item>
+    </plurals>
+    <plurals name="grade_notify_new_items">
+        <item quantity="one">You received %1$d grade</item>
+        <item quantity="other">You received %1$d grades</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_predicted">
+        <item quantity="one">You received %1$d predicted grade</item>
+        <item quantity="other">You received %1$d predicted grades</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_final">
+        <item quantity="one">You received %1$d final grade</item>
+        <item quantity="other">You received %1$d final grades</item>
+    </plurals>
+    <!--Timetable-->
+    <string name="timetable_lesson">Lesson</string>
+    <string name="timetable_room">Room</string>
+    <string name="timetable_group">Group</string>
+    <string name="timetable_time">Hours</string>
+    <string name="timetable_changes">Changes</string>
+    <string name="timetable_no_items">No lessons this day</string>
+    <string name="timetable_minutes">%s min</string>
+    <string name="timetable_seconds">%s sec</string>
+    <string name="timetable_time_left">%1$s left</string>
+    <string name="timetable_time_until">in %1$s</string>
+    <string name="timetable_finished">Finished</string>
+    <string name="timetable_now">Now: %s</string>
+    <string name="timetable_next">Next: %s</string>
+    <string name="timetable_later">Later: %s</string>
+    <string name="timetable_notify_lesson">%1$s lesson %2$d - %3$s</string>
+    <string name="timetable_notify_change_room">Change of room from %1$s to %2$s</string>
+    <string name="timetable_notify_change_teacher">Change of teacher from %1$s to %2$s</string>
+    <string name="timetable_notify_change_subject">Change of subject from %1$s to %2$s</string>
+    <plurals name="timetable_notify_new_items_title">
+        <item quantity="one">Timetable change</item>
+        <item quantity="other">Timetable changes</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items">
+        <item quantity="one">%1$s - %2$d change in timetable</item>
+        <item quantity="other">%1$s - %2$d  changes in timetable</item>
+    </plurals>
+    <plurals name="timetable_notify_new_items_group">
+        <item quantity="one">%1$d change in timetable</item>
+        <item quantity="other">%1$d changes in timetable</item>
+    </plurals>
+    <plurals name="timetable_number_item">
+        <item quantity="one">%d change</item>
+        <item quantity="other">%d changes</item>
+    </plurals>
+    <!--Completed lessons-->
+    <string name="completed_lessons_title">Completed lessons</string>
+    <string name="completed_lessons_button">Show completed lessons</string>
+    <string name="completed_lessons_no_items">No info about completed lessons</string>
+    <string name="completed_lessons_topic">Topic</string>
+    <string name="completed_lessons_absence">Absence</string>
+    <string name="completed_lessons_resources">Resources</string>
+    <!--Additional lessons-->
+    <string name="additional_lessons_title">Additional lessons</string>
+    <string name="additional_lessons_button">Show additional lessons</string>
+    <string name="additional_lessons_no_items">No info about additional lessons</string>
+    <string name="additional_lessons_add">New lesson</string>
+    <string name="additional_lessons_add_title">New additional lesson</string>
+    <string name="additional_lessons_add_success">Additional lesson added successfully</string>
+    <string name="additional_lessons_delete_success">Additional lesson deleted successfully</string>
+    <string name="additional_lessons_repeat">Repeat weekly</string>
+    <string name="additional_lessons_delete_title">Delete additional lesson</string>
+    <string name="additional_lessons_delete_one">Just this lesson</string>
+    <string name="additional_lessons_delete_series">All in the series</string>
+    <string name="additional_lessons_start">Start time</string>
+    <string name="additional_lessons_end">End time</string>
+    <string name="additional_lessons_end_time_error">End time must be greater than start time</string>
+    <!--Attendance-->
+    <string name="attendance_summary_button">Attendance summary</string>
+    <string name="attendance_absence_school">Absent for school reasons</string>
+    <string name="attendance_absence_excused">Excused absence</string>
+    <string name="attendance_absence_unexcused">Unexcused absence</string>
+    <string name="attendance_exemption">Exemption</string>
+    <string name="attendance_excused_lateness">Excused lateness</string>
+    <string name="attendance_unexcused_lateness">Unexcused lateness</string>
+    <string name="attendance_present">Present</string>
+    <string name="attendance_deleted">Deleted</string>
+    <string name="attendance_unknown">Unknown</string>
+    <string name="attendance_number">Number of lesson</string>
+    <string name="attendance_no_items">No entries</string>
+    <string name="attendance_excuse_dialog_reason">Absence reason (optional)</string>
+    <string name="attendance_excuse_dialog_submit">Send</string>
+    <string name="attendance_excuse_success">Absence excuse request sent successfully!</string>
+    <string name="attendance_excuse_no_selection">You must select at least one absence!</string>
+    <string name="attendance_excuse_title">Excuse</string>
+    <plurals name="attendance_notify_new_items_title">
+        <item quantity="one">New attendance</item>
+        <item quantity="other">New attendance</item>
+    </plurals>
+    <plurals name="attendance_notify_new_items">
+        <item quantity="one">%1$d new attendance</item>
+        <item quantity="other">%1$d attendance</item>
+    </plurals>
+    <plurals name="attendance_number_item">
+        <item quantity="one">%d attendance</item>
+        <item quantity="other">%d attendance</item>
+    </plurals>
+    <!--Attendance summary-->
+    <string name="attendance_summary_total">Total</string>
+    <!--Exam-->
+    <string name="exam_no_items">No exams this week</string>
+    <string name="exam_type">Type</string>
+    <string name="exam_entry_date">Entry date</string>
+    <plurals name="exam_notify_new_item_title">
+        <item quantity="one">New exam</item>
+        <item quantity="other">New exams</item>
+    </plurals>
+    <plurals name="exam_notify_new_item_content">
+        <item quantity="one">%d new exam</item>
+        <item quantity="other">%d new exams</item>
+    </plurals>
+    <plurals name="exam_number_item">
+        <item quantity="one">%d exam</item>
+        <item quantity="other">%d exams</item>
+    </plurals>
+    <!--Message-->
+    <string name="message_inbox">Inbox</string>
+    <string name="message_sent">Sent</string>
+    <string name="message_trash">Trash</string>
+    <string name="message_no_subject">(no subject)</string>
+    <string name="message_no_items">No messages</string>
+    <string name="message_from">From:</string>
+    <string name="message_to">To:</string>
+    <string name="message_date">Date: %1$s</string>
+    <string name="message_reply">Reply</string>
+    <string name="message_forward">Forward</string>
+    <string name="message_select_all">Select all</string>
+    <string name="message_unselect_all">Unselect all</string>
+    <string name="message_move_to_trash">Move to trash</string>
+    <string name="message_delete_forever">Delete permanently</string>
+    <string name="message_delete_success">Message deleted successfully</string>
+    <string name="message_mailbox_type_student">student</string>
+    <string name="message_mailbox_type_parent">parent</string>
+    <string name="message_mailbox_type_guardian">guardian</string>
+    <string name="message_mailbox_type_employee">employee</string>
+    <string name="message_share">Share</string>
+    <string name="message_print">Print</string>
+    <string name="message_subject">Subject</string>
+    <string name="message_content">Content</string>
+    <string name="message_send_successful">Message sent successfully</string>
+    <string name="message_not_exists">Message does not exist</string>
+    <string name="message_required_recipients">You need to choose at least 1 recipient</string>
+    <string name="message_content_min_length">The message content must be at least 3 characters</string>
+    <string name="message_chip_all_mailboxes">All mailboxes</string>
+    <string name="message_chip_only_unread">Only unread</string>
+    <string name="message_chip_only_with_attachments">Only with attachments</string>
+    <string name="message_read">Read: %s</string>
+    <string name="message_read_by">Read by: %1$d of %2$d people</string>
+    <plurals name="message_number_item">
+        <item quantity="one">%1$d message</item>
+        <item quantity="other">%1$d messages</item>
+    </plurals>
+    <plurals name="message_new_items">
+        <item quantity="one">New message</item>
+        <item quantity="other">New messages</item>
+    </plurals>
+    <string name="message_restore_dialog">Do you want to restore draft message?</string>
+    <string name="message_restore_dialog_with_recipients">Do you want to restore draft message with recipients: %s?</string>
+    <plurals name="message_notify_new_items">
+        <item quantity="one">You received %1$d message</item>
+        <item quantity="other">You received %1$d messages</item>
+    </plurals>
+    <plurals name="message_selected_messages_count">
+        <item quantity="one">%1$d selected</item>
+        <item quantity="other">%1$d selected</item>
+    </plurals>
+    <string name="message_messages_deleted">Messages deleted</string>
+    <string name="message_mailbox_chooser_title">Choose mailbox</string>
+    <!--Note-->
+    <string name="note_no_items">No info about notes</string>
+    <string name="note_points">Points</string>
+    <plurals name="note_number_item">
+        <item quantity="one">%d note</item>
+        <item quantity="other">%d notes</item>
+    </plurals>
+    <plurals name="note_new_items">
+        <item quantity="one">New note</item>
+        <item quantity="other">New notes</item>
+    </plurals>
+    <plurals name="note_notify_new_items">
+        <item quantity="one">You received %1$d note</item>
+        <item quantity="other">You received %1$d notes</item>
+    </plurals>
+    <!--Praise-->
+    <plurals name="praise_number_item">
+        <item quantity="one">%d praise</item>
+        <item quantity="other">%d praises</item>
+    </plurals>
+    <plurals name="praise_new_items">
+        <item quantity="one">New praise</item>
+        <item quantity="other">New praises</item>
+    </plurals>
+    <plurals name="praise_notify_new_items">
+        <item quantity="one">You received %1$d praise</item>
+        <item quantity="other">You received %1$d praises</item>
+    </plurals>
+    <!--Neutral notes-->
+    <plurals name="neutral_note_number_item">
+        <item quantity="one">%d neutral note</item>
+        <item quantity="other">%d neutral notes</item>
+    </plurals>
+    <plurals name="neutral_note_new_items">
+        <item quantity="one">New neutral note</item>
+        <item quantity="other">New neutral notes</item>
+    </plurals>
+    <plurals name="neutral_note_notify_new_items">
+        <item quantity="one">You received %1$d neutral note</item>
+        <item quantity="other">You received %1$d neutral notes</item>
+    </plurals>
+    <!--Homework-->
+    <string name="homework_no_items">No info about homework</string>
+    <string name="homework_mark_as_done">Mark as done</string>
+    <string name="homework_mark_as_undone">Mark as undone</string>
+    <string name="homework_add">Add homework</string>
+    <string name="homework_add_success">Homework added successfully</string>
+    <string name="homework_delete_success">Homework deleted successfully</string>
+    <string name="homework_attachments">Attachments</string>
+    <plurals name="homework_notify_new_item_title">
+        <item quantity="one">New homework</item>
+        <item quantity="other">New homework</item>
+    </plurals>
+    <plurals name="homework_notify_new_item_content">
+        <item quantity="one">You received %d new homework</item>
+        <item quantity="other">You received %d new homework</item>
+    </plurals>
+    <plurals name="homework_number_item">
+        <item quantity="one">%d homework</item>
+        <item quantity="other">%d homework</item>
+    </plurals>
+    <!--Lucky number-->
+    <string name="lucky_number_title">Lucky number</string>
+    <string name="lucky_number_header">Today\'s lucky number is</string>
+    <string name="lucky_number_empty">No info about the lucky number</string>
+    <string name="lucky_number_notify_new_item_title">Lucky number for today</string>
+    <string name="lucky_number_notify_new_item">Today\'s lucky number is: %s</string>
+    <string name="lucky_number_history_button">Show history</string>
+    <!--Lucky number history-->
+    <string name="lucky_number_history_title">Lucky number history</string>
+    <string name="lucky_number_history_empty">No info about lucky numbers</string>
+    <!--Mobile devices-->
+    <string name="mobile_devices_title">Mobile devices</string>
+    <string name="mobile_devices_no_items">No devices</string>
+    <string name="mobile_devices_unregister">Deregister</string>
+    <string name="mobile_device_removed">Device removed</string>
+    <string name="mobile_device_qr">QR code</string>
+    <string name="mobile_device_token">Token</string>
+    <string name="mobile_device_symbol">Symbol</string>
+    <string name="mobile_device_pin">PIN</string>
+    <!--School and teachers-->
+    <string name="schoolandteachers_title">School and teachers</string>
+    <!--School-->
+    <string name="school_title">School</string>
+    <string name="school_no_info">No info about school</string>
+    <string name="school_name">School name</string>
+    <string name="school_address">School address</string>
+    <string name="school_telephone">Telephone</string>
+    <string name="school_headmaster">Name of headmaster</string>
+    <string name="school_pedagogue">Name of pedagogue</string>
+    <string name="school_address_button">Show on map</string>
+    <string name="school_telephone_button">Call</string>
+    <!--Teacher-->
+    <string name="teachers_title">Teachers</string>
+    <string name="teacher_no_items">No info about teachers</string>
+    <string name="teacher_no_subject">No subject</string>
+    <!--Conference-->
+    <string name="conferences_title">Conferences</string>
+    <string name="conference_no_items">No info about conferences</string>
+    <plurals name="conference_number_item">
+        <item quantity="one">%d conference</item>
+        <item quantity="other">%d conferences</item>
+    </plurals>
+    <plurals name="conference_notify_new_item_title">
+        <item quantity="one">New conference</item>
+        <item quantity="other">New conferences</item>
+    </plurals>
+    <plurals name="conference_notify_new_items">
+        <item quantity="one">You have %1$d new conference</item>
+        <item quantity="other">You have %1$d new conferences</item>
+    </plurals>
+    <string name="conferences_present">Present at conference</string>
+    <string name="conference_agenda">Agenda</string>
+    <!--Director information-->
+    <string name="school_announcement_title">School announcements</string>
+    <string name="school_announcement_no_items">No school announcements</string>
+    <plurals name="school_announcement_number_item">
+        <item quantity="one">%d school announcement</item>
+        <item quantity="other">%d school announcements</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_item_title">
+        <item quantity="one">New school announcement</item>
+        <item quantity="other">New school announcements</item>
+    </plurals>
+    <plurals name="school_announcement_notify_new_items">
+        <item quantity="one">You have %1$d new school announcement</item>
+        <item quantity="other">You have %1$d new school announcements</item>
+    </plurals>
+    <!--Account-->
+    <string name="account_add_new">Add account</string>
+    <string name="account_logout">Logout</string>
+    <string name="account_confirm">Do you want to log out this student?</string>
+    <string name="account_logout_student">Student logout</string>
+    <string name="account_type_student">Student account</string>
+    <string name="account_type_parent">Parent account</string>
+    <string name="account_details_edit">Edit data</string>
+    <string name="account_quick_manager">Accounts manager</string>
+    <string name="account_select_student">Select student</string>
+    <string name="account_family">Family</string>
+    <string name="account_contact">Contact</string>
+    <string name="account_address">Residence details</string>
+    <string name="account_personal_data">Personal information</string>
+    <!--About-->
+    <string name="about_version">App version</string>
+    <string name="about_contributor">Contributors</string>
+    <string name="about_contributor_summary">List of Wulkanowy developers</string>
+    <string name="about_feedback">Report a bug</string>
+    <string name="about_feedback_summary">Send a bug report via e-mail</string>
+    <string name="about_faq">FAQ</string>
+    <string name="about_faq_summary">Read Frequently Asked Questions</string>
+    <string name="about_discord">Discord server</string>
+    <string name="about_discord_summary">Join the Wulkanowy community</string>
+    <string name="about_facebook">Facebook fanpage</string>
+    <string name="about_twitter">Twitter page</string>
+    <string name="about_twitter_summary">Follow us on twitter</string>
+    <string name="about_facebook_summary">Like our facebook fanpage</string>
+    <string name="about_privacy">Privacy policy</string>
+    <string name="about_privacy_summary">Rules for collecting personal data</string>
+    <string name="about_system">System settings</string>
+    <string name="about_system_summary">Open system settings</string>
+    <string name="about_homepage">Homepage</string>
+    <string name="about_homepage_summary">Visit the website and help develop the application</string>
+    <string name="about_licenses">Licenses</string>
+    <string name="about_licenses_summary">Licenses of libraries used in the application</string>
+    <!--Licenses-->
+    <string name="license_dialog_title">License</string>
+    <!--Contributor-->
+    <string name="contributor_avatar_description">Avatar</string>
+    <string name="contributor_see_more">See more on GitHub</string>
+    <!--Student info-->
+    <string name="student_info_empty">No info about student or student family</string>
+    <string name="student_info_first_name">Name</string>
+    <string name="student_info_second_name">Second name</string>
+    <string name="student_info_gender">Gender</string>
+    <string name="student_info_polish_citizenship">Polish citizenship</string>
+    <string name="student_info_family_name">Family name</string>
+    <string name="student_info_parents_name">Mother\'s and father\'s names</string>
+    <string name="student_info_phone">Phone</string>
+    <string name="student_info_cellphone">Cellphone</string>
+    <string name="student_info_email">E-mail</string>
+    <string name="student_info_address">Address of residence</string>
+    <string name="student_info_registered_address">Address of registration</string>
+    <string name="student_info_correspondence_address">Correspondence address</string>
+    <string name="student_info_full_name">Surname and first name</string>
+    <string name="student_info_kinship">Degree of kinship</string>
+    <string name="student_info_guardian_address">Address</string>
+    <string name="student_info_phones">Phones</string>
+    <string name="student_info_male">Male</string>
+    <string name="student_info_female">Female</string>
+    <string name="student_info_last_name">Last name</string>
+    <string name="student_info_guardian">Guardian</string>
+    <!--Account edit-->
+    <string name="account_edit_nick_hint">Nick</string>
+    <string name="account_edit_header">Add nick</string>
+    <string name="account_edit_avatar_title">Choose avatar color</string>
+    <!--Log viewer-->
+    <string name="logviewer_share">Share logs</string>
+    <string name="logviewer_refresh">Refresh</string>
+    <!--Dashboard-->
+    <string name="dashboard_timetable_title">Lessons</string>
+    <string name="dashboard_timetable_title_tomorrow">(Tomorrow)</string>
+    <string name="dashboard_timetable_title_today_and_tomorrow">(Today and tomorrow)</string>
+    <string name="dashboard_timetable_first_lesson_title_moment">In a moment:</string>
+    <string name="dashboard_timetable_first_lesson_title_soon">Soon:</string>
+    <string name="dashboard_timetable_first_lesson_title_first">First:</string>
+    <string name="dashboard_timetable_first_lesson_title_now">Now:</string>
+    <string name="dashboard_timetable_second_lesson_value_end">End of lessons</string>
+    <string name="dashboard_timetable_second_lessons_title">Next:</string>
+    <string name="dashboard_timetable_third_title">Later:</string>
+    <plurals name="dashboard_timetable_third_value">
+        <item quantity="one">%1$d more lesson</item>
+        <item quantity="other">%1$d more lessons</item>
+    </plurals>
+    <string name="dashboard_timetable_third_time">until %1$s</string>
+    <string name="dashboard_timetable_no_lessons">No upcoming lessons</string>
+    <string name="dashboard_timetable_error">An error occurred while loading the lessons</string>
+    <string name="dashboard_homework_title">Homework</string>
+    <string name="dashboard_homework_no_homework">No homework to do</string>
+    <string name="dashboard_homework_error">An error occurred while loading the homework</string>
+    <plurals name="dashboard_homework_more">
+        <item quantity="one">%1$d more homework</item>
+        <item quantity="other">%1$d more homework</item>
+    </plurals>
+    <string name="dashboard_homework_time">due %1$s</string>
+    <string name="dashboard_grade_title">Last grades</string>
+    <string name="dashboard_grade_no_grade">No new grades</string>
+    <string name="dashboard_grade_error">An error occurred while loading the grades</string>
+    <string name="dashboard_announcements_title">School announcements</string>
+    <string name="dashboard_announcements_no_announcements">No current announcements</string>
+    <string name="dashboard_announcements_error">An error occurred while loading the announcements</string>
+    <plurals name="dashboard_announcements_more">
+        <item quantity="one">%1$d more announcement</item>
+        <item quantity="other">%1$d more announcements</item>
+    </plurals>
+    <string name="dashboard_exams_title">Exams</string>
+    <string name="dashboard_exams_no_exams">No upcoming exams</string>
+    <string name="dashboard_exams_error">An error occurred while loading the exams</string>
+    <plurals name="dashboard_exams_more">
+        <item quantity="one">%1$d more exam</item>
+        <item quantity="other">%1$d more exams</item>
+    </plurals>
+    <string name="dashboard_conferences_title">Conferences</string>
+    <string name="dashboard_conferences_no_conferences">No upcoming conferences</string>
+    <string name="dashboard_conferences_error">An error occurred while loading the conferences</string>
+    <plurals name="dashboard_conference_more">
+        <item quantity="one">%1$d more conference</item>
+        <item quantity="other">%1$d more conferences</item>
+    </plurals>
+    <string name="dashboard_horizontal_group_error">An error occurred while loading data</string>
+    <string name="dashboard_horizontal_group_no_data">None</string>
+    <!--Error dialog-->
+    <string name="dialog_error_check_update">Check for updates</string>
+    <string name="dialog_error_check_update_message">Before reporting a bug, check first if an update with the bug fix is available</string>
+    <!--Generic-->
+    <string name="all_content">Content</string>
+    <string name="all_retry">Retry</string>
+    <string name="all_description">Description</string>
+    <string name="all_no_description">No description</string>
+    <string name="all_teacher">Teacher</string>
+    <string name="all_date">Date</string>
+    <string name="all_entry_date">Entry date</string>
+    <string name="all_color">Color</string>
+    <string name="all_details">Details</string>
+    <string name="all_category">Category</string>
+    <string name="all_close">Close</string>
+    <string name="all_no_data">No data</string>
+    <string name="all_subject">Subject</string>
+    <string name="all_prev">Prev</string>
+    <string name="all_next">Next</string>
+    <string name="all_search">Search</string>
+    <string name="all_search_hint">Search…</string>
+    <string name="all_yes">Yes</string>
+    <string name="all_no">No</string>
+    <string name="all_save">Save</string>
+    <string name="all_title">Title</string>
+    <string name="all_add">Add</string>
+    <string name="all_copied">Copied</string>
+    <string name="all_undo">Undo</string>
+    <string name="all_change">Change</string>
+    <string name="all_add_to_calendar">Add to calendar</string>
+    <!--Timetable Widget-->
+    <string name="widget_timetable_no_items">No lessons</string>
+    <string name="widget_timetable_theme_title">Choose theme</string>
+    <string name="widget_timetable_theme_light">Light</string>
+    <string name="widget_timetable_theme_dark">Dark</string>
+    <string name="widget_timetable_theme_system">System Theme</string>
+    <!--Preferences-->
+    <string name="pref_view_header">App</string>
+    <string name="pref_view_list">Default view</string>
+    <string name="pref_view_grade_average_mode">Calculated average options</string>
+    <string name="pref_view_grade_average_force_calc">Force average calculation by app</string>
+    <string name="pref_view_present">Show presence</string>
+    <string name="pref_view_app_theme">Theme</string>
+    <string name="pref_view_expand_grade">Grades expanding</string>
+    <string name="pref_view_timetable_show_timers">Mark current lesson</string>
+    <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
+    <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
+    <string name="pref_view_subjects_without_grades">Show subjects without grades</string>
+    <string name="pref_view_grade_color_scheme">Grades color scheme</string>
+    <string name="pref_view_grade_sorting_mode">Subjects sorting</string>
+    <string name="pref_view_app_language">Language</string>
+    <string name="pref_notify_header">Notifications</string>
+    <string name="pref_notify_header_other">Other</string>
+    <string name="pref_notify_switch">Show notifications</string>
+    <string name="pref_notify_upcoming_lessons_switch">Show upcoming lesson notifications</string>
+    <string name="pref_notify_upcoming_lessons_persistent_switch">Make upcoming lesson notification persistent</string>
+    <string name="pref_notify_upcoming_lessons_persistent_summary">Turn off when notification is not showing in your watch/band</string>
+    <string name="pref_notify_open_system_settings">Open system notification settings</string>
+    <string name="pref_notify_fix_sync_issues">Fix synchronization &amp; notifications issues</string>
+    <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
+    <string name="pref_notify_debug_switch">Show debug notifications</string>
+    <string name="pref_notify_disabled_summary">Synchronization is disabled</string>
+    <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
+    <string name="pref_notify_notifications_piggyback">Capture official app notifications</string>
+    <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
+    <string name="pref_notification_piggyback_popup_title">Capture notifications</string>
+    <string name="pref_notification_piggyback_popup_description">With this feature you can gain a substitute of push notifications like in the official app. All you need to do is allow Wulkanowy to receive all notifications in your system settings.\n\nHow it works?\nWhen you get a notification in Dziennik VULCAN, Wulkanowy will be notified (that\'s what these extra permissions are for) and will trigger a sync so that can send its own notification.\n\nFOR ADVANCED USERS ONLY</string>
+    <string name="pref_notification_exact_alarm_popup_title">Upcoming lesson notifications</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">You must allow the Wulkanowy app to set alarms and reminders in your system settings to use this feature.</string>
+    <string name="pref_notification_go_to_settings">Go to settings</string>
+    <string name="pref_services_header">Synchronization</string>
+    <string name="pref_services_switch">Automatic update</string>
+    <string name="pref_services_suspended">Suspended on holidays</string>
+    <string name="pref_services_interval">Updates interval</string>
+    <string name="pref_services_wifi">Wi-Fi only</string>
+    <string name="pref_services_force_sync">Sync now</string>
+    <string name="pref_services_message_sync_success">Synced!</string>
+    <string name="pref_services_message_sync_failed">Sync failed</string>
+    <string name="pref_services_sync_in_progress">Sync in progress</string>
+    <string name="pref_services_last_full_sync_date">Last full sync: %s</string>
+    <string name="pref_other_grade_modifier_plus">Value of the plus</string>
+    <string name="pref_other_grade_modifier_minus">Value of the minus</string>
+    <string name="pref_other_fill_message_content">Reply with message history</string>
+    <string name="pref_other_optional_arithmetic_average">Show arithmetic average when no weights provided</string>
+    <string name="pref_ads_support_category_name">Support</string>
+    <string name="pref_ads_privacy_policy">Privacy Policy</string>
+    <string name="pref_ads_agreements">Agreements</string>
+    <string name="pref_ads_consent">Consent to processing of data related to ads</string>
+    <string name="pref_ads_show_in_app">Show ads in app</string>
+    <string name="pref_ads_support">Watch single ad to support project</string>
+    <string name="pref_ads_privacy_title">Consent to data processing</string>
+    <string name="pref_ads_privacy_description">To view an advertisement you must agree to the data processing terms of our Privacy Policy</string>
+    <string name="pref_ads_privacy_agree">Agree</string>
+    <string name="pref_ads_privacy_link">Privacy policy</string>
+    <string name="pref_ads_loading">Ad is loading</string>
+    <string name="pref_ads_once_per_visit">Thank you for your support, come back later for more ads</string>
+    <string name="pref_ads_consent_title">Can we use your data to display ads?</string>
+    <string name="pref_ads_consent_description">You can change your choice anytime in the app settings. We may use your data to display ads tailored to you or, using less of your data, display non-personalized ads. Please see our Privacy Policy for details</string>
+    <string name="pref_ads_summary_personalized">Personalized ads</string>
+    <string name="pref_ads_summary_non_personalized">Non-personalized ads</string>
+    <string name="pref_ads_over_18_years_old">I am over 18 years old</string>
+    <string name="pref_ads_option_personalized">Yes, personalized ads</string>
+    <string name="pref_ads_option_non_personalized">Yes, non-personalized ads</string>
+    <string name="pref_settings_advanced_title">Advanced</string>
+    <string name="pref_settings_appearance_title">Appearance &amp; Behavior</string>
+    <string name="pref_settings_notifications_title">Notifications</string>
+    <string name="pref_settings_sync_title">Synchronization</string>
+    <string name="pref_settings_ads_title">Advertisements</string>
+    <string name="pref_grades_appearance_header">Grades</string>
+    <string name="pref_dashboard_appearance_header">Dashboard</string>
+    <string name="pref_dashboard_appearance_tiles_title">Tiles visibility</string>
+    <string name="pref_attendance_appearance_view">Attendance</string>
+    <string name="pref_timetable_appearance_view">Timetable</string>
+    <string name="pref_grades_advanced_header">Grades</string>
+    <string name="pref_counted_average_advanced_header">Calculated average</string>
+    <string name="pref_messages_advanced_header">Messages</string>
+    <string name="pref_appearance_category">Appearance &amp; Behavior</string>
+    <string name="pref_appearance_category_summary">Languages, themes, subjects sorting</string>
+    <string name="pref_notifications_category_summary">App notifications, fix problems</string>
+    <string name="pref_notifications_category">Notifications</string>
+    <string name="pref_sync_category">Synchronization</string>
+    <string name="pref_sync_category_summary">Automatic update, synchronization interval</string>
+    <string name="pref_advanced_category_summary">Plus and minus values, average calculation</string>
+    <string name="pref_advanced_category">Advanced</string>
+    <string name="pref_about_category_summary">App version, contributors, social portals</string>
+    <string name="pref_ads_category_summary">Displaying advertisements, project support</string>
+    <!--Notification Channels-->
+    <string name="channel_new_grades">New grades</string>
+    <string name="channel_new_homework">New homework</string>
+    <string name="channel_new_conference">New conferences</string>
+    <string name="channel_new_exam">New exams</string>
+    <string name="channel_lucky_number">Lucky number</string>
+    <string name="channel_new_message">New messages</string>
+    <string name="channel_new_notes">New notes</string>
+    <string name="channel_new_school_announcement">New school announcements</string>
+    <string name="channel_push">Push notifications</string>
+    <string name="channel_upcoming_lessons">Upcoming lessons</string>
+    <string name="channel_debug">Debug</string>
+    <string name="channel_change_timetable">Timetable change</string>
+    <string name="channel_new_attendance">New attendance</string>
+    <!--Colors-->
+    <string name="all_black">Black</string>
+    <string name="all_red">Red</string>
+    <string name="all_blue">Blue</string>
+    <string name="all_green">Green</string>
+    <string name="all_purple">Purple</string>
+    <string name="all_empty_color">No color</string>
+    <!--Update helper-->
+    <string name="update_download_started">Download of updates has started…</string>
+    <string name="update_download_success">An update has just been downloaded.</string>
+    <string name="update_download_success_button">Restart</string>
+    <string name="update_failed">Update failed! Wulkanowy may not function properly. Consider updating</string>
+    <!--Errors-->
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>
+    <string name="error_timeout">Connection to register failed. Servers can be overloaded. Please try again later</string>
+    <string name="error_login_failed">Loading data failed. Please try again later</string>
+    <string name="error_password_change_required">Register password change required</string>
+    <string name="error_service_unavailable">Maintenance underway UONET + register. Try again later</string>
+    <string name="error_unknown_uonet">Unknown UONET + register error. Try again later</string>
+    <string name="error_unknown_app">Unknown application error. Please try again later</string>
+    <string name="error_unknown">An unexpected error occurred</string>
+    <string name="error_feature_disabled">Feature disabled by your school</string>
+    <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
+    <string name="error_field_required">This field is required</string>
+</resources>

@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.repositories
 import android.content.Context
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.SharedPrefProvider
+import io.github.wulkanowy.data.db.dao.MailboxDao
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
 import io.github.wulkanowy.data.db.dao.MessagesDao
 import io.github.wulkanowy.data.db.entities.Message
@@ -10,6 +11,7 @@ import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.errorOrNull
 import io.github.wulkanowy.data.toFirstResult
+import io.github.wulkanowy.domain.messages.GetMailboxByStudentUseCase
 import io.github.wulkanowy.getMailboxEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
@@ -55,6 +57,12 @@ class MessageRepositoryTest {
     @MockK
     private lateinit var sharedPrefProvider: SharedPrefProvider
 
+    @MockK
+    private lateinit var mailboxDao: MailboxDao
+
+    @MockK
+    private lateinit var getMailboxByStudentUseCase: GetMailboxByStudentUseCase
+
     private val student = getStudentEntity()
 
     private val mailbox = getMailboxEntity()
@@ -74,26 +82,33 @@ class MessageRepositoryTest {
             refreshHelper = refreshHelper,
             sharedPrefProvider = sharedPrefProvider,
             json = Json,
+            mailboxDao = mailboxDao,
+            getMailboxByStudentUseCase = getMailboxByStudentUseCase,
         )
     }
 
     @Test
     fun `get messages when fetched completely new message without notify`() = runBlocking {
-        every { messageDb.loadAll(any(), any()) } returns flowOf(emptyList())
+        coEvery { mailboxDao.loadAll(any()) } returns listOf(mailbox)
+        every { messageDb.loadAll(mailbox.globalKey, any()) } returns flowOf(emptyList())
         coEvery { sdk.getMessages(Folder.RECEIVED, any()) } returns listOf(
-            getMessageDto()
+            getMessageDto().copy(
+                unreadBy = 5,
+                readBy = 10,
+            )
         )
         coEvery { messageDb.deleteAll(any()) } just Runs
         coEvery { messageDb.insertAll(any()) } returns listOf()
 
-        repository.getMessages(
+        val res = repository.getMessages(
             student = student,
             mailbox = mailbox,
             folder = MessageFolder.RECEIVED,
             forceRefresh = true,
             notify = false,
-        ).toFirstResult().dataOrNull.orEmpty()
+        ).toFirstResult()
 
+        assertEquals(null, res.errorOrNull)
         coVerify(exactly = 1) { messageDb.deleteAll(withArg { checkEquals(emptyList<Message>()) }) }
         coVerify {
             messageDb.insertAll(withArg {
@@ -187,13 +202,16 @@ class MessageRepositoryTest {
     ) = Message(
         messageGlobalKey = "v4",
         mailboxKey = "",
+        email = "",
         correspondents = "",
         messageId = messageId,
         subject = "",
         date = Instant.EPOCH,
         folderId = 1,
         unread = unread,
-        hasAttachments = false
+        readBy = 1,
+        unreadBy = 1,
+        hasAttachments = false,
     ).apply {
         this.content = content
     }
@@ -209,6 +227,8 @@ class MessageRepositoryTest {
         dateZoned = Instant.EPOCH.atZone(ZoneOffset.UTC),
         folderId = 1,
         unread = true,
+        readBy = 1,
+        unreadBy = 1,
         hasAttachments = false,
     )
 }

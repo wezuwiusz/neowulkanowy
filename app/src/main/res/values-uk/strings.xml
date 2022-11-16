@@ -77,9 +77,9 @@
     <string name="main_log_in">Увійти</string>
     <string name="main_session_expired">Минув термін дії сесії</string>
     <string name="main_session_relogin">Минув термін дії сесії, авторизуйтеся знову</string>
-    <string name="main_support_title">Application support</string>
-    <string name="main_support_description">Do you like this app? Support its development by enabling non-invasive ads that you can disable at any time</string>
-    <string name="main_support_positive">Enable ads</string>
+    <string name="main_support_title">Підтримка додатку</string>
+    <string name="main_support_description">Вам подобається цей додаток? Підтримайте його розвиток, увімкнувши неінвазивну рекламу, яку ви можете відключити в будь-який час</string>
+    <string name="main_support_positive">Увімкнути рекламу</string>
     <!--Grade-->
     <string name="grade_header">Оцінка</string>
     <string name="grade_semester">%d семестр</string>
@@ -97,7 +97,7 @@
     <string name="grade_summary_predicted_grade">Передбачувана оцінка</string>
     <string name="grade_summary_calculated_average">Розрахована середня оцінка</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Як працює \"Розрахована середня оцінка\"?</string>
-    <string name="grade_summary_calculated_average_help_dialog_message">The Calculated Average is the arithmetic average calculated from the subjects averages. It allows you to know the approximate final average. It is calculated in a way selected by the user in the application settings. It is recommended that you choose the appropriate option. This is because the calculation of school averages differs. Additionally, if your school reports the average of the subjects on the Vulcan page, the application downloads them and does not calculate these averages. This can be changed by forcing the calculation of the average in the application settings.\n\n<b>Average of grades only from selected semester</b>:\n1. Calculating the weighted average for each subject in a given semester\n2.Adding calculated averages\n3. Calculation of the arithmetic average of the summed averages\n\n<b>Average of averages from both semesters</b>:\n1.Calculating the weighted average for each subject in semester 1 and 2\n2. Calculating the arithmetic average of the calculated averages for semesters 1 and 2 for each subject.\n3. Adding calculated averages\n4. Calculation of the arithmetic average of the summed averages\n\n<b>Average of grades from the whole year:</b>\n1. Calculating weighted average over the year for each subject. The final average in the 1st semester is irrelevant.\n2. Adding calculated averages\n3. Calculating the arithmetic average of summed averages</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Розрахована середня оцінка - це середнє арифметичне, обчислене з середніх оцінок з предметів. Це дозволяє дізнатися приблизну кінцеву середню оцінку. Вона розраховується спосібом, обраним користувачем у налаштуваннях програми. Рекомендується вибрати відповідний варіант, тому що кожна школа по різному розраховує середню оцінку. Крім того, якщо у вашій школі повідомляється середня оцінка з предметів на сторінці Vulcan, програма тільки завантажує ці оцінки і не розраховує їх самостійно. Це можна змінити шляхом примусового розрахунку середньоЇ оцінки в налаштуваннях програми.\n\n<b>Середні оцінки тільки за обраний семестр</b>:\n1. Розрахунок середньозваженого числа для кожного предмета в даному семестрі\n2. Сумування розрахованих числ\n3. Розрахунок середнього арифметичного з сумованих чисел\n\n<b>Середнє значення з обох семестрів</b>:\n1. Обчислення середньозваженого числа для кожного предмета у 1 та 2 семестрі\n2. Обчислення середнього арифметичного з розрахованих середньозважених числ за 1 та 2 семестри для кожного предмета.\n3. Додавання розрахованих середніх\n4. Розрахунок середнього арифметичного підсумованих середніх значень\n\n<b>Середнє значення оцінок за весь рік: </b>\n1. Розрахунок середньозваженого числа за рік для кожного предмета. Підсумковий середній показник у 1-му семестрі не має значення.\n2. Сумування розрахованих середніх\n3. Обчислення середнього арифметичного з суммованих середніх</string>
     <string name="grade_summary_final_average_help_dialog_title">Як працює \"Підсумкова середня оцінка\"?</string>
     <string name="grade_summary_final_average_help_dialog_message">Підсумкове середнє значення - це середнє арифметичне, обчислене з усіх наявних наразі підсумкових оцінок у даному семестрі. \n\nСхема обчислення складається з таких кроків:\n1. Сумування підсумкових оцінок, виставленних викладачами\n2. Ділення на кількість предметів, з яких виставлені ці оцінки</string>
     <string name="grade_summary_final_average">Підсумкова середня оцінка</string>
@@ -220,7 +220,7 @@
     <string name="additional_lessons_delete_series">Всі в серії</string>
     <string name="additional_lessons_start">Час початку</string>
     <string name="additional_lessons_end">Час завершення</string>
-    <string name="additional_lessons_end_time_error">Час завершення має бути більшим, ніж час початку</string>
+    <string name="additional_lessons_end_time_error">Час завершення має бути пізніше часу початку</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Підсумок відвідуваності</string>
     <string name="attendance_absence_school">Відсутність зі шкільних причин</string>
@@ -297,10 +297,10 @@
     <string name="message_move_to_trash">Перемістити до кошика</string>
     <string name="message_delete_forever">Видалити назавжди</string>
     <string name="message_delete_success">Лист було успішно видалено</string>
-    <string name="message_mailbox_type_student">student</string>
-    <string name="message_mailbox_type_parent">parent</string>
-    <string name="message_mailbox_type_guardian">guardian</string>
-    <string name="message_mailbox_type_employee">employee</string>
+    <string name="message_mailbox_type_student">учень</string>
+    <string name="message_mailbox_type_parent">родич</string>
+    <string name="message_mailbox_type_guardian">опікун</string>
+    <string name="message_mailbox_type_employee">працівник</string>
     <string name="message_share">Поділитись</string>
     <string name="message_print">Друк</string>
     <string name="message_subject">Тема</string>
@@ -309,9 +309,11 @@
     <string name="message_not_exists">Такого листа не існує</string>
     <string name="message_required_recipients">Необхідно обрати принаймні 1 адресата</string>
     <string name="message_content_min_length">Зміст листа повинен складатися принаймні з 3 знаків</string>
+    <string name="message_chip_all_mailboxes">Усі поштові скриньки</string>
     <string name="message_chip_only_unread">Лише непрочитані</string>
     <string name="message_chip_only_with_attachments">Тільки з вкладеннями</string>
     <string name="message_read">Прочитаний: %s</string>
+    <string name="message_read_by">Прочитано: %1$d з %2$d осіб</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d лист</item>
         <item quantity="few">%1$d листи</item>
@@ -338,7 +340,8 @@
         <item quantity="many">%1$d вибрано</item>
         <item quantity="other">%1$d вибрано</item>
     </plurals>
-    <string name="message_messages_deleted">Листи видалені</string>
+    <string name="message_messages_deleted">Листи видалено</string>
+    <string name="message_mailbox_chooser_title">Вибрати поштову скриньку</string>
     <!--Note-->
     <string name="note_no_items">Немає інформації о зауваженнях</string>
     <string name="note_points">Бали</string>
@@ -720,10 +723,10 @@
     <string name="pref_other_fill_message_content">Відповісти з історією повідомлень</string>
     <string name="pref_other_optional_arithmetic_average">Вилічити середню аритметичну, якщо оцінка немає вартості</string>
     <string name="pref_ads_support_category_name">Підтримка</string>
-    <string name="pref_ads_privacy_policy">Privacy Policy</string>
-    <string name="pref_ads_agreements">Agreements</string>
-    <string name="pref_ads_consent">Consent to processing of data related to ads</string>
-    <string name="pref_ads_show_in_app">Show ads in app</string>
+    <string name="pref_ads_privacy_policy">Політика конфіденційності</string>
+    <string name="pref_ads_agreements">Угоди</string>
+    <string name="pref_ads_consent">Згода на обробку даних, пов\'язаних з рекламою</string>
+    <string name="pref_ads_show_in_app">Показувати рекламу в додатку</string>
     <string name="pref_ads_support">Подивіться одну рекламу для підтримки проєкту</string>
     <string name="pref_ads_privacy_title">Згода в обробці даних</string>
     <string name="pref_ads_privacy_description">Щоб переглянути рекламу, ви повинні погодитися з умовами обробки даних нашої Політики конфіденційності</string>
@@ -731,13 +734,13 @@
     <string name="pref_ads_privacy_link">Політика конфіденційності</string>
     <string name="pref_ads_loading">Реклама завантажується</string>
     <string name="pref_ads_once_per_visit">Дякуємо за вашу підтримку, повертайтеся пізніше для більшої кількості реклам</string>
-    <string name="pref_ads_consent_title">Can we use your data to display ads?</string>
-    <string name="pref_ads_consent_description">You can change your choice anytime in the app settings. We may use your data to display ads tailored to you or, using less of your data, display non-personalized ads. Please see our Privacy Policy for details</string>
-    <string name="pref_ads_summary_personalized">Personalized ads</string>
-    <string name="pref_ads_summary_non_personalized">Non-personalized ads</string>
-    <string name="pref_ads_over_18_years_old">I am over 18 years old</string>
-    <string name="pref_ads_option_personalized">Yes, personalized ads</string>
-    <string name="pref_ads_option_non_personalized">Yes, non-personalized ads</string>
+    <string name="pref_ads_consent_title">Чи можемо ми використовувати ваші дані для висвітлювання реклами?</string>
+    <string name="pref_ads_consent_description">Ви можете змінити свій вибір в будь-який час в налаштуваннях додатку. Ми можемо використовувати ваші дані для висвітлювання реклами, адаптованої до вас або, використовуючи менше ваших даних, висвітлювати неперсоналізовану рекламу. Перегляньте нашу Політику конфіденційності для подробиць</string>
+    <string name="pref_ads_summary_personalized">Персоналізована реклама</string>
+    <string name="pref_ads_summary_non_personalized">Неперсоналізована реклама</string>
+    <string name="pref_ads_over_18_years_old">Мені більше 18 років</string>
+    <string name="pref_ads_option_personalized">Так, персоналізована реклама</string>
+    <string name="pref_ads_option_non_personalized">Так, неперсоналізована реклама</string>
     <string name="pref_settings_advanced_title">Додатково</string>
     <string name="pref_settings_appearance_title">Вигляд та поведінка</string>
     <string name="pref_settings_notifications_title">Сповіщення</string>

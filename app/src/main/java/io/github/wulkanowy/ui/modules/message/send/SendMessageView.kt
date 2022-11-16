@@ -61,4 +61,5 @@ interface SendMessageView : BaseView {
     fun getMessageBackupDialogStringWithRecipients(recipients: String): String
 
     fun clearDraft()
+    fun showMailboxChooser(mailboxes: List<Mailbox>)
 }

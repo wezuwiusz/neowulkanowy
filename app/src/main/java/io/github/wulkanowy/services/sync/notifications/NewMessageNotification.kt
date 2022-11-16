@@ -8,7 +8,6 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.pojos.GroupNotificationData
 import io.github.wulkanowy.data.pojos.NotificationData
 import io.github.wulkanowy.ui.modules.Destination
-import io.github.wulkanowy.ui.modules.splash.SplashActivity
 import io.github.wulkanowy.utils.getPlural
 import javax.inject.Inject
 

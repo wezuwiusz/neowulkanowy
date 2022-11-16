@@ -1,10 +1,4 @@
-[English version of README](README.en.md)
-
-[Deutsche Version von README](README.de.md)
-
-[Česká verze README](README.cs.md)
-
-[Slovenská verzia README](README.sk.md)
+[Česká verze](README.cs.md) / [Deutsche Version](README.de.md) / [English version](README.en.md) / Polska wersja / [Slovenská verzia](README.sk.md)
 
 # Wulkanowy
 
@@ -13,6 +7,7 @@
 [![Discord](https://img.shields.io/discord/390889354199040011.svg?style=flat-square)](https://discord.gg/vccAQBr)
 [![F-Droid](https://img.shields.io/f-droid/v/io.github.wulkanowy.svg?style=flat-square)](https://f-droid.org/packages/io.github.wulkanowy/)
 [![Last release](https://img.shields.io/github/release/wulkanowy/wulkanowy.svg?logo=github&style=flat-square)](https://github.com/wulkanowy/wulkanowy/releases)
+[![Crowdin](https://badges.crowdin.net/wulkanowy2/localized.svg)](https://translate.wulkanowy.net.pl)
 
 Nieoficjalny klient dziennika VULCAN UONET+ dla ucznia i rodzica
 

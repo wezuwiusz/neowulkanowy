@@ -9,6 +9,9 @@ import java.time.Instant
 @Entity(tableName = "Messages")
 data class Message(
 
+    @ColumnInfo(name = "email")
+    val email: String,
+
     @ColumnInfo(name = "message_global_key")
     val messageGlobalKey: String,
 
@@ -28,6 +31,12 @@ data class Message(
     val folderId: Int,
 
     var unread: Boolean,
+
+    @ColumnInfo(name = "read_by")
+    val readBy: Int?,
+
+    @ColumnInfo(name = "unread_by")
+    val unreadBy: Int?,
 
     @ColumnInfo(name = "has_attachments")
     val hasAttachments: Boolean

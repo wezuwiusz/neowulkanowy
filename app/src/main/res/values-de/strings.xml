@@ -275,9 +275,11 @@
     <string name="message_not_exists">Nachricht nicht vorhanden</string>
     <string name="message_required_recipients">Sie müssen mindestens 1 Empfänger auswählen.</string>
     <string name="message_content_min_length">Der Inhalt der Nachricht muss mindestens 3 Zeichen lang sein.</string>
+    <string name="message_chip_all_mailboxes">All mailboxes</string>
     <string name="message_chip_only_unread">Nur ungelesen</string>
     <string name="message_chip_only_with_attachments">Nur mit Anhängen</string>
     <string name="message_read">Lesen: %s</string>
+    <string name="message_read_by">Read by: %1$d of %2$d people</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d Nachricht</item>
         <item quantity="other">%1$d Nachrichten</item>
@@ -297,6 +299,7 @@
         <item quantity="other">%1$d ausgewählt</item>
     </plurals>
     <string name="message_messages_deleted">Nachrichten gelöscht</string>
+    <string name="message_mailbox_chooser_title">Choose mailbox</string>
     <!--Note-->
     <string name="note_no_items">Keine Informationen über Eintragen</string>
     <string name="note_points">Punkte</string>
@@ -632,10 +635,10 @@
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
     <string name="pref_other_optional_arithmetic_average">Arithmetisches Mittel anzeigen, wenn keine Gewichte angegeben sind</string>
     <string name="pref_ads_support_category_name">Unterstützung</string>
-    <string name="pref_ads_privacy_policy">Privacy Policy</string>
-    <string name="pref_ads_agreements">Agreements</string>
-    <string name="pref_ads_consent">Consent to processing of data related to ads</string>
-    <string name="pref_ads_show_in_app">Show ads in app</string>
+    <string name="pref_ads_privacy_policy">Datenschutz-Bestimmungen</string>
+    <string name="pref_ads_agreements">Vereinbarungen</string>
+    <string name="pref_ads_consent">Zustimmung zur Verarbeitung von Daten im Zusammenhang mit Anzeigen</string>
+    <string name="pref_ads_show_in_app">Anzeigen in der App anzeigen</string>
     <string name="pref_ads_support">Einzelanzeige ansehen, um Projekt zu unterstützen</string>
     <string name="pref_ads_privacy_title">Einwilligung in die Datenverarbeitung</string>
     <string name="pref_ads_privacy_description">Um eine Anzeige zu sehen, müssen Sie mit den Datenverarbeitungsbedingungen unserer Datenschutzerklärung einverstanden sein</string>
@@ -647,9 +650,9 @@
     <string name="pref_ads_consent_description">Sie können Ihre Wahl jederzeit in den App-Einstellungen ändern. Wir verwenden Ihre Daten, um auf Sie zugeschnittene Anzeigen anzuzeigen oder unter Verwendung weniger Ihrer Daten nicht personalisierte Werbung anzuzeigen. Bitte lesen Sie unsere Datenschutzerklärung für Details</string>
     <string name="pref_ads_summary_personalized">Personalisierte Werbung</string>
     <string name="pref_ads_summary_non_personalized">keine personalisierte Werbung</string>
-    <string name="pref_ads_over_18_years_old">I am over 18 years old</string>
-    <string name="pref_ads_option_personalized">Yes, personalized ads</string>
-    <string name="pref_ads_option_non_personalized">Yes, non-personalized ads</string>
+    <string name="pref_ads_over_18_years_old">Ich bin über 18 Jahre alt</string>
+    <string name="pref_ads_option_personalized">Ja, personalisierte Werbung</string>
+    <string name="pref_ads_option_non_personalized">Ja, nicht personalisierte Werbung</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>

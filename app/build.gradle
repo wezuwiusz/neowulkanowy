@@ -23,8 +23,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 114
-        versionName "1.7.5"
+        versionCode 115
+        versionName "1.8.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -160,8 +160,8 @@ kapt {
 play {
     defaultToAppBundles = false
     track = 'production'
-//    releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
-//    userFraction = 0.05d
+    releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
+    userFraction = 0.25d
     updatePriority = 4
     enabled.set(false)
 }
@@ -181,24 +181,24 @@ ext {
     android_hilt = "1.0.0"
     room = "2.4.3"
     chucker = "3.5.2"
-    mockk = "1.12.7"
+    mockk = "1.13.2"
     coroutines = "1.6.4"
 }
 
 dependencies {
-    implementation "io.github.wulkanowy:sdk:1.7.5"
+    implementation "io.github.wulkanowy:sdk:1.8.0"
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.8'
 
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     implementation "androidx.core:core-ktx:1.8.0"
     implementation 'androidx.core:core-splashscreen:1.0.0'
     implementation "androidx.activity:activity-ktx:1.5.1"
-    implementation "androidx.appcompat:appcompat:1.5.0"
-    implementation "androidx.fragment:fragment-ktx:1.5.2"
-    implementation "androidx.annotation:annotation:1.4.0"
+    implementation "androidx.appcompat:appcompat:1.5.1"
+    implementation "androidx.fragment:fragment-ktx:1.5.4"
+    implementation "androidx.annotation:annotation:1.5.0"
 
     implementation "androidx.preference:preference-ktx:1.2.0"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
@@ -206,10 +206,10 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
-    implementation "com.google.android.material:material:1.6.1"
+    implementation "com.google.android.material:material:1.7.0"
     implementation "com.github.wulkanowy:material-chips-input:2.3.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
-    implementation 'com.github.lopspower:CircularImageView:4.2.0'
+    implementation 'com.github.lopspower:CircularImageView:4.3.0'
 
     implementation "androidx.work:work-runtime-ktx:$work_manager"
     playImplementation "androidx.work:work-gcm:$work_manager"
@@ -236,21 +236,21 @@ dependencies {
     implementation "at.favre.lib:slf4j-timber:1.0.1"
     implementation 'com.github.bastienpaulfr:Treessence:1.0.5'
     implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
-    implementation "io.coil-kt:coil:2.2.0"
+    implementation "io.coil-kt:coil:2.2.2"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.0"
     implementation 'me.xdrop:fuzzywuzzy:1.4.0'
     implementation 'com.fredporciuncula:flow-preferences:1.8.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:30.3.2')
+    playImplementation platform('com.google.firebase:firebase-bom:31.0.3')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-messaging:'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
     playImplementation 'com.google.android.play:core:1.10.3'
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
-    playImplementation 'com.google.android.gms:play-services-ads:21.1.0'
+    playImplementation 'com.google.android.gms:play-services-ads:21.3.0'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:6.7.0.300'
-    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.7.1.300'
+    hmsImplementation 'com.huawei.hms:hianalytics:6.8.0.300'
+    hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.7.3.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
 
@@ -263,10 +263,10 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
-    testImplementation 'org.robolectric:robolectric:4.8.2'
-    testImplementation "androidx.test:runner:1.4.0"
-    testImplementation "androidx.test.ext:junit:1.1.3"
-    testImplementation "androidx.test:core:1.4.0"
+    testImplementation 'org.robolectric:robolectric:4.9'
+    testImplementation "androidx.test:runner:1.5.1"
+    testImplementation "androidx.test.ext:junit:1.1.4"
+    testImplementation "androidx.test:core:1.5.0"
     testImplementation "androidx.room:room-testing:$room"
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"

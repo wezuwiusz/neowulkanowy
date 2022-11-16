@@ -77,9 +77,9 @@
     <string name="main_log_in">Войти</string>
     <string name="main_session_expired">Сеанс истёк</string>
     <string name="main_session_relogin">Сеанс истёк, авторизуйтесь снова</string>
-    <string name="main_support_title">Application support</string>
-    <string name="main_support_description">Do you like this app? Support its development by enabling non-invasive ads that you can disable at any time</string>
-    <string name="main_support_positive">Enable ads</string>
+    <string name="main_support_title">Поддержка приложения</string>
+    <string name="main_support_description">Вам нравится это приложение? Поддержите его разработку, включив неинвазивную рекламу, которую можно отключить в любое время</string>
+    <string name="main_support_positive">Включить рекламу</string>
     <!--Grade-->
     <string name="grade_header">Оценка</string>
     <string name="grade_semester">%d семестр</string>
@@ -97,7 +97,7 @@
     <string name="grade_summary_predicted_grade">Ожидаемая оценка</string>
     <string name="grade_summary_calculated_average">Рассчитанная средняя оценка</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Как работает \"Рассчитанная средняя оценка\"?</string>
-    <string name="grade_summary_calculated_average_help_dialog_message">The Calculated Average is the arithmetic average calculated from the subjects averages. It allows you to know the approximate final average. It is calculated in a way selected by the user in the application settings. It is recommended that you choose the appropriate option. This is because the calculation of school averages differs. Additionally, if your school reports the average of the subjects on the Vulcan page, the application downloads them and does not calculate these averages. This can be changed by forcing the calculation of the average in the application settings.\n\n<b>Average of grades only from selected semester</b>:\n1. Calculating the weighted average for each subject in a given semester\n2.Adding calculated averages\n3. Calculation of the arithmetic average of the summed averages\n\n<b>Average of averages from both semesters</b>:\n1.Calculating the weighted average for each subject in semester 1 and 2\n2. Calculating the arithmetic average of the calculated averages for semesters 1 and 2 for each subject.\n3. Adding calculated averages\n4. Calculation of the arithmetic average of the summed averages\n\n<b>Average of grades from the whole year:</b>\n1. Calculating weighted average over the year for each subject. The final average in the 1st semester is irrelevant.\n2. Adding calculated averages\n3. Calculating the arithmetic average of summed averages</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Рассчитанная средняя оценка - это среднее арифметическое, рассчитанное на основе средних оценок по предметам. Это позволяет узнать приблизительную итоговую среднюю оценку. Она рассчитывается способом, выбранным пользователем в настройках приложения. Рекомендуется выбрать подходящий вариант, так как каждая школа по разному считает среднюю оценку. Кроме того, если ваша школа выставляет средние оценки по предметам на странице Vulcan, приложение просто загрузит их. Это можно изменить, заставив приложение считать среднюю оценку в настройках.\n\n<b>Средняя из оценок выбранного семестра</b>:\n1. Вычисление средневзвешенного значения по каждому предмету за семестр\n2.Суммирование вычисленных значений\n3. Вычисление среднего арифметического суммированных значений\n\n<b>Средняя из средних оценок семестров</b>:\n1.Расчет средневзвешенного значения для каждого предмета в семестрах. \n2. Вычисление среднего арифметического из средневзвешенных значений для каждого предмета в семестрах.\n3. Суммирование средних арифметических\n4. Вычисление среднего арифматического из суммированных значений\n\n<b>Средняя из оценок со всего года:</b>\n1. Расчет средневзвешенного значения по каждому предмету за год. Итоговое среднее значение за 1 семестр не имеет значения.\n2. Суммирование вычисленных средних\n3. Расчет среднего арифметического суммированных чисел</string>
     <string name="grade_summary_final_average_help_dialog_title">Как работает \"Итоговая средняя оценка\"?</string>
     <string name="grade_summary_final_average_help_dialog_message">Итоговая средняя оценка - это среднее арифметическое, рассчитанное из всех имеющихся на данный момент итоговых оценок в семестре.\n\nРассчет происходит следующим образом:\n1. Суммирование итоговых оценок, выставленных преподавателями\n2. Полученная сумма делится на число предметов, по которым выставлены оценки</string>
     <string name="grade_summary_final_average">Итоговая средняя оценка</string>
@@ -297,10 +297,10 @@
     <string name="message_move_to_trash">Перенести в корзину</string>
     <string name="message_delete_forever">Удалить навсегда</string>
     <string name="message_delete_success">Письмо успешно удалено</string>
-    <string name="message_mailbox_type_student">student</string>
-    <string name="message_mailbox_type_parent">parent</string>
-    <string name="message_mailbox_type_guardian">guardian</string>
-    <string name="message_mailbox_type_employee">employee</string>
+    <string name="message_mailbox_type_student">ученик</string>
+    <string name="message_mailbox_type_parent">родитель</string>
+    <string name="message_mailbox_type_guardian">опекун</string>
+    <string name="message_mailbox_type_employee">работник</string>
     <string name="message_share">Поделиться</string>
     <string name="message_print">Печать</string>
     <string name="message_subject">Тема</string>
@@ -309,9 +309,11 @@
     <string name="message_not_exists">Письма не существует</string>
     <string name="message_required_recipients">Вы должны выбрать как минимум одного получателя</string>
     <string name="message_content_min_length">Текст сообщения должен содержать как минимум 3 знака</string>
+    <string name="message_chip_all_mailboxes">Все почтовые ящики</string>
     <string name="message_chip_only_unread">Только непрочитанные</string>
     <string name="message_chip_only_with_attachments">Только с вложениями</string>
     <string name="message_read">Прочитано: %s</string>
+    <string name="message_read_by">Прочитано: %1$d из %2$d человек</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d сообщение</item>
         <item quantity="few">%1$d сообщения</item>
@@ -339,6 +341,7 @@
         <item quantity="other">%1$d выбрано</item>
     </plurals>
     <string name="message_messages_deleted">Сообщение удалено</string>
+    <string name="message_mailbox_chooser_title">Выбрать почтовый ящик</string>
     <!--Note-->
     <string name="note_no_items">Нет записей о замечаниях и свершениях</string>
     <string name="note_points">Баллы</string>
@@ -720,10 +723,10 @@
     <string name="pref_other_fill_message_content">Отвечать с историей сообщений</string>
     <string name="pref_other_optional_arithmetic_average">Показывать среднее арифметическое при отсутствии стоимости</string>
     <string name="pref_ads_support_category_name">Поддержка</string>
-    <string name="pref_ads_privacy_policy">Privacy Policy</string>
-    <string name="pref_ads_agreements">Agreements</string>
-    <string name="pref_ads_consent">Consent to processing of data related to ads</string>
-    <string name="pref_ads_show_in_app">Show ads in app</string>
+    <string name="pref_ads_privacy_policy">Политика приватности</string>
+    <string name="pref_ads_agreements">Соглашения</string>
+    <string name="pref_ads_consent">Согласие на обработку данных, связанных с объявлениями</string>
+    <string name="pref_ads_show_in_app">Показать рекламу в приложении</string>
     <string name="pref_ads_support">Посмотреть рекламу для поддержки проекта</string>
     <string name="pref_ads_privacy_title">Согласие на обработку данных</string>
     <string name="pref_ads_privacy_description">Для просмотра рекламы вы должны согласиться с условиями обработки данных нашей Политики конфиденциальности</string>
@@ -731,13 +734,13 @@
     <string name="pref_ads_privacy_link">Политика конфиденциальности</string>
     <string name="pref_ads_loading">Реклама загружается</string>
     <string name="pref_ads_once_per_visit">Спасибо за вашу поддержку, возвращайтесь позже для дополнительной рекламы</string>
-    <string name="pref_ads_consent_title">Can we use your data to display ads?</string>
-    <string name="pref_ads_consent_description">You can change your choice anytime in the app settings. We may use your data to display ads tailored to you or, using less of your data, display non-personalized ads. Please see our Privacy Policy for details</string>
-    <string name="pref_ads_summary_personalized">Personalized ads</string>
-    <string name="pref_ads_summary_non_personalized">Non-personalized ads</string>
-    <string name="pref_ads_over_18_years_old">I am over 18 years old</string>
-    <string name="pref_ads_option_personalized">Yes, personalized ads</string>
-    <string name="pref_ads_option_non_personalized">Yes, non-personalized ads</string>
+    <string name="pref_ads_consent_title">Можем ли мы использовать ваши данные для показа рекламы?</string>
+    <string name="pref_ads_consent_description">Вы можете изменить свой выбор в любое время в настройках приложения. Мы можем использовать ваши данные для показа объявлений в соответствии с вашими пожеланиями или, используя меньше данных, отображать неперсональную рекламу. Пожалуйста, ознакомьтесь с нашей политикой конфиденциальности для подробностей</string>
+    <string name="pref_ads_summary_personalized">Персонализированная реклама</string>
+    <string name="pref_ads_summary_non_personalized">Неперсонализированная реклама</string>
+    <string name="pref_ads_over_18_years_old">Я старше 18 лет</string>
+    <string name="pref_ads_option_personalized">Да, персонализировать рекламу</string>
+    <string name="pref_ads_option_non_personalized">Да, не персонализировать рекламу</string>
     <string name="pref_settings_advanced_title">Расширенные</string>
     <string name="pref_settings_appearance_title">Внешний вид и поведение</string>
     <string name="pref_settings_notifications_title">Уведомления</string>

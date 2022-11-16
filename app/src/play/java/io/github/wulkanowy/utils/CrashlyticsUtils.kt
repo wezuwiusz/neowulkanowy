@@ -23,9 +23,6 @@ class CrashLogExceptionTree : FormatterPriorityTree(Log.ERROR, ExceptionFilter) 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (skipLog(priority, tag, message, t)) return
 
-        crashlytics.setCustomKey("priority", priority)
-        crashlytics.setCustomKey("tag", tag.orEmpty())
-        crashlytics.setCustomKey("message", message)
         if (t != null) {
             crashlytics.recordException(t)
         } else {

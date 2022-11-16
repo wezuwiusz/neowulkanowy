@@ -10,6 +10,7 @@ import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.ItemGradeSummaryBinding
 import io.github.wulkanowy.databinding.ScrollableHeaderGradeSummaryBinding
+import io.github.wulkanowy.sdk.scrapper.grades.isGradeValid
 import io.github.wulkanowy.utils.calcFinalAverage
 import java.util.Locale
 import javax.inject.Inject
@@ -61,7 +62,7 @@ class GradeSummaryAdapter @Inject constructor(
         if (items.isEmpty()) return
 
         val context = binding.root.context
-        val finalItemsCount = items.count { it.finalGrade.matches("[0-6][+-]?".toRegex()) }
+        val finalItemsCount = items.count { isGradeValid(it.finalGrade) }
         val calculatedItemsCount = items.count { value -> value.average != 0.0 }
         val allItemsCount = items.count { !it.subject.equals("zachowanie", true) }
         val finalAverage = items.calcFinalAverage(

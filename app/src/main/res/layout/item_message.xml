@@ -30,6 +30,7 @@
         android:layout_marginEnd="10dp"
         android:ellipsize="end"
         android:singleLine="true"
+        android:textColor="?android:textColorSecondary"
         android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/messageItemDate"
         app:layout_constraintStart_toEndOf="@id/messageItemCheckbox"
@@ -40,10 +41,13 @@
         android:id="@+id/messageItemDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:gravity="end"
+        android:textColor="?android:textColorSecondary"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/messageItemUnreadIndicator"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginEnd="0dp"
         tools:text="@tools:sample/date/ddmmyy" />
 
     <TextView
@@ -69,9 +73,21 @@
         android:layout_height="16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/messageItemSubject"
-        app:layout_constraintEnd_toEndOf="@id/messageItemDate"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_attachment"
-        app:tint="?colorOnBackground"
+        app:tint="?android:textColorSecondary"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/messageItemUnreadIndicator"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:src="@drawable/ic_circle"
+        app:layout_constraintBottom_toBottomOf="@id/messageItemDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/messageItemDate"
+        app:tint="?colorPrimary"
         tools:ignore="ContentDescription"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

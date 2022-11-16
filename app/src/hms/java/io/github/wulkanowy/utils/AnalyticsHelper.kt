@@ -3,26 +3,38 @@ package io.github.wulkanowy.utils
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import com.huawei.agconnect.crash.AGConnectCrash
 import com.huawei.hms.analytics.HiAnalytics
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AnalyticsHelper @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    preferencesRepository: PreferencesRepository,
+    appInfo: AppInfo,
 ) {
 
     private val analytics by lazy { HiAnalytics.getInstance(context) }
 
+    private val connectCrash by lazy { AGConnectCrash.getInstance() }
+
+    init {
+        if (!appInfo.isDebug) {
+            connectCrash.setUserId(preferencesRepository.installationId)
+        }
+    }
+
     fun logEvent(name: String, vararg params: Pair<String, Any?>) {
         Bundle().apply {
-            params.forEach {
-                if (it.second == null) return@forEach
-                when (it.second) {
-                    is String, is String? -> putString(it.first, it.second as String)
-                    is Int, is Int? -> putInt(it.first, it.second as Int)
-                    is Boolean, is Boolean? -> putBoolean(it.first, it.second as Boolean)
+            params.forEach { (key, value) ->
+                if (value == null) return@forEach
+                when (value) {
+                    is String -> putString(key, value)
+                    is Int -> putInt(key, value)
+                    is Boolean -> putBoolean(key, value)
                 }
             }
             analytics.onEvent(name, this)

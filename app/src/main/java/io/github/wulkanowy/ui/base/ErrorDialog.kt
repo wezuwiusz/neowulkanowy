@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
@@ -15,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.DialogErrorBinding
 import io.github.wulkanowy.utils.*
 import javax.inject.Inject
@@ -24,6 +24,9 @@ class ErrorDialog : DialogFragment() {
 
     @Inject
     lateinit var appInfo: AppInfo
+
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
 
     companion object {
         private const val ARGUMENT_KEY = "error"
@@ -36,7 +39,7 @@ class ErrorDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val error = requireArguments().getSerializable(ARGUMENT_KEY) as Throwable
 
-        val binding = DialogErrorBinding.inflate(LayoutInflater.from(context))
+        val binding = DialogErrorBinding.inflate(layoutInflater)
         binding.bindErrorDetails(error)
 
         return getAlertDialog(binding, error).apply {
@@ -99,7 +102,8 @@ class ErrorDialog : DialogFragment() {
                 R.string.about_feedback_template,
                 "${appInfo.systemManufacturer} ${appInfo.systemModel}",
                 appInfo.systemVersion.toString(),
-                "${appInfo.versionName}-${appInfo.buildFlavor}"
+                "${appInfo.versionName}-${appInfo.buildFlavor}",
+                preferencesRepository.installationId,
             ) + "\n" + content,
             onActivityNotFound = {
                 requireContext().openInternetBrowser(

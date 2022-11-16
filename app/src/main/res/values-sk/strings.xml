@@ -309,9 +309,11 @@
     <string name="message_not_exists">Správa neexistuje</string>
     <string name="message_required_recipients">Musíte vybrať aspoň 1 príjemca</string>
     <string name="message_content_min_length">Obsah správy musí mať aspoň 3 znaky</string>
+    <string name="message_chip_all_mailboxes">Všetky poštové schránky</string>
     <string name="message_chip_only_unread">Iba neprečítané</string>
     <string name="message_chip_only_with_attachments">Iba s prílohami</string>
     <string name="message_read">Prečítaná: %s</string>
+    <string name="message_read_by">Prečítaná cez: %1$d z %2$d osôb</string>
     <plurals name="message_number_item">
         <item quantity="one">%1$d správa</item>
         <item quantity="few">%1$d správy</item>
@@ -339,6 +341,7 @@
         <item quantity="other">%1$d vybraných</item>
     </plurals>
     <string name="message_messages_deleted">Správy odstránené</string>
+    <string name="message_mailbox_chooser_title">Vyberte poštovú schránku</string>
     <!--Note-->
     <string name="note_no_items">Žiadne informácie o poznámkach</string>
     <string name="note_points">Body</string>
@@ -735,7 +738,7 @@
     <string name="pref_ads_consent_description">Voľbu môžete kedykoľvek zmeniť v nastavení aplikácie. Môžeme použiť vaše údaje na zobrazenie reklám šitých pre vás alebo pomocou menej vašich dát zobrazovať neprispôsobené reklamy. Podrobnosti nájdete v našich Zásadách ochrany osobných údajov</string>
     <string name="pref_ads_summary_personalized">Prispôsobené reklamy</string>
     <string name="pref_ads_summary_non_personalized">Neprispôsobené reklamy</string>
-    <string name="pref_ads_over_18_years_old">Mám ukončené 18 rokov</string>
+    <string name="pref_ads_over_18_years_old">Mám viac ako 18 rokov</string>
     <string name="pref_ads_option_personalized">Áno, prispôsobené reklamy</string>
     <string name="pref_ads_option_non_personalized">Áno, neprispôsobené reklamy</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>

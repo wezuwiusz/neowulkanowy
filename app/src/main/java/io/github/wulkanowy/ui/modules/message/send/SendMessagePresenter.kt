@@ -1,15 +1,15 @@
 package io.github.wulkanowy.ui.modules.message.send
 
-import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.data.db.entities.MailboxType
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.Recipient
-import io.github.wulkanowy.data.logResourceStatus
-import io.github.wulkanowy.data.onResourceNotLoading
 import io.github.wulkanowy.data.pojos.MessageDraft
-import io.github.wulkanowy.data.repositories.*
-import io.github.wulkanowy.data.resourceFlow
+import io.github.wulkanowy.data.repositories.MessageRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.RecipientRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -28,7 +28,6 @@ class SendMessagePresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
-    private val mailboxRepository: MailboxRepository,
     private val recipientRepository: RecipientRepository,
     private val preferencesRepository: PreferencesRepository,
     private val analytics: AnalyticsHelper
@@ -36,10 +35,19 @@ class SendMessagePresenter @Inject constructor(
 
     private val messageUpdateChannel = Channel<Unit>()
 
+    private var message: Message? = null
+    private var isReplay: Boolean? = null
+
+    private var mailboxes: List<Mailbox> = emptyList()
+    private var selectedMailbox: Mailbox? = null
+
     fun onAttachView(view: SendMessageView, reason: String?, message: Message?, reply: Boolean?) {
         super.onAttachView(view)
         view.initView()
         initializeSubjectStream()
+        this.message = message
+        this.isReplay = reply
+
         Timber.i("Send message view was initialized")
         loadData(message, reply)
         with(view) {
@@ -110,16 +118,31 @@ class SendMessagePresenter @Inject constructor(
         return false
     }
 
+    fun onOpenMailboxChooser() {
+        view?.showMailboxChooser(mailboxes)
+    }
+
+    fun onMailboxSelected(mailbox: Mailbox?) {
+        selectedMailbox = mailbox
+
+        loadData(message, isReplay)
+    }
+
     private fun loadData(message: Message?, reply: Boolean?) {
         resourceFlow {
             val student = studentRepository.getCurrentStudent()
-            val mailbox = mailboxRepository.getMailbox(student)
+
+            if (selectedMailbox == null && mailboxes.isEmpty()) {
+                selectedMailbox = messageRepository.getMailboxByStudent(student)
+                mailboxes = messageRepository.getMailboxes(student, false).toFirstResult()
+                    .dataOrNull.orEmpty()
+            }
 
             Timber.i("Loading recipients started")
             val recipients = createChips(
                 recipients = recipientRepository.getRecipients(
                     student = student,
-                    mailbox = mailbox,
+                    mailbox = selectedMailbox,
                     type = MailboxType.EMPLOYEE,
                 )
             )
@@ -130,7 +153,7 @@ class SendMessagePresenter @Inject constructor(
                 message != null && reply == true -> recipientRepository.getMessageSender(
                     student = student,
                     message = message,
-                    mailbox = mailbox,
+                    mailbox = selectedMailbox,
                 )
                 else -> emptyList()
             }.let { createChips(it) }
@@ -139,39 +162,42 @@ class SendMessagePresenter @Inject constructor(
                 messageRecipients.size
             )
 
-            Triple(mailbox, recipients, messageRecipients)
+            recipients to messageRecipients
         }
             .logResourceStatus("load recipients")
-            .onEach {
-                when (it) {
-                    is Resource.Loading -> view?.run {
-                        showProgress(true)
-                        showContent(false)
-                    }
-                    is Resource.Success -> it.data.let { (mailbox, recipientChips, selectedRecipientChips) ->
-                        view?.run {
-                            setMailbox(getMailboxName(mailbox))
-                            setRecipients(recipientChips)
-                            if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(
-                                selectedRecipientChips
-                            )
-                            showContent(true)
-                        }
-                    }
-                    is Resource.Error -> {
-                        view?.showContent(true)
-                        errorHandler.dispatch(it.error)
+            .onResourceLoading {
+                view?.run {
+                    showProgress(true)
+                    showContent(false)
+                }
+            }
+            .onResourceNotLoading {
+                view?.run { showProgress(false) }
+            }
+            .onResourceError {
+                view?.showContent(true)
+                errorHandler.dispatch(it)
+            }
+            .onResourceSuccess {
+                it.let { (recipientChips, selectedRecipientChips) ->
+                    view?.run {
+                        setMailbox(getMailboxName(selectedMailbox))
+                        setRecipients(recipientChips)
+                        if (selectedRecipientChips.isNotEmpty()) setSelectedRecipients(
+                            selectedRecipientChips
+                        )
+                        showContent(true)
                     }
                 }
-            }.onResourceNotLoading {
-                view?.run { showProgress(false) }
-            }.launch()
+            }
+            .launch()
     }
 
     private fun sendMessage(subject: String, content: String, recipients: List<Recipient>) {
+        val mailbox = selectedMailbox ?: return
+
         resourceFlow {
             val student = studentRepository.getCurrentStudent()
-            val mailbox = mailboxRepository.getMailbox(student)
             messageRepository.sendMessage(
                 student = student,
                 subject = subject,
@@ -222,18 +248,21 @@ class SendMessagePresenter @Inject constructor(
         }
     }
 
-    private fun getMailboxName(mailbox: Mailbox): String {
+    private fun getMailboxName(mailbox: Mailbox?): String {
+        mailbox ?: return ""
+
+        // username - accountType [\n student name - ] (school short name)
         return buildString {
             append(mailbox.userName)
             append(" - ")
             append(getMailboxType(mailbox.type))
+            appendLine()
 
             if (mailbox.type == MailboxType.PARENT) {
-                append(" - ")
                 append(mailbox.studentName)
+                append(" - ")
             }
 
-            append(" - ")
             append("(${mailbox.schoolNameShort})")
         }
     }
@@ -267,9 +296,9 @@ class SendMessagePresenter @Inject constructor(
 
     private fun saveDraftMessage() {
         messageRepository.draftMessage = MessageDraft(
-            view?.formRecipientsData!!,
-            view?.formSubjectValue!!,
-            view?.formContentValue!!
+            recipients = view?.formRecipientsData!!,
+            subject = view?.formSubjectValue!!,
+            content = view?.formContentValue!!,
         )
     }
 
