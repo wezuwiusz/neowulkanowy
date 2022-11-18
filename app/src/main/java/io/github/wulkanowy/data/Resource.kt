@@ -49,8 +49,8 @@ fun <T, U> Resource<T>.mapData(block: (T) -> U) = when (this) {
 
 fun <T> Flow<Resource<T>>.logResourceStatus(name: String, showData: Boolean = false) = onEach {
     val description = when (it) {
-        is Resource.Loading -> "started"
         is Resource.Intermediate -> "intermediate data received" + if (showData) " (data: `${it.data}`)" else ""
+        is Resource.Loading -> "started"
         is Resource.Success -> "success" + if (showData) " (data: `${it.data}`)" else ""
         is Resource.Error -> "exception occurred: ${it.error}"
     }

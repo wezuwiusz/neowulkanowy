@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data.repositories
 
 import io.github.wulkanowy.data.db.dao.AttendanceDao
+import io.github.wulkanowy.data.db.dao.TimetableDao
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
@@ -9,8 +10,10 @@ import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Absent
 import io.github.wulkanowy.utils.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -20,6 +23,7 @@ import javax.inject.Singleton
 @Singleton
 class AttendanceRepository @Inject constructor(
     private val attendanceDb: AttendanceDao,
+    private val timetableDb: TimetableDao,
     private val sdk: Sdk,
     private val refreshHelper: AutoRefreshHelper,
 ) {
@@ -48,10 +52,15 @@ class AttendanceRepository @Inject constructor(
             attendanceDb.loadAll(semester.diaryId, semester.studentId, start.monday, end.sunday)
         },
         fetch = {
+            val lessons = withContext(Dispatchers.IO) {
+                timetableDb.load(
+                    semester.diaryId, semester.studentId, start.monday, end.sunday
+                )
+            }
             sdk.init(student)
                 .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
                 .getAttendance(start.monday, end.sunday, semester.semesterId)
-                .mapToEntities(semester)
+                .mapToEntities(semester, lessons)
         },
         saveFetchResult = { old, new ->
             attendanceDb.deleteAll(old uniqueSubtract new)
