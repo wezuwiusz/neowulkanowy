@@ -22,6 +22,8 @@ class GetMailboxByStudentUseCase @Inject constructor(
         } ?: singleOrNull {
             it.studentName.getFirstAndLastPart() == normalizedStudentName.getFirstAndLastPart()
         } ?: singleOrNull {
+            it.studentName.getReversedName() == normalizedStudentName
+        } ?: singleOrNull {
             it.studentName.getUnauthorizedVersion() == normalizedStudentName
         }
     }
@@ -41,6 +43,14 @@ class GetMailboxByStudentUseCase @Inject constructor(
             i == 0 || parts.size - 1 == i
         }
         return endParts.joinToString(" ")
+    }
+
+    private fun String.getReversedName(): String {
+        val parts = normalizeStudentName().split(" ")
+
+        return parts
+            .asReversed()
+            .joinToString(" ")
     }
 
     private fun String.getUnauthorizedVersion(): String {
