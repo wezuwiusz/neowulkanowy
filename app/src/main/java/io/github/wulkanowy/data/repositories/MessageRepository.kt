@@ -3,7 +3,7 @@ package io.github.wulkanowy.data.repositories
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.dao.MailboxDao
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
@@ -14,9 +14,7 @@ import io.github.wulkanowy.data.enums.MessageFolder.RECEIVED
 import io.github.wulkanowy.data.enums.MessageFolder.TRASHED
 import io.github.wulkanowy.data.mappers.mapFromEntities
 import io.github.wulkanowy.data.mappers.mapToEntities
-import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.data.pojos.MessageDraft
-import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.domain.messages.GetMailboxByStudentUseCase
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
@@ -194,7 +192,9 @@ class MessageRepository @Inject constructor(
             it.isEmpty() || isExpired || forceRefresh
         },
         query = { mailboxDao.loadAll(student.email, student.symbol, student.schoolSymbol) },
-        fetch = { sdk.init(student).getMailboxes().mapToEntities(student) },
+        fetch = {
+            sdk.init(student).getMailboxes().mapToEntities(student)
+        },
         saveFetchResult = { old, new ->
             mailboxDao.deleteAll(old uniqueSubtract new)
             mailboxDao.insertAll(new uniqueSubtract old)
@@ -207,7 +207,11 @@ class MessageRepository @Inject constructor(
         val mailbox = getMailboxByStudentUseCase(student)
 
         return if (mailbox == null) {
-            getMailboxes(student, forceRefresh = true).toFirstResult()
+            getMailboxes(student, forceRefresh = true)
+                .onResourceError { throw it }
+                .onResourceSuccess { Timber.i("Found ${it.size} new mailboxes") }
+                .waitForResult()
+
             getMailboxByStudentUseCase(student)
         } else mailbox
     }

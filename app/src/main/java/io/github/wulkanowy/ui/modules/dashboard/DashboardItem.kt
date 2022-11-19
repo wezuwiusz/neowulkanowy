@@ -33,18 +33,27 @@ sealed class DashboardItem(val type: Type) {
     }
 
     data class HorizontalGroup(
-        val unreadMessagesCount: Int? = null,
-        val attendancePercentage: Double? = null,
-        val luckyNumber: Int? = null,
+        val unreadMessagesCount: Cell<Int?>? = null,
+        val attendancePercentage: Cell<Double>? = null,
+        val luckyNumber: Cell<Int>? = null,
         override val error: Throwable? = null,
         override val isLoading: Boolean = false
     ) : DashboardItem(Type.HORIZONTAL_GROUP) {
 
+        data class Cell<T>(
+            val data: T?,
+            val error: Boolean,
+            val isLoading: Boolean,
+        ) {
+            val isHidden: Boolean
+                get() = data == null && !error && !isLoading
+        }
+
         override val isDataLoaded
-            get() = unreadMessagesCount != null || attendancePercentage != null || luckyNumber != null
+            get() = unreadMessagesCount?.isLoading == false || attendancePercentage?.isLoading == false || luckyNumber?.isLoading == false
 
         val isFullDataLoaded
-            get() = luckyNumber != -1 && attendancePercentage != -1.0 && unreadMessagesCount != -1
+            get() = luckyNumber?.isLoading != true && attendancePercentage?.isLoading != true && unreadMessagesCount?.isLoading != true
     }
 
     data class Grades(
