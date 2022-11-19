@@ -34,7 +34,7 @@ Neoficiální klient deníku VULCAN UONET+ pro žáka a rodiče
 * podpora více účtů s možností přejmenování žáků
 * tmavý a černý (AMOLED) motiv
 * offline režim
-* žádné reklamy
+* volitelné reklamy na podporu projektu
 
 ## Stáhnout
 

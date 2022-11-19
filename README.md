@@ -34,7 +34,7 @@ Nieoficjalny klient dziennika VULCAN UONET+ dla ucznia i rodzica
 * obsługa wielu kont wraz z możliwością zmiany nazwy ucznia 
 * ciemny i czarny (AMOLED) motyw
 * tryb offline
-* brak reklam
+* opcjonalne reklamy umożliwiające wsparcie projektu
 
 ## Pobierz
 

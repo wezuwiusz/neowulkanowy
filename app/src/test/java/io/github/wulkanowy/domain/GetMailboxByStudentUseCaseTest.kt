@@ -65,6 +65,18 @@ class GetMailboxByStudentUseCaseTest {
     }
 
     @Test
+    fun `get mailbox for user with reversed name`() = runTest {
+        val student = getStudentEntity(
+            userName = "Kowalski Jan",
+            studentName = "Jan Kowalski",
+        )
+        val expectedMailbox = getMailboxEntity("Kowalski Jan")
+        coEvery { mailboxDao.loadAll(any()) } returns listOf(expectedMailbox)
+
+        assertEquals(expectedMailbox, systemUnderTest(student))
+    }
+
+    @Test
     fun `get mailbox for unique non-authorized student`() = runTest {
         val student = getStudentEntity(
             userName = "Stanisław Kowalski",

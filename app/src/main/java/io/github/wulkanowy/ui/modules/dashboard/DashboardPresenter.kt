@@ -226,50 +226,71 @@ class DashboardPresenter @Inject constructor(
 
     private fun loadHorizontalGroup(student: Student, forceRefresh: Boolean) {
         flow {
-            val semester = semesterRepository.getCurrentSemester(student)
-            val mailbox = messageRepository.getMailboxByStudent(student)
             val selectedTiles = preferencesRepository.selectedDashboardTiles
-
             val flowSuccess = flowOf(Resource.Success(null))
+
             val luckyNumberFlow = luckyNumberRepository.getLuckyNumber(student, forceRefresh)
                 .mapResourceData {
                     it ?: LuckyNumber(0, LocalDate.now(), 0)
                 }
+                .onResourceError { errorHandler.dispatch(it) }
                 .takeIf { DashboardItem.Tile.LUCKY_NUMBER in selectedTiles } ?: flowSuccess
 
-            val messageFLow = messageRepository.getMessages(
-                student = student,
-                mailbox = mailbox,
-                folder = MessageFolder.RECEIVED,
-                forceRefresh = forceRefresh
-            ).takeIf { DashboardItem.Tile.MESSAGES in selectedTiles } ?: flowSuccess
+            val messageFLow = flatResourceFlow {
+                val mailbox = messageRepository.getMailboxByStudent(student)
 
-            val attendanceFlow = attendanceSummaryRepository.getAttendanceSummary(
-                student = student,
-                semester = semester,
-                subjectId = -1,
-                forceRefresh = forceRefresh
-            ).takeIf { DashboardItem.Tile.ATTENDANCE in selectedTiles } ?: flowSuccess
+                messageRepository.getMessages(
+                    student = student,
+                    mailbox = mailbox,
+                    folder = MessageFolder.RECEIVED,
+                    forceRefresh = forceRefresh
+                )
+            }
+                .onResourceError { errorHandler.dispatch(it) }
+                .takeIf { DashboardItem.Tile.MESSAGES in selectedTiles } ?: flowSuccess
+
+            val attendanceFlow = flatResourceFlow {
+                val semester = semesterRepository.getCurrentSemester(student)
+                attendanceSummaryRepository.getAttendanceSummary(
+                    student = student,
+                    semester = semester,
+                    subjectId = -1,
+                    forceRefresh = forceRefresh
+                )
+            }
+                .onResourceError { errorHandler.dispatch(it) }
+                .takeIf { DashboardItem.Tile.ATTENDANCE in selectedTiles } ?: flowSuccess
 
             emitAll(
                 combine(
-                    luckyNumberFlow,
-                    messageFLow,
-                    attendanceFlow
+                    flow = luckyNumberFlow,
+                    flow2 = messageFLow,
+                    flow3 = attendanceFlow,
                 ) { luckyNumberResource, messageResource, attendanceResource ->
                     val resList = listOf(luckyNumberResource, messageResource, attendanceResource)
-                    resList.firstNotNullOfOrNull { it.errorOrNull }?.let { throw it }
-                    val isLoading = resList.any { it is Resource.Loading }
-
-                    val luckyNumber = luckyNumberResource.dataOrNull?.luckyNumber
-                    val messageCount = messageResource.dataOrNull?.count { it.unread }
-                    val attendancePercentage = attendanceResource.dataOrNull?.calculatePercentage()
 
                     DashboardItem.HorizontalGroup(
-                        isLoading = isLoading,
-                        attendancePercentage = if (attendancePercentage == 0.0 && isLoading) -1.0 else attendancePercentage,
-                        unreadMessagesCount = if (messageCount == 0 && isLoading) -1 else messageCount,
-                        luckyNumber = if (luckyNumber == 0 && isLoading) -1 else luckyNumber
+                        isLoading = resList.any { it is Resource.Loading },
+                        error = resList.map { it.errorOrNull }.let { errors ->
+                            if (errors.all { it != null }) {
+                                errors.firstOrNull()
+                            } else null
+                        },
+                        attendancePercentage = DashboardItem.HorizontalGroup.Cell(
+                            data = attendanceResource.dataOrNull?.calculatePercentage(),
+                            error = attendanceResource.errorOrNull != null,
+                            isLoading = attendanceResource is Resource.Loading,
+                        ),
+                        unreadMessagesCount = DashboardItem.HorizontalGroup.Cell(
+                            data = messageResource.dataOrNull?.count { it.unread },
+                            error = messageResource.errorOrNull != null,
+                            isLoading = messageResource is Resource.Loading,
+                        ),
+                        luckyNumber = DashboardItem.HorizontalGroup.Cell(
+                            data = luckyNumberResource.dataOrNull?.luckyNumber,
+                            error = luckyNumberResource.errorOrNull != null,
+                            isLoading = luckyNumberResource is Resource.Loading,
+                        )
                     )
                 })
         }
@@ -280,11 +301,8 @@ class DashboardPresenter @Inject constructor(
 
                 if (it.isLoading) {
                     Timber.i("Loading horizontal group data started")
-
-                    if (it.isFullDataLoaded) {
-                        firstLoadedItemList += DashboardItem.Type.HORIZONTAL_GROUP
-                    }
                 } else {
+                    firstLoadedItemList += DashboardItem.Type.HORIZONTAL_GROUP
                     Timber.i("Loading horizontal group result: Success")
                 }
             }

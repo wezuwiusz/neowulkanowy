@@ -34,7 +34,7 @@ Unofficial android VULCAN UONET+ register client for both students and their par
 * support for multiple accounts with the ability to rename students 
 * dark and black (AMOLED) theme
 * offline mode
-* no ads
+* optional ads which allow to support the project
 
 ## Download
 

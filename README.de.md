@@ -21,7 +21,7 @@ Inoffizieller Android VULCAN UONET+ Registrierungsclient für Schüler und ihre 
     * Prozentsatz der Anwesenheit
     * Prüfungen
     * Stundenplan
-    * Unterricht abgeschlossen
+    * abgeschlossene Unterrichtsstunden
     * Nachrichten
     * Hausaufgaben
     * Anmerkungen
@@ -34,7 +34,7 @@ Inoffizieller Android VULCAN UONET+ Registrierungsclient für Schüler und ihre 
 * Unterstützung für mehrere Konten mit der Möglichkeit, den Namen des Schülers zu ändern
 * dunkles und schwarzes (AMOLED) Thema
 * Offline-Modus
-* keine Werbung
+* optionale Werbungen, die es uns ermöglichen das Projekt zu unterstützen
 
 ## Herunterladen
 

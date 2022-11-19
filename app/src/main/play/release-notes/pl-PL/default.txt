@@ -1,4 +1,4 @@
-Wersja 1.8.0
+Wersja 1.8.1
 
 - naprawiliśmy liczenie średniej ucznia w ocenach klasy dla wykresu "Wszystkie"
 - zmieniliśmy kolejność przycisków akcji w podglądzie wiadomości

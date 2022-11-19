@@ -3,17 +3,22 @@ package io.github.wulkanowy.data.mappers
 import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.db.entities.AttendanceSummary
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.sdk.pojo.Attendance as SdkAttendance
 import io.github.wulkanowy.sdk.pojo.AttendanceSummary as SdkAttendanceSummary
 
-fun List<SdkAttendance>.mapToEntities(semester: Semester) = map {
+fun List<SdkAttendance>.mapToEntities(semester: Semester, lessons: List<Timetable>) = map {
     Attendance(
         studentId = semester.studentId,
         diaryId = semester.diaryId,
         date = it.date,
         timeId = it.timeId,
         number = it.number,
-        subject = it.subject,
+        subject = it.subject.ifBlank {
+            lessons.find { lesson ->
+                lesson.date == it.date && lesson.number == it.number
+            }?.subject.orEmpty()
+        },
         name = it.name,
         presence = it.presence,
         absence = it.absence,
