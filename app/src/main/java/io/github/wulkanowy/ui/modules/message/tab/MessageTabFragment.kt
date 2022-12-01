@@ -9,6 +9,7 @@ import android.view.View.*
 import android.widget.CompoundButton
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,7 @@ import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.nullableSerializable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,12 +45,8 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
 
         const val MESSAGE_TAB_FOLDER_ID = "message_tab_folder_id"
 
-        fun newInstance(folder: MessageFolder): MessageTabFragment {
-            return MessageTabFragment().apply {
-                arguments = Bundle().apply {
-                    putString(MESSAGE_TAB_FOLDER_ID, folder.name)
-                }
-            }
+        fun newInstance(folder: MessageFolder) = MessageTabFragment().apply {
+            arguments = bundleOf(MESSAGE_TAB_FOLDER_ID to folder.name)
         }
     }
 
@@ -131,7 +129,7 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
 
         setFragmentResultListener(requireArguments().getString(MESSAGE_TAB_FOLDER_ID)!!) { _, bundle ->
             presenter.onMailboxSelected(
-                mailbox = bundle.getSerializable(MailboxChooserDialog.MAILBOX_KEY) as? Mailbox,
+                mailbox = bundle.nullableSerializable(MailboxChooserDialog.MAILBOX_KEY),
             )
         }
     }

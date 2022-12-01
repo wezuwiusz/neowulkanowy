@@ -8,14 +8,12 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.databinding.DialogTimetableBinding
-import io.github.wulkanowy.utils.capitalise
-import io.github.wulkanowy.utils.getThemeAttrColor
-import io.github.wulkanowy.utils.lifecycleAwareVariable
-import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.*
 import java.time.Instant
 
 class TimetableDialog : DialogFragment() {
@@ -28,17 +26,15 @@ class TimetableDialog : DialogFragment() {
 
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(exam: Timetable) = TimetableDialog().apply {
-            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
+        fun newInstance(lesson: Timetable) = TimetableDialog().apply {
+            arguments = bundleOf(ARGUMENT_KEY to lesson)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, 0)
-        arguments?.run {
-            lesson = getSerializable(ARGUMENT_KEY) as Timetable
-        }
+        lesson = requireArguments().serializable(ARGUMENT_KEY)
     }
 
     override fun onCreateView(

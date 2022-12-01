@@ -1,6 +1,9 @@
 package io.github.wulkanowy.ui.base
 
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.content.pm.PackageManager.GET_ACTIVITIES
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
@@ -41,9 +44,8 @@ class ThemeManager @Inject constructor(private val preferencesRepository: Prefer
         )
     }
 
-    private fun isThemeApplicable(activity: AppCompatActivity) =
-        activity.packageManager
-            .getPackageInfo(activity.packageName, GET_ACTIVITIES)
+    private fun isThemeApplicable(activity: AppCompatActivity): Boolean =
+        getPackageInfo(activity)
             .activities
             .singleOrNull { it.name == activity::class.java.canonicalName }
             ?.theme
@@ -52,4 +54,14 @@ class ThemeManager @Inject constructor(private val preferencesRepository: Prefer
                     || it == R.style.WulkanowyTheme_Login || it == R.style.WulkanowyTheme_Login_Black
                     || it == R.style.WulkanowyTheme_MessageSend || it == R.style.WulkanowyTheme_MessageSend_Black
             }
+
+    @Suppress("DEPRECATION")
+    private fun getPackageInfo(activity: AppCompatActivity): PackageInfo {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            activity.packageManager.getPackageInfo(
+                activity.packageName,
+                PackageManager.PackageInfoFlags.of(GET_ACTIVITIES.toLong())
+            )
+        } else activity.packageManager.getPackageInfo(activity.packageName, GET_ACTIVITIES)
+    }
 }

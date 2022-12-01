@@ -98,7 +98,7 @@ class LoginRecoverFragment :
             loginRecoverButton.setOnClickListener { presenter.onRecoverClick() }
             loginRecoverErrorRetry.setOnClickListener { presenter.onRecoverClick() }
             loginRecoverErrorDetails.setOnClickListener { presenter.onDetailsClick() }
-            loginRecoverLogin.setOnClickListener { (activity as LoginActivity).onBackPressed() }
+            loginRecoverLogin.setOnClickListener { (activity as LoginActivity).onBackPressedDispatcher.onBackPressed() }
         }
 
         with(bindingLocal.loginRecoverHost) {

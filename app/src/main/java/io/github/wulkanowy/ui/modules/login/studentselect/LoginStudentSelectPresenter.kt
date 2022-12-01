@@ -100,7 +100,7 @@ class LoginStudentSelectPresenter @Inject constructor(
                     }
                     is Resource.Success -> {
                         syncManager.startOneTimeSyncWorker(quiet = true)
-                        view?.openMainView()
+                        view?.navigateToNext()
                         logRegisterEvent(studentsWithSemesters)
                     }
                     is Resource.Error -> {

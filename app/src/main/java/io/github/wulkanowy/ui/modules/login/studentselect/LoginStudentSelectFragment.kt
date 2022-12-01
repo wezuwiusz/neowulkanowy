@@ -13,10 +13,10 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
-import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
+import io.github.wulkanowy.utils.serializable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,7 +51,7 @@ class LoginStudentSelectFragment :
         binding = FragmentLoginStudentSelectBinding.bind(view)
         presenter.onAttachView(
             view = this,
-            students = requireArguments().getSerializable(ARG_STUDENTS) as List<StudentWithSemesters>,
+            students = requireArguments().serializable(ARG_STUDENTS),
         )
     }
 
@@ -79,9 +79,8 @@ class LoginStudentSelectFragment :
         }
     }
 
-    override fun openMainView() {
-        startActivity(MainActivity.getStartIntent(requireContext()))
-        requireActivity().finish()
+    override fun navigateToNext() {
+        (requireActivity() as LoginActivity).navigateToNotifications()
     }
 
     override fun showProgress(show: Boolean) {

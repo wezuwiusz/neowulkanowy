@@ -90,14 +90,14 @@ class LoginStudentSelectPresenterTest {
             studentRepository.saveStudents(listOf(StudentWithSemesters(testStudent, emptyList())))
         } just Runs
 
-        every { loginStudentSelectView.openMainView() } just Runs
+        every { loginStudentSelectView.navigateToNext() } just Runs
 
         presenter.onItemSelected(StudentWithSemesters(testStudent, emptyList()), false)
         presenter.onSignIn()
 
         verify { loginStudentSelectView.showContent(false) }
         verify { loginStudentSelectView.showProgress(true) }
-        verify { loginStudentSelectView.openMainView() }
+        verify { loginStudentSelectView.navigateToNext() }
     }
 
     @Test

@@ -6,6 +6,8 @@ interface NotificationsView : BaseView {
 
     val isNotificationPermissionGranted: Boolean
 
+    val isNotificationPiggybackPermissionGranted: Boolean
+
     fun initView(showDebugNotificationSwitch: Boolean)
 
     fun showFixSyncDialog()
@@ -14,9 +16,15 @@ interface NotificationsView : BaseView {
 
     fun enableNotification(notificationKey: String, enable: Boolean)
 
-    fun openNotificationPermissionDialog()
+    fun requestNotificationPermissions()
+
+    fun openNotificationsPermissionDialog()
+
+    fun openNotificationPiggyBackPermissionDialog()
 
     fun openNotificationExactAlarmSettings()
+
+    fun setNotificationPreferencesChecked(isChecked: Boolean)
 
     fun setNotificationPiggybackPreferenceChecked(isChecked: Boolean)
 

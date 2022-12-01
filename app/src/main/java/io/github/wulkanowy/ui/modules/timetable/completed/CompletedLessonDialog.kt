@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.data.db.entities.CompletedLesson
 import io.github.wulkanowy.databinding.DialogLessonCompletedBinding
 import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.utils.serializable
 
 class CompletedLessonDialog : DialogFragment() {
 
@@ -19,17 +21,15 @@ class CompletedLessonDialog : DialogFragment() {
 
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(exam: CompletedLesson) = CompletedLessonDialog().apply {
-            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
+        fun newInstance(lesson: CompletedLesson) = CompletedLessonDialog().apply {
+            arguments = bundleOf(ARGUMENT_KEY to lesson)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, 0)
-        arguments?.run {
-            completedLesson = getSerializable(ARGUMENT_KEY) as CompletedLesson
-        }
+        completedLesson = requireArguments().serializable(ARGUMENT_KEY)
     }
 
     override fun onCreateView(

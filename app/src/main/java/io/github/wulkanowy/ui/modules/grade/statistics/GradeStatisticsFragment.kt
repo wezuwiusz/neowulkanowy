@@ -15,6 +15,7 @@ import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.grade.GradeView
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.serializable
 import io.github.wulkanowy.utils.setOnItemSelectedListener
 import javax.inject.Inject
 
@@ -48,8 +49,8 @@ class GradeStatisticsFragment :
         messageContainer = binding.gradeStatisticsRecycler
         presenter.onAttachView(
             view = this,
-            type = savedInstanceState?.getSerializable(SAVED_CHART_TYPE) as? GradeStatisticsItem.DataType,
-            subjectName = savedInstanceState?.getSerializable(SAVED_SUBJECT_NAME) as? String,
+            type = savedInstanceState?.serializable(SAVED_CHART_TYPE),
+            subjectName = savedInstanceState?.serializable(SAVED_SUBJECT_NAME),
         )
     }
 

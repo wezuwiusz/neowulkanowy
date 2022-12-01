@@ -1,11 +1,15 @@
 package io.github.wulkanowy.utils
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.CalendarContract
+import android.provider.Settings
 import io.github.wulkanowy.BuildConfig
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -83,6 +87,23 @@ fun Context.openDialer(phone: String) {
     val intent = Intent(Intent.ACTION_DIAL, intentUri)
     if (intent.resolveActivity(packageManager) != null) {
         startActivity(intent)
+    }
+}
+
+fun Activity.openNotificationSettings() {
+    val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+            putExtra("android.provider.extra.APP_PACKAGE", packageName)
+        }
+    } else {
+        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", packageName, null)
+        }
+    }
+    try {
+        startActivity(intent)
+    } catch (e: Exception) {
+        Timber.e(e)
     }
 }
 

@@ -9,7 +9,7 @@ interface LoginStudentSelectView : BaseView {
 
     fun updateData(data: List<Pair<StudentWithSemesters, Boolean>>)
 
-    fun openMainView()
+    fun navigateToNext()
 
     fun showProgress(show: Boolean)
 
