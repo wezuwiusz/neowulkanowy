@@ -422,6 +422,8 @@
     </plurals>
     <string name="conferences_present">Present at conference</string>
     <string name="conference_agenda">Agenda</string>
+    <string name="conference_place">Place</string>
+    <string name="conference_topic">Topic</string>
     <!--Director information-->
     <string name="school_announcement_title">School announcements</string>
     <string name="school_announcement_no_items">No school announcements</string>
