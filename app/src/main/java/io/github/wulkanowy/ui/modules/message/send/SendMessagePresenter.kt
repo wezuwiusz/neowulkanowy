@@ -55,7 +55,7 @@ class SendMessagePresenter @Inject constructor(
                 view.showMessageBackupDialog()
             }
             reason?.let {
-                setSubject("Usprawiedliwenie")
+                setSubject("Usprawiedliwienie")
                 setContent(it)
             }
             message?.let {
