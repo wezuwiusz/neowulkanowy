@@ -29,7 +29,7 @@ class Migration35Test : AbstractMigrationTest() {
             close()
         }
 
-        helper.runMigrationsAndValidate(dbName, 35, true, Migration35(AppInfo()))
+        runMigrationsAndValidate(Migration35(AppInfo()))
 
         val db = getMigratedRoomDatabase()
         val students = runBlocking { db.studentDao.loadAll() }
@@ -38,6 +38,8 @@ class Migration35Test : AbstractMigrationTest() {
 
         assertTrue { students[0].avatarColor in AppInfo().defaultColorsForAvatar }
         assertTrue { students[1].avatarColor in AppInfo().defaultColorsForAvatar }
+
+        db.close()
     }
 
     private fun createStudent(db: SupportSQLiteDatabase, id: Long) {

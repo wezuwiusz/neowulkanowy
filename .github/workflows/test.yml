@@ -2,10 +2,12 @@ name: Tests
 
 on:
   push:
-    branches: [ master, develop ]
+    branches:
+      - master
+      - develop
+      - 'hotfix/**'
     tags: [ '*' ]
   pull_request:
-    branches: [ master, develop ]
 
 jobs:
 
