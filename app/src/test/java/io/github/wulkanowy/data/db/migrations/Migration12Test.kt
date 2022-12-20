@@ -33,7 +33,7 @@ class Migration12Test : AbstractMigrationTest() {
             close()
         }
 
-        helper.runMigrationsAndValidate(dbName, 12, true, Migration12())
+        runMigrationsAndValidate(Migration12())
 
         val db = getMigratedRoomDatabase()
         val students = runBlocking { db.studentDao.loadAll() }
@@ -49,6 +49,7 @@ class Migration12Test : AbstractMigrationTest() {
             assertEquals(2, studentId)
             assertEquals(6, classId)
         }
+        db.close()
     }
 
     @Test
@@ -62,7 +63,7 @@ class Migration12Test : AbstractMigrationTest() {
             close()
         }
 
-        helper.runMigrationsAndValidate(dbName, 12, true, Migration12())
+        runMigrationsAndValidate(Migration12())
 
         val db = getMigratedRoomDatabase()
         val students = runBlocking { db.studentDao.loadAll() }
@@ -73,6 +74,7 @@ class Migration12Test : AbstractMigrationTest() {
             assertEquals(2, studentId)
             assertEquals(1, classId)
         }
+        db.close()
     }
 
     @Test
@@ -88,7 +90,7 @@ class Migration12Test : AbstractMigrationTest() {
             close()
         }
 
-        helper.runMigrationsAndValidate(dbName, 12, true, Migration12())
+        runMigrationsAndValidate(Migration12())
 
         val db = getMigratedRoomDatabase()
         val students = runBlocking { db.studentDao.loadAll() }
@@ -107,6 +109,7 @@ class Migration12Test : AbstractMigrationTest() {
             assertEquals(studentId, 3)
             assertEquals(true, isCurrent)
         }
+        db.close()
     }
 
     private fun createStudent(db: SupportSQLiteDatabase, studentId: Int, isCurrent: Boolean) {
