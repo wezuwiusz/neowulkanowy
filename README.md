@@ -2,7 +2,7 @@
 
 # Wulkanowy
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/wulkanowy/wulkanowy/Tests/develop?style=flat-square)](https://github.com/wulkanowy/wulkanowy/actions)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/wulkanowy/wulkanowy/test.yml?branch=develop&style=flat-square)](https://github.com/wulkanowy/wulkanowy/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/wulkanowy/wulkanowy/master.svg?style=flat-square)](https://codecov.io/gh/wulkanowy/wulkanowy)
 [![Discord](https://img.shields.io/discord/390889354199040011.svg?style=flat-square)](https://discord.gg/vccAQBr)
 [![F-Droid](https://img.shields.io/f-droid/v/io.github.wulkanowy.svg?style=flat-square)](https://f-droid.org/packages/io.github.wulkanowy/)

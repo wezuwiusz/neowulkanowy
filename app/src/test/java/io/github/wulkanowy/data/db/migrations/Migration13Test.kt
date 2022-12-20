@@ -57,6 +57,8 @@ class Migration13Test : AbstractMigrationTest() {
             assertEquals("C", className)
             assertEquals("Publiczna szkoła Wulkanowego-fejka nr 2 w fakelog.cf", schoolName)
         }
+
+        db.close()
     }
 
     @Test
@@ -85,6 +87,8 @@ class Migration13Test : AbstractMigrationTest() {
             assertEquals("", className)
             assertEquals("Publiczna szkoła Wulkanowego-fejka nr 1 w fakelog.cf", schoolName)
         }
+
+        db.close()
     }
 
     @Test
@@ -148,6 +152,7 @@ class Migration13Test : AbstractMigrationTest() {
             assertFalse(semesters[2].second)
             assertTrue(semesters[3].second)
         }
+        db.close()
     }
 
     private fun getSemesters(db: SupportSQLiteDatabase, query: String): List<Pair<Semester, Boolean>> {
