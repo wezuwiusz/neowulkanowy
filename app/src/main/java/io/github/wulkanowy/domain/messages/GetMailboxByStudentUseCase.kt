@@ -17,8 +17,11 @@ class GetMailboxByStudentUseCase @Inject constructor(
     private fun List<Mailbox>.filterByStudent(student: Student): Mailbox? {
         val normalizedStudentName = student.studentName.normalizeStudentName()
 
-        return find {
+        return singleOrNull {
             it.studentName.normalizeStudentName() == normalizedStudentName
+        } ?: singleOrNull {
+            it.studentName.normalizeStudentName() == normalizedStudentName
+                && it.schoolNameShort == student.schoolShortName
         } ?: singleOrNull {
             it.studentName.getFirstAndLastPart() == normalizedStudentName.getFirstAndLastPart()
         } ?: singleOrNull {
