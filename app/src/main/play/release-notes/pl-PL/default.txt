@@ -1,7 +1,8 @@
-Wersja 1.8.2
+Wersja 1.8.3
 
 - naprawiliśmy logowanie dla użytkowników systemu Resman Rzeszów
 - dodaliśmy wsparcie dla nowej platformy z Tomaszowa Mazowieckiego
+- poprawiliśmy dopasowywanie skrzynek pocztowych do uczniów
 - naprawiliśmy literówkę w tytule wiadomości z szablonem usprawiedliwienia
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
