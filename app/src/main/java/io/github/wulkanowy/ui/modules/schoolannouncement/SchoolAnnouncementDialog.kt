@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.text.parseAsHtml
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
 import io.github.wulkanowy.databinding.DialogSchoolAnnouncementBinding
 import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.utils.parseUonetHtml
 import io.github.wulkanowy.utils.serializable
 import io.github.wulkanowy.utils.toFormattedString
 
@@ -46,7 +46,7 @@ class SchoolAnnouncementDialog : DialogFragment() {
         with(binding) {
             announcementDialogSubjectValue.text = announcement.subject
             announcementDialogDateValue.text = announcement.date.toFormattedString()
-            announcementDialogDescriptionValue.text = announcement.content.parseAsHtml()
+            announcementDialogDescriptionValue.text = announcement.content.parseUonetHtml()
 
             announcementDialogClose.setOnClickListener { dismiss() }
         }
