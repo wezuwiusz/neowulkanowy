@@ -2,10 +2,10 @@ package io.github.wulkanowy.ui.modules.schoolannouncement
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
 import io.github.wulkanowy.databinding.ItemSchoolAnnouncementBinding
+import io.github.wulkanowy.utils.parseUonetHtml
 import io.github.wulkanowy.utils.toFormattedString
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ class SchoolAnnouncementAdapter @Inject constructor() :
         with(holder.binding) {
             schoolAnnouncementItemDate.text = item.date.toFormattedString()
             schoolAnnouncementItemType.text = item.subject
-            schoolAnnouncementItemContent.text = item.content.parseAsHtml()
+            schoolAnnouncementItemContent.text = item.content.parseUonetHtml()
 
             root.setOnClickListener { onItemClickListener(item) }
         }

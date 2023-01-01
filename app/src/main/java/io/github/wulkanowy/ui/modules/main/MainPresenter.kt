@@ -139,12 +139,9 @@ class MainPresenter @Inject constructor(
         return true
     }
 
-    fun onBackPressed(default: () -> Unit) {
+    fun onBackPressed() {
         Timber.i("Back pressed in main view")
-        view?.run {
-            if (isRootView) default()
-            else popView()
-        }
+        view?.popView()
     }
 
     fun onTabSelected(index: Int, wasSelected: Boolean): Boolean {

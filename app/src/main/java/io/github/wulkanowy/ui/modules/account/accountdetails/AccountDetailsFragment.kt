@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.core.view.get
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +22,7 @@ import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoFragment
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
 import io.github.wulkanowy.utils.createNameInitialsDrawable
 import io.github.wulkanowy.utils.nickOrName
+import io.github.wulkanowy.utils.serializable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,12 +39,12 @@ class AccountDetailsFragment :
 
         private const val ARGUMENT_KEY = "Data"
 
-        fun newInstance(student: Student) =
-            AccountDetailsFragment().apply {
-                arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, student) }
-            }
+        fun newInstance(student: Student) = AccountDetailsFragment().apply {
+            arguments = bundleOf(ARGUMENT_KEY to student)
+        }
     }
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -51,7 +53,7 @@ class AccountDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAccountDetailsBinding.bind(view)
-        presenter.onAttachView(this, requireArguments()[ARGUMENT_KEY] as Student)
+        presenter.onAttachView(this, requireArguments().serializable(ARGUMENT_KEY))
     }
 
     override fun initView() {

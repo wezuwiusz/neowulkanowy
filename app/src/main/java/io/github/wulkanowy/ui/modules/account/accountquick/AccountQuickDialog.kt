@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
@@ -13,6 +14,7 @@ import io.github.wulkanowy.ui.modules.account.AccountAdapter
 import io.github.wulkanowy.ui.modules.account.AccountFragment
 import io.github.wulkanowy.ui.modules.account.AccountItem
 import io.github.wulkanowy.ui.modules.main.MainActivity
+import io.github.wulkanowy.utils.serializable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,9 +32,7 @@ class AccountQuickDialog : BaseDialogFragment<DialogAccountQuickBinding>(), Acco
 
         fun newInstance(studentsWithSemesters: List<StudentWithSemesters>) =
             AccountQuickDialog().apply {
-                arguments = Bundle().apply {
-                    putSerializable(STUDENTS_ARGUMENT_KEY, studentsWithSemesters.toTypedArray())
-                }
+                arguments = bundleOf(STUDENTS_ARGUMENT_KEY to studentsWithSemesters.toTypedArray())
             }
     }
 
@@ -49,8 +49,8 @@ class AccountQuickDialog : BaseDialogFragment<DialogAccountQuickBinding>(), Acco
 
     @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val studentsWithSemesters =
-            (requireArguments()[STUDENTS_ARGUMENT_KEY] as Array<StudentWithSemesters>).toList()
+        val studentsWithSemesters = requireArguments()
+            .serializable<Array<StudentWithSemesters>>(STUDENTS_ARGUMENT_KEY).toList()
 
         presenter.onAttachView(this, studentsWithSemesters)
     }

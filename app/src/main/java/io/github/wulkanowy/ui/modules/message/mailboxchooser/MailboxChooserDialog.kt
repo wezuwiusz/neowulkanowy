@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.databinding.DialogMailboxChooserBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
+import io.github.wulkanowy.utils.parcelableArray
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -52,8 +53,7 @@ class MailboxChooserDialog : BaseDialogFragment<DialogMailboxChooserBinding>(), 
         presenter.onAttachView(
             view = this,
             requireMailbox = requireArguments().getBoolean(REQUIRED_KEY, false),
-            mailboxes = requireArguments().getParcelableArray(MAILBOX_KEY).orEmpty()
-                .toList() as List<Mailbox>,
+            mailboxes = requireArguments().parcelableArray<Mailbox>(MAILBOX_KEY).orEmpty().toList(),
         )
     }
 

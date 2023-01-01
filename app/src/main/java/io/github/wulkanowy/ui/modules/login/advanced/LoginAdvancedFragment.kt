@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.databinding.FragmentLoginAdvancedBinding
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -327,8 +327,8 @@ class LoginAdvancedFragment :
         (activity as? LoginActivity)?.navigateToSymbolFragment(loginData)
     }
 
-    override fun navigateToStudentSelect(studentsWithSemesters: List<StudentWithSemesters>) {
-        (activity as? LoginActivity)?.navigateToStudentSelect(studentsWithSemesters)
+    override fun navigateToStudentSelect(loginData: LoginData, registerUser: RegisterUser) {
+        (activity as? LoginActivity)?.navigateToStudentSelect(loginData, registerUser)
     }
 
     override fun onResume() {

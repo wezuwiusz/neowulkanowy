@@ -26,12 +26,13 @@ class NotificationsPresenter @Inject constructor(
 
         with(view) {
             enableNotification(
-                preferencesRepository.notificationsEnableKey,
-                preferencesRepository.isServiceEnabled
+                notificationKey = preferencesRepository.notificationsEnableKey,
+                enable = preferencesRepository.isServiceEnabled
             )
             initView(appInfo.isDebug)
         }
 
+        checkNotificationsPermissionState()
         checkNotificationPiggybackState()
 
         Timber.i("Settings notifications view was initialized")
@@ -49,12 +50,17 @@ class NotificationsPresenter @Inject constructor(
                         view?.openNotificationExactAlarmSettings()
                     }
                 }
+                notificationsEnableKey -> {
+                    if (isNotificationsEnable && view?.isNotificationPermissionGranted == false) {
+                        view?.requestNotificationPermissions()
+                    }
+                }
                 isDebugNotificationEnableKey -> {
                     chuckerCollector.showNotification = isDebugNotificationEnable
                 }
                 isNotificationPiggybackEnabledKey -> {
-                    if (isNotificationPiggybackEnabled && view?.isNotificationPermissionGranted == false) {
-                        view?.openNotificationPermissionDialog()
+                    if (isNotificationPiggybackEnabled && view?.isNotificationPiggybackPermissionGranted == false) {
+                        view?.openNotificationPiggyBackPermissionDialog()
                     }
                 }
             }
@@ -70,9 +76,15 @@ class NotificationsPresenter @Inject constructor(
         view?.openSystemSettings()
     }
 
+    fun onNotificationsPermissionResult() {
+        view?.run {
+            setNotificationPreferencesChecked(isNotificationPermissionGranted)
+        }
+    }
+
     fun onNotificationPiggybackPermissionResult() {
         view?.run {
-            setNotificationPiggybackPreferenceChecked(isNotificationPermissionGranted)
+            setNotificationPiggybackPreferenceChecked(isNotificationPiggybackPermissionGranted)
         }
     }
 
@@ -80,10 +92,18 @@ class NotificationsPresenter @Inject constructor(
         view?.setUpcomingLessonsNotificationPreferenceChecked(timetableNotificationHelper.canScheduleExactAlarms())
     }
 
+    private fun checkNotificationsPermissionState() {
+        if (preferencesRepository.isNotificationsEnable) {
+            view?.run {
+                setNotificationPreferencesChecked(isNotificationPermissionGranted)
+            }
+        }
+    }
+
     private fun checkNotificationPiggybackState() {
         if (preferencesRepository.isNotificationPiggybackEnabled) {
             view?.run {
-                setNotificationPiggybackPreferenceChecked(isNotificationPermissionGranted)
+                setNotificationPiggybackPreferenceChecked(isNotificationPiggybackPermissionGranted)
             }
         }
     }

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.data.db.entities.Conference
 import io.github.wulkanowy.databinding.DialogConferenceBinding
 import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.utils.serializable
 import io.github.wulkanowy.utils.toFormattedString
 
 class ConferenceDialog : DialogFragment() {
@@ -22,16 +24,14 @@ class ConferenceDialog : DialogFragment() {
         private const val ARGUMENT_KEY = "item"
 
         fun newInstance(conference: Conference) = ConferenceDialog().apply {
-            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, conference) }
+            arguments = bundleOf(ARGUMENT_KEY to conference)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, 0)
-        arguments?.let {
-            conference = it.getSerializable(ARGUMENT_KEY) as Conference
-        }
+        conference = requireArguments().serializable(ARGUMENT_KEY)
     }
 
     override fun onCreateView(

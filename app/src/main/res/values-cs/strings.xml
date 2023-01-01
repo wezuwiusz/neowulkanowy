@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Neplatný symbol</string>
     <string name="login_incorrect_symbol">Žák nebyl nalezen. Zkontrolujte správnost symbolu a vybrané varianty deníku UONET+</string>
     <string name="login_duplicate_student">Vybraný žák je už přihlášen</string>
-    <string name="login_symbol_helper">Symbol najdete na stránce deníku v &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUjistěte se, že jste na předchozí obrazovce nastavili správnou variantu deníku do pole <b>Variace deníku UONET+</b></string>
+    <string name="login_symbol_helper">Symbol najdete na stránce deníku v &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nUjistěte se, že jste nastavili správnou variantu deníku v poli <b>Variace deníku UONET+</b> na první přihlašovací obrazovce</string>
     <string name="login_select_student">Vyberte žáky, kteří se mají do aplikace přihlásit</string>
     <string name="login_advanced">Jiné možnosti</string>
     <string name="login_advanced_warning_mobile_api">V tomto režimu nefungují následující: šťastné číslo, statistiky třídy, shrnutí frekvencí, ospravedlnění nepřítomnosti, dokončené lekce, informace o škole a prohlížení seznamu registrovaných zařízení</string>
@@ -72,6 +72,14 @@
     <string name="login_recover">Obnovit</string>
     <string name="login_signed_in">Žák je už přihlášen</string>
     <string name="login_host_standard">Standardní</string>
+    <string name="login_other_search_locations">Jiná místa vyhledávání</string>
+    <string name="login_no_active_student">Nebyli nalezeni žádní aktivní žáci</string>
+    <string name="login_symbol_enter">Zadejte jiný symbol</string>
+    <!--Notifications-->
+    <string name="notifications_header_title">Povolit oznámení</string>
+    <string name="notifications_header_description">Povolit upozornění, abyste nezmeškali zprávu od učitele nebo o nové známce</string>
+    <string name="notifications_skip">Přeskočit</string>
+    <string name="notifications_enable">Zapnout</string>
     <!--Main-->
     <string name="main_account_picker">Manažer účtů</string>
     <string name="main_log_in">Přihlásit se</string>
@@ -485,6 +493,8 @@
     </plurals>
     <string name="conferences_present">Přítomnost na setkání</string>
     <string name="conference_agenda">Agenda</string>
+    <string name="conference_place">Místo</string>
+    <string name="conference_topic">Téma</string>
     <!--Director information-->
     <string name="school_announcement_title">Školní oznámení</string>
     <string name="school_announcement_no_items">Žádná školní oznámení</string>

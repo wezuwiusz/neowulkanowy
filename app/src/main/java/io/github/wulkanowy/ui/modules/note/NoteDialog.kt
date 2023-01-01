@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Note
@@ -13,6 +14,7 @@ import io.github.wulkanowy.databinding.DialogNoteBinding
 import io.github.wulkanowy.sdk.scrapper.notes.NoteCategory
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.utils.serializable
 import io.github.wulkanowy.utils.toFormattedString
 
 class NoteDialog : DialogFragment() {
@@ -25,17 +27,15 @@ class NoteDialog : DialogFragment() {
 
         private const val ARGUMENT_KEY = "Item"
 
-        fun newInstance(exam: Note) = NoteDialog().apply {
-            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
+        fun newInstance(note: Note) = NoteDialog().apply {
+            arguments = bundleOf(ARGUMENT_KEY to note)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, 0)
-        arguments?.run {
-            note = getSerializable(ARGUMENT_KEY) as Note
-        }
+        note = requireArguments().serializable(ARGUMENT_KEY)
     }
 
     override fun onCreateView(

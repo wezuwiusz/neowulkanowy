@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Nieprawidłowy symbol</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź poprawność symbolu i wybranej odmiany dziennika UONET+</string>
     <string name="login_duplicate_student">Wybrany uczeń jest już zalogowany</string>
-    <string name="login_symbol_helper">Symbol znajdziesz na stronie dziennika w&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUpewnij się, że w polu <b>Dziennik UONET+</b> na poprzednim ekranie została ustawiona odpowiednia odmiana dziennika</string>
+    <string name="login_symbol_helper">Symbol można znaleźć na stronie dziennika w&#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nUpewnij się, że ustawiłeś odpowiednią odmianę dziennika w polu  <b>Odmiana dziennika UONET+</b> na pierwszym ekranie logowania</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_advanced">Inne opcje</string>
     <string name="login_advanced_warning_mobile_api">W tym trybie nie działa szczęśliwy numerek, uczeń na tle klasy, podsumowanie frekwencji, usprawiedliwianie nieobecności, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń</string>
@@ -72,6 +72,14 @@
     <string name="login_recover">Przywróć</string>
     <string name="login_signed_in">Uczeń jest już zalogowany</string>
     <string name="login_host_standard">Standardowa</string>
+    <string name="login_other_search_locations">Inne lokalizacje wyszukiwania</string>
+    <string name="login_no_active_student">Nie znaleziono aktywnych uczniów</string>
+    <string name="login_symbol_enter">Wprowadź inny symbol</string>
+    <!--Notifications-->
+    <string name="notifications_header_title">Włącz powiadomienia</string>
+    <string name="notifications_header_description">Włącz powiadomienia, aby nie przegapić wiadomości od nauczyciela lub nowej oceny</string>
+    <string name="notifications_skip">Pomiń</string>
+    <string name="notifications_enable">Włącz</string>
     <!--Main-->
     <string name="main_account_picker">Menadżer kont</string>
     <string name="main_log_in">Zaloguj się</string>
@@ -485,6 +493,8 @@
     </plurals>
     <string name="conferences_present">Obecność na zebraniu</string>
     <string name="conference_agenda">Agenda</string>
+    <string name="conference_place">Miejsce</string>
+    <string name="conference_topic">Temat</string>
     <!--Director information-->
     <string name="school_announcement_title">Ogłoszenia szkolne</string>
     <string name="school_announcement_no_items">Brak ogłoszeń szkolnych</string>

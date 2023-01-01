@@ -37,7 +37,7 @@ class ErrorDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val error = requireArguments().getSerializable(ARGUMENT_KEY) as Throwable
+        val error = requireArguments().serializable<Throwable>(ARGUMENT_KEY)
 
         val binding = DialogErrorBinding.inflate(layoutInflater)
         binding.bindErrorDetails(error)

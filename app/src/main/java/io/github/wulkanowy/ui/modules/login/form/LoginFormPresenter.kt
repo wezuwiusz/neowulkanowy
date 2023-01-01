@@ -93,7 +93,7 @@ class LoginFormPresenter @Inject constructor(
         if (!validateCredentials(email, password, host)) return
 
         resourceFlow {
-            studentRepository.getStudentsScrapper(
+            studentRepository.getUserSubjectsFromScrapper(
                 email = email,
                 password = password,
                 scrapperBaseUrl = host,
@@ -109,14 +109,14 @@ class LoginFormPresenter @Inject constructor(
                 }
             }
             .onResourceSuccess {
-                when (it.size) {
-                    0 -> view?.navigateToSymbol(LoginData(email, password, host))
-                    else -> view?.navigateToStudentSelect(it)
+                val loginData = LoginData(email, password, host, symbol)
+                when (it.symbols.size) {
+                    0 -> view?.navigateToSymbol(loginData)
+                    else -> view?.navigateToStudentSelect(loginData, it)
                 }
                 analytics.logEvent(
                     "registration_form",
                     "success" to true,
-                    "students" to it.size,
                     "scrapperBaseUrl" to host,
                     "error" to "No error"
                 )
@@ -134,7 +134,6 @@ class LoginFormPresenter @Inject constructor(
                 analytics.logEvent(
                     "registration_form",
                     "success" to false,
-                    "students" to -1,
                     "scrapperBaseUrl" to host,
                     "error" to it.message.ifNullOrBlank { "No message" }
                 )

@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Неверный symbol</string>
     <string name="login_incorrect_symbol">Ученик не найден. Проверьте symbol и выбранный тип дненика UONET+</string>
     <string name="login_duplicate_student">Данный ученик уже авторизован</string>
-    <string name="login_symbol_helper">Symbol можно найти на странице регистрации в &#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nУбедитесь, что вы выбрали соответствующий тип дневника в поле <b>Тип дневника UONET+</b> на предыдущем экране</string>
+    <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the first login screen</string>
     <string name="login_select_student">Выберите учеников для авторизации в приложении</string>
     <string name="login_advanced">Другие варианты</string>
     <string name="login_advanced_warning_mobile_api">В этом режиме не работают: счастливый номер, статистика класса по оценкам, статистика посещаемости и уроков, информация о школе и список зарегистрированных устройств</string>
@@ -72,6 +72,14 @@
     <string name="login_recover">Восстановить</string>
     <string name="login_signed_in">Ученик уже авторизован</string>
     <string name="login_host_standard">Стандартный</string>
+    <string name="login_other_search_locations">Other search locations</string>
+    <string name="login_no_active_student">No active students found</string>
+    <string name="login_symbol_enter">Enter a different symbol</string>
+    <!--Notifications-->
+    <string name="notifications_header_title">Enable notifications</string>
+    <string name="notifications_header_description">Enable notifications so you don\'t miss message from teacher or new grade</string>
+    <string name="notifications_skip">Skip</string>
+    <string name="notifications_enable">Enable</string>
     <!--Main-->
     <string name="main_account_picker">Менеджер аккаунтов</string>
     <string name="main_log_in">Войти</string>
@@ -485,6 +493,8 @@
     </plurals>
     <string name="conferences_present">Присутствует на встрече</string>
     <string name="conference_agenda">Повестка дня</string>
+    <string name="conference_place">Place</string>
+    <string name="conference_topic">Topic</string>
     <!--Director information-->
     <string name="school_announcement_title">Объявления школы</string>
     <string name="school_announcement_no_items">Нет школьных объявлений</string>

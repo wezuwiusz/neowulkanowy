@@ -1,9 +1,7 @@
 package io.github.wulkanowy.ui.modules.debug.logviewer
 
 import android.content.Intent
-import android.content.Intent.EXTRA_EMAIL
-import android.content.Intent.EXTRA_STREAM
-import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+import android.content.Intent.*
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -36,6 +34,7 @@ class LogViewerFragment : BaseFragment<FragmentLogviewerBinding>(R.layout.fragme
         fun newInstance() = LogViewerFragment()
     }
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)

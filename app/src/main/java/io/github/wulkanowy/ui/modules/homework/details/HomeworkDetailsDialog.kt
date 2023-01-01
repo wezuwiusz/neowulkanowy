@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -14,6 +15,7 @@ import io.github.wulkanowy.data.db.entities.Homework
 import io.github.wulkanowy.databinding.DialogHomeworkBinding
 import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.utils.openInternetBrowser
+import io.github.wulkanowy.utils.serializable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,16 +37,14 @@ class HomeworkDetailsDialog : BaseDialogFragment<DialogHomeworkBinding>(), Homew
         private const val ARGUMENT_KEY = "Item"
 
         fun newInstance(homework: Homework) = HomeworkDetailsDialog().apply {
-            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, homework) }
+            arguments = bundleOf(ARGUMENT_KEY to homework)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, 0)
-        arguments?.run {
-            homework = getSerializable(ARGUMENT_KEY) as Homework
-        }
+        homework = requireArguments().serializable(ARGUMENT_KEY)
     }
 
     override fun onCreateView(

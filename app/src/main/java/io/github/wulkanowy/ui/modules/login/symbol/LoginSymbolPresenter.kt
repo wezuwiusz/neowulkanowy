@@ -1,9 +1,12 @@
 package io.github.wulkanowy.ui.modules.login.symbol
 
 import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.onResourceNotLoading
+import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
+import io.github.wulkanowy.sdk.scrapper.getNormalizedSymbol
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -23,9 +26,14 @@ class LoginSymbolPresenter @Inject constructor(
 
     lateinit var loginData: LoginData
 
+    private var registerUser: RegisterUser? = null
+
     fun onAttachView(view: LoginSymbolView, loginData: LoginData) {
         super.onAttachView(view)
         this.loginData = loginData
+        loginErrorHandler.onBadCredentials = {
+            view.setErrorSymbol(it.orEmpty())
+        }
         with(view) {
             initView()
             showContact(false)
@@ -39,20 +47,24 @@ class LoginSymbolPresenter @Inject constructor(
         view?.apply { if (symbolNameError != null) clearSymbolError() }
     }
 
-    fun attemptLogin(symbol: String) {
-        if (symbol.isBlank()) {
+    fun attemptLogin() {
+        if (view?.symbolValue.isNullOrBlank()) {
             view?.setErrorSymbolRequire()
             return
         }
 
+        loginData = loginData.copy(
+            symbol = view?.symbolValue?.getNormalizedSymbol(),
+        )
         resourceFlow {
-            studentRepository.getStudentsScrapper(
+            studentRepository.getUserSubjectsFromScrapper(
                 email = loginData.login,
                 password = loginData.password,
                 scrapperBaseUrl = loginData.baseUrl,
-                symbol = symbol,
+                symbol = view?.symbolValue.orEmpty(),
             )
         }.onEach {
+            registerUser = it.dataOrNull
             when (it) {
                 is Resource.Loading -> view?.run {
                     Timber.i("Login with symbol started")
@@ -61,7 +73,7 @@ class LoginSymbolPresenter @Inject constructor(
                     showContent(false)
                 }
                 is Resource.Success -> {
-                    when (it.data.size) {
+                    when (it.data.symbols.size) {
                         0 -> {
                             Timber.i("Login with symbol result: Empty student list")
                             view?.run {
@@ -71,15 +83,14 @@ class LoginSymbolPresenter @Inject constructor(
                         }
                         else -> {
                             Timber.i("Login with symbol result: Success")
-                            view?.navigateToStudentSelect(requireNotNull(it.data))
+                            view?.navigateToStudentSelect(loginData, requireNotNull(it.data))
                         }
                     }
                     analytics.logEvent(
                         "registration_symbol",
                         "success" to true,
-                        "students" to it.data.size,
                         "scrapperBaseUrl" to loginData.baseUrl,
-                        "symbol" to symbol,
+                        "symbol" to view?.symbolValue,
                         "error" to "No error"
                     )
                 }
@@ -90,7 +101,7 @@ class LoginSymbolPresenter @Inject constructor(
                         "success" to false,
                         "students" to -1,
                         "scrapperBaseUrl" to loginData.baseUrl,
-                        "symbol" to symbol,
+                        "symbol" to view?.symbolValue,
                         "error" to it.error.message.ifNullOrBlank { "No message" }
                     )
                     loginErrorHandler.dispatch(it.error)
@@ -111,6 +122,12 @@ class LoginSymbolPresenter @Inject constructor(
     }
 
     fun onEmailClick() {
-        view?.openEmail(loginData.baseUrl, lastError?.message.ifNullOrBlank { "empty" })
+        view?.openEmail(loginData.baseUrl, lastError?.message.ifNullOrBlank {
+            registerUser?.symbols?.flatMap { symbol ->
+                symbol.schools.map { it.error?.message } + symbol.error?.message
+            }?.filterNotNull()?.distinct()?.joinToString(";") {
+                it.take(46) + "..."
+            } ?: "blank"
+        })
     }
 }

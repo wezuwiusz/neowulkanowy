@@ -11,6 +11,8 @@ import io.github.wulkanowy.data.db.entities.StudentNickAndAvatar
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
 import io.github.wulkanowy.data.mappers.mapToEntities
+import io.github.wulkanowy.data.mappers.mapToPojo
+import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.DispatchersProvider
@@ -51,6 +53,14 @@ class StudentRepository @Inject constructor(
     ): List<StudentWithSemesters> =
         sdk.getStudentsFromScrapper(email, password, scrapperBaseUrl, symbol)
             .mapToEntities(password, appInfo.defaultColorsForAvatar)
+
+    suspend fun getUserSubjectsFromScrapper(
+        email: String,
+        password: String,
+        scrapperBaseUrl: String,
+        symbol: String
+    ): RegisterUser = sdk.getUserSubjectsFromScrapper(email, password, scrapperBaseUrl, symbol)
+        .mapToPojo(password)
 
     suspend fun getStudentsHybrid(
         email: String,

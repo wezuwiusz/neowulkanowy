@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,9 +40,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         private const val ARGUMENT_DATE_KEY = "ARGUMENT_DATE"
 
         fun newInstance(date: LocalDate? = null) = TimetableFragment().apply {
-            arguments = Bundle().apply {
-                date?.let { putLong(ARGUMENT_DATE_KEY, it.toEpochDay()) }
-            }
+            arguments = date?.let { bundleOf(ARGUMENT_DATE_KEY to it.toEpochDay()) }
         }
     }
 
@@ -51,6 +50,7 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override val currentStackSize get() = (activity as? MainActivity)?.currentStackSize
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)

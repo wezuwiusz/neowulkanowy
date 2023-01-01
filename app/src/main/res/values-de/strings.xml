@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Ungültige symbol</string>
     <string name="login_incorrect_symbol">Schüler nicht gefunden. Überprüfen Sie das Symbol und die gewählte Variation des UONET+ Registers</string>
     <string name="login_duplicate_student">Ausgewählter Student ist bereits angemeldet.</string>
-    <string name="login_symbol_helper">Das Symbol kann auf der Registerseite in&#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>gefunden werden.\n\nStellen Sie sicher, dass Sie die entsprechende Registervariante im Feld <b>UONET+ Registervariante</b> auf dem vorherigen Bildschirm festgelegt haben</string>
+    <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the first login screen</string>
     <string name="login_select_student">Wählen Sie die Studenten aus, die sich bei der Anwendung anmelden sollen</string>
     <string name="login_advanced">Andere Optionen</string>
     <string name="login_advanced_warning_mobile_api">In diesem Modus funktioniert eine Glücknummer, eine Klassenstatistik, eine Zusammenfassung der Anwesenheit, eine Entschuldigung für die Abwesenheit, abgeschlossene Lektionen, Schulinformationen und eine Vorschau der Liste der registrierten Geräte nicht</string>
@@ -72,6 +72,14 @@
     <string name="login_recover">Wiederherstellen</string>
     <string name="login_signed_in">Student ist bereits angemeldet</string>
     <string name="login_host_standard">Standard</string>
+    <string name="login_other_search_locations">Other search locations</string>
+    <string name="login_no_active_student">No active students found</string>
+    <string name="login_symbol_enter">Enter a different symbol</string>
+    <!--Notifications-->
+    <string name="notifications_header_title">Enable notifications</string>
+    <string name="notifications_header_description">Enable notifications so you don\'t miss message from teacher or new grade</string>
+    <string name="notifications_skip">Skip</string>
+    <string name="notifications_enable">Enable</string>
     <!--Main-->
     <string name="main_account_picker">Kundenbetreuer</string>
     <string name="main_log_in">Anmelden</string>
@@ -275,7 +283,7 @@
     <string name="message_not_exists">Nachricht nicht vorhanden</string>
     <string name="message_required_recipients">Sie müssen mindestens 1 Empfänger auswählen.</string>
     <string name="message_content_min_length">Der Inhalt der Nachricht muss mindestens 3 Zeichen lang sein.</string>
-    <string name="message_chip_all_mailboxes">All mailboxes</string>
+    <string name="message_chip_all_mailboxes">Alle postfächer</string>
     <string name="message_chip_only_unread">Nur ungelesen</string>
     <string name="message_chip_only_with_attachments">Nur mit Anhängen</string>
     <string name="message_read">Lesen: %s</string>
@@ -299,7 +307,7 @@
         <item quantity="other">%1$d ausgewählt</item>
     </plurals>
     <string name="message_messages_deleted">Nachrichten gelöscht</string>
-    <string name="message_mailbox_chooser_title">Choose mailbox</string>
+    <string name="message_mailbox_chooser_title">Postfach auswählen</string>
     <!--Note-->
     <string name="note_no_items">Keine Informationen über Eintragen</string>
     <string name="note_points">Punkte</string>
@@ -413,6 +421,8 @@
     </plurals>
     <string name="conferences_present">Teilnahme an einem Meeting</string>
     <string name="conference_agenda">Agenda</string>
+    <string name="conference_place">Place</string>
+    <string name="conference_topic">Topic</string>
     <!--Director information-->
     <string name="school_announcement_title">Schulankündigungen</string>
     <string name="school_announcement_no_items">Keine schulankündigungen</string>

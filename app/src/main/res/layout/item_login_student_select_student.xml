@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
-    android:minHeight="72dp"
+    android:minHeight="56dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
     tools:context=".ui.modules.login.studentselect.LoginStudentSelectAdapter">
@@ -14,9 +14,10 @@
         android:layout_width="32dp"
         android:layout_height="24dp"
         android:layout_centerVertical="true"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="32dp"
         android:layout_marginEnd="28dp"
         android:background="@android:color/transparent"
+        android:clickable="false"
         tools:text=" " />
 
     <TextView
@@ -32,34 +33,18 @@
         tools:text="@tools:sample/full_names" />
 
     <TextView
-        android:id="@+id/loginItemSchool"
+        android:id="@+id/loginItemSignedIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/loginItemName"
         android:layout_marginEnd="16dp"
         android:layout_toEndOf="@id/loginItemCheck"
         android:ellipsize="end"
-        android:gravity="bottom"
-        android:maxLines="2"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="14sp"
-        tools:text="@tools:sample/lorem/random" />
-
-    <TextView
-        android:id="@+id/loginItemSignedIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="20dp"
-        android:layout_below="@id/loginItemSchool"
-        android:layout_marginEnd="16dp"
-        android:layout_toEndOf="@id/loginItemCheck"
-        android:ellipsize="end"
         android:enabled="false"
         android:gravity="bottom"
         android:maxLines="1"
+        android:minHeight="20dp"
         android:text="@string/login_signed_in"
         android:textColor="?android:textColorSecondary"
-        android:textSize="14sp"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:textSize="14sp" />
 </RelativeLayout>

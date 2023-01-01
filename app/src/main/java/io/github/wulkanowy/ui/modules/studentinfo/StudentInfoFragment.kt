@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.getSystemService
+import androidx.core.os.bundleOf
 import androidx.core.view.get
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,8 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.capitalise
 import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.nullableSerializable
+import io.github.wulkanowy.utils.serializable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,7 +41,9 @@ class StudentInfoFragment :
     lateinit var studentInfoAdapter: StudentInfoAdapter
 
     override val titleStringId: Int
-        get() = when (requireArguments().getSerializable(INFO_TYPE_ARGUMENT_KEY) as? StudentInfoView.Type) {
+        get() = when (
+            requireArguments().nullableSerializable<StudentInfoView.Type>(INFO_TYPE_ARGUMENT_KEY)
+        ) {
             StudentInfoView.Type.PERSONAL -> R.string.account_personal_data
             StudentInfoView.Type.CONTACT -> R.string.account_contact
             StudentInfoView.Type.ADDRESS -> R.string.account_address
@@ -58,13 +63,14 @@ class StudentInfoFragment :
 
         fun newInstance(type: StudentInfoView.Type, studentWithSemesters: StudentWithSemesters) =
             StudentInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(INFO_TYPE_ARGUMENT_KEY, type)
-                    putSerializable(STUDENT_ARGUMENT_KEY, studentWithSemesters)
-                }
+                arguments = bundleOf(
+                    INFO_TYPE_ARGUMENT_KEY to type,
+                    STUDENT_ARGUMENT_KEY to studentWithSemesters
+                )
             }
     }
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -74,9 +80,9 @@ class StudentInfoFragment :
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentStudentInfoBinding.bind(view)
         presenter.onAttachView(
-            this,
-            requireArguments().getSerializable(INFO_TYPE_ARGUMENT_KEY) as StudentInfoView.Type,
-            requireArguments().getSerializable(STUDENT_ARGUMENT_KEY) as StudentWithSemesters
+            view = this,
+            type = requireArguments().serializable(INFO_TYPE_ARGUMENT_KEY),
+            studentWithSemesters = requireArguments().serializable(STUDENT_ARGUMENT_KEY),
         )
     }
 
@@ -153,7 +159,6 @@ class StudentInfoFragment :
         )
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun showFamilyTypeData(studentInfo: StudentInfo) {
         val items = buildList {
             add(studentInfo.firstGuardian?.let {

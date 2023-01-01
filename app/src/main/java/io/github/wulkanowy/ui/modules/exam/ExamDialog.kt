@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.databinding.DialogExamBinding
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 import io.github.wulkanowy.utils.openCalendarEventAdd
+import io.github.wulkanowy.utils.serializable
 import io.github.wulkanowy.utils.toFormattedString
 import java.time.LocalTime
 
@@ -24,16 +26,14 @@ class ExamDialog : DialogFragment() {
         private const val ARGUMENT_KEY = "Item"
 
         fun newInstance(exam: Exam) = ExamDialog().apply {
-            arguments = Bundle().apply { putSerializable(ARGUMENT_KEY, exam) }
+            arguments = bundleOf(ARGUMENT_KEY to exam)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, 0)
-        arguments?.run {
-            exam = getSerializable(ARGUMENT_KEY) as Exam
-        }
+        exam = requireArguments().serializable(ARGUMENT_KEY)
     }
 
     override fun onCreateView(
