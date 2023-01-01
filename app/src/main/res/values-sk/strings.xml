@@ -35,7 +35,7 @@
     <string name="login_email_hint">Email</string>
     <string name="login_login_pesel_email_hint">Prihlásenie, číslo PESEL alebo e-mail</string>
     <string name="login_password_hint">Heslo</string>
-    <string name="login_host_hint">Variácie denníka UONET+</string>
+    <string name="login_host_hint">Variácia denníka UONET+</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybridné</string>
@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Neplatný symbol</string>
     <string name="login_incorrect_symbol">Žiak nebol nájdený. Skontrolujte správnosť symbolu a vybrané varianty denníka UONET+</string>
     <string name="login_duplicate_student">Vybraný žiak už je prihlásený</string>
-    <string name="login_symbol_helper">Symbol nájdete na stránke denníka v &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nUistite sa, že ste na predchádzajúcu obrazovke nastaviť správny variant denníka do poľa <b>Variácie denníka UONET+</b></string>
+    <string name="login_symbol_helper">Symbol nájdete na stránke denníka v &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nUistite sa, že ste nastavili správny variant denníka v poli <b>Variácia denníka UONET+</b> na prvej prihlasovacej obrazovke</string>
     <string name="login_select_student">Vyberte žiakov, ktorí sa majú do aplikácie prihlásiť</string>
     <string name="login_advanced">Iné možnosti</string>
     <string name="login_advanced_warning_mobile_api">V tomto režime nefungujú nasledovné: šťastné číslo, štatistiky triedy, zhrnutie frekvencií, ospravedlnenie neprítomnosti, dokončené lekcie, informácie o škole a prezeranie zoznamu registrovaných zariadení</string>
@@ -72,6 +72,14 @@
     <string name="login_recover">Obnoviť</string>
     <string name="login_signed_in">Žiak je už prihlásený</string>
     <string name="login_host_standard">Štandardná</string>
+    <string name="login_other_search_locations">Iné miesta vyhľadávania</string>
+    <string name="login_no_active_student">Neboli nájdení žiadni aktívni žiaci</string>
+    <string name="login_symbol_enter">Zadajte iný symbol</string>
+    <!--Notifications-->
+    <string name="notifications_header_title">Povoliť oznámenia</string>
+    <string name="notifications_header_description">Povoliť oznámenia, aby ste nezmeškali správu od učiteľa alebo o novej známke</string>
+    <string name="notifications_skip">Preskočiť</string>
+    <string name="notifications_enable">Zapnúť</string>
     <!--Main-->
     <string name="main_account_picker">Manažér účtov</string>
     <string name="main_log_in">Prihlásiť sa</string>
@@ -485,6 +493,8 @@
     </plurals>
     <string name="conferences_present">Prítomnosť na stretnutí</string>
     <string name="conference_agenda">Agenda</string>
+    <string name="conference_place">Miesto</string>
+    <string name="conference_topic">Téma</string>
     <!--Director information-->
     <string name="school_announcement_title">Školské oznámenia</string>
     <string name="school_announcement_no_items">Žiadne školské oznámenia</string>

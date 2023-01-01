@@ -55,7 +55,7 @@
     <string name="login_invalid_symbol">Неправильний symbol</string>
     <string name="login_incorrect_symbol">Студента не знайдено. Перевірте symbol та обранний тип щоденника UONET+</string>
     <string name="login_duplicate_student">Цього учня вже авторизовано</string>
-    <string name="login_symbol_helper">Symbol можна знайти на сторінці реєстрації в &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Zarejestruj urządzenie mobilne</b>.\n\nПереконайтесь, що ви встановили відповідний тип щоденника в полі <b>Тип щоденника UONET+</b> на попередньому екрані</string>
+    <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the first login screen</string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_advanced_warning_mobile_api">У цьому режимі не працюють: щасливий номер, статистика класу по оцінкам, статистика відвідуваності та уроків, інформація про школу та список зареєстрованих пристроїв</string>
@@ -72,6 +72,14 @@
     <string name="login_recover">Відновити</string>
     <string name="login_signed_in">Учня вже авторизовано</string>
     <string name="login_host_standard">Стандартний</string>
+    <string name="login_other_search_locations">Other search locations</string>
+    <string name="login_no_active_student">No active students found</string>
+    <string name="login_symbol_enter">Enter a different symbol</string>
+    <!--Notifications-->
+    <string name="notifications_header_title">Enable notifications</string>
+    <string name="notifications_header_description">Enable notifications so you don\'t miss message from teacher or new grade</string>
+    <string name="notifications_skip">Skip</string>
+    <string name="notifications_enable">Enable</string>
     <!--Main-->
     <string name="main_account_picker">Змінити облікові записи</string>
     <string name="main_log_in">Увійти</string>
@@ -485,6 +493,8 @@
     </plurals>
     <string name="conferences_present">Присутність на зустрічі</string>
     <string name="conference_agenda">Порядок денний</string>
+    <string name="conference_place">Place</string>
+    <string name="conference_topic">Topic</string>
     <!--Director information-->
     <string name="school_announcement_title">Оголошення школи</string>
     <string name="school_announcement_no_items">Немає шкільних оголошень</string>
