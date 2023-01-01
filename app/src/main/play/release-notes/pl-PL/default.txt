@@ -1,8 +1,10 @@
-Wersja 1.8.3
+Wersja 1.9.0
 
-- naprawiliśmy logowanie dla użytkowników systemu Resman Rzeszów
-- dodaliśmy wsparcie dla nowej platformy z Tomaszowa Mazowieckiego
-- poprawiliśmy dopasowywanie skrzynek pocztowych do uczniów
-- naprawiliśmy literówkę w tytule wiadomości z szablonem usprawiedliwienia
+- dodaliśmy obsługę Androida 13 (w tym ikona aplikacji obsługująca Material You)
+- przerobiliśmy ekran wyboru ucznia przy pierwszym logowaniu
+- naprawiliśmy usuwanie wiadomości w niektórych przypadkach
+- naprawiliśmy błąd występujący przy resecie hasła
+- naprawiliśmy literówkę w tytule domyślnej treści wiadomości usprawiedliwiania
+- naprawiliśmy nazwę aplikacji przy ustawionym w telefonie jezyku francuskim
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
