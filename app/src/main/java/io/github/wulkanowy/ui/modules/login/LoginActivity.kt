@@ -8,10 +8,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.fragment.app.commit
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.databinding.ActivityLoginBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.advanced.LoginAdvancedFragment
@@ -76,8 +77,8 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         openFragment(LoginSymbolFragment.newInstance(loginData))
     }
 
-    fun navigateToStudentSelect(studentsWithSemesters: List<StudentWithSemesters>) {
-        openFragment(LoginStudentSelectFragment.newInstance(studentsWithSemesters))
+    fun navigateToStudentSelect(loginData: LoginData, registerUser: RegisterUser) {
+        openFragment(LoginStudentSelectFragment.newInstance(loginData, registerUser))
     }
 
     fun navigateToNotifications() {
@@ -105,6 +106,8 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
     }
 
     private fun openFragment(fragment: Fragment, clearBackStack: Boolean = false) {
+        supportFragmentManager.popBackStack(fragment::class.java.name, POP_BACK_STACK_INCLUSIVE)
+
         supportFragmentManager.commit {
             replace(R.id.loginContainer, fragment)
             setReorderingAllowed(true)

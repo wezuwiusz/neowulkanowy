@@ -4,9 +4,15 @@ import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.logResourceStatus
 import io.github.wulkanowy.data.onResourceNotLoading
+import io.github.wulkanowy.data.pojos.RegisterStudent
+import io.github.wulkanowy.data.pojos.RegisterSymbol
+import io.github.wulkanowy.data.pojos.RegisterUnit
+import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.sdk.scrapper.Scrapper
+import io.github.wulkanowy.sdk.scrapper.getNormalizedSymbol
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -142,19 +148,23 @@ class LoginAdvancedPresenter @Inject constructor(
                     is Resource.Success -> {
                         analytics.logEvent(
                             "registration_form",
-                        "success" to true,
-                        "students" to it.data.size,
-                        "error" to "No error"
-                    )
-                    val loginData = LoginData(
-                        login = view?.formUsernameValue.orEmpty().trim(),
-                        password = view?.formPassValue.orEmpty().trim(),
-                        baseUrl = view?.formHostValue.orEmpty().trim()
-                    )
-                    when (it.data.size) {
-                        0 -> view?.navigateToSymbol(loginData)
-                        else -> view?.navigateToStudentSelect(it.data)
-                    }
+                            "success" to true,
+                            "students" to it.data.size,
+                            "error" to "No error"
+                        )
+                        val loginData = LoginData(
+                            login = view?.formUsernameValue.orEmpty().trim(),
+                            password = view?.formPassValue.orEmpty().trim(),
+                            baseUrl = view?.formHostValue.orEmpty().trim(),
+                            symbol = view?.formSymbolValue.orEmpty().trim().getNormalizedSymbol(),
+                        )
+                        when (it.data.size) {
+                            0 -> view?.navigateToSymbol(loginData)
+                            else -> view?.navigateToStudentSelect(
+                                loginData = loginData,
+                                registerUser = it.data.toRegisterUser(loginData),
+                            )
+                        }
                     }
                     is Resource.Error -> {
                         analytics.logEvent(
@@ -172,6 +182,58 @@ class LoginAdvancedPresenter @Inject constructor(
                 }
             }.launch("login")
     }
+
+    private fun List<StudentWithSemesters>.toRegisterUser(loginData: LoginData) = RegisterUser(
+        email = loginData.login,
+        password = loginData.password,
+        login = loginData.login,
+        baseUrl = loginData.baseUrl,
+        loginType = firstOrNull()?.student?.loginType?.let(
+            Scrapper.LoginType::valueOf
+        ) ?: Scrapper.LoginType.AUTO,
+        symbols = this
+            .groupBy { students -> students.student.symbol }
+            .map { (symbol, students) ->
+                RegisterSymbol(
+                    symbol = symbol,
+                    error = null,
+                    userName = "",
+                    schools = students
+                        .groupBy { student ->
+                            Triple(
+                                first = student.student.schoolSymbol,
+                                second = student.student.userLoginId,
+                                third = student.student.schoolShortName
+                            )
+                        }
+                        .map { (groupKey, students) ->
+                            val (schoolId, loginId, schoolName) = groupKey
+                            RegisterUnit(
+                                students = students.map {
+                                    RegisterStudent(
+                                        studentId = it.student.studentId,
+                                        studentName = it.student.studentName,
+                                        studentSecondName = it.student.studentName,
+                                        studentSurname = it.student.studentName,
+                                        className = it.student.className,
+                                        classId = it.student.classId,
+                                        isParent = it.student.isParent,
+                                        semesters = it.semesters,
+                                    )
+                                },
+                                userLoginId = loginId,
+                                schoolId = schoolId,
+                                schoolName = schoolName,
+                                schoolShortName = schoolName,
+                                parentIds = listOf(),
+                                studentIds = listOf(),
+                                employeeIds = listOf(),
+                                error = null
+                            )
+                        }
+                )
+            },
+    )
 
     private suspend fun getStudentsAppropriatesToLoginType(): List<StudentWithSemesters> {
         val email = view?.formUsernameValue.orEmpty()

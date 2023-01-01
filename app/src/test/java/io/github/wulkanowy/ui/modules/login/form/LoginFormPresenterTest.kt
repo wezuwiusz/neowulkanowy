@@ -1,9 +1,9 @@
 package io.github.wulkanowy.ui.modules.login.form
 
 import io.github.wulkanowy.MainCoroutineRule
-import io.github.wulkanowy.data.db.entities.Student
-import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.sdk.scrapper.Scrapper
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.mockk.*
@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
-import java.time.Instant
 
 class LoginFormPresenterTest {
 
@@ -32,6 +31,15 @@ class LoginFormPresenterTest {
     lateinit var analytics: AnalyticsHelper
 
     private lateinit var presenter: LoginFormPresenter
+
+    private val registerUser = RegisterUser(
+        email = "",
+        password = "",
+        login = "",
+        baseUrl = "",
+        loginType = Scrapper.LoginType.AUTO,
+        symbols = listOf(),
+    )
 
     @Before
     fun setUp() {
@@ -104,32 +112,9 @@ class LoginFormPresenterTest {
 
     @Test
     fun loginTest() {
-        val studentTest = Student(
-            email = "test@",
-            password = "123",
-            scrapperBaseUrl = "https://fakelog.cf/?email",
-            loginType = "AUTO",
-            studentName = "",
-            schoolSymbol = "",
-            schoolName = "",
-            studentId = 0,
-            classId = 1,
-            isCurrent = false,
-            symbol = "",
-            registrationDate = Instant.now(),
-            className = "",
-            mobileBaseUrl = "",
-            privateKey = "",
-            certificateKey = "",
-            loginMode = "",
-            userLoginId = 0,
-            schoolShortName = "",
-            isParent = false,
-            userName = ""
-        )
-        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf(
-            StudentWithSemesters(studentTest, emptyList())
-        )
+        coEvery {
+            repository.getUserSubjectsFromScrapper(any(), any(), any(), any())
+        } returns registerUser
 
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
@@ -146,7 +131,9 @@ class LoginFormPresenterTest {
 
     @Test
     fun loginEmptyTest() {
-        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf()
+        coEvery {
+            repository.getUserSubjectsFromScrapper(any(), any(), any(), any())
+        } returns registerUser
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
         every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
@@ -162,7 +149,9 @@ class LoginFormPresenterTest {
 
     @Test
     fun loginEmptyTwiceTest() {
-        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } returns listOf()
+        coEvery {
+            repository.getUserSubjectsFromScrapper(any(), any(), any(), any())
+        } returns registerUser
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
         every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"
@@ -180,7 +169,14 @@ class LoginFormPresenterTest {
     @Test
     fun loginErrorTest() {
         val testException = IOException("test")
-        coEvery { repository.getStudentsScrapper(any(), any(), any(), any()) } throws testException
+        coEvery {
+            repository.getUserSubjectsFromScrapper(
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        } throws testException
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
         every { loginFormView.formHostValue } returns "https://fakelog.cf/?email"

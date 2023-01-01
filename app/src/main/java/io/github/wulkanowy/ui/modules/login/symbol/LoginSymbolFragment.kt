@@ -12,7 +12,7 @@ import androidx.core.text.parseAsHtml
 import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.StudentWithSemesters
+import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginSymbolBinding
 import io.github.wulkanowy.ui.base.BaseFragment
@@ -42,6 +42,8 @@ class LoginSymbolFragment :
         }
     }
 
+    override val symbolValue: String? get() = binding.loginSymbolName.text?.toString()
+
     override val symbolNameError: CharSequence?
         get() = binding.loginSymbolNameLayout.error
 
@@ -58,7 +60,7 @@ class LoginSymbolFragment :
         (requireActivity() as LoginActivity).showActionBar(true)
 
         with(binding) {
-            loginSymbolSignIn.setOnClickListener { presenter.attemptLogin(loginSymbolName.text.toString()) }
+            loginSymbolSignIn.setOnClickListener { presenter.attemptLogin() }
             loginSymbolFaq.setOnClickListener { presenter.onFaqClick() }
             loginSymbolContactEmail.setOnClickListener { presenter.onEmailClick() }
 
@@ -92,9 +94,13 @@ class LoginSymbolFragment :
     }
 
     override fun setErrorSymbolRequire() {
-        binding.loginSymbolNameLayout.apply {
+        setErrorSymbol(getString(R.string.error_field_required))
+    }
+
+    override fun setErrorSymbol(message: String) {
+        with(binding.loginSymbolNameLayout) {
             requestFocus()
-            error = getString(R.string.error_field_required)
+            error = message
         }
     }
 
@@ -125,8 +131,8 @@ class LoginSymbolFragment :
         binding.loginSymbolContainer.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun navigateToStudentSelect(studentsWithSemesters: List<StudentWithSemesters>) {
-        (activity as? LoginActivity)?.navigateToStudentSelect(studentsWithSemesters)
+    override fun navigateToStudentSelect(loginData: LoginData, registerUser: RegisterUser) {
+        (activity as? LoginActivity)?.navigateToStudentSelect(loginData, registerUser)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
