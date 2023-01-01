@@ -178,7 +178,7 @@ class MessageRepository @Inject constructor(
         ).first()
     }
 
-    suspend fun deleteMessage(student: Student, mailbox: Mailbox, message: Message) {
+    suspend fun deleteMessage(student: Student, mailbox: Mailbox?, message: Message) {
         deleteMessages(student, mailbox, listOf(message))
     }
 

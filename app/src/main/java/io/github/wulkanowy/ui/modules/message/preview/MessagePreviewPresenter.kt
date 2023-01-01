@@ -186,7 +186,7 @@ class MessagePreviewPresenter @Inject constructor(
             runCatching {
                 val student = studentRepository.getCurrentStudent(decryptPass = true)
                 val mailbox = messageRepository.getMailboxByStudent(student)
-                messageRepository.deleteMessage(student, mailbox!!, message!!)
+                messageRepository.deleteMessage(student, mailbox, message!!)
             }
                 .onFailure {
                     retryCallback = { onMessageDelete() }
