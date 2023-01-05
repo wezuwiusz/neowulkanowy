@@ -1,4 +1,4 @@
-Wersja 1.9.0
+Wersja 1.9.1
 
 - dodaliśmy obsługę Androida 13 (w tym ikona aplikacji obsługująca Material You)
 - przerobiliśmy ekran wyboru ucznia przy pierwszym logowaniu
