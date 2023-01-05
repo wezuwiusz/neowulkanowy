@@ -280,11 +280,24 @@ class LoginStudentSelectPresenter @Inject constructor(
 
     private fun onEmailClick() {
         view?.openEmail(lastError?.message.ifNullOrBlank {
-            registerUser.symbols.flatMap { symbol ->
-                symbol.schools.map { it.error?.message } + symbol.error?.message
-            }.filterNotNull().distinct().joinToString("; ") {
-                it.take(46) + "..."
-            }.ifEmpty { "blank" }
+            loginData.baseUrl + "/" + loginData.symbol + "\n" + registerUser.symbols.filterNot {
+                it.error is AccountPermissionException && it.symbol != loginData.symbol
+            }.joinToString(";\n") { symbol ->
+                buildString {
+                    append(" -")
+                    append(symbol.symbol)
+                    append("(${symbol.error?.message?.let { it.take(46) + "..." } ?: symbol.schools.size})")
+                    if (symbol.schools.isNotEmpty()) {
+                        append(": ")
+                    }
+                    append(symbol.schools.joinToString(", ") { unit ->
+                        buildString {
+                            append(unit.schoolShortName)
+                            append("(${unit.error?.message?.let { it.take(46) + "..." } ?: unit.students.size})")
+                        }
+                    })
+                }
+            }
         })
     }
 
