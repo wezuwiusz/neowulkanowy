@@ -103,7 +103,10 @@ class MessageRepository @Inject constructor(
             messagesDb.loadMessageWithAttachment(message.messageGlobalKey)
         },
         fetch = {
-            sdk.init(student).getMessageDetails(it!!.message.messageGlobalKey, markAsRead)
+            sdk.init(student).getMessageDetails(
+                messageKey = it!!.message.messageGlobalKey,
+                markAsRead = message.unread && markAsRead,
+            )
         },
         saveFetchResult = { old, new ->
             checkNotNull(old) { "Fetched message no longer exist!" }
