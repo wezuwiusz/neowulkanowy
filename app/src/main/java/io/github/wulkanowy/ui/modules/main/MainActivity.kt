@@ -27,6 +27,7 @@ import io.github.wulkanowy.databinding.DialogAdsConsentBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
+import io.github.wulkanowy.ui.modules.settings.appearance.menuorder.AppMenuItem
 import io.github.wulkanowy.utils.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -124,13 +125,20 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         return true
     }
 
-    override fun initView(startMenuIndex: Int, rootDestinations: List<Destination>) {
+    override fun initView(
+        startMenuIndex: Int,
+        rootAppMenuItems: List<AppMenuItem>,
+        rootUpdatedDestinations: List<Destination>
+    ) {
         initializeToolbar()
-        initializeBottomNavigation(startMenuIndex)
-        initializeNavController(startMenuIndex, rootDestinations)
+        initializeBottomNavigation(startMenuIndex, rootAppMenuItems)
+        initializeNavController(startMenuIndex, rootUpdatedDestinations)
     }
 
-    private fun initializeNavController(startMenuIndex: Int, rootDestinations: List<Destination>) {
+    private fun initializeNavController(
+        startMenuIndex: Int,
+        rootUpdatedDestinations: List<Destination>
+    ) {
         with(navController) {
             setOnViewChangeListener { destinationView ->
                 presenter.onViewChange(destinationView)
@@ -140,7 +148,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
                 )
             }
             fragmentHideStrategy = HIDE
-            rootFragments = rootDestinations.map { it.destinationFragment }
+            rootFragments = rootUpdatedDestinations.map { it.destinationFragment }
 
             initialize(startMenuIndex, savedInstanceState)
         }
@@ -156,17 +164,16 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         }
     }
 
-    private fun initializeBottomNavigation(startMenuIndex: Int) {
+    private fun initializeBottomNavigation(
+        startMenuIndex: Int,
+        rootAppMenuItems: List<AppMenuItem>
+    ) {
         with(binding.mainBottomNav) {
             with(menu) {
-                add(Menu.NONE, 0, Menu.NONE, R.string.dashboard_title)
-                    .setIcon(R.drawable.ic_main_dashboard)
-                add(Menu.NONE, 1, Menu.NONE, R.string.grade_title)
-                    .setIcon(R.drawable.ic_main_grade)
-                add(Menu.NONE, 2, Menu.NONE, R.string.attendance_title)
-                    .setIcon(R.drawable.ic_main_attendance)
-                add(Menu.NONE, 3, Menu.NONE, R.string.timetable_title)
-                    .setIcon(R.drawable.ic_main_timetable)
+                rootAppMenuItems.forEachIndexed { index, item ->
+                    add(Menu.NONE, index, Menu.NONE, item.title)
+                        .setIcon(item.icon)
+                }
                 add(Menu.NONE, 4, Menu.NONE, R.string.more_title)
                     .setIcon(R.drawable.ic_main_more)
             }

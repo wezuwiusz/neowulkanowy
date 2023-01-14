@@ -10,6 +10,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.enums.*
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
+import io.github.wulkanowy.ui.modules.settings.appearance.menuorder.AppMenuItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.decodeFromString
@@ -27,9 +28,6 @@ class PreferencesRepository @Inject constructor(
     private val flowSharedPref: FlowSharedPreferences,
     private val json: Json,
 ) {
-
-    val startMenuIndex: Int
-        get() = getString(R.string.pref_key_start_menu, R.string.pref_default_startup).toInt()
 
     val isShowPresent: Boolean
         get() = getBoolean(
@@ -315,6 +313,20 @@ class PreferencesRepository @Inject constructor(
             putBoolean(context.getString(R.string.pref_key_ads_enabled), value)
         }
 
+    var appMenuItemOrder: List<AppMenuItem>
+        get() {
+            val value = sharedPref.getString(PREF_KEY_APP_MENU_ITEM_ORDER, null)
+                ?: return AppMenuItem.defaultAppMenuItemList
+
+            return json.decodeFromString(value)
+        }
+        set(value) = sharedPref.edit {
+            putString(
+                PREF_KEY_APP_MENU_ITEM_ORDER,
+                json.encodeToString(value)
+            )
+        }
+
     var installationId: String
         get() = sharedPref.getString(PREF_KEY_INSTALLATION_ID, null).orEmpty()
         private set(value) = sharedPref.edit { putString(PREF_KEY_INSTALLATION_ID, value) }
@@ -341,6 +353,7 @@ class PreferencesRepository @Inject constructor(
         sharedPref.getBoolean(id, context.resources.getBoolean(default))
 
     private companion object {
+        private const val PREF_KEY_APP_MENU_ITEM_ORDER = "app_menu_item_order"
         private const val PREF_KEY_INSTALLATION_ID = "installation_id"
         private const val PREF_KEY_DASHBOARD_ITEMS_POSITION = "dashboard_items_position"
         private const val PREF_KEY_IN_APP_REVIEW_COUNT = "in_app_review_count"

@@ -46,7 +46,7 @@ class MainPresenterTest {
         MockKAnnotations.init(this)
         clearMocks(mainView)
 
-        every { mainView.initView(any(), any()) } just Runs
+        every { mainView.initView(any(), any(), any()) } just Runs
         presenter = MainPresenter(
             errorHandler = errorHandler,
             studentRepository = studentRepository,

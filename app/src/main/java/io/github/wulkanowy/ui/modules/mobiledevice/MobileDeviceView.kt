@@ -32,4 +32,6 @@ interface MobileDeviceView : BaseView {
     fun setErrorDetails(message: String)
 
     fun showTokenDialog()
+
+    fun resetView()
 }

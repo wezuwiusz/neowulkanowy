@@ -26,4 +26,6 @@ interface LuckyNumberView : BaseView {
     fun showContent(show: Boolean)
 
     fun openLuckyNumberHistory()
+
+    fun popView()
 }

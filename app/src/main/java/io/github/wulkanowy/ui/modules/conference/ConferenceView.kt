@@ -28,4 +28,6 @@ interface ConferenceView : BaseView {
     fun showContent(show: Boolean)
 
     fun openConferenceDialog(conference: Conference)
+
+    fun resetView()
 }

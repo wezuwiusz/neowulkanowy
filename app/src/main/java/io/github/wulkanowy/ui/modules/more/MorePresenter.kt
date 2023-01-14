@@ -1,15 +1,23 @@
 package io.github.wulkanowy.ui.modules.more
 
+import io.github.wulkanowy.R
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
+import io.github.wulkanowy.ui.modules.Destination
 import timber.log.Timber
 import javax.inject.Inject
 
 class MorePresenter @Inject constructor(
     errorHandler: ErrorHandler,
-    studentRepository: StudentRepository
+    studentRepository: StudentRepository,
+    preferencesRepository: PreferencesRepository
 ) : BasePresenter<MoreView>(errorHandler, studentRepository) {
+
+    private val moreAppMenuItem = preferencesRepository.appMenuItemOrder
+        .sortedBy { it.order }
+        .drop(4)
 
     override fun onAttachView(view: MoreView) {
         super.onAttachView(view)
@@ -18,22 +26,10 @@ class MorePresenter @Inject constructor(
         loadData()
     }
 
-    fun onItemSelected(title: String) {
-        Timber.i("Select more item \"${title}\"")
-        view?.run {
-            when (title) {
-                messagesRes?.first -> openMessagesView()
-                examRes?.first -> openExamView()
-                homeworkRes?.first -> openHomeworkView()
-                noteRes?.first -> openNoteView()
-                conferencesRes?.first -> openConferencesView()
-                schoolAnnouncementRes?.first -> openSchoolAnnouncementView()
-                schoolAndTeachersRes?.first -> openSchoolAndTeachersView()
-                mobileDevicesRes?.first -> openMobileDevicesView()
-                settingsRes?.first -> openSettingsView()
-                luckyNumberRes?.first -> openLuckyNumberView()
-            }
-        }
+    fun onItemSelected(moreItem: MoreItem) {
+        Timber.i("Select more item \"${moreItem.destination.destinationType}\"")
+
+        view?.openView(moreItem.destination)
     }
 
     fun onViewReselected() {
@@ -43,19 +39,21 @@ class MorePresenter @Inject constructor(
 
     private fun loadData() {
         Timber.i("Load items for more view")
-        view?.run {
-            updateData(listOfNotNull(
-                messagesRes,
-                examRes,
-                homeworkRes,
-                noteRes,
-                luckyNumberRes,
-                conferencesRes,
-                schoolAnnouncementRes,
-                schoolAndTeachersRes,
-                mobileDevicesRes,
-                settingsRes
-            ))
+        val moreItems = moreAppMenuItem.map {
+            MoreItem(
+                icon = it.icon,
+                title = it.title,
+                destination = it.destinationType.defaultDestination
+            )
         }
+            .plus(
+                MoreItem(
+                    icon = R.drawable.ic_more_settings,
+                    title = R.string.settings_title,
+                    destination = Destination.Settings
+                )
+            )
+
+        view?.updateData(moreItems)
     }
 }

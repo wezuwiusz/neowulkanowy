@@ -30,4 +30,6 @@ interface NoteView : BaseView {
     fun showRefresh(show: Boolean)
 
     fun showNoteDialog(note: Note)
+
+    fun resetView()
 }

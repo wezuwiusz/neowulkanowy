@@ -175,4 +175,17 @@ class ExamPresenter @Inject constructor(
             )
         }
     }
+
+    fun onViewReselected() {
+        Timber.i("Exam view is reselected")
+
+        baseDate = now().nextOrSameSchoolDay
+
+        if (currentDate != baseDate) {
+            reloadView(baseDate)
+            loadData()
+        } else if (view?.isViewEmpty == false) {
+            view?.resetView()
+        }
+    }
 }

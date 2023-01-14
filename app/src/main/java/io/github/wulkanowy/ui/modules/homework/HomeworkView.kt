@@ -36,4 +36,6 @@ interface HomeworkView : BaseView {
     fun showHomeworkDialog(homework: Homework)
 
     fun showAddHomeworkDialog()
+
+    fun resetView()
 }

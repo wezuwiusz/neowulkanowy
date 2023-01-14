@@ -2,9 +2,7 @@ package io.github.wulkanowy.ui.modules.exam
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -20,7 +18,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), ExamView,
-    MainView.TitledView {
+    MainView.TitledView, MainView.MainChildView {
 
     @Inject
     lateinit var presenter: ExamPresenter
@@ -124,6 +122,14 @@ class ExamFragment : BaseFragment<FragmentExamBinding>(R.layout.fragment_exam), 
 
     override fun showExamDialog(exam: Exam) {
         (activity as? MainActivity)?.showDialogFragment(ExamDialog.newInstance(exam))
+    }
+
+    override fun onFragmentReselected() {
+        if (::presenter.isInitialized) presenter.onViewReselected()
+    }
+
+    override fun resetView() {
+        binding.examRecycler.smoothScrollToPosition(0)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

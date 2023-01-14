@@ -99,4 +99,9 @@ class LuckyNumberPresenter @Inject constructor(
     fun onDetailsClick() {
         view?.showErrorDetailsDialog(lastError)
     }
+
+    fun onViewReselected() {
+        Timber.i("Luckynumber view is reselected")
+        view?.popView()
+    }
 }

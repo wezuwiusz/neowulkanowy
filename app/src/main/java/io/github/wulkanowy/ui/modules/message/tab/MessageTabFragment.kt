@@ -235,6 +235,10 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         presenter.onParentFinishActionMode()
     }
 
+    fun onParentReselected() {
+        presenter.onParentReselected()
+    }
+
     private fun onChipChecked(chip: CompoundButton, isChecked: Boolean) {
         when (chip.id) {
             R.id.chip_unread -> presenter.onUnreadFilterSelected(isChecked)

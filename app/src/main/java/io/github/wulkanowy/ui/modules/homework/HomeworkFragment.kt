@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment_homework),
-    HomeworkView, MainView.TitledView {
+    HomeworkView, MainView.TitledView, MainView.MainChildView {
 
     @Inject
     lateinit var presenter: HomeworkPresenter
@@ -131,6 +131,14 @@ class HomeworkFragment : BaseFragment<FragmentHomeworkBinding>(R.layout.fragment
 
     override fun showAddHomeworkDialog() {
         (activity as? MainActivity)?.showDialogFragment(HomeworkAddDialog())
+    }
+
+    override fun onFragmentReselected() {
+        if (::presenter.isInitialized) presenter.onViewReselected()
+    }
+
+    override fun resetView() {
+        binding.homeworkRecycler.smoothScrollToPosition(0)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
