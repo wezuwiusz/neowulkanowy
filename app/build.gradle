@@ -239,7 +239,7 @@ dependencies {
     implementation "io.coil-kt:coil:2.2.2"
     implementation "io.github.wulkanowy:AppKillerManager:3.0.1"
     implementation 'me.xdrop:fuzzywuzzy:1.4.0'
-    implementation 'com.fredporciuncula:flow-preferences:1.8.0'
+    implementation 'com.fredporciuncula:flow-preferences:1.9.0'
     implementation 'org.apache.commons:commons-text:1.10.0'
 
     playImplementation platform('com.google.firebase:firebase-bom:31.2.1')
