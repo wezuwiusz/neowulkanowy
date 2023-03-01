@@ -26,6 +26,7 @@
     <string name="student_info_title">Student info</string>
     <string name="dashboard_title">Dashboard</string>
     <string name="notifications_center_title">Notifications center</string>
+    <string name="menu_order_title">Menu configuartion</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -590,6 +591,7 @@
     <string name="all_undo">Undo</string>
     <string name="all_change">Change</string>
     <string name="all_add_to_calendar">Add to calendar</string>
+    <string name="all_cancel">Cancel</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">No lessons</string>
     <string name="widget_timetable_theme_title">Choose theme</string>
@@ -611,6 +613,8 @@
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>
     <string name="pref_view_grade_sorting_mode">Subjects sorting</string>
     <string name="pref_view_app_language">Language</string>
+    <string name="pref_view_menu_order_title">Menu configuration</string>
+    <string name="pref_view_menu_order_summary">Set the order of functions in the menu</string>
     <string name="pref_notify_header">Notifications</string>
     <string name="pref_notify_header_other">Other</string>
     <string name="pref_notify_switch">Show notifications</string>
@@ -712,6 +716,10 @@
     <string name="update_download_success">An update has just been downloaded.</string>
     <string name="update_download_success_button">Restart</string>
     <string name="update_failed">Update failed! Wulkanowy may not function properly. Consider updating</string>
+    <!--Menu order-->
+    <string name="menu_order_confirm_title">Application restart</string>
+    <string name="menu_order_confirm_content">The application must restart for the changes to be saved</string>
+    <string name="menu_order_confirm_restart">Restart</string>
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>
     <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>

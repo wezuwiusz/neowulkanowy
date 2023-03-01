@@ -26,6 +26,7 @@
     <string name="student_info_title">Інформація про учня</string>
     <string name="dashboard_title">Головна</string>
     <string name="notifications_center_title">Центр сповіщень</string>
+    <string name="menu_order_title">Конфігурація меню</string>
     <!--Subtitles-->
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
@@ -55,7 +56,7 @@
     <string name="login_invalid_symbol">Неправильний symbol</string>
     <string name="login_incorrect_symbol">Студента не знайдено. Перевірте symbol та обранний тип щоденника UONET+</string>
     <string name="login_duplicate_student">Цього учня вже авторизовано</string>
-    <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the first login screen</string>
+    <string name="login_symbol_helper">Symbol можно знайти на сторінці щоденника у&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nПереконайтеся, що ви вказали відповідний щоденник у полі <b>Тип щоденника UONET+</b> на першому екрані логування</string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_advanced_warning_mobile_api">У цьому режимі не працюють: щасливий номер, статистика класу по оцінкам, статистика відвідуваності та уроків, інформація про школу та список зареєстрованих пристроїв</string>
@@ -72,14 +73,14 @@
     <string name="login_recover">Відновити</string>
     <string name="login_signed_in">Учня вже авторизовано</string>
     <string name="login_host_standard">Стандартний</string>
-    <string name="login_other_search_locations">Other search locations</string>
-    <string name="login_no_active_student">No active students found</string>
-    <string name="login_symbol_enter">Enter a different symbol</string>
+    <string name="login_other_search_locations">Інші розташування пошуку</string>
+    <string name="login_no_active_student">Активних учнів не знайдено</string>
+    <string name="login_symbol_enter">Введіть інший symbol</string>
     <!--Notifications-->
-    <string name="notifications_header_title">Enable notifications</string>
-    <string name="notifications_header_description">Enable notifications so you don\'t miss message from teacher or new grade</string>
-    <string name="notifications_skip">Skip</string>
-    <string name="notifications_enable">Enable</string>
+    <string name="notifications_header_title">Увімкнути сповіщення</string>
+    <string name="notifications_header_description">Увімкнути сповіщення, щоб не пропустити лист від вчителя або нову оцінку</string>
+    <string name="notifications_skip">Пропустити</string>
+    <string name="notifications_enable">Увімкнути</string>
     <!--Main-->
     <string name="main_account_picker">Змінити облікові записи</string>
     <string name="main_log_in">Увійти</string>
@@ -493,8 +494,8 @@
     </plurals>
     <string name="conferences_present">Присутність на зустрічі</string>
     <string name="conference_agenda">Порядок денний</string>
-    <string name="conference_place">Place</string>
-    <string name="conference_topic">Topic</string>
+    <string name="conference_place">Місце</string>
+    <string name="conference_topic">Тема</string>
     <!--Director information-->
     <string name="school_announcement_title">Оголошення школи</string>
     <string name="school_announcement_no_items">Немає шкільних оголошень</string>
@@ -522,7 +523,7 @@
     <string name="account_confirm">Ви впевнені, що хочете вийти з цього облікового запису?</string>
     <string name="account_logout_student">Вийти з облікового запису учня</string>
     <string name="account_type_student">Обліковий запис учня</string>
-    <string name="account_type_parent">Обліковий запис батька</string>
+    <string name="account_type_parent">Обліковий запис родителя</string>
     <string name="account_details_edit">Змінити дані</string>
     <string name="account_quick_manager">Змінити облікові записи</string>
     <string name="account_select_student">Вибрати учня</string>
@@ -678,6 +679,7 @@
     <string name="all_undo">Відмінити</string>
     <string name="all_change">Змінити</string>
     <string name="all_add_to_calendar">Додати у календар</string>
+    <string name="all_cancel">Скасувати</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Немаэ уроків</string>
     <string name="widget_timetable_theme_title">Увібрати тему</string>
@@ -699,6 +701,8 @@
     <string name="pref_view_grade_color_scheme">Схема кольорів оцінок</string>
     <string name="pref_view_grade_sorting_mode">Сортування предметів</string>
     <string name="pref_view_app_language">Мова</string>
+    <string name="pref_view_menu_order_title">Конфігурація меню</string>
+    <string name="pref_view_menu_order_summary">Встановити порядок функцій в меню</string>
     <string name="pref_notify_header">Повідомлення</string>
     <string name="pref_notify_header_other">Інше</string>
     <string name="pref_notify_switch">Показувати повідомлення</string>
@@ -800,6 +804,10 @@
     <string name="update_download_success">Щойно завантажено оновлення.</string>
     <string name="update_download_success_button">Перезавантажити</string>
     <string name="update_failed">Помилка оновлення! Wulkanowy може не працювати належним чином. Подумайте про оновлення</string>
+    <!--Menu order-->
+    <string name="menu_order_confirm_title">Перезавантаження додатку</string>
+    <string name="menu_order_confirm_content">Додаток потрібно перезавантажити для збереження змін</string>
+    <string name="menu_order_confirm_restart">Перезавантажити</string>
     <!--Errors-->
     <string name="error_no_internet">Немає з\'єднання з інтернетом</string>
     <string name="error_invalid_device_datetime">Сталася помилка. Перевірте годинник пристрою</string>
