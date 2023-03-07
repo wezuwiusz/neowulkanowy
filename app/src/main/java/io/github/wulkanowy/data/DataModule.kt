@@ -19,6 +19,7 @@ import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AppInfo
+import io.github.wulkanowy.utils.RemoteConfigHelper
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -36,10 +37,11 @@ internal class DataModule {
 
     @Singleton
     @Provides
-    fun provideSdk(chuckerInterceptor: ChuckerInterceptor) =
+    fun provideSdk(chuckerInterceptor: ChuckerInterceptor, remoteConfig: RemoteConfigHelper) =
         Sdk().apply {
             androidVersion = android.os.Build.VERSION.RELEASE
             buildTag = android.os.Build.MODEL
+            userAgentTemplate = remoteConfig.userAgentTemplate
             setSimpleHttpLogger { Timber.d(it) }
 
             // for debug only
