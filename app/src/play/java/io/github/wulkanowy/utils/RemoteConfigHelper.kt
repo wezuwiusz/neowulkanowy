@@ -15,7 +15,7 @@ class RemoteConfigHelper @Inject constructor(
     private val appInfo: AppInfo,
 ) : BaseRemoteConfigHelper() {
 
-    fun initialize() {
+    override fun initialize() {
         FirebaseApp.initializeApp(context)
 
         Firebase.remoteConfig.setConfigSettingsAsync(remoteConfigSettings {
