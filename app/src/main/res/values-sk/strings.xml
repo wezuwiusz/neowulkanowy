@@ -26,7 +26,7 @@
     <string name="student_info_title">Informácie o žiakovi</string>
     <string name="dashboard_title">Domov</string>
     <string name="notifications_center_title">Centrum oznámení</string>
-    <string name="menu_order_title">Menu configuartion</string>
+    <string name="menu_order_title">Konfigurácia menu</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -679,7 +679,7 @@
     <string name="all_undo">Vrátiť</string>
     <string name="all_change">Zmeniť</string>
     <string name="all_add_to_calendar">Pridať do kalendára</string>
-    <string name="all_cancel">Cancel</string>
+    <string name="all_cancel">Zrušiť</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Žiadne lekcie</string>
     <string name="widget_timetable_theme_title">Vybrať motív</string>
@@ -701,8 +701,8 @@
     <string name="pref_view_grade_color_scheme">Známky farebnú schému</string>
     <string name="pref_view_grade_sorting_mode">Triedenie predmetov</string>
     <string name="pref_view_app_language">Jazyk</string>
-    <string name="pref_view_menu_order_title">Menu configuration</string>
-    <string name="pref_view_menu_order_summary">Set the order of functions in the menu</string>
+    <string name="pref_view_menu_order_title">Konfigurácia menu</string>
+    <string name="pref_view_menu_order_summary">Nastaviť poradie funkcií v menu</string>
     <string name="pref_notify_header">Oznámenia</string>
     <string name="pref_notify_header_other">Iné</string>
     <string name="pref_notify_switch">Zobraziť oznámenia</string>
@@ -805,9 +805,9 @@
     <string name="update_download_success_button">Reštartovať</string>
     <string name="update_failed">Aktualizácia zlyhala! Wulkanowy nemusí fungovať správne. Zvážte aktualizáciu</string>
     <!--Menu order-->
-    <string name="menu_order_confirm_title">Application restart</string>
-    <string name="menu_order_confirm_content">The application must restart for the changes to be saved</string>
-    <string name="menu_order_confirm_restart">Restart</string>
+    <string name="menu_order_confirm_title">Reštartovanie aplikácie</string>
+    <string name="menu_order_confirm_content">Pre uloženie zmien je nutné aplikáciu reštartovať</string>
+    <string name="menu_order_confirm_restart">Reštartovať</string>
     <!--Errors-->
     <string name="error_no_internet">Žiadne internetové pripojenie</string>
     <string name="error_invalid_device_datetime">Vyskytla sa chyba. Skontrolujte hodiny svojho zariadenia</string>
