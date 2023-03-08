@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.sdk.scrapper.getNormalizedSymbol
+import io.github.wulkanowy.sdk.scrapper.login.InvalidSymbolException
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -61,11 +62,11 @@ class LoginSymbolPresenter @Inject constructor(
                 email = loginData.login,
                 password = loginData.password,
                 scrapperBaseUrl = loginData.baseUrl,
-                symbol = view?.symbolValue.orEmpty(),
+                symbol = loginData.symbol.orEmpty(),
             )
-        }.onEach {
-            registerUser = it.dataOrNull
-            when (it) {
+        }.onEach { user ->
+            registerUser = user.dataOrNull
+            when (user) {
                 is Resource.Loading -> view?.run {
                     Timber.i("Login with symbol started")
                     hideSoftKeyboard()
@@ -73,7 +74,7 @@ class LoginSymbolPresenter @Inject constructor(
                     showContent(false)
                 }
                 is Resource.Success -> {
-                    when (it.data.symbols.size) {
+                    when (user.data.symbols.size) {
                         0 -> {
                             Timber.i("Login with symbol result: Empty student list")
                             view?.run {
@@ -82,8 +83,19 @@ class LoginSymbolPresenter @Inject constructor(
                             }
                         }
                         else -> {
-                            Timber.i("Login with symbol result: Success")
-                            view?.navigateToStudentSelect(loginData, requireNotNull(it.data))
+                            val enteredSymbolDetails = user.data.symbols
+                                .firstOrNull()
+                                ?.takeIf { it.symbol == loginData.symbol }
+
+                            if (enteredSymbolDetails?.error is InvalidSymbolException) {
+                                view?.run {
+                                    setErrorSymbolInvalid()
+                                    showContact(true)
+                                }
+                            } else {
+                                Timber.i("Login with symbol result: Success")
+                                view?.navigateToStudentSelect(loginData, requireNotNull(user.data))
+                            }
                         }
                     }
                     analytics.logEvent(
@@ -102,10 +114,10 @@ class LoginSymbolPresenter @Inject constructor(
                         "students" to -1,
                         "scrapperBaseUrl" to loginData.baseUrl,
                         "symbol" to view?.symbolValue,
-                        "error" to it.error.message.ifNullOrBlank { "No message" }
+                        "error" to user.error.message.ifNullOrBlank { "No message" }
                     )
-                    loginErrorHandler.dispatch(it.error)
-                    lastError = it.error
+                    loginErrorHandler.dispatch(user.error)
+                    lastError = user.error
                     view?.showContact(true)
                 }
             }
