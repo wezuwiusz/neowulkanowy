@@ -40,7 +40,6 @@ fun List<SdkMessage>.mapToEntities(
 fun List<SdkMessageAttachment>.mapToEntities(messageGlobalKey: String) = map {
     MessageAttachment(
         messageGlobalKey = messageGlobalKey,
-        realId = it.url.hashCode(),
         url = it.url,
         filename = it.filename
     )

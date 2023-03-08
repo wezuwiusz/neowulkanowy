@@ -34,11 +34,15 @@ class WulkanowyApp : Application(), Configuration.Provider {
     @Inject
     lateinit var adsHelper: AdsHelper
 
+    @Inject
+    lateinit var remoteConfigHelper: RemoteConfigHelper
+
     override fun onCreate() {
         super.onCreate()
         initializeAppLanguage()
         themeManager.applyDefaultTheme()
         adsHelper.initialize()
+        remoteConfigHelper.initialize()
         initLogging()
     }
 

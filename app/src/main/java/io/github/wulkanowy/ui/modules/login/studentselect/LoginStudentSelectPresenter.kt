@@ -12,6 +12,7 @@ import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.sdk.scrapper.login.AccountPermissionException
+import io.github.wulkanowy.sdk.scrapper.login.InvalidSymbolException
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
@@ -158,7 +159,7 @@ class LoginStudentSelectPresenter @Inject constructor(
         isNotEmptySymbolsExist: Boolean,
     ) = buildList {
         val filteredEmptySymbols = emptySymbols.filter {
-            it.error !is AccountPermissionException
+            it.error !is InvalidSymbolException
         }.ifEmpty { emptySymbols.takeIf { !isNotEmptySymbolsExist }.orEmpty() }
 
         if (filteredEmptySymbols.isNotEmpty() && isNotEmptySymbolsExist) {
@@ -281,7 +282,7 @@ class LoginStudentSelectPresenter @Inject constructor(
     private fun onEmailClick() {
         view?.openEmail(lastError?.message.ifNullOrBlank {
             loginData.baseUrl + "/" + loginData.symbol + "\n" + registerUser.symbols.filterNot {
-                it.error is AccountPermissionException && it.symbol != loginData.symbol
+                (it.error is AccountPermissionException || it.error is InvalidSymbolException) && it.symbol != loginData.symbol
             }.joinToString(";\n") { symbol ->
                 buildString {
                     append(" -")
@@ -297,7 +298,9 @@ class LoginStudentSelectPresenter @Inject constructor(
                         }
                     })
                 }
-            }
+            } + "\nPozostałe: " + registerUser.symbols.filter {
+                it.error is AccountPermissionException || it.error is InvalidSymbolException
+            }.joinToString(", ") { it.symbol }
         })
     }
 
