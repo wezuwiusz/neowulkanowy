@@ -1,10 +1,7 @@
-Wersja 1.9.1
+Wersja 1.9.2
 
-- dodaliśmy obsługę Androida 13 (w tym ikona aplikacji obsługująca Material You)
-- przerobiliśmy ekran wyboru ucznia przy pierwszym logowaniu
-- naprawiliśmy usuwanie wiadomości w niektórych przypadkach
-- naprawiliśmy błąd występujący przy resecie hasła
-- naprawiliśmy literówkę w tytule domyślnej treści wiadomości usprawiedliwiania
-- naprawiliśmy nazwę aplikacji przy ustawionym w telefonie jezyku francuskim
+- naprawiliśmy oznaczanie wiadomości jako odczytanych (problem dotyczył głównie kont rodziców z wieloma dziećmi w tej samej szkole)
+- naprawiliśmy zapisywanie załączników do wiadomości w sytuacji, gdy ten sam załącznik był dodany do więcej niż jednej wiadomości
+- usprawniliśmy ekran z wyborem uczniów i wpisywaniem symbolu przy pierwszym logowaniu
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
