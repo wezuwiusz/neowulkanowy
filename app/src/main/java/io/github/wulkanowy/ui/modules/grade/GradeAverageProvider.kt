@@ -15,6 +15,7 @@ import io.github.wulkanowy.utils.changeModifier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
@@ -77,7 +78,7 @@ class GradeAverageProvider @Inject constructor(
                 )
             }
         }
-    }
+    }.distinctUntilChanged()
 
     private fun calculateCombinedAverage(
         student: Student,
