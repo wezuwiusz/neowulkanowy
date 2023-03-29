@@ -11,6 +11,7 @@
         android:layout_height="48dp"
         android:background="?colorSurface"
         android:visibility="invisible"
+        android:outlineProvider="none"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="?colorPrimary"
         app:tabTextColor="@color/material_on_surface_emphasis_medium"
@@ -69,7 +70,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/gradeErrorDetails"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

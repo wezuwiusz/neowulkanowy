@@ -201,13 +201,6 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_timetable_show_timers
         )
 
-    var isHomeworkFullscreen: Boolean
-        get() = getBoolean(
-            R.string.pref_key_homework_fullscreen,
-            R.bool.pref_default_homework_fullscreen
-        )
-        set(value) = sharedPref.edit().putBoolean("homework_fullscreen", value).apply()
-
     val showSubjectsWithoutGrades: Boolean
         get() = getBoolean(
             R.string.pref_key_subjects_without_grades,

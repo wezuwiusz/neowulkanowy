@@ -13,6 +13,7 @@ import io.github.wulkanowy.utils.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.sync.Mutex
+import java.time.Instant
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -162,6 +163,11 @@ class TimetableRepository @Inject constructor(
     private suspend fun refreshDayHeaders(old: List<TimetableHeader>, new: List<TimetableHeader>) {
         timetableHeaderDb.deleteAll(old uniqueSubtract new)
         timetableHeaderDb.insertAll(new uniqueSubtract old)
+    }
+
+    fun getLastRefreshTimestamp(semester: Semester, start: LocalDate, end: LocalDate): Instant {
+        val refreshKey = getRefreshKey(cacheKey, semester, start, end)
+        return refreshHelper.getLastRefreshTimestamp(refreshKey)
     }
 
     suspend fun saveAdditionalList(additionalList: List<TimetableAdditional>) =

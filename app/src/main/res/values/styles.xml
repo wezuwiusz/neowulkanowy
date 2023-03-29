@@ -2,19 +2,35 @@
 
     <style name="WulkanowyTheme" parent="BaseWulkanowyTheme" />
 
-    <style name="BaseWulkanowyTheme" parent="@style/Theme.MaterialComponents.Light">
+    <style name="BaseWulkanowyTheme" parent="@style/Theme.Material3.Light">
         <item name="android:forceDarkAllowed" tools:targetApi="Q">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>
         <item name="colorSecondary">@color/colorPrimary</item>
         <item name="colorOnSecondary">@android:color/white</item>
-        <item name="colorTimetableChange">@color/timetable_change_dark</item>
+        <item name="colorSecondaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/colorOnPrimaryContainer</item>
+        <item name="colorTertiary">@color/colorPrimary</item>
+        <item name="colorOnTertiary">@android:color/white</item>
+        <item name="colorTertiaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/colorOnPrimaryContainer</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorTimetableCanceled">@color/timetable_canceled_light</item>
+        <item name="colorTimetableChange">@color/timetable_change_light</item>
         <item name="colorError">@color/colorError</item>
         <item name="colorDivider">@color/colorDivider</item>
         <item name="colorSwipeRefresh">@color/colorSwipeRefresh</item>
         <item name="colorMessageMedium">@color/dashboard_message_medium_dark</item>
-        <item name="android:statusBarColor">@android:color/darker_gray</item>
         <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:statusBarColor">@android:color/black</item>
         <item name="android:preferenceStyle">@style/PreferenceThemeOverlay</item>
+        <item name="materialCardViewStyle">@style/Widget.Material3.CardView.Elevated</item>
+        <item name="switchPreferenceCompatStyle">
+            @style/Preference.Wulkanowy.SwitchPreferenceCompat
+        </item>
+        <item name="alertDialogTheme">@style/WulkanowyTheme.PreferenceAlertDialog</item>
     </style>
 
     <style name="WulkanowyTheme.NoActionBar" parent="WulkanowyTheme">
@@ -24,26 +40,26 @@
     </style>
 
     <style name="WulkanowyTheme.SplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/colorPrimaryDark</item>
+        <item name="windowSplashScreenBackground">@color/colorPrimaryDarker</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
         <item name="postSplashScreenTheme">@style/WulkanowyTheme.NoActionBar</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
-    <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.MaterialComponents.Light.Dialog">
+    <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.Material3.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorPrimary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:windowBackground">@drawable/background_material_alert_dialog</item>
     </style>
 
-    <style name="Widget.Wulkanowy.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.Wulkanowy.Chip.Choice</item>
-    </style>
-
-    <style name="ThemeOverlay.Wulkanowy.Chip.Choice" parent="">
-        <item name="elevationOverlayEnabled">false</item>
+    <style name="Wulkanowy.Widget.Theme" parent="WulkanowyTheme">
+        <item name="colorPrimary">@color/widget_primary_color_light</item>
+        <item name="colorSurface">@color/widget_container</item>
+        <item name="colorOnPrimaryContainer">?attr/colorPrimary</item>
+        <item name="backgroundColor">@color/widget_list_item</item>
     </style>
 
     <style name="WulkanowyTheme.TextAppearanceBottomNavigation">
@@ -52,5 +68,14 @@
 
     <style name="WulkanowyTheme.Login" parent="WulkanowyTheme.NoActionBar" />
 
-    <style name="WulkanowyTheme.MessageSend" parent="WulkanowyTheme.NoActionBar" />
+    <style name="Preference.Wulkanowy.SwitchPreferenceCompat" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:widgetLayout">@layout/layout_preference_switch</item>
+    </style>
+
+    <style name="WulkanowyTheme.PreferenceAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="dialogCornerRadius">28dp</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="android:background">@drawable/background_material_alert_dialog</item>
+        <item name="android:layout" tools:ignore="PrivateResource">@layout/m3_alert_dialog</item>
+    </style>
 </resources>

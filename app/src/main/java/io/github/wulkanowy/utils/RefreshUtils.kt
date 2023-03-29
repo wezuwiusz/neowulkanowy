@@ -49,4 +49,9 @@ class AutoRefreshHelper @Inject constructor(
     fun updateLastRefreshTimestamp(key: String) {
         sharedPref.putLong(key, Instant.now().toEpochMilli())
     }
+
+    fun getLastRefreshTimestamp(key: String): Instant {
+        val refreshTimestampMilli = sharedPref.getLong(key, 0)
+        return Instant.ofEpochMilli(refreshTimestampMilli)
+    }
 }

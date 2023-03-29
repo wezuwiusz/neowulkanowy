@@ -3,7 +3,7 @@ package io.github.wulkanowy.ui.modules.notifications
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
-import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentNotificationsBinding
@@ -41,7 +41,7 @@ class NotificationsFragment :
     }
 
     private fun showSettingsDialog() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.notifications_header_title)
             .setMessage(R.string.notifications_header_description)
             .setNegativeButton(R.string.notifications_skip) { dialog, _ ->

@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.grade.details
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +18,10 @@ import io.github.wulkanowy.databinding.HeaderGradeDetailsBinding
 import io.github.wulkanowy.databinding.ItemGradeDetailsBinding
 import io.github.wulkanowy.ui.base.BaseExpandableAdapter
 import io.github.wulkanowy.utils.getBackgroundColor
+import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toFormattedString
 import timber.log.Timber
-import java.util.BitSet
+import java.util.*
 import javax.inject.Inject
 
 class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<RecyclerView.ViewHolder>() {
@@ -203,7 +205,9 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
         with(holder.binding) {
             gradeItemValue.run {
                 text = grade.entry
-                setBackgroundResource(grade.getBackgroundColor(gradeColorTheme))
+                backgroundTintList = ColorStateList.valueOf(
+                    context.getCompatColor(grade.getBackgroundColor(gradeColorTheme))
+                )
             }
             gradeItemDescription.text = when {
                 grade.description.isNotBlank() -> grade.description

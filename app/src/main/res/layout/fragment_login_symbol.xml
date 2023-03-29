@@ -66,7 +66,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/loginSymbolContactEmail"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -77,7 +77,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/loginSymbolFaq"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -132,7 +132,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginSymbolNameLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp"
@@ -145,7 +145,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/loginSymbolName"
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeActionLabel="@string/login_sign_in"

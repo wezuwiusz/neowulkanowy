@@ -1,23 +1,22 @@
 package io.github.wulkanowy.ui.modules.exam
 
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Exam
 import io.github.wulkanowy.databinding.DialogExamBinding
-import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.utils.openCalendarEventAdd
 import io.github.wulkanowy.utils.serializable
 import io.github.wulkanowy.utils.toFormattedString
 import java.time.LocalTime
 
-class ExamDialog : DialogFragment() {
-
-    private var binding: DialogExamBinding by lifecycleAwareVariable()
+@AndroidEntryPoint
+class ExamDialog : BaseDialogFragment<DialogExamBinding>() {
 
     private lateinit var exam: Exam
 
@@ -32,15 +31,14 @@ class ExamDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
         exam = requireArguments().serializable(ARGUMENT_KEY)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = DialogExamBinding.inflate(inflater).apply { binding = this }.root
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return MaterialAlertDialogBuilder(requireContext(), theme)
+            .setView(DialogExamBinding.inflate(layoutInflater).apply { binding = this }.root)
+            .create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

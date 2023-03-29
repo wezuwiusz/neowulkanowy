@@ -1,21 +1,20 @@
 package io.github.wulkanowy.ui.modules.conference
 
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.entities.Conference
 import io.github.wulkanowy.databinding.DialogConferenceBinding
-import io.github.wulkanowy.utils.lifecycleAwareVariable
+import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.utils.serializable
 import io.github.wulkanowy.utils.toFormattedString
 
-class ConferenceDialog : DialogFragment() {
-
-    private var binding: DialogConferenceBinding by lifecycleAwareVariable()
+@AndroidEntryPoint
+class ConferenceDialog : BaseDialogFragment<DialogConferenceBinding>() {
 
     private lateinit var conference: Conference
 
@@ -30,15 +29,14 @@ class ConferenceDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
         conference = requireArguments().serializable(ARGUMENT_KEY)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = DialogConferenceBinding.inflate(inflater).also { binding = it }.root
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return MaterialAlertDialogBuilder(requireContext(), theme)
+            .setView(DialogConferenceBinding.inflate(layoutInflater).apply { binding = this }.root)
+            .create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

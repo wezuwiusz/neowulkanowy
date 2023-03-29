@@ -13,16 +13,17 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/allDetailsHeader"
-            android:layout_width="0dp"
+            android:id="@+id/homework_dialog_header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_weight="1"
             android:text="@string/all_details"
-            android:textSize="21sp"
-            android:textStyle="bold" />
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/homework_dialog_delete"
@@ -33,29 +34,6 @@
             android:padding="5dp"
             app:srcCompat="@drawable/ic_menu_message_delete"
             app:tint="?colorPrimary"
-            tools:ignore="ContentDescription" />
-
-        <ImageButton
-            android:id="@+id/homework_dialog_full_screen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:padding="5dp"
-            app:srcCompat="@drawable/ic_fullscreen"
-            app:tint="?colorOnBackground"
-            tools:ignore="ContentDescription" />
-
-        <ImageButton
-            android:id="@+id/homework_dialog_full_screen_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:padding="5dp"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_fullscreen_exit"
-            app:tint="?colorOnBackground"
             tools:ignore="ContentDescription" />
 
     </LinearLayout>

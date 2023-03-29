@@ -7,6 +7,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.GradeSummary
@@ -118,7 +119,7 @@ class GradeSummaryFragment :
     }
 
     override fun showCalculatedAverageHelpDialog() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.grade_summary_calculated_average_help_dialog_title)
             .setMessage(R.string.grade_summary_calculated_average_help_dialog_message)
             .setPositiveButton(R.string.all_close) { _, _ -> }
@@ -126,7 +127,7 @@ class GradeSummaryFragment :
     }
 
     override fun showFinalAverageHelpDialog() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.grade_summary_final_average_help_dialog_title)
             .setMessage(R.string.grade_summary_final_average_help_dialog_message)
             .setPositiveButton(R.string.all_close) { _, _ -> }

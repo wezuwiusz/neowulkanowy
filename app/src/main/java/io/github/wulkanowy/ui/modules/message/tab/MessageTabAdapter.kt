@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -68,21 +69,23 @@ class MessageTabAdapter @Inject constructor() :
         }
     }
 
+    @SuppressLint("PrivateResource")
     private fun bindHeaderViewHolder(holder: HeaderViewHolder, position: Int) {
         val item = items[position] as MessageTabDataItem.FilterHeader
+        val context = holder.binding.root.context
 
         with(holder.binding) {
-            chipMailbox.text = item.selectedMailbox
-                ?: root.context.getString(R.string.message_chip_all_mailboxes)
+            chipMailbox.text =
+                item.selectedMailbox ?: context.getString(R.string.message_chip_all_mailboxes)
             chipMailbox.chipBackgroundColor = ColorStateList.valueOf(
                 if (item.selectedMailbox == null) {
-                    root.context.getCompatColor(R.color.mtrl_choice_chip_background_color)
-                } else root.context.getThemeAttrColor(android.R.attr.colorPrimary, 64)
+                    context.getCompatColor(R.color.m3_elevated_chip_background_color)
+                } else context.getThemeAttrColor(R.attr.colorPrimary, 64)
             )
             chipMailbox.setTextColor(
                 if (item.selectedMailbox == null) {
-                    root.context.getThemeAttrColor(android.R.attr.textColorPrimary)
-                } else root.context.getThemeAttrColor(android.R.attr.colorPrimary)
+                    context.getThemeAttrColor(R.attr.colorOnSurfaceVariant)
+                } else context.getThemeAttrColor(R.attr.colorPrimary)
             )
             chipMailbox.setOnClickListener { onMailboxClickListener() }
 

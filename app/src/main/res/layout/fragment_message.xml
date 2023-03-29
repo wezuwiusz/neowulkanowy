@@ -29,6 +29,7 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/openSendMessageButton"
+        style="@style/Widget.Material3.ExtendedFloatingActionButton.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -36,7 +37,6 @@
         android:clickable="true"
         android:focusable="true"
         android:text="@string/send_message_title"
-        android:tint="?colorOnSecondary"
         app:icon="@drawable/ic_menu_message_write" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator

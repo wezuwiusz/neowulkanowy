@@ -14,9 +14,6 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.AccountView
 import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsView
-import io.github.wulkanowy.ui.modules.grade.GradeView
-import io.github.wulkanowy.ui.modules.message.MessageView
-import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
 import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -100,7 +97,6 @@ class MainPresenter @Inject constructor(
     fun onViewChange(destinationView: BaseView) {
         view?.apply {
             showBottomNavigation(shouldShowBottomNavigation(destinationView))
-            showActionBarElevation(shouldShowActionBarElevation(destinationView))
             currentViewTitle?.let { setViewTitle(it) }
             currentViewSubtitle?.let { setViewSubTitle(it.ifBlank { null }) }
             currentStackSize?.let {
@@ -108,13 +104,6 @@ class MainPresenter @Inject constructor(
                 else showHomeArrow(false)
             }
         }
-    }
-
-    private fun shouldShowActionBarElevation(destination: BaseView) = when (destination) {
-        is GradeView,
-        is MessageView,
-        is SchoolAndTeachersView -> false
-        else -> true
     }
 
     private fun shouldShowBottomNavigation(destination: BaseView) = when (destination) {

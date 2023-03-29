@@ -7,17 +7,9 @@
     tools:context=".ui.modules.mobiledevice.token.MobileDeviceTokenDialog">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <View
-            android:layout_width="292dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/mobileDeviceQr"
@@ -119,17 +111,16 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mobileDeviceDialogClose"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            style="@style/Widget.Material3.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             android:insetLeft="0dp"
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
-            android:minWidth="88dp"
             android:text="@string/all_close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

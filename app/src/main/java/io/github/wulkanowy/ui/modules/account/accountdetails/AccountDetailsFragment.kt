@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.get
 import androidx.core.view.isVisible
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
@@ -114,7 +115,7 @@ class AccountDetailsFragment :
 
     override fun showLogoutConfirmDialog() {
         context?.let {
-            AlertDialog.Builder(it)
+            MaterialAlertDialogBuilder(it)
                 .setTitle(R.string.account_logout_student)
                 .setMessage(R.string.account_confirm)
                 .setPositiveButton(R.string.account_logout) { _, _ -> presenter.onLogoutConfirm() }

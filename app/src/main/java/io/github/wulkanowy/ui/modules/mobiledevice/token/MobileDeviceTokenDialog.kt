@@ -1,17 +1,17 @@
 package io.github.wulkanowy.ui.modules.mobiledevice.token
 
+import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.getSystemService
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
@@ -31,16 +31,13 @@ class MobileDeviceTokenDialog : BaseDialogFragment<DialogMobileDeviceBinding>(),
         fun newInstance() = MobileDeviceTokenDialog()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return MaterialAlertDialogBuilder(requireContext(), theme)
+            .setView(
+                DialogMobileDeviceBinding.inflate(layoutInflater).apply { binding = this }.root
+            )
+            .create()
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = DialogMobileDeviceBinding.inflate(inflater).apply { binding = this }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

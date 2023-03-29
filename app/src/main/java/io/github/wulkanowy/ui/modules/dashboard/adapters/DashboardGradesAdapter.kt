@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.dashboard.adapters
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.databinding.SubitemDashboardGradesBinding
 import io.github.wulkanowy.databinding.SubitemDashboardSmallGradeBinding
 import io.github.wulkanowy.utils.getBackgroundColor
+import io.github.wulkanowy.utils.getCompatColor
 
 class DashboardGradesAdapter : RecyclerView.Adapter<DashboardGradesAdapter.ViewHolder>() {
 
@@ -37,7 +39,9 @@ class DashboardGradesAdapter : RecyclerView.Adapter<DashboardGradesAdapter.ViewH
 
                 with(subitemBinding.dashboardSmallGradeSubitemValue) {
                     text = it.entry
-                    setBackgroundResource(it.getBackgroundColor(gradeColorTheme))
+                    backgroundTintList = ColorStateList.valueOf(
+                        context.getCompatColor(it.getBackgroundColor(gradeColorTheme))
+                    )
                 }
 
                 dashboardGradesSubitemGradeContainer.addView(subitemBinding.root)

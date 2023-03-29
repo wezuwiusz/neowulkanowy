@@ -8,13 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.thelittlefireman.appkillermanager.AppKillerManager
 import com.thelittlefireman.appkillermanager.exceptions.NoActionFoundException
 import dagger.hilt.android.AndroidEntryPoint
@@ -149,7 +149,7 @@ class NotificationsFragment : PreferenceFragmentCompat(),
     }
 
     override fun showFixSyncDialog() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.pref_notify_fix_sync_issues)
             .setMessage(R.string.pref_notify_fix_sync_issues_message)
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
@@ -177,7 +177,7 @@ class NotificationsFragment : PreferenceFragmentCompat(),
     }
 
     override fun openNotificationsPermissionDialog() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.notifications_header_title)
             .setMessage(R.string.notifications_header_description)
             .setPositiveButton(R.string.pref_notification_go_to_settings) { _, _ ->
@@ -191,7 +191,7 @@ class NotificationsFragment : PreferenceFragmentCompat(),
     }
 
     override fun openNotificationPiggyBackPermissionDialog() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.pref_notification_piggyback_popup_title))
             .setMessage(getString(R.string.pref_notification_piggyback_popup_description))
             .setPositiveButton(getString(R.string.pref_notification_go_to_settings)) { _, _ ->
@@ -205,7 +205,7 @@ class NotificationsFragment : PreferenceFragmentCompat(),
     }
 
     override fun openNotificationExactAlarmSettings() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.pref_notification_exact_alarm_popup_title))
             .setMessage(getString(R.string.pref_notification_exact_alarm_popup_descriptions))
             .setPositiveButton(getString(R.string.pref_notification_go_to_settings)) { _, _ ->

@@ -28,7 +28,6 @@
     <string name="pref_key_timetable_show_whole_class">show_whole_class_plan</string>
     <string name="pref_key_timetable_show_groups">show_groups_in_plan</string>
     <string name="pref_key_timetable_show_timers">timetable_show_timers</string>
-    <string name="pref_key_homework_fullscreen">homework_fullscreen</string>
     <string name="pref_key_subjects_without_grades">subjects_without_grades</string>
     <string name="pref_key_optional_arithmetic_average">optional_arithmetic_average</string>
     <string name="pref_key_message_draft">message_draft</string>

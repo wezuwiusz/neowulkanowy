@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -141,7 +142,7 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
         val choices = semesters.map { getString(R.string.grade_semester, it.semesterName) }
             .toTypedArray()
 
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setSingleChoiceItems(choices, selectedIndex) { dialog, which ->
                 presenter.onSemesterSelected(which)
                 dialog.dismiss()

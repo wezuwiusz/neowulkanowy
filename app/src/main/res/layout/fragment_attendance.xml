@@ -65,7 +65,6 @@
             android:clickable="true"
             android:focusable="true"
             android:text="@string/attendance_excuse_title"
-            android:tint="?colorOnSecondary"
             android:visibility="gone"
             app:icon="@drawable/ic_all_done_all"
             tools:visibility="visible" />
@@ -106,7 +105,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/attendanceErrorDetails"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"

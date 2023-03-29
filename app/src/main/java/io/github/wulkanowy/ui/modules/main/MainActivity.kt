@@ -2,14 +2,14 @@ package io.github.wulkanowy.ui.modules.main
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build.VERSION_CODES.P
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
-import androidx.core.view.ViewCompat
-import androidx.core.view.isVisible
+import androidx.core.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
@@ -90,8 +90,16 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         super.onCreate(savedInstanceState)
         setContentView(ActivityMainBinding.inflate(layoutInflater).apply { binding = this }.root)
         setSupportActionBar(binding.mainToolbar)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+            binding.mainAppBar.isLifted = true
+        }
+        initializeFragmentContainer()
+
         this.savedInstanceState = savedInstanceState
         messageContainer = binding.mainMessageContainer
+        messageAnchor = binding.mainMessageContainer
         updateHelper.messageContainer = binding.mainFragmentContainer
         onBackCallback = onBackPressedDispatcher.addCallback(this, enabled = false) {
             presenter.onBackPressed()
@@ -187,6 +195,17 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         }
     }
 
+    private fun initializeFragmentContainer() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainFragmentContainer) { view, insets ->
+            val bottomInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+
+            view.updateLayoutParams<MarginLayoutParams> {
+                bottomMargin = if (binding.mainBottomNav.isVisible) 0 else bottomInsets.bottom
+            }
+            WindowInsetsCompat.CONSUMED
+        }
+    }
+
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
         pref: Preference
@@ -231,20 +250,9 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         showDialogFragment(AccountQuickDialog.newInstance(studentWithSemesters))
     }
 
-    override fun showActionBarElevation(show: Boolean) {
-        ViewCompat.setElevation(binding.mainToolbar, if (show) dpToPx(4f) else 0f)
-    }
-
     override fun showBottomNavigation(show: Boolean) {
         binding.mainBottomNav.isVisible = show
-
-        if (appInfo.systemVersion >= P) {
-            window.navigationBarColor = if (show) {
-                getThemeAttrColor(android.R.attr.navigationBarColor)
-            } else {
-                getThemeAttrColor(R.attr.colorSurface)
-            }
-        }
+        binding.mainFragmentContainer.requestApplyInsets()
     }
 
     override fun openMoreDestination(destination: Destination) {

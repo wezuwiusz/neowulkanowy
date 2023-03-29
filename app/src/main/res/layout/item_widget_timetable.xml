@@ -1,129 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/timetableWidgetItemContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="45dp"
-    android:orientation="vertical"
     android:background="@drawable/background_widget_item_timetable"
+    android:backgroundTint="?attr/backgroundColor"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp"
+    android:theme="@style/Wulkanowy.Widget.Theme"
     tools:context=".ui.modules.timetablewidget.TimetableWidgetFactory">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/timetableWidgetItemNumber"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="6dp"
-        android:paddingLeft="6dp"
-        android:paddingTop="6dp"
-        android:paddingEnd="12dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="6dp">
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="24sp"
+        tools:text="1"
+        tools:textColor="?attr/colorTimetableChange" />
 
-        <TextView
-            android:id="@+id/timetableWidgetItemNumber"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:maxLength="2"
-            android:textColor="?android:textColorPrimary"
-            android:textSize="28sp"
-            tools:text="5" />
-
-        <TextView
-            android:id="@+id/timetableWidgetItemSubject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/timetableWidgetItemNumber"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
-            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textSize="15sp"
-            tools:text="@tools:sample/lorem" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/timetableWidgetItemTimeStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/timetableWidgetItemNumber"
-            android:layout_marginStart="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_toEndOf="@id/timetableWidgetItemNumber"
-            android:layout_toRightOf="@id/timetableWidgetItemNumber"
-            android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textSize="13sp"
-            tools:text="11:11" />
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            tools:text="08:00" />
 
         <TextView
             android:id="@+id/timetableWidgetItemTimeFinish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/timetableWidgetItemNumber"
-            android:layout_marginStart="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_toEndOf="@id/timetableWidgetItemNumber"
-            android:layout_toRightOf="@id/timetableWidgetItemNumber"
-            android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textSize="13sp"
-            tools:text="12:00" />
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            tools:text="09:45" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/timetableWidgetItemRoom"
+            android:id="@+id/timetableWidgetItemSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/timetableWidgetItemNumber"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
-            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
-            android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textSize="13sp"
-            tools:text="22"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/timetableWidgetItemTeacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/timetableWidgetItemNumber"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_toEndOf="@id/timetableWidgetItemRoom"
-            android:layout_toRightOf="@id/timetableWidgetItemRoom"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/timetable_change_dark"
-            android:textSize="13sp"
-            android:visibility="gone"
-            tools:text="Agata Kowalska - Błaszczyk"
-            tools:visibility="visible" />
+            android:lines="1"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            tools:text="Programowanie aplikacji mobilnych i desktopowych" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/timetableWidgetItemRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                tools:text="Sala 213"
+                tools:textColor="?attr/colorTimetableChange" />
+
+            <TextView
+                android:id="@+id/timetableWidgetItemTeacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                tools:text="Dorota Nowak" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/timetableWidgetItemDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/timetableWidgetItemTimeFinish"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_toEndOf="@+id/timetableWidgetItemTimeStart"
-            android:layout_toRightOf="@+id/timetableWidgetItemTimeStart"
-            android:textColor="@color/timetable_change_dark"
-            android:textSize="13sp"
+            android:textAppearance="?attr/textAppearanceBodySmall"
             tools:text="Lekcja odwołana: uczniowie zwolnieni do domu"
             tools:visibility="gone" />
-    </RelativeLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/timetableWidgetItemIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:contentDescription="@string/timetable_changes"
+        android:tint="?attr/colorTimetableChange"
+        app:tint="?attr/colorTimetableChange"
+        tools:ignore="UseAppTint"
+        tools:src="@drawable/ic_timetable_widget_swap" />
+
 </LinearLayout>

@@ -1,0 +1,60 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="WulkanowyTheme" parent="BaseWulkanowyTheme" />
+
+    <style name="BaseWulkanowyTheme" parent="@style/Theme.Material3.DynamicColors.Light">
+        <item name="android:forceDarkAllowed" tools:targetApi="Q">false</item>
+
+        <item name="colorPrimary">@color/material_dynamic_primary40</item>
+        <item name="colorOnPrimary">@color/material_dynamic_primary100</item>
+        <item name="colorPrimaryContainer">@color/material_dynamic_primary90</item>
+        <item name="colorOnPrimaryContainer">@color/material_dynamic_primary10</item>
+
+        <item name="colorSecondary">@color/material_dynamic_secondary40</item>
+        <item name="colorOnSecondary">@color/material_dynamic_secondary100</item>
+        <item name="colorSecondaryContainer">@color/material_dynamic_secondary90</item>
+        <item name="colorOnSecondaryContainer">@color/material_dynamic_secondary10</item>
+
+        <item name="colorTertiary">@color/material_dynamic_tertiary40</item>
+        <item name="colorOnTertiary">@color/material_dynamic_tertiary100</item>
+        <item name="colorTertiaryContainer">@color/material_dynamic_tertiary90</item>
+        <item name="colorOnTertiaryContainer">@color/material_dynamic_tertiary10</item>
+
+        <item name="android:colorBackground">@color/material_dynamic_neutral99</item>
+        <item name="colorOnBackground">@color/material_dynamic_neutral10</item>
+
+        <item name="colorSurface">@color/material_dynamic_neutral_variant99</item>
+        <item name="colorOnSurface">@color/material_dynamic_neutral10</item>
+        <item name="colorSurfaceVariant">@color/material_dynamic_neutral_variant90</item>
+        <item name="colorOnSurfaceVariant">@color/material_dynamic_neutral_variant30</item>
+
+        <item name="colorOutline">@color/material_dynamic_neutral_variant50</item>
+        <item name="colorSurfaceInverse">@color/material_dynamic_neutral20</item>
+        <item name="colorOnSurfaceInverse">@color/material_dynamic_neutral95</item>
+        <item name="colorPrimaryInverse">@color/material_dynamic_primary80</item>
+        <item name="colorTimetableCanceled">@color/timetable_canceled_light</item>
+        <item name="colorTimetableChange">@color/timetable_change_light</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorDivider">@color/colorDivider</item>
+        <item name="colorSwipeRefresh">@color/material_dynamic_secondary90</item>
+        <item name="colorMessageMedium">@color/dashboard_message_medium_dark</item>
+        <item name="android:textColor">@color/material_dynamic_neutral10</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:preferenceStyle">@style/PreferenceThemeOverlay</item>
+        <item name="materialCardViewStyle">@style/Widget.Material3.CardView.Elevated</item>
+        <item name="switchPreferenceCompatStyle">
+            @style/Preference.Wulkanowy.SwitchPreferenceCompat
+        </item>
+        <item name="alertDialogTheme">@style/WulkanowyTheme.PreferenceAlertDialog</item>
+    </style>
+
+    <style name="Wulkanowy.Widget.Theme" parent="WulkanowyTheme">
+        <item name="colorSurface">@color/material_dynamic_secondary95</item>
+        <item name="colorOnPrimaryContainer">?attr/colorPrimary</item>
+        <item name="backgroundColor">@color/material_dynamic_neutral99</item>
+    </style>
+
+    <style name="WulkanowyTheme.Login" parent="WulkanowyTheme.NoActionBar" />
+</resources>

@@ -9,6 +9,7 @@ import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
 import io.github.wulkanowy.ui.modules.luckynumber.LuckyNumberFragment
+import io.github.wulkanowy.ui.modules.luckynumber.history.LuckyNumberHistoryFragment
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.mobiledevice.MobileDeviceFragment
 import io.github.wulkanowy.ui.modules.more.MoreFragment
@@ -43,6 +44,7 @@ sealed class Destination {
         SCHOOL_ANNOUNCEMENT(SchoolAnnouncement),
         SCHOOL_AND_TEACHERS(SchoolAndTeachers),
         LUCKY_NUMBER(LuckyNumber),
+        LUCKY_NUMBER_HISTORY(LuckyNumberHistory),
         MORE(More),
         MESSAGE(Message),
         MOBILE_DEVICE(MobileDevice),
@@ -116,6 +118,12 @@ sealed class Destination {
     object LuckyNumber : Destination() {
         override val destinationType get() = Type.LUCKY_NUMBER
         override val destinationFragment get() = LuckyNumberFragment.newInstance()
+    }
+
+    @Serializable
+    object LuckyNumberHistory : Destination() {
+        override val destinationType get() = Type.LUCKY_NUMBER_HISTORY
+        override val destinationFragment get() = LuckyNumberHistoryFragment.newInstance()
     }
 
     @Serializable

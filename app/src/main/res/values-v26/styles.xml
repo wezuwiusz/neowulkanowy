@@ -1,8 +1,0 @@
-<resources>
-
-    <style name="WulkanowyTheme" parent="BaseWulkanowyTheme">
-        <item name="android:navigationBarColor">@android:color/black</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:statusBarColor">@android:color/darker_gray</item>
-    </style>
-</resources>

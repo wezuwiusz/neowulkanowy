@@ -28,8 +28,6 @@ interface MainView : BaseView {
 
     fun showAccountPicker(studentWithSemesters: List<StudentWithSemesters>)
 
-    fun showActionBarElevation(show: Boolean)
-
     fun showBottomNavigation(show: Boolean)
 
     fun notifyMenuViewReselected()
