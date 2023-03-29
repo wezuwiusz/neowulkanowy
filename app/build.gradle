@@ -214,7 +214,7 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_manager"
     playImplementation "androidx.work:work-gcm:$work_manager"
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-ktx:$room"
