@@ -682,6 +682,7 @@
     <string name="all_cancel">Zrušit</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Žádné lekce</string>
+    <string name="widget_timetable_last_synchronization">Synchronizováno %1$s v %2$s</string>
     <string name="widget_timetable_theme_title">Vybrat motiv</string>
     <string name="widget_timetable_theme_light">Světlý</string>
     <string name="widget_timetable_theme_dark">Tmavý</string>

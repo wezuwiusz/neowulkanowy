@@ -594,6 +594,7 @@
     <string name="all_cancel">Cancel</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Keine Lektionen</string>
+    <string name="widget_timetable_last_synchronization">Synchronized on %1$s at %2$s</string>
     <string name="widget_timetable_theme_title">Thema wählen</string>
     <string name="widget_timetable_theme_light">Licht</string>
     <string name="widget_timetable_theme_dark">Dunkel</string>

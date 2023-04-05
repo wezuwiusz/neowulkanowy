@@ -682,6 +682,7 @@
     <string name="all_cancel">Скасувати</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Немаэ уроків</string>
+    <string name="widget_timetable_last_synchronization">Synchronized on %1$s at %2$s</string>
     <string name="widget_timetable_theme_title">Увібрати тему</string>
     <string name="widget_timetable_theme_light">Яскрава</string>
     <string name="widget_timetable_theme_dark">Темна</string>
