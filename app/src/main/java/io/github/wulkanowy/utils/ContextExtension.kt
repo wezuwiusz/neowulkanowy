@@ -6,7 +6,6 @@ import android.content.res.ColorStateList
 import android.graphics.*
 import android.text.TextPaint
 import android.util.DisplayMetrics.DENSITY_DEFAULT
-import android.widget.ImageView
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -14,7 +13,6 @@ import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.widget.ImageViewCompat
 
 
 @ColorInt
@@ -89,6 +87,6 @@ fun Context.createNameInitialsDrawable(
         .apply { isCircular = true }
 }
 
-fun ImageView.setTint(@ColorInt color: Int) {
-    ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(color))
+fun Context.getAttrColorStateList(@AttrRes color: Int): ColorStateList {
+    return ColorStateList.valueOf(getThemeAttrColor(color))
 }

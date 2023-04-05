@@ -180,12 +180,12 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:hint="@string/login_password_hint"
+                app:endIconMode="password_toggle"
                 app:errorEnabled="true"
                 app:errorIconDrawable="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormUsernameLayout"
-                app:passwordToggleEnabled="true">
+                app:layout_constraintTop_toBottomOf="@+id/loginFormUsernameLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginFormPass"
