@@ -6,14 +6,22 @@ import io.github.wulkanowy.data.pojos.RegisterSymbol
 import io.github.wulkanowy.data.pojos.RegisterUnit
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.scrapper.Scrapper
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.clearMocks
+import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.just
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -76,6 +84,9 @@ class LoginStudentSelectPresenterTest {
         symbol = "",
         error = null,
         userName = "",
+        keyId = null,
+        privatePem = null,
+        hebeBaseUrl = null,
         schools = listOf(school),
     )
 
@@ -83,7 +94,8 @@ class LoginStudentSelectPresenterTest {
         email = "",
         password = "",
         login = "",
-        baseUrl = "",
+        scrapperBaseUrl = "",
+        loginMode = Sdk.Mode.SCRAPPER,
         loginType = Scrapper.LoginType.AUTO,
         symbols = listOf(symbol),
     )

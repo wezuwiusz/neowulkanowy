@@ -22,6 +22,7 @@ data class Exam(
 
     val subject: String,
 
+    @Deprecated("not available anymore")
     val group: String,
 
     val type: String,

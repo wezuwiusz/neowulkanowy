@@ -26,7 +26,7 @@ fun List<SdkMessage>.mapToEntities(
         messageId = it.id,
         correspondents = it.correspondents,
         subject = it.subject.trim(),
-        date = it.dateZoned.toInstant(),
+        date = it.date.toInstant(),
         folderId = it.folderId,
         unread = it.unread,
         unreadBy = it.unreadBy,

@@ -12,18 +12,17 @@ fun Sdk.init(student: Student): Sdk {
     studentId = student.studentId
     classId = student.classId
 
-    if (Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.API) {
+    if (Sdk.Mode.valueOf(student.loginMode) == Sdk.Mode.HEBE) {
+        mobileBaseUrl = student.mobileBaseUrl
+    } else {
         scrapperBaseUrl = student.scrapperBaseUrl
         loginType = Sdk.ScrapperLoginType.valueOf(student.loginType)
     }
-    loginId = student.userLoginId
 
     mode = Sdk.Mode.valueOf(student.loginMode)
     mobileBaseUrl = student.mobileBaseUrl
-    certKey = student.certificateKey
-    privateKey = student.privateKey
-
-    emptyCookieJarInterceptor = true
+    keyId = student.certificateKey
+    privatePem = student.privateKey
 
     Timber.d("Sdk in ${student.loginMode} mode reinitialized")
 

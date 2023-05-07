@@ -5,10 +5,10 @@ import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.db.entities.TimetableAdditional
 import io.github.wulkanowy.data.db.entities.TimetableHeader
 import io.github.wulkanowy.data.pojos.TimetableFull
-import io.github.wulkanowy.sdk.pojo.TimetableFull as SdkTimetableFull
+import io.github.wulkanowy.sdk.pojo.Timetable as SdkTimetableFull
 import io.github.wulkanowy.sdk.pojo.TimetableDayHeader as SdkTimetableHeader
-import io.github.wulkanowy.sdk.pojo.Timetable as SdkTimetable
-import io.github.wulkanowy.sdk.pojo.TimetableAdditional as SdkTimetableAdditional
+import io.github.wulkanowy.sdk.pojo.Lesson as SdkLesson
+import io.github.wulkanowy.sdk.pojo.LessonAdditional as SdkTimetableAdditional
 
 fun SdkTimetableFull.mapToEntities(semester: Semester) = TimetableFull(
     lessons = lessons.mapToEntities(semester),
@@ -16,13 +16,13 @@ fun SdkTimetableFull.mapToEntities(semester: Semester) = TimetableFull(
     headers = headers.mapToEntities(semester)
 )
 
-fun List<SdkTimetable>.mapToEntities(semester: Semester) = map {
+fun List<SdkLesson>.mapToEntities(semester: Semester) = map {
     Timetable(
         studentId = semester.studentId,
         diaryId = semester.diaryId,
         number = it.number,
-        start = it.startZoned.toInstant(),
-        end = it.endZoned.toInstant(),
+        start = it.start.toInstant(),
+        end = it.end.toInstant(),
         date = it.date,
         subject = it.subject,
         subjectOld = it.subjectOld,
@@ -45,8 +45,8 @@ fun List<SdkTimetableAdditional>.mapToEntities(semester: Semester) = map {
         diaryId = semester.diaryId,
         subject = it.subject,
         date = it.date,
-        start = it.startZoned.toInstant(),
-        end = it.endZoned.toInstant(),
+        start = it.start.toInstant(),
+        end = it.end.toInstant(),
     )
 }
 

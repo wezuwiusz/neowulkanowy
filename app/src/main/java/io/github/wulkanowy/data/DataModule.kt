@@ -20,7 +20,6 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.RemoteConfigHelper
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -81,7 +80,6 @@ internal class DataModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
 
-    @OptIn(ExperimentalSerializationApi::class)
     @Singleton
     @Provides
     fun provideRetrofit(

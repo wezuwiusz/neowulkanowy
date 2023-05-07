@@ -75,7 +75,7 @@ class SemesterRepositoryTest {
         coEvery { semesterDb.deleteAll(any()) } just Runs
         coEvery { semesterDb.insertSemesters(any()) } returns listOf()
 
-        val items = runBlocking { semesterRepository.getSemesters(student.copy(loginMode = Sdk.Mode.API.name)) }
+        val items = runBlocking { semesterRepository.getSemesters(student.copy(loginMode = Sdk.Mode.HEBE.name)) }
         assertEquals(2, items.size)
         assertEquals(0, items[0].diaryId)
     }
@@ -215,6 +215,7 @@ class SemesterRepositoryTest {
     @Test(expected = RuntimeException::class)
     fun getCurrentSemester_emptyList() {
         coEvery { semesterDb.loadAll(student.studentId, student.classId) } returns emptyList()
+        coEvery { sdk.getSemesters() } returns emptyList()
 
         runBlocking { semesterRepository.getCurrentSemester(student) }
     }

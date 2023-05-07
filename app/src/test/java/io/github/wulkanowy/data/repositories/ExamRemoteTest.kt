@@ -59,7 +59,7 @@ class ExamRemoteTest {
     @Test
     fun `force refresh without difference`() {
         // prepare
-        coEvery { sdk.getExams(startDate, realEndDate, 1) } returns remoteList
+        coEvery { sdk.getExams(startDate, realEndDate) } returns remoteList
         coEvery { examDb.loadAll(1, 1, startDate, realEndDate) } returnsMany listOf(
             flowOf(remoteList.mapToEntities(semester)),
             flowOf(remoteList.mapToEntities(semester))
@@ -73,7 +73,7 @@ class ExamRemoteTest {
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(2, res.dataOrNull?.size)
-        coVerify { sdk.getExams(startDate, realEndDate, 1) }
+        coVerify { sdk.getExams(startDate, realEndDate) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
         coVerify { examDb.insertAll(match { it.isEmpty() }) }
         coVerify { examDb.deleteAll(match { it.isEmpty() }) }
@@ -82,7 +82,7 @@ class ExamRemoteTest {
     @Test
     fun `force refresh with more items in remote`() {
         // prepare
-        coEvery { sdk.getExams(startDate, realEndDate, 1) } returns remoteList
+        coEvery { sdk.getExams(startDate, realEndDate) } returns remoteList
         coEvery { examDb.loadAll(1, 1, startDate, realEndDate) } returnsMany listOf(
             flowOf(remoteList.dropLast(1).mapToEntities(semester)),
             flowOf(remoteList.dropLast(1).mapToEntities(semester)), // after fetch end before save result
@@ -97,7 +97,7 @@ class ExamRemoteTest {
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(2, res.dataOrNull?.size)
-        coVerify { sdk.getExams(startDate, realEndDate, 1) }
+        coVerify { sdk.getExams(startDate, realEndDate) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
         coVerify {
             examDb.insertAll(match {
@@ -110,7 +110,7 @@ class ExamRemoteTest {
     @Test
     fun `force refresh with more items in local`() {
         // prepare
-        coEvery { sdk.getExams(startDate, realEndDate, 1) } returns remoteList.dropLast(1)
+        coEvery { sdk.getExams(startDate, realEndDate) } returns remoteList.dropLast(1)
         coEvery { examDb.loadAll(1, 1, startDate, realEndDate) } returnsMany listOf(
             flowOf(remoteList.mapToEntities(semester)),
             flowOf(remoteList.mapToEntities(semester)), // after fetch end before save result
@@ -125,7 +125,7 @@ class ExamRemoteTest {
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(1, res.dataOrNull?.size)
-        coVerify { sdk.getExams(startDate, realEndDate, 1) }
+        coVerify { sdk.getExams(startDate, realEndDate) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
         coVerify { examDb.insertAll(match { it.isEmpty() }) }
         coVerify {
@@ -137,7 +137,6 @@ class ExamRemoteTest {
 
     private fun getExam(date: LocalDate) = SdkExam(
         subject = "",
-        group = "",
         type = "",
         description = "",
         teacher = "",

@@ -3,22 +3,24 @@ package io.github.wulkanowy.data.mappers
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.pojos.*
-import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.sdk.mapper.mapSemesters
 import java.time.Instant
-import io.github.wulkanowy.sdk.scrapper.register.RegisterStudent as SdkRegisterStudent
-import io.github.wulkanowy.sdk.scrapper.register.RegisterUser as SdkRegisterUser
+import io.github.wulkanowy.sdk.pojo.RegisterStudent as SdkRegisterStudent
+import io.github.wulkanowy.sdk.pojo.RegisterUser as SdkRegisterUser
 
-fun SdkRegisterUser.mapToPojo(password: String) = RegisterUser(
+fun SdkRegisterUser.mapToPojo(password: String?) = RegisterUser(
     email = email,
     login = login,
     password = password,
-    baseUrl = baseUrl,
+    scrapperBaseUrl = scrapperBaseUrl,
+    loginMode = loginMode,
     loginType = loginType,
     symbols = symbols.map { registerSymbol ->
         RegisterSymbol(
             symbol = registerSymbol.symbol,
             error = registerSymbol.error,
+            hebeBaseUrl = registerSymbol.hebeBaseUrl,
+            keyId = registerSymbol.keyId,
+            privatePem = registerSymbol.privatePem,
             userName = registerSymbol.userName,
             schools = registerSymbol.schools.map {
                 RegisterUnit(
@@ -42,14 +44,13 @@ fun SdkRegisterUser.mapToPojo(password: String) = RegisterUser(
                                 classId = registerSubject.classId,
                                 isParent = registerSubject.isParent,
                                 semesters = registerSubject.semesters
-                                    .mapSemesters()
                                     .mapToEntities(registerSubject.studentId),
                             )
                         },
                 )
             }
         )
-    }
+    },
 )
 
 fun RegisterStudent.mapToStudentWithSemesters(
@@ -68,17 +69,17 @@ fun RegisterStudent.mapToStudentWithSemesters(
         classId = classId,
         studentId = studentId,
         symbol = symbol.symbol,
-        loginType = user.loginType.name,
+        loginType = user.loginType?.name.orEmpty(),
         schoolName = unit.schoolName,
         schoolShortName = unit.schoolShortName,
         schoolSymbol = unit.schoolId,
         studentName = "$studentName $studentSurname",
-        loginMode = Sdk.Mode.SCRAPPER.name,
-        scrapperBaseUrl = user.baseUrl,
-        mobileBaseUrl = "",
-        certificateKey = "",
-        privateKey = "",
-        password = user.password,
+        loginMode = user.loginMode.name,
+        scrapperBaseUrl = user.scrapperBaseUrl.orEmpty(),
+        mobileBaseUrl = symbol.hebeBaseUrl.orEmpty(),
+        certificateKey = symbol.keyId.orEmpty(),
+        privateKey = symbol.privatePem.orEmpty(),
+        password = user.password.orEmpty(),
         isCurrent = false,
         registrationDate = Instant.now(),
     ).apply {

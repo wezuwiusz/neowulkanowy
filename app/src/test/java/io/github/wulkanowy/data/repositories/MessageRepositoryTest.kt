@@ -224,7 +224,7 @@ class MessageRepositoryTest {
         recipients = listOf(),
         subject = "",
         content = "Test",
-        dateZoned = Instant.EPOCH.atZone(ZoneOffset.UTC),
+        date = Instant.EPOCH.atZone(ZoneOffset.UTC),
         folderId = 1,
         unread = true,
         readBy = 1,

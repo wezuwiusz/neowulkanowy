@@ -7,6 +7,7 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.ifNullOrBlank
 import timber.log.Timber
 import java.net.URL
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class LoginFormPresenter @Inject constructor(
     studentRepository: StudentRepository,
     private val loginErrorHandler: LoginErrorHandler,
+    private val appInfo: AppInfo,
     private val analytics: AnalyticsHelper
 ) : BasePresenter<LoginFormView>(loginErrorHandler, studentRepository) {
 
@@ -25,6 +27,7 @@ class LoginFormPresenter @Inject constructor(
         view.run {
             initView()
             showContact(false)
+            showOtherOptionsButton(appInfo.isDebug)
             showVersion()
 
             loginErrorHandler.onBadCredentials = {

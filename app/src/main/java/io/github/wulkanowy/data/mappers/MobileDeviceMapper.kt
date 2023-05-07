@@ -9,7 +9,7 @@ import io.github.wulkanowy.sdk.pojo.Token as SdkToken
 fun List<SdkDevice>.mapToEntities(student: Student) = map {
     MobileDevice(
         userLoginId = student.userLoginId,
-        date = it.createDateZoned.toInstant(),
+        date = it.createDate.toInstant(),
         deviceId = it.id,
         name = it.name
     )

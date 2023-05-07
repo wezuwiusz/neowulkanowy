@@ -204,6 +204,10 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         binding.loginFormContainer.visibility = if (show) VISIBLE else GONE
     }
 
+    override fun showOtherOptionsButton(show: Boolean) {
+        binding.loginFormAdvancedButton.isVisible = show
+    }
+
     @SuppressLint("SetTextI18n")
     override fun showVersion() {
         binding.loginFormVersion.text = "v${appInfo.versionName}"

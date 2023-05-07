@@ -42,7 +42,7 @@ class NoteRepository @Inject constructor(
         fetch = {
             sdk.init(student)
                 .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
-                .getNotes(semester.semesterId)
+                .getNotes()
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->

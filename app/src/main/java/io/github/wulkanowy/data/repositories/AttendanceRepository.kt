@@ -59,7 +59,7 @@ class AttendanceRepository @Inject constructor(
             }
             sdk.init(student)
                 .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
-                .getAttendance(start.monday, end.sunday, semester.semesterId)
+                .getAttendance(start.monday, end.sunday)
                 .mapToEntities(semester, lessons)
         },
         saveFetchResult = { old, new ->

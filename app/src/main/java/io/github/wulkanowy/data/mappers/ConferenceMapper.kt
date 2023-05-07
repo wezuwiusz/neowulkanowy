@@ -10,9 +10,9 @@ fun List<SdkConference>.mapToEntities(semester: Semester) = map {
         diaryId = semester.diaryId,
         agenda = it.agenda,
         conferenceId = it.id,
-        date = it.dateZoned.toInstant(),
+        date = it.date.toInstant(),
         presentOnConference = it.presentOnConference,
-        subject = it.subject,
-        title = it.title
+        subject = it.topic,
+        title = it.place,
     )
 }

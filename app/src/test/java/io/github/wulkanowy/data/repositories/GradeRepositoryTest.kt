@@ -9,13 +9,21 @@ import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.sdk.pojo.Grades
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
+import io.mockk.just
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
@@ -72,7 +80,7 @@ class GradeRepositoryTest {
             createGradeApi(5, 4.0, of(2019, 2, 27), "Ocena z dnia logowania"),
             createGradeApi(5, 4.0, of(2019, 2, 28), "Ocena jeszcze nowsza")
         )
-        coEvery { sdk.getGrades(1) } returns (remoteList to emptyList())
+        coEvery { sdk.getGrades(1) } returns createGrades(remoteList)
 
         coEvery { gradeDb.loadAll(1, 1) } returnsMany listOf(
             flowOf(listOf()), // empty because it is new user
@@ -122,7 +130,7 @@ class GradeRepositoryTest {
             ),
             createGradeApi(2, 5.0, of(2019, 2, 28), "Ta jest już w ogóle nowa")
         )
-        coEvery { sdk.getGrades(1) } returns (remoteList to emptyList())
+        coEvery { sdk.getGrades(1) } returns createGrades(remoteList)
 
         val localList = listOf(
             createGradeApi(5, 3.0, of(2019, 2, 25), "Jedna ocena"),
@@ -169,7 +177,7 @@ class GradeRepositoryTest {
             createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
             createGradeApi(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
         )
-        coEvery { sdk.getGrades(1) } returns (remoteList to emptyList())
+        coEvery { sdk.getGrades(1) } returns createGrades(remoteList)
 
         val localList = listOf(
             createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
@@ -200,7 +208,7 @@ class GradeRepositoryTest {
             createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"), // will be added...
             createGradeApi(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
         )
-        coEvery { sdk.getGrades(1) } returns (remoteList to emptyList())
+        coEvery { sdk.getGrades(1) } returns createGrades(remoteList)
 
         val localList = listOf(
             createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
@@ -230,7 +238,7 @@ class GradeRepositoryTest {
             createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
             createGradeApi(3, 5.0, of(2019, 2, 26), "Jakaś inna ocena")
         )
-        coEvery { sdk.getGrades(1) } returns (remoteList to emptyList())
+        coEvery { sdk.getGrades(1) } returns createGrades(remoteList)
 
         coEvery { gradeDb.loadAll(1, 1) } returnsMany listOf(
             flowOf(listOf()),
@@ -250,7 +258,7 @@ class GradeRepositoryTest {
     fun `force refresh when remote is empty`() {
         // prepare
         val remoteList = emptyList<SdkGrade>()
-        coEvery { sdk.getGrades(semester.semesterId) } returns (remoteList to emptyList())
+        coEvery { sdk.getGrades(semester.semesterId) } returns createGrades(remoteList)
 
         val localList = listOf(
             createGradeApi(5, 3.0, of(2019, 2, 25), "Taka sama ocena"),
@@ -284,4 +292,13 @@ class GradeRepositoryTest {
             weight = weight.toString(),
             weightValue = weight
         )
+
+    private fun createGrades(grades: List<SdkGrade>): Grades = Grades(
+        details = grades,
+        summary = listOf(),
+        isAverage = false,
+        isPoints = false,
+        isForAdults = false,
+        type = 0,
+    )
 }

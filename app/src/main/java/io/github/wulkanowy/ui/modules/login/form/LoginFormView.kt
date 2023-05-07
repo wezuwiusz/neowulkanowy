@@ -56,6 +56,8 @@ interface LoginFormView : BaseView {
 
     fun showContent(show: Boolean)
 
+    fun showOtherOptionsButton(show: Boolean)
+
     fun showVersion()
 
     fun navigateToSymbol(loginData: LoginData)

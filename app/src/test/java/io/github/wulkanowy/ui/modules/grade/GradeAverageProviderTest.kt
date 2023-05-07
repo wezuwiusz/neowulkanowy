@@ -456,7 +456,7 @@ class GradeAverageProviderTest {
 
     @Test
     fun `force calc current semester average with custom modifiers in api mode`() {
-        val student = student.copy(loginMode = Sdk.Mode.API.name)
+        val student = student.copy(loginMode = Sdk.Mode.HEBE.name)
 
         every { preferencesRepository.gradeAverageForceCalcFlow } returns flowOf(true)
         every { preferencesRepository.isOptionalArithmeticAverageFlow } returns flowOf(false)

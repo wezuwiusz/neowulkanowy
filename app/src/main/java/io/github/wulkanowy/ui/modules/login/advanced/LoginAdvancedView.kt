@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.login.advanced
 
-import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.login.LoginData
