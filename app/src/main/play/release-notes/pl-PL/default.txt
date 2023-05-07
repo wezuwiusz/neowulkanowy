@@ -1,7 +1,8 @@
-Wersja 1.9.2
+Wersja 2.0.0
 
-- naprawiliśmy oznaczanie wiadomości jako odczytanych (problem dotyczył głównie kont rodziców z wieloma dziećmi w tej samej szkole)
-- naprawiliśmy zapisywanie załączników do wiadomości w sytuacji, gdy ten sam załącznik był dodany do więcej niż jednej wiadomości
-- usprawniliśmy ekran z wyborem uczniów i wpisywaniem symbolu przy pierwszym logowaniu
+— zaktualizowaliśmy wygląd aplikacji na (częściowo) zgodny z wytycznymi Material 3
+— dodaliśmy możliwość zmiany kolejności pozycji w menu dolnym
+— poprawiliśmy sposób wyświetlania błędu o nieprawidłowym haśle na ekranie logowania
+— od teraz zmiana ustawień liczenia średniej automatycznie odświeży listę ocen
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
