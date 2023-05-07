@@ -207,7 +207,7 @@ class GetMailboxByStudentUseCaseTest {
         className = "",
         isCurrent = false,
         isParent = false,
-        loginMode = Sdk.Mode.API.name,
+        loginMode = Sdk.Mode.HEBE.name,
         loginType = Sdk.ScrapperLoginType.STANDARD.name,
         mobileBaseUrl = "",
         password = "",

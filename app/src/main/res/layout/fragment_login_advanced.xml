@@ -97,7 +97,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginFormUsernameLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -127,7 +127,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginFormPassLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -161,7 +161,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginFormHostLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -187,7 +187,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginFormTokenLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -212,7 +212,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginFormSymbolLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -229,7 +229,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/loginFormSymbol"
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeActionLabel="@string/login_sign_in"
@@ -242,7 +242,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginFormPinLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"

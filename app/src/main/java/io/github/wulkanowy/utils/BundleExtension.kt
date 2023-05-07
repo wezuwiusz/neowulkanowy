@@ -3,6 +3,7 @@ package io.github.wulkanowy.utils
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import java.io.Serializable
 
 inline fun <reified T : Serializable> Bundle.serializable(key: String): T = when {
@@ -15,10 +16,10 @@ inline fun <reified T : Serializable> Bundle.nullableSerializable(key: String): 
     else -> @Suppress("DEPRECATION") getSerializable(key) as T?
 }
 
-@Suppress("DEPRECATION", "UNCHECKED_CAST")
-inline fun <reified T : Serializable> Bundle.parcelableArray(key: String): Array<T>? = when {
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T : Parcelable> Bundle.parcelableArray(key: String): Array<T>? = when {
     Build.VERSION.SDK_INT >= 33 -> getParcelableArray(key, T::class.java)
-    else -> getParcelableArray(key) as Array<T>?
+    else -> @Suppress("DEPRECATION") getParcelableArray(key) as Array<T>?
 }
 
 inline fun <reified T : Serializable> Intent.serializable(key: String): T = when {

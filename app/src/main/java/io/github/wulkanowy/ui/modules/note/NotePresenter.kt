@@ -121,4 +121,10 @@ class NotePresenter @Inject constructor(
             }
             .launch("update_note")
     }
+
+    fun onFragmentReselected() {
+        if (view?.isViewEmpty == false) {
+            view?.resetView()
+        }
+    }
 }

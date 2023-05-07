@@ -26,6 +26,7 @@
     <string name="student_info_title">Schülerinfo</string>
     <string name="dashboard_title">Übersicht</string>
     <string name="notifications_center_title">Benachrichtigungszentrum</string>
+    <string name="menu_order_title">Menu configuartion</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semester %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -590,8 +591,10 @@
     <string name="all_undo">lösen</string>
     <string name="all_change">Ändern</string>
     <string name="all_add_to_calendar">Zum Kalender hinzufügen</string>
+    <string name="all_cancel">Cancel</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Keine Lektionen</string>
+    <string name="widget_timetable_last_synchronization">Synchronized on %1$s at %2$s</string>
     <string name="widget_timetable_theme_title">Thema wählen</string>
     <string name="widget_timetable_theme_light">Licht</string>
     <string name="widget_timetable_theme_dark">Dunkel</string>
@@ -611,6 +614,8 @@
     <string name="pref_view_grade_color_scheme">Farbschema der Noten</string>
     <string name="pref_view_grade_sorting_mode">Schulfachen sortieren</string>
     <string name="pref_view_app_language">Sprache</string>
+    <string name="pref_view_menu_order_title">Menu configuration</string>
+    <string name="pref_view_menu_order_summary">Set the order of functions in the menu</string>
     <string name="pref_notify_header">Benachrichtigungen</string>
     <string name="pref_notify_header_other">Sonstiges</string>
     <string name="pref_notify_switch">Benachrichtigungen anzeigen</string>
@@ -712,6 +717,10 @@
     <string name="update_download_success">Ein Update wurde gerade heruntergeladen.</string>
     <string name="update_download_success_button">Neustart</string>
     <string name="update_failed">Update fehlgeschlagen! Wulkanowy funktioniert möglicherweise nicht richtig. Überlegen Sie die Aktualisierung</string>
+    <!--Menu order-->
+    <string name="menu_order_confirm_title">Application restart</string>
+    <string name="menu_order_confirm_content">The application must restart for the changes to be saved</string>
+    <string name="menu_order_confirm_restart">Restart</string>
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
     <string name="error_invalid_device_datetime">Es ist ein Fehler aufgetreten. Überprüfen Sie Ihre Geräteuhr</string>

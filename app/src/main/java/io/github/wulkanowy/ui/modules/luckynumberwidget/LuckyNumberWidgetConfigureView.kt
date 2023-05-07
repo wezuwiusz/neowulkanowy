@@ -7,8 +7,6 @@ interface LuckyNumberWidgetConfigureView : BaseView {
 
     fun initView()
 
-    fun showThemeDialog()
-
     fun updateData(data: List<StudentWithSemesters>, selectedStudentId: Long)
 
     fun updateLuckyNumberWidget(widgetId: Int)

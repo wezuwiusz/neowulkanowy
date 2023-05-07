@@ -1,28 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d32f2f</color>
-    <color name="colorPrimaryLight">#e57373</color>
-    <color name="colorPrimaryDark">#9a0007</color>
+    <color name="colorIcon">#d32f2f</color>
+    <color name="colorPrimary">#B91B21</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorPrimaryContainer">#FFDAD5</color>
+    <color name="colorOnPrimaryContainer">#410003</color>
+    <color name="colorSurface">#FCFCFC</color>
+    <color name="colorOnSurface">#201A1A</color>
+    <color name="colorSurfaceVariant">#F4DDDB</color>
+    <color name="colorOnSurfaceVariant">#534341</color>
+    <color name="colorOutline">#857371</color>
+    <color name="colorSurfaceInverse">#352F2F</color>
+    <color name="colorOnSurfaceInverse">#FAEEEE</color>
+    <color name="colorPrimaryInverse">#FFB3AA</color>
+
+    <color name="colorPrimaryDark">#FFB3AA</color>
+    <color name="colorOnPrimaryDark">#680006</color>
+    <color name="colorPrimaryContainerDark">#93000E</color>
+    <color name="colorOnPrimaryContainerDark">#FFDAD5</color>
+    <color name="colorSurfaceDark">#201A1A</color>
+    <color name="colorOnSurfaceDark">#ECE0E0</color>
+    <color name="colorSurfaceVariantDark">#534341</color>
+    <color name="colorOnSurfaceVariantDark">#D7C1BF</color>
+    <color name="colorOutlineDark">#9F8C8A</color>
+    <color name="colorSurfaceInverseDark">#ECE0E0</color>
+    <color name="colorOnSurfaceInverseDark">#201A1A</color>
+    <color name="colorPrimaryInverseDark">#B91B21</color>
+
+    <color name="colorPrimaryDarker">#9a0007</color>
     <color name="colorError">#ff5722</color>
     <color name="colorErrorLight">#e84853</color>
 
-    <color name="colorNavigationBarLight">#2D2D2D</color>
-    <color name="colorNavigationBarBlack">#1E1E1E</color>
+    <color name="colorNavigationBarLight">#f5e8e9</color>
+    <color name="colorNavigationBarDark">#312624</color>
+    <color name="colorNavigationBarBlack">#150e0e</color>
 
-    <color name="colorStatusBarLight">#1C1C1C</color>
-    <color name="colorStatusBarBlack">#0D0D0D</color>
+    <color name="colorStatusBarLight">#f5e5e6</color>
+    <color name="colorStatusBarDark">#342826</color>
+    <color name="colorStatusBarBlack">#181010</color>
 
     <color name="dashboard_message_medium_light">#FFD980</color>
     <color name="dashboard_message_medium_dark">#ffd54f</color>
 
-    <color name="timetable_change_light">#ffd54f</color>
-    <color name="timetable_change_dark">#ff8f00</color>
+    <color name="timetable_canceled_light">#d32f2f</color>
+    <color name="timetable_canceled_dark">#e57373</color>
+    <color name="timetable_change_light">#ff8f00</color>
+    <color name="timetable_change_dark">#ffd54f</color>
 
     <color name="colorDivider">#1f000000</color>
     <color name="colorDividerInverse">#1fffffff</color>
 
     <color name="colorSwipeRefreshDark">#ff383838</color>
     <color name="colorSwipeRefresh">#ffffffff</color>
+
+    <color name="widget_primary_color_light">#FF944841</color>
+    <color name="widget_container">#FFEDEA</color>
+    <color name="widget_container_dark">#462527</color>
+    <color name="widget_list_item">#FFFBFF</color>
+    <color name="widget_list_item_dark">#201A19</color>
 
     <color name="note_positive">#a0c431</color>
     <color name="note_negative">#d43f3f</color>

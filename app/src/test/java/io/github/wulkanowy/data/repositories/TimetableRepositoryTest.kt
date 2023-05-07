@@ -10,12 +10,17 @@ import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.sdk.pojo.TimetableFull
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
+import io.mockk.just
+import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -25,7 +30,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalDateTime.of
 import java.time.ZoneId
-import io.github.wulkanowy.sdk.pojo.Timetable as SdkTimetable
+import io.github.wulkanowy.sdk.pojo.Lesson as SdkLesson
 
 class TimetableRepositoryTest {
 
@@ -62,18 +67,43 @@ class TimetableRepositoryTest {
         MockKAnnotations.init(this)
         every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
-        timetableRepository = TimetableRepository(timetableDb, timetableAdditionalDao, timetableHeaderDao, sdk, timetableNotificationSchedulerHelper, refreshHelper)
+        timetableRepository = TimetableRepository(
+            timetableDb,
+            timetableAdditionalDao,
+            timetableHeaderDao,
+            sdk,
+            timetableNotificationSchedulerHelper,
+            refreshHelper
+        )
     }
 
     @Test
     fun `force refresh without difference`() {
         val remoteList = listOf(
-            createTimetableRemote(of(2021, 1, 4, 8, 0), 1, "123", "Język polski", "Jan Kowalski", false),
-            createTimetableRemote(of(2021, 1, 4, 8, 50), 2, "124", "Język niemiecki", "Joanna Czarniecka", true)
+            createTimetableRemote(
+                start = of(2021, 1, 4, 8, 0),
+                number = 1,
+                room = "123",
+                subject = "Język polski",
+                teacher = "Jan Kowalski",
+                changes = false
+            ),
+            createTimetableRemote(
+                start = of(2021, 1, 4, 8, 50),
+                number = 2,
+                room = "124",
+                subject = "Język niemiecki",
+                teacher = "Joanna Czarniecka",
+                changes = true
+            )
         )
 
         // prepare
-        coEvery { sdk.getTimetableFull(startDate, endDate) } returns TimetableFull(emptyList(), remoteList, emptyList())
+        coEvery { sdk.getTimetable(startDate, endDate) } returns mockk {
+            every { headers } returns emptyList()
+            every { lessons } returns remoteList
+            every { additional } returns emptyList()
+        }
         coEvery { timetableDb.loadAll(1, 1, startDate, endDate) } returnsMany listOf(
             flowOf(remoteList.mapToEntities(semester)),
             flowOf(remoteList.mapToEntities(semester))
@@ -81,7 +111,14 @@ class TimetableRepositoryTest {
         coEvery { timetableDb.insertAll(any()) } returns listOf(1, 2, 3)
         coEvery { timetableDb.deleteAll(any()) } just Runs
 
-        coEvery { timetableAdditionalDao.loadAll(1, 1, startDate, endDate) } returns flowOf(listOf())
+        coEvery {
+            timetableAdditionalDao.loadAll(
+                diaryId = 1,
+                studentId = 1,
+                from = startDate,
+                end = endDate
+            )
+        } returns flowOf(listOf())
         coEvery { timetableAdditionalDao.deleteAll(emptyList()) } just Runs
         coEvery { timetableAdditionalDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
 
@@ -90,23 +127,36 @@ class TimetableRepositoryTest {
         coEvery { timetableHeaderDao.deleteAll(emptyList()) } just Runs
 
         // execute
-        val res = runBlocking { timetableRepository.getTimetable(student, semester, startDate, endDate, true).toFirstResult() }
+        val res = runBlocking {
+            timetableRepository.getTimetable(
+                student = student,
+                semester = semester,
+                start = startDate,
+                end = endDate,
+                forceRefresh = true
+            ).toFirstResult()
+        }
 
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(2, res.dataOrNull!!.lessons.size)
-        coVerify { sdk.getTimetableFull(startDate, endDate) }
+        coVerify { sdk.getTimetable(startDate, endDate) }
         coVerify { timetableDb.loadAll(1, 1, startDate, endDate) }
         coVerify { timetableDb.insertAll(match { it.isEmpty() }) }
         coVerify { timetableDb.deleteAll(match { it.isEmpty() }) }
     }
 
-    private fun createTimetableRemote(start: LocalDateTime, number: Int = 1, room: String = "", subject: String = "", teacher: String = "", changes: Boolean = false) = SdkTimetable(
+    private fun createTimetableRemote(
+        start: LocalDateTime,
+        number: Int = 1,
+        room: String = "",
+        subject: String = "",
+        teacher: String = "",
+        changes: Boolean = false
+    ) = SdkLesson(
         number = number,
-        start = start,
-        end = start.plusMinutes(45),
-        startZoned = start.atZone(ZoneId.systemDefault()),
-        endZoned = start.plusMinutes(45).atZone(ZoneId.systemDefault()),
+        start = start.atZone(ZoneId.systemDefault()),
+        end = start.plusMinutes(45).atZone(ZoneId.systemDefault()),
         date = start.toLocalDate(),
         subject = subject,
         group = "",

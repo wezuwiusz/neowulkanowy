@@ -22,7 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MobileDeviceFragment :
     BaseFragment<FragmentMobileDeviceBinding>(R.layout.fragment_mobile_device), MobileDeviceView,
-    MainView.TitledView {
+    MainView.TitledView, MainView.MainChildView {
 
     @Inject
     lateinit var presenter: MobileDevicePresenter
@@ -133,6 +133,14 @@ class MobileDeviceFragment :
 
     override fun showTokenDialog() {
         (activity as? MainActivity)?.showDialogFragment(MobileDeviceTokenDialog.newInstance())
+    }
+
+    override fun onFragmentReselected() {
+        if (::presenter.isInitialized) presenter.onFragmentReselected()
+    }
+
+    override fun resetView() {
+        binding.mobileDevicesRecycler.smoothScrollToPosition(0)
     }
 
     override fun onDestroyView() {

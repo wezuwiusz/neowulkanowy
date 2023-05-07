@@ -1,20 +1,41 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="WulkanowyTheme" parent="@style/Theme.MaterialComponents">
+    <style name="WulkanowyTheme" parent="@style/Theme.Material3.Dark">
         <item name="android:forceDarkAllowed" tools:targetApi="Q">false</item>
-        <item name="colorPrimary">@color/colorPrimaryLight</item>
-        <item name="colorSecondary">@color/colorPrimaryLight</item>
-        <item name="colorTimetableChange">@color/timetable_change_light</item>
+
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryDark</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainerDark</item>
+        <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainerDark</item>
+
+        <item name="colorSecondary">@color/colorPrimaryDark</item>
+        <item name="colorOnSecondary">@color/colorOnPrimaryDark</item>
+        <item name="colorSecondaryContainer">@color/colorPrimaryContainerDark</item>
+        <item name="colorOnSecondaryContainer">@color/colorOnPrimaryContainerDark</item>
+
+        <item name="colorTertiary">@color/colorPrimaryDark</item>
+        <item name="colorOnTertiary">@color/colorOnPrimaryDark</item>
+        <item name="colorTertiaryContainer">@color/colorPrimaryContainerDark</item>
+        <item name="colorOnTertiaryContainer">@color/colorOnPrimaryContainerDark</item>
+
+        <item name="colorSurface">@color/colorSurfaceDark</item>
+        <item name="colorTimetableCanceled">@color/timetable_canceled_dark</item>
+        <item name="colorTimetableChange">@color/timetable_change_dark</item>
         <item name="colorError">@color/colorErrorLight</item>
         <item name="colorDivider">@color/colorDividerInverse</item>
         <item name="colorSwipeRefresh">@color/colorSwipeRefreshDark</item>
         <item name="colorMessageMedium">@color/dashboard_message_medium_light</item>
         <item name="android:windowBackground">?colorSurface</item>
         <item name="android:textColor">?android:textColorPrimary</item>
-        <item name="android:navigationBarColor">@color/colorNavigationBarLight</item>
-        <item name="android:statusBarColor">@color/colorStatusBarLight</item>
+        <item name="android:navigationBarColor">@color/colorNavigationBarDark</item>
+        <item name="android:statusBarColor">@color/colorStatusBarDark</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="materialCardViewStyle">@style/Widget.Material3.CardView.Elevated</item>
+        <item name="switchPreferenceCompatStyle">
+            @style/Preference.Wulkanowy.SwitchPreferenceCompat
+        </item>
+        <item name="alertDialogTheme">@style/WulkanowyTheme.PreferenceAlertDialog</item>
     </style>
 
     <style name="WulkanowyTheme.Black" parent="WulkanowyTheme.NoActionBar">
@@ -34,21 +55,19 @@
         <item name="android:statusBarColor">?colorSurface</item>
     </style>
 
-    <style name="WulkanowyTheme.MessageSend" parent="WulkanowyTheme.NoActionBar">
-        <item name="android:navigationBarColor">?colorSurface</item>
-        <item name="android:statusBarColor">#1C1C1C</item>
-    </style>
-
-    <style name="WulkanowyTheme.MessageSend.Black" parent="WulkanowyTheme.Black">
-        <item name="android:navigationBarColor">?colorSurface</item>
-        <item name="android:statusBarColor">@android:color/black</item>
-    </style>
-
-    <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.MaterialComponents.Dialog">
-        <item name="colorPrimary">@color/colorPrimaryLight</item>
-        <item name="colorSecondary">@color/colorPrimaryLight</item>
+    <style name="WulkanowyTheme.WidgetAccountSwitcher" parent="Theme.Material3.Dark.Dialog">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/colorPrimaryDark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:windowBackground">@drawable/background_material_alert_dialog</item>
+    </style>
+
+    <style name="Wulkanowy.Widget.Theme" parent="WulkanowyTheme">
+        <item name="colorSurface">@color/widget_container_dark</item>
+        <item name="colorPrimaryContainer">?attr/colorPrimary</item>
+        <item name="colorOnPrimaryContainer">?attr/colorSurface</item>
+        <item name="backgroundColor">@color/widget_list_item_dark</item>
     </style>
 </resources>

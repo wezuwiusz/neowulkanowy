@@ -1,8 +1,14 @@
 package io.github.wulkanowy.ui.base
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.CallSuper
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.elevation.SurfaceColors
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 import javax.inject.Inject
@@ -37,6 +43,19 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment(), BaseView
     override fun showErrorDetailsDialog(error: Throwable) {
         ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
     }
+
+    @CallSuper
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.setBackgroundColor(SurfaceColors.SURFACE_3.getColor(requireContext()))
+    }
+
+    @CallSuper
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = binding.root
 
     override fun onResume() {
         super.onResume()

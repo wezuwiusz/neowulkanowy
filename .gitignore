@@ -119,3 +119,4 @@ Thumbs.db
 app/src/release/agconnect-services.json
 app/src/release/agconnect-credentials.json
 .idea/deploymentTargetDropDown.xml
+.idea/kotlinc.xml

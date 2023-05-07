@@ -8,10 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.widget.RemoteViews
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.drawable.toBitmap
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.SharedPrefProvider
@@ -70,11 +70,6 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             "timetable_widget_today_last_lesson_end_date_time_$appWidgetId"
 
         fun getStudentWidgetKey(appWidgetId: Int) = "timetable_widget_student_$appWidgetId"
-
-        fun getThemeWidgetKey(appWidgetId: Int) = "timetable_widget_theme_$appWidgetId"
-
-        fun getCurrentThemeWidgetKey(appWidgetId: Int) =
-            "timetable_widget_current_theme_$appWidgetId"
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -109,8 +104,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             val buttonType = intent.getStringExtra(EXTRA_BUTTON_TYPE)
             val toggledWidgetId = intent.getIntExtra(EXTRA_TOGGLED_WIDGET_ID, 0)
             val student = getStudent(
-                sharedPref.getLong(getStudentWidgetKey(toggledWidgetId), 0),
-                toggledWidgetId
+                sharedPref.getLong(getStudentWidgetKey(toggledWidgetId), 0), toggledWidgetId
             )
             val savedDate =
                 LocalDate.ofEpochDay(sharedPref.getLong(getDateWidgetKey(toggledWidgetId), 0))
@@ -122,8 +116,7 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             }
             if (!buttonType.isNullOrBlank()) {
                 analytics.logEvent(
-                    "changed_timetable_widget_day",
-                    "button" to buttonType
+                    "changed_timetable_widget_day", "button" to buttonType
                 )
             }
             updateWidget(context, toggledWidgetId, date, student)
@@ -137,49 +130,21 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             with(sharedPref) {
                 delete(getStudentWidgetKey(appWidgetId))
                 delete(getDateWidgetKey(appWidgetId))
-                delete(getThemeWidgetKey(appWidgetId))
-                delete(getCurrentThemeWidgetKey(appWidgetId))
             }
         }
     }
 
     private fun updateWidget(
-        context: Context,
-        appWidgetId: Int,
-        date: LocalDate,
-        student: Student?
+        context: Context, appWidgetId: Int, date: LocalDate, student: Student?
     ) {
-        val savedConfigureTheme = sharedPref.getLong(getThemeWidgetKey(appWidgetId), 0)
-        val isSystemDarkMode =
-            context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        var currentTheme = 0L
-        var layoutId = R.layout.widget_timetable
-
-        if (savedConfigureTheme == 1L || (savedConfigureTheme == 2L && isSystemDarkMode)) {
-            currentTheme = 1L
-            layoutId = R.layout.widget_timetable_dark
-        }
-
         val nextNavIntent = createNavIntent(context, appWidgetId, appWidgetId, BUTTON_NEXT)
         val prevNavIntent = createNavIntent(context, -appWidgetId, appWidgetId, BUTTON_PREV)
         val resetNavIntent =
             createNavIntent(context, Int.MAX_VALUE - appWidgetId, appWidgetId, BUTTON_RESET)
-        val adapterIntent = Intent(context, TimetableWidgetService::class.java)
-            .apply {
-                putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
-                //make Intent unique
-                action = appWidgetId.toString()
-            }
-        val accountIntent = PendingIntent.getActivity(
-            context,
-            -Int.MAX_VALUE + appWidgetId,
-            Intent(context, TimetableWidgetConfigureActivity::class.java).apply {
-                addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
-                putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
-                putExtra(EXTRA_FROM_PROVIDER, true)
-            }, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
-
-        )
+        val adapterIntent = Intent(context, TimetableWidgetService::class.java).apply {
+            putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
+            action = appWidgetId.toString() //make Intent unique
+        }
         val appIntent = PendingIntent.getActivity(
             context,
             TIMETABLE_PENDING_INTENT_ID,
@@ -187,56 +152,41 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
         )
 
-        val remoteView = RemoteViews(context.packageName, layoutId).apply {
+        val formattedDate = date.toFormattedString("EEE, dd.MM").capitalise()
+        val remoteView = RemoteViews(context.packageName, R.layout.widget_timetable).apply {
             setEmptyView(R.id.timetableWidgetList, R.id.timetableWidgetEmpty)
-            setTextViewText(
-                R.id.timetableWidgetDate,
-                date.toFormattedString("EEEE, dd.MM").capitalise()
-            )
-            setTextViewText(
-                R.id.timetableWidgetName,
-                student?.nickOrName ?: context.getString(R.string.all_no_data)
-            )
-
-            student?.let {
-                setImageViewBitmap(R.id.timetableWidgetAccount, context.createAvatarBitmap(it))
-            }
-
+            setTextViewText(R.id.timetableWidgetDate, formattedDate)
             setRemoteAdapter(R.id.timetableWidgetList, adapterIntent)
             setOnClickPendingIntent(R.id.timetableWidgetNext, nextNavIntent)
             setOnClickPendingIntent(R.id.timetableWidgetPrev, prevNavIntent)
             setOnClickPendingIntent(R.id.timetableWidgetDate, resetNavIntent)
-            setOnClickPendingIntent(R.id.timetableWidgetName, resetNavIntent)
-            setOnClickPendingIntent(R.id.timetableWidgetAccount, accountIntent)
             setPendingIntentTemplate(R.id.timetableWidgetList, appIntent)
         }
 
+        student?.let {
+            setupAccountView(context, student, remoteView, appWidgetId)
+        }
+
         with(sharedPref) {
-            putLong(getCurrentThemeWidgetKey(appWidgetId), currentTheme)
             putLong(getDateWidgetKey(appWidgetId), date.toEpochDay(), true)
         }
 
         with(appWidgetManager) {
-            updateAppWidget(appWidgetId, remoteView)
+            partiallyUpdateAppWidget(appWidgetId, remoteView)
             notifyAppWidgetViewDataChanged(appWidgetId, R.id.timetableWidgetList)
-            Timber.d("TimetableWidgetProvider updated")
         }
+
+        Timber.d("TimetableWidgetProvider updated")
     }
 
     private fun createNavIntent(
-        context: Context,
-        code: Int,
-        appWidgetId: Int,
-        buttonType: String
+        context: Context, code: Int, appWidgetId: Int, buttonType: String
     ) = PendingIntent.getBroadcast(
-        context,
-        code,
-        Intent(context, TimetableWidgetProvider::class.java).apply {
+        context, code, Intent(context, TimetableWidgetProvider::class.java).apply {
             action = ACTION_APPWIDGET_UPDATE
             putExtra(EXTRA_BUTTON_TYPE, buttonType)
             putExtra(EXTRA_TOGGLED_WIDGET_ID, appWidgetId)
-        },
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
+        }, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
     )
 
     private suspend fun getStudent(studentId: Long, appWidgetId: Int) = try {
@@ -258,31 +208,6 @@ class TimetableWidgetProvider : BroadcastReceiver() {
         null
     }
 
-    private fun Context.createAvatarBitmap(student: Student): Bitmap {
-        val avatarColor = if (student.avatarColor == -2937041L) {
-            getCompatColor(R.color.colorPrimaryLight).toLong()
-        } else {
-            student.avatarColor
-        }
-        val avatarDrawable = createNameInitialsDrawable(student.nickOrName, avatarColor, 0.5f)
-
-        val avatarBitmap =
-            if (avatarDrawable.intrinsicWidth <= 0 || avatarDrawable.intrinsicHeight <= 0) {
-                Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-            } else {
-                Bitmap.createBitmap(
-                    avatarDrawable.intrinsicWidth,
-                    avatarDrawable.intrinsicHeight,
-                    Bitmap.Config.ARGB_8888
-                )
-            }
-
-        val canvas = Canvas(avatarBitmap)
-        avatarDrawable.setBounds(0, 0, canvas.width, canvas.height)
-        avatarDrawable.draw(canvas)
-        return avatarBitmap
-    }
-
     private fun getWidgetDefaultDateToLoad(appWidgetId: Int): LocalDate {
         val lastLessonEndTimestamp =
             sharedPref.getLong(getTodayLastLessonEndDateTimeWidgetKey(appWidgetId), 0)
@@ -297,6 +222,46 @@ class TimetableWidgetProvider : BroadcastReceiver() {
             todayDate.nextSchoolDay
         } else {
             todayDate.nextOrSameSchoolDay
+        }
+    }
+
+    private fun setupAccountView(
+        context: Context,
+        student: Student,
+        remoteViews: RemoteViews,
+        appWidgetId: Int
+    ) {
+        val accountInitials = student.nickOrName
+            .split(" ")
+            .mapNotNull { it.firstOrNull() }.take(2)
+            .joinToString(separator = "").uppercase()
+
+        val accountPickerIntent = PendingIntent.getActivity(
+            context,
+            -Int.MAX_VALUE + appWidgetId,
+            Intent(context, TimetableWidgetConfigureActivity::class.java).apply {
+                addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
+                putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
+                putExtra(EXTRA_FROM_PROVIDER, true)
+            },
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntentCompat.FLAG_IMMUTABLE
+        )
+
+        // Create background bitmap
+        val avatarDrawableResource = R.drawable.background_timetable_widget_avatar
+        AppCompatResources.getDrawable(context, avatarDrawableResource)?.let { drawable ->
+            val screenDensity = context.resources.displayMetrics.density
+            val avatarSize = (48 * screenDensity).toInt()
+            val backgroundBitmap = DrawableCompat.wrap(drawable).run {
+                DrawableCompat.setTint(this, student.avatarColor.toInt())
+                toBitmap(avatarSize, avatarSize)
+            }
+            remoteViews.setImageViewBitmap(R.id.timetableWidgetAccountBackground, backgroundBitmap)
+        }
+
+        remoteViews.apply {
+            setTextViewText(R.id.timetableWidgetAccountInitials, accountInitials)
+            setOnClickPendingIntent(R.id.timetableWidgetAccount, accountPickerIntent)
         }
     }
 }

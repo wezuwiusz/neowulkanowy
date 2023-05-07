@@ -15,8 +15,8 @@
     <string name="notification_debug_title">Отладка уведомлений</string>
     <string name="contributors_title">Разработчики</string>
     <string name="license_title">Лицензии</string>
-    <string name="message_title">Письма</string>
-    <string name="send_message_title">Написать</string>
+    <string name="message_title">Сообщения</string>
+    <string name="send_message_title">Новое сообщение</string>
     <string name="add_homework_title">Новое домашнее задание</string>
     <string name="note_title">Замечания и свершения</string>
     <string name="homework_title">Домашние задания</string>
@@ -26,6 +26,7 @@
     <string name="student_info_title">Информация о ученике</string>
     <string name="dashboard_title">Главная</string>
     <string name="notifications_center_title">Центр уведомлений</string>
+    <string name="menu_order_title">Настройка меню</string>
     <!--Subtitles-->
     <string name="grade_subtitle">%1$d семестр, %2$d/%3$d</string>
     <!--Login-->
@@ -55,7 +56,7 @@
     <string name="login_invalid_symbol">Неверный symbol</string>
     <string name="login_incorrect_symbol">Ученик не найден. Проверьте symbol и выбранный тип дненика UONET+</string>
     <string name="login_duplicate_student">Данный ученик уже авторизован</string>
-    <string name="login_symbol_helper">The symbol can be found on the register page in&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nMake sure that you have set the appropriate register variant in the <b>UONET+ register variant</b> field on the first login screen</string>
+    <string name="login_symbol_helper">Symbol можно найти на странице регистрации в &#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nУбедитесь, что вы выбрали соответствующий тип дневника в поле <b>Тип дневника UONET+</b> на первом экране входа</string>
     <string name="login_select_student">Выберите учеников для авторизации в приложении</string>
     <string name="login_advanced">Другие варианты</string>
     <string name="login_advanced_warning_mobile_api">В этом режиме не работают: счастливый номер, статистика класса по оценкам, статистика посещаемости и уроков, информация о школе и список зарегистрированных устройств</string>
@@ -72,14 +73,14 @@
     <string name="login_recover">Восстановить</string>
     <string name="login_signed_in">Ученик уже авторизован</string>
     <string name="login_host_standard">Стандартный</string>
-    <string name="login_other_search_locations">Other search locations</string>
-    <string name="login_no_active_student">No active students found</string>
-    <string name="login_symbol_enter">Enter a different symbol</string>
+    <string name="login_other_search_locations">Другие места поиска</string>
+    <string name="login_no_active_student">Не найдено активных учеников</string>
+    <string name="login_symbol_enter">Введите другой symbol</string>
     <!--Notifications-->
-    <string name="notifications_header_title">Enable notifications</string>
-    <string name="notifications_header_description">Enable notifications so you don\'t miss message from teacher or new grade</string>
-    <string name="notifications_skip">Skip</string>
-    <string name="notifications_enable">Enable</string>
+    <string name="notifications_header_title">Включить уведомления</string>
+    <string name="notifications_header_description">Включить уведомления, чтобы вы не пропустили сообщение от учителя или новую оценку</string>
+    <string name="notifications_skip">Пропустить</string>
+    <string name="notifications_enable">Включить</string>
     <!--Main-->
     <string name="main_account_picker">Менеджер аккаунтов</string>
     <string name="main_log_in">Войти</string>
@@ -294,7 +295,7 @@
     <string name="message_sent">Отправленные</string>
     <string name="message_trash">Корзина</string>
     <string name="message_no_subject">(нет темы)</string>
-    <string name="message_no_items">Нет писем</string>
+    <string name="message_no_items">Нет сообщений</string>
     <string name="message_from">От:</string>
     <string name="message_to">Кому:</string>
     <string name="message_date">Дата: %1$s</string>
@@ -304,7 +305,7 @@
     <string name="message_unselect_all">Отменить выбор</string>
     <string name="message_move_to_trash">Перенести в корзину</string>
     <string name="message_delete_forever">Удалить навсегда</string>
-    <string name="message_delete_success">Письмо успешно удалено</string>
+    <string name="message_delete_success">Сообщение успешно удалено</string>
     <string name="message_mailbox_type_student">ученик</string>
     <string name="message_mailbox_type_parent">родитель</string>
     <string name="message_mailbox_type_guardian">опекун</string>
@@ -313,8 +314,8 @@
     <string name="message_print">Печать</string>
     <string name="message_subject">Тема</string>
     <string name="message_content">Содержание</string>
-    <string name="message_send_successful">Письмо успешно отправлено</string>
-    <string name="message_not_exists">Письма не существует</string>
+    <string name="message_send_successful">Сообщение успешно отправлено</string>
+    <string name="message_not_exists">Сообщения не существует</string>
     <string name="message_required_recipients">Вы должны выбрать как минимум одного получателя</string>
     <string name="message_content_min_length">Текст сообщения должен содержать как минимум 3 знака</string>
     <string name="message_chip_all_mailboxes">Все почтовые ящики</string>
@@ -334,8 +335,8 @@
         <item quantity="many">Новые сообщения</item>
         <item quantity="other">Новые сообщения</item>
     </plurals>
-    <string name="message_restore_dialog">Вы хотите восстановить черновик письма?</string>
-    <string name="message_restore_dialog_with_recipients">Вы хотите восстановить черновик письма с получателями: %s?</string>
+    <string name="message_restore_dialog">Вы хотите восстановить черновик сообщения?</string>
+    <string name="message_restore_dialog_with_recipients">Вы хотите восстановить черновик сообщения с получателями: %s?</string>
     <plurals name="message_notify_new_items">
         <item quantity="one">Вы получили %1$d новое сообщение</item>
         <item quantity="few">Вы получили %1$d новых сообщения</item>
@@ -493,8 +494,8 @@
     </plurals>
     <string name="conferences_present">Присутствует на встрече</string>
     <string name="conference_agenda">Повестка дня</string>
-    <string name="conference_place">Place</string>
-    <string name="conference_topic">Topic</string>
+    <string name="conference_place">Место</string>
+    <string name="conference_topic">Тема</string>
     <!--Director information-->
     <string name="school_announcement_title">Объявления школы</string>
     <string name="school_announcement_no_items">Нет школьных объявлений</string>
@@ -678,8 +679,10 @@
     <string name="all_undo">Отменить</string>
     <string name="all_change">Изменить</string>
     <string name="all_add_to_calendar">Добавить в календарь</string>
+    <string name="all_cancel">Отменить</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Нет уроков</string>
+    <string name="widget_timetable_last_synchronization">Synchronized on %1$s at %2$s</string>
     <string name="widget_timetable_theme_title">Выбрать тему</string>
     <string name="widget_timetable_theme_light">Светлая</string>
     <string name="widget_timetable_theme_dark">Тёмная</string>
@@ -699,6 +702,8 @@
     <string name="pref_view_grade_color_scheme">Цветовая схема оценок</string>
     <string name="pref_view_grade_sorting_mode">Сортировка уроков</string>
     <string name="pref_view_app_language">Язык</string>
+    <string name="pref_view_menu_order_title">Настройка меню</string>
+    <string name="pref_view_menu_order_summary">Установить порядок функций в меню</string>
     <string name="pref_notify_header">Уведомления</string>
     <string name="pref_notify_header_other">Прочее</string>
     <string name="pref_notify_switch">Показывать уведомления</string>
@@ -780,7 +785,7 @@
     <string name="channel_new_conference">Новые встречи</string>
     <string name="channel_new_exam">Новые тесты</string>
     <string name="channel_lucky_number">Счастливый номер</string>
-    <string name="channel_new_message">Новые письма</string>
+    <string name="channel_new_message">Новые сообщения</string>
     <string name="channel_new_notes">Новые замечания</string>
     <string name="channel_new_school_announcement">Новые школьные объявления</string>
     <string name="channel_push">Push-уведомления</string>
@@ -800,6 +805,10 @@
     <string name="update_download_success">Только что было скачано обновление.</string>
     <string name="update_download_success_button">Перезапустить</string>
     <string name="update_failed">Не удалось обновить! Wulkanowy может работать некорректно. Рассмотрите возможность обновления</string>
+    <!--Menu order-->
+    <string name="menu_order_confirm_title">Перезапуск приложение</string>
+    <string name="menu_order_confirm_content">Для сохранения изменений необходимо перезапустить приложение</string>
+    <string name="menu_order_confirm_restart">Перезапустить</string>
     <!--Errors-->
     <string name="error_no_internet">Интернет-соединение отсутствует</string>
     <string name="error_invalid_device_datetime">Произошла ошибка. Проверьте время на вашем устройстве</string>

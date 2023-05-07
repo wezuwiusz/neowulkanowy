@@ -1,63 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/luckyNumberWidgetContainer"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/background_luckynumber_widget"
-    android:gravity="center"
-    android:padding="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:theme="@style/Wulkanowy.Widget.Theme"
     tools:context=".ui.modules.luckynumberwidget.LuckyNumberWidgetProvider">
 
     <ImageView
-        android:id="@+id/luckyNumberWidgetImageTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/luckyNumberWidgetNumber"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:contentDescription="@string/lucky_number_title"
-        android:gravity="center"
-        android:src="@drawable/ic_widget_clover"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:adjustViewBounds="true"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        android:src="@drawable/shape_badge"
+        android:tint="?attr/colorSurface"
+        app:tint="?attr/colorSurface"
+        tools:ignore="UseAppTint" />
 
     <TextView
-        android:id="@+id/luckyNumberWidgetTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:gravity="center"
-        android:labelFor="@id/luckyNumberWidgetImageTop"
-        android:text="@string/lucky_number_title"
-        android:textAlignment="center"
-        android:textColor="#8c8c8c"
-        android:textSize="22sp"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/luckyNumberWidgetImageLeft"
+        android:id="@+id/luckyNumberWidgetValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/luckyNumberWidgetNumber"
-        android:contentDescription="@string/lucky_number_title"
-        android:src="@drawable/ic_widget_clover"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:layout_gravity="center"
+        android:text="17"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="72sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/luckyNumberWidgetNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/luckyNumberWidgetTitle"
-        android:layout_toEndOf="@id/luckyNumberWidgetImageLeft"
-        android:layout_toRightOf="@id/luckyNumberWidgetImageLeft"
-        android:gravity="center"
-        android:text="#"
-        android:textAlignment="center"
-        android:textColor="#404040"
-        android:textSize="34sp"
-        tools:ignore="HardcodedText"
-        tools:text="13" />
-</RelativeLayout>
+    <ImageButton
+        android:id="@+id/luckyNumberWidgetHistoryButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="left|bottom"
+        android:background="@drawable/background_luckynumber_widget_button"
+        android:backgroundTint="?attr/colorPrimaryContainer"
+        android:contentDescription="@string/lucky_number_history_button"
+        android:src="@drawable/ic_history"
+        android:tint="?attr/colorOnPrimaryContainer"
+        app:tint="?attr/colorOnPrimaryContainer"
+        tools:ignore="UseAppTint" />
+</FrameLayout>

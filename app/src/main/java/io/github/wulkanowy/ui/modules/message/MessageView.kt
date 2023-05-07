@@ -20,5 +20,9 @@ interface MessageView : BaseView {
 
     fun notifyChildrenFinishActionMode()
 
+    fun notifyChildParentReselected(index: Int)
+
     fun openSendMessage()
+
+    fun popView()
 }

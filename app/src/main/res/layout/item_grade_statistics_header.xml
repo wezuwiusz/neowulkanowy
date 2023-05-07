@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context=".ui.modules.grade.statistics.GradeStatisticsAdapter">
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
@@ -12,36 +14,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RadioGroup
+        <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/gradeStatisticsTypeSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingTop="5dp"
-            android:paddingEnd="16dp">
+            android:paddingEnd="16dp"
+            app:selectionRequired="true"
+            app:singleSelection="true">
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <Button
                 android:id="@+id/gradeStatisticsTypePartial"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:tag="partial"
                 android:text="@string/grade_statistics_partial" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <Button
                 android:id="@+id/gradeStatisticsTypeSemester"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="annual"
                 android:text="@string/grade_statistics_semester" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <Button
                 android:id="@+id/gradeStatisticsTypePoints"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="points"
                 android:text="@string/grade_statistics_points" />
-        </RadioGroup>
+        </com.google.android.material.button.MaterialButtonToggleGroup>
     </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

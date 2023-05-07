@@ -51,7 +51,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/account_details_error_details"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -278,7 +278,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/accountDetailsLogout"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

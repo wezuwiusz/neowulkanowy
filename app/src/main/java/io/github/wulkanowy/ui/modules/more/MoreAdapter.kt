@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.more
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,9 +8,9 @@ import javax.inject.Inject
 
 class MoreAdapter @Inject constructor() : RecyclerView.Adapter<MoreAdapter.ItemViewHolder>() {
 
-    var items = emptyList<Pair<String, Drawable?>>()
+    var items = emptyList<MoreItem>()
 
-    var onClickListener: (name: String) -> Unit = {}
+    var onClickListener: (moreItem: MoreItem) -> Unit = {}
 
     override fun getItemCount() = items.size
 
@@ -20,13 +19,14 @@ class MoreAdapter @Inject constructor() : RecyclerView.Adapter<MoreAdapter.ItemV
     )
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val (title, drawable) = items[position]
+        val item = items[position]
+        val context = holder.binding.root.context
 
         with(holder.binding) {
-            moreItemTitle.text = title
-            moreItemImage.setImageDrawable(drawable)
+            moreItemTitle.text = context.getString(item.title)
+            moreItemImage.setImageResource(item.icon)
 
-            root.setOnClickListener { onClickListener(title) }
+            root.setOnClickListener { onClickListener(item) }
         }
     }
 

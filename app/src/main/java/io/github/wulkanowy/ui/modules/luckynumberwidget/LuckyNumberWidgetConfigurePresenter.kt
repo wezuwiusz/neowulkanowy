@@ -8,7 +8,6 @@ import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetProvider.Companion.getStudentWidgetKey
-import io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetProvider.Companion.getThemeWidgetKey
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -32,18 +31,7 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
 
     fun onItemSelect(student: Student) {
         selectedStudent = student
-        view?.showThemeDialog()
-    }
-
-    fun onThemeSelect(index: Int) {
-        appWidgetId?.let {
-            sharedPref.putLong(getThemeWidgetKey(it), index.toLong())
-        }
         registerStudent(selectedStudent)
-    }
-
-    fun onDismissThemeView() {
-        view?.finishView()
     }
 
     private fun loadData() {
@@ -56,10 +44,7 @@ class LuckyNumberWidgetConfigurePresenter @Inject constructor(
                     } ?: -1
                     when {
                         it.data.isEmpty() -> view?.openLoginView()
-                        it.data.size == 1 -> {
-                            selectedStudent = it.data.single().student
-                            view?.showThemeDialog()
-                        }
+                        it.data.size == 1 -> onItemSelect(it.data.single().student)
                         else -> view?.updateData(it.data, selectedStudentId)
                     }
                 }

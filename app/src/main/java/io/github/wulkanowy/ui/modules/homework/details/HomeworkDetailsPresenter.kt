@@ -5,7 +5,6 @@ import io.github.wulkanowy.data.logResourceStatus
 import io.github.wulkanowy.data.onResourceError
 import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.HomeworkRepository
-import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -19,14 +18,7 @@ class HomeworkDetailsPresenter @Inject constructor(
     studentRepository: StudentRepository,
     private val homeworkRepository: HomeworkRepository,
     private val analytics: AnalyticsHelper,
-    private val preferencesRepository: PreferencesRepository
 ) : BasePresenter<HomeworkDetailsView>(errorHandler, studentRepository) {
-
-    var isHomeworkFullscreen
-        get() = preferencesRepository.isHomeworkFullscreen
-        set(value) {
-            preferencesRepository.isHomeworkFullscreen = value
-        }
 
     override fun onAttachView(view: HomeworkDetailsView) {
         super.onAttachView(view)

@@ -2,37 +2,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:minWidth="300dp"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minWidth="300dp"
-        android:orientation="vertical">
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
 
         <TextView
             android:id="@+id/addadditionalLessonHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
             android:text="@string/additional_lessons_add_title"
-            android:textSize="21sp"
-            android:textStyle="bold" />
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/additionalLessonDialogDate"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="28dp"
             android:hint="@string/all_date"
+            app:layout_constraintTop_toBottomOf="@id/addadditionalLessonHeader"
             app:startIconDrawable="@drawable/ic_calendar_all">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -45,22 +43,22 @@
                 tools:ignore="Deprecated" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/additionalLessonDialogRepeat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="6dp"
-            android:text="@string/additional_lessons_repeat" />
+            android:text="@string/additional_lessons_repeat"
+            app:layout_constraintTop_toBottomOf="@id/additionalLessonDialogDate" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/additionalLessonDialogStart"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="6dp"
             android:hint="@string/additional_lessons_start"
+            app:layout_constraintTop_toBottomOf="@id/additionalLessonDialogRepeat"
             app:startIconDrawable="@drawable/ic_all_clock">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -78,9 +76,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:hint="@string/additional_lessons_end"
+            app:layout_constraintTop_toBottomOf="@id/additionalLessonDialogStart"
             app:startIconDrawable="@drawable/ic_all_clock">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -98,59 +96,52 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:hint="@string/all_subject">
+            android:hint="@string/all_subject"
+            app:layout_constraintTop_toBottomOf="@id/additionalLessonDialogEnd">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/additionalLessonDialogContentEdit"
                 android:layout_width="match_parent"
-                android:inputType="text"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="end"
-            android:minHeight="52dp"
-            android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/additionalLessonDialogClose"
+            style="@style/Widget.Material3.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="24dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/all_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/additionalLessonDialogAdd"
+            app:layout_constraintTop_toBottomOf="@id/additionalLessonDialogContent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/additionalLessonDialogClose"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginBottom="8dp"
-                android:insetLeft="0dp"
-                android:insetTop="0dp"
-                android:insetRight="0dp"
-                android:insetBottom="0dp"
-                android:minWidth="88dp"
-                android:text="@string/all_close"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/additionalLessonDialogAdd"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="8dp"
-                android:insetLeft="0dp"
-                android:insetTop="0dp"
-                android:insetRight="0dp"
-                android:insetBottom="0dp"
-                android:minWidth="88dp"
-                android:text="@string/all_add"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/additionalLessonDialogAdd"
+            style="@style/Widget.Material3.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/all_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/additionalLessonDialogContent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

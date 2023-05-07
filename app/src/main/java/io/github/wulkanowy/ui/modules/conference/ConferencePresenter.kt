@@ -96,4 +96,11 @@ class ConferencePresenter @Inject constructor(
             .onResourceError(errorHandler::dispatch)
             .launch()
     }
+
+    fun onFragmentReselected() {
+        Timber.i("Conference is reselected")
+        if (view?.isViewEmpty == false) {
+            view?.resetView()
+        }
+    }
 }

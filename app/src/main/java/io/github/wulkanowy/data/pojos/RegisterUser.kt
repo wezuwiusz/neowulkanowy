@@ -1,20 +1,25 @@
 package io.github.wulkanowy.data.pojos
 
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.scrapper.Scrapper
 
 data class RegisterUser(
     val email: String,
-    val password: String,
+    val password: String?,
     val login: String, // may be the same as email
-    val baseUrl: String,
-    val loginType: Scrapper.LoginType,
+    val scrapperBaseUrl: String?,
+    val loginType: Scrapper.LoginType?,
+    val loginMode: Sdk.Mode,
     val symbols: List<RegisterSymbol>,
 ) : java.io.Serializable
 
 data class RegisterSymbol(
     val symbol: String,
     val error: Throwable?,
+    val hebeBaseUrl: String?,
+    val keyId: String?,
+    val privatePem: String?,
     val userName: String,
     val schools: List<RegisterUnit>,
 ) : java.io.Serializable

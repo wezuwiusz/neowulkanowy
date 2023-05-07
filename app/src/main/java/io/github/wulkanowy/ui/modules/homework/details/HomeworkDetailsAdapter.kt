@@ -31,13 +31,7 @@ class HomeworkDetailsAdapter @Inject constructor() :
             attachments = value?.attachments.orEmpty()
         }
 
-    var isHomeworkFullscreen = false
-
     var onAttachmentClickListener: (url: String) -> Unit = {}
-
-    var onFullScreenClickListener = {}
-
-    var onFullScreenExitClickListener = {}
 
     var onDeleteClickListener: (homework: Homework) -> Unit = {}
 
@@ -82,18 +76,6 @@ class HomeworkDetailsAdapter @Inject constructor() :
             homeworkDialogTeacher.text = homework?.teacher.ifNullOrBlank { noDataString }
             homeworkDialogContent.text = homework?.content.ifNullOrBlank { noDataString }
             homeworkDialogDelete.visibility = if (homework?.isAddedByUser == true) VISIBLE else GONE
-            homeworkDialogFullScreen.visibility = if (isHomeworkFullscreen) GONE else VISIBLE
-            homeworkDialogFullScreenExit.visibility = if (isHomeworkFullscreen) VISIBLE else GONE
-            homeworkDialogFullScreen.setOnClickListener {
-                homeworkDialogFullScreen.visibility = GONE
-                homeworkDialogFullScreenExit.visibility = VISIBLE
-                onFullScreenClickListener()
-            }
-            homeworkDialogFullScreenExit.setOnClickListener {
-                homeworkDialogFullScreen.visibility = VISIBLE
-                homeworkDialogFullScreenExit.visibility = GONE
-                onFullScreenExitClickListener()
-            }
             homeworkDialogDelete.setOnClickListener {
                 onDeleteClickListener(homework!!)
             }

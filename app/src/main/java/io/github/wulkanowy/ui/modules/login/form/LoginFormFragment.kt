@@ -15,12 +15,7 @@ import io.github.wulkanowy.databinding.FragmentLoginFormBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginData
-import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.hideSoftInput
-import io.github.wulkanowy.utils.openEmailClient
-import io.github.wulkanowy.utils.openInternetBrowser
-import io.github.wulkanowy.utils.setOnEditorDoneSignIn
-import io.github.wulkanowy.utils.showSoftInput
+import io.github.wulkanowy.utils.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -149,12 +144,14 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
     override fun setErrorPassRequired(focus: Boolean) {
         with(binding.loginFormPassLayout) {
             error = getString(R.string.error_field_required)
+            setEndIconTintList(requireContext().getAttrColorStateList(R.attr.colorError))
         }
     }
 
     override fun setErrorPassInvalid(focus: Boolean) {
         with(binding.loginFormPassLayout) {
             error = getString(R.string.login_invalid_password)
+            setEndIconTintList(requireContext().getAttrColorStateList(R.attr.colorError))
         }
     }
 
@@ -162,6 +159,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         with(binding) {
             loginFormUsernameLayout.error = " "
             loginFormPassLayout.error = " "
+            loginFormPassLayout.setEndIconTintList(requireContext().getAttrColorStateList(R.attr.colorError))
             loginFormHostLayout.error = " "
             loginFormErrorBox.text = message ?: getString(R.string.login_incorrect_password_default)
             loginFormErrorBox.isVisible = true
@@ -181,6 +179,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun clearPassError() {
         binding.loginFormPassLayout.error = null
+        binding.loginFormPassLayout.setEndIconTintList(null)
         binding.loginFormErrorBox.isVisible = false
     }
 
@@ -203,6 +202,10 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun showContent(show: Boolean) {
         binding.loginFormContainer.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showOtherOptionsButton(show: Boolean) {
+        binding.loginFormAdvancedButton.isVisible = show
     }
 
     @SuppressLint("SetTextI18n")

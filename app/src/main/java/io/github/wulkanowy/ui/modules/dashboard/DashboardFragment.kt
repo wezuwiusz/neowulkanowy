@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentDashboardBinding
@@ -148,7 +149,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
         val values = requireContext().resources.getStringArray(R.array.dashboard_tile_values)
         val selectedItemsState = values.map { value -> selectedItems.any { it.name == value } }
 
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.pref_dashboard_appearance_tiles_title)
             .setMultiChoiceItems(entries, selectedItemsState.toBooleanArray()) { _, _, _ -> }
             .setPositiveButton(android.R.string.ok) { dialog, _ ->

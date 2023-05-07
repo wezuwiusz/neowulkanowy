@@ -1,22 +1,23 @@
 package io.github.wulkanowy.ui.modules.grade.details
 
+import android.app.Dialog
+import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.databinding.DialogGradeBinding
+import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.utils.*
 
-
-class GradeDetailsDialog : DialogFragment() {
-
-    private var binding: DialogGradeBinding by lifecycleAwareVariable()
+@AndroidEntryPoint
+class GradeDetailsDialog : BaseDialogFragment<DialogGradeBinding>() {
 
     private lateinit var grade: Grade
 
@@ -38,16 +39,15 @@ class GradeDetailsDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
         grade = requireArguments().serializable(ARGUMENT_KEY)
         gradeColorTheme = requireArguments().serializable(COLOR_THEME_KEY)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = DialogGradeBinding.inflate(inflater).apply { binding = this }.root
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return MaterialAlertDialogBuilder(requireContext(), theme)
+            .setView(DialogGradeBinding.inflate(layoutInflater).apply { binding = this }.root)
+            .create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,10 +55,9 @@ class GradeDetailsDialog : DialogFragment() {
         with(binding) {
             gradeDialogSubject.text = grade.subject
 
-            gradeDialogColorAndWeightValue.run {
-                text = context.getString(R.string.grade_weight_value, grade.weight)
-                setBackgroundResource(grade.getGradeColor())
-            }
+            gradeDialogWeightValue.text = grade.weight
+            gradeDialogWeightLayout.backgroundTintList =
+                ColorStateList.valueOf(requireContext().getCompatColor(grade.getGradeColor()))
 
             gradeDialogDateValue.text = grade.date.toFormattedString()
             gradeDialogColorValue.text = getString(grade.colorStringId)
@@ -72,7 +71,12 @@ class GradeDetailsDialog : DialogFragment() {
 
             gradeDialogValue.run {
                 text = grade.entry
-                setBackgroundResource(grade.getBackgroundColor(gradeColorTheme))
+                backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        grade.getBackgroundColor(gradeColorTheme)
+                    )
+                )
             }
 
             gradeDialogTeacherValue.text = grade.teacher.ifBlank { getString(R.string.all_no_data) }

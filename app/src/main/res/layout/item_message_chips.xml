@@ -21,29 +21,23 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_mailbox"
-            style="@style/Widget.MaterialComponents.Chip.Action"
+            style="@style/Widget.Material3.Chip.Suggestion.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/message_chip_all_mailboxes" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_unread"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/message_chip_only_unread"
-            app:checkedIcon="@drawable/ic_mtrl_chip_checked_black"
-            app:checkedIconEnabled="true"
-            app:checkedIconTint="@color/mtrl_choice_chip_text_color" />
+            android:text="@string/message_chip_only_unread" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_attachments"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            style="@style/Widget.Material3.Chip.Filter.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/message_chip_only_with_attachments"
-            app:checkedIcon="@drawable/ic_mtrl_chip_checked_black"
-            app:checkedIconEnabled="true"
-            app:checkedIconTint="@color/mtrl_choice_chip_text_color" />
+            android:text="@string/message_chip_only_with_attachments" />
     </com.google.android.material.chip.ChipGroup>
 </HorizontalScrollView>

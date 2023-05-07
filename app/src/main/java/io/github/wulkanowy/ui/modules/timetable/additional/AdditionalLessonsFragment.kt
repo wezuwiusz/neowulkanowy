@@ -2,8 +2,8 @@ package io.github.wulkanowy.ui.modules.timetable.additional
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.TimetableAdditional
@@ -13,11 +13,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.timetable.additional.add.AdditionalLessonAddDialog
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.dpToPx
-import io.github.wulkanowy.utils.firstSchoolDayInSchoolYear
-import io.github.wulkanowy.utils.getThemeAttrColor
-import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
-import io.github.wulkanowy.utils.openMaterialDatePicker
+import io.github.wulkanowy.utils.*
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -73,7 +69,7 @@ class AdditionalLessonsFragment :
 
             openAddAdditionalLessonButton.setOnClickListener { presenter.onAdditionalLessonAddButtonClicked() }
 
-            additionalLessonsNavContainer.elevation = requireContext().dpToPx(8f)
+            additionalLessonsNavContainer.elevation = requireContext().dpToPx(3f)
         }
     }
 
@@ -154,7 +150,7 @@ class AdditionalLessonsFragment :
     }
 
     override fun showDeleteLessonDialog(timetableAdditional: TimetableAdditional) {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.additional_lessons_delete_title))
             .setItems(
                 arrayOf(

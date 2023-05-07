@@ -14,9 +14,6 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.AccountView
 import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsView
-import io.github.wulkanowy.ui.modules.grade.GradeView
-import io.github.wulkanowy.ui.modules.message.MessageView
-import io.github.wulkanowy.ui.modules.schoolandteachers.SchoolAndTeachersView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
 import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -42,17 +39,16 @@ class MainPresenter @Inject constructor(
 
     private var studentsWitSemesters: List<StudentWithSemesters>? = null
 
-    private val rootDestinationTypeList = listOf(
-        Destination.Type.DASHBOARD,
-        Destination.Type.GRADE,
-        Destination.Type.ATTENDANCE,
-        Destination.Type.TIMETABLE,
-        Destination.Type.MORE
-    )
+    private val rootAppMenuItems = preferencesRepository.appMenuItemOrder
+        .sortedBy { it.order }
+        .take(4)
+
+    private val rootDestinationTypeList = rootAppMenuItems.map { it.destinationType }
+        .plus(Destination.Type.MORE)
 
     private val Destination?.startMenuIndex
         get() = when {
-            this == null -> preferencesRepository.startMenuIndex
+            this == null -> 0
             destinationType in rootDestinationTypeList -> {
                 rootDestinationTypeList.indexOf(destinationType)
             }
@@ -69,7 +65,7 @@ class MainPresenter @Inject constructor(
             if (it == initDestination?.destinationType) initDestination else it.defaultDestination
         }
 
-        view.initView(startMenuIndex, destinations)
+        view.initView(startMenuIndex, rootAppMenuItems, destinations)
         if (initDestination != null && startMenuIndex == 4) {
             view.openMoreDestination(initDestination)
         }
@@ -101,7 +97,6 @@ class MainPresenter @Inject constructor(
     fun onViewChange(destinationView: BaseView) {
         view?.apply {
             showBottomNavigation(shouldShowBottomNavigation(destinationView))
-            showActionBarElevation(shouldShowActionBarElevation(destinationView))
             currentViewTitle?.let { setViewTitle(it) }
             currentViewSubtitle?.let { setViewSubTitle(it.ifBlank { null }) }
             currentStackSize?.let {
@@ -109,13 +104,6 @@ class MainPresenter @Inject constructor(
                 else showHomeArrow(false)
             }
         }
-    }
-
-    private fun shouldShowActionBarElevation(destination: BaseView) = when (destination) {
-        is GradeView,
-        is MessageView,
-        is SchoolAndTeachersView -> false
-        else -> true
     }
 
     private fun shouldShowBottomNavigation(destination: BaseView) = when (destination) {

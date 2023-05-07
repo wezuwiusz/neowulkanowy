@@ -83,6 +83,14 @@ class MessageTabPresenter @Inject constructor(
         view?.showActionMode(false)
     }
 
+    fun onParentReselected() {
+        view?.run {
+            if (!isViewEmpty) {
+                resetListPosition()
+            }
+        }
+    }
+
     fun onDestroyActionMode() {
         isActionMode = false
         messagesToDelete.clear()

@@ -1,11 +1,11 @@
 package io.github.wulkanowy.ui.modules.account.accountedit
 
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.databinding.DialogAccountEditBinding
@@ -31,16 +31,12 @@ class AccountEditDialog : BaseDialogFragment<DialogAccountEditBinding>(), Accoun
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = DialogAccountEditBinding.inflate(inflater).apply { binding = this }.root
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return MaterialAlertDialogBuilder(requireContext(), theme)
+            .setView(DialogAccountEditBinding.inflate(layoutInflater).apply { binding = this }.root)
+            .create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

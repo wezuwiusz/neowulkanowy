@@ -1,7 +1,6 @@
 package io.github.wulkanowy.data.db.dao
 
 import androidx.room.*
-import androidx.room.OnConflictStrategy.ABORT
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentNickAndAvatar
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
@@ -11,7 +10,7 @@ import javax.inject.Singleton
 @Dao
 abstract class StudentDao {
 
-    @Insert(onConflict = ABORT)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     abstract suspend fun insertAll(student: List<Student>): List<Long>
 
     @Delete

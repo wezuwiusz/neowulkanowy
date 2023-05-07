@@ -26,6 +26,7 @@
     <string name="student_info_title">Informacje o uczniu</string>
     <string name="dashboard_title">Start</string>
     <string name="notifications_center_title">Centrum powiadomień</string>
+    <string name="menu_order_title">Konfiguracja menu</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -678,8 +679,10 @@
     <string name="all_undo">Cofnij</string>
     <string name="all_change">Zmień</string>
     <string name="all_add_to_calendar">Dodaj do kalendarza</string>
+    <string name="all_cancel">Anuluj</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
+    <string name="widget_timetable_last_synchronization">Zsynchronizowano %1$s o %2$s</string>
     <string name="widget_timetable_theme_title">Wybierz motyw</string>
     <string name="widget_timetable_theme_light">Jasny</string>
     <string name="widget_timetable_theme_dark">Ciemny</string>
@@ -699,6 +702,8 @@
     <string name="pref_view_grade_color_scheme">Schemat kolorów ocen</string>
     <string name="pref_view_grade_sorting_mode">Sortowanie przedmiotów</string>
     <string name="pref_view_app_language">Język</string>
+    <string name="pref_view_menu_order_title">Konfiguracja menu</string>
+    <string name="pref_view_menu_order_summary">Ustaw kolejność funkcji w menu</string>
     <string name="pref_notify_header">Powiadomienia</string>
     <string name="pref_notify_header_other">Inne</string>
     <string name="pref_notify_switch">Pokazuj powiadomienia</string>
@@ -800,6 +805,10 @@
     <string name="update_download_success">Aktualizacja została pobrana.</string>
     <string name="update_download_success_button">Uruchom ponownie</string>
     <string name="update_failed">Aktualizacja nie powiodła się! Wulkanowy może nie działać prawidłowo. Rozważ aktualizację</string>
+    <!--Menu order-->
+    <string name="menu_order_confirm_title">Ponowne uruchomienie aplikacji</string>
+    <string name="menu_order_confirm_content">W celu zapisania zmian aplikacja musi zostać ponownie uruchomiona</string>
+    <string name="menu_order_confirm_restart">Uruchom ponownie</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_invalid_device_datetime">Wystąpił błąd. Sprawdź poprawność daty w urządzeniu</string>

@@ -55,7 +55,6 @@ class LoginStudentSelectFragment :
             }
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentLoginStudentSelectBinding.bind(view)

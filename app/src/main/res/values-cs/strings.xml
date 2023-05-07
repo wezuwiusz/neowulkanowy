@@ -26,6 +26,7 @@
     <string name="student_info_title">Informace o žáku</string>
     <string name="dashboard_title">Domů</string>
     <string name="notifications_center_title">Centrum oznámení</string>
+    <string name="menu_order_title">Konfigurace menu</string>
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
@@ -678,8 +679,10 @@
     <string name="all_undo">Vrátit</string>
     <string name="all_change">Změnit</string>
     <string name="all_add_to_calendar">Přidat do kalendáře</string>
+    <string name="all_cancel">Zrušit</string>
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Žádné lekce</string>
+    <string name="widget_timetable_last_synchronization">Synchronizováno %1$s v %2$s</string>
     <string name="widget_timetable_theme_title">Vybrat motiv</string>
     <string name="widget_timetable_theme_light">Světlý</string>
     <string name="widget_timetable_theme_dark">Tmavý</string>
@@ -699,6 +702,8 @@
     <string name="pref_view_grade_color_scheme">Známky barevné schéma</string>
     <string name="pref_view_grade_sorting_mode">Třídění předmětů</string>
     <string name="pref_view_app_language">Jazyk</string>
+    <string name="pref_view_menu_order_title">Konfigurace menu</string>
+    <string name="pref_view_menu_order_summary">Nastavit pořadí funkcí v menu</string>
     <string name="pref_notify_header">Oznámení</string>
     <string name="pref_notify_header_other">Jiné</string>
     <string name="pref_notify_switch">Zobrazit oznámení</string>
@@ -800,6 +805,10 @@
     <string name="update_download_success">Aktualizace byla stažena.</string>
     <string name="update_download_success_button">Restartovat</string>
     <string name="update_failed">Aktualizace selhala! Wulkanowy nemusí fungovat správně. Zvažte aktualizaci</string>
+    <!--Menu order-->
+    <string name="menu_order_confirm_title">Restartování aplikace</string>
+    <string name="menu_order_confirm_content">Pro uložení změn je nutné aplikaci restartovat</string>
+    <string name="menu_order_confirm_restart">Restartovat</string>
     <!--Errors-->
     <string name="error_no_internet">Žádné internetové připojení</string>
     <string name="error_invalid_device_datetime">Vyskytla se chyba. Zkontrolujte hodiny svého zařízení</string>

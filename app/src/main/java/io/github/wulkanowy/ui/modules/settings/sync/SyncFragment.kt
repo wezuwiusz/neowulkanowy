@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
@@ -75,7 +76,11 @@ class SyncFragment : PreferenceFragmentCompat(),
     }
 
     override fun showMessage(text: String) {
-        (activity as? BaseActivity<*, *>)?.showMessage(text)
+        Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG)
+            .apply {
+                anchorView = requireActivity().findViewById(R.id.main_bottom_nav)
+                show()
+            }
     }
 
     override fun showExpiredDialog() {

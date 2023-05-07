@@ -18,7 +18,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LuckyNumberFragment :
     BaseFragment<FragmentLuckyNumberBinding>(R.layout.fragment_lucky_number), LuckyNumberView,
-    MainView.TitledView {
+    MainView.TitledView, MainView.MainChildView {
 
     @Inject
     lateinit var presenter: LuckyNumberPresenter
@@ -84,6 +84,14 @@ class LuckyNumberFragment :
 
     override fun openLuckyNumberHistory() {
         (activity as? MainActivity)?.pushView(LuckyNumberHistoryFragment.newInstance())
+    }
+
+    override fun onFragmentReselected() {
+        if (::presenter.isInitialized) presenter.onViewReselected()
+    }
+
+    override fun popView() {
+        (activity as? MainActivity)?.popView()
     }
 
     override fun onDestroyView() {

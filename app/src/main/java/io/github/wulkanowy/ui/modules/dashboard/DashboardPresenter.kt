@@ -606,7 +606,7 @@ class DashboardPresenter @Inject constructor(
                     }
                     is Resource.Error -> {
                         Timber.i("Loading dashboard admin message result: An exception occurred")
-                        errorHandler.dispatch(it.error)
+                        Timber.e(it.error)
                         updateData(
                             dashboardItem = DashboardItem.AdminMessages(
                                 adminMessage = null,
@@ -748,7 +748,7 @@ class DashboardPresenter @Inject constructor(
             itemsLoadedList.find { it.type == DashboardItem.Type.ACCOUNT }?.error != null
         val isGeneralError =
             filteredItems.none { it.error == null } && filteredItems.isNotEmpty() || isAccountItemError
-        val firstError = itemsLoadedList.mapNotNull { it.error }.firstOrNull()
+        val firstError = itemsLoadedList.firstNotNullOfOrNull { it.error }
 
         val filteredOriginalLoadedList =
             dashboardItemLoadedList.filterNot { it.type == DashboardItem.Type.ACCOUNT }

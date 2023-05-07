@@ -1,10 +1,10 @@
 package io.github.wulkanowy.ui.modules.message.send
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.text.Spanned
 import android.view.Menu
@@ -12,11 +12,14 @@ import android.view.MenuItem
 import android.view.TouchDelegate
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.core.text.parseAsHtml
 import androidx.core.text.toHtml
+import androidx.core.view.*
 import androidx.core.widget.doOnTextChanged
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Mailbox
@@ -24,8 +27,8 @@ import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.databinding.ActivitySendMessageBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.message.mailboxchooser.MailboxChooserDialog
-import io.github.wulkanowy.ui.modules.message.mailboxchooser.MailboxChooserDialog.Companion.MAILBOX_KEY
 import io.github.wulkanowy.ui.modules.message.mailboxchooser.MailboxChooserDialog.Companion.LISTENER_KEY
+import io.github.wulkanowy.ui.modules.message.mailboxchooser.MailboxChooserDialog.Companion.MAILBOX_KEY
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.hideSoftInput
 import io.github.wulkanowy.utils.nullableSerializable
@@ -99,6 +102,13 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
         )
         setSupportActionBar(binding.sendMessageToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+            binding.sendAppBar.isLifted = true
+        }
+        initializeMessageContainer()
+
         messageContainer = binding.sendMessageContainer
 
         formRecipientsData = binding.sendMessageTo.addedChipItems as List<RecipientChipItem>
@@ -127,6 +137,17 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
             sendMessageTo.onTextChangeListener = presenter::onRecipientsTextChange
             sendMessageSubject.doOnTextChanged { text, _, _, _ -> onMessageSubjectChange(text) }
             sendMessageMessageContent.doOnTextChanged { text, _, _, _ -> onMessageContentChange(text) }
+        }
+    }
+
+    private fun initializeMessageContainer() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.sendMessageScroll) { view, insets ->
+            val bottomInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = bottomInsets.bottom
+            }
+            WindowInsetsCompat.CONSUMED
         }
     }
 
@@ -252,7 +273,7 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
     }
 
     override fun showMessageBackupDialog() {
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setTitle(R.string.message_title)
             .setMessage(presenter.getMessageBackupContent(presenter.getRecipientsNames()))
             .setPositiveButton(R.string.all_yes) { _, _ -> presenter.restoreMessageParts() }

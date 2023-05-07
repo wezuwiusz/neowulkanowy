@@ -8,7 +8,6 @@ import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getStudentWidgetKey
-import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider.Companion.getThemeWidgetKey
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -39,20 +38,7 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
 
     fun onItemSelect(student: Student) {
         selectedStudent = student
-
-        if (isFromProvider) registerStudent(selectedStudent)
-        else view?.showThemeDialog()
-    }
-
-    fun onThemeSelect(index: Int) {
-        appWidgetId?.let {
-            sharedPref.putLong(getThemeWidgetKey(it), index.toLong())
-        }
         registerStudent(selectedStudent)
-    }
-
-    fun onDismissThemeView() {
-        view?.finishView()
     }
 
     private fun loadData() {
@@ -65,10 +51,7 @@ class TimetableWidgetConfigurePresenter @Inject constructor(
                     } ?: -1
                     when {
                         it.data.isEmpty() -> view?.openLoginView()
-                        it.data.size == 1 && !isFromProvider -> {
-                            selectedStudent = it.data.single().student
-                            view?.showThemeDialog()
-                        }
+                        it.data.size == 1 && !isFromProvider -> onItemSelect(it.data.single().student)
                         else -> view?.updateData(it.data, selectedStudentId)
                     }
                 }

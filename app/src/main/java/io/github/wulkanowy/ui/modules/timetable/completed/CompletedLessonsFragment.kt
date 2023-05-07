@@ -2,9 +2,7 @@ package io.github.wulkanowy.ui.modules.timetable.completed
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -14,12 +12,7 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.dpToPx
-import io.github.wulkanowy.utils.firstSchoolDayInSchoolYear
-import io.github.wulkanowy.utils.getCompatDrawable
-import io.github.wulkanowy.utils.getThemeAttrColor
-import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
-import io.github.wulkanowy.utils.openMaterialDatePicker
+import io.github.wulkanowy.utils.*
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -73,7 +66,7 @@ class CompletedLessonsFragment :
             completedLessonsNavDate.setOnClickListener { presenter.onPickDate() }
             completedLessonsNextButton.setOnClickListener { presenter.onNextDay() }
 
-            completedLessonsNavContainer.elevation = requireContext().dpToPx(8f)
+            completedLessonsNavContainer.elevation = requireContext().dpToPx(3f)
         }
     }
 

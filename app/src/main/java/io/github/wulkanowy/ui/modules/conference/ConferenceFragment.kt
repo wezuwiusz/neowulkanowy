@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ConferenceFragment : BaseFragment<FragmentConferenceBinding>(R.layout.fragment_conference),
-    ConferenceView, MainView.TitledView {
+    ConferenceView, MainView.TitledView, MainView.MainChildView {
 
     @Inject
     lateinit var presenter: ConferencePresenter
@@ -107,6 +107,14 @@ class ConferenceFragment : BaseFragment<FragmentConferenceBinding>(R.layout.frag
 
     override fun openConferenceDialog(conference: Conference) {
         (activity as? MainActivity)?.showDialogFragment(ConferenceDialog.newInstance(conference))
+    }
+
+    override fun onFragmentReselected() {
+        if (::presenter.isInitialized) presenter.onFragmentReselected()
+    }
+
+    override fun resetView() {
+        binding.conferenceRecycler.smoothScrollToPosition(0)
     }
 
     override fun onDestroyView() {

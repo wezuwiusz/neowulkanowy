@@ -4,18 +4,12 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.asFlow
+import androidx.work.*
 import androidx.work.BackoffPolicy.EXPONENTIAL
-import androidx.work.Constraints
-import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
-import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
-import androidx.work.ExistingWorkPolicy
+import androidx.work.ExistingPeriodicWorkPolicy.UPDATE
 import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.UNMETERED
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.SharedPrefProvider.Companion.APP_VERSION_CODE_KEY
 import io.github.wulkanowy.data.repositories.PreferencesRepository
@@ -60,7 +54,7 @@ class SyncManager @Inject constructor(
             val serviceInterval = preferencesRepository.servicesInterval
 
             workManager.enqueueUniquePeriodicWork(
-                SyncWorker::class.java.simpleName, if (restart) REPLACE else KEEP,
+                SyncWorker::class.java.simpleName, if (restart) UPDATE else KEEP,
                 PeriodicWorkRequestBuilder<SyncWorker>(serviceInterval, MINUTES)
                     .setInitialDelay(10, MINUTES)
                     .setBackoffCriteria(EXPONENTIAL, 30, MINUTES)

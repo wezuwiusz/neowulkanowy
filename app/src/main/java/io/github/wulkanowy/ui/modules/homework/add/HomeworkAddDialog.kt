@@ -1,10 +1,10 @@
 package io.github.wulkanowy.ui.modules.homework.add
 
+import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogHomeworkAddBinding
@@ -21,19 +21,14 @@ class HomeworkAddDialog : BaseDialogFragment<DialogHomeworkAddBinding>(), Homewo
     @Inject
     lateinit var presenter: HomeworkAddPresenter
 
-    // todo: move it to presenter
+    //todo: move it to presenter
     private var date: LocalDate? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return MaterialAlertDialogBuilder(requireContext(), theme)
+            .setView(DialogHomeworkAddBinding.inflate(layoutInflater).apply { binding = this }.root)
+            .create()
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = DialogHomeworkAddBinding.inflate(inflater).apply { binding = this }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

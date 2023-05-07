@@ -34,4 +34,6 @@ interface ExamView : BaseView {
     fun showPreButton(show: Boolean)
 
     fun showExamDialog(exam: Exam)
+
+    fun resetView()
 }

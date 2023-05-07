@@ -129,4 +129,10 @@ class MobileDevicePresenter @Inject constructor(
             .onResourceError(errorHandler::dispatch)
             .launch("unregister")
     }
+
+    fun onFragmentReselected() {
+        if (view?.isViewEmpty == false) {
+            view?.resetView()
+        }
+    }
 }

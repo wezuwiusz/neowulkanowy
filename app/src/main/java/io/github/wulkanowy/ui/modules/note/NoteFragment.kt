@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note), NoteView,
-    MainView.TitledView {
+    MainView.TitledView, MainView.MainChildView {
 
     @Inject
     lateinit var presenter: NotePresenter
@@ -110,6 +110,14 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note), 
 
     override fun showRefresh(show: Boolean) {
         binding.noteSwipe.isRefreshing = show
+    }
+
+    override fun onFragmentReselected() {
+        if (::presenter.isInitialized) presenter.onFragmentReselected()
+    }
+
+    override fun resetView() {
+        binding.noteRecycler.smoothScrollToPosition(0)
     }
 
     override fun onDestroyView() {

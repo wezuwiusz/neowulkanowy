@@ -4,11 +4,13 @@
     android:configure="io.github.wulkanowy.ui.modules.luckynumberwidget.LuckyNumberWidgetConfigureActivity"
     android:initialLayout="@layout/widget_luckynumber"
     android:minWidth="110dp"
-    android:minHeight="40dp"
-    android:minResizeWidth="40dp"
+    android:minHeight="110dp"
     android:minResizeHeight="40dp"
     android:previewImage="@drawable/img_luckynumber_widget_preview"
+    android:previewLayout="@layout/widget_luckynumber"
     android:resizeMode="horizontal|vertical"
+    android:targetCellWidth="2"
+    android:targetCellHeight="2"
     android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen"
-    tools:targetApi="jelly_bean_mr1" />
+    tools:targetApi="s" />

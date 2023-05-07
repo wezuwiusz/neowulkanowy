@@ -116,7 +116,9 @@ class GradeStatisticsAdapter @Inject constructor() :
             }
         )
 
-        binding.gradeStatisticsTypeSwitch.setOnCheckedChangeListener { _, checkedId ->
+        binding.gradeStatisticsTypeSwitch.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
+
             currentDataType = when (checkedId) {
                 R.id.gradeStatisticsTypePartial -> GradeStatisticsItem.DataType.PARTIAL
                 R.id.gradeStatisticsTypeSemester -> GradeStatisticsItem.DataType.SEMESTER

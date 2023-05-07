@@ -3,7 +3,7 @@ package io.github.wulkanowy.data.mappers
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.sdk.pojo.Attendance
-import io.github.wulkanowy.sdk.scrapper.attendance.SentExcuse
+import io.github.wulkanowy.sdk.scrapper.attendance.SentExcuseStatus
 import org.junit.Test
 import java.time.Instant
 import java.time.LocalDate
@@ -98,7 +98,7 @@ class AttendanceMapperTest {
         timeId = 1,
         categoryId = 1,
         deleted = false,
-        excuseStatus = SentExcuse.Status.WAITING,
+        excuseStatus = SentExcuseStatus.WAITING,
         excusable = false,
         absence = false,
         excused = false,

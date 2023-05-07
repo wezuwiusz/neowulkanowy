@@ -11,8 +11,6 @@ interface TimetableWidgetConfigureView : BaseView {
 
     fun updateTimetableWidget(widgetId: Int)
 
-    fun showThemeDialog()
-
     fun setSuccessResult(widgetId: Int)
 
     fun finishView()

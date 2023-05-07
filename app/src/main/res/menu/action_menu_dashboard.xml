@@ -6,13 +6,13 @@
         android:icon="@drawable/ic_settings_notifications"
         android:orderInCategory="1"
         android:title="@string/notifications_center_title"
-        app:iconTint="@color/material_on_surface_emphasis_medium"
+        app:iconTint="?colorControlNormal"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/dashboard_menu_tiles"
         android:icon="@drawable/ic_more_settings"
         android:orderInCategory="2"
         android:title="@string/pref_dashboard_appearance_tiles_title"
-        app:iconTint="@color/material_on_surface_emphasis_medium"
+        app:iconTint="?colorControlNormal"
         app:showAsAction="ifRoom" />
 </menu>

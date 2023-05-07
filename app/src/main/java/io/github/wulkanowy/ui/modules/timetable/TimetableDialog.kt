@@ -1,24 +1,24 @@
 package io.github.wulkanowy.ui.modules.timetable
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.databinding.DialogTimetableBinding
+import io.github.wulkanowy.ui.base.BaseDialogFragment
 import io.github.wulkanowy.utils.*
 import java.time.Instant
 
-class TimetableDialog : DialogFragment() {
-
-    private var binding: DialogTimetableBinding by lifecycleAwareVariable()
+@AndroidEntryPoint
+class TimetableDialog : BaseDialogFragment<DialogTimetableBinding>() {
 
     private lateinit var lesson: Timetable
 
@@ -33,15 +33,14 @@ class TimetableDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
         lesson = requireArguments().serializable(ARGUMENT_KEY)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = DialogTimetableBinding.inflate(inflater).apply { binding = this }.root
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return MaterialAlertDialogBuilder(requireContext(), theme)
+            .setView(DialogTimetableBinding.inflate(layoutInflater).apply { binding = this }.root)
+            .create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,12 +81,12 @@ class TimetableDialog : DialogFragment() {
                     if (canceled) {
                         timetableDialogChangesTitle.setTextColor(
                             requireContext().getThemeAttrColor(
-                                R.attr.colorPrimary
+                                R.attr.colorTimetableCanceled
                             )
                         )
                         timetableDialogChangesValue.setTextColor(
                             requireContext().getThemeAttrColor(
-                                R.attr.colorPrimary
+                                R.attr.colorTimetableCanceled
                             )
                         )
                     } else {

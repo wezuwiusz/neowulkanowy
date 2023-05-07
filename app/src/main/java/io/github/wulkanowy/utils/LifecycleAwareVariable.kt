@@ -3,6 +3,7 @@ package io.github.wulkanowy.utils
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -29,18 +30,18 @@ class LifecycleAwareVariable<T : Any> : ReadWriteProperty<Fragment, T>, DefaultL
     }
 }
 
-class LifecycleAwareVariableActivity<T : Any> : ReadWriteProperty<AppCompatActivity, T>,
+class LifecycleAwareVariableComponent<T : Any> : ReadWriteProperty<LifecycleOwner, T>,
     DefaultLifecycleObserver {
 
     private var _value: T? = null
 
-    override fun setValue(thisRef: AppCompatActivity, property: KProperty<*>, value: T) {
+    override fun setValue(thisRef: LifecycleOwner, property: KProperty<*>, value: T) {
         thisRef.lifecycle.removeObserver(this)
         _value = value
         thisRef.lifecycle.addObserver(this)
     }
 
-    override fun getValue(thisRef: AppCompatActivity, property: KProperty<*>) = _value
+    override fun getValue(thisRef: LifecycleOwner, property: KProperty<*>) = _value
         ?: throw IllegalStateException("Trying to call an lifecycle-aware value outside of the view lifecycle, or the value has not been initialized")
 
     override fun onDestroy(owner: LifecycleOwner) {
@@ -53,4 +54,8 @@ class LifecycleAwareVariableActivity<T : Any> : ReadWriteProperty<AppCompatActiv
 @Suppress("unused")
 fun <T : Any> Fragment.lifecycleAwareVariable() = LifecycleAwareVariable<T>()
 
-fun <T : Any> lifecycleAwareVariable() = LifecycleAwareVariableActivity<T>()
+@Suppress("unused")
+fun <T : Any> DialogFragment.lifecycleAwareVariable() = LifecycleAwareVariableComponent<T>()
+
+@Suppress("unused")
+fun <T : Any> AppCompatActivity.lifecycleAwareVariable() = LifecycleAwareVariableComponent<T>()
