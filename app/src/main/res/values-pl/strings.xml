@@ -809,6 +809,15 @@
     <string name="menu_order_confirm_title">Ponowne uruchomienie aplikacji</string>
     <string name="menu_order_confirm_content">W celu zapisania zmian aplikacja musi zostać ponownie uruchomiona</string>
     <string name="menu_order_confirm_restart">Uruchom ponownie</string>
+    <!--Auth-->
+    <string name="auth_api_error">Autoryzacja została odrzucona. Podano dane niezgodne z danymi w sekretariacie.</string>
+    <string name="auth_invalid_error">Nieprawidłowy PESEL</string>
+    <string name="auth_pesel">PESEL</string>
+    <string name="auth_button">Potwierdź</string>
+    <string name="auth_success">Autoryzacja zakończona pomyślnie</string>
+    <string name="auth_title">Autoryzacja</string>
+    <string name="auth_description">Rodzicu, musimy mieć pewność, że Twój adres e-mail został powiązany z prawidłowym kontem ucznia. W celu autoryzacji konta podaj numer PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt; w polu poniżej</string>
+    <string name="auth_button_skip">Na razie pomiń</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_invalid_device_datetime">Wystąpił błąd. Sprawdź poprawność daty w urządzeniu</string>
