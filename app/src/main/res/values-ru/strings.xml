@@ -778,7 +778,7 @@
     <string name="pref_advanced_category_summary">Значения плюса и минуса, расчёт средней оценки</string>
     <string name="pref_advanced_category">Расширенные</string>
     <string name="pref_about_category_summary">Версия приложения, разработчики, соц. сети</string>
-    <string name="pref_ads_category_summary">Посмотреть рекламу, чтобы поддержать преокт</string>
+    <string name="pref_ads_category_summary">Displaying advertisements, project support</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Новые оценки</string>
     <string name="channel_new_homework">Новое домашнее задание</string>
@@ -809,6 +809,15 @@
     <string name="menu_order_confirm_title">Перезапуск приложение</string>
     <string name="menu_order_confirm_content">Для сохранения изменений необходимо перезапустить приложение</string>
     <string name="menu_order_confirm_restart">Перезапустить</string>
+    <!--Auth-->
+    <string name="auth_api_error">Authorization has been rejected. The data provided does not match the records in the secretary\'s office.</string>
+    <string name="auth_invalid_error">Invalid PESEL</string>
+    <string name="auth_pesel">PESEL</string>
+    <string name="auth_button">Authorize</string>
+    <string name="auth_success">Authorization completed successfully</string>
+    <string name="auth_title">Authorization</string>
+    <string name="auth_description">To operate the application, we need to confirm your identity. Please enter the student\'s PESEL &lt;b&gt;%1$s&lt;/b&gt; in the field below</string>
+    <string name="auth_button_skip">Skip for now</string>
     <!--Errors-->
     <string name="error_no_internet">Интернет-соединение отсутствует</string>
     <string name="error_invalid_device_datetime">Произошла ошибка. Проверьте время на вашем устройстве</string>
