@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.ErrorDialog
+import io.github.wulkanowy.ui.modules.auth.AuthDialog
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Inject
@@ -60,6 +61,10 @@ class AdvancedFragment : PreferenceFragmentCompat(),
 
     override fun showErrorDetailsDialog(error: Throwable) {
         ErrorDialog.newInstance(error).show(childFragmentManager, error.toString())
+    }
+
+    override fun showAuthDialog() {
+        AuthDialog.newInstance().show(childFragmentManager, "auth_dialog")
     }
 
     override fun onResume() {

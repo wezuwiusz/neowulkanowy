@@ -31,4 +31,6 @@ class SettingsFragment : PreferenceFragmentCompat(), MainView.TitledView, Settin
     override fun showErrorDetailsDialog(error: Throwable) {}
 
     override fun showChangePasswordSnackbar(redirectUrl: String) {}
+
+    override fun showAuthDialog() {}
 }
