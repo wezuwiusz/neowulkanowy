@@ -142,10 +142,15 @@ class SendMessageActivity : BaseActivity<SendMessagePresenter, ActivitySendMessa
 
     private fun initializeMessageContainer() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.sendMessageScroll) { view, insets ->
-            val bottomInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val navigationBarInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
 
             view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = bottomInsets.bottom
+                bottomMargin = if (imeInsets.bottom > navigationBarInsets.bottom) {
+                    imeInsets.bottom
+                } else {
+                    navigationBarInsets.bottom
+                }
             }
             WindowInsetsCompat.CONSUMED
         }
