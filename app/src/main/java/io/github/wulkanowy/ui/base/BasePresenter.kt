@@ -1,10 +1,15 @@
 package io.github.wulkanowy.ui.base
 
 import io.github.wulkanowy.data.repositories.StudentRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 open class BasePresenter<T : BaseView>(
@@ -26,6 +31,7 @@ open class BasePresenter<T : BaseView>(
             onSessionExpired = view::showExpiredDialog
             onNoCurrentStudent = view::openClearLoginView
             onPasswordChangeRequired = view::showChangePasswordSnackbar
+            onAuthorizationRequired = view::showAuthDialog
         }
     }
 

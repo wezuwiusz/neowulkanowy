@@ -13,6 +13,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogAdsConsentBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.ErrorDialog
+import io.github.wulkanowy.ui.modules.auth.AuthDialog
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
@@ -144,6 +145,10 @@ class AdsFragment : PreferenceFragmentCompat(), MainView.TitledView, AdsView {
 
     override fun openClearLoginView() {
         (activity as? BaseActivity<*, *>)?.openClearLoginView()
+    }
+
+    override fun showAuthDialog() {
+        AuthDialog.newInstance().show(childFragmentManager, "auth_dialog")
     }
 
     override fun showErrorDetailsDialog(error: Throwable) {

@@ -4,5 +4,6 @@ Wersja 2.0.0
 — dodaliśmy możliwość zmiany kolejności pozycji w menu dolnym
 — poprawiliśmy sposób wyświetlania błędu o nieprawidłowym haśle na ekranie logowania
 — od teraz zmiana ustawień liczenia średniej automatycznie odświeży listę ocen
+— dodaliśmy okienko na wpisanie numeru PESEL, gdy dziennik wymaga dodatkowej autoryzacji dostępu
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
