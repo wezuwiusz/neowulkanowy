@@ -39,8 +39,10 @@
     <color name="colorStatusBarDark">#342826</color>
     <color name="colorStatusBarBlack">#181010</color>
 
-    <color name="dashboard_message_medium_light">#FFD980</color>
-    <color name="dashboard_message_medium_dark">#ffd54f</color>
+    <color name="dashboard_message_medium_light">#ffd54f</color>
+    <color name="dashboard_message_medium_dark">#FFD980</color>
+    <color name="dashboard_message_high_light">#B91B21</color>
+    <color name="dashboard_message_high_dark">#e57373</color>
 
     <color name="timetable_canceled_light">#d32f2f</color>
     <color name="timetable_canceled_dark">#e57373</color>

@@ -37,7 +37,9 @@
         <item name="colorError">@color/colorError</item>
         <item name="colorDivider">@color/colorDivider</item>
         <item name="colorSwipeRefresh">@color/material_dynamic_secondary90</item>
-        <item name="colorMessageMedium">@color/dashboard_message_medium_dark</item>
+        <item name="colorMessageMedium">@color/dashboard_message_medium_light</item>
+        <item name="colorMessageHigh">@color/dashboard_message_high_light</item>
+        <item name="colorOnMessageHigh">@android:color/white</item>
         <item name="android:textColor">@color/material_dynamic_neutral10</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
