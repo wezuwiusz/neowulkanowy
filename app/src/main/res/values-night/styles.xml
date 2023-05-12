@@ -24,7 +24,9 @@
         <item name="colorError">@color/colorErrorLight</item>
         <item name="colorDivider">@color/colorDividerInverse</item>
         <item name="colorSwipeRefresh">@color/colorSwipeRefreshDark</item>
-        <item name="colorMessageMedium">@color/dashboard_message_medium_light</item>
+        <item name="colorMessageMedium">@color/dashboard_message_medium_dark</item>
+        <item name="colorMessageHigh">@color/dashboard_message_high_dark</item>
+        <item name="colorOnMessageHigh">@android:color/black</item>
         <item name="android:windowBackground">?colorSurface</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:navigationBarColor">@color/colorNavigationBarDark</item>

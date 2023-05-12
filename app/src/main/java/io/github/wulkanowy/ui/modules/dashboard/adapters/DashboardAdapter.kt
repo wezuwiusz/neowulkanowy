@@ -738,8 +738,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         val context = adminMessageViewHolder.binding.root.context
         val (backgroundColor, textColor) = when (item.priority) {
             "HIGH" -> {
-                context.getThemeAttrColor(R.attr.colorPrimary) to
-                    context.getThemeAttrColor(R.attr.colorOnPrimary)
+                context.getThemeAttrColor(R.attr.colorMessageHigh) to
+                    context.getThemeAttrColor(R.attr.colorOnMessageHigh)
             }
             "MEDIUM" -> {
                 context.getThemeAttrColor(R.attr.colorMessageMedium) to Color.BLACK
@@ -754,6 +754,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             dashboardAdminMessageItemDescription.setTextColor(textColor)
             dashboardAdminMessageItemIcon.setColorFilter(textColor)
             dashboardAdminMessageItemDismiss.isVisible = item.isDismissible
+            dashboardAdminMessageItemDismiss.setTextColor(textColor)
             dashboardAdminMessageItemDismiss.setOnClickListener {
                 onAdminMessageDismissClickListener(item)
             }

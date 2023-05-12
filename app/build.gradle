@@ -23,8 +23,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 124
-        versionName "2.0.2"
+        versionCode 125
+        versionName "2.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -161,8 +161,8 @@ play {
     defaultToAppBundles = false
     track = 'production'
     releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
-    userFraction = 0.10d
-    updatePriority = 2
+    userFraction = 0.50d
+    updatePriority = 3
     enabled.set(false)
 }
 
@@ -182,11 +182,11 @@ ext {
     room = "2.5.1"
     chucker = "3.5.2"
     mockk = "1.13.5"
-    coroutines = "1.6.4"
+    coroutines = "1.7.0"
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.0.1'
+    implementation 'io.github.wulkanowy:sdk:2.0.3'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
@@ -206,7 +206,7 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
-    implementation "com.google.android.material:material:1.8.0"
+    implementation "com.google.android.material:material:1.9.0"
     implementation "com.github.wulkanowy:material-chips-input:2.3.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
     implementation 'com.github.lopspower:CircularImageView:4.3.0'
@@ -242,7 +242,7 @@ dependencies {
     implementation 'com.fredporciuncula:flow-preferences:1.9.1'
     implementation 'org.apache.commons:commons-text:1.10.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:31.5.0')
+    playImplementation platform('com.google.firebase:firebase-bom:32.0.0')
     playImplementation 'com.google.firebase:firebase-analytics-ktx'
     playImplementation 'com.google.firebase:firebase-messaging:'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
@@ -265,7 +265,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
-    testImplementation 'org.robolectric:robolectric:4.10'
+    testImplementation 'org.robolectric:robolectric:4.10.2'
     testImplementation "androidx.test:runner:1.5.2"
     testImplementation "androidx.test.ext:junit:1.1.5"
     testImplementation "androidx.test:core:1.5.0"
