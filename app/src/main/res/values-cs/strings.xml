@@ -810,14 +810,14 @@
     <string name="menu_order_confirm_content">Pro uložení změn je nutné aplikaci restartovat</string>
     <string name="menu_order_confirm_restart">Restartovat</string>
     <!--Auth-->
-    <string name="auth_api_error">Authorization has been rejected. The data provided does not match the records in the secretary\'s office.</string>
-    <string name="auth_invalid_error">Invalid PESEL</string>
+    <string name="auth_api_error">Autorizace byla zamítnuta. Uvedené údaje se neshodují se záznamy v kanceláři tajemníka.</string>
+    <string name="auth_invalid_error">Neplatný PESEL</string>
     <string name="auth_pesel">PESEL</string>
-    <string name="auth_button">Authorize</string>
-    <string name="auth_success">Authorization completed successfully</string>
-    <string name="auth_title">Authorization</string>
-    <string name="auth_description">To operate the application, we need to confirm your identity. Please enter the student\'s PESEL &lt;b&gt;%1$s&lt;/b&gt; in the field below</string>
-    <string name="auth_button_skip">Skip for now</string>
+    <string name="auth_button">Autorizovat</string>
+    <string name="auth_success">Autorizace byla úspěšně dokončena</string>
+    <string name="auth_title">Autorizace</string>
+    <string name="auth_description">Pro provoz aplikace potřebujeme potvrdit vaši identitu. Zadejte PESEL žáka &lt;b&gt;%1$s&lt;/b&gt; v níže uvedeném poli</string>
+    <string name="auth_button_skip">Zatím přeskočit</string>
     <!--Errors-->
     <string name="error_no_internet">Žádné internetové připojení</string>
     <string name="error_invalid_device_datetime">Vyskytla se chyba. Zkontrolujte hodiny svého zařízení</string>
