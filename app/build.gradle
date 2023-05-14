@@ -156,7 +156,11 @@ android {
 kapt {
     correctErrorTypes true
 }
-
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
 play {
     defaultToAppBundles = false
     track = 'production'
