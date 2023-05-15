@@ -192,7 +192,7 @@ ext {
     room = "2.5.1"
     chucker = "3.5.2"
     mockk = "1.13.5"
-    coroutines = "1.7.0"
+    coroutines = "1.7.1"
 }
 
 dependencies {
