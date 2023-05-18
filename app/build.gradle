@@ -156,11 +156,11 @@ android {
 kapt {
     correctErrorTypes true
 }
+
 kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
+    jvmToolchain(11)
 }
+
 play {
     defaultToAppBundles = false
     track = 'production'
@@ -261,7 +261,7 @@ dependencies {
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
     playImplementation 'com.google.android.gms:play-services-ads:22.0.0'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:6.9.1.200'
+    hmsImplementation 'com.huawei.hms:hianalytics:6.10.0.300'
     hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.9.0.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
@@ -275,7 +275,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
-    testImplementation 'org.robolectric:robolectric:4.10.2'
+    testImplementation 'org.robolectric:robolectric:4.10.3'
     testImplementation "androidx.test:runner:1.5.2"
     testImplementation "androidx.test.ext:junit:1.1.5"
     testImplementation "androidx.test:core:1.5.0"
