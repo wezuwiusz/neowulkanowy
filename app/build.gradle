@@ -23,8 +23,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 125
-        versionName "2.0.3"
+        versionCode 126
+        versionName "2.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -157,12 +157,16 @@ kapt {
     correctErrorTypes true
 }
 
+kotlin {
+    jvmToolchain(11)
+}
+
 play {
     defaultToAppBundles = false
     track = 'production'
     releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
     userFraction = 0.50d
-    updatePriority = 3
+    updatePriority = 1
     enabled.set(false)
 }
 
@@ -171,7 +175,13 @@ huaweiPublish {
         hmsRelease {
             credentialsPath = "$rootDir/app/src/release/agconnect-credentials.json"
             buildFormat = "aab"
-            deployType = "draft"
+            deployType = "publish"
+            releaseNotes = [
+                new ru.cian.huawei.publish.ReleaseNote(
+                    "pl-PL",
+                    "$projectDir/src/main/play/release-notes/pl-PL/default.txt"
+                )
+            ]
         }
     }
 }
@@ -182,18 +192,18 @@ ext {
     room = "2.5.1"
     chucker = "3.5.2"
     mockk = "1.13.5"
-    coroutines = "1.7.0"
+    coroutines = "1.7.1"
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.0.3'
+    implementation 'io.github.wulkanowy:sdk:2.0.4'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
-    implementation "androidx.core:core-ktx:1.10.0"
+    implementation "androidx.core:core-ktx:1.10.1"
     implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation "androidx.activity:activity-ktx:1.7.1"
     implementation "androidx.appcompat:appcompat:1.6.1"
@@ -251,7 +261,7 @@ dependencies {
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
     playImplementation 'com.google.android.gms:play-services-ads:22.0.0'
 
-    hmsImplementation 'com.huawei.hms:hianalytics:6.9.1.200'
+    hmsImplementation 'com.huawei.hms:hianalytics:6.10.0.300'
     hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.9.0.300'
 
     releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:$chucker"
@@ -265,7 +275,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
-    testImplementation 'org.robolectric:robolectric:4.10.2'
+    testImplementation 'org.robolectric:robolectric:4.10.3'
     testImplementation "androidx.test:runner:1.5.2"
     testImplementation "androidx.test.ext:junit:1.1.5"
     testImplementation "androidx.test:core:1.5.0"
