@@ -1,4 +1,4 @@
-Wersja 2.0.3
+Wersja 2.0.4
 
 — zaktualizowaliśmy wygląd aplikacji na (częściowo) zgodny z wytycznymi Material 3
 — dodaliśmy możliwość zmiany kolejności pozycji w menu dolnym
