@@ -1,9 +1,7 @@
-Wersja 2.0.6
+Wersja 2.0.7
 
-— zaktualizowaliśmy wygląd aplikacji na (częściowo) zgodny z wytycznymi Material 3
-— dodaliśmy możliwość zmiany kolejności pozycji w menu dolnym
-— poprawiliśmy sposób wyświetlania błędu o nieprawidłowym haśle na ekranie logowania
-— od teraz zmiana ustawień liczenia średniej automatycznie odświeży listę ocen
-— dodaliśmy okienko na wpisanie numeru PESEL, gdy dziennik wymaga dodatkowej autoryzacji dostępu
+— poprawiliśmy wyświetlanie kilku rodzajów zmian w planie lekcji
+— dodaliśmy limit znaków w okienku usprawiedliwiania
+— naprawiliśmy wyświetlanie frekwencji w szkołach, gdzie działa już system eduOne (ciągle jednak brak opcji usprawiedliwiania)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
