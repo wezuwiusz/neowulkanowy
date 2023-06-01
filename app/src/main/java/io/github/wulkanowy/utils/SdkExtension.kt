@@ -16,6 +16,7 @@ fun Sdk.init(student: Student): Sdk {
         mobileBaseUrl = student.mobileBaseUrl
     } else {
         scrapperBaseUrl = student.scrapperBaseUrl
+        domainSuffix = student.scrapperDomainSuffix
         loginType = Sdk.ScrapperLoginType.valueOf(student.loginType)
     }
 

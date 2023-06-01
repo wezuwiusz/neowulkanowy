@@ -172,7 +172,7 @@
                 android:layout_marginBottom="16dp"
                 android:hint="@string/login_host_hint"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/loginFormTokenLayout"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormDomainSuffixLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginFormPassLayout">
@@ -183,6 +183,31 @@
                     android:layout_height="wrap_content"
                     android:editable="false"
                     tools:ignore="Deprecated,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loginFormDomainSuffixLayout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:hint="@string/login_domain_suffix_hint"
+                app:errorEnabled="true"
+                app:layout_constraintBottom_toTopOf="@+id/loginFormSymbolLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginFormDomainSuffix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textShortMessage"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -200,7 +225,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/loginFormSymbolLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout">
+                app:layout_constraintTop_toBottomOf="@+id/loginFormDomainSuffixLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginFormToken"

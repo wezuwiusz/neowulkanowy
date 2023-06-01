@@ -130,7 +130,7 @@ class LoginFormPresenterTest {
     @Test
     fun loginTest() {
         coEvery {
-            repository.getUserSubjectsFromScrapper(any(), any(), any(), any())
+            repository.getUserSubjectsFromScrapper(any(), any(), any(), any(), any())
         } returns registerUser
 
         every { loginFormView.formUsernameValue } returns "@"
@@ -149,7 +149,7 @@ class LoginFormPresenterTest {
     @Test
     fun loginEmptyTest() {
         coEvery {
-            repository.getUserSubjectsFromScrapper(any(), any(), any(), any())
+            repository.getUserSubjectsFromScrapper(any(), any(), any(), any(), any())
         } returns registerUser
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
@@ -167,7 +167,7 @@ class LoginFormPresenterTest {
     @Test
     fun loginEmptyTwiceTest() {
         coEvery {
-            repository.getUserSubjectsFromScrapper(any(), any(), any(), any())
+            repository.getUserSubjectsFromScrapper(any(), any(), any(), any(), any())
         } returns registerUser
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"
@@ -187,12 +187,7 @@ class LoginFormPresenterTest {
     fun loginErrorTest() {
         val testException = IOException("test")
         coEvery {
-            repository.getUserSubjectsFromScrapper(
-                any(),
-                any(),
-                any(),
-                any()
-            )
+            repository.getUserSubjectsFromScrapper(any(), any(), any(), any(), any())
         } throws testException
         every { loginFormView.formUsernameValue } returns "@"
         every { loginFormView.formPassValue } returns "123456"

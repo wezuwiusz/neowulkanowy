@@ -45,6 +45,9 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         get() = hostValues.getOrNull(hostKeys.indexOf(binding.loginFormHost.text.toString()))
             .orEmpty()
 
+    override val formDomainSuffix: String
+        get() = binding.loginFormDomainSuffix.text.toString()
+
     override val formHostSymbol: String
         get() = hostSymbols.getOrNull(hostKeys.indexOf(binding.loginFormHost.text.toString()))
             .orEmpty()
@@ -204,6 +207,10 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         binding.loginFormContainer.visibility = if (show) VISIBLE else GONE
     }
 
+    override fun showDomainSuffixInput(show: Boolean) {
+        binding.loginFormDomainSuffixLayout.isVisible = show
+    }
+
     override fun showOtherOptionsButton(show: Boolean) {
         binding.loginFormAdvancedButton.isVisible = show
     }
@@ -256,6 +263,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
     override fun onResume() {
         super.onResume()
         presenter.updateUsernameLabel()
+        presenter.updateCustomDomainSuffixVisibility()
     }
 
     override fun openEmail(lastError: String) {

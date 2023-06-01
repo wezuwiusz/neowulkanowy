@@ -241,6 +241,7 @@ class LoginStudentSelectPresenter @Inject constructor(
                 item.student.mapToStudentWithSemesters(
                     user = registerUser,
                     symbol = item.symbol,
+                    scrapperDomainSuffix = loginData.domainSuffix,
                     unit = item.unit,
                     colors = appInfo.defaultColorsForAvatar,
                 )

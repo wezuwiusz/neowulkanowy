@@ -55,6 +55,7 @@ fun SdkRegisterUser.mapToPojo(password: String?) = RegisterUser(
 
 fun RegisterStudent.mapToStudentWithSemesters(
     user: RegisterUser,
+    scrapperDomainSuffix: String,
     symbol: RegisterSymbol,
     unit: RegisterUnit,
     colors: List<Long>,
@@ -76,6 +77,7 @@ fun RegisterStudent.mapToStudentWithSemesters(
         studentName = "$studentName $studentSurname",
         loginMode = user.loginMode.name,
         scrapperBaseUrl = user.scrapperBaseUrl.orEmpty(),
+        scrapperDomainSuffix = scrapperDomainSuffix,
         mobileBaseUrl = symbol.hebeBaseUrl.orEmpty(),
         certificateKey = symbol.keyId.orEmpty(),
         privateKey = symbol.privatePem.orEmpty(),

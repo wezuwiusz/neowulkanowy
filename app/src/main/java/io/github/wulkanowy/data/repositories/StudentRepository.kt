@@ -43,22 +43,14 @@ class StudentRepository @Inject constructor(
         .getStudentsFromHebe(token, pin, symbol, "")
         .mapToPojo(null)
 
-    suspend fun getStudentsScrapper(
-        email: String,
-        password: String,
-        scrapperBaseUrl: String,
-        symbol: String
-    ): RegisterUser = sdk
-        .getUserSubjectsFromScrapper(email, password, scrapperBaseUrl, symbol)
-        .mapToPojo(password)
-
     suspend fun getUserSubjectsFromScrapper(
         email: String,
         password: String,
         scrapperBaseUrl: String,
+        domainSuffix: String,
         symbol: String
     ): RegisterUser = sdk
-        .getUserSubjectsFromScrapper(email, password, scrapperBaseUrl, symbol)
+        .getUserSubjectsFromScrapper(email, password, scrapperBaseUrl, domainSuffix, symbol)
         .mapToPojo(password)
 
     suspend fun getStudentsHybrid(

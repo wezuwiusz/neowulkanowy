@@ -47,6 +47,7 @@ class GradeAverageProviderTest {
 
     private val student = Student(
         scrapperBaseUrl = "",
+        scrapperDomainSuffix = "",
         mobileBaseUrl = "",
         loginType = "",
         loginMode = "SCRAPPER",

@@ -19,6 +19,9 @@ data class Student(
     @ColumnInfo(name = "scrapper_base_url")
     val scrapperBaseUrl: String,
 
+    @ColumnInfo(name = "scrapper_domain_suffix", defaultValue = "")
+    val scrapperDomainSuffix: String,
+
     @ColumnInfo(name = "mobile_base_url")
     val mobileBaseUrl: String,
 
