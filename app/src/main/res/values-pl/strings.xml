@@ -37,6 +37,7 @@
     <string name="login_login_pesel_email_hint">Login, PESEL lub adres e-mail</string>
     <string name="login_password_hint">Hasło</string>
     <string name="login_host_hint">Odmiana dziennika UONET+</string>
+    <string name="login_domain_suffix_hint">Niestandardowy sufiks domeny</string>
     <string name="login_type_api">Mobilne API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrydowe</string>

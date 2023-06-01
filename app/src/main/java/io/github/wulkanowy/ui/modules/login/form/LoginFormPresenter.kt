@@ -1,8 +1,13 @@
 package io.github.wulkanowy.ui.modules.login.form
 
 import androidx.core.net.toUri
-import io.github.wulkanowy.data.*
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceLoading
+import io.github.wulkanowy.data.onResourceNotLoading
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -56,7 +61,14 @@ class LoginFormPresenter @Inject constructor(
             } else if (formUsernameValue == "jan@fakelog.cf" && formPassValue == "jan123") {
                 setCredentials("", "")
             }
+            updateCustomDomainSuffixVisibility()
             updateUsernameLabel()
+        }
+    }
+
+    fun updateCustomDomainSuffixVisibility() {
+        view?.run {
+            showDomainSuffixInput("customSuffix" in formHostValue)
         }
     }
 
@@ -91,6 +103,7 @@ class LoginFormPresenter @Inject constructor(
         val email = view?.formUsernameValue.orEmpty().trim()
         val password = view?.formPassValue.orEmpty().trim()
         val host = view?.formHostValue.orEmpty().trim()
+        val domainSuffix = view?.formDomainSuffix.orEmpty().trim()
         val symbol = view?.formHostSymbol.orEmpty().trim()
 
         if (!validateCredentials(email, password, host)) return
@@ -100,6 +113,7 @@ class LoginFormPresenter @Inject constructor(
                 email = email,
                 password = password,
                 scrapperBaseUrl = host,
+                domainSuffix = domainSuffix,
                 symbol = symbol
             )
         }
@@ -112,7 +126,7 @@ class LoginFormPresenter @Inject constructor(
                 }
             }
             .onResourceSuccess {
-                val loginData = LoginData(email, password, host, symbol)
+                val loginData = LoginData(email, password, host, domainSuffix, symbol)
                 when (it.symbols.size) {
                     0 -> view?.navigateToSymbol(loginData)
                     else -> view?.navigateToStudentSelect(loginData, it)

@@ -37,6 +37,7 @@
     <string name="login_login_pesel_email_hint">Anmeldung, PESEL oder e-mail</string>
     <string name="login_password_hint">Passwort</string>
     <string name="login_host_hint">UONET+ Registervariante</string>
+    <string name="login_domain_suffix_hint">Custom domain suffix</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybride</string>

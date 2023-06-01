@@ -296,6 +296,7 @@ class GradeRepositoryTest {
     private fun createGrades(grades: List<SdkGrade>): Grades = Grades(
         details = grades,
         summary = listOf(),
+        descriptive = emptyList(),
         isAverage = false,
         isPoints = false,
         isForAdults = false,

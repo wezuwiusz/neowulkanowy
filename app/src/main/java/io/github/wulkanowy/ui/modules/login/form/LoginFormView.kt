@@ -14,6 +14,8 @@ interface LoginFormView : BaseView {
 
     val formHostValue: String
 
+    val formDomainSuffix: String
+
     val formHostSymbol: String
 
     val nicknameLabel: String
@@ -55,6 +57,8 @@ interface LoginFormView : BaseView {
     fun showProgress(show: Boolean)
 
     fun showContent(show: Boolean)
+
+    fun showDomainSuffixInput(show: Boolean)
 
     fun showOtherOptionsButton(show: Boolean)
 

@@ -55,6 +55,7 @@ class LoginStudentSelectPresenterTest {
         password = "",
         baseUrl = "",
         symbol = null,
+        domainSuffix = "",
     )
 
     private val subject = RegisterStudent(

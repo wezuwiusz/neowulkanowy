@@ -201,6 +201,7 @@ class GetMailboxByStudentUseCaseTest {
         schoolShortName: String = "test",
     ) = Student(
         scrapperBaseUrl = "http://fakelog.cf",
+        scrapperDomainSuffix = "",
         email = "jan@fakelog.cf",
         certificateKey = "",
         classId = 0,

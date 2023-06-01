@@ -12,6 +12,8 @@ interface LoginAdvancedView : BaseView {
 
     val formHostValue: String
 
+    val formDomainSuffix: String
+
     val formHostSymbol: String
 
     val formLoginType: String

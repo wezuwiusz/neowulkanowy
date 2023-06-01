@@ -20,6 +20,7 @@
         <item>Gmina Ulan-Majorat - Platforma oświatowa</item>
         <item>Gmina Ozorków - Platforma edukacyjna</item>
         <item>Gmina Łopiennik Górny - Platforma oświatowa</item>
+        <item>@string/login_domain_suffix_hint</item>
         <item>Fakelog</item>
     </string-array>
     <string-array name="hosts_values">
@@ -42,6 +43,7 @@
         <item>https://vulcan.net.pl/?login</item>
         <item>https://vulcan.net.pl/?login</item>
         <item>https://vulcan.net.pl/?login</item>
+        <item>https://vulcan.net.pl/?email&amp;customSuffix</item>
         <item>https://fakelog.cf/?email</item>
     </string-array>
     <string-array name="hosts_symbols">
@@ -64,6 +66,7 @@
         <item>gminaulanmajorat</item>
         <item>gminaozorkow</item>
         <item>gminalopiennikgorny</item>
+        <item>Default</item>
         <item>powiatwulkanowy</item>
     </string-array>
 </resources>

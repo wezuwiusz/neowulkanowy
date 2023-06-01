@@ -62,6 +62,7 @@ class LoginSymbolPresenter @Inject constructor(
                 email = loginData.login,
                 password = loginData.password,
                 scrapperBaseUrl = loginData.baseUrl,
+                domainSuffix = loginData.domainSuffix,
                 symbol = loginData.symbol.orEmpty(),
             )
         }.onEach { user ->

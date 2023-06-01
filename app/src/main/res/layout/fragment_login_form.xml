@@ -239,6 +239,32 @@
                     tools:ignore="Deprecated,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/loginFormDomainSuffixLayout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:hint="@string/login_domain_suffix_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout"
+                tools:ignore="HardcodedText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginFormDomainSuffix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    tools:targetApi="o" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginFormAdvancedButton"
                 style="@style/Widget.Material3.Button.OutlinedButton"
@@ -264,7 +290,7 @@
                 android:layout_marginEnd="24dp"
                 android:text="@string/login_sign_in"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormHostLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/loginFormDomainSuffixLayout" />
 
             <TextView
                 android:id="@+id/loginFormPrivacyLink"
