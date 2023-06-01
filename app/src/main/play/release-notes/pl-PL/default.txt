@@ -1,4 +1,4 @@
-Wersja 2.0.7
+Wersja 2.0.8
 
 — poprawiliśmy wyświetlanie kilku rodzajów zmian w planie lekcji
 — dodaliśmy limit znaków w okienku usprawiedliwiania
