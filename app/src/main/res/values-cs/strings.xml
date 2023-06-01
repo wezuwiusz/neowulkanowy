@@ -37,6 +37,7 @@
     <string name="login_login_pesel_email_hint">Přihlášení, číslo PESEL nebo e-mail</string>
     <string name="login_password_hint">Heslo</string>
     <string name="login_host_hint">Variace deníku UONET+</string>
+    <string name="login_domain_suffix_hint">Custom domain suffix</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybridní</string>
