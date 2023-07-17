@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
@@ -33,14 +34,6 @@ android {
             firebase_enabled: project.hasProperty("enableFirebase"),
             admob_project_id: ""
         ]
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += [
-                    "room.schemaLocation": "$projectDir/schemas".toString(),
-                    "room.incremental"   : "true"
-                ]
-            }
-        }
 
         buildConfigField "String", "SINGLE_SUPPORT_AD_ID", "null"
         buildConfigField "String", "DASHBOARD_TILE_AD_ID", "null"
@@ -156,7 +149,9 @@ android {
 kapt {
     correctErrorTypes true
 }
-
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas".toString())
+}
 kotlin {
     jvmToolchain(11)
 }
@@ -228,7 +223,7 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-ktx:$room"
-    kapt "androidx.room:room-compiler:$room"
+    ksp "androidx.room:room-compiler:$room"
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
