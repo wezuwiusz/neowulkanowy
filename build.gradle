@@ -2,7 +2,7 @@ buildscript {
     ext {
         kotlin_version = '1.9.0'
         about_libraries = '10.8.0'
-        hilt_version = "2.46.1"
+        hilt_version = "2.47"
     }
     repositories {
         mavenCentral()
