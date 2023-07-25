@@ -95,22 +95,22 @@ class Migration13Test : AbstractMigrationTest() {
     fun markAtLeastAndOnlyOneSemesterAtCurrent() {
         helper.createDatabase(dbName, 12).apply {
             createStudent(this, 1, "", 5)
-            createSemester(this, 1, 5, 1, 1, false)
-            createSemester(this, 1, 5, 2, 1, false)
-            createSemester(this, 1, 5, 3, 2, false)
-            createSemester(this, 1, 5, 4, 2, false)
+            createSemester(this, 1, 1, 1, false)
+            createSemester(this, 1, 2, 1, false)
+            createSemester(this, 1, 3, 2, false)
+            createSemester(this, 1, 4, 2, false)
 
             createStudent(this, 2, "", 5)
-            createSemester(this, 2, 5, 5, 5, true)
-            createSemester(this, 2, 5, 6, 5, true)
-            createSemester(this, 2, 5, 7, 55, true)
-            createSemester(this, 2, 5, 8, 55, true)
+            createSemester(this, 2, 5, 5, true)
+            createSemester(this, 2, 6, 5, true)
+            createSemester(this, 2, 7, 55, true)
+            createSemester(this, 2, 8, 55, true)
 
             createStudent(this, 3, "", 5)
-            createSemester(this, 3, 5, 11, 99, false)
-            createSemester(this, 3, 5, 12, 99, false)
-            createSemester(this, 3, 5, 13, 100, false)
-            createSemester(this, 3, 5, 14, 100, true)
+            createSemester(this, 3, 11, 99, false)
+            createSemester(this, 3, 12, 99, false)
+            createSemester(this, 3, 13, 100, false)
+            createSemester(this, 3, 14, 100, true)
             close()
         }
 
@@ -198,7 +198,13 @@ class Migration13Test : AbstractMigrationTest() {
         })
     }
 
-    private fun createSemester(db: SupportSQLiteDatabase, studentId: Int, classId: Int, semesterId: Int, diaryId: Int, isCurrent: Boolean = false) {
+    private fun createSemester(
+        db: SupportSQLiteDatabase,
+        studentId: Int,
+        semesterId: Int,
+        diaryId: Int,
+        isCurrent: Boolean = false
+    ) {
         db.insert("Semesters", SQLiteDatabase.CONFLICT_FAIL, ContentValues().apply {
             put("student_id", studentId)
             put("diary_id", diaryId)
@@ -206,7 +212,7 @@ class Migration13Test : AbstractMigrationTest() {
             put("semester_id", semesterId)
             put("semester_name", "1")
             put("is_current", isCurrent)
-            put("class_id", classId)
+            put("class_id", 5)
             put("unit_id", "99")
         })
     }
