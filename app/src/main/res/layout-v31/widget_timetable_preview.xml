@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_widget_timetable"
-    android:backgroundTint="?attr/colorSurface"
+    android:backgroundTint="?attr/colorSecondaryContainer"
     android:clipToOutline="true"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
+    android:paddingHorizontal="12dp"
     android:theme="@style/Wulkanowy.Widget.Theme"
     tools:context=".ui.modules.timetablewidget.TimetableWidgetProvider">
 
@@ -16,23 +16,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingVertical="16dp">
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp">
+
+        <FrameLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:src="@drawable/background_timetable_widget_avatar"
+                android:tint="?attr/colorPrimary"
+                app:tint="?attr/colorPrimary"
+                tools:ignore="UseAppTint" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="JK"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="18sp"
+                tools:ignore="HardcodedText" />
+
+        </FrameLayout>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginHorizontal="12dp"
             android:layout_weight="1"
             android:lines="1"
-            android:text="Pon, 03.10"
-            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:text="Pon, 19.05"
+            android:textSize="18sp"
             tools:ignore="HardcodedText" />
 
         <ImageButton
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/all_prev"
             android:rotation="180"
@@ -51,46 +75,273 @@
             app:tint="?attr/colorPrimary"
             tools:ignore="UseAppTint" />
 
-        <TextView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="12dp"
-            android:background="@drawable/background_timetable_widget_avatar"
-            android:backgroundTint="?attr/colorPrimary"
-            android:contentDescription="@string/account_quick_manager"
-            android:gravity="center"
-            android:text="AW"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:textColor="?attr/colorOnPrimary" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:showDividers="middle">
+        android:paddingBottom="12dp">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:importantForAccessibility="no"
-            android:src="@drawable/background_widget_item_timetable"
-            app:tint="?attr/backgroundColor" />
+            android:background="@drawable/background_widget_item_timetable"
+            android:backgroundTint="?attr/colorSurface"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
 
-        <ImageView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="22sp"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="08:00"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="09:45"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Wychowanie fizyczne"
+                    android:textSize="14sp"
+                    tools:ignore="HardcodedText" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:text="213"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="Dorota Nowak"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:importantForAccessibility="no"
-            android:src="@drawable/background_widget_item_timetable"
-            app:tint="?attr/backgroundColor" />
+            android:background="@drawable/background_widget_item_timetable"
+            android:backgroundTint="?attr/colorSurface"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
 
-        <ImageView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="22sp"
+                tools:ignore="HardcodedText"
+                tools:textColor="?attr/colorTimetableChange" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="08:50"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="09:35"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Język polski"
+                    android:textColor="?attr/colorTimetableChange"
+                    android:textSize="14sp"
+                    tools:ignore="HardcodedText" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:text="125"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="Karolina Kowalska"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?attr/colorTimetableChange"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:contentDescription="@string/timetable_changes"
+                android:tint="?attr/colorTimetableChange"
+                app:tint="?attr/colorTimetableChange"
+                tools:ignore="UseAppTint"
+                tools:src="@drawable/ic_timetable_widget_swap" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:importantForAccessibility="no"
-            android:src="@drawable/background_widget_item_timetable"
-            app:tint="?attr/backgroundColor" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_widget_item_timetable"
+            android:backgroundTint="?attr/colorSurface"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="22sp"
+                tools:ignore="HardcodedText"
+                tools:textColor="?attr/colorTimetableCanceled" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="09:45"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="10:30"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Wiedza o społeczeństwie"
+                    android:textColor="?attr/colorTimetableCanceled"
+                    android:textSize="14sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lekcja odwołana: uczniowie zwolnieni do domu"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="?attr/colorTimetableCanceled"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>
