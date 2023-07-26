@@ -11,7 +11,9 @@ import androidx.core.view.updateMargins
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.enums.MessageFolder.*
+import io.github.wulkanowy.data.enums.MessageFolder.RECEIVED
+import io.github.wulkanowy.data.enums.MessageFolder.SENT
+import io.github.wulkanowy.data.enums.MessageFolder.TRASHED
 import io.github.wulkanowy.databinding.FragmentMessageBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
@@ -49,6 +51,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMessageBinding.bind(view)
+        messageContainer = binding.messageViewPager
         presenter.onAttachView(this)
     }
 
@@ -93,6 +96,10 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(R.layout.fragment_m
 
     override fun showProgress(show: Boolean) {
         binding.messageProgress.visibility = if (show) VISIBLE else INVISIBLE
+    }
+
+    override fun showMessage(messageId: Int) {
+        showMessage(getString(messageId))
     }
 
     override fun showNewMessage(show: Boolean) {

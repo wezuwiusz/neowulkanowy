@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.message
 
+import io.github.wulkanowy.R
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -9,7 +11,8 @@ import javax.inject.Inject
 
 class MessagePresenter @Inject constructor(
     errorHandler: ErrorHandler,
-    studentRepository: StudentRepository
+    studentRepository: StudentRepository,
+    private val preferencesRepository: PreferencesRepository,
 ) : BasePresenter<MessageView>(errorHandler, studentRepository) {
 
     override fun onAttachView(view: MessageView) {
@@ -18,6 +21,14 @@ class MessagePresenter @Inject constructor(
             view.initView()
             Timber.i("Message view was initialized")
             loadData()
+        }
+
+        showIncognitoModeReminderMessage()
+    }
+
+    private fun showIncognitoModeReminderMessage() {
+        if (preferencesRepository.isIncognitoMode) {
+            view?.showMessage(R.string.message_incognito_mode_on)
         }
     }
 

@@ -343,6 +343,12 @@ class PreferencesRepository @Inject constructor(
             )
         }
 
+    var isIncognitoMode: Boolean
+        get() = getBoolean(R.string.pref_key_incognito_moge, R.bool.pref_default_incognito_mode)
+        set(value) = sharedPref.edit {
+            putBoolean(context.getString(R.string.pref_key_incognito_moge), value)
+        }
+
     var installationId: String
         get() = sharedPref.getString(PREF_KEY_INSTALLATION_ID, null).orEmpty()
         private set(value) = sharedPref.edit { putString(PREF_KEY_INSTALLATION_ID, value) }

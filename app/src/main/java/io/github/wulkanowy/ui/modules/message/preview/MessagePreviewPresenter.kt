@@ -2,11 +2,13 @@ package io.github.wulkanowy.ui.modules.message.preview
 
 import android.annotation.SuppressLint
 import androidx.core.text.parseAsHtml
+import io.github.wulkanowy.R
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageAttachment
 import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.repositories.MessageRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
@@ -20,6 +22,7 @@ class MessagePreviewPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
+    private val preferencesRepository: PreferencesRepository,
     private val analytics: AnalyticsHelper
 ) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository) {
 
@@ -54,7 +57,11 @@ class MessagePreviewPresenter @Inject constructor(
     private fun loadData(messageToLoad: Message) {
         flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
-            messageRepository.getMessage(student, messageToLoad, true)
+            messageRepository.getMessage(
+                student = student,
+                message = messageToLoad,
+                markAsRead = !preferencesRepository.isIncognitoMode,
+            )
         }
             .logResourceStatus("message ${messageToLoad.messageId} preview")
             .onResourceData {
@@ -65,6 +72,10 @@ class MessagePreviewPresenter @Inject constructor(
                         setMessageWithAttachment(it)
                         showContent(true)
                         initOptions()
+
+                        if (preferencesRepository.isIncognitoMode && it.message.unread) {
+                            showMessage(R.string.message_incognito_description)
+                        }
                     }
                 } else {
                     view?.run {

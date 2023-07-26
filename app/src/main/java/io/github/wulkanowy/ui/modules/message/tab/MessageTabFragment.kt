@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.*
 import android.widget.CompoundButton
+import androidx.annotation.StringRes
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -134,14 +135,20 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         }
     }
 
+    @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.action_menu_message_tab, menu)
 
-        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.queryHint = getString(R.string.all_search_hint)
-        searchView.maxWidth = Int.MAX_VALUE
+        initializeSearchView(menu)
+    }
+
+    private fun initializeSearchView(menu: Menu) {
+        val searchView = (menu.findItem(R.id.action_search).actionView as SearchView).apply {
+            queryHint = getString(R.string.all_search_hint)
+            maxWidth = Int.MAX_VALUE
+        }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String) = false
             override fun onQueryTextChange(query: String): Boolean {
@@ -207,8 +214,8 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
         binding.messageTabSwipe.isRefreshing = show
     }
 
-    override fun showMessagesDeleted() {
-        showMessage(getString(R.string.message_messages_deleted))
+    override fun showMessage(@StringRes messageId: Int) {
+        showMessage(getString(messageId))
     }
 
     override fun notifyParentShowNewMessage(show: Boolean) {

@@ -53,5 +53,12 @@
             app:key="@string/pref_key_fill_message_content"
             app:singleLineTitle="false"
             app:title="@string/pref_other_fill_message_content" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_incognito_mode"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_incognito_moge"
+            app:singleLineTitle="false"
+            app:title="@string/pref_other_incognito_mode"
+            app:summary="@string/pref_other_incognito_mode_summary" />
     </PreferenceCategory>
 </PreferenceScreen>
