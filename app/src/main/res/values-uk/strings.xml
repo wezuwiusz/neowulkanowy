@@ -37,7 +37,7 @@
     <string name="login_login_pesel_email_hint">Логін, PESEL або e-mail</string>
     <string name="login_password_hint">Пароль</string>
     <string name="login_host_hint">Тип щоденника UONET+</string>
-    <string name="login_domain_suffix_hint">Custom domain suffix</string>
+    <string name="login_domain_suffix_hint">Користувацький суфікс домену</string>
     <string name="login_type_api">Мobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybrid</string>
@@ -814,8 +814,8 @@
     <string name="auth_api_error">Авторизацію відхилено. Надані дані не збігаються із записами в кабінеті секретаря.</string>
     <string name="auth_invalid_error">Неправильний PESEL</string>
     <string name="auth_pesel">Число PESEL</string>
-    <string name="auth_button">Authorize</string>
-    <string name="auth_success">Authorization completed successfully</string>
+    <string name="auth_button">Авторизовать</string>
+    <string name="auth_success">Авторизація пройшла успішно</string>
     <string name="auth_title">Авторизувати</string>
     <string name="auth_description">Для роботи програми нам потрібно підтвердити вашу особу. Будь ласка, введіть число PESEL &lt;b&gt;%1$s&lt;/b&gt; студента в поле нижче</string>
     <string name="auth_button_skip">Поки що пропустити</string>
