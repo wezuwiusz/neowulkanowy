@@ -352,6 +352,8 @@
     </plurals>
     <string name="message_messages_deleted">Листи видалено</string>
     <string name="message_mailbox_chooser_title">Вибрати поштову скриньку</string>
+    <string name="message_incognito_mode_on">Режим анонімності включено</string>
+    <string name="message_incognito_description">Завдяки режиму анонімності, відправник не буде сповіщений коли ви прочитаєте повідомлення</string>
     <!--Note-->
     <string name="note_no_items">Немає інформації о зауваженнях</string>
     <string name="note_points">Бали</string>
@@ -738,6 +740,8 @@
     <string name="pref_other_grade_modifier_minus">Вартість мінуса</string>
     <string name="pref_other_fill_message_content">Відповісти з історією повідомлень</string>
     <string name="pref_other_optional_arithmetic_average">Вилічити середню аритметичну, якщо оцінка немає вартості</string>
+    <string name="pref_other_incognito_mode">Анонімний режим</string>
+    <string name="pref_other_incognito_mode_summary">Не повідомляти про прочитання повідомлення</string>
     <string name="pref_ads_support_category_name">Підтримка</string>
     <string name="pref_ads_privacy_policy">Політика конфіденційності</string>
     <string name="pref_ads_agreements">Угоди</string>

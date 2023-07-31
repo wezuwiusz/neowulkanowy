@@ -37,7 +37,7 @@
     <string name="login_login_pesel_email_hint">Prihlásenie, číslo PESEL alebo e-mail</string>
     <string name="login_password_hint">Heslo</string>
     <string name="login_host_hint">Variácia denníka UONET+</string>
-    <string name="login_domain_suffix_hint">Custom domain suffix</string>
+    <string name="login_domain_suffix_hint">Vlastná prípona domény</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybridné</string>
@@ -352,6 +352,8 @@
     </plurals>
     <string name="message_messages_deleted">Správy odstránené</string>
     <string name="message_mailbox_chooser_title">Vyberte poštovú schránku</string>
+    <string name="message_incognito_mode_on">Režim inkognito je zapnutý</string>
+    <string name="message_incognito_description">Vďaka inkognito režimu nie je odosielateľ upozornený, keď si správu prečítate</string>
     <!--Note-->
     <string name="note_no_items">Žiadne informácie o poznámkach</string>
     <string name="note_points">Body</string>
@@ -738,6 +740,8 @@
     <string name="pref_other_grade_modifier_minus">Hodnota mínusu</string>
     <string name="pref_other_fill_message_content">Odpovedať s históriou správ</string>
     <string name="pref_other_optional_arithmetic_average">Vypočítať aritmetický priemer, ak žiadna známka nemá váhu</string>
+    <string name="pref_other_incognito_mode">Režim inkognito</string>
+    <string name="pref_other_incognito_mode_summary">Neinformovať o prečítaní správy</string>
     <string name="pref_ads_support_category_name">Podpora</string>
     <string name="pref_ads_privacy_policy">Ochrana osobných údajov</string>
     <string name="pref_ads_agreements">Súhlasy</string>
