@@ -1,3 +1,6 @@
+import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+import ru.cian.huawei.publish.ReleaseNote
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlinx-serialization'
@@ -17,7 +20,7 @@ apply from: 'hooks.gradle'
 
 android {
     namespace 'io.github.wulkanowy'
-    compileSdkVersion 33
+    compileSdk 33
 
     defaultConfig {
         applicationId "io.github.wulkanowy"
@@ -78,7 +81,7 @@ android {
         }
     }
 
-    flavorDimensions "platform"
+    flavorDimensions += "platform"
 
     productFlavors {
         hms {
@@ -117,20 +120,20 @@ android {
         }
     }
 
-    testOptions.unitTests {
-        includeAndroidResources = true
+    testOptions {
+        unitTests.includeAndroidResources = true
         // workaround HMS test errors https://github.com/robolectric/robolectric/issues/2750
-        all { jvmArgs '-noverify' }
+        unitTests.all { jvmArgs '-noverify' }
     }
 
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
         freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn", "-Xjvm-default=all"]
     }
 
@@ -152,14 +155,11 @@ kapt {
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas".toString())
 }
-kotlin {
-    jvmToolchain(11)
-}
 
 play {
     defaultToAppBundles = false
     track = 'production'
-    releaseStatus = com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS
+    releaseStatus = ReleaseStatus.IN_PROGRESS
     userFraction = 0.25d
     updatePriority = 1
     enabled.set(false)
@@ -172,7 +172,7 @@ huaweiPublish {
             buildFormat = "aab"
             deployType = "publish"
             releaseNotes = [
-                new ru.cian.huawei.publish.ReleaseNote(
+                new ReleaseNote(
                     "pl-PL",
                     "$projectDir/src/main/play/release-notes/pl-PL/default.txt"
                 )
