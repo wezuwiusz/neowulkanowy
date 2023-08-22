@@ -111,5 +111,13 @@
                    app:title="@string/pref_view_timetable_show_whole_class"
                    app:useSimpleSummaryProvider="true" />
         -->
+        <ListPreference
+            app:defaultValue="@string/pref_default_timetable_show_gaps"
+            app:entries="@array/timetable_show_gaps_entries"
+            app:entryValues="@array/timetable_show_gaps_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_timetable_show_gaps"
+            app:title="@string/pref_view_timetable_show_gaps"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 </PreferenceScreen>

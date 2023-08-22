@@ -16,6 +16,11 @@ sealed class TimetableItem(val type: TimetableItemType) {
         val timeLeft: TimeLeft?,
         val onClick: (Timetable) -> Unit,
     ) : TimetableItem(TimetableItemType.NORMAL)
+
+    data class Empty(
+        val numFrom: Int,
+        val numTo: Int
+    ) : TimetableItem(TimetableItemType.EMPTY)
 }
 
 data class TimeLeft(
@@ -27,4 +32,5 @@ data class TimeLeft(
 enum class TimetableItemType {
     SMALL,
     NORMAL,
+    EMPTY
 }

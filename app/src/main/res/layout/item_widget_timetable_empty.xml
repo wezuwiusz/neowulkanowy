@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/timetableWidgetEmptyItemContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_widget_item_timetable"
+    android:backgroundTint="?attr/colorSurface"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp"
+    android:theme="@style/Wulkanowy.Widget.Theme"
+    tools:context=".ui.modules.timetablewidget.TimetableWidgetFactory">
+
+    <TextView
+        android:id="@+id/timetableWidgetEmptyItemNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="?android:textColorHint"
+        android:textSize="22sp"
+        tools:text="1-4" />
+
+    <TextView
+        android:id="@+id/timetableWidgetEmptyItemText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?android:textColorHint"
+        tools:text="No lessons" />
+
+</LinearLayout>

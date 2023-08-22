@@ -15,7 +15,6 @@ import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
 import io.github.wulkanowy.ui.modules.settings.appearance.menuorder.AppMenuItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.time.Instant
@@ -199,6 +198,14 @@ class PreferencesRepository @Inject constructor(
         get() = getBoolean(
             R.string.pref_key_timetable_show_timers,
             R.bool.pref_default_timetable_show_timers
+        )
+
+    val showTimetableGaps: TimetableGapsMode
+        get() = TimetableGapsMode.getByValue(
+            getString(
+                R.string.pref_key_timetable_show_gaps,
+                R.string.pref_default_timetable_show_gaps
+            )
         )
 
     val showSubjectsWithoutGrades: Boolean

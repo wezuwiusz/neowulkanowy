@@ -23,6 +23,7 @@
     <string name="pref_default_timetable_show_whole_class">no</string>
     <string name="pref_default_grade_sorting_mode">alphabetic</string>
     <bool name="pref_default_timetable_show_timers">false</bool>
+    <string name="pref_default_timetable_show_gaps">between</string>
     <bool name="pref_default_subjects_without_grades">false</bool>
     <bool name="pref_default_optional_arithmetic_average">false</bool>
     <string name="pref_default_last_sync_date">0</string>

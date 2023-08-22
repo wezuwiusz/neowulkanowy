@@ -186,6 +186,10 @@
     <string name="timetable_notify_change_room">Change of room from %1$s to %2$s</string>
     <string name="timetable_notify_change_teacher">Change of teacher from %1$s to %2$s</string>
     <string name="timetable_notify_change_subject">Change of subject from %1$s to %2$s</string>
+    <plurals name="timetable_no_lesson">
+        <item quantity="one">No lesson</item>
+        <item quantity="other">No lessons</item>
+    </plurals>
     <plurals name="timetable_notify_new_items_title">
         <item quantity="one">Timetable change</item>
         <item quantity="other">Timetable changes</item>
@@ -690,6 +694,7 @@
     <string name="pref_view_expand_grade">Grades expanding</string>
     <string name="pref_view_timetable_show_timers">Mark current lesson</string>
     <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
+    <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
     <string name="pref_view_subjects_without_grades">Show subjects without grades</string>
     <string name="pref_view_grade_color_scheme">Grades color scheme</string>

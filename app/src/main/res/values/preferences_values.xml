@@ -123,6 +123,17 @@
         <item>all_year</item>
     </string-array>
 
+    <string-array name="timetable_show_gaps_entries">
+        <item>Don\'t show</item>
+        <item>Only between lessons</item>
+        <item>Before and between lessons</item>
+    </string-array>
+    <string-array name="timetable_show_gaps_values" translatable="false">
+        <item>no_gaps</item>
+        <item>between</item>
+        <item>before_and_between</item>
+    </string-array>
+
     <string-array name="dashboard_tile_entries">
         <item>Lucky number</item>
         <item>Unread messages</item>
