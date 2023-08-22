@@ -186,7 +186,7 @@ ext {
     android_hilt = "1.0.0"
     room = "2.5.2"
     chucker = "3.5.2"
-    mockk = "1.13.5"
+    mockk = "1.13.7"
     coroutines = "1.7.3"
 }
 
