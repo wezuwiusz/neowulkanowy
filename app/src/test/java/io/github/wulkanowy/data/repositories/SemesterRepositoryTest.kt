@@ -15,6 +15,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
 import io.mockk.just
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
@@ -81,15 +82,15 @@ class SemesterRepositoryTest {
     }
 
     @Test
-    fun getSemesters_invalidDiary_scrapper() {
+    fun getSemesters_invalidDiary_scrapper() = runTest {
         val badSemesters = listOf(
-            getSemesterPojo(0, 1, now().minusMonths(6), now().minusMonths(3)),
-            getSemesterPojo(0, 2, now().minusMonths(3), now())
+            getSemesterPojo(0, 2, now().minusMonths(6), now()),
+            getSemesterPojo(0, 2, now(), now().plusMonths(6)),
         )
 
         val goodSemesters = listOf(
-            getSemesterPojo(1, 1, now().minusMonths(6), now().minusMonths(3)),
-            getSemesterPojo(1, 2, now().minusMonths(3), now())
+            getSemesterPojo(1, 2, now().minusMonths(6), now()),
+            getSemesterPojo(2, 3, now(), now().plusMonths(6)),
         )
 
         coEvery { semesterDb.loadAll(student.studentId, student.classId) } returnsMany listOf(
@@ -101,7 +102,9 @@ class SemesterRepositoryTest {
         coEvery { semesterDb.deleteAll(any()) } just Runs
         coEvery { semesterDb.insertSemesters(any()) } returns listOf()
 
-        val items = runBlocking { semesterRepository.getSemesters(student.copy(loginMode = Sdk.Mode.SCRAPPER.name)) }
+        val items = semesterRepository.getSemesters(
+            student = student.copy(loginMode = Sdk.Mode.SCRAPPER.name)
+        )
         assertEquals(2, items.size)
         assertNotEquals(0, items[0].diaryId)
     }
@@ -188,15 +191,15 @@ class SemesterRepositoryTest {
     }
 
     @Test
-    fun getSemesters_doubleCurrent_refreshOnNoCurrent() {
+    fun getSemesters_doubleCurrent_refreshOnNoCurrent() = runTest {
         val semesters = listOf(
-            getSemesterEntity(1, 1, now(), now()),
-            getSemesterEntity(1, 2, now(), now())
+            getSemesterEntity(1, 1, now().minusMonths(1), now().plusMonths(1)),
+            getSemesterEntity(1, 2, now().minusMonths(1), now().plusMonths(1))
         )
 
         coEvery { semesterDb.loadAll(student.studentId, student.classId) } returns semesters
 
-        val items = runBlocking { semesterRepository.getSemesters(student, refreshOnNoCurrent = true) }
+        val items = semesterRepository.getSemesters(student, refreshOnNoCurrent = true)
         assertEquals(2, items.size)
     }
 
