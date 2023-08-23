@@ -51,6 +51,11 @@
         <item>Priemer z priemerov z oboch semestrov</item>
         <item>Priemer známok z celého roka</item>
     </string-array>
+    <string-array name="timetable_show_gaps_entries">
+        <item>Don\'t show</item>
+        <item>Only between lessons</item>
+        <item>Before and between lessons</item>
+    </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Šťastné číslo</item>
         <item>Neprečítané správy</item>

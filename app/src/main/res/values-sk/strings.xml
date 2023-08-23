@@ -185,6 +185,12 @@
     <string name="timetable_notify_change_room">Zmena učebne z %1$s na %2$s</string>
     <string name="timetable_notify_change_teacher">Zmena učiteľa z %1$s na %2$s</string>
     <string name="timetable_notify_change_subject">Zmena predmetu z %1$s na %2$s</string>
+    <plurals name="timetable_no_lesson">
+        <item quantity="one">No lesson</item>
+        <item quantity="few">No lessons</item>
+        <item quantity="many">No lessons</item>
+        <item quantity="other">No lessons</item>
+    </plurals>
     <plurals name="timetable_notify_new_items_title">
         <item quantity="one">Zmena plánu lekcií</item>
         <item quantity="few">Zmeny plánu lekcií</item>
@@ -700,6 +706,7 @@
     <string name="pref_view_expand_grade">Rozvijanie známok</string>
     <string name="pref_view_timetable_show_timers">Označiť aktuálne lekciu</string>
     <string name="pref_view_timetable_show_groups">Zobraziť skupiny vedľa predmetov</string>
+    <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Zobraziť zoznam grafov v známkach triedy</string>
     <string name="pref_view_subjects_without_grades">Zobraziť predmety bez známok</string>
     <string name="pref_view_grade_color_scheme">Známky farebnú schému</string>

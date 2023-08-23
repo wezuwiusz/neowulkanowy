@@ -185,6 +185,12 @@
     <string name="timetable_notify_change_room">Зміна аудіторії з %1$s на %2$s</string>
     <string name="timetable_notify_change_teacher">Зміна вчителя з %1$s на %2$s</string>
     <string name="timetable_notify_change_subject">Зміна теми з %1$s на %2$s</string>
+    <plurals name="timetable_no_lesson">
+        <item quantity="one">No lesson</item>
+        <item quantity="few">No lessons</item>
+        <item quantity="many">No lessons</item>
+        <item quantity="other">No lessons</item>
+    </plurals>
     <plurals name="timetable_notify_new_items_title">
         <item quantity="one">Зміна у розкладі</item>
         <item quantity="few">Зміни у розкладі</item>
@@ -700,6 +706,7 @@
     <string name="pref_view_expand_grade">Розгортання оцінок</string>
     <string name="pref_view_timetable_show_timers">Позначити поточний урок</string>
     <string name="pref_view_timetable_show_groups">Показувати групи поруч з темами</string>
+    <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Показувати діаграми в оцінках класу</string>
     <string name="pref_view_subjects_without_grades">Показати предмети без оцінок</string>
     <string name="pref_view_grade_color_scheme">Схема кольорів оцінок</string>
