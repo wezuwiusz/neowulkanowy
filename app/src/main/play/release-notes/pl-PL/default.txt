@@ -1,7 +1,8 @@
-Wersja 2.0.8
+Wersja 2.1.0
 
-— poprawiliśmy wyświetlanie kilku rodzajów zmian w planie lekcji
-— dodaliśmy limit znaków w okienku usprawiedliwiania
-— naprawiliśmy wyświetlanie frekwencji w szkołach, gdzie działa już system eduOne (ciągle jednak brak opcji usprawiedliwiania)
+— dodaliśmy tryb incognito w wiadomościach
+— dodaliśmy wyświetlanie pustych lekcji (okienek) w planie lekcji
+— poprawiliśmy widżet planu lekcji (będzie teraz trochę bardziej kompaktowy)
+— zmieniliśmy datę rozpoczęcia roku szkolnego na 3 dni przed 1 września (sorry)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
