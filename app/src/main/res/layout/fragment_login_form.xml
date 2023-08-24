@@ -105,6 +105,18 @@
                     android:background="?android:attr/listDivider" />
             </LinearLayout>
 
+            <include
+                android:id="@+id/login_form_message"
+                layout="@layout/item_dashboard_admin_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/loginFormContact"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:visibility="visible" />
+
             <TextView
                 android:id="@+id/loginFormHeader"
                 android:layout_width="match_parent"
@@ -119,9 +131,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/loginFormUsernameLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loginFormContact"
+                app:layout_constraintTop_toBottomOf="@+id/login_form_message"
                 app:layout_constraintVertical_bias="0"
-                app:layout_constraintVertical_chainStyle="packed"
                 app:layout_goneMarginTop="64dp" />
 
             <TextView

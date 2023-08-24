@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data.db
 
 import androidx.room.TypeConverter
+import io.github.wulkanowy.data.enums.MessageType
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.utils.toTimestamp
 import kotlinx.serialization.SerializationException
@@ -68,4 +69,9 @@ class Converters {
     @TypeConverter
     fun stringToDestination(destination: String): Destination = json.decodeFromString(destination)
 
+    @TypeConverter
+    fun messageTypesToString(types: List<MessageType>): String = json.encodeToString(types)
+
+    @TypeConverter
+    fun stringToMessageTypes(text: String): List<MessageType> = json.decodeFromString(text)
 }

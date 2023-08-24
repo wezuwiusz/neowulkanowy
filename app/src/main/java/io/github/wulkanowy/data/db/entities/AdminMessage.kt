@@ -3,6 +3,7 @@ package io.github.wulkanowy.data.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import io.github.wulkanowy.data.enums.MessageType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -33,7 +34,8 @@ data class AdminMessage(
 
     val priority: String,
 
-    val type: String,
+    @ColumnInfo(name = "types", defaultValue = "[]")
+    val types: List<MessageType> = emptyList(),
 
     @ColumnInfo(name = "is_dismissible")
     val isDismissible: Boolean = false

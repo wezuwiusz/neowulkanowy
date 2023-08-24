@@ -2,7 +2,9 @@ package io.github.wulkanowy.ui.modules.login.form
 
 import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.pojos.RegisterUser
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.scrapper.Scrapper
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -40,6 +42,12 @@ class LoginFormPresenterTest {
     @MockK
     lateinit var appInfo: AppInfo
 
+    @MockK
+    lateinit var getAppropriateAdminMessageUseCase: GetAppropriateAdminMessageUseCase
+
+    @MockK
+    lateinit var preferencesRepository: PreferencesRepository
+
     private lateinit var presenter: LoginFormPresenter
 
     private val registerUser = RegisterUser(
@@ -72,6 +80,8 @@ class LoginFormPresenterTest {
             loginErrorHandler = errorHandler,
             appInfo = appInfo,
             analytics = analytics,
+            getAppropriateAdminMessageUseCase = getAppropriateAdminMessageUseCase,
+            preferencesRepository = preferencesRepository,
         )
         presenter.onAttachView(loginFormView)
     }

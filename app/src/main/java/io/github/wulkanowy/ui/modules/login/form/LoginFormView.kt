@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.form
 
+import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.login.LoginData
@@ -57,6 +58,10 @@ interface LoginFormView : BaseView {
     fun showProgress(show: Boolean)
 
     fun showContent(show: Boolean)
+
+    fun showAdminMessage(message: AdminMessage?)
+
+    fun openInternetBrowser(url: String)
 
     fun showDomainSuffixInput(show: Boolean)
 

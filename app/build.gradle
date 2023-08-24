@@ -27,7 +27,7 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 130
+        versionCode 131 // todo: already bumped for 2.1.0 version
         versionName "2.0.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
