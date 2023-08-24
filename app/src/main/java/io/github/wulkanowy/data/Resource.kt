@@ -148,7 +148,7 @@ inline fun <ResultType, RequestType, T> networkBoundResource(
     crossinline saveFetchResult: suspend (old: ResultType, new: RequestType) -> Unit,
     crossinline onFetchFailed: (Throwable) -> Unit = { },
     crossinline shouldFetch: (ResultType) -> Boolean = { true },
-    crossinline mapResult: (ResultType) -> T
+    crossinline mapResult: (ResultType) -> T,
 ) = flow {
     emit(Resource.Loading())
 

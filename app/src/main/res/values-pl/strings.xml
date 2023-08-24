@@ -185,6 +185,12 @@
     <string name="timetable_notify_change_room">Zmiana sali z %1$s na %2$s</string>
     <string name="timetable_notify_change_teacher">Zmiana nauczyciela z %1$s na %2$s</string>
     <string name="timetable_notify_change_subject">Zmiana przedmiotu z %1$s na %2$s</string>
+    <plurals name="timetable_no_lesson">
+        <item quantity="one">Brak lekcji</item>
+        <item quantity="few">Brak lekcji</item>
+        <item quantity="many">Brak lekcji</item>
+        <item quantity="other">Brak lekcji</item>
+    </plurals>
     <plurals name="timetable_notify_new_items_title">
         <item quantity="one">Zmiana planu lekcji</item>
         <item quantity="few">Zmiany planu lekcji</item>
@@ -352,6 +358,8 @@
     </plurals>
     <string name="message_messages_deleted">Wiadomości zostały usunięte</string>
     <string name="message_mailbox_chooser_title">Wybierz skrzynkę</string>
+    <string name="message_incognito_mode_on">Tryb incognito jest włączony</string>
+    <string name="message_incognito_description">Dzięki trybowi incognito nadawca nie zobaczy, że przeczytałeś tę wiadomość</string>
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
     <string name="note_points">Punkty</string>
@@ -698,6 +706,7 @@
     <string name="pref_view_expand_grade">Rozwijanie ocen</string>
     <string name="pref_view_timetable_show_timers">Oznaczaj bieżącą lekcję</string>
     <string name="pref_view_timetable_show_groups">Pokazuj grupę obok przedmiotu</string>
+    <string name="pref_view_timetable_show_gaps">Pokazuj puste kafelki gdzie nie ma lekcji</string>
     <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>
     <string name="pref_view_subjects_without_grades">Pokazuj przedmioty bez ocen</string>
     <string name="pref_view_grade_color_scheme">Schemat kolorów ocen</string>
@@ -738,6 +747,8 @@
     <string name="pref_other_grade_modifier_minus">Wartość minusa</string>
     <string name="pref_other_fill_message_content">Odpowiadaj z historią wiadomości</string>
     <string name="pref_other_optional_arithmetic_average">Licz średnią arytmetyczną, gdy żadna ocena nie ma wagi</string>
+    <string name="pref_other_incognito_mode">Tryb incognito</string>
+    <string name="pref_other_incognito_mode_summary">Nie informuj o przeczytaniu wiadomości</string>
     <string name="pref_ads_support_category_name">Wsparcie</string>
     <string name="pref_ads_privacy_policy">Polityka prywatności</string>
     <string name="pref_ads_agreements">Zgody</string>

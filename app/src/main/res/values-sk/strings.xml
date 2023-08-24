@@ -37,7 +37,7 @@
     <string name="login_login_pesel_email_hint">Prihlásenie, číslo PESEL alebo e-mail</string>
     <string name="login_password_hint">Heslo</string>
     <string name="login_host_hint">Variácia denníka UONET+</string>
-    <string name="login_domain_suffix_hint">Custom domain suffix</string>
+    <string name="login_domain_suffix_hint">Vlastná prípona domény</string>
     <string name="login_type_api">Mobile API</string>
     <string name="login_type_scrapper">Scraper</string>
     <string name="login_type_hybrid">Hybridné</string>
@@ -185,6 +185,12 @@
     <string name="timetable_notify_change_room">Zmena učebne z %1$s na %2$s</string>
     <string name="timetable_notify_change_teacher">Zmena učiteľa z %1$s na %2$s</string>
     <string name="timetable_notify_change_subject">Zmena predmetu z %1$s na %2$s</string>
+    <plurals name="timetable_no_lesson">
+        <item quantity="one">No lesson</item>
+        <item quantity="few">No lessons</item>
+        <item quantity="many">No lessons</item>
+        <item quantity="other">No lessons</item>
+    </plurals>
     <plurals name="timetable_notify_new_items_title">
         <item quantity="one">Zmena plánu lekcií</item>
         <item quantity="few">Zmeny plánu lekcií</item>
@@ -352,6 +358,8 @@
     </plurals>
     <string name="message_messages_deleted">Správy odstránené</string>
     <string name="message_mailbox_chooser_title">Vyberte poštovú schránku</string>
+    <string name="message_incognito_mode_on">Režim inkognito je zapnutý</string>
+    <string name="message_incognito_description">Vďaka inkognito režimu nie je odosielateľ upozornený, keď si správu prečítate</string>
     <!--Note-->
     <string name="note_no_items">Žiadne informácie o poznámkach</string>
     <string name="note_points">Body</string>
@@ -698,6 +706,7 @@
     <string name="pref_view_expand_grade">Rozvijanie známok</string>
     <string name="pref_view_timetable_show_timers">Označiť aktuálne lekciu</string>
     <string name="pref_view_timetable_show_groups">Zobraziť skupiny vedľa predmetov</string>
+    <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Zobraziť zoznam grafov v známkach triedy</string>
     <string name="pref_view_subjects_without_grades">Zobraziť predmety bez známok</string>
     <string name="pref_view_grade_color_scheme">Známky farebnú schému</string>
@@ -738,6 +747,8 @@
     <string name="pref_other_grade_modifier_minus">Hodnota mínusu</string>
     <string name="pref_other_fill_message_content">Odpovedať s históriou správ</string>
     <string name="pref_other_optional_arithmetic_average">Vypočítať aritmetický priemer, ak žiadna známka nemá váhu</string>
+    <string name="pref_other_incognito_mode">Režim inkognito</string>
+    <string name="pref_other_incognito_mode_summary">Neinformovať o prečítaní správy</string>
     <string name="pref_ads_support_category_name">Podpora</string>
     <string name="pref_ads_privacy_policy">Ochrana osobných údajov</string>
     <string name="pref_ads_agreements">Súhlasy</string>

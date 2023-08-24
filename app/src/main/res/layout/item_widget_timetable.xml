@@ -6,11 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_widget_item_timetable"
-    android:backgroundTint="?attr/backgroundColor"
+    android:backgroundTint="?attr/colorSurface"
     android:gravity="center_vertical"
+    android:minHeight="48dp"
     android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="12dp"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp"
     android:theme="@style/Wulkanowy.Widget.Theme"
     tools:context=".ui.modules.timetablewidget.TimetableWidgetFactory">
 
@@ -18,15 +19,14 @@
         android:id="@+id/timetableWidgetItemNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textSize="24sp"
+        android:textSize="22sp"
         tools:text="1"
         tools:textColor="?attr/colorTimetableChange" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="10dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -41,7 +41,7 @@
             android:id="@+id/timetableWidgetItemTimeFinish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:textAppearance="?attr/textAppearanceBodySmall"
             tools:text="09:45" />
 
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textSize="14sp"
             tools:text="Programowanie aplikacji mobilnych i desktopowych" />
 
         <LinearLayout
@@ -72,15 +72,15 @@
                 android:id="@+id/timetableWidgetItemRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
                 android:textAppearance="?attr/textAppearanceBodySmall"
-                tools:text="Sala 213"
+                tools:text="213"
                 tools:textColor="?attr/colorTimetableChange" />
 
             <TextView
                 android:id="@+id/timetableWidgetItemTeacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:ellipsize="end"
                 android:lines="1"
                 android:textAppearance="?attr/textAppearanceBodySmall"

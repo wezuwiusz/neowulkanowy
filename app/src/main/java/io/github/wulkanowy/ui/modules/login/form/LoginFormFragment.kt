@@ -9,10 +9,12 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginFormBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.dashboard.viewholders.AdminMessageViewHolder
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.utils.*
@@ -205,6 +207,19 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun showContent(show: Boolean) {
         binding.loginFormContainer.visibility = if (show) VISIBLE else GONE
+    }
+
+    override fun showAdminMessage(message: AdminMessage?) {
+        AdminMessageViewHolder(
+            binding = binding.loginFormMessage,
+            onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed,
+            onAdminMessageClickListener = presenter::onAdminMessageSelected,
+        ).bind(message)
+        binding.loginFormMessage.root.isVisible = message != null
+    }
+
+    override fun openInternetBrowser(url: String) {
+        requireContext().openInternetBrowser(url)
     }
 
     override fun showDomainSuffixInput(show: Boolean) {

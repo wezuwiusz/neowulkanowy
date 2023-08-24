@@ -12,6 +12,7 @@ import android.view.View.VISIBLE
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.annotation.StringRes
 import androidx.core.content.getSystemService
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -162,6 +163,10 @@ class MessagePreviewFragment :
 
     override fun setErrorRetryCallback(callback: () -> Unit) {
         binding.messagePreviewErrorRetry.setOnClickListener { callback() }
+    }
+
+    override fun showMessage(@StringRes messageId: Int) {
+        showMessage(getString(messageId))
     }
 
     override fun openMessageReply(message: Message?) {

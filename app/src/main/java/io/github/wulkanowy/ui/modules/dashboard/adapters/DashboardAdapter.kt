@@ -1,8 +1,6 @@
 package io.github.wulkanowy.ui.modules.dashboard.adapters
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Handler
 import android.os.Looper
@@ -24,6 +22,7 @@ import io.github.wulkanowy.data.db.entities.TimetableHeader
 import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.databinding.*
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
+import io.github.wulkanowy.ui.modules.dashboard.viewholders.AdminMessageViewHolder
 import io.github.wulkanowy.utils.*
 import timber.log.Timber
 import java.time.Duration
@@ -109,7 +108,9 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 ItemDashboardConferencesBinding.inflate(inflater, parent, false)
             )
             DashboardItem.Type.ADMIN_MESSAGE.ordinal -> AdminMessageViewHolder(
-                ItemDashboardAdminMessageBinding.inflate(inflater, parent, false)
+                ItemDashboardAdminMessageBinding.inflate(inflater, parent, false),
+                onAdminMessageDismissClickListener = onAdminMessageDismissClickListener,
+                onAdminMessageClickListener = onAdminMessageClickListener,
             )
             DashboardItem.Type.ADS.ordinal -> AdsViewHolder(
                 ItemDashboardAdsBinding.inflate(inflater, parent, false)
@@ -128,7 +129,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             is AnnouncementsViewHolder -> bindAnnouncementsViewHolder(holder, position)
             is ExamsViewHolder -> bindExamsViewHolder(holder, position)
             is ConferencesViewHolder -> bindConferencesViewHolder(holder, position)
-            is AdminMessageViewHolder -> bindAdminMessage(holder, position)
+            is AdminMessageViewHolder -> holder.bind((items[position] as DashboardItem.AdminMessages).adminMessage)
             is AdsViewHolder -> bindAdsViewHolder(holder, position)
         }
     }
@@ -733,39 +734,6 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         }
     }
 
-    private fun bindAdminMessage(adminMessageViewHolder: AdminMessageViewHolder, position: Int) {
-        val item = (items[position] as DashboardItem.AdminMessages).adminMessage ?: return
-        val context = adminMessageViewHolder.binding.root.context
-        val (backgroundColor, textColor) = when (item.priority) {
-            "HIGH" -> {
-                context.getThemeAttrColor(R.attr.colorMessageHigh) to
-                    context.getThemeAttrColor(R.attr.colorOnMessageHigh)
-            }
-            "MEDIUM" -> {
-                context.getThemeAttrColor(R.attr.colorMessageMedium) to Color.BLACK
-            }
-            else -> null to context.getThemeAttrColor(R.attr.colorOnSurface)
-        }
-
-        with(adminMessageViewHolder.binding) {
-            dashboardAdminMessageItemTitle.text = item.title
-            dashboardAdminMessageItemTitle.setTextColor(textColor)
-            dashboardAdminMessageItemDescription.text = item.content
-            dashboardAdminMessageItemDescription.setTextColor(textColor)
-            dashboardAdminMessageItemIcon.setColorFilter(textColor)
-            dashboardAdminMessageItemDismiss.isVisible = item.isDismissible
-            dashboardAdminMessageItemDismiss.setTextColor(textColor)
-            dashboardAdminMessageItemDismiss.setOnClickListener {
-                onAdminMessageDismissClickListener(item)
-            }
-
-            root.setCardBackgroundColor(backgroundColor?.let { ColorStateList.valueOf(it) })
-            item.destinationUrl?.let { url ->
-                root.setOnClickListener { onAdminMessageClickListener(url) }
-            }
-        }
-    }
-
     private fun bindAdsViewHolder(adsViewHolder: AdsViewHolder, position: Int) {
         val item = (items[position] as DashboardItem.Ads).adBanner ?: return
         val binding = adsViewHolder.binding
@@ -818,9 +786,6 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
         val adapter by lazy { DashboardConferencesAdapter() }
     }
-
-    class AdminMessageViewHolder(val binding: ItemDashboardAdminMessageBinding) :
-        RecyclerView.ViewHolder(binding.root)
 
     class AdsViewHolder(val binding: ItemDashboardAdsBinding) :
         RecyclerView.ViewHolder(binding.root)

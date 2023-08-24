@@ -1,23 +1,44 @@
 package io.github.wulkanowy.ui.modules.timetable
 
-import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.data.enums.TimetableGapsMode.BETWEEN_AND_BEFORE_LESSONS
+import io.github.wulkanowy.data.enums.TimetableGapsMode.NO_GAPS
 import io.github.wulkanowy.data.enums.TimetableMode
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceData
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceIntermediate
+import io.github.wulkanowy.data.onResourceNotLoading
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.capitalise
+import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
+import io.github.wulkanowy.utils.isHolidays
+import io.github.wulkanowy.utils.isJustFinished
+import io.github.wulkanowy.utils.isShowTimeUntil
+import io.github.wulkanowy.utils.left
+import io.github.wulkanowy.utils.nextOrSameSchoolDay
+import io.github.wulkanowy.utils.nextSchoolDay
+import io.github.wulkanowy.utils.previousSchoolDay
+import io.github.wulkanowy.utils.toFormattedString
+import io.github.wulkanowy.utils.until
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDate.*
-import java.util.*
+import java.time.LocalDate.now
+import java.time.LocalDate.of
+import java.time.LocalDate.ofEpochDay
+import java.util.Timer
 import javax.inject.Inject
 import kotlin.concurrent.timer
 
@@ -192,16 +213,38 @@ class TimetablePresenter @Inject constructor(
                 compareBy({ item -> item.number }, { item -> !item.isStudentPlan })
             )
 
-        return filteredItems.mapIndexed { i, it ->
-            if (it.isStudentPlan) TimetableItem.Normal(
-                lesson = it,
-                showGroupsInPlan = prefRepository.showGroupsInPlan,
-                timeLeft = filteredItems.getTimeLeftForLesson(it, i),
-                onClick = ::onTimetableItemSelected
-            ) else TimetableItem.Small(
-                lesson = it,
-                onClick = ::onTimetableItemSelected
-            )
+        var prevNum = when (prefRepository.showTimetableGaps) {
+            BETWEEN_AND_BEFORE_LESSONS -> 0
+            else -> null
+        }
+        return buildList {
+            filteredItems.forEachIndexed { i, it ->
+                if (prefRepository.showTimetableGaps != NO_GAPS && prevNum != null && it.number > prevNum!! + 1) {
+                    val emptyLesson = TimetableItem.Empty(
+                        numFrom = prevNum!! + 1,
+                        numTo = it.number - 1
+                    )
+                    add(emptyLesson)
+                }
+
+                if (it.isStudentPlan) {
+                    val normalLesson = TimetableItem.Normal(
+                        lesson = it,
+                        showGroupsInPlan = prefRepository.showGroupsInPlan,
+                        timeLeft = filteredItems.getTimeLeftForLesson(it, i),
+                        onClick = ::onTimetableItemSelected
+                    )
+                    add(normalLesson)
+                } else {
+                    val smallLesson = TimetableItem.Small(
+                        lesson = it,
+                        onClick = ::onTimetableItemSelected
+                    )
+                    add(smallLesson)
+                }
+
+                prevNum = it.number
+            }
         }
     }
 

@@ -171,6 +171,10 @@
     <string name="timetable_notify_change_room">Änderung des Raumes von %1$s zu %2$s</string>
     <string name="timetable_notify_change_teacher">Wechsel des Lehrers von %1$s zu %2$s</string>
     <string name="timetable_notify_change_subject">Thema von %1$s zu %2$s wechseln</string>
+    <plurals name="timetable_no_lesson">
+        <item quantity="one">No lesson</item>
+        <item quantity="other">No lessons</item>
+    </plurals>
     <plurals name="timetable_notify_new_items_title">
         <item quantity="one">Änderung des Zeitplans</item>
         <item quantity="other">Änderungen des Zeitplans</item>
@@ -310,6 +314,8 @@
     </plurals>
     <string name="message_messages_deleted">Nachrichten gelöscht</string>
     <string name="message_mailbox_chooser_title">Postfach auswählen</string>
+    <string name="message_incognito_mode_on">Incognito mode is on</string>
+    <string name="message_incognito_description">Thanks to incognito mode sender is not notified when you read the message</string>
     <!--Note-->
     <string name="note_no_items">Keine Informationen über Eintragen</string>
     <string name="note_points">Punkte</string>
@@ -610,6 +616,7 @@
     <string name="pref_view_expand_grade">Steigende Sorten</string>
     <string name="pref_view_timetable_show_timers">Aktuelle Lektion markieren</string>
     <string name="pref_view_timetable_show_groups">Gruppen neben Schulfächen anzeigen</string>
+    <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>
     <string name="pref_view_subjects_without_grades">Schulfächer ohne Noten anzeigen</string>
     <string name="pref_view_grade_color_scheme">Farbschema der Noten</string>
@@ -650,6 +657,8 @@
     <string name="pref_other_grade_modifier_minus">Wert des Minus</string>
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
     <string name="pref_other_optional_arithmetic_average">Arithmetisches Mittel anzeigen, wenn keine Gewichte angegeben sind</string>
+    <string name="pref_other_incognito_mode">Incognito mode</string>
+    <string name="pref_other_incognito_mode_summary">Do not inform about reading the message</string>
     <string name="pref_ads_support_category_name">Unterstützung</string>
     <string name="pref_ads_privacy_policy">Datenschutz-Bestimmungen</string>
     <string name="pref_ads_agreements">Vereinbarungen</string>

@@ -15,7 +15,6 @@ import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
 import io.github.wulkanowy.ui.modules.settings.appearance.menuorder.AppMenuItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.time.Instant
@@ -201,6 +200,14 @@ class PreferencesRepository @Inject constructor(
             R.bool.pref_default_timetable_show_timers
         )
 
+    val showTimetableGaps: TimetableGapsMode
+        get() = TimetableGapsMode.getByValue(
+            getString(
+                R.string.pref_key_timetable_show_gaps,
+                R.string.pref_default_timetable_show_gaps
+            )
+        )
+
     val showSubjectsWithoutGrades: Boolean
         get() = getBoolean(
             R.string.pref_key_subjects_without_grades,
@@ -341,6 +348,12 @@ class PreferencesRepository @Inject constructor(
                 PREF_KEY_APP_MENU_ITEM_ORDER,
                 json.encodeToString(value)
             )
+        }
+
+    var isIncognitoMode: Boolean
+        get() = getBoolean(R.string.pref_key_incognito_moge, R.bool.pref_default_incognito_mode)
+        set(value) = sharedPref.edit {
+            putBoolean(context.getString(R.string.pref_key_incognito_moge), value)
         }
 
     var installationId: String

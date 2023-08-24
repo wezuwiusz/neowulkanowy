@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.message.tab
 
+import io.github.wulkanowy.R
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.data.db.entities.Message
@@ -26,7 +27,7 @@ class MessageTabPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val messageRepository: MessageRepository,
-    private val analytics: AnalyticsHelper
+    private val analytics: AnalyticsHelper,
 ) : BasePresenter<MessageTabView>(errorHandler, studentRepository) {
 
     lateinit var folder: MessageFolder
@@ -135,7 +136,7 @@ class MessageTabPresenter @Inject constructor(
                 messageRepository.deleteMessages(student, selectedMailbox, messageList)
             }
                 .onFailure(errorHandler::dispatch)
-                .onSuccess { view?.showMessagesDeleted() }
+                .onSuccess { view?.showMessage(R.string.message_messages_deleted) }
         }
     }
 

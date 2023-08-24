@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.databinding.ItemTimetableBinding
+import io.github.wulkanowy.databinding.ItemTimetableEmptyBinding
 import io.github.wulkanowy.databinding.ItemTimetableSmallBinding
+import io.github.wulkanowy.utils.getPlural
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.toFormattedString
 import javax.inject.Inject
@@ -29,8 +31,13 @@ class TimetableAdapter @Inject constructor() :
             TimetableItemType.SMALL -> SmallViewHolder(
                 ItemTimetableSmallBinding.inflate(inflater, parent, false)
             )
+
             TimetableItemType.NORMAL -> NormalViewHolder(
                 ItemTimetableBinding.inflate(inflater, parent, false)
+            )
+
+            TimetableItemType.EMPTY -> EmptyViewHolder(
+                ItemTimetableEmptyBinding.inflate(inflater, parent, false)
             )
         }
     }
@@ -40,12 +47,12 @@ class TimetableAdapter @Inject constructor() :
         position: Int,
         payloads: MutableList<Any>
     ) {
-        if (payloads.isEmpty()) return super.onBindViewHolder(holder, position, payloads)
-
-        if (holder is NormalViewHolder) updateTimeLeft(
-            binding = holder.binding,
-            timeLeft = (getItem(position) as TimetableItem.Normal).timeLeft,
-        )
+        if (payloads.isNotEmpty() && holder is NormalViewHolder) {
+            updateTimeLeft(
+                binding = holder.binding,
+                timeLeft = (getItem(position) as TimetableItem.Normal).timeLeft,
+            )
+        } else super.onBindViewHolder(holder, position, payloads)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -54,9 +61,15 @@ class TimetableAdapter @Inject constructor() :
                 binding = holder.binding,
                 item = getItem(position) as TimetableItem.Small,
             )
+
             is NormalViewHolder -> bindNormalView(
                 binding = holder.binding,
                 item = getItem(position) as TimetableItem.Normal,
+            )
+
+            is EmptyViewHolder -> bindEmptyView(
+                binding = holder.binding,
+                item = getItem(position) as TimetableItem.Empty,
             )
         }
     }
@@ -100,6 +113,19 @@ class TimetableAdapter @Inject constructor() :
         }
     }
 
+    private fun bindEmptyView(binding: ItemTimetableEmptyBinding, item: TimetableItem.Empty) {
+        with(binding) {
+            timetableEmptyItemNumber.text = when (item.numFrom) {
+                item.numTo -> item.numFrom.toString()
+                else -> "${item.numFrom}-${item.numTo}"
+            }
+            timetableEmptyItemSubject.text = timetableEmptyItemSubject.context.getPlural(
+                R.plurals.timetable_no_lesson,
+                item.numTo - item.numFrom + 1
+            )
+        }
+    }
+
     private fun updateTimeLeft(binding: ItemTimetableBinding, timeLeft: TimeLeft?) {
         with(binding) {
             when {
@@ -137,6 +163,7 @@ class TimetableAdapter @Inject constructor() :
                     timetableItemTimeLeft.visibility = VISIBLE
                     timetableItemTimeLeft.text = root.context.getString(R.string.timetable_finished)
                 }
+
                 else -> {
                     timetableItemTimeUntil.visibility = GONE
                     timetableItemTimeLeft.visibility = GONE
@@ -191,7 +218,8 @@ class TimetableAdapter @Inject constructor() :
                 )
             } else {
                 timetableItemDescription.visibility = GONE
-                timetableItemRoom.isVisible = lesson.room.isNotBlank() || lesson.roomOld.isNotBlank()
+                timetableItemRoom.isVisible =
+                    lesson.room.isNotBlank() || lesson.roomOld.isNotBlank()
                 timetableItemGroup.isVisible = item.showGroupsInPlan && lesson.group.isNotBlank()
                 timetableItemTeacher.visibility = VISIBLE
             }
@@ -274,6 +302,9 @@ class TimetableAdapter @Inject constructor() :
     private class SmallViewHolder(val binding: ItemTimetableSmallBinding) :
         RecyclerView.ViewHolder(binding.root)
 
+    private class EmptyViewHolder(val binding: ItemTimetableEmptyBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
     companion object {
         private val differ = object : DiffUtil.ItemCallback<TimetableItem>() {
             override fun areItemsTheSame(oldItem: TimetableItem, newItem: TimetableItem): Boolean =
@@ -281,9 +312,11 @@ class TimetableAdapter @Inject constructor() :
                     oldItem is TimetableItem.Small && newItem is TimetableItem.Small -> {
                         oldItem.lesson.start == newItem.lesson.start
                     }
+
                     oldItem is TimetableItem.Normal && newItem is TimetableItem.Normal -> {
                         oldItem.lesson.start == newItem.lesson.start
                     }
+
                     else -> oldItem == newItem
                 }
 

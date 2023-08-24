@@ -8,6 +8,40 @@ import kotlin.test.assertEquals
 
 class SemesterExtensionKtTest {
 
+    @Test
+    fun `check is first semester is current`() {
+        val first = getSemesterEntity(
+            semesterName = 1,
+            start = LocalDate.of(2023, 9, 1),
+            end = LocalDate.of(2024, 1, 31),
+        )
+
+        // first boundary - school-year start
+        assertEquals(false, first.isCurrent(LocalDate.of(2023, 8, 28)))
+        assertEquals(true, first.isCurrent(LocalDate.of(2023, 8, 29)))
+
+        // second boundary
+        assertEquals(true, first.isCurrent(LocalDate.of(2024, 1, 31)))
+        assertEquals(false, first.isCurrent(LocalDate.of(2024, 2, 1)))
+    }
+
+    @Test
+    fun `check is second semester is current`() {
+        val second = getSemesterEntity(
+            semesterName = 2,
+            start = LocalDate.of(2024, 2, 1),
+            end = LocalDate.of(2024, 9, 1),
+        )
+
+        // first boundary
+        assertEquals(false, second.isCurrent(LocalDate.of(2024, 1, 31)))
+        assertEquals(true, second.isCurrent(LocalDate.of(2024, 2, 1)))
+
+        // second boundary - school-year end
+        assertEquals(true, second.isCurrent(LocalDate.of(2024, 8, 29)))
+        assertEquals(false, second.isCurrent(LocalDate.of(2024, 8, 30)))
+    }
+
     @Test(expected = IllegalArgumentException::class)
     fun `get current semester when current is doubled`() {
         val semesters = listOf(

@@ -51,6 +51,11 @@
         <item>Durchschnittswert der Durchschnittswerte beider Semester</item>
         <item>Durchschnitt der Noten aus dem ganzen Jahr</item>
     </string-array>
+    <string-array name="timetable_show_gaps_entries">
+        <item>Don\'t show</item>
+        <item>Only between lessons</item>
+        <item>Before and between lessons</item>
+    </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Glückszahl</item>
         <item>Ungelesene Nachrichten</item>
