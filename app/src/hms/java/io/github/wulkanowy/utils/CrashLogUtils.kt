@@ -2,8 +2,8 @@ package io.github.wulkanowy.utils
 
 import android.util.Log
 import com.huawei.agconnect.crash.AGConnectCrash
-import fr.bipi.tressence.base.FormatterPriorityTree
-import fr.bipi.tressence.common.StackTraceRecorder
+import fr.bipi.treessence.base.FormatterPriorityTree
+import fr.bipi.treessence.common.StackTraceRecorder
 
 class CrashLogTree : FormatterPriorityTree(Log.VERBOSE) {
 
