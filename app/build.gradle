@@ -69,6 +69,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             buildConfigField "String", "MESSAGES_BASE_URL", "\"https://messages.wulkanowy.net.pl\""
+            buildConfigField "String", "SCHOOLS_BASE_URL", '"https://schools.wulkanowy.net.pl"'
         }
         debug {
             minifyEnabled false
@@ -78,6 +79,7 @@ android {
             versionNameSuffix "-dev"
             ext.enableCrashlytics = project.hasProperty("enableFirebase")
             buildConfigField "String", "MESSAGES_BASE_URL", "\"https://messages.wulkanowy.net.pl\""
+            buildConfigField "String", "SCHOOLS_BASE_URL", '"https://schools.wulkanowy.net.pl"'
         }
     }
 
@@ -255,6 +257,7 @@ dependencies {
     playImplementation 'com.google.android.play:core:1.10.3'
     playImplementation 'com.google.android.play:core-ktx:1.8.1'
     playImplementation 'com.google.android.gms:play-services-ads:22.4.0'
+    playImplementation "com.google.android.play:integrity:1.2.0"
 
     hmsImplementation 'com.huawei.hms:hianalytics:6.12.0.300'
     hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.9.1.301'

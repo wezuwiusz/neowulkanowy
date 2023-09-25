@@ -9,6 +9,7 @@ import io.github.wulkanowy.data.pojos.RegisterStudent
 import io.github.wulkanowy.data.pojos.RegisterSymbol
 import io.github.wulkanowy.data.pojos.RegisterUnit
 import io.github.wulkanowy.data.pojos.RegisterUser
+import io.github.wulkanowy.data.repositories.SchoolsRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.sdk.scrapper.login.AccountPermissionException
@@ -26,6 +27,7 @@ import javax.inject.Inject
 
 class LoginStudentSelectPresenter @Inject constructor(
     studentRepository: StudentRepository,
+    private val schoolsRepository: SchoolsRepository,
     private val loginErrorHandler: LoginErrorHandler,
     private val syncManager: SyncManager,
     private val analytics: AnalyticsHelper,
@@ -236,17 +238,20 @@ class LoginStudentSelectPresenter @Inject constructor(
     }
 
     private fun registerStudents(students: List<LoginStudentSelectItem>) {
-        val studentsWithSemesters = students
-            .filterIsInstance<LoginStudentSelectItem.Student>().map { item ->
-                item.student.mapToStudentWithSemesters(
-                    user = registerUser,
-                    symbol = item.symbol,
-                    scrapperDomainSuffix = loginData.domainSuffix,
-                    unit = item.unit,
-                    colors = appInfo.defaultColorsForAvatar,
-                )
-            }
-        resourceFlow { studentRepository.saveStudents(studentsWithSemesters) }
+        val filteredStudents = students.filterIsInstance<LoginStudentSelectItem.Student>()
+        val studentsWithSemesters = filteredStudents.map { item ->
+            item.student.mapToStudentWithSemesters(
+                user = registerUser,
+                symbol = item.symbol,
+                scrapperDomainSuffix = loginData.domainSuffix,
+                unit = item.unit,
+                colors = appInfo.defaultColorsForAvatar,
+            )
+        }
+        resourceFlow {
+            studentRepository.saveStudents(studentsWithSemesters)
+            schoolsRepository.logSchoolLogin(loginData, studentsWithSemesters)
+        }
             .logResourceStatus("registration")
             .onEach {
                 when (it) {
@@ -254,11 +259,13 @@ class LoginStudentSelectPresenter @Inject constructor(
                         showProgress(true)
                         showContent(false)
                     }
+
                     is Resource.Success -> {
                         syncManager.startOneTimeSyncWorker(quiet = true)
                         view?.navigateToNext()
                         logRegisterEvent(studentsWithSemesters)
                     }
+
                     is Resource.Error -> {
                         view?.apply {
                             showProgress(false)

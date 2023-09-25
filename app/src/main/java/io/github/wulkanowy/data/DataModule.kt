@@ -14,6 +14,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.wulkanowy.data.api.AdminMessageService
+import io.github.wulkanowy.data.api.SchoolsService
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.PreferencesRepository
@@ -82,19 +83,29 @@ internal class DataModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(
+    fun provideAdminMessageService(
         okHttpClient: OkHttpClient,
         json: Json,
         appInfo: AppInfo
-    ): Retrofit = Retrofit.Builder()
+    ): AdminMessageService = Retrofit.Builder()
         .baseUrl(appInfo.messagesBaseUrl)
         .client(okHttpClient)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
+        .create()
 
     @Singleton
     @Provides
-    fun provideAdminMessageService(retrofit: Retrofit): AdminMessageService = retrofit.create()
+    fun provideSchoolsService(
+        okHttpClient: OkHttpClient,
+        json: Json,
+        appInfo: AppInfo,
+    ): SchoolsService = Retrofit.Builder()
+        .baseUrl(appInfo.schoolsBaseUrl)
+        .client(okHttpClient)
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .build()
+        .create()
 
     @Singleton
     @Provides
