@@ -52,9 +52,9 @@
         <item>Priemer známok z celého roka</item>
     </string-array>
     <string-array name="timetable_show_gaps_entries">
-        <item>Don\'t show</item>
-        <item>Only between lessons</item>
-        <item>Before and between lessons</item>
+        <item>Nezobrazovať</item>
+        <item>Iba medzi lekciami</item>
+        <item>Pred a medzi lekciami</item>
     </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Šťastné číslo</item>

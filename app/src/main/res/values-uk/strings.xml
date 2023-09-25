@@ -55,7 +55,7 @@
     <string name="login_invalid_login">Використовуйте призначений логін замість адреси e-mail</string>
     <string name="login_invalid_custom_email">Використовуйте призначений логін або адресу e-mail в @%1$s</string>
     <string name="login_invalid_symbol">Неправильний symbol</string>
-    <string name="login_incorrect_symbol">Студента не знайдено. Перевірте symbol та обранний тип щоденника UONET+</string>
+    <string name="login_incorrect_symbol">Студента не знайдено. Перевірте symbol та обраний тип щоденника UONET+</string>
     <string name="login_duplicate_student">Цього учня вже авторизовано</string>
     <string name="login_symbol_helper">Symbol можно знайти на сторінці щоденника у&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nПереконайтеся, що ви вказали відповідний щоденник у полі <b>Тип щоденника UONET+</b> на першому екрані логування</string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
