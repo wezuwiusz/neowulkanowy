@@ -17,6 +17,7 @@ import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.ifNullOrBlank
@@ -133,7 +134,7 @@ class LoginFormPresenter @Inject constructor(
         }
     }
 
-    fun onSignInClick() {
+    private fun getLoginData(): LoginData {
         val email = view?.formUsernameValue.orEmpty().trim()
         val password = view?.formPassValue.orEmpty().trim()
         val host = view?.formHostValue.orEmpty().trim()
@@ -142,15 +143,27 @@ class LoginFormPresenter @Inject constructor(
         }.orEmpty()
         val symbol = view?.formHostSymbol.orEmpty().trim()
 
-        if (!validateCredentials(email, password, host)) return
+        return LoginData(
+            login = email,
+            password = password,
+            baseUrl = host,
+            domainSuffix = domainSuffix,
+            symbol = symbol
+        )
+    }
+
+    fun onSignInClick() {
+        val loginData = getLoginData()
+
+        if (!validateCredentials(loginData.login, loginData.password, loginData.baseUrl)) return
 
         resourceFlow {
             studentRepository.getUserSubjectsFromScrapper(
-                email = email,
-                password = password,
-                scrapperBaseUrl = host,
-                domainSuffix = domainSuffix,
-                symbol = symbol
+                email = loginData.login,
+                password = loginData.password,
+                scrapperBaseUrl = loginData.baseUrl,
+                domainSuffix = loginData.domainSuffix,
+                symbol = loginData.symbol.orEmpty(),
             )
         }
             .logResourceStatus("login")
@@ -162,7 +175,6 @@ class LoginFormPresenter @Inject constructor(
                 }
             }
             .onResourceSuccess {
-                val loginData = LoginData(email, password, host, domainSuffix, symbol)
                 when (it.symbols.size) {
                     0 -> view?.navigateToSymbol(loginData)
                     else -> view?.navigateToStudentSelect(loginData, it)
@@ -170,7 +182,7 @@ class LoginFormPresenter @Inject constructor(
                 analytics.logEvent(
                     "registration_form",
                     "success" to true,
-                    "scrapperBaseUrl" to host,
+                    "scrapperBaseUrl" to loginData.baseUrl,
                     "error" to "No error"
                 )
             }
@@ -187,7 +199,7 @@ class LoginFormPresenter @Inject constructor(
                 analytics.logEvent(
                     "registration_form",
                     "success" to false,
-                    "scrapperBaseUrl" to host,
+                    "scrapperBaseUrl" to loginData.baseUrl,
                     "error" to it.message.ifNullOrBlank { "No message" }
                 )
             }
@@ -199,7 +211,14 @@ class LoginFormPresenter @Inject constructor(
     }
 
     fun onEmailClick() {
-        view?.openEmail(lastError?.message.ifNullOrBlank { "none" })
+        view?.openEmail(
+            LoginSupportInfo(
+                loginData = getLoginData(),
+                lastErrorMessage = lastError?.message,
+                registerUser = null,
+                enteredSymbol = null,
+            )
+        )
     }
 
     fun onRecoverClick() {

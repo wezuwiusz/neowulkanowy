@@ -76,7 +76,7 @@
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Send email</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
-    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nIdentyfikator instalacji: %5$s\nOstatni błąd: %6$s\n\nNazwa szkoły i miejscowość: </string>
+    <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nIdentyfikator instalacji: %5$s\nOstatni błąd: %6$s\n\nNazwa szkoły i miejscowość: %7$s\nDodatkowe informacje: %8$s</string>
     <string name="login_recover_warning">Make sure you select the correct UONET+ register variation!</string>
     <string name="login_recover_button">Reset password</string>
     <string name="login_recover_title">Recover your account</string>
@@ -86,6 +86,12 @@
     <string name="login_other_search_locations">Other search locations</string>
     <string name="login_no_active_student">No active students found</string>
     <string name="login_symbol_enter">Enter a different symbol</string>
+    <string name="login_support_title">Get help</string>
+    <string name="login_support_school_hint">Full school name (required)</string>
+    <string name="login_support_school_placeholder">Np. ZSTiO Jarosław lub SP nr 99 w Łodzi</string>
+    <string name="login_support_additional_hint">Additional information in Polish (optional)</string>
+    <string name="login_support_additional_placeholder">Np. \"Ostatnio zmieniłem szkołę i…\" albo \"Jestem rodzicem i nie widzę drugiego dziecka…\"</string>
+    <string name="login_support_submit">Submit</string>
 
 
     <!--Notifications-->

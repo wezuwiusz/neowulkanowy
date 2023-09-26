@@ -18,7 +18,13 @@ import io.github.wulkanowy.databinding.FragmentLoginSymbolBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginData
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportDialog
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
+import io.github.wulkanowy.utils.AppInfo
+import io.github.wulkanowy.utils.hideSoftInput
+import io.github.wulkanowy.utils.openInternetBrowser
+import io.github.wulkanowy.utils.serializable
+import io.github.wulkanowy.utils.showSoftInput
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -170,20 +176,7 @@ class LoginSymbolFragment :
         )
     }
 
-    override fun openEmail(host: String, lastError: String) {
-        context?.openEmailClient(
-            chooserTitle = requireContext().getString(R.string.login_email_intent_title),
-            email = "wulkanowyinc@gmail.com",
-            subject = requireContext().getString(R.string.login_email_subject),
-            body = requireContext().getString(
-                R.string.login_email_text,
-                "${appInfo.systemManufacturer} ${appInfo.systemModel}",
-                appInfo.systemVersion.toString(),
-                "${appInfo.versionName}-${appInfo.buildFlavor}",
-                "$host/${binding.loginSymbolName.text}",
-                preferencesRepository.installationId,
-                lastError
-            )
-        )
+    override fun openSupportDialog(supportInfo: LoginSupportInfo) {
+        LoginSupportDialog.newInstance(supportInfo).show(childFragmentManager, "support_dialog")
     }
 }

@@ -12,15 +12,14 @@ import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.SchoolsRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
-import io.github.wulkanowy.sdk.scrapper.login.AccountPermissionException
 import io.github.wulkanowy.sdk.scrapper.login.InvalidSymbolException
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.ifNullOrBlank
 import io.github.wulkanowy.utils.isCurrent
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -311,28 +310,14 @@ class LoginStudentSelectPresenter @Inject constructor(
     }
 
     private fun onEmailClick() {
-        view?.openEmail(lastError?.message.ifNullOrBlank {
-            loginData.baseUrl + "/" + loginData.symbol + "\n" + registerUser.symbols.filterNot {
-                (it.error is AccountPermissionException || it.error is InvalidSymbolException) && it.symbol != loginData.symbol
-            }.joinToString(";\n") { symbol ->
-                buildString {
-                    append(" -")
-                    append(symbol.symbol)
-                    append("(${symbol.error?.message?.let { it.take(46) + "..." } ?: symbol.schools.size})")
-                    if (symbol.schools.isNotEmpty()) {
-                        append(": ")
-                    }
-                    append(symbol.schools.joinToString(", ") { unit ->
-                        buildString {
-                            append(unit.schoolShortName)
-                            append("(${unit.error?.message?.let { it.take(46) + "..." } ?: unit.students.size})")
-                        }
-                    })
-                }
-            } + "\nPozostałe: " + registerUser.symbols.filter {
-                it.error is AccountPermissionException || it.error is InvalidSymbolException
-            }.joinToString(", ") { it.symbol }
-        })
+        view?.openEmail(
+            LoginSupportInfo(
+                loginData = loginData,
+                registerUser = registerUser,
+                lastErrorMessage = lastError?.message,
+                enteredSymbol = loginData.symbol,
+            )
+        )
     }
 
     private fun logRegisterEvent(

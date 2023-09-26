@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.login.studentselect
 
 import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.login.LoginData
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
 
 interface LoginStudentSelectView : BaseView {
 
@@ -23,5 +24,5 @@ interface LoginStudentSelectView : BaseView {
 
     fun openDiscordInvite()
 
-    fun openEmail(lastError: String)
+    fun openEmail(supportInfo: LoginSupportInfo)
 }

@@ -4,6 +4,7 @@ import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.login.LoginData
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
 
 interface LoginFormView : BaseView {
 
@@ -79,7 +80,7 @@ interface LoginFormView : BaseView {
 
     fun openFaqPage()
 
-    fun openEmail(lastError: String)
+    fun openEmail(supportInfo: LoginSupportInfo)
 
     fun openAdvancedLogin()
 
