@@ -184,7 +184,9 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun clearPassError() {
         binding.loginFormPassLayout.error = null
-        binding.loginFormPassLayout.setEndIconTintList(null)
+        binding.loginFormPassLayout.setEndIconTintList(
+            requireContext().getAttrColorStateList(R.attr.colorOnSurface)
+        )
         binding.loginFormErrorBox.isVisible = false
     }
 
