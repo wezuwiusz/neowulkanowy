@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.login.symbol
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.login.LoginData
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
 
 interface LoginSymbolView : BaseView {
 
@@ -17,6 +18,8 @@ interface LoginSymbolView : BaseView {
     fun setErrorSymbolIncorrect()
 
     fun setErrorSymbolInvalid()
+
+    fun setErrorSymbolDefinitelyInvalid()
 
     fun setErrorSymbolRequire()
 
@@ -40,5 +43,5 @@ interface LoginSymbolView : BaseView {
 
     fun openFaqPage()
 
-    fun openEmail(host: String, lastError: String)
+    fun openSupportDialog(supportInfo: LoginSupportInfo)
 }

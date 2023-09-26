@@ -52,9 +52,9 @@
         <item>Середня оцінка з цілого року</item>
     </string-array>
     <string-array name="timetable_show_gaps_entries">
-        <item>Don\'t show</item>
-        <item>Only between lessons</item>
-        <item>Before and between lessons</item>
+        <item>Не показувати</item>
+        <item>Тільки між уроками</item>
+        <item>Перед і між уроками</item>
     </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Щасливий номер</item>

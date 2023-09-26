@@ -6,7 +6,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.yariksoffice.lingver.Lingver
 import dagger.hilt.android.HiltAndroidApp
-import fr.bipi.tressence.file.FileLoggerTree
+import fr.bipi.treessence.file.FileLoggerTree
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.ui.base.ThemeManager
 import io.github.wulkanowy.utils.*

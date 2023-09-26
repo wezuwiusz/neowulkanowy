@@ -58,7 +58,7 @@ class GradeAverageProvider @Inject constructor(
             when (params.gradeAverageMode) {
                 ONE_SEMESTER -> getGradeSubjects(
                     student = student,
-                    semester = semesters.single { it.semesterId == semesterId },
+                    semester = semesters.first { it.semesterId == semesterId },
                     forceRefresh = forceRefresh,
                     params = params,
                 )

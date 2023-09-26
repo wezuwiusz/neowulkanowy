@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import fr.bipi.tressence.common.filters.Filter
+import fr.bipi.treessence.common.filters.Filter
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
 import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
 import timber.log.Timber

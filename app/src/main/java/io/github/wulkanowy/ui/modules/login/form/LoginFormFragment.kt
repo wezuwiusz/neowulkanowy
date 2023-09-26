@@ -17,6 +17,8 @@ import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.dashboard.viewholders.AdminMessageViewHolder
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginData
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportDialog
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
 import io.github.wulkanowy.utils.*
 import javax.inject.Inject
 
@@ -184,7 +186,9 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
 
     override fun clearPassError() {
         binding.loginFormPassLayout.error = null
-        binding.loginFormPassLayout.setEndIconTintList(null)
+        binding.loginFormPassLayout.setEndIconTintList(
+            requireContext().getAttrColorStateList(R.attr.colorOnSurface)
+        )
         binding.loginFormErrorBox.isVisible = false
     }
 
@@ -236,8 +240,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
     }
 
     override fun showContact(show: Boolean) {
-        binding.loginFormContact.visibility = if (show) VISIBLE else GONE
-        binding.loginFormRecoverLink.visibility = if (show) GONE else VISIBLE
+        binding.loginFormContact.isVisible = show
     }
 
     override fun openPrivacyPolicyPage() {
@@ -281,20 +284,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         presenter.updateCustomDomainSuffixVisibility()
     }
 
-    override fun openEmail(lastError: String) {
-        context?.openEmailClient(
-            chooserTitle = requireContext().getString(R.string.login_email_intent_title),
-            email = "wulkanowyinc@gmail.com",
-            subject = requireContext().getString(R.string.login_email_subject),
-            body = requireContext().getString(
-                R.string.login_email_text,
-                "${appInfo.systemManufacturer} ${appInfo.systemModel}",
-                appInfo.systemVersion.toString(),
-                "${appInfo.versionName}-${appInfo.buildFlavor}",
-                "$formHostValue/$formHostSymbol",
-                preferencesRepository.installationId,
-                lastError
-            )
-        )
+    override fun openEmail(supportInfo: LoginSupportInfo) {
+        LoginSupportDialog.newInstance(supportInfo).show(childFragmentManager, "support_dialog")
     }
 }

@@ -44,6 +44,7 @@
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
     <string name="login_symbol_hint">Symbol</string>
+    <string name="login_symbol_placeholder">E.g. \"lodz\" or \"powiatjaroslawski\"</string>
     <string name="login_sign_in">Увійти</string>
     <string name="login_invalid_password">Занадто короткий пароль</string>
     <string name="login_incorrect_password_default">Вказані невірні дані</string>
@@ -54,8 +55,9 @@
     <string name="login_invalid_email">Недійсна адреса e-mail</string>
     <string name="login_invalid_login">Використовуйте призначений логін замість адреси e-mail</string>
     <string name="login_invalid_custom_email">Використовуйте призначений логін або адресу e-mail в @%1$s</string>
-    <string name="login_invalid_symbol">Неправильний symbol</string>
-    <string name="login_incorrect_symbol">Студента не знайдено. Перевірте symbol та обранний тип щоденника UONET+</string>
+    <string name="login_invalid_symbol">Invalid symbol. If you cannot find it, please contact the school</string>
+    <string name="login_invalid_symbol_definitely">Don\'t make this up! If you cannot find it, please contact the school</string>
+    <string name="login_incorrect_symbol">Студента не знайдено. Перевірте symbol та обраний тип щоденника UONET+</string>
     <string name="login_duplicate_student">Цього учня вже авторизовано</string>
     <string name="login_symbol_helper">Symbol можно знайти на сторінці щоденника у&#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nПереконайтеся, що ви вказали відповідний щоденник у полі <b>Тип щоденника UONET+</b> на першому екрані логування</string>
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
@@ -69,7 +71,7 @@
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">Надіслати електронний лист</string>
     <string name="login_recover_warning">Переконайтеся, що ви вибрали правильний тип щоденника UONET+!</string>
-    <string name="login_recover_button">Забули пароль?</string>
+    <string name="login_recover_button">Reset password</string>
     <string name="login_recover_title">Відновіть свій обліковий запис</string>
     <string name="login_recover">Відновити</string>
     <string name="login_signed_in">Учня вже авторизовано</string>
@@ -77,6 +79,12 @@
     <string name="login_other_search_locations">Інші розташування пошуку</string>
     <string name="login_no_active_student">Активних учнів не знайдено</string>
     <string name="login_symbol_enter">Введіть інший symbol</string>
+    <string name="login_support_title">Get help</string>
+    <string name="login_support_school_hint">Full school name (required)</string>
+    <string name="login_support_school_placeholder">Np. ZSTiO Jarosław lub SP nr 99 w Łodzi</string>
+    <string name="login_support_additional_hint">Additional information in Polish (optional)</string>
+    <string name="login_support_additional_placeholder">Np. \"Ostatnio zmieniłem szkołę i…\" albo \"Jestem rodzicem i nie widzę drugiego dziecka…\"</string>
+    <string name="login_support_submit">Submit</string>
     <!--Notifications-->
     <string name="notifications_header_title">Увімкнути сповіщення</string>
     <string name="notifications_header_description">Увімкнути сповіщення, щоб не пропустити лист від вчителя або нову оцінку</string>
@@ -186,10 +194,10 @@
     <string name="timetable_notify_change_teacher">Зміна вчителя з %1$s на %2$s</string>
     <string name="timetable_notify_change_subject">Зміна теми з %1$s на %2$s</string>
     <plurals name="timetable_no_lesson">
-        <item quantity="one">No lesson</item>
-        <item quantity="few">No lessons</item>
-        <item quantity="many">No lessons</item>
-        <item quantity="other">No lessons</item>
+        <item quantity="one">Немає уроку</item>
+        <item quantity="few">Немає уроків</item>
+        <item quantity="many">Немає уроків</item>
+        <item quantity="other">Немає уроків</item>
     </plurals>
     <plurals name="timetable_notify_new_items_title">
         <item quantity="one">Зміна у розкладі</item>
@@ -706,7 +714,7 @@
     <string name="pref_view_expand_grade">Розгортання оцінок</string>
     <string name="pref_view_timetable_show_timers">Позначити поточний урок</string>
     <string name="pref_view_timetable_show_groups">Показувати групи поруч з темами</string>
-    <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
+    <string name="pref_view_timetable_show_gaps">Показувати порожні плитки там, де немає уроків</string>
     <string name="pref_view_grade_statistics_list">Показувати діаграми в оцінках класу</string>
     <string name="pref_view_subjects_without_grades">Показати предмети без оцінок</string>
     <string name="pref_view_grade_color_scheme">Схема кольорів оцінок</string>

@@ -46,7 +46,7 @@ class LoginRecoverPresenter @Inject constructor(
 
     fun updateFields() {
         view?.run {
-            setUsernameHint(if ("standard" in recoverHostValue) emailHintString else loginPeselEmailHintString)
+            setUsernameHint(if ("email" in recoverHostValue) emailHintString else loginPeselEmailHintString)
         }
     }
 
@@ -92,7 +92,7 @@ class LoginRecoverPresenter @Inject constructor(
             isCorrect = false
         }
 
-        if ("standard" in host && "@" !in username) {
+        if ("email" in host && "@" !in username) {
             view?.setUsernameError(view?.invalidEmailString.orEmpty())
             isCorrect = false
         }

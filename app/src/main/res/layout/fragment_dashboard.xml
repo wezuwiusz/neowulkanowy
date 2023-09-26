@@ -26,7 +26,8 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingTop="6dp"
-            android:paddingBottom="6dp" />
+            android:paddingBottom="6dp"
+            tools:listitem="@layout/item_dashboard_grades" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout

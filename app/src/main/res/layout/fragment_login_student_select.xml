@@ -56,6 +56,8 @@
             android:layout_marginBottom="32dp"
             android:enabled="false"
             android:text="@string/login_sign_in"
+            app:icon="@drawable/ic_login"
+            app:iconGravity="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginStudentSelectRecycler" />

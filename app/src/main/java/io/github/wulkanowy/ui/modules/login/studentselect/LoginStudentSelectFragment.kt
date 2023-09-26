@@ -10,8 +10,11 @@ import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.auth.AuthDialog
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginData
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportDialog
+import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
@@ -106,21 +109,8 @@ class LoginStudentSelectFragment :
         context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
     }
 
-    override fun openEmail(lastError: String) {
-        context?.openEmailClient(
-            chooserTitle = requireContext().getString(R.string.login_email_intent_title),
-            email = "wulkanowyinc@gmail.com",
-            subject = requireContext().getString(R.string.login_email_subject),
-            body = requireContext().getString(
-                R.string.login_email_text,
-                "${appInfo.systemManufacturer} ${appInfo.systemModel}",
-                appInfo.systemVersion.toString(),
-                "${appInfo.versionName}-${appInfo.buildFlavor}",
-                "Select users to log in",
-                preferencesRepository.installationId,
-                lastError
-            )
-        )
+    override fun openEmail(supportInfo: LoginSupportInfo) {
+        LoginSupportDialog.newInstance(supportInfo).show(childFragmentManager, "support_dialog")
     }
 
     override fun onDestroyView() {

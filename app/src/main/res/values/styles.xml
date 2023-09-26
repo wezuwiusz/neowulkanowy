@@ -82,7 +82,6 @@
     </style>
 
     <style name="FullScreenDialogStyle" parent="WulkanowyTheme">
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsFloating">false</item>
     </style>
 </resources>
