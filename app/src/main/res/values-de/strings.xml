@@ -44,6 +44,7 @@
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
     <string name="login_symbol_hint">Symbol</string>
+    <string name="login_symbol_placeholder">E.g. \"lodz\" or \"powiatjaroslawski\"</string>
     <string name="login_sign_in">Anmelden</string>
     <string name="login_invalid_password">Passwort ist zu kurz</string>
     <string name="login_incorrect_password_default">Anmeldedaten sind falsch</string>
@@ -54,7 +55,8 @@
     <string name="login_invalid_email">Ungültige email</string>
     <string name="login_invalid_login">Den zugewiesenen Login anstelle von email verwenden</string>
     <string name="login_invalid_custom_email">Benutze den zugewiesenen Login oder E-Mail in @%1$s</string>
-    <string name="login_invalid_symbol">Ungültige symbol</string>
+    <string name="login_invalid_symbol">Invalid symbol. If you cannot find it, please contact the school</string>
+    <string name="login_invalid_symbol_definitely">Don\'t make this up! If you cannot find it, please contact the school</string>
     <string name="login_incorrect_symbol">Schüler nicht gefunden. Überprüfen Sie das Symbol und die gewählte Variation des UONET+ Registers</string>
     <string name="login_duplicate_student">Ausgewählter Student ist bereits angemeldet.</string>
     <string name="login_symbol_helper">Das Symbol kann auf der Registerseite in&#160;<b>Student </b>→&#160;<b>Tost Möbeln</b> →&#160;<b>Registrieren Sie Ihr Mobilgerät</b>gefunden werden.\n\nStellen Sie sicher, dass Sie die entsprechende Registervariante im Feld <b>UONET+ Registervariante</b> auf dem vorherigen Bildschirm festgelegt haben</string>
@@ -69,7 +71,7 @@
     <string name="login_contact_discord">Discord</string>
     <string name="login_email_intent_title">email senden</string>
     <string name="login_recover_warning">Stellen Sie sicher, dass Sie die richtige UONET+ Registervariation wählen!</string>
-    <string name="login_recover_button">Ich habe mein Passwort vergessen.</string>
+    <string name="login_recover_button">Reset password</string>
     <string name="login_recover_title">Ihr Konto wiederherstellen</string>
     <string name="login_recover">Wiederherstellen</string>
     <string name="login_signed_in">Student ist bereits angemeldet</string>
@@ -77,6 +79,12 @@
     <string name="login_other_search_locations">Andere Suchorte</string>
     <string name="login_no_active_student">Keine aktiven Schüler gefunden</string>
     <string name="login_symbol_enter">Geben Sie ein anderes Symbol ein</string>
+    <string name="login_support_title">Get help</string>
+    <string name="login_support_school_hint">Full school name (required)</string>
+    <string name="login_support_school_placeholder">Np. ZSTiO Jarosław lub SP nr 99 w Łodzi</string>
+    <string name="login_support_additional_hint">Additional information in Polish (optional)</string>
+    <string name="login_support_additional_placeholder">Np. \"Ostatnio zmieniłem szkołę i…\" albo \"Jestem rodzicem i nie widzę drugiego dziecka…\"</string>
+    <string name="login_support_submit">Submit</string>
     <!--Notifications-->
     <string name="notifications_header_title">Benachrichtigungen aktivieren</string>
     <string name="notifications_header_description">Aktivieren Sie Benachrichtigungen, damit Sie keine Nachricht vom Lehrer oder eine neue Klasse verpassen</string>
