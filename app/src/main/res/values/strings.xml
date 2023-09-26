@@ -76,7 +76,7 @@
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
     <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nIdentyfikator instalacji: %5$s\nOstatni błąd: %6$s\n\nNazwa szkoły i miejscowość: </string>
     <string name="login_recover_warning">Make sure you select the correct UONET+ register variation!</string>
-    <string name="login_recover_button">I forgot my password</string>
+    <string name="login_recover_button">Reset password</string>
     <string name="login_recover_title">Recover your account</string>
     <string name="login_recover">Recover</string>
     <string name="login_signed_in">Student is already signed in</string>
