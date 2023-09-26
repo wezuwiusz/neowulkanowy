@@ -21,6 +21,7 @@ import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.ifNullOrBlank
+import io.github.wulkanowy.utils.isCurrent
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -73,7 +74,14 @@ class LoginStudentSelectPresenter @Inject constructor(
             students = it.dataOrNull.orEmpty()
             when (it) {
                 is Resource.Loading -> Timber.d("Login student select students load started")
-                is Resource.Success -> refreshItems()
+                is Resource.Success -> {
+                    getStudentsWithCurrentlyActiveSemesters()
+                    selectedStudents.clear()
+                    selectedStudents.addAll(getStudentsWithCurrentlyActiveSemesters())
+                    view?.enableSignIn(selectedStudents.isNotEmpty())
+                    refreshItems()
+                }
+
                 is Resource.Error -> {
                     errorHandler.dispatch(it.error)
                     lastError = it.error
@@ -81,6 +89,21 @@ class LoginStudentSelectPresenter @Inject constructor(
                 }
             }
         }.launch()
+    }
+
+    private fun getStudentsWithCurrentlyActiveSemesters(): List<LoginStudentSelectItem.Student> {
+        val students = registerUser.symbols.flatMap { symbol ->
+            symbol.schools.flatMap { unit ->
+                unit.students.map {
+                    createStudentItem(it, symbol, unit, students)
+                }
+            }
+        }
+        return students.filter { student ->
+            student.student.semesters.any { semester ->
+                semester.isCurrent()
+            }
+        }
     }
 
     private fun createItems(): List<LoginStudentSelectItem> = buildList {
