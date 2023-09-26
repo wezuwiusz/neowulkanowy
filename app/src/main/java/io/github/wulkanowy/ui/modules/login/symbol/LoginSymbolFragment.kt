@@ -100,6 +100,13 @@ class LoginSymbolFragment :
         }
     }
 
+    override fun setErrorSymbolDefinitelyInvalid() {
+        with(binding.loginSymbolNameLayout) {
+            requestFocus()
+            error = getString(R.string.login_invalid_symbol_definitely)
+        }
+    }
+
     override fun setErrorSymbolRequire() {
         setErrorSymbol(getString(R.string.error_field_required))
     }

@@ -53,6 +53,10 @@ class LoginSymbolPresenter @Inject constructor(
             view?.setErrorSymbolRequire()
             return
         }
+        if (isFormDefinitelyInvalid()) {
+            view?.setErrorSymbolDefinitelyInvalid()
+            return
+        }
 
         loginData = loginData.copy(
             symbol = view?.symbolValue?.getNormalizedSymbol(),
@@ -128,6 +132,13 @@ class LoginSymbolPresenter @Inject constructor(
                 showContent(true)
             }
         }.launch("login")
+    }
+
+    private fun isFormDefinitelyInvalid(): Boolean {
+        val definitelyInvalidSymbols = listOf("vulcan", "uonet", "wulkanowy", "standardowa")
+        val normalizedSymbol = view?.symbolValue.orEmpty().getNormalizedSymbol()
+
+        return normalizedSymbol in definitelyInvalidSymbols
     }
 
     fun onFaqClick() {

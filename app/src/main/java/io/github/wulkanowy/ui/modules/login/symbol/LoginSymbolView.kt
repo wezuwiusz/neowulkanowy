@@ -18,6 +18,8 @@ interface LoginSymbolView : BaseView {
 
     fun setErrorSymbolInvalid()
 
+    fun setErrorSymbolDefinitelyInvalid()
+
     fun setErrorSymbolRequire()
 
     fun setErrorSymbol(message: String)
