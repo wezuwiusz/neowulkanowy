@@ -1,8 +1,5 @@
-Wersja 2.1.0
+Wersja 2.2.0
 
-— dodaliśmy tryb incognito w wiadomościach
-— dodaliśmy wyświetlanie pustych lekcji (okienek) w planie lekcji
-— poprawiliśmy widżet planu lekcji (będzie teraz trochę bardziej kompaktowy)
-— zmieniliśmy datę rozpoczęcia roku szkolnego na 3 dni przed 1 września (sorry)
+Dokonaliśmy drobnych usprawnień w obszarze logowania, które powinny pomóc Wam i nam
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
