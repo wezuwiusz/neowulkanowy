@@ -80,8 +80,9 @@
     <string name="login_no_active_student">No active students found</string>
     <string name="login_symbol_enter">Enter a different symbol</string>
     <string name="login_support_title">Get help</string>
-    <string name="login_support_school_hint">Full school name (required)</string>
+    <string name="login_support_school_hint">Full school name with the town (required)</string>
     <string name="login_support_school_placeholder">Np. ZSTiO Jarosław lub SP nr 99 w Łodzi</string>
+    <string name="login_support_school_invalid">Enter correct name of the school</string>
     <string name="login_support_additional_hint">Additional information in Polish (optional)</string>
     <string name="login_support_additional_placeholder">Np. \"Ostatnio zmieniłem szkołę i…\" albo \"Jestem rodzicem i nie widzę drugiego dziecka…\"</string>
     <string name="login_support_submit">Submit</string>

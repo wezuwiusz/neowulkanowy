@@ -80,8 +80,9 @@
     <string name="login_no_active_student">Nie znaleziono aktywnych uczniów</string>
     <string name="login_symbol_enter">Wprowadź inny symbol</string>
     <string name="login_support_title">Uzyskaj pomoc</string>
-    <string name="login_support_school_hint">Pełna nazwa szkoły (wymagana)</string>
+    <string name="login_support_school_hint">Pełna nazwa szkoły z miastem (wymagana)</string>
     <string name="login_support_school_placeholder">Np. ZSTiO Jarosław lub SP nr 99 w Łodzi</string>
+    <string name="login_support_school_invalid">Wprowadź poprawną nazwę szkoły</string>
     <string name="login_support_additional_hint">Dodatkowe informacje (po polsku) (nieobowiązkowo)</string>
     <string name="login_support_additional_placeholder">Np. \"Ostatnio zmieniłem szkołę i…\" albo \"Jestem rodzicem i nie widzę drugiego dziecka…\"</string>
     <string name="login_support_submit">Wyślij</string>

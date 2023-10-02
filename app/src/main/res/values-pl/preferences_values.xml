@@ -52,7 +52,7 @@
         <item>Średnia wszystkich ocen z całego roku</item>
     </string-array>
     <string-array name="timetable_show_gaps_entries">
-        <item>Nie pokauj</item>
+        <item>Nie pokazuj</item>
         <item>Tylko między lekcjami</item>
         <item>Przed i między lekcjami</item>
     </string-array>
