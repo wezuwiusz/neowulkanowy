@@ -1,5 +1,6 @@
-Wersja 2.2.0
+Wersja 2.2.1
 
-Dokonaliśmy drobnych usprawnień w obszarze logowania, które powinny pomóc Wam i nam
+– dokonaliśmy kilka poprawek na ekranie logowania
+– naprawiliśmy przypadek z błędnym wyświetlaniem starej klasy ucznia po zalogowaniu się na konto z nowej klasy
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

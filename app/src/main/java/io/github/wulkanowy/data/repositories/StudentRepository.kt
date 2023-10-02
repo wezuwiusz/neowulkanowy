@@ -62,20 +62,28 @@ class StudentRepository @Inject constructor(
         .getStudentsHybrid(email, password, scrapperBaseUrl, "", symbol)
         .mapToPojo(password)
 
-    suspend fun getSavedStudents(decryptPass: Boolean = true) =
-        studentDb.loadStudentsWithSemesters()
-            .map {
-                it.apply {
+    suspend fun getSavedStudents(decryptPass: Boolean = true): List<StudentWithSemesters> {
+        return studentDb.loadStudentsWithSemesters().map { (student, semesters) ->
+            StudentWithSemesters(
+                student = student.apply {
                     if (decryptPass && Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.HEBE) {
                         student.password = withContext(dispatchers.io) {
                             decrypt(student.password)
                         }
                     }
-                }
-            }
+                },
+                semesters = semesters,
+            )
+        }
+    }
 
-    suspend fun getSavedStudentById(id: Long, decryptPass: Boolean = true) =
-        studentDb.loadStudentWithSemestersById(id)?.apply {
+    suspend fun getSavedStudentById(id: Long, decryptPass: Boolean = true): StudentWithSemesters? =
+        studentDb.loadStudentWithSemestersById(id).let { res ->
+            StudentWithSemesters(
+                student = res.keys.firstOrNull() ?: return null,
+                semesters = res.values.first(),
+            )
+        }.apply {
             if (decryptPass && Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.HEBE) {
                 student.password = withContext(dispatchers.io) {
                     decrypt(student.password)
