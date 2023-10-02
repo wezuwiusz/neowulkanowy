@@ -98,11 +98,13 @@ class LoginStudentSelectPresenter @Inject constructor(
                 }
             }
         }
-        return students.filter { student ->
-            student.student.semesters.any { semester ->
-                semester.isCurrent()
+        return students
+            .filter { it.isEnabled }
+            .filter { student ->
+                student.student.semesters.any { semester ->
+                    semester.isCurrent()
+                }
             }
-        }
     }
 
     private fun createItems(): List<LoginStudentSelectItem> = buildList {
