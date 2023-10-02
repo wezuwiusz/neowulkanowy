@@ -27,8 +27,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 132
-        versionName "2.2.0"
+        versionCode 133
+        versionName "2.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -162,7 +162,7 @@ play {
     track = 'production'
     releaseStatus = ReleaseStatus.IN_PROGRESS
     userFraction = 0.01d
-    updatePriority = 1
+    updatePriority = 3
     enabled.set(false)
 }
 
@@ -192,7 +192,7 @@ ext {
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.2.0'
+    implementation 'io.github.wulkanowy:sdk:2.2.1'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
