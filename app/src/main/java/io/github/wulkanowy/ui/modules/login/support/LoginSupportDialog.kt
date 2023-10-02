@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.login.support
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,21 +65,36 @@ class LoginSupportDialog : BaseDialogFragment<DialogLoginSupportBinding>() {
                     error = null
                 }
             }
-            dialogLoginSupportSubmit.setOnClickListener {
-                if (dialogLoginSupportSchoolInput.text.isNullOrBlank()) {
-                    with(dialogLoginSupportSchoolLayout) {
-                        isErrorEnabled = true
-                        error = getString(R.string.error_field_required)
-                    }
-                } else {
-                    onSubmitClick()
-                    dismiss()
-                }
-            }
+            dialogLoginSupportSubmit.setOnClickListener { onSubmitClick() }
         }
     }
 
     private fun onSubmitClick() {
+        when {
+            binding.dialogLoginSupportSchoolInput.text.isNullOrBlank() -> {
+                with(binding.dialogLoginSupportSchoolLayout) {
+                    isErrorEnabled = true
+                    error = getString(R.string.error_field_required)
+                }
+            }
+
+            Patterns.EMAIL_ADDRESS.matcher(
+                binding.dialogLoginSupportSchoolInput.text.toString()
+            ).matches() -> {
+                with(binding.dialogLoginSupportSchoolLayout) {
+                    isErrorEnabled = true
+                    error = getString(R.string.login_support_school_invalid)
+                }
+            }
+
+            else -> {
+                openEmailClientWithFilledTemplate()
+                dismiss()
+            }
+        }
+    }
+
+    private fun openEmailClientWithFilledTemplate() {
         with(binding) {
             context?.openEmailClient(
                 chooserTitle = requireContext().getString(R.string.login_email_intent_title),
