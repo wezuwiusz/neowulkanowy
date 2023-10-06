@@ -114,7 +114,7 @@ class NotificationsFragment : PreferenceFragmentCompat(),
         setPreferencesFromResource(R.xml.scheme_preferences_notifications, rootKey)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         presenter.onSharedPreferenceChanged(key)
     }
 

@@ -1,16 +1,16 @@
 apply plugin: "jacoco"
 
 jacoco {
-    toolVersion "0.8.7"
+    toolVersion "0.8.10"
     reportsDirectory.set(file("$buildDir/reports"))
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     jacoco.includeNoLocationClasses = true
     jacoco.excludes = ['jdk.internal.*']
 }
 
-task jacocoTestReport(type: JacocoReport) {
+tasks.register('jacocoTestReport', JacocoReport) {
 
     group = "Reporting"
     description = "Generate Jacoco coverage reports"
@@ -33,19 +33,19 @@ task jacocoTestReport(type: JacocoReport) {
                     '**/*_Factory.*']
 
     classDirectories.setFrom(fileTree(
-            dir: "$buildDir/intermediates/classes/debug",
-            excludes: excludes
+        dir: "$buildDir/intermediates/classes/debug",
+        excludes: excludes
     ) + fileTree(
-            dir: "$buildDir/tmp/kotlin-classes/fdroidDebug",
-            excludes: excludes
+        dir: "$buildDir/tmp/kotlin-classes/fdroidDebug",
+        excludes: excludes
     ))
 
     sourceDirectories.setFrom(files([
-            "src/main/java",
-            "src/fdroid/java"
+        "src/main/java",
+        "src/fdroid/java"
     ]))
     executionData.setFrom(fileTree(
-            dir: project.projectDir,
-            includes: ["**/*.exec", "**/*.ec"]
+        dir: project.projectDir,
+        includes: ["**/*.exec", "**/*.ec"]
     ))
 }

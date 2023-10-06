@@ -52,7 +52,7 @@ class SyncFragment : PreferenceFragmentCompat(),
         setPreferencesFromResource(R.xml.scheme_preferences_sync, rootKey)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         presenter.onSharedPreferenceChanged(key)
     }
 

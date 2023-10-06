@@ -35,7 +35,7 @@ class AdvancedFragment : PreferenceFragmentCompat(),
         setPreferencesFromResource(R.xml.scheme_preferences_advanced, rootKey)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         presenter.onSharedPreferenceChanged(key)
     }
 

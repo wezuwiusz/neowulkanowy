@@ -31,7 +31,8 @@ class SyncPresenter @Inject constructor(
         setSyncDateInView()
     }
 
-    fun onSharedPreferenceChanged(key: String) {
+    fun onSharedPreferenceChanged(key: String?) {
+        key ?: return
         Timber.i("Change settings $key")
 
         preferencesRepository.apply {
@@ -52,10 +53,12 @@ class SyncPresenter @Inject constructor(
                         Timber.i("Setting sync now started")
                         analytics.logEvent("sync_now", "status" to "started")
                     }
+
                     WorkInfo.State.SUCCEEDED -> {
                         showMessage(syncSuccessString)
                         analytics.logEvent("sync_now", "status" to "success")
                     }
+
                     WorkInfo.State.FAILED -> {
                         showError(
                             syncFailedString,
@@ -66,6 +69,7 @@ class SyncPresenter @Inject constructor(
                         )
                         analytics.logEvent("sync_now", "status" to "failed")
                     }
+
                     else -> Timber.d("Sync now state: ${workInfo?.state}")
                 }
                 if (workInfo?.state?.isFinished == true) {

@@ -18,7 +18,8 @@ class AdvancedPresenter @Inject constructor(
         Timber.i("Settings advanced view was initialized")
     }
 
-    fun onSharedPreferenceChanged(key: String) {
+    fun onSharedPreferenceChanged(key: String?) {
+        key ?: return
         Timber.i("Change settings $key")
         analytics.logEvent("setting_changed", "name" to key)
     }
