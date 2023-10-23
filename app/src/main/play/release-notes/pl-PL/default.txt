@@ -1,6 +1,7 @@
-Wersja 2.2.1
+Wersja 2.2.2
 
-– dokonaliśmy kilka poprawek na ekranie logowania
-– naprawiliśmy przypadek z błędnym wyświetlaniem starej klasy ucznia po zalogowaniu się na konto z nowej klasy
+— dodaliśmy możliwość łatwego wejścia w sobotę i niedziele w planie lekcji przy użyciu strzałek
+— poprawiliśmy wsparcie dla statystyk ocen z systemem punktowym
+— poprawiliśmy sortowanie nauczycieli w widoku Szkoła i nauczyciele
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
