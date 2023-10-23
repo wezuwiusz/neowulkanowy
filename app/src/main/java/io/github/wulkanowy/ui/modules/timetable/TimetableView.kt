@@ -36,6 +36,8 @@ interface TimetableView : BaseView {
 
     fun showContent(show: Boolean)
 
+    fun showNavigation(show: Boolean)
+
     fun showPreButton(show: Boolean)
 
     fun showNextButton(show: Boolean)

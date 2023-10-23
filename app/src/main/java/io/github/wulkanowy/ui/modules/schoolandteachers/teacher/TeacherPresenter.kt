@@ -58,7 +58,10 @@ class TeacherPresenter @Inject constructor(
             .logResourceStatus("load teachers data")
             .onResourceData {
                 view?.run {
-                    updateData(it.filter { item -> item.name.isNotBlank() })
+                    updateData(it
+                        .filter { item -> item.name.isNotBlank() }
+                        .sortedBy { it.name }
+                    )
                     showContent(it.isNotEmpty())
                     showEmpty(it.isEmpty())
                     showErrorView(false)

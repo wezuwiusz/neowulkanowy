@@ -386,7 +386,7 @@ class DashboardPresenter @Inject constructor(
     private fun loadLessons(student: Student, forceRefresh: Boolean) {
         flatResourceFlow {
             val semester = semesterRepository.getCurrentSemester(student)
-            val date = LocalDate.now().nextOrSameSchoolDay
+            val date = LocalDate.now()
 
             timetableRepository.getTimetable(
                 student = student,

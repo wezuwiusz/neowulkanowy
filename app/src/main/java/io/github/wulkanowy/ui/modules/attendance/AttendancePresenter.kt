@@ -3,10 +3,14 @@ package io.github.wulkanowy.ui.modules.attendance
 import android.annotation.SuppressLint
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Attendance
+import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.repositories.AttendanceRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.*
@@ -14,6 +18,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDate.now
 import java.time.LocalDate.ofEpochDay
@@ -28,9 +33,10 @@ class AttendancePresenter @Inject constructor(
     private val analytics: AnalyticsHelper
 ) : BasePresenter<AttendanceView>(errorHandler, studentRepository) {
 
-    private var baseDate: LocalDate = now().previousOrSameSchoolDay
+    private var initialDate: LocalDate? = null
+    private var isWeekendHasLessons: Boolean = false
 
-    lateinit var currentDate: LocalDate
+    var currentDate: LocalDate? = null
         private set
 
     private lateinit var lastError: Throwable
@@ -44,27 +50,34 @@ class AttendancePresenter @Inject constructor(
         view.initView()
         Timber.i("Attendance view was initialized")
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        reloadView(ofEpochDay(date ?: baseDate.toEpochDay()))
+        currentDate = date?.let(::ofEpochDay)
         loadData()
-        if (currentDate.isHolidays) setBaseDateOnHolidays()
     }
 
     fun onPreviousDay() {
+        val date = if (isWeekendHasLessons) {
+            currentDate?.minusDays(1)
+        } else currentDate?.previousSchoolDay
+
         view?.finishActionMode()
         attendanceToExcuseList.clear()
-        reloadView(currentDate.previousSchoolDay)
+        reloadView(date ?: return)
         loadData()
     }
 
     fun onNextDay() {
+        val date = if (isWeekendHasLessons) {
+            currentDate?.plusDays(1)
+        } else currentDate?.nextSchoolDay
+
         view?.finishActionMode()
         attendanceToExcuseList.clear()
-        reloadView(currentDate.nextSchoolDay)
+        reloadView(date ?: return)
         loadData()
     }
 
     fun onPickDate() {
-        view?.showDatePickerDialog(currentDate)
+        view?.showDatePickerDialog(currentDate ?: return)
     }
 
     fun onDateSet(year: Int, month: Int, day: Int) {
@@ -93,10 +106,8 @@ class AttendancePresenter @Inject constructor(
         Timber.i("Attendance view is reselected")
         view?.let { view ->
             if (view.currentStackSize == 1) {
-                baseDate = now().previousOrSameSchoolDay
-
-                if (currentDate != baseDate) {
-                    reloadView(baseDate)
+                if (currentDate != initialDate) {
+                    reloadView(initialDate ?: return)
                     loadData()
                 } else if (!view.isViewEmpty) {
                     view.resetView()
@@ -188,19 +199,6 @@ class AttendancePresenter @Inject constructor(
         return true
     }
 
-    private fun setBaseDateOnHolidays() {
-        flow {
-            val student = studentRepository.getCurrentStudent()
-            emit(semesterRepository.getCurrentSemester(student))
-        }.catch {
-            Timber.i("Loading semester result: An exception occurred")
-        }.onEach {
-            baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
-            currentDate = baseDate
-            reloadNavigation()
-        }.launch("holidays")
-    }
-
     private fun loadData(forceRefresh: Boolean = false) {
         Timber.i("Loading attendance data started")
 
@@ -211,11 +209,13 @@ class AttendancePresenter @Inject constructor(
             isParent = student.isParent
 
             val semester = semesterRepository.getCurrentSemester(student)
+
+            checkInitialAndCurrentDate(student, semester)
             attendanceRepository.getAttendance(
                 student = student,
                 semester = semester,
-                start = currentDate,
-                end = currentDate,
+                start = currentDate ?: now(),
+                end = currentDate ?: now(),
                 forceRefresh = forceRefresh
             )
         }
@@ -231,6 +231,8 @@ class AttendancePresenter @Inject constructor(
                 }.sortedBy { item -> item.number }
             }
             .onResourceData {
+                isWeekendHasLessons = isWeekendHasLessons || isWeekendHasLessons(it)
+
                 view?.run {
                     enableSwipe(true)
                     showProgress(false)
@@ -238,6 +240,7 @@ class AttendancePresenter @Inject constructor(
                     showEmpty(it.isEmpty())
                     showContent(it.isNotEmpty())
                     updateData(it)
+                    reloadNavigation()
                 }
             }
             .onResourceIntermediate { view?.showRefresh(true) }
@@ -261,6 +264,43 @@ class AttendancePresenter @Inject constructor(
             }
             .onResourceError(errorHandler::dispatch)
             .launch()
+    }
+
+    private suspend fun checkInitialAndCurrentDate(student: Student, semester: Semester) {
+        if (initialDate == null) {
+            val lessons = attendanceRepository.getAttendance(
+                student = student,
+                semester = semester,
+                start = now().monday,
+                end = now().sunday,
+                forceRefresh = false,
+            ).toFirstResult().dataOrNull.orEmpty()
+            isWeekendHasLessons = isWeekendHasLessons(lessons)
+            initialDate = getInitialDate(semester)
+        }
+
+        if (currentDate == null) {
+            currentDate = initialDate
+        }
+    }
+
+    private fun isWeekendHasLessons(
+        lessons: List<Attendance>,
+    ): Boolean = lessons.any {
+        it.date.dayOfWeek in listOf(
+            DayOfWeek.SATURDAY,
+            DayOfWeek.SUNDAY,
+        )
+    }
+
+    private fun getInitialDate(semester: Semester): LocalDate {
+        val now = now()
+
+        return when {
+            now.isHolidays -> now.getLastSchoolDayIfHoliday(semester.schoolYear)
+            isWeekendHasLessons -> now
+            else -> now.previousOrSameSchoolDay
+        }
     }
 
     private fun excuseAbsence(reason: String?, toExcuseList: List<Attendance>) {
@@ -311,7 +351,7 @@ class AttendancePresenter @Inject constructor(
     private fun reloadView(date: LocalDate) {
         currentDate = date
 
-        Timber.i("Reload attendance view with the date ${currentDate.toFormattedString()}")
+        Timber.i("Reload attendance view with the date ${currentDate?.toFormattedString()}")
         view?.apply {
             showProgress(true)
             enableSwipe(false)
@@ -326,10 +366,13 @@ class AttendancePresenter @Inject constructor(
 
     @SuppressLint("DefaultLocale")
     private fun reloadNavigation() {
+        val currentDate = currentDate ?: return
+
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
             showNextButton(!currentDate.plusDays(1).isHolidays)
             updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalise())
+            showNavigation(true)
         }
     }
 }

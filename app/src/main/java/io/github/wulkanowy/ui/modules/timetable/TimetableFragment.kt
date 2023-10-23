@@ -9,6 +9,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -160,6 +161,10 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
         binding.timetableRecycler.visibility = if (show) VISIBLE else GONE
     }
 
+    override fun showNavigation(show: Boolean) {
+        binding.timetableNavContainer.isVisible = true
+    }
+
     override fun showPreButton(show: Boolean) {
         binding.timetablePreviousButton.visibility = if (show) VISIBLE else View.INVISIBLE
     }
@@ -193,7 +198,9 @@ class TimetableFragment : BaseFragment<FragmentTimetableBinding>(R.layout.fragme
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putLong(SAVED_DATE_KEY, presenter.currentDate.toEpochDay())
+        presenter.currentDate?.toEpochDay()?.let {
+            outState.putLong(SAVED_DATE_KEY, it)
+        }
     }
 
     override fun onDestroyView() {

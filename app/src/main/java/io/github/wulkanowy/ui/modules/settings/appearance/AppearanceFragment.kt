@@ -39,7 +39,7 @@ class AppearanceFragment : PreferenceFragmentCompat(),
         setPreferencesFromResource(R.xml.scheme_preferences_appearance, rootKey)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         presenter.onSharedPreferenceChanged(key)
     }
 

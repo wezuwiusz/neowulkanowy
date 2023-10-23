@@ -22,7 +22,8 @@ class AppearancePresenter @Inject constructor(
         Timber.i("Settings appearance view was initialized")
     }
 
-    fun onSharedPreferenceChanged(key: String) {
+    fun onSharedPreferenceChanged(key: String?) {
+        key ?: return
         Timber.i("Change settings $key")
 
         preferencesRepository.apply {

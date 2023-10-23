@@ -1,8 +1,8 @@
 buildscript {
     ext {
         kotlin_version = '1.9.10'
-        about_libraries = '10.9.0'
-        hilt_version = "2.48"
+        about_libraries = '10.9.1'
+        hilt_version = '2.48.1'
     }
     repositories {
         mavenCentral()
@@ -21,7 +21,7 @@ buildscript {
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
         classpath "com.github.triplet.gradle:play-publisher:3.8.4"
         classpath "ru.cian:huawei-publish-gradle-plugin:1.4.0"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.4.0.3356"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.4.1.3373"
         classpath "gradle.plugin.com.star-zero.gradle:githook:1.2.0"
         classpath "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:$about_libraries"
     }

@@ -22,6 +22,8 @@ import io.github.wulkanowy.databinding.ItemGradeStatisticsHeaderBinding
 import io.github.wulkanowy.databinding.ItemGradeStatisticsPieBinding
 import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
+import kotlin.math.max
+import kotlin.math.roundToInt
 
 class GradeStatisticsAdapter @Inject constructor() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -269,7 +271,7 @@ class GradeStatisticsAdapter @Inject constructor() :
             valueTextSize = 12f
             valueTextColor = binding.root.context.getThemeAttrColor(android.R.attr.textColorPrimary)
             valueFormatter = object : ValueFormatter() {
-                override fun getBarLabel(barEntry: BarEntry) = "${barEntry.y}%"
+                override fun getBarLabel(barEntry: BarEntry) = "${barEntry.y}"
             }
             colors = gradePointsColors
         }
@@ -304,15 +306,20 @@ class GradeStatisticsAdapter @Inject constructor() :
             }
             xAxis.setDrawLabels(false)
             xAxis.setDrawGridLines(false)
+
+            val yMaxFromValues = (max(points.others, points.student)).roundToInt() + 30f
+            val yMaxFromValuesWithMargin = ((yMaxFromValues / 10.0).roundToInt() * 10).toFloat()
+            val yMax = yMaxFromValuesWithMargin.coerceAtLeast(100f)
+            val yLabelCount = (yMax / 10).toInt() + 1
             with(axisLeft) {
                 axisMinimum = 0f
-                axisMaximum = 100f
-                labelCount = 11
+                axisMaximum = yMax
+                labelCount = yLabelCount
             }
             with(axisRight) {
                 axisMinimum = 0f
-                axisMaximum = 100f
-                labelCount = 11
+                axisMaximum = yMax
+                labelCount = yLabelCount
             }
             invalidate()
         }

@@ -38,7 +38,8 @@ class NotificationsPresenter @Inject constructor(
         Timber.i("Settings notifications view was initialized")
     }
 
-    fun onSharedPreferenceChanged(key: String) {
+    fun onSharedPreferenceChanged(key: String?) {
+        key ?: return
         Timber.i("Change settings $key")
 
         preferencesRepository.apply {
