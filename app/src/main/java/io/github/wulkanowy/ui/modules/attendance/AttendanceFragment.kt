@@ -148,6 +148,10 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
         binding.attendanceNavDate.text = date
     }
 
+    override fun showNavigation(show: Boolean) {
+        binding.attendanceNavContainer.isVisible = show
+    }
+
     override fun clearData() {
         with(attendanceAdapter) {
             items = emptyList()
@@ -281,7 +285,9 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putLong(SAVED_DATE_KEY, presenter.currentDate.toEpochDay())
+        presenter.currentDate?.let {
+            outState.putLong(SAVED_DATE_KEY, it.toEpochDay())
+        }
     }
 
     override fun onDestroyView() {

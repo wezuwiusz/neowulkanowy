@@ -1,5 +1,8 @@
 package io.github.wulkanowy.ui.modules.timetable
 
+import io.github.wulkanowy.data.dataOrNull
+import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.enums.TimetableGapsMode.BETWEEN_AND_BEFORE_LESSONS
 import io.github.wulkanowy.data.enums.TimetableGapsMode.NO_GAPS
@@ -15,6 +18,8 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
+import io.github.wulkanowy.data.toFirstResult
+import io.github.wulkanowy.data.waitForResult
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -24,15 +29,16 @@ import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.isJustFinished
 import io.github.wulkanowy.utils.isShowTimeUntil
 import io.github.wulkanowy.utils.left
+import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
+import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.until
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.firstOrNull
 import timber.log.Timber
+import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDate.now
@@ -51,9 +57,10 @@ class TimetablePresenter @Inject constructor(
     private val analytics: AnalyticsHelper,
 ) : BasePresenter<TimetableView>(errorHandler, studentRepository) {
 
-    private var baseDate: LocalDate = now().nextOrSameSchoolDay
+    private var initialDate: LocalDate? = null
+    private var isWeekendHasLessons: Boolean = false
 
-    lateinit var currentDate: LocalDate
+    var currentDate: LocalDate? = null
         private set
 
     private lateinit var lastError: Throwable
@@ -65,23 +72,30 @@ class TimetablePresenter @Inject constructor(
         view.initView()
         Timber.i("Timetable was initialized")
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        reloadView(ofEpochDay(date ?: baseDate.toEpochDay()))
+        currentDate = date?.let(::ofEpochDay)
         loadData()
-        if (currentDate.isHolidays) setBaseDateOnHolidays()
     }
 
     fun onPreviousDay() {
-        reloadView(currentDate.previousSchoolDay)
+        val date = if (isWeekendHasLessons) {
+            currentDate?.minusDays(1)
+        } else currentDate?.previousSchoolDay
+
+        reloadView(date ?: return)
         loadData()
     }
 
     fun onNextDay() {
-        reloadView(currentDate.nextSchoolDay)
+        val date = if (isWeekendHasLessons) {
+            currentDate?.plusDays(1)
+        } else currentDate?.nextSchoolDay
+
+        reloadView(date ?: return)
         loadData()
     }
 
     fun onPickDate() {
-        view?.showDatePickerDialog(currentDate)
+        view?.showDatePickerDialog(currentDate ?: return)
     }
 
     fun onDateSet(year: Int, month: Int, day: Int) {
@@ -110,10 +124,8 @@ class TimetablePresenter @Inject constructor(
         Timber.i("Timetable view is reselected")
         view?.let { view ->
             if (view.currentStackSize == 1) {
-                baseDate = now().nextOrSameSchoolDay
-
-                if (currentDate != baseDate) {
-                    reloadView(baseDate)
+                if (currentDate != initialDate) {
+                    reloadView(initialDate ?: return)
                     loadData()
                 } else if (!view.isViewEmpty) {
                     view.resetView()
@@ -134,34 +146,25 @@ class TimetablePresenter @Inject constructor(
         return true
     }
 
-    private fun setBaseDateOnHolidays() {
-        flow {
-            val student = studentRepository.getCurrentStudent()
-            emit(semesterRepository.getCurrentSemester(student))
-        }.catch {
-            Timber.i("Loading semester result: An exception occurred")
-        }.onEach {
-            baseDate = baseDate.getLastSchoolDayIfHoliday(it.schoolYear)
-            currentDate = baseDate
-            reloadNavigation()
-        }.launch("holidays")
-    }
-
     private fun loadData(forceRefresh: Boolean = false) {
         flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
+
+            checkInitialAndCurrentDate(student, semester)
             timetableRepository.getTimetable(
                 student = student,
                 semester = semester,
-                start = currentDate,
-                end = currentDate,
+                start = currentDate ?: now(),
+                end = currentDate ?: now(),
                 forceRefresh = forceRefresh,
                 timetableType = TimetableRepository.TimetableType.NORMAL
             )
         }
             .logResourceStatus("load timetable data")
             .onResourceData {
+                isWeekendHasLessons = isWeekendHasLessons || isWeekendHasLessons(it.lessons)
+
                 view?.run {
                     enableSwipe(true)
                     showProgress(false)
@@ -169,7 +172,8 @@ class TimetablePresenter @Inject constructor(
                     showContent(it.lessons.isNotEmpty())
                     showEmpty(it.lessons.isEmpty())
                     updateData(it.lessons)
-                    setDayHeaderMessage(it.headers.singleOrNull { header -> header.date == currentDate }?.content)
+                    setDayHeaderMessage(it.headers.find { header -> header.date == currentDate }?.content)
+                    reloadNavigation()
                 }
             }
             .onResourceIntermediate { view?.showRefresh(true) }
@@ -189,6 +193,44 @@ class TimetablePresenter @Inject constructor(
             }
             .onResourceError(errorHandler::dispatch)
             .launch()
+    }
+
+    private suspend fun checkInitialAndCurrentDate(student: Student, semester: Semester) {
+        if (initialDate == null) {
+            val lessons = timetableRepository.getTimetable(
+                student = student,
+                semester = semester,
+                start = now().monday,
+                end = now().sunday,
+                forceRefresh = false,
+                timetableType = TimetableRepository.TimetableType.NORMAL
+            ).toFirstResult().dataOrNull?.lessons.orEmpty()
+            isWeekendHasLessons = isWeekendHasLessons(lessons)
+            initialDate = getInitialDate(semester)
+        }
+
+        if (currentDate == null) {
+            currentDate = initialDate
+        }
+    }
+
+    private fun isWeekendHasLessons(
+        lessons: List<Timetable>,
+    ): Boolean = lessons.any {
+        it.date.dayOfWeek in listOf(
+            DayOfWeek.SATURDAY,
+            DayOfWeek.SUNDAY,
+        )
+    }
+
+    private fun getInitialDate(semester: Semester): LocalDate {
+        val now = now()
+
+        return when {
+            now.isHolidays -> now.getLastSchoolDayIfHoliday(semester.schoolYear)
+            isWeekendHasLessons -> now
+            else -> now.nextOrSameSchoolDay
+        }
     }
 
     private fun updateData(lessons: List<Timetable>) {
@@ -285,7 +327,7 @@ class TimetablePresenter @Inject constructor(
     private fun reloadView(date: LocalDate) {
         currentDate = date
 
-        Timber.i("Reload timetable view with the date ${currentDate.toFormattedString()}")
+        Timber.i("Reload timetable view with the date ${currentDate?.toFormattedString()}")
         view?.apply {
             showProgress(true)
             enableSwipe(false)
@@ -298,10 +340,13 @@ class TimetablePresenter @Inject constructor(
     }
 
     private fun reloadNavigation() {
+        val currentDate = currentDate ?: return
+
         view?.apply {
             showPreButton(!currentDate.minusDays(1).isHolidays)
             showNextButton(!currentDate.plusDays(1).isHolidays)
             updateNavigationDay(currentDate.toFormattedString("EEEE, dd.MM").capitalise())
+            showNavigation(true)
         }
     }
 
