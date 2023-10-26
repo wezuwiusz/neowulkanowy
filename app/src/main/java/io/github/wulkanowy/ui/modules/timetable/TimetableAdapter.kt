@@ -325,7 +325,7 @@ class TimetableAdapter @Inject constructor() :
 
             override fun getChangePayload(oldItem: TimetableItem, newItem: TimetableItem): Any? {
                 return if (oldItem is TimetableItem.Normal && newItem is TimetableItem.Normal) {
-                    if (oldItem.lesson == newItem.lesson && oldItem.timeLeft != newItem.timeLeft) {
+                    if (oldItem.lesson == newItem.lesson && oldItem.showGroupsInPlan == newItem.showGroupsInPlan && oldItem.timeLeft != newItem.timeLeft) {
                         "time_left"
                     } else super.getChangePayload(oldItem, newItem)
                 } else super.getChangePayload(oldItem, newItem)

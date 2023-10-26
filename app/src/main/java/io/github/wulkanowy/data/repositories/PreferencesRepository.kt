@@ -194,12 +194,6 @@ class PreferencesRepository @Inject constructor(
             )
         )
 
-    val showTimetableTimers: Boolean
-        get() = getBoolean(
-            R.string.pref_key_timetable_show_timers,
-            R.bool.pref_default_timetable_show_timers
-        )
-
     val showTimetableGaps: TimetableGapsMode
         get() = TimetableGapsMode.getByValue(
             getString(

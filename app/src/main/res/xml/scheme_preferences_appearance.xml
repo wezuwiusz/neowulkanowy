@@ -91,11 +91,6 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref_timetable_appearance_view">
         <SwitchPreferenceCompat
-            app:defaultValue="@bool/pref_default_timetable_show_timers"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_timetable_show_timers"
-            app:title="@string/pref_view_timetable_show_timers" />
-        <SwitchPreferenceCompat
             app:defaultValue="@bool/pref_default_timetable_show_groups"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_timetable_show_groups"

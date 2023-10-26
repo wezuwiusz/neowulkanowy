@@ -1,6 +1,6 @@
-Wersja 2.2.2
+Wersja 2.2.3
 
-— dodaliśmy możliwość łatwego wejścia w sobotę i niedziele w planie lekcji przy użyciu strzałek
+— ułatwiliśmy przełączenie dnia na weekend w planie lekcji przy użyciu strzałek
 — poprawiliśmy wsparcie dla statystyk ocen z systemem punktowym
 — poprawiliśmy sortowanie nauczycieli w widoku Szkoła i nauczyciele
 

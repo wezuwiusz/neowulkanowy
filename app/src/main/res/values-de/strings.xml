@@ -623,7 +623,6 @@
     <string name="pref_view_present">Anwesendheit zeigen</string>
     <string name="pref_view_app_theme">Thema</string>
     <string name="pref_view_expand_grade">Steigende Sorten</string>
-    <string name="pref_view_timetable_show_timers">Aktuelle Lektion markieren</string>
     <string name="pref_view_timetable_show_groups">Gruppen neben Schulfächen anzeigen</string>
     <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>

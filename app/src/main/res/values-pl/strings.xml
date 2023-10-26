@@ -713,7 +713,6 @@
     <string name="pref_view_present">Pokazuj obecność</string>
     <string name="pref_view_app_theme">Motyw</string>
     <string name="pref_view_expand_grade">Rozwijanie ocen</string>
-    <string name="pref_view_timetable_show_timers">Oznaczaj bieżącą lekcję</string>
     <string name="pref_view_timetable_show_groups">Pokazuj grupę obok przedmiotu</string>
     <string name="pref_view_timetable_show_gaps">Pokazuj puste kafelki gdzie nie ma lekcji</string>
     <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>

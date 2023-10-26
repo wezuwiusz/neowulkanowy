@@ -623,7 +623,6 @@
     <string name="pref_view_present">Show presence</string>
     <string name="pref_view_app_theme">Theme</string>
     <string name="pref_view_expand_grade">Grades expanding</string>
-    <string name="pref_view_timetable_show_timers">Mark current lesson</string>
     <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
     <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
