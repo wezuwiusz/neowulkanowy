@@ -713,7 +713,6 @@
     <string name="pref_view_present">Zobraziť prítomnosť</string>
     <string name="pref_view_app_theme">Motív</string>
     <string name="pref_view_expand_grade">Rozvijanie známok</string>
-    <string name="pref_view_timetable_show_timers">Označiť aktuálne lekciu</string>
     <string name="pref_view_timetable_show_groups">Zobraziť skupiny vedľa predmetov</string>
     <string name="pref_view_timetable_show_gaps">Zobraziť prázdne dlaždice, kde nie je žiadne lekcie</string>
     <string name="pref_view_grade_statistics_list">Zobraziť zoznam grafov v známkach triedy</string>

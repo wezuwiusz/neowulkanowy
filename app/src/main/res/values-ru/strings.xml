@@ -713,7 +713,6 @@
     <string name="pref_view_present">Показывать присутствия</string>
     <string name="pref_view_app_theme">Тема</string>
     <string name="pref_view_expand_grade">Разворачивание оценок</string>
-    <string name="pref_view_timetable_show_timers">Отметить текущий урок</string>
     <string name="pref_view_timetable_show_groups">Показать группы рядом с темами</string>
     <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Показывать диаграммы в оценках класса</string>

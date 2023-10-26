@@ -1,5 +1,7 @@
 package io.github.wulkanowy.ui.modules.timetable
 
+import android.os.Handler
+import android.os.Looper
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
@@ -236,11 +238,13 @@ class TimetablePresenter @Inject constructor(
     private fun updateData(lessons: List<Timetable>) {
         tickTimer?.cancel()
 
-        if (!prefRepository.showTimetableTimers) {
+        if (currentDate != now()) {
             view?.updateData(createItems(lessons))
         } else {
             tickTimer = timer(period = 2_000) {
-                view?.updateData(createItems(lessons))
+                Handler(Looper.getMainLooper()).post {
+                    view?.updateData(createItems(lessons))
+                }
             }
         }
     }
