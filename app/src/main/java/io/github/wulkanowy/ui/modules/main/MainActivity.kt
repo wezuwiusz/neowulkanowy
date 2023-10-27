@@ -45,7 +45,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     lateinit var analytics: AnalyticsHelper
 
     @Inject
-    lateinit var updateHelper: UpdateHelper
+    lateinit var inAppUpdateHelper: InAppUpdateHelper
 
     @Inject
     lateinit var inAppReviewHelper: InAppReviewHelper
@@ -100,7 +100,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         this.savedInstanceState = savedInstanceState
         messageContainer = binding.mainMessageContainer
         messageAnchor = binding.mainMessageContainer
-        updateHelper.messageContainer = binding.mainFragmentContainer
+        inAppUpdateHelper.messageContainer = binding.mainFragmentContainer
         onBackCallback = onBackPressedDispatcher.addCallback(this, enabled = false) {
             presenter.onBackPressed()
         }
@@ -109,19 +109,12 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             ?.takeIf { savedInstanceState == null }
 
         presenter.onAttachView(this, destination)
-        updateHelper.checkAndInstallUpdates(this)
+        inAppUpdateHelper.checkAndInstallUpdates()
     }
 
     override fun onResume() {
         super.onResume()
-        updateHelper.onResume(this)
-    }
-
-    //https://developer.android.com/guide/playcore/in-app-updates#status_callback
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        updateHelper.onActivityResult(requestCode, resultCode)
+        inAppUpdateHelper.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

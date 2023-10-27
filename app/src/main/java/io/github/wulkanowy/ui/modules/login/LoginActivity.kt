@@ -23,7 +23,7 @@ import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.notifications.NotificationsFragment
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.UpdateHelper
+import io.github.wulkanowy.utils.InAppUpdateHelper
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,7 +33,7 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
     override lateinit var presenter: LoginPresenter
 
     @Inject
-    lateinit var updateHelper: UpdateHelper
+    lateinit var inAppUpdateHelper: InAppUpdateHelper
 
     @Inject
     lateinit var appInfo: AppInfo
@@ -47,10 +47,10 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         setContentView(ActivityLoginBinding.inflate(layoutInflater).apply { binding = this }.root)
         setSupportActionBar(binding.loginToolbar)
         messageContainer = binding.loginContainer
-        updateHelper.messageContainer = binding.loginContainer
+        inAppUpdateHelper.messageContainer = binding.loginContainer
 
         presenter.onAttachView(this)
-        updateHelper.checkAndInstallUpdates(this)
+        inAppUpdateHelper.checkAndInstallUpdates()
 
         if (savedInstanceState == null) {
             openFragment(LoginFormFragment.newInstance(), clearBackStack = true)
@@ -117,14 +117,6 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
 
     override fun onResume() {
         super.onResume()
-        updateHelper.onResume(this)
-    }
-
-    //https://developer.android.com/guide/playcore/in-app-updates#status_callback
-    @Deprecated("Deprecated in Java")
-    @Suppress("DEPRECATION")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        updateHelper.onActivityResult(requestCode, resultCode)
+        inAppUpdateHelper.onResume()
     }
 }
