@@ -3,12 +3,15 @@ package io.github.wulkanowy.utils
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
-import android.content.IntentSender
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType.FLEXIBLE
 import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
@@ -20,15 +23,16 @@ import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
 import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import com.google.android.play.core.ktx.updatePriority
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ActivityScoped
 import io.github.wulkanowy.R
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class UpdateHelper @Inject constructor(
+@ActivityScoped
+class InAppUpdateHelper @Inject constructor(
     @ApplicationContext private val context: Context,
     private val analyticsHelper: AnalyticsHelper,
+    activity: Activity
 ) {
 
     lateinit var messageContainer: View
@@ -39,6 +43,7 @@ class UpdateHelper @Inject constructor(
         when (state.installStatus()) {
             PENDING -> Toast.makeText(context, R.string.update_download_started, Toast.LENGTH_SHORT)
                 .show()
+
             DOWNLOADED -> popupSnackBarForCompleteUpdate()
             else -> Timber.d("Update state: ${state.installStatus()}")
         }
@@ -70,45 +75,55 @@ class UpdateHelper @Inject constructor(
             return updateAvailability() == UPDATE_AVAILABLE && isFlexibleUpdateAllowed && isUpdatePriorityAllowUpdate
         }
 
-    fun checkAndInstallUpdates(activity: Activity) {
+    private val activityResultLauncher = (activity as AppCompatActivity).registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult(),
+        ::onActivityResult
+    )
+
+    fun checkAndInstallUpdates() {
         Timber.d("Checking for updates...")
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             when {
                 appUpdateInfo.isImmediateUpdateAvailable -> {
-                    startUpdate(activity, appUpdateInfo, IMMEDIATE)
+                    startUpdate(appUpdateInfo, IMMEDIATE)
                 }
+
                 appUpdateInfo.isFlexibleUpdateAvailable -> {
                     appUpdateManager.registerListener(flexibleUpdateListener)
-                    startUpdate(activity, appUpdateInfo, FLEXIBLE)
+                    startUpdate(appUpdateInfo, FLEXIBLE)
                 }
+
                 else -> Timber.d("No update available")
             }
         }
     }
 
-    private fun startUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo, updateType: Int) {
+    private fun startUpdate(appUpdateInfo: AppUpdateInfo, updateType: Int) {
         Timber.d("Start update ($updateType): $appUpdateInfo")
+
         try {
             appUpdateManager.startUpdateFlowForResult(
-                appUpdateInfo, updateType, activity, IN_APP_UPDATE_REQUEST_CODE
+                appUpdateInfo,
+                activityResultLauncher,
+                AppUpdateOptions.defaultOptions(updateType)
             )
-        } catch (e: IntentSender.SendIntentException) {
-            Timber.i("Update failed! Duplicated PendingIntent")
+        } catch (e: Exception) {
+            Timber.e(e, "Update failed!")
         }
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int) {
-        if (requestCode == IN_APP_UPDATE_REQUEST_CODE) {
-            if (resultCode != RESULT_OK) {
-                Timber.i("Update failed! Result code: $resultCode")
-                Toast.makeText(context, R.string.update_failed, Toast.LENGTH_LONG).show()
-            }
+    private fun onActivityResult(activityResult: ActivityResult) {
+        val resultCode = activityResult.resultCode
 
-            analyticsHelper.logEvent("inapp_update", "code" to resultCode)
+        if (resultCode != RESULT_OK) {
+            Timber.i("Update failed! Result code: $resultCode")
+            Toast.makeText(context, R.string.update_failed, Toast.LENGTH_LONG).show()
         }
+
+        analyticsHelper.logEvent("inapp_update", "code" to resultCode)
     }
 
-    fun onResume(activity: Activity) {
+    fun onResume() {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
             Timber.d("InAppUpdate.onResume() listener: $info")
 
@@ -116,7 +131,6 @@ class UpdateHelper @Inject constructor(
                 DOWNLOADED == info.installStatus() -> popupSnackBarForCompleteUpdate()
                 DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS == info.updateAvailability() -> {
                     startUpdate(
-                        activity = activity,
                         appUpdateInfo = info,
                         updateType = if (info.isImmediateUpdateAvailable) IMMEDIATE else FLEXIBLE
                     )
@@ -138,10 +152,5 @@ class UpdateHelper @Inject constructor(
             }
             show()
         }
-    }
-
-    private companion object {
-
-        private const val IN_APP_UPDATE_REQUEST_CODE = 1721
     }
 }

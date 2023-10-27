@@ -1,4 +1,4 @@
-Wersja 2.2.3
+Wersja 2.2.4
 
 — ułatwiliśmy przełączenie dnia na weekend w planie lekcji przy użyciu strzałek
 — poprawiliśmy wsparcie dla statystyk ocen z systemem punktowym
