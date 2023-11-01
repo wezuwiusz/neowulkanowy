@@ -5,17 +5,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration51 : Migration(50, 51) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        createMailboxTable(database)
-        recreateMessagesTable(database)
-        recreateMessageAttachmentsTable(database)
-        recreateRecipientsTable(database)
-        deleteReportingUnitTable(database)
+    override fun migrate(db: SupportSQLiteDatabase) {
+        createMailboxTable(db)
+        recreateMessagesTable(db)
+        recreateMessageAttachmentsTable(db)
+        recreateRecipientsTable(db)
+        deleteReportingUnitTable(db)
     }
 
-    private fun createMailboxTable(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS Mailboxes")
-        database.execSQL(
+    private fun createMailboxTable(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS Mailboxes")
+        db.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `Mailboxes` (
                 `globalKey` TEXT NOT NULL,
@@ -30,9 +30,9 @@ class Migration51 : Migration(50, 51) {
         )
     }
 
-    private fun recreateMessagesTable(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS Messages")
-        database.execSQL(
+    private fun recreateMessagesTable(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS Messages")
+        db.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `Messages` (
                 `message_global_key` TEXT NOT NULL,
@@ -52,9 +52,9 @@ class Migration51 : Migration(50, 51) {
         )
     }
 
-    private fun recreateMessageAttachmentsTable(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS MessageAttachments")
-        database.execSQL(
+    private fun recreateMessageAttachmentsTable(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS MessageAttachments")
+        db.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `MessageAttachments` (
                 `real_id` INTEGER NOT NULL,
@@ -66,9 +66,9 @@ class Migration51 : Migration(50, 51) {
         )
     }
 
-    private fun recreateRecipientsTable(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS Recipients")
-        database.execSQL(
+    private fun recreateRecipientsTable(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS Recipients")
+        db.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `Recipients` (
                 `mailboxGlobalKey` TEXT NOT NULL,
@@ -82,7 +82,7 @@ class Migration51 : Migration(50, 51) {
         )
     }
 
-    private fun deleteReportingUnitTable(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS ReportingUnits")
+    private fun deleteReportingUnitTable(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS ReportingUnits")
     }
 }

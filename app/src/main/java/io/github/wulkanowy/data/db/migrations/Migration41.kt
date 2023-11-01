@@ -7,9 +7,9 @@ import io.github.wulkanowy.data.enums.GradeExpandMode
 
 class Migration41(private val sharedPrefProvider: SharedPrefProvider) : Migration(40, 41) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
+    override fun migrate(db: SupportSQLiteDatabase) {
         migrateSharedPreferences()
-        database.execSQL("ALTER TABLE Homework ADD COLUMN is_added_by_user INTEGER NOT NULL DEFAULT 0")
+        db.execSQL("ALTER TABLE Homework ADD COLUMN is_added_by_user INTEGER NOT NULL DEFAULT 0")
     }
 
     private fun migrateSharedPreferences() {

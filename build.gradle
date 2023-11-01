@@ -36,7 +36,3 @@ allprojects {
         maven { url "https://developer.huawei.com/repo/" }
     }
 }
-
-tasks.register('clean', Delete) {
-    delete rootProject.buildDir
-}

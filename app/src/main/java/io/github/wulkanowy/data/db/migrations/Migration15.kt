@@ -5,8 +5,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration15 : Migration(14, 15) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("""
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
             CREATE TABLE IF NOT EXISTS MobileDevices (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 student_id INTEGER NOT NULL,
@@ -14,6 +15,7 @@ class Migration15 : Migration(14, 15) {
                 name TEXT NOT NULL,
                 date INTEGER NOT NULL
             )
-        """)
+        """
+        )
     }
 }

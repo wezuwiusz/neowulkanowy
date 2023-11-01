@@ -6,16 +6,17 @@ import io.github.wulkanowy.data.db.SharedPrefProvider
 
 class Migration19(private val sharedPrefProvider: SharedPrefProvider) : Migration(18, 19) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        migrateMessages(database)
-        migrateGrades(database)
-        migrateStudents(database)
+    override fun migrate(db: SupportSQLiteDatabase) {
+        migrateMessages(db)
+        migrateGrades(db)
+        migrateStudents(db)
         migrateSharedPreferences()
     }
 
-    private fun migrateMessages(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE Messages")
-        database.execSQL("""
+    private fun migrateMessages(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE Messages")
+        db.execSQL(
+            """
             CREATE TABLE IF NOT EXISTS Messages (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 is_notified INTEGER NOT NULL,
@@ -34,12 +35,14 @@ class Migration19(private val sharedPrefProvider: SharedPrefProvider) : Migratio
                 read_by INTEGER NOT NULL,
                 removed INTEGER NOT NULL
             )
-        """)
+        """
+        )
     }
 
-    private fun migrateGrades(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE Grades")
-        database.execSQL("""
+    private fun migrateGrades(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE Grades")
+        db.execSQL(
+            """
             CREATE TABLE IF NOT EXISTS Grades (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 is_read INTEGER NOT NULL,
@@ -59,11 +62,13 @@ class Migration19(private val sharedPrefProvider: SharedPrefProvider) : Migratio
                 date INTEGER NOT NULL,
                 teacher TEXT NOT NULL
             )
-        """)
+        """
+        )
     }
 
-    private fun migrateStudents(database: SupportSQLiteDatabase) {
-        database.execSQL("""
+    private fun migrateStudents(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
             CREATE TABLE IF NOT EXISTS Students_tmp (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 scrapper_base_url TEXT NOT NULL,
@@ -86,26 +91,29 @@ class Migration19(private val sharedPrefProvider: SharedPrefProvider) : Migratio
                 is_current INTEGER NOT NULL,
                 registration_date INTEGER NOT NULL
             )
-        """)
+        """
+        )
 
-        database.execSQL("ALTER TABLE Students ADD COLUMN scrapperBaseUrl TEXT NOT NULL DEFAULT \"\";")
-        database.execSQL("ALTER TABLE Students ADD COLUMN apiBaseUrl TEXT NOT NULL DEFAULT \"\";")
-        database.execSQL("ALTER TABLE Students ADD COLUMN is_parent INT NOT NULL DEFAULT 0;")
-        database.execSQL("ALTER TABLE Students ADD COLUMN loginMode TEXT NOT NULL DEFAULT \"\";")
-        database.execSQL("ALTER TABLE Students ADD COLUMN certificateKey TEXT NOT NULL DEFAULT \"\";")
-        database.execSQL("ALTER TABLE Students ADD COLUMN privateKey TEXT NOT NULL DEFAULT \"\";")
-        database.execSQL("ALTER TABLE Students ADD COLUMN user_login_id INTEGER NOT NULL DEFAULT 0;")
+        db.execSQL("ALTER TABLE Students ADD COLUMN scrapperBaseUrl TEXT NOT NULL DEFAULT \"\";")
+        db.execSQL("ALTER TABLE Students ADD COLUMN apiBaseUrl TEXT NOT NULL DEFAULT \"\";")
+        db.execSQL("ALTER TABLE Students ADD COLUMN is_parent INT NOT NULL DEFAULT 0;")
+        db.execSQL("ALTER TABLE Students ADD COLUMN loginMode TEXT NOT NULL DEFAULT \"\";")
+        db.execSQL("ALTER TABLE Students ADD COLUMN certificateKey TEXT NOT NULL DEFAULT \"\";")
+        db.execSQL("ALTER TABLE Students ADD COLUMN privateKey TEXT NOT NULL DEFAULT \"\";")
+        db.execSQL("ALTER TABLE Students ADD COLUMN user_login_id INTEGER NOT NULL DEFAULT 0;")
 
-        database.execSQL("""
+        db.execSQL(
+            """
             INSERT INTO Students_tmp(
             id, scrapper_base_url, mobile_base_url, is_parent, login_type, login_mode, certificate_key, private_key, email, password, symbol, student_id, user_login_id, student_name, school_id, school_name, school_id, school_name, class_name, class_id, is_current, registration_date)
             SELECT
             id, endpoint, apiBaseUrl, is_parent, loginType, "SCRAPPER", certificateKey, privateKey, email, password, symbol, student_id, user_login_id, student_name, school_id, school_name, school_id, school_name, class_name, class_id, is_current, registration_date
             FROM Students
-        """)
-        database.execSQL("DROP TABLE Students")
-        database.execSQL("ALTER TABLE Students_tmp RENAME TO Students")
-        database.execSQL("CREATE UNIQUE INDEX index_Students_email_symbol_student_id_school_id_class_id ON Students (email, symbol, student_id, school_id, class_id)")
+        """
+        )
+        db.execSQL("DROP TABLE Students")
+        db.execSQL("ALTER TABLE Students_tmp RENAME TO Students")
+        db.execSQL("CREATE UNIQUE INDEX index_Students_email_symbol_student_id_school_id_class_id ON Students (email, symbol, student_id, school_id, class_id)")
     }
 
     private fun migrateSharedPreferences() {

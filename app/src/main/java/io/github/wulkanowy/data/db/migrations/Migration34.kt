@@ -5,9 +5,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration34 : Migration(33, 34) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("DELETE FROM ReportingUnits")
-        database.execSQL("DELETE FROM Recipients")
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("DELETE FROM ReportingUnits")
+        db.execSQL("DELETE FROM Recipients")
     }
 }
 

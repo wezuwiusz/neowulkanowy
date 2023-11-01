@@ -5,8 +5,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration42 : Migration(41, 42) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL(
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
             """CREATE TABLE IF NOT EXISTS `AdminMessages` (
             `id` INTEGER NOT NULL, 
             `title` TEXT NOT NULL, 
