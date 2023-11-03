@@ -1,7 +1,5 @@
-Wersja 2.2.4
+Wersja 2.2.5
 
-— ułatwiliśmy przełączenie dnia na weekend w planie lekcji przy użyciu strzałek
-— poprawiliśmy wsparcie dla statystyk ocen z systemem punktowym
-— poprawiliśmy sortowanie nauczycieli w widoku Szkoła i nauczyciele
+— naprawiliśmy logowanie do aplikacji, które zostało zepsute w piątek aktualizacją dziennika VULCAN
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
