@@ -42,7 +42,7 @@ class GradeSummaryPresenter @Inject constructor(
             val student = studentRepository.getCurrentStudent()
             averageProvider.getGradesDetailsWithAverage(student, semesterId, forceRefresh)
         }
-            .logResourceStatus("load grade summary", showData = true)
+            .logResourceStatus("load grade summary")
             .mapResourceData { createGradeSummaryItems(it) }
             .onResourceData {
                 view?.run {
