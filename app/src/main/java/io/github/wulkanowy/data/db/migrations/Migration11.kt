@@ -5,8 +5,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration11 : Migration(10, 11) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("""
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
             CREATE TABLE IF NOT EXISTS Grades_temp (
                 id INTEGER PRIMARY KEY NOT NULL,
                 is_read INTEGER NOT NULL,
@@ -26,9 +27,10 @@ class Migration11 : Migration(10, 11) {
                 date INTEGER NOT NULL,
                 teacher TEXT NOT NULL
             )
-        """)
-        database.execSQL("INSERT INTO Grades_temp SELECT * FROM Grades")
-        database.execSQL("DROP TABLE Grades")
-        database.execSQL("ALTER TABLE Grades_temp RENAME TO Grades")
+        """
+        )
+        db.execSQL("INSERT INTO Grades_temp SELECT * FROM Grades")
+        db.execSQL("DROP TABLE Grades")
+        db.execSQL("ALTER TABLE Grades_temp RENAME TO Grades")
     }
 }

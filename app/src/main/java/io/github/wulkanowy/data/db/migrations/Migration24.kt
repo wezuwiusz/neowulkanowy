@@ -5,9 +5,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration24 : Migration(23, 24) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE Messages ADD COLUMN has_attachments INTEGER NOT NULL DEFAULT 0")
-        database.execSQL("""
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE Messages ADD COLUMN has_attachments INTEGER NOT NULL DEFAULT 0")
+        db.execSQL(
+            """
             CREATE TABLE IF NOT EXISTS MessageAttachments (
                 real_id INTEGER NOT NULL,
                 message_id INTEGER NOT NULL,
@@ -16,6 +17,7 @@ class Migration24 : Migration(23, 24) {
                 filename TEXT NOT NULL,
                 PRIMARY KEY(real_id)
             )
-        """)
+        """
+        )
     }
 }

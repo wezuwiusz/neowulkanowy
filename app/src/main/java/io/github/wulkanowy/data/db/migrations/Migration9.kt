@@ -5,9 +5,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration9 : Migration(8, 9) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS Messages")
-        database.execSQL("""
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS Messages")
+        db.execSQL(
+            """
             CREATE TABLE IF NOT EXISTS Messages (
                 id INTEGER PRIMARY KEY NOT NULL,
                 student_id INTEGER NOT NULL,

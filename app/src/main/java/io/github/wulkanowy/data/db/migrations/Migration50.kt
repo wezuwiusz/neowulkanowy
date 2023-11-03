@@ -5,9 +5,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration50 : Migration(49, 50) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS MobileDevices")
-        database.execSQL(
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS MobileDevices")
+        db.execSQL(
             """
             CREATE TABLE IF NOT EXISTS `MobileDevices` (
             `user_login_id` INTEGER NOT NULL, 

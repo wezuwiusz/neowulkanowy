@@ -5,16 +5,17 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration12 : Migration(11, 12) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        createTempStudentsTable(database)
-        replaceStudentTable(database)
-        updateStudentsWithClassId(database, getStudentsIds(database))
-        removeStudentsWithNoClassId(database)
-        ensureThereIsOnlyOneCurrentStudent(database)
+    override fun migrate(db: SupportSQLiteDatabase) {
+        createTempStudentsTable(db)
+        replaceStudentTable(db)
+        updateStudentsWithClassId(db, getStudentsIds(db))
+        removeStudentsWithNoClassId(db)
+        ensureThereIsOnlyOneCurrentStudent(db)
     }
 
-    private fun createTempStudentsTable(database: SupportSQLiteDatabase) {
-        database.execSQL("""
+    private fun createTempStudentsTable(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
             CREATE TABLE IF NOT EXISTS Students_tmp (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 endpoint TEXT NOT NULL,
@@ -30,15 +31,16 @@ class Migration12 : Migration(11, 12) {
                 registration_date INTEGER NOT NULL,
                 class_id INTEGER NOT NULL
             )
-        """)
-        database.execSQL("CREATE UNIQUE INDEX index_Students_email_symbol_student_id_school_id_class_id ON Students_tmp (email, symbol, student_id, school_id, class_id)")
+        """
+        )
+        db.execSQL("CREATE UNIQUE INDEX index_Students_email_symbol_student_id_school_id_class_id ON Students_tmp (email, symbol, student_id, school_id, class_id)")
     }
 
-    private fun replaceStudentTable(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE Students ADD COLUMN class_id INTEGER DEFAULT 0 NOT NULL")
-        database.execSQL("INSERT INTO Students_tmp SELECT * FROM Students")
-        database.execSQL("DROP TABLE Students")
-        database.execSQL("ALTER TABLE Students_tmp RENAME TO Students")
+    private fun replaceStudentTable(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE Students ADD COLUMN class_id INTEGER DEFAULT 0 NOT NULL")
+        db.execSQL("INSERT INTO Students_tmp SELECT * FROM Students")
+        db.execSQL("DROP TABLE Students")
+        db.execSQL("ALTER TABLE Students_tmp RENAME TO Students")
     }
 
     private fun getStudentsIds(database: SupportSQLiteDatabase): List<Int> {
@@ -54,18 +56,18 @@ class Migration12 : Migration(11, 12) {
         return students
     }
 
-    private fun updateStudentsWithClassId(database: SupportSQLiteDatabase, students: List<Int>) {
+    private fun updateStudentsWithClassId(db: SupportSQLiteDatabase, students: List<Int>) {
         students.forEach {
-            database.execSQL("UPDATE Students SET class_id = IFNULL((SELECT class_id FROM Semesters WHERE student_id = $it), 0) WHERE student_id = $it")
+            db.execSQL("UPDATE Students SET class_id = IFNULL((SELECT class_id FROM Semesters WHERE student_id = $it), 0) WHERE student_id = $it")
         }
     }
 
-    private fun removeStudentsWithNoClassId(database: SupportSQLiteDatabase) {
-        database.execSQL("DELETE FROM Students WHERE class_id = 0")
+    private fun removeStudentsWithNoClassId(db: SupportSQLiteDatabase) {
+        db.execSQL("DELETE FROM Students WHERE class_id = 0")
     }
 
-    private fun ensureThereIsOnlyOneCurrentStudent(database: SupportSQLiteDatabase) {
-        database.execSQL("UPDATE Students SET is_current = 0")
-        database.execSQL("UPDATE Students SET is_current = 1 WHERE id = (SELECT MAX(id) FROM Students)")
+    private fun ensureThereIsOnlyOneCurrentStudent(db: SupportSQLiteDatabase) {
+        db.execSQL("UPDATE Students SET is_current = 0")
+        db.execSQL("UPDATE Students SET is_current = 1 WHERE id = (SELECT MAX(id) FROM Students)")
     }
 }

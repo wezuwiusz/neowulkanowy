@@ -5,8 +5,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration30 : Migration(29, 30) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("""
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
             CREATE TABLE TimetableAdditional (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 student_id INTEGER NOT NULL,
@@ -16,6 +17,7 @@ class Migration30 : Migration(29, 30) {
                 date INTEGER NOT NULL,
                 subject TEXT NOT NULL
             )
-        """)
+        """
+        )
     }
 }

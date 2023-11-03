@@ -5,22 +5,24 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration54 : Migration(53, 54) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        migrateResman(database)
-        removeTomaszowMazowieckiStudents(database)
+    override fun migrate(db: SupportSQLiteDatabase) {
+        migrateResman(db)
+        removeTomaszowMazowieckiStudents(db)
     }
 
-    private fun migrateResman(database: SupportSQLiteDatabase) {
-        database.execSQL("""
+    private fun migrateResman(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
             UPDATE Students SET
                 scrapper_base_url = 'https://vulcan.net.pl',
                 login_type = 'ADFSLightScoped',
                 symbol = 'rzeszowprojekt'
             WHERE scrapper_base_url = 'https://resman.pl'
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 
-    private fun removeTomaszowMazowieckiStudents(database: SupportSQLiteDatabase) {
-        database.execSQL("DELETE FROM Students WHERE symbol = 'tomaszowmazowiecki'")
+    private fun removeTomaszowMazowieckiStudents(db: SupportSQLiteDatabase) {
+        db.execSQL("DELETE FROM Students WHERE symbol = 'tomaszowmazowiecki'")
     }
 }

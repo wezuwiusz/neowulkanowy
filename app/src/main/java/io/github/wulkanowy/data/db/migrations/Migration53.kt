@@ -5,14 +5,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 class Migration53 : Migration(52, 53) {
 
-    override fun migrate(database: SupportSQLiteDatabase) {
-        createMailboxTable(database)
-        recreateMessagesTable(database)
+    override fun migrate(db: SupportSQLiteDatabase) {
+        createMailboxTable(db)
+        recreateMessagesTable(db)
     }
 
-    private fun createMailboxTable(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS Mailboxes")
-        database.execSQL(
+    private fun createMailboxTable(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS Mailboxes")
+        db.execSQL(
             """
                 CREATE TABLE IF NOT EXISTS `Mailboxes` (
                     `globalKey` TEXT NOT NULL,
@@ -29,9 +29,9 @@ class Migration53 : Migration(52, 53) {
         )
     }
 
-    private fun recreateMessagesTable(database: SupportSQLiteDatabase) {
-        database.execSQL("DROP TABLE IF EXISTS Messages")
-        database.execSQL(
+    private fun recreateMessagesTable(db: SupportSQLiteDatabase) {
+        db.execSQL("DROP TABLE IF EXISTS Messages")
+        db.execSQL(
             """
                 CREATE TABLE IF NOT EXISTS `Messages` (
                     `email` TEXT NOT NULL,
