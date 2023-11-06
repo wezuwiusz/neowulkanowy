@@ -1,5 +1,5 @@
-Wersja 2.2.5
+Wersja 2.2.6
 
-— naprawiliśmy logowanie do aplikacji, które zostało zepsute w piątek aktualizacją dziennika VULCAN
+— naprawiliśmy logowanie do aplikacji (tym razem musi się udać) na odmianie standardowej i podobnych
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
