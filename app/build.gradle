@@ -194,7 +194,7 @@ ext {
 dependencies {
     implementation 'io.github.wulkanowy:sdk:2.2.7-SNAPSHOT'
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
