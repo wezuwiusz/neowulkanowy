@@ -26,9 +26,6 @@ import javax.inject.Inject
 class WulkanowyApp : Application(), Configuration.Provider {
 
     @Inject
-    lateinit var workerFactory: HiltWorkerFactory
-
-    @Inject
     lateinit var themeManager: ThemeManager
 
     @Inject
@@ -45,6 +42,15 @@ class WulkanowyApp : Application(), Configuration.Provider {
 
     @Inject
     lateinit var remoteConfigHelper: RemoteConfigHelper
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .setMinimumLoggingLevel(if (appInfo.isDebug) VERBOSE else INFO)
+            .build()
 
     override fun onCreate() {
         super.onCreate()
@@ -83,9 +89,4 @@ class WulkanowyApp : Application(), Configuration.Provider {
             analyticsHelper.logEvent("language", "startup" to preferencesRepository.appLanguage)
         }
     }
-
-    override val workManagerConfiguration: Configuration = Configuration.Builder()
-        .setWorkerFactory(workerFactory)
-        .setMinimumLoggingLevel(if (appInfo.isDebug) VERBOSE else INFO)
-        .build()
 }
