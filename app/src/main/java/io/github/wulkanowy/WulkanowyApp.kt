@@ -1,7 +1,9 @@
 package io.github.wulkanowy
 
 import android.app.Application
-import android.util.Log.*
+import android.util.Log.DEBUG
+import android.util.Log.INFO
+import android.util.Log.VERBOSE
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.yariksoffice.lingver.Lingver
@@ -9,15 +11,19 @@ import dagger.hilt.android.HiltAndroidApp
 import fr.bipi.treessence.file.FileLoggerTree
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.ui.base.ThemeManager
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.ActivityLifecycleLogger
+import io.github.wulkanowy.utils.AdsHelper
+import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
+import io.github.wulkanowy.utils.CrashLogExceptionTree
+import io.github.wulkanowy.utils.CrashLogTree
+import io.github.wulkanowy.utils.DebugLogTree
+import io.github.wulkanowy.utils.RemoteConfigHelper
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltAndroidApp
 class WulkanowyApp : Application(), Configuration.Provider {
-
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
 
     @Inject
     lateinit var themeManager: ThemeManager
@@ -36,6 +42,15 @@ class WulkanowyApp : Application(), Configuration.Provider {
 
     @Inject
     lateinit var remoteConfigHelper: RemoteConfigHelper
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .setMinimumLoggingLevel(if (appInfo.isDebug) VERBOSE else INFO)
+            .build()
 
     override fun onCreate() {
         super.onCreate()
@@ -74,9 +89,4 @@ class WulkanowyApp : Application(), Configuration.Provider {
             analyticsHelper.logEvent("language", "startup" to preferencesRepository.appLanguage)
         }
     }
-
-    override fun getWorkManagerConfiguration() = Configuration.Builder()
-        .setWorkerFactory(workerFactory)
-        .setMinimumLoggingLevel(if (appInfo.isDebug) VERBOSE else INFO)
-        .build()
 }
