@@ -9,7 +9,11 @@ import android.view.MenuItem
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
-import androidx.core.view.*
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
@@ -23,12 +27,19 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.databinding.ActivityMainBinding
-import io.github.wulkanowy.databinding.DialogAdsConsentBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.accountquick.AccountQuickDialog
 import io.github.wulkanowy.ui.modules.settings.appearance.menuorder.AppMenuItem
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.AppInfo
+import io.github.wulkanowy.utils.InAppReviewHelper
+import io.github.wulkanowy.utils.InAppUpdateHelper
+import io.github.wulkanowy.utils.createNameInitialsDrawable
+import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.nickOrName
+import io.github.wulkanowy.utils.safelyPopFragments
+import io.github.wulkanowy.utils.setOnViewChangeListener
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
@@ -310,40 +321,6 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .setOnDismissListener { }
             .show()
-    }
-
-    override fun showPrivacyPolicyDialog() {
-        val dialogAdsConsentBinding = DialogAdsConsentBinding.inflate(layoutInflater)
-
-        val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.pref_ads_consent_title)
-            .setMessage(R.string.pref_ads_consent_description)
-            .setView(dialogAdsConsentBinding.root)
-            .show()
-
-        dialogAdsConsentBinding.adsConsentOver.setOnCheckedChangeListener { _, isChecked ->
-            dialogAdsConsentBinding.adsConsentPersonalised.isEnabled = isChecked
-        }
-
-        dialogAdsConsentBinding.adsConsentPersonalised.setOnClickListener {
-            presenter.onPrivacyAgree(true)
-            dialog.dismiss()
-        }
-
-        dialogAdsConsentBinding.adsConsentNonPersonalised.setOnClickListener {
-            presenter.onPrivacyAgree(false)
-            dialog.dismiss()
-        }
-
-        dialogAdsConsentBinding.adsConsentPrivacy.setOnClickListener { presenter.onPrivacySelected() }
-        dialogAdsConsentBinding.adsConsentCancel.setOnClickListener { dialog.cancel() }
-    }
-
-    override fun openPrivacyPolicy() {
-        openInternetBrowser(
-            "https://wulkanowy.github.io/polityka-prywatnosci.html",
-            ::showMessage
-        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -769,13 +769,6 @@
     <string name="pref_ads_privacy_link">Polityka prywatności</string>
     <string name="pref_ads_loading">Ładowanie reklamy</string>
     <string name="pref_ads_once_per_visit">Dziękujemy za wsparcie, wróć później po więcej reklam</string>
-    <string name="pref_ads_consent_title">Czy możemy używać Twoich danych do wyświetlania reklam?</string>
-    <string name="pref_ads_consent_description">Możesz zmienić swój wybór w dowolnym momencie w ustawieniach aplikacji. Możemy wykorzystać Twoje dane do wyświetlania reklam dostosowanych do Ciebie lub, przy użyciu mniejszej ilości danych, wyświetlić niepersonalizowane reklamy. Zobacz naszą Politykę Prywatności, aby uzyskać więcej informacji</string>
-    <string name="pref_ads_summary_personalized">Spersonalizowane reklamy</string>
-    <string name="pref_ads_summary_non_personalized">Niespersonalizowane reklamy</string>
-    <string name="pref_ads_over_18_years_old">Mam ukończone 18 lat</string>
-    <string name="pref_ads_option_personalized">Tak, spersonalizowane reklamy</string>
-    <string name="pref_ads_option_non_personalized">Tak, niespersonalizowane reklamy</string>
     <string name="pref_settings_advanced_title">Zaawansowane</string>
     <string name="pref_settings_appearance_title">Wygląd i zachowanie</string>
     <string name="pref_settings_notifications_title">Powiadomienia</string>

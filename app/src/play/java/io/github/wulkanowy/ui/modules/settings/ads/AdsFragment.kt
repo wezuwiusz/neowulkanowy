@@ -2,19 +2,17 @@ package io.github.wulkanowy.ui.modules.settings.ads
 
 import android.os.Bundle
 import android.view.View
-import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.databinding.DialogAdsConsentBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.ErrorDialog
 import io.github.wulkanowy.ui.modules.auth.AuthDialog
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.openInternetBrowser
 import javax.inject.Inject
 
@@ -23,6 +21,9 @@ class AdsFragment : PreferenceFragmentCompat(), MainView.TitledView, AdsView {
 
     @Inject
     lateinit var presenter: AdsPresenter
+
+    @Inject
+    lateinit var adsHelper: AdsHelper
 
     override val titleStringId = R.string.pref_settings_ads_title
 
@@ -46,59 +47,24 @@ class AdsFragment : PreferenceFragmentCompat(), MainView.TitledView, AdsView {
             true
         }
 
-        findPreference<CheckBoxPreference>(getString(R.string.pref_key_ads_consent_data_processing))
-            ?.setOnPreferenceChangeListener { _, newValue ->
-                presenter.onConsentSelected(newValue as Boolean)
-                true
-            }
+        findPreference<Preference>(getString(R.string.pref_key_ads_ump_agreements))?.setOnPreferenceClickListener {
+            presenter.onUmpAgreementsSelected()
+            true
+        }
+
+        findPreference<Preference>(getString(R.string.pref_key_ads_single_support))
+            ?.isEnabled = adsHelper.canShowAd
+
+        findPreference<SwitchPreferenceCompat>(getString(R.string.pref_key_ads_enabled))?.setOnPreferenceChangeListener { _, newValue ->
+            presenter.onAdsEnabledSelected(newValue as Boolean)
+            true
+        }
     }
 
     override fun showAd(ad: RewardedInterstitialAd) {
         if (isVisible) {
             ad.show(requireActivity()) {}
         }
-    }
-
-    override fun showPrivacyPolicyDialog() {
-        val dialogAdsConsentBinding = DialogAdsConsentBinding.inflate(layoutInflater)
-
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.pref_ads_consent_title)
-            .setMessage(R.string.pref_ads_consent_description)
-            .setView(dialogAdsConsentBinding.root)
-            .setOnCancelListener { presenter.onPrivacyDialogCanceled() }
-            .show()
-
-        dialogAdsConsentBinding.adsConsentOver.setOnCheckedChangeListener { _, isChecked ->
-            dialogAdsConsentBinding.adsConsentPersonalised.isEnabled = isChecked
-        }
-
-        dialogAdsConsentBinding.adsConsentPersonalised.setOnClickListener {
-            presenter.onPersonalizedAgree()
-            dialog.dismiss()
-        }
-
-        dialogAdsConsentBinding.adsConsentNonPersonalised.setOnClickListener {
-            presenter.onNonPersonalizedAgree()
-            dialog.dismiss()
-        }
-
-        dialogAdsConsentBinding.adsConsentPrivacy.setOnClickListener { presenter.onPrivacySelected() }
-        dialogAdsConsentBinding.adsConsentCancel.setOnClickListener { dialog.cancel() }
-    }
-
-    override fun showProcessingDataSummary(isPersonalized: Boolean?) {
-        val summaryText = isPersonalized?.let {
-            getString(if (it) R.string.pref_ads_summary_personalized else R.string.pref_ads_summary_non_personalized)
-        }
-
-        findPreference<CheckBoxPreference>(getString(R.string.pref_key_ads_consent_data_processing))
-            ?.summary = summaryText
-    }
-
-    override fun setCheckedProcessingData(checked: Boolean) {
-        findPreference<CheckBoxPreference>(getString(R.string.pref_key_ads_consent_data_processing))
-            ?.isChecked = checked
     }
 
     override fun setCheckedAdsEnabled(checked: Boolean) {

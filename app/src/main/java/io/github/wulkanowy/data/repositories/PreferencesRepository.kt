@@ -9,7 +9,12 @@ import com.fredporciuncula.flow.preferences.Preference
 import com.fredporciuncula.flow.preferences.Serializer
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.enums.*
+import io.github.wulkanowy.data.enums.AppTheme
+import io.github.wulkanowy.data.enums.GradeColorTheme
+import io.github.wulkanowy.data.enums.GradeExpandMode
+import io.github.wulkanowy.data.enums.GradeSortingMode
+import io.github.wulkanowy.data.enums.TimetableGapsMode
+import io.github.wulkanowy.data.enums.TimetableMode
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
 import io.github.wulkanowy.ui.modules.grade.GradeAverageMode
 import io.github.wulkanowy.ui.modules.settings.appearance.menuorder.AppMenuItem
@@ -18,7 +23,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.time.Instant
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -303,19 +308,6 @@ class PreferencesRepository @Inject constructor(
         get() = sharedPref.getBoolean(PREF_KEY_APP_SUPPORT_SHOWN, false)
         set(value) = sharedPref.edit { putBoolean(PREF_KEY_APP_SUPPORT_SHOWN, value) }
 
-    var isAgreeToProcessData: Boolean
-        get() = getBoolean(
-            R.string.pref_key_ads_consent_data_processing,
-            R.bool.pref_default_ads_consent_data_processing
-        )
-        set(value) = sharedPref.edit {
-            putBoolean(context.getString(R.string.pref_key_ads_consent_data_processing), value)
-        }
-
-    var isPersonalizedAdsEnabled: Boolean
-        get() = sharedPref.getBoolean(PREF_KEY_PERSONALIZED_ADS_ENABLED, false)
-        set(value) = sharedPref.edit { putBoolean(PREF_KEY_PERSONALIZED_ADS_ENABLED, value) }
-
     val isAdsEnabledFlow = flowSharedPref.getBoolean(
         context.getString(R.string.pref_key_ads_enabled),
         context.resources.getBoolean(R.bool.pref_default_ads_enabled)
@@ -398,7 +390,6 @@ class PreferencesRepository @Inject constructor(
         private const val PREF_KEY_IN_APP_REVIEW_DATE = "in_app_review_date"
         private const val PREF_KEY_IN_APP_REVIEW_DONE = "in_app_review_done"
         private const val PREF_KEY_APP_SUPPORT_SHOWN = "app_support_shown"
-        private const val PREF_KEY_PERSONALIZED_ADS_ENABLED = "personalized_ads_enabled"
         private const val PREF_KEY_ADMIN_DISMISSED_MESSAGE_IDS = "admin_message_dismissed_ids"
     }
 }

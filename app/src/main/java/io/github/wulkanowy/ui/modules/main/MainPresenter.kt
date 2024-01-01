@@ -19,7 +19,6 @@ import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
 import kotlinx.coroutines.launch
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.time.Duration
@@ -52,6 +51,7 @@ class MainPresenter @Inject constructor(
             destinationType in rootDestinationTypeList -> {
                 rootDestinationTypeList.indexOf(destinationType)
             }
+
             else -> 4
         }
 
@@ -110,6 +110,7 @@ class MainPresenter @Inject constructor(
         is AccountView,
         is StudentInfoView,
         is AccountDetailsView -> false
+
         else -> true
     }
 
@@ -148,20 +149,8 @@ class MainPresenter @Inject constructor(
     }
 
     fun onEnableAdsSelected() {
-        view?.showPrivacyPolicyDialog()
-    }
-
-    fun onPrivacyAgree(isPersonalizedAds: Boolean) {
-        preferencesRepository.isAgreeToProcessData = true
-        preferencesRepository.isPersonalizedAdsEnabled = isPersonalizedAds
-
-        adsHelper.initialize()
-
         preferencesRepository.isAdsEnabled = true
-    }
-
-    fun onPrivacySelected() {
-        view?.openPrivacyPolicy()
+        adsHelper.initialize()
     }
 
     private fun checkInAppReview() {
@@ -189,8 +178,8 @@ class MainPresenter @Inject constructor(
                     .getOrElse { return@launch }
 
                 if (Instant.now().minus(Duration.ofDays(28)).isAfter(student.registrationDate)) {
-                    view?.showAppSupport()
                     preferencesRepository.isAppSupportShown = true
+                    view?.showAppSupport()
                 }
             }
         }

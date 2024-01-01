@@ -679,13 +679,6 @@
     <string name="pref_ads_privacy_link">Privacy policy</string>
     <string name="pref_ads_loading">Ad is loading</string>
     <string name="pref_ads_once_per_visit">Thank you for your support, come back later for more ads</string>
-    <string name="pref_ads_consent_title">Can we use your data to display ads?</string>
-    <string name="pref_ads_consent_description">You can change your choice anytime in the app settings. We may use your data to display ads tailored to you or, using less of your data, display non-personalized ads. Please see our Privacy Policy for details</string>
-    <string name="pref_ads_summary_personalized">Personalized ads</string>
-    <string name="pref_ads_summary_non_personalized">Non-personalized ads</string>
-    <string name="pref_ads_over_18_years_old">I am over 18 years old</string>
-    <string name="pref_ads_option_personalized">Yes, personalized ads</string>
-    <string name="pref_ads_option_non_personalized">Yes, non-personalized ads</string>
     <string name="pref_settings_advanced_title">Advanced</string>
     <string name="pref_settings_appearance_title">Appearance &amp; Behavior</string>
     <string name="pref_settings_notifications_title">Notifications</string>

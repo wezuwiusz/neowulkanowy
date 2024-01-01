@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        app:defaultValue="@string/pref_key_ads_enabled"
+        app:iconSpaceReserved="false"
+        app:key="@string/pref_key_ads_enabled"
+        app:singleLineTitle="false"
+        app:title="@string/pref_ads_show_in_app" />
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/pref_ads_agreements">
@@ -8,25 +14,17 @@
             app:key="@string/pref_key_ads_privacy_policy"
             app:singleLineTitle="false"
             app:title="@string/pref_ads_privacy_policy" />
-        <CheckBoxPreference
-            app:defaultValue="@bool/pref_default_ads_consent_data_processing"
+        <Preference
+            app:dependency="@string/pref_key_ads_enabled"
             app:iconSpaceReserved="false"
-            app:key="@string/pref_key_ads_consent_data_processing"
+            app:key="@string/pref_key_ads_ump_agreements"
             app:singleLineTitle="false"
             app:title="@string/pref_ads_consent" />
     </PreferenceCategory>
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/pref_ads_support_category_name">
-        <SwitchPreferenceCompat
-            app:defaultValue="@string/pref_key_ads_enabled"
-            app:dependency="@string/pref_key_ads_consent_data_processing"
-            app:iconSpaceReserved="false"
-            app:key="@string/pref_key_ads_enabled"
-            app:singleLineTitle="false"
-            app:title="@string/pref_ads_show_in_app" />
         <Preference
-            app:dependency="@string/pref_key_ads_consent_data_processing"
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_ads_single_support"
             app:singleLineTitle="false"

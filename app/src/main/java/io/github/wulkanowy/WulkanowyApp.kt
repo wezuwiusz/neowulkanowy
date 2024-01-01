@@ -12,7 +12,6 @@ import fr.bipi.treessence.file.FileLoggerTree
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.ui.base.ThemeManager
 import io.github.wulkanowy.utils.ActivityLifecycleLogger
-import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.CrashLogExceptionTree
@@ -38,9 +37,6 @@ class WulkanowyApp : Application(), Configuration.Provider {
     lateinit var analyticsHelper: AnalyticsHelper
 
     @Inject
-    lateinit var adsHelper: AdsHelper
-
-    @Inject
     lateinit var remoteConfigHelper: RemoteConfigHelper
 
     @Inject
@@ -56,7 +52,6 @@ class WulkanowyApp : Application(), Configuration.Provider {
         super.onCreate()
         initializeAppLanguage()
         themeManager.applyDefaultTheme()
-        adsHelper.initialize()
         remoteConfigHelper.initialize()
         initLogging()
     }

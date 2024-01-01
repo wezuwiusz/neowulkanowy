@@ -769,13 +769,6 @@
     <string name="pref_ads_privacy_link">Политика конфиденциальности</string>
     <string name="pref_ads_loading">Реклама загружается</string>
     <string name="pref_ads_once_per_visit">Спасибо за вашу поддержку, возвращайтесь позже для дополнительной рекламы</string>
-    <string name="pref_ads_consent_title">Можем ли мы использовать ваши данные для показа рекламы?</string>
-    <string name="pref_ads_consent_description">Вы можете изменить свой выбор в любое время в настройках приложения. Мы можем использовать ваши данные для показа объявлений в соответствии с вашими пожеланиями или, используя меньше данных, отображать неперсональную рекламу. Пожалуйста, ознакомьтесь с нашей политикой конфиденциальности для подробностей</string>
-    <string name="pref_ads_summary_personalized">Персонализированная реклама</string>
-    <string name="pref_ads_summary_non_personalized">Неперсонализированная реклама</string>
-    <string name="pref_ads_over_18_years_old">Я старше 18 лет</string>
-    <string name="pref_ads_option_personalized">Да, персонализировать рекламу</string>
-    <string name="pref_ads_option_non_personalized">Да, не персонализировать рекламу</string>
     <string name="pref_settings_advanced_title">Расширенные</string>
     <string name="pref_settings_appearance_title">Внешний вид и поведение</string>
     <string name="pref_settings_notifications_title">Уведомления</string>
