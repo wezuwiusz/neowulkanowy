@@ -760,7 +760,7 @@
     <string name="pref_ads_support_category_name">Podpora</string>
     <string name="pref_ads_privacy_policy">Ochrana osobních údajů</string>
     <string name="pref_ads_agreements">Souhlasy</string>
-    <string name="pref_ads_consent">Souhlas se zpracováním údajů souvisejících s reklamami</string>
+    <string name="pref_ads_consent">Show consent to data processing</string>
     <string name="pref_ads_show_in_app">Zobrazit reklamy v aplikaci</string>
     <string name="pref_ads_support">Podívejte se na jednu reklamu pro podporu projektu</string>
     <string name="pref_ads_privacy_title">Souhlas se zpracováním dat</string>
@@ -769,13 +769,6 @@
     <string name="pref_ads_privacy_link">Ochrana osobních údajů</string>
     <string name="pref_ads_loading">Reklama se načítá</string>
     <string name="pref_ads_once_per_visit">Děkujeme za vaši podporu, vraťte se později pro více reklam</string>
-    <string name="pref_ads_consent_title">Můžeme použít Vaše data k zobrazení reklam?</string>
-    <string name="pref_ads_consent_description">Volbu můžete kdykoliv změnit v nastavení aplikace. Můžeme použít Vaše data k zobrazení reklam šitých pro vás nebo pomocí méně vašich dat zobrazovat nepřizpůsobené reklamy. Podrobnosti naleznete v našich Zásadách ochrany osobních údajů</string>
-    <string name="pref_ads_summary_personalized">Přizpůsobené reklamy</string>
-    <string name="pref_ads_summary_non_personalized">Nepřizpůsobené reklamy</string>
-    <string name="pref_ads_over_18_years_old">Je mi více než 18 let</string>
-    <string name="pref_ads_option_personalized">Ano, přizpůsobené reklamy</string>
-    <string name="pref_ads_option_non_personalized">Ano, nepřizpůsobené reklamy</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhled a chování</string>
     <string name="pref_settings_notifications_title">Oznámení</string>

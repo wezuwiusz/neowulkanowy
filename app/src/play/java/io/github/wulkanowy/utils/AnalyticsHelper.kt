@@ -1,25 +1,24 @@
 package io.github.wulkanowy.utils
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
+import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.google.firebase.analytics.analytics
+import com.google.firebase.crashlytics.crashlytics
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AnalyticsHelper @Inject constructor(
-    @ApplicationContext private val context: Context,
     preferencesRepository: PreferencesRepository,
     appInfo: AppInfo,
 ) {
 
-    private val analytics by lazy { FirebaseAnalytics.getInstance(context) }
+    private val analytics by lazy { Firebase.analytics }
 
-    private val crashlytics by lazy { FirebaseCrashlytics.getInstance() }
+    private val crashlytics by lazy { Firebase.crashlytics }
 
     init {
         if (!appInfo.isDebug) {

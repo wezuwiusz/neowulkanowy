@@ -1,19 +1,46 @@
 package io.github.wulkanowy.ui.modules.dashboard
 
-import io.github.wulkanowy.data.*
+import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.enums.MessageType
-import io.github.wulkanowy.data.repositories.*
+import io.github.wulkanowy.data.errorOrNull
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.mapResourceData
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.repositories.AttendanceSummaryRepository
+import io.github.wulkanowy.data.repositories.ConferenceRepository
+import io.github.wulkanowy.data.repositories.ExamRepository
+import io.github.wulkanowy.data.repositories.GradeRepository
+import io.github.wulkanowy.data.repositories.HomeworkRepository
+import io.github.wulkanowy.data.repositories.LuckyNumberRepository
+import io.github.wulkanowy.data.repositories.MessageRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.SchoolAnnouncementRepository
+import io.github.wulkanowy.data.repositories.SemesterRepository
+import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.Instant
@@ -48,6 +75,11 @@ class DashboardPresenter @Inject constructor(
 
     private val firstLoadedItemList = mutableListOf<DashboardItem.Type>()
 
+    private val selectedDashboardTiles
+        get() = preferencesRepository.selectedDashboardTiles
+            .filterNot { it == DashboardItem.Tile.ADS && !adsHelper.canShowAd }
+            .toSet()
+
     private lateinit var lastError: Throwable
 
     override fun onAttachView(view: DashboardView) {
@@ -59,10 +91,19 @@ class DashboardPresenter @Inject constructor(
             showContent(false)
         }
 
+        val selectedDashboardTilesFlow = preferencesRepository.selectedDashboardTilesFlow
+            .map { selectedDashboardTiles }
+        val isAdsEnabledFlow = preferencesRepository.isAdsEnabledFlow
+            .filter { (adsHelper.canShowAd && it) || !it }
+            .map { selectedDashboardTiles }
+        val isMobileAdsSdkInitializedFlow = adsHelper.isMobileAdsSdkInitialized
+            .filter { it }
+            .map { selectedDashboardTiles }
+
         merge(
-            preferencesRepository.selectedDashboardTilesFlow,
-            preferencesRepository.isAdsEnabledFlow
-                .map { preferencesRepository.selectedDashboardTiles }
+            selectedDashboardTilesFlow,
+            isAdsEnabledFlow,
+            isMobileAdsSdkInitializedFlow
         )
             .onEach { loadData(tilesToLoad = it) }
             .launch("dashboard_pref")
@@ -71,7 +112,7 @@ class DashboardPresenter @Inject constructor(
     fun onAdminMessageDismissed(adminMessage: AdminMessage) {
         preferencesRepository.dismissedAdminMessageIds += adminMessage.id
 
-        loadData(preferencesRepository.selectedDashboardTiles)
+        loadData(selectedDashboardTiles)
     }
 
     fun onDragAndDropEnd(list: List<DashboardItem>) {
@@ -187,7 +228,7 @@ class DashboardPresenter @Inject constructor(
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the dashboard")
-        loadData(preferencesRepository.selectedDashboardTiles, forceRefresh = true)
+        loadData(selectedDashboardTiles, forceRefresh = true)
     }
 
     fun onRetry() {
@@ -195,7 +236,7 @@ class DashboardPresenter @Inject constructor(
             showErrorView(false)
             showProgress(true)
         }
-        loadData(preferencesRepository.selectedDashboardTiles, forceRefresh = true)
+        loadData(selectedDashboardTiles, forceRefresh = true)
     }
 
     fun onViewReselected() {
@@ -216,7 +257,7 @@ class DashboardPresenter @Inject constructor(
     }
 
     fun onDashboardTileSettingsSelected(): Boolean {
-        view?.showDashboardTileSettings(preferencesRepository.selectedDashboardTiles.toList())
+        view?.showDashboardTileSettings(selectedDashboardTiles.toList())
         return true
     }
 
@@ -232,7 +273,7 @@ class DashboardPresenter @Inject constructor(
 
     private fun loadHorizontalGroup(student: Student, forceRefresh: Boolean) {
         flow {
-            val selectedTiles = preferencesRepository.selectedDashboardTiles
+            val selectedTiles = selectedDashboardTiles
             val flowSuccess = flowOf(Resource.Success(null))
 
             val luckyNumberFlow = luckyNumberRepository.getLuckyNumber(student, forceRefresh)

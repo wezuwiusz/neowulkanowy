@@ -9,8 +9,6 @@ interface AdsView : BaseView {
 
     fun showAd(ad: RewardedInterstitialAd)
 
-    fun showPrivacyPolicyDialog()
-
     fun openPrivacyPolicy()
 
     fun showLoadingSupportAd(show: Boolean)
@@ -18,8 +16,4 @@ interface AdsView : BaseView {
     fun showWatchAdOncePerVisit(show: Boolean)
 
     fun setCheckedAdsEnabled(checked: Boolean)
-
-    fun setCheckedProcessingData(checked: Boolean)
-
-    fun showProcessingDataSummary(isPersonalized: Boolean?)
 }

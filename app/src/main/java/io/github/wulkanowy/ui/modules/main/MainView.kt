@@ -46,10 +46,6 @@ interface MainView : BaseView {
 
     fun showAppSupport()
 
-    fun showPrivacyPolicyDialog()
-
-    fun openPrivacyPolicy()
-
     fun openMoreDestination(destination: Destination)
 
     interface MainChildView {

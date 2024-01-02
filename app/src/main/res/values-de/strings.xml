@@ -670,7 +670,7 @@
     <string name="pref_ads_support_category_name">Unterstützung</string>
     <string name="pref_ads_privacy_policy">Datenschutz-Bestimmungen</string>
     <string name="pref_ads_agreements">Vereinbarungen</string>
-    <string name="pref_ads_consent">Zustimmung zur Verarbeitung von Daten im Zusammenhang mit Anzeigen</string>
+    <string name="pref_ads_consent">Show consent to data processing</string>
     <string name="pref_ads_show_in_app">Anzeigen in der App anzeigen</string>
     <string name="pref_ads_support">Einzelanzeige ansehen, um Projekt zu unterstützen</string>
     <string name="pref_ads_privacy_title">Einwilligung in die Datenverarbeitung</string>
@@ -679,13 +679,6 @@
     <string name="pref_ads_privacy_link">Datenschutzerklärung</string>
     <string name="pref_ads_loading">Anzeige wird geladen</string>
     <string name="pref_ads_once_per_visit">Vielen Dank für Ihre Unterstützung, kommen Sie später wieder für weitere Anzeigen</string>
-    <string name="pref_ads_consent_title">Können wir Ihre Daten zur Anzeige von Werbung verwenden?</string>
-    <string name="pref_ads_consent_description">Sie können Ihre Wahl jederzeit in den App-Einstellungen ändern. Wir verwenden Ihre Daten, um auf Sie zugeschnittene Anzeigen anzuzeigen oder unter Verwendung weniger Ihrer Daten nicht personalisierte Werbung anzuzeigen. Bitte lesen Sie unsere Datenschutzerklärung für Details</string>
-    <string name="pref_ads_summary_personalized">Personalisierte Werbung</string>
-    <string name="pref_ads_summary_non_personalized">keine personalisierte Werbung</string>
-    <string name="pref_ads_over_18_years_old">Ich bin über 18 Jahre alt</string>
-    <string name="pref_ads_option_personalized">Ja, personalisierte Werbung</string>
-    <string name="pref_ads_option_non_personalized">Ja, nicht personalisierte Werbung</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>

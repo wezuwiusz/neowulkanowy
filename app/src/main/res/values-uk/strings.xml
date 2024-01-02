@@ -760,7 +760,7 @@
     <string name="pref_ads_support_category_name">Підтримка</string>
     <string name="pref_ads_privacy_policy">Політика конфіденційності</string>
     <string name="pref_ads_agreements">Угоди</string>
-    <string name="pref_ads_consent">Згода на обробку даних, пов\'язаних з рекламою</string>
+    <string name="pref_ads_consent">Показати згоду на обробку даних</string>
     <string name="pref_ads_show_in_app">Показувати рекламу в додатку</string>
     <string name="pref_ads_support">Подивіться одну рекламу для підтримки проєкту</string>
     <string name="pref_ads_privacy_title">Згода в обробці даних</string>
@@ -769,13 +769,6 @@
     <string name="pref_ads_privacy_link">Політика конфіденційності</string>
     <string name="pref_ads_loading">Реклама завантажується</string>
     <string name="pref_ads_once_per_visit">Дякуємо за вашу підтримку, повертайтеся пізніше для більшої кількості реклам</string>
-    <string name="pref_ads_consent_title">Чи можемо ми використовувати ваші дані для висвітлювання реклами?</string>
-    <string name="pref_ads_consent_description">Ви можете змінити свій вибір в будь-який час в налаштуваннях додатку. Ми можемо використовувати ваші дані для висвітлювання реклами, адаптованої до вас або, використовуючи менше ваших даних, висвітлювати неперсоналізовану рекламу. Перегляньте нашу Політику конфіденційності для подробиць</string>
-    <string name="pref_ads_summary_personalized">Персоналізована реклама</string>
-    <string name="pref_ads_summary_non_personalized">Неперсоналізована реклама</string>
-    <string name="pref_ads_over_18_years_old">Мені більше 18 років</string>
-    <string name="pref_ads_option_personalized">Так, персоналізована реклама</string>
-    <string name="pref_ads_option_non_personalized">Так, неперсоналізована реклама</string>
     <string name="pref_settings_advanced_title">Додатково</string>
     <string name="pref_settings_appearance_title">Вигляд та поведінка</string>
     <string name="pref_settings_notifications_title">Сповіщення</string>
