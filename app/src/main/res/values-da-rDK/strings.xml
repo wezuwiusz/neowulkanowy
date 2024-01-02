@@ -670,7 +670,7 @@
     <string name="pref_ads_support_category_name">Support</string>
     <string name="pref_ads_privacy_policy">Privacy Policy</string>
     <string name="pref_ads_agreements">Agreements</string>
-    <string name="pref_ads_consent">Consent to processing of data related to ads</string>
+    <string name="pref_ads_consent">Show consent to data processing</string>
     <string name="pref_ads_show_in_app">Show ads in app</string>
     <string name="pref_ads_support">Watch single ad to support project</string>
     <string name="pref_ads_privacy_title">Consent to data processing</string>

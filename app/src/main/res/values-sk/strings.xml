@@ -760,7 +760,7 @@
     <string name="pref_ads_support_category_name">Podpora</string>
     <string name="pref_ads_privacy_policy">Ochrana osobných údajov</string>
     <string name="pref_ads_agreements">Súhlasy</string>
-    <string name="pref_ads_consent">Súhlas so spracovaním údajov súvisiacich s reklamami</string>
+    <string name="pref_ads_consent">Show consent to data processing</string>
     <string name="pref_ads_show_in_app">Zobraziť reklamy v aplikácii</string>
     <string name="pref_ads_support">Pozrite sa na jednu reklamu pre podporu projektu</string>
     <string name="pref_ads_privacy_title">Súhlas so spracovaním dát</string>

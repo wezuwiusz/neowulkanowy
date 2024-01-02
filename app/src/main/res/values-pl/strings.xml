@@ -760,7 +760,7 @@
     <string name="pref_ads_support_category_name">Wsparcie</string>
     <string name="pref_ads_privacy_policy">Polityka prywatności</string>
     <string name="pref_ads_agreements">Zgody</string>
-    <string name="pref_ads_consent">Zgoda na przetwarzanie danych związanych z reklamami</string>
+    <string name="pref_ads_consent">Pokaż zgodę na przetwarzanie danych</string>
     <string name="pref_ads_show_in_app">Pokazuj reklamy w aplikacji</string>
     <string name="pref_ads_support">Obejrzyj pojedynczą reklamę, aby wesprzeć projekt</string>
     <string name="pref_ads_privacy_title">Zgoda na przetwarzanie danych</string>

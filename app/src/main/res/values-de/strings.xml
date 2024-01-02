@@ -670,7 +670,7 @@
     <string name="pref_ads_support_category_name">Unterstützung</string>
     <string name="pref_ads_privacy_policy">Datenschutz-Bestimmungen</string>
     <string name="pref_ads_agreements">Vereinbarungen</string>
-    <string name="pref_ads_consent">Zustimmung zur Verarbeitung von Daten im Zusammenhang mit Anzeigen</string>
+    <string name="pref_ads_consent">Show consent to data processing</string>
     <string name="pref_ads_show_in_app">Anzeigen in der App anzeigen</string>
     <string name="pref_ads_support">Einzelanzeige ansehen, um Projekt zu unterstützen</string>
     <string name="pref_ads_privacy_title">Einwilligung in die Datenverarbeitung</string>
