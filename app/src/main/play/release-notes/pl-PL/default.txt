@@ -1,5 +1,6 @@
-Wersja 2.2.7
+Wersja 2.3.0
 
-— naprawiliśmy logowanie do aplikacji i odświeżanie danych na odmianie standardowej i podobnych
+— poprawiliśmy kilka usterek przy odświeżaniu danych (ale pewnie nie wszystkie)
+— zaktualizowaliśmy sposób pytania o zgodę na personalizowane reklamy
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
