@@ -162,7 +162,7 @@ play {
     defaultToAppBundles = false
     track = 'production'
     releaseStatus = ReleaseStatus.IN_PROGRESS
-    userFraction = 0.15d
+    userFraction = 0.99d
     updatePriority = 3
     enabled.set(false)
 }
@@ -193,7 +193,7 @@ ext {
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.3.3-SNAPSHOT'
+    implementation 'com.github.wulkanowy:sdk:2.3.3'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
