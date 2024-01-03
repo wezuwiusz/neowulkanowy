@@ -1,6 +1,5 @@
-Wersja 2.3.0
+Wersja 2.3.1
 
 — poprawiliśmy kilka usterek przy odświeżaniu danych (ale pewnie nie wszystkie)
-— zaktualizowaliśmy sposób pytania o zgodę na personalizowane reklamy
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
