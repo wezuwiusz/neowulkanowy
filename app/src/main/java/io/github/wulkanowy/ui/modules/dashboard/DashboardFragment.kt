@@ -30,7 +30,12 @@ import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.notificationscenter.NotificationsCenterFragment
 import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.capitalise
+import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.getErrorString
+import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.openInternetBrowser
+import io.github.wulkanowy.utils.toFormattedString
 import java.time.LocalDate
 import javax.inject.Inject
 

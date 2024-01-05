@@ -24,7 +24,9 @@ class SettingsFragment : PreferenceFragmentCompat(), MainView.TitledView, Settin
 
     override fun showMessage(text: String) {}
 
-    override fun showExpiredDialog() {}
+    override fun showExpiredCredentialsDialog() {}
+
+    override fun showDecryptionFailedDialog() {}
 
     override fun openClearLoginView() {}
 

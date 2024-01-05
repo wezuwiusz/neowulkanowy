@@ -68,11 +68,20 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
         } else Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
-    override fun showExpiredDialog() {
+    override fun showExpiredCredentialsDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.main_expired_credentials_title)
+            .setMessage(R.string.main_expired_credentials_description)
+            .setPositiveButton(R.string.main_log_in) { _, _ -> presenter.onConfirmExpiredCredentialsSelected() }
+            .setNegativeButton(android.R.string.cancel) { _, _ -> }
+            .show()
+    }
+
+    override fun showDecryptionFailedDialog() {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.main_session_expired)
             .setMessage(R.string.main_session_relogin)
-            .setPositiveButton(R.string.main_log_in) { _, _ -> presenter.onExpiredLoginSelected() }
+            .setPositiveButton(R.string.main_log_in) { _, _ -> presenter.onConfirmDecryptionFailedSelected() }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()
     }
