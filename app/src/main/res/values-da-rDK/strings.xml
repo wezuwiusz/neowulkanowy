@@ -96,6 +96,8 @@
     <string name="main_log_in">Log in</string>
     <string name="main_session_expired">Session expired</string>
     <string name="main_session_relogin">Session expired, log in again</string>
+    <string name="main_expired_credentials_description">Your account password has been changed. You need to log in to Wulkanowy again</string>
+    <string name="main_expired_credentials_title">Password changed</string>
     <string name="main_support_title">Application support</string>
     <string name="main_support_description">Do you like this app? Support its development by enabling non-invasive ads that you can disable at any time</string>
     <string name="main_support_positive">Enable ads</string>

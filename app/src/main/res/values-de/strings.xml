@@ -96,6 +96,8 @@
     <string name="main_log_in">Anmelden</string>
     <string name="main_session_expired">Die Sitzung ist abgelaufen</string>
     <string name="main_session_relogin">Die Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein</string>
+    <string name="main_expired_credentials_description">Your account password has been changed. You need to log in to Wulkanowy again</string>
+    <string name="main_expired_credentials_title">Password changed</string>
     <string name="main_support_title">Anwendungsunterstützung</string>
     <string name="main_support_description">Gefällt Ihnen diese App? Unterstützen Sie ihre Entwicklung, indem Sie nicht-invasive Werbung aktivieren, die Sie jederzeit deaktivieren können</string>
     <string name="main_support_positive">Werbung aktivieren</string>
