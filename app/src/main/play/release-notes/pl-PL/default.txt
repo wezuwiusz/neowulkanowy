@@ -1,4 +1,4 @@
-Wersja 2.3.2
+Wersja 2.3.3
 
 — poprawiliśmy kolejne usterki przy odświeżaniu danych (teraz to powinno działać już dużo lepiej)
 
