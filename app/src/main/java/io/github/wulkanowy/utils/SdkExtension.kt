@@ -11,6 +11,7 @@ fun Sdk.init(student: Student): Sdk {
     schoolSymbol = student.schoolSymbol
     studentId = student.studentId
     classId = student.classId
+    emptyCookieJarInterceptor = true
 
     if (Sdk.Mode.valueOf(student.loginMode) == Sdk.Mode.HEBE) {
         mobileBaseUrl = student.mobileBaseUrl

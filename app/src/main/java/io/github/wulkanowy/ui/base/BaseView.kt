@@ -6,7 +6,9 @@ interface BaseView {
 
     fun showMessage(text: String)
 
-    fun showExpiredDialog()
+    fun showExpiredCredentialsDialog()
+
+    fun showDecryptionFailedDialog()
 
     fun showAuthDialog()
 

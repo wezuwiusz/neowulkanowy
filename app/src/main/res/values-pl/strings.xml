@@ -96,6 +96,8 @@
     <string name="main_log_in">Zaloguj się</string>
     <string name="main_session_expired">Sesja wygasła</string>
     <string name="main_session_relogin">Sesja wygasła, zaloguj się ponownie</string>
+    <string name="main_expired_credentials_description">Hasło do Twojego konta zostało zmienione. Musisz zalogować się ponownie do Wulkanowego</string>
+    <string name="main_expired_credentials_title">Hasło zostało zmienione</string>
     <string name="main_support_title">Wparcie aplikacji</string>
     <string name="main_support_description">Podoba Ci się ta aplikacja? Wspieraj jej rozwój poprzez włączenie nieinwazyjnych reklam, które możesz wyłączyć w dowolnym momencie</string>
     <string name="main_support_positive">Włącz reklamy</string>

@@ -84,8 +84,12 @@ class SyncFragment : PreferenceFragmentCompat(),
             }
     }
 
-    override fun showExpiredDialog() {
-        (activity as? BaseActivity<*, *>)?.showExpiredDialog()
+    override fun showExpiredCredentialsDialog() {
+        (activity as? BaseActivity<*, *>)?.showExpiredCredentialsDialog()
+    }
+
+    override fun showDecryptionFailedDialog() {
+        (activity as? BaseActivity<*, *>)?.showDecryptionFailedDialog()
     }
 
     override fun showChangePasswordSnackbar(redirectUrl: String) {

@@ -28,20 +28,37 @@ open class BasePresenter<T : BaseView>(
         this.view = view
         errorHandler.apply {
             showErrorMessage = view::showError
-            onSessionExpired = view::showExpiredDialog
+            onExpiredCredentials = view::showExpiredCredentialsDialog
+            onDecryptionFailed = view::showDecryptionFailedDialog
             onNoCurrentStudent = view::openClearLoginView
             onPasswordChangeRequired = view::showChangePasswordSnackbar
             onAuthorizationRequired = view::showAuthDialog
         }
     }
 
-    fun onExpiredLoginSelected() {
-        Timber.i("Attempt to switch the student after the session expires")
+    fun onConfirmDecryptionFailedSelected() {
+        Timber.i("Attempt to clear all data")
+
+        presenterScope.launch {
+            runCatching { studentRepository.clearAll() }
+                .onFailure {
+                    Timber.i("Clear data result: An exception occurred")
+                    errorHandler.dispatch(it)
+                }
+                .onSuccess {
+                    Timber.i("Clear data result: Open login view")
+                    view?.openClearLoginView()
+                }
+        }
+    }
+
+    fun onConfirmExpiredCredentialsSelected() {
+        Timber.i("Attempt to delete students associated with the account and switch to new student")
 
         presenterScope.launch {
             runCatching {
                 val student = studentRepository.getCurrentStudent(false)
-                studentRepository.logoutStudent(student)
+                studentRepository.deleteStudentsAssociatedWithAccount(student)
 
                 val students = studentRepository.getSavedStudents(false)
                 if (students.isNotEmpty()) {
@@ -50,11 +67,11 @@ open class BasePresenter<T : BaseView>(
                 }
             }
                 .onFailure {
-                    Timber.i("Switch student result: An exception occurred")
+                    Timber.i("Delete students result: An exception occurred")
                     errorHandler.dispatch(it)
                 }
                 .onSuccess {
-                    Timber.i("Switch student result: Open login view")
+                    Timber.i("Delete students result: Open login view")
                     view?.openClearLoginView()
                 }
         }

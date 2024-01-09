@@ -15,7 +15,9 @@ open class ErrorHandler @Inject constructor(@ApplicationContext protected val co
 
     var showErrorMessage: (String, Throwable) -> Unit = { _, _ -> }
 
-    var onSessionExpired: () -> Unit = {}
+    var onExpiredCredentials: () -> Unit = {}
+
+    var onDecryptionFailed: () -> Unit = {}
 
     var onNoCurrentStudent: () -> Unit = {}
 
@@ -32,7 +34,8 @@ open class ErrorHandler @Inject constructor(@ApplicationContext protected val co
         showErrorMessage(context.resources.getErrorString(error), error)
         when (error) {
             is PasswordChangeRequiredException -> onPasswordChangeRequired(error.redirectUrl)
-            is ScramblerException, is BadCredentialsException -> onSessionExpired()
+            is ScramblerException -> onDecryptionFailed()
+            is BadCredentialsException -> onExpiredCredentials()
             is NoCurrentStudentException -> onNoCurrentStudent()
             is AuthorizationRequiredException -> onAuthorizationRequired()
         }
@@ -40,7 +43,8 @@ open class ErrorHandler @Inject constructor(@ApplicationContext protected val co
 
     open fun clear() {
         showErrorMessage = { _, _ -> }
-        onSessionExpired = {}
+        onExpiredCredentials = {}
+        onDecryptionFailed = {}
         onNoCurrentStudent = {}
         onPasswordChangeRequired = {}
         onAuthorizationRequired = {}

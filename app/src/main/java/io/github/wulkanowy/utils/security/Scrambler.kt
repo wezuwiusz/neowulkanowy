@@ -16,6 +16,7 @@ import android.util.Base64.DEFAULT
 import android.util.Base64.decode
 import android.util.Base64.encode
 import android.util.Base64.encodeToString
+import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -33,108 +34,124 @@ import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 import javax.crypto.spec.OAEPParameterSpec
 import javax.crypto.spec.PSource.PSpecified
+import javax.inject.Inject
+import javax.inject.Singleton
 import javax.security.auth.x500.X500Principal
 
-private const val KEYSTORE_NAME = "AndroidKeyStore"
+@Singleton
+class Scrambler @Inject constructor(
+    @ApplicationContext private val context: Context,
+) {
+    private val keyCharset = Charset.forName("UTF-8")
 
-private const val KEY_ALIAS = "wulkanowy_password"
+    private val isKeyPairExists: Boolean
+        get() = keyStore.getKey(KEY_ALIAS, null) != null
 
-private val KEY_CHARSET = Charset.forName("UTF-8")
+    private val keyStore: KeyStore
+        get() = KeyStore.getInstance(KEYSTORE_NAME).apply { load(null) }
 
-private val isKeyPairExists: Boolean
-    get() = keyStore.getKey(KEY_ALIAS, null) != null
+    private val cipher: Cipher
+        get() {
+            return if (SDK_INT >= M) Cipher.getInstance(
+                "RSA/ECB/OAEPWithSHA-256AndMGF1Padding",
+                "AndroidKeyStoreBCWorkaround"
+            )
+            else Cipher.getInstance("RSA/ECB/PKCS1Padding", "AndroidOpenSSL")
+        }
 
-private val keyStore: KeyStore
-    get() = KeyStore.getInstance(KEYSTORE_NAME).apply { load(null) }
+    fun encrypt(plainText: String): String {
+        if (plainText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
-private val cipher: Cipher
-    get() {
-        return if (SDK_INT >= M) Cipher.getInstance(
-            "RSA/ECB/OAEPWithSHA-256AndMGF1Padding",
-            "AndroidKeyStoreBCWorkaround"
-        )
-        else Cipher.getInstance("RSA/ECB/PKCS1Padding", "AndroidOpenSSL")
+        return try {
+            if (!isKeyPairExists) generateKeyPair()
+
+            cipher.let {
+                if (SDK_INT >= M) {
+                    OAEPParameterSpec("SHA-256", "MGF1", SHA1, PSpecified.DEFAULT).let { spec ->
+                        it.init(ENCRYPT_MODE, keyStore.getCertificate(KEY_ALIAS).publicKey, spec)
+                    }
+                } else it.init(ENCRYPT_MODE, keyStore.getCertificate(KEY_ALIAS).publicKey)
+
+                ByteArrayOutputStream().let { output ->
+                    CipherOutputStream(output, it).apply {
+                        write(plainText.toByteArray(keyCharset))
+                        close()
+                    }
+                    encodeToString(output.toByteArray(), DEFAULT)
+                }
+            }
+        } catch (exception: Exception) {
+            Timber.e(exception, "An error occurred while encrypting text")
+            String(encode(plainText.toByteArray(keyCharset), DEFAULT), keyCharset)
+        }
     }
 
-fun encrypt(plainText: String, context: Context): String {
-    if (plainText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
+    fun decrypt(cipherText: String): String {
+        if (cipherText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
 
-    return try {
-        if (!isKeyPairExists) generateKeyPair(context)
+        return try {
+            if (!isKeyPairExists) throw ScramblerException("KeyPair doesn't exist")
 
-        cipher.let {
-            if (SDK_INT >= M) {
-                OAEPParameterSpec("SHA-256", "MGF1", SHA1, PSpecified.DEFAULT).let { spec ->
-                    it.init(ENCRYPT_MODE, keyStore.getCertificate(KEY_ALIAS).publicKey, spec)
+            cipher.let {
+                if (SDK_INT >= M) {
+                    OAEPParameterSpec("SHA-256", "MGF1", SHA1, PSpecified.DEFAULT).let { spec ->
+                        it.init(DECRYPT_MODE, keyStore.getKey(KEY_ALIAS, null), spec)
+                    }
+                } else it.init(DECRYPT_MODE, keyStore.getKey(KEY_ALIAS, null))
+
+                CipherInputStream(
+                    ByteArrayInputStream(decode(cipherText, DEFAULT)),
+                    it
+                ).let { input ->
+                    val values = ArrayList<Byte>()
+                    var nextByte: Int
+                    while (run { nextByte = input.read(); nextByte } != -1) {
+                        values.add(nextByte.toByte())
+                    }
+                    val bytes = ByteArray(values.size)
+                    for (i in bytes.indices) {
+                        bytes[i] = values[i]
+                    }
+                    String(bytes, 0, bytes.size, keyCharset)
                 }
-            } else it.init(ENCRYPT_MODE, keyStore.getCertificate(KEY_ALIAS).publicKey)
+            }
+        } catch (e: Exception) {
+            throw ScramblerException("An error occurred while decrypting text", e)
+        }
+    }
 
-            ByteArrayOutputStream().let { output ->
-                CipherOutputStream(output, it).apply {
-                    write(plainText.toByteArray(KEY_CHARSET))
-                    close()
-                }
-                encodeToString(output.toByteArray(), DEFAULT)
+    private fun generateKeyPair() {
+        (if (SDK_INT >= M) {
+            KeyGenParameterSpec.Builder(KEY_ALIAS, PURPOSE_DECRYPT or PURPOSE_ENCRYPT)
+                .setDigests(DIGEST_SHA256, DIGEST_SHA512)
+                .setEncryptionPaddings(ENCRYPTION_PADDING_RSA_OAEP)
+                .setCertificateSerialNumber(BigInteger.TEN)
+                .setCertificateSubject(X500Principal("CN=Wulkanowy"))
+                .build()
+        } else {
+            KeyPairGeneratorSpec.Builder(context)
+                .setAlias(KEY_ALIAS)
+                .setSubject(X500Principal("CN=Wulkanowy"))
+                .setSerialNumber(BigInteger.TEN)
+                .setStartDate(Calendar.getInstance().time)
+                .setEndDate(Calendar.getInstance().apply { add(YEAR, 99) }.time)
+                .build()
+        }).let {
+            KeyPairGenerator.getInstance("RSA", KEYSTORE_NAME).apply {
+                initialize(it)
+                genKeyPair()
             }
         }
-    } catch (exception: Exception) {
-        Timber.e(exception, "An error occurred while encrypting text")
-        String(encode(plainText.toByteArray(KEY_CHARSET), DEFAULT), KEY_CHARSET)
+        Timber.i("A new KeyPair has been generated")
     }
-}
 
-fun decrypt(cipherText: String): String {
-    if (cipherText.isEmpty()) throw ScramblerException("Text to be encrypted is empty")
-
-    return try {
-        if (!isKeyPairExists) throw ScramblerException("KeyPair doesn't exist")
-
-        cipher.let {
-            if (SDK_INT >= M) {
-                OAEPParameterSpec("SHA-256", "MGF1", SHA1, PSpecified.DEFAULT).let { spec ->
-                    it.init(DECRYPT_MODE, keyStore.getKey(KEY_ALIAS, null), spec)
-                }
-            } else it.init(DECRYPT_MODE, keyStore.getKey(KEY_ALIAS, null))
-
-            CipherInputStream(ByteArrayInputStream(decode(cipherText, DEFAULT)), it).let { input ->
-                val values = ArrayList<Byte>()
-                var nextByte: Int
-                while (run { nextByte = input.read(); nextByte } != -1) {
-                    values.add(nextByte.toByte())
-                }
-                val bytes = ByteArray(values.size)
-                for (i in bytes.indices) {
-                    bytes[i] = values[i]
-                }
-                String(bytes, 0, bytes.size, KEY_CHARSET)
-            }
-        }
-    } catch (e: Exception) {
-        throw ScramblerException("An error occurred while decrypting text", e)
+    fun clearKeyPair() {
+        keyStore.deleteEntry(KEY_ALIAS)
+        Timber.i("KeyPair has been cleared")
     }
-}
 
-private fun generateKeyPair(context: Context) {
-    (if (SDK_INT >= M) {
-        KeyGenParameterSpec.Builder(KEY_ALIAS, PURPOSE_DECRYPT or PURPOSE_ENCRYPT)
-            .setDigests(DIGEST_SHA256, DIGEST_SHA512)
-            .setEncryptionPaddings(ENCRYPTION_PADDING_RSA_OAEP)
-            .setCertificateSerialNumber(BigInteger.TEN)
-            .setCertificateSubject(X500Principal("CN=Wulkanowy"))
-            .build()
-    } else {
-        KeyPairGeneratorSpec.Builder(context)
-            .setAlias(KEY_ALIAS)
-            .setSubject(X500Principal("CN=Wulkanowy"))
-            .setSerialNumber(BigInteger.TEN)
-            .setStartDate(Calendar.getInstance().time)
-            .setEndDate(Calendar.getInstance().apply { add(YEAR, 99) }.time)
-            .build()
-    }).let {
-        KeyPairGenerator.getInstance("RSA", KEYSTORE_NAME).apply {
-            initialize(it)
-            genKeyPair()
-        }
+    private companion object {
+        private const val KEYSTORE_NAME = "AndroidKeyStore"
+        private const val KEY_ALIAS = "wulkanowy_password"
     }
-    Timber.i("A new KeyPair has been generated")
 }

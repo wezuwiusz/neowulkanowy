@@ -39,8 +39,12 @@ abstract class BaseFragment<VB : ViewBinding>(@LayoutRes layoutId: Int) : Fragme
         }
     }
 
-    override fun showExpiredDialog() {
-        (activity as? BaseActivity<*, *>)?.showExpiredDialog()
+    override fun showExpiredCredentialsDialog() {
+        (activity as? BaseActivity<*, *>)?.showExpiredCredentialsDialog()
+    }
+
+    override fun showDecryptionFailedDialog() {
+        (activity as? BaseActivity<*, *>)?.showDecryptionFailedDialog()
     }
 
     override fun showAuthDialog() {

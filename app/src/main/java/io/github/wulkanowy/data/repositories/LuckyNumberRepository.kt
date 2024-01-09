@@ -35,12 +35,15 @@ class LuckyNumberRepository @Inject constructor(
         fetch = {
             sdk.init(student).getLuckyNumber(student.schoolShortName)?.mapToEntity(student)
         },
-        saveFetchResult = { old, new ->
-            if (new != old) {
-                old?.let { luckyNumberDb.deleteAll(listOfNotNull(it)) }
-                luckyNumberDb.insertAll(listOfNotNull((new?.apply {
-                    if (notify) isNotified = false
-                })))
+        saveFetchResult = { oldLuckyNumber, newLuckyNumber ->
+            newLuckyNumber ?: return@networkBoundResource
+
+            if (newLuckyNumber != oldLuckyNumber) {
+                val updatedLuckNumberList =
+                    listOf(newLuckyNumber.apply { if (notify) isNotified = false })
+
+                oldLuckyNumber?.let { luckyNumberDb.deleteAll(listOfNotNull(it)) }
+                luckyNumberDb.insertAll(updatedLuckNumberList)
             }
         }
     )

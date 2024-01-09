@@ -1,11 +1,16 @@
 package io.github.wulkanowy.data.db.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentName
 import io.github.wulkanowy.data.db.entities.StudentNickAndAvatar
-import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import javax.inject.Singleton
 
 @Singleton
@@ -46,6 +51,9 @@ abstract class StudentDao {
 
     @Query("UPDATE Students SET is_current = 0")
     abstract suspend fun resetCurrent()
+
+    @Query("DELETE FROM Students WHERE email = :email AND user_name = :userName")
+    abstract suspend fun deleteByEmailAndUserName(email: String, userName: String)
 
     @Transaction
     open suspend fun switchCurrent(id: Long) {

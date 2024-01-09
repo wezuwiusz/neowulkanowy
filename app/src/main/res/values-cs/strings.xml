@@ -96,6 +96,8 @@
     <string name="main_log_in">Přihlásit se</string>
     <string name="main_session_expired">Relace vypršela</string>
     <string name="main_session_relogin">Relace vypršela. Přihlaste se prosím znovu</string>
+    <string name="main_expired_credentials_description">Heslo k vašemu účtu bylo změněno. Musíte se znovu přihlásit do Wulkanového</string>
+    <string name="main_expired_credentials_title">Heslo bylo změněno</string>
     <string name="main_support_title">Podpora aplikace</string>
     <string name="main_support_description">Líbí se Vám tato aplikace? Podpořte její vývoj tím, že povolíte neinvazivní reklamy, které můžete kdykoliv vypnout</string>
     <string name="main_support_positive">Zapnout reklamy</string>
@@ -760,7 +762,7 @@
     <string name="pref_ads_support_category_name">Podpora</string>
     <string name="pref_ads_privacy_policy">Ochrana osobních údajů</string>
     <string name="pref_ads_agreements">Souhlasy</string>
-    <string name="pref_ads_consent">Show consent to data processing</string>
+    <string name="pref_ads_consent">Zobrazit souhlas se zpracováním údajů</string>
     <string name="pref_ads_show_in_app">Zobrazit reklamy v aplikaci</string>
     <string name="pref_ads_support">Podívejte se na jednu reklamu pro podporu projektu</string>
     <string name="pref_ads_privacy_title">Souhlas se zpracováním dat</string>

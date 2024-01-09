@@ -1,8 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
-import android.content.Context
 import androidx.room.withTransaction
-import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.dao.StudentDao
@@ -17,20 +15,19 @@ import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.DispatchersProvider
 import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.security.decrypt
-import io.github.wulkanowy.utils.security.encrypt
+import io.github.wulkanowy.utils.security.Scrambler
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class StudentRepository @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val dispatchers: DispatchersProvider,
     private val studentDb: StudentDao,
     private val semesterDb: SemesterDao,
     private val sdk: Sdk,
-    private val appDatabase: AppDatabase
+    private val appDatabase: AppDatabase,
+    private val scrambler: Scrambler,
 ) {
 
     suspend fun isCurrentStudentSet() = studentDb.loadCurrent()?.isCurrent ?: false
@@ -68,7 +65,7 @@ class StudentRepository @Inject constructor(
                 student = student.apply {
                     if (decryptPass && Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.HEBE) {
                         student.password = withContext(dispatchers.io) {
-                            decrypt(student.password)
+                            scrambler.decrypt(student.password)
                         }
                     }
                 },
@@ -86,7 +83,7 @@ class StudentRepository @Inject constructor(
         }.apply {
             if (decryptPass && Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.HEBE) {
                 student.password = withContext(dispatchers.io) {
-                    decrypt(student.password)
+                    scrambler.decrypt(student.password)
                 }
             }
         }
@@ -96,7 +93,7 @@ class StudentRepository @Inject constructor(
 
         if (decryptPass && Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.HEBE) {
             student.password = withContext(dispatchers.io) {
-                decrypt(student.password)
+                scrambler.decrypt(student.password)
             }
         }
         return student
@@ -107,7 +104,7 @@ class StudentRepository @Inject constructor(
 
         if (decryptPass && Sdk.Mode.valueOf(student.loginMode) != Sdk.Mode.HEBE) {
             student.password = withContext(dispatchers.io) {
-                decrypt(student.password)
+                scrambler.decrypt(student.password)
             }
         }
         return student
@@ -120,7 +117,7 @@ class StudentRepository @Inject constructor(
                 it.apply {
                     if (Sdk.Mode.valueOf(it.loginMode) != Sdk.Mode.HEBE) {
                         password = withContext(dispatchers.io) {
-                            encrypt(password, context)
+                            scrambler.encrypt(password)
                         }
                     }
                 }
@@ -165,5 +162,16 @@ class StudentRepository @Inject constructor(
         ).apply { id = student.id }
 
         studentDb.update(studentName)
+    }
+
+    suspend fun deleteStudentsAssociatedWithAccount(student: Student) {
+        studentDb.deleteByEmailAndUserName(student.email, student.userName)
+    }
+
+    suspend fun clearAll() {
+        withContext(dispatchers.io) {
+            scrambler.clearKeyPair()
+            appDatabase.clearAllTables()
+        }
     }
 }

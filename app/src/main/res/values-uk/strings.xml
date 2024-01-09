@@ -96,6 +96,8 @@
     <string name="main_log_in">Увійти</string>
     <string name="main_session_expired">Минув термін дії сесії</string>
     <string name="main_session_relogin">Минув термін дії сесії, авторизуйтеся знову</string>
+    <string name="main_expired_credentials_description">Your account password has been changed. You need to log in to Wulkanowy again</string>
+    <string name="main_expired_credentials_title">Password changed</string>
     <string name="main_support_title">Підтримка додатку</string>
     <string name="main_support_description">Вам подобається цей додаток? Підтримайте його розвиток, увімкнувши неінвазивну рекламу, яку ви можете відключити в будь-який час</string>
     <string name="main_support_positive">Увімкнути рекламу</string>
