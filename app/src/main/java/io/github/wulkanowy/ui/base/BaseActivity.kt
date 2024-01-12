@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.modules.auth.AuthDialog
+import io.github.wulkanowy.ui.modules.captcha.CaptchaDialog
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.utils.FragmentLifecycleLogger
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -75,6 +76,10 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
             .setPositiveButton(R.string.main_log_in) { _, _ -> presenter.onConfirmExpiredCredentialsSelected() }
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()
+    }
+
+    override fun onCaptchaVerificationRequired(url: String?) {
+        CaptchaDialog.newInstance(url).show(supportFragmentManager, "captcha_dialog")
     }
 
     override fun showDecryptionFailedDialog() {

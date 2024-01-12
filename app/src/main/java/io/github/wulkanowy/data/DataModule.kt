@@ -21,6 +21,7 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.RemoteConfigHelper
+import io.github.wulkanowy.utils.WebkitCookieManagerProxy
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -43,6 +44,7 @@ internal class DataModule {
             buildTag = android.os.Build.MODEL
             userAgentTemplate = remoteConfig.userAgentTemplate
             setSimpleHttpLogger { Timber.d(it) }
+            setAdditionalCookieManager(WebkitCookieManagerProxy())
 
             // for debug only
             addInterceptor(chuckerInterceptor, network = true)

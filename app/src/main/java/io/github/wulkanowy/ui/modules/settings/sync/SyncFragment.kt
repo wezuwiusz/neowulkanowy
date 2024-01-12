@@ -88,6 +88,10 @@ class SyncFragment : PreferenceFragmentCompat(),
         (activity as? BaseActivity<*, *>)?.showExpiredCredentialsDialog()
     }
 
+    override fun onCaptchaVerificationRequired(url: String?) {
+        (activity as? BaseActivity<*, *>)?.onCaptchaVerificationRequired(url)
+    }
+
     override fun showDecryptionFailedDialog() {
         (activity as? BaseActivity<*, *>)?.showDecryptionFailedDialog()
     }

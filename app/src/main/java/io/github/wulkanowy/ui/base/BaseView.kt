@@ -8,6 +8,8 @@ interface BaseView {
 
     fun showExpiredCredentialsDialog()
 
+    fun onCaptchaVerificationRequired(url: String?)
+
     fun showDecryptionFailedDialog()
 
     fun showAuthDialog()
