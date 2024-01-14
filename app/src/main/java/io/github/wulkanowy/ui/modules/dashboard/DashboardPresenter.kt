@@ -324,7 +324,7 @@ class DashboardPresenter @Inject constructor(
                 ) { luckyNumberResource, messageResource, attendanceResource ->
                     val resList = listOf(luckyNumberResource, messageResource, attendanceResource)
 
-                    DashboardItem.HorizontalGroup(
+                    resList to DashboardItem.HorizontalGroup(
                         isLoading = resList.any { it is Resource.Loading },
                         error = resList.map { it.errorOrNull }.let { errors ->
                             if (errors.all { it != null }) {
@@ -349,9 +349,9 @@ class DashboardPresenter @Inject constructor(
                     )
                 })
         }
-            .filterNot { it.isLoading && forceRefresh }
+            .filterNot { (_, it) -> it.isLoading && forceRefresh }
             .distinctUntilChanged()
-            .onEach {
+            .onEach { (_, it) ->
                 updateData(it, forceRefresh)
 
                 if (it.isLoading) {
@@ -369,7 +369,7 @@ class DashboardPresenter @Inject constructor(
                 )
                 errorHandler.dispatch(it)
             }
-            .launch("horizontal_group ${if (forceRefresh) "-forceRefresh" else ""}")
+            .launchWithUniqueRefreshJob("horizontal_group", forceRefresh)
     }
 
     private fun loadGrades(student: Student, forceRefresh: Boolean) {
@@ -861,6 +861,28 @@ class DashboardPresenter @Inject constructor(
         if (forceRefresh) {
             onEach {
                 if (it is Resource.Success) {
+                    cancelJobs(jobName)
+                } else if (it is Resource.Error) {
+                    cancelJobs(jobName)
+                }
+            }.launch(jobName)
+        } else {
+            launch(jobName)
+        }
+    }
+
+    @JvmName("launchWithUniqueRefreshJobHorizontalGroup")
+    private fun Flow<Pair<List<Resource<*>>, *>>.launchWithUniqueRefreshJob(
+        name: String,
+        forceRefresh: Boolean
+    ) {
+        val jobName = if (forceRefresh) "$name-forceRefresh" else name
+
+        if (forceRefresh) {
+            onEach { (resources, _) ->
+                if (resources.all { it is Resource.Success<*> }) {
+                    cancelJobs(jobName)
+                } else if (resources.any { it is Resource.Error<*> }) {
                     cancelJobs(jobName)
                 }
             }.launch(jobName)

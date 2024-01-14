@@ -76,7 +76,7 @@ class CaptchaDialog : BaseDialogFragment<DialogCaptchaBinding>() {
         runCatching { parentFragmentManager.setFragmentResult(CAPTCHA_SUCCESS, bundleOf()) }
             .onFailure { Timber.e(it) }
         showMessage(getString(R.string.captcha_verified_message))
-        dismiss()
+        dismissAllowingStateLoss()
     }
 
     override fun onDestroy() {
