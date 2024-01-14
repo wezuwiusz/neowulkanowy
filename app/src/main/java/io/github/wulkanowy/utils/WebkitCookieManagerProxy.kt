@@ -1,6 +1,8 @@
 package io.github.wulkanowy.utils
 
 import java.net.CookiePolicy
+import java.net.CookieStore
+import java.net.HttpCookie
 import java.net.URI
 import android.webkit.CookieManager as WebkitCookieManager
 import java.net.CookieManager as JavaCookieManager
@@ -35,5 +37,22 @@ class WebkitCookieManagerProxy : JavaCookieManager(null, CookiePolicy.ACCEPT_ALL
         val cookie = webkitCookieManager.getCookie(uri.toString())
         if (cookie != null) res["Cookie"] = listOf(cookie)
         return res
+    }
+
+    override fun getCookieStore(): CookieStore {
+        val cookies = super.getCookieStore()
+        return object : CookieStore {
+            override fun add(uri: URI?, cookie: HttpCookie?) = cookies.add(uri, cookie)
+            override fun get(uri: URI?): List<HttpCookie> = cookies.get(uri)
+            override fun getCookies(): List<HttpCookie> = cookies.cookies
+            override fun getURIs(): List<URI> = cookies.urIs
+            override fun remove(uri: URI?, cookie: HttpCookie?): Boolean =
+                cookies.remove(uri, cookie)
+
+            override fun removeAll(): Boolean {
+                webkitCookieManager.removeAllCookies(null)
+                return true
+            }
+        }
     }
 }

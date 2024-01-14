@@ -239,6 +239,14 @@ class DashboardPresenter @Inject constructor(
         loadData(selectedDashboardTiles, forceRefresh = true)
     }
 
+    fun onRetryAfterCaptcha() {
+        view?.run {
+            showErrorView(false)
+            showProgress(true)
+        }
+        loadData(selectedDashboardTiles, forceRefresh = true)
+    }
+
     fun onViewReselected() {
         Timber.i("Dashboard view is reselected")
         view?.run {

@@ -15,6 +15,7 @@ class DebugPresenter @Inject constructor(
     val items = listOf(
         DebugItem(R.string.logviewer_title),
         DebugItem(R.string.notification_debug_title),
+        DebugItem(R.string.debug_cookies_clear),
     )
 
     override fun onAttachView(view: DebugView) {
@@ -31,6 +32,7 @@ class DebugPresenter @Inject constructor(
         when (item.title) {
             R.string.logviewer_title -> view?.openLogViewer()
             R.string.notification_debug_title -> view?.openNotificationsDebug()
+            R.string.debug_cookies_clear -> view?.clearWebkitCookies()
             else -> Timber.d("Unknown debug item: $item")
         }
     }

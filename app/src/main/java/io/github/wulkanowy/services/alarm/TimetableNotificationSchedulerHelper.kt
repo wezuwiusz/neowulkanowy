@@ -65,8 +65,6 @@ class TimetableNotificationSchedulerHelper @Inject constructor(
                     range = lesson.start..lesson.end,
                     requestCode = getRequestCode(lesson.start, studentId)
                 )
-
-                Timber.d("TimetableNotification canceled: type 1 & 2, subject: ${lesson.subject}, start: ${lesson.start}, student: $studentId")
             }
         }
     }

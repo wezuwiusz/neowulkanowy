@@ -3,6 +3,7 @@ package io.github.wulkanowy.utils
 import android.content.res.Resources
 import io.github.wulkanowy.R
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
+import io.github.wulkanowy.sdk.scrapper.exception.CloudflareVerificationException
 import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
 import io.github.wulkanowy.sdk.scrapper.exception.ScrapperException
 import io.github.wulkanowy.sdk.scrapper.exception.ServiceUnavailableException
@@ -34,6 +35,7 @@ fun Resources.getErrorString(error: Throwable): String = when (error) {
     is FeatureNotAvailableException -> R.string.error_feature_not_available
     is VulcanException -> R.string.error_unknown_uonet
     is ScrapperException -> R.string.error_unknown_app
+    is CloudflareVerificationException -> R.string.error_cloudflare_captcha
     is SSLHandshakeException -> when {
         error.isCausedByCertificateNotValidNow() -> R.string.error_invalid_device_datetime
         else -> R.string.error_timeout

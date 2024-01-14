@@ -6,6 +6,8 @@ interface DashboardView : BaseView {
 
     val tileWidth: Int
 
+    val isViewEmpty: Boolean
+
     fun initView()
 
     fun updateData(data: List<DashboardItem>)
@@ -27,6 +29,5 @@ interface DashboardView : BaseView {
     fun popViewToRoot()
 
     fun openNotificationsCenterView()
-
     fun openInternetBrowser(url: String)
 }
