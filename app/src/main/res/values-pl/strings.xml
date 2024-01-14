@@ -13,6 +13,7 @@
     <string name="logviewer_title">Przeglądarka logów</string>
     <string name="debug_title">Debugowanie</string>
     <string name="notification_debug_title">Debugowanie powiadomień</string>
+    <string name="debug_cookies_clear">Wyczyść ciasteczka webview</string>
     <string name="contributors_title">Twórcy</string>
     <string name="license_title">Licencje</string>
     <string name="message_title">Wiadomości</string>
@@ -833,6 +834,9 @@
     <string name="auth_title">Autoryzacja</string>
     <string name="auth_description">Rodzicu, musimy mieć pewność, że Twój adres e-mail został powiązany z prawidłowym kontem ucznia. W celu autoryzacji konta podaj numer PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt; w polu poniżej</string>
     <string name="auth_button_skip">Na razie pomiń</string>
+    <!--Captcha-->
+    <string name="captcha_dialog_title">Trwa weryfikacja. Czekaj…</string>
+    <string name="captcha_verified_message">Pomyślnie zweryfikowano</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_invalid_device_datetime">Wystąpił błąd. Sprawdź poprawność daty w urządzeniu</string>
@@ -842,6 +846,7 @@
     <string name="error_service_unavailable">Trwa przerwa techniczna dziennika UONET+. Spróbuj ponownie później</string>
     <string name="error_unknown_uonet">Nieznany błąd dziennika UONET+. Spróbuj ponownie później</string>
     <string name="error_unknown_app">Nieznany błąd aplikacji. Spróbuj ponownie później</string>
+    <string name="error_cloudflare_captcha">Wymagana weryfikacja captcha</string>
     <string name="error_unknown">Wystąpił nieoczekiwany błąd</string>
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w trybie innym niż Mobilne API</string>

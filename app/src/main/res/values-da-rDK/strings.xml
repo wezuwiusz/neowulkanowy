@@ -13,6 +13,7 @@
     <string name="logviewer_title">Log viewer</string>
     <string name="debug_title">Debug</string>
     <string name="notification_debug_title">Notification debug</string>
+    <string name="debug_cookies_clear">Clear webview cookies</string>
     <string name="contributors_title">Contributors</string>
     <string name="license_title">Licenses</string>
     <string name="message_title">Messages</string>
@@ -743,6 +744,9 @@
     <string name="auth_title">Authorization</string>
     <string name="auth_description">To operate the application, we need to confirm your identity. Please enter the student\'s PESEL &lt;b&gt;%1$s&lt;/b&gt; in the field below</string>
     <string name="auth_button_skip">Skip for now</string>
+    <!--Captcha-->
+    <string name="captcha_dialog_title">Verification is in progress. Wait…</string>
+    <string name="captcha_verified_message">Verified successfully</string>
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>
     <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>
@@ -752,6 +756,7 @@
     <string name="error_service_unavailable">Maintenance underway UONET + register. Try again later</string>
     <string name="error_unknown_uonet">Unknown UONET + register error. Try again later</string>
     <string name="error_unknown_app">Unknown application error. Please try again later</string>
+    <string name="error_cloudflare_captcha">Captcha verification required</string>
     <string name="error_unknown">An unexpected error occurred</string>
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>

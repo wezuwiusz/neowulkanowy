@@ -13,6 +13,7 @@
     <string name="logviewer_title">Переглядач логів</string>
     <string name="debug_title">Відладка</string>
     <string name="notification_debug_title">Відладка сповіщень</string>
+    <string name="debug_cookies_clear">Очистити кукі веб - перегляду</string>
     <string name="contributors_title">Розробники</string>
     <string name="license_title">Ліцензії</string>
     <string name="message_title">Листи</string>
@@ -833,6 +834,9 @@
     <string name="auth_title">Авторизувати</string>
     <string name="auth_description">Для роботи програми нам потрібно підтвердити вашу особу. Будь ласка, введіть число PESEL &lt;b&gt;%1$s&lt;/b&gt; студента в поле нижче</string>
     <string name="auth_button_skip">Поки що пропустити</string>
+    <!--Captcha-->
+    <string name="captcha_dialog_title">Верифікація в процесі. Чекайте…</string>
+    <string name="captcha_verified_message">Верифікація завершена</string>
     <!--Errors-->
     <string name="error_no_internet">Немає з\'єднання з інтернетом</string>
     <string name="error_invalid_device_datetime">Сталася помилка. Перевірте годинник пристрою</string>
@@ -842,6 +846,7 @@
     <string name="error_service_unavailable">UONET+ проводить технічне осблуговування, спробуйте пізніше</string>
     <string name="error_unknown_uonet">Невідома помилка щоденника UONET+, спробуйте пізніше</string>
     <string name="error_unknown_app">Невідома помилка програми, спробуйте пізніше</string>
+    <string name="error_cloudflare_captcha">Необхідна перевірка Captcha</string>
     <string name="error_unknown">Відбулася несподівана помилка</string>
     <string name="error_feature_disabled">Функція вимкнена вашою школою</string>
     <string name="error_feature_not_available">Функція недоступна в режимі Mobile API. Увійдіть в інший режим</string>
