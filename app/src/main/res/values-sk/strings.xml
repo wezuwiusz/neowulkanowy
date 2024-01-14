@@ -13,6 +13,7 @@
     <string name="logviewer_title">Prehliadač protokolov</string>
     <string name="debug_title">Ladenie</string>
     <string name="notification_debug_title">Ladenie oznámení</string>
+    <string name="debug_cookies_clear">Vymazať súbory cookie webview</string>
     <string name="contributors_title">Tvorcovia</string>
     <string name="license_title">Licencie</string>
     <string name="message_title">Správy</string>
@@ -833,6 +834,9 @@
     <string name="auth_title">Autorizácia</string>
     <string name="auth_description">Na prevádzku aplikácie potrebujeme potvrdiť vašu identitu. Zadajte PESEL žiaka &lt;b&gt;%1$s&lt;/b&gt; v nižšie uvedenom poli</string>
     <string name="auth_button_skip">Zatiaľ preskočiť</string>
+    <!--Captcha-->
+    <string name="captcha_dialog_title">Overovanie prebieha. Počkajte…</string>
+    <string name="captcha_verified_message">Úspešne overené</string>
     <!--Errors-->
     <string name="error_no_internet">Žiadne internetové pripojenie</string>
     <string name="error_invalid_device_datetime">Vyskytla sa chyba. Skontrolujte hodiny svojho zariadenia</string>
@@ -842,6 +846,7 @@
     <string name="error_service_unavailable">Prebieha údržba denníka UONET+. Skúste to neskôr znova</string>
     <string name="error_unknown_uonet">Neznáma chyba dennika UONET+. Prosím skúste to znova neskôr</string>
     <string name="error_unknown_app">Neznáma chyba aplikácie. Prosím skúste to znova neskôr</string>
+    <string name="error_cloudflare_captcha">Vyžaduje sa overenie Captcha</string>
     <string name="error_unknown">Vyskytla sa neočakávaná chyba</string>
     <string name="error_feature_disabled">Funkcia je deaktivovaná cez vašou školou</string>
     <string name="error_feature_not_available">Funkcia nie je k dispozícii. Prihláste sa v inom režime než Mobile API</string>

@@ -152,6 +152,10 @@ class LoginFormPresenter @Inject constructor(
         )
     }
 
+    fun onRetryAfterCaptcha() {
+        onSignInClick()
+    }
+
     fun onSignInClick() {
         val loginData = getLoginData()
 

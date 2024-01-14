@@ -29,6 +29,7 @@ open class BasePresenter<T : BaseView>(
         errorHandler.apply {
             showErrorMessage = view::showError
             onExpiredCredentials = view::showExpiredCredentialsDialog
+            onCaptchaVerificationRequired = view::onCaptchaVerificationRequired
             onDecryptionFailed = view::showDecryptionFailedDialog
             onNoCurrentStudent = view::openClearLoginView
             onPasswordChangeRequired = view::showChangePasswordSnackbar

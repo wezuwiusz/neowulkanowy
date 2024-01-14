@@ -13,6 +13,7 @@
     <string name="logviewer_title">Log Viewer</string>
     <string name="debug_title">Debuggen</string>
     <string name="notification_debug_title">Benachrichtigungen debuggen</string>
+    <string name="debug_cookies_clear">Clear webview cookies</string>
     <string name="contributors_title">Mitarbeiter</string>
     <string name="license_title">Lizenzen</string>
     <string name="message_title">Nachrichten</string>
@@ -743,6 +744,9 @@
     <string name="auth_title">Authorization</string>
     <string name="auth_description">To operate the application, we need to confirm your identity. Please enter the student\'s PESEL &lt;b&gt;%1$s&lt;/b&gt; in the field below</string>
     <string name="auth_button_skip">Skip for now</string>
+    <!--Captcha-->
+    <string name="captcha_dialog_title">Verification is in progress. Wait…</string>
+    <string name="captcha_verified_message">Verified successfully</string>
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
     <string name="error_invalid_device_datetime">Es ist ein Fehler aufgetreten. Überprüfen Sie Ihre Geräteuhr</string>
@@ -752,6 +756,7 @@
     <string name="error_service_unavailable">Wartung im Gange UONET + Klassenbuch. Versuchen Sie es später noch einmal</string>
     <string name="error_unknown_uonet">Unbekannter UONET + Registerfehler. Versuchen Sie es später erneut</string>
     <string name="error_unknown_app">Unbekannter Anwendungsfehler. Bitte versuchen Sie es später noch einmal</string>
+    <string name="error_cloudflare_captcha">Captcha verification required</string>
     <string name="error_unknown">Ein unerwarteter Fehler ist aufgetreten</string>
     <string name="error_feature_disabled">Funktion, die von Ihrer Schule deaktiviert wurde</string>
     <string name="error_feature_not_available">Feature in diesem Modus nicht verfügbar</string>

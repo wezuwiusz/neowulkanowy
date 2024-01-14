@@ -11,4 +11,6 @@ interface DebugView : BaseView {
     fun openLogViewer()
 
     fun openNotificationsDebug()
+
+    fun clearWebkitCookies()
 }

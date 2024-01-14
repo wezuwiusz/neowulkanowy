@@ -1,5 +1,6 @@
-Wersja 2.3.3
+Wersja 2.3.4
 
-— poprawiliśmy kolejne usterki przy odświeżaniu danych (teraz to powinno działać już dużo lepiej)
+— dodaliśmy obsługę captchy, co umożliwi używanie apki np. na odmianie ResMan Rzeszów
+— naprawiliśmy wyświetlanie frekwencji w szkołach używających eduOne (piszcie, jeśli nadal nie działa)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

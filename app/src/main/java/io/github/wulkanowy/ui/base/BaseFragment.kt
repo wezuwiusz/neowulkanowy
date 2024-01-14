@@ -7,7 +7,6 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import io.github.wulkanowy.R
-import io.github.wulkanowy.ui.modules.auth.AuthDialog
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 
 abstract class BaseFragment<VB : ViewBinding>(@LayoutRes layoutId: Int) : Fragment(layoutId),
@@ -43,12 +42,16 @@ abstract class BaseFragment<VB : ViewBinding>(@LayoutRes layoutId: Int) : Fragme
         (activity as? BaseActivity<*, *>)?.showExpiredCredentialsDialog()
     }
 
+    override fun onCaptchaVerificationRequired(url: String?) {
+        (activity as? BaseActivity<*, *>)?.onCaptchaVerificationRequired(url)
+    }
+
     override fun showDecryptionFailedDialog() {
         (activity as? BaseActivity<*, *>)?.showDecryptionFailedDialog()
     }
 
     override fun showAuthDialog() {
-        AuthDialog.newInstance().show(childFragmentManager, "auth_dialog")
+        (activity as? BaseActivity<*, *>)?.showAuthDialog()
     }
 
     override fun openClearLoginView() {

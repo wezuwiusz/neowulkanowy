@@ -21,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.base.ErrorDialog
-import io.github.wulkanowy.ui.modules.auth.AuthDialog
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.openInternetBrowser
@@ -137,6 +136,10 @@ class NotificationsFragment : PreferenceFragmentCompat(),
         (activity as? BaseActivity<*, *>)?.showExpiredCredentialsDialog()
     }
 
+    override fun onCaptchaVerificationRequired(url: String?) {
+        (activity as? BaseActivity<*, *>)?.onCaptchaVerificationRequired(url)
+    }
+
     override fun showDecryptionFailedDialog() {
         (activity as? BaseActivity<*, *>)?.showDecryptionFailedDialog()
     }
@@ -154,7 +157,7 @@ class NotificationsFragment : PreferenceFragmentCompat(),
     }
 
     override fun showAuthDialog() {
-        AuthDialog.newInstance().show(childFragmentManager, "auth_dialog")
+        (activity as? BaseActivity<*, *>)?.showAuthDialog()
     }
 
     override fun showFixSyncDialog() {

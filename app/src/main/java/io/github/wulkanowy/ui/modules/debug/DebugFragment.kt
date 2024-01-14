@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.debug
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.CookieManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -56,6 +57,10 @@ class DebugFragment : BaseFragment<FragmentDebugBinding>(R.layout.fragment_debug
 
     override fun openNotificationsDebug() {
         (activity as? MainActivity)?.pushView(NotificationDebugFragment.newInstance())
+    }
+
+    override fun clearWebkitCookies() {
+        CookieManager.getInstance().removeAllCookies(null)
     }
 
     override fun onDestroyView() {

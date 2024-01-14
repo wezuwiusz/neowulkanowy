@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.settings
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import io.github.wulkanowy.R
+import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import timber.log.Timber
 
@@ -25,6 +26,8 @@ class SettingsFragment : PreferenceFragmentCompat(), MainView.TitledView, Settin
     override fun showMessage(text: String) {}
 
     override fun showExpiredCredentialsDialog() {}
+
+    override fun onCaptchaVerificationRequired(url: String?) = Unit
 
     override fun showDecryptionFailedDialog() {}
 

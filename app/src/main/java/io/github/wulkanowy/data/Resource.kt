@@ -1,6 +1,16 @@
 package io.github.wulkanowy.data
 
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
@@ -131,7 +141,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
             query().map { Resource.Success(filterResult(it)) }
         } catch (throwable: Throwable) {
             onFetchFailed(throwable)
-            query().map { Resource.Error(throwable) }
+            flowOf(Resource.Error(throwable))
         }
     } else {
         query().map { Resource.Success(filterResult(it)) }
@@ -165,7 +175,7 @@ inline fun <ResultType, RequestType, T> networkBoundResource(
             query().map { Resource.Success(mapResult(it)) }
         } catch (throwable: Throwable) {
             onFetchFailed(throwable)
-            query().map { Resource.Error(throwable) }
+            flowOf(Resource.Error(throwable))
         }
     } else {
         query().map { Resource.Success(mapResult(it)) }
