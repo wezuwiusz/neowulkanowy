@@ -20,7 +20,7 @@ interface DashboardView : BaseView {
 
     fun showRefresh(show: Boolean)
 
-    fun showErrorView(show: Boolean)
+    fun showErrorView(show: Boolean, adminMessageItem: DashboardItem.AdminMessages? = null)
 
     fun setErrorDetails(error: Throwable)
 
@@ -29,5 +29,6 @@ interface DashboardView : BaseView {
     fun popViewToRoot()
 
     fun openNotificationsCenterView()
+
     fun openInternetBrowser(url: String)
 }

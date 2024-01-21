@@ -21,6 +21,7 @@ import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragme
 import io.github.wulkanowy.ui.modules.captcha.CaptchaDialog.Companion.CAPTCHA_SUCCESS
 import io.github.wulkanowy.ui.modules.conference.ConferenceFragment
 import io.github.wulkanowy.ui.modules.dashboard.adapters.DashboardAdapter
+import io.github.wulkanowy.ui.modules.dashboard.viewholders.AdminMessageViewHolder
 import io.github.wulkanowy.ui.modules.exam.ExamFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
 import io.github.wulkanowy.ui.modules.homework.HomeworkFragment
@@ -37,7 +38,6 @@ import io.github.wulkanowy.utils.getErrorString
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.toFormattedString
-import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -199,8 +199,17 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
         binding.dashboardRecycler.isVisible = show
     }
 
-    override fun showErrorView(show: Boolean) {
+    override fun showErrorView(show: Boolean, adminMessageItem: DashboardItem.AdminMessages?) {
         binding.dashboardErrorContainer.isVisible = show
+        binding.dashboardErrorAdminMessage.root.isVisible = adminMessageItem != null
+
+        if (adminMessageItem != null) {
+            AdminMessageViewHolder(
+                binding = binding.dashboardErrorAdminMessage,
+                onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed,
+                onAdminMessageClickListener = presenter::onAdminMessageSelected,
+            ).bind(adminMessageItem.adminMessage)
+        }
     }
 
     override fun setErrorDetails(error: Throwable) {

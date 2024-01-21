@@ -18,7 +18,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/dashboard_swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dashboard_recycler"
@@ -30,19 +31,33 @@
             tools:listitem="@layout/item_dashboard_grades" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dashboard_error_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
         android:visibility="gone"
         tools:ignore="UseCompoundDrawables"
         tools:visibility="visible">
 
+        <include
+            android:id="@+id/dashboard_error_admin_message"
+            layout="@layout/item_dashboard_admin_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
         <ImageView
+            android:id="@+id/dashboard_error_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            app:layout_constraintBottom_toTopOf="@id/dashboard_error_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_error_admin_message"
+            app:layout_constraintVertical_chainStyle="packed"
             app:srcCompat="@drawable/ic_error"
             app:tint="?colorOnBackground"
             tools:ignore="contentDescription" />
@@ -55,14 +70,21 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="@string/error_unknown"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/dashboard_error_buttons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_error_image" />
 
         <LinearLayout
+            android:id="@+id/dashboard_error_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_error_message">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/dashboard_error_details"
@@ -79,5 +101,5 @@
                 android:layout_height="wrap_content"
                 android:text="@string/all_retry" />
         </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
