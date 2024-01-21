@@ -16,6 +16,7 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.sync.Mutex
 import java.util.*
@@ -56,7 +57,7 @@ class GradeStatisticsRepository @Inject constructor(
         query = { gradePartialStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getGradesPartialStatistics(semester.semesterId)
                 .mapToEntities(semester)
         },
@@ -101,7 +102,7 @@ class GradeStatisticsRepository @Inject constructor(
         query = { gradeSemesterStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getGradesSemesterStatistics(semester.semesterId)
                 .mapToEntities(semester)
         },
@@ -157,7 +158,7 @@ class GradeStatisticsRepository @Inject constructor(
         query = { gradePointsStatisticsDb.loadAll(semester.semesterId, semester.studentId) },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getGradesPointsStatistics(semester.semesterId)
                 .mapToEntities(semester)
         },

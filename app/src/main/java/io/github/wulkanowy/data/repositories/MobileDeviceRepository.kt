@@ -12,6 +12,7 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
@@ -42,7 +43,7 @@ class MobileDeviceRepository @Inject constructor(
         query = { mobileDb.loadAll(student.userLoginId) },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getRegisteredDevices()
                 .mapToEntities(student)
         },
@@ -56,7 +57,7 @@ class MobileDeviceRepository @Inject constructor(
 
     suspend fun unregisterDevice(student: Student, semester: Semester, device: MobileDevice) {
         sdk.init(student)
-            .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+            .switchSemester(semester)
             .unregisterDevice(device.deviceId)
 
         mobileDb.deleteAll(listOf(device))
@@ -64,7 +65,7 @@ class MobileDeviceRepository @Inject constructor(
 
     suspend fun getToken(student: Student, semester: Semester): MobileDeviceToken {
         return sdk.init(student)
-            .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+            .switchSemester(semester)
             .getToken()
             .mapToMobileDeviceToken()
     }

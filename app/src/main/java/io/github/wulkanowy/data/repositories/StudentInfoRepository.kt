@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.mappers.mapToEntity
 import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.switchSemester
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,7 +31,7 @@ class StudentInfoRepository @Inject constructor(
         query = { studentInfoDao.loadStudentInfo(student.studentId) },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getStudentInfo().mapToEntity(semester)
         },
         saveFetchResult = { old, new ->

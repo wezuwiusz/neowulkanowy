@@ -10,6 +10,7 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
@@ -46,7 +47,7 @@ class ConferenceRepository @Inject constructor(
         },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getConferences()
                 .mapToEntities(semester)
                 .filter { it.date >= startDate }

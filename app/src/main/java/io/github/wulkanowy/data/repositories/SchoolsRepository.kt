@@ -11,6 +11,7 @@ import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.utils.IntegrityHelper
 import io.github.wulkanowy.utils.getCurrentOrLast
 import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.switchSemester
 import kotlinx.coroutines.withTimeout
 import timber.log.Timber
 import java.util.UUID
@@ -42,11 +43,7 @@ class SchoolsRepository @Inject constructor(
 
         val schoolInfo = sdk
             .init(student.copy(password = loginData.password))
-            .switchDiary(
-                diaryId = semester.diaryId,
-                kindergartenDiaryId = semester.kindergartenDiaryId,
-                schoolYear = semester.schoolYear
-            )
+            .switchSemester(semester)
             .getSchool()
 
         schoolsService.logLoginEvent(

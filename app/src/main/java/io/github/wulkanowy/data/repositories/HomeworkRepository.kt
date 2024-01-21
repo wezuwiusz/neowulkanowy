@@ -55,7 +55,7 @@ class HomeworkRepository @Inject constructor(
         },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getHomework(start.monday, end.sunday)
                 .mapToEntities(semester)
         },

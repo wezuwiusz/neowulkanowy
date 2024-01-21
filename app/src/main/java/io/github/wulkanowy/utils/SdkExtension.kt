@@ -1,5 +1,6 @@
 package io.github.wulkanowy.utils
 
+import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
 import timber.log.Timber
@@ -29,4 +30,13 @@ fun Sdk.init(student: Student): Sdk {
     Timber.d("Sdk in ${student.loginMode} mode reinitialized")
 
     return this
+}
+
+fun Sdk.switchSemester(semester: Semester): Sdk {
+    return switchDiary(
+        diaryId = semester.diaryId,
+        kindergartenDiaryId = semester.kindergartenDiaryId,
+        schoolYear = semester.schoolYear,
+        unitId = semester.unitId,
+    )
 }
