@@ -34,10 +34,23 @@
             android:layout_marginEnd="16dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/dashboard_admin_message_item_close"
             app:layout_constraintStart_toEndOf="@id/dashboard_admin_message_item_icon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/lorem" />
+
+        <ImageView
+            android:id="@+id/dashboard_admin_message_item_close"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:padding="12dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/dashboard_admin_message_item_description"
