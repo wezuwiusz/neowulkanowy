@@ -9,6 +9,7 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
@@ -39,8 +40,9 @@ class SubjectRepository @Inject constructor(
         query = { subjectDao.loadAll(semester.diaryId, semester.studentId) },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
-                .getSubjects().mapToEntities(semester)
+                .switchSemester(semester)
+                .getSubjects()
+                .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
             subjectDao.deleteAll(old uniqueSubtract new)

@@ -9,7 +9,13 @@ import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Absent
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
+import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.monday
+import io.github.wulkanowy.utils.sunday
+import io.github.wulkanowy.utils.switchSemester
+import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
@@ -58,7 +64,7 @@ class AttendanceRepository @Inject constructor(
                 )
             }
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getAttendance(start.monday, end.sunday)
                 .mapToEntities(semester, lessons)
         },
@@ -97,7 +103,7 @@ class AttendanceRepository @Inject constructor(
             )
         }
         sdk.init(student)
-            .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+            .switchSemester(semester)
             .excuseForAbsence(items, reason)
     }
 }

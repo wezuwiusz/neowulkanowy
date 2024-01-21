@@ -16,6 +16,7 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.DispatchersProvider
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.security.Scrambler
+import io.github.wulkanowy.utils.switchSemester
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -149,12 +150,12 @@ class StudentRepository @Inject constructor(
 
     suspend fun authorizePermission(student: Student, semester: Semester, pesel: String) =
         sdk.init(student)
-            .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+            .switchSemester(semester)
             .authorizePermission(pesel)
 
     suspend fun refreshStudentName(student: Student, semester: Semester) {
         val newCurrentApiStudent = sdk.init(student)
-            .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+            .switchSemester(semester)
             .getCurrentStudent() ?: return
 
         val studentName = StudentName(

@@ -48,7 +48,7 @@ class CompletedLessonsRepository @Inject constructor(
         },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getCompletedLessons(start.monday, end.sunday)
                 .mapToEntities(semester)
         },

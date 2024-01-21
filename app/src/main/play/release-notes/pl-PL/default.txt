@@ -1,6 +1,6 @@
-Wersja 2.3.4
+Wersja 2.3.5
 
-— dodaliśmy obsługę captchy, co umożliwi używanie apki np. na odmianie ResMan Rzeszów
-— naprawiliśmy wyświetlanie frekwencji w szkołach używających eduOne (piszcie, jeśli nadal nie działa)
+— naprawiliśmy ładowanie frekwencji dla szkół używających eduOne
+— naprawiliśmy wielokrotne wysyłanie powiadomień o zmianach w planie lekcji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

@@ -10,7 +10,7 @@
     <string name="settings_title">Einstellungen</string>
     <string name="more_title">Mehr</string>
     <string name="about_title">Über die Applikation</string>
-    <string name="logviewer_title">Log Viewer</string>
+    <string name="logviewer_title">Log viewer</string>
     <string name="debug_title">Debuggen</string>
     <string name="notification_debug_title">Benachrichtigungen debuggen</string>
     <string name="debug_cookies_clear">Clear webview cookies</string>

@@ -16,17 +16,24 @@ class TimetableWork @Inject constructor(
 ) : Work {
 
     override suspend fun doWork(student: Student, semester: Semester, notify: Boolean) {
+        val startDate = now().nextOrSameSchoolDay
+        val endDate = startDate.plusDays(7)
+
         timetableRepository.getTimetable(
             student = student,
             semester = semester,
-            start = now().nextOrSameSchoolDay,
-            end = now().nextOrSameSchoolDay,
+            start = startDate,
+            end = endDate,
             forceRefresh = true,
             notify = notify,
         )
             .waitForResult()
 
-        timetableRepository.getTimetableFromDatabase(semester, now(), now().plusDays(7))
+        timetableRepository.getTimetableFromDatabase(
+            semester = semester,
+            from = startDate,
+            end = endDate,
+        )
             .first()
             .filterNot { it.isNotified }
             .let {

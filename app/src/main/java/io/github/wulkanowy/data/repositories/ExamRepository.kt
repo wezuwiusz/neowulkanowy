@@ -7,7 +7,13 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.endExamsDay
+import io.github.wulkanowy.utils.getRefreshKey
+import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.startExamsDay
+import io.github.wulkanowy.utils.switchSemester
+import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
 import java.time.LocalDate
@@ -51,7 +57,7 @@ class ExamRepository @Inject constructor(
         },
         fetch = {
             sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getExams(start.startExamsDay, start.endExamsDay)
                 .mapToEntities(semester)
         },
@@ -67,14 +73,16 @@ class ExamRepository @Inject constructor(
         filterResult = { it.filter { item -> item.date in start..end } }
     )
 
-    fun getExamsFromDatabase(semester: Semester, start: LocalDate): Flow<List<Exam>> {
-        return examDb.loadAll(
-            diaryId = semester.diaryId,
-            studentId = semester.studentId,
-            from = start.startExamsDay,
-            end = start.endExamsDay
-        )
-    }
+    fun getExamsFromDatabase(
+        semester: Semester,
+        start: LocalDate,
+        end: LocalDate
+    ): Flow<List<Exam>> = examDb.loadAll(
+        diaryId = semester.diaryId,
+        studentId = semester.studentId,
+        from = start,
+        end = end,
+    )
 
     suspend fun updateExam(exam: List<Exam>) = examDb.updateAll(exam)
 }

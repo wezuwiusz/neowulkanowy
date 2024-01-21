@@ -829,7 +829,7 @@
     <string name="auth_api_error">Авторизация отклонена. Предоставленные данные не соответствуют записям в кабинете секретаря.</string>
     <string name="auth_invalid_error">Неправильный номер PESEL</string>
     <string name="auth_pesel">Номер PESEL</string>
-    <string name="auth_button">Authorize</string>
+    <string name="auth_button">Авторизовать</string>
     <string name="auth_success">Авторизация прошла успешно</string>
     <string name="auth_title">Авторизация</string>
     <string name="auth_description">Для работы приложения нам необходимо подтвердить вашу личность. Введите PESEL учащегося &lt;b&gt;%1$s&lt;/b&gt; в поле ниже</string>

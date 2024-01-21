@@ -1,11 +1,124 @@
 package io.github.wulkanowy.data.db
 
 import android.content.Context
-import androidx.room.*
+import androidx.room.AutoMigration
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import androidx.room.RoomDatabase.JournalMode.TRUNCATE
-import io.github.wulkanowy.data.db.dao.*
-import io.github.wulkanowy.data.db.entities.*
-import io.github.wulkanowy.data.db.migrations.*
+import androidx.room.TypeConverters
+import io.github.wulkanowy.data.db.dao.AdminMessageDao
+import io.github.wulkanowy.data.db.dao.AttendanceDao
+import io.github.wulkanowy.data.db.dao.AttendanceSummaryDao
+import io.github.wulkanowy.data.db.dao.CompletedLessonsDao
+import io.github.wulkanowy.data.db.dao.ConferenceDao
+import io.github.wulkanowy.data.db.dao.ExamDao
+import io.github.wulkanowy.data.db.dao.GradeDao
+import io.github.wulkanowy.data.db.dao.GradePartialStatisticsDao
+import io.github.wulkanowy.data.db.dao.GradePointsStatisticsDao
+import io.github.wulkanowy.data.db.dao.GradeSemesterStatisticsDao
+import io.github.wulkanowy.data.db.dao.GradeSummaryDao
+import io.github.wulkanowy.data.db.dao.HomeworkDao
+import io.github.wulkanowy.data.db.dao.LuckyNumberDao
+import io.github.wulkanowy.data.db.dao.MailboxDao
+import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
+import io.github.wulkanowy.data.db.dao.MessagesDao
+import io.github.wulkanowy.data.db.dao.MobileDeviceDao
+import io.github.wulkanowy.data.db.dao.NoteDao
+import io.github.wulkanowy.data.db.dao.NotificationDao
+import io.github.wulkanowy.data.db.dao.RecipientDao
+import io.github.wulkanowy.data.db.dao.SchoolAnnouncementDao
+import io.github.wulkanowy.data.db.dao.SchoolDao
+import io.github.wulkanowy.data.db.dao.SemesterDao
+import io.github.wulkanowy.data.db.dao.StudentDao
+import io.github.wulkanowy.data.db.dao.StudentInfoDao
+import io.github.wulkanowy.data.db.dao.SubjectDao
+import io.github.wulkanowy.data.db.dao.TeacherDao
+import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
+import io.github.wulkanowy.data.db.dao.TimetableDao
+import io.github.wulkanowy.data.db.dao.TimetableHeaderDao
+import io.github.wulkanowy.data.db.entities.AdminMessage
+import io.github.wulkanowy.data.db.entities.Attendance
+import io.github.wulkanowy.data.db.entities.AttendanceSummary
+import io.github.wulkanowy.data.db.entities.CompletedLesson
+import io.github.wulkanowy.data.db.entities.Conference
+import io.github.wulkanowy.data.db.entities.Exam
+import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradePartialStatistics
+import io.github.wulkanowy.data.db.entities.GradePointsStatistics
+import io.github.wulkanowy.data.db.entities.GradeSemesterStatistics
+import io.github.wulkanowy.data.db.entities.GradeSummary
+import io.github.wulkanowy.data.db.entities.Homework
+import io.github.wulkanowy.data.db.entities.LuckyNumber
+import io.github.wulkanowy.data.db.entities.Mailbox
+import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.db.entities.MessageAttachment
+import io.github.wulkanowy.data.db.entities.MobileDevice
+import io.github.wulkanowy.data.db.entities.Note
+import io.github.wulkanowy.data.db.entities.Notification
+import io.github.wulkanowy.data.db.entities.Recipient
+import io.github.wulkanowy.data.db.entities.School
+import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
+import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.db.entities.StudentInfo
+import io.github.wulkanowy.data.db.entities.Subject
+import io.github.wulkanowy.data.db.entities.Teacher
+import io.github.wulkanowy.data.db.entities.Timetable
+import io.github.wulkanowy.data.db.entities.TimetableAdditional
+import io.github.wulkanowy.data.db.entities.TimetableHeader
+import io.github.wulkanowy.data.db.migrations.Migration10
+import io.github.wulkanowy.data.db.migrations.Migration11
+import io.github.wulkanowy.data.db.migrations.Migration12
+import io.github.wulkanowy.data.db.migrations.Migration13
+import io.github.wulkanowy.data.db.migrations.Migration14
+import io.github.wulkanowy.data.db.migrations.Migration15
+import io.github.wulkanowy.data.db.migrations.Migration16
+import io.github.wulkanowy.data.db.migrations.Migration17
+import io.github.wulkanowy.data.db.migrations.Migration18
+import io.github.wulkanowy.data.db.migrations.Migration19
+import io.github.wulkanowy.data.db.migrations.Migration2
+import io.github.wulkanowy.data.db.migrations.Migration20
+import io.github.wulkanowy.data.db.migrations.Migration21
+import io.github.wulkanowy.data.db.migrations.Migration22
+import io.github.wulkanowy.data.db.migrations.Migration23
+import io.github.wulkanowy.data.db.migrations.Migration24
+import io.github.wulkanowy.data.db.migrations.Migration25
+import io.github.wulkanowy.data.db.migrations.Migration26
+import io.github.wulkanowy.data.db.migrations.Migration27
+import io.github.wulkanowy.data.db.migrations.Migration28
+import io.github.wulkanowy.data.db.migrations.Migration29
+import io.github.wulkanowy.data.db.migrations.Migration3
+import io.github.wulkanowy.data.db.migrations.Migration30
+import io.github.wulkanowy.data.db.migrations.Migration31
+import io.github.wulkanowy.data.db.migrations.Migration32
+import io.github.wulkanowy.data.db.migrations.Migration33
+import io.github.wulkanowy.data.db.migrations.Migration34
+import io.github.wulkanowy.data.db.migrations.Migration35
+import io.github.wulkanowy.data.db.migrations.Migration36
+import io.github.wulkanowy.data.db.migrations.Migration37
+import io.github.wulkanowy.data.db.migrations.Migration38
+import io.github.wulkanowy.data.db.migrations.Migration39
+import io.github.wulkanowy.data.db.migrations.Migration4
+import io.github.wulkanowy.data.db.migrations.Migration40
+import io.github.wulkanowy.data.db.migrations.Migration41
+import io.github.wulkanowy.data.db.migrations.Migration42
+import io.github.wulkanowy.data.db.migrations.Migration43
+import io.github.wulkanowy.data.db.migrations.Migration44
+import io.github.wulkanowy.data.db.migrations.Migration46
+import io.github.wulkanowy.data.db.migrations.Migration49
+import io.github.wulkanowy.data.db.migrations.Migration5
+import io.github.wulkanowy.data.db.migrations.Migration50
+import io.github.wulkanowy.data.db.migrations.Migration51
+import io.github.wulkanowy.data.db.migrations.Migration53
+import io.github.wulkanowy.data.db.migrations.Migration54
+import io.github.wulkanowy.data.db.migrations.Migration55
+import io.github.wulkanowy.data.db.migrations.Migration57
+import io.github.wulkanowy.data.db.migrations.Migration58
+import io.github.wulkanowy.data.db.migrations.Migration6
+import io.github.wulkanowy.data.db.migrations.Migration7
+import io.github.wulkanowy.data.db.migrations.Migration8
+import io.github.wulkanowy.data.db.migrations.Migration9
 import io.github.wulkanowy.utils.AppInfo
 import javax.inject.Singleton
 
@@ -51,6 +164,7 @@ import javax.inject.Singleton
         AutoMigration(from = 54, to = 55, spec = Migration55::class),
         AutoMigration(from = 55, to = 56),
         AutoMigration(from = 56, to = 57, spec = Migration57::class),
+        AutoMigration(from = 57, to = 58, spec = Migration58::class),
     ],
     version = AppDatabase.VERSION_SCHEMA,
     exportSchema = true
@@ -59,7 +173,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 57
+        const val VERSION_SCHEMA = 58
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),

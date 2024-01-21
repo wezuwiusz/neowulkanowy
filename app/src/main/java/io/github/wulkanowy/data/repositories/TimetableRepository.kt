@@ -65,7 +65,7 @@ class TimetableRepository @Inject constructor(
         query = { getFullTimetableFromDatabase(student, semester, start, end) },
         fetch = {
             val timetableFull = sdk.init(student)
-                .switchDiary(semester.diaryId, semester.kindergartenDiaryId, semester.schoolYear)
+                .switchSemester(semester)
                 .getTimetable(start.monday, end.sunday)
 
             timetableFull.mapToEntities(semester)
