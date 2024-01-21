@@ -16,17 +16,24 @@ class AttendanceWork @Inject constructor(
 ) : Work {
 
     override suspend fun doWork(student: Student, semester: Semester, notify: Boolean) {
+        val startDate = now().previousOrSameSchoolDay
+        val endDate = startDate.plusDays(7)
+
         attendanceRepository.getAttendance(
             student = student,
             semester = semester,
-            start = now().previousOrSameSchoolDay,
-            end = now().previousOrSameSchoolDay,
+            start = startDate,
+            end = endDate,
             forceRefresh = true,
             notify = notify,
         )
             .waitForResult()
 
-        attendanceRepository.getAttendanceFromDatabase(semester, now().minusDays(7), now())
+        attendanceRepository.getAttendanceFromDatabase(
+            semester = semester,
+            start = startDate,
+            end = endDate,
+        )
             .first()
             .filterNot { it.isNotified }
             .let {

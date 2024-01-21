@@ -67,14 +67,16 @@ class ExamRepository @Inject constructor(
         filterResult = { it.filter { item -> item.date in start..end } }
     )
 
-    fun getExamsFromDatabase(semester: Semester, start: LocalDate): Flow<List<Exam>> {
-        return examDb.loadAll(
-            diaryId = semester.diaryId,
-            studentId = semester.studentId,
-            from = start.startExamsDay,
-            end = start.endExamsDay
-        )
-    }
+    fun getExamsFromDatabase(
+        semester: Semester,
+        start: LocalDate,
+        end: LocalDate
+    ): Flow<List<Exam>> = examDb.loadAll(
+        diaryId = semester.diaryId,
+        studentId = semester.studentId,
+        from = start,
+        end = end,
+    )
 
     suspend fun updateExam(exam: List<Exam>) = examDb.updateAll(exam)
 }
