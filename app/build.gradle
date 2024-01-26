@@ -262,7 +262,7 @@ dependencies {
     playImplementation 'com.google.android.play:review-ktx:2.0.1'
     playImplementation "com.google.android.ump:user-messaging-platform:2.1.0"
 
-    hmsImplementation 'com.huawei.hms:hianalytics:6.12.0.300'
+    hmsImplementation 'com.huawei.hms:hianalytics:6.12.0.301'
     hmsImplementation 'com.huawei.agconnect:agconnect-crash:1.9.1.303'
 
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$chucker"
