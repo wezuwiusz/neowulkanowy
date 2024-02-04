@@ -65,6 +65,8 @@ captures/
 .idea/uiDesigner.xml
 .idea/runConfigurations.xml
 .idea/discord.xml
+.idea/migrations.xml
+.idea/androidTestResultsUserPreferences.xml
 
 # Keystore files
 *.jks
