@@ -32,6 +32,9 @@
         <item name="colorPrimaryInverse">@color/material_dynamic_primary40</item>
         <item name="colorTimetableCanceled">@color/timetable_canceled_dark</item>
         <item name="colorTimetableChange">@color/timetable_change_dark</item>
+        <item name="colorAttendanceAbsence">@color/attendance_absence_dark</item>
+        <item name="colorAttendanceLateness">@color/attendance_lateness_dark</item>
+
         <item name="colorError">@color/colorErrorLight</item>
         <item name="colorDivider">@color/colorDividerInverse</item>
         <item name="colorSwipeRefresh">@color/material_dynamic_secondary20</item>
