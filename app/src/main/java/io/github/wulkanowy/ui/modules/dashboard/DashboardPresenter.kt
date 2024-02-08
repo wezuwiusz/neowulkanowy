@@ -24,11 +24,13 @@ import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
+import io.github.wulkanowy.domain.timetable.IsStudentHasLessonsOnWeekendUseCase
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
+import io.github.wulkanowy.utils.sunday
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
@@ -56,6 +58,7 @@ class DashboardPresenter @Inject constructor(
     private val messageRepository: MessageRepository,
     private val attendanceSummaryRepository: AttendanceSummaryRepository,
     private val timetableRepository: TimetableRepository,
+    private val isStudentHasLessonsOnWeekendUseCase: IsStudentHasLessonsOnWeekendUseCase,
     private val homeworkRepository: HomeworkRepository,
     private val examRepository: ExamRepository,
     private val conferenceRepository: ConferenceRepository,
@@ -435,14 +438,17 @@ class DashboardPresenter @Inject constructor(
     private fun loadLessons(student: Student, forceRefresh: Boolean) {
         flatResourceFlow {
             val semester = semesterRepository.getCurrentSemester(student)
-            val date = LocalDate.now().nextOrSameSchoolDay
+            val date = when (isStudentHasLessonsOnWeekendUseCase(student, semester)) {
+                true -> LocalDate.now()
+                else -> LocalDate.now().nextOrSameSchoolDay
+            }
 
             timetableRepository.getTimetable(
                 student = student,
                 semester = semester,
                 start = date,
-                end = date,
-                forceRefresh = forceRefresh
+                end = date.sunday,
+                forceRefresh = forceRefresh,
             )
         }
             .onEach {

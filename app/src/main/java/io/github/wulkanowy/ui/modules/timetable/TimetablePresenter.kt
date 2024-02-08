@@ -2,7 +2,6 @@ package io.github.wulkanowy.ui.modules.timetable
 
 import android.os.Handler
 import android.os.Looper
-import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
@@ -20,8 +19,8 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
-import io.github.wulkanowy.data.toFirstResult
-import io.github.wulkanowy.data.waitForResult
+import io.github.wulkanowy.domain.timetable.IsStudentHasLessonsOnWeekendUseCase
+import io.github.wulkanowy.domain.timetable.IsWeekendHasLessonsUseCase
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -31,16 +30,12 @@ import io.github.wulkanowy.utils.isHolidays
 import io.github.wulkanowy.utils.isJustFinished
 import io.github.wulkanowy.utils.isShowTimeUntil
 import io.github.wulkanowy.utils.left
-import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.nextSchoolDay
 import io.github.wulkanowy.utils.previousSchoolDay
-import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.toFormattedString
 import io.github.wulkanowy.utils.until
-import kotlinx.coroutines.flow.firstOrNull
 import timber.log.Timber
-import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDate.now
@@ -54,6 +49,8 @@ class TimetablePresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val timetableRepository: TimetableRepository,
+    private val isStudentHasLessonsOnWeekendUseCase: IsStudentHasLessonsOnWeekendUseCase,
+    private val isWeekendHasLessonsUseCase: IsWeekendHasLessonsUseCase,
     private val semesterRepository: SemesterRepository,
     private val prefRepository: PreferencesRepository,
     private val analytics: AnalyticsHelper,
@@ -165,7 +162,7 @@ class TimetablePresenter @Inject constructor(
         }
             .logResourceStatus("load timetable data")
             .onResourceData {
-                isWeekendHasLessons = isWeekendHasLessons || isWeekendHasLessons(it.lessons)
+                isWeekendHasLessons = isWeekendHasLessons || isWeekendHasLessonsUseCase(it.lessons)
 
                 view?.run {
                     enableSwipe(true)
@@ -199,30 +196,13 @@ class TimetablePresenter @Inject constructor(
 
     private suspend fun checkInitialAndCurrentDate(student: Student, semester: Semester) {
         if (initialDate == null) {
-            val lessons = timetableRepository.getTimetable(
-                student = student,
-                semester = semester,
-                start = now().monday,
-                end = now().sunday,
-                forceRefresh = false,
-                timetableType = TimetableRepository.TimetableType.NORMAL
-            ).toFirstResult().dataOrNull?.lessons.orEmpty()
-            isWeekendHasLessons = isWeekendHasLessons(lessons)
+            isWeekendHasLessons = isStudentHasLessonsOnWeekendUseCase(student, semester)
             initialDate = getInitialDate(semester)
         }
 
         if (currentDate == null) {
             currentDate = initialDate
         }
-    }
-
-    private fun isWeekendHasLessons(
-        lessons: List<Timetable>,
-    ): Boolean = lessons.any {
-        it.date.dayOfWeek in listOf(
-            DayOfWeek.SATURDAY,
-            DayOfWeek.SUNDAY,
-        )
     }
 
     private fun getInitialDate(semester: Semester): LocalDate {
