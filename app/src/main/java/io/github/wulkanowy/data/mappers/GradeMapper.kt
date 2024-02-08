@@ -1,10 +1,12 @@
 package io.github.wulkanowy.data.mappers
 
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradeDescriptive
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.sdk.pojo.GradeSummary as SdkGradeSummary
 import io.github.wulkanowy.sdk.pojo.Grade as SdkGrade
+import io.github.wulkanowy.sdk.pojo.GradeDescriptive as SdkGradeDescriptive
+import io.github.wulkanowy.sdk.pojo.GradeSummary as SdkGradeSummary
 
 fun List<SdkGrade>.mapToEntities(semester: Semester) = map {
     Grade(
@@ -40,3 +42,15 @@ fun List<SdkGradeSummary>.mapToEntities(semester: Semester) = map {
         average = it.average
     )
 }
+
+@JvmName("mapGradeDescriptiveToEntities")
+fun List<SdkGradeDescriptive>.mapToEntities(semester: Semester) = map {
+    GradeDescriptive(
+        semesterId = semester.semesterId,
+        studentId = semester.studentId,
+        subject = it.subject,
+        description = it.description
+    )
+}
+
+

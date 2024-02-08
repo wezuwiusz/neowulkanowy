@@ -1,9 +1,16 @@
 package io.github.wulkanowy.ui.modules.grade.summary
 
-import io.github.wulkanowy.data.*
-import io.github.wulkanowy.data.db.entities.GradeSummary
-import io.github.wulkanowy.data.enums.GradeSortingMode
-import io.github.wulkanowy.data.enums.GradeSortingMode.*
+import io.github.wulkanowy.data.enums.GradeSortingMode.ALPHABETIC
+import io.github.wulkanowy.data.enums.GradeSortingMode.AVERAGE
+import io.github.wulkanowy.data.enums.GradeSortingMode.DATE
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.mapResourceData
+import io.github.wulkanowy.data.onResourceData
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceIntermediate
+import io.github.wulkanowy.data.onResourceNotLoading
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -128,7 +135,7 @@ class GradeSummaryPresenter @Inject constructor(
         view?.showFinalAverageHelpDialog()
     }
 
-    private fun createGradeSummaryItems(items: List<GradeSubject>): List<GradeSummary> {
+    private fun createGradeSummaryItems(items: List<GradeSubject>): List<GradeSummaryItem> {
         return items
             .filter { !checkEmpty(it) }
             .let { gradeSubjects ->
@@ -136,21 +143,32 @@ class GradeSummaryPresenter @Inject constructor(
                     DATE -> gradeSubjects.sortedByDescending { gradeDetailsWithAverage ->
                         gradeDetailsWithAverage.grades.maxByOrNull { it.date }?.date
                     }
+
                     ALPHABETIC -> gradeSubjects.sortedBy { gradeDetailsWithAverage ->
                         gradeDetailsWithAverage.subject.lowercase()
                     }
+
                     AVERAGE -> gradeSubjects.sortedByDescending { it.average }
                 }
             }
-            .map { it.summary.copy(average = it.average) }
+            .map {
+                val gradeSummary = it.summary.copy(average = it.average)
+                val descriptive = it.descriptive
+                GradeSummaryItem(
+                    gradeSummary = gradeSummary,
+                    gradeDescriptive = descriptive,
+                )
+            }
+
     }
 
     private fun checkEmpty(gradeSummary: GradeSubject): Boolean {
         return gradeSummary.run {
             summary.finalGrade.isBlank()
-                    && summary.predictedGrade.isBlank()
-                    && average == .0
-                    && points.isBlank()
+                && summary.predictedGrade.isBlank()
+                && average == .0
+                && points.isBlank()
+                && descriptive == null
         }
     }
 }

@@ -2,16 +2,16 @@ package io.github.wulkanowy.ui.modules.grade.summary
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.ItemGradeSummaryBinding
 import io.github.wulkanowy.databinding.ScrollableHeaderGradeSummaryBinding
 import io.github.wulkanowy.sdk.scrapper.grades.isGradeValid
 import io.github.wulkanowy.utils.calcFinalAverage
+import io.github.wulkanowy.utils.ifNullOrBlank
 import java.util.Locale
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class GradeSummaryAdapter @Inject constructor(
         ITEM(2)
     }
 
-    var items = emptyList<GradeSummary>()
+    var items = emptyList<GradeSummaryItem>()
 
     var onCalculatedHelpClickListener: () -> Unit = {}
 
@@ -44,9 +44,11 @@ class GradeSummaryAdapter @Inject constructor(
             ViewType.HEADER.id -> HeaderViewHolder(
                 ScrollableHeaderGradeSummaryBinding.inflate(inflater, parent, false)
             )
+
             ViewType.ITEM.id -> ItemViewHolder(
                 ItemGradeSummaryBinding.inflate(inflater, parent, false)
             )
+
             else -> throw IllegalStateException()
         }
     }
@@ -60,19 +62,23 @@ class GradeSummaryAdapter @Inject constructor(
 
     private fun bindHeaderViewHolder(binding: ScrollableHeaderGradeSummaryBinding) {
         if (items.isEmpty()) return
+        val gradeSummaries = items
+            .filter { it.gradeDescriptive == null }
+            .map { it.gradeSummary }
 
         val context = binding.root.context
-        val finalItemsCount = items.count { isGradeValid(it.finalGrade) }
-        val calculatedItemsCount = items.count { value -> value.average != 0.0 }
-        val allItemsCount = items.count { !it.subject.equals("zachowanie", true) }
-        val finalAverage = items.calcFinalAverage(
+        val finalItemsCount = gradeSummaries.count { isGradeValid(it.finalGrade) }
+        val calculatedItemsCount = gradeSummaries.count { value -> value.average != 0.0 }
+        val allItemsCount = gradeSummaries.count { !it.subject.equals("zachowanie", true) }
+        val finalAverage = gradeSummaries.calcFinalAverage(
             preferencesRepository.gradePlusModifier,
             preferencesRepository.gradeMinusModifier
         )
-        val calculatedAverage = items.filter { value -> value.average != 0.0 }
+        val calculatedAverage = gradeSummaries.filter { value -> value.average != 0.0 }
             .map { values -> values.average }
             .reversed() // fix average precision
             .average()
+            .let { if (it.isNaN()) 0.0 else it }
 
         with(binding) {
             gradeSummaryScrollableHeaderFinal.text = formatAverage(finalAverage)
@@ -95,16 +101,28 @@ class GradeSummaryAdapter @Inject constructor(
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindItemViewHolder(binding: ItemGradeSummaryBinding, item: GradeSummary) {
-        with(binding) {
-            gradeSummaryItemTitle.text = item.subject
-            gradeSummaryItemPoints.text = item.pointsSum
-            gradeSummaryItemAverage.text = formatAverage(item.average, "")
-            gradeSummaryItemPredicted.text = "${item.predictedGrade} ${item.proposedPoints}".trim()
-            gradeSummaryItemFinal.text = "${item.finalGrade} ${item.finalPoints}".trim()
+    private fun bindItemViewHolder(binding: ItemGradeSummaryBinding, item: GradeSummaryItem) {
+        val (gradeSummary, gradeDescriptive) = item
 
-            gradeSummaryItemPointsContainer.visibility =
-                if (item.pointsSum.isBlank()) View.GONE else View.VISIBLE
+        with(binding) {
+            gradeSummaryItemTitle.text = gradeSummary.subject
+            gradeSummaryItemPoints.text = gradeSummary.pointsSum
+            gradeSummaryItemAverage.text = formatAverage(gradeSummary.average, "")
+            gradeSummaryItemPredicted.text =
+                "${gradeSummary.predictedGrade} ${gradeSummary.proposedPoints}".trim()
+            gradeSummaryItemFinal.text =
+                "${gradeSummary.finalGrade} ${gradeSummary.finalPoints}".trim()
+            gradeSummaryItemDescriptive.text = gradeDescriptive?.description.ifNullOrBlank {
+                root.context.getString(R.string.all_no_data)
+            }
+
+            gradeSummaryItemFinalDivider.isVisible = gradeDescriptive == null
+            gradeSummaryItemPredictedDivider.isVisible = gradeDescriptive == null
+            gradeSummaryItemPointsDivider.isVisible = gradeDescriptive == null
+            gradeSummaryItemPredictedContainer.isVisible = gradeDescriptive == null
+            gradeSummaryItemFinalContainer.isVisible = gradeDescriptive == null
+            gradeSummaryItemDescriptiveContainer.isVisible = gradeDescriptive != null
+            gradeSummaryItemPointsContainer.isVisible = gradeSummary.pointsSum.isNotBlank()
         }
     }
 

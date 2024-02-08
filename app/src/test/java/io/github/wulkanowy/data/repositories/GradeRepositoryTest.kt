@@ -2,6 +2,7 @@ package io.github.wulkanowy.data.repositories
 
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.GradeDao
+import io.github.wulkanowy.data.db.dao.GradeDescriptiveDao
 import io.github.wulkanowy.data.db.dao.GradeSummaryDao
 import io.github.wulkanowy.data.errorOrNull
 import io.github.wulkanowy.data.mappers.mapToEntities
@@ -42,6 +43,9 @@ class GradeRepositoryTest {
     @MockK
     private lateinit var gradeSummaryDb: GradeSummaryDao
 
+    @MockK
+    private lateinit var gradeDescriptiveDb: GradeDescriptiveDao
+
     @MockK(relaxUnitFun = true)
     private lateinit var refreshHelper: AutoRefreshHelper
 
@@ -56,7 +60,8 @@ class GradeRepositoryTest {
         MockKAnnotations.init(this)
         every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
-        gradeRepository = GradeRepository(gradeDb, gradeSummaryDb, sdk, refreshHelper)
+        gradeRepository =
+            GradeRepository(gradeDb, gradeSummaryDb, gradeDescriptiveDb, sdk, refreshHelper)
 
         coEvery { gradeDb.deleteAll(any()) } just Runs
         coEvery { gradeDb.insertAll(any()) } returns listOf()
@@ -68,6 +73,13 @@ class GradeRepositoryTest {
         )
         coEvery { gradeSummaryDb.deleteAll(any()) } just Runs
         coEvery { gradeSummaryDb.insertAll(any()) } returns listOf()
+
+        coEvery { gradeDescriptiveDb.loadAll(any(), any()) } returnsMany listOf(
+            flowOf(listOf()),
+        )
+
+        coEvery { gradeDescriptiveDb.deleteAll(any()) } just Runs
+        coEvery { gradeDescriptiveDb.insertAll(any()) } returns listOf()
     }
 
     @Test
