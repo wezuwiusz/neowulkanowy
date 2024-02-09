@@ -1,6 +1,8 @@
-Wersja 2.3.5
+Wersja 2.4.0
 
-— naprawiliśmy ładowanie frekwencji dla szkół używających eduOne
-— naprawiliśmy wielokrotne wysyłanie powiadomień o zmianach w planie lekcji
+— naprawiliśmy logowanie do aplikacji na odmianie standardowej
+— naprawiliśmy wyświetlanie lekcji na kolejny dzień w kafelku na ekranie Start
+— dodaliśmy oceny opisowe
+— dodaliśmy kolorowe opisy we frekwencji we wpisach innych niż obecność
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
