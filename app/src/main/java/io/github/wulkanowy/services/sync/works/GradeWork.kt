@@ -45,5 +45,15 @@ class GradeWork @Inject constructor(
                     grade.isFinalGradeNotified = true
                 })
             }
+
+        gradeRepository.getGradesDescriptiveFromDatabase(semester).first()
+            .filter { !it.isNotified }
+            .let {
+                if (it.isNotEmpty()) newGradeNotification.notifyDescriptive(it, student)
+
+                gradeRepository.updateGradesDescriptive(it.onEach { grade ->
+                    grade.isNotified = true
+                })
+            }
     }
 }

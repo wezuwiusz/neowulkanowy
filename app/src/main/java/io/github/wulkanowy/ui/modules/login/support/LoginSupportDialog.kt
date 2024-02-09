@@ -105,7 +105,7 @@ class LoginSupportDialog : BaseDialogFragment<DialogLoginSupportBinding>() {
                     "${appInfo.systemManufacturer} ${appInfo.systemModel}",
                     appInfo.systemVersion.toString(),
                     "${appInfo.versionName}-${appInfo.buildFlavor}",
-                    supportInfo.loginData.baseUrl + "/" + supportInfo.loginData.symbol,
+                    supportInfo.loginData.let { "${it.baseUrl}/${it.defaultSymbol}/${it.userEnteredSymbol}" },
                     preferencesRepository.installationId,
                     getLastErrorFromStudentSelectScreen(),
                     dialogLoginSupportSchoolInput.text.takeIf { !it.isNullOrBlank() }

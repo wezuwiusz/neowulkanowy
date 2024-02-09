@@ -60,7 +60,7 @@ class LoginSymbolPresenter @Inject constructor(
         }
 
         loginData = loginData.copy(
-            symbol = view?.symbolValue?.getNormalizedSymbol(),
+            userEnteredSymbol = view?.symbolValue?.getNormalizedSymbol(),
         )
         resourceFlow {
             studentRepository.getUserSubjectsFromScrapper(
@@ -68,7 +68,7 @@ class LoginSymbolPresenter @Inject constructor(
                 password = loginData.password,
                 scrapperBaseUrl = loginData.baseUrl,
                 domainSuffix = loginData.domainSuffix,
-                symbol = loginData.symbol.orEmpty(),
+                symbol = loginData.userEnteredSymbol.orEmpty(),
             )
         }.onEach { user ->
             registerUser = user.dataOrNull
@@ -93,7 +93,7 @@ class LoginSymbolPresenter @Inject constructor(
                         else -> {
                             val enteredSymbolDetails = user.data.symbols
                                 .firstOrNull()
-                                ?.takeIf { it.symbol == loginData.symbol }
+                                ?.takeIf { it.symbol == loginData.userEnteredSymbol }
 
                             if (enteredSymbolDetails?.error is InvalidSymbolException) {
                                 view?.run {

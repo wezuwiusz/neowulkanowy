@@ -90,7 +90,7 @@ class LoginFormPresenter @Inject constructor(
             clearPassError()
             clearUsernameError()
             clearHostError()
-            if (formHostValue.contains("fakelog")) {
+            if (formHostValue.contains("wulkanowy")) {
                 setCredentials("jan@fakelog.cf", "jan123")
             } else if (formUsernameValue == "jan@fakelog.cf" && formPassValue == "jan123") {
                 setCredentials("", "")
@@ -148,7 +148,7 @@ class LoginFormPresenter @Inject constructor(
             password = password,
             baseUrl = host,
             domainSuffix = domainSuffix,
-            symbol = symbol
+            defaultSymbol = symbol
         )
     }
 
@@ -167,7 +167,7 @@ class LoginFormPresenter @Inject constructor(
                 password = loginData.password,
                 scrapperBaseUrl = loginData.baseUrl,
                 domainSuffix = loginData.domainSuffix,
-                symbol = loginData.symbol.orEmpty(),
+                symbol = loginData.defaultSymbol,
             )
         }
             .logResourceStatus("login")

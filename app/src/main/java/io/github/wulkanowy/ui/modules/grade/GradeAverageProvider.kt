@@ -1,15 +1,23 @@
 package io.github.wulkanowy.ui.modules.grade
 
-import io.github.wulkanowy.data.*
+import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradeDescriptive
 import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
+import io.github.wulkanowy.data.errorOrNull
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.mapData
+import io.github.wulkanowy.data.mapResourceData
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.*
+import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.ALL_YEAR
+import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.BOTH_SEMESTERS
+import io.github.wulkanowy.ui.modules.grade.GradeAverageMode.ONE_SEMESTER
 import io.github.wulkanowy.utils.calcAverage
 import io.github.wulkanowy.utils.changeModifier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -62,6 +70,7 @@ class GradeAverageProvider @Inject constructor(
                     forceRefresh = forceRefresh,
                     params = params,
                 )
+
                 BOTH_SEMESTERS -> calculateCombinedAverage(
                     student = student,
                     semesters = semesters,
@@ -69,6 +78,7 @@ class GradeAverageProvider @Inject constructor(
                     forceRefresh = forceRefresh,
                     config = params,
                 )
+
                 ALL_YEAR -> calculateCombinedAverage(
                     student = student,
                     semesters = semesters,
@@ -189,36 +199,73 @@ class GradeAverageProvider @Inject constructor(
     ): Flow<Resource<List<GradeSubject>>> {
         return gradeRepository.getGrades(student, semester, forceRefresh = forceRefresh)
             .mapResourceData { res ->
-                val (details, summaries) = res
+                val (details, summaries, descriptives) = res
                 val isAnyAverage = summaries.any { it.average != .0 }
                 val allGrades = details.groupBy { it.subject }
+                val descriptiveGradesBySubject = descriptives.associateBy { it.subject }
 
-                val items = summaries.emulateEmptySummaries(
-                    student = student,
-                    semester = semester,
-                    grades = allGrades.toList(),
-                    calcAverage = isAnyAverage,
-                    params = params,
-                ).map { summary ->
-                    val grades = allGrades[summary.subject].orEmpty()
-                    GradeSubject(
-                        subject = summary.subject,
-                        average = if (!isAnyAverage || params.forceAverageCalc) {
-                            grades.updateModifiers(student, params)
-                                .calcAverage(params.isOptionalArithmeticAverage)
-                        } else summary.average,
-                        points = summary.pointsSum,
-                        summary = summary,
-                        grades = grades,
-                        isVulcanAverage = isAnyAverage
+                val items = summaries
+                    .createEmptySummariesByGradesIfNeeded(
+                        student = student,
+                        semester = semester,
+                        grades = allGrades.toList(),
+                        calcAverage = isAnyAverage,
+                        params = params,
                     )
-                }
+                    .createEmptySummariesByDescriptiveGradesIfNeeded(
+                        student = student,
+                        semester = semester,
+                        descriptives = descriptives,
+                    )
+                    .map { summary ->
+                        val grades = allGrades[summary.subject].orEmpty()
+                        val descriptiveGrade = descriptiveGradesBySubject[summary.subject]
+
+                        GradeSubject(
+                            subject = summary.subject,
+                            average = if (!isAnyAverage || params.forceAverageCalc) {
+                                grades.updateModifiers(student, params)
+                                    .calcAverage(params.isOptionalArithmeticAverage)
+                            } else summary.average,
+                            points = summary.pointsSum,
+                            summary = summary,
+                            grades = grades,
+                            descriptive = descriptiveGrade,
+                            isVulcanAverage = isAnyAverage
+                        )
+                    }
 
                 items
             }
     }
 
-    private fun List<GradeSummary>.emulateEmptySummaries(
+    private fun List<GradeSummary>.createEmptySummariesByDescriptiveGradesIfNeeded(
+        student: Student,
+        semester: Semester,
+        descriptives: List<GradeDescriptive>
+    ): List<GradeSummary> {
+        val summarySubjects = this.map { it.subject }
+        val gradeSummaryToAdd = descriptives.mapNotNull { gradeDescriptive ->
+            if (gradeDescriptive.subject in summarySubjects) return@mapNotNull null
+
+            GradeSummary(
+                studentId = student.studentId,
+                semesterId = semester.semesterId,
+                position = 0,
+                subject = gradeDescriptive.subject,
+                predictedGrade = "",
+                finalGrade = "",
+                proposedPoints = "",
+                finalPoints = "",
+                pointsSum = "",
+                average = .0
+            )
+        }
+
+        return this + gradeSummaryToAdd
+    }
+
+    private fun List<GradeSummary>.createEmptySummariesByGradesIfNeeded(
         student: Student,
         semester: Semester,
         grades: List<Pair<String, List<Grade>>>,

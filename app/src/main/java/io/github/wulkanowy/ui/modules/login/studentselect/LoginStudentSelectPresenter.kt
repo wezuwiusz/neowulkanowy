@@ -111,8 +111,8 @@ class LoginStudentSelectPresenter @Inject constructor(
         val notEmptySymbols = registerUser.symbols.filter { it.schools.isNotEmpty() }
         val emptySymbols = registerUser.symbols.filter { it.schools.isEmpty() }
 
-        if (emptySymbols.isNotEmpty() && notEmptySymbols.isNotEmpty() && emptySymbols.any { it.symbol == loginData.symbol }) {
-            add(createEmptySymbolItem(emptySymbols.first { it.symbol == loginData.symbol }))
+        if (emptySymbols.isNotEmpty() && notEmptySymbols.isNotEmpty() && emptySymbols.any { it.symbol == loginData.userEnteredSymbol }) {
+            add(createEmptySymbolItem(emptySymbols.first { it.symbol == loginData.userEnteredSymbol }))
         }
 
         addAll(createNotEmptySymbolItems(notEmptySymbols, students))
@@ -317,7 +317,7 @@ class LoginStudentSelectPresenter @Inject constructor(
                 loginData = loginData,
                 registerUser = registerUser,
                 lastErrorMessage = lastError?.message,
-                enteredSymbol = loginData.symbol,
+                enteredSymbol = loginData.userEnteredSymbol,
             )
         )
     }

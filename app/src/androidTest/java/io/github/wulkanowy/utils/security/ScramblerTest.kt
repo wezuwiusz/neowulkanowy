@@ -14,34 +14,37 @@ import kotlin.test.assertFailsWith
 @RunWith(AndroidJUnit4::class)
 class ScramblerTest {
 
+    private val scrambler = Scrambler(ApplicationProvider.getApplicationContext())
+
     @Test
     fun encryptDecryptTest() {
-        assertEquals("TEST", decrypt(encrypt("TEST",
-                ApplicationProvider.getApplicationContext())))
+        assertEquals(
+            "TEST", scrambler.decrypt(scrambler.encrypt("TEST"))
+        )
     }
 
     @Test
     fun emptyTextEncryptTest() {
         assertFailsWith<ScramblerException> {
-            decrypt("")
+            scrambler.decrypt("")
         }
 
         assertFailsWith<ScramblerException> {
-            encrypt("", ApplicationProvider.getApplicationContext())
+            scrambler.encrypt("")
         }
     }
 
     @Test
     @SdkSuppress(minSdkVersion = 18)
     fun emptyKeyStoreTest() {
-        val text = encrypt("test", ApplicationProvider.getApplicationContext())
+        val text = scrambler.encrypt("test")
 
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
         keyStore.load(null)
         keyStore.deleteEntry("wulkanowy_password")
 
         assertFailsWith<ScramblerException> {
-            decrypt(text)
+            scrambler.decrypt(text)
         }
     }
 }

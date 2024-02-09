@@ -10,13 +10,11 @@ import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
 import io.github.wulkanowy.ui.base.BaseFragment
-import io.github.wulkanowy.ui.modules.auth.AuthDialog
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.support.LoginSupportDialog
 import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.openEmailClient
 import io.github.wulkanowy.utils.openInternetBrowser
 import io.github.wulkanowy.utils.serializable
 import javax.inject.Inject

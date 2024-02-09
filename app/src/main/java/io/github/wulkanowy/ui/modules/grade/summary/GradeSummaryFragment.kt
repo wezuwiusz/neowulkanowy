@@ -5,12 +5,10 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.db.entities.GradeSummary
 import io.github.wulkanowy.databinding.FragmentGradeSummaryBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.modules.grade.GradeFragment
@@ -72,7 +70,7 @@ class GradeSummaryFragment :
         }
     }
 
-    override fun updateData(data: List<GradeSummary>) {
+    override fun updateData(data: List<GradeSummaryItem>) {
         with(gradeSummaryAdapter) {
             items = data
             notifyDataSetChanged()

@@ -7,5 +7,6 @@ data class LoginData(
     val password: String,
     val baseUrl: String,
     val domainSuffix: String,
-    val symbol: String?,
+    val defaultSymbol: String,
+    val userEnteredSymbol: String? = null,
 ) : Serializable

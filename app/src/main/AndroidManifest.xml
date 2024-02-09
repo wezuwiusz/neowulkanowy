@@ -44,6 +44,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="false"
         android:theme="@style/WulkanowyTheme"
+        android:resizeableActivity="true"
         tools:ignore="DataExtractionRules,UnusedAttribute">
         <activity
             android:name=".ui.modules.splash.SplashActivity"

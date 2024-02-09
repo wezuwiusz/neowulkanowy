@@ -58,7 +58,7 @@ class LoginStudentSelectPresenterTest {
         login = "",
         password = "",
         baseUrl = "",
-        symbol = null,
+        defaultSymbol = "warszawa",
         domainSuffix = "",
     )
 

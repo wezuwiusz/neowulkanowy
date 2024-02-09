@@ -18,6 +18,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugAttendanceItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugConferenceItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugExamItems
+import io.github.wulkanowy.ui.modules.debug.notification.mock.debugGradeDescriptiveItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugGradeDetailsItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugGradeSummaryItems
 import io.github.wulkanowy.ui.modules.debug.notification.mock.debugHomeworkItems
@@ -54,6 +55,14 @@ class NotificationDebugPresenter @Inject constructor(
         },
         NotificationDebugItem(R.string.grade_summary_final_grade) { n ->
             withStudent { newGradeNotification.notifyFinal(debugGradeSummaryItems.take(n), it) }
+        },
+        NotificationDebugItem(R.string.grade_summary_descriptive) { n ->
+            withStudent {
+                newGradeNotification.notifyDescriptive(
+                    debugGradeDescriptiveItems.take(n),
+                    it
+                )
+            }
         },
         NotificationDebugItem(R.string.homework_title) { n ->
             withStudent { newHomeworkNotification.notify(debugHomeworkItems.take(n), it) }

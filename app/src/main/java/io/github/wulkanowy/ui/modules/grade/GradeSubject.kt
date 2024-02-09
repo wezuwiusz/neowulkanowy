@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.modules.grade
 
 import io.github.wulkanowy.data.db.entities.Grade
+import io.github.wulkanowy.data.db.entities.GradeDescriptive
 import io.github.wulkanowy.data.db.entities.GradeSummary
 
 data class GradeSubject(
@@ -8,6 +9,7 @@ data class GradeSubject(
     val average: Double,
     val points: String,
     val summary: GradeSummary,
+    val descriptive: GradeDescriptive?,
     val grades: List<Grade>,
     val isVulcanAverage: Boolean
 )

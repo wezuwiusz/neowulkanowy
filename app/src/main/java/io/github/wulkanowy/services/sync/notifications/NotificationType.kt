@@ -37,6 +37,10 @@ enum class NotificationType(
         channel = NewGradesChannel.CHANNEL_ID,
         icon = R.drawable.ic_stat_grade,
     ),
+    NEW_GRADE_DESCRIPTIVE(
+        channel = NewGradesChannel.CHANNEL_ID,
+        icon = R.drawable.ic_stat_grade,
+    ),
     NEW_HOMEWORK(
         channel = NewHomeworkChannel.CHANNEL_ID,
         icon = R.drawable.ic_more_homework,

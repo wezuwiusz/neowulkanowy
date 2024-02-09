@@ -19,6 +19,8 @@
         <item name="colorSurface">@color/colorSurface</item>
         <item name="colorTimetableCanceled">@color/timetable_canceled_light</item>
         <item name="colorTimetableChange">@color/timetable_change_light</item>
+        <item name="colorAttendanceAbsence">@color/attendance_absence_light</item>
+        <item name="colorAttendanceLateness">@color/attendance_lateness_light</item>
         <item name="colorError">@color/colorError</item>
         <item name="colorDivider">@color/colorDivider</item>
         <item name="colorSwipeRefresh">@color/colorSwipeRefresh</item>

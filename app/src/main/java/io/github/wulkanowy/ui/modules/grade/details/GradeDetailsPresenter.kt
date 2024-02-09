@@ -1,13 +1,22 @@
 package io.github.wulkanowy.ui.modules.grade.details
 
-import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Grade
 import io.github.wulkanowy.data.enums.GradeExpandMode
-import io.github.wulkanowy.data.enums.GradeSortingMode.*
+import io.github.wulkanowy.data.enums.GradeSortingMode.ALPHABETIC
+import io.github.wulkanowy.data.enums.GradeSortingMode.AVERAGE
+import io.github.wulkanowy.data.enums.GradeSortingMode.DATE
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceData
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceIntermediate
+import io.github.wulkanowy.data.onResourceNotLoading
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.GradeRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.grade.GradeAverageProvider
@@ -207,20 +216,20 @@ class GradeDetailsPresenter @Inject constructor(
                     AVERAGE -> gradeSubjects.sortedByDescending { it.average }
                 }
             }
-            .map { (subject, average, points, _, grades) ->
-                val subItems = grades
+            .map { gradeSubject ->
+                val subItems = gradeSubject.grades
                     .sortedByDescending { it.date }
                     .map { GradeDetailsItem(it, ViewType.ITEM) }
 
                 val gradeDetailsItems = listOf(
                     GradeDetailsItem(
                         GradeDetailsHeader(
-                            subject = subject,
-                            average = average,
-                            pointsSum = points,
+                            subject = gradeSubject.subject,
+                            average = gradeSubject.average,
+                            pointsSum = gradeSubject.points,
                             grades = subItems
                         ).apply {
-                            newGrades = grades.filter { grade -> !grade.isRead }.size
+                            newGrades = gradeSubject.grades.filter { grade -> !grade.isRead }.size
                         }, ViewType.HEADER
                     )
                 )

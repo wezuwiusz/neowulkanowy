@@ -42,6 +42,7 @@ fun getSemesterPojo(diaryId: Int, semesterId: Int, start: LocalDate, end: LocalD
     diaryName = "$semesterId",
     schoolYear = 1970,
     classId = 0,
+    className = "Ti",
     semesterNumber = semesterName,
     unitId = 1,
     start = start,

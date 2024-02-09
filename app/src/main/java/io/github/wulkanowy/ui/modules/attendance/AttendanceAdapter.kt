@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.attendance
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.data.enums.SentExcuseStatus
 import io.github.wulkanowy.databinding.ItemAttendanceBinding
 import io.github.wulkanowy.utils.descriptionRes
+import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.isExcusableOrNotExcused
 import javax.inject.Inject
 
@@ -39,7 +41,33 @@ class AttendanceAdapter @Inject constructor() :
                 root.context.getString(R.string.all_no_data)
             }
             attendanceItemDescription.setText(item.descriptionRes)
-            attendanceItemAlert.isVisible = item.let { it.absence && !it.excused }
+
+            attendanceItemDescription.setTextColor(
+                root.context.getThemeAttrColor(
+                    when {
+                        item.absence && !item.excused -> R.attr.colorAttendanceAbsence
+                        item.lateness && !item.excused -> R.attr.colorAttendanceLateness
+                        else -> android.R.attr.textColorSecondary
+                    }
+                )
+            )
+
+            if (item.exemption || item.excused) {
+                attendanceItemDescription.setTypeface(null, Typeface.BOLD)
+            } else {
+                attendanceItemDescription.setTypeface(null, Typeface.NORMAL)
+            }
+
+            attendanceItemAlert.isVisible =
+                item.let { (it.absence && !it.excused) || (it.lateness && !it.excused) }
+
+            attendanceItemAlert.setColorFilter(root.context.getThemeAttrColor(
+                when{
+                    item.absence && !item.excused -> R.attr.colorAttendanceAbsence
+                    item.lateness && !item.excused -> R.attr.colorAttendanceLateness
+                    else -> android.R.attr.colorPrimary
+                }
+            ))
             attendanceItemNumber.visibility = View.GONE
             attendanceItemExcuseInfo.visibility = View.GONE
             attendanceItemExcuseCheckbox.visibility = View.GONE
@@ -54,10 +82,12 @@ class AttendanceAdapter @Inject constructor() :
                     attendanceItemExcuseInfo.visibility = View.VISIBLE
                     attendanceItemAlert.visibility = View.INVISIBLE
                 }
+
                 SentExcuseStatus.DENIED -> {
                     attendanceItemExcuseInfo.setImageResource(R.drawable.ic_excuse_denied)
                     attendanceItemExcuseInfo.visibility = View.VISIBLE
                 }
+
                 else -> {
                     if (item.isExcusableOrNotExcused && excuseActionMode) {
                         attendanceItemNumber.visibility = View.GONE
