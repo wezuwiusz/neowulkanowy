@@ -117,6 +117,7 @@
     <string name="grade_summary_points">Súčet bodov</string>
     <string name="grade_summary_final_grade">Konečná známka</string>
     <string name="grade_summary_predicted_grade">Predpokladaná známka</string>
+    <string name="grade_summary_descriptive">Popisná známka</string>
     <string name="grade_summary_calculated_average">Vypočítaný priemer</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Ako funguje vypočítaný priemer?</string>
     <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný priemer je aritmetický priemer vypočítaný z priemerov predmetov. Umožňuje vám to poznať približný konečný priemer. Vypočítava sa spôsobom zvoleným užívateľom v nastaveniach aplikácii. Odporúča sa vybrať príslušnú možnosť. Dôvodom je rozdielny výpočet školských priemerov. Ak vaša škola navyše uvádza priemer predmetov na stránke denníka Vulcan, aplikácia si ich stiahne a tieto priemery nepočíta. To možno zmeniť vynútením výpočtu priemeru v nastavení aplikácii.\n\n<b>Priemer známok iba z vybraného semestra</b>:\n1. Výpočet váženého priemeru pre každý predmet v danom semestri\n2. Sčítanie vypočítaných priemerov\n3. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer priemerov z oboch semestrov</b>:\n1. Výpočet váženého priemeru pre každý predmet v semestri 1 a 2\n2. Výpočet aritmetického priemeru vypočítaných priemerov za semestre 1 a 2 pre každý predmet.\n3. Sčítanie vypočítaných priemerov\n4. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer známok z celého roka:</b>\n1. Výpočet váženého priemeru za rok pre každý predmet. Konečný priemer v 1. semestri je nepodstatný.\n2. Sčítanie vypočítaných priemerov\n3. Výpočet aritmetického priemeru součtených priemerov</string>
@@ -160,6 +161,12 @@
         <item quantity="many">Nové konečné známky</item>
         <item quantity="other">Nové konečné známky</item>
     </plurals>
+    <plurals name="grade_new_items_descriptive">
+        <item quantity="one">Nová popisná známka</item>
+        <item quantity="few">Nové popisné známky</item>
+        <item quantity="many">Nové popisné známky</item>
+        <item quantity="other">Nové popisné známky</item>
+    </plurals>
     <plurals name="grade_notify_new_items">
         <item quantity="one">Máte %1$d novú známku</item>
         <item quantity="few">Máte %1$d nové známky</item>
@@ -177,6 +184,12 @@
         <item quantity="few">Máte %1$d nové konečnej známky</item>
         <item quantity="many">Máte %1$d nových konečných známok</item>
         <item quantity="other">Máte %1$d nových konečných známok</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_descriptive">
+        <item quantity="one">Máte %1$d novú popisnú známku</item>
+        <item quantity="few">Máte %1$d nové popisné známky</item>
+        <item quantity="many">Máte %1$d nových popisných známok</item>
+        <item quantity="other">Máte %1$d nových popisných známok</item>
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lekcia</string>

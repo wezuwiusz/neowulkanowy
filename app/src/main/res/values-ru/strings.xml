@@ -117,6 +117,7 @@
     <string name="grade_summary_points">Сумма баллов</string>
     <string name="grade_summary_final_grade">Итоговая оценка</string>
     <string name="grade_summary_predicted_grade">Ожидаемая оценка</string>
+    <string name="grade_summary_descriptive">Descriptive grade</string>
     <string name="grade_summary_calculated_average">Рассчитанная средняя оценка</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Как работает \"Рассчитанная средняя оценка\"?</string>
     <string name="grade_summary_calculated_average_help_dialog_message">Рассчитанная средняя оценка - это среднее арифметическое, рассчитанное на основе средних оценок по предметам. Это позволяет узнать приблизительную итоговую среднюю оценку. Она рассчитывается способом, выбранным пользователем в настройках приложения. Рекомендуется выбрать подходящий вариант, так как каждая школа по разному считает среднюю оценку. Кроме того, если ваша школа выставляет средние оценки по предметам на странице Vulcan, приложение просто загрузит их. Это можно изменить, заставив приложение считать среднюю оценку в настройках.\n\n<b>Средняя из оценок выбранного семестра</b>:\n1. Вычисление средневзвешенного значения по каждому предмету за семестр\n2.Суммирование вычисленных значений\n3. Вычисление среднего арифметического суммированных значений\n\n<b>Средняя из средних оценок семестров</b>:\n1.Расчет средневзвешенного значения для каждого предмета в семестрах. \n2. Вычисление среднего арифметического из средневзвешенных значений для каждого предмета в семестрах.\n3. Суммирование средних арифметических\n4. Вычисление среднего арифматического из суммированных значений\n\n<b>Средняя из оценок со всего года:</b>\n1. Расчет средневзвешенного значения по каждому предмету за год. Итоговое среднее значение за 1 семестр не имеет значения.\n2. Суммирование вычисленных средних\n3. Расчет среднего арифметического суммированных чисел</string>
@@ -160,6 +161,12 @@
         <item quantity="many">Новые итоговые оценки</item>
         <item quantity="other">Новые итоговые оценки</item>
     </plurals>
+    <plurals name="grade_new_items_descriptive">
+        <item quantity="one">New descriptive grade</item>
+        <item quantity="few">New descriptive grades</item>
+        <item quantity="many">New descriptive grades</item>
+        <item quantity="other">New descriptive grades</item>
+    </plurals>
     <plurals name="grade_notify_new_items">
         <item quantity="one">Вы получили %1$d новую оценку</item>
         <item quantity="few">Вы получили %1$d новые оценки</item>
@@ -177,6 +184,12 @@
         <item quantity="few">Вы получили %1$d новых итоговых оценки</item>
         <item quantity="many">Вы получили %1$d новых итоговых оценок</item>
         <item quantity="other">Вы получили %1$d новых итоговые оценки</item>
+    </plurals>
+    <plurals name="grade_notify_new_items_descriptive">
+        <item quantity="one">You received %1$d descriptive grade</item>
+        <item quantity="few">You received %1$d descriptive grades</item>
+        <item quantity="many">You received %1$d descriptive grades</item>
+        <item quantity="other">You received %1$d descriptive grades</item>
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Урок</string>
