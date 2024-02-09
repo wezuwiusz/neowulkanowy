@@ -38,7 +38,7 @@ class LoginRecoverPresenter @Inject constructor(
 
     fun onHostSelected() {
         view?.run {
-            if ("fakelog" in recoverHostValue) setDefaultCredentials("jan@fakelog.cf")
+            if ("wulkanowy" in recoverHostValue) setDefaultCredentials("jan@fakelog.cf")
             clearUsernameError()
             updateFields()
         }

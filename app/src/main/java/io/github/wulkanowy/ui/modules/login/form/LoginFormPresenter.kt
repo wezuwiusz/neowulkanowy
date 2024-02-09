@@ -90,7 +90,7 @@ class LoginFormPresenter @Inject constructor(
             clearPassError()
             clearUsernameError()
             clearHostError()
-            if (formHostValue.contains("fakelog")) {
+            if (formHostValue.contains("wulkanowy")) {
                 setCredentials("jan@fakelog.cf", "jan123")
             } else if (formUsernameValue == "jan@fakelog.cf" && formPassValue == "jan123") {
                 setCredentials("", "")

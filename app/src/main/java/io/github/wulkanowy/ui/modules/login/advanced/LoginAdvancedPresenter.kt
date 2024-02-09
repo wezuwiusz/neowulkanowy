@@ -71,7 +71,7 @@ class LoginAdvancedPresenter @Inject constructor(
 
     fun updateUsernameLabel() {
         view?.apply {
-            setUsernameLabel(if ("vulcan" in formHostValue || "fakelog" in formHostValue) emailLabel else nicknameLabel)
+            setUsernameLabel(if ("vulcan" in formHostValue || "wulkanowy" in formHostValue) emailLabel else nicknameLabel)
         }
     }
 
@@ -79,7 +79,7 @@ class LoginAdvancedPresenter @Inject constructor(
         view?.apply {
             clearPassError()
             clearUsernameError()
-            if (formHostValue.contains("fakelog")) {
+            if (formHostValue.contains("wulkanowy")) {
                 setDefaultCredentials(
                     "jan@fakelog.cf", "jan123", "powiatwulkanowy", "FK100000", "999999"
                 )
