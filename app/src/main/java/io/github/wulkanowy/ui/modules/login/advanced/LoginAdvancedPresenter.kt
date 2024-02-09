@@ -155,7 +155,7 @@ class LoginAdvancedPresenter @Inject constructor(
                             password = view?.formPassValue.orEmpty().trim(),
                             baseUrl = view?.formHostValue.orEmpty().trim(),
                             domainSuffix = view?.formDomainSuffix.orEmpty().trim(),
-                            symbol = view?.formSymbolValue.orEmpty().trim().getNormalizedSymbol(),
+                            defaultSymbol = view?.formSymbolValue.orEmpty().trim().getNormalizedSymbol(),
                         )
                         when (it.data.symbols.size) {
                             0 -> view?.navigateToSymbol(loginData)

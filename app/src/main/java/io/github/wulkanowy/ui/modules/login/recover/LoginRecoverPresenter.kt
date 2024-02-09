@@ -60,7 +60,7 @@ class LoginRecoverPresenter @Inject constructor(
         resourceFlow {
             recoverRepository.getReCaptchaSiteKey(
                 host,
-                symbol.ifBlank { "Default" })
+                symbol.ifBlank { "default" })
         }.onEach {
             when (it) {
                 is Resource.Loading -> view?.run {
@@ -103,7 +103,7 @@ class LoginRecoverPresenter @Inject constructor(
     fun onReCaptchaVerified(reCaptchaResponse: String) {
         val username = view?.recoverNameValue.orEmpty()
         val host = view?.recoverHostValue.orEmpty()
-        val symbol = view?.formHostSymbol.ifNullOrBlank { "Default" }
+        val symbol = view?.formHostSymbol.ifNullOrBlank { "default" }
 
         resourceFlow {
             recoverRepository.sendRecoverRequest(

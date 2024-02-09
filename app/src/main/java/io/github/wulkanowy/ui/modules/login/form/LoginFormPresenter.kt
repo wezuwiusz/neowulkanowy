@@ -148,7 +148,7 @@ class LoginFormPresenter @Inject constructor(
             password = password,
             baseUrl = host,
             domainSuffix = domainSuffix,
-            symbol = symbol
+            defaultSymbol = symbol
         )
     }
 
@@ -167,7 +167,7 @@ class LoginFormPresenter @Inject constructor(
                 password = loginData.password,
                 scrapperBaseUrl = loginData.baseUrl,
                 domainSuffix = loginData.domainSuffix,
-                symbol = loginData.symbol.orEmpty(),
+                symbol = loginData.defaultSymbol,
             )
         }
             .logResourceStatus("login")
