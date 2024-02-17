@@ -96,10 +96,7 @@ class LoginSymbolPresenter @Inject constructor(
                                 ?.takeIf { it.symbol == loginData.userEnteredSymbol }
 
                             if (enteredSymbolDetails?.error is InvalidSymbolException) {
-                                view?.run {
-                                    setErrorSymbolInvalid()
-                                    showContact(true)
-                                }
+                                showInvalidSymbolError()
                             } else {
                                 Timber.i("Login with symbol result: Success")
                                 view?.navigateToStudentSelect(loginData, requireNotNull(user.data))
@@ -128,6 +125,9 @@ class LoginSymbolPresenter @Inject constructor(
                     loginErrorHandler.dispatch(user.error)
                     lastError = user.error
                     view?.showContact(true)
+                    if (user.error is InvalidSymbolException) {
+                        showInvalidSymbolError()
+                    }
                 }
             }
         }.onResourceNotLoading {
@@ -143,6 +143,13 @@ class LoginSymbolPresenter @Inject constructor(
         val normalizedSymbol = view?.symbolValue.orEmpty().getNormalizedSymbol()
 
         return normalizedSymbol in definitelyInvalidSymbols
+    }
+
+    private fun showInvalidSymbolError() {
+        view?.run {
+            setErrorSymbolInvalid()
+            showContact(true)
+        }
     }
 
     fun onFaqClick() {
