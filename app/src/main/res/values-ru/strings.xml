@@ -56,6 +56,7 @@
     <string name="login_invalid_email">Неверный e-mail</string>
     <string name="login_invalid_login">Используйте назначенный логин вместо e-mail</string>
     <string name="login_invalid_custom_email">Используйте назначенный логин или email в @%1$s</string>
+    <string name="login_invalid_domain_suffix">Invalid domain suffix</string>
     <string name="login_invalid_symbol">Invalid symbol. If you cannot find it, please contact the school</string>
     <string name="login_invalid_symbol_definitely">Don\'t make this up! If you cannot find it, please contact the school</string>
     <string name="login_incorrect_symbol">Ученик не найден. Проверьте symbol и выбранный тип дненика UONET+</string>

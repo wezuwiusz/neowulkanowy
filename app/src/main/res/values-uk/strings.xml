@@ -56,6 +56,7 @@
     <string name="login_invalid_email">Недійсна адреса e-mail</string>
     <string name="login_invalid_login">Використовуйте призначений логін замість адреси e-mail</string>
     <string name="login_invalid_custom_email">Використовуйте призначений логін або адресу e-mail в @%1$s</string>
+    <string name="login_invalid_domain_suffix">Invalid domain suffix</string>
     <string name="login_invalid_symbol">Некоректний символ. Якщо ви не можете знайти його, будь ласка, зв\'яжіться зі школою</string>
     <string name="login_invalid_symbol_definitely">Не вигадуйте! Якщо ви не можете знайти його, будь ласка, зв\'яжіться зі школою</string>
     <string name="login_incorrect_symbol">Студента не знайдено. Перевірте symbol та обраний тип щоденника UONET+</string>

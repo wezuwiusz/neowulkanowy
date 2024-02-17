@@ -56,6 +56,7 @@
     <string name="login_invalid_email">Ungültige email</string>
     <string name="login_invalid_login">Den zugewiesenen Login anstelle von email verwenden</string>
     <string name="login_invalid_custom_email">Benutze den zugewiesenen Login oder E-Mail in @%1$s</string>
+    <string name="login_invalid_domain_suffix">Invalid domain suffix</string>
     <string name="login_invalid_symbol">Invalid symbol. If you cannot find it, please contact the school</string>
     <string name="login_invalid_symbol_definitely">Don\'t make this up! If you cannot find it, please contact the school</string>
     <string name="login_incorrect_symbol">Schüler nicht gefunden. Überprüfen Sie das Symbol und die gewählte Variation des UONET+ Registers</string>

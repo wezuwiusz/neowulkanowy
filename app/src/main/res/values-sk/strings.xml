@@ -56,6 +56,7 @@
     <string name="login_invalid_email">Neplatný e-mail</string>
     <string name="login_invalid_login">Namiesto e-mailu použite priradené prihlasovacie údaje</string>
     <string name="login_invalid_custom_email">Použite priradené prihlasovacie alebo e-mail v @%1$s</string>
+    <string name="login_invalid_domain_suffix">Invalid domain suffix</string>
     <string name="login_invalid_symbol">Neplatný symbol. Pokiaľ ho nemôžete nájsť, kontaktujte školu</string>
     <string name="login_invalid_symbol_definitely">Nevymýšľajte si! Pokiaľ symbol nemôžete nájsť, kontaktujte školu</string>
     <string name="login_incorrect_symbol">Žiak nebol nájdený. Skontrolujte správnosť symbolu a vybrané varianty denníka UONET+</string>
