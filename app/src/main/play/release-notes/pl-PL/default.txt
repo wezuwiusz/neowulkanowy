@@ -1,8 +1,5 @@
-Wersja 2.4.0
+Wersja 2.4.1
 
-— naprawiliśmy logowanie do aplikacji na odmianie standardowej
-— naprawiliśmy wyświetlanie lekcji na kolejny dzień w kafelku na ekranie Start
-— dodaliśmy oceny opisowe
-— dodaliśmy kolorowe opisy we frekwencji we wpisach innych niż obecność
+- drobne poprawki stabilności aplikacji i odświeżania danych
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
