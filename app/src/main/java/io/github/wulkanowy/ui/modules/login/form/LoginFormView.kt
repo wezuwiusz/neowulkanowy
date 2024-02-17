@@ -46,11 +46,15 @@ interface LoginFormView : BaseView {
 
     fun setErrorEmailInvalid(domain: String)
 
+    fun setDomainSuffixInvalid()
+
     fun clearUsernameError()
 
     fun clearPassError()
 
     fun clearHostError()
+
+    fun clearDomainSuffixError()
 
     fun showSoftKeyboard()
 

@@ -56,6 +56,7 @@
     <string name="login_invalid_email">Nieprawidłowy adres e-mail</string>
     <string name="login_invalid_login">Użyj loginu zamiast adresu e-mail</string>
     <string name="login_invalid_custom_email">Użyj loginu lub adresu e-mail w @%1$s</string>
+    <string name="login_invalid_domain_suffix">Nieprawidłowy sufiks domeny</string>
     <string name="login_invalid_symbol">Nieprawidłowy symbol. Jeśli nie możesz go znaleźć, skontaktuj się ze szkołą</string>
     <string name="login_invalid_symbol_definitely">Nie zmyślaj! Jeśli nie możesz znaleźć symbolu, skontaktuj się ze szkołą</string>
     <string name="login_incorrect_symbol">Nie znaleziono ucznia. Sprawdź poprawność symbolu i wybranej odmiany dziennika UONET+</string>

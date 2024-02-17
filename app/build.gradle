@@ -27,8 +27,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 146
-        versionName "2.4.0"
+        versionCode 147
+        versionName "2.4.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -195,7 +195,7 @@ ext {
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.4.0'
+    implementation 'io.github.wulkanowy:sdk:2.4.1'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
@@ -252,7 +252,7 @@ dependencies {
     implementation 'com.fredporciuncula:flow-preferences:1.9.1'
     implementation 'org.apache.commons:commons-text:1.11.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:32.7.1')
+    playImplementation platform('com.google.firebase:firebase-bom:32.7.2')
     playImplementation 'com.google.firebase:firebase-analytics'
     playImplementation 'com.google.firebase:firebase-messaging'
     playImplementation 'com.google.firebase:firebase-crashlytics:'

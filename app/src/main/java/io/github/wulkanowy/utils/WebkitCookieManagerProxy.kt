@@ -1,5 +1,6 @@
 package io.github.wulkanowy.utils
 
+import android.util.AndroidRuntimeException
 import java.net.CookiePolicy
 import java.net.CookieStore
 import java.net.HttpCookie
@@ -9,7 +10,18 @@ import java.net.CookieManager as JavaCookieManager
 
 class WebkitCookieManagerProxy : JavaCookieManager(null, CookiePolicy.ACCEPT_ALL) {
 
-    private val webkitCookieManager: WebkitCookieManager = WebkitCookieManager.getInstance()
+    private val webkitCookieManager: WebkitCookieManager? = getWebkitCookieManager()
+
+    /**
+     * @see [https://stackoverflow.com/a/70354583/6695449]
+     */
+    private fun getWebkitCookieManager(): WebkitCookieManager? {
+        return try {
+            WebkitCookieManager.getInstance()
+        } catch (e: AndroidRuntimeException) {
+            null
+        }
+    }
 
     override fun put(uri: URI?, responseHeaders: Map<String?, List<String?>>?) {
         if (uri == null || responseHeaders == null) return
@@ -23,7 +35,7 @@ class WebkitCookieManagerProxy : JavaCookieManager(null, CookiePolicy.ACCEPT_ALL
 
             // process each of the headers
             for (headerValue in responseHeaders[headerKey].orEmpty()) {
-                webkitCookieManager.setCookie(url, headerValue)
+                webkitCookieManager?.setCookie(url, headerValue)
             }
         }
     }
@@ -34,7 +46,7 @@ class WebkitCookieManagerProxy : JavaCookieManager(null, CookiePolicy.ACCEPT_ALL
     ): Map<String, List<String>> {
         require(!(uri == null || requestHeaders == null)) { "Argument is null" }
         val res = mutableMapOf<String, List<String>>()
-        val cookie = webkitCookieManager.getCookie(uri.toString())
+        val cookie = webkitCookieManager?.getCookie(uri.toString())
         if (cookie != null) res["Cookie"] = listOf(cookie)
         return res
     }
@@ -50,7 +62,7 @@ class WebkitCookieManagerProxy : JavaCookieManager(null, CookiePolicy.ACCEPT_ALL
                 cookies.remove(uri, cookie)
 
             override fun removeAll(): Boolean {
-                webkitCookieManager.removeAllCookies(null)
+                webkitCookieManager?.removeAllCookies(null) ?: return false
                 return true
             }
         }

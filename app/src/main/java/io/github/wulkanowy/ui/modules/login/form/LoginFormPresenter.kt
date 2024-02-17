@@ -101,6 +101,12 @@ class LoginFormPresenter @Inject constructor(
         }
     }
 
+    fun onDomainSuffixChanged() {
+        view?.apply {
+            clearDomainSuffixError()
+        }
+    }
+
     fun updateCustomDomainSuffixVisibility() {
         view?.run {
             showDomainSuffixInput("customSuffix" in formHostValue)
@@ -159,7 +165,7 @@ class LoginFormPresenter @Inject constructor(
     fun onSignInClick() {
         val loginData = getLoginData()
 
-        if (!validateCredentials(loginData.login, loginData.password, loginData.baseUrl)) return
+        if (!validateCredentials(loginData)) return
 
         resourceFlow {
             studentRepository.getUserSubjectsFromScrapper(
@@ -229,24 +235,29 @@ class LoginFormPresenter @Inject constructor(
         view?.onRecoverClick()
     }
 
-    private fun validateCredentials(login: String, password: String, host: String): Boolean {
+    private fun validateCredentials(loginData: LoginData): Boolean {
         var isCorrect = true
 
-        if (login.isEmpty()) {
+        if (loginData.login.isEmpty()) {
             view?.setErrorUsernameRequired()
             isCorrect = false
         } else {
-            if ("@" in login && "login" in host) {
+            if ("@" in loginData.login && "login" in loginData.baseUrl) {
                 view?.setErrorLoginRequired()
                 isCorrect = false
             }
-            if ("@" !in login && "email" in host) {
+            if ("@" !in loginData.login && "email" in loginData.baseUrl) {
                 view?.setErrorEmailRequired()
                 isCorrect = false
             }
-            if ("@" in login && "||" !in login && "login" !in host && "email" !in host) {
-                val emailHost = login.substringAfter("@")
-                val emailDomain = URL(host).host
+
+            val isEmailLogin = "@" in loginData.login
+            val isEmailWithLogin = "||" !in loginData.login
+            val isLoginNotRequired = "login" !in loginData.baseUrl
+            val isEmailNotRequired = "email" !in loginData.baseUrl
+            if (isEmailLogin && isEmailWithLogin && isLoginNotRequired && isEmailNotRequired) {
+                val emailHost = loginData.login.substringAfter("@")
+                val emailDomain = URL(loginData.baseUrl).host
                 if (!emailHost.equals(emailDomain, true)) {
                     view?.setErrorEmailInvalid(domain = emailDomain)
                     isCorrect = false
@@ -254,13 +265,18 @@ class LoginFormPresenter @Inject constructor(
             }
         }
 
-        if (password.isEmpty()) {
+        if (loginData.password.isEmpty()) {
             view?.setErrorPassRequired(focus = isCorrect)
             isCorrect = false
         }
 
-        if (password.length < 6 && password.isNotEmpty()) {
+        if (loginData.password.length < 6 && loginData.password.isNotEmpty()) {
             view?.setErrorPassInvalid(focus = isCorrect)
+            isCorrect = false
+        }
+
+        if (loginData.domainSuffix !in listOf("", "rc", "kurs")) {
+            view?.setDomainSuffixInvalid()
             isCorrect = false
         }
 

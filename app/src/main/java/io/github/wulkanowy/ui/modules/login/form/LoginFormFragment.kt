@@ -94,6 +94,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
             loginFormUsername.doOnTextChanged { _, _, _, _ -> presenter.onUsernameTextChanged() }
             loginFormPass.doOnTextChanged { _, _, _, _ -> presenter.onPassTextChanged() }
             loginFormHost.setOnItemClickListener { _, _, _, _ -> presenter.onHostSelected() }
+            loginFormDomainSuffix.doOnTextChanged { _, _, _, _ -> presenter.onDomainSuffixChanged() }
             loginFormSignIn.setOnClickListener { presenter.onSignInClick() }
             loginFormAdvancedButton.setOnClickListener { presenter.onAdvancedLoginClick() }
             loginFormPrivacyLink.setOnClickListener { presenter.onPrivacyLinkClick() }
@@ -188,6 +189,12 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
         }
     }
 
+    override fun setDomainSuffixInvalid() {
+        with(binding.loginFormDomainSuffixLayout) {
+            error = getString(R.string.login_invalid_domain_suffix)
+        }
+    }
+
     override fun clearUsernameError() {
         binding.loginFormUsernameLayout.error = null
         binding.loginFormErrorBox.isVisible = false
@@ -204,6 +211,10 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
     override fun clearHostError() {
         binding.loginFormHostLayout.error = null
         binding.loginFormErrorBox.isVisible = false
+    }
+
+    override fun clearDomainSuffixError() {
+        binding.loginFormDomainSuffixLayout.error = null
     }
 
     override fun showSoftKeyboard() {
