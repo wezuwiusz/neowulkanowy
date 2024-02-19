@@ -11,10 +11,8 @@ import android.view.View
 import android.widget.RemoteViews
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.Resource
-import io.github.wulkanowy.data.dataOrNull
+import io.github.wulkanowy.data.dataOrThrow
 import io.github.wulkanowy.data.db.SharedPrefProvider
-import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.repositories.LuckyNumberRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.toFirstResult
@@ -69,8 +67,7 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
 
         appWidgetIds?.forEach { widgetId ->
             val studentId = sharedPref.getLong(getStudentWidgetKey(widgetId), 0)
-            val luckyNumberResource = getLuckyNumber(studentId, widgetId)
-            val luckyNumber = luckyNumberResource.dataOrNull?.luckyNumber?.toString()
+            val luckyNumber = getLuckyNumber(studentId, widgetId)?.luckyNumber?.toString()
             val remoteView = RemoteViews(context.packageName, R.layout.widget_luckynumber)
                 .apply {
                     setTextViewText(R.id.luckyNumberWidgetValue, luckyNumber ?: "-")
@@ -143,18 +140,18 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
                         sharedPref.putLong(getStudentWidgetKey(appWidgetId), it.id)
                     }
                 }
+
                 else -> null
             }
 
             if (currentStudent != null) {
                 luckyNumberRepository.getLuckyNumber(currentStudent, forceRefresh = false)
                     .toFirstResult()
-            } else {
-                Resource.Success<LuckyNumber?>(null)
-            }
+                    .dataOrThrow
+            } else null
         } catch (e: Exception) {
             Timber.e(e, "An error has occurred in lucky number provider")
-            Resource.Error(e)
+            null
         }
     }
 
