@@ -1,5 +1,7 @@
-Wersja 2.4.1
+Wersja 2.4.2
 
-- drobne poprawki stabilności aplikacji i odświeżania danych
+- naprawiliśmy crash przy przełączaniu uczniów, motywów i języków
+- naprawiliśmy crash przy dodawaniu dodatkowych lekcji
+- naprawiliśmy obsługę błędów widżetach
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
