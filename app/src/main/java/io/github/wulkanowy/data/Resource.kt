@@ -30,8 +30,15 @@ val <T> Resource<T>.dataOrNull: T?
     get() = when (this) {
         is Resource.Success -> this.data
         is Resource.Intermediate -> this.data
-        is Resource.Loading -> null
-        is Resource.Error -> null
+        else -> null
+    }
+
+val <T> Resource<T>.dataOrThrow: T
+    get() = when (this) {
+        is Resource.Success -> this.data
+        is Resource.Intermediate -> this.data
+        is Resource.Loading -> throw IllegalStateException("Resource is in loading state")
+        is Resource.Error -> throw this.error
     }
 
 val <T> Resource<T>.errorOrNull: Throwable?
