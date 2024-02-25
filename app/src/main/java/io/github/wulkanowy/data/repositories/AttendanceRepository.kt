@@ -16,10 +16,8 @@ import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.sunday
 import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -58,11 +56,9 @@ class AttendanceRepository @Inject constructor(
             attendanceDb.loadAll(semester.diaryId, semester.studentId, start.monday, end.sunday)
         },
         fetch = {
-            val lessons = withContext(Dispatchers.IO) {
-                timetableDb.load(
-                    semester.diaryId, semester.studentId, start.monday, end.sunday
-                )
-            }
+            val lessons = timetableDb.load(
+                semester.diaryId, semester.studentId, start.monday, end.sunday
+            )
             sdk.init(student)
                 .switchSemester(semester)
                 .getAttendance(start.monday, end.sunday)

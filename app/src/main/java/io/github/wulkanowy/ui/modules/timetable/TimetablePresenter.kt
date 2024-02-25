@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.modules.timetable
 import android.os.Handler
 import android.os.Looper
 import io.github.wulkanowy.data.db.entities.Semester
-import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.data.enums.TimetableGapsMode.BETWEEN_AND_BEFORE_LESSONS
 import io.github.wulkanowy.data.enums.TimetableGapsMode.NO_GAPS
@@ -150,7 +149,7 @@ class TimetablePresenter @Inject constructor(
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
 
-            checkInitialAndCurrentDate(student, semester)
+            checkInitialAndCurrentDate(semester)
             timetableRepository.getTimetable(
                 student = student,
                 semester = semester,
@@ -194,9 +193,9 @@ class TimetablePresenter @Inject constructor(
             .launch()
     }
 
-    private suspend fun checkInitialAndCurrentDate(student: Student, semester: Semester) {
+    private suspend fun checkInitialAndCurrentDate(semester: Semester) {
         if (initialDate == null) {
-            isWeekendHasLessons = isStudentHasLessonsOnWeekendUseCase(student, semester)
+            isWeekendHasLessons = isStudentHasLessonsOnWeekendUseCase(semester)
             initialDate = getInitialDate(semester)
         }
 
