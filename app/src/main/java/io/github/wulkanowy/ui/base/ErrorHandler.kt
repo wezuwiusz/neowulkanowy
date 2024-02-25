@@ -34,7 +34,7 @@ open class ErrorHandler @Inject constructor(@ApplicationContext protected val co
     }
 
     protected open fun proceed(error: Throwable) {
-        showErrorMessage(context.resources.getErrorString(error), error)
+        showDefaultMessage(error)
         when (error) {
             is PasswordChangeRequiredException -> onPasswordChangeRequired(error.redirectUrl)
             is ScramblerException -> onDecryptionFailed()
@@ -43,6 +43,10 @@ open class ErrorHandler @Inject constructor(@ApplicationContext protected val co
             is AuthorizationRequiredException -> onAuthorizationRequired()
             is CloudflareVerificationException -> onCaptchaVerificationRequired(error.originalUrl)
         }
+    }
+
+    fun showDefaultMessage(error: Throwable) {
+        showErrorMessage(context.resources.getErrorString(error), error)
     }
 
     open fun clear() {

@@ -62,7 +62,11 @@ class AuthPresenter @Inject constructor(
                 }
                 isSuccess
             }
-                .onFailure { errorHandler.dispatch(it) }
+                .onFailure {
+                    errorHandler.dispatch(it)
+                    view?.showProgress(false)
+                    view?.showContent(true)
+                }
                 .onSuccess {
                     if (it) {
                         view?.showSuccess(true)
