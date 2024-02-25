@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dashboard_small_grade_subitem_value"
     android:layout_width="wrap_content"
@@ -13,4 +14,7 @@
     android:textColor="@android:color/white"
     android:textSize="12sp"
     android:textStyle="bold"
+    app:autoSizeMaxTextSize="14dp"
+    app:autoSizeMinTextSize="10dp"
+    app:autoSizeTextType="uniform"
     tools:text="6" />
