@@ -854,6 +854,7 @@
     <!--Errors-->
     <string name="error_no_internet">Žádné internetové připojení</string>
     <string name="error_invalid_device_datetime">Vyskytla se chyba. Zkontrolujte hodiny svého zařízení</string>
+    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Nelze se připojit ke deníku. Servery mohou být přetíženy. Prosím zkuste to znovu později</string>
     <string name="error_login_failed">Načítání dat se nezdařilo. Prosím zkuste to znovu později</string>
     <string name="error_password_change_required">Je vyžadována změna hesla pro deník</string>

@@ -854,6 +854,7 @@
     <!--Errors-->
     <string name="error_no_internet">Интернет-соединение отсутствует</string>
     <string name="error_invalid_device_datetime">Произошла ошибка. Проверьте время на вашем устройстве</string>
+    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Не удалось подключиться к дневнику. Возможно, сервера перегружены, повторите попытку позже</string>
     <string name="error_login_failed">Не удалось загрузить данные, повторите попытку позже</string>
     <string name="error_password_change_required">Необходимо изменить пароль дневника</string>

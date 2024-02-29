@@ -854,6 +854,7 @@
     <!--Errors-->
     <string name="error_no_internet">Немає з\'єднання з інтернетом</string>
     <string name="error_invalid_device_datetime">Сталася помилка. Перевірте годинник пристрою</string>
+    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Помилка підключення до щоденнику. Сервери можуть бути перевантажені, спробуйте пізніше</string>
     <string name="error_login_failed">Помилка завантаження даних, спробуйте пізніше</string>
     <string name="error_password_change_required">Необхідна зміна пароля щоденника</string>

@@ -760,6 +760,7 @@
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
     <string name="error_invalid_device_datetime">Es ist ein Fehler aufgetreten. Überprüfen Sie Ihre Geräteuhr</string>
+    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Registrierungsverbindung fehlgeschlagen. Server können überlastet sein. Bitte versuchen Sie es später noch einmal</string>
     <string name="error_login_failed">Das Laden der Daten ist fehlgeschlagen. Bitte versuchen Sie es später noch einmal</string>
     <string name="error_password_change_required">Passwortänderung für Registrierung erforderlich</string>
