@@ -866,4 +866,9 @@
     <string name="error_feature_disabled">Funkce je deaktivována přes vaší školou</string>
     <string name="error_feature_not_available">Funkce není k dispozici. Přihlaste se v jiném režimu než Mobile API</string>
     <string name="error_field_required">Toto pole je povinné</string>
+    <!-- Mute system -->
+    <string name="message_mute">Mute</string>
+    <string name="message_unmute">Unmute</string>
+    <string name="message_mute_success">You have muted this user</string>
+    <string name="message_unmute_success">You have unmuted this user</string>
 </resources>
