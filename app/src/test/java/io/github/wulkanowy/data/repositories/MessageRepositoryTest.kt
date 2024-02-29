@@ -6,8 +6,10 @@ import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.dao.MailboxDao
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
 import io.github.wulkanowy.data.db.dao.MessagesDao
+import io.github.wulkanowy.data.db.dao.MutedMessageSendersDao
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
+import io.github.wulkanowy.data.db.entities.MutedMessageSender
 import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.errorOrNull
 import io.github.wulkanowy.data.toFirstResult
@@ -19,9 +21,16 @@ import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.Status
 import io.github.wulkanowy.utils.status
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.checkEquals
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
+import io.mockk.just
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
@@ -44,6 +53,9 @@ class MessageRepositoryTest {
 
     @MockK
     private lateinit var messageDb: MessagesDao
+
+    @MockK
+    private lateinit var mutesDb: MutedMessageSendersDao
 
     @MockK
     private lateinit var messageAttachmentDao: MessageAttachmentDao
@@ -73,9 +85,22 @@ class MessageRepositoryTest {
     fun setUp() {
         MockKAnnotations.init(this)
         every { refreshHelper.shouldBeRefreshed(any()) } returns false
-
+        coEvery { mutesDb.checkMute(any()) } returns false
+        coEvery {
+            messageDb.loadMessagesWithMutedAuthor(
+                mailboxKey = any(),
+                folder = any()
+            )
+        } returns flowOf(emptyList())
+        coEvery {
+            messageDb.loadMessagesWithMutedAuthor(
+                folder = any(),
+                email = any()
+            )
+        } returns flowOf(emptyList())
         repository = MessageRepository(
             messagesDb = messageDb,
+            mutedMessageSendersDao = mutesDb,
             messageAttachmentDao = messageAttachmentDao,
             sdk = sdk,
             context = context,
@@ -131,7 +156,11 @@ class MessageRepositoryTest {
     @Test
     fun `get message when content already in db`() {
         val testMessage = getMessageEntity(123, "Test", false)
-        val messageWithAttachment = MessageWithAttachment(testMessage, emptyList())
+        val messageWithAttachment = MessageWithAttachment(
+            testMessage,
+            emptyList(),
+            MutedMessageSender("Jan Kowalski - P - (WULKANOWY)")
+        )
 
         coEvery { messageDb.loadMessageWithAttachment("v4") } returns flowOf(
             messageWithAttachment
@@ -149,8 +178,16 @@ class MessageRepositoryTest {
         val testMessage = getMessageEntity(123, "", true)
         val testMessageWithContent = testMessage.copy().apply { content = "Test" }
 
-        val mWa = MessageWithAttachment(testMessage, emptyList())
-        val mWaWithContent = MessageWithAttachment(testMessageWithContent, emptyList())
+        val mWa = MessageWithAttachment(
+            testMessage,
+            emptyList(),
+            MutedMessageSender("Jan Kowalski - P - (WULKANOWY)")
+        )
+        val mWaWithContent = MessageWithAttachment(
+            testMessageWithContent,
+            emptyList(),
+            MutedMessageSender("Jan Kowalski - P - (WULKANOWY)")
+        )
 
         coEvery {
             messageDb.loadMessageWithAttachment("v4")

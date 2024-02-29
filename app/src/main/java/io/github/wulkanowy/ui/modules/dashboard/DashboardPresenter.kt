@@ -304,6 +304,7 @@ class DashboardPresenter @Inject constructor(
                     forceRefresh = forceRefresh
                 )
             }
+                .mapResourceData { it.map { messageWithAuthor -> messageWithAuthor.message } }
                 .onResourceError { errorHandler.dispatch(it) }
                 .takeIf { DashboardItem.Tile.MESSAGES in selectedTiles } ?: flowSuccess
 

@@ -18,8 +18,7 @@ import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.toFormattedString
 import javax.inject.Inject
 
-class MessageTabAdapter @Inject constructor() :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessageTabAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var onItemClickListener: (MessageTabDataItem.MessageItem, position: Int) -> Unit
 
@@ -52,10 +51,11 @@ class MessageTabAdapter @Inject constructor() :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
-        return when (MessageItemViewType.values()[viewType]) {
+        return when (MessageItemViewType.entries[viewType]) {
             MessageItemViewType.FILTERS -> HeaderViewHolder(
                 ItemMessageChipsBinding.inflate(inflater, parent, false)
             )
+
             MessageItemViewType.MESSAGE -> ItemViewHolder(
                 ItemMessageBinding.inflate(inflater, parent, false)
             )
@@ -137,7 +137,12 @@ class MessageTabAdapter @Inject constructor() :
                 ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(currentTextColor))
                 isVisible = message.hasAttachments
             }
-            messageItemUnreadIndicator.isVisible = message.unread
+            messageItemUnreadIndicator.isVisible = message.unread || item.isMuted
+
+            when (item.isMuted) {
+                true -> messageItemUnreadIndicator.setImageResource(R.drawable.ic_notifications_off)
+                else -> messageItemUnreadIndicator.setImageResource(R.drawable.ic_circle_notification)
+            }
 
             root.setOnClickListener {
                 holder.bindingAdapterPosition.let {
@@ -165,8 +170,7 @@ class MessageTabAdapter @Inject constructor() :
         RecyclerView.ViewHolder(binding.root)
 
     private class MessageTabDiffUtil(
-        private val old: List<MessageTabDataItem>,
-        private val new: List<MessageTabDataItem>
+        private val old: List<MessageTabDataItem>, private val new: List<MessageTabDataItem>
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = old.size

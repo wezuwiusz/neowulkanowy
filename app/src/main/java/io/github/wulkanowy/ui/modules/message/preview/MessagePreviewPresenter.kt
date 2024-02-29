@@ -5,7 +5,7 @@ import androidx.core.text.parseAsHtml
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Message
-import io.github.wulkanowy.data.db.entities.MessageAttachment
+import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.repositories.MessageRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
@@ -26,9 +26,7 @@ class MessagePreviewPresenter @Inject constructor(
     private val analytics: AnalyticsHelper
 ) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository) {
 
-    var message: Message? = null
-
-    var attachments: List<MessageAttachment>? = null
+    var messageWithAttachments: MessageWithAttachment? = null
 
     private lateinit var lastError: Throwable
 
@@ -38,7 +36,6 @@ class MessagePreviewPresenter @Inject constructor(
         super.onAttachView(view)
         view.initView()
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        this.message = message
         loadData(requireNotNull(message))
     }
 
@@ -66,13 +63,12 @@ class MessagePreviewPresenter @Inject constructor(
             .logResourceStatus("message ${messageToLoad.messageId} preview")
             .onResourceData {
                 if (it != null) {
-                    message = it.message
-                    attachments = it.attachments
+                    messageWithAttachments = it
                     view?.apply {
                         setMessageWithAttachment(it)
                         showContent(true)
                         initOptions()
-
+                        updateMuteToggleButton(isMuted = it.mutedMessageSender != null)
                         if (preferencesRepository.isIncognitoMode && it.message.unread) {
                             showMessage(R.string.message_incognito_description)
                         }
@@ -83,8 +79,7 @@ class MessagePreviewPresenter @Inject constructor(
                         popView()
                     }
                 }
-            }
-            .onResourceSuccess {
+            }.onResourceSuccess {
                 if (it != null) {
                     analytics.logEvent(
                         "load_item",
@@ -92,31 +87,28 @@ class MessagePreviewPresenter @Inject constructor(
                         "length" to it.message.content.length
                     )
                 }
-            }
-            .onResourceNotLoading { view?.showProgress(false) }
-            .onResourceError {
+            }.onResourceNotLoading { view?.showProgress(false) }.onResourceError {
                 retryCallback = { onMessageLoadRetry(messageToLoad) }
                 errorHandler.dispatch(it)
-            }
-            .launch()
+            }.launch()
     }
 
     fun onReply(): Boolean {
-        return if (message != null) {
-            view?.openMessageReply(message)
+        return if (messageWithAttachments?.message != null) {
+            view?.openMessageReply(messageWithAttachments?.message)
             true
         } else false
     }
 
     fun onForward(): Boolean {
-        return if (message != null) {
-            view?.openMessageForward(message)
+        return if (messageWithAttachments?.message != null) {
+            view?.openMessageForward(messageWithAttachments?.message)
             true
         } else false
     }
 
     fun onShare(): Boolean {
-        val message = message ?: return false
+        val message = messageWithAttachments?.message ?: return false
         val subject = message.subject.ifBlank { view?.messageNoSubjectString.orEmpty() }
 
         val text = buildString {
@@ -129,13 +121,15 @@ class MessagePreviewPresenter @Inject constructor(
 
             appendLine(message.content.parseAsHtml())
 
-            if (!attachments.isNullOrEmpty()) {
+            if (!messageWithAttachments?.attachments.isNullOrEmpty()) {
                 appendLine()
                 appendLine("Załączniki:")
 
-                append(attachments.orEmpty().joinToString(separator = "\n") { attachment ->
-                    "${attachment.filename}: ${attachment.url}"
-                })
+                append(
+                    messageWithAttachments?.attachments.orEmpty()
+                        .joinToString(separator = "\n") { attachment ->
+                            "${attachment.filename}: ${attachment.url}"
+                        })
             }
         }
 
@@ -148,7 +142,7 @@ class MessagePreviewPresenter @Inject constructor(
 
     @SuppressLint("NewApi")
     fun onPrint(): Boolean {
-        val message = message ?: return false
+        val message = messageWithAttachments?.message ?: return false
         val subject = message.subject.ifBlank { view?.messageNoSubjectString.orEmpty() }
 
         val dateString = message.date.toFormattedString("yyyy-MM-dd HH:mm:ss")
@@ -159,8 +153,7 @@ class MessagePreviewPresenter @Inject constructor(
             append("<div><h4>Od</h4>${message.sender}</div>")
             append("<div><h4>DO</h4>${message.recipients}</div>")
         }
-        val messageContent = "<p>${message.content}</p>"
-            .replace(Regex("[\\n\\r]{2,}"), "</p><p>")
+        val messageContent = "<p>${message.content}</p>".replace(Regex("[\\n\\r]{2,}"), "</p><p>")
             .replace(Regex("[\\n\\r]"), "<br>")
 
         val jobName = buildString {
@@ -171,9 +164,7 @@ class MessagePreviewPresenter @Inject constructor(
         }
 
         view?.apply {
-            val html = printHTML
-                .replace("%SUBJECT%", subject)
-                .replace("%CONTENT%", messageContent)
+            val html = printHTML.replace("%SUBJECT%", subject).replace("%CONTENT%", messageContent)
                 .replace("%INFO%", infoContent)
             printDocument(html, jobName)
         }
@@ -182,7 +173,7 @@ class MessagePreviewPresenter @Inject constructor(
     }
 
     private fun deleteMessage() {
-        message ?: return
+        messageWithAttachments?.message ?: return
 
         view?.run {
             showContent(false)
@@ -191,24 +182,22 @@ class MessagePreviewPresenter @Inject constructor(
             showErrorView(false)
         }
 
-        Timber.i("Delete message ${message?.messageGlobalKey}")
+        Timber.i("Delete message ${messageWithAttachments?.message?.messageGlobalKey}")
 
         presenterScope.launch {
             runCatching {
                 val student = studentRepository.getCurrentStudent(decryptPass = true)
                 val mailbox = messageRepository.getMailboxByStudent(student)
-                messageRepository.deleteMessage(student, mailbox, message!!)
+                messageRepository.deleteMessage(student, mailbox, messageWithAttachments?.message!!)
+            }.onFailure {
+                retryCallback = { onMessageDelete() }
+                errorHandler.dispatch(it)
+            }.onSuccess {
+                view?.run {
+                    showMessage(deleteMessageSuccessString)
+                    popView()
+                }
             }
-                .onFailure {
-                    retryCallback = { onMessageDelete() }
-                    errorHandler.dispatch(it)
-                }
-                .onSuccess {
-                    view?.run {
-                        showMessage(deleteMessageSuccessString)
-                        popView()
-                    }
-                }
 
             view?.showProgress(false)
         }
@@ -232,10 +221,10 @@ class MessagePreviewPresenter @Inject constructor(
     private fun initOptions() {
         view?.apply {
             showOptions(
-                show = message != null,
-                isReplayable = message?.folderId != MessageFolder.SENT.id,
+                show = messageWithAttachments?.message != null,
+                isReplayable = messageWithAttachments?.message?.folderId != MessageFolder.SENT.id,
             )
-            message?.let {
+            messageWithAttachments?.message?.let {
                 when (it.folderId == MessageFolder.TRASHED.id) {
                     true -> setDeletedOptionsLabels()
                     false -> setNotDeletedOptionsLabels()
@@ -247,5 +236,30 @@ class MessagePreviewPresenter @Inject constructor(
 
     fun onCreateOptionsMenu() {
         initOptions()
+    }
+
+    fun onMute(): Boolean {
+        val message = messageWithAttachments?.message ?: return false
+        val isMuted = messageWithAttachments?.mutedMessageSender != null
+
+        presenterScope.launch {
+            runCatching {
+                when (isMuted) {
+                    true -> {
+                        messageRepository.unmuteMessage(message.correspondents)
+                        view?.run { showMessage(unmuteMessageSuccessString) }
+                    }
+
+                    false -> {
+                        messageRepository.muteMessage(message.correspondents)
+                        view?.run { showMessage(muteMessageSuccessString) }
+                    }
+                }
+            }.onFailure {
+                errorHandler.dispatch(it)
+            }
+        }
+        view?.updateMuteToggleButton(isMuted)
+        return true
     }
 }

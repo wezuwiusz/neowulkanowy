@@ -50,11 +50,19 @@ class MessagePreviewFragment :
 
     private var menuPrintButton: MenuItem? = null
 
+    private var menuMuteButton: MenuItem? = null
+
     override val titleStringId: Int
         get() = R.string.message_title
 
     override val deleteMessageSuccessString: String
         get() = getString(R.string.message_delete_success)
+
+    override val muteMessageSuccessString: String
+        get() = getString(R.string.message_mute_success)
+
+    override val unmuteMessageSuccessString: String
+        get() = getString(R.string.message_unmute_success)
 
     override val messageNoSubjectString: String
         get() = getString(R.string.message_no_subject)
@@ -106,6 +114,7 @@ class MessagePreviewFragment :
         menuDeleteButton = menu.findItem(R.id.messagePreviewMenuDelete)
         menuShareButton = menu.findItem(R.id.messagePreviewMenuShare)
         menuPrintButton = menu.findItem(R.id.messagePreviewMenuPrint)
+        menuMuteButton = menu.findItem(R.id.messagePreviewMenuMute)
         presenter.onCreateOptionsMenu()
 
         menu.findItem(R.id.mainMenuAccount).isVisible = false
@@ -118,6 +127,7 @@ class MessagePreviewFragment :
             R.id.messagePreviewMenuDelete -> presenter.onMessageDelete()
             R.id.messagePreviewMenuShare -> presenter.onShare()
             R.id.messagePreviewMenuPrint -> presenter.onPrint()
+            R.id.messagePreviewMenuMute -> presenter.onMute()
             else -> false
         }
     }
@@ -127,6 +137,11 @@ class MessagePreviewFragment :
             messageWithAttachment = item
             notifyDataSetChanged()
         }
+    }
+
+    override fun updateMuteToggleButton(isMuted: Boolean) {
+        menuMuteButton?.setTitle(if (isMuted) R.string.message_unmute else R.string.message_mute)
+
     }
 
     override fun showProgress(show: Boolean) {
@@ -143,6 +158,7 @@ class MessagePreviewFragment :
         menuDeleteButton?.isVisible = show
         menuShareButton?.isVisible = show
         menuPrintButton?.isVisible = show
+        menuMuteButton?.isVisible = show && isReplayable
     }
 
     override fun setDeletedOptionsLabels() {
@@ -213,7 +229,7 @@ class MessagePreviewFragment :
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable(MESSAGE_ID_KEY, presenter.message)
+        outState.putSerializable(MESSAGE_ID_KEY, presenter.messageWithAttachments)
         super.onSaveInstanceState(outState)
     }
 

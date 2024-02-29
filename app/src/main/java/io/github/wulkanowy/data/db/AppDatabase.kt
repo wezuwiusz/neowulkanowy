@@ -25,6 +25,7 @@ import io.github.wulkanowy.data.db.dao.MailboxDao
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
 import io.github.wulkanowy.data.db.dao.MessagesDao
 import io.github.wulkanowy.data.db.dao.MobileDeviceDao
+import io.github.wulkanowy.data.db.dao.MutedMessageSendersDao
 import io.github.wulkanowy.data.db.dao.NoteDao
 import io.github.wulkanowy.data.db.dao.NotificationDao
 import io.github.wulkanowy.data.db.dao.RecipientDao
@@ -56,6 +57,7 @@ import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageAttachment
 import io.github.wulkanowy.data.db.entities.MobileDevice
+import io.github.wulkanowy.data.db.entities.MutedMessageSender
 import io.github.wulkanowy.data.db.entities.Note
 import io.github.wulkanowy.data.db.entities.Notification
 import io.github.wulkanowy.data.db.entities.Recipient
@@ -157,6 +159,7 @@ import javax.inject.Singleton
         SchoolAnnouncement::class,
         Notification::class,
         AdminMessage::class,
+        MutedMessageSender::class,
         GradeDescriptive::class,
     ],
     autoMigrations = [
@@ -169,6 +172,7 @@ import javax.inject.Singleton
         AutoMigration(from = 56, to = 57, spec = Migration57::class),
         AutoMigration(from = 57, to = 58, spec = Migration58::class),
         AutoMigration(from = 58, to = 59),
+        AutoMigration(from = 59, to = 60),
     ],
     version = AppDatabase.VERSION_SCHEMA,
     exportSchema = true
@@ -177,7 +181,7 @@ import javax.inject.Singleton
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        const val VERSION_SCHEMA = 59
+        const val VERSION_SCHEMA = 60
 
         fun getMigrations(sharedPrefProvider: SharedPrefProvider, appInfo: AppInfo) = arrayOf(
             Migration2(),
@@ -303,5 +307,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract val adminMessagesDao: AdminMessageDao
 
+    abstract val mutedMessageSendersDao: MutedMessageSendersDao
+  
     abstract val gradeDescriptiveDao: GradeDescriptiveDao
 }
