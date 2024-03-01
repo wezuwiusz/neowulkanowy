@@ -336,8 +336,10 @@
     <string name="message_forward">Переслати</string>
     <string name="message_select_all">Вибрати всі</string>
     <string name="message_unselect_all">Відмінити вибір</string>
+    <string name="message_restore_from_trash">Restore from trash</string>
     <string name="message_move_to_trash">Перемістити до кошика</string>
     <string name="message_delete_forever">Видалити назавжди</string>
+    <string name="message_restore_success">Message restored successfully</string>
     <string name="message_delete_success">Лист було успішно видалено</string>
     <string name="message_mailbox_type_student">учень</string>
     <string name="message_mailbox_type_parent">родич</string>
@@ -383,6 +385,7 @@
         <item quantity="other">%1$d вибрано</item>
     </plurals>
     <string name="message_messages_deleted">Листи видалено</string>
+    <string name="message_messages_restored">Messages restored</string>
     <string name="message_mailbox_chooser_title">Вибрати поштову скриньку</string>
     <string name="message_incognito_mode_on">Режим анонімності включено</string>
     <string name="message_incognito_description">Завдяки режиму анонімності, відправник не буде сповіщений коли ви прочитаєте повідомлення</string>

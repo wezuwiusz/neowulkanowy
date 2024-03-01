@@ -296,8 +296,10 @@
     <string name="message_forward">Weiterleiten</string>
     <string name="message_select_all">Alle auswählen</string>
     <string name="message_unselect_all">Alle abwählen</string>
+    <string name="message_restore_from_trash">Restore from trash</string>
     <string name="message_move_to_trash">In Papierkorb verschieben</string>
     <string name="message_delete_forever">Dauerhaft löschen</string>
+    <string name="message_restore_success">Message restored successfully</string>
     <string name="message_delete_success">Nachricht erfolgreich gelöscht</string>
     <string name="message_mailbox_type_student">schüler</string>
     <string name="message_mailbox_type_parent">Eltern</string>
@@ -335,6 +337,7 @@
         <item quantity="other">%1$d ausgewählt</item>
     </plurals>
     <string name="message_messages_deleted">Nachrichten gelöscht</string>
+    <string name="message_messages_restored">Messages restored</string>
     <string name="message_mailbox_chooser_title">Postfach auswählen</string>
     <string name="message_incognito_mode_on">Incognito mode is on</string>
     <string name="message_incognito_description">Thanks to incognito mode sender is not notified when you read the message</string>

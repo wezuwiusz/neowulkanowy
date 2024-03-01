@@ -336,8 +336,10 @@
     <string name="message_forward">Prześlij dalej</string>
     <string name="message_select_all">Zaznacz wszystkie</string>
     <string name="message_unselect_all">Odznacz wszystkie</string>
+    <string name="message_restore_from_trash">Przywróć z kosza</string>
     <string name="message_move_to_trash">Przenieś do kosza</string>
     <string name="message_delete_forever">Usuń trwale</string>
+    <string name="message_restore_success">Wiadomość przywrócona pomyślnie</string>
     <string name="message_delete_success">Wiadomość usunięta pomyślnie</string>
     <string name="message_mailbox_type_student">uczeń</string>
     <string name="message_mailbox_type_parent">rodzic</string>
@@ -383,6 +385,7 @@
         <item quantity="other">%1$d wybranych</item>
     </plurals>
     <string name="message_messages_deleted">Wiadomości zostały usunięte</string>
+    <string name="message_messages_restored">Wiadomości przywrócone</string>
     <string name="message_mailbox_chooser_title">Wybierz skrzynkę</string>
     <string name="message_incognito_mode_on">Tryb incognito jest włączony</string>
     <string name="message_incognito_description">Dzięki trybowi incognito nadawca nie zobaczy, że przeczytałeś tę wiadomość</string>
