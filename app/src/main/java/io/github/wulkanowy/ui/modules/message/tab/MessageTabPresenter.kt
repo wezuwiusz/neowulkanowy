@@ -121,8 +121,27 @@ class MessageTabPresenter @Inject constructor(
         return true
     }
 
+    fun onActionModeSelectRestore() {
+        Timber.i("Restore ${messagesToDelete.size} messages")
+        val messageList = messagesToDelete.toList()
+
+        presenterScope.launch {
+            view?.run {
+                showProgress(true)
+                showContent(false)
+                showActionMode(false)
+            }
+            runCatching {
+                val student = studentRepository.getCurrentStudent(true)
+                messageRepository.restoreMessages(student, selectedMailbox, messageList)
+            }
+                .onFailure(errorHandler::dispatch)
+                .onSuccess { view?.showMessage(R.string.message_messages_restored) }
+        }
+    }
+
     fun onActionModeSelectDelete() {
-        Timber.i("Delete ${messagesToDelete.size} messages)")
+        Timber.i("Delete ${messagesToDelete.size} messages")
         val messageList = messagesToDelete.toList()
 
         presenterScope.launch {
@@ -134,7 +153,7 @@ class MessageTabPresenter @Inject constructor(
 
             runCatching {
                 val student = studentRepository.getCurrentStudent(true)
-                messageRepository.deleteMessages(student, selectedMailbox, messageList)
+                messageRepository.deleteMessages(student, messageList)
             }
                 .onFailure(errorHandler::dispatch)
                 .onSuccess { view?.showMessage(R.string.message_messages_deleted) }

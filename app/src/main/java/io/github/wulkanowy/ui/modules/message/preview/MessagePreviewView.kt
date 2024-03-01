@@ -13,6 +13,8 @@ interface MessagePreviewView : BaseView {
 
     val unmuteMessageSuccessString: String
 
+    val restoreMessageSuccessString: String
+
     val messageNoSubjectString: String
 
     val printHTML: String
@@ -35,11 +37,7 @@ interface MessagePreviewView : BaseView {
 
     fun setErrorRetryCallback(callback: () -> Unit)
 
-    fun showOptions(show: Boolean, isReplayable: Boolean)
-
-    fun setDeletedOptionsLabels()
-
-    fun setNotDeletedOptionsLabels()
+    fun showOptions(show: Boolean, isReplayable: Boolean, isRestorable: Boolean)
 
     fun openMessageReply(message: Message?)
 

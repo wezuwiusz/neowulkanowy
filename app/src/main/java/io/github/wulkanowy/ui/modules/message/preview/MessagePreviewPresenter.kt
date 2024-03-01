@@ -14,9 +14,11 @@ import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.toFormattedString
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 class MessagePreviewPresenter @Inject constructor(
     errorHandler: ErrorHandler,
@@ -74,6 +76,7 @@ class MessagePreviewPresenter @Inject constructor(
                         }
                     }
                 } else {
+                    delay(1.seconds)
                     view?.run {
                         showMessage(messageNotExists)
                         popView()
@@ -172,13 +175,51 @@ class MessagePreviewPresenter @Inject constructor(
         return true
     }
 
+    private fun restoreMessage() {
+        val message = messageWithAttachments?.message ?: return
+
+        view?.run {
+            showContent(false)
+            showProgress(true)
+            showOptions(
+                show = false,
+                isReplayable = false,
+                isRestorable = false,
+            )
+            showErrorView(false)
+        }
+        Timber.i("Restore message ${message.messageGlobalKey}")
+        presenterScope.launch {
+            runCatching {
+                val student = studentRepository.getCurrentStudent(decryptPass = true)
+                val mailbox = messageRepository.getMailboxByStudent(student)
+                messageRepository.restoreMessages(student, mailbox, listOfNotNull(message))
+            }
+                .onFailure {
+                    retryCallback = { onMessageRestore() }
+                    errorHandler.dispatch(it)
+                }
+                .onSuccess {
+                    view?.run {
+                        showMessage(restoreMessageSuccessString)
+                        popView()
+                    }
+                }
+            view?.showProgress(false)
+        }
+    }
+
     private fun deleteMessage() {
         messageWithAttachments?.message ?: return
 
         view?.run {
             showContent(false)
             showProgress(true)
-            showOptions(show = false, isReplayable = false)
+            showOptions(
+                show = false,
+                isReplayable = false,
+                isRestorable = false,
+            )
             showErrorView(false)
         }
 
@@ -187,8 +228,7 @@ class MessagePreviewPresenter @Inject constructor(
         presenterScope.launch {
             runCatching {
                 val student = studentRepository.getCurrentStudent(decryptPass = true)
-                val mailbox = messageRepository.getMailboxByStudent(student)
-                messageRepository.deleteMessage(student, mailbox, messageWithAttachments?.message!!)
+                messageRepository.deleteMessage(student, messageWithAttachments?.message!!)
             }.onFailure {
                 retryCallback = { onMessageDelete() }
                 errorHandler.dispatch(it)
@@ -213,6 +253,11 @@ class MessagePreviewPresenter @Inject constructor(
         }
     }
 
+    fun onMessageRestore(): Boolean {
+        restoreMessage()
+        return true
+    }
+
     fun onMessageDelete(): Boolean {
         deleteMessage()
         return true
@@ -222,15 +267,9 @@ class MessagePreviewPresenter @Inject constructor(
         view?.apply {
             showOptions(
                 show = messageWithAttachments?.message != null,
-                isReplayable = messageWithAttachments?.message?.folderId != MessageFolder.SENT.id,
+                isReplayable = messageWithAttachments?.message?.folderId == MessageFolder.RECEIVED.id,
+                isRestorable = messageWithAttachments?.message?.folderId == MessageFolder.TRASHED.id,
             )
-            messageWithAttachments?.message?.let {
-                when (it.folderId == MessageFolder.TRASHED.id) {
-                    true -> setDeletedOptionsLabels()
-                    false -> setNotDeletedOptionsLabels()
-                }
-            }
-
         }
     }
 
