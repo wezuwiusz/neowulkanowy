@@ -24,6 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
         tools:text="5" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@id/timetableItemTimeBarrier"
         app:layout_constraintStart_toEndOf="@+id/timetableItemTimeStart"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/timetableItemTimeStart"
         tools:text="@tools:sample/lorem" />
 
     <TextView
@@ -52,6 +53,8 @@
         app:layout_constraintBottom_toTopOf="@id/timetableItemTimeFinish"
         app:layout_constraintStart_toEndOf="@id/timetableItemNumber"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="11:11" />
 
     <TextView
@@ -129,8 +132,8 @@
         android:textColor="?colorTimetableChange"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timetableItemTeacher"
-        app:layout_constraintTop_toTopOf="@+id/timetableItemTimeFinish"
+        app:layout_constraintStart_toEndOf="@id/timetableItemTimeFinish"
+        app:layout_constraintTop_toTopOf="@id/timetableItemTimeFinish"
         tools:text="Lekcja odwołana: uczniowie zwolnieni do domu"
         tools:visibility="gone" />
 
@@ -179,7 +182,7 @@
         android:visibility="gone"
         app:backgroundTint="?colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/timetableItemTimeStart"
         tools:text="jeszcze 15 min"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
