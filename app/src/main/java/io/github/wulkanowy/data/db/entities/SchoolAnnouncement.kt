@@ -16,7 +16,9 @@ data class SchoolAnnouncement(
 
     val subject: String,
 
-    val content: String
+    val content: String,
+
+    val author: String? = null,
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

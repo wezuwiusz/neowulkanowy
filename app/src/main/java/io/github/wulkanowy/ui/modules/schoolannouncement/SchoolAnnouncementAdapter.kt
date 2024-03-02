@@ -2,6 +2,7 @@ package io.github.wulkanowy.ui.modules.schoolannouncement
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.data.db.entities.SchoolAnnouncement
 import io.github.wulkanowy.databinding.ItemSchoolAnnouncementBinding
@@ -29,6 +30,10 @@ class SchoolAnnouncementAdapter @Inject constructor() :
             schoolAnnouncementItemDate.text = item.date.toFormattedString()
             schoolAnnouncementItemType.text = item.subject
             schoolAnnouncementItemContent.text = item.content.parseUonetHtml()
+            with(schoolAnnouncementItemAuthor) {
+                text = item.author
+                isVisible = !item.author.isNullOrBlank()
+            }
 
             root.setOnClickListener { onItemClickListener(item) }
         }

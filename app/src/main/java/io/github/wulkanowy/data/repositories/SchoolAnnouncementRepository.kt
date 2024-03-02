@@ -41,9 +41,10 @@ class SchoolAnnouncementRepository @Inject constructor(
             schoolAnnouncementDb.loadAll(student.userLoginId)
         },
         fetch = {
-            sdk.init(student)
-                .getDirectorInformation()
-                .mapToEntities(student)
+            val sdk = sdk.init(student)
+            val lastAnnouncements = sdk.getLastAnnouncements().mapToEntities(student)
+            val directorInformation = sdk.getDirectorInformation().mapToEntities(student)
+            lastAnnouncements + directorInformation
         },
         saveFetchResult = { old, new ->
             val schoolAnnouncementsToSave = (new uniqueSubtract old).onEach {
