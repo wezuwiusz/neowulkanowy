@@ -56,7 +56,7 @@
     <string name="login_invalid_email">Neplatný e-mail</string>
     <string name="login_invalid_login">Namiesto e-mailu použite priradené prihlasovacie údaje</string>
     <string name="login_invalid_custom_email">Použite priradené prihlasovacie alebo e-mail v @%1$s</string>
-    <string name="login_invalid_domain_suffix">Invalid domain suffix</string>
+    <string name="login_invalid_domain_suffix">Neplatná prípona domény</string>
     <string name="login_invalid_symbol">Neplatný symbol. Pokiaľ ho nemôžete nájsť, kontaktujte školu</string>
     <string name="login_invalid_symbol_definitely">Nevymýšľajte si! Pokiaľ symbol nemôžete nájsť, kontaktujte školu</string>
     <string name="login_incorrect_symbol">Žiak nebol nájdený. Skontrolujte správnosť symbolu a vybrané varianty denníka UONET+</string>
@@ -98,8 +98,8 @@
     <string name="main_log_in">Prihlásiť sa</string>
     <string name="main_session_expired">Relácia vypršala</string>
     <string name="main_session_relogin">Relácia vypršala. Prihláste sa prosím znovu</string>
-    <string name="main_expired_credentials_title">Password has expired or been changed</string>
-    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to Wulkanowy again</string>
+    <string name="main_expired_credentials_title">Heslo vypršalo alebo bolo zmenené</string>
+    <string name="main_expired_credentials_description">Platnosť hesla k vášmu účtu vypršala alebo bolo zmenené. Budete sa musieť znova prihlásiť do Wulkanového</string>
     <string name="main_support_title">Podpora aplikácie</string>
     <string name="main_support_description">Páči sa Vám táto aplikácia? Podporte jej vývoj tým, že povolíte neinvazívne reklamy, ktoré môžete kedykoľvek vypnúť</string>
     <string name="main_support_positive">Zapnúť reklamy</string>
@@ -336,10 +336,10 @@
     <string name="message_forward">Poslať ďalej</string>
     <string name="message_select_all">Vybrať všetko</string>
     <string name="message_unselect_all">Odznačiť všetko</string>
-    <string name="message_restore_from_trash">Restore from trash</string>
+    <string name="message_restore_from_trash">Obnoviť z koša</string>
     <string name="message_move_to_trash">Presunúť do koša</string>
     <string name="message_delete_forever">Odstrániť natrvalo</string>
-    <string name="message_restore_success">Message restored successfully</string>
+    <string name="message_restore_success">Správa úspešne obnovená</string>
     <string name="message_delete_success">Správa bola úspešne odstránená</string>
     <string name="message_mailbox_type_student">žiak</string>
     <string name="message_mailbox_type_parent">rodič</string>
@@ -385,7 +385,7 @@
         <item quantity="other">%1$d vybraných</item>
     </plurals>
     <string name="message_messages_deleted">Správy odstránené</string>
-    <string name="message_messages_restored">Messages restored</string>
+    <string name="message_messages_restored">Obnovené správy</string>
     <string name="message_mailbox_chooser_title">Vyberte poštovú schránku</string>
     <string name="message_incognito_mode_on">Režim inkognito je zapnutý</string>
     <string name="message_incognito_description">Vďaka inkognito režimu nie je odosielateľ upozornený, keď si správu prečítate</string>
@@ -852,15 +852,16 @@
     <string name="auth_description">Na prevádzku aplikácie potrebujeme potvrdiť vašu identitu. Zadajte PESEL žiaka &lt;b&gt;%1$s&lt;/b&gt; v nižšie uvedenom poli</string>
     <string name="auth_button_skip">Zatiaľ preskočiť</string>
     <!--Captcha-->
-    <string name="captcha_dialog_title">Overovanie prebieha. Počkajte…</string>
+    <string name="captcha_dialog_title">VULCAN\'s website requires verification</string>
+    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Úspešne overené</string>
     <!--Errors-->
     <string name="error_no_internet">Žiadne internetové pripojenie</string>
     <string name="error_invalid_device_datetime">Vyskytla sa chyba. Skontrolujte hodiny svojho zariadenia</string>
-    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
+    <string name="error_account_inactive">Tento účet je neaktívny. Skúste sa znova prihlásiť</string>
     <string name="error_timeout">Nedá sa pripojiť ku denníku. Servery môžu byť preťažené. Prosím skúste to znova neskôr</string>
     <string name="error_login_failed">Načítanie údajov zlyhalo. Skúste neskôr prosím</string>
-    <string name="error_password_invalid">Your password has expired or been changed. Please log in again</string>
+    <string name="error_password_invalid">Vaše heslo vypršalo alebo bolo zmenené. Prihláste sa znova</string>
     <string name="error_password_change_required">Je vyžadovaná zmena hesla pre denník</string>
     <string name="error_service_unavailable">Prebieha údržba denníka UONET+. Skúste to neskôr znova</string>
     <string name="error_unknown_uonet">Neznáma chyba dennika UONET+. Prosím skúste to znova neskôr</string>
@@ -871,8 +872,8 @@
     <string name="error_feature_not_available">Funkcia nie je k dispozícii. Prihláste sa v inom režime než Mobile API</string>
     <string name="error_field_required">Toto pole je povinné</string>
     <!-- Mute system -->
-    <string name="message_mute">Mute</string>
-    <string name="message_unmute">Unmute</string>
-    <string name="message_mute_success">You have muted this user</string>
-    <string name="message_unmute_success">You have unmuted this user</string>
+    <string name="message_mute">Stlmiť</string>
+    <string name="message_unmute">Zrušiť stlmenie</string>
+    <string name="message_mute_success">Stlmili ste tohto používateľa</string>
+    <string name="message_unmute_success">Zrušili ste stlmenie tohto používateľa</string>
 </resources>

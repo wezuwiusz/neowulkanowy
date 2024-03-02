@@ -852,7 +852,8 @@
     <string name="auth_description">Rodzicu, musimy mieć pewność, że Twój adres e-mail został powiązany z prawidłowym kontem ucznia. W celu autoryzacji konta podaj numer PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt; w polu poniżej</string>
     <string name="auth_button_skip">Na razie pomiń</string>
     <!--Captcha-->
-    <string name="captcha_dialog_title">Trwa weryfikacja. Czekaj…</string>
+    <string name="captcha_dialog_title">Strona dziennika VULCAN wymaga weryfikacji</string>
+    <string name="captcha_dialog_description"><b>Dlaczego to widzę?</b>\nStrona internetowa dziennika, z której Wulkanowy pobiera dane, wyświetla ten sam ekran jak powyżej, więc Wulkanowy musi również ją pokazać, aby móc pobrać dane z tej witryny. Nie da się tego obejść</string>
     <string name="captcha_verified_message">Pomyślnie zweryfikowano</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>

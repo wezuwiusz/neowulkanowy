@@ -56,7 +56,7 @@
     <string name="login_invalid_email">Недійсна адреса e-mail</string>
     <string name="login_invalid_login">Використовуйте призначений логін замість адреси e-mail</string>
     <string name="login_invalid_custom_email">Використовуйте призначений логін або адресу e-mail в @%1$s</string>
-    <string name="login_invalid_domain_suffix">Invalid domain suffix</string>
+    <string name="login_invalid_domain_suffix">Невірний суфікс домену</string>
     <string name="login_invalid_symbol">Некоректний символ. Якщо ви не можете знайти його, будь ласка, зв\'яжіться зі школою</string>
     <string name="login_invalid_symbol_definitely">Не вигадуйте! Якщо ви не можете знайти його, будь ласка, зв\'яжіться зі школою</string>
     <string name="login_incorrect_symbol">Студента не знайдено. Перевірте symbol та обраний тип щоденника UONET+</string>
@@ -98,8 +98,8 @@
     <string name="main_log_in">Увійти</string>
     <string name="main_session_expired">Минув термін дії сесії</string>
     <string name="main_session_relogin">Минув термін дії сесії, авторизуйтеся знову</string>
-    <string name="main_expired_credentials_title">Password has expired or been changed</string>
-    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to Wulkanowy again</string>
+    <string name="main_expired_credentials_title">Термін дії пароля закінчився або його було змінено</string>
+    <string name="main_expired_credentials_description">Термін дії пароля для вашого облікового запису закінчився або було змінено. Необхідно зайти в Wulkanowy знову</string>
     <string name="main_support_title">Підтримка додатку</string>
     <string name="main_support_description">Вам подобається цей додаток? Підтримайте його розвиток, увімкнувши неінвазивну рекламу, яку ви можете відключити в будь-який час</string>
     <string name="main_support_positive">Увімкнути рекламу</string>
@@ -336,10 +336,10 @@
     <string name="message_forward">Переслати</string>
     <string name="message_select_all">Вибрати всі</string>
     <string name="message_unselect_all">Відмінити вибір</string>
-    <string name="message_restore_from_trash">Restore from trash</string>
+    <string name="message_restore_from_trash">Відновити зі смітника</string>
     <string name="message_move_to_trash">Перемістити до кошика</string>
     <string name="message_delete_forever">Видалити назавжди</string>
-    <string name="message_restore_success">Message restored successfully</string>
+    <string name="message_restore_success">Повідомлення успішно відновлено</string>
     <string name="message_delete_success">Лист було успішно видалено</string>
     <string name="message_mailbox_type_student">учень</string>
     <string name="message_mailbox_type_parent">родич</string>
@@ -385,7 +385,7 @@
         <item quantity="other">%1$d вибрано</item>
     </plurals>
     <string name="message_messages_deleted">Листи видалено</string>
-    <string name="message_messages_restored">Messages restored</string>
+    <string name="message_messages_restored">Повідомлення відновлені</string>
     <string name="message_mailbox_chooser_title">Вибрати поштову скриньку</string>
     <string name="message_incognito_mode_on">Режим анонімності включено</string>
     <string name="message_incognito_description">Завдяки режиму анонімності, відправник не буде сповіщений коли ви прочитаєте повідомлення</string>
@@ -852,15 +852,16 @@
     <string name="auth_description">Для роботи програми нам потрібно підтвердити вашу особу. Будь ласка, введіть число PESEL &lt;b&gt;%1$s&lt;/b&gt; студента в поле нижче</string>
     <string name="auth_button_skip">Поки що пропустити</string>
     <!--Captcha-->
-    <string name="captcha_dialog_title">Верифікація в процесі. Чекайте…</string>
+    <string name="captcha_dialog_title">Веб-сайт VULCAN потребує підтвердження</string>
+    <string name="captcha_dialog_description"><b>Чому я це бачу?</b>\nСайт реєстру, з якого Wulkanowy завантажує дані, відображає той самий екран, що й вище, тому Wulkanowy також повинен показувати його, щоб мати змогу завантажувати дані з цього сайту. Це неможливо обійти</string>
     <string name="captcha_verified_message">Верифікація завершена</string>
     <!--Errors-->
     <string name="error_no_internet">Немає з\'єднання з інтернетом</string>
     <string name="error_invalid_device_datetime">Сталася помилка. Перевірте годинник пристрою</string>
-    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
+    <string name="error_account_inactive">Цей обліковий запис неактивний. Спробуйте увійти ще раз</string>
     <string name="error_timeout">Помилка підключення до щоденнику. Сервери можуть бути перевантажені, спробуйте пізніше</string>
     <string name="error_login_failed">Помилка завантаження даних, спробуйте пізніше</string>
-    <string name="error_password_invalid">Your password has expired or been changed. Please log in again</string>
+    <string name="error_password_invalid">Термін дії вашого пароля минув або був змінений. Будь ласка увійдіть знову</string>
     <string name="error_password_change_required">Необхідна зміна пароля щоденника</string>
     <string name="error_service_unavailable">UONET+ проводить технічне осблуговування, спробуйте пізніше</string>
     <string name="error_unknown_uonet">Невідома помилка щоденника UONET+, спробуйте пізніше</string>
@@ -871,8 +872,8 @@
     <string name="error_feature_not_available">Функція недоступна в режимі Mobile API. Увійдіть в інший режим</string>
     <string name="error_field_required">Це поле обовʼязкове</string>
     <!-- Mute system -->
-    <string name="message_mute">Mute</string>
-    <string name="message_unmute">Unmute</string>
-    <string name="message_mute_success">You have muted this user</string>
-    <string name="message_unmute_success">You have unmuted this user</string>
+    <string name="message_mute">Вимкнути сповіщення</string>
+    <string name="message_unmute">Ввімкнути сповіщення</string>
+    <string name="message_mute_success">Ви ігноруєте цього користувача</string>
+    <string name="message_unmute_success">Ви не ігноруєте цього користувача</string>
 </resources>

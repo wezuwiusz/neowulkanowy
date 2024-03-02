@@ -758,7 +758,8 @@
     <string name="auth_description">To operate the application, we need to confirm your identity. Please enter the student\'s PESEL &lt;b&gt;%1$s&lt;/b&gt; in the field below</string>
     <string name="auth_button_skip">Skip for now</string>
     <!--Captcha-->
-    <string name="captcha_dialog_title">Verification is in progress. Wait…</string>
+    <string name="captcha_dialog_title">VULCAN\'s website requires verification</string>
+    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Verified successfully</string>
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
