@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @Singleton
 class LuckyNumberRepository @Inject constructor(
     private val luckyNumberDb: LuckyNumberDao,
-    private val sdk: Sdk
+    private val sdk: Sdk,
 ) {
 
     private val saveFetchResultMutex = Mutex()
@@ -39,11 +39,10 @@ class LuckyNumberRepository @Inject constructor(
             newLuckyNumber ?: return@networkBoundResource
 
             if (newLuckyNumber != oldLuckyNumber) {
-                val updatedLuckNumberList =
-                    listOf(newLuckyNumber.apply { if (notify) isNotified = false })
-
-                oldLuckyNumber?.let { luckyNumberDb.deleteAll(listOfNotNull(it)) }
-                luckyNumberDb.insertAll(updatedLuckNumberList)
+                luckyNumberDb.removeOldAndSaveNew(
+                    oldItems = listOfNotNull(oldLuckyNumber),
+                    newItems = listOf(newLuckyNumber.apply { if (notify) isNotified = false }),
+                )
             }
         }
     )

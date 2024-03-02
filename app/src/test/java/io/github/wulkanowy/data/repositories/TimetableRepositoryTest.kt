@@ -108,8 +108,7 @@ class TimetableRepositoryTest {
             flowOf(remoteList.mapToEntities(semester)),
             flowOf(remoteList.mapToEntities(semester))
         )
-        coEvery { timetableDb.insertAll(any()) } returns listOf(1, 2, 3)
-        coEvery { timetableDb.deleteAll(any()) } just Runs
+        coEvery { timetableDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         coEvery {
             timetableAdditionalDao.loadAll(
@@ -119,12 +118,10 @@ class TimetableRepositoryTest {
                 end = endDate
             )
         } returns flowOf(listOf())
-        coEvery { timetableAdditionalDao.deleteAll(emptyList()) } just Runs
-        coEvery { timetableAdditionalDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
+        coEvery { timetableAdditionalDao.removeOldAndSaveNew(any(), any()) } just Runs
 
         coEvery { timetableHeaderDao.loadAll(1, 1, startDate, endDate) } returns flowOf(listOf())
-        coEvery { timetableHeaderDao.insertAll(emptyList()) } returns listOf(1, 2, 3)
-        coEvery { timetableHeaderDao.deleteAll(emptyList()) } just Runs
+        coEvery { timetableHeaderDao.removeOldAndSaveNew(any(), any()) } just Runs
 
         // execute
         val res = runBlocking {
@@ -142,8 +139,12 @@ class TimetableRepositoryTest {
         assertEquals(2, res.dataOrNull!!.lessons.size)
         coVerify { sdk.getTimetable(startDate, endDate) }
         coVerify { timetableDb.loadAll(1, 1, startDate, endDate) }
-        coVerify { timetableDb.insertAll(match { it.isEmpty() }) }
-        coVerify { timetableDb.deleteAll(match { it.isEmpty() }) }
+        coVerify {
+            timetableDb.removeOldAndSaveNew(
+                oldItems = match { it.isEmpty() },
+                newItems = match { it.isEmpty() },
+            )
+        }
     }
 
     private fun createTimetableRemote(

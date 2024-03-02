@@ -62,12 +62,12 @@ class ExamRepository @Inject constructor(
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
-            val examsToSave = (new uniqueSubtract old).onEach {
-                if (notify) it.isNotified = false
-            }
-
-            examDb.deleteAll(old uniqueSubtract new)
-            examDb.insertAll(examsToSave)
+            examDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = (new uniqueSubtract old).onEach {
+                    if (notify) it.isNotified = false
+                },
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester, start, end))
         },
         filterResult = { it.filter { item -> item.date in start..end } }

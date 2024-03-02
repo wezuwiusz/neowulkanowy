@@ -154,8 +154,10 @@ class TimetableRepository @Inject constructor(
             new.apply { if (notify) isNotified = false }
         }
 
-        timetableDb.deleteAll(lessonsToRemove)
-        timetableDb.insertAll(lessonsToAdd)
+        timetableDb.removeOldAndSaveNew(
+            oldItems = lessonsToRemove,
+            newItems = lessonsToAdd,
+        )
 
         schedulerHelper.cancelScheduled(lessonsToRemove, student)
         schedulerHelper.scheduleNotifications(lessonsToAdd, student)
@@ -166,13 +168,17 @@ class TimetableRepository @Inject constructor(
         new: List<TimetableAdditional>
     ) {
         val oldFiltered = old.filter { !it.isAddedByUser }
-        timetableAdditionalDb.deleteAll(oldFiltered uniqueSubtract new)
-        timetableAdditionalDb.insertAll(new uniqueSubtract old)
+        timetableAdditionalDb.removeOldAndSaveNew(
+            oldItems = oldFiltered uniqueSubtract new,
+            newItems = new uniqueSubtract old,
+        )
     }
 
     private suspend fun refreshDayHeaders(old: List<TimetableHeader>, new: List<TimetableHeader>) {
-        timetableHeaderDb.deleteAll(old uniqueSubtract new)
-        timetableHeaderDb.insertAll(new uniqueSubtract old)
+        timetableHeaderDb.removeOldAndSaveNew(
+            oldItems = old uniqueSubtract new,
+            newItems = new uniqueSubtract old,
+        )
     }
 
     fun getLastRefreshTimestamp(semester: Semester, start: LocalDate, end: LocalDate): Instant {

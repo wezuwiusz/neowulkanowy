@@ -113,7 +113,7 @@ class MessageRepositoryTest {
     }
 
     @Test
-    fun `get messages when fetched completely new message without notify`() = runBlocking {
+    fun `get messages when fetched completely new message without notify`() = runTest {
         coEvery { mailboxDao.loadAll(any()) } returns listOf(mailbox)
         every { messageDb.loadAll(mailbox.globalKey, any()) } returns flowOf(emptyList())
         coEvery { sdk.getMessages(Folder.RECEIVED, any()) } returns listOf(
@@ -122,8 +122,7 @@ class MessageRepositoryTest {
                 readBy = 10,
             )
         )
-        coEvery { messageDb.deleteAll(any()) } just Runs
-        coEvery { messageDb.insertAll(any()) } returns listOf()
+        coEvery { messageDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         val res = repository.getMessages(
             student = student,
@@ -134,12 +133,14 @@ class MessageRepositoryTest {
         ).toFirstResult()
 
         assertEquals(null, res.errorOrNull)
-        coVerify(exactly = 1) { messageDb.deleteAll(withArg { checkEquals(emptyList<Message>()) }) }
         coVerify {
-            messageDb.insertAll(withArg {
-                assertEquals(4, it.single().messageId)
-                assertTrue(it.single().isNotified)
-            })
+            messageDb.removeOldAndSaveNew(
+                oldItems = withArg { checkEquals(emptyList<Message>()) },
+                newItems = withArg {
+                    assertEquals(4, it.single().messageId)
+                    assertTrue(it.single().isNotified)
+                },
+            )
         }
     }
 

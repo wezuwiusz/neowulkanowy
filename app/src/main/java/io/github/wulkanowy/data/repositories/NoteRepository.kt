@@ -7,7 +7,12 @@ import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
+import io.github.wulkanowy.utils.init
+import io.github.wulkanowy.utils.switchSemester
+import io.github.wulkanowy.utils.toLocalDate
+import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
@@ -46,14 +51,16 @@ class NoteRepository @Inject constructor(
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
-            noteDb.deleteAll(old uniqueSubtract new)
-            noteDb.insertAll((new uniqueSubtract old).onEach {
+            val notesToAdd = (new uniqueSubtract old).onEach {
                 if (it.date >= student.registrationDate.toLocalDate()) it.apply {
                     isRead = false
                     if (notify) isNotified = false
                 }
-            })
-
+            }
+            noteDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = notesToAdd,
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester))
         }
     )

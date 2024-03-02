@@ -7,11 +7,16 @@ import io.github.wulkanowy.data.mappers.mapToEntity
 import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
+import io.mockk.just
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -53,7 +58,8 @@ class LuckyNumberRemoteTest {
         coEvery { luckyNumberDb.deleteAll(any()) } just Runs
 
         // execute
-        val res = runBlocking { luckyNumberRepository.getLuckyNumber(student, true).toFirstResult() }
+        val res =
+            runBlocking { luckyNumberRepository.getLuckyNumber(student, true).toFirstResult() }
 
         // verify
         assertEquals(null, res.errorOrNull)
@@ -65,19 +71,19 @@ class LuckyNumberRemoteTest {
     }
 
     @Test
-    fun `force refresh with different item on remote`() {
+    fun `force refresh with different item on remote`() = runTest {
         // prepare
         coEvery { sdk.getLuckyNumber(student.schoolShortName) } returns luckyNumber
         coEvery { luckyNumberDb.load(1, date) } returnsMany listOf(
             flowOf(luckyNumber.mapToEntity(student).copy(luckyNumber = 6666)),
-            flowOf(luckyNumber.mapToEntity(student).copy(luckyNumber = 6666)), // after fetch end before save result
+            // after fetch end before save result
+            flowOf(luckyNumber.mapToEntity(student).copy(luckyNumber = 6666)),
             flowOf(luckyNumber.mapToEntity(student))
         )
-        coEvery { luckyNumberDb.insertAll(any()) } returns listOf(1, 2, 3)
-        coEvery { luckyNumberDb.deleteAll(any()) } just Runs
+        coEvery { luckyNumberDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         // execute
-        val res = runBlocking { luckyNumberRepository.getLuckyNumber(student, true).toFirstResult() }
+        val res = luckyNumberRepository.getLuckyNumber(student, true).toFirstResult()
 
         // verify
         assertEquals(null, res.errorOrNull)
@@ -85,13 +91,16 @@ class LuckyNumberRemoteTest {
         coVerify { sdk.getLuckyNumber(student.schoolShortName) }
         coVerify { luckyNumberDb.load(1, date) }
         coVerify {
-            luckyNumberDb.insertAll(match {
-                it.size == 1 && it[0] == luckyNumber.mapToEntity(student)
-            })
+            luckyNumberDb.removeOldAndSaveNew(
+                oldItems = match {
+                    it.size == 1 && it[0] == luckyNumber.mapToEntity(student)
+                        .copy(luckyNumber = 6666)
+                },
+                newItems = match {
+                    it.size == 1 && it[0] == luckyNumber.mapToEntity(student)
+                }
+            )
         }
-        coVerify { luckyNumberDb.deleteAll(match {
-            it.size == 1 && it[0] == luckyNumber.mapToEntity(student).copy(luckyNumber = 6666)
-        }) }
     }
 
     @Test
@@ -103,11 +112,11 @@ class LuckyNumberRemoteTest {
             flowOf(null), // after fetch end before save result
             flowOf(luckyNumber.mapToEntity(student))
         )
-        coEvery { luckyNumberDb.insertAll(any()) } returns listOf(1, 2, 3)
-        coEvery { luckyNumberDb.deleteAll(any()) } just Runs
+        coEvery { luckyNumberDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         // execute
-        val res = runBlocking { luckyNumberRepository.getLuckyNumber(student, true).toFirstResult() }
+        val res =
+            runBlocking { luckyNumberRepository.getLuckyNumber(student, true).toFirstResult() }
 
         // verify
         assertEquals(null, res.errorOrNull)
@@ -115,10 +124,12 @@ class LuckyNumberRemoteTest {
         coVerify { sdk.getLuckyNumber(student.schoolShortName) }
         coVerify { luckyNumberDb.load(1, date) }
         coVerify {
-            luckyNumberDb.insertAll(match {
-                it.size == 1 && it[0] == luckyNumber.mapToEntity(student)
-            })
+            luckyNumberDb.removeOldAndSaveNew(
+                oldItems = emptyList(),
+                newItems = match {
+                    it.size == 1 && it[0] == luckyNumber.mapToEntity(student)
+                }
+            )
         }
-        coVerify(exactly = 0) { luckyNumberDb.deleteAll(any()) }
     }
 }

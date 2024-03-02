@@ -89,12 +89,13 @@ class MessageRepository @Inject constructor(
         },
         saveFetchResult = { oldWithAuthors, new ->
             val old = oldWithAuthors.map { it.message }
-            messagesDb.deleteAll(old uniqueSubtract new)
-            messagesDb.insertAll((new uniqueSubtract old).onEach {
-                val muted = isMuted(it.correspondents)
-                it.isNotified = !notify || muted
-            })
-
+            messagesDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = (new uniqueSubtract old).onEach {
+                    val muted = isMuted(it.correspondents)
+                    it.isNotified = !notify || muted
+                },
+            )
             refreshHelper.updateLastRefreshTimestamp(
                 getRefreshKey(messagesCacheKey, mailbox, folder)
             )

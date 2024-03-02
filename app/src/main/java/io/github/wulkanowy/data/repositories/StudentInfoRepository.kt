@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class StudentInfoRepository @Inject constructor(
     private val studentInfoDao: StudentInfoDao,
-    private val sdk: Sdk
+    private val sdk: Sdk,
 ) {
 
     private val saveFetchResultMutex = Mutex()
@@ -36,10 +36,10 @@ class StudentInfoRepository @Inject constructor(
         },
         saveFetchResult = { old, new ->
             if (old != null && new != old) {
-                with(studentInfoDao) {
-                    deleteAll(listOf(old))
-                    insertAll(listOf(new))
-                }
+                studentInfoDao.removeOldAndSaveNew(
+                    oldItems = listOf(old),
+                    newItems = listOf(new),
+                )
             } else if (old == null) {
                 studentInfoDao.insertAll(listOf(new))
             }

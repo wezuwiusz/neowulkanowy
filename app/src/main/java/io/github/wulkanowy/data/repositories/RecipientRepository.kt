@@ -1,7 +1,11 @@
 package io.github.wulkanowy.data.repositories
 
 import io.github.wulkanowy.data.db.dao.RecipientDao
-import io.github.wulkanowy.data.db.entities.*
+import io.github.wulkanowy.data.db.entities.Mailbox
+import io.github.wulkanowy.data.db.entities.MailboxType
+import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.db.entities.Recipient
+import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
@@ -25,8 +29,10 @@ class RecipientRepository @Inject constructor(
             .mapToEntities(mailbox.globalKey)
         val old = recipientDb.loadAll(type, mailbox.globalKey)
 
-        recipientDb.deleteAll(old uniqueSubtract new)
-        recipientDb.insertAll(new uniqueSubtract old)
+        recipientDb.removeOldAndSaveNew(
+            oldItems = old uniqueSubtract new,
+            newItems = new uniqueSubtract old,
+        )
 
         refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, student))
     }

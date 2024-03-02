@@ -71,8 +71,7 @@ class GradeStatisticsRepositoryTest {
             flowOf(remotePartialList.mapToEntities(semester)),
             flowOf(remotePartialList.mapToEntities(semester))
         )
-        coEvery { gradePartialStatisticsDb.insertAll(any()) } returns listOf(1, 2, 3)
-        coEvery { gradePartialStatisticsDb.deleteAll(any()) } just Runs
+        coEvery { gradePartialStatisticsDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         // execute
         val res = runBlocking {
@@ -93,8 +92,7 @@ class GradeStatisticsRepositoryTest {
         assertEquals("", items[2].partial?.studentAverage)
         coVerify { sdk.getGradesPartialStatistics(1) }
         coVerify { gradePartialStatisticsDb.loadAll(1, 1) }
-        coVerify { gradePartialStatisticsDb.insertAll(match { it.isEmpty() }) }
-        coVerify { gradePartialStatisticsDb.deleteAll(match { it.isEmpty() }) }
+        coVerify { gradePartialStatisticsDb.removeOldAndSaveNew(emptyList(), emptyList()) }
     }
 
     @Test
@@ -109,8 +107,7 @@ class GradeStatisticsRepositoryTest {
             flowOf(remotePartialList.mapToEntities(semester)),
             flowOf(remotePartialList.mapToEntities(semester))
         )
-        coEvery { gradePartialStatisticsDb.insertAll(any()) } returns listOf(1, 2, 3)
-        coEvery { gradePartialStatisticsDb.deleteAll(any()) } just Runs
+        coEvery { gradePartialStatisticsDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         // execute
         val res = runBlocking {
@@ -131,8 +128,7 @@ class GradeStatisticsRepositoryTest {
         assertEquals("5.0", items[2].partial?.studentAverage)
         coVerify { sdk.getGradesPartialStatistics(1) }
         coVerify { gradePartialStatisticsDb.loadAll(1, 1) }
-        coVerify { gradePartialStatisticsDb.insertAll(match { it.isEmpty() }) }
-        coVerify { gradePartialStatisticsDb.deleteAll(match { it.isEmpty() }) }
+        coVerify { gradePartialStatisticsDb.removeOldAndSaveNew(emptyList(), emptyList()) }
     }
 
     private fun getGradeStatisticsPartialSubject(

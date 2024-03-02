@@ -47,12 +47,12 @@ class SchoolAnnouncementRepository @Inject constructor(
             lastAnnouncements + directorInformation
         },
         saveFetchResult = { old, new ->
-            val schoolAnnouncementsToSave = (new uniqueSubtract old).onEach {
-                if (notify) it.isNotified = false
-            }
-
-            schoolAnnouncementDb.deleteAll(old uniqueSubtract new)
-            schoolAnnouncementDb.insertAll(schoolAnnouncementsToSave)
+            schoolAnnouncementDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = (new uniqueSubtract old).onEach {
+                    if (notify) it.isNotified = false
+                },
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, student))
         }
     )

@@ -47,10 +47,10 @@ class SchoolRepository @Inject constructor(
         },
         saveFetchResult = { old, new ->
             if (old != null && new != old) {
-                with(schoolDb) {
-                    deleteAll(listOf(old))
-                    insertAll(listOf(new))
-                }
+                schoolDb.removeOldAndSaveNew(
+                    oldItems = listOf(old),
+                    newItems = listOf(new)
+                )
             } else if (old == null) {
                 schoolDb.insertAll(listOf(new))
             }

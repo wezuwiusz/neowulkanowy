@@ -61,14 +61,14 @@ class HomeworkRepository @Inject constructor(
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
-            val homeWorkToSave = (new uniqueSubtract old).onEach {
-                if (notify) it.isNotified = false
-            }
             val filteredOld = old.filterNot { it.isAddedByUser }
 
-            homeworkDb.deleteAll(filteredOld uniqueSubtract new)
-            homeworkDb.insertAll(homeWorkToSave)
-
+            homeworkDb.removeOldAndSaveNew(
+                oldItems = filteredOld uniqueSubtract new,
+                newItems = (new uniqueSubtract old).onEach {
+                    if (notify) it.isNotified = false
+                },
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester, start, end))
         }
     )

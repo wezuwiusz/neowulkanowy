@@ -65,12 +65,13 @@ class AttendanceRepository @Inject constructor(
                 .mapToEntities(semester, lessons)
         },
         saveFetchResult = { old, new ->
-            attendanceDb.deleteAll(old uniqueSubtract new)
             val attendanceToAdd = (new uniqueSubtract old).map { newAttendance ->
                 newAttendance.apply { if (notify) isNotified = false }
             }
-            attendanceDb.insertAll(attendanceToAdd)
-
+            attendanceDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = attendanceToAdd,
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester, start, end))
         },
         filterResult = { it.filter { item -> item.date in start..end } }
