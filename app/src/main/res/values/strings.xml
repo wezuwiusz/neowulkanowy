@@ -109,8 +109,8 @@
     <string name="main_log_in">Log in</string>
     <string name="main_session_expired">Session expired</string>
     <string name="main_session_relogin">Session expired, log in again</string>
-    <string name="main_expired_credentials_description">Your account password has been changed. You need to log in to Wulkanowy again</string>
-    <string name="main_expired_credentials_title">Password changed</string>
+    <string name="main_expired_credentials_title">Password has expired or been changed</string>
+    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to Wulkanowy again</string>
     <string name="main_support_title">Application support</string>
     <string name="main_support_description">Do you like this app? Support its development by enabling non-invasive ads that you can disable at any time</string>
     <string name="main_support_positive">Enable ads</string>
@@ -325,8 +325,10 @@
     <string name="message_forward">Forward</string>
     <string name="message_select_all">Select all</string>
     <string name="message_unselect_all">Unselect all</string>
+    <string name="message_restore_from_trash">Restore from trash</string>
     <string name="message_move_to_trash">Move to trash</string>
     <string name="message_delete_forever">Delete permanently</string>
+    <string name="message_restore_success">Message restored successfully</string>
     <string name="message_delete_success">Message deleted successfully</string>
     <string name="message_mailbox_type_student">student</string>
     <string name="message_mailbox_type_parent">parent</string>
@@ -364,6 +366,7 @@
         <item quantity="other">%1$d selected</item>
     </plurals>
     <string name="message_messages_deleted">Messages deleted</string>
+    <string name="message_messages_restored">Messages restored</string>
     <string name="message_mailbox_chooser_title">Choose mailbox</string>
     <string name="message_incognito_mode_on">Incognito mode is on</string>
     <string name="message_incognito_description">Thanks to incognito mode sender is not notified when you read the message</string>
@@ -845,15 +848,18 @@
 
 
     <!--Captcha-->
-    <string name="captcha_dialog_title">Verification is in progress. Wait…</string>
+    <string name="captcha_dialog_title">VULCAN\'s website requires verification</string>
+    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Verified successfully</string>
 
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>
     <string name="error_invalid_device_datetime">An error occurred. Check your device clock</string>
+    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Connection to register failed. Servers can be overloaded. Please try again later</string>
     <string name="error_login_failed">Loading data failed. Please try again later</string>
+    <string name="error_password_invalid">Your password has expired or been changed. Please log in again</string>
     <string name="error_password_change_required">Register password change required</string>
     <string name="error_service_unavailable">Maintenance underway UONET + register. Try again later</string>
     <string name="error_unknown_uonet">Unknown UONET + register error. Try again later</string>
@@ -863,4 +869,10 @@
     <string name="error_feature_disabled">Feature disabled by your school</string>
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
     <string name="error_field_required">This field is required</string>
+
+    <!-- Mute system -->
+    <string name="message_mute">Mute</string>
+    <string name="message_unmute">Unmute</string>
+    <string name="message_mute_success">You have muted this user</string>
+    <string name="message_unmute_success">You have unmuted this user</string>
 </resources>

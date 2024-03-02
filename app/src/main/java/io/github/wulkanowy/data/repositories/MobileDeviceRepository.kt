@@ -48,9 +48,10 @@ class MobileDeviceRepository @Inject constructor(
                 .mapToEntities(student)
         },
         saveFetchResult = { old, new ->
-            mobileDb.deleteAll(old uniqueSubtract new)
-            mobileDb.insertAll(new uniqueSubtract old)
-
+            mobileDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = new uniqueSubtract old,
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, student))
         }
     )

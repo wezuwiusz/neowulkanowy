@@ -98,8 +98,8 @@
     <string name="main_log_in">Zaloguj się</string>
     <string name="main_session_expired">Sesja wygasła</string>
     <string name="main_session_relogin">Sesja wygasła, zaloguj się ponownie</string>
-    <string name="main_expired_credentials_description">Hasło do Twojego konta zostało zmienione. Musisz zalogować się ponownie do Wulkanowego</string>
-    <string name="main_expired_credentials_title">Hasło zostało zmienione</string>
+    <string name="main_expired_credentials_title">Hasło wygasło lub zostało zmienione</string>
+    <string name="main_expired_credentials_description">Hasło do twojego konta wygasło lub zostało zmienione. Musisz zalogować się ponownie do Wulkanowego</string>
     <string name="main_support_title">Wparcie aplikacji</string>
     <string name="main_support_description">Podoba Ci się ta aplikacja? Wspieraj jej rozwój poprzez włączenie nieinwazyjnych reklam, które możesz wyłączyć w dowolnym momencie</string>
     <string name="main_support_positive">Włącz reklamy</string>
@@ -336,8 +336,10 @@
     <string name="message_forward">Prześlij dalej</string>
     <string name="message_select_all">Zaznacz wszystkie</string>
     <string name="message_unselect_all">Odznacz wszystkie</string>
+    <string name="message_restore_from_trash">Przywróć z kosza</string>
     <string name="message_move_to_trash">Przenieś do kosza</string>
     <string name="message_delete_forever">Usuń trwale</string>
+    <string name="message_restore_success">Wiadomość przywrócona pomyślnie</string>
     <string name="message_delete_success">Wiadomość usunięta pomyślnie</string>
     <string name="message_mailbox_type_student">uczeń</string>
     <string name="message_mailbox_type_parent">rodzic</string>
@@ -383,6 +385,7 @@
         <item quantity="other">%1$d wybranych</item>
     </plurals>
     <string name="message_messages_deleted">Wiadomości zostały usunięte</string>
+    <string name="message_messages_restored">Wiadomości przywrócone</string>
     <string name="message_mailbox_chooser_title">Wybierz skrzynkę</string>
     <string name="message_incognito_mode_on">Tryb incognito jest włączony</string>
     <string name="message_incognito_description">Dzięki trybowi incognito nadawca nie zobaczy, że przeczytałeś tę wiadomość</string>
@@ -849,13 +852,16 @@
     <string name="auth_description">Rodzicu, musimy mieć pewność, że Twój adres e-mail został powiązany z prawidłowym kontem ucznia. W celu autoryzacji konta podaj numer PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt; w polu poniżej</string>
     <string name="auth_button_skip">Na razie pomiń</string>
     <!--Captcha-->
-    <string name="captcha_dialog_title">Trwa weryfikacja. Czekaj…</string>
+    <string name="captcha_dialog_title">Strona dziennika VULCAN wymaga weryfikacji</string>
+    <string name="captcha_dialog_description"><b>Dlaczego to widzę?</b>\nStrona internetowa dziennika, z której Wulkanowy pobiera dane, wyświetla ten sam ekran jak powyżej, więc Wulkanowy musi również ją pokazać, aby móc pobrać dane z tej witryny. Nie da się tego obejść</string>
     <string name="captcha_verified_message">Pomyślnie zweryfikowano</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_invalid_device_datetime">Wystąpił błąd. Sprawdź poprawność daty w urządzeniu</string>
+    <string name="error_account_inactive">Konto jest nieaktywne. Spróbuj zalogować się ponownie</string>
     <string name="error_timeout">Nie udało się połączyć z dziennikiem. Serwery mogą być przeciążone. Spróbuj ponownie później</string>
     <string name="error_login_failed">Ładowanie danych nie powiodło się. Spróbuj ponownie później</string>
+    <string name="error_password_invalid">Twoje hasło wygasło lub zostało zmienione. Zaloguj się ponownie</string>
     <string name="error_password_change_required">Wymagana zmiana hasła do dziennika</string>
     <string name="error_service_unavailable">Trwa przerwa techniczna dziennika UONET+. Spróbuj ponownie później</string>
     <string name="error_unknown_uonet">Nieznany błąd dziennika UONET+. Spróbuj ponownie później</string>
@@ -865,4 +871,9 @@
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w trybie innym niż Mobilne API</string>
     <string name="error_field_required">To pole jest wymagane</string>
+    <!-- Mute system -->
+    <string name="message_mute">Wycisz</string>
+    <string name="message_unmute">Wyłącz wyciszenie</string>
+    <string name="message_mute_success">Wyciszyleś tego użytkownika</string>
+    <string name="message_unmute_success">Wyłączyłeś wyciszenie tego użytkownika</string>
 </resources>

@@ -1,5 +1,7 @@
 package io.github.wulkanowy.data.repositories
 
+import androidx.room.withTransaction
+import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.dao.AttendanceSummaryDao
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
@@ -20,6 +22,7 @@ class AttendanceSummaryRepository @Inject constructor(
     private val attendanceDb: AttendanceSummaryDao,
     private val sdk: Sdk,
     private val refreshHelper: AutoRefreshHelper,
+    private val appDatabase: AppDatabase,
 ) {
 
     private val saveFetchResultMutex = Mutex()
@@ -46,8 +49,10 @@ class AttendanceSummaryRepository @Inject constructor(
                 .mapToEntities(semester, subjectId)
         },
         saveFetchResult = { old, new ->
-            attendanceDb.deleteAll(old uniqueSubtract new)
-            attendanceDb.insertAll(new uniqueSubtract old)
+            appDatabase.withTransaction {
+                attendanceDb.deleteAll(old uniqueSubtract new)
+                attendanceDb.insertAll(new uniqueSubtract old)
+            }
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester))
         }
     )

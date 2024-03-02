@@ -9,11 +9,17 @@ import io.github.wulkanowy.getSemesterEntity
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.SpyK
+import io.mockk.just
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -64,35 +70,42 @@ class ExamRemoteTest {
             flowOf(remoteList.mapToEntities(semester)),
             flowOf(remoteList.mapToEntities(semester))
         )
-        coEvery { examDb.insertAll(any()) } returns listOf(1, 2, 3)
-        coEvery { examDb.deleteAll(any()) } just Runs
+        coEvery { examDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         // execute
-        val res = runBlocking { examRepository.getExams(student, semester, startDate, endDate, true).toFirstResult() }
+        val res = runBlocking {
+            examRepository.getExams(student, semester, startDate, endDate, true).toFirstResult()
+        }
 
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(2, res.dataOrNull?.size)
         coVerify { sdk.getExams(startDate, realEndDate) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
-        coVerify { examDb.insertAll(match { it.isEmpty() }) }
-        coVerify { examDb.deleteAll(match { it.isEmpty() }) }
+        coVerify { examDb.removeOldAndSaveNew(emptyList(), emptyList()) }
     }
 
     @Test
-    fun `force refresh with more items in remote`() {
+    fun `force refresh with more items in remote`() = runTest {
         // prepare
         coEvery { sdk.getExams(startDate, realEndDate) } returns remoteList
         coEvery { examDb.loadAll(1, 1, startDate, realEndDate) } returnsMany listOf(
             flowOf(remoteList.dropLast(1).mapToEntities(semester)),
-            flowOf(remoteList.dropLast(1).mapToEntities(semester)), // after fetch end before save result
+            flowOf(
+                remoteList.dropLast(1).mapToEntities(semester)
+            ), // after fetch end before save result
             flowOf(remoteList.mapToEntities(semester))
         )
-        coEvery { examDb.insertAll(any()) } returns listOf(1, 2, 3)
-        coEvery { examDb.deleteAll(any()) } just Runs
+        coEvery { examDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         // execute
-        val res = runBlocking { examRepository.getExams(student, semester, startDate, endDate, true).toFirstResult() }
+        val res = examRepository.getExams(
+            student = student,
+            semester = semester,
+            start = startDate,
+            end = endDate,
+            forceRefresh = true,
+        ).toFirstResult()
 
         // verify
         assertEquals(null, res.errorOrNull)
@@ -100,15 +113,17 @@ class ExamRemoteTest {
         coVerify { sdk.getExams(startDate, realEndDate) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
         coVerify {
-            examDb.insertAll(match {
-                it.size == 1 && it[0] == remoteList.mapToEntities(semester)[1]
-            })
+            examDb.removeOldAndSaveNew(
+                oldItems = emptyList(),
+                newItems = match {
+                    it.size == 1 && it[0] == remoteList.mapToEntities(semester)[1]
+                },
+            )
         }
-        coVerify { examDb.deleteAll(match { it.isEmpty() }) }
     }
 
     @Test
-    fun `force refresh with more items in local`() {
+    fun `force refresh with more items in local`() = runTest {
         // prepare
         coEvery { sdk.getExams(startDate, realEndDate) } returns remoteList.dropLast(1)
         coEvery { examDb.loadAll(1, 1, startDate, realEndDate) } returnsMany listOf(
@@ -116,22 +131,27 @@ class ExamRemoteTest {
             flowOf(remoteList.mapToEntities(semester)), // after fetch end before save result
             flowOf(remoteList.dropLast(1).mapToEntities(semester))
         )
-        coEvery { examDb.insertAll(any()) } returns listOf(1, 2, 3)
-        coEvery { examDb.deleteAll(any()) } just Runs
+        coEvery { examDb.removeOldAndSaveNew(any(), any()) } just Runs
 
         // execute
-        val res = runBlocking { examRepository.getExams(student, semester, startDate, endDate, true).toFirstResult() }
+        val res = examRepository.getExams(
+            student = student,
+            semester = semester,
+            start = startDate,
+            end = endDate,
+            forceRefresh = true,
+        ).toFirstResult()
 
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(1, res.dataOrNull?.size)
         coVerify { sdk.getExams(startDate, realEndDate) }
         coVerify { examDb.loadAll(1, 1, startDate, realEndDate) }
-        coVerify { examDb.insertAll(match { it.isEmpty() }) }
         coVerify {
-            examDb.deleteAll(match {
-                it.size == 1 && it[0] == remoteList.mapToEntities(semester)[1]
-            })
+            examDb.removeOldAndSaveNew(
+                oldItems = match { it.size == 1 && it[0] == remoteList.mapToEntities(semester)[1] },
+                newItems = emptyList()
+            )
         }
     }
 

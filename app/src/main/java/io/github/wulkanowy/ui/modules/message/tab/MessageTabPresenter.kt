@@ -4,6 +4,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.data.db.entities.Message
+import io.github.wulkanowy.data.db.entities.MessageWithMutedAuthor
 import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.repositories.MessageRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
@@ -39,7 +40,7 @@ class MessageTabPresenter @Inject constructor(
     private var mailboxes: List<Mailbox> = emptyList()
     private var selectedMailbox: Mailbox? = null
 
-    private var messages = emptyList<Message>()
+    private var messages = emptyList<MessageWithMutedAuthor>()
 
     private val searchChannel = Channel<String>()
 
@@ -120,8 +121,27 @@ class MessageTabPresenter @Inject constructor(
         return true
     }
 
+    fun onActionModeSelectRestore() {
+        Timber.i("Restore ${messagesToDelete.size} messages")
+        val messageList = messagesToDelete.toList()
+
+        presenterScope.launch {
+            view?.run {
+                showProgress(true)
+                showContent(false)
+                showActionMode(false)
+            }
+            runCatching {
+                val student = studentRepository.getCurrentStudent(true)
+                messageRepository.restoreMessages(student, selectedMailbox, messageList)
+            }
+                .onFailure(errorHandler::dispatch)
+                .onSuccess { view?.showMessage(R.string.message_messages_restored) }
+        }
+    }
+
     fun onActionModeSelectDelete() {
-        Timber.i("Delete ${messagesToDelete.size} messages)")
+        Timber.i("Delete ${messagesToDelete.size} messages")
         val messageList = messagesToDelete.toList()
 
         presenterScope.launch {
@@ -133,7 +153,7 @@ class MessageTabPresenter @Inject constructor(
 
             runCatching {
                 val student = studentRepository.getCurrentStudent(true)
-                messageRepository.deleteMessages(student, selectedMailbox, messageList)
+                messageRepository.deleteMessages(student, messageList)
             }
                 .onFailure(errorHandler::dispatch)
                 .onSuccess { view?.showMessage(R.string.message_messages_deleted) }
@@ -141,7 +161,7 @@ class MessageTabPresenter @Inject constructor(
     }
 
     fun onActionModeSelectCheckAll() {
-        val messagesToSelect = getFilteredData()
+        val messagesToSelect = getFilteredData().map { it.message }
         val isAllSelected = messagesToDelete.containsAll(messagesToSelect)
 
         if (isAllSelected) {
@@ -188,7 +208,7 @@ class MessageTabPresenter @Inject constructor(
                 view?.showActionMode(false)
             }
 
-            val filteredData = getFilteredData()
+            val filteredData = getFilteredData().map { it.message }
 
             view?.run {
                 updateActionModeTitle(messagesToDelete.size)
@@ -320,25 +340,31 @@ class MessageTabPresenter @Inject constructor(
         }
     }
 
-    private fun getFilteredData(): List<Message> {
+    private fun getFilteredData(): List<MessageWithMutedAuthor> {
         if (lastSearchQuery.trim().isEmpty()) {
-            val sortedMessages = messages.sortedByDescending { it.date }
+            val sortedMessages = messages.sortedByDescending { it.message.date }
             return when {
-                (onlyUnread == true) && onlyWithAttachments -> sortedMessages.filter { it.unread == onlyUnread && it.hasAttachments == onlyWithAttachments }
-                (onlyUnread == true) -> sortedMessages.filter { it.unread == onlyUnread }
-                onlyWithAttachments -> sortedMessages.filter { it.hasAttachments == onlyWithAttachments }
+                (onlyUnread == true) && onlyWithAttachments -> sortedMessages.filter {
+                    it.message.unread == onlyUnread && it.message.hasAttachments == onlyWithAttachments
+                }
+
+                (onlyUnread == true) -> sortedMessages.filter { it.message.unread == onlyUnread }
+                onlyWithAttachments -> sortedMessages.filter { it.message.hasAttachments == onlyWithAttachments }
                 else -> sortedMessages
             }
         } else {
             val sortedMessages = messages
-                .map { it to calculateMatchRatio(it, lastSearchQuery) }
-                .sortedWith(compareBy<Pair<Message, Int>> { -it.second }.thenByDescending { it.first.date })
+                .map { it to calculateMatchRatio(it.message, lastSearchQuery) }
+                .sortedWith(compareBy<Pair<MessageWithMutedAuthor, Int>> { -it.second }.thenByDescending { it.first.message.date })
                 .filter { it.second > 6000 }
                 .map { it.first }
             return when {
-                (onlyUnread == true) && onlyWithAttachments -> sortedMessages.filter { it.unread == onlyUnread && it.hasAttachments == onlyWithAttachments }
-                (onlyUnread == true) -> sortedMessages.filter { it.unread == onlyUnread }
-                onlyWithAttachments -> sortedMessages.filter { it.hasAttachments == onlyWithAttachments }
+                (onlyUnread == true) && onlyWithAttachments -> sortedMessages.filter {
+                    it.message.unread == onlyUnread && it.message.hasAttachments == onlyWithAttachments
+                }
+
+                (onlyUnread == true) -> sortedMessages.filter { it.message.unread == onlyUnread }
+                onlyWithAttachments -> sortedMessages.filter { it.message.hasAttachments == onlyWithAttachments }
                 else -> sortedMessages
             }
         }
@@ -367,8 +393,9 @@ class MessageTabPresenter @Inject constructor(
 
             addAll(data.map { message ->
                 MessageTabDataItem.MessageItem(
-                    message = message,
-                    isSelected = messagesToDelete.any { it.messageGlobalKey == message.messageGlobalKey },
+                    message = message.message,
+                    isMuted = message.mutedMessageSender != null,
+                    isSelected = messagesToDelete.any { it.messageGlobalKey == message.message.messageGlobalKey },
                     isActionMode = isActionMode
                 )
             })

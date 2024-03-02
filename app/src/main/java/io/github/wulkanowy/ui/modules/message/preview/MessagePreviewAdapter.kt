@@ -50,12 +50,15 @@ class MessagePreviewAdapter @Inject constructor() :
             ViewType.MESSAGE.id -> MessageViewHolder(
                 ItemMessagePreviewBinding.inflate(inflater, parent, false)
             )
+
             ViewType.DIVIDER.id -> DividerViewHolder(
                 ItemMessageDividerBinding.inflate(inflater, parent, false)
             )
+
             ViewType.ATTACHMENT.id -> AttachmentViewHolder(
                 ItemMessageAttachmentBinding.inflate(inflater, parent, false)
             )
+
             else -> throw IllegalStateException()
         }
     }
@@ -66,6 +69,7 @@ class MessagePreviewAdapter @Inject constructor() :
                 holder,
                 requireNotNull(messageWithAttachment).message
             )
+
             is AttachmentViewHolder -> bindAttachment(
                 holder,
                 requireNotNull(messageWithAttachment).attachments[position - 2]
@@ -82,9 +86,11 @@ class MessagePreviewAdapter @Inject constructor() :
             recipientCount > 1 -> {
                 context.getString(R.string.message_read_by, message.readBy, recipientCount)
             }
+
             message.readBy == 1 || (isReceived && !message.unread) -> {
                 context.getString(R.string.message_read, context.getString(R.string.all_yes))
             }
+
             else -> context.getString(R.string.message_read, context.getString(R.string.all_no))
         }
 

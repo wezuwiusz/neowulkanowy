@@ -45,9 +45,10 @@ class SubjectRepository @Inject constructor(
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
-            subjectDao.deleteAll(old uniqueSubtract new)
-            subjectDao.insertAll(new uniqueSubtract old)
-
+            subjectDao.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = new uniqueSubtract old
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester))
         }
     )

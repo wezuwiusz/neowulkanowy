@@ -14,6 +14,7 @@ import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
+import io.github.wulkanowy.sdk.scrapper.login.InvalidSymbolException
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.LoginErrorHandler
@@ -204,6 +205,9 @@ class LoginFormPresenter @Inject constructor(
             }
             .onResourceError {
                 loginErrorHandler.dispatch(it)
+                if (it is InvalidSymbolException) {
+                    loginErrorHandler.showDefaultMessage(it)
+                }
                 lastError = it
                 view?.showContact(true)
                 analytics.logEvent(

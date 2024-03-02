@@ -1,7 +1,11 @@
-Wersja 2.4.2
+Wersja 2.5.0
 
-- naprawiliśmy crash przy przełączaniu uczniów, motywów i języków
-- naprawiliśmy crash przy dodawaniu dodatkowych lekcji
-- naprawiliśmy obsługę błędów widżetach
+— dodaliśmy wyświetlanie ogłoszeń
+— dodaliśmy opcję przywracania wiadomości z kosza
+— dodaliśmy opcję wyciszania nadawców wiadomości
+— naprawiliśmy opcjonalne liczenie średniej arytmetycznej, kiedy brak ocen z wagą w drugim semestrze
+— usprawniliśmy ładowanie frekwencji i planu lekcji
+— naprawiliśmy usprawiedliwianie nieobecności i autoryzację u użytkowników eduOne
+— zmieniliśmy komunikat o zmienionym haśle
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

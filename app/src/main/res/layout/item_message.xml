@@ -81,9 +81,9 @@
 
     <ImageView
         android:id="@+id/messageItemUnreadIndicator"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:src="@drawable/ic_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_circle_notification"
         app:layout_constraintBottom_toBottomOf="@id/messageItemDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/messageItemDate"

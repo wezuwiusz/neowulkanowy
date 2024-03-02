@@ -6,6 +6,7 @@ sealed class MessageTabDataItem(val viewType: MessageItemViewType) {
 
     data class MessageItem(
         val message: Message,
+        val isMuted: Boolean,
         val isSelected: Boolean,
         val isActionMode: Boolean
     ) : MessageTabDataItem(MessageItemViewType.MESSAGE)

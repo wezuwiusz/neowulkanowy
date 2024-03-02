@@ -45,9 +45,10 @@ class TeacherRepository @Inject constructor(
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
-            teacherDb.deleteAll(old uniqueSubtract new)
-            teacherDb.insertAll(new uniqueSubtract old)
-
+            teacherDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = new uniqueSubtract old,
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester))
         }
     )

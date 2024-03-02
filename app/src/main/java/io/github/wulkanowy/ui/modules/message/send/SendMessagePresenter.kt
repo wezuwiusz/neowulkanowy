@@ -203,7 +203,7 @@ class SendMessagePresenter @Inject constructor(
                 subject = subject,
                 content = content,
                 recipients = recipients,
-                mailboxId = mailbox.globalKey,
+                mailbox = mailbox,
             )
         }.logResourceStatus("sending message").onEach {
             when (it) {

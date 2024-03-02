@@ -98,8 +98,8 @@
     <string name="main_log_in">Войти</string>
     <string name="main_session_expired">Сеанс истёк</string>
     <string name="main_session_relogin">Сеанс истёк, авторизуйтесь снова</string>
-    <string name="main_expired_credentials_description">Your account password has been changed. You need to log in to Wulkanowy again</string>
-    <string name="main_expired_credentials_title">Password changed</string>
+    <string name="main_expired_credentials_title">Password has expired or been changed</string>
+    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to Wulkanowy again</string>
     <string name="main_support_title">Поддержка приложения</string>
     <string name="main_support_description">Вам нравится это приложение? Поддержите его разработку, включив неинвазивную рекламу, которую можно отключить в любое время</string>
     <string name="main_support_positive">Включить рекламу</string>
@@ -336,8 +336,10 @@
     <string name="message_forward">Переслать</string>
     <string name="message_select_all">Выбрать все</string>
     <string name="message_unselect_all">Отменить выбор</string>
+    <string name="message_restore_from_trash">Restore from trash</string>
     <string name="message_move_to_trash">Перенести в корзину</string>
     <string name="message_delete_forever">Удалить навсегда</string>
+    <string name="message_restore_success">Message restored successfully</string>
     <string name="message_delete_success">Сообщение успешно удалено</string>
     <string name="message_mailbox_type_student">ученик</string>
     <string name="message_mailbox_type_parent">родитель</string>
@@ -383,6 +385,7 @@
         <item quantity="other">%1$d выбрано</item>
     </plurals>
     <string name="message_messages_deleted">Сообщение удалено</string>
+    <string name="message_messages_restored">Messages restored</string>
     <string name="message_mailbox_chooser_title">Выбрать почтовый ящик</string>
     <string name="message_incognito_mode_on">Incognito mode is on</string>
     <string name="message_incognito_description">Thanks to incognito mode sender is not notified when you read the message</string>
@@ -849,13 +852,16 @@
     <string name="auth_description">Для работы приложения нам необходимо подтвердить вашу личность. Введите PESEL учащегося &lt;b&gt;%1$s&lt;/b&gt; в поле ниже</string>
     <string name="auth_button_skip">Пропустить сейчас</string>
     <!--Captcha-->
-    <string name="captcha_dialog_title">Verification is in progress. Wait…</string>
+    <string name="captcha_dialog_title">VULCAN\'s website requires verification</string>
+    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Verified successfully</string>
     <!--Errors-->
     <string name="error_no_internet">Интернет-соединение отсутствует</string>
     <string name="error_invalid_device_datetime">Произошла ошибка. Проверьте время на вашем устройстве</string>
+    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Не удалось подключиться к дневнику. Возможно, сервера перегружены, повторите попытку позже</string>
     <string name="error_login_failed">Не удалось загрузить данные, повторите попытку позже</string>
+    <string name="error_password_invalid">Your password has expired or been changed. Please log in again</string>
     <string name="error_password_change_required">Необходимо изменить пароль дневника</string>
     <string name="error_service_unavailable">UONET+ проводит техническое обслуживание, повторите попытку позже</string>
     <string name="error_unknown_uonet">Неизвестная ошибка дневника UONET+, повторите попытку позже</string>
@@ -865,4 +871,9 @@
     <string name="error_feature_disabled">Функция отключена вашей школой</string>
     <string name="error_feature_not_available">Функция недоступна в режиме Mobile API. Воспользуйтесь другим режимом</string>
     <string name="error_field_required">Это поле обязательно</string>
+    <!-- Mute system -->
+    <string name="message_mute">Mute</string>
+    <string name="message_unmute">Unmute</string>
+    <string name="message_mute_success">You have muted this user</string>
+    <string name="message_unmute_success">You have unmuted this user</string>
 </resources>

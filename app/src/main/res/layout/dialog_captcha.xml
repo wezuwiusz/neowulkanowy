@@ -7,15 +7,18 @@
     tools:context=".ui.modules.captcha.CaptchaDialog">
 
     <TextView
+        android:id="@+id/captcha_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:gravity="center_vertical"
+        android:paddingVertical="10dp"
         android:text="@string/captcha_dialog_title"
         app:layout_constraintBottom_toBottomOf="@id/captcha_close"
         app:layout_constraintEnd_toStartOf="@id/captcha_refresh"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/captcha_refresh"
@@ -41,11 +44,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/captcha_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="captcha_title,captcha_close,captcha_refresh" />
+
     <WebView
         android:id="@+id/captcha_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/captcha_description"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintTop_toBottomOf="@id/captcha_toolbar" />
+
+    <TextView
+        android:id="@+id/captcha_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:text="@string/captcha_dialog_description"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/captcha_close" />
+        app:layout_constraintTop_toBottomOf="@id/captcha_webview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

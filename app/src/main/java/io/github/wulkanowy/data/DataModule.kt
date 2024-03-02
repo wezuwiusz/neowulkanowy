@@ -38,17 +38,20 @@ internal class DataModule {
 
     @Singleton
     @Provides
-    fun provideSdk(chuckerInterceptor: ChuckerInterceptor, remoteConfig: RemoteConfigHelper) =
-        Sdk().apply {
-            androidVersion = android.os.Build.VERSION.RELEASE
-            buildTag = android.os.Build.MODEL
-            userAgentTemplate = remoteConfig.userAgentTemplate
-            setSimpleHttpLogger { Timber.d(it) }
-            setAdditionalCookieManager(WebkitCookieManagerProxy())
+    fun provideSdk(
+        chuckerInterceptor: ChuckerInterceptor,
+        remoteConfig: RemoteConfigHelper,
+        webkitCookieManagerProxy: WebkitCookieManagerProxy,
+    ) = Sdk().apply {
+        androidVersion = android.os.Build.VERSION.RELEASE
+        buildTag = android.os.Build.MODEL
+        userAgentTemplate = remoteConfig.userAgentTemplate
+        setSimpleHttpLogger { Timber.d(it) }
+        setAdditionalCookieManager(webkitCookieManagerProxy)
 
-            // for debug only
-            addInterceptor(chuckerInterceptor, network = true)
-        }
+        // for debug only
+        addInterceptor(chuckerInterceptor, network = true)
+    }
 
     @Singleton
     @Provides
@@ -253,6 +256,10 @@ internal class DataModule {
     @Singleton
     @Provides
     fun provideAdminMessageDao(database: AppDatabase) = database.adminMessagesDao
+
+    @Singleton
+    @Provides
+    fun provideMutesDao(database: AppDatabase) = database.mutedMessageSendersDao
 
     @Singleton
     @Provides

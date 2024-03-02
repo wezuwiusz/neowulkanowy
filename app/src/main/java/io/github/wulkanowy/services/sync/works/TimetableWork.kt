@@ -6,7 +6,6 @@ import io.github.wulkanowy.data.repositories.TimetableRepository
 import io.github.wulkanowy.data.waitForResult
 import io.github.wulkanowy.services.sync.notifications.ChangeTimetableNotification
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
-import kotlinx.coroutines.flow.first
 import java.time.LocalDate.now
 import javax.inject.Inject
 
@@ -31,10 +30,9 @@ class TimetableWork @Inject constructor(
 
         timetableRepository.getTimetableFromDatabase(
             semester = semester,
-            from = startDate,
+            start = startDate,
             end = endDate,
         )
-            .first()
             .filterNot { it.isNotified }
             .let {
                 if (it.isNotEmpty()) changeTimetableNotification.notify(it, student)

@@ -27,8 +27,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 148
-        versionName "2.4.2"
+        versionCode 149
+        versionName "2.5.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -164,8 +164,8 @@ play {
     defaultToAppBundles = false
     track = 'production'
     releaseStatus = ReleaseStatus.IN_PROGRESS
-    userFraction = 0.99d
-    updatePriority = 2
+    userFraction = 0.20d
+    updatePriority = 1
     enabled.set(false)
 }
 
@@ -187,15 +187,15 @@ huaweiPublish {
 
 ext {
     work_manager = "2.9.0"
-    android_hilt = "1.1.0"
+    android_hilt = "1.2.0"
     room = "2.6.1"
     chucker = "4.0.0"
-    mockk = "1.13.9"
+    mockk = "1.13.10"
     coroutines = "1.8.0"
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.4.1'
+    implementation 'io.github.wulkanowy:sdk:2.5.0'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
@@ -246,13 +246,13 @@ dependencies {
     implementation 'com.github.Faierbel:slf4j-timber:2.0'
     implementation 'com.github.bastienpaulfr:Treessence:1.1.2'
     implementation "com.mikepenz:aboutlibraries-core:$about_libraries"
-    implementation 'io.coil-kt:coil:2.5.0'
+    implementation 'io.coil-kt:coil:2.6.0'
     implementation "io.github.wulkanowy:AppKillerManager:3.0.1"
     implementation 'me.xdrop:fuzzywuzzy:1.4.0'
     implementation 'com.fredporciuncula:flow-preferences:1.9.1'
     implementation 'org.apache.commons:commons-text:1.11.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:32.7.2')
+    playImplementation platform('com.google.firebase:firebase-bom:32.7.3')
     playImplementation 'com.google.firebase:firebase-analytics'
     playImplementation 'com.google.firebase:firebase-messaging'
     playImplementation 'com.google.firebase:firebase-crashlytics:'

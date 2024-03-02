@@ -41,17 +41,18 @@ class SchoolAnnouncementRepository @Inject constructor(
             schoolAnnouncementDb.loadAll(student.userLoginId)
         },
         fetch = {
-            sdk.init(student)
-                .getDirectorInformation()
-                .mapToEntities(student)
+            val sdk = sdk.init(student)
+            val lastAnnouncements = sdk.getLastAnnouncements().mapToEntities(student)
+            val directorInformation = sdk.getDirectorInformation().mapToEntities(student)
+            lastAnnouncements + directorInformation
         },
         saveFetchResult = { old, new ->
-            val schoolAnnouncementsToSave = (new uniqueSubtract old).onEach {
-                if (notify) it.isNotified = false
-            }
-
-            schoolAnnouncementDb.deleteAll(old uniqueSubtract new)
-            schoolAnnouncementDb.insertAll(schoolAnnouncementsToSave)
+            schoolAnnouncementDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = (new uniqueSubtract old).onEach {
+                    if (notify) it.isNotified = false
+                },
+            )
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, student))
         }
     )

@@ -17,6 +17,8 @@ import io.github.wulkanowy.utils.FragmentLifecycleLogger
 import io.github.wulkanowy.utils.getThemeAttrColor
 import io.github.wulkanowy.utils.lifecycleAwareVariable
 import io.github.wulkanowy.utils.openInternetBrowser
+import timber.log.Timber
+import java.time.Instant
 import javax.inject.Inject
 
 abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
@@ -35,6 +37,8 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
     protected var messageAnchor: View? = null
 
     abstract var presenter: T
+
+    private var lastDialogOpenTime = mutableMapOf<String, Instant>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         inject()
@@ -70,6 +74,8 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
     }
 
     override fun showExpiredCredentialsDialog() {
+        if (!shouldShowDialog(DIALOG_ERROR_BAD_CREDENTIALS)) return
+
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.main_expired_credentials_title)
             .setMessage(R.string.main_expired_credentials_description)
@@ -83,6 +89,8 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
     }
 
     override fun showDecryptionFailedDialog() {
+        if (!shouldShowDialog(DIALOG_ERROR_DECRYPTION_FAILED)) return
+
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.main_session_expired)
             .setMessage(R.string.main_session_relogin)
@@ -118,5 +126,22 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
     //https://github.com/google/dagger/releases/tag/dagger-2.33
     protected open fun inject() {
         throw UnsupportedOperationException()
+    }
+
+    private fun shouldShowDialog(name: String): Boolean {
+        val lastOpenTime = lastDialogOpenTime[name]
+        val now = Instant.now()
+
+        if (lastOpenTime != null && now.isBefore(lastOpenTime.plusSeconds(1))) {
+            Timber.i("Dialog $name was shown less than a second ago. Skip")
+            return false
+        }
+        lastDialogOpenTime[name] = Instant.now()
+        return true
+    }
+
+    companion object {
+        private const val DIALOG_ERROR_BAD_CREDENTIALS = "dialog_error_bad_credentials"
+        private const val DIALOG_ERROR_DECRYPTION_FAILED = "dialog_error_decryption_failed"
     }
 }

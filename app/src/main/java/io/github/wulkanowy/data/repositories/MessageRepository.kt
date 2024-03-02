@@ -8,13 +8,17 @@ import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.dao.MailboxDao
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
 import io.github.wulkanowy.data.db.dao.MessagesDao
+import io.github.wulkanowy.data.db.dao.MutedMessageSendersDao
 import io.github.wulkanowy.data.db.entities.Mailbox
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
+import io.github.wulkanowy.data.db.entities.MessageWithMutedAuthor
+import io.github.wulkanowy.data.db.entities.MutedMessageSender
 import io.github.wulkanowy.data.db.entities.Recipient
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageFolder
 import io.github.wulkanowy.data.enums.MessageFolder.RECEIVED
+import io.github.wulkanowy.data.enums.MessageFolder.SENT
 import io.github.wulkanowy.data.enums.MessageFolder.TRASHED
 import io.github.wulkanowy.data.mappers.mapFromEntities
 import io.github.wulkanowy.data.mappers.mapToEntities
@@ -22,6 +26,7 @@ import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.data.onResourceError
 import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.pojos.MessageDraft
+import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.data.waitForResult
 import io.github.wulkanowy.domain.messages.GetMailboxByStudentUseCase
 import io.github.wulkanowy.sdk.Sdk
@@ -31,7 +36,6 @@ import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -42,6 +46,7 @@ import javax.inject.Singleton
 @Singleton
 class MessageRepository @Inject constructor(
     private val messagesDb: MessagesDao,
+    private val mutedMessageSendersDao: MutedMessageSendersDao,
     private val messageAttachmentDao: MessageAttachmentDao,
     private val sdk: Sdk,
     @ApplicationContext private val context: Context,
@@ -51,7 +56,6 @@ class MessageRepository @Inject constructor(
     private val mailboxDao: MailboxDao,
     private val getMailboxByStudentUseCase: GetMailboxByStudentUseCase,
 ) {
-
     private val saveFetchResultMutex = Mutex()
 
     private val messagesCacheKey = "message"
@@ -63,7 +67,7 @@ class MessageRepository @Inject constructor(
         folder: MessageFolder,
         forceRefresh: Boolean,
         notify: Boolean = false,
-    ): Flow<Resource<List<Message>>> = networkBoundResource(
+    ): Flow<Resource<List<MessageWithMutedAuthor>>> = networkBoundResource(
         mutex = saveFetchResultMutex,
         isResultEmpty = { it.isEmpty() },
         shouldFetch = {
@@ -74,8 +78,8 @@ class MessageRepository @Inject constructor(
         },
         query = {
             if (mailbox == null) {
-                messagesDb.loadAll(folder.id, student.email)
-            } else messagesDb.loadAll(mailbox.globalKey, folder.id)
+                messagesDb.loadMessagesWithMutedAuthor(folder.id, student.email)
+            } else messagesDb.loadMessagesWithMutedAuthor(mailbox.globalKey, folder.id)
         },
         fetch = {
             sdk.init(student).getMessages(
@@ -83,12 +87,15 @@ class MessageRepository @Inject constructor(
                 mailboxKey = mailbox?.globalKey,
             ).mapToEntities(student, mailbox, mailboxDao.loadAll(student.email))
         },
-        saveFetchResult = { old, new ->
-            messagesDb.deleteAll(old uniqueSubtract new)
-            messagesDb.insertAll((new uniqueSubtract old).onEach {
-                it.isNotified = !notify
-            })
-
+        saveFetchResult = { oldWithAuthors, new ->
+            val old = oldWithAuthors.map { it.message }
+            messagesDb.removeOldAndSaveNew(
+                oldItems = old uniqueSubtract new,
+                newItems = (new uniqueSubtract old).onEach {
+                    val muted = isMuted(it.correspondents)
+                    it.isNotified = !notify || muted
+                },
+            )
             refreshHelper.updateLastRefreshTimestamp(
                 getRefreshKey(messagesCacheKey, mailbox, folder)
             )
@@ -106,9 +113,7 @@ class MessageRepository @Inject constructor(
             Timber.d("Message content in db empty: ${it.message.content.isBlank()}")
             (it.message.unread && markAsRead) || it.message.content.isBlank()
         },
-        query = {
-            messagesDb.loadMessageWithAttachment(message.messageGlobalKey)
-        },
+        query = { messagesDb.loadMessageWithAttachment(message.messageGlobalKey) },
         fetch = {
             sdk.init(student).getMessageDetails(
                 messageKey = it!!.message.messageGlobalKey,
@@ -152,17 +157,30 @@ class MessageRepository @Inject constructor(
         subject: String,
         content: String,
         recipients: List<Recipient>,
-        mailboxId: String,
+        mailbox: Mailbox,
     ) {
         sdk.init(student).sendMessage(
             subject = subject,
             content = content,
             recipients = recipients.mapFromEntities(),
-            mailboxId = mailboxId,
+            mailboxId = mailbox.globalKey,
         )
+        refreshFolders(student, mailbox, listOf(SENT))
     }
 
-    suspend fun deleteMessages(student: Student, mailbox: Mailbox?, messages: List<Message>) {
+    suspend fun restoreMessages(student: Student, mailbox: Mailbox?, messages: List<Message>) {
+        sdk.init(student).restoreMessages(
+            messages = messages.map { it.messageGlobalKey },
+        )
+
+        refreshFolders(student, mailbox)
+    }
+
+    suspend fun deleteMessage(student: Student, message: Message) {
+        deleteMessages(student, listOf(message))
+    }
+
+    suspend fun deleteMessages(student: Student, messages: List<Message>) {
         val firstMessage = messages.first()
         sdk.init(student).deleteMessages(
             messages = messages.map { it.messageGlobalKey },
@@ -181,18 +199,24 @@ class MessageRepository @Inject constructor(
             }
 
             messagesDb.updateAll(deletedMessages)
-        } else messagesDb.deleteAll(messages)
-
-        getMessages(
-            student = student,
-            mailbox = mailbox,
-            folder = TRASHED,
-            forceRefresh = true,
-        ).first()
+        } else {
+            messagesDb.deleteAll(messages)
+        }
     }
 
-    suspend fun deleteMessage(student: Student, mailbox: Mailbox?, message: Message) {
-        deleteMessages(student, mailbox, listOf(message))
+    private suspend fun refreshFolders(
+        student: Student,
+        mailbox: Mailbox?,
+        folders: List<MessageFolder> = MessageFolder.entries
+    ) {
+        folders.forEach {
+            getMessages(
+                student = student,
+                mailbox = mailbox,
+                folder = it,
+                forceRefresh = true,
+            ).toFirstResult()
+        }
     }
 
     suspend fun getMailboxes(student: Student, forceRefresh: Boolean) = networkBoundResource(
@@ -236,4 +260,18 @@ class MessageRepository @Inject constructor(
             context.getString(R.string.pref_key_message_draft),
             value?.let { json.encodeToString(it) }
         )
+
+    private suspend fun isMuted(author: String): Boolean {
+        return mutedMessageSendersDao.checkMute(author)
+    }
+
+    suspend fun muteMessage(author: String) {
+        if (isMuted(author)) return
+        mutedMessageSendersDao.insertMute(MutedMessageSender(author))
+    }
+
+    suspend fun unmuteMessage(author: String) {
+        if (!isMuted(author)) return
+        mutedMessageSendersDao.deleteMute(author)
+    }
 }

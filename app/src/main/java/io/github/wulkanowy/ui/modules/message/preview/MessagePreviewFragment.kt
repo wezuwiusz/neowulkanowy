@@ -44,17 +44,32 @@ class MessagePreviewFragment :
 
     private var menuForwardButton: MenuItem? = null
 
+    private var menuRestoreButton: MenuItem? = null
+
     private var menuDeleteButton: MenuItem? = null
+
+    private var menuDeleteForeverButton: MenuItem? = null
 
     private var menuShareButton: MenuItem? = null
 
     private var menuPrintButton: MenuItem? = null
+
+    private var menuMuteButton: MenuItem? = null
 
     override val titleStringId: Int
         get() = R.string.message_title
 
     override val deleteMessageSuccessString: String
         get() = getString(R.string.message_delete_success)
+
+    override val muteMessageSuccessString: String
+        get() = getString(R.string.message_mute_success)
+
+    override val unmuteMessageSuccessString: String
+        get() = getString(R.string.message_unmute_success)
+
+    override val restoreMessageSuccessString: String
+        get() = getString(R.string.message_restore_success)
 
     override val messageNoSubjectString: String
         get() = getString(R.string.message_no_subject)
@@ -103,9 +118,12 @@ class MessagePreviewFragment :
         inflater.inflate(R.menu.action_menu_message_preview, menu)
         menuReplyButton = menu.findItem(R.id.messagePreviewMenuReply)
         menuForwardButton = menu.findItem(R.id.messagePreviewMenuForward)
+        menuRestoreButton = menu.findItem(R.id.messagePreviewMenuRestore)
         menuDeleteButton = menu.findItem(R.id.messagePreviewMenuDelete)
+        menuDeleteForeverButton = menu.findItem(R.id.messagePreviewMenuDeleteForever)
         menuShareButton = menu.findItem(R.id.messagePreviewMenuShare)
         menuPrintButton = menu.findItem(R.id.messagePreviewMenuPrint)
+        menuMuteButton = menu.findItem(R.id.messagePreviewMenuMute)
         presenter.onCreateOptionsMenu()
 
         menu.findItem(R.id.mainMenuAccount).isVisible = false
@@ -115,9 +133,12 @@ class MessagePreviewFragment :
         return when (item.itemId) {
             R.id.messagePreviewMenuReply -> presenter.onReply()
             R.id.messagePreviewMenuForward -> presenter.onForward()
+            R.id.messagePreviewMenuRestore -> presenter.onMessageRestore()
             R.id.messagePreviewMenuDelete -> presenter.onMessageDelete()
+            R.id.messagePreviewMenuDeleteForever -> presenter.onMessageDelete()
             R.id.messagePreviewMenuShare -> presenter.onShare()
             R.id.messagePreviewMenuPrint -> presenter.onPrint()
+            R.id.messagePreviewMenuMute -> presenter.onMute()
             else -> false
         }
     }
@@ -129,6 +150,11 @@ class MessagePreviewFragment :
         }
     }
 
+    override fun updateMuteToggleButton(isMuted: Boolean) {
+        menuMuteButton?.setTitle(if (isMuted) R.string.message_unmute else R.string.message_mute)
+
+    }
+
     override fun showProgress(show: Boolean) {
         binding.messagePreviewProgress.visibility = if (show) VISIBLE else GONE
     }
@@ -137,20 +163,15 @@ class MessagePreviewFragment :
         binding.messagePreviewRecycler.visibility = if (show) VISIBLE else GONE
     }
 
-    override fun showOptions(show: Boolean, isReplayable: Boolean) {
-        menuReplyButton?.isVisible = isReplayable
+    override fun showOptions(show: Boolean, isReplayable: Boolean, isRestorable: Boolean) {
+        menuReplyButton?.isVisible = show && isReplayable
         menuForwardButton?.isVisible = show
-        menuDeleteButton?.isVisible = show
+        menuRestoreButton?.isVisible = show && isRestorable
+        menuDeleteButton?.isVisible = show && !isRestorable
+        menuDeleteForeverButton?.isVisible = show && isRestorable
         menuShareButton?.isVisible = show
         menuPrintButton?.isVisible = show
-    }
-
-    override fun setDeletedOptionsLabels() {
-        menuDeleteButton?.setTitle(R.string.message_delete_forever)
-    }
-
-    override fun setNotDeletedOptionsLabels() {
-        menuDeleteButton?.setTitle(R.string.message_move_to_trash)
+        menuMuteButton?.isVisible = show && isReplayable
     }
 
     override fun showErrorView(show: Boolean) {
@@ -213,7 +234,7 @@ class MessagePreviewFragment :
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable(MESSAGE_ID_KEY, presenter.message)
+        outState.putSerializable(MESSAGE_ID_KEY, presenter.messageWithAttachments)
         super.onSaveInstanceState(outState)
     }
 

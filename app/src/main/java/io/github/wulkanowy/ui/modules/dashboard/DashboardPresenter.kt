@@ -304,6 +304,7 @@ class DashboardPresenter @Inject constructor(
                     forceRefresh = forceRefresh
                 )
             }
+                .mapResourceData { it.map { messageWithAuthor -> messageWithAuthor.message } }
                 .onResourceError { errorHandler.dispatch(it) }
                 .takeIf { DashboardItem.Tile.MESSAGES in selectedTiles } ?: flowSuccess
 
@@ -438,7 +439,7 @@ class DashboardPresenter @Inject constructor(
     private fun loadLessons(student: Student, forceRefresh: Boolean) {
         flatResourceFlow {
             val semester = semesterRepository.getCurrentSemester(student)
-            val date = when (isStudentHasLessonsOnWeekendUseCase(student, semester)) {
+            val date = when (isStudentHasLessonsOnWeekendUseCase(semester)) {
                 true -> LocalDate.now()
                 else -> LocalDate.now().nextOrSameSchoolDay
             }

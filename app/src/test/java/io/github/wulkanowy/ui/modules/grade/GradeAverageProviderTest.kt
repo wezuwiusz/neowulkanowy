@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -112,8 +113,8 @@ class GradeAverageProviderTest {
 
     private val secondGradeWithModifier = listOf(
         // avg: 3.375
-        getGrade(24, "Język polski", 3.0, -0.50),
-        getGrade(24, "Język polski", 4.0, 0.25)
+        getGrade(24, "Język polski", 3.0, -0.50, entry = "3-"),
+        getGrade(24, "Język polski", 4.0, 0.25, entry = "4+")
     )
 
     private val secondSummariesWithModifier = listOf(
@@ -122,8 +123,8 @@ class GradeAverageProviderTest {
 
     private val noWeightGrades = listOf(
         // standard: 0.0, arithmetic: 4.0
-        getGrade(22, "Matematyka", 5.0, 0.0, 0.0),
-        getGrade(22, "Matematyka", 3.0, 0.0, 0.0),
+        getGrade(22, "Matematyka", 5.0, 0.0, 0.0, "5"),
+        getGrade(22, "Matematyka", 3.0, 0.0, 0.0, "3"),
         getGrade(22, "Matematyka", 1.0, 0.0, 0.0, "np.")
     )
 
@@ -132,7 +133,7 @@ class GradeAverageProviderTest {
     )
 
     private val noWeightGradesArithmeticSummary = listOf(
-        getSummary(23, "Matematyka", 4.0)
+        getSummary(23, "Matematyka", .0)
     )
 
     @Before
@@ -203,6 +204,51 @@ class GradeAverageProviderTest {
                 true
             ).getResult()
         }
+
+        assertEquals(
+            4.0,
+            items.single { it.subject == "Matematyka" }.average,
+            .0
+        ) // from summary: 4,0
+    }
+
+    @Test
+    fun `calc current semester arithmetic average with no weights in second semester`() = runTest {
+        every { preferencesRepository.gradeAverageForceCalcFlow } returns flowOf(false)
+        every { preferencesRepository.isOptionalArithmeticAverageFlow } returns flowOf(true)
+        every { preferencesRepository.gradeAverageModeFlow } returns flowOf(GradeAverageMode.BOTH_SEMESTERS)
+        coEvery {
+            gradeRepository.getGrades(
+                student = student,
+                semester = semesters[1],
+                forceRefresh = true,
+            )
+        } returns resourceFlow {
+            Triple(
+                first = noWeightGrades,
+                second = noWeightGradesArithmeticSummary,
+                third = emptyList(),
+            )
+        }
+        coEvery {
+            gradeRepository.getGrades(
+                student = student,
+                semester = semesters[2],
+                forceRefresh = true,
+            )
+        } returns resourceFlow {
+            Triple(
+                first = noWeightGrades,
+                second = noWeightGradesArithmeticSummary,
+                third = emptyList(),
+            )
+        }
+
+        val items = gradeAverageProvider.getGradesDetailsWithAverage(
+            student = student,
+            semesterId = semesters[2].semesterId,
+            forceRefresh = true
+        ).getResult()
 
         assertEquals(
             4.0,

@@ -9,6 +9,12 @@ interface MessagePreviewView : BaseView {
 
     val deleteMessageSuccessString: String
 
+    val muteMessageSuccessString: String
+
+    val unmuteMessageSuccessString: String
+
+    val restoreMessageSuccessString: String
+
     val messageNoSubjectString: String
 
     val printHTML: String
@@ -18,6 +24,8 @@ interface MessagePreviewView : BaseView {
     fun initView()
 
     fun setMessageWithAttachment(item: MessageWithAttachment)
+
+    fun updateMuteToggleButton(isMuted: Boolean)
 
     fun showProgress(show: Boolean)
 
@@ -29,11 +37,7 @@ interface MessagePreviewView : BaseView {
 
     fun setErrorRetryCallback(callback: () -> Unit)
 
-    fun showOptions(show: Boolean, isReplayable: Boolean)
-
-    fun setDeletedOptionsLabels()
-
-    fun setNotDeletedOptionsLabels()
+    fun showOptions(show: Boolean, isReplayable: Boolean, isRestorable: Boolean)
 
     fun openMessageReply(message: Message?)
 
