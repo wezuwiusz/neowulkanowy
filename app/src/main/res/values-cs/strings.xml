@@ -98,8 +98,8 @@
     <string name="main_log_in">Přihlásit se</string>
     <string name="main_session_expired">Relace vypršela</string>
     <string name="main_session_relogin">Relace vypršela. Přihlaste se prosím znovu</string>
-    <string name="main_expired_credentials_description">Heslo k vašemu účtu bylo změněno. Musíte se znovu přihlásit do Wulkanového</string>
-    <string name="main_expired_credentials_title">Heslo bylo změněno</string>
+    <string name="main_expired_credentials_title">Password has expired or been changed</string>
+    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to Wulkanowy again</string>
     <string name="main_support_title">Podpora aplikace</string>
     <string name="main_support_description">Líbí se Vám tato aplikace? Podpořte její vývoj tím, že povolíte neinvazivní reklamy, které můžete kdykoliv vypnout</string>
     <string name="main_support_positive">Zapnout reklamy</string>
@@ -860,6 +860,7 @@
     <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Nelze se připojit ke deníku. Servery mohou být přetíženy. Prosím zkuste to znovu později</string>
     <string name="error_login_failed">Načítání dat se nezdařilo. Prosím zkuste to znovu později</string>
+    <string name="error_password_invalid">Your password has expired or been changed. Please log in again</string>
     <string name="error_password_change_required">Je vyžadována změna hesla pro deník</string>
     <string name="error_service_unavailable">Probíhá údržba deníku UONET+. Zkuste to později znovu</string>
     <string name="error_unknown_uonet">Neznámá chyba deniku UONET+. Prosím zkuste to znovu později</string>

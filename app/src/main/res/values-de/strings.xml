@@ -98,8 +98,8 @@
     <string name="main_log_in">Anmelden</string>
     <string name="main_session_expired">Die Sitzung ist abgelaufen</string>
     <string name="main_session_relogin">Die Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein</string>
-    <string name="main_expired_credentials_description">Your account password has been changed. You need to log in to Wulkanowy again</string>
-    <string name="main_expired_credentials_title">Password changed</string>
+    <string name="main_expired_credentials_title">Password has expired or been changed</string>
+    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to Wulkanowy again</string>
     <string name="main_support_title">Anwendungsunterstützung</string>
     <string name="main_support_description">Gefällt Ihnen diese App? Unterstützen Sie ihre Entwicklung, indem Sie nicht-invasive Werbung aktivieren, die Sie jederzeit deaktivieren können</string>
     <string name="main_support_positive">Werbung aktivieren</string>
@@ -766,6 +766,7 @@
     <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Registrierungsverbindung fehlgeschlagen. Server können überlastet sein. Bitte versuchen Sie es später noch einmal</string>
     <string name="error_login_failed">Das Laden der Daten ist fehlgeschlagen. Bitte versuchen Sie es später noch einmal</string>
+    <string name="error_password_invalid">Your password has expired or been changed. Please log in again</string>
     <string name="error_password_change_required">Passwortänderung für Registrierung erforderlich</string>
     <string name="error_service_unavailable">Wartung im Gange UONET + Klassenbuch. Versuchen Sie es später noch einmal</string>
     <string name="error_unknown_uonet">Unbekannter UONET + Registerfehler. Versuchen Sie es später erneut</string>

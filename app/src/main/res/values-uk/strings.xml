@@ -98,8 +98,8 @@
     <string name="main_log_in">Увійти</string>
     <string name="main_session_expired">Минув термін дії сесії</string>
     <string name="main_session_relogin">Минув термін дії сесії, авторизуйтеся знову</string>
-    <string name="main_expired_credentials_description">Пароль вашого облікового запису був змінений. Ви повинні увійти в Wulkanowy знову</string>
-    <string name="main_expired_credentials_title">Пароль змінено</string>
+    <string name="main_expired_credentials_title">Password has expired or been changed</string>
+    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to Wulkanowy again</string>
     <string name="main_support_title">Підтримка додатку</string>
     <string name="main_support_description">Вам подобається цей додаток? Підтримайте його розвиток, увімкнувши неінвазивну рекламу, яку ви можете відключити в будь-який час</string>
     <string name="main_support_positive">Увімкнути рекламу</string>
@@ -860,6 +860,7 @@
     <string name="error_account_inactive">This account is inactive. Try logging in again</string>
     <string name="error_timeout">Помилка підключення до щоденнику. Сервери можуть бути перевантажені, спробуйте пізніше</string>
     <string name="error_login_failed">Помилка завантаження даних, спробуйте пізніше</string>
+    <string name="error_password_invalid">Your password has expired or been changed. Please log in again</string>
     <string name="error_password_change_required">Необхідна зміна пароля щоденника</string>
     <string name="error_service_unavailable">UONET+ проводить технічне осблуговування, спробуйте пізніше</string>
     <string name="error_unknown_uonet">Невідома помилка щоденника UONET+, спробуйте пізніше</string>

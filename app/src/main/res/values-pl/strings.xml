@@ -98,8 +98,8 @@
     <string name="main_log_in">Zaloguj się</string>
     <string name="main_session_expired">Sesja wygasła</string>
     <string name="main_session_relogin">Sesja wygasła, zaloguj się ponownie</string>
-    <string name="main_expired_credentials_description">Hasło do Twojego konta zostało zmienione. Musisz zalogować się ponownie do Wulkanowego</string>
-    <string name="main_expired_credentials_title">Hasło zostało zmienione</string>
+    <string name="main_expired_credentials_title">Hasło wygasło lub zostało zmienione</string>
+    <string name="main_expired_credentials_description">Hasło do twojego konta wygasło lub zostało zmienione. Musisz zalogować się ponownie do Wulkanowego</string>
     <string name="main_support_title">Wparcie aplikacji</string>
     <string name="main_support_description">Podoba Ci się ta aplikacja? Wspieraj jej rozwój poprzez włączenie nieinwazyjnych reklam, które możesz wyłączyć w dowolnym momencie</string>
     <string name="main_support_positive">Włącz reklamy</string>
@@ -860,6 +860,7 @@
     <string name="error_account_inactive">Konto jest nieaktywne. Spróbuj zalogować się ponownie</string>
     <string name="error_timeout">Nie udało się połączyć z dziennikiem. Serwery mogą być przeciążone. Spróbuj ponownie później</string>
     <string name="error_login_failed">Ładowanie danych nie powiodło się. Spróbuj ponownie później</string>
+    <string name="error_password_invalid">Twoje hasło wygasło lub zostało zmienione. Zaloguj się ponownie</string>
     <string name="error_password_change_required">Wymagana zmiana hasła do dziennika</string>
     <string name="error_service_unavailable">Trwa przerwa techniczna dziennika UONET+. Spróbuj ponownie później</string>
     <string name="error_unknown_uonet">Nieznany błąd dziennika UONET+. Spróbuj ponownie później</string>
