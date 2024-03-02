@@ -9,6 +9,7 @@ import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
 import io.github.wulkanowy.sdk.scrapper.exception.ScrapperException
 import io.github.wulkanowy.sdk.scrapper.exception.ServiceUnavailableException
 import io.github.wulkanowy.sdk.scrapper.exception.VulcanException
+import io.github.wulkanowy.sdk.scrapper.login.BadCredentialsException
 import io.github.wulkanowy.sdk.scrapper.login.NotLoggedInException
 import io.github.wulkanowy.sdk.scrapper.login.PasswordChangeRequiredException
 import okhttp3.internal.http2.StreamResetException
@@ -34,6 +35,7 @@ fun Resources.getErrorString(error: Throwable): String = when (error) {
     is ServiceUnavailableException -> R.string.error_service_unavailable
     is FeatureDisabledException -> R.string.error_feature_disabled
     is FeatureNotAvailableException -> R.string.error_feature_not_available
+    is BadCredentialsException -> R.string.error_password_invalid
     is AccountInactiveException -> R.string.error_account_inactive
     is VulcanException -> R.string.error_unknown_uonet
     is ScrapperException -> R.string.error_unknown_app
