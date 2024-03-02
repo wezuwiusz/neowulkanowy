@@ -5,17 +5,21 @@ import java.net.CookiePolicy
 import java.net.CookieStore
 import java.net.HttpCookie
 import java.net.URI
+import javax.inject.Inject
+import javax.inject.Singleton
 import android.webkit.CookieManager as WebkitCookieManager
 import java.net.CookieManager as JavaCookieManager
 
-class WebkitCookieManagerProxy : JavaCookieManager(null, CookiePolicy.ACCEPT_ALL) {
+@Singleton
+class WebkitCookieManagerProxy @Inject constructor() :
+    JavaCookieManager(null, CookiePolicy.ACCEPT_ALL) {
 
-    private val webkitCookieManager: WebkitCookieManager? = getWebkitCookieManager()
+    val webkitCookieManager: WebkitCookieManager? = getCookieManager()
 
     /**
      * @see [https://stackoverflow.com/a/70354583/6695449]
      */
-    private fun getWebkitCookieManager(): WebkitCookieManager? {
+    private fun getCookieManager(): WebkitCookieManager? {
         return try {
             WebkitCookieManager.getInstance()
         } catch (e: AndroidRuntimeException) {

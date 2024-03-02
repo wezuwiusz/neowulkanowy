@@ -13,6 +13,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.DialogCaptchaBinding
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.ui.base.BaseDialogFragment
+import io.github.wulkanowy.utils.WebkitCookieManagerProxy
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,6 +22,9 @@ class CaptchaDialog : BaseDialogFragment<DialogCaptchaBinding>() {
 
     @Inject
     lateinit var sdk: Sdk
+
+    @Inject
+    lateinit var webkitCookieManagerProxy: WebkitCookieManagerProxy
 
     private var webView: WebView? = null
 
@@ -80,6 +84,7 @@ class CaptchaDialog : BaseDialogFragment<DialogCaptchaBinding>() {
     }
 
     override fun onDestroy() {
+        webkitCookieManagerProxy.webkitCookieManager?.flush()
         webView?.destroy()
         super.onDestroy()
     }
