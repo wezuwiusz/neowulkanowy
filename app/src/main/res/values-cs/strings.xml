@@ -852,8 +852,8 @@
     <string name="auth_description">Pro provoz aplikace potřebujeme potvrdit vaši identitu. Zadejte PESEL žáka &lt;b&gt;%1$s&lt;/b&gt; v níže uvedeném poli</string>
     <string name="auth_button_skip">Zatím přeskočit</string>
     <!--Captcha-->
-    <string name="captcha_dialog_title">VULCAN\'s website requires verification</string>
-    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
+    <string name="captcha_dialog_title">Webová stránka deníku VULCAN vyžaduje ověření</string>
+    <string name="captcha_dialog_description"><b>Proč se mi to zobrazuje?</b>\nWebová stránka deníku, ze které Wulkanowy stahuje data, zobrazuje stejnou obrazovku jako výše, takže Wulkanowy ji musí také zobrazit, aby bylo možné získávat data z této stránky. Nedá se to obejít</string>
     <string name="captcha_verified_message">Úspěšně ověřeno</string>
     <!--Errors-->
     <string name="error_no_internet">Žádné internetové připojení</string>

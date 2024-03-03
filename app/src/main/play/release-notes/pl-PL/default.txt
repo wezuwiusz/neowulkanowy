@@ -1,4 +1,4 @@
-Wersja 2.5.0
+Wersja 2.5.1
 
 — dodaliśmy wyświetlanie ogłoszeń
 — dodaliśmy opcję przywracania wiadomości z kosza
