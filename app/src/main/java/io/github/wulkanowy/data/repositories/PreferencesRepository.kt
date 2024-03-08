@@ -10,6 +10,7 @@ import com.fredporciuncula.flow.preferences.Serializer
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.enums.AppTheme
+import io.github.wulkanowy.data.enums.AttendanceCalculatorSortingMode
 import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.data.enums.GradeExpandMode
 import io.github.wulkanowy.data.enums.GradeSortingMode
@@ -40,6 +41,18 @@ class PreferencesRepository @Inject constructor(
             R.string.pref_key_attendance_present,
             R.bool.pref_default_attendance_present
         )
+
+    val targetAttendanceFlow: Flow<Int>
+        get() = flowSharedPref.getInt(
+            context.getString(R.string.pref_key_attendance_target),
+            context.resources.getInteger(R.integer.pref_default_attendance_target)
+        ).asFlow()
+
+    val attendanceCalculatorSortingModeFlow: Flow<AttendanceCalculatorSortingMode>
+        get() = flowSharedPref.getString(
+            context.getString(R.string.pref_key_attendance_calculator_sorting_mode),
+            context.resources.getString(R.string.pref_default_attendance_calculator_sorting_mode)
+        ).asFlow().map(AttendanceCalculatorSortingMode::getByValue)
 
     private val gradeAverageModePref: Preference<GradeAverageMode>
         get() = getObjectFlow(

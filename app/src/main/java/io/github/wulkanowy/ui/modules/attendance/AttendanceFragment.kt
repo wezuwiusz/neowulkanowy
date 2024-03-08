@@ -14,6 +14,7 @@ import io.github.wulkanowy.data.db.entities.Attendance
 import io.github.wulkanowy.databinding.DialogExcuseBinding
 import io.github.wulkanowy.databinding.FragmentAttendanceBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.attendance.calculator.AttendanceCalculatorFragment
 import io.github.wulkanowy.ui.modules.attendance.summary.AttendanceSummaryFragment
 import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
@@ -134,6 +135,7 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.attendanceMenuSummary) presenter.onSummarySwitchSelected()
+        else if (item.itemId == R.id.attendanceMenuCalculator) presenter.onCalculatorSwitchSelected()
         else false
     }
 
@@ -251,6 +253,10 @@ class AttendanceFragment : BaseFragment<FragmentAttendanceBinding>(R.layout.frag
 
     override fun openSummaryView() {
         (activity as? MainActivity)?.pushView(AttendanceSummaryFragment.newInstance())
+    }
+
+    override fun openCalculatorView() {
+        (activity as? MainActivity)?.pushView(AttendanceCalculatorFragment.newInstance())
     }
 
     override fun startActionMode() {

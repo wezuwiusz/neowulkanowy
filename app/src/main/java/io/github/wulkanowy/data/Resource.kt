@@ -1,11 +1,16 @@
 package io.github.wulkanowy.data
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -14,8 +19,10 @@ import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
-sealed class Resource<T> {
+sealed class Resource<out T> {
 
     open class Loading<T> : Resource<T>()
 
@@ -64,6 +71,19 @@ fun <T, U> Resource<T>.mapData(block: (T) -> U) = when (this) {
     is Resource.Error -> Resource.Error(this.error)
 }
 
+inline fun <T1, T2, R> Flow<Resource<T1>>.combineWithResourceData(
+    flow: Flow<T2>,
+    crossinline block: suspend (T1, T2) -> R
+): Flow<Resource<R>> =
+    combine(flow) { resource, inject ->
+        when (resource) {
+            is Resource.Success -> Resource.Success(block(resource.data, inject))
+            is Resource.Intermediate -> Resource.Intermediate(block(resource.data, inject))
+            is Resource.Loading -> Resource.Loading()
+            is Resource.Error -> Resource.Error(resource.error)
+        }
+    }
+
 fun <T> Flow<Resource<T>>.logResourceStatus(name: String, showData: Boolean = false) = onEach {
     val description = when (it) {
         is Resource.Intermediate -> "intermediate data received" + if (showData) " (data: `${it.data}`)" else ""
@@ -74,8 +94,29 @@ fun <T> Flow<Resource<T>>.logResourceStatus(name: String, showData: Boolean = fa
     Timber.i("$name: $description")
 }
 
-fun <T, U> Flow<Resource<T>>.mapResourceData(block: (T) -> U) = map {
-    it.mapData(block)
+fun <T, U> Flow<Resource<T>>.mapResourceData(block: suspend (T) -> U) = map {
+    when (it) {
+        is Resource.Success -> Resource.Success(block(it.data))
+        is Resource.Intermediate -> Resource.Intermediate(block(it.data))
+        is Resource.Loading -> Resource.Loading()
+        is Resource.Error -> Resource.Error(it.error)
+    }
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+fun <T, U> Flow<Resource<T>>.flatMapResourceData(
+    inheritIntermediate: Boolean = true, block: suspend (T) -> Flow<Resource<U>>
+) = flatMapLatest {
+    when (it) {
+        is Resource.Success -> block(it.data)
+        is Resource.Intermediate -> block(it.data).map { newRes ->
+            if (inheritIntermediate && newRes is Resource.Success) Resource.Intermediate(newRes.data)
+            else newRes
+        }
+
+        is Resource.Loading -> flowOf(Resource.Loading())
+        is Resource.Error -> flowOf(Resource.Error(it.error))
+    }
 }
 
 fun <T> Flow<Resource<T>>.onResourceData(block: suspend (T) -> Unit) = onEach {
@@ -105,13 +146,13 @@ fun <T> Flow<Resource<T>>.onResourceSuccess(block: suspend (T) -> Unit) = onEach
     }
 }
 
-fun <T> Flow<Resource<T>>.onResourceError(block: (Throwable) -> Unit) = onEach {
+fun <T> Flow<Resource<T>>.onResourceError(block: suspend (Throwable) -> Unit) = onEach {
     if (it is Resource.Error) {
         block(it.error)
     }
 }
 
-fun <T> Flow<Resource<T>>.onResourceNotLoading(block: () -> Unit) = onEach {
+fun <T> Flow<Resource<T>>.onResourceNotLoading(block: suspend () -> Unit) = onEach {
     if (it !is Resource.Loading) {
         block()
     }
@@ -120,6 +161,55 @@ fun <T> Flow<Resource<T>>.onResourceNotLoading(block: () -> Unit) = onEach {
 suspend fun <T> Flow<Resource<T>>.toFirstResult() = filter { it !is Resource.Loading }.first()
 
 suspend fun <T> Flow<Resource<T>>.waitForResult() = takeWhile { it is Resource.Loading }.collect()
+
+// Can cause excessive amounts of `Resource.Intermediate` to be emitted. Unless that is desired,
+// use `debounceIntermediates` to alleviate this behavior.
+inline fun <reified T> combineResourceFlows(
+    flows: Iterable<Flow<Resource<T>>>,
+): Flow<Resource<List<T>>> = combine(flows) { items ->
+    var isIntermediate = false
+    val data = mutableListOf<T>()
+    for (item in items) {
+        when (item) {
+            is Resource.Success -> data.add(item.data)
+            is Resource.Intermediate -> {
+                isIntermediate = true
+                data.add(item.data)
+            }
+
+            is Resource.Loading -> return@combine Resource.Loading()
+            is Resource.Error -> continue
+        }
+    }
+    if (data.isEmpty()) {
+        // All items have to be errors for this to happen, so just return the first one.
+        // mapData is functionally useless and exists only to satisfy the type checker
+        items.first().mapData { listOf(it) }
+    } else if (isIntermediate) {
+        Resource.Intermediate(data)
+    } else {
+        Resource.Success(data)
+    }
+}
+
+@OptIn(FlowPreview::class)
+fun <T> Flow<Resource<T>>.debounceIntermediates(timeout: Duration = 5.seconds) = flow {
+    var wasIntermediate = false
+
+    emitAll(this@debounceIntermediates.debounce {
+        if (it is Resource.Intermediate) {
+            if (!wasIntermediate) {
+                wasIntermediate = true
+                Duration.ZERO
+            } else {
+                timeout
+            }
+        } else {
+            wasIntermediate = false
+            Duration.ZERO
+        }
+    })
+}
 
 inline fun <ResultType, RequestType> networkBoundResource(
     mutex: Mutex = Mutex(),

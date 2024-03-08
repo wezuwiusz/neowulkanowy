@@ -85,6 +85,25 @@
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_attendance_present"
             app:title="@string/pref_view_present" />
+        <SeekBarPreference
+            app:defaultValue="@integer/pref_default_attendance_target"
+            app:iconSpaceReserved="false"
+            android:layout="@layout/pref_target_attendance"
+            app:key="@string/pref_key_attendance_target"
+            app:title="@string/pref_attendance_target"
+            app:min="1"
+            app:updatesContinuously="true"
+            android:max="99"
+            app:showSeekBarValue="true"
+            />
+        <ListPreference
+            app:defaultValue="@string/pref_default_attendance_calculator_sorting_mode"
+            app:entries="@array/attendance_calculator_sorting_mode_entries"
+            app:entryValues="@array/attendance_calculator_sorting_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_attendance_calculator_sorting_mode"
+            app:title="@string/pref_view_attendance_calculator_sorting_mode"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory
         android:layout_height="wrap_content"

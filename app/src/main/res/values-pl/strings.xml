@@ -876,4 +876,7 @@
     <string name="message_unmute">Wyłącz wyciszenie</string>
     <string name="message_mute_success">Wyciszyleś tego użytkownika</string>
     <string name="message_unmute_success">Wyłączyłeś wyciszenie tego użytkownika</string>
+    <!-- attendance calculator -->
+    <string name="pref_attendance_target">Docelowa frekwencja (w %)</string>
+    <string name="attendance_calculator_button">Kalkulator frekwencji</string>
 </resources>

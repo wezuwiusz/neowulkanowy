@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SeekBarPreference
 import com.yariksoffice.lingver.Lingver
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
@@ -36,6 +37,15 @@ class AppearanceFragment : PreferenceFragmentCompat(),
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.scheme_preferences_appearance, rootKey)
+        val attendanceTargetPref =
+            findPreference<SeekBarPreference>(requireContext().getString(R.string.pref_key_attendance_target))!!
+        attendanceTargetPref.setOnPreferenceChangeListener { _, newValueObj ->
+            val newValue = (((newValueObj as Int).toDouble() + 2.5) / 5).toInt() * 5
+            attendanceTargetPref.value =
+                newValue.coerceIn(attendanceTargetPref.min, attendanceTargetPref.max)
+
+            false
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
