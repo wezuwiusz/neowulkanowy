@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="general_alphabetically">Alphabetically</string>
+    <string name="sort_alphabetically">Alphabetically</string>
+    <string name="sort_by_date">By date</string>
+    <string name="sort_by_average">By average</string>
+    <string name="sort_by_attendance_percentage">By attendance percentage</string>
+    <string name="sort_by_subject_attendance_balance">By subject attendance balance</string>
 
     <string-array name="startup_tab_entries" translatable="false">
         <item>@string/dashboard_title</item>
@@ -82,10 +86,10 @@
         <item>0.75</item>
     </string-array>
 
-    <string-array name="attendance_calculator_sorting_mode_entries">
-        <item>@string/general_alphabetically</item>
-        <item>By attendance percentage</item>
-        <item>By subject attendance balance</item>
+    <string-array name="attendance_calculator_sorting_mode_entries" translatable="false">
+        <item>@string/sort_alphabetically</item>
+        <item>@string/sort_by_attendance_percentage</item>
+        <item>@string/sort_by_subject_attendance_balance</item>
     </string-array>
     <string-array name="attendance_calculator_sorting_mode_values" translatable="false">
         <item>alphabetic</item>
@@ -93,10 +97,10 @@
         <item>lesson_balance</item>
     </string-array>
 
-    <string-array name="grade_sorting_mode_entries">
-        <item>@string/general_alphabetically</item>
-        <item>By date</item>
-        <item>By average</item>
+    <string-array name="grade_sorting_mode_entries" translatable="false">
+        <item>@string/sort_alphabetically</item>
+        <item>@string/sort_by_date</item>
+        <item>@string/sort_by_average</item>
     </string-array>
     <string-array name="grade_sorting_mode_values" translatable="false">
         <item>alphabetic</item>
