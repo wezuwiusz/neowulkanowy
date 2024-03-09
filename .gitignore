@@ -68,6 +68,8 @@ captures/
 .idea/migrations.xml
 .idea/androidTestResultsUserPreferences.xml
 .idea/copilot
+.idea/deploymentTargetDropDown.xml
+.idea/kotlinc.xml
 
 # Keystore files
 *.jks
@@ -114,12 +116,13 @@ Thumbs.db
 *.ear
 
 ### AndroidStudio Patch ###
-
 !/gradle/wrapper/gradle-wrapper.jar
 .idea/jarRepositories.xml
 
+### Services config files
+agconnect-services.json
+agconnect-credentials.json
+google-services.json
+!app/google-services.json
 
-app/src/release/agconnect-services.json
-app/src/release/agconnect-credentials.json
-.idea/deploymentTargetDropDown.xml
-.idea/kotlinc.xml
+

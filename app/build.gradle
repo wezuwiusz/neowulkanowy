@@ -32,10 +32,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
-        manifestPlaceholders = [
-            firebase_enabled: project.hasProperty("enableFirebase"),
-            admob_project_id: ""
-        ]
+        manifestPlaceholders = [admob_project_id: ""]
 
         buildConfigField "String", "SINGLE_SUPPORT_AD_ID", "null"
         buildConfigField "String", "DASHBOARD_TILE_AD_ID", "null"
@@ -76,7 +73,6 @@ android {
             resValue "string", "app_name", "Wulkanowy DEV"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            ext.enableCrashlytics = project.hasProperty("enableFirebase")
             buildConfigField "String", "MESSAGES_BASE_URL", "\"https://messages.wulkanowy.net.pl\""
             buildConfigField "String", "SCHOOLS_BASE_URL", '"https://schools.wulkanowy.net.pl"'
         }
