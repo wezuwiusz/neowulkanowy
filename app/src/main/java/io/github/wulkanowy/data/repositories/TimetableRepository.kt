@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
 import io.github.wulkanowy.data.db.dao.TimetableDao
 import io.github.wulkanowy.data.db.dao.TimetableHeaderDao
@@ -11,14 +12,11 @@ import io.github.wulkanowy.data.db.entities.TimetableHeader
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.data.pojos.TimetableFull
-import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.monday
 import io.github.wulkanowy.utils.sunday
-import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -33,7 +31,7 @@ class TimetableRepository @Inject constructor(
     private val timetableDb: TimetableDao,
     private val timetableAdditionalDb: TimetableAdditionalDao,
     private val timetableHeaderDb: TimetableHeaderDao,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
     private val schedulerHelper: TimetableNotificationSchedulerHelper,
     private val refreshHelper: AutoRefreshHelper,
 ) {
@@ -74,8 +72,7 @@ class TimetableRepository @Inject constructor(
         },
         query = { getFullTimetableFromDatabase(student, semester, start, end) },
         fetch = {
-            val timetableFull = sdk.init(student)
-                .switchSemester(semester)
+            val timetableFull = wulkanowySdkFactory.create(student, semester)
                 .getTimetable(start.monday, end.sunday)
 
             timetableFull.mapToEntities(semester)

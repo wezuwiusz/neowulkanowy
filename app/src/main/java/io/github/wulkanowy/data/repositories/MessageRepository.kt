@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.Resource
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.dao.MailboxDao
 import io.github.wulkanowy.data.db.dao.MessageAttachmentDao
@@ -29,11 +30,9 @@ import io.github.wulkanowy.data.pojos.MessageDraft
 import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.data.waitForResult
 import io.github.wulkanowy.domain.messages.GetMailboxByStudentUseCase
-import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
@@ -48,7 +47,7 @@ class MessageRepository @Inject constructor(
     private val messagesDb: MessagesDao,
     private val mutedMessageSendersDao: MutedMessageSendersDao,
     private val messageAttachmentDao: MessageAttachmentDao,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
     @ApplicationContext private val context: Context,
     private val refreshHelper: AutoRefreshHelper,
     private val sharedPrefProvider: SharedPrefProvider,
@@ -82,10 +81,16 @@ class MessageRepository @Inject constructor(
             } else messagesDb.loadMessagesWithMutedAuthor(mailbox.globalKey, folder.id)
         },
         fetch = {
-            sdk.init(student).getMessages(
-                folder = Folder.valueOf(folder.name),
-                mailboxKey = mailbox?.globalKey,
-            ).mapToEntities(student, mailbox, mailboxDao.loadAll(student.email))
+            wulkanowySdkFactory.create(student)
+                .getMessages(
+                    folder = Folder.valueOf(folder.name),
+                    mailboxKey = mailbox?.globalKey,
+                )
+                .mapToEntities(
+                    student = student,
+                    mailbox = mailbox,
+                    allMailboxes = mailboxDao.loadAll(student.email)
+                )
         },
         saveFetchResult = { oldWithAuthors, new ->
             val old = oldWithAuthors.map { it.message }
@@ -115,10 +120,11 @@ class MessageRepository @Inject constructor(
         },
         query = { messagesDb.loadMessageWithAttachment(message.messageGlobalKey) },
         fetch = {
-            sdk.init(student).getMessageDetails(
-                messageKey = it!!.message.messageGlobalKey,
-                markAsRead = message.unread && markAsRead,
-            )
+            wulkanowySdkFactory.create(student)
+                .getMessageDetails(
+                    messageKey = it!!.message.messageGlobalKey,
+                    markAsRead = message.unread && markAsRead,
+                )
         },
         saveFetchResult = { old, new ->
             checkNotNull(old) { "Fetched message no longer exist!" }
@@ -159,19 +165,19 @@ class MessageRepository @Inject constructor(
         recipients: List<Recipient>,
         mailbox: Mailbox,
     ) {
-        sdk.init(student).sendMessage(
-            subject = subject,
-            content = content,
-            recipients = recipients.mapFromEntities(),
-            mailboxId = mailbox.globalKey,
-        )
+        wulkanowySdkFactory.create(student)
+            .sendMessage(
+                subject = subject,
+                content = content,
+                recipients = recipients.mapFromEntities(),
+                mailboxId = mailbox.globalKey,
+            )
         refreshFolders(student, mailbox, listOf(SENT))
     }
 
     suspend fun restoreMessages(student: Student, mailbox: Mailbox?, messages: List<Message>) {
-        sdk.init(student).restoreMessages(
-            messages = messages.map { it.messageGlobalKey },
-        )
+        wulkanowySdkFactory.create(student)
+            .restoreMessages(messages = messages.map { it.messageGlobalKey })
 
         refreshFolders(student, mailbox)
     }
@@ -182,10 +188,11 @@ class MessageRepository @Inject constructor(
 
     suspend fun deleteMessages(student: Student, messages: List<Message>) {
         val firstMessage = messages.first()
-        sdk.init(student).deleteMessages(
-            messages = messages.map { it.messageGlobalKey },
-            removeForever = firstMessage.folderId == TRASHED.id,
-        )
+        wulkanowySdkFactory.create(student)
+            .deleteMessages(
+                messages = messages.map { it.messageGlobalKey },
+                removeForever = firstMessage.folderId == TRASHED.id,
+            )
 
         if (firstMessage.folderId != TRASHED.id) {
             val deletedMessages = messages.map {
@@ -230,7 +237,9 @@ class MessageRepository @Inject constructor(
         },
         query = { mailboxDao.loadAll(student.email, student.symbol, student.schoolSymbol) },
         fetch = {
-            sdk.init(student).getMailboxes().mapToEntities(student)
+            wulkanowySdkFactory.create(student)
+                .getMailboxes()
+                .mapToEntities(student)
         },
         saveFetchResult = { old, new ->
             mailboxDao.deleteAll(old uniqueSubtract new)

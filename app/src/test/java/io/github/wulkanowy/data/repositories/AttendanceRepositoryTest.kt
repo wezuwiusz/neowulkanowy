@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.createWulkanowySdkFactoryMock
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.AttendanceDao
 import io.github.wulkanowy.data.db.dao.TimetableDao
@@ -16,8 +17,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.mockk.just
+import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -30,8 +31,8 @@ import io.github.wulkanowy.sdk.pojo.Attendance as SdkAttendance
 
 class AttendanceRepositoryTest {
 
-    @SpyK
-    private var sdk = Sdk()
+    private var sdk = spyk<Sdk>()
+    private val wulkanowySdkFactory = createWulkanowySdkFactoryMock(sdk)
 
     @MockK
     private lateinit var attendanceDb: AttendanceDao
@@ -63,7 +64,8 @@ class AttendanceRepositoryTest {
         every { refreshHelper.shouldBeRefreshed(any()) } returns false
         coEvery { timetableDb.load(any(), any(), any(), any()) } returns emptyList()
 
-        attendanceRepository = AttendanceRepository(attendanceDb, timetableDb, sdk, refreshHelper)
+        attendanceRepository =
+            AttendanceRepository(attendanceDb, timetableDb, wulkanowySdkFactory, refreshHelper)
     }
 
     @Test

@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.createWulkanowySdkFactoryMock
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.TimetableAdditionalDao
 import io.github.wulkanowy.data.db.dao.TimetableDao
@@ -18,9 +19,9 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -37,8 +38,8 @@ class TimetableRepositoryTest {
     @MockK(relaxed = true)
     private lateinit var timetableNotificationSchedulerHelper: TimetableNotificationSchedulerHelper
 
-    @SpyK
-    private var sdk = Sdk()
+    private var sdk = spyk<Sdk>()
+    private val wulkanowySdkFactory = createWulkanowySdkFactoryMock(sdk)
 
     @MockK
     private lateinit var timetableDb: TimetableDao
@@ -71,7 +72,7 @@ class TimetableRepositoryTest {
             timetableDb,
             timetableAdditionalDao,
             timetableHeaderDao,
-            sdk,
+            wulkanowySdkFactory,
             timetableNotificationSchedulerHelper,
             refreshHelper
         )

@@ -1,16 +1,14 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.dao.ConferenceDao
 import io.github.wulkanowy.data.db.entities.Conference
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.networkBoundResource
-import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
@@ -21,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class ConferenceRepository @Inject constructor(
     private val conferenceDb: ConferenceDao,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
     private val refreshHelper: AutoRefreshHelper,
 ) {
 
@@ -46,8 +44,7 @@ class ConferenceRepository @Inject constructor(
             conferenceDb.loadAll(semester.diaryId, student.studentId, startDate)
         },
         fetch = {
-            sdk.init(student)
-                .switchSemester(semester)
+            wulkanowySdkFactory.create(student, semester)
                 .getConferences()
                 .mapToEntities(semester)
                 .filter { it.date >= startDate }
