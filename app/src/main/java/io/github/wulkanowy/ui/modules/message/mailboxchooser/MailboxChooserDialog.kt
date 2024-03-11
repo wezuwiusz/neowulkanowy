@@ -47,7 +47,6 @@ class MailboxChooserDialog : BaseDialogFragment<DialogMailboxChooserBinding>(), 
     }
 
 
-    @Suppress("UNCHECKED_CAST")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.onAttachView(
