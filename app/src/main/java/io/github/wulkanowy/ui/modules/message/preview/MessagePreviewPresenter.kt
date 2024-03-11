@@ -3,10 +3,15 @@ package io.github.wulkanowy.ui.modules.message.preview
 import android.annotation.SuppressLint
 import androidx.core.text.parseAsHtml
 import io.github.wulkanowy.R
-import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.Message
 import io.github.wulkanowy.data.db.entities.MessageWithAttachment
 import io.github.wulkanowy.data.enums.MessageFolder
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceData
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceNotLoading
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.MessageRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
@@ -28,17 +33,17 @@ class MessagePreviewPresenter @Inject constructor(
     private val analytics: AnalyticsHelper
 ) : BasePresenter<MessagePreviewView>(errorHandler, studentRepository) {
 
-    var messageWithAttachments: MessageWithAttachment? = null
+    private var messageWithAttachments: MessageWithAttachment? = null
 
     private lateinit var lastError: Throwable
 
     private var retryCallback: () -> Unit = {}
 
-    fun onAttachView(view: MessagePreviewView, message: Message?) {
+    fun onAttachView(view: MessagePreviewView, message: Message) {
         super.onAttachView(view)
         view.initView()
         errorHandler.showErrorMessage = ::showErrorViewOnError
-        loadData(requireNotNull(message))
+        loadData(message)
     }
 
     private fun onMessageLoadRetry(message: Message) {
