@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.attendance
 
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
@@ -33,17 +34,17 @@ class AttendanceAdapter @Inject constructor() :
     )
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val context = holder.binding.root.context
         val item = items[position]
 
         with(holder.binding) {
             attendanceItemNumber.text = item.number.toString()
-            attendanceItemSubject.text = item.subject.ifBlank {
-                root.context.getString(R.string.all_no_data)
-            }
+            attendanceItemSubject.text = item.subject
+                .ifBlank { context.getString(R.string.all_no_data) }
             attendanceItemDescription.setText(item.descriptionRes)
 
             attendanceItemDescription.setTextColor(
-                root.context.getThemeAttrColor(
+                context.getThemeAttrColor(
                     when {
                         item.absence && !item.excused -> R.attr.colorAttendanceAbsence
                         item.lateness && !item.excused -> R.attr.colorAttendanceLateness
@@ -61,13 +62,15 @@ class AttendanceAdapter @Inject constructor() :
             attendanceItemAlert.isVisible =
                 item.let { (it.absence && !it.excused) || (it.lateness && !it.excused) }
 
-            attendanceItemAlert.setColorFilter(root.context.getThemeAttrColor(
-                when{
-                    item.absence && !item.excused -> R.attr.colorAttendanceAbsence
-                    item.lateness && !item.excused -> R.attr.colorAttendanceLateness
-                    else -> android.R.attr.colorPrimary
-                }
-            ))
+            attendanceItemAlert.imageTintList = ColorStateList.valueOf(
+                context.getThemeAttrColor(
+                    when {
+                        item.absence && !item.excused -> R.attr.colorAttendanceAbsence
+                        item.lateness && !item.excused -> R.attr.colorAttendanceLateness
+                        else -> android.R.attr.colorPrimary
+                    }
+                )
+            )
             attendanceItemNumber.visibility = View.GONE
             attendanceItemExcuseInfo.visibility = View.GONE
             attendanceItemExcuseCheckbox.visibility = View.GONE
