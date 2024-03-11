@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.dao.MobileDeviceDao
 import io.github.wulkanowy.data.db.entities.MobileDevice
 import io.github.wulkanowy.data.db.entities.Semester
@@ -8,11 +9,8 @@ import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.mappers.mapToMobileDeviceToken
 import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.data.pojos.MobileDeviceToken
-import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
@@ -21,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class MobileDeviceRepository @Inject constructor(
     private val mobileDb: MobileDeviceDao,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
     private val refreshHelper: AutoRefreshHelper,
 ) {
 
@@ -42,8 +40,7 @@ class MobileDeviceRepository @Inject constructor(
         },
         query = { mobileDb.loadAll(student.userLoginId) },
         fetch = {
-            sdk.init(student)
-                .switchSemester(semester)
+            wulkanowySdkFactory.create(student, semester)
                 .getRegisteredDevices()
                 .mapToEntities(student)
         },
@@ -57,16 +54,14 @@ class MobileDeviceRepository @Inject constructor(
     )
 
     suspend fun unregisterDevice(student: Student, semester: Semester, device: MobileDevice) {
-        sdk.init(student)
-            .switchSemester(semester)
+        wulkanowySdkFactory.create(student, semester)
             .unregisterDevice(device.deviceId)
 
         mobileDb.deleteAll(listOf(device))
     }
 
     suspend fun getToken(student: Student, semester: Semester): MobileDeviceToken {
-        return sdk.init(student)
-            .switchSemester(semester)
+        return wulkanowySdkFactory.create(student, semester)
             .getToken()
             .mapToMobileDeviceToken()
     }

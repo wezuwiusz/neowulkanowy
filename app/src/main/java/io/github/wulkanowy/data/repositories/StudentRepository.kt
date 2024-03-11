@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data.repositories
 
 import androidx.room.withTransaction
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.dao.StudentDao
@@ -14,9 +15,7 @@ import io.github.wulkanowy.data.mappers.mapToPojo
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.DispatchersProvider
-import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.security.Scrambler
-import io.github.wulkanowy.utils.switchSemester
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,7 +25,7 @@ class StudentRepository @Inject constructor(
     private val dispatchers: DispatchersProvider,
     private val studentDb: StudentDao,
     private val semesterDb: SemesterDao,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
     private val appDatabase: AppDatabase,
     private val scrambler: Scrambler,
 ) {
@@ -37,7 +36,7 @@ class StudentRepository @Inject constructor(
         pin: String,
         symbol: String,
         token: String
-    ): RegisterUser = sdk
+    ): RegisterUser = wulkanowySdkFactory.create()
         .getStudentsFromHebe(token, pin, symbol, "")
         .mapToPojo(null)
 
@@ -47,7 +46,7 @@ class StudentRepository @Inject constructor(
         scrapperBaseUrl: String,
         domainSuffix: String,
         symbol: String
-    ): RegisterUser = sdk
+    ): RegisterUser = wulkanowySdkFactory.create()
         .getUserSubjectsFromScrapper(email, password, scrapperBaseUrl, domainSuffix, symbol)
         .mapToPojo(password)
 
@@ -56,7 +55,7 @@ class StudentRepository @Inject constructor(
         password: String,
         scrapperBaseUrl: String,
         symbol: String
-    ): RegisterUser = sdk
+    ): RegisterUser = wulkanowySdkFactory.create()
         .getStudentsHybrid(email, password, scrapperBaseUrl, "", symbol)
         .mapToPojo(password)
 
@@ -149,13 +148,11 @@ class StudentRepository @Inject constructor(
         .distinctBy { it.student.studentName }.size == 1
 
     suspend fun authorizePermission(student: Student, semester: Semester, pesel: String) =
-        sdk.init(student)
-            .switchSemester(semester)
+        wulkanowySdkFactory.create(student, semester)
             .authorizePermission(pesel)
 
     suspend fun refreshStudentName(student: Student, semester: Semester) {
-        val newCurrentApiStudent = sdk.init(student)
-            .switchSemester(semester)
+        val newCurrentApiStudent = wulkanowySdkFactory.create(student, semester)
             .getCurrentStudent() ?: return
 
         val studentName = StudentName(

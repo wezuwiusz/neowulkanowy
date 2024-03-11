@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.createWulkanowySdkFactoryMock
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.MobileDeviceDao
 import io.github.wulkanowy.data.errorOrNull
@@ -16,8 +17,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.mockk.just
+import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -28,8 +29,8 @@ import java.time.ZonedDateTime.of
 
 class MobileDeviceRepositoryTest {
 
-    @SpyK
-    private var sdk = Sdk()
+    private var sdk = spyk<Sdk>()
+    private val wulkanowySdkFactory = createWulkanowySdkFactoryMock(sdk)
 
     @MockK
     private lateinit var mobileDeviceDb: MobileDeviceDao
@@ -53,7 +54,8 @@ class MobileDeviceRepositoryTest {
         MockKAnnotations.init(this)
         every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
-        mobileDeviceRepository = MobileDeviceRepository(mobileDeviceDb, sdk, refreshHelper)
+        mobileDeviceRepository =
+            MobileDeviceRepository(mobileDeviceDb, wulkanowySdkFactory, refreshHelper)
     }
 
     @Test

@@ -18,40 +18,19 @@ import io.github.wulkanowy.data.api.SchoolsService
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.AppInfo
-import io.github.wulkanowy.utils.RemoteConfigHelper
-import io.github.wulkanowy.utils.WebkitCookieManagerProxy
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.create
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal class DataModule {
-
-    @Singleton
-    @Provides
-    fun provideSdk(
-        chuckerInterceptor: ChuckerInterceptor,
-        remoteConfig: RemoteConfigHelper,
-        webkitCookieManagerProxy: WebkitCookieManagerProxy,
-    ) = Sdk().apply {
-        androidVersion = android.os.Build.VERSION.RELEASE
-        buildTag = android.os.Build.MODEL
-        userAgentTemplate = remoteConfig.userAgentTemplate
-        setSimpleHttpLogger { Timber.d(it) }
-        setAdditionalCookieManager(webkitCookieManagerProxy)
-
-        // for debug only
-        addInterceptor(chuckerInterceptor, network = true)
-    }
 
     @Singleton
     @Provides

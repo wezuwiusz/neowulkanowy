@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.createWulkanowySdkFactoryMock
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.ExamDao
 import io.github.wulkanowy.data.errorOrNull
@@ -15,8 +16,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.mockk.just
+import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -28,8 +29,8 @@ import io.github.wulkanowy.sdk.pojo.Exam as SdkExam
 
 class ExamRemoteTest {
 
-    @SpyK
-    private var sdk = Sdk()
+    private var sdk = spyk<Sdk>()
+    private val wulkanowySdkFactory = createWulkanowySdkFactoryMock(sdk)
 
     @MockK
     private lateinit var examDb: ExamDao
@@ -59,7 +60,7 @@ class ExamRemoteTest {
         MockKAnnotations.init(this)
         every { refreshHelper.shouldBeRefreshed(any()) } returns false
 
-        examRepository = ExamRepository(examDb, sdk, refreshHelper)
+        examRepository = ExamRepository(examDb, wulkanowySdkFactory, refreshHelper)
     }
 
     @Test

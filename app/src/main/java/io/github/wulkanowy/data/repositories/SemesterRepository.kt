@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
@@ -7,7 +8,6 @@ import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.DispatchersProvider
 import io.github.wulkanowy.utils.getCurrentOrLast
-import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.isCurrent
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.withContext
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @Singleton
 class SemesterRepository @Inject constructor(
     private val semesterDb: SemesterDao,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
     private val dispatchers: DispatchersProvider,
 ) {
 
@@ -60,7 +60,10 @@ class SemesterRepository @Inject constructor(
     }
 
     private suspend fun refreshSemesters(student: Student) {
-        val new = sdk.init(student).getSemesters().mapToEntities(student.studentId)
+        val new = wulkanowySdkFactory.create(student)
+            .getSemesters()
+            .mapToEntities(student.studentId)
+
         if (new.isEmpty()) return Timber.i("Empty semester list!")
 
         val old = semesterDb.loadAll(student.studentId, student.classId)

@@ -1,17 +1,15 @@
 package io.github.wulkanowy.data.repositories
 
 import androidx.room.withTransaction
-import io.github.wulkanowy.data.*
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.dao.AttendanceSummaryDao
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntities
-import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.switchSemester
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
@@ -20,9 +18,9 @@ import javax.inject.Singleton
 @Singleton
 class AttendanceSummaryRepository @Inject constructor(
     private val attendanceDb: AttendanceSummaryDao,
-    private val sdk: Sdk,
     private val refreshHelper: AutoRefreshHelper,
     private val appDatabase: AppDatabase,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
 ) {
 
     private val saveFetchResultMutex = Mutex()
@@ -43,8 +41,7 @@ class AttendanceSummaryRepository @Inject constructor(
         },
         query = { attendanceDb.loadAll(semester.diaryId, semester.studentId, subjectId) },
         fetch = {
-            sdk.init(student)
-                .switchSemester(semester)
+            wulkanowySdkFactory.create(student, semester)
                 .getAttendanceSummary(subjectId)
                 .mapToEntities(semester, subjectId)
         },

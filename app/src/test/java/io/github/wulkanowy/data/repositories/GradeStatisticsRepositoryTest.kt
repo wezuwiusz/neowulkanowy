@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.createWulkanowySdkFactoryMock
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.GradePartialStatisticsDao
 import io.github.wulkanowy.data.db.dao.GradePointsStatisticsDao
@@ -13,9 +14,14 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.GradeStatisticsItem
 import io.github.wulkanowy.sdk.pojo.GradeStatisticsSubject
 import io.github.wulkanowy.utils.AutoRefreshHelper
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
+import io.mockk.just
+import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -24,8 +30,8 @@ import org.junit.Test
 
 class GradeStatisticsRepositoryTest {
 
-    @SpyK
-    private var sdk = Sdk()
+    private var sdk = spyk<Sdk>()
+    private val wulkanowySdkFactory = createWulkanowySdkFactoryMock(sdk)
 
     @MockK
     private lateinit var gradePartialStatisticsDb: GradePartialStatisticsDao
@@ -54,7 +60,7 @@ class GradeStatisticsRepositoryTest {
             gradePartialStatisticsDb = gradePartialStatisticsDb,
             gradePointsStatisticsDb = gradePointsStatisticsDb,
             gradeSemesterStatisticsDb = gradeSemesterStatisticsDb,
-            sdk = sdk,
+            wulkanowySdkFactory = wulkanowySdkFactory,
             refreshHelper = refreshHelper,
         )
     }
