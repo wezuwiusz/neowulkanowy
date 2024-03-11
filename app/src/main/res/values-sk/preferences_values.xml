@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="sort_alphabetically">Abecedne</string>
+    <string name="sort_by_date">Podľa dátumu</string>
+    <string name="sort_by_average">Podľa priemeru</string>
+    <string name="sort_by_attendance_percentage">Podľa percenta dochádzky</string>
+    <string name="sort_by_subject_attendance_balance">Podľa rovnováhy dochádzky predmetu</string>
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
         <item>Svetlý</item>
         <item>Tmavý</item>
@@ -54,7 +59,7 @@
     <string-array name="dashboard_tile_entries">
         <item>Šťastné číslo</item>
         <item>Neprečítané správy</item>
-        <item>Frekvencia</item>
+        <item>Dochádzka</item>
         <item>Lekcie</item>
         <item>Známky</item>
         <item>Domáce úlohy</item>

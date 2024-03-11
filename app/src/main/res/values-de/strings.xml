@@ -237,6 +237,11 @@
     <string name="additional_lessons_end_time_error">Endzeit muss grösser sein als Startzeit</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Übersicht über die Schulbesuch</string>
+    <string name="attendance_calculator_button">Attendance calculator</string>
+    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> over target</string>
+    <string name="attendance_calculator_summary_balance_neutral">right on target</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> under target</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d presences</string>
     <string name="attendance_absence_school">Aus schulischen Gründen abwesend</string>
     <string name="attendance_absence_excused">Entschuldigte Abwesenheit</string>
     <string name="attendance_absence_unexcused">Unentschuldigtes Abwesenheit</string>
@@ -637,6 +642,8 @@
     <string name="pref_view_grade_average_mode">Berechnete Durchschnittsoptionen</string>
     <string name="pref_view_grade_average_force_calc">Mittelwertberechnung durch App erzwingen</string>
     <string name="pref_view_present">Anwesendheit zeigen</string>
+    <string name="pref_attendance_target">Attendance target</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Attendance calculator sorting</string>
     <string name="pref_view_app_theme">Thema</string>
     <string name="pref_view_expand_grade">Steigende Sorten</string>
     <string name="pref_view_timetable_show_groups">Gruppen neben Schulfächen anzeigen</string>

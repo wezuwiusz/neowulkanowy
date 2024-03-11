@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="sort_alphabetically">За алфавітом</string>
+    <string name="sort_by_date">За датою</string>
+    <string name="sort_by_average">За середньою</string>
+    <string name="sort_by_attendance_percentage">За відсотком відвідуваності</string>
+    <string name="sort_by_subject_attendance_balance">За балансом відвідування теми</string>
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
         <item>Світла</item>
         <item>Темна</item>

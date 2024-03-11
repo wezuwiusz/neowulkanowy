@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="sort_alphabetically">Alphabetically</string>
+    <string name="sort_by_date">By date</string>
+    <string name="sort_by_average">By average</string>
+    <string name="sort_by_attendance_percentage">By attendance percentage</string>
+    <string name="sort_by_subject_attendance_balance">By subject attendance balance</string>
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
         <item>Светлая</item>
         <item>Тёмная</item>

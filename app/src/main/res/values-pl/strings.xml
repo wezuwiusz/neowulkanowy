@@ -265,6 +265,11 @@
     <string name="additional_lessons_end_time_error">Godzina zakończenia musi być późniejsza niż godzina rozpoczęcia</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
+    <string name="attendance_calculator_button">Kalkulator obecności</string>
+    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> powyżej celu</string>
+    <string name="attendance_calculator_summary_balance_neutral">dokładnie u celu</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> poniżej celu</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d obecności</string>
     <string name="attendance_absence_school">Nieobecność z przyczyn szkolnych</string>
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
@@ -731,6 +736,8 @@
     <string name="pref_view_grade_average_mode">Opcje obliczonej średniej</string>
     <string name="pref_view_grade_average_force_calc">Wymuś obliczanie średniej przez aplikację</string>
     <string name="pref_view_present">Pokazuj obecność</string>
+    <string name="pref_attendance_target">Docelowa obecność</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Sortowanie kalkulatora obecności</string>
     <string name="pref_view_app_theme">Motyw</string>
     <string name="pref_view_expand_grade">Rozwijanie ocen</string>
     <string name="pref_view_timetable_show_groups">Pokazuj grupę obok przedmiotu</string>
@@ -876,7 +883,4 @@
     <string name="message_unmute">Wyłącz wyciszenie</string>
     <string name="message_mute_success">Wyciszyleś tego użytkownika</string>
     <string name="message_unmute_success">Wyłączyłeś wyciszenie tego użytkownika</string>
-    <!-- attendance calculator -->
-    <string name="pref_attendance_target">Docelowa frekwencja (w %)</string>
-    <string name="attendance_calculator_button">Kalkulator frekwencji</string>
 </resources>

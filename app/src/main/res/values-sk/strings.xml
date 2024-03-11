@@ -4,7 +4,7 @@
     <string name="login_title">Prihlásenie</string>
     <string name="main_title">Wulkanowy</string>
     <string name="grade_title">Známky</string>
-    <string name="attendance_title">Frekvencia</string>
+    <string name="attendance_title">Dochádzka</string>
     <string name="exam_title">Skúšky</string>
     <string name="timetable_title">Plán lekcie</string>
     <string name="settings_title">Nastavenia</string>
@@ -64,7 +64,7 @@
     <string name="login_symbol_helper">Symbol nájdete na stránke denníka v &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nUistite sa, že ste nastavili správny variant denníka v poli <b>Variácia denníka UONET+</b> na prvej prihlasovacej obrazovke</string>
     <string name="login_select_student">Vyberte žiakov, ktorí sa majú do aplikácie prihlásiť</string>
     <string name="login_advanced">Iné možnosti</string>
-    <string name="login_advanced_warning_mobile_api">V tomto režime nefungujú nasledovné: šťastné číslo, štatistiky triedy, zhrnutie frekvencií, ospravedlnenie neprítomnosti, dokončené lekcie, informácie o škole a prezeranie zoznamu registrovaných zariadení</string>
+    <string name="login_advanced_warning_mobile_api">V tomto režime nefungujú nasledovné: šťastné číslo, štatistiky triedy, zhrnutie dochádzky, ospravedlnenie neprítomnosti, dokončené lekcie, informácie o škole a prezeranie zoznamu registrovaných zariadení</string>
     <string name="login_advanced_warning_scraper">Tento režim zobrazuje rovnaké dáta, ktoré sa zobrazujú na webových stránkach denníka</string>
     <string name="login_advanced_warning_hybrid">Kombinácia najlepších vlastností ostatných dvoch režimov. Funguje rýchlejšie ako scraper a poskytuje funkcie, ktoré nie sú k dispozícii v režime Mobilne API. Je to v experimentálnej fáze</string>
     <string name="login_privacy_policy">Ochrana osobných údajov</string>
@@ -264,7 +264,12 @@
     <string name="additional_lessons_end">Čas ukončenia</string>
     <string name="additional_lessons_end_time_error">Čas ukončenia musí byť neskorší ako čas začatia</string>
     <!--Attendance-->
-    <string name="attendance_summary_button">Zhrnutie frekvencií</string>
+    <string name="attendance_summary_button">Zhrnutie dochádzky</string>
+    <string name="attendance_calculator_button">Kalkulačka dochádzky</string>
+    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> nad cieľom</string>
+    <string name="attendance_calculator_summary_balance_neutral">presne v cieli</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> pod cieľom</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d prítomnosti</string>
     <string name="attendance_absence_school">Neprítomnosť zo školských dôvodov</string>
     <string name="attendance_absence_excused">Ospravedlnená neprítomnosť</string>
     <string name="attendance_absence_unexcused">Neospravedlnená neprítomnosť</string>
@@ -282,22 +287,22 @@
     <string name="attendance_excuse_no_selection">Musíte vybrať aspoň jednu neprítomnosť!</string>
     <string name="attendance_excuse_title">Ospravedlniť</string>
     <plurals name="attendance_notify_new_items_title">
-        <item quantity="one">Nová frekvencia</item>
-        <item quantity="few">Nové frekvencie</item>
-        <item quantity="many">Nové frekvencie</item>
-        <item quantity="other">Nové frekvencie</item>
+        <item quantity="one">Nová dochádzka</item>
+        <item quantity="few">Nové dochádzky</item>
+        <item quantity="many">Nové dochádzky</item>
+        <item quantity="other">Nové dochádzky</item>
     </plurals>
     <plurals name="attendance_notify_new_items">
-        <item quantity="one">%1$d nová frekvencia</item>
-        <item quantity="few">%1$d nové frekvencie</item>
-        <item quantity="many">%1$d nových frekvencií</item>
-        <item quantity="other">%1$d nových frekvencií</item>
+        <item quantity="one">%1$d nová dochádzka</item>
+        <item quantity="few">%1$d nové dochádzky</item>
+        <item quantity="many">%1$d nových dochádzok</item>
+        <item quantity="other">%1$d nových dochádzok</item>
     </plurals>
     <plurals name="attendance_number_item">
-        <item quantity="one">%d frekvencia</item>
-        <item quantity="few">%d frekvencie</item>
-        <item quantity="many">%d frekvencií</item>
-        <item quantity="other">%d frekvencií</item>
+        <item quantity="one">%d dochádzka</item>
+        <item quantity="few">%d dochádzky</item>
+        <item quantity="many">%d dochádzok</item>
+        <item quantity="other">%d dochádzok</item>
     </plurals>
     <!--Attendance summary-->
     <string name="attendance_summary_total">Spoločne</string>
@@ -731,6 +736,8 @@
     <string name="pref_view_grade_average_mode">Možnosti vypočítaného priemeru</string>
     <string name="pref_view_grade_average_force_calc">Vynútiť priemerný výpočet podľa aplikácie</string>
     <string name="pref_view_present">Zobraziť prítomnosť</string>
+    <string name="pref_attendance_target">Cieľová dochádzka</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Triedenie kalkulačky dochádzky</string>
     <string name="pref_view_app_theme">Motív</string>
     <string name="pref_view_expand_grade">Rozvijanie známok</string>
     <string name="pref_view_timetable_show_groups">Zobraziť skupiny vedľa predmetov</string>
@@ -797,7 +804,7 @@
     <string name="pref_grades_appearance_header">Známky</string>
     <string name="pref_dashboard_appearance_header">Domov</string>
     <string name="pref_dashboard_appearance_tiles_title">Viditeľnosť dlaždíc</string>
-    <string name="pref_attendance_appearance_view">Frekvencia</string>
+    <string name="pref_attendance_appearance_view">Dochádzka</string>
     <string name="pref_timetable_appearance_view">Plán lekcie</string>
     <string name="pref_grades_advanced_header">Známky</string>
     <string name="pref_counted_average_advanced_header">Vypočítaný priemer</string>
@@ -825,7 +832,7 @@
     <string name="channel_upcoming_lessons">Nadchádzajúce lekcie</string>
     <string name="channel_debug">Ladenie</string>
     <string name="channel_change_timetable">Zmeny plánu lekcií</string>
-    <string name="channel_new_attendance">Nové frekvencie</string>
+    <string name="channel_new_attendance">Nové dochádzky</string>
     <!--Colors-->
     <string name="all_black">Čierna</string>
     <string name="all_red">Červená</string>

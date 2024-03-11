@@ -265,6 +265,11 @@
     <string name="additional_lessons_end_time_error">Час завершення має бути пізніше часу початку</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Підсумок відвідуваності</string>
+    <string name="attendance_calculator_button">Калькулятор відвідуваності</string>
+    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> понад ціль</string>
+    <string name="attendance_calculator_summary_balance_neutral">точно у цілі</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> під ціллю</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d відвідуваності</string>
     <string name="attendance_absence_school">Відсутність зі шкільних причин</string>
     <string name="attendance_absence_excused">Відсутність з поважних причин</string>
     <string name="attendance_absence_unexcused">Відсутність без поважних причин</string>
@@ -731,6 +736,8 @@
     <string name="pref_view_grade_average_mode">Параметри розраховування середніх оцінок</string>
     <string name="pref_view_grade_average_force_calc">Примусово розраховувати середню оцінку через додаток</string>
     <string name="pref_view_present">Показувати присутність</string>
+    <string name="pref_attendance_target">Цільова відвідуваність</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Сортування калькулятора відвідування</string>
     <string name="pref_view_app_theme">Тема</string>
     <string name="pref_view_expand_grade">Розгортання оцінок</string>
     <string name="pref_view_timetable_show_groups">Показувати групи поруч з темами</string>
