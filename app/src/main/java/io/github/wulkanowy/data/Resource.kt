@@ -71,6 +71,9 @@ fun <T, U> Resource<T>.mapData(block: (T) -> U) = when (this) {
     is Resource.Error -> Resource.Error(this.error)
 }
 
+/**
+ * Injects another flow into this flow's resource data.
+ */
 inline fun <T1, T2, R> Flow<Resource<T1>>.combineWithResourceData(
     flow: Flow<T2>,
     crossinline block: suspend (T1, T2) -> R

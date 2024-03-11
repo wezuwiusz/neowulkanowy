@@ -1,6 +1,5 @@
 package io.github.wulkanowy.ui.modules.attendance.calculator
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -19,42 +18,47 @@ class AttendanceCalculatorAdapter @Inject constructor() :
 
     override fun getItemCount() = items.size
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup, viewType: Int
-    ) = ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         ItemAttendanceCalculatorHeaderBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
     )
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(parent: ViewHolder, position: Int) {
+        val context = parent.binding.root.context
+        val item = items[position]
+
         with(parent.binding) {
-            val item = items[position]
             attendanceCalculatorPercentage.text = "${item.presencePercentage.roundToInt()}"
 
-            if (item.lessonBalance > 0) {
-                attendanceCalculatorSummaryBalance.text = root.context.getString(
-                    R.string.attendance_calculator_summary_balance_positive,
-                    item.lessonBalance
-                )
-            } else if (item.lessonBalance < 0) {
-                attendanceCalculatorSummaryBalance.text = root.context.getString(
-                    R.string.attendance_calculator_summary_balance_negative,
-                    abs(item.lessonBalance)
-                )
-            } else {
-                attendanceCalculatorSummaryBalance.text = root.context.getString(
-                    R.string.attendance_calculator_summary_balance_neutral,
-                )
+            attendanceCalculatorSummaryBalance.text = when {
+                item.lessonBalance > 0 -> {
+                    context.getString(
+                        R.string.attendance_calculator_summary_balance_positive,
+                        item.lessonBalance
+                    )
+                }
+
+                item.lessonBalance < 0 -> {
+                    context.getString(
+                        R.string.attendance_calculator_summary_balance_negative,
+                        abs(item.lessonBalance)
+                    )
+                }
+
+                else -> context.getString(R.string.attendance_calculator_summary_balance_neutral)
             }
             attendanceCalculatorWarning.isVisible = item.lessonBalance < 0
             attendanceCalculatorTitle.text = item.subjectName
-            attendanceCalculatorSummaryValues.text = root.context.getString(
-                R.string.attendance_calculator_summary_values,
-                item.presences,
-                item.total
-            )
+            attendanceCalculatorSummaryValues.text = if (item.total == 0) {
+                context.getString(R.string.attendance_calculator_summary_values_empty)
+            } else {
+                context.getString(
+                    R.string.attendance_calculator_summary_values,
+                    item.presences,
+                    item.total
+                )
+            }
         }
     }
 

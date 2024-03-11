@@ -54,6 +54,15 @@ class PreferencesRepository @Inject constructor(
             context.resources.getString(R.string.pref_default_attendance_calculator_sorting_mode)
         ).asFlow().map(AttendanceCalculatorSortingMode::getByValue)
 
+    /**
+     * Subjects are empty when they don't have any attendances (total = 0, attendances = 0, absences = 0).
+     */
+    val attendanceCalculatorShowEmptySubjects: Flow<Boolean>
+        get() = flowSharedPref.getBoolean(
+            context.getString(R.string.pref_key_attendance_calculator_show_empty_subjects),
+            context.resources.getBoolean(R.bool.pref_default_attendance_calculator_show_empty_subjects)
+        ).asFlow()
+
     private val gradeAverageModePref: Preference<GradeAverageMode>
         get() = getObjectFlow(
             R.string.pref_key_grade_average_mode,

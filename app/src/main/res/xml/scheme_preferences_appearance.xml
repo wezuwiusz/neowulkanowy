@@ -104,6 +104,11 @@
             app:key="@string/pref_key_attendance_calculator_sorting_mode"
             app:title="@string/pref_view_attendance_calculator_sorting_mode"
             app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            app:defaultValue="@bool/pref_default_attendance_calculator_show_empty_subjects"
+            app:iconSpaceReserved="false"
+            app:key="@string/pref_key_attendance_calculator_show_empty_subjects"
+            app:title="@string/pref_attendance_calculator_show_empty_subjects" />
     </PreferenceCategory>
     <PreferenceCategory
         android:layout_height="wrap_content"

@@ -49,6 +49,9 @@ class GetAttendanceCalculatorDataUseCase @Inject constructor(
                     // intermediates that will be visible for barely any time.
                     .debounceIntermediates()
             }
+            .combineWithResourceData(preferencesRepository.attendanceCalculatorShowEmptySubjects) { attendanceDataList, showEmptySubjects ->
+                attendanceDataList.filter { it.total != 0 || showEmptySubjects }
+            }
             .combineWithResourceData(preferencesRepository.attendanceCalculatorSortingModeFlow, List<AttendanceData>::sortedBy)
 }
 

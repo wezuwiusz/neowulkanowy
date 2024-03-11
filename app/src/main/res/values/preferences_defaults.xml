@@ -4,6 +4,7 @@
     <bool name="pref_default_attendance_present">true</bool>
     <integer name="pref_default_attendance_target">50</integer>
     <string name="pref_default_attendance_calculator_sorting_mode">alphabetic</string>
+    <bool name="pref_default_attendance_calculator_show_empty_subjects">false</bool>
     <string name="pref_default_grade_average_mode">only_one_semester</string>
     <bool name="pref_default_grade_average_force_calc">false</bool>
     <string name="pref_default_expand_grade_mode">one</string>
