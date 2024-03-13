@@ -1,6 +1,10 @@
 package io.github.wulkanowy.data
 
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.coEvery
+import io.mockk.coVerifyOrder
+import io.mockk.just
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
@@ -42,7 +46,6 @@ class ResourceTest {
         // first
         networkBoundResource(
             isResultEmpty = { false },
-            showSavedOnLoading = false,
             query = { repo.query() },
             fetch = {
                 val data = repo.fetch()
@@ -57,7 +60,6 @@ class ResourceTest {
         // second
         networkBoundResource(
             isResultEmpty = { false },
-            showSavedOnLoading = false,
             query = { repo.query() },
             fetch = {
                 val data = repo.fetch()
@@ -124,7 +126,6 @@ class ResourceTest {
         networkBoundResource(
             isResultEmpty = { false },
             mutex = saveResultMutex,
-            showSavedOnLoading = false,
             query = { repo.query() },
             fetch = {
                 val data = repo.fetch()
@@ -143,7 +144,6 @@ class ResourceTest {
         networkBoundResource(
             isResultEmpty = { false },
             mutex = saveResultMutex,
-            showSavedOnLoading = false,
             query = { repo.query() },
             fetch = {
                 val data = repo.fetch()

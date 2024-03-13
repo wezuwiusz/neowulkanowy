@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -22,15 +23,15 @@ import timber.log.Timber
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
-sealed class Resource<out T> {
+sealed interface Resource<out T> {
 
-    open class Loading<T> : Resource<T>()
+    open class Loading<T> : Resource<T>
 
     data class Intermediate<T>(val data: T) : Loading<T>()
 
-    data class Success<T>(val data: T) : Resource<T>()
+    data class Success<T>(val data: T) : Resource<T>
 
-    data class Error<T>(val error: Throwable) : Resource<T>()
+    data class Error<T>(val error: Throwable) : Resource<T>
 }
 
 val <T> Resource<T>.dataOrNull: T?
@@ -97,7 +98,7 @@ fun <T> Flow<Resource<T>>.logResourceStatus(name: String, showData: Boolean = fa
     Timber.i("$name: $description")
 }
 
-fun <T, U> Flow<Resource<T>>.mapResourceData(block: suspend (T) -> U) = map {
+inline fun <T, U> Flow<Resource<T>>.mapResourceData(crossinline block: suspend (T) -> U) = map {
     when (it) {
         is Resource.Success -> Resource.Success(block(it.data))
         is Resource.Intermediate -> Resource.Intermediate(block(it.data))
@@ -167,33 +168,32 @@ suspend fun <T> Flow<Resource<T>>.waitForResult() = takeWhile { it is Resource.L
 
 // Can cause excessive amounts of `Resource.Intermediate` to be emitted. Unless that is desired,
 // use `debounceIntermediates` to alleviate this behavior.
-inline fun <reified T> combineResourceFlows(
-    flows: Iterable<Flow<Resource<T>>>,
-): Flow<Resource<List<T>>> = combine(flows) { items ->
-    var isIntermediate = false
-    val data = mutableListOf<T>()
-    for (item in items) {
-        when (item) {
-            is Resource.Success -> data.add(item.data)
-            is Resource.Intermediate -> {
-                isIntermediate = true
-                data.add(item.data)
-            }
+inline fun <reified T> combineResourceFlows(flows: Iterable<Flow<Resource<T>>>): Flow<Resource<List<T>>> =
+    combine(flows) { items ->
+        var isIntermediate = false
+        val data = mutableListOf<T>()
+        for (item in items) {
+            when (item) {
+                is Resource.Success -> data.add(item.data)
+                is Resource.Intermediate -> {
+                    isIntermediate = true
+                    data.add(item.data)
+                }
 
-            is Resource.Loading -> return@combine Resource.Loading()
-            is Resource.Error -> continue
+                is Resource.Loading -> return@combine Resource.Loading()
+                is Resource.Error -> continue
+            }
+        }
+        if (data.isEmpty()) {
+            // All items have to be errors for this to happen, so just return the first one.
+            // mapData is functionally useless and exists only to satisfy the type checker
+            items.first().mapData { listOf(it) }
+        } else if (isIntermediate) {
+            Resource.Intermediate(data)
+        } else {
+            Resource.Success(data)
         }
     }
-    if (data.isEmpty()) {
-        // All items have to be errors for this to happen, so just return the first one.
-        // mapData is functionally useless and exists only to satisfy the type checker
-        items.first().mapData { listOf(it) }
-    } else if (isIntermediate) {
-        Resource.Intermediate(data)
-    } else {
-        Resource.Success(data)
-    }
-}
 
 @OptIn(FlowPreview::class)
 fun <T> Flow<Resource<T>>.debounceIntermediates(timeout: Duration = 5.seconds) = flow {
@@ -214,70 +214,51 @@ fun <T> Flow<Resource<T>>.debounceIntermediates(timeout: Duration = 5.seconds) =
     })
 }
 
+
 inline fun <ResultType, RequestType> networkBoundResource(
     mutex: Mutex = Mutex(),
-    showSavedOnLoading: Boolean = true,
     crossinline isResultEmpty: (ResultType) -> Boolean,
     crossinline query: () -> Flow<ResultType>,
-    crossinline fetch: suspend (ResultType) -> RequestType,
+    crossinline fetch: suspend () -> RequestType,
     crossinline saveFetchResult: suspend (old: ResultType, new: RequestType) -> Unit,
-    crossinline onFetchFailed: (Throwable) -> Unit = { },
     crossinline shouldFetch: (ResultType) -> Boolean = { true },
     crossinline filterResult: (ResultType) -> ResultType = { it }
-) = flow {
-    emit(Resource.Loading())
-
-    val data = query().first()
-    emitAll(if (shouldFetch(data)) {
-        val filteredResult = filterResult(data)
-
-        if (showSavedOnLoading && !isResultEmpty(filteredResult)) {
-            emit(Resource.Intermediate(filteredResult))
-        }
-
-        try {
-            val newData = fetch(data)
-            mutex.withLock { saveFetchResult(query().first(), newData) }
-            query().map { Resource.Success(filterResult(it)) }
-        } catch (throwable: Throwable) {
-            onFetchFailed(throwable)
-            flowOf(Resource.Error(throwable))
-        }
-    } else {
-        query().map { Resource.Success(filterResult(it)) }
-    })
-}
+) = networkBoundResource(
+    mutex = mutex,
+    isResultEmpty = isResultEmpty,
+    query = query,
+    fetch = fetch,
+    saveFetchResult = saveFetchResult,
+    shouldFetch = shouldFetch,
+    mapResult = filterResult
+)
 
 @JvmName("networkBoundResourceWithMap")
-inline fun <ResultType, RequestType, T> networkBoundResource(
+inline fun <ResultType, RequestType, MappedResultType> networkBoundResource(
     mutex: Mutex = Mutex(),
-    showSavedOnLoading: Boolean = true,
-    crossinline isResultEmpty: (T) -> Boolean,
+    crossinline isResultEmpty: (MappedResultType) -> Boolean,
     crossinline query: () -> Flow<ResultType>,
-    crossinline fetch: suspend (ResultType) -> RequestType,
+    crossinline fetch: suspend () -> RequestType,
     crossinline saveFetchResult: suspend (old: ResultType, new: RequestType) -> Unit,
-    crossinline onFetchFailed: (Throwable) -> Unit = { },
     crossinline shouldFetch: (ResultType) -> Boolean = { true },
-    crossinline mapResult: (ResultType) -> T,
+    crossinline mapResult: (ResultType) -> MappedResultType,
 ) = flow {
     emit(Resource.Loading())
 
     val data = query().first()
-    emitAll(if (shouldFetch(data)) {
-        val mappedResult = mapResult(data)
+    if (shouldFetch(data)) {
+        emit(Resource.Intermediate(data))
 
-        if (showSavedOnLoading && !isResultEmpty(mappedResult)) {
-            emit(Resource.Intermediate(mappedResult))
-        }
         try {
-            val newData = fetch(data)
+            val newData = fetch()
             mutex.withLock { saveFetchResult(query().first(), newData) }
-            query().map { Resource.Success(mapResult(it)) }
         } catch (throwable: Throwable) {
-            onFetchFailed(throwable)
-            flowOf(Resource.Error(throwable))
+            emit(Resource.Error(throwable))
+            return@flow
         }
-    } else {
-        query().map { Resource.Success(mapResult(it)) }
-    })
+    }
+
+    emitAll(query().map { Resource.Success(it) })
 }
+    .mapResourceData { mapResult(it) }
+    .filterNot { it is Resource.Intermediate && isResultEmpty(it.data) }
