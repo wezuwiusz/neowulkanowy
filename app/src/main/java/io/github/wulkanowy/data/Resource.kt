@@ -24,13 +24,34 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 sealed interface Resource<out T> {
-
+    /**
+     * The initial value of a resource flow. Indicates no data that is currently available to be shown,
+     * however with the expectation that the state will transition to another one soon.
+     */
     open class Loading<T> : Resource<T>
 
+    /**
+     * A semi-loading state with some data available to be displayed (usually cached data loaded from
+     * the database). Still not the target state and it's expected to transition into another one soon.
+     */
     data class Intermediate<T>(val data: T) : Loading<T>()
 
+    /**
+     * The happy-path target state. Data can either be:
+     * - loaded from the database - while it may seem like this case is already handled by the
+     *   Intermediate state, the difference here is semantic. Cached data is returned as Intermediate
+     *   when there's a API request in progress (or soon expected to be), however when there is no
+     *   intention of immediately querying the API, the cached data is returned as a Success.
+     * - fetched from the API.
+     */
     data class Success<T>(val data: T) : Resource<T>
 
+    /**
+     * Something bad happened and we were unable to get the requested data. This can be caused by
+     * a database error, a network error, or really just any other error. Upon receiving this state
+     * the UI can either: display a full screen error, or, when it has received any data previously,
+     * display a snack bar informing of the problem.
+     */
     data class Error<T>(val error: Throwable) : Resource<T>
 }
 
@@ -215,14 +236,14 @@ fun <T> Flow<Resource<T>>.debounceIntermediates(timeout: Duration = 5.seconds) =
 }
 
 
-inline fun <ResultType, RequestType> networkBoundResource(
+inline fun <OutputType, ApiType> networkBoundResource(
     mutex: Mutex = Mutex(),
-    crossinline isResultEmpty: (ResultType) -> Boolean,
-    crossinline query: () -> Flow<ResultType>,
-    crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResult: suspend (old: ResultType, new: RequestType) -> Unit,
-    crossinline shouldFetch: (ResultType) -> Boolean = { true },
-    crossinline filterResult: (ResultType) -> ResultType = { it }
+    crossinline isResultEmpty: (OutputType) -> Boolean,
+    crossinline query: () -> Flow<OutputType>,
+    crossinline fetch: suspend () -> ApiType,
+    crossinline saveFetchResult: suspend (old: OutputType, new: ApiType) -> Unit,
+    crossinline shouldFetch: (OutputType) -> Boolean = { true },
+    crossinline filterResult: (OutputType) -> OutputType = { it }
 ) = networkBoundResource(
     mutex = mutex,
     isResultEmpty = isResultEmpty,
@@ -234,14 +255,14 @@ inline fun <ResultType, RequestType> networkBoundResource(
 )
 
 @JvmName("networkBoundResourceWithMap")
-inline fun <ResultType, RequestType, MappedResultType> networkBoundResource(
+inline fun <DatabaseType, ApiType, OutputType> networkBoundResource(
     mutex: Mutex = Mutex(),
-    crossinline isResultEmpty: (MappedResultType) -> Boolean,
-    crossinline query: () -> Flow<ResultType>,
-    crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResult: suspend (old: ResultType, new: RequestType) -> Unit,
-    crossinline shouldFetch: (ResultType) -> Boolean = { true },
-    crossinline mapResult: (ResultType) -> MappedResultType,
+    crossinline isResultEmpty: (OutputType) -> Boolean,
+    crossinline query: () -> Flow<DatabaseType>,
+    crossinline fetch: suspend () -> ApiType,
+    crossinline saveFetchResult: suspend (old: DatabaseType, new: ApiType) -> Unit,
+    crossinline shouldFetch: (DatabaseType) -> Boolean = { true },
+    crossinline mapResult: (DatabaseType) -> OutputType,
 ) = flow {
     emit(Resource.Loading())
 
