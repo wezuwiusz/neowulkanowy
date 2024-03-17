@@ -13,6 +13,8 @@ import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.networkBoundResource
 import io.github.wulkanowy.data.pojos.TimetableFull
 import io.github.wulkanowy.services.alarm.TimetableNotificationSchedulerHelper
+import io.github.wulkanowy.ui.modules.timetablewidget.TimetableWidgetProvider
+import io.github.wulkanowy.utils.AppWidgetUpdater
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.monday
@@ -26,6 +28,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @Singleton
 class TimetableRepository @Inject constructor(
     private val timetableDb: TimetableDao,
@@ -34,6 +37,7 @@ class TimetableRepository @Inject constructor(
     private val wulkanowySdkFactory: WulkanowySdkFactory,
     private val schedulerHelper: TimetableNotificationSchedulerHelper,
     private val refreshHelper: AutoRefreshHelper,
+    private val appWidgetUpdater: AppWidgetUpdater,
 ) {
 
     private val saveFetchResultMutex = Mutex()
@@ -52,7 +56,8 @@ class TimetableRepository @Inject constructor(
         forceRefresh: Boolean,
         refreshAdditional: Boolean = false,
         notify: Boolean = false,
-        timetableType: TimetableType = TimetableType.NORMAL
+        timetableType: TimetableType = TimetableType.NORMAL,
+        isFromAppWidget: Boolean = false
     ) = networkBoundResource(
         mutex = saveFetchResultMutex,
         isResultEmpty = {
@@ -83,6 +88,9 @@ class TimetableRepository @Inject constructor(
             refreshDayHeaders(timetableOld.headers, timetableNew.headers)
 
             refreshHelper.updateLastRefreshTimestamp(getRefreshKey(cacheKey, semester, start, end))
+            if (!isFromAppWidget) {
+                appWidgetUpdater.updateAllAppWidgetsByProvider(TimetableWidgetProvider::class)
+            }
         },
         filterResult = { (timetable, additional, headers) ->
             TimetableFull(

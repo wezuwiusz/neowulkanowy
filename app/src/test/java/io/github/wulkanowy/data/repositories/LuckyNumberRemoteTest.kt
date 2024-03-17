@@ -8,6 +8,7 @@ import io.github.wulkanowy.data.mappers.mapToEntity
 import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.getStudentEntity
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.utils.AppWidgetUpdater
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -32,6 +33,9 @@ class LuckyNumberRemoteTest {
     @MockK
     private lateinit var luckyNumberDb: LuckyNumberDao
 
+    @MockK(relaxed = true)
+    private lateinit var appWidgetUpdater: AppWidgetUpdater
+
     private val student = getStudentEntity()
 
     private lateinit var luckyNumberRepository: LuckyNumberRepository
@@ -44,7 +48,8 @@ class LuckyNumberRemoteTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        luckyNumberRepository = LuckyNumberRepository(luckyNumberDb, wulkanowySdkFactory)
+        luckyNumberRepository =
+            LuckyNumberRepository(luckyNumberDb, wulkanowySdkFactory, appWidgetUpdater)
     }
 
     @Test

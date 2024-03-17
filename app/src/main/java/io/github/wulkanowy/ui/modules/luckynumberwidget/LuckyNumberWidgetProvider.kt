@@ -145,7 +145,11 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
             }
 
             if (currentStudent != null) {
-                luckyNumberRepository.getLuckyNumber(currentStudent, forceRefresh = false)
+                luckyNumberRepository.getLuckyNumber(
+                    student = currentStudent,
+                    forceRefresh = false,
+                    isFromAppWidget = true
+                )
                     .toFirstResult()
                     .dataOrThrow
             } else null
