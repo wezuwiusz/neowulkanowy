@@ -5,8 +5,8 @@ import io.github.wulkanowy.data.db.entities.MailboxType
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.sdk.Sdk
-import java.time.LocalDate
 import java.time.Instant.now
+import java.time.LocalDate
 import io.github.wulkanowy.sdk.pojo.Semester as SdkSemester
 
 fun getSemesterEntity(diaryId: Int = 1, semesterId: Int = 1, start: LocalDate = LocalDate.now(), end: LocalDate = LocalDate.now(), semesterName: Int = 1) = Semester(
@@ -72,6 +72,8 @@ fun getStudentEntity(mode: Sdk.Mode = Sdk.Mode.HEBE) = Student(
     symbol = "",
     userLoginId = 1,
     userName = "",
+    isEduOne = false,
+    isAuthorized = false
 ).apply {
     id = 1
 }

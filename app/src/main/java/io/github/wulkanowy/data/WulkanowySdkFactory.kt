@@ -38,6 +38,7 @@ class WulkanowySdkFactory @Inject constructor(
             schoolSymbol = student.schoolSymbol
             studentId = student.studentId
             classId = student.classId
+            isEduOne = student.isEduOne
             emptyCookieJarInterceptor = true
 
             if (Sdk.Mode.valueOf(student.loginMode) == Sdk.Mode.HEBE) {

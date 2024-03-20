@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.main
 
+import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.services.sync.SyncManager
@@ -7,13 +8,22 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.Runs
+import io.mockk.clearMocks
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.just
+import io.mockk.verify
 import kotlinx.serialization.json.Json
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class MainPresenterTest {
+
+    @get:Rule
+    val coroutineRule = MainCoroutineRule()
 
     @MockK(relaxed = true)
     lateinit var errorHandler: ErrorHandler

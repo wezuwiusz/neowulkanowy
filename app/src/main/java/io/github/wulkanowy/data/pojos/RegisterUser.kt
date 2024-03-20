@@ -45,4 +45,6 @@ data class RegisterStudent(
     val classId: Int,
     val isParent: Boolean,
     val semesters: List<Semester>,
+    val isAuthorized: Boolean,
+    val isEduOne: Boolean
 ) : java.io.Serializable
