@@ -78,6 +78,13 @@ data class Student(
 
     @ColumnInfo(name = "registration_date")
     val registrationDate: Instant,
+
+    @ColumnInfo(name = "is_authorized", defaultValue = "0")
+    val isAuthorized: Boolean,
+
+    @ColumnInfo(name = "is_edu_one", defaultValue = "0")
+    val isEduOne: Boolean,
+
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

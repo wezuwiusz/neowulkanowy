@@ -3,7 +3,7 @@ package io.github.wulkanowy.ui.base
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
-import io.github.wulkanowy.sdk.scrapper.exception.AuthorizationRequiredException
+import io.github.wulkanowy.data.repositories.NoAuthorizationException
 import io.github.wulkanowy.sdk.scrapper.exception.CloudflareVerificationException
 import io.github.wulkanowy.sdk.scrapper.login.BadCredentialsException
 import io.github.wulkanowy.sdk.scrapper.login.PasswordChangeRequiredException
@@ -40,7 +40,7 @@ open class ErrorHandler @Inject constructor(@ApplicationContext protected val co
             is ScramblerException -> onDecryptionFailed()
             is BadCredentialsException -> onExpiredCredentials()
             is NoCurrentStudentException -> onNoCurrentStudent()
-            is AuthorizationRequiredException -> onAuthorizationRequired()
+            is NoAuthorizationException -> onAuthorizationRequired()
             is CloudflareVerificationException -> onCaptchaVerificationRequired(error.originalUrl)
         }
     }

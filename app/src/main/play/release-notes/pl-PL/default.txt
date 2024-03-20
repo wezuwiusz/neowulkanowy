@@ -1,11 +1,7 @@
-Wersja 2.5.1
+Wersja 2.5.2
 
-— dodaliśmy wyświetlanie ogłoszeń
-— dodaliśmy opcję przywracania wiadomości z kosza
-— dodaliśmy opcję wyciszania nadawców wiadomości
-— naprawiliśmy opcjonalne liczenie średniej arytmetycznej, kiedy brak ocen z wagą w drugim semestrze
-— usprawniliśmy ładowanie frekwencji i planu lekcji
-— naprawiliśmy usprawiedliwianie nieobecności i autoryzację u użytkowników eduOne
-— zmieniliśmy komunikat o zmienionym haśle
+— naprawiliśmy omyłkowe wyświetlanie ekranu z wymaganą autoryzacją numerem PESEL
+— naprawiliśmy kilka problemów ze stabilnością
+— poprawiliśmy wyświetlanie kolorów we frekwencji
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

@@ -1,6 +1,7 @@
 package io.github.wulkanowy.ui.base
 
 import android.app.ActivityManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -45,11 +46,19 @@ abstract class BaseActivity<T : BasePresenter<out BaseView>, VB : ViewBinding> :
         themeManager.applyActivityTheme(this)
         super.onCreate(savedInstanceState)
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleLogger, true)
+        applyCustomTaskDescription()
+    }
 
-        @Suppress("DEPRECATION")
-        setTaskDescription(
-            ActivityManager.TaskDescription(null, null, getThemeAttrColor(R.attr.colorSurface))
-        )
+    @Suppress("DEPRECATION")
+    private fun applyCustomTaskDescription() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) return
+        try {
+            val newColor = getThemeAttrColor(R.attr.colorSurface)
+            val taskDescription = ActivityManager.TaskDescription(null, null, newColor)
+            setTaskDescription(taskDescription)
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
     }
 
     override fun showError(text: String, error: Throwable) {

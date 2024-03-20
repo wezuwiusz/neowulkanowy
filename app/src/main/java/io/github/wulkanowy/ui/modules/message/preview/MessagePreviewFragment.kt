@@ -82,10 +82,10 @@ class MessagePreviewFragment :
         get() = getString(R.string.message_not_exists)
 
     companion object {
-        const val MESSAGE_ID_KEY = "message_id"
+        private const val MESSAGE_ARG_KEY = "message"
 
         fun newInstance(message: Message) = MessagePreviewFragment().apply {
-            arguments = bundleOf(MESSAGE_ID_KEY to message)
+            arguments = bundleOf(MESSAGE_ARG_KEY to message)
         }
     }
 
@@ -101,7 +101,7 @@ class MessagePreviewFragment :
         messageContainer = binding.messagePreviewContainer
         presenter.onAttachView(
             view = this,
-            message = (savedInstanceState ?: arguments)?.serializable(MESSAGE_ID_KEY),
+            message = requireArguments().serializable(MESSAGE_ARG_KEY),
         )
     }
 
@@ -231,11 +231,6 @@ class MessagePreviewFragment :
 
     override fun popView() {
         (activity as MainActivity).popView()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable(MESSAGE_ID_KEY, presenter.messageWithAttachments?.message)
-        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {

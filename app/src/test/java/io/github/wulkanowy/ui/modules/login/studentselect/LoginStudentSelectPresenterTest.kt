@@ -71,6 +71,8 @@ class LoginStudentSelectPresenterTest {
         classId = 0,
         isParent = false,
         semesters = listOf(),
+        isEduOne = false,
+        isAuthorized = false,
     )
 
     private val school = RegisterUnit(

@@ -78,4 +78,9 @@ class AuthDialog : BaseDialogFragment<DialogAuthBinding>(), AuthView {
     override fun showDescriptionWithName(name: String) {
         binding.authDescription.text = getString(R.string.auth_description, name).parseAsHtml()
     }
+
+    override fun onDestroyView() {
+        presenter.onDetachView()
+        super.onDestroyView()
+    }
 }

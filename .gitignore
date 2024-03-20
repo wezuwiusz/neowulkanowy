@@ -67,6 +67,10 @@ captures/
 .idea/discord.xml
 .idea/migrations.xml
 .idea/androidTestResultsUserPreferences.xml
+.idea/copilot
+.idea/deploymentTargetDropDown.xml
+.idea/deploymentTargetSelector.xml
+.idea/kotlinc.xml
 
 # Keystore files
 *.jks

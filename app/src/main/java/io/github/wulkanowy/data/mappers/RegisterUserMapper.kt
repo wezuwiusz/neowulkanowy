@@ -34,17 +34,19 @@ fun SdkRegisterUser.mapToPojo(password: String?) = RegisterUser(
                     error = it.error,
                     students = it.subjects
                         .filterIsInstance<SdkRegisterStudent>()
-                        .map { registerSubject ->
+                        .map { registerStudent ->
                             RegisterStudent(
-                                studentId = registerSubject.studentId,
-                                studentName = registerSubject.studentName,
-                                studentSecondName = registerSubject.studentSecondName,
-                                studentSurname = registerSubject.studentSurname,
-                                className = registerSubject.className,
-                                classId = registerSubject.classId,
-                                isParent = registerSubject.isParent,
-                                semesters = registerSubject.semesters
-                                    .mapToEntities(registerSubject.studentId),
+                                studentId = registerStudent.studentId,
+                                studentName = registerStudent.studentName,
+                                studentSecondName = registerStudent.studentSecondName,
+                                studentSurname = registerStudent.studentSurname,
+                                className = registerStudent.className,
+                                classId = registerStudent.classId,
+                                isParent = registerStudent.isParent,
+                                isAuthorized = registerStudent.isAuthorized,
+                                isEduOne = registerStudent.isEduOne,
+                                semesters = registerStudent.semesters
+                                    .mapToEntities(registerStudent.studentId),
                             )
                         },
                 )
@@ -84,6 +86,8 @@ fun RegisterStudent.mapToStudentWithSemesters(
         password = user.password.orEmpty(),
         isCurrent = false,
         registrationDate = Instant.now(),
+        isAuthorized = this.isAuthorized,
+        isEduOne = this.isEduOne,
     ).apply {
         avatarColor = colors.random()
     },

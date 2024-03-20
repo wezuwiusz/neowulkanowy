@@ -72,7 +72,9 @@ class GradeAverageProviderTest {
         className = "",
         classId = 1,
         isCurrent = true,
-        registrationDate = Instant.now()
+        registrationDate = Instant.now(),
+        isAuthorized = false,
+        isEduOne = false
     )
 
     private val semesters = mutableListOf(
