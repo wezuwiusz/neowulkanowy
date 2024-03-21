@@ -57,6 +57,7 @@ class TimetablePresenter @Inject constructor(
 
     private var initialDate: LocalDate? = null
     private var isWeekendHasLessons: Boolean = false
+    private var isEduOne: Boolean = false
 
     var currentDate: LocalDate? = null
         private set
@@ -149,6 +150,7 @@ class TimetablePresenter @Inject constructor(
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
 
+            isEduOne = student.isEduOne
             checkInitialAndCurrentDate(semester)
             timetableRepository.getTimetable(
                 student = student,
@@ -234,9 +236,8 @@ class TimetablePresenter @Inject constructor(
                 if (prefRepository.showWholeClassPlan == TimetableMode.ONLY_CURRENT_GROUP) {
                     it.isStudentPlan
                 } else true
-            }.sortedWith(
-                compareBy({ item -> item.number }, { item -> !item.isStudentPlan })
-            )
+            }
+            .sortedWith(compareBy({ item -> item.start }, { item -> !item.isStudentPlan }))
 
         var prevNum = when (prefRepository.showTimetableGaps) {
             BETWEEN_AND_BEFORE_LESSONS -> 0
@@ -257,13 +258,15 @@ class TimetablePresenter @Inject constructor(
                         lesson = it,
                         showGroupsInPlan = prefRepository.showGroupsInPlan,
                         timeLeft = filteredItems.getTimeLeftForLesson(it, i),
-                        onClick = ::onTimetableItemSelected
+                        onClick = ::onTimetableItemSelected,
+                        isLessonNumberVisible = !isEduOne
                     )
                     add(normalLesson)
                 } else {
                     val smallLesson = TimetableItem.Small(
                         lesson = it,
-                        onClick = ::onTimetableItemSelected
+                        onClick = ::onTimetableItemSelected,
+                        isLessonNumberVisible = !isEduOne
                     )
                     add(smallLesson)
                 }

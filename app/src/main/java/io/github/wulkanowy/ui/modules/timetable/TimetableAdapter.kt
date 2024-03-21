@@ -27,7 +27,7 @@ class TimetableAdapter @Inject constructor() :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
-        return when (TimetableItemType.values()[viewType]) {
+        return when (TimetableItemType.entries[viewType]) {
             TimetableItemType.SMALL -> SmallViewHolder(
                 ItemTimetableSmallBinding.inflate(inflater, parent, false)
             )
@@ -79,6 +79,7 @@ class TimetableAdapter @Inject constructor() :
 
         with(binding) {
             timetableSmallItemNumber.text = lesson.number.toString()
+            timetableSmallItemNumber.isVisible = item.isLessonNumberVisible
             timetableSmallItemSubject.text = lesson.subject
             timetableSmallItemTimeStart.text = lesson.start.toFormattedString("HH:mm")
             timetableSmallItemRoom.text = lesson.room
@@ -97,6 +98,7 @@ class TimetableAdapter @Inject constructor() :
 
         with(binding) {
             timetableItemNumber.text = lesson.number.toString()
+            timetableItemNumber.isVisible = item.isLessonNumberVisible
             timetableItemSubject.text = lesson.subject
             timetableItemGroup.text = lesson.group
             timetableItemRoom.text = lesson.room
