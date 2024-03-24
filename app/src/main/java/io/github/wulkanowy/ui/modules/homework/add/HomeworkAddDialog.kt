@@ -98,7 +98,9 @@ class HomeworkAddDialog : BaseDialogFragment<DialogHomeworkAddBinding>(), Homewo
             rangeEnd = LocalDate.now().lastSchoolDayInSchoolYear,
             onDateSelected = {
                 date = it
-                binding.homeworkDialogDate.editText?.setText(date!!.toFormattedString())
+                if (isAdded) {
+                    binding.homeworkDialogDate.editText?.setText(date!!.toFormattedString())
+                }
             }
         )
     }
