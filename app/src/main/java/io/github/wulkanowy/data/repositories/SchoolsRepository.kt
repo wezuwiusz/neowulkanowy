@@ -1,17 +1,15 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.api.SchoolsService
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.pojos.IntegrityRequest
 import io.github.wulkanowy.data.pojos.LoginEvent
-import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.utils.IntegrityHelper
 import io.github.wulkanowy.utils.getCurrentOrLast
-import io.github.wulkanowy.utils.init
-import io.github.wulkanowy.utils.switchSemester
 import kotlinx.coroutines.withTimeout
 import timber.log.Timber
 import java.util.UUID
@@ -23,7 +21,7 @@ import kotlin.time.Duration.Companion.seconds
 class SchoolsRepository @Inject constructor(
     private val integrityHelper: IntegrityHelper,
     private val schoolsService: SchoolsService,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
 ) {
 
     suspend fun logSchoolLogin(loginData: LoginData, students: List<StudentWithSemesters>) {
@@ -40,10 +38,9 @@ class SchoolsRepository @Inject constructor(
     private suspend fun logLogin(loginData: LoginData, student: Student, semester: Semester) {
         val requestId = UUID.randomUUID().toString()
         val token = integrityHelper.getIntegrityToken(requestId) ?: return
+        val updatedStudent = student.copy(password = loginData.password)
 
-        val schoolInfo = sdk
-            .init(student.copy(password = loginData.password))
-            .switchSemester(semester)
+        val schoolInfo = wulkanowySdkFactory.create(updatedStudent, semester)
             .getSchool()
 
         schoolsService.logLoginEvent(

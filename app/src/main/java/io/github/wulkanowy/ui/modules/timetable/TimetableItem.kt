@@ -7,12 +7,14 @@ sealed class TimetableItem(val type: TimetableItemType) {
 
     data class Small(
         val lesson: Timetable,
+        val isLessonNumberVisible: Boolean,
         val onClick: (Timetable) -> Unit,
     ) : TimetableItem(TimetableItemType.SMALL)
 
     data class Normal(
         val lesson: Timetable,
         val showGroupsInPlan: Boolean,
+        val isLessonNumberVisible: Boolean,
         val timeLeft: TimeLeft?,
         val onClick: (Timetable) -> Unit,
     ) : TimetableItem(TimetableItemType.NORMAL)

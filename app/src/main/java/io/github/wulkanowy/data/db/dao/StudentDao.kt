@@ -10,6 +10,7 @@ import androidx.room.Update
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentIsAuthorized
+import io.github.wulkanowy.data.db.entities.StudentIsEduOne
 import io.github.wulkanowy.data.db.entities.StudentName
 import io.github.wulkanowy.data.db.entities.StudentNickAndAvatar
 import javax.inject.Singleton
@@ -26,6 +27,9 @@ abstract class StudentDao {
 
     @Update(entity = Student::class)
     abstract suspend fun update(studentIsAuthorized: StudentIsAuthorized)
+
+    @Update(entity = Student::class)
+    abstract suspend fun update(studentIsEduOne: StudentIsEduOne)
 
     @Update(entity = Student::class)
     abstract suspend fun update(studentNickAndAvatar: StudentNickAndAvatar)

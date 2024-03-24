@@ -1,5 +1,6 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.createWulkanowySdkFactoryMock
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.dao.LuckyNumberDao
 import io.github.wulkanowy.data.errorOrNull
@@ -12,8 +13,8 @@ import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.mockk.just
+import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -25,8 +26,8 @@ import io.github.wulkanowy.sdk.pojo.LuckyNumber as SdkLuckyNumber
 
 class LuckyNumberRemoteTest {
 
-    @SpyK
-    private var sdk = Sdk()
+    private var sdk = spyk<Sdk>()
+    private val wulkanowySdkFactory = createWulkanowySdkFactoryMock(sdk)
 
     @MockK
     private lateinit var luckyNumberDb: LuckyNumberDao
@@ -43,7 +44,7 @@ class LuckyNumberRemoteTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        luckyNumberRepository = LuckyNumberRepository(luckyNumberDb, sdk)
+        luckyNumberRepository = LuckyNumberRepository(luckyNumberDb, wulkanowySdkFactory)
     }
 
     @Test

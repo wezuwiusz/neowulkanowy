@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data.repositories
 
 import androidx.room.withTransaction
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.dao.SemesterDao
 import io.github.wulkanowy.data.db.dao.StudentDao
@@ -11,15 +12,14 @@ import io.github.wulkanowy.data.db.entities.StudentName
 import io.github.wulkanowy.data.db.entities.StudentNickAndAvatar
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
+import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.mappers.mapToPojo
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.DispatchersProvider
-import io.github.wulkanowy.utils.getCurrentOrLast
-import io.github.wulkanowy.utils.init
 import io.github.wulkanowy.utils.security.Scrambler
-import io.github.wulkanowy.utils.switchSemester
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +28,7 @@ class StudentRepository @Inject constructor(
     private val dispatchers: DispatchersProvider,
     private val studentDb: StudentDao,
     private val semesterDb: SemesterDao,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
     private val appDatabase: AppDatabase,
     private val scrambler: Scrambler,
 ) {
@@ -39,7 +39,7 @@ class StudentRepository @Inject constructor(
         pin: String,
         symbol: String,
         token: String
-    ): RegisterUser = sdk
+    ): RegisterUser = wulkanowySdkFactory.create()
         .getStudentsFromHebe(token, pin, symbol, "")
         .mapToPojo(null)
 
@@ -49,7 +49,7 @@ class StudentRepository @Inject constructor(
         scrapperBaseUrl: String,
         domainSuffix: String,
         symbol: String
-    ): RegisterUser = sdk
+    ): RegisterUser = wulkanowySdkFactory.create()
         .getUserSubjectsFromScrapper(email, password, scrapperBaseUrl, domainSuffix, symbol)
         .mapToPojo(password)
 
@@ -58,7 +58,7 @@ class StudentRepository @Inject constructor(
         password: String,
         scrapperBaseUrl: String,
         symbol: String
-    ): RegisterUser = sdk
+    ): RegisterUser = wulkanowySdkFactory.create()
         .getStudentsHybrid(email, password, scrapperBaseUrl, "", symbol)
         .mapToPojo(password)
 
@@ -102,23 +102,44 @@ class StudentRepository @Inject constructor(
         return student
     }
 
-    suspend fun checkCurrentStudentAuthorizationStatus() {
+    suspend fun updateCurrentStudentAuthStatus() {
+        Timber.i("Check isAuthorized: started")
         val student = getCurrentStudent()
-
-        if (!student.isAuthorized) {
-            val currentSemester = semesterDb.loadAll(
-                studentId = student.studentId,
-                classId = student.classId,
-            ).getCurrentOrLast()
-            val initializedSdk = sdk.init(student).switchSemester(currentSemester)
-            val isAuthorized = initializedSdk.getCurrentStudent()?.isAuthorized ?: false
-
-            if (isAuthorized) {
-                studentDb.update(StudentIsAuthorized(isAuthorized = true).apply {
-                    id = student.id
-                })
-            } else throw NoAuthorizationException()
+        if (student.isAuthorized) {
+            Timber.i("Check isAuthorized: already authorized")
+            return
         }
+
+        val initializedSdk = wulkanowySdkFactory.create(student)
+        val newCurrentStudent = runCatching { initializedSdk.getCurrentStudent() }
+            .onFailure { Timber.e(it, "Check isAuthorized: error occurred") }
+            .getOrNull()
+
+        if (newCurrentStudent == null) {
+            Timber.d("Check isAuthorized: current user is null")
+            return
+        }
+
+        val currentStudentSemesters = semesterDb.loadAll(student.studentId, student.classId)
+        if (currentStudentSemesters.isEmpty()) {
+            Timber.d("Check isAuthorized: apply empty semesters workaround")
+            semesterDb.insertSemesters(
+                items = newCurrentStudent.semesters.mapToEntities(student.studentId),
+            )
+        }
+
+        if (!newCurrentStudent.isAuthorized) {
+            Timber.i("Check isAuthorized: authorization required")
+            throw NoAuthorizationException()
+        }
+
+        val studentIsAuthorized = StudentIsAuthorized(
+            id = student.id,
+            isAuthorized = true
+        )
+
+        Timber.i("Check isAuthorized: already authorized, update local status")
+        studentDb.update(studentIsAuthorized)
     }
 
     suspend fun getCurrentStudent(decryptPass: Boolean = true): Student {
@@ -170,20 +191,24 @@ class StudentRepository @Inject constructor(
         .distinctBy { it.student.studentName }.size == 1
 
     suspend fun authorizePermission(student: Student, semester: Semester, pesel: String) =
-        sdk.init(student)
-            .switchSemester(semester)
+        wulkanowySdkFactory.create(student, semester)
             .authorizePermission(pesel)
 
-    suspend fun refreshStudentName(student: Student, semester: Semester) {
-        val newCurrentApiStudent = sdk.init(student)
-            .switchSemester(semester)
-            .getCurrentStudent() ?: return
+    suspend fun refreshStudentAfterAuthorize(student: Student, semester: Semester) {
+        val newCurrentApiStudent = wulkanowySdkFactory
+            .create(student, semester)
+            .getCurrentStudent()
+            ?: return Timber.d("Can't find student with id ${student.studentId}")
 
         val studentName = StudentName(
             studentName = "${newCurrentApiStudent.studentName} ${newCurrentApiStudent.studentSurname}"
         ).apply { id = student.id }
 
         studentDb.update(studentName)
+        semesterDb.removeOldAndSaveNew(
+            oldItems = semesterDb.loadAll(student.studentId, semester.classId),
+            newItems = newCurrentApiStudent.semesters.mapToEntities(newCurrentApiStudent.studentId)
+        )
     }
 
     suspend fun deleteStudentsAssociatedWithAccount(student: Student) {
@@ -199,4 +224,3 @@ class StudentRepository @Inject constructor(
 }
 
 class NoAuthorizationException : Exception()
-

@@ -1,12 +1,11 @@
 package io.github.wulkanowy.data.repositories
 
+import io.github.wulkanowy.data.WulkanowySdkFactory
 import io.github.wulkanowy.data.db.dao.LuckyNumberDao
 import io.github.wulkanowy.data.db.entities.LuckyNumber
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.mappers.mapToEntity
 import io.github.wulkanowy.data.networkBoundResource
-import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.utils.init
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
@@ -18,7 +17,7 @@ import javax.inject.Singleton
 @Singleton
 class LuckyNumberRepository @Inject constructor(
     private val luckyNumberDb: LuckyNumberDao,
-    private val sdk: Sdk,
+    private val wulkanowySdkFactory: WulkanowySdkFactory,
 ) {
 
     private val saveFetchResultMutex = Mutex()
@@ -33,7 +32,9 @@ class LuckyNumberRepository @Inject constructor(
         shouldFetch = { it == null || forceRefresh },
         query = { luckyNumberDb.load(student.studentId, now()) },
         fetch = {
-            sdk.init(student).getLuckyNumber(student.schoolShortName)?.mapToEntity(student)
+            wulkanowySdkFactory.create(student)
+                .getLuckyNumber(student.schoolShortName)
+                ?.mapToEntity(student)
         },
         saveFetchResult = { oldLuckyNumber, newLuckyNumber ->
             newLuckyNumber ?: return@networkBoundResource

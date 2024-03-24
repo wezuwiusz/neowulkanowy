@@ -22,11 +22,8 @@ class GradePresenter @Inject constructor(
 ) : BasePresenter<GradeView>(errorHandler, studentRepository) {
 
     private var selectedIndex = 0
-
     private var schoolYear = 0
-
-    private var semesters = emptyList<Semester>()
-
+    private var availableSemesters = emptyList<Semester>()
     private val loadedSemesterId = mutableMapOf<Int, Int>()
 
     private lateinit var lastError: Throwable
@@ -40,7 +37,7 @@ class GradePresenter @Inject constructor(
     }
 
     fun onCreateMenu() {
-        if (semesters.isEmpty()) view?.showSemesterSwitch(false)
+        if (availableSemesters.isEmpty()) view?.showSemesterSwitch(false)
     }
 
     fun onViewReselected() {
@@ -49,8 +46,8 @@ class GradePresenter @Inject constructor(
     }
 
     fun onSemesterSwitch(): Boolean {
-        if (semesters.isNotEmpty()) {
-            view?.showSemesterDialog(selectedIndex - 1, semesters.take(2))
+        if (availableSemesters.isNotEmpty()) {
+            view?.showSemesterDialog(selectedIndex - 1, availableSemesters.take(2))
         }
         return true
     }
@@ -83,7 +80,7 @@ class GradePresenter @Inject constructor(
     }
 
     fun onPageSelected(index: Int) {
-        if (semesters.isNotEmpty()) loadChild(index)
+        if (availableSemesters.isNotEmpty()) loadChild(index)
     }
 
     fun onRetry() {
@@ -101,16 +98,24 @@ class GradePresenter @Inject constructor(
     private fun loadData() {
         resourceFlow {
             val student = studentRepository.getCurrentStudent()
-            semesterRepository.getSemesters(student, refreshOnNoCurrent = true)
+            val semesters = semesterRepository.getSemesters(student, refreshOnNoCurrent = true)
+
+            student to semesters
         }
             .logResourceStatus("load grade data")
-            .onResourceData {
-                val current = it.getCurrentOrLast()
-                selectedIndex = if (selectedIndex == 0) current.semesterName else selectedIndex
-                schoolYear = current.schoolYear
-                semesters = it.filter { semester -> semester.diaryId == current.diaryId }
-                view?.setCurrentSemesterName(current.semesterName, schoolYear)
+            .onResourceData { (student, semesters) ->
+                val currentSemester = semesters.getCurrentOrLast()
+                selectedIndex =
+                    if (selectedIndex == 0) currentSemester.semesterName else selectedIndex
+                schoolYear = currentSemester.schoolYear
+                availableSemesters = semesters.filter { semester ->
+                    semester.diaryId == currentSemester.diaryId
+                }
+
                 view?.run {
+                    initTabs(if (student.isEduOne == true) 2 else 3)
+                    setCurrentSemesterName(currentSemester.semesterName, schoolYear)
+
                     Timber.i("Loading grade data: Attempt load index $currentPageIndex")
                     loadChild(currentPageIndex)
                     showErrorView(false)
@@ -131,10 +136,10 @@ class GradePresenter @Inject constructor(
     }
 
     private fun loadChild(index: Int, forceRefresh: Boolean = false) {
-        Timber.d("Load grade tab child. Selected semester: $selectedIndex, semesters: ${semesters.joinToString { it.semesterName.toString() }}")
+        Timber.d("Load grade tab child. Selected semester: $selectedIndex, semesters: ${availableSemesters.joinToString { it.semesterName.toString() }}")
 
         val newSelectedSemesterId = try {
-            semesters.first { it.semesterName == selectedIndex }.semesterId
+            availableSemesters.first { it.semesterName == selectedIndex }.semesterId
         } catch (e: NoSuchElementException) {
             Timber.e(e, "Selected semester no exists")
             return

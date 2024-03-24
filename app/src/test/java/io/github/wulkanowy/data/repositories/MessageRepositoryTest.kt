@@ -1,6 +1,7 @@
 package io.github.wulkanowy.data.repositories
 
 import android.content.Context
+import io.github.wulkanowy.createWulkanowySdkFactoryMock
 import io.github.wulkanowy.data.dataOrNull
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.dao.MailboxDao
@@ -28,10 +29,9 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.SpyK
 import io.mockk.just
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
@@ -45,11 +45,10 @@ import java.time.Instant
 import java.time.ZoneOffset
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class MessageRepositoryTest {
 
-    @SpyK
-    private var sdk = Sdk()
+    private var sdk = spyk<Sdk>()
+    private val wulkanowySdkFactory = createWulkanowySdkFactoryMock(sdk)
 
     @MockK
     private lateinit var messageDb: MessagesDao
@@ -102,7 +101,7 @@ class MessageRepositoryTest {
             messagesDb = messageDb,
             mutedMessageSendersDao = mutesDb,
             messageAttachmentDao = messageAttachmentDao,
-            sdk = sdk,
+            wulkanowySdkFactory = wulkanowySdkFactory,
             context = context,
             refreshHelper = refreshHelper,
             sharedPrefProvider = sharedPrefProvider,

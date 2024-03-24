@@ -17,6 +17,7 @@ import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
 import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
+import io.github.wulkanowy.sdk.scrapper.exception.FeatureUnavailableException
 import io.github.wulkanowy.services.sync.channels.DebugChannel
 import io.github.wulkanowy.services.sync.works.Work
 import io.github.wulkanowy.utils.DispatchersProvider
@@ -48,6 +49,7 @@ class SyncWorker @AssistedInject constructor(
             val semester = semesterRepository.getCurrentSemester(student, true)
             student to semester
         } catch (e: Throwable) {
+            Timber.e(e)
             return@withContext getResultFromErrors(listOf(e))
         }
 
@@ -59,7 +61,7 @@ class SyncWorker @AssistedInject constructor(
                 null
             } catch (e: Throwable) {
                 Timber.w("${work::class.java.simpleName} result: An exception ${e.message} occurred")
-                if (e is FeatureDisabledException || e is FeatureNotAvailableException) {
+                if (e is FeatureDisabledException || e is FeatureNotAvailableException || e is FeatureUnavailableException) {
                     null
                 } else {
                     Timber.e(e)
