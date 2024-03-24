@@ -78,7 +78,7 @@ class TimetableWidgetFactory(
                 val lessons = getLessons(student, semester, date)
                 val lastSync = timetableRepository.getLastRefreshTimestamp(semester, date, date)
 
-                createItems(lessons, lastSync, !student.isEduOne)
+                createItems(lessons, lastSync, !(student.isEduOne ?: false))
             }
                 .onFailure {
                     items = listOf(TimetableWidgetItem.Error(it))

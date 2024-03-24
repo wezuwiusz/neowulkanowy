@@ -16,9 +16,9 @@ import io.github.wulkanowy.data.mappers.mapToPojo
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.DispatchersProvider
-import io.github.wulkanowy.utils.getCurrentOrLast
 import io.github.wulkanowy.utils.security.Scrambler
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -101,23 +101,29 @@ class StudentRepository @Inject constructor(
         return student
     }
 
-    suspend fun checkCurrentStudentAuthorizationStatus() {
+    suspend fun updateCurrentStudentAuthStatus() {
+        Timber.i("Check isAuthorized: started")
         val student = getCurrentStudent()
-
-        if (!student.isAuthorized) {
-            val currentSemester = semesterDb.loadAll(
-                studentId = student.studentId,
-                classId = student.classId,
-            ).getCurrentOrLast()
-            val initializedSdk = wulkanowySdkFactory.create(student, currentSemester)
-            val isAuthorized = initializedSdk.getCurrentStudent()?.isAuthorized ?: false
-
-            if (isAuthorized) {
-                studentDb.update(StudentIsAuthorized(isAuthorized = true).apply {
-                    id = student.id
-                })
-            } else throw NoAuthorizationException()
+        if (student.isAuthorized) {
+            Timber.i("Check isAuthorized: already authorized")
+            return
         }
+
+        val initializedSdk = wulkanowySdkFactory.create(student)
+        val newCurrentStudent = initializedSdk.getCurrentStudent() ?: return
+
+        if (!newCurrentStudent.isAuthorized) {
+            Timber.i("Check isAuthorized: authorization required")
+            throw NoAuthorizationException()
+        }
+
+        val studentIsAuthorized = StudentIsAuthorized(
+            id = student.id,
+            isAuthorized = true
+        )
+
+        Timber.i("Check isAuthorized: already authorized, update local status")
+        studentDb.update(studentIsAuthorized)
     }
 
     suspend fun getCurrentStudent(decryptPass: Boolean = true): Student {

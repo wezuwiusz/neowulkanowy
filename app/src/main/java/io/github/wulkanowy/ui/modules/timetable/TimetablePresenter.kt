@@ -150,7 +150,7 @@ class TimetablePresenter @Inject constructor(
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
 
-            isEduOne = student.isEduOne
+            isEduOne = student.isEduOne == true
             checkInitialAndCurrentDate(semester)
             timetableRepository.getTimetable(
                 student = student,
