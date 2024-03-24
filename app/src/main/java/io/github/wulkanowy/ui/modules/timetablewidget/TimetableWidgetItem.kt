@@ -7,6 +7,7 @@ sealed class TimetableWidgetItem(val type: TimetableWidgetItemType) {
 
     data class Normal(
         val lesson: Timetable,
+        val isLessonNumberVisible: Boolean,
     ) : TimetableWidgetItem(TimetableWidgetItemType.NORMAL)
 
     data class Empty(

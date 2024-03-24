@@ -93,8 +93,12 @@ class AdsHelper @Inject constructor(
     private fun initializeMobileAds() {
         if (isMobileAdsInitializeCalled.getAndSet(true)) return
 
-        MobileAds.initialize(context) {
-            isMobileAdsSdkInitialized.value = true
+        try {
+            MobileAds.initialize(context) {
+                isMobileAdsSdkInitialized.value = true
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
         }
     }
 

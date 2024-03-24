@@ -48,8 +48,11 @@ class LuckyNumberRemoteTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        luckyNumberRepository =
-            LuckyNumberRepository(luckyNumberDb, wulkanowySdkFactory, appWidgetUpdater)
+        luckyNumberRepository = LuckyNumberRepository(
+            luckyNumberDb = luckyNumberDb,
+            wulkanowySdkFactory = wulkanowySdkFactory,
+            appWidgetUpdater = appWidgetUpdater,
+        )
     }
 
     @Test

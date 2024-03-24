@@ -21,10 +21,10 @@ abstract class AbstractMigrationTest {
 
     @get:Rule
     val helper: MigrationTestHelper = MigrationTestHelper(
-        InstrumentationRegistry.getInstrumentation(),
-        AppDatabase::class.java,
-        listOf(Migration55()),
-        FrameworkSQLiteOpenHelperFactory()
+        instrumentation = InstrumentationRegistry.getInstrumentation(),
+        databaseClass = AppDatabase::class.java,
+        specs = listOf(Migration63()),
+        openFactory = FrameworkSQLiteOpenHelperFactory()
     )
 
     fun runMigrationsAndValidate(migration: Migration) {

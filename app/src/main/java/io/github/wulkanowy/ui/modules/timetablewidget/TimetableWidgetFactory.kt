@@ -46,11 +46,8 @@ class TimetableWidgetFactory(
 ) : RemoteViewsService.RemoteViewsFactory {
 
     private var items = emptyList<TimetableWidgetItem>()
-
     private var timetableCanceledColor: Int? = null
-
     private var textColor: Int? = null
-
     private var timetableChangeColor: Int? = null
 
     override fun getLoadingView() = null
@@ -81,7 +78,7 @@ class TimetableWidgetFactory(
                 val lessons = getLessons(student, semester, date)
                 val lastSync = timetableRepository.getLastRefreshTimestamp(semester, date, date)
 
-                createItems(lessons, lastSync)
+                createItems(lessons, lastSync, !(student.isEduOne ?: false))
             }
                 .onFailure {
                     items = listOf(TimetableWidgetItem.Error(it))
@@ -113,12 +110,13 @@ class TimetableWidgetFactory(
             isFromAppWidget = true
         )
         val lessons = timetable.toFirstResult().dataOrThrow.lessons
-        return lessons.sortedBy { it.number }
+        return lessons.sortedBy { it.start }
     }
 
     private fun createItems(
         lessons: List<Timetable>,
         lastSync: Instant?,
+        isEduOne: Boolean
     ): List<TimetableWidgetItem> {
         var prevNum = when (prefRepository.showTimetableGaps) {
             BETWEEN_AND_BEFORE_LESSONS -> 0
@@ -134,7 +132,7 @@ class TimetableWidgetFactory(
                     )
                     add(emptyItem)
                 }
-                add(TimetableWidgetItem.Normal(it))
+                add(TimetableWidgetItem.Normal(it, isEduOne))
                 prevNum = it.number
             }
             add(TimetableWidgetItem.Synchronized(lastSync ?: Instant.MIN))
@@ -162,9 +160,11 @@ class TimetableWidgetFactory(
 
         val lessonStartTime = lesson.start.toFormattedString(TIME_FORMAT_STYLE)
         val lessonEndTime = lesson.end.toFormattedString(TIME_FORMAT_STYLE)
+        val lessonNumberVisibility = if (item.isLessonNumberVisible) VISIBLE else GONE
 
         val remoteViews = RemoteViews(context.packageName, R.layout.item_widget_timetable).apply {
             setTextViewText(R.id.timetableWidgetItemNumber, lesson.number.toString())
+            setViewVisibility(R.id.timetableWidgetItemNumber, lessonNumberVisibility)
             setTextViewText(R.id.timetableWidgetItemTimeStart, lessonStartTime)
             setTextViewText(R.id.timetableWidgetItemTimeFinish, lessonEndTime)
             setTextViewText(R.id.timetableWidgetItemSubject, lesson.subject)

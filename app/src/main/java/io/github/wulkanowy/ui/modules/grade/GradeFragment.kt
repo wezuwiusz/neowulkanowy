@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,14 +30,6 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     @Inject
     lateinit var presenter: GradePresenter
 
-    private val pagerAdapter by lazy {
-        BaseFragmentPagerAdapter(
-            fragmentManager = childFragmentManager,
-            pagesCount = 3,
-            lifecycle = lifecycle,
-        )
-    }
-
     private var semesterSwitchMenu: MenuItem? = null
 
     companion object {
@@ -51,6 +42,8 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     override var subtitleString = ""
 
     override val currentPageIndex get() = binding.gradeViewPager.currentItem
+
+    private var pagerAdapter: BaseFragmentPagerAdapter? = null
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,13 +64,26 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     }
 
     override fun initView() {
+        with(binding) {
+            gradeErrorRetry.setOnClickListener { presenter.onRetry() }
+            gradeErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+        }
+    }
+
+    override fun initTabs(pageCount: Int) {
+        pagerAdapter = BaseFragmentPagerAdapter(
+            lifecycle = lifecycle,
+            pagesCount = pageCount,
+            fragmentManager = childFragmentManager
+        )
+
         with(binding.gradeViewPager) {
             adapter = pagerAdapter
             offscreenPageLimit = 3
             setOnSelectPageListener(presenter::onPageSelected)
         }
 
-        with(pagerAdapter) {
+        with(pagerAdapter!!) {
             containerId = binding.gradeViewPager.id
             titleFactory = {
                 when (it) {
@@ -99,11 +105,6 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
         }
 
         binding.gradeTabLayout.elevation = requireContext().dpToPx(4f)
-
-        with(binding) {
-            gradeErrorRetry.setOnClickListener { presenter.onRetry() }
-            gradeErrorDetails.setOnClickListener { presenter.onDetailsClick() }
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -169,19 +170,20 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     }
 
     override fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean) {
-        (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)
+        (pagerAdapter?.getFragmentInstance(index) as? GradeView.GradeChildView)
             ?.onParentLoadData(semesterId, forceRefresh)
     }
 
     override fun notifyChildParentReselected(index: Int) {
-        (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentReselected()
+        (pagerAdapter?.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentReselected()
     }
 
     override fun notifyChildSemesterChange(index: Int) {
-        (pagerAdapter.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentChangeSemester()
+        (pagerAdapter?.getFragmentInstance(index) as? GradeView.GradeChildView)?.onParentChangeSemester()
     }
 
     override fun onDestroyView() {
+        pagerAdapter = null
         presenter.onDetachView()
         super.onDestroyView()
     }

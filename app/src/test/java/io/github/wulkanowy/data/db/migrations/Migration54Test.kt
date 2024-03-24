@@ -7,8 +7,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import io.github.wulkanowy.sdk.Sdk
-import io.github.wulkanowy.sdk.Sdk.ScrapperLoginType.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import io.github.wulkanowy.sdk.Sdk.ScrapperLoginType.ADFSLight
+import io.github.wulkanowy.sdk.Sdk.ScrapperLoginType.ADFSLightScoped
+import io.github.wulkanowy.sdk.Sdk.ScrapperLoginType.STANDARD
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,7 +20,6 @@ import kotlin.test.assertEquals
 
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
-@OptIn(ExperimentalCoroutinesApi::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1], application = HiltTestApplication::class)
 class Migration54Test : AbstractMigrationTest() {
 

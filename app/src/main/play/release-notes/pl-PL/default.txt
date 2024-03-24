@@ -1,7 +1,8 @@
-Wersja 2.5.2
+Wersja 2.5.3
 
-— naprawiliśmy omyłkowe wyświetlanie ekranu z wymaganą autoryzacją numerem PESEL
-— naprawiliśmy kilka problemów ze stabilnością
-— poprawiliśmy wyświetlanie kolorów we frekwencji
+— naprawiliśmy wyświetlanie błędu "Brak uprawnień" po starcie aplikacji u użytkowników eduOne
+— naprawiliśmy obsługę autoryzacji u użytkowników eduOne
+— ukryliśmy numery lekcji i oceny klasy u użytkowników eduOne, bo VULCAN te funkcje usunął
+— naprawiliśmy inne rzeczy u użytkowników eduOne (jak brak opisu oceny czy ładowanie danych na kilku ekranach)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

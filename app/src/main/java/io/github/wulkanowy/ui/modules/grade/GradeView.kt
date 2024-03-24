@@ -9,6 +9,8 @@ interface GradeView : BaseView {
 
     fun initView()
 
+    fun initTabs(pageCount: Int)
+
     fun showContent(show: Boolean)
 
     fun showProgress(show: Boolean)
