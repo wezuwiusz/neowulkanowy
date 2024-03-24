@@ -12,6 +12,7 @@ import io.github.wulkanowy.data.db.entities.StudentName
 import io.github.wulkanowy.data.db.entities.StudentNickAndAvatar
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
 import io.github.wulkanowy.data.exceptions.NoCurrentStudentException
+import io.github.wulkanowy.data.mappers.mapToEntities
 import io.github.wulkanowy.data.mappers.mapToPojo
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.sdk.Sdk
@@ -110,7 +111,22 @@ class StudentRepository @Inject constructor(
         }
 
         val initializedSdk = wulkanowySdkFactory.create(student)
-        val newCurrentStudent = initializedSdk.getCurrentStudent() ?: return
+        val newCurrentStudent = runCatching { initializedSdk.getCurrentStudent() }
+            .onFailure { Timber.e(it, "Check isAuthorized: error occurred") }
+            .getOrNull()
+
+        if (newCurrentStudent == null) {
+            Timber.d("Check isAuthorized: current user is null")
+            return
+        }
+
+        val currentStudentSemesters = semesterDb.loadAll(student.studentId, student.classId)
+        if (currentStudentSemesters.isEmpty()) {
+            Timber.d("Check isAuthorized: apply empty semesters workaround")
+            semesterDb.insertSemesters(
+                items = newCurrentStudent.semesters.mapToEntities(student.studentId),
+            )
+        }
 
         if (!newCurrentStudent.isAuthorized) {
             Timber.i("Check isAuthorized: authorization required")
@@ -178,15 +194,21 @@ class StudentRepository @Inject constructor(
         wulkanowySdkFactory.create(student, semester)
             .authorizePermission(pesel)
 
-    suspend fun refreshStudentName(student: Student, semester: Semester) {
-        val newCurrentApiStudent = wulkanowySdkFactory.create(student, semester)
-            .getCurrentStudent() ?: return
+    suspend fun refreshStudentAfterAuthorize(student: Student, semester: Semester) {
+        val newCurrentApiStudent = wulkanowySdkFactory
+            .create(student, semester)
+            .getCurrentStudent()
+            ?: return Timber.d("Can't find student with id ${student.studentId}")
 
         val studentName = StudentName(
             studentName = "${newCurrentApiStudent.studentName} ${newCurrentApiStudent.studentSurname}"
         ).apply { id = student.id }
 
         studentDb.update(studentName)
+        semesterDb.removeOldAndSaveNew(
+            oldItems = semesterDb.loadAll(student.studentId, semester.classId),
+            newItems = newCurrentApiStudent.semesters.mapToEntities(newCurrentApiStudent.studentId)
+        )
     }
 
     suspend fun deleteStudentsAssociatedWithAccount(student: Student) {
@@ -202,4 +224,3 @@ class StudentRepository @Inject constructor(
 }
 
 class NoAuthorizationException : Exception()
-
