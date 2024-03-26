@@ -1,5 +1,6 @@
-Wersja 2.5.4
+Wersja 2.5.5
 
-— naprawiliśmy kolejnych kilka błędów związanych z obsługą dziennika eduOne (tak, nie umiemy za jednym razem)
+— naprawiliśmy migrację informacji o tym, czy szkoła ucznia używa eduOne
+— naprawiliśmy w końcu (teraz naprawdę mamy taką nadzieję) ten komunikat o braku uprawnień
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

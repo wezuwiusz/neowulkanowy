@@ -47,11 +47,11 @@ abstract class StudentDao {
     abstract suspend fun loadAll(): List<Student>
 
     @Transaction
-    @Query("SELECT * FROM Students JOIN Semesters ON Students.student_id = Semesters.student_id AND Students.class_id = Semesters.class_id")
+    @Query("SELECT * FROM Students JOIN Semesters ON (Students.student_id = Semesters.student_id AND Students.class_id = Semesters.class_id) OR (Students.student_id = Semesters.student_id AND Semesters.class_id = 0)")
     abstract suspend fun loadStudentsWithSemesters(): Map<Student, List<Semester>>
 
     @Transaction
-    @Query("SELECT * FROM Students JOIN Semesters ON Students.student_id = Semesters.student_id AND Students.class_id = Semesters.class_id WHERE Students.id = :id")
+    @Query("SELECT * FROM Students JOIN Semesters ON (Students.student_id = Semesters.student_id AND Students.class_id = Semesters.class_id) OR (Students.student_id = Semesters.student_id AND Semesters.class_id = 0) WHERE Students.id = :id")
     abstract suspend fun loadStudentWithSemestersById(id: Long): Map<Student, List<Semester>>
 
     @Query("UPDATE Students SET is_current = 1 WHERE id = :id")
