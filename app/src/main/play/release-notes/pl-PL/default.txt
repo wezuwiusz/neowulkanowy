@@ -1,8 +1,5 @@
-Wersja 2.5.3
+Wersja 2.5.4
 
-— naprawiliśmy wyświetlanie błędu "Brak uprawnień" po starcie aplikacji u użytkowników eduOne
-— naprawiliśmy obsługę autoryzacji u użytkowników eduOne
-— ukryliśmy numery lekcji i oceny klasy u użytkowników eduOne, bo VULCAN te funkcje usunął
-— naprawiliśmy inne rzeczy u użytkowników eduOne (jak brak opisu oceny czy ładowanie danych na kilku ekranach)
+— naprawiliśmy kolejnych kilka błędów związanych z obsługą dziennika eduOne (tak, nie umiemy za jednym razem)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
