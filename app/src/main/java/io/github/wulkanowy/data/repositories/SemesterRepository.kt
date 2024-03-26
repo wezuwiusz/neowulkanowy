@@ -27,11 +27,11 @@ class SemesterRepository @Inject constructor(
         forceRefresh: Boolean = false,
         refreshOnNoCurrent: Boolean = false
     ) = withContext(dispatchers.io) {
-        val semesters = semesterDb.loadAll(student.studentId, student.classId)
+        val semesters = semesterDb.loadAll(student)
 
         if (isShouldFetch(student, semesters, forceRefresh, refreshOnNoCurrent)) {
             refreshSemesters(student)
-            semesterDb.loadAll(student.studentId, student.classId)
+            semesterDb.loadAll(student)
         } else semesters
     }
 
@@ -66,7 +66,7 @@ class SemesterRepository @Inject constructor(
 
         if (new.isEmpty()) return Timber.i("Empty semester list!")
 
-        val old = semesterDb.loadAll(student.studentId, student.classId)
+        val old = semesterDb.loadAll(student)
         semesterDb.removeOldAndSaveNew(
             oldItems = old uniqueSubtract new,
             newItems = new uniqueSubtract old,

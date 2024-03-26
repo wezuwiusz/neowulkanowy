@@ -123,7 +123,7 @@ class StudentRepository @Inject constructor(
             return
         }
 
-        val currentStudentSemesters = semesterDb.loadAll(student.studentId, student.classId)
+        val currentStudentSemesters = semesterDb.loadAll(student)
         if (currentStudentSemesters.isEmpty()) {
             Timber.d("Check isAuthorized: apply empty semesters workaround")
             semesterDb.insertSemesters(
@@ -209,7 +209,7 @@ class StudentRepository @Inject constructor(
 
         studentDb.update(studentName)
         semesterDb.removeOldAndSaveNew(
-            oldItems = semesterDb.loadAll(student.studentId, semester.classId),
+            oldItems = semesterDb.loadAll(student),
             newItems = newCurrentApiStudent.semesters.mapToEntities(newCurrentApiStudent.studentId)
         )
     }
