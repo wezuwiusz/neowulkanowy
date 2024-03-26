@@ -18,7 +18,7 @@ fun Semester.isCurrent(now: LocalDate = now()): Boolean {
 }
 
 fun List<Semester>.getCurrentOrLast(): Semester {
-    if (isEmpty()) throw RuntimeException("Empty semester list")
+    if (isEmpty()) throw IllegalStateException("Empty semester list")
 
     // when there is only one current semester
     singleOrNull { it.isCurrent() }?.let { return it }
