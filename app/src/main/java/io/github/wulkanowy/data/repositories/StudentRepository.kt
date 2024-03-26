@@ -42,6 +42,7 @@ class StudentRepository @Inject constructor(
     ): RegisterUser = wulkanowySdkFactory.create()
         .getStudentsFromHebe(token, pin, symbol, "")
         .mapToPojo(null)
+        .also { it.logErrors() }
 
     suspend fun getUserSubjectsFromScrapper(
         email: String,
@@ -52,6 +53,7 @@ class StudentRepository @Inject constructor(
     ): RegisterUser = wulkanowySdkFactory.create()
         .getUserSubjectsFromScrapper(email, password, scrapperBaseUrl, domainSuffix, symbol)
         .mapToPojo(password)
+        .also { it.logErrors() }
 
     suspend fun getStudentsHybrid(
         email: String,
@@ -61,6 +63,7 @@ class StudentRepository @Inject constructor(
     ): RegisterUser = wulkanowySdkFactory.create()
         .getStudentsHybrid(email, password, scrapperBaseUrl, "", symbol)
         .mapToPojo(password)
+        .also { it.logErrors() }
 
     suspend fun getSavedStudents(decryptPass: Boolean = true): List<StudentWithSemesters> {
         return studentDb.loadStudentsWithSemesters().map { (student, semesters) ->
@@ -195,10 +198,10 @@ class StudentRepository @Inject constructor(
             .authorizePermission(pesel)
 
     suspend fun refreshStudentAfterAuthorize(student: Student, semester: Semester) {
-        val newCurrentApiStudent = wulkanowySdkFactory
-            .create(student, semester)
-            .getCurrentStudent()
-            ?: return Timber.d("Can't find student with id ${student.studentId}")
+        val wulkanowySdk = wulkanowySdkFactory.create(student, semester)
+        val newCurrentApiStudent = runCatching { wulkanowySdk.getCurrentStudent() }
+            .onFailure { Timber.e(it, "Can't find student with id ${student.studentId}") }
+            .getOrNull() ?: return
 
         val studentName = StudentName(
             studentName = "${newCurrentApiStudent.studentName} ${newCurrentApiStudent.studentSurname}"
@@ -219,6 +222,18 @@ class StudentRepository @Inject constructor(
         withContext(dispatchers.io) {
             scrambler.clearKeyPair()
             appDatabase.clearAllTables()
+        }
+    }
+
+    private fun RegisterUser.logErrors() {
+        val symbolsErrors = symbols.filter { it.error != null }
+            .map { it.error }
+        val unitsErrors = symbols.flatMap { it.schools }
+            .filter { it.error != null }
+            .map { it.error }
+
+        (symbolsErrors + unitsErrors).forEach { error ->
+            Timber.e(error, "Error occurred while fetching students")
         }
     }
 }
