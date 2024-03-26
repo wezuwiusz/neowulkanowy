@@ -112,7 +112,7 @@ class WulkanowySdkFactory @Inject constructor(
                 return false
             }
 
-            Timber.d("Migration eduOne: success. New isEduOne flag: ${newCurrentStudent.isEduOne}")
+            Timber.i("Migration eduOne: success. New isEduOne flag: ${newCurrentStudent.isEduOne}")
 
             val studentIsEduOne = StudentIsEduOne(
                 id = student.id,
