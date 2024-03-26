@@ -64,7 +64,10 @@ class SemesterRepository @Inject constructor(
             .getSemesters()
             .mapToEntities(student.studentId)
 
-        if (new.isEmpty()) return Timber.i("Empty semester list!")
+        if (new.isEmpty()) {
+            Timber.i("Empty semester list from SDK!")
+            return
+        }
 
         val old = semesterDb.loadAll(student)
         semesterDb.removeOldAndSaveNew(
