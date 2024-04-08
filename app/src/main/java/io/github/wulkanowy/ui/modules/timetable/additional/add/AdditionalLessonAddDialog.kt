@@ -155,7 +155,9 @@ class AdditionalLessonAddDialog : BaseDialogFragment<DialogAdditionalAddBinding>
             .build()
 
         timePicker.addOnPositiveButtonClickListener {
-            onTimeSelected(LocalTime.of(timePicker.hour, timePicker.minute))
+            if (isAdded) {
+                onTimeSelected(LocalTime.of(timePicker.hour, timePicker.minute))
+            }
         }
 
         if (!parentFragmentManager.isStateSaved) {
