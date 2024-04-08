@@ -233,7 +233,7 @@ dependencies {
     implementation 'com.github.ncapdevi:FragNav:3.3.0'
     implementation "com.github.YarikSOffice:lingver:1.3.0"
 
-    implementation 'com.squareup.retrofit2:retrofit:2.10.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:4.12.0"
