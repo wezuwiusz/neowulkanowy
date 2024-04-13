@@ -27,8 +27,12 @@ class AuthPresenter @Inject constructor(
 
     private fun loadName() {
         presenterScope.launch {
-            runCatching { studentRepository.getCurrentStudent(false) }
-                .onSuccess { view?.showDescriptionWithName(it.studentName) }
+            runCatching {
+                studentRepository.getCurrentStudent(false)
+                    .studentName
+                    .replace(" ", "\u00A0")
+            }
+                .onSuccess { view?.showDescriptionWithName(it) }
                 .onFailure { errorHandler.dispatch(it) }
         }
     }
