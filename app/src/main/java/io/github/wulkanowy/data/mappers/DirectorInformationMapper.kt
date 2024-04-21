@@ -8,7 +8,7 @@ import io.github.wulkanowy.sdk.pojo.LastAnnouncement as SdkLastAnnouncement
 @JvmName("mapDirectorInformationToEntities")
 fun List<SdkDirectorInformation>.mapToEntities(student: Student) = map {
     SchoolAnnouncement(
-        userLoginId = student.userLoginId,
+        studentId = student.studentId,
         date = it.date,
         subject = it.subject,
         content = it.content,
@@ -19,7 +19,7 @@ fun List<SdkDirectorInformation>.mapToEntities(student: Student) = map {
 @JvmName("mapLastAnnouncementsToEntities")
 fun List<SdkLastAnnouncement>.mapToEntities(student: Student) = map {
     SchoolAnnouncement(
-        userLoginId = student.userLoginId,
+        studentId = student.studentId,
         date = it.date,
         subject = it.subject,
         content = it.content,

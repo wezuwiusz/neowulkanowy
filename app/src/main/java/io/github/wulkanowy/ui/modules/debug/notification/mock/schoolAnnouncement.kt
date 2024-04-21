@@ -19,6 +19,6 @@ val debugSchoolAnnouncementItems = listOf(
 private fun generateAnnouncement(subject: String, content: String) = SchoolAnnouncement(
     subject = subject,
     content = content,
-    userLoginId = 0,
+    studentId = 0,
     date = LocalDate.now()
 )

@@ -1,6 +1,5 @@
-Wersja 2.5.5
+Wersja 2.5.6
 
-— naprawiliśmy migrację informacji o tym, czy szkoła ucznia używa eduOne
-— naprawiliśmy w końcu (teraz naprawdę mamy taką nadzieję) ten komunikat o braku uprawnień
+— naprawiliśmy logowanie (pusta lista z wyborem uczniów), które zepsuło się po zmianach po stronie VULCANa
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
