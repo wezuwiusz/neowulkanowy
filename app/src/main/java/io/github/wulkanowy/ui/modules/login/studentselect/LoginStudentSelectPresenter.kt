@@ -12,6 +12,7 @@ import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.SchoolsRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
+import io.github.wulkanowy.sdk.scrapper.exception.StudentGraduateException
 import io.github.wulkanowy.sdk.scrapper.login.InvalidSymbolException
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -108,8 +109,8 @@ class LoginStudentSelectPresenter @Inject constructor(
     }
 
     private fun createItems(): List<LoginStudentSelectItem> = buildList {
-        val notEmptySymbols = registerUser.symbols.filter { it.schools.isNotEmpty() }
-        val emptySymbols = registerUser.symbols.filter { it.schools.isEmpty() }
+        val notEmptySymbols = registerUser.symbols.filter { it.shouldShowOnTop() }
+        val emptySymbols = registerUser.symbols.filter { !it.shouldShowOnTop() }
 
         if (emptySymbols.isNotEmpty() && notEmptySymbols.isNotEmpty() && emptySymbols.any { it.symbol == loginData.userEnteredSymbol }) {
             add(createEmptySymbolItem(emptySymbols.first { it.symbol == loginData.userEnteredSymbol }))
@@ -125,6 +126,10 @@ class LoginStudentSelectPresenter @Inject constructor(
             isSymbolButtonVisible = "login" !in loginData.baseUrl,
         )
         add(helpItem)
+    }
+
+    private fun RegisterSymbol.shouldShowOnTop(): Boolean {
+        return schools.isNotEmpty() || error is StudentGraduateException
     }
 
     private fun createNotEmptySymbolItems(
