@@ -195,7 +195,7 @@ ext {
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.5.5'
+    implementation 'io.github.wulkanowy:sdk:2.5.6-SNAPSHOT'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
