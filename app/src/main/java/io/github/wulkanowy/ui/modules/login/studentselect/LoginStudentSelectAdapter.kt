@@ -19,19 +19,23 @@ class LoginStudentSelectAdapter @Inject constructor() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when (LoginStudentSelectItemType.values()[viewType]) {
+        return when (LoginStudentSelectItemType.entries[viewType]) {
             LoginStudentSelectItemType.EMPTY_SYMBOLS_HEADER -> EmptySymbolsHeaderViewHolder(
                 ItemLoginStudentSelectEmptySymbolHeaderBinding.inflate(inflater, parent, false),
             )
+
             LoginStudentSelectItemType.SYMBOL_HEADER -> SymbolsHeaderViewHolder(
                 ItemLoginStudentSelectHeaderSymbolBinding.inflate(inflater, parent, false)
             )
+
             LoginStudentSelectItemType.SCHOOL_HEADER -> SchoolHeaderViewHolder(
                 ItemLoginStudentSelectHeaderSchoolBinding.inflate(inflater, parent, false)
             )
+
             LoginStudentSelectItemType.STUDENT -> StudentViewHolder(
                 ItemLoginStudentSelectStudentBinding.inflate(inflater, parent, false)
             )
+
             LoginStudentSelectItemType.HELP -> HelpViewHolder(
                 ItemLoginStudentSelectHelpBinding.inflate(inflater, parent, false)
             )
@@ -98,9 +102,11 @@ class LoginStudentSelectAdapter @Inject constructor() :
             with(binding) {
                 loginStudentSelectHeaderSchoolName.text = buildString {
                     append(item.unit.schoolName.trim())
-                    append(" (")
-                    append(item.unit.schoolShortName)
-                    append(")")
+                    if (item.unit.schoolShortName.isNotBlank()) {
+                        append(" (")
+                        append(item.unit.schoolShortName)
+                        append(")")
+                    }
                 }
                 loginStudentSelectHeaderSchoolDetails.isVisible = item.unit.students.isEmpty()
                 loginStudentSelectHeaderSchoolError.text = item.unit.error?.message
@@ -170,9 +176,11 @@ class LoginStudentSelectAdapter @Inject constructor() :
             oldItem is LoginStudentSelectItem.SymbolHeader && newItem is LoginStudentSelectItem.SymbolHeader -> {
                 oldItem.symbol == newItem.symbol
             }
+
             oldItem is LoginStudentSelectItem.Student && newItem is LoginStudentSelectItem.Student -> {
                 oldItem.student == newItem.student
             }
+
             else -> oldItem == newItem
         }
 
