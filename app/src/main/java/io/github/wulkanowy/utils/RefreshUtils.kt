@@ -23,7 +23,7 @@ fun getRefreshKey(name: String, semester: Semester): String {
 }
 
 fun getRefreshKey(name: String, student: Student): String {
-    return "${name}_${student.userLoginId}"
+    return "${name}_${student.studentId}"
 }
 
 fun getRefreshKey(name: String, mailbox: Mailbox?, folder: MessageFolder): String {

@@ -49,6 +49,7 @@ data class Student(
     @ColumnInfo(name = "student_id")
     val studentId: Int,
 
+    @Deprecated("not available in VULCAN anymore")
     @ColumnInfo(name = "user_login_id")
     val userLoginId: Int,
 

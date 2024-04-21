@@ -37,7 +37,7 @@ class SchoolAnnouncementRepository @Inject constructor(
             it.isEmpty() || forceRefresh || isExpired
         },
         query = {
-            schoolAnnouncementDb.loadAll(student.userLoginId)
+            schoolAnnouncementDb.loadAll(student.studentId)
         },
         fetch = {
             val sdk = wulkanowySdkFactory.create(student)
@@ -57,7 +57,7 @@ class SchoolAnnouncementRepository @Inject constructor(
     )
 
     fun getSchoolAnnouncementFromDatabase(student: Student): Flow<List<SchoolAnnouncement>> {
-        return schoolAnnouncementDb.loadAll(student.userLoginId)
+        return schoolAnnouncementDb.loadAll(student.studentId)
     }
 
     suspend fun updateSchoolAnnouncement(schoolAnnouncement: List<SchoolAnnouncement>) =
