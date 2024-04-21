@@ -38,7 +38,7 @@ class MobileDeviceRepository @Inject constructor(
             val isExpired = refreshHelper.shouldBeRefreshed(getRefreshKey(cacheKey, student))
             it.isEmpty() || forceRefresh || isExpired
         },
-        query = { mobileDb.loadAll(student.userLoginId) },
+        query = { mobileDb.loadAll(student.studentId) },
         fetch = {
             wulkanowySdkFactory.create(student, semester)
                 .getRegisteredDevices()
