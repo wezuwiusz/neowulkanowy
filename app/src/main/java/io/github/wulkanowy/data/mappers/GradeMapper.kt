@@ -37,9 +37,11 @@ fun List<SdkGradeSummary>.mapToEntities(semester: Semester) = map {
         predictedGrade = it.predicted,
         finalGrade = it.final,
         pointsSum = it.pointsSum,
+        pointsSumAllYear = it.pointsSumAllYear,
         proposedPoints = it.proposedPoints,
         finalPoints = it.finalPoints,
-        average = it.average
+        average = it.average,
+        averageAllYear = it.averageAllYear,
     )
 }
 

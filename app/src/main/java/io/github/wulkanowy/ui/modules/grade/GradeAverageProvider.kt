@@ -266,7 +266,9 @@ class GradeAverageProvider @Inject constructor(
                 proposedPoints = "",
                 finalPoints = "",
                 pointsSum = "",
-                average = .0
+                pointsSumAllYear = null,
+                average = .0,
+                averageAllYear = null,
             )
         }
 
@@ -294,13 +296,15 @@ class GradeAverageProvider @Inject constructor(
                 proposedPoints = "",
                 finalPoints = "",
                 pointsSum = "",
+                pointsSumAllYear = null,
                 average = when {
                     calcAverage -> details
                         .updateModifiers(student, params)
                         .calcAverage(isOptionalArithmeticAverage = params.isOptionalArithmeticAverage)
 
                     else -> .0
-                }
+                },
+                averageAllYear = null,
             )
         }
     }

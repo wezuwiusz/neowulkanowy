@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.grade.summary
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.wulkanowy.R
@@ -65,37 +66,55 @@ class GradeSummaryAdapter @Inject constructor(
         val gradeSummaries = items
             .filter { it.gradeDescriptive == null }
             .map { it.gradeSummary }
+        val isSecondSemester = items.any { item ->
+            item.gradeSummary.let { it.averageAllYear != null && it.averageAllYear != .0 }
+        }
 
         val context = binding.root.context
         val finalItemsCount = gradeSummaries.count { isGradeValid(it.finalGrade) }
-        val calculatedItemsCount = gradeSummaries.count { value -> value.average != 0.0 }
+        val calculatedSemesterItemsCount = gradeSummaries.count { value -> value.average != 0.0 }
+        val calculatedAnnualItemsCount =
+            gradeSummaries.count { value -> value.averageAllYear != 0.0 }
         val allItemsCount = gradeSummaries.count { !it.subject.equals("zachowanie", true) }
         val finalAverage = gradeSummaries.calcFinalAverage(
-            preferencesRepository.gradePlusModifier,
-            preferencesRepository.gradeMinusModifier
+            plusModifier = preferencesRepository.gradePlusModifier,
+            minusModifier = preferencesRepository.gradeMinusModifier,
         )
-        val calculatedAverage = gradeSummaries.filter { value -> value.average != 0.0 }
+        val calculatedSemesterAverage = gradeSummaries.filter { value -> value.average != 0.0 }
             .map { values -> values.average }
+            .reversed() // fix average precision
+            .average()
+            .let { if (it.isNaN()) 0.0 else it }
+        val calculatedAnnualAverage = gradeSummaries.filter { value -> value.averageAllYear != 0.0 }
+            .mapNotNull { values -> values.averageAllYear }
             .reversed() // fix average precision
             .average()
             .let { if (it.isNaN()) 0.0 else it }
 
         with(binding) {
+            gradeSummaryScrollableHeaderCalculated.text = formatAverage(calculatedSemesterAverage)
+            gradeSummaryScrollableHeaderCalculatedAnnual.text =
+                formatAverage(calculatedAnnualAverage)
             gradeSummaryScrollableHeaderFinal.text = formatAverage(finalAverage)
-            gradeSummaryScrollableHeaderCalculated.text = formatAverage(calculatedAverage)
-            gradeSummaryScrollableHeaderFinalSubjectCount.text =
-                context.getString(
-                    R.string.grade_summary_from_subjects,
-                    finalItemsCount,
-                    allItemsCount
-                )
-            gradeSummaryScrollableHeaderCalculatedSubjectCount.text = context.getString(
+            gradeSummaryScrollableHeaderFinalSubjectCount.text = context.getString(
                 R.string.grade_summary_from_subjects,
-                calculatedItemsCount,
+                finalItemsCount,
                 allItemsCount
             )
+            gradeSummaryScrollableHeaderCalculatedSubjectCount.text = context.getString(
+                R.string.grade_summary_from_subjects,
+                calculatedSemesterItemsCount,
+                allItemsCount
+            )
+            gradeSummaryScrollableHeaderCalculatedSubjectCountAnnual.text = context.getString(
+                R.string.grade_summary_from_subjects,
+                calculatedAnnualItemsCount,
+                allItemsCount
+            )
+            gradeSummaryScrollableHeaderCalculatedAnnualContainer.isVisible = isSecondSemester
 
             gradeSummaryCalculatedAverageHelp.setOnClickListener { onCalculatedHelpClickListener() }
+            gradeSummaryCalculatedAverageHelpAnnual.setOnClickListener { onCalculatedHelpClickListener() }
             gradeSummaryFinalAverageHelp.setOnClickListener { onFinalHelpClickListener() }
         }
     }
@@ -107,7 +126,12 @@ class GradeSummaryAdapter @Inject constructor(
         with(binding) {
             gradeSummaryItemTitle.text = gradeSummary.subject
             gradeSummaryItemPoints.text = gradeSummary.pointsSum
+
             gradeSummaryItemAverage.text = formatAverage(gradeSummary.average, "")
+            gradeSummaryItemAverageAllYear.text = gradeSummary.averageAllYear?.let {
+                formatAverage(it, "")
+            }
+
             gradeSummaryItemPredicted.text =
                 "${gradeSummary.predictedGrade} ${gradeSummary.proposedPoints}".trim()
             gradeSummaryItemFinal.text =
@@ -116,6 +140,12 @@ class GradeSummaryAdapter @Inject constructor(
                 root.context.getString(R.string.all_no_data)
             }
 
+            gradeSummaryItemAverageContainer.isVisible = gradeSummary.average != .0
+            gradeSummaryItemAverageDivider.isVisible = gradeSummaryItemAverageContainer.isVisible
+            gradeSummaryItemAverageAllYearContainer.isGone =
+                gradeSummary.averageAllYear == null || gradeSummary.averageAllYear == .0
+            gradeSummaryItemAverageAllYearDivider.isGone =
+                gradeSummaryItemAverageAllYearContainer.isGone
             gradeSummaryItemFinalDivider.isVisible = gradeDescriptive == null
             gradeSummaryItemPredictedDivider.isVisible = gradeDescriptive == null
             gradeSummaryItemPointsDivider.isVisible = gradeDescriptive == null
@@ -123,6 +153,7 @@ class GradeSummaryAdapter @Inject constructor(
             gradeSummaryItemFinalContainer.isVisible = gradeDescriptive == null
             gradeSummaryItemDescriptiveContainer.isVisible = gradeDescriptive != null
             gradeSummaryItemPointsContainer.isVisible = gradeSummary.pointsSum.isNotBlank()
+            gradeSummaryItemPointsDivider.isVisible = gradeSummaryItemPointsContainer.isVisible
         }
     }
 
