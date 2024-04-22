@@ -20,19 +20,79 @@
             android:id="@+id/gradeSummaryItemTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
             android:layout_weight="1"
             android:textSize="17sp"
             tools:text="@tools:sample/lorem" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gradeSummaryItemAverageContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="35dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:text="@string/grade_summary_average_semester"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/gradeSummaryItemAverage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="25dp"
             android:gravity="end"
             android:textSize="12sp"
-            tools:text="4.74" />
+            tools:text="2,50" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/gradeSummaryItemAverageDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/ic_all_divider" />
+
+    <LinearLayout
+        android:id="@+id/gradeSummaryItemAverageAllYearContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="35dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:text="@string/grade_summary_average_year"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/gradeSummaryItemAverageAllYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="25dp"
+            android:gravity="end"
+            android:textSize="12sp"
+            tools:text="4,50" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/gradeSummaryItemAverageAllYearDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/ic_all_divider" />
 
     <LinearLayout
         android:id="@+id/gradeSummaryItemPointsContainer"
@@ -63,9 +123,9 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/gradeSummaryItemPointsDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:id="@+id/gradeSummaryItemPointsDivider"
         android:background="@drawable/ic_all_divider" />
 
     <LinearLayout
@@ -97,8 +157,8 @@
     </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
         android:id="@+id/gradeSummaryItemPredictedDivider"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/ic_all_divider" />
 
@@ -131,9 +191,9 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/gradeSummaryItemFinalDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:id="@+id/gradeSummaryItemFinalDivider"
         android:background="@drawable/ic_all_divider" />
 
     <LinearLayout

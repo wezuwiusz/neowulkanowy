@@ -23,13 +23,15 @@ class GradeExtensionTest {
 
     @Test
     fun calcWeightedAverage() {
-        assertEquals(3.47, listOf(
-            createGrade(5.0, 6.0, 0.33),
-            createGrade(5.0, 5.0, -0.33),
-            createGrade(4.0, 1.0, 0.0),
-            createGrade(1.0, 9.0, 0.5),
-            createGrade(0.0, .0, 0.0)
-        ).calcAverage(false), 0.005)
+        assertEquals(
+            3.47, listOf(
+                createGrade(5.0, 6.0, 0.33),
+                createGrade(5.0, 5.0, -0.33),
+                createGrade(4.0, 1.0, 0.0),
+                createGrade(1.0, 9.0, 0.5),
+                createGrade(0.0, .0, 0.0)
+            ).calcAverage(false), 0.005
+        )
     }
 
     @Test
@@ -86,7 +88,11 @@ class GradeExtensionTest {
         assertEquals(-.25, createGrade(5.0, .0, -.33).changeModifier(.0, .25).modifier, .0)
     }
 
-    private fun createGrade(value: Double, weightValue: Double = .0, modifier: Double = 0.25): Grade {
+    private fun createGrade(
+        value: Double,
+        weightValue: Double = .0,
+        modifier: Double = 0.25
+    ): Grade {
         return Grade(
             semesterId = 1,
             studentId = 1,
@@ -116,7 +122,9 @@ class GradeExtensionTest {
             proposedPoints = "",
             finalPoints = "",
             pointsSum = "",
-            average = .0
+            average = .0,
+            pointsSumAllYear = null,
+            averageAllYear = null,
         )
     }
 }

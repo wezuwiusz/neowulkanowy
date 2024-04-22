@@ -26,5 +26,7 @@ private fun generateSummary(subject: String, predicted: String, final: String) =
     proposedPoints = "",
     finalPoints = "",
     pointsSum = "",
-    average = .0
+    average = .0,
+    pointsSumAllYear = null,
+    averageAllYear = null,
 )

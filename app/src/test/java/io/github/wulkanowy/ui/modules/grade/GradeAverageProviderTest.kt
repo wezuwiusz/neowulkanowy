@@ -1679,7 +1679,9 @@ class GradeAverageProviderTest {
             finalPoints = "",
             finalGrade = "",
             predictedGrade = "",
-            position = 0
+            position = 0,
+            pointsSumAllYear = null,
+            averageAllYear = null,
         )
     }
 }

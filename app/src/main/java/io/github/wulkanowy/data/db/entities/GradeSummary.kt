@@ -33,7 +33,13 @@ data class GradeSummary(
     @ColumnInfo(name = "points_sum")
     val pointsSum: String,
 
-    val average: Double
+    @ColumnInfo(name = "points_sum_all_year")
+    val pointsSumAllYear: String?,
+
+    val average: Double,
+
+    @ColumnInfo(name = "average_all_year")
+    val averageAllYear: Double? = null,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

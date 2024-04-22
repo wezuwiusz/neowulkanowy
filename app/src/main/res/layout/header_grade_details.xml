@@ -45,12 +45,29 @@
             android:textColor="?android:textColorSecondary"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/gradeHeaderPointsSum"
+            app:layout_constraintEnd_toStartOf="@id/gradeHeaderAverageAllYear"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@id/gradeHeaderSubject"
             app:layout_constraintTop_toBottomOf="@+id/gradeHeaderSubject"
             tools:text="Average: 6,00" />
+
+        <TextView
+            android:id="@+id/gradeHeaderAverageAllYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/gradeHeaderPointsSum"
+            app:layout_constraintStart_toEndOf="@+id/gradeHeaderAverage"
+            app:layout_constraintTop_toBottomOf="@+id/gradeHeaderSubject"
+            tools:text="Roczna: 5,00"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/gradeHeaderPointsSum"
@@ -64,7 +81,7 @@
             android:textSize="12sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@id/gradeHeaderNumber"
-            app:layout_constraintStart_toEndOf="@+id/gradeHeaderAverage"
+            app:layout_constraintStart_toEndOf="@+id/gradeHeaderAverageAllYear"
             app:layout_constraintTop_toBottomOf="@+id/gradeHeaderSubject"
             tools:text="Points: 123/200 (61,5%)" />
 
