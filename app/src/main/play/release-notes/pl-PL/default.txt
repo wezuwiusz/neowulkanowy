@@ -1,5 +1,6 @@
-Wersja 2.5.6
+Wersja 2.5.7
 
 — naprawiliśmy logowanie (pusta lista z wyborem uczniów), które zepsuło się po zmianach po stronie VULCANa
+— dodaliśmy wyświetlanie osobno średniej rocznej, bo VULCAN rozdzielił i zrobił się bałagan
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

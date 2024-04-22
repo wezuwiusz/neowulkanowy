@@ -13,6 +13,7 @@ data class GradeDetailsItem(
 data class GradeDetailsHeader(
     val subject: String,
     val average: Double?,
+    val averageAllYear: Double?,
     val pointsSum: String?,
     val grades: List<GradeDetailsItem>
 ) {

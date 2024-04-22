@@ -96,9 +96,11 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             ViewType.HEADER.id -> HeaderViewHolder(
                 HeaderGradeDetailsBinding.inflate(inflater, parent, false)
             )
+
             ViewType.ITEM.id -> ItemViewHolder(
                 ItemGradeDetailsBinding.inflate(inflater, parent, false)
             )
+
             else -> throw IllegalStateException()
         }
     }
@@ -110,6 +112,7 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
                 header = items[position].value as GradeDetailsHeader,
                 position = position
             )
+
             is ItemViewHolder -> bindItemViewHolder(
                 holder = holder,
                 grade = items[position].value as Grade
@@ -133,6 +136,10 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
                 maxLines = if (expandedPositions[headerPosition]) 2 else 1
             }
             gradeHeaderAverage.text = formatAverage(header.average, root.context.resources)
+            with(gradeHeaderAverageAllYear) {
+                isVisible = header.averageAllYear != null && header.averageAllYear != .0
+                text = formatAverageAllYear(header.averageAllYear, root.context.resources)
+            }
             gradeHeaderPointsSum.text =
                 context.getString(R.string.grade_points_sum, header.pointsSum)
             gradeHeaderPointsSum.isVisible = !header.pointsSum.isNullOrEmpty()
@@ -231,6 +238,13 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             resources.getString(R.string.grade_no_average)
         } else {
             resources.getString(R.string.grade_average, average)
+        }
+
+    private fun formatAverageAllYear(average: Double?, resources: Resources) =
+        if (average == null || average == .0) {
+            resources.getString(R.string.grade_no_average)
+        } else {
+            resources.getString(R.string.grade_average_year, average)
         }
 
     private class HeaderViewHolder(val binding: HeaderGradeDetailsBinding) :

@@ -10,10 +10,11 @@
     tools:context=".ui.modules.grade.summary.GradeSummaryAdapter">
 
     <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
@@ -21,9 +22,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:minLines="2"
-            android:textStyle="bold"
             android:text="@string/grade_summary_calculated_average"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -61,9 +62,64 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/gradeSummaryScrollableHeaderCalculatedAnnualContainer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minLines="2"
+            android:text="@string/grade_summary_calculated_average_annual"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/gradeSummaryScrollableHeaderCalculatedAnnual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="21sp"
+                tools:text="6,00" />
+
+            <ImageButton
+                android:id="@+id/gradeSummaryCalculatedAverageHelpAnnual"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@+string/grade_summary_calculated_average_help_dialog_title"
+                app:srcCompat="@drawable/ic_help"
+                app:tint="?colorOnBackground" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/gradeSummaryScrollableHeaderCalculatedSubjectCountAnnual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:textSize="13sp"
+            tools:text="from 8 subjects" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
@@ -71,9 +127,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:minLines="2"
-            android:textStyle="bold"
             android:text="@string/grade_summary_final_average"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -103,8 +159,8 @@
         <TextView
             android:id="@+id/gradeSummaryScrollableHeaderFinalSubjectCount"
             android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
             android:textSize="13sp"
             tools:text="from 5 subjects" />

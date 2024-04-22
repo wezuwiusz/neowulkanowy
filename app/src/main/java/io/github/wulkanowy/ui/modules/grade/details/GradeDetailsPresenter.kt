@@ -226,8 +226,9 @@ class GradeDetailsPresenter @Inject constructor(
                         GradeDetailsHeader(
                             subject = gradeSubject.subject,
                             average = gradeSubject.average,
+                            averageAllYear = gradeSubject.summary.averageAllYear,
                             pointsSum = gradeSubject.points,
-                            grades = subItems
+                            grades = subItems,
                         ).apply {
                             newGrades = gradeSubject.grades.filter { grade -> !grade.isRead }.size
                         }, ViewType.HEADER
