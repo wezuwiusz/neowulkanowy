@@ -81,7 +81,7 @@ class TimetablePresenter @Inject constructor(
         } else currentDate?.previousSchoolDay
 
         reloadView(date ?: return)
-        loadData()
+        loadData(isDayChanged = true)
     }
 
     fun onNextDay() {
@@ -90,7 +90,7 @@ class TimetablePresenter @Inject constructor(
         } else currentDate?.nextSchoolDay
 
         reloadView(date ?: return)
-        loadData()
+        loadData(isDayChanged = true)
     }
 
     fun onPickDate() {
@@ -104,7 +104,7 @@ class TimetablePresenter @Inject constructor(
 
     fun onSwipeRefresh() {
         Timber.i("Force refreshing the timetable")
-        loadData(true)
+        loadData(forceRefresh = true)
     }
 
     fun onRetry() {
@@ -112,7 +112,7 @@ class TimetablePresenter @Inject constructor(
             showErrorView(false)
             showProgress(true)
         }
-        loadData(true)
+        loadData(forceRefresh = true)
     }
 
     fun onDetailsClick() {
@@ -145,7 +145,7 @@ class TimetablePresenter @Inject constructor(
         return true
     }
 
-    private fun loadData(forceRefresh: Boolean = false) {
+    private fun loadData(forceRefresh: Boolean = false, isDayChanged: Boolean = false) {
         flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
@@ -169,9 +169,9 @@ class TimetablePresenter @Inject constructor(
                     enableSwipe(true)
                     showProgress(false)
                     showErrorView(false)
+                    updateData(it.lessons, isDayChanged)
                     showContent(it.lessons.isNotEmpty())
                     showEmpty(it.lessons.isEmpty())
-                    updateData(it.lessons)
                     setDayHeaderMessage(it.headers.find { header -> header.date == currentDate }?.content)
                     reloadNavigation()
                 }
@@ -216,15 +216,14 @@ class TimetablePresenter @Inject constructor(
         }
     }
 
-    private fun updateData(lessons: List<Timetable>) {
+    private fun updateData(lessons: List<Timetable>, isDayChanged: Boolean) {
         tickTimer?.cancel()
 
-        if (currentDate != now()) {
-            view?.updateData(createItems(lessons))
-        } else {
-            tickTimer = timer(period = 2_000) {
+        view?.updateData(createItems(lessons), isDayChanged)
+        if (currentDate == now()) {
+            tickTimer = timer(period = 2_000, initialDelay = 2_000) {
                 Handler(Looper.getMainLooper()).post {
-                    view?.updateData(createItems(lessons))
+                    view?.updateData(createItems(lessons), isDayChanged)
                 }
             }
         }
