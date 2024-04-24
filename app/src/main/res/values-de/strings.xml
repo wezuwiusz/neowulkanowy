@@ -113,13 +113,17 @@
     <string name="grade_comment">Kommentar</string>
     <string name="grade_number_new_items">Anzahl der neuen Bewertungen: %1$d</string>
     <string name="grade_average">Durchschnitt: %1$.2f</string>
+    <string name="grade_average_year">Annual: %1$.2f</string>
     <string name="grade_points_sum">Punkte: %s</string>
     <string name="grade_no_average">Kein Durchschnitt</string>
+    <string name="grade_summary_average_semester">Semester average</string>
+    <string name="grade_summary_average_year">Annual average</string>
     <string name="grade_summary_points">Gesamtpunkte</string>
     <string name="grade_summary_final_grade">Finaler Note</string>
     <string name="grade_summary_predicted_grade">Vorhergesagte Note</string>
     <string name="grade_summary_descriptive">Descriptive grade</string>
-    <string name="grade_summary_calculated_average">Berechnender Durchschnitt</string>
+    <string name="grade_summary_calculated_average">Calculated semester average</string>
+    <string name="grade_summary_calculated_average_annual">Calculated annual average</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Wie funktioniert der berechnete Durchschnitt?</string>
     <string name="grade_summary_calculated_average_help_dialog_message">Der berechnete Mittelwert ist das arithmetische Mittel, das aus den Durchschnittswerten der Probanden errechnet wird. Es erlaubt Ihnen, den ungefähre endgültigen Durchschnitt zu kennen. Sie wird auf eine vom Anwender in den Anwendungseinstellungen gewählte Weise berechnet. Es wird empfohlen, die entsprechende Option zu wählen. Das liegt daran, dass die Berechnung der Schuldurchschnitte unterschiedlich ist. Wenn Ihre Schule den Durchschnitt der Fächer auf der Vulcan-Seite angibt, lädt die Anwendung diese Fächer herunter und berechnet nicht den Durchschnitt. Dies kann geändert werden, indem die Berechnung des Durchschnitts in den Anwendungseinstellungen erzwungen wird. \n\n<b>Durchschnitt der Noten nur aus dem ausgewählten Semester </b>:\n1. Berechnung des gewichteten Durchschnitts für jedes Fach in einem bestimmten Semester\n2. Addition der berechneten Durchschnittswerte\n3. Berechnung des arithmetischen Mittels der summierten Durchschnitte\n<b>Durchschnitt der Durchschnitte aus beiden Semestern</b>:\n1. Berechnung des gewichteten Durchschnitts für jedes Fach in Semester 1 und 2\n2. Berechnung des arithmetischen Mittels der berechneten Durchschnitte für Semester 1 und 2 für jedes Fach. \n3. Hinzufügen von berechneten Durchschnittswerten\n4. Berechnung des arithmetischen Mittels der summierten Durchschnitte\n<b>Durchschnitt der Noten aus dem ganzen Jahr:</b>\n1. Berechnung des gewichteten Jahresdurchschnitts für jedes Fach. Der Abschlussdurchschnitt im 1. Semester ist irrelevant. \n2. Addition der berechneten Durchschnittswerte\n3. Berechnung des arithmetischen Mittels der summierten Mittelwerte</string>
     <string name="grade_summary_final_average_help_dialog_title">Wie funktioniert der endgültige Durchschnitt?</string>
@@ -242,6 +246,7 @@
     <string name="attendance_calculator_summary_balance_neutral">right on target</string>
     <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> under target</string>
     <string name="attendance_calculator_summary_values">%1$d/%2$d presences</string>
+    <string name="attendance_calculator_summary_values_empty">No attendances recorded</string>
     <string name="attendance_absence_school">Aus schulischen Gründen abwesend</string>
     <string name="attendance_absence_excused">Entschuldigte Abwesenheit</string>
     <string name="attendance_absence_unexcused">Unentschuldigtes Abwesenheit</string>
@@ -643,6 +648,7 @@
     <string name="pref_view_grade_average_force_calc">Mittelwertberechnung durch App erzwingen</string>
     <string name="pref_view_present">Anwesendheit zeigen</string>
     <string name="pref_attendance_target">Attendance target</string>
+    <string name="pref_attendance_calculator_show_empty_subjects">Show subjects without any attendances</string>
     <string name="pref_view_attendance_calculator_sorting_mode">Attendance calculator sorting</string>
     <string name="pref_view_app_theme">Thema</string>
     <string name="pref_view_expand_grade">Steigende Sorten</string>
@@ -762,7 +768,7 @@
     <string name="auth_button">Authorize</string>
     <string name="auth_success">Authorization completed successfully</string>
     <string name="auth_title">Authorization</string>
-    <string name="auth_description">To operate the application, we need to confirm your identity. Please enter the student\'s PESEL &lt;b&gt;%1$s&lt;/b&gt; in the field below</string>
+    <string name="auth_description">Dear Parent,&lt;br&gt;&lt;br&gt;To authorize and ensure the security of data, we kindly ask you to enter below PESEL number of student &lt;b&gt;%1$s&lt;/b&gt;. These details are essential for the proper assignment of access and protection of personal data in accordance with applicable regulations.&lt;br&gt;&lt;br&gt;After entering the data, it will be verified to ensure that access to the VULCAN system is granted exclusively to authorized individuals. Should you have any doubts or problems, please contact the school diary administrator to clarify the situation.&lt;br&gt;&lt;br&gt;We maintain the highest standards of personal data protection and ensure that all information provided is secure. Wulkanowy app does not store or process the PESEL number.&lt;br&gt;&lt;br&gt;We remind you that providing full and accurate data is mandatory and necessary for the use of the VULCAN system.</string>
     <string name="auth_button_skip">Skip for now</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">VULCAN\'s website requires verification</string>

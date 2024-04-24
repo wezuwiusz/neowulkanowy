@@ -274,6 +274,7 @@
     <string name="attendance_calculator_summary_balance_neutral">dokładnie u celu</string>
     <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> poniżej celu</string>
     <string name="attendance_calculator_summary_values">%1$d/%2$d obecności</string>
+    <string name="attendance_calculator_summary_values_empty">Nie odnotowano żadnej frekwencji</string>
     <string name="attendance_absence_school">Nieobecność z przyczyn szkolnych</string>
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
@@ -741,6 +742,7 @@
     <string name="pref_view_grade_average_force_calc">Wymuś obliczanie średniej przez aplikację</string>
     <string name="pref_view_present">Pokazuj obecność</string>
     <string name="pref_attendance_target">Docelowa obecność</string>
+    <string name="pref_attendance_calculator_show_empty_subjects">Pokazuj przedmioty bez frekwencji</string>
     <string name="pref_view_attendance_calculator_sorting_mode">Sortowanie kalkulatora obecności</string>
     <string name="pref_view_app_theme">Motyw</string>
     <string name="pref_view_expand_grade">Rozwijanie ocen</string>
@@ -860,7 +862,7 @@
     <string name="auth_button">Potwierdź</string>
     <string name="auth_success">Autoryzacja zakończona pomyślnie</string>
     <string name="auth_title">Autoryzacja</string>
-    <string name="auth_description">Rodzicu, musimy mieć pewność, że Twój adres e-mail został powiązany z prawidłowym kontem ucznia. W celu autoryzacji konta podaj numer PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt; w polu poniżej</string>
+    <string name="auth_description">Dear Parent,&lt;br&gt;&lt;br&gt;To authorize and ensure the security of data, we kindly ask you to enter below PESEL number of student &lt;b&gt;%1$s&lt;/b&gt;. These details are essential for the proper assignment of access and protection of personal data in accordance with applicable regulations.&lt;br&gt;&lt;br&gt;After entering the data, it will be verified to ensure that access to the VULCAN system is granted exclusively to authorized individuals. Should you have any doubts or problems, please contact the school diary administrator to clarify the situation.&lt;br&gt;&lt;br&gt;We maintain the highest standards of personal data protection and ensure that all information provided is secure. Wulkanowy app does not store or process the PESEL number.&lt;br&gt;&lt;br&gt;We remind you that providing full and accurate data is mandatory and necessary for the use of the VULCAN system.</string>
     <string name="auth_button_skip">Na razie pomiń</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Strona dziennika VULCAN wymaga weryfikacji</string>
