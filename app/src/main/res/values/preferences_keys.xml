@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="pref_key_start_menu">default_menu_index</string>
+    <string name="pref_key_attendance_calculator">attendance_calculator</string>
     <string name="pref_key_attendance_present">attendance_present</string>
     <string name="pref_key_attendance_target">attendance_target</string>
     <string name="pref_key_attendance_calculator_sorting_mode">attendance_calculator_sorting_mode</string>

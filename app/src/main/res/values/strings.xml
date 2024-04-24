@@ -796,6 +796,8 @@
     <string name="pref_dashboard_appearance_header">Dashboard</string>
     <string name="pref_dashboard_appearance_tiles_title">Tiles visibility</string>
     <string name="pref_attendance_appearance_view">Attendance</string>
+    <string name="pref_attendance_calculator_appearance_view">Attendance calculator</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Settings</string>
     <string name="pref_timetable_appearance_view">Timetable</string>
     <string name="pref_grades_advanced_header">Grades</string>
     <string name="pref_counted_average_advanced_header">Calculated average</string>

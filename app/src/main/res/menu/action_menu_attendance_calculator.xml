@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/attendance_calculator_menu_settings"
+        android:icon="@drawable/ic_more_settings"
+        android:orderInCategory="2"
+        android:title="@string/pref_attendance_calculator_appearance_settings_title"
+        app:iconTint="?colorControlNormal"
+        app:showAsAction="ifRoom" />
+</menu>

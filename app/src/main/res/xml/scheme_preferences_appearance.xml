@@ -85,6 +85,11 @@
             app:iconSpaceReserved="false"
             app:key="@string/pref_key_attendance_present"
             app:title="@string/pref_view_present" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_attendance_calculator_appearance_view"
+        app:key="@string/pref_key_attendance_calculator">
         <SeekBarPreference
             app:defaultValue="@integer/pref_default_attendance_target"
             app:iconSpaceReserved="false"

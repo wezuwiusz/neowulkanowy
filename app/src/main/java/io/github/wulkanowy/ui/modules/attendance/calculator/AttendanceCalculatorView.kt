@@ -26,4 +26,6 @@ interface AttendanceCalculatorView : BaseView {
     fun updateData(data: List<AttendanceData>)
 
     fun clearView()
+
+    fun openSettingsView()
 }

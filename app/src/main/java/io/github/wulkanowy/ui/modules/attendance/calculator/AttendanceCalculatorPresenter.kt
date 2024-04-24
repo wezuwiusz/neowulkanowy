@@ -1,6 +1,11 @@
 package io.github.wulkanowy.ui.modules.attendance.calculator
 
-import io.github.wulkanowy.data.*
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceData
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceIntermediate
+import io.github.wulkanowy.data.onResourceNotLoading
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.domain.attendance.GetAttendanceCalculatorDataUseCase
@@ -80,5 +85,10 @@ class AttendanceCalculatorPresenter @Inject constructor(
                 showEmpty(false)
             } else showError(message, error)
         }
+    }
+
+    fun onSettingsSelected(): Boolean {
+        view?.openSettingsView()
+        return true
     }
 }

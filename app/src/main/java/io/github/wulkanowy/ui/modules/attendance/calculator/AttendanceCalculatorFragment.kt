@@ -1,6 +1,9 @@
 package io.github.wulkanowy.ui.modules.attendance.calculator
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,7 +12,9 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.AttendanceData
 import io.github.wulkanowy.databinding.FragmentAttendanceCalculatorBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
+import io.github.wulkanowy.ui.modules.settings.appearance.AppearanceFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.getThemeAttrColor
 import javax.inject.Inject
@@ -33,11 +38,30 @@ class AttendanceCalculatorFragment :
 
     override val isViewEmpty get() = attendanceCalculatorAdapter.items.isEmpty()
 
+    @Suppress("DEPRECATION")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAttendanceCalculatorBinding.bind(view)
         messageContainer = binding.attendanceCalculatorRecycler
         presenter.onAttachView(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.action_menu_attendance_calculator, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.attendance_calculator_menu_settings) presenter.onSettingsSelected()
+        else false
+    }
+
+    override fun openSettingsView() {
+        (activity as? MainActivity)?.pushView(AppearanceFragment.withFocusedPreference(getString(R.string.pref_key_attendance_target)))
     }
 
     override fun initView() {
@@ -50,7 +74,11 @@ class AttendanceCalculatorFragment :
         with(binding) {
             attendanceCalculatorSwipe.setOnRefreshListener(presenter::onSwipeRefresh)
             attendanceCalculatorSwipe.setColorSchemeColors(requireContext().getThemeAttrColor(R.attr.colorPrimary))
-            attendanceCalculatorSwipe.setProgressBackgroundColorSchemeColor(requireContext().getThemeAttrColor(R.attr.colorSwipeRefresh))
+            attendanceCalculatorSwipe.setProgressBackgroundColorSchemeColor(
+                requireContext().getThemeAttrColor(
+                    R.attr.colorSwipeRefresh
+                )
+            )
             attendanceCalculatorErrorRetry.setOnClickListener { presenter.onRetry() }
             attendanceCalculatorErrorDetails.setOnClickListener { presenter.onDetailsClick() }
         }

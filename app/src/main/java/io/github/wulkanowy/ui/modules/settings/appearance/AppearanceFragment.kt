@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.settings.appearance
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import com.yariksoffice.lingver.Lingver
@@ -30,9 +31,18 @@ class AppearanceFragment : PreferenceFragmentCompat(),
 
     override val titleStringId get() = R.string.pref_settings_appearance_title
 
+    companion object {
+        fun withFocusedPreference(key: String) = AppearanceFragment().apply {
+            arguments = bundleOf(FOCUSED_KEY to key)
+        }
+
+        private const val FOCUSED_KEY = "focusedKey"
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.onAttachView(this)
+        arguments?.getString(FOCUSED_KEY)?.let { scrollToPreference(it) }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
