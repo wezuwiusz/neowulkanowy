@@ -811,6 +811,8 @@
     <string name="pref_dashboard_appearance_header">Главная</string>
     <string name="pref_dashboard_appearance_tiles_title">Видимость плиток</string>
     <string name="pref_attendance_appearance_view">Посещаемость</string>
+    <string name="pref_attendance_calculator_appearance_view">Attendance calculator</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Settings</string>
     <string name="pref_timetable_appearance_view">Расписание</string>
     <string name="pref_grades_advanced_header">Оценки</string>
     <string name="pref_counted_average_advanced_header">Рассчитанная средняя оценка</string>

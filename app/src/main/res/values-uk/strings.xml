@@ -811,6 +811,8 @@
     <string name="pref_dashboard_appearance_header">Головна</string>
     <string name="pref_dashboard_appearance_tiles_title">Видимість плиток</string>
     <string name="pref_attendance_appearance_view">Відвідуваність</string>
+    <string name="pref_attendance_calculator_appearance_view">Attendance calculator</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Settings</string>
     <string name="pref_timetable_appearance_view">Розклад</string>
     <string name="pref_grades_advanced_header">Оцінки</string>
     <string name="pref_counted_average_advanced_header">Розрахована середня оцінка</string>

@@ -811,6 +811,8 @@
     <string name="pref_dashboard_appearance_header">Start</string>
     <string name="pref_dashboard_appearance_tiles_title">Widoczność kafelków</string>
     <string name="pref_attendance_appearance_view">Frekwencja</string>
+    <string name="pref_attendance_calculator_appearance_view">Kalkulator frekwencji</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Ustawienia</string>
     <string name="pref_timetable_appearance_view">Plan lekcji</string>
     <string name="pref_grades_advanced_header">Oceny</string>
     <string name="pref_counted_average_advanced_header">Obliczona średnia</string>

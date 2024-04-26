@@ -113,17 +113,17 @@
     <string name="grade_comment">Komentár</string>
     <string name="grade_number_new_items">Počet nových známok %1$d</string>
     <string name="grade_average">Priemer: %1$.2f</string>
-    <string name="grade_average_year">Annual: %1$.2f</string>
+    <string name="grade_average_year">Ročný: %1$.2f</string>
     <string name="grade_points_sum">Body: %s</string>
     <string name="grade_no_average">Bez priemeru</string>
-    <string name="grade_summary_average_semester">Semester average</string>
-    <string name="grade_summary_average_year">Annual average</string>
+    <string name="grade_summary_average_semester">Polročný priemer</string>
+    <string name="grade_summary_average_year">Ročný priemer</string>
     <string name="grade_summary_points">Súčet bodov</string>
     <string name="grade_summary_final_grade">Konečná známka</string>
     <string name="grade_summary_predicted_grade">Predpokladaná známka</string>
     <string name="grade_summary_descriptive">Popisná známka</string>
-    <string name="grade_summary_calculated_average">Calculated semester average</string>
-    <string name="grade_summary_calculated_average_annual">Calculated annual average</string>
+    <string name="grade_summary_calculated_average">Vypočítaný polročný priemer</string>
+    <string name="grade_summary_calculated_average_annual">Vypočítaný ročný priemer</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Ako funguje vypočítaný priemer?</string>
     <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný priemer je aritmetický priemer vypočítaný z priemerov predmetov. Umožňuje vám to poznať približný konečný priemer. Vypočítava sa spôsobom zvoleným užívateľom v nastaveniach aplikácii. Odporúča sa vybrať príslušnú možnosť. Dôvodom je rozdielny výpočet školských priemerov. Ak vaša škola navyše uvádza priemer predmetov na stránke denníka Vulcan, aplikácia si ich stiahne a tieto priemery nepočíta. To možno zmeniť vynútením výpočtu priemeru v nastavení aplikácii.\n\n<b>Priemer známok iba z vybraného semestra</b>:\n1. Výpočet váženého priemeru pre každý predmet v danom semestri\n2. Sčítanie vypočítaných priemerov\n3. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer priemerov z oboch semestrov</b>:\n1. Výpočet váženého priemeru pre každý predmet v semestri 1 a 2\n2. Výpočet aritmetického priemeru vypočítaných priemerov za semestre 1 a 2 pre každý predmet.\n3. Sčítanie vypočítaných priemerov\n4. Výpočet aritmetického priemeru součtených priemerov\n\n<b>Priemer známok z celého roka:</b>\n1. Výpočet váženého priemeru za rok pre každý predmet. Konečný priemer v 1. semestri je nepodstatný.\n2. Sčítanie vypočítaných priemerov\n3. Výpočet aritmetického priemeru součtených priemerov</string>
     <string name="grade_summary_final_average_help_dialog_title">Ako funguje konečný priemer?</string>
@@ -811,6 +811,8 @@
     <string name="pref_dashboard_appearance_header">Domov</string>
     <string name="pref_dashboard_appearance_tiles_title">Viditeľnosť dlaždíc</string>
     <string name="pref_attendance_appearance_view">Dochádzka</string>
+    <string name="pref_attendance_calculator_appearance_view">Kalkulačka dochádzky</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Nastavenia</string>
     <string name="pref_timetable_appearance_view">Plán lekcie</string>
     <string name="pref_grades_advanced_header">Známky</string>
     <string name="pref_counted_average_advanced_header">Vypočítaný priemer</string>
@@ -862,7 +864,7 @@
     <string name="auth_button">Autorizovať</string>
     <string name="auth_success">Autorizácia bola úspešne dokončená</string>
     <string name="auth_title">Autorizácia</string>
-    <string name="auth_description">Dear Parent,<br/><br/>To authorize and ensure the security of data, we kindly ask you to enter below PESEL number of student <b>%1$s</b>. These details are essential for the proper assignment of access and protection of personal data in accordance with applicable regulations.<br/><br/>After entering the data, it will be verified to ensure that access to the VULCAN system is granted exclusively to authorized individuals. Should you have any doubts or problems, please contact the school diary administrator to clarify the situation.<br/><br/>We maintain the highest standards of personal data protection and ensure that all information provided is secure. Wulkanowy app does not store or process the PESEL number.<br/><br/>We remind you that providing full and accurate data is mandatory and necessary for the use of the VULCAN system.</string>
+    <string name="auth_description">Vážený rodiči,<br/><br/>Ak chcete autorizovať a zaistiť bezpečnosť dát, prosíme Vás, aby ste nižšie zadali PESEL číslo žiaka <b>%1$s</b>. Tieto detaily sú nutné pre správne prideľovanie prístupu k osobným údajom a ich ochranu v súlade s platnými predpismi.<br/><br/>Po zadaní údajov budú dáta overené, čím sa zaistí, že prístup do systému VULCAN získajú iba autorizované osoby. Pokiaľ máte akékoľvek pochybnosti alebo problémy, kontaktujte prosím školského správcu denníka pre objasnenie situácie.<br/><br/>Udržujeme najvyššie štandardy ochrany osobných údajov a zaisťujeme, aby boli všetky poskytnuté informácie chránené. Wulkanowy neukladá ani nespracováva číslo PESEL.<br/><br/>Pripomíname, že poskytovanie úplných a presných údajov je nutné a nevyhnutné na používanie systému VULCAN.</string>
     <string name="auth_button_skip">Zatiaľ preskočiť</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Webová stránka denníka VULCAN vyžaduje overenie</string>
