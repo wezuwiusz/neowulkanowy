@@ -13,7 +13,11 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.timetable.additional.add.AdditionalLessonAddDialog
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.dpToPx
+import io.github.wulkanowy.utils.firstSchoolDayInSchoolYear
+import io.github.wulkanowy.utils.getThemeAttrColor
+import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
+import io.github.wulkanowy.utils.openMaterialDatePicker
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -132,8 +136,12 @@ class AdditionalLessonsFragment :
         binding.additionalLessonsNextButton.visibility = if (show) View.VISIBLE else View.INVISIBLE
     }
 
-    override fun showAddAdditionalLessonDialog() {
-        (activity as? MainActivity)?.showDialogFragment(AdditionalLessonAddDialog.newInstance())
+    override fun showAddAdditionalLessonDialog(currentDate: LocalDate) {
+        (activity as? MainActivity)?.showDialogFragment(
+            AdditionalLessonAddDialog.newInstance(
+                currentDate
+            )
+        )
     }
 
     override fun showDatePickerDialog(selectedDate: LocalDate) {

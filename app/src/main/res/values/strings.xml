@@ -195,6 +195,7 @@
 
     <!--Timetable-->
     <string name="timetable_lesson">Lesson</string>
+    <string name="timetable_additional_lesson">Additional lesson</string>
     <string name="timetable_room">Room</string>
     <string name="timetable_group">Group</string>
     <string name="timetable_time">Hours</string>
@@ -731,6 +732,7 @@
     <string name="pref_view_app_theme">Theme</string>
     <string name="pref_view_expand_grade">Grades expanding</string>
     <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
+    <string name="pref_view_timetable_show_additional_lessons">Show additional lessons</string>
     <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
     <string name="pref_view_subjects_without_grades">Show subjects without grades</string>

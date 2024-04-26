@@ -14,6 +14,7 @@ import io.github.wulkanowy.data.enums.AttendanceCalculatorSortingMode
 import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.data.enums.GradeExpandMode
 import io.github.wulkanowy.data.enums.GradeSortingMode
+import io.github.wulkanowy.data.enums.ShowAdditionalLessonsMode
 import io.github.wulkanowy.data.enums.TimetableGapsMode
 import io.github.wulkanowy.data.enums.TimetableMode
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
@@ -212,6 +213,12 @@ class PreferencesRepository @Inject constructor(
                 R.string.pref_default_timetable_show_whole_class
             )
         )
+
+    val showAdditionalLessonsInPlan: ShowAdditionalLessonsMode
+        get() = getString(
+            R.string.pref_key_timetable_show_additional_lessons,
+            R.string.pref_default_timetable_show_additional_lessons
+        ).let { ShowAdditionalLessonsMode.getByValue(it) }
 
     val gradeSortingMode: GradeSortingMode
         get() = GradeSortingMode.getByValue(

@@ -12,6 +12,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Timetable
 import io.github.wulkanowy.databinding.ItemTimetableBinding
 import io.github.wulkanowy.databinding.ItemTimetableEmptyBinding
+import io.github.wulkanowy.databinding.ItemTimetableMainAdditionalBinding
 import io.github.wulkanowy.databinding.ItemTimetableSmallBinding
 import io.github.wulkanowy.utils.SyncListAdapter
 import io.github.wulkanowy.utils.getPlural
@@ -38,6 +39,10 @@ class TimetableAdapter @Inject constructor() :
 
             TimetableItemType.EMPTY -> EmptyViewHolder(
                 ItemTimetableEmptyBinding.inflate(inflater, parent, false)
+            )
+
+            TimetableItemType.ADDITIONAL -> AdditionalViewHolder(
+                ItemTimetableMainAdditionalBinding.inflate(inflater, parent, false)
             )
         }
     }
@@ -69,6 +74,22 @@ class TimetableAdapter @Inject constructor() :
                 binding = holder.binding,
                 item = getItem(position) as TimetableItem.Empty,
             )
+
+            is AdditionalViewHolder -> bindAdditionalView(
+                binding = holder.binding,
+                item = getItem(position) as TimetableItem.Additional,
+            )
+        }
+    }
+
+    private fun bindAdditionalView(
+        binding: ItemTimetableMainAdditionalBinding,
+        item: TimetableItem.Additional
+    ) {
+        with(binding) {
+            timetableItemSubject.text = item.additional.subject
+            timetableItemTimeStart.text = item.additional.start.toFormattedString("HH:mm")
+            timetableItemTimeFinish.text = item.additional.end.toFormattedString("HH:mm")
         }
     }
 
@@ -303,6 +324,9 @@ class TimetableAdapter @Inject constructor() :
         RecyclerView.ViewHolder(binding.root)
 
     private class EmptyViewHolder(val binding: ItemTimetableEmptyBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    private class AdditionalViewHolder(val binding: ItemTimetableMainAdditionalBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     private object Differ : DiffUtil.ItemCallback<TimetableItem>() {
