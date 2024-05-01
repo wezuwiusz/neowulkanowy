@@ -198,6 +198,7 @@
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lekce</string>
+    <string name="timetable_additional_lesson">Další lekce</string>
     <string name="timetable_room">Učebna</string>
     <string name="timetable_group">Skupina</string>
     <string name="timetable_time">Hodiny</string>
@@ -747,6 +748,7 @@
     <string name="pref_view_app_theme">Motiv</string>
     <string name="pref_view_expand_grade">Rozvíjení známek</string>
     <string name="pref_view_timetable_show_groups">Zobrazit skupiny vedle předmětů</string>
+    <string name="pref_view_timetable_show_additional_lessons">Zobrazit další lekce</string>
     <string name="pref_view_timetable_show_gaps">Zobrazit prázdné dlaždice, kde není žádná lekce</string>
     <string name="pref_view_grade_statistics_list">Zobrazit seznam grafů v známkách třídy</string>
     <string name="pref_view_subjects_without_grades">Zobrazit předměty bez známek</string>

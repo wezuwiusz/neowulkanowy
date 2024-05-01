@@ -56,6 +56,11 @@
         <item>Tylko między lekcjami</item>
         <item>Przed i między lekcjami</item>
     </string-array>
+    <string-array name="timetable_show_additional_lessons_entries">
+        <item>Nie pokazuj</item>
+        <item>Pokaż razem</item>
+        <item>Pokaż poniżej zwykłych lekcji</item>
+    </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Szczęśliwy numerek</item>
         <item>Nieprzeczytane wiadomości</item>

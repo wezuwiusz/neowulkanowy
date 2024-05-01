@@ -56,6 +56,11 @@
         <item>Only between lessons</item>
         <item>Before and between lessons</item>
     </string-array>
+    <string-array name="timetable_show_additional_lessons_entries">
+        <item>Don\'t show</item>
+        <item>Show inline</item>
+        <item>Show below regular lessons</item>
+    </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Счастливый номер</item>
         <item>Непрочитанные письма</item>

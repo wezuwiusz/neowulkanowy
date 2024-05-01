@@ -56,6 +56,11 @@
         <item>Only between lessons</item>
         <item>Before and between lessons</item>
     </string-array>
+    <string-array name="timetable_show_additional_lessons_entries">
+        <item>Nicht zeigen</item>
+        <item>Inline anzeigen</item>
+        <item>Unterhalb der regulären Lektionen anzeigen</item>
+    </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Glückszahl</item>
         <item>Ungelesene Nachrichten</item>

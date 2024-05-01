@@ -56,6 +56,11 @@
         <item>Pouze mezi lekcemi</item>
         <item>Před a mezi lekcemi</item>
     </string-array>
+    <string-array name="timetable_show_additional_lessons_entries">
+        <item>Nezobrazovat</item>
+        <item>Zobrazit v řadě</item>
+        <item>Zobrazit pod pravidelnými hodinami</item>
+    </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Šťastné číslo</item>
         <item>Nepřečtené zprávy</item>

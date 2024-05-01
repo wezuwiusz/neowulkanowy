@@ -180,6 +180,7 @@
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lektion</string>
+    <string name="timetable_additional_lesson">Zusätzliche Lektion</string>
     <string name="timetable_room">Klassenzimmer</string>
     <string name="timetable_group">Gruppe</string>
     <string name="timetable_time">Stunden</string>
@@ -198,8 +199,8 @@
     <string name="timetable_notify_change_teacher">Wechsel des Lehrers von %1$s zu %2$s</string>
     <string name="timetable_notify_change_subject">Thema von %1$s zu %2$s wechseln</string>
     <plurals name="timetable_no_lesson">
-        <item quantity="one">No lesson</item>
-        <item quantity="other">No lessons</item>
+        <item quantity="one">Keine Lektion</item>
+        <item quantity="other">Keine Lektionen</item>
     </plurals>
     <plurals name="timetable_notify_new_items_title">
         <item quantity="one">Änderung des Zeitplans</item>
@@ -244,9 +245,9 @@
     <string name="attendance_calculator_button">Anwesenheitsrechner</string>
     <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> Über Ziel</string>
     <string name="attendance_calculator_summary_balance_neutral">direkt am ziel</string>
-    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> under target</string>
-    <string name="attendance_calculator_summary_values">%1$d/%2$d presences</string>
-    <string name="attendance_calculator_summary_values_empty">No attendances recorded</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> Unter Ziel</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d Präsenzen</string>
+    <string name="attendance_calculator_summary_values_empty">Keine Anwesenheit verzeichnet</string>
     <string name="attendance_absence_school">Aus schulischen Gründen abwesend</string>
     <string name="attendance_absence_excused">Entschuldigte Abwesenheit</string>
     <string name="attendance_absence_unexcused">Unentschuldigtes Abwesenheit</string>
@@ -306,10 +307,10 @@
     <string name="message_forward">Weiterleiten</string>
     <string name="message_select_all">Alle auswählen</string>
     <string name="message_unselect_all">Alle abwählen</string>
-    <string name="message_restore_from_trash">Restore from trash</string>
+    <string name="message_restore_from_trash">Wiederherstellen aus dem Papierkorb</string>
     <string name="message_move_to_trash">In Papierkorb verschieben</string>
     <string name="message_delete_forever">Dauerhaft löschen</string>
-    <string name="message_restore_success">Message restored successfully</string>
+    <string name="message_restore_success">Nachricht erfolgreich wiederhergestellt</string>
     <string name="message_delete_success">Nachricht erfolgreich gelöscht</string>
     <string name="message_mailbox_type_student">schüler</string>
     <string name="message_mailbox_type_parent">Eltern</string>
@@ -347,10 +348,10 @@
         <item quantity="other">%1$d ausgewählt</item>
     </plurals>
     <string name="message_messages_deleted">Nachrichten gelöscht</string>
-    <string name="message_messages_restored">Messages restored</string>
+    <string name="message_messages_restored">Wiederhergestellte Nachrichten</string>
     <string name="message_mailbox_chooser_title">Postfach auswählen</string>
-    <string name="message_incognito_mode_on">Incognito mode is on</string>
-    <string name="message_incognito_description">Thanks to incognito mode sender is not notified when you read the message</string>
+    <string name="message_incognito_mode_on">Inkognito-Modus ist aktiviert</string>
+    <string name="message_incognito_description">Dank des Inkognito-Modus wird der Absender nicht benachrichtigt, wenn Sie die Nachricht lesen</string>
     <!--Note-->
     <string name="note_no_items">Keine Informationen über Eintragen</string>
     <string name="note_points">Punkte</string>
@@ -647,13 +648,14 @@
     <string name="pref_view_grade_average_mode">Berechnete Durchschnittsoptionen</string>
     <string name="pref_view_grade_average_force_calc">Mittelwertberechnung durch App erzwingen</string>
     <string name="pref_view_present">Anwesendheit zeigen</string>
-    <string name="pref_attendance_target">Attendance target</string>
-    <string name="pref_attendance_calculator_show_empty_subjects">Show subjects without any attendances</string>
-    <string name="pref_view_attendance_calculator_sorting_mode">Attendance calculator sorting</string>
+    <string name="pref_attendance_target">Anwesenheitsziel</string>
+    <string name="pref_attendance_calculator_show_empty_subjects">Lektion ohne Anwesenheit anzeigen</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Anwesenheitsrechner Sortierung</string>
     <string name="pref_view_app_theme">Thema</string>
     <string name="pref_view_expand_grade">Steigende Sorten</string>
     <string name="pref_view_timetable_show_groups">Gruppen neben Schulfächen anzeigen</string>
-    <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
+    <string name="pref_view_timetable_show_additional_lessons">Zusätzliche Lektionen anzeigen</string>
+    <string name="pref_view_timetable_show_gaps">Leere Kacheln anzeigen, wenn es keinen Lektionen gibt</string>
     <string name="pref_view_grade_statistics_list">Liste der Diagramme in Klassenbewertungen anzeigen</string>
     <string name="pref_view_subjects_without_grades">Schulfächer ohne Noten anzeigen</string>
     <string name="pref_view_grade_color_scheme">Farbschema der Noten</string>
@@ -694,12 +696,12 @@
     <string name="pref_other_grade_modifier_minus">Wert des Minus</string>
     <string name="pref_other_fill_message_content">Antwort mit Nachrichtenhistorie</string>
     <string name="pref_other_optional_arithmetic_average">Arithmetisches Mittel anzeigen, wenn keine Gewichte angegeben sind</string>
-    <string name="pref_other_incognito_mode">Incognito mode</string>
-    <string name="pref_other_incognito_mode_summary">Do not inform about reading the message</string>
+    <string name="pref_other_incognito_mode">Inkognito-Modus</string>
+    <string name="pref_other_incognito_mode_summary">Nicht über das Lesen der Nachricht informieren</string>
     <string name="pref_ads_support_category_name">Unterstützung</string>
     <string name="pref_ads_privacy_policy">Datenschutz-Bestimmungen</string>
     <string name="pref_ads_agreements">Vereinbarungen</string>
-    <string name="pref_ads_consent">Show consent to data processing</string>
+    <string name="pref_ads_consent">Einwilligung zur Datenverarbeitung zeigen</string>
     <string name="pref_ads_show_in_app">Anzeigen in der App anzeigen</string>
     <string name="pref_ads_support">Einzelanzeige ansehen, um Projekt zu unterstützen</string>
     <string name="pref_ads_privacy_title">Einwilligung in die Datenverarbeitung</string>
@@ -717,8 +719,8 @@
     <string name="pref_dashboard_appearance_header">Dashboard</string>
     <string name="pref_dashboard_appearance_tiles_title">Sichtbarkeit der Kacheln</string>
     <string name="pref_attendance_appearance_view">Schulbesuch</string>
-    <string name="pref_attendance_calculator_appearance_view">Attendance calculator</string>
-    <string name="pref_attendance_calculator_appearance_settings_title">Settings</string>
+    <string name="pref_attendance_calculator_appearance_view">Anwesenheits-Rechner</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Einstellungen</string>
     <string name="pref_timetable_appearance_view">Stundenplan</string>
     <string name="pref_grades_advanced_header">Noten</string>
     <string name="pref_counted_average_advanced_header">Berechneter Durchschnitt</string>
@@ -764,37 +766,37 @@
     <string name="menu_order_confirm_content">Die Anwendung muss neu gestartet werden, damit die Änderungen gespeichert werden</string>
     <string name="menu_order_confirm_restart">Restart</string>
     <!--Auth-->
-    <string name="auth_api_error">Authorization has been rejected. The data provided does not match the records in the secretary\'s office.</string>
-    <string name="auth_invalid_error">Invalid PESEL</string>
+    <string name="auth_api_error">Die Autorisierung wurde abgelehnt. Die vorgelegten Daten stimmen nicht mit denen des Sekretariats überein.</string>
+    <string name="auth_invalid_error">Ungültig PESEL</string>
     <string name="auth_pesel">PESEL</string>
-    <string name="auth_button">Authorize</string>
-    <string name="auth_success">Authorization completed successfully</string>
-    <string name="auth_title">Authorization</string>
-    <string name="auth_description">Dear Parent,<br/><br/>To authorize and ensure the security of data, we kindly ask you to enter below PESEL number of student <b>%1$s</b>. These details are essential for the proper assignment of access and protection of personal data in accordance with applicable regulations.<br/><br/>After entering the data, it will be verified to ensure that access to the VULCAN system is granted exclusively to authorized individuals. Should you have any doubts or problems, please contact the school diary administrator to clarify the situation.<br/><br/>We maintain the highest standards of personal data protection and ensure that all information provided is secure. Wulkanowy app does not store or process the PESEL number.<br/><br/>We remind you that providing full and accurate data is mandatory and necessary for the use of the VULCAN system.</string>
-    <string name="auth_button_skip">Skip for now</string>
+    <string name="auth_button">Autorisieren Sie</string>
+    <string name="auth_success">Autorisierung erfolgreich abgeschlossen</string>
+    <string name="auth_title">Autorisierung</string>
+    <string name="auth_description">Liebes Elternteil,<br/><br/>Um die Sicherheit der Daten zu gewährleisten, bitten wir Sie, die PESEL-Nummer des Schülers/der Schülerin anzugeben<b>%1$s</b>Diese Angaben sind für die ordnungsgemäße Zuweisung des Zugriffs und den Schutz der personenbezogenen Daten gemäß den geltenden Vorschriften unerlässlich.<br/><br/>Nach der Eingabe der Daten werden diese überprüft, um sicherzustellen, dass nur berechtigte Personen Zugang zum VULCAN-System erhalten. Wenn Sie Zweifel oder Probleme haben, wenden Sie sich bitte an den Administrator des Schülerkalenders, um die Situation zu klären.<br/><br/>Wir halten die höchsten Standards für den Schutz personenbezogener Daten ein und gewährleisten, dass alle bereitgestellten Informationen sicher sind. Die Wulkanowy-App speichert und verarbeitet die PESEL-Nummer nicht.<br/><br/>Wir erinnern Sie daran, dass die Angabe vollständiger und korrekter Daten obligatorisch und notwendig für die Nutzung des VULCAN-Systems ist.</string>
+    <string name="auth_button_skip">Vorerst überspringen</string>
     <!--Captcha-->
-    <string name="captcha_dialog_title">VULCAN\'s website requires verification</string>
-    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
-    <string name="captcha_verified_message">Verified successfully</string>
+    <string name="captcha_dialog_title">VULCAN\'s Website erfordert Überprüfung</string>
+    <string name="captcha_dialog_description"><b>Warum sehe ich das?</b>\nDie Website des Registers, von der Wulkanowy Daten herunterlädt, zeigt denselben Bildschirm wie oben an, so dass Wulkanowy ihn ebenfalls anzeigen muss, um Daten von dieser Website herunterladen zu können. Es gibt keinen Ausweg</string>
+    <string name="captcha_verified_message">Erfolgreich verifiziert</string>
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
     <string name="error_invalid_device_datetime">Es ist ein Fehler aufgetreten. Überprüfen Sie Ihre Geräteuhr</string>
-    <string name="error_account_inactive">This account is inactive. Try logging in again</string>
+    <string name="error_account_inactive">Dieses Konto ist inaktiv. Versuchen Sie, sich erneut anzumelden</string>
     <string name="error_timeout">Registrierungsverbindung fehlgeschlagen. Server können überlastet sein. Bitte versuchen Sie es später noch einmal</string>
     <string name="error_login_failed">Das Laden der Daten ist fehlgeschlagen. Bitte versuchen Sie es später noch einmal</string>
-    <string name="error_password_invalid">Your password has expired or been changed. Please log in again</string>
+    <string name="error_password_invalid">Ihr Passwort ist abgelaufen oder wurde geändert. Bitte melden Sie sich erneut an</string>
     <string name="error_password_change_required">Passwortänderung für Registrierung erforderlich</string>
     <string name="error_service_unavailable">Wartung im Gange UONET + Klassenbuch. Versuchen Sie es später noch einmal</string>
     <string name="error_unknown_uonet">Unbekannter UONET + Registerfehler. Versuchen Sie es später erneut</string>
     <string name="error_unknown_app">Unbekannter Anwendungsfehler. Bitte versuchen Sie es später noch einmal</string>
-    <string name="error_cloudflare_captcha">Captcha verification required</string>
+    <string name="error_cloudflare_captcha">Captcha-Verifizierung erforderlich</string>
     <string name="error_unknown">Ein unerwarteter Fehler ist aufgetreten</string>
     <string name="error_feature_disabled">Funktion, die von Ihrer Schule deaktiviert wurde</string>
     <string name="error_feature_not_available">Feature in diesem Modus nicht verfügbar</string>
     <string name="error_field_required">Dieses Feld ist erforderlich</string>
     <!-- Mute system -->
-    <string name="message_mute">Mute</string>
-    <string name="message_unmute">Unmute</string>
-    <string name="message_mute_success">You have muted this user</string>
-    <string name="message_unmute_success">You have unmuted this user</string>
+    <string name="message_mute">Stumm</string>
+    <string name="message_unmute">Stummschaltung aufheben</string>
+    <string name="message_mute_success">Sie haben diesen Benutzer stummgeschaltet</string>
+    <string name="message_unmute_success">Sie haben die Stummschaltung dieses Benutzers aufgehoben</string>
 </resources>

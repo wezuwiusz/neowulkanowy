@@ -198,6 +198,7 @@
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lekcja</string>
+    <string name="timetable_additional_lesson">Dodatkowa lekcja</string>
     <string name="timetable_room">Sala</string>
     <string name="timetable_group">Grupa</string>
     <string name="timetable_time">Godziny</string>
@@ -747,6 +748,7 @@
     <string name="pref_view_app_theme">Motyw</string>
     <string name="pref_view_expand_grade">Rozwijanie ocen</string>
     <string name="pref_view_timetable_show_groups">Pokazuj grupę obok przedmiotu</string>
+    <string name="pref_view_timetable_show_additional_lessons">Pokaż dodatkowe lekcje</string>
     <string name="pref_view_timetable_show_gaps">Pokazuj puste kafelki gdzie nie ma lekcji</string>
     <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>
     <string name="pref_view_subjects_without_grades">Pokazuj przedmioty bez ocen</string>

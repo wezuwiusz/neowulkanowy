@@ -56,6 +56,11 @@
         <item>Тільки між уроками</item>
         <item>Перед і між уроками</item>
     </string-array>
+    <string-array name="timetable_show_additional_lessons_entries">
+        <item>Не показувати</item>
+        <item>Показати у рядку</item>
+        <item>Показати нижче стандартних уроків</item>
+    </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Щасливий номер</item>
         <item>Непрочитані листи</item>
