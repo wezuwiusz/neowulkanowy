@@ -1,5 +1,8 @@
-Wersja 2.5.8
+Wersja 2.6.0
 
-— obeszliśmy próby blokowania Wulkanowego przez firmę VULCAN, o czymś pewnie zapomnieliśmy, ale nie miejcie nam tego za złe
+— dodaliśmy kalkulator frekwencji
+— dodaliśmy wyświetlanie lekcji dodatkowych w planie lekcji
+— ulepszyliśmy wyjaśnienie na ekranie z miejscem na wpisanie numeru PESEL
+— naprawiliśmy rzadkie sytuacje, gdy plan lekcji nakładał się na informację o jego braku
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
