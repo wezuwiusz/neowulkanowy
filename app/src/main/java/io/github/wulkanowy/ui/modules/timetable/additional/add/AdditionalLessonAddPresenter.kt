@@ -10,9 +10,12 @@ import io.github.wulkanowy.utils.lastSchoolDayInSchoolYear
 import io.github.wulkanowy.utils.toLocalDate
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.time.*
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 class AdditionalLessonAddPresenter @Inject constructor(
@@ -30,7 +33,7 @@ class AdditionalLessonAddPresenter @Inject constructor(
 
     override fun onAttachView(view: AdditionalLessonAddView) {
         super.onAttachView(view)
-        view.initView()
+        view.initView(selectedDate)
         Timber.i("AdditionalLesson details view was initialized")
     }
 

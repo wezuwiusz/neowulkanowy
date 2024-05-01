@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/attendanceMenuCalculator"
+        android:icon="@drawable/ic_menu_attendance_calculator"
+        android:orderInCategory="0"
+        android:title="@string/attendance_calculator_button"
+        app:iconTint="@color/material_on_surface_emphasis_medium"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/attendanceMenuSummary"
         android:icon="@drawable/ic_menu_attendance_summary"
         android:orderInCategory="1"

@@ -10,9 +10,11 @@ import com.fredporciuncula.flow.preferences.Serializer
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.enums.AppTheme
+import io.github.wulkanowy.data.enums.AttendanceCalculatorSortingMode
 import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.data.enums.GradeExpandMode
 import io.github.wulkanowy.data.enums.GradeSortingMode
+import io.github.wulkanowy.data.enums.ShowAdditionalLessonsMode
 import io.github.wulkanowy.data.enums.TimetableGapsMode
 import io.github.wulkanowy.data.enums.TimetableMode
 import io.github.wulkanowy.ui.modules.dashboard.DashboardItem
@@ -40,6 +42,27 @@ class PreferencesRepository @Inject constructor(
             R.string.pref_key_attendance_present,
             R.bool.pref_default_attendance_present
         )
+
+    val targetAttendanceFlow: Flow<Int>
+        get() = flowSharedPref.getInt(
+            context.getString(R.string.pref_key_attendance_target),
+            context.resources.getInteger(R.integer.pref_default_attendance_target)
+        ).asFlow()
+
+    val attendanceCalculatorSortingModeFlow: Flow<AttendanceCalculatorSortingMode>
+        get() = flowSharedPref.getString(
+            context.getString(R.string.pref_key_attendance_calculator_sorting_mode),
+            context.resources.getString(R.string.pref_default_attendance_calculator_sorting_mode)
+        ).asFlow().map(AttendanceCalculatorSortingMode::getByValue)
+
+    /**
+     * Subjects are empty when they don't have any attendances (total = 0, attendances = 0, absences = 0).
+     */
+    val attendanceCalculatorShowEmptySubjects: Flow<Boolean>
+        get() = flowSharedPref.getBoolean(
+            context.getString(R.string.pref_key_attendance_calculator_show_empty_subjects),
+            context.resources.getBoolean(R.bool.pref_default_attendance_calculator_show_empty_subjects)
+        ).asFlow()
 
     private val gradeAverageModePref: Preference<GradeAverageMode>
         get() = getObjectFlow(
@@ -190,6 +213,12 @@ class PreferencesRepository @Inject constructor(
                 R.string.pref_default_timetable_show_whole_class
             )
         )
+
+    val showAdditionalLessonsInPlan: ShowAdditionalLessonsMode
+        get() = getString(
+            R.string.pref_key_timetable_show_additional_lessons,
+            R.string.pref_default_timetable_show_additional_lessons
+        ).let { ShowAdditionalLessonsMode.getByValue(it) }
 
     val gradeSortingMode: GradeSortingMode
         get() = GradeSortingMode.getByValue(

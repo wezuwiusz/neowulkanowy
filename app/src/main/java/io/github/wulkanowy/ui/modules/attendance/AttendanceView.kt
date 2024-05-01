@@ -56,6 +56,8 @@ interface AttendanceView : BaseView {
 
     fun openSummaryView()
 
+    fun openCalculatorView()
+
     fun startSendMessageIntent(date: LocalDate, numbers: String, reason: String)
 
     fun startActionMode()

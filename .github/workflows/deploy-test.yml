@@ -36,8 +36,7 @@ jobs:
       - name: Prepare build configuration
         run: |
           sed -i -e "s#applicationIdSuffix \".dev\"#applicationIdSuffix \".${GITHUB_HEAD_REF//[-.\/]/_}\"#" app/build.gradle
-          sed -i -e "s#.dev\"#.${GITHUB_HEAD_REF//[-.\/]/_}\"#" app/src/debug/google-services.json
-          sed -i -e "s#.dev\"#.${GITHUB_HEAD_REF//[-.\/]/_}\"#" app/src/debug/agconnect-services.json
+          sed -i -e "s#.dev\"#.${GITHUB_HEAD_REF//[-.\/]/_}\"#" app/google-services.json
           sed -i -e '/versionNameSuffix/d' app/build.gradle
       - name: Add signing config
         run: |
@@ -131,7 +130,7 @@ jobs:
           BITRISE_KEYSTORE_PASSWORD: ${{ secrets.BITRISE_KEYSTORE_PASSWORD }}
           BITRISE_KEY_ALIAS: ${{ secrets.BITRISE_KEY_ALIAS }}
           BITRISE_KEY_PASSWORD: ${{ secrets.BITRISE_KEY_PASSWORD }}
-        run: ./gradlew assemblePlayDebug -PenableFirebase --stacktrace
+        run: ./gradlew assemblePlayDebug --stacktrace
       - name: Upload apk to github artifacts
         uses: actions/upload-artifact@v3
         with:

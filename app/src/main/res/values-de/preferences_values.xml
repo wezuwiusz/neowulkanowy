@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="sort_alphabetically">Alphabetisch</string>
+    <string name="sort_by_date">Nach Datum</string>
+    <string name="sort_by_average">Nach Durchschnitt</string>
+    <string name="sort_by_attendance_percentage">Nach Anwesenheitsprozent</string>
+    <string name="sort_by_subject_attendance_balance">Nach Subjekt Anwesenheitssaldo</string>
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
         <item>Licht</item>
         <item>Dunkel</item>
@@ -31,11 +36,6 @@
         <item>0,5</item>
         <item>0,75</item>
     </string-array>
-    <string-array name="grade_sorting_mode_entries">
-        <item>Alphabetisch</item>
-        <item>Nach Datum</item>
-        <item>Nach Durchschnitt</item>
-    </string-array>
     <string-array name="grade_color_scheme_entries">
         <item>Dzienniczek+</item>
         <item>Wulkanowy</item>
@@ -55,6 +55,11 @@
         <item>Don\'t show</item>
         <item>Only between lessons</item>
         <item>Before and between lessons</item>
+    </string-array>
+    <string-array name="timetable_show_additional_lessons_entries">
+        <item>Nicht zeigen</item>
+        <item>Inline anzeigen</item>
+        <item>Unterhalb der regulären Lektionen anzeigen</item>
     </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Glückszahl</item>

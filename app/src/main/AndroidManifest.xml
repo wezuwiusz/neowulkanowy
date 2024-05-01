@@ -51,7 +51,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/WulkanowyTheme.SplashScreen"
-            tools:ignore="LockedOrientationActivity">
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -155,33 +155,9 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <!-- workaround for https://github.com/firebase/firebase-android-sdk/issues/473 enabled:false -->
-        <!-- https://firebase.googleblog.com/2017/03/take-control-of-your-firebase-init-on.html -->
-        <provider
-            android:name="com.google.firebase.provider.FirebaseInitProvider"
-            android:authorities="${applicationId}.firebaseinitprovider"
-            android:enabled="${firebase_enabled}"
-            android:exported="false"
-            tools:ignore="MissingClass" />
-
         <meta-data
             android:name="install_channel"
             android:value="${install_channel}" />
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="${firebase_enabled}" />
-        <meta-data
-            android:name="google_analytics_adid_collection_enabled"
-            android:value="${firebase_enabled}" />
-        <meta-data
-            android:name="firebase_crashlytics_collection_enabled"
-            android:value="${firebase_enabled}" />
-        <meta-data
-            android:name="firebase_messaging_auto_init_enabled"
-            android:value="${firebase_enabled}" />
-        <meta-data
-            android:name="firebase_inapp_messaging_auto_data_collection_enabled"
-            android:value="${firebase_enabled}" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_all" />

@@ -6,10 +6,12 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.databinding.FragmentLoginStudentSelectBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.dashboard.viewholders.AdminMessageViewHolder
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.support.LoginSupportDialog
@@ -109,6 +111,19 @@ class LoginStudentSelectFragment :
 
     override fun openEmail(supportInfo: LoginSupportInfo) {
         LoginSupportDialog.newInstance(supportInfo).show(childFragmentManager, "support_dialog")
+    }
+
+    override fun showAdminMessage(adminMessage: AdminMessage?) {
+        AdminMessageViewHolder(
+            binding = binding.loginStudentSelectAdminMessage,
+            onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed,
+            onAdminMessageClickListener = presenter::onAdminMessageSelected,
+        ).bind(adminMessage)
+        binding.loginStudentSelectAdminMessage.root.isVisible = adminMessage != null
+    }
+
+    override fun openInternetBrowser(url: String) {
+        requireContext().openInternetBrowser(url)
     }
 
     override fun onDestroyView() {

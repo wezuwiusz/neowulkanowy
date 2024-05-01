@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.timetable.additional.add
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -26,9 +27,11 @@ class AdditionalLessonAddDialog : BaseDialogFragment<DialogAdditionalAddBinding>
     lateinit var presenter: AdditionalLessonAddPresenter
 
     companion object {
-        fun newInstance() = AdditionalLessonAddDialog()
+        const val ARGUMENT_KEY = "additional_lesson_default_date"
+        fun newInstance(defaultDate: LocalDate) = AdditionalLessonAddDialog().apply {
+            arguments = bundleOf(ARGUMENT_KEY to defaultDate.toEpochDay())
+        }
     }
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(requireContext(), theme)
@@ -40,10 +43,13 @@ class AdditionalLessonAddDialog : BaseDialogFragment<DialogAdditionalAddBinding>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.getLong(ARGUMENT_KEY)?.let(LocalDate::ofEpochDay)?.let {
+            presenter.onDateSelected(it)
+        }
         presenter.onAttachView(this)
     }
 
-    override fun initView() {
+    override fun initView(selectedDate: LocalDate) {
         with(binding) {
             additionalLessonDialogStartEdit.doOnTextChanged { _, _, _, _ ->
                 additionalLessonDialogStart.isErrorEnabled = false
@@ -53,6 +59,7 @@ class AdditionalLessonAddDialog : BaseDialogFragment<DialogAdditionalAddBinding>
                 additionalLessonDialogEnd.isErrorEnabled = false
                 additionalLessonDialogEnd.error = null
             }
+            additionalLessonDialogDateEdit.setText(selectedDate.toFormattedString())
             additionalLessonDialogDateEdit.doOnTextChanged { _, _, _, _ ->
                 additionalLessonDialogDate.isErrorEnabled = false
                 additionalLessonDialogDate.error = null
@@ -61,7 +68,6 @@ class AdditionalLessonAddDialog : BaseDialogFragment<DialogAdditionalAddBinding>
                 additionalLessonDialogContent.isErrorEnabled = false
                 additionalLessonDialogContent.error = null
             }
-
             additionalLessonDialogAdd.setOnClickListener {
                 presenter.onAddAdditionalClicked(
                     start = additionalLessonDialogStartEdit.text?.toString(),
@@ -155,7 +161,9 @@ class AdditionalLessonAddDialog : BaseDialogFragment<DialogAdditionalAddBinding>
             .build()
 
         timePicker.addOnPositiveButtonClickListener {
-            onTimeSelected(LocalTime.of(timePicker.hour, timePicker.minute))
+            if (isAdded) {
+                onTimeSelected(LocalTime.of(timePicker.hour, timePicker.minute))
+            }
         }
 
         if (!parentFragmentManager.isStateSaved) {

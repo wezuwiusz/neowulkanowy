@@ -61,7 +61,7 @@ script:
       gpg --yes --batch --passphrase=$SERVICES_ENCRYPT_KEY ./app/src/release/agconnect-services.json.gpg;
       gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/key.p12.gpg;
       gpg --yes --batch --passphrase=$ENCRYPT_KEY ./app/upload-key.jks.gpg;
-      ./gradlew publishPlayRelease -PenableFirebase --stacktrace;
+      ./gradlew publishPlayRelease --stacktrace;
     fi
 
 after_success:

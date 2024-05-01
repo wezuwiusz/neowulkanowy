@@ -1,14 +1,27 @@
 package io.github.wulkanowy.ui.modules.timetable.additional
 
 import android.annotation.SuppressLint
-import io.github.wulkanowy.data.*
 import io.github.wulkanowy.data.db.entities.TimetableAdditional
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceData
+import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceNotLoading
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
+import io.github.wulkanowy.domain.timetable.IsStudentHasLessonsOnWeekendUseCase
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.*
+import io.github.wulkanowy.utils.AnalyticsHelper
+import io.github.wulkanowy.utils.capitalise
+import io.github.wulkanowy.utils.getLastSchoolDayIfHoliday
+import io.github.wulkanowy.utils.isHolidays
+import io.github.wulkanowy.utils.nextOrSameSchoolDay
+import io.github.wulkanowy.utils.nextSchoolDay
+import io.github.wulkanowy.utils.previousSchoolDay
+import io.github.wulkanowy.utils.toFormattedString
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
@@ -22,10 +35,13 @@ class AdditionalLessonsPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     private val semesterRepository: SemesterRepository,
     private val timetableRepository: TimetableRepository,
+    private val isStudentHasLessonsOnWeekendUseCase: IsStudentHasLessonsOnWeekendUseCase,
     private val analytics: AnalyticsHelper
 ) : BasePresenter<AdditionalLessonsView>(errorHandler, studentRepository) {
 
     private var baseDate: LocalDate = LocalDate.now().nextOrSameSchoolDay
+
+    private var isWeekendHasLessons: Boolean = false
 
     lateinit var currentDate: LocalDate
         private set
@@ -43,12 +59,18 @@ class AdditionalLessonsPresenter @Inject constructor(
     }
 
     fun onPreviousDay() {
-        loadData(currentDate.previousSchoolDay)
+        val date = if (isWeekendHasLessons) {
+            currentDate.minusDays(1)
+        } else currentDate.previousSchoolDay
+        loadData(date)
         reloadView()
     }
 
     fun onNextDay() {
-        loadData(currentDate.nextSchoolDay)
+        val date = if (isWeekendHasLessons) {
+            currentDate.plusDays(1)
+        } else currentDate.nextSchoolDay
+        loadData(date)
         reloadView()
     }
 
@@ -57,7 +79,7 @@ class AdditionalLessonsPresenter @Inject constructor(
     }
 
     fun onAdditionalLessonAddButtonClicked() {
-        view?.showAddAdditionalLessonDialog()
+        view?.showAddAdditionalLessonDialog(currentDate)
     }
 
     fun onDateSet(year: Int, month: Int, day: Int) {
@@ -131,6 +153,8 @@ class AdditionalLessonsPresenter @Inject constructor(
         flatResourceFlow {
             val student = studentRepository.getCurrentStudent()
             val semester = semesterRepository.getCurrentSemester(student)
+
+            isWeekendHasLessons = isStudentHasLessonsOnWeekendUseCase(semester, currentDate)
             timetableRepository.getTimetable(
                 student = student,
                 semester = semester,

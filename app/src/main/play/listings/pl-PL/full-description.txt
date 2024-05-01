@@ -6,7 +6,7 @@ Wyróżnione cechy i funkcje:
 - szczęśliwy numerek,
 - podgląd lekcji dodatkowych i zrealizowanych,
 - ciemny motyw.
-- brak reklam,
+- opcjonalne reklam,
 - tryb offline,
 - powiadomienia.
 

@@ -1,0 +1,153 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:paddingStart="8dp"
+    android:paddingTop="6dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="6dp"
+    tools:context=".ui.modules.timetable.TimetableAdapter">
+
+    <TextView
+        android:id="@+id/timetableItemNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:maxLength="2"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
+
+    <TextView
+        android:id="@+id/timetableItemSubject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@id/timetableItemTimeBarrier"
+        app:layout_constraintStart_toEndOf="@+id/timetableItemTimeStart"
+        app:layout_constraintTop_toTopOf="@id/timetableItemTimeStart"
+        tools:text="@tools:sample/lorem" />
+
+    <TextView
+        android:id="@+id/timetableItemTimeStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:maxLines="1"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/timetableItemTimeFinish"
+        app:layout_constraintStart_toEndOf="@id/timetableItemNumber"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="11:11" />
+
+    <TextView
+        android:id="@+id/timetableItemTimeFinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:maxLines="1"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/timetableItemNumber"
+        app:layout_constraintTop_toBottomOf="@id/timetableItemTimeStart"
+        tools:text="12:00" />
+
+    <TextView
+        android:id="@+id/timetableItemTeacher"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="13sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/timetableItemTimeStart"
+        app:layout_constraintTop_toTopOf="@id/timetableItemTimeFinish"
+        android:text="@string/timetable_additional_lesson"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/timetableItemDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="?colorTimetableChange"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/timetableItemTimeFinish"
+        app:layout_constraintTop_toTopOf="@id/timetableItemTimeFinish"
+        tools:text="Lekcja odwołana: uczniowie zwolnieni do domu"
+        tools:visibility="gone" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/timetableItemTimeBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="timetableItemTimeUntil,timetableItemTimeLeft" />
+
+    <TextView
+        android:id="@+id/timetableItemTimeUntil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textColor="?colorPrimary"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="za 15 min"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/timetableItemTimeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/background_timetable_time_left"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:paddingLeft="7dp"
+        android:paddingTop="2dp"
+        android:paddingRight="7dp"
+        android:paddingBottom="2dp"
+        android:textColor="?colorOnPrimary"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:backgroundTint="?colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/timetableItemTimeStart"
+        tools:text="jeszcze 15 min"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

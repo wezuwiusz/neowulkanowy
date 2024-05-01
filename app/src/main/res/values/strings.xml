@@ -195,6 +195,7 @@
 
     <!--Timetable-->
     <string name="timetable_lesson">Lesson</string>
+    <string name="timetable_additional_lesson">Additional lesson</string>
     <string name="timetable_room">Room</string>
     <string name="timetable_group">Group</string>
     <string name="timetable_time">Hours</string>
@@ -262,6 +263,12 @@
 
     <!--Attendance-->
     <string name="attendance_summary_button">Attendance summary</string>
+    <string name="attendance_calculator_button">Attendance calculator</string>
+    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> over target</string>
+    <string name="attendance_calculator_summary_balance_neutral">right on target</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> under target</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d presences</string>
+    <string name="attendance_calculator_summary_values_empty">No attendances recorded</string>
     <string name="attendance_absence_school">Absent for school reasons</string>
     <string name="attendance_absence_excused">Excused absence</string>
     <string name="attendance_absence_unexcused">Unexcused absence</string>
@@ -719,9 +726,13 @@
     <string name="pref_view_grade_average_mode">Calculated average options</string>
     <string name="pref_view_grade_average_force_calc">Force average calculation by app</string>
     <string name="pref_view_present">Show presence</string>
+    <string name="pref_attendance_target">Attendance target</string>
+    <string name="pref_attendance_calculator_show_empty_subjects">Show subjects without any attendances</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Attendance calculator sorting</string>
     <string name="pref_view_app_theme">Theme</string>
     <string name="pref_view_expand_grade">Grades expanding</string>
     <string name="pref_view_timetable_show_groups">Show groups next to subjects</string>
+    <string name="pref_view_timetable_show_additional_lessons">Show additional lessons</string>
     <string name="pref_view_timetable_show_gaps">Show empty tiles where there\'s no lesson</string>
     <string name="pref_view_grade_statistics_list">Show chart list in class grades</string>
     <string name="pref_view_subjects_without_grades">Show subjects without grades</string>
@@ -787,6 +798,8 @@
     <string name="pref_dashboard_appearance_header">Dashboard</string>
     <string name="pref_dashboard_appearance_tiles_title">Tiles visibility</string>
     <string name="pref_attendance_appearance_view">Attendance</string>
+    <string name="pref_attendance_calculator_appearance_view">Attendance calculator</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Settings</string>
     <string name="pref_timetable_appearance_view">Timetable</string>
     <string name="pref_grades_advanced_header">Grades</string>
     <string name="pref_counted_average_advanced_header">Calculated average</string>
@@ -847,7 +860,7 @@
     <string name="auth_button">Authorize</string>
     <string name="auth_success">Authorization completed successfully</string>
     <string name="auth_title">Authorization</string>
-    <string name="auth_description">To operate the application, we need to confirm your identity. Please enter the student\'s PESEL &lt;b>%1$s&lt;/b> in the field below</string>
+    <string name="auth_description">Dear Parent,&lt;br />&lt;br />To authorize and ensure the security of data, we kindly ask you to enter below PESEL number of student &lt;b>%1$s&lt;/b>. These details are essential for the proper assignment of access and protection of personal data in accordance with applicable regulations.&lt;br />&lt;br />After entering the data, it will be verified to ensure that access to the VULCAN system is granted exclusively to authorized individuals. Should you have any doubts or problems, please contact the school diary administrator to clarify the situation.&lt;br />&lt;br />We maintain the highest standards of personal data protection and ensure that all information provided is secure. Wulkanowy app does not store or process the PESEL number.&lt;br />&lt;br />We remind you that providing full and accurate data is mandatory and necessary for the use of the VULCAN system.</string>
     <string name="auth_button_skip">Skip for now</string>
 
 

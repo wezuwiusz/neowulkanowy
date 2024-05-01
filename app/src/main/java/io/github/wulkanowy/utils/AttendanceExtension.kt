@@ -10,19 +10,19 @@ import io.github.wulkanowy.sdk.scrapper.attendance.AttendanceCategory
  * (https://www.vulcan.edu.pl/vulcang_files/user/AABW/AABW-PDF/uonetplus/uonetplus_Frekwencja-liczby-obecnych-nieobecnych.pdf)
  */
 
-private inline val AttendanceSummary.allPresences: Double
-    get() = presence.toDouble() + absenceForSchoolReasons + lateness + latenessExcused
+inline val AttendanceSummary.allPresences: Int
+    get() = presence + absenceForSchoolReasons + lateness + latenessExcused
 
-private inline val AttendanceSummary.allAbsences: Double
-    get() = absence.toDouble() + absenceExcused
+inline val AttendanceSummary.allAbsences: Int
+    get() = absence + absenceExcused
 
 inline val Attendance.isExcusableOrNotExcused: Boolean
     get() = (excusable || ((absence || lateness) && !excused)) && excuseStatus == null
 
-fun AttendanceSummary.calculatePercentage() = calculatePercentage(allPresences, allAbsences)
+fun AttendanceSummary.calculatePercentage() = calculatePercentage(allPresences.toDouble(), allAbsences.toDouble())
 
 fun List<AttendanceSummary>.calculatePercentage(): Double {
-    return calculatePercentage(sumOf { it.allPresences }, sumOf { it.allAbsences })
+    return calculatePercentage(sumOf { it.allPresences.toDouble() }, sumOf { it.allAbsences.toDouble() })
 }
 
 private fun calculatePercentage(presence: Double, absence: Double): Double {

@@ -199,7 +199,7 @@ class StudentRepository @Inject constructor(
 
     suspend fun refreshStudentAfterAuthorize(student: Student, semester: Semester) {
         val wulkanowySdk = wulkanowySdkFactory.create(student, semester)
-        val newCurrentApiStudent = runCatching { wulkanowySdk.getCurrentStudent() }
+            val newCurrentApiStudent = runCatching { wulkanowySdk.getCurrentStudent() }
             .onFailure { Timber.e(it, "Can't find student with id ${student.studentId}") }
             .getOrNull() ?: return
 

@@ -101,7 +101,14 @@ class TimetableWidgetFactory(
     private suspend fun getLessons(
         student: Student, semester: Semester, date: LocalDate
     ): List<Timetable> {
-        val timetable = timetableRepository.getTimetable(student, semester, date, date, false)
+        val timetable = timetableRepository.getTimetable(
+            student = student,
+            semester = semester,
+            start = date,
+            end = date,
+            forceRefresh = false,
+            isFromAppWidget = true
+        )
         val lessons = timetable.toFirstResult().dataOrThrow.lessons
         return lessons.sortedBy { it.start }
     }

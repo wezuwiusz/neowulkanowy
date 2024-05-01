@@ -6,7 +6,7 @@ import java.time.LocalTime
 
 interface AdditionalLessonAddView : BaseView {
 
-    fun initView()
+    fun initView(selectedDate: LocalDate)
 
     fun closeDialog()
 

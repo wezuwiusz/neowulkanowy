@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="sort_alphabetically">Alfabetycznie</string>
+    <string name="sort_by_date">Według daty</string>
+    <string name="sort_by_average">Według średniej</string>
+    <string name="sort_by_attendance_percentage">Według procentu obecności</string>
+    <string name="sort_by_subject_attendance_balance">Według balansu frekwencji przedmiotu</string>
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
         <item>Jasny</item>
         <item>Ciemny</item>
@@ -31,11 +36,6 @@
         <item>0,5</item>
         <item>0,75</item>
     </string-array>
-    <string-array name="grade_sorting_mode_entries">
-        <item>Alfabetycznie</item>
-        <item>Według daty</item>
-        <item>Według średniej</item>
-    </string-array>
     <string-array name="grade_color_scheme_entries">
         <item>Dzienniczek+</item>
         <item>Wulkanowy</item>
@@ -55,6 +55,11 @@
         <item>Nie pokazuj</item>
         <item>Tylko między lekcjami</item>
         <item>Przed i między lekcjami</item>
+    </string-array>
+    <string-array name="timetable_show_additional_lessons_entries">
+        <item>Nie pokazuj</item>
+        <item>Pokaż razem</item>
+        <item>Pokaż poniżej zwykłych lekcji</item>
     </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Szczęśliwy numerek</item>

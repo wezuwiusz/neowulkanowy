@@ -6,7 +6,7 @@ Zvýraznené vlastnosti a funkcie:
 - šťastné číslo,
 - náhľad na ďalšie a dokončené lekcie,
 - tmavý motív,
-- žiadne reklamy,
+- voliteľné reklamy,
 - offline režim,
 - upozornenia.
 

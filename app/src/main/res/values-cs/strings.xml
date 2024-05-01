@@ -4,7 +4,7 @@
     <string name="login_title">Přihlášení</string>
     <string name="main_title">Wulkanowy</string>
     <string name="grade_title">Známky</string>
-    <string name="attendance_title">Frekvence</string>
+    <string name="attendance_title">Docházka</string>
     <string name="exam_title">Zkoušky</string>
     <string name="timetable_title">Plán lekce</string>
     <string name="settings_title">Nastavení</string>
@@ -31,7 +31,7 @@
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
     <!--Login-->
-    <string name="login_header_default">Přihlaste se pomocí studentského nebo rodičovského účtu</string>
+    <string name="login_header_default">Přihlaste se pomocí žákovského nebo rodičovského účtu</string>
     <string name="login_header_symbol">Zadejte symbol ze stránky deníku: &lt;b&gt;%1$s&lt;/b&gt;</string>
     <string name="login_nickname_hint">Uživatelské jméno</string>
     <string name="login_email_hint">Email</string>
@@ -64,7 +64,7 @@
     <string name="login_symbol_helper">Symbol najdete na stránce deníku v &#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nUjistěte se, že jste nastavili správnou variantu deníku v poli <b>Variace deníku UONET+</b> na první přihlašovací obrazovce</string>
     <string name="login_select_student">Vyberte žáky, kteří se mají do aplikace přihlásit</string>
     <string name="login_advanced">Jiné možnosti</string>
-    <string name="login_advanced_warning_mobile_api">V tomto režimu nefungují následující: šťastné číslo, statistiky třídy, shrnutí frekvencí, ospravedlnění nepřítomnosti, dokončené lekce, informace o škole a prohlížení seznamu registrovaných zařízení</string>
+    <string name="login_advanced_warning_mobile_api">V tomto režimu nefungují následující: šťastné číslo, statistiky třídy, shrnutí docházky, ospravedlnění nepřítomnosti, dokončené lekce, informace o škole a prohlížení seznamu registrovaných zařízení</string>
     <string name="login_advanced_warning_scraper">Tento režim zobrazuje stejná data, která se zobrazují na webových stránkách deníka</string>
     <string name="login_advanced_warning_hybrid">Kombinace nejlepších vlastností ostatních dvou režimů. Funguje rychleji než scraper a poskytuje funkce, které nejsou k dispozici v režimu Mobile API. Je to v experimentální fázi</string>
     <string name="login_privacy_policy">Ochrana osobních údajů</string>
@@ -113,13 +113,17 @@
     <string name="grade_comment">Komentář</string>
     <string name="grade_number_new_items">Počet nových známek: %1$d</string>
     <string name="grade_average">Průměr: %1$.2f</string>
+    <string name="grade_average_year">Roční: %1$.2f</string>
     <string name="grade_points_sum">Body: %s</string>
     <string name="grade_no_average">Bez průměru</string>
+    <string name="grade_summary_average_semester">Pololetní průměr</string>
+    <string name="grade_summary_average_year">Roční průměr</string>
     <string name="grade_summary_points">Součet bodů</string>
     <string name="grade_summary_final_grade">Konečná známka</string>
     <string name="grade_summary_predicted_grade">Předpokládaná známka</string>
     <string name="grade_summary_descriptive">Popisná známka</string>
-    <string name="grade_summary_calculated_average">Vypočítaný průměr</string>
+    <string name="grade_summary_calculated_average">Vypočítaný pololetní průměr</string>
+    <string name="grade_summary_calculated_average_annual">Vypočítaný roční průměr</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Jak funguje vypočítaný průměr?</string>
     <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný průměr je aritmetický průměr vypočítaný z průměrů předmětů. Umožňuje vám to znát přibližný konečný průměr. Vypočítává se způsobem zvoleným uživatelem v nastavení aplikaci. Doporučuje se vybrat příslušnou možnost. Důvodem je rozdílný výpočet školních průměrů. Pokud vaše škola navíc uvádí průměr předmětů na stránce deníku Vulcan, aplikace si je stáhne a tyto průměry nepočítá. To lze změnit vynucením výpočtu průměru v nastavení aplikaci.\n\n<b>Průměr známek pouze z vybraného semestru</b>:\n1. Výpočet váženého průměru pro každý předmět v daném semestru\n2. Sčítání vypočítaných průměrů\n3. Výpočet aritmetického průměru součtených průměrů\n\n<b>Průměr průměrů z obou semestrů</b>:\n1. Výpočet váženého průměru pro každý předmět v semestru 1 a 2\n2. Výpočet aritmetického průměru vypočítaných průměrů za semestry 1 a 2 pro každý předmět.\n3. Sčítání vypočítaných průměrů\n4. Výpočet aritmetického průměru sečtených průměrů\n\n<b>Průměr známek z celého roku:</b>\n1. Výpočet váženého průměru za rok pro každý předmět. Konečný průměr v 1. semestru je nepodstatný.\n2. Sčítání vypočítaných průměrů\n3. Výpočet aritmetického průměru součtených průměrů</string>
     <string name="grade_summary_final_average_help_dialog_title">Jak funguje konečný průměr?</string>
@@ -194,6 +198,7 @@
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lekce</string>
+    <string name="timetable_additional_lesson">Další lekce</string>
     <string name="timetable_room">Učebna</string>
     <string name="timetable_group">Skupina</string>
     <string name="timetable_time">Hodiny</string>
@@ -264,7 +269,13 @@
     <string name="additional_lessons_end">Čas ukončení</string>
     <string name="additional_lessons_end_time_error">Čas ukončení musí být pozdější než čas zahájení</string>
     <!--Attendance-->
-    <string name="attendance_summary_button">Shrnutí frekvencí</string>
+    <string name="attendance_summary_button">Shrnutí docházky</string>
+    <string name="attendance_calculator_button">Kalkulačka docházky</string>
+    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> nad cílem</string>
+    <string name="attendance_calculator_summary_balance_neutral">přesně v cíli</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> pod cílem</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d přítomnosti</string>
+    <string name="attendance_calculator_summary_values_empty">Nebyla zaznamenána žádná docházka</string>
     <string name="attendance_absence_school">Nepřítomnost ze školních důvodů</string>
     <string name="attendance_absence_excused">Omluvená nepřítomnost</string>
     <string name="attendance_absence_unexcused">Neomluvená nepřítomnost</string>
@@ -282,22 +293,22 @@
     <string name="attendance_excuse_no_selection">Musíte vybrat alespoň jednu nepřítomnost!</string>
     <string name="attendance_excuse_title">Ospravedlnit</string>
     <plurals name="attendance_notify_new_items_title">
-        <item quantity="one">Nové frekvence</item>
-        <item quantity="few">Nové frekvence</item>
-        <item quantity="many">Nové frekvence</item>
-        <item quantity="other">Nové frekvence</item>
+        <item quantity="one">Nová docházka</item>
+        <item quantity="few">Nové docházky</item>
+        <item quantity="many">Nové docházky</item>
+        <item quantity="other">Nové docházky</item>
     </plurals>
     <plurals name="attendance_notify_new_items">
-        <item quantity="one">%1$d nové frekvence</item>
-        <item quantity="few">%1$d nové frekvence</item>
-        <item quantity="many">%1$d nových frekvencí</item>
-        <item quantity="other">%1$d nových frekvencí</item>
+        <item quantity="one">%1$d nová docházka</item>
+        <item quantity="few">%1$d nové docházky</item>
+        <item quantity="many">%1$d nových docházek</item>
+        <item quantity="other">%1$d nových docházek</item>
     </plurals>
     <plurals name="attendance_number_item">
-        <item quantity="one">%d frekvence</item>
-        <item quantity="few">%d frekvence</item>
-        <item quantity="many">%d frekvencí</item>
-        <item quantity="other">%d frekvencí</item>
+        <item quantity="one">%d docházka</item>
+        <item quantity="few">%d docházky</item>
+        <item quantity="many">%d docházek</item>
+        <item quantity="other">%d docházek</item>
     </plurals>
     <!--Attendance summary-->
     <string name="attendance_summary_total">Společně</string>
@@ -731,9 +742,13 @@
     <string name="pref_view_grade_average_mode">Možnosti vypočítaného průměru</string>
     <string name="pref_view_grade_average_force_calc">Vynutit průměrný výpočet podle aplikace</string>
     <string name="pref_view_present">Zobrazit přítomnost</string>
+    <string name="pref_attendance_target">Cílová docházka</string>
+    <string name="pref_attendance_calculator_show_empty_subjects">Zobrazit předměty bez docházek</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Třídění kalkulačky docházky</string>
     <string name="pref_view_app_theme">Motiv</string>
     <string name="pref_view_expand_grade">Rozvíjení známek</string>
     <string name="pref_view_timetable_show_groups">Zobrazit skupiny vedle předmětů</string>
+    <string name="pref_view_timetable_show_additional_lessons">Zobrazit další lekce</string>
     <string name="pref_view_timetable_show_gaps">Zobrazit prázdné dlaždice, kde není žádná lekce</string>
     <string name="pref_view_grade_statistics_list">Zobrazit seznam grafů v známkách třídy</string>
     <string name="pref_view_subjects_without_grades">Zobrazit předměty bez známek</string>
@@ -797,7 +812,9 @@
     <string name="pref_grades_appearance_header">Známky</string>
     <string name="pref_dashboard_appearance_header">Domů</string>
     <string name="pref_dashboard_appearance_tiles_title">Viditelnost dlaždic</string>
-    <string name="pref_attendance_appearance_view">Frekvence</string>
+    <string name="pref_attendance_appearance_view">Docházka</string>
+    <string name="pref_attendance_calculator_appearance_view">Kalkulačka docházky</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Nastavení</string>
     <string name="pref_timetable_appearance_view">Plán lekce</string>
     <string name="pref_grades_advanced_header">Známky</string>
     <string name="pref_counted_average_advanced_header">Vypočítaný průměr</string>
@@ -825,7 +842,7 @@
     <string name="channel_upcoming_lessons">Nadcházející lekce</string>
     <string name="channel_debug">Ladění</string>
     <string name="channel_change_timetable">Změny plánu lekcí</string>
-    <string name="channel_new_attendance">Nové frekvence</string>
+    <string name="channel_new_attendance">Nové docházky</string>
     <!--Colors-->
     <string name="all_black">Černá</string>
     <string name="all_red">Červená</string>
@@ -849,7 +866,7 @@
     <string name="auth_button">Autorizovat</string>
     <string name="auth_success">Autorizace byla úspěšně dokončena</string>
     <string name="auth_title">Autorizace</string>
-    <string name="auth_description">Pro provoz aplikace potřebujeme potvrdit vaši identitu. Zadejte PESEL žáka &lt;b&gt;%1$s&lt;/b&gt; v níže uvedeném poli</string>
+    <string name="auth_description">Vážený rodiči,&lt;br/&gt;&lt;br/&gt;Chcete-li autorizovat a zajistit bezpečnost dat, prosíme Vás, abyste níže zadali PESEL číslo žáka &lt;b&gt;%1$s&lt;/b&gt;. Tyto detaily jsou nutné pro správné přidělování přístupu k osobním údajům a jejich ochranu v souladu s platnými předpisy.&lt;br/&gt;&lt;br/&gt;Po zadání údajů budou data ověřena, čímž se zajistí, že přístup do systému VULCAN získají pouze autorizované osoby. Pokud máte jakékoliv pochybnosti nebo problémy, kontaktujte prosím školního správce deníku pro objasnění situace.&lt;br/&gt;&lt;br/&gt;Udržujeme nejvyšší standardy ochrany osobních údajů a zajišťujeme, aby byly všechny poskytnuté informace chráněné. Wulkanowy neukládá ani nezpracovává číslo PESEL.&lt;br/&gt;&lt;br/&gt;Připomínáme, že poskytování úplných a přesných údajů je nutné a nezbytné k používání systému VULCAN.</string>
     <string name="auth_button_skip">Zatím přeskočit</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Webová stránka deníku VULCAN vyžaduje ověření</string>

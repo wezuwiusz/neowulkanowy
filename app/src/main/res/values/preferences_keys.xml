@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="pref_key_start_menu">default_menu_index</string>
+    <string name="pref_key_attendance_calculator">attendance_calculator</string>
     <string name="pref_key_attendance_present">attendance_present</string>
+    <string name="pref_key_attendance_target">attendance_target</string>
+    <string name="pref_key_attendance_calculator_sorting_mode">attendance_calculator_sorting_mode</string>
+    <string name="pref_key_attendance_calculator_show_empty_subjects">attendance_calculator_show_empty_subjects</string>
     <string name="pref_key_app_theme">app_theme</string>
     <string name="pref_key_dashboard_tiles">dashboard_tiles</string>
     <string name="pref_key_grade_color_scheme">grade_color_scheme</string>
@@ -27,6 +31,7 @@
     <string name="pref_key_grade_sorting_mode">grade_sorting_mode</string>
     <string name="pref_key_timetable_show_whole_class">show_whole_class_plan</string>
     <string name="pref_key_timetable_show_groups">show_groups_in_plan</string>
+    <string name="pref_key_timetable_show_additional_lessons">show_additional_lessons</string>
     <string name="pref_key_timetable_show_gaps">timetable_show_gaps</string>
     <string name="pref_key_subjects_without_grades">subjects_without_grades</string>
     <string name="pref_key_optional_arithmetic_average">optional_arithmetic_average</string>

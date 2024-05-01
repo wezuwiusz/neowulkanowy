@@ -122,7 +122,7 @@ class MessageRepository @Inject constructor(
         fetch = {
             wulkanowySdkFactory.create(student)
                 .getMessageDetails(
-                    messageKey = it!!.message.messageGlobalKey,
+                    messageKey = message.messageGlobalKey,
                     markAsRead = message.unread && markAsRead,
                 )
         },

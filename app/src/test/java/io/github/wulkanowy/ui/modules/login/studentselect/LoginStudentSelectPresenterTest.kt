@@ -5,8 +5,10 @@ import io.github.wulkanowy.data.pojos.RegisterStudent
 import io.github.wulkanowy.data.pojos.RegisterSymbol
 import io.github.wulkanowy.data.pojos.RegisterUnit
 import io.github.wulkanowy.data.pojos.RegisterUser
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SchoolsRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.scrapper.Scrapper
 import io.github.wulkanowy.services.sync.SyncManager
@@ -43,6 +45,12 @@ class LoginStudentSelectPresenterTest {
 
     @MockK
     lateinit var schoolsRepository: SchoolsRepository
+
+    @MockK
+    lateinit var preferencesRepository: PreferencesRepository
+
+    @MockK
+    lateinit var getAppropriateAdminMessageUseCase: GetAppropriateAdminMessageUseCase
 
     @MockK(relaxed = true)
     lateinit var analytics: AnalyticsHelper
@@ -132,6 +140,8 @@ class LoginStudentSelectPresenterTest {
             syncManager = syncManager,
             analytics = analytics,
             appInfo = appInfo,
+            preferencesRepository = preferencesRepository,
+            getAppropriateAdminMessageUseCase = getAppropriateAdminMessageUseCase
         )
     }
 

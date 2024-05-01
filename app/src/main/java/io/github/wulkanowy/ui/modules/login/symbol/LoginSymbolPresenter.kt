@@ -2,10 +2,18 @@ package io.github.wulkanowy.ui.modules.login.symbol
 
 import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.dataOrNull
+import io.github.wulkanowy.data.db.entities.AdminMessage
+import io.github.wulkanowy.data.enums.MessageType
+import io.github.wulkanowy.data.flatResourceFlow
+import io.github.wulkanowy.data.logResourceStatus
+import io.github.wulkanowy.data.onResourceData
+import io.github.wulkanowy.data.onResourceError
 import io.github.wulkanowy.data.onResourceNotLoading
 import io.github.wulkanowy.data.pojos.RegisterUser
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
+import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
 import io.github.wulkanowy.sdk.scrapper.getNormalizedSymbol
 import io.github.wulkanowy.sdk.scrapper.login.InvalidSymbolException
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -21,7 +29,9 @@ import javax.inject.Inject
 class LoginSymbolPresenter @Inject constructor(
     studentRepository: StudentRepository,
     private val loginErrorHandler: LoginErrorHandler,
-    private val analytics: AnalyticsHelper
+    private val analytics: AnalyticsHelper,
+    private val preferencesRepository: PreferencesRepository,
+    private val getAppropriateAdminMessageUseCase: GetAppropriateAdminMessageUseCase,
 ) : BasePresenter<LoginSymbolView>(loginErrorHandler, studentRepository) {
 
     private var lastError: Throwable? = null
@@ -43,6 +53,21 @@ class LoginSymbolPresenter @Inject constructor(
             clearAndFocusSymbol()
             showSoftKeyboard()
         }
+
+        loadAdminMessage()
+    }
+
+    private fun loadAdminMessage() {
+        flatResourceFlow {
+            getAppropriateAdminMessageUseCase(
+                scrapperBaseUrl = loginData.baseUrl,
+                type = MessageType.LOGIN_SYMBOL_MESSAGE,
+            )
+        }
+            .logResourceStatus("load login admin message")
+            .onResourceData { view?.showAdminMessage(it) }
+            .onResourceError { view?.showAdminMessage(null) }
+            .launch("load_admin_message")
     }
 
     fun onSymbolTextChanged() {
@@ -165,5 +190,15 @@ class LoginSymbolPresenter @Inject constructor(
                 enteredSymbol = view?.symbolValue,
             )
         )
+    }
+
+    fun onAdminMessageSelected(url: String?) {
+        url?.let { view?.openInternetBrowser(it) }
+    }
+
+    fun onAdminMessageDismissed(adminMessage: AdminMessage) {
+        preferencesRepository.dismissedAdminMessageIds += adminMessage.id
+
+        view?.showAdminMessage(null)
     }
 }

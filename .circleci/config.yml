@@ -162,7 +162,7 @@ jobs:
             openssl aes-256-cbc -d -in ./app/upload-key-encrypted.jks -k $ENCRYPT_KEY >> ./app/upload-key.jks
       - run:
           name: Publish release
-          command: ./gradlew publishPlayRelease --no-daemon --stacktrace --console=plain -PenableCrashlytics -PdisablePreDex
+          command: ./gradlew publishPlayRelease --no-daemon --stacktrace --console=plain -PdisablePreDex
 
 workflows:
   version: 2

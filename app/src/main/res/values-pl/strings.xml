@@ -198,6 +198,7 @@
     </plurals>
     <!--Timetable-->
     <string name="timetable_lesson">Lekcja</string>
+    <string name="timetable_additional_lesson">Dodatkowa lekcja</string>
     <string name="timetable_room">Sala</string>
     <string name="timetable_group">Grupa</string>
     <string name="timetable_time">Godziny</string>
@@ -269,6 +270,12 @@
     <string name="additional_lessons_end_time_error">Godzina zakończenia musi być późniejsza niż godzina rozpoczęcia</string>
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
+    <string name="attendance_calculator_button">Kalkulator obecności</string>
+    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> powyżej celu</string>
+    <string name="attendance_calculator_summary_balance_neutral">dokładnie u celu</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> poniżej celu</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d obecności</string>
+    <string name="attendance_calculator_summary_values_empty">Nie odnotowano żadnej frekwencji</string>
     <string name="attendance_absence_school">Nieobecność z przyczyn szkolnych</string>
     <string name="attendance_absence_excused">Nieobecność usprawiedliwiona</string>
     <string name="attendance_absence_unexcused">Nieobecność nieusprawiedliwiona</string>
@@ -735,9 +742,13 @@
     <string name="pref_view_grade_average_mode">Opcje obliczonej średniej</string>
     <string name="pref_view_grade_average_force_calc">Wymuś obliczanie średniej przez aplikację</string>
     <string name="pref_view_present">Pokazuj obecność</string>
+    <string name="pref_attendance_target">Docelowa obecność</string>
+    <string name="pref_attendance_calculator_show_empty_subjects">Pokazuj przedmioty bez frekwencji</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Sortowanie kalkulatora obecności</string>
     <string name="pref_view_app_theme">Motyw</string>
     <string name="pref_view_expand_grade">Rozwijanie ocen</string>
     <string name="pref_view_timetable_show_groups">Pokazuj grupę obok przedmiotu</string>
+    <string name="pref_view_timetable_show_additional_lessons">Pokaż dodatkowe lekcje</string>
     <string name="pref_view_timetable_show_gaps">Pokazuj puste kafelki gdzie nie ma lekcji</string>
     <string name="pref_view_grade_statistics_list">Pokazuj listę wykresów w ocenach klasy</string>
     <string name="pref_view_subjects_without_grades">Pokazuj przedmioty bez ocen</string>
@@ -802,6 +813,8 @@
     <string name="pref_dashboard_appearance_header">Start</string>
     <string name="pref_dashboard_appearance_tiles_title">Widoczność kafelków</string>
     <string name="pref_attendance_appearance_view">Frekwencja</string>
+    <string name="pref_attendance_calculator_appearance_view">Kalkulator frekwencji</string>
+    <string name="pref_attendance_calculator_appearance_settings_title">Ustawienia</string>
     <string name="pref_timetable_appearance_view">Plan lekcji</string>
     <string name="pref_grades_advanced_header">Oceny</string>
     <string name="pref_counted_average_advanced_header">Obliczona średnia</string>
@@ -853,7 +866,7 @@
     <string name="auth_button">Potwierdź</string>
     <string name="auth_success">Autoryzacja zakończona pomyślnie</string>
     <string name="auth_title">Autoryzacja</string>
-    <string name="auth_description">Rodzicu, musimy mieć pewność, że Twój adres e-mail został powiązany z prawidłowym kontem ucznia. W celu autoryzacji konta podaj numer PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt; w polu poniżej</string>
+    <string name="auth_description">Szanowny Rodzicu,&lt;br/&gt;&lt;br/&gt;W celu autoryzacji i zapewnienia bezpieczeństwa danych, uprzejmie prosimy o wprowadzenie poniżej numeru PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt;. Te informacje są niezbędne do prawidłowego przypisania dostępu i ochrony danych osobowych zgodnie z obowiązującymi przepisami.&lt;br/&gt;&lt;br/&gt;Po wprowadzeniu danych, będą one weryfikowane w celu zapewnienia, że dostęp do systemu VULCAN jest przyznawany wyłącznie upoważnionym osobom. W przypadku jakichkolwiek wątpliwości lub problemów, prosimy o kontakt z administratorem dziennika szkolnego w celu wyjaśnienia sytuacji.&lt;br/&gt;&lt;br/&gt;Zachowujemy najwyższe standardy ochrony danych osobowych i zapewniamy, że wszelkie przekazane informacje są chronione. Wulkanowy nie przechowuje ani nie przetwarza numeru PESEL.&lt;br/&gt;&lt;br/&gt;Przypominamy, że podanie pełnych i prawdziwych danych jest obowiązkowe i konieczne do korzystania z systemu VULCAN.</string>
     <string name="auth_button_skip">Na razie pomiń</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Strona dziennika VULCAN wymaga weryfikacji</string>
