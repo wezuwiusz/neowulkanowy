@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.symbol
 
+import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.login.LoginData
@@ -44,4 +45,8 @@ interface LoginSymbolView : BaseView {
     fun openFaqPage()
 
     fun openSupportDialog(supportInfo: LoginSupportInfo)
+
+    fun showAdminMessage(adminMessage: AdminMessage?)
+
+    fun openInternetBrowser(url: String)
 }

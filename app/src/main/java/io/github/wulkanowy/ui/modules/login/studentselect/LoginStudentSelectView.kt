@@ -1,5 +1,6 @@
 package io.github.wulkanowy.ui.modules.login.studentselect
 
+import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.ui.base.BaseView
 import io.github.wulkanowy.ui.modules.login.LoginData
 import io.github.wulkanowy.ui.modules.login.support.LoginSupportInfo
@@ -25,4 +26,8 @@ interface LoginStudentSelectView : BaseView {
     fun openDiscordInvite()
 
     fun openEmail(supportInfo: LoginSupportInfo)
+
+    fun showAdminMessage(adminMessage: AdminMessage?)
+
+    fun openInternetBrowser(url: String)
 }

@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import io.github.wulkanowy.data.enums.MessageType
+import io.github.wulkanowy.data.serializers.SafeMessageTypeEnumListSerializer
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -34,6 +36,8 @@ data class AdminMessage(
 
     val priority: String,
 
+    @SerialName("messageTypes")
+    @Serializable(with = SafeMessageTypeEnumListSerializer::class)
     @ColumnInfo(name = "types", defaultValue = "[]")
     val types: List<MessageType> = emptyList(),
 
