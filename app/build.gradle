@@ -248,7 +248,7 @@ dependencies {
     implementation 'com.fredporciuncula:flow-preferences:1.9.1'
     implementation 'org.apache.commons:commons-text:1.12.0'
 
-    playImplementation platform('com.google.firebase:firebase-bom:32.8.1')
+    playImplementation platform('com.google.firebase:firebase-bom:33.0.0')
     playImplementation 'com.google.firebase:firebase-analytics'
     playImplementation 'com.google.firebase:firebase-messaging'
     playImplementation 'com.google.firebase:firebase-crashlytics:'
