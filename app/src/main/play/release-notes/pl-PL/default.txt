@@ -1,8 +1,5 @@
 Wersja 2.6.1
 
-— dodaliśmy kalkulator frekwencji
-— dodaliśmy wyświetlanie lekcji dodatkowych w planie lekcji
-— ulepszyliśmy wyjaśnienie na ekranie z miejscem na wpisanie numeru PESEL
-— naprawiliśmy rzadkie sytuacje, gdy plan lekcji nakładał się na informację o jego braku
+— obeszliśmy próby zablokowania naszej aplikacji w dostępie do danych ucznia i wiadomości (ale nie wiemy, czy eduOne działa)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
