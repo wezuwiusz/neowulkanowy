@@ -1,5 +1,7 @@
-Wersja 2.6.1
+Wersja 2.6.2
 
-— obeszliśmy próby zablokowania naszej aplikacji w dostępie do danych ucznia i wiadomości (ale nie wiemy, czy eduOne działa)
+— naprawiliśmy wysyłanie wiadomości, które zepsuło się przez zmiany naszych milusińskich
+- naprawiliśmy ładowanie danych u użytkowników eduOne (ale tylko z jednym uczniem na koncie), powód zepsucia jak wyżej
+- naprawiliśmy logowanie do aplikacji na odmianach, gdzie jeszcze nasi milusińscy nie zepsuli dziennika (paradoksalnie)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
