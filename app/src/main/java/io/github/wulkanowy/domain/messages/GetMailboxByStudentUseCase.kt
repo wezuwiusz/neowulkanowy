@@ -59,7 +59,7 @@ class GetMailboxByStudentUseCase @Inject constructor(
     private fun String.getUnauthorizedVersion(): String {
         return normalizeStudentName().split(" ")
             .joinToString(" ") {
-                it.first() + "*".repeat(it.length - 1)
+                it.firstOrNull()?.toString().orEmpty() + "*".repeat((it.length - 1).coerceAtLeast(0))
             }
     }
 }
