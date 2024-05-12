@@ -1,5 +1,5 @@
-Wersja 2.6.4
+Wersja 2.6.5
 
-— naprawiliśmy dostęp do modułu ucznia i modułu wiadomości po kolejnej próbie blokady nas (niestety jeszcze bez nowego modułu ucznia)
+— naprawiliśmy pozostałe bieżące problemy spowodowane ostatnimi blokadami Wulkanowego przez wiadomo kogo
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
