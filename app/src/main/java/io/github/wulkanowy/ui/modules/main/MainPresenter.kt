@@ -6,6 +6,7 @@ import io.github.wulkanowy.data.onResourceError
 import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.WulkanowyRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -29,6 +30,7 @@ class MainPresenter @Inject constructor(
     errorHandler: ErrorHandler,
     studentRepository: StudentRepository,
     private val preferencesRepository: PreferencesRepository,
+    private val wulkanowyRepository: WulkanowyRepository,
     private val syncManager: SyncManager,
     private val analytics: AnalyticsHelper,
     private val json: Json,
@@ -197,6 +199,13 @@ class MainPresenter @Inject constructor(
         presenterScope.launch {
             runCatching { studentRepository.updateCurrentStudentAuthStatus() }
                 .onFailure { errorHandler.dispatch(it) }
+        }
+    }
+
+    fun updateSdkMappings() {
+        presenterScope.launch {
+            runCatching { wulkanowyRepository.fetchMapping() }
+                .onFailure { Timber.e(it) }
         }
     }
 }

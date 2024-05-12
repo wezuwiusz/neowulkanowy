@@ -1,4 +1,4 @@
-package io.github.wulkanowy.data.api
+package io.github.wulkanowy.data.api.services
 
 import io.github.wulkanowy.data.pojos.IntegrityRequest
 import io.github.wulkanowy.data.pojos.LoginEvent

@@ -138,6 +138,7 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
     override fun onResume() {
         super.onResume()
         inAppUpdateHelper.onResume()
+        presenter.updateSdkMappings()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

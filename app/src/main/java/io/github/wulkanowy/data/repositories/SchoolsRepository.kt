@@ -1,7 +1,7 @@
 package io.github.wulkanowy.data.repositories
 
 import io.github.wulkanowy.data.WulkanowySdkFactory
-import io.github.wulkanowy.data.api.SchoolsService
+import io.github.wulkanowy.data.api.services.SchoolsService
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentWithSemesters
