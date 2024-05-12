@@ -11,7 +11,6 @@ import io.github.wulkanowy.sdk.pojo.RegisterStudent
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.spyk
@@ -40,11 +39,12 @@ class WulkanowySdkFactoryTest {
                 chuckerInterceptor = mockk(),
                 remoteConfig = mockk(relaxed = true),
                 webkitCookieManagerProxy = mockk(),
-                studentDb = studentDao
+                studentDb = studentDao,
+                wulkanowyRepository = mockk(relaxed = true),
             )
         )
 
-        every { wulkanowySdkFactory.create() } returns sdk
+        coEvery { wulkanowySdkFactory.create() } returns sdk
     }
 
     @Test

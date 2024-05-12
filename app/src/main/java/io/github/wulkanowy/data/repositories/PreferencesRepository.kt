@@ -9,6 +9,7 @@ import com.fredporciuncula.flow.preferences.Preference
 import com.fredporciuncula.flow.preferences.Serializer
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.R
+import io.github.wulkanowy.data.api.models.Mapping
 import io.github.wulkanowy.data.enums.AppTheme
 import io.github.wulkanowy.data.enums.AttendanceCalculatorSortingMode
 import io.github.wulkanowy.data.enums.GradeColorTheme
@@ -374,6 +375,15 @@ class PreferencesRepository @Inject constructor(
     var installationId: String
         get() = sharedPref.getString(PREF_KEY_INSTALLATION_ID, null).orEmpty()
         private set(value) = sharedPref.edit { putString(PREF_KEY_INSTALLATION_ID, value) }
+
+    var mapping: Mapping?
+        get() {
+            val value = sharedPref.getString("mapping", null)
+            return value?.let { json.decodeFromString(it) }
+        }
+        set(value) = sharedPref.edit(commit = true) {
+            putString("mapping", value?.let { json.encodeToString(it) })
+        }
 
     init {
         if (installationId.isEmpty()) {

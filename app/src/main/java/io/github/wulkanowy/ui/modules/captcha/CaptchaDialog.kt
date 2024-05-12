@@ -59,7 +59,7 @@ class CaptchaDialog : BaseDialogFragment<DialogCaptchaBinding>() {
             webView = this
             with(settings) {
                 javaScriptEnabled = true
-                userAgentString = wulkanowySdkFactory.create().userAgent
+                userAgentString = wulkanowySdkFactory.createBase().userAgent
             }
 
             webViewClient = object : WebViewClient() {

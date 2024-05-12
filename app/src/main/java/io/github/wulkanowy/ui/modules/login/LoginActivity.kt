@@ -118,5 +118,6 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
     override fun onResume() {
         super.onResume()
         inAppUpdateHelper.onResume()
+        presenter.updateSdkMappings()
     }
 }

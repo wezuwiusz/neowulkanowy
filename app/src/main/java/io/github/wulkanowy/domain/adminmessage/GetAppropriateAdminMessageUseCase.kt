@@ -5,14 +5,14 @@ import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.enums.MessageType
 import io.github.wulkanowy.data.mapResourceData
-import io.github.wulkanowy.data.repositories.AdminMessageRepository
 import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.WulkanowyRepository
 import io.github.wulkanowy.utils.AppInfo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetAppropriateAdminMessageUseCase @Inject constructor(
-    private val adminMessageRepository: AdminMessageRepository,
+    private val wulkanowyRepository: WulkanowyRepository,
     private val preferencesRepository: PreferencesRepository,
     private val appInfo: AppInfo
 ) {
@@ -22,7 +22,7 @@ class GetAppropriateAdminMessageUseCase @Inject constructor(
     }
 
     operator fun invoke(scrapperBaseUrl: String, type: MessageType): Flow<Resource<AdminMessage?>> {
-        return adminMessageRepository.getAdminMessages().mapResourceData { adminMessages ->
+        return wulkanowyRepository.getAdminMessages().mapResourceData { adminMessages ->
             adminMessages
                 .asSequence()
                 .filter { it.isNotDismissed() }

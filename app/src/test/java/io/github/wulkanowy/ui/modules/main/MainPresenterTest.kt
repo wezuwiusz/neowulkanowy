@@ -3,6 +3,7 @@ package io.github.wulkanowy.ui.modules.main
 import io.github.wulkanowy.MainCoroutineRule
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.WulkanowyRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.utils.AdsHelper
@@ -30,6 +31,9 @@ class MainPresenterTest {
 
     @MockK
     lateinit var studentRepository: StudentRepository
+
+    @MockK(relaxed = true)
+    lateinit var wulkanowyRepository: WulkanowyRepository
 
     @MockK(relaxed = true)
     lateinit var prefRepository: PreferencesRepository
@@ -65,7 +69,8 @@ class MainPresenterTest {
             analytics = analytics,
             json = Json,
             appInfo = appInfo,
-            adsHelper = adsHelper
+            adsHelper = adsHelper,
+            wulkanowyRepository = wulkanowyRepository
         )
         presenter.onAttachView(mainView, null)
     }

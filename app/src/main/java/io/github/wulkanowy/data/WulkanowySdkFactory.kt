@@ -5,6 +5,7 @@ import io.github.wulkanowy.data.db.dao.StudentDao
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentIsEduOne
+import io.github.wulkanowy.data.repositories.WulkanowyRepository
 import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.utils.RemoteConfigHelper
 import io.github.wulkanowy.utils.WebkitCookieManagerProxy
@@ -20,6 +21,7 @@ class WulkanowySdkFactory @Inject constructor(
     private val remoteConfig: RemoteConfigHelper,
     private val webkitCookieManagerProxy: WebkitCookieManagerProxy,
     private val studentDb: StudentDao,
+    private val wulkanowyRepository: WulkanowyRepository,
 ) {
 
     private val eduOneMutex = Mutex()
@@ -36,14 +38,29 @@ class WulkanowySdkFactory @Inject constructor(
         addInterceptor(chuckerInterceptor, network = true)
     }
 
-    fun create() = sdk
+    fun createBase() = sdk
+
+    suspend fun create(): Sdk {
+        val mapping = wulkanowyRepository.getMapping()
+
+        return createBase().apply {
+            if (mapping != null) {
+                endpointsMapping = mapping.endpoints
+                vTokenMapping = mapping.vTokens
+            }
+        }
+    }
 
     suspend fun create(student: Student, semester: Semester? = null): Sdk {
         val overrideIsEduOne = checkEduOneAndMigrateIfNecessary(student)
         return buildSdk(student, semester, overrideIsEduOne)
     }
 
-    private fun buildSdk(student: Student, semester: Semester?, isStudentEduOne: Boolean): Sdk {
+    private suspend fun buildSdk(
+        student: Student,
+        semester: Semester?,
+        isStudentEduOne: Boolean
+    ): Sdk {
         return create().apply {
             email = student.email
             password = student.password

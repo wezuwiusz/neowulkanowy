@@ -8,6 +8,7 @@ import io.mockk.mockk
 
 fun createWulkanowySdkFactoryMock(sdk: Sdk) = mockk<WulkanowySdkFactory>()
     .apply {
-        every { create() } returns sdk
+        every { createBase() } returns sdk
+        coEvery { create() } returns sdk
         coEvery { create(any(), any()) } returns sdk
     }
