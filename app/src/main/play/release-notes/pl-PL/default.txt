@@ -1,5 +1,5 @@
-Wersja 2.6.5
+Wersja 2.6.6
 
-— naprawiliśmy pozostałe bieżące problemy spowodowane ostatnimi blokadami Wulkanowego przez wiadomo kogo
+— to tylko kolejna aktualizacja, która obchodzi blokadę firmy, której nazwy nie napiszemy. Pewnie zaraz znowu zostaniemy zablokowani, ale co tam
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
