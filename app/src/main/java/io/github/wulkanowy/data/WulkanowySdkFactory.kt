@@ -47,6 +47,7 @@ class WulkanowySdkFactory @Inject constructor(
             if (mapping != null) {
                 endpointsMapping = mapping.endpoints
                 vTokenMapping = mapping.vTokens
+                vTokenSchemeMapping = mapping.vTokenScheme
             }
         }
     }
