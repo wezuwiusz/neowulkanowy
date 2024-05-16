@@ -1,14 +1,21 @@
 package io.github.wulkanowy.data
 
+import android.content.Context
+import android.os.Build
+import androidx.javascriptengine.JavaScriptSandbox
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.google.common.util.concurrent.ListenableFuture
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.wulkanowy.data.db.dao.StudentDao
 import io.github.wulkanowy.data.db.entities.Semester
 import io.github.wulkanowy.data.db.entities.Student
 import io.github.wulkanowy.data.db.entities.StudentIsEduOne
 import io.github.wulkanowy.data.repositories.WulkanowyRepository
 import io.github.wulkanowy.sdk.Sdk
+import io.github.wulkanowy.sdk.scrapper.EvaluateHandler
 import io.github.wulkanowy.utils.RemoteConfigHelper
 import io.github.wulkanowy.utils.WebkitCookieManagerProxy
+import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
@@ -17,6 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class WulkanowySdkFactory @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val chuckerInterceptor: ChuckerInterceptor,
     private val remoteConfig: RemoteConfigHelper,
     private val webkitCookieManagerProxy: WebkitCookieManagerProxy,
@@ -26,10 +34,14 @@ class WulkanowySdkFactory @Inject constructor(
 
     private val eduOneMutex = Mutex()
     private val migrationFailedStudentIds = mutableSetOf<Long>()
+    private val sandbox: ListenableFuture<JavaScriptSandbox>? =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && JavaScriptSandbox.isSupported())
+            JavaScriptSandbox.createConnectedInstanceAsync(context)
+        else null
 
     private val sdk = Sdk().apply {
-        androidVersion = android.os.Build.VERSION.RELEASE
-        buildTag = android.os.Build.MODEL
+        androidVersion = Build.VERSION.RELEASE
+        buildTag = Build.MODEL
         userAgentTemplate = remoteConfig.userAgentTemplate
         setSimpleHttpLogger { Timber.d(it) }
         setAdditionalCookieManager(webkitCookieManagerProxy)
@@ -48,6 +60,22 @@ class WulkanowySdkFactory @Inject constructor(
                 endpointsMapping = mapping.endpoints
                 vTokenMapping = mapping.vTokens
                 vTokenSchemeMapping = mapping.vTokenScheme
+                vParamsEvaluation = createIsolate()
+            }
+        }
+    }
+
+    private suspend fun createIsolate(): suspend () -> EvaluateHandler {
+        return {
+            val isolate = sandbox?.await()?.createIsolate()
+            object : EvaluateHandler {
+                override suspend fun evaluate(code: String): String? {
+                    return isolate?.evaluateJavaScriptAsync(code)?.await()
+                }
+
+                override fun close() {
+                    isolate?.close()
+                }
             }
         }
     }
