@@ -1,5 +1,5 @@
-Wersja 2.6.6
+Wersja 2.6.7
 
-— to tylko kolejna aktualizacja, która obchodzi blokadę firmy, której nazwy nie napiszemy. Pewnie zaraz znowu zostaniemy zablokowani, ale co tam
+— taka tam aktualizacja wiadomości w czwartek. Jeśli widzisz to w piątek, to może już nie działać
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
