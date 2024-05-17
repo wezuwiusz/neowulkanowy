@@ -1,5 +1,6 @@
-Wersja 2.6.7
+Wersja 2.6.8
 
-— taka tam aktualizacja wiadomości w czwartek. Jeśli widzisz to w piątek, to może już nie działać
+— i znowu aktualizacja, żeby wiadomości działały chociaż w piątek. Później już pewnie nie będą
+— a i jeszcze naprawiliśmy dostęp mobilny, bo prosiliście
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
