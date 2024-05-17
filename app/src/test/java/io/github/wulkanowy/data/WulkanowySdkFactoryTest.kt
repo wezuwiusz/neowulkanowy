@@ -41,6 +41,7 @@ class WulkanowySdkFactoryTest {
                 webkitCookieManagerProxy = mockk(),
                 studentDb = studentDao,
                 wulkanowyRepository = mockk(relaxed = true),
+                context = mockk(),
             )
         )
 

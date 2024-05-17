@@ -1,6 +1,5 @@
-Wersja 2.6.8
+Wersja 2.6.9
 
-— i znowu aktualizacja, żeby wiadomości działały chociaż w piątek. Później już pewnie nie będą
-— a i jeszcze naprawiliśmy dostęp mobilny, bo prosiliście
+— naprawiliśmy obsługę eduOne (w piątek wieczorem, więc jak widzisz to później to może już nie działać)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
