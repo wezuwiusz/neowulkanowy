@@ -14,4 +14,7 @@ data class Mapping(
 
     @SerialName("vTokenScheme")
     val vTokenScheme: Map<String, Map<String, String>> = emptyMap(),
+
+    @SerialName("vHeaders")
+    val vHeaders: Map<String, Map<String, Map<String, String>>> = emptyMap(),
 )
