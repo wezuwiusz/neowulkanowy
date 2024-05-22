@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="sort_alphabetically">Alphabetically</string>
-    <string name="sort_by_date">By date</string>
-    <string name="sort_by_average">By average</string>
-    <string name="sort_by_attendance_percentage">By attendance percentage</string>
-    <string name="sort_by_subject_attendance_balance">By subject attendance balance</string>
+    <string name="sort_alphabetically">По алфавиту</string>
+    <string name="sort_by_date">По дате</string>
+    <string name="sort_by_average">По средней</string>
+    <string name="sort_by_attendance_percentage">Согласно проценту посещаемости</string>
+    <string name="sort_by_subject_attendance_balance">Согласно балансу посещаемости уроков</string>
     <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
         <item>Светлая</item>
         <item>Тёмная</item>
@@ -52,14 +52,14 @@
         <item>Средняя из оценок со всего года</item>
     </string-array>
     <string-array name="timetable_show_gaps_entries">
-        <item>Don\'t show</item>
-        <item>Only between lessons</item>
-        <item>Before and between lessons</item>
+        <item>Не показывать</item>
+        <item>Только между уроками</item>
+        <item>Перед и между уроками</item>
     </string-array>
     <string-array name="timetable_show_additional_lessons_entries">
-        <item>Don\'t show</item>
-        <item>Show inline</item>
-        <item>Show below regular lessons</item>
+        <item>Не показывать</item>
+        <item>Показать в строке</item>
+        <item>Показать ниже обычных уроков</item>
     </string-array>
     <string-array name="dashboard_tile_entries">
         <item>Счастливый номер</item>

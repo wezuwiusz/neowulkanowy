@@ -27,8 +27,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 170
-        versionName "2.6.10"
+        versionCode 171
+        versionName "2.6.11"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -187,11 +187,11 @@ ext {
     room = "2.6.1"
     chucker = "4.0.0"
     mockk = "1.13.10"
-    coroutines = "1.8.0"
+    coroutines = "1.8.1"
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.6.9'
+    implementation 'io.github.wulkanowy:sdk:2.6.10'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
