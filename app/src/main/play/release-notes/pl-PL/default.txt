@@ -1,5 +1,5 @@
-Wersja 2.6.9
+Wersja 2.6.10
 
-— naprawiliśmy obsługę eduOne (w piątek wieczorem, więc jak widzisz to później to może już nie działać)
+— naprawiliśmy obsługę wiadomości (w środę rano, więc w kolejne dni może już serio nie działać)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
