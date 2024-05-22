@@ -30,6 +30,10 @@ fun getRefreshKey(name: String, mailbox: Mailbox?, folder: MessageFolder): Strin
     return "${name}_${mailbox?.globalKey ?: "all"}_${folder.id}"
 }
 
+fun getRefreshKey(name: String): String {
+    return name
+}
+
 class AutoRefreshHelper @Inject constructor(
     @ApplicationContext private val context: Context,
     private val sharedPref: SharedPrefProvider

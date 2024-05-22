@@ -6,6 +6,8 @@ import io.github.wulkanowy.data.api.services.WulkanowyService
 import io.github.wulkanowy.data.db.dao.AdminMessageDao
 import io.github.wulkanowy.data.db.entities.AdminMessage
 import io.github.wulkanowy.data.networkBoundResource
+import io.github.wulkanowy.utils.AutoRefreshHelper
+import io.github.wulkanowy.utils.getRefreshKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.sync.Mutex
@@ -18,9 +20,12 @@ class WulkanowyRepository @Inject constructor(
     private val wulkanowyService: WulkanowyService,
     private val adminMessageDao: AdminMessageDao,
     private val preferencesRepository: PreferencesRepository,
+    private val refreshHelper: AutoRefreshHelper,
 ) {
 
     private val saveFetchResultMutex = Mutex()
+
+    private val cacheKey = "mapping"
 
     fun getAdminMessages(): Flow<Resource<List<AdminMessage>>> =
         networkBoundResource(
@@ -38,7 +43,11 @@ class WulkanowyRepository @Inject constructor(
     suspend fun getMapping(): Mapping? {
         var savedMapping = preferencesRepository.mapping
 
-        if (savedMapping == null) {
+        val isExpired = refreshHelper.shouldBeRefreshed(
+            key = getRefreshKey(cacheKey)
+        )
+
+        if (savedMapping == null || isExpired) {
             fetchMapping()
             savedMapping = preferencesRepository.mapping
         }
@@ -49,6 +58,9 @@ class WulkanowyRepository @Inject constructor(
     suspend fun fetchMapping() {
         runCatching { wulkanowyService.getMapping() }
             .onFailure { Timber.e(it) }
-            .onSuccess { preferencesRepository.mapping = it }
+            .onSuccess {
+                preferencesRepository.mapping = it
+                refreshHelper.updateLastRefreshTimestamp(cacheKey)
+            }
     }
 }
