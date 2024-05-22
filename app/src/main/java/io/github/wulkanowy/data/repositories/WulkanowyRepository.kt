@@ -25,7 +25,7 @@ class WulkanowyRepository @Inject constructor(
 
     private val saveFetchResultMutex = Mutex()
 
-    private val cacheKey = "mapping"
+    private val cacheKey = "mapping_refresh_key"
 
     fun getAdminMessages(): Flow<Resource<List<AdminMessage>>> =
         networkBoundResource(

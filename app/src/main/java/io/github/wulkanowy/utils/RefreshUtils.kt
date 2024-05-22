@@ -31,7 +31,7 @@ fun getRefreshKey(name: String, mailbox: Mailbox?, folder: MessageFolder): Strin
 }
 
 fun getRefreshKey(name: String): String {
-    return "${name}_refresh_key"
+    return name
 }
 
 class AutoRefreshHelper @Inject constructor(
