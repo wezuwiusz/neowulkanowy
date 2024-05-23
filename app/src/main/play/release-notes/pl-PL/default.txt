@@ -1,5 +1,5 @@
-Wersja 2.6.11
+Wersja 2.6.12
 
-— naprawiliśmy obsługę wiadomości i ucznia plus u osób, u których działało na wcześniejszej wersji
+— dodaliśmy przycisk otwierający stronę dziennika w awaryjnych sytuacjach (ostatnio cały czas jest awaryjna sytuacja)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
