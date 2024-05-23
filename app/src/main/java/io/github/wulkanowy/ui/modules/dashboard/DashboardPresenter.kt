@@ -11,6 +11,7 @@ import io.github.wulkanowy.data.errorOrNull
 import io.github.wulkanowy.data.flatResourceFlow
 import io.github.wulkanowy.data.mapResourceData
 import io.github.wulkanowy.data.onResourceError
+import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.AttendanceSummaryRepository
 import io.github.wulkanowy.data.repositories.ConferenceRepository
 import io.github.wulkanowy.data.repositories.ExamRepository
@@ -23,6 +24,7 @@ import io.github.wulkanowy.data.repositories.SchoolAnnouncementRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.TimetableRepository
+import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
 import io.github.wulkanowy.domain.timetable.IsStudentHasLessonsOnWeekendUseCase
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -44,6 +46,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber
 import java.time.Instant
 import java.time.LocalDate
@@ -280,6 +283,22 @@ class DashboardPresenter @Inject constructor(
 
     fun onAdminMessageSelected(url: String?) {
         url?.let { view?.openInternetBrowser(it) }
+    }
+
+    fun onPanicButtonClicked() {
+        resourceFlow { studentRepository.getCurrentStudent() }
+            .onResourceError { errorHandler.dispatch(it) }
+            .onResourceSuccess {
+                val baseUrl = it.scrapperBaseUrl.toHttpUrl()
+                val urlToOpen = baseUrl.newBuilder()
+                    .host("uonetplus${it.scrapperDomainSuffix}.${baseUrl.host}")
+                    .addPathSegment(it.symbol)
+                    .build()
+                    .toString()
+
+                view?.openInternetBrowser(urlToOpen)
+            }
+            .launch("panic_button")
     }
 
     private fun loadHorizontalGroup(student: Student, forceRefresh: Boolean) {

@@ -59,6 +59,8 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
     var onAdminMessageClickListener: (String?) -> Unit = {}
 
+    var onPanicButtonClickListener: () -> Unit = {}
+
     var onAdminMessageDismissClickListener: (AdminMessage) -> Unit = {}
 
     val items = mutableListOf<DashboardItem>()
@@ -86,35 +88,46 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             DashboardItem.Type.ACCOUNT.ordinal -> AccountViewHolder(
                 ItemDashboardAccountBinding.inflate(inflater, parent, false)
             )
+
             DashboardItem.Type.HORIZONTAL_GROUP.ordinal -> HorizontalGroupViewHolder(
                 ItemDashboardHorizontalGroupBinding.inflate(inflater, parent, false)
             )
+
             DashboardItem.Type.GRADES.ordinal -> GradesViewHolder(
                 ItemDashboardGradesBinding.inflate(inflater, parent, false)
             )
+
             DashboardItem.Type.LESSONS.ordinal -> LessonsViewHolder(
                 ItemDashboardLessonsBinding.inflate(inflater, parent, false)
             )
+
             DashboardItem.Type.HOMEWORK.ordinal -> HomeworkViewHolder(
                 ItemDashboardHomeworkBinding.inflate(inflater, parent, false)
             )
+
             DashboardItem.Type.ANNOUNCEMENTS.ordinal -> AnnouncementsViewHolder(
                 ItemDashboardAnnouncementsBinding.inflate(inflater, parent, false)
             )
+
             DashboardItem.Type.EXAMS.ordinal -> ExamsViewHolder(
                 ItemDashboardExamsBinding.inflate(inflater, parent, false)
             )
+
             DashboardItem.Type.CONFERENCES.ordinal -> ConferencesViewHolder(
                 ItemDashboardConferencesBinding.inflate(inflater, parent, false)
             )
+
             DashboardItem.Type.ADMIN_MESSAGE.ordinal -> AdminMessageViewHolder(
                 ItemDashboardAdminMessageBinding.inflate(inflater, parent, false),
                 onAdminMessageDismissClickListener = onAdminMessageDismissClickListener,
                 onAdminMessageClickListener = onAdminMessageClickListener,
+                onPanicButtonClickListener = onPanicButtonClickListener,
             )
+
             DashboardItem.Type.ADS.ordinal -> AdsViewHolder(
                 ItemDashboardAdsBinding.inflate(inflater, parent, false)
             )
+
             else -> throw IllegalArgumentException()
         }
     }
@@ -129,7 +142,11 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             is AnnouncementsViewHolder -> bindAnnouncementsViewHolder(holder, position)
             is ExamsViewHolder -> bindExamsViewHolder(holder, position)
             is ConferencesViewHolder -> bindConferencesViewHolder(holder, position)
-            is AdminMessageViewHolder -> holder.bind((items[position] as DashboardItem.AdminMessages).adminMessage)
+            is AdminMessageViewHolder -> holder.bind(
+                (items[position] as DashboardItem.AdminMessages).adminMessage,
+                showPanicButton = true
+            )
+
             is AdsViewHolder -> bindAdsViewHolder(holder, position)
         }
     }
@@ -240,12 +257,15 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             attendancePercentage == null || attendancePercentage == .0 -> {
                 root.context.getThemeAttrColor(R.attr.colorOnSurface)
             }
+
             attendancePercentage <= ATTENDANCE_SECOND_WARNING_THRESHOLD -> {
                 root.context.getThemeAttrColor(R.attr.colorPrimary)
             }
+
             attendancePercentage <= ATTENDANCE_FIRST_WARNING_THRESHOLD -> {
                 root.context.getThemeAttrColor(R.attr.colorTimetableChange)
             }
+
             else -> root.context.getThemeAttrColor(R.attr.colorOnSurface)
         }
         val attendanceString = if (attendancePercentage == null || attendancePercentage == .0) {
@@ -336,24 +356,28 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
                     binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
+
                 tomorrowTimetable.isNotEmpty() -> {
                     dateToNavigate = tomorrowDate
                     updateLessonView(item, tomorrowTimetable, binding)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
                     binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
+
                 currentDayHeader != null && currentDayHeader.content.isNotBlank() -> {
                     dateToNavigate = currentDate
                     updateLessonView(item, emptyList(), binding, currentDayHeader)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = false
                     binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
+
                 tomorrowDayHeader != null && tomorrowDayHeader.content.isNotBlank() -> {
                     dateToNavigate = tomorrowDate
                     updateLessonView(item, emptyList(), binding, tomorrowDayHeader)
                     binding.dashboardLessonsItemTitleTomorrow.isVisible = true
                     binding.dashboardLessonsItemTitleTodayAndTomorrow.isVisible = false
                 }
+
                 else -> {
                     dateToNavigate = currentDate
                     updateLessonView(item, emptyList(), binding)
@@ -461,6 +485,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                     firstTitleText =
                         context.getString(R.string.dashboard_timetable_first_lesson_title_moment)
                 }
+
                 minutesToStartLesson < 240 -> {
                     firstTitleAndValueTextColor =
                         context.getThemeAttrColor(R.attr.colorOnSurface)
@@ -468,6 +493,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                     firstTitleText =
                         context.getString(R.string.dashboard_timetable_first_lesson_title_soon)
                 }
+
                 else -> {
                     firstTitleAndValueTextColor =
                         context.getThemeAttrColor(R.attr.colorOnSurface)
