@@ -872,6 +872,8 @@
     <string name="captcha_dialog_title">Strona dziennika VULCAN wymaga weryfikacji</string>
     <string name="captcha_dialog_description"><b>Dlaczego to widzę?</b>\nStrona internetowa dziennika, z której Wulkanowy pobiera dane, wyświetla ten sam ekran jak powyżej, więc Wulkanowy musi również ją pokazać, aby móc pobrać dane z tej witryny. Nie da się tego obejść</string>
     <string name="captcha_verified_message">Pomyślnie zweryfikowano</string>
+    <!--Panic mode-->
+    <string name="panic_mode_title">Awaryjny dostęp</string>
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_invalid_device_datetime">Wystąpił błąd. Sprawdź poprawność daty w urządzeniu</string>

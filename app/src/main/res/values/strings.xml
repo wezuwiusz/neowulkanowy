@@ -869,6 +869,9 @@
     <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Verified successfully</string>
 
+    <!--Panic mode-->
+    <string name="panic_mode_title">Emergency access</string>
+
 
     <!--Errors-->
     <string name="error_no_internet">No internet connection</string>

@@ -60,6 +60,16 @@
         tools:ignore="UseCompoundDrawables"
         tools:visibility="invisible">
 
+        <include
+            android:id="@+id/message_tab_panic_section"
+            layout="@layout/item_dashboard_panic_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="16dp"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_error_admin_message" />
+
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"

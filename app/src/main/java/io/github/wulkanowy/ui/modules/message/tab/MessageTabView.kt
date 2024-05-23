@@ -50,4 +50,6 @@ interface MessageTabView : BaseView {
     fun showRecyclerBottomPadding(show: Boolean)
 
     fun showMailboxChooser(mailboxes: List<Mailbox>)
+
+    fun openPanicWebView(url: String)
 }

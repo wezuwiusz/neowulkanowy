@@ -296,7 +296,7 @@ class DashboardPresenter @Inject constructor(
                     .build()
                     .toString()
 
-                view?.openInternetBrowser(urlToOpen)
+                view?.openPanicWebView(urlToOpen)
             }
             .launch("panic_button")
     }
