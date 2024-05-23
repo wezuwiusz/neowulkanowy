@@ -118,6 +118,7 @@ class LoginStudentSelectFragment :
             binding = binding.loginStudentSelectAdminMessage,
             onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed,
             onAdminMessageClickListener = presenter::onAdminMessageSelected,
+            onPanicButtonClickListener = {},
         ).bind(adminMessage)
         binding.loginStudentSelectAdminMessage.root.isVisible = adminMessage != null
     }

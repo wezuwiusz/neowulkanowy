@@ -125,6 +125,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
                 mainActivity.pushView(ConferenceFragment.newInstance())
             }
             onAdminMessageClickListener = presenter::onAdminMessageSelected
+            onPanicButtonClickListener = presenter::onPanicButtonClicked
             onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed
 
             registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -208,7 +209,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
                 binding = binding.dashboardErrorAdminMessage,
                 onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed,
                 onAdminMessageClickListener = presenter::onAdminMessageSelected,
-            ).bind(adminMessageItem.adminMessage)
+                onPanicButtonClickListener = presenter::onPanicButtonClicked,
+            ).bind(
+                item = adminMessageItem.adminMessage,
+                showPanicButton = true,
+            )
         }
     }
 

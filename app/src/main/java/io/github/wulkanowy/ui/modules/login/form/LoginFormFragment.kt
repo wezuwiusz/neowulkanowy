@@ -238,6 +238,7 @@ class LoginFormFragment : BaseFragment<FragmentLoginFormBinding>(R.layout.fragme
             binding = binding.loginFormMessage,
             onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed,
             onAdminMessageClickListener = presenter::onAdminMessageSelected,
+            onPanicButtonClickListener = {},
         ).bind(message)
         binding.loginFormMessage.root.isVisible = message != null
     }

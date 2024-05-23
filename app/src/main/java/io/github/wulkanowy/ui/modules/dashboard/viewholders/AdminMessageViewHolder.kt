@@ -13,9 +13,10 @@ class AdminMessageViewHolder(
     private val binding: ItemDashboardAdminMessageBinding,
     private val onAdminMessageDismissClickListener: (AdminMessage) -> Unit,
     private val onAdminMessageClickListener: (String?) -> Unit,
+    private val onPanicButtonClickListener: () -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: AdminMessage?) {
+    fun bind(item: AdminMessage?, showPanicButton: Boolean = false) {
         item ?: return
 
         val context = binding.root.context
@@ -48,10 +49,14 @@ class AdminMessageViewHolder(
             dashboardAdminMessageItemClose.setOnClickListener {
                 onAdminMessageDismissClickListener(item)
             }
+            dashboardPanicSection.root.isVisible = showPanicButton
+            dashboardPanicSection.dashboardPanicButton.setOnClickListener {
+                onPanicButtonClickListener()
+            }
 
-            root.setCardBackgroundColor(backgroundColor?.let { ColorStateList.valueOf(it) })
+            dashboardAdminMessage.setCardBackgroundColor(backgroundColor?.let { ColorStateList.valueOf(it) })
             item.destinationUrl?.let { url ->
-                root.setOnClickListener { onAdminMessageClickListener(url) }
+                dashboardAdminMessage.setOnClickListener { onAdminMessageClickListener(url) }
             }
         }
     }
