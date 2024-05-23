@@ -1,5 +1,6 @@
-Wersja 2.6.12
+Wersja 2.6.13
 
-— dodaliśmy przycisk otwierający stronę dziennika w awaryjnych sytuacjach (ostatnio cały czas jest awaryjna sytuacja)
+— dodaliśmy tryb awaryjny (no w sensie taka przeglądarka z dziennikiem w apce, ale nie trzeba się ręcznie logować)
+— naprawiliśmy ładowania ucznia na tle klasy i lekcji zrealizowanych
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
