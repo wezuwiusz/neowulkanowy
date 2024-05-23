@@ -31,4 +31,6 @@ interface DashboardView : BaseView {
     fun openNotificationsCenterView()
 
     fun openInternetBrowser(url: String)
+
+    fun openPanicWebView(url: String)
 }

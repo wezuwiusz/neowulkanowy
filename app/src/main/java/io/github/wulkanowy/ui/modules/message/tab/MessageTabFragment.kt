@@ -27,6 +27,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.message.mailboxchooser.MailboxChooserDialog
 import io.github.wulkanowy.ui.modules.message.preview.MessagePreviewFragment
+import io.github.wulkanowy.ui.modules.panicmode.PanicModeFragment
 import io.github.wulkanowy.ui.widgets.DividerItemDecoration
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.getThemeAttrColor
@@ -132,6 +133,7 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
             )
             messageTabErrorRetry.setOnClickListener { presenter.onRetry() }
             messageTabErrorDetails.setOnClickListener { presenter.onDetailsClick() }
+            messageTabPanicSection.dashboardPanicButton.setOnClickListener { presenter.onPanicButtonClicked() }
         }
 
         setFragmentResultListener(requireArguments().getString(MESSAGE_TAB_FOLDER_ID)!!) { _, bundle ->
@@ -281,6 +283,10 @@ class MessageTabFragment : BaseFragment<FragmentMessageTabBinding>(R.layout.frag
                 folder = requireArguments().getString(MESSAGE_TAB_FOLDER_ID)!!,
             )
         )
+    }
+
+    override fun openPanicWebView(url: String) {
+        (requireActivity() as MainActivity).pushView(PanicModeFragment.newInstance(url))
     }
 
     override fun hideKeyboard() {

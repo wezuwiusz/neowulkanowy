@@ -30,6 +30,7 @@ import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.ui.modules.message.MessageFragment
 import io.github.wulkanowy.ui.modules.notificationscenter.NotificationsCenterFragment
+import io.github.wulkanowy.ui.modules.panicmode.PanicModeFragment
 import io.github.wulkanowy.ui.modules.schoolannouncement.SchoolAnnouncementFragment
 import io.github.wulkanowy.ui.modules.timetable.TimetableFragment
 import io.github.wulkanowy.utils.capitalise
@@ -239,6 +240,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
 
     override fun openInternetBrowser(url: String) {
         requireContext().openInternetBrowser(url)
+    }
+
+    override fun openPanicWebView(url: String) {
+        (requireActivity() as MainActivity).pushView(PanicModeFragment.newInstance(url))
     }
 
     override fun onDestroyView() {

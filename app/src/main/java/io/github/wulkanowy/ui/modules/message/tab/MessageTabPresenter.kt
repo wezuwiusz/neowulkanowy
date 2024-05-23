@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import me.xdrop.fuzzywuzzy.FuzzySearch
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.pow
@@ -428,5 +429,21 @@ class MessageTabPresenter @Inject constructor(
             + correspondentsRatio.toDouble().pow(2)
             + dateRatio.toDouble().pow(2) * 2
             ).toInt()
+    }
+
+    fun onPanicButtonClicked() {
+        resourceFlow { studentRepository.getCurrentStudent() }
+            .onResourceError { errorHandler.dispatch(it) }
+            .onResourceSuccess {
+                val baseUrl = it.scrapperBaseUrl.toHttpUrl()
+                val urlToOpen = baseUrl.newBuilder()
+                    .host("uonetplus${it.scrapperDomainSuffix}-wiadomosciplus.${baseUrl.host}")
+                    .addPathSegment(it.symbol)
+                    .build()
+                    .toString()
+
+                view?.openPanicWebView(urlToOpen)
+            }
+            .launch("panic_button")
     }
 }
