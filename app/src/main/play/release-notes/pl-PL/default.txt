@@ -1,6 +1,5 @@
-Wersja 2.6.13
+Wersja 2.6.14
 
-— dodaliśmy tryb awaryjny (no w sensie taka przeglądarka z dziennikiem w apce, ale nie trzeba się ręcznie logować)
-— naprawiliśmy ładowania ucznia na tle klasy i lekcji zrealizowanych
+— naprawiliśmy moduł "Uczeń", czyli bez wiadomości i "Uczeń Plus" (na razie)
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
