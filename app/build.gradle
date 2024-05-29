@@ -27,8 +27,8 @@ android {
         testApplicationId "io.github.tests.wulkanowy"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 173
-        versionName "2.6.13"
+        versionCode 174
+        versionName "2.6.14"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_name", "Wulkanowy"
@@ -160,8 +160,8 @@ play {
     defaultToAppBundles = false
     track = 'production'
     releaseStatus = ReleaseStatus.IN_PROGRESS
-    userFraction = 0.1d
-    updatePriority = 2
+    userFraction = 0.99d
+    updatePriority = 3
     enabled.set(false)
 }
 
@@ -186,12 +186,12 @@ ext {
     android_hilt = "1.2.0"
     room = "2.6.1"
     chucker = "4.0.0"
-    mockk = "1.13.10"
+    mockk = "1.13.11"
     coroutines = "1.8.1"
 }
 
 dependencies {
-    implementation 'io.github.wulkanowy:sdk:2.6.11'
+    implementation 'io.github.wulkanowy:sdk:2.6.12'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
@@ -203,13 +203,13 @@ dependencies {
     implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation "androidx.activity:activity-ktx:1.9.0"
     implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.fragment:fragment-ktx:1.7.0"
-    implementation "androidx.annotation:annotation:1.7.1"
+    implementation "androidx.fragment:fragment-ktx:1.7.1"
+    implementation "androidx.annotation:annotation:1.8.0"
     implementation "androidx.javascriptengine:javascriptengine:1.0.0-beta01"
 
     implementation "androidx.preference:preference-ktx:1.2.1"
     implementation "androidx.recyclerview:recyclerview:1.3.2"
-    implementation "androidx.viewpager2:viewpager2:1.1.0-rc01"
+    implementation "androidx.viewpager2:viewpager2:1.1.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
@@ -221,7 +221,7 @@ dependencies {
     implementation "androidx.work:work-runtime:$work_manager"
     playImplementation "androidx.work:work-gcm:$work_manager"
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.7.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.8.0"
 
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-ktx:$room"
@@ -256,7 +256,7 @@ dependencies {
     playImplementation 'com.google.firebase:firebase-crashlytics:'
     playImplementation 'com.google.firebase:firebase-config'
 
-    playImplementation 'com.google.android.gms:play-services-ads:22.6.0'
+    playImplementation 'com.google.android.gms:play-services-ads:23.1.0'
     playImplementation "com.google.android.play:integrity:1.3.0"
     playImplementation 'com.google.android.play:app-update-ktx:2.1.0'
     playImplementation 'com.google.android.play:review-ktx:2.0.1'
@@ -276,7 +276,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
-    testImplementation 'org.robolectric:robolectric:4.12.1'
+    testImplementation 'org.robolectric:robolectric:4.12.2'
     testImplementation "androidx.test:runner:1.5.2"
     testImplementation "androidx.test.ext:junit:1.1.5"
     testImplementation "androidx.test:core:1.5.0"
