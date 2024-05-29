@@ -872,6 +872,8 @@
     <string name="captcha_dialog_title">Веб-сайт VULCAN потребує підтвердження</string>
     <string name="captcha_dialog_description"><b>Чому я це бачу?</b>\nСайт реєстру, з якого Wulkanowy завантажує дані, відображає той самий екран, що й вище, тому Wulkanowy також повинен показувати його, щоб мати змогу завантажувати дані з цього сайту. Це неможливо обійти</string>
     <string name="captcha_verified_message">Верифікація завершена</string>
+    <!--Panic mode-->
+    <string name="panic_mode_title">Екстрений доступ</string>
     <!--Errors-->
     <string name="error_no_internet">Немає з\'єднання з інтернетом</string>
     <string name="error_invalid_device_datetime">Сталася помилка. Перевірте годинник пристрою</string>

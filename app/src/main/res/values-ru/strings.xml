@@ -872,6 +872,8 @@
     <string name="captcha_dialog_title">Требуется верификация веб-сайта VULCAN</string>
     <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Верификация успешна</string>
+    <!--Panic mode-->
+    <string name="panic_mode_title">Emergency access</string>
     <!--Errors-->
     <string name="error_no_internet">Интернет-соединение отсутствует</string>
     <string name="error_invalid_device_datetime">Произошла ошибка. Проверьте время на вашем устройстве</string>

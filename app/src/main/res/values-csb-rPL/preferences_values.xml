@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="sort_alphabetically">Alfabéticzno</string>
+    <string name="sort_by_date">Pòdług datë</string>
+    <string name="sort_by_average">Pòdług strzédny</string>
+    <string name="sort_by_attendance_percentage">Pòdług procentu bëtnoscë</string>
+    <string name="sort_by_subject_attendance_balance">Pòdług salda frekwencje na przibiorze</string>
+    <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
+        <item>Jôsny</item>
+        <item>Cemny</item>
+        <item>Cemny (AMOLED)</item>
+    </string-array>
+    <string-array name="app_language_entries">
+        <item>Systemòwi jãzëk</item>
+        <item>Polski</item>
+        <item>English</item>
+        <item>Pусский</item>
+        <item>Українська</item>
+        <item>Deutsch</item>
+        <item>Čeština</item>
+        <item>Slovenčina</item>
+    </string-array>
+    <string-array name="services_interval_entries">
+        <item>15 minutów</item>
+        <item>30 minutów</item>
+        <item>1 gòdzëna</item>
+        <item>2 gòdzënë</item>
+        <item>6 gòdzyn</item>
+        <item>12 gòdzyn</item>
+        <item>24 gòdzyn</item>
+    </string-array>
+    <string-array name="grade_modifier_entries">
+        <item>0,00</item>
+        <item>0,25</item>
+        <item>0,33</item>
+        <item>0,5</item>
+        <item>0,75</item>
+    </string-array>
+    <string-array name="grade_color_scheme_entries">
+        <item>Dzienniczek+</item>
+        <item>Wulkanowy</item>
+        <item>Farwa taksów w dzénnikù</item>
+    </string-array>
+    <string-array name="default_expand_grade_entries">
+        <item>Do 1 na rôz</item>
+        <item>Wiedno rozwiniãti</item>
+        <item>Rozwijanié bez grańców</item>
+    </string-array>
+    <string-array name="grade_average_mode_entries">
+        <item>Strzédnô taksów leno z wëbrónégò semestru</item>
+        <item>Strzédnô z strzédnëch z òbùch semestrów</item>
+        <item>Strzédnô wszëtczich taksów z całégò rokù</item>
+    </string-array>
+    <string-array name="timetable_show_gaps_entries">
+        <item>Nié pòkazuj</item>
+        <item>Leno midzë ùczbama</item>
+        <item>Przed a midzë ùczbama</item>
+    </string-array>
+    <string-array name="timetable_show_additional_lessons_entries">
+        <item>Nié pòkazuj</item>
+        <item>Pòkażë razã</item>
+        <item>Pòkôżë niżi zwëczajné ùczbë</item>
+    </string-array>
+    <string-array name="dashboard_tile_entries">
+        <item>Szczestlëwi numerk</item>
+        <item>Nieprzeczëtóné wiadë</item>
+        <item>Frekwencjô</item>
+        <item>Ùczbë</item>
+        <item>Taksë</item>
+        <item>Zadanié dodóm</item>
+        <item>Szkòlowi ògłos</item>
+        <item>Testë</item>
+        <item>Zéńdzenia</item>
+    </string-array>
+</resources>
