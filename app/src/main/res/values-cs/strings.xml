@@ -29,7 +29,7 @@
     <string name="notifications_center_title">Centrum oznámení</string>
     <string name="menu_order_title">Konfigurace menu</string>
     <!--Subtitles-->
-    <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
+    <string name="grade_subtitle">Pololetí %1$d, %2$d/%3$d</string>
     <!--Login-->
     <string name="login_header_default">Přihlaste se pomocí žákovského nebo rodičovského účtu</string>
     <string name="login_header_symbol">Zadejte symbol ze stránky deníku: &lt;b&gt;%1$s&lt;/b&gt;</string>
@@ -105,8 +105,8 @@
     <string name="main_support_positive">Zapnout reklamy</string>
     <!--Grade-->
     <string name="grade_header">Známka</string>
-    <string name="grade_semester">Semestr %d</string>
-    <string name="grade_switch_semester">Změnit semestr</string>
+    <string name="grade_semester">Pololetí %d</string>
+    <string name="grade_switch_semester">Změnit pololetí</string>
     <string name="grade_no_items">Žádné známky</string>
     <string name="grade_weight">Váha</string>
     <string name="grade_weight_value">Váha: %s</string>
@@ -125,16 +125,16 @@
     <string name="grade_summary_calculated_average">Vypočítaný pololetní průměr</string>
     <string name="grade_summary_calculated_average_annual">Vypočítaný roční průměr</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Jak funguje vypočítaný průměr?</string>
-    <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný průměr je aritmetický průměr vypočítaný z průměrů předmětů. Umožňuje vám to znát přibližný konečný průměr. Vypočítává se způsobem zvoleným uživatelem v nastavení aplikaci. Doporučuje se vybrat příslušnou možnost. Důvodem je rozdílný výpočet školních průměrů. Pokud vaše škola navíc uvádí průměr předmětů na stránce deníku Vulcan, aplikace si je stáhne a tyto průměry nepočítá. To lze změnit vynucením výpočtu průměru v nastavení aplikaci.\n\n<b>Průměr známek pouze z vybraného semestru</b>:\n1. Výpočet váženého průměru pro každý předmět v daném semestru\n2. Sčítání vypočítaných průměrů\n3. Výpočet aritmetického průměru součtených průměrů\n\n<b>Průměr průměrů z obou semestrů</b>:\n1. Výpočet váženého průměru pro každý předmět v semestru 1 a 2\n2. Výpočet aritmetického průměru vypočítaných průměrů za semestry 1 a 2 pro každý předmět.\n3. Sčítání vypočítaných průměrů\n4. Výpočet aritmetického průměru sečtených průměrů\n\n<b>Průměr známek z celého roku:</b>\n1. Výpočet váženého průměru za rok pro každý předmět. Konečný průměr v 1. semestru je nepodstatný.\n2. Sčítání vypočítaných průměrů\n3. Výpočet aritmetického průměru součtených průměrů</string>
+    <string name="grade_summary_calculated_average_help_dialog_message">Vypočítaný průměr je aritmetický průměr vypočítaný z průměrů předmětů. Umožňuje vám to znát přibližný konečný průměr. Vypočítává se způsobem zvoleným uživatelem v nastavení aplikaci. Doporučuje se vybrat příslušnou možnost. Důvodem je rozdílný výpočet školních průměrů. Pokud vaše škola navíc uvádí průměr předmětů na stránce deníku Vulcan, aplikace si je stáhne a tyto průměry nepočítá. To lze změnit vynucením výpočtu průměru v nastavení aplikaci.\n\n<b>Průměr známek pouze z vybraného pololetí</b>:\n1. Výpočet váženého průměru pro každý předmět v daném pololetí\n2. Sčítání vypočítaných průměrů\n3. Výpočet aritmetického průměru součtených průměrů\n\n<b>Průměr průměrů z obou pololetí</b>:\n1. Výpočet váženého průměru pro každý předmět v pololetí 1 a 2\n2. Výpočet aritmetického průměru vypočítaných průměrů za pololetí 1 a 2 pro každý předmět.\n3. Sčítání vypočítaných průměrů\n4. Výpočet aritmetického průměru sečtených průměrů\n\n<b>Průměr známek z celého roku:</b>\n1. Výpočet váženého průměru za rok pro každý předmět. Konečný průměr v 1. pololetí je nepodstatný.\n2. Sčítání vypočítaných průměrů\n3. Výpočet aritmetického průměru součtených průměrů</string>
     <string name="grade_summary_final_average_help_dialog_title">Jak funguje konečný průměr?</string>
-    <string name="grade_summary_final_average_help_dialog_message">Konečný průměr je aritmetický průměr vypočítaný ze všech aktuálně dostupných konečných známek v daném semestru.\n\nSchéma výpočtu se skládá z následujících kroků:\n1. Sčítání konečných známek zadaných učiteli\n2. Děleno počtem předmětů, pro které už byly uděleny známky</string>
+    <string name="grade_summary_final_average_help_dialog_message">Konečný průměr je aritmetický průměr vypočítaný ze všech aktuálně dostupných konečných známek v daném pololetí.\n\nSchéma výpočtu se skládá z následujících kroků:\n1. Sčítání konečných známek zadaných učiteli\n2. Děleno počtem předmětů, pro které už byly uděleny známky</string>
     <string name="grade_summary_final_average">Konečný průměr</string>
     <string name="grade_summary_from_subjects">z %1$d z %2$d předmětů</string>
     <string name="grade_menu_summary">Shrnutí</string>
     <string name="grade_menu_statistics">Třída</string>
     <string name="grade_menu_read">Označit jako přečtené</string>
     <string name="grade_statistics_partial">Částečně</string>
-    <string name="grade_statistics_semester">Semestr</string>
+    <string name="grade_statistics_semester">Pololetí</string>
     <string name="grade_statistics_points">Body</string>
     <string name="grade_statistics_legend">Vysvětlivky</string>
     <string name="grade_statistics_class_average">Průměr třídy: %1$s</string>
@@ -499,7 +499,7 @@
     <string name="mobile_devices_title">Mobilní přístup</string>
     <string name="mobile_devices_no_items">Žádná zařízení</string>
     <string name="mobile_devices_unregister">Zrušit registraci</string>
-    <string name="mobile_device_removed">Zařízení odstranění</string>
+    <string name="mobile_device_removed">Zařízení odstraněno</string>
     <string name="mobile_device_qr">QR kód</string>
     <string name="mobile_device_token">Token</string>
     <string name="mobile_device_symbol">Symbol</string>
@@ -872,6 +872,8 @@
     <string name="captcha_dialog_title">Webová stránka deníku VULCAN vyžaduje ověření</string>
     <string name="captcha_dialog_description"><b>Proč se mi to zobrazuje?</b>\nWebová stránka deníku, ze které Wulkanowy stahuje data, zobrazuje stejnou obrazovku jako výše, takže Wulkanowy ji musí také zobrazit, aby bylo možné získávat data z této stránky. Nedá se to obejít</string>
     <string name="captcha_verified_message">Úspěšně ověřeno</string>
+    <!--Panic mode-->
+    <string name="panic_mode_title">Nouzový přístup</string>
     <!--Errors-->
     <string name="error_no_internet">Žádné internetové připojení</string>
     <string name="error_invalid_device_datetime">Vyskytla se chyba. Zkontrolujte hodiny svého zařízení</string>

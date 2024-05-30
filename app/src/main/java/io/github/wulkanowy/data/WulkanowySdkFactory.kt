@@ -60,6 +60,7 @@ class WulkanowySdkFactory @Inject constructor(
                 endpointsMapping = mapping.endpoints
                 vTokenMapping = mapping.vTokens
                 vHeaders = mapping.vHeaders
+                responseMapping = mapping.responseMap
                 vParamsEvaluation = createIsolate()
             }
         }

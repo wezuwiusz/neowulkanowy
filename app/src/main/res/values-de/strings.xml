@@ -778,6 +778,8 @@
     <string name="captcha_dialog_title">VULCAN\'s Website erfordert Überprüfung</string>
     <string name="captcha_dialog_description"><b>Warum sehe ich das?</b>\nDie Website des Registers, von der Wulkanowy Daten herunterlädt, zeigt denselben Bildschirm wie oben an, so dass Wulkanowy ihn ebenfalls anzeigen muss, um Daten von dieser Website herunterladen zu können. Es gibt keinen Ausweg</string>
     <string name="captcha_verified_message">Erfolgreich verifiziert</string>
+    <!--Panic mode-->
+    <string name="panic_mode_title">Notfallzugriff</string>
     <!--Errors-->
     <string name="error_no_internet">Keine Internetverbindung</string>
     <string name="error_invalid_device_datetime">Es ist ein Fehler aufgetreten. Überprüfen Sie Ihre Geräteuhr</string>

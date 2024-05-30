@@ -1,5 +1,5 @@
-Wersja 2.6.14
+Wersja 2.6.15
 
-— naprawiliśmy moduł "Uczeń", czyli bez wiadomości i "Uczeń Plus" (na razie)
+— naprawiliśmy moduł wiadomości
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases

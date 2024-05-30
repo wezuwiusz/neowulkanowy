@@ -11,6 +11,6 @@ interface WulkanowyService {
     @GET("/v1.json")
     suspend fun getAdminMessages(): List<AdminMessage>
 
-    @GET("/mapping3.json")
+    @GET("/mapping4.json")
     suspend fun getMapping(): Mapping
 }
