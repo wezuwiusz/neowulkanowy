@@ -17,4 +17,7 @@ data class Mapping(
 
     @SerialName("vHeaders")
     val vHeaders: Map<String, Map<String, Map<String, String>>> = emptyMap(),
+
+    @SerialName("responseMap")
+    val responseMap: Map<String, Map<String, Map<String, Map<String, String>>>> = emptyMap(),
 )
