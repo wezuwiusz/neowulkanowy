@@ -19,6 +19,7 @@
         <item>Deutsch</item>
         <item>Čeština</item>
         <item>Slovenčina</item>
+        <item>Kaszëbsczi</item>
     </string-array>
     <string-array name="services_interval_entries">
         <item>15 хвилин</item>

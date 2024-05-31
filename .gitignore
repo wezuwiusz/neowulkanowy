@@ -71,6 +71,7 @@ captures/
 .idea/deploymentTargetDropDown.xml
 .idea/deploymentTargetSelector.xml
 .idea/kotlinc.xml
+.idea/studiobot.xml
 
 # Keystore files
 *.jks

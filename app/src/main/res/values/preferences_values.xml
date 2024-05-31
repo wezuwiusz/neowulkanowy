@@ -40,6 +40,7 @@
         <item>Deutsch</item>
         <item>Čeština</item>
         <item>Slovenčina</item>
+        <item>Kaszëbsczi</item>
     </string-array>
     <string-array name="app_language_values" translatable="false">
         <item>system</item>
@@ -50,6 +51,7 @@
         <item>de</item>
         <item>cs</item>
         <item>sk</item>
+        <item>csb</item>
     </string-array>
 
     <string-array name="services_interval_entries">
