@@ -1,5 +1,6 @@
-Wersja 2.6.15
+Wersja 2.6.16
 
-— naprawiliśmy moduł wiadomości
+— dodaliśmy język kaszubski
+— naprawiliśmy crash aplikacji przy przełączaniu uczniów, kiedy włączone są reklamy
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
