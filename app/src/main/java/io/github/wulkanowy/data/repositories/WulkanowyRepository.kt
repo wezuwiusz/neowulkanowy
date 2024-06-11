@@ -12,8 +12,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.sync.Mutex
 import timber.log.Timber
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
+
+private val endDate = LocalDate.of(2024, 6, 25)
+val isEndDateReached = LocalDate.now() >= endDate
 
 @Singleton
 class WulkanowyRepository @Inject constructor(
@@ -24,7 +28,6 @@ class WulkanowyRepository @Inject constructor(
 ) {
 
     private val saveFetchResultMutex = Mutex()
-
     private val cacheKey = "mapping_refresh_key"
 
     fun getAdminMessages(): Flow<Resource<List<AdminMessage>>> =

@@ -4,19 +4,27 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.asFlow
-import androidx.work.*
 import androidx.work.BackoffPolicy.EXPONENTIAL
+import androidx.work.Constraints
+import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.ExistingPeriodicWorkPolicy.UPDATE
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.UNMETERED
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.db.SharedPrefProvider.Companion.APP_VERSION_CODE_KEY
 import io.github.wulkanowy.data.repositories.PreferencesRepository
+import io.github.wulkanowy.data.repositories.isEndDateReached
 import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.isHolidays
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import timber.log.Timber
 import java.time.LocalDate.now
 import java.util.concurrent.TimeUnit.MINUTES
@@ -34,7 +42,9 @@ class SyncManager @Inject constructor(
 ) {
 
     init {
-        if (now().isHolidays) stopSyncWorker()
+        if (now().isHolidays || isEndDateReached) {
+            stopSyncWorker()
+        }
 
         if (SDK_INT >= O) {
             channels.forEach { it.create() }
@@ -50,7 +60,7 @@ class SyncManager @Inject constructor(
     }
 
     fun startPeriodicSyncWorker(restart: Boolean = false) {
-        if (preferencesRepository.isServiceEnabled && !now().isHolidays) {
+        if (preferencesRepository.isServiceEnabled && !now().isHolidays && isEndDateReached) {
             val serviceInterval = preferencesRepository.servicesInterval
 
             workManager.enqueueUniquePeriodicWork(
@@ -70,6 +80,10 @@ class SyncManager @Inject constructor(
 
     // if quiet, no notifications will be sent
     fun startOneTimeSyncWorker(quiet: Boolean = false): Flow<WorkInfo?> {
+        if (isEndDateReached) {
+            return flowOf(null)
+        }
+
         val work = OneTimeWorkRequestBuilder<SyncWorker>()
             .setInputData(
                 Data.Builder()

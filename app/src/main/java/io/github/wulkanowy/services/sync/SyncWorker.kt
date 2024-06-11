@@ -15,6 +15,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.isEndDateReached
 import io.github.wulkanowy.sdk.exception.FeatureNotAvailableException
 import io.github.wulkanowy.sdk.scrapper.exception.FeatureDisabledException
 import io.github.wulkanowy.sdk.scrapper.exception.FeatureUnavailableException
@@ -42,7 +43,9 @@ class SyncWorker @AssistedInject constructor(
     override suspend fun doWork(): Result = withContext(dispatchersProvider.io) {
         Timber.i("SyncWorker is starting")
 
-        if (!studentRepository.isCurrentStudentSet()) return@withContext Result.failure()
+        if (!studentRepository.isCurrentStudentSet() || isEndDateReached) {
+            return@withContext Result.failure()
+        }
 
         val (student, semester) = try {
             val student = studentRepository.getCurrentStudent()
@@ -91,6 +94,7 @@ class SyncWorker @AssistedInject constructor(
                     .build()
             )
         }
+
         errors.isNotEmpty() -> Result.retry()
         else -> {
             preferencesRepository.lasSyncDate = Instant.now()
