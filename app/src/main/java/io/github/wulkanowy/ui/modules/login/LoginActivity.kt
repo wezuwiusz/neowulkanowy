@@ -15,7 +15,6 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.databinding.ActivityLoginBinding
 import io.github.wulkanowy.ui.base.BaseActivity
-import io.github.wulkanowy.ui.modules.end.EndFragment
 import io.github.wulkanowy.ui.modules.login.advanced.LoginAdvancedFragment
 import io.github.wulkanowy.ui.modules.login.form.LoginFormFragment
 import io.github.wulkanowy.ui.modules.login.recover.LoginRecoverFragment
@@ -116,14 +115,9 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         }
     }
 
-    override fun navigateToEnd() {
-        openFragment(EndFragment(), clearBackStack = true)
-    }
-
     override fun onResume() {
         super.onResume()
         inAppUpdateHelper.onResume()
         presenter.updateSdkMappings()
-        presenter.checkIfEnd()
     }
 }

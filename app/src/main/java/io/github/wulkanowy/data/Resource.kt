@@ -1,6 +1,5 @@
 package io.github.wulkanowy.data
 
-import io.github.wulkanowy.data.repositories.isEndDateReached
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -268,8 +267,7 @@ inline fun <DatabaseType, ApiType, OutputType> networkBoundResource(
     emit(Resource.Loading())
 
     val data = query().first()
-    val updatedShouldFetch = if (isEndDateReached) false else shouldFetch(data)
-    if (updatedShouldFetch) {
+    if (shouldFetch(data)) {
         emit(Resource.Intermediate(data))
 
         try {
