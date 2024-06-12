@@ -7,6 +7,7 @@ import io.github.wulkanowy.data.onResourceSuccess
 import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.WulkanowyRepository
+import io.github.wulkanowy.data.repositories.isEndDateReached
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.BasePresenter
@@ -15,6 +16,7 @@ import io.github.wulkanowy.ui.base.ErrorHandler
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.AccountView
 import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsView
+import io.github.wulkanowy.ui.modules.end.EndView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
 import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
@@ -110,6 +112,7 @@ class MainPresenter @Inject constructor(
     }
 
     private fun shouldShowBottomNavigation(destination: BaseView) = when (destination) {
+        is EndView,
         is AccountView,
         is StudentInfoView,
         is AccountDetailsView -> false
@@ -206,6 +209,13 @@ class MainPresenter @Inject constructor(
         presenterScope.launch {
             runCatching { wulkanowyRepository.fetchMapping() }
                 .onFailure { Timber.e(it) }
+        }
+    }
+
+    fun checkIfEnd() {
+        if (isEndDateReached) {
+            syncManager.stopSyncWorker()
+            view?.navigateToEnd()
         }
     }
 }

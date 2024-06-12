@@ -14,7 +14,9 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.dataOrThrow
 import io.github.wulkanowy.data.db.SharedPrefProvider
 import io.github.wulkanowy.data.repositories.LuckyNumberRepository
+import io.github.wulkanowy.data.repositories.PreferencesRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
+import io.github.wulkanowy.data.repositories.isEndDateReached
 import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.splash.SplashActivity
@@ -34,6 +36,9 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
 
     @Inject
     lateinit var sharedPref: SharedPrefProvider
+
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
 
     companion object {
         private const val LUCKY_NUMBER_WIDGET_MAX_SIZE = 196
@@ -130,6 +135,10 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
     }
 
     private fun getLuckyNumber(studentId: Long, appWidgetId: Int) = runBlocking {
+        if (isEndDateReached) {
+            return@runBlocking null
+        }
+
         try {
             val students = studentRepository.getSavedStudents()
             val student = students.singleOrNull { it.student.id == studentId }?.student

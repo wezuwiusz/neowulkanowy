@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="app_theme_entries" tools:ignore="InconsistentArrays">
+        <item>Motiw systemu</item>
+        <item>Jôsny</item>
+        <item>Cemny</item>
+        <item>Cemny (AMOLED)</item>
+    </string-array>
+</resources>

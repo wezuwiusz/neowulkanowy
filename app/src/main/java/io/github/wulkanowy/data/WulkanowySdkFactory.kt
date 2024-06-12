@@ -36,7 +36,9 @@ class WulkanowySdkFactory @Inject constructor(
     private val migrationFailedStudentIds = mutableSetOf<Long>()
     private val sandbox: ListenableFuture<JavaScriptSandbox>? =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && JavaScriptSandbox.isSupported())
-            JavaScriptSandbox.createConnectedInstanceAsync(context)
+            runCatching { JavaScriptSandbox.createConnectedInstanceAsync(context) }
+                .onFailure { Timber.e(it) }
+                .getOrNull()
         else null
 
     private val sdk = Sdk().apply {
