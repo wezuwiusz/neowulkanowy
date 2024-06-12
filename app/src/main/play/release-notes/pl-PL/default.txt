@@ -1,6 +1,7 @@
-Wersja 2.6.16
+Wersja 2.7.0
 
-— dodaliśmy język kaszubski
-— naprawiliśmy crash aplikacji przy przełączaniu uczniów, kiedy włączone są reklamy
+— naprawiliśmy ustawienia wyglądu po zmianie na język kaszubski
+— dodaliśmy ekran końca
+- naprawiliśmy ładowanie ocen z modułu Uczeń Plus
 
 Pełna lista zmian: https://github.com/wulkanowy/wulkanowy/releases
