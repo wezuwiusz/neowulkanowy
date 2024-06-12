@@ -58,7 +58,7 @@
     <string name="login_invalid_custom_email">Используйте назначенный логин или email в @%1$s</string>
     <string name="login_invalid_domain_suffix">Недопустимый суффикс домена</string>
     <string name="login_invalid_symbol">Неверный символ. Если вы не можете найти символ, пожалуйста, свяжитесь со школой</string>
-    <string name="login_invalid_symbol_definitely">Don\'t make this up! If you cannot find it, please contact the school</string>
+    <string name="login_invalid_symbol_definitely">Неверный символ. Если вы не можете найти символ, пожалуйста, свяжитесь со школой</string>
     <string name="login_incorrect_symbol">Ученик не найден. Проверьте symbol и выбранный тип дненика UONET+</string>
     <string name="login_duplicate_student">Данный ученик уже авторизован</string>
     <string name="login_symbol_helper">Symbol можно найти на странице регистрации в &#160;<b>Uczeń</b> →&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nУбедитесь, что вы выбрали соответствующий тип дневника в поле <b>Тип дневника UONET+</b> на первом экране входа</string>
@@ -123,7 +123,7 @@
     <string name="grade_summary_predicted_grade">Ожидаемая оценка</string>
     <string name="grade_summary_descriptive">Описательная оценка</string>
     <string name="grade_summary_calculated_average">Рассчитанная средняя семестра</string>
-    <string name="grade_summary_calculated_average_annual">Calculated annual average</string>
+    <string name="grade_summary_calculated_average_annual">Рассчитанная средняя оценка</string>
     <string name="grade_summary_calculated_average_help_dialog_title">Как работает \"Рассчитанная средняя оценка\"?</string>
     <string name="grade_summary_calculated_average_help_dialog_message">Рассчитанная средняя оценка - это среднее арифметическое, рассчитанное на основе средних оценок по предметам. Это позволяет узнать приблизительную итоговую среднюю оценку. Она рассчитывается способом, выбранным пользователем в настройках приложения. Рекомендуется выбрать подходящий вариант, так как каждая школа по разному считает среднюю оценку. Кроме того, если ваша школа выставляет средние оценки по предметам на странице Vulcan, приложение просто загрузит их. Это можно изменить, заставив приложение считать среднюю оценку в настройках.\n\n<b>Средняя из оценок выбранного семестра</b>:\n1. Вычисление средневзвешенного значения по каждому предмету за семестр\n2.Суммирование вычисленных значений\n3. Вычисление среднего арифметического суммированных значений\n\n<b>Средняя из средних оценок семестров</b>:\n1.Расчет средневзвешенного значения для каждого предмета в семестрах. \n2. Вычисление среднего арифметического из средневзвешенных значений для каждого предмета в семестрах.\n3. Суммирование средних арифметических\n4. Вычисление среднего арифматического из суммированных значений\n\n<b>Средняя из оценок со всего года:</b>\n1. Расчет средневзвешенного значения по каждому предмету за год. Итоговое среднее значение за 1 семестр не имеет значения.\n2. Суммирование вычисленных средних\n3. Расчет среднего арифметического суммированных чисел</string>
     <string name="grade_summary_final_average_help_dialog_title">Как работает \"Итоговая средняя оценка\"?</string>
@@ -271,11 +271,11 @@
     <!--Attendance-->
     <string name="attendance_summary_button">Итоговая посещаемость</string>
     <string name="attendance_calculator_button">Калькулятор посещаемости</string>
-    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> over target</string>
-    <string name="attendance_calculator_summary_balance_neutral">right on target</string>
-    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> under target</string>
-    <string name="attendance_calculator_summary_values">%1$d/%2$d presences</string>
-    <string name="attendance_calculator_summary_values_empty">No attendances recorded</string>
+    <string name="attendance_calculator_summary_balance_positive"><b>%1$d</b> выше нормы</string>
+    <string name="attendance_calculator_summary_balance_neutral">является нормой</string>
+    <string name="attendance_calculator_summary_balance_negative"><b>%1$d</b> выше нормы</string>
+    <string name="attendance_calculator_summary_values">%1$d/%2$d посещаемостей</string>
+    <string name="attendance_calculator_summary_values_empty">Нет зарегистрированных участников</string>
     <string name="attendance_absence_school">Отсутствие по школьным причинам</string>
     <string name="attendance_absence_excused">Отсутствие по уважительной причине</string>
     <string name="attendance_absence_unexcused">Отсутствие по неуважительной причине</string>
@@ -742,9 +742,9 @@
     <string name="pref_view_grade_average_mode">Параметры расчёта средних оценок</string>
     <string name="pref_view_grade_average_force_calc">Принудительно высчитать среднюю оценку через приложение</string>
     <string name="pref_view_present">Показывать присутствия</string>
-    <string name="pref_attendance_target">Attendance target</string>
-    <string name="pref_attendance_calculator_show_empty_subjects">Show subjects without any attendances</string>
-    <string name="pref_view_attendance_calculator_sorting_mode">Attendance calculator sorting</string>
+    <string name="pref_attendance_target">Норма посещаемости</string>
+    <string name="pref_attendance_calculator_show_empty_subjects">Показать предметы без посещаемостей</string>
+    <string name="pref_view_attendance_calculator_sorting_mode">Сортировка рассчитанных посещаемостей</string>
     <string name="pref_view_app_theme">Тема</string>
     <string name="pref_view_expand_grade">Разворачивание оценок</string>
     <string name="pref_view_timetable_show_groups">Показать группы рядом с темами</string>
@@ -870,10 +870,10 @@
     <string name="auth_button_skip">Пропустить сейчас</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Требуется верификация веб-сайта VULCAN</string>
-    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
+    <string name="captcha_dialog_description"><b>Почему я это вижу?</b>\n Веб-сайт регистрации, с которого Wulkanowy загружает данные, отображает тот же экран, что и выше, поэтому Wulkanowy также должен показать его, чтобы иметь возможность загружать данные с этого веб-сайта. Нет никакого способа обойти это</string>
     <string name="captcha_verified_message">Верификация успешна</string>
     <!--Panic mode-->
-    <string name="panic_mode_title">Emergency access</string>
+    <string name="panic_mode_title">Экстренный доступ</string>
     <!--Errors-->
     <string name="error_no_internet">Интернет-соединение отсутствует</string>
     <string name="error_invalid_device_datetime">Произошла ошибка. Проверьте время на вашем устройстве</string>
@@ -895,4 +895,7 @@
     <string name="message_unmute">Включить уведомления</string>
     <string name="message_mute_success">Вы отключили уведомления от этого пользователя</string>
     <string name="message_unmute_success">Вы включили уведомления от этого пользователя снова</string>
+    <!--End-->
+    <string name="end_title">Koniec Wulkanowego</string>
+    <string name="end_message">Jak zapewne niektórzy z Was się domyślali zbliża się ten moment, aby zakończyć pewien etap. Wraz z końcem tego roku szkolnego zamykamy projekt Wulkanowy. Stworzenie apki było ekscytującym wyzwaniem, ale skala projektu jest tak duża, że nie jesteśmy w stanie odpowiedzialnie utrzymywać aplikacji. Wulkanowy był fajną przygodą, ale sytuacja wymknęła się nam spod kontroli – zarówno pod względem technicznym, jak i społecznym. Nie akceptujemy pojawiającego się hejtu wobec nas ani wobec innych, także Vulcana. Nie chcemy brać udziału w tych działaniach i być z nimi utożsamiani. Prosimy Was o powściągliwość i rozwagę w publikowanych komentarzach i nieprzekraczanie dopuszczalnych granic.&lt;br /&gt;&lt;br /&gt;Prosimy Was też o uszanowanie naszej decyzji, jest ona przemyślana i ostateczna. Wszystkim dotychczasowym użytkownikom Wulkanowego rekomendujemy użycie oficjalnej aplikacji &lt;a href=\"https://play.google.com/store/apps/details?id=pl.edu.vulcan.hebe&amp;hl=pl\"&gt;Dzienniczek VULCAN&lt;/a&gt;. Jeszcze raz dziękujemy wszystkim użytkownikom za lata wsparcia, pomoc i miłe słowa!</string>
 </resources>

@@ -801,4 +801,7 @@
     <string name="message_unmute">Stummschaltung aufheben</string>
     <string name="message_mute_success">Sie haben diesen Benutzer stummgeschaltet</string>
     <string name="message_unmute_success">Sie haben die Stummschaltung dieses Benutzers aufgehoben</string>
+    <!--End-->
+    <string name="end_title">Koniec Wulkanowego</string>
+    <string name="end_message">Jak zapewne niektórzy z Was się domyślali zbliża się ten moment, aby zakończyć pewien etap. Wraz z końcem tego roku szkolnego zamykamy projekt Wulkanowy. Stworzenie apki było ekscytującym wyzwaniem, ale skala projektu jest tak duża, że nie jesteśmy w stanie odpowiedzialnie utrzymywać aplikacji. Wulkanowy był fajną przygodą, ale sytuacja wymknęła się nam spod kontroli – zarówno pod względem technicznym, jak i społecznym. Nie akceptujemy pojawiającego się hejtu wobec nas ani wobec innych, także Vulcana. Nie chcemy brać udziału w tych działaniach i być z nimi utożsamiani. Prosimy Was o powściągliwość i rozwagę w publikowanych komentarzach i nieprzekraczanie dopuszczalnych granic.&lt;br /&gt;&lt;br /&gt;Prosimy Was też o uszanowanie naszej decyzji, jest ona przemyślana i ostateczna. Wszystkim dotychczasowym użytkownikom Wulkanowego rekomendujemy użycie oficjalnej aplikacji &lt;a href=\"https://play.google.com/store/apps/details?id=pl.edu.vulcan.hebe&amp;hl=pl\"&gt;Dzienniczek VULCAN&lt;/a&gt;. Jeszcze raz dziękujemy wszystkim użytkownikom za lata wsparcia, pomoc i miłe słowa!</string>
 </resources>
