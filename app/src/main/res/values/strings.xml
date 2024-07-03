@@ -118,7 +118,7 @@
 
     <!--Grade-->
     <string name="grade_header">Grade</string>
-    <string name="grade_semester">Semester %d</string>
+    <string name="grade_semester">Semester %s</string>
     <string name="grade_switch_semester">Change semester</string>
     <string name="grade_no_items">No grades</string>
     <string name="grade_weight">Weight</string>

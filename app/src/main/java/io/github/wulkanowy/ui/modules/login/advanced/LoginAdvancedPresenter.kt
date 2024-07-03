@@ -4,6 +4,7 @@ import io.github.wulkanowy.data.Resource
 import io.github.wulkanowy.data.logResourceStatus
 import io.github.wulkanowy.data.onResourceNotLoading
 import io.github.wulkanowy.data.pojos.RegisterUser
+import io.github.wulkanowy.data.repositories.SemesterRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.sdk.Sdk
@@ -194,7 +195,9 @@ class LoginAdvancedPresenter @Inject constructor(
         val token = view?.formTokenValue.orEmpty()
 
         return when (Sdk.Mode.valueOf(view?.formLoginType.orEmpty())) {
-            Sdk.Mode.HEBE -> studentRepository.getStudentsApi(pin, symbol, token)
+            Sdk.Mode.HEBE -> {
+                studentRepository.getStudentsApi(pin, symbol, token)
+            }
             Sdk.Mode.SCRAPPER -> studentRepository.getUserSubjectsFromScrapper(
                 email, password, endpoint, domainSuffix, symbol
             )

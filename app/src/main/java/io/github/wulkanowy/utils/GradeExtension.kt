@@ -13,9 +13,15 @@ fun List<Grade>.calcAverage(isOptionalArithmeticAverage: Boolean): Double {
     var denominator = 0.0
 
     forEach {
-        val weight = if (isArithmeticAverage && isGradeValid(it.entry)) 1.0 else it.weightValue
-        counter += (it.value + it.modifier) * weight
-        denominator += weight
+        // Hebe API returns the values of nb. and np. as 0.0 which screws
+        // up this calculator. In the SDK, we assume 0.1 to be our null value.
+        // See: GradesMapper.kt:70.
+        if (it.value != 0.1) {
+            val weight = if (isArithmeticAverage && isGradeValid(it.entry)) 1.0 else it.weightValue
+            val (gradeValue, gradeModifier) = getGradeValueWithModifier(it.entry)
+            counter += ((gradeValue ?: it.value.toInt()) + (gradeModifier ?: it.modifier)) * weight
+            denominator += weight
+        }
     }
     return if (denominator != 0.0) counter / denominator else 0.0
 }

@@ -55,7 +55,10 @@ class GradeAverageProvider @Inject constructor(
     ) { gradeAverageMode, forceAverageCalc, isOptionalArithmeticAverage, plusModifier, minusModifier ->
         AverageCalcParams(
             gradeAverageMode = gradeAverageMode,
-            forceAverageCalc = forceAverageCalc,
+            // Averages provided by the Hebe API are inaccurate. Force recalculation regardless
+            // of user preference if Hebe/Hybrid is used.
+            forceAverageCalc = if (student.loginMode == Sdk.Mode.SCRAPPER.name) forceAverageCalc
+            else true,
             isOptionalArithmeticAverage = isOptionalArithmeticAverage,
             plusModifier = plusModifier,
             minusModifier = minusModifier,

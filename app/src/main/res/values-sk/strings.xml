@@ -105,7 +105,7 @@
     <string name="main_support_positive">Zapnúť reklamy</string>
     <!--Grade-->
     <string name="grade_header">Známka</string>
-    <string name="grade_semester">Polrok %d</string>
+    <string name="grade_semester">Polrok %s</string>
     <string name="grade_switch_semester">Zmeniť polrok</string>
     <string name="grade_no_items">Žiadne známky</string>
     <string name="grade_weight">Váha</string>

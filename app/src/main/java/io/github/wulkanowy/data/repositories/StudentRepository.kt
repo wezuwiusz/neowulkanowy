@@ -39,10 +39,12 @@ class StudentRepository @Inject constructor(
         pin: String,
         symbol: String,
         token: String
-    ): RegisterUser = wulkanowySdkFactory.create()
-        .getStudentsFromHebe(token, pin, symbol, "")
-        .mapToPojo(null)
-        .also { it.logErrors() }
+    ): RegisterUser {
+        return wulkanowySdkFactory.create()
+            .getStudentsFromHebe(token, pin, symbol, "")
+            .mapToPojo(null)
+            .also { it.logErrors() }
+    }
 
     suspend fun getUserSubjectsFromScrapper(
         email: String,

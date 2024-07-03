@@ -105,7 +105,7 @@
     <string name="main_support_positive">Włącz reklamy</string>
     <!--Grade-->
     <string name="grade_header">Ocena</string>
-    <string name="grade_semester">Semestr %d</string>
+    <string name="grade_semester">Semestr %s</string>
     <string name="grade_switch_semester">Zmień semestr</string>
     <string name="grade_no_items">Brak ocen</string>
     <string name="grade_weight">Waga</string>

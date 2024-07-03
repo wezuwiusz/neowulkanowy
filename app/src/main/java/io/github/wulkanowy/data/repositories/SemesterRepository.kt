@@ -12,6 +12,7 @@ import io.github.wulkanowy.utils.isCurrent
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.util.Collections
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -59,10 +60,26 @@ class SemesterRepository @Inject constructor(
         return forceRefresh || isNoSemesters || isRefreshOnModeChangeRequired || isRefreshOnNoCurrentAppropriate
     }
 
-    private suspend fun refreshSemesters(student: Student) {
-        val new = wulkanowySdkFactory.create(student)
-            .getSemesters()
-            .mapToEntities(student.studentId)
+    private suspend fun refreshSemesters(
+        student: Student
+    ) {
+        val sdk = wulkanowySdkFactory.create(student)
+        val new: List<Semester>
+
+        when(sdk.mode) {
+            Sdk.Mode.SCRAPPER -> {
+                new = wulkanowySdkFactory.create(student)
+                    .getSemesters()
+                    .mapToEntities(student.studentId)
+            }
+
+            Sdk.Mode.HEBE, Sdk.Mode.HYBRID -> {
+               /*new = wulkanowySdkFactory.create(student)
+                    .getSemesters(pin, symbol, token)
+                    .mapToEntities(student.studentId)*/
+                new = Collections.emptyList()
+            }
+        }
 
         if (new.isEmpty()) {
             Timber.i("Empty semester list from SDK!")

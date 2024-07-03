@@ -23,6 +23,7 @@ class GradePresenter @Inject constructor(
 
     private var selectedIndex = 0
     private var schoolYear = 0
+    private var selectedSemesterId = 0
     private var availableSemesters = emptyList<Semester>()
     private val loadedSemesterId = mutableMapOf<Int, Int>()
 
@@ -47,7 +48,7 @@ class GradePresenter @Inject constructor(
 
     fun onSemesterSwitch(): Boolean {
         if (availableSemesters.isNotEmpty()) {
-            view?.showSemesterDialog(selectedIndex - 1, availableSemesters.take(2))
+            view?.showSemesterDialog(selectedIndex - 1, availableSemesters)
         }
         return true
     }
@@ -56,9 +57,10 @@ class GradePresenter @Inject constructor(
         if (selectedIndex != index - 1) {
             Timber.i("Change semester in grade view to ${index + 1}")
             selectedIndex = index + 1
+            selectedSemesterId = availableSemesters[index].semesterId
             loadedSemesterId.clear()
             view?.let {
-                it.setCurrentSemesterName(index + 1, schoolYear)
+                it.setCurrentSemesterName(availableSemesters[index].semesterName, availableSemesters[index].start.year, availableSemesters[index].end.year)
                 notifyChildrenSemesterChange()
                 loadChild(it.currentPageIndex)
             }
@@ -106,11 +108,13 @@ class GradePresenter @Inject constructor(
             .onResourceData { (student, semesters) ->
                 val currentSemester = semesters.getCurrentOrLast()
                 selectedIndex =
-                    if (selectedIndex == 0) currentSemester.semesterName else selectedIndex
+                    if (selectedIndex == 0) semesters.size else selectedIndex
                 schoolYear = currentSemester.schoolYear
                 availableSemesters = semesters.filter { semester ->
                     semester.diaryId == currentSemester.diaryId
                 }
+
+                selectedSemesterId = availableSemesters.last().semesterId
 
                 view?.run {
                     initTabs(if (student.isEduOne == true) 2 else 3)
@@ -139,9 +143,9 @@ class GradePresenter @Inject constructor(
         Timber.d("Load grade tab child. Selected semester: $selectedIndex, semesters: ${availableSemesters.joinToString { it.semesterName.toString() }}")
 
         val newSelectedSemesterId = try {
-            availableSemesters.first { it.semesterName == selectedIndex }.semesterId
+            availableSemesters.first { it.semesterId == selectedSemesterId }.semesterId
         } catch (e: NoSuchElementException) {
-            Timber.e(e, "Selected semester no exists")
+            Timber.e(e, "Selected semester does not exist")
             return
         }
 

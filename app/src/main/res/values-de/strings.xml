@@ -105,7 +105,7 @@
     <string name="main_support_positive">Werbung aktivieren</string>
     <!--Grade-->
     <string name="grade_header">Note</string>
-    <string name="grade_semester">Semester %d</string>
+    <string name="grade_semester">Semester %s</string>
     <string name="grade_switch_semester">Semester wechseln</string>
     <string name="grade_no_items">Keine Noten</string>
     <string name="grade_weight">Gewichtung</string>
