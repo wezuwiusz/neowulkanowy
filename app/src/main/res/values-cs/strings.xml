@@ -2,7 +2,7 @@
 <resources>
     <!--Activity/Fragment title-->
     <string name="login_title">Přihlášení</string>
-    <string name="main_title">Wulkanowy</string>
+    <string name="main_title">neoWulkanowy</string>
     <string name="grade_title">Známky</string>
     <string name="attendance_title">Docházka</string>
     <string name="exam_title">Zkoušky</string>
@@ -772,7 +772,7 @@
     <string name="pref_notify_notifications_piggyback">Zachytit oznámení oficiální aplikací</string>
     <string name="pref_notify_notifications_piggyback_cancel_original">Odstranit oznámení oficiální aplikace po zachycení</string>
     <string name="pref_notification_piggyback_popup_title">Zachytit oznámení</string>
-    <string name="pref_notification_piggyback_popup_description">S touto funkcí můžete získat náhradu push oznámení jako v oficiální aplikaci. Vše, co musíte udělat, je povolit Wulkanowému číst všechna vaše oznámení v nastaveních systému.\n\nJak to funguje?\nKdyž obdržíte oznámení v Deníčku VULCAN, Wulkanowy bude o tom informován (k tomu je to dodatečné povolení) a spustí synchronizaci, aby mohl zaslat vlastní oznámení.\n\nPOUZE PRO POKROČILÉ UŽIVATELE</string>
+    <string name="pref_notification_piggyback_popup_description">S touto funkcí můžete získat náhradu push oznámení jako v oficiální aplikaci. Vše, co musíte udělat, je povolit Wulkanowému číst všechna vaše oznámení v nastaveních systému.\n\nJak to funguje?\nKdyž obdržíte oznámení v Deníčku VULCAN, neoWulkanowy bude o tom informován (k tomu je to dodatečné povolení) a spustí synchronizaci, aby mohl zaslat vlastní oznámení.\n\nPOUZE PRO POKROČILÉ UŽIVATELE</string>
     <string name="pref_notification_exact_alarm_popup_title">Oznámení o nadcházející lekci</string>
     <string name="pref_notification_exact_alarm_popup_descriptions">Musíte povolit Wulkanovému nastavit budíky a připomenutí v nastavení vašeho systému pro použití této funkce.</string>
     <string name="pref_notification_go_to_settings">Přejít do nastavení</string>
@@ -854,7 +854,7 @@
     <string name="update_download_started">Stahování aktualizací začalo…</string>
     <string name="update_download_success">Aktualizace byla stažena.</string>
     <string name="update_download_success_button">Restartovat</string>
-    <string name="update_failed">Aktualizace selhala! Wulkanowy nemusí fungovat správně. Zvažte aktualizaci</string>
+    <string name="update_failed">Aktualizace selhala! neoWulkanowy nemusí fungovat správně. Zvažte aktualizaci</string>
     <!--Menu order-->
     <string name="menu_order_confirm_title">Restartování aplikace</string>
     <string name="menu_order_confirm_content">Pro uložení změn je nutné aplikaci restartovat</string>
@@ -866,11 +866,11 @@
     <string name="auth_button">Autorizovat</string>
     <string name="auth_success">Autorizace byla úspěšně dokončena</string>
     <string name="auth_title">Autorizace</string>
-    <string name="auth_description">Vážený rodiči,&lt;br/&gt;&lt;br/&gt;Chcete-li autorizovat a zajistit bezpečnost dat, prosíme Vás, abyste níže zadali PESEL číslo žáka &lt;b&gt;%1$s&lt;/b&gt;. Tyto detaily jsou nutné pro správné přidělování přístupu k osobním údajům a jejich ochranu v souladu s platnými předpisy.&lt;br/&gt;&lt;br/&gt;Po zadání údajů budou data ověřena, čímž se zajistí, že přístup do systému VULCAN získají pouze autorizované osoby. Pokud máte jakékoliv pochybnosti nebo problémy, kontaktujte prosím školního správce deníku pro objasnění situace.&lt;br/&gt;&lt;br/&gt;Udržujeme nejvyšší standardy ochrany osobních údajů a zajišťujeme, aby byly všechny poskytnuté informace chráněné. Wulkanowy neukládá ani nezpracovává číslo PESEL.&lt;br/&gt;&lt;br/&gt;Připomínáme, že poskytování úplných a přesných údajů je nutné a nezbytné k používání systému VULCAN.</string>
+    <string name="auth_description">Vážený rodiči,&lt;br/&gt;&lt;br/&gt;Chcete-li autorizovat a zajistit bezpečnost dat, prosíme Vás, abyste níže zadali PESEL číslo žáka &lt;b&gt;%1$s&lt;/b&gt;. Tyto detaily jsou nutné pro správné přidělování přístupu k osobním údajům a jejich ochranu v souladu s platnými předpisy.&lt;br/&gt;&lt;br/&gt;Po zadání údajů budou data ověřena, čímž se zajistí, že přístup do systému VULCAN získají pouze autorizované osoby. Pokud máte jakékoliv pochybnosti nebo problémy, kontaktujte prosím školního správce deníku pro objasnění situace.&lt;br/&gt;&lt;br/&gt;Udržujeme nejvyšší standardy ochrany osobních údajů a zajišťujeme, aby byly všechny poskytnuté informace chráněné. neoWulkanowy neukládá ani nezpracovává číslo PESEL.&lt;br/&gt;&lt;br/&gt;Připomínáme, že poskytování úplných a přesných údajů je nutné a nezbytné k používání systému VULCAN.</string>
     <string name="auth_button_skip">Zatím přeskočit</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Webová stránka deníku VULCAN vyžaduje ověření</string>
-    <string name="captcha_dialog_description"><b>Proč se mi to zobrazuje?</b>\nWebová stránka deníku, ze které Wulkanowy stahuje data, zobrazuje stejnou obrazovku jako výše, takže Wulkanowy ji musí také zobrazit, aby bylo možné získávat data z této stránky. Nedá se to obejít</string>
+    <string name="captcha_dialog_description"><b>Proč se mi to zobrazuje?</b>\nWebová stránka deníku, ze které neoWulkanowy stahuje data, zobrazuje stejnou obrazovku jako výše, takže neoWulkanowy ji musí také zobrazit, aby bylo možné získávat data z této stránky. Nedá se to obejít</string>
     <string name="captcha_verified_message">Úspěšně ověřeno</string>
     <!--Panic mode-->
     <string name="panic_mode_title">Nouzový přístup</string>

@@ -2,7 +2,7 @@
 <resources>
     <!--Activity/Fragment title-->
     <string name="login_title">Авторизація</string>
-    <string name="main_title">Wulkanowy</string>
+    <string name="main_title">neoWulkanowy</string>
     <string name="grade_title">Оцінки</string>
     <string name="attendance_title">Відвідуваність</string>
     <string name="exam_title">Тести</string>
@@ -99,7 +99,7 @@
     <string name="main_session_expired">Минув термін дії сесії</string>
     <string name="main_session_relogin">Минув термін дії сесії, авторизуйтеся знову</string>
     <string name="main_expired_credentials_title">Термін дії пароля закінчився або його було змінено</string>
-    <string name="main_expired_credentials_description">Термін дії пароля для вашого облікового запису закінчився або було змінено. Необхідно зайти в Wulkanowy знову</string>
+    <string name="main_expired_credentials_description">Термін дії пароля для вашого облікового запису закінчився або було змінено. Необхідно зайти в neoWulkanowy знову</string>
     <string name="main_support_title">Підтримка додатку</string>
     <string name="main_support_description">Вам подобається цей додаток? Підтримайте його розвиток, увімкнувши неінвазивну рекламу, яку ви можете відключити в будь-який час</string>
     <string name="main_support_positive">Увімкнути рекламу</string>
@@ -765,16 +765,16 @@
     <string name="pref_notify_upcoming_lessons_persistent_summary">Вимкніть, якщо сповіщення не показуються на розумному годиннику</string>
     <string name="pref_notify_open_system_settings">Відкрити налаштування сповіщень системи</string>
     <string name="pref_notify_fix_sync_issues">Виправити помилки з синхронізацією і повідомленнями</string>
-    <string name="pref_notify_fix_sync_issues_message">На вашому пристрої можуть бути помилки з синхронізацією і повідомленнями\n\nЩоб виправити іх, вам необхідно додати Wulkanowy в авто-старт і вимкнути оптимізацію/экономію батареї в налаштуваннях пристрою.</string>
+    <string name="pref_notify_fix_sync_issues_message">На вашому пристрої можуть бути помилки з синхронізацією і повідомленнями\n\nЩоб виправити іх, вам необхідно додати neoWulkanowy в авто-старт і вимкнути оптимізацію/экономію батареї в налаштуваннях пристрою.</string>
     <string name="pref_notify_debug_switch">Показувати дебаг-повідомлення</string>
     <string name="pref_notify_disabled_summary">Синхронізація вимкнена</string>
     <string name="pref_notify_notifications_piggyback_header">Сповіщення офіційного додатку</string>
     <string name="pref_notify_notifications_piggyback">Захоплювати сповіщення офіційного додатку</string>
     <string name="pref_notify_notifications_piggyback_cancel_original">Видалити сповіщення офіційного додатку після захоплення</string>
     <string name="pref_notification_piggyback_popup_title">Захоплювати сповіщення</string>
-    <string name="pref_notification_piggyback_popup_description">За допомогою цієї функції ви можете отримати аналог повідомлень з офіційного додатку. Все, що вам потрібно зробити, це дозволити Wulkanowy отримувати всі сповіщення у налаштуваннях вашої системи.\n\nЯк це працює?\nКоли ви отримаєте сповіщення у Dziennik VULCAN, Wulkanowy отримає сповіщення (для цього призначені ці додаткові дозволи) і запустить синхронізацію, щоб надіслати своє власне повідомлення.\n\nТІЛЬКИ ДЛЯ ПРОСУНУТИХ КОРИСТУВАЧІВ</string>
+    <string name="pref_notification_piggyback_popup_description">За допомогою цієї функції ви можете отримати аналог повідомлень з офіційного додатку. Все, що вам потрібно зробити, це дозволити neoWulkanowy отримувати всі сповіщення у налаштуваннях вашої системи.\n\nЯк це працює?\nКоли ви отримаєте сповіщення у Dziennik VULCAN, Wulkanowy отримає сповіщення (для цього призначені ці додаткові дозволи) і запустить синхронізацію, щоб надіслати своє власне повідомлення.\n\nТІЛЬКИ ДЛЯ ПРОСУНУТИХ КОРИСТУВАЧІВ</string>
     <string name="pref_notification_exact_alarm_popup_title">Показувати повідомлення о наступних уроках</string>
-    <string name="pref_notification_exact_alarm_popup_descriptions">Ви повинні дозволити Wulkanowy встановлювати будильник та нагадування у налаштуваннях вашої системи для використання цієї функції.</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">Ви повинні дозволити neoWulkanowy встановлювати будильник та нагадування у налаштуваннях вашої системи для використання цієї функції.</string>
     <string name="pref_notification_go_to_settings">Перейти до налаштувань</string>
     <string name="pref_services_header">Синхронізація</string>
     <string name="pref_services_switch">Автоматичне оновлення</string>
@@ -854,7 +854,7 @@
     <string name="update_download_started">Завантаження оновлень розпочато…</string>
     <string name="update_download_success">Щойно завантажено оновлення.</string>
     <string name="update_download_success_button">Перезавантажити</string>
-    <string name="update_failed">Помилка оновлення! Wulkanowy може не працювати належним чином. Подумайте про оновлення</string>
+    <string name="update_failed">Помилка оновлення! neoWulkanowy може не працювати належним чином. Подумайте про оновлення</string>
     <!--Menu order-->
     <string name="menu_order_confirm_title">Перезавантаження додатку</string>
     <string name="menu_order_confirm_content">Додаток потрібно перезавантажити для збереження змін</string>
@@ -866,11 +866,11 @@
     <string name="auth_button">Авторизовать</string>
     <string name="auth_success">Авторизація пройшла успішно</string>
     <string name="auth_title">Авторизувати</string>
-    <string name="auth_description">Шановні батьки,&lt;br/&gt;&lt;br/&gt;Для авторизації та забезпечення безпеки даних просимо Вас ввести нижче PESEL номер учня &lt;b&gt;%1$s&lt;/b&gt;. Ці дані необхідні для правильного призначення доступу та захисту персональних даних відповідно до чинного законодавства.&lt;br/&gt;&lt;br/&gt;Після введення даних буде проведена перевірка, щоб переконатися, що доступ до системи VULCAN надається виключно уповноваженим особам. У разі виникнення будь-яких сумнівів або проблем, будь ласка, зв\'яжіться з адміністратором шкільного щоденника для з\'ясування ситуації.&lt;br/&gt;&lt;br/&gt;Ми підтримуємо найвищі стандарти захисту персональних даних і гарантуємо, що вся надана інформація є безпечною. Додаток Wulkanowy не зберігає і не обробляє номер PESEL.&lt;br/&gt;&lt;br/&gt;Нагадуємо, що надання повних і точних даних є обов\'язковим і необхідним для використання системи VULCAN.</string>
+    <string name="auth_description">Шановні батьки,&lt;br/&gt;&lt;br/&gt;Для авторизації та забезпечення безпеки даних просимо Вас ввести нижче PESEL номер учня &lt;b&gt;%1$s&lt;/b&gt;. Ці дані необхідні для правильного призначення доступу та захисту персональних даних відповідно до чинного законодавства.&lt;br/&gt;&lt;br/&gt;Після введення даних буде проведена перевірка, щоб переконатися, що доступ до системи VULCAN надається виключно уповноваженим особам. У разі виникнення будь-яких сумнівів або проблем, будь ласка, зв\'яжіться з адміністратором шкільного щоденника для з\'ясування ситуації.&lt;br/&gt;&lt;br/&gt;Ми підтримуємо найвищі стандарти захисту персональних даних і гарантуємо, що вся надана інформація є безпечною. Додаток neoWulkanowy не зберігає і не обробляє номер PESEL.&lt;br/&gt;&lt;br/&gt;Нагадуємо, що надання повних і точних даних є обов\'язковим і необхідним для використання системи VULCAN.</string>
     <string name="auth_button_skip">Поки що пропустити</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Веб-сайт VULCAN потребує підтвердження</string>
-    <string name="captcha_dialog_description"><b>Чому я це бачу?</b>\nСайт реєстру, з якого Wulkanowy завантажує дані, відображає той самий екран, що й вище, тому Wulkanowy також повинен показувати його, щоб мати змогу завантажувати дані з цього сайту. Це неможливо обійти</string>
+    <string name="captcha_dialog_description"><b>Чому я це бачу?</b>\nСайт реєстру, з якого neoWulkanowy завантажує дані, відображає той самий екран, що й вище, тому neoWulkanowy також повинен показувати його, щоб мати змогу завантажувати дані з цього сайту. Це неможливо обійти</string>
     <string name="captcha_verified_message">Верифікація завершена</string>
     <!--Panic mode-->
     <string name="panic_mode_title">Екстрений доступ</string>

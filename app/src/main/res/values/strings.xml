@@ -3,7 +3,7 @@
 
     <!--Activity/Fragment title-->
     <string name="login_title">Login</string>
-    <string name="main_title">Wulkanowy</string>
+    <string name="main_title">neoWulkanowy</string>
     <string name="grade_title">Grades</string>
     <string name="attendance_title">Attendance</string>
     <string name="exam_title">Exams</string>
@@ -110,7 +110,7 @@
     <string name="main_session_expired">Session expired</string>
     <string name="main_session_relogin">Session expired, log in again</string>
     <string name="main_expired_credentials_title">Password has expired or been changed</string>
-    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to Wulkanowy again</string>
+    <string name="main_expired_credentials_description">Your account password has expired or been changed. You will need to log in to neoWulkanowy again</string>
     <string name="main_support_title">Application support</string>
     <string name="main_support_description">Do you like this app? Support its development by enabling non-invasive ads that you can disable at any time</string>
     <string name="main_support_positive">Enable ads</string>
@@ -556,13 +556,13 @@
     <!--About-->
     <string name="about_version">App version</string>
     <string name="about_contributor">Contributors</string>
-    <string name="about_contributor_summary">List of Wulkanowy developers</string>
+    <string name="about_contributor_summary">List of neoWulkanowy developers</string>
     <string name="about_feedback">Report a bug</string>
     <string name="about_feedback_summary">Send a bug report via e-mail</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Read Frequently Asked Questions</string>
     <string name="about_discord">Discord server</string>
-    <string name="about_discord_summary">Join the Wulkanowy community</string>
+    <string name="about_discord_summary">Join the neoWulkanowy community</string>
     <string name="about_facebook">Facebook fanpage</string>
     <string name="about_twitter">Twitter page</string>
     <string name="about_twitter_summary">Follow us on twitter</string>
@@ -749,16 +749,16 @@
     <string name="pref_notify_upcoming_lessons_persistent_summary">Turn off when notification is not showing in your watch/band</string>
     <string name="pref_notify_open_system_settings">Open system notification settings</string>
     <string name="pref_notify_fix_sync_issues">Fix synchronization &amp; notifications issues</string>
-    <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add Wulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
+    <string name="pref_notify_fix_sync_issues_message">Your device may have data synchronization issues and with notifications.\n\nTo fix them, you need to add neoWulkanowy to the autostart and turn off battery optimization/saving in the phone settings.</string>
     <string name="pref_notify_debug_switch">Show debug notifications</string>
     <string name="pref_notify_disabled_summary">Synchronization is disabled</string>
     <string name="pref_notify_notifications_piggyback_header">Official app notifications</string>
     <string name="pref_notify_notifications_piggyback">Capture official app notifications</string>
     <string name="pref_notify_notifications_piggyback_cancel_original">Remove official app notifications after capture</string>
     <string name="pref_notification_piggyback_popup_title">Capture notifications</string>
-    <string name="pref_notification_piggyback_popup_description">With this feature you can gain a substitute of push notifications like in the official app. All you need to do is allow Wulkanowy to receive all notifications in your system settings.\n\nHow it works?\nWhen you get a notification in Dziennik VULCAN, Wulkanowy will be notified (that\'s what these extra permissions are for) and will trigger a sync so that can send its own notification.\n\nFOR ADVANCED USERS ONLY</string>
+    <string name="pref_notification_piggyback_popup_description">With this feature you can gain a substitute of push notifications like in the official app. All you need to do is allow neoWulkanowy to receive all notifications in your system settings.\n\nHow it works?\nWhen you get a notification in Dziennik VULCAN, Wulkanowy will be notified (that\'s what these extra permissions are for) and will trigger a sync so that can send its own notification.\n\nFOR ADVANCED USERS ONLY</string>
     <string name="pref_notification_exact_alarm_popup_title">Upcoming lesson notifications</string>
-    <string name="pref_notification_exact_alarm_popup_descriptions">You must allow the Wulkanowy app to set alarms and reminders in your system settings to use this feature.</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">You must allow the neoWulkanowy app to set alarms and reminders in your system settings to use this feature.</string>
     <string name="pref_notification_go_to_settings">Go to settings</string>
     <string name="pref_services_header">Synchronization</string>
     <string name="pref_services_switch">Automatic update</string>
@@ -845,7 +845,7 @@
     <string name="update_download_started">Download of updates has started…</string>
     <string name="update_download_success">An update has just been downloaded.</string>
     <string name="update_download_success_button">Restart</string>
-    <string name="update_failed">Update failed! Wulkanowy may not function properly. Consider updating</string>
+    <string name="update_failed">Update failed! neoWulkanowy may not function properly. Consider updating</string>
 
     <!--Menu order-->
     <string name="menu_order_confirm_title">Application restart</string>
@@ -860,13 +860,13 @@
     <string name="auth_button">Authorize</string>
     <string name="auth_success">Authorization completed successfully</string>
     <string name="auth_title">Authorization</string>
-    <string name="auth_description">Dear Parent,&lt;br />&lt;br />To authorize and ensure the security of data, we kindly ask you to enter below PESEL number of student &lt;b>%1$s&lt;/b>. These details are essential for the proper assignment of access and protection of personal data in accordance with applicable regulations.&lt;br />&lt;br />After entering the data, it will be verified to ensure that access to the VULCAN system is granted exclusively to authorized individuals. Should you have any doubts or problems, please contact the school diary administrator to clarify the situation.&lt;br />&lt;br />We maintain the highest standards of personal data protection and ensure that all information provided is secure. Wulkanowy app does not store or process the PESEL number.&lt;br />&lt;br />We remind you that providing full and accurate data is mandatory and necessary for the use of the VULCAN system.</string>
+    <string name="auth_description">Dear Parent,&lt;br />&lt;br />To authorize and ensure the security of data, we kindly ask you to enter below PESEL number of student &lt;b>%1$s&lt;/b>. These details are essential for the proper assignment of access and protection of personal data in accordance with applicable regulations.&lt;br />&lt;br />After entering the data, it will be verified to ensure that access to the VULCAN system is granted exclusively to authorized individuals. Should you have any doubts or problems, please contact the school diary administrator to clarify the situation.&lt;br />&lt;br />We maintain the highest standards of personal data protection and ensure that all information provided is secure. neoWulkanowy app does not store or process the PESEL number.&lt;br />&lt;br />We remind you that providing full and accurate data is mandatory and necessary for the use of the VULCAN system.</string>
     <string name="auth_button_skip">Skip for now</string>
 
 
     <!--Captcha-->
     <string name="captcha_dialog_title">VULCAN\'s website requires verification</string>
-    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wulkanowy downloads data displays the same screen as above, so Wulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
+    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which neoWulkanowy downloads data displays the same screen as above, so neoWulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Verified successfully</string>
 
     <!--Panic mode-->

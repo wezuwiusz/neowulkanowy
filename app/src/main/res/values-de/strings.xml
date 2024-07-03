@@ -2,7 +2,7 @@
 <resources>
     <!--Activity/Fragment title-->
     <string name="login_title">Anmelden</string>
-    <string name="main_title">Wulkanowy</string>
+    <string name="main_title">neoWulkanowy</string>
     <string name="grade_title">Noten</string>
     <string name="attendance_title">Schulbesuch</string>
     <string name="exam_title">Prüfungen</string>
@@ -99,7 +99,7 @@
     <string name="main_session_expired">Die Sitzung ist abgelaufen</string>
     <string name="main_session_relogin">Die Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein</string>
     <string name="main_expired_credentials_title">Das Passwort ist abgelaufen oder wurde geändert</string>
-    <string name="main_expired_credentials_description">Ihr Passwort ist abgelaufen oder wurde geändert. Sie müssen sich erneut bei Wulkanowy anmelden</string>
+    <string name="main_expired_credentials_description">Ihr Passwort ist abgelaufen oder wurde geändert. Sie müssen sich erneut bei neoWulkanowy anmelden</string>
     <string name="main_support_title">Anwendungsunterstützung</string>
     <string name="main_support_description">Gefällt Ihnen diese App? Unterstützen Sie ihre Entwicklung, indem Sie nicht-invasive Werbung aktivieren, die Sie jederzeit deaktivieren können</string>
     <string name="main_support_positive">Werbung aktivieren</string>
@@ -499,13 +499,13 @@
     <!--About-->
     <string name="about_version">Version der App</string>
     <string name="about_contributor">Mitarbeiter</string>
-    <string name="about_contributor_summary">Liste der Wulkanowy-Entwickler</string>
+    <string name="about_contributor_summary">Liste der neoWulkanowy-Entwickler</string>
     <string name="about_feedback">Melden Sie einen Fehler</string>
     <string name="about_feedback_summary">Senden Sie einen Fehlerbericht per E-Mail</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Lesen Sie Häufig gestellte Fragen</string>
     <string name="about_discord">Discord server</string>
-    <string name="about_discord_summary">Treten Sie der Wulkanowy-Gemeinschaft bei</string>
+    <string name="about_discord_summary">Treten Sie der neoWulkanowy-Gemeinschaft bei</string>
     <string name="about_facebook">Facebook fanpage</string>
     <string name="about_twitter">Twitter-Seite</string>
     <string name="about_twitter_summary">Folgen Sie uns bei Twitter</string>
@@ -671,16 +671,16 @@
     <string name="pref_notify_upcoming_lessons_persistent_summary">Deaktivieren wenn die Benachrichtigung nicht in deiner Uhr/Band angezeigt wird</string>
     <string name="pref_notify_open_system_settings">Systembenachrichtigungseinstellungen öffnen</string>
     <string name="pref_notify_fix_sync_issues">Synchronisierungs- und Benachrichtigungsprobleme reparieren</string>
-    <string name="pref_notify_fix_sync_issues_message">Ihr Gerät hat möglicherweise Probleme mit der Datensynchronisierung und Benachrichtigungen.\n\nUm diese zu reparieren, fügen Sie Wulkanowy zum Autostart hinzu und deaktivieren Sie die Batterieoptimierung in den Systemeinstellungen des Geräts.</string>
+    <string name="pref_notify_fix_sync_issues_message">Ihr Gerät hat möglicherweise Probleme mit der Datensynchronisierung und Benachrichtigungen.\n\nUm diese zu reparieren, fügen Sie neoWulkanowy zum Autostart hinzu und deaktivieren Sie die Batterieoptimierung in den Systemeinstellungen des Geräts.</string>
     <string name="pref_notify_debug_switch">Debug-Benachrichtigungen anzeigen</string>
     <string name="pref_notify_disabled_summary">Synchronisierung ist deaktiviert</string>
     <string name="pref_notify_notifications_piggyback_header">Offizielle Benachrichtigungen</string>
     <string name="pref_notify_notifications_piggyback">Offizielle App-Benachrichtigungen erfassen</string>
     <string name="pref_notify_notifications_piggyback_cancel_original">Entfernen Sie offizielle App-Benachrichtigungen nach der Erfassung</string>
     <string name="pref_notification_piggyback_popup_title">Benachrichtigungen erfassen</string>
-    <string name="pref_notification_piggyback_popup_description">Mit dieser Funktion können Sie einen Ersatz für Push-Benachrichtigungen erhalten, wie in der offiziellen App. Alles, was Sie tun müssen, ist es Wulkanowy erlauben, alle Benachrichtigungen in Ihren Systemeinstellungen zu erhalten.\n\nWie funktioniert es?\nWenn Sie eine Benachrichtigung in Dziennik VULCAN erhalten, Wulkanowy wird benachrichtigt (dafür sind diese zusätzlichen Berechtigungen) und wird eine Synchronisierung auslösen, so dass eine eigene Benachrichtigung gesendet werden kann.\n\nNUR FÜR FORTGESCHRITTENE BENUTZER</string>
+    <string name="pref_notification_piggyback_popup_description">Mit dieser Funktion können Sie einen Ersatz für Push-Benachrichtigungen erhalten, wie in der offiziellen App. Alles, was Sie tun müssen, ist es neoWulkanowy erlauben, alle Benachrichtigungen in Ihren Systemeinstellungen zu erhalten.\n\nWie funktioniert es?\nWenn Sie eine Benachrichtigung in Dziennik VULCAN erhalten, Wulkanowy wird benachrichtigt (dafür sind diese zusätzlichen Berechtigungen) und wird eine Synchronisierung auslösen, so dass eine eigene Benachrichtigung gesendet werden kann.\n\nNUR FÜR FORTGESCHRITTENE BENUTZER</string>
     <string name="pref_notification_exact_alarm_popup_title">Bevorstehende Unterrichtsbenachrichtigungen</string>
-    <string name="pref_notification_exact_alarm_popup_descriptions">Sie müssen der Wulkanowy-App erlauben, in Ihren Systemeinstellungen Alarme und Erinnerungen einzustellen, damit diese Funktion verwendet werden kann.</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">Sie müssen der neoWulkanowy-App erlauben, in Ihren Systemeinstellungen Alarme und Erinnerungen einzustellen, damit diese Funktion verwendet werden kann.</string>
     <string name="pref_notification_go_to_settings">Gehe zu den Einstellungen</string>
     <string name="pref_services_header">Synchronisierung</string>
     <string name="pref_services_switch">Automatische Aktualisierung</string>
@@ -760,7 +760,7 @@
     <string name="update_download_started">Download der Updates wurde gestartet…</string>
     <string name="update_download_success">Ein Update wurde gerade heruntergeladen.</string>
     <string name="update_download_success_button">Neustart</string>
-    <string name="update_failed">Update fehlgeschlagen! Wulkanowy funktioniert möglicherweise nicht richtig. Überlegen Sie die Aktualisierung</string>
+    <string name="update_failed">Update fehlgeschlagen! neoWulkanowy funktioniert möglicherweise nicht richtig. Überlegen Sie die Aktualisierung</string>
     <!--Menu order-->
     <string name="menu_order_confirm_title">Neustart der Anwendung</string>
     <string name="menu_order_confirm_content">Die Anwendung muss neu gestartet werden, damit die Änderungen gespeichert werden</string>
@@ -772,11 +772,11 @@
     <string name="auth_button">Autorisieren Sie</string>
     <string name="auth_success">Autorisierung erfolgreich abgeschlossen</string>
     <string name="auth_title">Autorisierung</string>
-    <string name="auth_description">Liebes Elternteil,&lt;br/&gt;&lt;br/&gt;Um die Sicherheit der Daten zu gewährleisten, bitten wir Sie, die PESEL-Nummer des Schülers/der Schülerin anzugeben&lt;b&gt;%1$s&lt;/b&gt;Diese Angaben sind für die ordnungsgemäße Zuweisung des Zugriffs und den Schutz der personenbezogenen Daten gemäß den geltenden Vorschriften unerlässlich.&lt;br/&gt;&lt;br/&gt;Nach der Eingabe der Daten werden diese überprüft, um sicherzustellen, dass nur berechtigte Personen Zugang zum VULCAN-System erhalten. Wenn Sie Zweifel oder Probleme haben, wenden Sie sich bitte an den Administrator des Schülerkalenders, um die Situation zu klären.&lt;br/&gt;&lt;br/&gt;Wir halten die höchsten Standards für den Schutz personenbezogener Daten ein und gewährleisten, dass alle bereitgestellten Informationen sicher sind. Die Wulkanowy-App speichert und verarbeitet die PESEL-Nummer nicht.&lt;br/&gt;&lt;br/&gt;Wir erinnern Sie daran, dass die Angabe vollständiger und korrekter Daten obligatorisch und notwendig für die Nutzung des VULCAN-Systems ist.</string>
+    <string name="auth_description">Liebes Elternteil,&lt;br/&gt;&lt;br/&gt;Um die Sicherheit der Daten zu gewährleisten, bitten wir Sie, die PESEL-Nummer des Schülers/der Schülerin anzugeben&lt;b&gt;%1$s&lt;/b&gt;Diese Angaben sind für die ordnungsgemäße Zuweisung des Zugriffs und den Schutz der personenbezogenen Daten gemäß den geltenden Vorschriften unerlässlich.&lt;br/&gt;&lt;br/&gt;Nach der Eingabe der Daten werden diese überprüft, um sicherzustellen, dass nur berechtigte Personen Zugang zum VULCAN-System erhalten. Wenn Sie Zweifel oder Probleme haben, wenden Sie sich bitte an den Administrator des Schülerkalenders, um die Situation zu klären.&lt;br/&gt;&lt;br/&gt;Wir halten die höchsten Standards für den Schutz personenbezogener Daten ein und gewährleisten, dass alle bereitgestellten Informationen sicher sind. Die neoWulkanowy-App speichert und verarbeitet die PESEL-Nummer nicht.&lt;br/&gt;&lt;br/&gt;Wir erinnern Sie daran, dass die Angabe vollständiger und korrekter Daten obligatorisch und notwendig für die Nutzung des VULCAN-Systems ist.</string>
     <string name="auth_button_skip">Vorerst überspringen</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">VULCAN\'s Website erfordert Überprüfung</string>
-    <string name="captcha_dialog_description"><b>Warum sehe ich das?</b>\nDie Website des Registers, von der Wulkanowy Daten herunterlädt, zeigt denselben Bildschirm wie oben an, so dass Wulkanowy ihn ebenfalls anzeigen muss, um Daten von dieser Website herunterladen zu können. Es gibt keinen Ausweg</string>
+    <string name="captcha_dialog_description"><b>Warum sehe ich das?</b>\nDie Website des Registers, von der neoWulkanowy Daten herunterlädt, zeigt denselben Bildschirm wie oben an, so dass neoWulkanowy ihn ebenfalls anzeigen muss, um Daten von dieser Website herunterladen zu können. Es gibt keinen Ausweg</string>
     <string name="captcha_verified_message">Erfolgreich verifiziert</string>
     <!--Panic mode-->
     <string name="panic_mode_title">Notfallzugriff</string>

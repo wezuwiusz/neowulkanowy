@@ -2,7 +2,7 @@
 <resources>
     <!--Activity/Fragment title-->
     <string name="login_title">Logòwanié</string>
-    <string name="main_title">Wulkanowy</string>
+    <string name="main_title">neoWulkanowy</string>
     <string name="grade_title">Taksë</string>
     <string name="attendance_title">Frekwencjô</string>
     <string name="exam_title">Testë</string>
@@ -725,7 +725,7 @@
     <string name="pref_notify_notifications_piggyback">Przechwatiwanié wiadłów òficjalny aplikacëje</string>
     <string name="pref_notify_notifications_piggyback_cancel_original">Rëmni wiadła òficjalny aplikacëje pò przechwôceniu</string>
     <string name="pref_notification_piggyback_popup_title">Przechwatiwanié wiadłów</string>
-    <string name="pref_notification_piggyback_popup_description">Dzãka ti òpcje mòżesz zwëskac erzac pòwiadomieniów push tak jak w òficjalny aplikacje. Do tegò brëkùjesz ùdzelëc pòzwòleniégò na dostôwanié wszëtczich pòwiadomieniów w systémòwëch nastawach.\n\nJak to dzejô?\nCzedë Dziennik VULCAN wësle do cebie pòwiadomienié, Wulkanowy je òdbierze (do te brëkòwné są te dodôwkòwé pòzwòlenia), a tak ùrëszni synchronizacją, dzãka chtërny bãdze mógł wësłac swòje gwôsné pòwiadomienié.\n\nLENO DLÔ ZAAWANSOWÓNËCH BRËKÒWNIKÓW</string>
+    <string name="pref_notification_piggyback_popup_description">Dzãka ti òpcje mòżesz zwëskac erzac pòwiadomieniów push tak jak w òficjalny aplikacje. Do tegò brëkùjesz ùdzelëc pòzwòleniégò na dostôwanié wszëtczich pòwiadomieniów w systémòwëch nastawach.\n\nJak to dzejô?\nCzedë Dziennik VULCAN wësle do cebie pòwiadomienié, neoWulkanowy je òdbierze (do te brëkòwné są te dodôwkòwé pòzwòlenia), a tak ùrëszni synchronizacją, dzãka chtërny bãdze mógł wësłac swòje gwôsné pòwiadomienié.\n\nLENO DLÔ ZAAWANSOWÓNËCH BRËKÒWNIKÓW</string>
     <string name="pref_notification_exact_alarm_popup_title">Wiadła ò przińdłich ùczbach</string>
     <string name="pref_notification_exact_alarm_popup_descriptions">Mùszisz zezwòlëc Wùlkanowémù na twòrzenié alarmów i przëpòmnieniów w nastôwach Twòjégò systemù, abë ùżic ti fónkcje.</string>
     <string name="pref_notification_go_to_settings">Jidzë do nastôwów</string>
@@ -819,7 +819,7 @@
     <string name="auth_button">Pòcwierdzë</string>
     <string name="auth_success">Autorizacëjô skùńczonô z sukcesã</string>
     <string name="auth_title">Autorizacëjô</string>
-    <string name="auth_description">Drodżi Rodzëcu,&lt;br /&gt;&lt;br /&gt;Żebë pòcwierdzëc a zagwësnic bezpiek dónëch, prosëmë ò wpisanié niżi numru PESEL ùczni &lt;b&gt;%1$s&lt;/b&gt;. Taczé detale są brëkòwné dlô pòprawnégò przedzéleniô przistãpù a téż òbarnë personowëch dónëch zgódno z òbrzesziwającyma reglama.&lt;br /&gt;&lt;br /&gt;Pò wprowadzenim dónëch, òstóną òne sprôwdzoné, żebë ùgwësnic sã czë przistãp do systémù VULCAN je przëznôwóny leno ùprôwnionym òsobóm. W przëtrôfkù jaczich le wątplëwòtów a tôklów, w célu wëwidnieniô stojiznë skòntaktuj sã ze administracją w szkòle.&lt;br /&gt;&lt;br /&gt;Ùtrzimiwómë nôwëższé sztandardë òbarnë personowëch dónëch, a garantérëjemë że wszëtczé pòdôwóné jinfòrmacje są w bezpiekù. Aplikacjô Wulkanowy nie przetrzimiwô ani nie przerôbiô numru PESEL.&lt;br /&gt;&lt;br /&gt;Przëbôcziwómë, że pòdanié fùlnëch a prôwdzëwëch dónëch je òbrzészkòwé a brëkòwné żebë ùżëwac systémù VULCAN.</string>
+    <string name="auth_description">Drodżi Rodzëcu,&lt;br /&gt;&lt;br /&gt;Żebë pòcwierdzëc a zagwësnic bezpiek dónëch, prosëmë ò wpisanié niżi numru PESEL ùczni &lt;b&gt;%1$s&lt;/b&gt;. Taczé detale są brëkòwné dlô pòprawnégò przedzéleniô przistãpù a téż òbarnë personowëch dónëch zgódno z òbrzesziwającyma reglama.&lt;br /&gt;&lt;br /&gt;Pò wprowadzenim dónëch, òstóną òne sprôwdzoné, żebë ùgwësnic sã czë przistãp do systémù VULCAN je przëznôwóny leno ùprôwnionym òsobóm. W przëtrôfkù jaczich le wątplëwòtów a tôklów, w célu wëwidnieniô stojiznë skòntaktuj sã ze administracją w szkòle.&lt;br /&gt;&lt;br /&gt;Ùtrzimiwómë nôwëższé sztandardë òbarnë personowëch dónëch, a garantérëjemë że wszëtczé pòdôwóné jinfòrmacje są w bezpiekù. Aplikacjô neoWulkanowy nie przetrzimiwô ani nie przerôbiô numru PESEL.&lt;br /&gt;&lt;br /&gt;Przëbôcziwómë, że pòdanié fùlnëch a prôwdzëwëch dónëch je òbrzészkòwé a brëkòwné żebë ùżëwac systémù VULCAN.</string>
     <string name="auth_button_skip">Timczasã pòmiń</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Starna dzénnika VULCAN wëmôga werëfikacëji</string>
