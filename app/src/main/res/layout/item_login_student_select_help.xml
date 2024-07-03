@@ -45,13 +45,13 @@
         app:layout_constraintTop_toBottomOf="@id/login_student_select_help_symbol" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_student_select_help_discord"
+        android:id="@+id/login_student_select_help_telegram"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:contentDescription="@string/login_contact_discord"
-        app:icon="@drawable/ic_about_discord"
+        android:contentDescription="@string/login_contact_telegram"
+        app:icon="@drawable/ic_about_telegram"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
         app:layout_constraintEnd_toEndOf="parent"

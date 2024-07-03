@@ -145,7 +145,7 @@ class LoginStudentSelectPresenter @Inject constructor(
         val helpItem = LoginStudentSelectItem.Help(
             onEnterSymbolClick = ::onEnterSymbol,
             onContactUsClick = ::onEmailClick,
-            onDiscordClick = ::onDiscordClick,
+            onTelegramClick = ::onTelegramClick,
             isSymbolButtonVisible = "login" !in loginData.baseUrl,
         )
         add(helpItem)
@@ -335,8 +335,8 @@ class LoginStudentSelectPresenter @Inject constructor(
         view?.navigateToSymbol(loginData)
     }
 
-    private fun onDiscordClick() {
-        view?.openDiscordInvite()
+    private fun onTelegramClick() {
+        view?.openTelegramChat()
     }
 
     private fun onEmailClick() {

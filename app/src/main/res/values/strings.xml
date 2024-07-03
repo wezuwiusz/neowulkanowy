@@ -75,7 +75,7 @@
     <string name="login_privacy_policy">Privacy policy</string>
     <string name="login_contact_header">Trouble signing in? Contact us!</string>
     <string name="login_contact_email">Email</string>
-    <string name="login_contact_discord">Discord</string>
+    <string name="login_contact_telegram">Telegram</string>
     <string name="login_email_intent_title">Send email</string>
     <string name="login_email_subject" translatable="false">Zgłoszenie: Problemy z logowaniem</string>
     <string name="login_email_text" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nDodatkowe informacje: %4$s\nIdentyfikator instalacji: %5$s\nOstatni błąd: %6$s\n\nNazwa szkoły i miejscowość: %7$s\nDodatkowe informacje: %8$s</string>
@@ -561,12 +561,6 @@
     <string name="about_feedback_summary">Send a bug report via e-mail</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Read Frequently Asked Questions</string>
-    <string name="about_discord">Discord server</string>
-    <string name="about_discord_summary">Join the neoWulkanowy community</string>
-    <string name="about_facebook">Facebook fanpage</string>
-    <string name="about_twitter">Twitter page</string>
-    <string name="about_twitter_summary">Follow us on twitter</string>
-    <string name="about_facebook_summary">Like our facebook fanpage</string>
     <string name="about_privacy">Privacy policy</string>
     <string name="about_privacy_summary">Rules for collecting personal data</string>
     <string name="about_system">System settings</string>
@@ -576,6 +570,8 @@
     <string name="about_licenses">Licenses</string>
     <string name="about_licenses_summary">Licenses of libraries used in the application</string>
     <string name="about_feedback_template" translatable="false">Informacje o aplikacji:\n\nUrządzenie: %1$s\nWersja SDK: %2$s\nWersja aplikacji: %3$s\nIdentyfikator instalacji: %4$s\nTreść zgłoszenia:</string>
+    <string name="about_telegram">Telegram channel</string>
+    <string name="about_telegram_summary">Join neoWulkanowy\'s Telegram channel</string>
 
 
     <!--Licenses-->

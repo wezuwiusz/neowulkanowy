@@ -70,7 +70,7 @@
     <string name="login_privacy_policy">Политика конфиденциальности</string>
     <string name="login_contact_header">Проблемы с авторизацией? Свяжитесь с нами!</string>
     <string name="login_contact_email">E-mail</string>
-    <string name="login_contact_discord">Discord</string>
+    <string name="login_contact_telegram">Telegram</string>
     <string name="login_email_intent_title">Отправить письмо</string>
     <string name="login_recover_warning">Убедитесь, что вы выбрали правильный тип дневника UONET+</string>
     <string name="login_recover_button">Сбросить пароль</string>
@@ -588,12 +588,6 @@
     <string name="about_feedback_summary">Сообщить о ошибке</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Часто задаваемые вопросы</string>
-    <string name="about_discord">Сервер Discord</string>
-    <string name="about_discord_summary">Присоединиться к сообществу приложения</string>
-    <string name="about_facebook">Страница в Facebook</string>
-    <string name="about_twitter">Страница в Twitter</string>
-    <string name="about_twitter_summary">Следите за нами в Twitter</string>
-    <string name="about_facebook_summary">Лайкните нас в Facebook</string>
     <string name="about_privacy">Политика конфиденциальности</string>
     <string name="about_privacy_summary">Правила хранения личных данных</string>
     <string name="about_system">Системные настройки</string>

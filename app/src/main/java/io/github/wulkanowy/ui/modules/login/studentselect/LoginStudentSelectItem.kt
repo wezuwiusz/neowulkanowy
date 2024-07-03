@@ -36,7 +36,7 @@ sealed class LoginStudentSelectItem(val type: LoginStudentSelectItemType) {
     data class Help(
         val onEnterSymbolClick: () -> Unit,
         val onContactUsClick: () -> Unit,
-        val onDiscordClick: () -> Unit,
+        val onTelegramClick: () -> Unit,
         val isSymbolButtonVisible: Boolean,
     ) : LoginStudentSelectItem(LoginStudentSelectItemType.HELP)
 }

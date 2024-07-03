@@ -70,7 +70,7 @@
     <string name="login_privacy_policy">Datenschutzerklärung</string>
     <string name="login_contact_header">Probleme bei der Anmeldung? Kontaktieren Sie uns!</string>
     <string name="login_contact_email">Email</string>
-    <string name="login_contact_discord">Discord</string>
+    <string name="login_contact_telegram">Telegram</string>
     <string name="login_email_intent_title">email senden</string>
     <string name="login_recover_warning">Stellen Sie sicher, dass Sie die richtige UONET+ Registervariation wählen!</string>
     <string name="login_recover_button">Passwort zurücksetzen</string>
@@ -504,12 +504,6 @@
     <string name="about_feedback_summary">Senden Sie einen Fehlerbericht per E-Mail</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Lesen Sie Häufig gestellte Fragen</string>
-    <string name="about_discord">Discord server</string>
-    <string name="about_discord_summary">Treten Sie der neoWulkanowy-Gemeinschaft bei</string>
-    <string name="about_facebook">Facebook fanpage</string>
-    <string name="about_twitter">Twitter-Seite</string>
-    <string name="about_twitter_summary">Folgen Sie uns bei Twitter</string>
-    <string name="about_facebook_summary">Gefällt unsere Facebook-Fanpage</string>
     <string name="about_privacy">Datenschutzerklärung</string>
     <string name="about_privacy_summary">Regeln für die Sammlung persönlicher Daten</string>
     <string name="about_system">Systemeinstellungen</string>

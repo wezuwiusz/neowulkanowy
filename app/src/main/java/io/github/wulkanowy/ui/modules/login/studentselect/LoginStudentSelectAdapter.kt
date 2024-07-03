@@ -162,7 +162,7 @@ class LoginStudentSelectAdapter @Inject constructor() :
                 loginStudentSelectHelpSymbol.isVisible = item.isSymbolButtonVisible
                 loginStudentSelectHelpSymbol.setOnClickListener { item.onEnterSymbolClick() }
                 loginStudentSelectHelpMail.setOnClickListener { item.onContactUsClick() }
-                loginStudentSelectHelpDiscord.setOnClickListener { item.onDiscordClick() }
+                loginStudentSelectHelpTelegram.setOnClickListener { item.onTelegramClick() }
             }
         }
     }

@@ -70,7 +70,7 @@
     <string name="login_privacy_policy">Pòlitëka priwatnoscë</string>
     <string name="login_contact_header">Tôkel z logòwanim? Napiszë do naju!</string>
     <string name="login_contact_email">E-mail</string>
-    <string name="login_contact_discord">Discord</string>
+    <string name="login_contact_telegram">Telegram</string>
     <string name="login_email_intent_title">Wëslë e-mail</string>
     <string name="login_recover_warning">Ùgwësni sã, że òsta wëbrónô òdpòwiedniô òdmiana dzénnika UONET+!</string>
     <string name="login_recover_button">Resetuj parolã</string>
@@ -546,12 +546,6 @@
     <string name="about_feedback_summary">Wëslë zgłoszenié ò błãdze bez e-mail</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Òbôczë nôczãscy zadawóné pëtania</string>
-    <string name="about_discord">Serwer Discord</string>
-    <string name="about_discord_summary">Dołączë do spòlëznë Wùlkanowégò</string>
-    <string name="about_facebook">Fanpage na Facebookù</string>
-    <string name="about_twitter">Starna na Twitterze</string>
-    <string name="about_twitter_summary">Szlachùj nas na Twitterze</string>
-    <string name="about_facebook_summary">Pòlub najégò fanpage na Facebookù</string>
     <string name="about_privacy">Pòlitëka priwatnoscë</string>
     <string name="about_privacy_summary">Regle zbieraniégò òsobòwëch danëch</string>
     <string name="about_system">Systemòwé nastôwë</string>

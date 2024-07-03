@@ -23,7 +23,7 @@ interface LoginStudentSelectView : BaseView {
 
     fun enableSignIn(enable: Boolean)
 
-    fun openDiscordInvite()
+    fun openTelegramChat()
 
     fun openEmail(supportInfo: LoginSupportInfo)
 

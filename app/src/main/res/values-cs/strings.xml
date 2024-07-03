@@ -70,7 +70,7 @@
     <string name="login_privacy_policy">Ochrana osobních údajů</string>
     <string name="login_contact_header">Problémy s přihlášením? Napište nám!</string>
     <string name="login_contact_email">Email</string>
-    <string name="login_contact_discord">Discord</string>
+    <string name="login_contact_telegram">Telegram</string>
     <string name="login_email_intent_title">Poslat e-mail</string>
     <string name="login_recover_warning">Ujistěte se, že jste vybrali správnou variantu deníku UONET+!</string>
     <string name="login_recover_button">Obnovit heslo</string>
@@ -588,12 +588,6 @@
     <string name="about_feedback_summary">Odeslat zprávu o chybě e-mailem</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Přečtěte si často kladené otázky</string>
-    <string name="about_discord">Server Discord</string>
-    <string name="about_discord_summary">Připojte se ke komunitě Wulkanového</string>
-    <string name="about_facebook">Stránka na Facebooku</string>
-    <string name="about_twitter">Twitter stránka</string>
-    <string name="about_twitter_summary">Sledujte nás na Twitteru</string>
-    <string name="about_facebook_summary">Dejte like naší stránce na Facebooku</string>
     <string name="about_privacy">Ochrana osobních údajů</string>
     <string name="about_privacy_summary">Pravidla pro shromažďování osobních údajů</string>
     <string name="about_system">Systemová nastavení</string>

@@ -11,13 +11,9 @@ interface AboutView : BaseView {
 
     val feedbackRes: Triple<String, String, Drawable?>?
 
+    val telegramRes: Triple<String, String, Drawable?>?
+
     val faqRes: Triple<String, String, Drawable?>?
-
-    val discordRes: Triple<String, String, Drawable?>?
-
-    val twitterRes: Triple<String, String, Drawable?>?
-
-    val facebookRes: Triple<String, String, Drawable?>?
 
     val homepageRes: Triple<String, String, Drawable?>?
 
@@ -33,11 +29,7 @@ interface AboutView : BaseView {
 
     fun openDebugScreen()
 
-    fun openDiscordInvite()
-
-    fun openFacebookPage()
-
-    fun openTwitterPage()
+    fun openTelegramChannel()
 
     fun openEmailClient()
 

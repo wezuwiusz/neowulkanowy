@@ -70,7 +70,7 @@
     <string name="login_privacy_policy">Polityka prywatności</string>
     <string name="login_contact_header">Problemy z logowaniem? Napisz do nas!</string>
     <string name="login_contact_email">E-mail</string>
-    <string name="login_contact_discord">Discord</string>
+    <string name="login_contact_telegram">Telegram</string>
     <string name="login_email_intent_title">Wyślij wiadomość e-mail</string>
     <string name="login_recover_warning">Upewnij się, że została wybrana odpowiednia odmiana dziennika UONET+!</string>
     <string name="login_recover_button">Zresetuj hasło</string>
@@ -588,12 +588,6 @@
     <string name="about_feedback_summary">Wyślij zgłoszenie o błędzie poprzez e-maila</string>
     <string name="about_faq">FAQ</string>
     <string name="about_faq_summary">Zobacz Najczęściej Zadawane Pytania</string>
-    <string name="about_discord">Serwer Discord</string>
-    <string name="about_discord_summary">Dołącz do społeczności Wulkanowego</string>
-    <string name="about_facebook">Fanpage na Facebooku</string>
-    <string name="about_twitter">Strona na Twitterze</string>
-    <string name="about_twitter_summary">Śledź nas na Twitterze</string>
-    <string name="about_facebook_summary">Polub nasz fanpage na Facebooku</string>
     <string name="about_privacy">Polityka prywatności</string>
     <string name="about_privacy_summary">Zasady zbierania danych osobowych</string>
     <string name="about_system">Ustawienia systemowe</string>
@@ -603,6 +597,8 @@
     <string name="about_licenses">Licencje</string>
     <string name="about_licenses_summary">Licencje użytych bibliotek w aplikacji</string>
     <!--Licenses-->
+    <string name="about_telegram">Kanał na Telegramie</string>
+    <string name="about_telegram_summary">Dołącz do kanału neoWulkanowego na Telegramie</string>
     <string name="license_dialog_title">Licencja</string>
     <!--Contributor-->
     <string name="contributor_avatar_description">Awatar</string>

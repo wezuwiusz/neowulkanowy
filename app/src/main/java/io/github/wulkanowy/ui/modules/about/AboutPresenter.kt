@@ -41,20 +41,10 @@ class AboutPresenter @Inject constructor(
                     openFaqPage()
                     analytics.logEvent("about_open", "name" to "faq")
                 }
-                discordRes?.first -> {
-                    Timber.i("Opening discord")
-                    openDiscordInvite()
-                    analytics.logEvent("about_open", "name" to "discord")
-                }
-                facebookRes?.first -> {
-                    Timber.i("Opening facebook")
-                    openFacebookPage()
-                    analytics.logEvent("about_open", "name" to "facebook")
-                }
-                twitterRes?.first -> {
-                    Timber.i("Opening twitter")
-                    openTwitterPage()
-                    analytics.logEvent("about_open", "name" to "twitter")
+                telegramRes?.first -> {
+                    Timber.i("Opening telegram")
+                    openTelegramChannel()
+                    analytics.logEvent("about_open", "name" to "telegram")
                 }
                 homepageRes?.first -> {
                     Timber.i("Opening homepage")
@@ -88,9 +78,7 @@ class AboutPresenter @Inject constructor(
                     creatorsRes,
                     feedbackRes,
                     faqRes,
-                    discordRes,
-                    facebookRes,
-                    twitterRes,
+                    telegramRes,
                     homepageRes,
                     licensesRes,
                     privacyRes

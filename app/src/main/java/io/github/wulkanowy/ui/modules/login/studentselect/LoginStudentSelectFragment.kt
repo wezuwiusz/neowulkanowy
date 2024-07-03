@@ -105,8 +105,8 @@ class LoginStudentSelectFragment :
         binding.loginStudentSelectSignIn.isEnabled = enable
     }
 
-    override fun openDiscordInvite() {
-        context?.openInternetBrowser("https://discord.gg/vccAQBr", ::showMessage)
+    override fun openTelegramChat() {
+        context?.openInternetBrowser("https://t.me/neowulkanowychat", ::showMessage)
     }
 
     override fun openEmail(supportInfo: LoginSupportInfo) {
