@@ -38,7 +38,7 @@ class TeacherRepository @Inject constructor(
         query = { teacherDb.loadAll(semester.studentId, semester.classId) },
         fetch = {
             wulkanowySdkFactory.create(student, semester)
-                .getTeachers()
+                .getTeachers(semester.semesterId)
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
