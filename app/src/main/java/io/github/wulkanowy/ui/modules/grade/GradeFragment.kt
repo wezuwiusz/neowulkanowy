@@ -139,23 +139,10 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
         semesterSwitchMenu?.isVisible = show
     }
 
-    // For some reason, the Hebe API returns the school year in a weird format - 56043 for 2024
-    // I haven't figured out a proper way of decoding the years, so this will have to suffice for now.
-    private fun formatSchoolYear(schoolYear: Int): Int {
-        var correctedYear = schoolYear
-        if (schoolYear > 9999) {
-            correctedYear /= 1000
-            correctedYear -= 42
-            correctedYear += 2010
-        }
-
-        return correctedYear
-    }
-
     override fun showSemesterDialog(selectedIndex: Int, semesters: List<Semester>) {
         val choices = semesters.map {
-            val schoolYearStart = formatSchoolYear(it.start.year)
-            val schoolYearEnd = formatSchoolYear(it.end.year)
+            val schoolYearStart = it.start.year
+            val schoolYearEnd = it.end.year
 
             getString(
                 R.string.grade_semester,
@@ -174,13 +161,12 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     }
 
     override fun setCurrentSemesterName(semester: Int, schoolYear: Int, nextSchoolYear: Int) {
-        val firstYear = formatSchoolYear(schoolYear)
         val secondYear =
-            formatSchoolYear(if (nextSchoolYear == 0) schoolYear + 1 else nextSchoolYear)
+            if (nextSchoolYear == 0) schoolYear + 1 else nextSchoolYear
         subtitleString = getString(
             R.string.grade_subtitle,
             semester,
-            if (firstYear == secondYear) firstYear - 1 else firstYear,
+            if (schoolYear == secondYear) schoolYear - 1 else schoolYear,
             secondYear
         )
 
