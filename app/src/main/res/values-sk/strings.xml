@@ -40,7 +40,7 @@
     <string name="login_host_hint">Variácia denníka UONET+</string>
     <string name="login_domain_suffix_hint">Vlastná prípona domény</string>
     <string name="login_type_api">Mobile API</string>
-    <string name="login_type_scrapper">Scraper</string>
+    <string name="login_type_scrapper">Scrapper</string>
     <string name="login_type_hybrid">Hybridné</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>

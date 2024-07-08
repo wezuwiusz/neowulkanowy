@@ -40,7 +40,7 @@
     <string name="login_host_hint">Тип щоденника UONET+</string>
     <string name="login_domain_suffix_hint">Користувацький суфікс домену</string>
     <string name="login_type_api">Мobile API</string>
-    <string name="login_type_scrapper">Scraper</string>
+    <string name="login_type_scrapper">Scrapper</string>
     <string name="login_type_hybrid">Hybrid</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
@@ -65,7 +65,7 @@
     <string name="login_select_student">Виберіть учнів для авторизації в додатку</string>
     <string name="login_advanced">Інші варіанти</string>
     <string name="login_advanced_warning_mobile_api">У цьому режимі не працюють: щасливий номер, статистика класу по оцінкам, статистика відвідуваності та уроків, інформація про школу та список зареєстрованих пристроїв</string>
-    <string name="login_advanced_warning_scraper">Scraper - режим, котрий показує дані так само, як і сторінка щоденника</string>
+    <string name="login_advanced_warning_scraper">Scrapper - режим, котрий показує дані так само, як і сторінка щоденника</string>
     <string name="login_advanced_warning_hybrid">Hybrid - це комбінація найкращих функцій інших двох режимів. Він працює швидше, ніж Scraper, й впроваджує функції, котрих нема в режимі Mobile API. Знаходиться в експериментальній стадії</string>
     <string name="login_privacy_policy">Політика конфіденційності</string>
     <string name="login_contact_header">Проблеми з авторизацією? Зв\'яжіться з нами!</string>

@@ -40,7 +40,7 @@
     <string name="login_host_hint">Odmiana dziennika UONET+</string>
     <string name="login_domain_suffix_hint">Niestandardowy sufiks domeny</string>
     <string name="login_type_api">Mobilne API</string>
-    <string name="login_type_scrapper">Scraper</string>
+    <string name="login_type_scrapper">Scrapper</string>
     <string name="login_type_hybrid">Hybrydowe</string>
     <string name="login_token_hint">Token</string>
     <string name="login_pin_hint">PIN</string>
@@ -64,9 +64,9 @@
     <string name="login_symbol_helper">Symbol można znaleźć na stronie dziennika w&#160;<b>Uczeń</b>→&#160;<b>Dostęp Mobilny</b> →&#160;<b>Wygeneruj kod dostępu</b>.\n\nUpewnij się, że ustawiłeś odpowiednią odmianę dziennika w polu  <b>Odmiana dziennika UONET+</b> na pierwszym ekranie logowania</string>
     <string name="login_select_student">Wybierz uczniów do zalogowania w aplikacji</string>
     <string name="login_advanced">Inne opcje</string>
-    <string name="login_advanced_warning_mobile_api">W tym trybie nie działa szczęśliwy numerek, uczeń na tle klasy, podsumowanie frekwencji, usprawiedliwianie nieobecności, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń</string>
-    <string name="login_advanced_warning_scraper">Tryb ten wyświetla te same dane, które widoczne są na stronie internetowej dziennika</string>
-    <string name="login_advanced_warning_hybrid">Połączenie najlepszych cech dwóch pozostałych trybów. Działa szybciej niż scraper i zapewnia funkcje niedostępne w trybie Mobilne API. Jest w fazie eksperymentalnej</string>
+    <string name="login_advanced_warning_mobile_api">W tym trybie nie działa uczeń na tle klasy, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń.</string>
+    <string name="login_advanced_warning_scraper">Tryb ten wyświetla te same dane, które widoczne są na stronie internetowej dziennika, lecz jest zawodny.</string>
+    <string name="login_advanced_warning_hybrid">Połączenie najlepszych cech dwóch pozostałych trybów. Działa szybciej niż scrapper i zapewnia funkcje niedostępne w trybie Mobilne API. Ten tryb zostanie wkrótce domyślny w neoWulkanowym.</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
     <string name="login_contact_header">Problemy z logowaniem? Napisz do nas!</string>
     <string name="login_contact_email">E-mail</string>
