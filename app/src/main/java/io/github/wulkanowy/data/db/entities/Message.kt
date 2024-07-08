@@ -19,7 +19,7 @@ data class Message(
     val mailboxKey: String,
 
     @ColumnInfo(name = "message_id")
-    val messageId: Int,
+    val messageId: String,
 
     val correspondents: String,
 

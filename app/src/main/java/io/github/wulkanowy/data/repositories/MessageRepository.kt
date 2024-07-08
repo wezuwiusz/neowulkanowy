@@ -30,6 +30,7 @@ import io.github.wulkanowy.data.pojos.MessageDraft
 import io.github.wulkanowy.data.toFirstResult
 import io.github.wulkanowy.data.waitForResult
 import io.github.wulkanowy.domain.messages.GetMailboxByStudentUseCase
+import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
@@ -81,16 +82,50 @@ class MessageRepository @Inject constructor(
             } else messagesDb.loadMessagesWithMutedAuthor(mailbox.globalKey, folder.id)
         },
         fetch = {
-            wulkanowySdkFactory.create(student)
-                .getMessages(
+            val sdk = wulkanowySdkFactory.create(student)
+            if (mailbox != null) {
+                sdk.getMessages(
                     folder = Folder.valueOf(folder.name),
                     mailboxKey = mailbox?.globalKey,
-                )
-                .mapToEntities(
+                ).mapToEntities(
                     student = student,
                     mailbox = mailbox,
                     allMailboxes = mailboxDao.loadAll(student.email)
                 )
+            } else {
+                when (sdk.mode) {
+                    Sdk.Mode.HEBE, Sdk.Mode.HYBRID -> {
+                        // Hebe requires a mailbox key unlike the scrapper,
+                        // so we'll have to fetch all mailboxes individually.
+                        val mailboxes = mailboxDao.loadAll(student.email)
+                        val messages = arrayListOf<Message>()
+                        mailboxes.forEach { mailbox ->
+                            sdk.getMessages(
+                                folder = Folder.valueOf(folder.name),
+                                mailboxKey = mailbox.globalKey,
+                            ).mapToEntities(
+                                student = student,
+                                mailbox = mailbox,
+                                allMailboxes = mailboxes
+                            ).forEach {
+                                messages.add(it)
+                            }
+                        }
+                        messages
+                    }
+
+                    Sdk.Mode.SCRAPPER -> {
+                        sdk.getMessages(
+                            folder = Folder.valueOf(folder.name),
+                            mailboxKey = mailbox?.globalKey,
+                        ).mapToEntities(
+                            student = student,
+                            mailbox = mailbox,
+                            allMailboxes = mailboxDao.loadAll(student.email)
+                        )
+                    }
+                }
+            }
         },
         saveFetchResult = { oldWithAuthors, new ->
             val old = oldWithAuthors.map { it.message }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 64,
-    "identityHash": "dd5446e82ad8d0a65c545a5dbbaeb81c",
+    "identityHash": "2f4f9fe8da64bfbcc6ab3ec581e251c6",
     "entities": [
       {
         "tableName": "Students",
@@ -1115,7 +1115,7 @@
       },
       {
         "tableName": "Messages",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `message_global_key` TEXT NOT NULL, `mailbox_key` TEXT NOT NULL, `message_id` INTEGER NOT NULL, `correspondents` TEXT NOT NULL, `subject` TEXT NOT NULL, `date` INTEGER NOT NULL, `folder_id` INTEGER NOT NULL, `unread` INTEGER NOT NULL, `read_by` INTEGER, `unread_by` INTEGER, `has_attachments` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `is_notified` INTEGER NOT NULL, `content` TEXT NOT NULL, `sender` TEXT, `recipients` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `message_global_key` TEXT NOT NULL, `mailbox_key` TEXT NOT NULL, `message_id` TEXT NOT NULL, `correspondents` TEXT NOT NULL, `subject` TEXT NOT NULL, `date` INTEGER NOT NULL, `folder_id` INTEGER NOT NULL, `unread` INTEGER NOT NULL, `read_by` INTEGER, `unread_by` INTEGER, `has_attachments` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `is_notified` INTEGER NOT NULL, `content` TEXT NOT NULL, `sender` TEXT, `recipients` TEXT)",
         "fields": [
           {
             "fieldPath": "email",
@@ -1138,7 +1138,7 @@
           {
             "fieldPath": "messageId",
             "columnName": "message_id",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -2553,7 +2553,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd5446e82ad8d0a65c545a5dbbaeb81c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2f4f9fe8da64bfbcc6ab3ec581e251c6')"
     ]
   }
 }

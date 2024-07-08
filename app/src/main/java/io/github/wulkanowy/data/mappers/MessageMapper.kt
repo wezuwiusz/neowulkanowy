@@ -34,6 +34,8 @@ fun List<SdkMessage>.mapToEntities(
         hasAttachments = it.hasAttachments,
     ).apply {
         content = it.content.orEmpty()
+        recipients = it.recipients[0].fullName
+        sender = it.correspondents
     }
 }
 
