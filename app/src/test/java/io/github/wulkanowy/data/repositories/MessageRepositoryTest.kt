@@ -223,7 +223,7 @@ class MessageRepositoryTest {
 
     @Test(expected = UnknownHostException::class)
     fun `get message when content in db is empty, unread and there is no internet connection`() {
-        val testMessage = getMessageEntity(123, "", true)
+        val testMessage = getMessageEntity("123", "", true)
 
         coEvery {
             messageDb.loadMessageWithAttachment("v4")
@@ -233,7 +233,7 @@ class MessageRepositoryTest {
     }
 
     private fun getMessageEntity(
-        messageId: Int,
+        messageId: String,
         content: String,
         unread: Boolean
     ) = Message(
@@ -257,7 +257,7 @@ class MessageRepositoryTest {
         globalKey = "v4",
         mailbox = "",
         correspondents = "",
-        id = 4,
+        id = "4",
         recipients = listOf(),
         subject = "",
         content = "Test",

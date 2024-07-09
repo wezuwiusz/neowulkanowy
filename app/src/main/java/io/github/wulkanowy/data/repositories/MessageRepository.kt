@@ -238,8 +238,11 @@ class MessageRepository @Inject constructor(
         val firstMessage = messages.first()
         wulkanowySdkFactory.create(student)
             .deleteMessages(
-                messages = messages.map { it.messageGlobalKey },
+                messages = Pair(
+                    messages.map { it.messageGlobalKey },
+                    messages.map { it.mailboxKey }),
                 removeForever = firstMessage.folderId == TRASHED.id,
+                pupilId = null
             )
 
         if (firstMessage.folderId != TRASHED.id) {

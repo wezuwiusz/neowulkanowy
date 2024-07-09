@@ -236,7 +236,7 @@ fun <T> Flow<Resource<T>>.debounceIntermediates(timeout: Duration = 5.seconds) =
 }
 
 
-inline fun <OutputType, ApiType> networkBoundResource(
+inline fun <OutputType, ApiType>    networkBoundResource(
     mutex: Mutex = Mutex(),
     crossinline isResultEmpty: (OutputType) -> Boolean,
     crossinline query: () -> Flow<OutputType>,
