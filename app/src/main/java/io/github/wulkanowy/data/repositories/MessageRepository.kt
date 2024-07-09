@@ -242,7 +242,7 @@ class MessageRepository @Inject constructor(
                     messages.map { it.messageGlobalKey },
                     messages.map { it.mailboxKey }),
                 removeForever = firstMessage.folderId == TRASHED.id,
-                pupilId = null
+                pupilId = student.studentId
             )
 
         if (firstMessage.folderId != TRASHED.id) {
