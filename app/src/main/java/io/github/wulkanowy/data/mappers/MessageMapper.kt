@@ -11,32 +11,38 @@ fun List<SdkMessage>.mapToEntities(
     student: Student,
     mailbox: Mailbox?,
     allMailboxes: List<Mailbox>
-): List<Message> = map {
-    Message(
-        messageGlobalKey = it.globalKey,
-        mailboxKey = mailbox?.globalKey ?: allMailboxes.find { box ->
-            box.fullName == it.mailbox
-        }?.globalKey.let { mailboxKey ->
-            if (mailboxKey == null) {
-                Timber.e("Can't find ${it.mailbox} in $allMailboxes")
-                "unknown"
-            } else mailboxKey
-        },
-        email = student.email,
-        messageId = it.id,
-        correspondents = it.correspondents,
-        subject = it.subject.trim(),
-        date = it.date.toInstant(),
-        folderId = it.folderId,
-        unread = it.unread,
-        unreadBy = it.unreadBy,
-        readBy = it.readBy,
-        hasAttachments = it.hasAttachments,
-    ).apply {
-        content = it.content.orEmpty()
-        recipients = it.recipients[0].fullName
-        sender = it.correspondents
-    }
+): Pair<List<Message>, List<MessageAttachment>> {
+    val attachments = arrayListOf<MessageAttachment>()
+    return map {
+        it.attachments.mapToEntities(it.globalKey).forEach { attachment ->
+            attachments.add(attachment)
+        }
+        Message(
+            messageGlobalKey = it.globalKey,
+            mailboxKey = mailbox?.globalKey ?: allMailboxes.find { box ->
+                box.fullName == it.mailbox
+            }?.globalKey.let { mailboxKey ->
+                if (mailboxKey == null) {
+                    Timber.e("Can't find ${it.mailbox} in $allMailboxes")
+                    "unknown"
+                } else mailboxKey
+            },
+            email = student.email,
+            messageId = it.id,
+            correspondents = it.correspondents,
+            subject = it.subject.trim(),
+            date = it.date.toInstant(),
+            folderId = it.folderId,
+            unread = it.unread,
+            unreadBy = it.unreadBy,
+            readBy = it.readBy,
+            hasAttachments = it.hasAttachments,
+        ).apply {
+            content = it.content.orEmpty()
+            recipients = it.recipients[0].fullName
+            sender = it.correspondents
+        }
+    } to attachments
 }
 
 fun List<SdkMessageAttachment>.mapToEntities(messageGlobalKey: String) = map {

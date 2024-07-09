@@ -83,49 +83,62 @@ class MessageRepository @Inject constructor(
         },
         fetch = {
             val sdk = wulkanowySdkFactory.create(student)
-            if (mailbox != null) {
-                sdk.getMessages(
-                    folder = Folder.valueOf(folder.name),
-                    mailboxKey = mailbox?.globalKey,
-                ).mapToEntities(
-                    student = student,
-                    mailbox = mailbox,
-                    allMailboxes = mailboxDao.loadAll(student.email)
-                )
-            } else {
-                when (sdk.mode) {
-                    Sdk.Mode.HEBE, Sdk.Mode.HYBRID -> {
+            var messages = listOf<Message>()
+            when (sdk.mode) {
+                // Hebe returns attachments together with the message
+                Sdk.Mode.HEBE, Sdk.Mode.HYBRID -> {
+                    if (mailbox != null) {
+                        val mappedMessages = sdk.getMessages(
+                            folder = Folder.valueOf(folder.name),
+                            mailboxKey = mailbox.globalKey,
+                        ).mapToEntities(
+                            student = student,
+                            mailbox = mailbox,
+                            allMailboxes = mailboxDao.loadAll(student.email)
+                        )
+                        messages = mappedMessages.first
+                        messageAttachmentDao.insertAttachments(
+                            items = mappedMessages.second,
+                        )
+                    } else {
                         // Hebe requires a mailbox key unlike the scrapper,
                         // so we'll have to fetch all mailboxes individually.
                         val mailboxes = mailboxDao.loadAll(student.email)
-                        val messages = arrayListOf<Message>()
+                        val mappedMessages = arrayListOf<Message>()
                         mailboxes.forEach { mailbox ->
-                            sdk.getMessages(
+                            val mailboxMessages = sdk.getMessages(
                                 folder = Folder.valueOf(folder.name),
                                 mailboxKey = mailbox.globalKey,
                             ).mapToEntities(
                                 student = student,
                                 mailbox = mailbox,
                                 allMailboxes = mailboxes
-                            ).forEach {
-                                messages.add(it)
+                            )
+                            mailboxMessages.first.forEach {
+                                mappedMessages.add(it)
                             }
-                        }
-                        messages
-                    }
 
-                    Sdk.Mode.SCRAPPER -> {
-                        sdk.getMessages(
-                            folder = Folder.valueOf(folder.name),
-                            mailboxKey = mailbox?.globalKey,
-                        ).mapToEntities(
-                            student = student,
-                            mailbox = mailbox,
-                            allMailboxes = mailboxDao.loadAll(student.email)
-                        )
+                            messageAttachmentDao.insertAttachments(
+                                items = mailboxMessages.second,
+                            )
+                        }
+                        messages = mappedMessages
                     }
                 }
+
+                Sdk.Mode.SCRAPPER -> {
+                    messages = sdk.getMessages(
+                        folder = Folder.valueOf(folder.name),
+                        mailboxKey = mailbox?.globalKey,
+                    ).mapToEntities(
+                        student = student,
+                        mailbox = mailbox,
+                        allMailboxes = mailboxDao.loadAll(student.email)
+                    ).first
+                }
             }
+
+            messages
         },
         saveFetchResult = { oldWithAuthors, new ->
             val old = oldWithAuthors.map { it.message }
