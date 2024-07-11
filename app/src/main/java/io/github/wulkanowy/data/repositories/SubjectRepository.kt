@@ -38,7 +38,7 @@ class SubjectRepository @Inject constructor(
         query = { subjectDao.loadAll(semester.diaryId, semester.studentId) },
         fetch = {
             wulkanowySdkFactory.create(student, semester)
-                .getSubjects()
+                .getSubjects(semester.semesterId)
                 .mapToEntities(semester)
         },
         saveFetchResult = { old, new ->
