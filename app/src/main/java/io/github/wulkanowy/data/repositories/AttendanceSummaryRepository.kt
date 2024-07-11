@@ -12,6 +12,7 @@ import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.sync.Mutex
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -42,7 +43,7 @@ class AttendanceSummaryRepository @Inject constructor(
         query = { attendanceDb.loadAll(semester.diaryId, semester.studentId, subjectId) },
         fetch = {
             wulkanowySdkFactory.create(student, semester)
-                .getAttendanceSummary(subjectId)
+                .getAttendanceSummary(subjectId, LocalDate.of(semester.start.year - 1, 9, 1), semester.end)
                 .mapToEntities(semester, subjectId)
         },
         saveFetchResult = { old, new ->
