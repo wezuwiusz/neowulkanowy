@@ -43,6 +43,7 @@ data class RegisterStudent(
     val studentSecondName: String,
     val studentSurname: String,
     val className: String,
+    val diaryNumber: Int?,
     val classId: Int,
     val isParent: Boolean,
     val semesters: List<Semester>,

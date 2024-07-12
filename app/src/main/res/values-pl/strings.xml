@@ -694,6 +694,7 @@
     </plurals>
     <string name="dashboard_horizontal_group_error">Wystąpił błąd podczas ładowania danych</string>
     <string name="dashboard_horizontal_group_no_data">Brak</string>
+    <string name="dashboard_school_diary_info">%s \nNumer w dzienniku: %d</string>
     <!--Error dialog-->
     <string name="dialog_error_check_update">Sprawdź dostępność aktualizacji</string>
     <string name="dialog_error_check_update_message">Przed zgłoszeniem błędu sprawdź wcześniej, czy dostępna jest już aktualizacja z poprawką błędu</string>

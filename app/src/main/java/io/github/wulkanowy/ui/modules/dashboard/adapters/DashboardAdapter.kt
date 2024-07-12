@@ -177,7 +177,15 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
             dashboardAccountItemAvatar.setImageDrawable(avatar)
             dashboardAccountItemName.text = student?.nickOrName.orEmpty()
-            dashboardAccountItemSchoolName.text = student?.schoolName.orEmpty()
+
+            with(dashboardAccountItemSchoolName) {
+                dashboardAccountItemSchoolName.text = context.getString(
+                    R.string.dashboard_school_diary_info,
+                    student?.schoolName.orEmpty(),
+                    student?.diaryNumber
+                )
+            }
+
 
             root.setOnClickListener { student?.let(onAccountTileClickListener) }
         }

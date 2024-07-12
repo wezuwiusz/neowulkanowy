@@ -37,6 +37,7 @@ fun SdkRegisterUser.mapToPojo(password: String?) = RegisterUser(
                         .filterIsInstance<SdkRegisterStudent>()
                         .map { registerStudent ->
                             RegisterStudent(
+                                diaryNumber = registerStudent.diaryNumber,
                                 studentId = registerStudent.studentId,
                                 studentName = registerStudent.studentName,
                                 studentSecondName = registerStudent.studentSecondName,
@@ -70,6 +71,7 @@ fun RegisterStudent.mapToStudentWithSemesters(
         userLoginId = unit.userLoginId,
         isParent = isParent,
         className = className,
+        diaryNumber = diaryNumber,
         classId = classId,
         studentId = studentId,
         symbol = symbol.symbol,

@@ -670,6 +670,7 @@
     </plurals>
     <string name="dashboard_horizontal_group_error">An error occurred while loading data</string>
     <string name="dashboard_horizontal_group_no_data">None</string>
+    <string name="dashboard_school_diary_info">%s \nDiary number: %d</string>
 
 
     <!--Error dialog-->

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 64,
-    "identityHash": "11de48d3063c8538d5cf72b58aaf2433",
+    "identityHash": "afc938395922a5c84487b4bc53aacaf7",
     "entities": [
       {
         "tableName": "Students",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`scrapper_base_url` TEXT NOT NULL, `scrapper_domain_suffix` TEXT NOT NULL DEFAULT '', `mobile_base_url` TEXT NOT NULL, `login_type` TEXT NOT NULL, `login_mode` TEXT NOT NULL, `certificate_key` TEXT NOT NULL, `private_key` TEXT NOT NULL, `is_parent` INTEGER NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `symbol` TEXT NOT NULL, `student_id` INTEGER NOT NULL, `user_login_id` INTEGER NOT NULL, `user_name` TEXT NOT NULL, `student_name` TEXT NOT NULL, `school_id` TEXT NOT NULL, `constituent_id` INTEGER NOT NULL DEFAULT 0, `school_short` TEXT NOT NULL, `school_name` TEXT NOT NULL, `class_name` TEXT NOT NULL, `class_id` INTEGER NOT NULL, `is_current` INTEGER NOT NULL, `registration_date` INTEGER NOT NULL, `is_authorized` INTEGER NOT NULL DEFAULT 0, `is_edu_one` INTEGER DEFAULT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nick` TEXT NOT NULL, `avatar_color` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`scrapper_base_url` TEXT NOT NULL, `scrapper_domain_suffix` TEXT NOT NULL DEFAULT '', `mobile_base_url` TEXT NOT NULL, `login_type` TEXT NOT NULL, `login_mode` TEXT NOT NULL, `certificate_key` TEXT NOT NULL, `private_key` TEXT NOT NULL, `is_parent` INTEGER NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `symbol` TEXT NOT NULL, `student_id` INTEGER NOT NULL, `diary_number` INTEGER, `user_login_id` INTEGER NOT NULL, `user_name` TEXT NOT NULL, `student_name` TEXT NOT NULL, `school_id` TEXT NOT NULL, `constituent_id` INTEGER NOT NULL DEFAULT 0, `school_short` TEXT NOT NULL, `school_name` TEXT NOT NULL, `class_name` TEXT NOT NULL, `class_id` INTEGER NOT NULL, `is_current` INTEGER NOT NULL, `registration_date` INTEGER NOT NULL, `is_authorized` INTEGER NOT NULL DEFAULT 0, `is_edu_one` INTEGER DEFAULT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nick` TEXT NOT NULL, `avatar_color` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "scrapperBaseUrl",
@@ -80,6 +80,12 @@
             "columnName": "student_id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "diaryNumber",
+            "columnName": "diary_number",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "userLoginId",
@@ -2560,7 +2566,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '11de48d3063c8538d5cf72b58aaf2433')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'afc938395922a5c84487b4bc53aacaf7')"
     ]
   }
 }
