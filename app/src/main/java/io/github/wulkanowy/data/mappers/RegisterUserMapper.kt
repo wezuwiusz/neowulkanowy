@@ -26,6 +26,7 @@ fun SdkRegisterUser.mapToPojo(password: String?) = RegisterUser(
                 RegisterUnit(
                     userLoginId = it.userLoginId,
                     schoolId = it.schoolId,
+                    constituentId = it.constituentId,
                     schoolName = it.schoolName,
                     schoolShortName = it.schoolShortName,
                     parentIds = it.parentIds,
@@ -76,7 +77,8 @@ fun RegisterStudent.mapToStudentWithSemesters(
         schoolName = unit.schoolName,
         schoolShortName = unit.schoolShortName,
         schoolSymbol = unit.schoolId,
-        studentName = "$studentName $studentSurname",
+        constituentUnitId = unit.constituentId,
+        studentName = studentName,
         loginMode = user.loginMode.name,
         scrapperBaseUrl = user.scrapperBaseUrl.orEmpty(),
         scrapperDomainSuffix = scrapperDomainSuffix,

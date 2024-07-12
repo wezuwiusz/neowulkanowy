@@ -27,6 +27,7 @@ data class RegisterSymbol(
 data class RegisterUnit(
     val userLoginId: Int,
     val schoolId: String,
+    val constituentId: Int,
     val schoolName: String,
     val schoolShortName: String,
     val parentIds: List<Int>,

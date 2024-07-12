@@ -37,7 +37,7 @@ class LuckyNumberRepository @Inject constructor(
         query = { luckyNumberDb.load(student.studentId, now()) },
         fetch = {
             wulkanowySdkFactory.create(student)
-                .getLuckyNumber(student.schoolShortName)
+                .getLuckyNumber(student.schoolShortName, student.constituentUnitId)
                 ?.mapToEntity(student)
         },
         saveFetchResult = { oldLuckyNumber, newLuckyNumber ->
