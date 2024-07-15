@@ -58,7 +58,7 @@ class LuckyNumberRemoteTest {
     @Test
     fun `force refresh without difference`() {
         // prepare
-        coEvery { sdk.getLuckyNumber(student.schoolShortName) } returns luckyNumber
+        coEvery { sdk.getLuckyNumber(student.schoolShortName, 1) } returns luckyNumber
         coEvery { luckyNumberDb.load(1, date) } returnsMany listOf(
             flowOf(luckyNumber.mapToEntity(student)),
             flowOf(luckyNumber.mapToEntity(student))
@@ -73,7 +73,7 @@ class LuckyNumberRemoteTest {
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(luckyNumber.number, res.dataOrNull?.luckyNumber)
-        coVerify { sdk.getLuckyNumber(student.schoolShortName) }
+        coVerify { sdk.getLuckyNumber(student.schoolShortName, 1) }
         coVerify { luckyNumberDb.load(1, date) }
         coVerify(exactly = 0) { luckyNumberDb.insertAll(any()) }
         coVerify(exactly = 0) { luckyNumberDb.deleteAll(any()) }
@@ -82,7 +82,7 @@ class LuckyNumberRemoteTest {
     @Test
     fun `force refresh with different item on remote`() = runTest {
         // prepare
-        coEvery { sdk.getLuckyNumber(student.schoolShortName) } returns luckyNumber
+        coEvery { sdk.getLuckyNumber(student.schoolShortName, 1) } returns luckyNumber
         coEvery { luckyNumberDb.load(1, date) } returnsMany listOf(
             flowOf(luckyNumber.mapToEntity(student).copy(luckyNumber = 6666)),
             // after fetch end before save result
@@ -97,7 +97,7 @@ class LuckyNumberRemoteTest {
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(luckyNumber.number, res.dataOrNull?.luckyNumber)
-        coVerify { sdk.getLuckyNumber(student.schoolShortName) }
+        coVerify { sdk.getLuckyNumber(student.schoolShortName, 1) }
         coVerify { luckyNumberDb.load(1, date) }
         coVerify {
             luckyNumberDb.removeOldAndSaveNew(
@@ -115,7 +115,7 @@ class LuckyNumberRemoteTest {
     @Test
     fun `force refresh no local item`() {
         // prepare
-        coEvery { sdk.getLuckyNumber(student.schoolShortName) } returns luckyNumber
+        coEvery { sdk.getLuckyNumber(student.schoolShortName, 1) } returns luckyNumber
         coEvery { luckyNumberDb.load(1, date) } returnsMany listOf(
             flowOf(null),
             flowOf(null), // after fetch end before save result
@@ -130,7 +130,7 @@ class LuckyNumberRemoteTest {
         // verify
         assertEquals(null, res.errorOrNull)
         assertEquals(luckyNumber.number, res.dataOrNull?.luckyNumber)
-        coVerify { sdk.getLuckyNumber(student.schoolShortName) }
+        coVerify { sdk.getLuckyNumber(student.schoolShortName, 1) }
         coVerify { luckyNumberDb.load(1, date) }
         coVerify {
             luckyNumberDb.removeOldAndSaveNew(

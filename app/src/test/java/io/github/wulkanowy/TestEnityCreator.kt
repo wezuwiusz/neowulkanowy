@@ -73,7 +73,9 @@ fun getStudentEntity(mode: Sdk.Mode = Sdk.Mode.HEBE) = Student(
     userLoginId = 1,
     userName = "",
     isEduOne = false,
-    isAuthorized = false
+    isAuthorized = false,
+    diaryNumber = 1,
+    constituentUnitId = 1
 ).apply {
     id = 1
 }

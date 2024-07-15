@@ -182,7 +182,7 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 dashboardAccountItemSchoolName.text = context.getString(
                     R.string.dashboard_school_diary_info,
                     student?.schoolName.orEmpty(),
-                    student?.diaryNumber
+                    (student?.diaryNumber ?: "Nieznany").toString()
                 )
             }
 

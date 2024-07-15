@@ -145,7 +145,7 @@ class MessageRepositoryTest {
 
     @Test(expected = NoSuchElementException::class)
     fun `throw error when message is not in the db`() {
-        val testMessage = getMessageEntity(1, "", false)
+        val testMessage = getMessageEntity("1", "", false)
         coEvery {
             messageDb.loadMessageWithAttachment("v4")
         } throws NoSuchElementException("No message in database")
@@ -155,7 +155,7 @@ class MessageRepositoryTest {
 
     @Test
     fun `get message when content already in db`() {
-        val testMessage = getMessageEntity(123, "Test", false)
+        val testMessage = getMessageEntity("123", "Test", false)
         val messageWithAttachment = MessageWithAttachment(
             testMessage,
             emptyList(),
@@ -175,7 +175,7 @@ class MessageRepositoryTest {
 
     @Test
     fun `get message when content in db is empty`() = runTest {
-        val testMessage = getMessageEntity(123, "", true)
+        val testMessage = getMessageEntity("123", "", true)
         val testMessageWithContent = testMessage.copy().apply { content = "Test" }
 
         val mWa = MessageWithAttachment(
@@ -212,7 +212,7 @@ class MessageRepositoryTest {
 
     @Test(expected = UnknownHostException::class)
     fun `get message when content in db is empty and there is no internet connection`() {
-        val testMessage = getMessageEntity(123, "", false)
+        val testMessage = getMessageEntity("123", "", false)
 
         coEvery {
             messageDb.loadMessageWithAttachment("v4")

@@ -126,5 +126,6 @@ class WulkanowySdkFactoryTest {
         isAuthorized = isAuthorized,
         semesters = emptyList(),
         isEduOne = isEduOne,
+        diaryNumber = diaryNumber
     )
 }

@@ -81,6 +81,7 @@ class LoginStudentSelectPresenterTest {
         semesters = listOf(),
         isEduOne = false,
         isAuthorized = false,
+        diaryNumber = 1
     )
 
     private val school = RegisterUnit(
@@ -92,7 +93,8 @@ class LoginStudentSelectPresenterTest {
         studentIds = listOf(),
         employeeIds = listOf(),
         error = null,
-        students = listOf(subject)
+        students = listOf(subject),
+        constituentId = 1
     )
 
     private val symbol = RegisterSymbol(

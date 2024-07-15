@@ -223,6 +223,8 @@ class GetMailboxByStudentUseCaseTest {
         userLoginId = 1,
         userName = userName,
         isAuthorized = false,
-        isEduOne = false
+        isEduOne = false,
+        diaryNumber = 1,
+        constituentUnitId = 1
     )
 }
