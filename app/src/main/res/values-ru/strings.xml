@@ -2,7 +2,7 @@
 <resources>
     <!--Activity/Fragment title-->
     <string name="login_title">Авторизация</string>
-    <string name="main_title">neoWulkanowy</string>
+    <string name="main_title">Wezuwiusz</string>
     <string name="grade_title">Оценки</string>
     <string name="attendance_title">Посещаемость</string>
     <string name="exam_title">Тесты</string>
@@ -99,7 +99,7 @@
     <string name="main_session_expired">Сеанс истёк</string>
     <string name="main_session_relogin">Сеанс истёк, авторизуйтесь снова</string>
     <string name="main_expired_credentials_title">Срок действия пароля истек или был изменен</string>
-    <string name="main_expired_credentials_description">Пароль вашей учетной записи устарел или был изменен. Вам нужно будет войти в neoWulkanowy снова</string>
+    <string name="main_expired_credentials_description">Пароль вашей учетной записи устарел или был изменен. Вам нужно будет войти в Wezuwiusz снова</string>
     <string name="main_support_title">Поддержка приложения</string>
     <string name="main_support_description">Вам нравится это приложение? Поддержите его разработку, включив неинвазивную рекламу, которую можно отключить в любое время</string>
     <string name="main_support_positive">Включить рекламу</string>
@@ -759,16 +759,16 @@
     <string name="pref_notify_upcoming_lessons_persistent_summary">Выключите, если уведомление не отображается на умных часах</string>
     <string name="pref_notify_open_system_settings">Открыть системные настройки уведомлений</string>
     <string name="pref_notify_fix_sync_issues">Исправить проблемы с синхронизацией и уведомлениями</string>
-    <string name="pref_notify_fix_sync_issues_message">На вашем устройстве могут быть проблемы с синхронизацией данных и уведомлениями.\n\nЧтобы их исправить, вам необходимо добавить neoWulkanowy в авто-старт и выключить оптимизацию/экономию батареи в настройках устройства.</string>
+    <string name="pref_notify_fix_sync_issues_message">На вашем устройстве могут быть проблемы с синхронизацией данных и уведомлениями.\n\nЧтобы их исправить, вам необходимо добавить Wezuwiusz в авто-старт и выключить оптимизацию/экономию батареи в настройках устройства.</string>
     <string name="pref_notify_debug_switch">Показывать отладочные уведомления</string>
     <string name="pref_notify_disabled_summary">Синхронизация отключена</string>
     <string name="pref_notify_notifications_piggyback_header">Уведомления официального приложения</string>
     <string name="pref_notify_notifications_piggyback">Захватывать уведомления официального приложения</string>
     <string name="pref_notify_notifications_piggyback_cancel_original">Удалить уведомления от официального приложения после захвата</string>
     <string name="pref_notification_piggyback_popup_title">Захват уведомлений</string>
-    <string name="pref_notification_piggyback_popup_description">С помощью этой функции вы можете получить аналог push-уведомлений из официального приложения. Все, что вам нужно сделать, это разрешить neoWulkanowy получать все уведомления в настройках системы.\n\nКак это работает?\nКогда вы получаете уведомление в Dziennik VULCAN, Wulkanowy будет уведомлен (для этого и нужны дополнительные разрешения) и запустит синхронизацию, чтобы отправить свое уведомление.\n\nТОЛЬКО ДЛЯ ПРОДВИНУТЫХ ПОЛЬЗОВАТЕЛЕЙ</string>
+    <string name="pref_notification_piggyback_popup_description">С помощью этой функции вы можете получить аналог push-уведомлений из официального приложения. Все, что вам нужно сделать, это разрешить Wezuwiusz получать все уведомления в настройках системы.\n\nКак это работает?\nКогда вы получаете уведомление в Dziennik VULCAN, Wulkanowy будет уведомлен (для этого и нужны дополнительные разрешения) и запустит синхронизацию, чтобы отправить свое уведомление.\n\nТОЛЬКО ДЛЯ ПРОДВИНУТЫХ ПОЛЬЗОВАТЕЛЕЙ</string>
     <string name="pref_notification_exact_alarm_popup_title">Показывать уведомления о предстоящих уроках</string>
-    <string name="pref_notification_exact_alarm_popup_descriptions">Вы должны разрешить neoWulkanowy устанавливать будильник и напоминания в настройках системы, чтобы использовать эту функцию.</string>
+    <string name="pref_notification_exact_alarm_popup_descriptions">Вы должны разрешить Wezuwiusz устанавливать будильник и напоминания в настройках системы, чтобы использовать эту функцию.</string>
     <string name="pref_notification_go_to_settings">Перейти к настройкам</string>
     <string name="pref_services_header">Синхронизация</string>
     <string name="pref_services_switch">Автоматическая синхронизация</string>
@@ -848,7 +848,7 @@
     <string name="update_download_started">Загрузка обновлений началась…</string>
     <string name="update_download_success">Только что было скачано обновление.</string>
     <string name="update_download_success_button">Перезапустить</string>
-    <string name="update_failed">Не удалось обновить! neoWulkanowy может работать некорректно. Рассмотрите возможность обновления</string>
+    <string name="update_failed">Не удалось обновить! Wezuwiusz может работать некорректно. Рассмотрите возможность обновления</string>
     <!--Menu order-->
     <string name="menu_order_confirm_title">Перезапуск приложение</string>
     <string name="menu_order_confirm_content">Для сохранения изменений необходимо перезапустить приложение</string>
@@ -860,11 +860,11 @@
     <string name="auth_button">Авторизовать</string>
     <string name="auth_success">Авторизация прошла успешно</string>
     <string name="auth_title">Авторизация</string>
-    <string name="auth_description">Уважаемый родитель,&lt;br /&gt;&lt;br /&gt;для авторизации и обеспечения безопасности данных, просим Вас ввести ниже номер PESEL &lt;b&gt;%1$s&lt;/b&gt;. Эти данные необходимы для надлежащего доступа к и защиты личных данных в соответствии с действующими нормами.&lt;br /&gt;&lt;br /&gt;После ввода данных мы обеспечим проверку, чтобы доступ к системе VULCAN был предоставлен исключительно уполномоченным лицам. Если у Вас возникли какие-либо сомнения или проблемы, пожалуйста, свяжитесь с администратором школьного дневника для уточнения ситуации.&lt;br /&gt;&lt;br /&gt;Мы соблюдаем наивысшие стандарты защиты персональных данных и гарантируем сохранность всей информации. Приложение neoWulkanowy не сохраняет и не обрабатывает номер PESEL.&lt;br /&gt;&lt;br /&gt;Напоминаем, что предоставление точных данных является обязательным и необходимым для использования системы VULCAN.</string>
+    <string name="auth_description">Уважаемый родитель,&lt;br /&gt;&lt;br /&gt;для авторизации и обеспечения безопасности данных, просим Вас ввести ниже номер PESEL &lt;b&gt;%1$s&lt;/b&gt;. Эти данные необходимы для надлежащего доступа к и защиты личных данных в соответствии с действующими нормами.&lt;br /&gt;&lt;br /&gt;После ввода данных мы обеспечим проверку, чтобы доступ к системе VULCAN был предоставлен исключительно уполномоченным лицам. Если у Вас возникли какие-либо сомнения или проблемы, пожалуйста, свяжитесь с администратором школьного дневника для уточнения ситуации.&lt;br /&gt;&lt;br /&gt;Мы соблюдаем наивысшие стандарты защиты персональных данных и гарантируем сохранность всей информации. Приложение Wezuwiusz не сохраняет и не обрабатывает номер PESEL.&lt;br /&gt;&lt;br /&gt;Напоминаем, что предоставление точных данных является обязательным и необходимым для использования системы VULCAN.</string>
     <string name="auth_button_skip">Пропустить сейчас</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Требуется верификация веб-сайта VULCAN</string>
-    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which neoWulkanowy downloads data displays the same screen as above, so neoWulkanowy must also show it to be able to download data from this website. There\'s no way around it</string>
+    <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wezuwiusz downloads data displays the same screen as above, so Wezuwiusz must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Верификация успешна</string>
     <!--Panic mode-->
     <string name="panic_mode_title">Emergency access</string>

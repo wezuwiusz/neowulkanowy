@@ -10,5 +10,5 @@ Wyróżnione cechy i funkcje:
 - tryb offline,
 - powiadomienia.
 
-GitHub: https://github.com/neowulkanowy/wulkanowy
+GitHub: https://github.com/wezuwiusz/wulkanowy
 Telegram: https://t.me/neowulkanowy

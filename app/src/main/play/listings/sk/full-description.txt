@@ -10,5 +10,5 @@ Zvýraznené vlastnosti a funkcie:
 - offline režim,
 - upozornenia.
 
-GitHub: https://github.com/neowulkanowy/wulkanowy
+GitHub: https://github.com/wezuwiusz/wulkanowy
 Telegram: https://t.me/neowulkanowy

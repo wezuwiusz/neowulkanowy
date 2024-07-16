@@ -2,7 +2,7 @@
 <resources>
     <!--Activity/Fragment title-->
     <string name="login_title">Logowanie</string>
-    <string name="main_title">neoWulkanowy</string>
+    <string name="main_title">Wezuwiusz</string>
     <string name="grade_title">Oceny</string>
     <string name="attendance_title">Frekwencja</string>
     <string name="exam_title">Sprawdziany</string>
@@ -66,7 +66,7 @@
     <string name="login_advanced">Inne opcje</string>
     <string name="login_advanced_warning_mobile_api">W tym trybie nie działa uczeń na tle klasy, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń.</string>
     <string name="login_advanced_warning_scraper">Tryb ten wyświetla te same dane, które widoczne są na stronie internetowej dziennika, lecz jest zawodny.</string>
-    <string name="login_advanced_warning_hybrid">Połączenie najlepszych cech dwóch pozostałych trybów. Działa szybciej niż scrapper i zapewnia funkcje niedostępne w trybie Mobilne API. Ten tryb zostanie wkrótce domyślny w neoWulkanowym.</string>
+    <string name="login_advanced_warning_hybrid">Połączenie najlepszych cech dwóch pozostałych trybów. Działa szybciej niż scrapper i zapewnia funkcje niedostępne w trybie Mobilne API. Ten tryb zostanie wkrótce domyślny w Wezuwiuszu.</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
     <string name="login_contact_header">Problemy z logowaniem? Napisz do nas!</string>
     <string name="login_contact_email">E-mail</string>
@@ -769,7 +769,7 @@
     <string name="pref_notify_notifications_piggyback">Przechwytywanie powiadomień oficjalnej aplikacji</string>
     <string name="pref_notify_notifications_piggyback_cancel_original">Usuwaj powiadomienia oficjalnej aplikacji po przechwyceniu</string>
     <string name="pref_notification_piggyback_popup_title">Przechwytywanie powiadomień</string>
-    <string name="pref_notification_piggyback_popup_description">Dzięki tej funkcji możesz uzyskać namiastkę powiadomień push, takich jak w oficjalnej aplikacji. Wszystko, co musisz zrobić, to zezwolić Wulkanowemu na odczytywanie wszystkich powiadomień w ustawieniach systemowych.\n\nJak to działa?\nKiedy otrzymasz powiadomienie w Dzienniczku VULCAN, neoWulkanowy zostanie o tym powiadomiony (do tego jest to dodatkowe uprawnienie) i uruchomi synchronizację, aby mógł wysłać własne powiadomienie.\n\nWYŁĄCZNIE DLA ZAAWANSOWANYCH UŻYTKOWNIKÓW</string>
+    <string name="pref_notification_piggyback_popup_description">Dzięki tej funkcji możesz uzyskać namiastkę powiadomień push, takich jak w oficjalnej aplikacji. Wszystko, co musisz zrobić, to zezwolić Wulkanowemu na odczytywanie wszystkich powiadomień w ustawieniach systemowych.\n\nJak to działa?\nKiedy otrzymasz powiadomienie w Dzienniczku VULCAN, Wezuwiusz zostanie o tym powiadomiony (do tego jest to dodatkowe uprawnienie) i uruchomi synchronizację, aby mógł wysłać własne powiadomienie.\n\nWYŁĄCZNIE DLA ZAAWANSOWANYCH UŻYTKOWNIKÓW</string>
     <string name="pref_notification_exact_alarm_popup_title">Powiadomienia o nadchodzących lekcjach</string>
     <string name="pref_notification_exact_alarm_popup_descriptions">Musisz pozwolić Wulkanowemu na tworzenie alarmów i przypomnień w ustawieniach Twojego systemu, aby użyć tej funkcji.</string>
     <string name="pref_notification_go_to_settings">Przejdź do ustawień</string>
@@ -851,7 +851,7 @@
     <string name="update_download_started">Rozpoczęto pobieranie aktualizacji…</string>
     <string name="update_download_success">Aktualizacja została pobrana.</string>
     <string name="update_download_success_button">Uruchom ponownie</string>
-    <string name="update_failed">Aktualizacja nie powiodła się! neoWulkanowy może nie działać prawidłowo. Rozważ aktualizację</string>
+    <string name="update_failed">Aktualizacja nie powiodła się! Wezuwiusz może nie działać prawidłowo. Rozważ aktualizację</string>
     <!--Menu order-->
     <string name="menu_order_confirm_title">Ponowne uruchomienie aplikacji</string>
     <string name="menu_order_confirm_content">W celu zapisania zmian aplikacja musi zostać ponownie uruchomiona</string>
@@ -863,11 +863,11 @@
     <string name="auth_button">Potwierdź</string>
     <string name="auth_success">Autoryzacja zakończona pomyślnie</string>
     <string name="auth_title">Autoryzacja</string>
-    <string name="auth_description">Szanowny Rodzicu,&lt;br/&gt;&lt;br/&gt;W celu autoryzacji i zapewnienia bezpieczeństwa danych, uprzejmie prosimy o wprowadzenie poniżej numeru PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt;. Te informacje są niezbędne do prawidłowego przypisania dostępu i ochrony danych osobowych zgodnie z obowiązującymi przepisami.&lt;br/&gt;&lt;br/&gt;Po wprowadzeniu danych, będą one weryfikowane w celu zapewnienia, że dostęp do systemu VULCAN jest przyznawany wyłącznie upoważnionym osobom. W przypadku jakichkolwiek wątpliwości lub problemów, prosimy o kontakt z administratorem dziennika szkolnego w celu wyjaśnienia sytuacji.&lt;br/&gt;&lt;br/&gt;Zachowujemy najwyższe standardy ochrony danych osobowych i zapewniamy, że wszelkie przekazane informacje są chronione. neoWulkanowy nie przechowuje ani nie przetwarza numeru PESEL.&lt;br/&gt;&lt;br/&gt;Przypominamy, że podanie pełnych i prawdziwych danych jest obowiązkowe i konieczne do korzystania z systemu VULCAN.</string>
+    <string name="auth_description">Szanowny Rodzicu,&lt;br/&gt;&lt;br/&gt;W celu autoryzacji i zapewnienia bezpieczeństwa danych, uprzejmie prosimy o wprowadzenie poniżej numeru PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt;. Te informacje są niezbędne do prawidłowego przypisania dostępu i ochrony danych osobowych zgodnie z obowiązującymi przepisami.&lt;br/&gt;&lt;br/&gt;Po wprowadzeniu danych, będą one weryfikowane w celu zapewnienia, że dostęp do systemu VULCAN jest przyznawany wyłącznie upoważnionym osobom. W przypadku jakichkolwiek wątpliwości lub problemów, prosimy o kontakt z administratorem dziennika szkolnego w celu wyjaśnienia sytuacji.&lt;br/&gt;&lt;br/&gt;Zachowujemy najwyższe standardy ochrony danych osobowych i zapewniamy, że wszelkie przekazane informacje są chronione. Wezuwiusz nie przechowuje ani nie przetwarza numeru PESEL.&lt;br/&gt;&lt;br/&gt;Przypominamy, że podanie pełnych i prawdziwych danych jest obowiązkowe i konieczne do korzystania z systemu VULCAN.</string>
     <string name="auth_button_skip">Na razie pomiń</string>
     <!--Captcha-->
     <string name="captcha_dialog_title">Strona dziennika VULCAN wymaga weryfikacji</string>
-    <string name="captcha_dialog_description"><b>Dlaczego to widzę?</b>\nStrona internetowa dziennika, z której neoWulkanowy pobiera dane, wyświetla ten sam ekran jak powyżej, więc neoWulkanowy musi również ją pokazać, aby móc pobrać dane z tej witryny. Nie da się tego obejść</string>
+    <string name="captcha_dialog_description"><b>Dlaczego to widzę?</b>\nStrona internetowa dziennika, z której Wezuwiusz pobiera dane, wyświetla ten sam ekran jak powyżej, więc Wezuwiusz musi również ją pokazać, aby móc pobrać dane z tej witryny. Nie da się tego obejść</string>
     <string name="captcha_verified_message">Pomyślnie zweryfikowano</string>
     <!--Panic mode-->
     <string name="panic_mode_title">Dostęp awaryjny</string>

@@ -1,4 +1,4 @@
-# neoWulkanowy
+# Wezuwiusz
 
 Nieoficjalny klient dziennika VULCAN UONET+ dla ucznia i rodzica. Fork projektu Wulkanowy,
 skupiony na rozwoju wsparcia dla mobilnego API. Celem projektu jest ukończenie wsparcia API mobilnego
@@ -39,7 +39,7 @@ jar SDK w cache gradle.
 
 ## Zbudowana za pomocą
 
-* [neoWulkanowy SDK](https://github.com/neowulkanowy/sdk)
+* [Wezuwiusz SDK](https://github.com/wezuwiusz/sdk)
 * [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
 * [Hilt](https://dagger.dev/hilt/)
 * [Room](https://developer.android.com/topic/libraries/architecture/room)
