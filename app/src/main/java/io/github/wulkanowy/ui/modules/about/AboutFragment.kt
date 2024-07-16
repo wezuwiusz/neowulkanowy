@@ -147,7 +147,7 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
     }
 
     override fun openTelegramChannel() {
-        context?.openInternetBrowser("https://t.me/neowulkanowy", ::showMessage)
+        context?.openInternetBrowser("https://t.me/dzienniczekwezuwiusz", ::showMessage)
     }
 
     override fun openHomepage() {

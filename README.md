@@ -5,7 +5,8 @@ skupiony na rozwoju wsparcia dla mobilnego API. Celem projektu jest ukończenie 
 na wystarczającym poziomie, aby domyślną opcją dla wszystkich użytkowników był tryb hybrydowy SDK
 (wykorzystujemy API mobilne tam gdzie się ta, i jest wspierany scrapperem tam gdzie się nie da)
 
-[Oficjalny kanał i chat na telegramie](https://t.me/neowulkanowy)
+[Oficjalny kanał na telegramie](https://t.me/dzienniczekwezuwiusz)
+[Oficjalny chat na telegramie](https://t.me/wezuwiuszchat)
 
 ## Funkcje
 

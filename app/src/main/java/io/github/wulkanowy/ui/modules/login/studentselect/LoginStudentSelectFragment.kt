@@ -106,7 +106,7 @@ class LoginStudentSelectFragment :
     }
 
     override fun openTelegramChat() {
-        context?.openInternetBrowser("https://t.me/neowulkanowychat", ::showMessage)
+        context?.openInternetBrowser("https://t.me/wezuwiuszchat", ::showMessage)
     }
 
     override fun openEmail(supportInfo: LoginSupportInfo) {
