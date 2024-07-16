@@ -72,5 +72,6 @@
         <item>Schulankündigungen</item>
         <item>Prüfungen</item>
         <item>Sitzungen</item>
+        <item>Notfallzugriff</item>
     </string-array>
 </resources>
