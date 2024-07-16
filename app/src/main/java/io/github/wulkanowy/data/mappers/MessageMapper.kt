@@ -39,7 +39,7 @@ fun List<SdkMessage>.mapToEntities(
             hasAttachments = it.hasAttachments,
         ).apply {
             content = it.content.orEmpty()
-            recipients = it.recipients[0].fullName
+            recipients = if (it.recipients.isNotEmpty()) it.recipients[0].fullName else ""
             sender = it.correspondents
         }
     } to attachments

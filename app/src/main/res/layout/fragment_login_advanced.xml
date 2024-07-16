@@ -67,7 +67,6 @@
                     android:id="@+id/loginTypeScrapper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:tag="scrapper"
                     android:text="@string/login_type_scrapper" />
 
@@ -75,6 +74,7 @@
                     android:id="@+id/loginTypeHybrid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:tag="hybrid"
                     android:text="@string/login_type_hybrid" />
             </RadioGroup>
@@ -88,7 +88,7 @@
                 android:layout_marginRight="24dp"
                 android:gravity="center_horizontal"
                 android:lineSpacingExtra="3sp"
-                android:text="@string/login_advanced_warning_scraper"
+                android:text="@string/login_advanced_warning_hybrid"
                 android:textColor="?colorTimetableChange"
                 app:layout_constraintBottom_toTopOf="@id/loginFormUsernameLayout"
                 app:layout_constraintLeft_toLeftOf="parent"

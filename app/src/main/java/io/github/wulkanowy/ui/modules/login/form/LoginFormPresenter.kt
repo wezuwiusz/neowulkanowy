@@ -169,11 +169,10 @@ class LoginFormPresenter @Inject constructor(
         if (!validateCredentials(loginData)) return
 
         resourceFlow {
-            studentRepository.getUserSubjectsFromScrapper(
+            studentRepository.getStudentsHybrid(
                 email = loginData.login,
                 password = loginData.password,
                 scrapperBaseUrl = loginData.baseUrl,
-                domainSuffix = loginData.domainSuffix,
                 symbol = loginData.defaultSymbol,
             )
         }
