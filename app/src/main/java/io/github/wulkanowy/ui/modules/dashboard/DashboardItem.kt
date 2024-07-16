@@ -120,6 +120,14 @@ sealed class DashboardItem(val type: Type) {
         override val isDataLoaded get() = adBanner != null
     }
 
+    data class PanicMode(
+        override val error: Throwable? = null,
+        override val isLoading: Boolean = false
+    ) : DashboardItem(Type.PANIC_MODE) {
+
+        override val isDataLoaded get() = true
+    }
+
     enum class Type {
         ADMIN_MESSAGE,
         ACCOUNT,
@@ -131,6 +139,7 @@ sealed class DashboardItem(val type: Type) {
         ANNOUNCEMENTS,
         EXAMS,
         CONFERENCES,
+        PANIC_MODE
     }
 
     enum class Tile {
@@ -146,6 +155,7 @@ sealed class DashboardItem(val type: Type) {
         ANNOUNCEMENTS,
         EXAMS,
         CONFERENCES,
+        PANIC_MODE
     }
 }
 
@@ -162,4 +172,5 @@ fun DashboardItem.Tile.toDashboardItemType() = when (this) {
     DashboardItem.Tile.EXAMS -> DashboardItem.Type.EXAMS
     DashboardItem.Tile.CONFERENCES -> DashboardItem.Type.CONFERENCES
     DashboardItem.Tile.ADS -> DashboardItem.Type.ADS
+    DashboardItem.Tile.PANIC_MODE -> DashboardItem.Type.PANIC_MODE
 }

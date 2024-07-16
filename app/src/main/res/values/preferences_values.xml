@@ -175,6 +175,7 @@
         <item>School announcements</item>
         <item>Exams</item>
         <item>Conferences</item>
+        <item>Panic Mode</item>
     </string-array>
     <string-array name="dashboard_tile_values" translatable="false">
         <item>LUCKY_NUMBER</item>
@@ -186,5 +187,6 @@
         <item>ANNOUNCEMENTS</item>
         <item>EXAMS</item>
         <item>CONFERENCES</item>
+        <item>PANIC_MODE</item>
     </string-array>
 </resources>

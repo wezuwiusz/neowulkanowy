@@ -227,6 +227,7 @@ class DashboardPresenter @Inject constructor(
 
                     DashboardItem.Type.ADS -> loadAds(forceRefresh)
                     DashboardItem.Type.ADMIN_MESSAGE -> loadAdminMessage(student, forceRefresh)
+                    DashboardItem.Type.PANIC_MODE -> updateData(DashboardItem.PanicMode(), false)
                 }
             }
         }

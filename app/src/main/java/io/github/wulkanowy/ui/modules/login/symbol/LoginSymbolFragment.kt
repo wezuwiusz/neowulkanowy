@@ -188,7 +188,6 @@ class LoginSymbolFragment :
             binding = binding.loginSymbolAdminMessage,
             onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed,
             onAdminMessageClickListener = presenter::onAdminMessageSelected,
-            onPanicButtonClickListener = {},
         ).bind(adminMessage)
         binding.loginSymbolAdminMessage.root.isVisible = adminMessage != null
     }

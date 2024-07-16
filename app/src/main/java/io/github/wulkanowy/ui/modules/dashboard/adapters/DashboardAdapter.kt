@@ -121,11 +121,15 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 ItemDashboardAdminMessageBinding.inflate(inflater, parent, false),
                 onAdminMessageDismissClickListener = onAdminMessageDismissClickListener,
                 onAdminMessageClickListener = onAdminMessageClickListener,
-                onPanicButtonClickListener = onPanicButtonClickListener,
             )
 
             DashboardItem.Type.ADS.ordinal -> AdsViewHolder(
                 ItemDashboardAdsBinding.inflate(inflater, parent, false)
+            )
+
+            DashboardItem.Type.PANIC_MODE.ordinal -> PanicModeViewHolder(
+                ItemDashboardPanicButtonBinding.inflate(inflater, parent, false),
+                onPanicButtonClickListener = onPanicButtonClickListener,
             )
 
             else -> throw IllegalArgumentException()
@@ -144,10 +148,10 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             is ConferencesViewHolder -> bindConferencesViewHolder(holder, position)
             is AdminMessageViewHolder -> holder.bind(
                 (items[position] as DashboardItem.AdminMessages).adminMessage,
-                showPanicButton = true
             )
 
             is AdsViewHolder -> bindAdsViewHolder(holder, position)
+            is PanicModeViewHolder -> bindPanicViewHolder(holder)
         }
     }
 
@@ -782,6 +786,12 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         )
     }
 
+    private fun bindPanicViewHolder(panicViewHolder: PanicModeViewHolder) {
+        panicViewHolder.bind()
+        val binding = panicViewHolder.binding
+        binding.dashboardPanicButton.isVisible = true
+    }
+
     class AccountViewHolder(val binding: ItemDashboardAccountBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -838,6 +848,22 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
             newList[newItemPosition].type == oldList[oldItemPosition].type
+    }
+
+    class PanicModeViewHolder(
+        val binding: ItemDashboardPanicButtonBinding,
+        private val onPanicButtonClickListener: () -> Unit,
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
+        val adapter by lazy { DashboardPanicModeAdapter() }
+
+        fun bind() {
+            with(binding) {
+                dashboardPanicButton.setOnClickListener {
+                    onPanicButtonClickListener()
+                }
+            }
+        }
     }
 
     private companion object {

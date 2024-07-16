@@ -210,10 +210,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(R.layout.fragme
                 binding = binding.dashboardErrorAdminMessage,
                 onAdminMessageDismissClickListener = presenter::onAdminMessageDismissed,
                 onAdminMessageClickListener = presenter::onAdminMessageSelected,
-                onPanicButtonClickListener = presenter::onPanicButtonClicked,
             ).bind(
                 item = adminMessageItem.adminMessage,
-                showPanicButton = true,
             )
         }
     }
