@@ -27,6 +27,8 @@ class RecipientRepository @Inject constructor(
         val new = wulkanowySdkFactory.create(student)
             .getRecipients(mailbox.globalKey)
             .mapToEntities(mailbox.globalKey)
+            .filter { it.type == type }
+
         val old = recipientDb.loadAll(type, mailbox.globalKey)
 
         recipientDb.removeOldAndSaveNew(

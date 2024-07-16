@@ -139,14 +139,31 @@ class SendMessagePresenter @Inject constructor(
             }
 
             Timber.i("Loading recipients started")
-            val recipients = createChips(
+            val employeeRecipients = createChips(
                 recipients = recipientRepository.getRecipients(
                     student = student,
                     mailbox = selectedMailbox,
                     type = MailboxType.EMPLOYEE,
                 )
             )
-            Timber.i("Loading recipients result: Success, fetched %d recipients", recipients.size)
+            val guardianRecipients = createChips(
+                recipients = recipientRepository.getRecipients(
+                    student = student,
+                    mailbox = selectedMailbox,
+                    type = MailboxType.PARENT,
+                )
+            )
+            val studentRecipients = createChips(
+                recipients = recipientRepository.getRecipients(
+                    student = student,
+                    mailbox = selectedMailbox,
+                    type = MailboxType.STUDENT,
+                )
+            )
+
+            val combinedRecipients = employeeRecipients + guardianRecipients + studentRecipients
+
+            Timber.i("Loading recipients result: Success, fetched %d recipients", combinedRecipients.size)
 
             Timber.i("Loading message recipients started")
             val messageRecipients = when {
@@ -162,7 +179,7 @@ class SendMessagePresenter @Inject constructor(
                 messageRecipients.size
             )
 
-            recipients to messageRecipients
+            combinedRecipients to messageRecipients
         }
             .logResourceStatus("load recipients")
             .onResourceLoading {

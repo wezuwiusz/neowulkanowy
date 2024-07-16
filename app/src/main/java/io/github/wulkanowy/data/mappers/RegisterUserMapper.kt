@@ -47,6 +47,7 @@ fun SdkRegisterUser.mapToPojo(password: String?) = RegisterUser(
                                 isParent = registerStudent.isParent,
                                 isAuthorized = registerStudent.isAuthorized,
                                 isEduOne = registerStudent.isEduOne,
+                                partition = registerStudent.partition,
                                 semesters = registerStudent.semesters
                                     .mapToEntities(registerStudent.studentId),
                             )
@@ -92,6 +93,7 @@ fun RegisterStudent.mapToStudentWithSemesters(
         registrationDate = Instant.now(),
         isAuthorized = this.isAuthorized,
         isEduOne = this.isEduOne,
+        partition = partition
     ).apply {
         avatarColor = colors.random()
     },

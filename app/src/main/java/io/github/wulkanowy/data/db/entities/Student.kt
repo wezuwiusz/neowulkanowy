@@ -92,6 +92,9 @@ data class Student(
     @ColumnInfo(name = "is_edu_one", defaultValue = "NULL")
     val isEduOne: Boolean?,
 
+    @ColumnInfo(name = "partition", defaultValue = "NULL")
+    val partition: String?
+
 ) : Serializable {
 
     @PrimaryKey(autoGenerate = true)

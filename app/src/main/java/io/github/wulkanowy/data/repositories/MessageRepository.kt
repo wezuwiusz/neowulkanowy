@@ -34,6 +34,7 @@ import io.github.wulkanowy.sdk.Sdk
 import io.github.wulkanowy.sdk.pojo.Folder
 import io.github.wulkanowy.utils.AutoRefreshHelper
 import io.github.wulkanowy.utils.getRefreshKey
+import io.github.wulkanowy.utils.nickOrName
 import io.github.wulkanowy.utils.uniqueSubtract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
@@ -218,7 +219,9 @@ class MessageRepository @Inject constructor(
                 subject = subject,
                 content = content,
                 recipients = recipients.mapFromEntities(),
-                mailboxId = mailbox.globalKey,
+                senderName = student.userName,
+                senderKey = mailbox.globalKey,
+                partition = student.partition ?: ""
             )
         refreshFolders(student, mailbox, listOf(SENT))
     }
