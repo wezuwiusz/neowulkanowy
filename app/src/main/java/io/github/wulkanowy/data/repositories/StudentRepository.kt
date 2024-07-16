@@ -63,7 +63,7 @@ class StudentRepository @Inject constructor(
         scrapperBaseUrl: String,
         symbol: String
     ): RegisterUser = wulkanowySdkFactory.create()
-        .getStudentsHybrid(email, password, scrapperBaseUrl, "", symbol)
+        .getStudentsHybrid(email, password, scrapperBaseUrl, symbol, "")
         .mapToPojo(password)
         .also { it.logErrors() }
 
