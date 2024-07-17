@@ -381,6 +381,9 @@
     <string name="message_mailbox_chooser_title">Choose mailbox</string>
     <string name="message_incognito_mode_on">Incognito mode is on</string>
     <string name="message_incognito_description">Thanks to incognito mode sender is not notified when you read the message</string>
+    <string name="message_read_incognito">Mark as read</string>
+    <string name="message_incognito_markread_success">Message marked as read</string>
+    <string name="message_incognito_markread_error">Could not mark message as read</string>
 
 
     <!--Note-->
@@ -844,6 +847,7 @@
     <string name="update_download_success_button">Restart</string>
     <string name="update_failed">Update failed! Wezuwiusz may not function properly. Consider updating</string>
 
+
     <!--Menu order-->
     <string name="menu_order_confirm_title">Application restart</string>
     <string name="menu_order_confirm_content">The application must restart for the changes to be saved</string>
@@ -866,6 +870,7 @@
     <string name="captcha_dialog_description"><b>Why am I seeing this?</b>\nThe register website from which Wezuwiusz downloads data displays the same screen as above, so Wezuwiusz must also show it to be able to download data from this website. There\'s no way around it</string>
     <string name="captcha_verified_message">Verified successfully</string>
 
+
     <!--Panic mode-->
     <string name="panic_mode_title">Emergency access</string>
 
@@ -887,9 +892,11 @@
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
     <string name="error_field_required">This field is required</string>
 
+
     <!-- Mute system -->
     <string name="message_mute">Mute</string>
     <string name="message_unmute">Unmute</string>
     <string name="message_mute_success">You have muted this user</string>
     <string name="message_unmute_success">You have unmuted this user</string>
+
 </resources>
