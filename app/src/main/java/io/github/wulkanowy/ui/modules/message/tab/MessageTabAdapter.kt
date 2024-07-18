@@ -119,7 +119,10 @@ class MessageTabAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerVie
             val currentTextColor = if (message.unread) primaryColor else secondaryColor
 
             with(messageItemAuthor) {
-                text = message.correspondents
+                text = when(message.folderId != 3) {
+                    true -> message.correspondents
+                    else -> context.getString(R.string.message_deleted_message)
+                }
                 setTextColor(currentTextColor)
                 typeface = currentFont
             }

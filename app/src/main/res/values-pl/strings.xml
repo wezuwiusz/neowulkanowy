@@ -428,6 +428,7 @@
     <string name="message_read_incognito">Oznacz wiadomość jako przeczytaną</string>
     <string name="message_incognito_markread_success">Oznaczono wiadomość jako przeczytaną</string>
     <string name="message_incognito_markread_error">Podczas oznaczania wiadomości jako przeczytanej wystąpił błąd</string>
+    <string name="message_deleted_message">Usunięta wiadomość</string>
 
 
     <!--Note-->

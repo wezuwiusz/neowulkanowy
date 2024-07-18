@@ -898,5 +898,6 @@
     <string name="message_unmute">Unmute</string>
     <string name="message_mute_success">You have muted this user</string>
     <string name="message_unmute_success">You have unmuted this user</string>
+    <string name="message_deleted_message">Deleted message</string>
 
 </resources>
