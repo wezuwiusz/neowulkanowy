@@ -236,7 +236,7 @@ fun <T> Flow<Resource<T>>.debounceIntermediates(timeout: Duration = 5.seconds) =
 }
 
 
-inline fun <OutputType, ApiType>    networkBoundResource(
+inline fun <OutputType, ApiType> networkBoundResource(
     mutex: Mutex = Mutex(),
     crossinline isResultEmpty: (OutputType) -> Boolean,
     crossinline query: () -> Flow<OutputType>,
@@ -282,4 +282,42 @@ inline fun <DatabaseType, ApiType, OutputType> networkBoundResource(
     emitAll(query().map { Resource.Success(it) })
 }
     .mapResourceData { mapResult(it) }
+    .filterNot { it is Resource.Intermediate && isResultEmpty(it.data) }
+
+
+@JvmName("networkBoundResourceWithPostTransaction")
+inline fun <ApiType, OutputType> networkBoundResource(
+    mutex: Mutex = Mutex(),
+    crossinline isResultEmpty: (OutputType) -> Boolean,
+    crossinline query: () -> Flow<OutputType>,
+    crossinline fetch: suspend () -> ApiType,
+    crossinline saveFetchResult: suspend (old: OutputType, new: ApiType) -> Unit,
+    crossinline shouldFetch: (OutputType) -> Boolean = { true },
+    crossinline filterResult: (OutputType) -> OutputType = { it },
+    crossinline postTransaction: suspend () -> Unit
+) = flow {
+    emit(Resource.Loading())
+
+    val data = query().first()
+    if (shouldFetch(data)) {
+        emit(Resource.Intermediate(data))
+
+        try {
+            val newData = fetch()
+            mutex.withLock { saveFetchResult(query().first(), newData) }
+        } catch (throwable: Throwable) {
+            emit(Resource.Error(throwable))
+            return@flow
+        }
+    }
+
+    try {
+        postTransaction()
+    } catch (throwable: Throwable) {
+        emit(Resource.Error(throwable))
+    }
+
+    emitAll(query().map { Resource.Success(it) })
+}
+    .mapResourceData { filterResult(it) }
     .filterNot { it is Resource.Intermediate && isResultEmpty(it.data) }

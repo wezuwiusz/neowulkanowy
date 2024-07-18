@@ -163,20 +163,17 @@ class MessageRepository @Inject constructor(
     ): Flow<Resource<MessageWithAttachment?>> = networkBoundResource(
         isResultEmpty = { it?.message?.content.isNullOrBlank() },
         shouldFetch = {
-            checkNotNull(it) { "This message no longer exist!" }
+            checkNotNull(it) { "This message no longer exists!" }
             Timber.d("Message content in db empty: ${it.message.content.isBlank()}")
             (it.message.unread && markAsRead) || it.message.content.isBlank()
         },
         query = { messagesDb.loadMessageWithAttachment(message.messageGlobalKey) },
         fetch = {
             wulkanowySdkFactory.create(student)
-                .getMessageDetails(
-                    messageKey = message.messageGlobalKey,
-                    markAsRead = message.unread && markAsRead,
-                )
+                .getMessageDetails(messageKey = message.messageGlobalKey)
         },
         saveFetchResult = { old, new ->
-            checkNotNull(old) { "Fetched message no longer exist!" }
+            checkNotNull(old) { "Fetched message no longer exists!" }
             messagesDb.updateAll(
                 listOf(old.message.apply {
                     id = message.id
@@ -194,6 +191,42 @@ class MessageRepository @Inject constructor(
             )
 
             Timber.d("Message ${message.messageId} with blank content: ${old.message.content.isBlank()}, marked as read: $markAsRead")
+        },
+        postTransaction = {
+            if(markAsRead) {
+                wulkanowySdkFactory.create()
+                    .markMessageRead(
+                        messageKey = message.messageGlobalKey,
+                        boxKey = message.mailboxKey
+                    )
+            }
+        }
+    )
+
+    fun markMessageRead(
+        student: Student,
+        message: Message
+    ): Flow<Resource<MessageWithAttachment?>> = networkBoundResource(
+        isResultEmpty = { it?.message?.content.isNullOrBlank() },
+        shouldFetch = {
+            checkNotNull(it) { "This message no longer exists!" }
+            message.unread
+        },
+        query = { messagesDb.loadMessageWithAttachment(message.messageGlobalKey) },
+        fetch = {
+            wulkanowySdkFactory.create(student)
+                .markMessageRead(
+                    boxKey = message.mailboxKey,
+                    messageKey = message.messageGlobalKey
+                )
+        },
+        saveFetchResult = { old, _ ->
+            checkNotNull(old) { "Fetched message no longer exists!" }
+            messagesDb.updateAll(
+                listOf(old.message.apply { unread = false })
+            )
+
+            Timber.d("Marking as read message ${message.messageId} with blank content: ${old.message.content.isBlank()}")
         }
     )
 

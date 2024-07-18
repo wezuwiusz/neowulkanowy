@@ -119,7 +119,10 @@ class MessageTabAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerVie
             val currentTextColor = if (message.unread) primaryColor else secondaryColor
 
             with(messageItemAuthor) {
-                text = message.correspondents
+                text = when(message.folderId != 3) {
+                    true -> message.correspondents
+                    else -> context.getString(R.string.message_deleted_message)
+                }
                 setTextColor(currentTextColor)
                 typeface = currentFont
             }
@@ -138,6 +141,22 @@ class MessageTabAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerVie
                 isVisible = message.hasAttachments
             }
             messageItemUnreadIndicator.isVisible = message.unread || item.isMuted
+
+            with(messageItemReadUnreadIcon){
+                // Check if the message was received and if it's not deleted
+                if (message.unreadBy != null && message.readBy != null && message.folderId != 3){
+                    isVisible = true
+                    ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(currentTextColor))
+
+                    val imageResource = when {
+                        message.unreadBy == 0 -> R.drawable.ic_read
+                        message.readBy > 0 -> R.drawable.ic_read_partial
+                        else -> R.drawable.ic_unread
+                    }
+
+                    setImageResource(imageResource)
+                } else isVisible = false
+            }
 
             when (item.isMuted) {
                 true -> messageItemUnreadIndicator.setImageResource(R.drawable.ic_notifications_off)

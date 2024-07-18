@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!--Activity/Fragment title-->
     <string name="login_title">Logowanie</string>
     <string name="main_title">Wezuwiusz</string>
@@ -28,8 +29,12 @@
     <string name="dashboard_title">Start</string>
     <string name="notifications_center_title">Centrum powiadomień</string>
     <string name="menu_order_title">Konfiguracja menu</string>
+
+
     <!--Subtitles-->
     <string name="grade_subtitle">Semestr %1$d, %2$d/%3$d</string>
+
+
     <!--Login-->
     <string name="login_header_default">Zaloguj się za pomocą konta ucznia lub rodzica</string>
     <string name="login_header_symbol">Podaj symbol ze strony dziennika dla konta: &lt;b&gt;%1$s&lt;/b&gt;</string>
@@ -88,11 +93,15 @@
     <string name="login_support_additional_hint">Dodatkowe informacje (po polsku) (nieobowiązkowo)</string>
     <string name="login_support_additional_placeholder">Np. \"Ostatnio zmieniłem szkołę i…\" albo \"Jestem rodzicem i nie widzę drugiego dziecka…\"</string>
     <string name="login_support_submit">Wyślij</string>
+
+
     <!--Notifications-->
     <string name="notifications_header_title">Włącz powiadomienia</string>
     <string name="notifications_header_description">Włącz powiadomienia, aby nie przegapić wiadomości od nauczyciela lub nowej oceny</string>
     <string name="notifications_skip">Pomiń</string>
     <string name="notifications_enable">Włącz</string>
+
+
     <!--Main-->
     <string name="main_account_picker">Menadżer kont</string>
     <string name="main_log_in">Zaloguj się</string>
@@ -103,6 +112,8 @@
     <string name="main_support_title">Wparcie aplikacji</string>
     <string name="main_support_description">Podoba Ci się ta aplikacja? Wspieraj jej rozwój poprzez włączenie nieinwazyjnych reklam, które możesz wyłączyć w dowolnym momencie</string>
     <string name="main_support_positive">Włącz reklamy</string>
+
+
     <!--Grade-->
     <string name="grade_header">Ocena</string>
     <string name="grade_semester">Semestr %s</string>
@@ -196,6 +207,8 @@
         <item quantity="many">Masz %1$d nowych ocen opisowych</item>
         <item quantity="other">Masz %1$d nowych ocen opisowych</item>
     </plurals>
+
+
     <!--Timetable-->
     <string name="timetable_lesson">Lekcja</string>
     <string name="timetable_additional_lesson">Dodatkowa lekcja</string>
@@ -246,6 +259,8 @@
         <item quantity="many">%d zmian</item>
         <item quantity="other">%d zmian</item>
     </plurals>
+
+
     <!--Completed lessons-->
     <string name="completed_lessons_title">Lekcje zrealizowane</string>
     <string name="completed_lessons_button">Zobacz lekcje zrealizowane</string>
@@ -253,6 +268,8 @@
     <string name="completed_lessons_topic">Temat</string>
     <string name="completed_lessons_absence">Nieobecność</string>
     <string name="completed_lessons_resources">Zasoby</string>
+
+
     <!--Additional lessons-->
     <string name="additional_lessons_title">Dodatkowe lekcje</string>
     <string name="additional_lessons_button">Pokaż dodatkowe lekcje</string>
@@ -268,6 +285,8 @@
     <string name="additional_lessons_start">Godzina rozpoczęcia</string>
     <string name="additional_lessons_end">Godzina zakończenia</string>
     <string name="additional_lessons_end_time_error">Godzina zakończenia musi być późniejsza niż godzina rozpoczęcia</string>
+
+
     <!--Attendance-->
     <string name="attendance_summary_button">Podsumowanie frekwencji</string>
     <string name="attendance_calculator_button">Kalkulator obecności</string>
@@ -310,8 +329,12 @@
         <item quantity="many">%d frekwencji</item>
         <item quantity="other">%d frekwencji</item>
     </plurals>
+
+
     <!--Attendance summary-->
     <string name="attendance_summary_total">Razem</string>
+
+
     <!--Exam-->
     <string name="exam_no_items">Brak sprawdzianów w tym tygodniu</string>
     <string name="exam_type">Typ</string>
@@ -334,6 +357,8 @@
         <item quantity="many">%d sprawdzianów</item>
         <item quantity="other">%d sprawdzianów</item>
     </plurals>
+
+
     <!--Message-->
     <string name="message_inbox">Odebrane</string>
     <string name="message_sent">Wysłane</string>
@@ -400,6 +425,12 @@
     <string name="message_mailbox_chooser_title">Wybierz skrzynkę</string>
     <string name="message_incognito_mode_on">Tryb incognito jest włączony</string>
     <string name="message_incognito_description">Dzięki trybowi incognito nadawca nie zobaczy, że przeczytałeś tę wiadomość</string>
+    <string name="message_read_incognito">Oznacz wiadomość jako przeczytaną</string>
+    <string name="message_incognito_markread_success">Oznaczono wiadomość jako przeczytaną</string>
+    <string name="message_incognito_markread_error">Podczas oznaczania wiadomości jako przeczytanej wystąpił błąd</string>
+    <string name="message_deleted_message">Usunięta wiadomość</string>
+
+
     <!--Note-->
     <string name="note_no_items">Brak informacji o uwagach</string>
     <string name="note_points">Punkty</string>
@@ -421,6 +452,8 @@
         <item quantity="many">Masz %1$d nowych uwag</item>
         <item quantity="other">Masz %1$d nowych uwag</item>
     </plurals>
+
+
     <!--Praise-->
     <plurals name="praise_number_item">
         <item quantity="one">%d pochwała</item>
@@ -440,6 +473,8 @@
         <item quantity="many">Masz %1$d nowych pochwał</item>
         <item quantity="other">Masz %1$d nowych pochwał</item>
     </plurals>
+
+
     <!--Neutral notes-->
     <plurals name="neutral_note_number_item">
         <item quantity="one">%d neutralna uwaga</item>
@@ -459,6 +494,8 @@
         <item quantity="many">Masz %1$d nowych neutralnych uwag</item>
         <item quantity="other">Masz %1$d nowych neutralnych uwag</item>
     </plurals>
+
+
     <!--Homework-->
     <string name="homework_no_items">Brak zadań domowych</string>
     <string name="homework_mark_as_done">Wykonane</string>
@@ -485,6 +522,8 @@
         <item quantity="many">%d zadań domowych</item>
         <item quantity="other">%d zadań domowych</item>
     </plurals>
+
+
     <!--Lucky number-->
     <string name="lucky_number_title">Szczęśliwy numerek</string>
     <string name="lucky_number_header">Dzisiejszym szczęśliwym numerkiem jest</string>
@@ -492,9 +531,13 @@
     <string name="lucky_number_notify_new_item_title">Szczęśliwy numerek na dzisiaj</string>
     <string name="lucky_number_notify_new_item">Dzisiejszym szczęśliwym numerkiem jest: %s</string>
     <string name="lucky_number_history_button">Pokaż historię</string>
+
+
     <!--Lucky number history-->
     <string name="lucky_number_history_title">Historia numerków</string>
     <string name="lucky_number_history_empty">Brak informacji o szczęśliwych numerkach</string>
+
+
     <!--Mobile devices-->
     <string name="mobile_devices_title">Dostęp mobilny</string>
     <string name="mobile_devices_no_items">Brak urządzeń</string>
@@ -504,8 +547,12 @@
     <string name="mobile_device_token">Token</string>
     <string name="mobile_device_symbol">Symbol</string>
     <string name="mobile_device_pin">PIN</string>
+
+
     <!--School and teachers-->
     <string name="schoolandteachers_title">Szkoła i nauczyciele</string>
+
+
     <!--School-->
     <string name="school_title">Szkoła</string>
     <string name="school_no_info">Brak informacji o szkole</string>
@@ -516,10 +563,14 @@
     <string name="school_pedagogue">Imię i nazwisko pedagoga</string>
     <string name="school_address_button">Pokaż na mapie</string>
     <string name="school_telephone_button">Zadzwoń</string>
+
+
     <!--Teacher-->
     <string name="teachers_title">Nauczyciele</string>
     <string name="teacher_no_items">Brak informacji o nauczycielach</string>
     <string name="teacher_no_subject">Brak przedmiotu</string>
+
+
     <!--Conference-->
     <string name="conferences_title">Zebrania</string>
     <string name="conference_no_items">Brak informacji o zebraniach</string>
@@ -545,6 +596,8 @@
     <string name="conference_agenda">Agenda</string>
     <string name="conference_place">Miejsce</string>
     <string name="conference_topic">Temat</string>
+
+
     <!--Director information-->
     <string name="school_announcement_title">Ogłoszenia szkolne</string>
     <string name="school_announcement_no_items">Brak ogłoszeń szkolnych</string>
@@ -566,6 +619,8 @@
         <item quantity="many">Masz %1$d nowych ogłoszeń szkolnych</item>
         <item quantity="other">Masz %1$d nowych ogłoszeń szkolnych</item>
     </plurals>
+
+
     <!--Account-->
     <string name="account_add_new">Dodaj konto</string>
     <string name="account_logout">Wyloguj</string>
@@ -580,6 +635,8 @@
     <string name="account_contact">Kontakt</string>
     <string name="account_address">Dane adresowe</string>
     <string name="account_personal_data">Dane osobowe</string>
+
+
     <!--About-->
     <string name="about_version">Wersja aplikacji</string>
     <string name="about_contributor">Twórcy</string>
@@ -596,13 +653,19 @@
     <string name="about_homepage_summary">Odwiedź stronę i pomóż rozwijać aplikację</string>
     <string name="about_licenses">Licencje</string>
     <string name="about_licenses_summary">Licencje użytych bibliotek w aplikacji</string>
-    <!--Licenses-->
     <string name="about_telegram">Kanał na Telegramie</string>
     <string name="about_telegram_summary">Dołącz do kanału neoWulkanowego na Telegramie</string>
+
+
+    <!--Licenses-->
     <string name="license_dialog_title">Licencja</string>
+
+
     <!--Contributor-->
     <string name="contributor_avatar_description">Awatar</string>
     <string name="contributor_see_more">Zobacz więcej na GitHub</string>
+
+
     <!--Student info-->
     <string name="student_info_empty">Brak informacji o uczniu lub rodzinie ucznia</string>
     <string name="student_info_first_name">Imię</string>
@@ -625,13 +688,19 @@
     <string name="student_info_female">Kobieta</string>
     <string name="student_info_last_name">Nazwisko</string>
     <string name="student_info_guardian">Opiekun</string>
+
+
     <!--Account edit-->
     <string name="account_edit_nick_hint">Pseudonim</string>
     <string name="account_edit_header">Dodaj pseudonim</string>
     <string name="account_edit_avatar_title">Wybierz kolor awatara</string>
+
+
     <!--Log viewer-->
     <string name="logviewer_share">Udostępnij logi</string>
     <string name="logviewer_refresh">Odśwież</string>
+
+
     <!--Dashboard-->
     <string name="dashboard_timetable_title">Lekcje</string>
     <string name="dashboard_timetable_title_tomorrow">(Jutro)</string>
@@ -695,9 +764,13 @@
     <string name="dashboard_horizontal_group_error">Wystąpił błąd podczas ładowania danych</string>
     <string name="dashboard_horizontal_group_no_data">Brak</string>
     <string name="dashboard_school_diary_info">%s \nNumer w dzienniku: %s</string>
+
+
     <!--Error dialog-->
     <string name="dialog_error_check_update">Sprawdź dostępność aktualizacji</string>
     <string name="dialog_error_check_update_message">Przed zgłoszeniem błędu sprawdź wcześniej, czy dostępna jest już aktualizacja z poprawką błędu</string>
+
+
     <!--Generic-->
     <string name="all_content">Treść</string>
     <string name="all_retry">Ponów</string>
@@ -726,6 +799,8 @@
     <string name="all_change">Zmień</string>
     <string name="all_add_to_calendar">Dodaj do kalendarza</string>
     <string name="all_cancel">Anuluj</string>
+
+
     <!--Timetable Widget-->
     <string name="widget_timetable_no_items">Brak lekcji</string>
     <string name="widget_timetable_last_synchronization">Zsynchronizowano %1$s o %2$s</string>
@@ -733,6 +808,8 @@
     <string name="widget_timetable_theme_light">Jasny</string>
     <string name="widget_timetable_theme_dark">Ciemny</string>
     <string name="widget_timetable_theme_system">Motyw systemu</string>
+
+
     <!--Preferences-->
     <string name="pref_view_header">Aplikacja</string>
     <string name="pref_view_list">Domyślny widok</string>
@@ -826,6 +903,8 @@
     <string name="pref_advanced_category">Zaawansowane</string>
     <string name="pref_about_category_summary">Wersja aplikacji, twórcy, media społecznościowe</string>
     <string name="pref_ads_category_summary">Wyświetlanie reklam, wsparcie projektu</string>
+
+
     <!--Notification Channels-->
     <string name="channel_new_grades">Nowe oceny</string>
     <string name="channel_new_homework">Nowe zadania domowe</string>
@@ -840,6 +919,8 @@
     <string name="channel_debug">Debugowanie</string>
     <string name="channel_change_timetable">Zmiany planu lekcji</string>
     <string name="channel_new_attendance">Nowe frekwencje</string>
+
+
     <!--Colors-->
     <string name="all_black">Czarny</string>
     <string name="all_red">Czerwony</string>
@@ -847,15 +928,21 @@
     <string name="all_green">Zielony</string>
     <string name="all_purple">Fioletowy</string>
     <string name="all_empty_color">Brak koloru</string>
+
+
     <!--Update helper-->
     <string name="update_download_started">Rozpoczęto pobieranie aktualizacji…</string>
     <string name="update_download_success">Aktualizacja została pobrana.</string>
     <string name="update_download_success_button">Uruchom ponownie</string>
     <string name="update_failed">Aktualizacja nie powiodła się! Wezuwiusz może nie działać prawidłowo. Rozważ aktualizację</string>
+
+
     <!--Menu order-->
     <string name="menu_order_confirm_title">Ponowne uruchomienie aplikacji</string>
     <string name="menu_order_confirm_content">W celu zapisania zmian aplikacja musi zostać ponownie uruchomiona</string>
     <string name="menu_order_confirm_restart">Uruchom ponownie</string>
+
+
     <!--Auth-->
     <string name="auth_api_error">Autoryzacja została odrzucona. Podano dane niezgodne z danymi w sekretariacie.</string>
     <string name="auth_invalid_error">Nieprawidłowy PESEL</string>
@@ -865,12 +952,18 @@
     <string name="auth_title">Autoryzacja</string>
     <string name="auth_description">Szanowny Rodzicu,&lt;br/&gt;&lt;br/&gt;W celu autoryzacji i zapewnienia bezpieczeństwa danych, uprzejmie prosimy o wprowadzenie poniżej numeru PESEL ucznia &lt;b&gt;%1$s&lt;/b&gt;. Te informacje są niezbędne do prawidłowego przypisania dostępu i ochrony danych osobowych zgodnie z obowiązującymi przepisami.&lt;br/&gt;&lt;br/&gt;Po wprowadzeniu danych, będą one weryfikowane w celu zapewnienia, że dostęp do systemu VULCAN jest przyznawany wyłącznie upoważnionym osobom. W przypadku jakichkolwiek wątpliwości lub problemów, prosimy o kontakt z administratorem dziennika szkolnego w celu wyjaśnienia sytuacji.&lt;br/&gt;&lt;br/&gt;Zachowujemy najwyższe standardy ochrony danych osobowych i zapewniamy, że wszelkie przekazane informacje są chronione. Wezuwiusz nie przechowuje ani nie przetwarza numeru PESEL.&lt;br/&gt;&lt;br/&gt;Przypominamy, że podanie pełnych i prawdziwych danych jest obowiązkowe i konieczne do korzystania z systemu VULCAN.</string>
     <string name="auth_button_skip">Na razie pomiń</string>
+
+
     <!--Captcha-->
     <string name="captcha_dialog_title">Strona dziennika VULCAN wymaga weryfikacji</string>
     <string name="captcha_dialog_description"><b>Dlaczego to widzę?</b>\nStrona internetowa dziennika, z której Wezuwiusz pobiera dane, wyświetla ten sam ekran jak powyżej, więc Wezuwiusz musi również ją pokazać, aby móc pobrać dane z tej witryny. Nie da się tego obejść</string>
     <string name="captcha_verified_message">Pomyślnie zweryfikowano</string>
+
+
     <!--Panic mode-->
     <string name="panic_mode_title">Dostęp awaryjny</string>
+
+
     <!--Errors-->
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_invalid_device_datetime">Wystąpił błąd. Sprawdź poprawność daty w urządzeniu</string>
@@ -887,9 +980,12 @@
     <string name="error_feature_disabled">Funkcja wyłączona przez szkołę</string>
     <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w trybie innym niż Mobilne API</string>
     <string name="error_field_required">To pole jest wymagane</string>
+
+
     <!-- Mute system -->
     <string name="message_mute">Wycisz</string>
     <string name="message_unmute">Wyłącz wyciszenie</string>
-    <string name="message_mute_success">Wyciszyleś tego użytkownika</string>
+    <string name="message_mute_success">Wyciszyłeś tego użytkownika</string>
     <string name="message_unmute_success">Wyłączyłeś wyciszenie tego użytkownika</string>
+
 </resources>
