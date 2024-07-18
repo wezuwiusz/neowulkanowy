@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
@@ -325,16 +324,6 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
 
     override fun showInAppReview() {
         inAppReviewHelper.showInAppReview(this)
-    }
-
-    override fun showAppSupport() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.main_support_title)
-            .setMessage(R.string.main_support_description)
-            .setPositiveButton(R.string.main_support_positive) { _, _ -> presenter.onEnableAdsSelected() }
-            .setNegativeButton(android.R.string.cancel) { _, _ -> }
-            .setOnDismissListener { }
-            .show()
     }
 
     @OptIn(FlowPreview::class)

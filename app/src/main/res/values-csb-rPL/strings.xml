@@ -100,9 +100,6 @@
     <string name="main_session_relogin">Sesja zgasłô, zalogùj sã znôwa</string>
     <string name="main_expired_credentials_title">Parola zgasłô abò òsta zmieniona</string>
     <string name="main_expired_credentials_description">Parola do twòjégò kònta zgasłô abò òsta zmieniona. Mùszisz zalogòwac sã znôwa do Wùlkanowégò</string>
-    <string name="main_support_title">Wspiarcé aplikacëje</string>
-    <string name="main_support_description">Widzy cë sã ta aplikacëjô? Wësprzë ji rozwój pòprzez włączenié nieszkòdzącëch reklamów, chtërne mòżesz wëłączëc w kôżdim mòmence</string>
-    <string name="main_support_positive">Włączë reklamë</string>
     <!--Grade-->
     <string name="grade_header">Taksa</string>
     <string name="grade_semester">Semestr %s</string>
@@ -739,23 +736,10 @@
     <string name="pref_other_optional_arithmetic_average">Licz strzédną aritmeticzną, ga niżôdnô taksa ni ma wôdżi</string>
     <string name="pref_other_incognito_mode">Trib incognito</string>
     <string name="pref_other_incognito_mode_summary">Nie jinfòrmùj ò przeczëtaniu wiadë</string>
-    <string name="pref_ads_support_category_name">Wspiarcé</string>
-    <string name="pref_ads_privacy_policy">Pòlitëka priwatnoscë</string>
-    <string name="pref_ads_agreements">Zgòdë</string>
-    <string name="pref_ads_consent">Pòkôżë zgòdã na òbrabianié danëch</string>
-    <string name="pref_ads_show_in_app">Pòkôżë reklamë w aplikacëje</string>
-    <string name="pref_ads_support">Òbezdrzë jedurną reklamã, bë wesprzec projekt</string>
-    <string name="pref_ads_privacy_title">Zgòdã na przerôbianié danëch</string>
-    <string name="pref_ads_privacy_description">Abë òbézdrzëc reklamã, mùszisz sã zgòdzyc na warënczi przerôbianiégò danëch zawôrtë w naszi Pòlitëce Priwatnoscë</string>
-    <string name="pref_ads_privacy_agree">Zgôdzóm sã</string>
-    <string name="pref_ads_privacy_link">Pòlitëka priwatnoscë</string>
-    <string name="pref_ads_loading">Reklama sã ładuje</string>
-    <string name="pref_ads_once_per_visit">Dzãkùjemë za wspiarcé, wrócë pózdni pò wicy reklamów</string>
     <string name="pref_settings_advanced_title">Zaawansowóné</string>
     <string name="pref_settings_appearance_title">Wëzdrzatk i zachòwanié</string>
     <string name="pref_settings_notifications_title">Wiadła</string>
     <string name="pref_settings_sync_title">Synchronizacëjô</string>
-    <string name="pref_settings_ads_title">Reklamë</string>
     <string name="pref_grades_appearance_header">Taksë</string>
     <string name="pref_dashboard_appearance_header">Doma</string>
     <string name="pref_dashboard_appearance_tiles_title">Widocznosc kachlów</string>
@@ -775,7 +759,6 @@
     <string name="pref_advanced_category_summary">Wôrtnoscë plusa i minusa, òbliczanié strzédny</string>
     <string name="pref_advanced_category">Zaawansowóné</string>
     <string name="pref_about_category_summary">Wersëjô aplikacëje, twórcë, spòlëznowé media</string>
-    <string name="pref_ads_category_summary">Wëswietlanié reklamów, wspiarcé projektu</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Nowé taksë</string>
     <string name="channel_new_homework">Nowé zadanié dodóm</string>

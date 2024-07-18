@@ -100,9 +100,6 @@
     <string name="main_session_relogin">Сеанс истёк, авторизуйтесь снова</string>
     <string name="main_expired_credentials_title">Срок действия пароля истек или был изменен</string>
     <string name="main_expired_credentials_description">Пароль вашей учетной записи устарел или был изменен. Вам нужно будет войти в Wezuwiusz снова</string>
-    <string name="main_support_title">Поддержка приложения</string>
-    <string name="main_support_description">Вам нравится это приложение? Поддержите его разработку, включив неинвазивную рекламу, которую можно отключить в любое время</string>
-    <string name="main_support_positive">Включить рекламу</string>
     <!--Grade-->
     <string name="grade_header">Оценка</string>
     <string name="grade_semester">%s семестр</string>
@@ -786,23 +783,10 @@
     <string name="pref_other_optional_arithmetic_average">Показывать среднее арифметическое при отсутствии стоимости</string>
     <string name="pref_other_incognito_mode">Режим инкогнито</string>
     <string name="pref_other_incognito_mode_summary">Не сообщать о чтении сообщения</string>
-    <string name="pref_ads_support_category_name">Поддержка</string>
-    <string name="pref_ads_privacy_policy">Политика приватности</string>
-    <string name="pref_ads_agreements">Соглашения</string>
-    <string name="pref_ads_consent">Показать согласие на обработку данных</string>
-    <string name="pref_ads_show_in_app">Показать рекламу в приложении</string>
-    <string name="pref_ads_support">Посмотреть рекламу для поддержки проекта</string>
-    <string name="pref_ads_privacy_title">Согласие на обработку данных</string>
-    <string name="pref_ads_privacy_description">Для просмотра рекламы вы должны согласиться с условиями обработки данных нашей Политики конфиденциальности</string>
-    <string name="pref_ads_privacy_agree">Согласиться</string>
-    <string name="pref_ads_privacy_link">Политика конфиденциальности</string>
-    <string name="pref_ads_loading">Реклама загружается</string>
-    <string name="pref_ads_once_per_visit">Спасибо за вашу поддержку, возвращайтесь позже для дополнительной рекламы</string>
     <string name="pref_settings_advanced_title">Расширенные</string>
     <string name="pref_settings_appearance_title">Внешний вид и поведение</string>
     <string name="pref_settings_notifications_title">Уведомления</string>
     <string name="pref_settings_sync_title">Синхронизация</string>
-    <string name="pref_settings_ads_title">Реклама</string>
     <string name="pref_grades_appearance_header">Оценки</string>
     <string name="pref_dashboard_appearance_header">Главная</string>
     <string name="pref_dashboard_appearance_tiles_title">Видимость плиток</string>
@@ -822,7 +806,6 @@
     <string name="pref_advanced_category_summary">Значения плюса и минуса, расчёт средней оценки</string>
     <string name="pref_advanced_category">Расширенные</string>
     <string name="pref_about_category_summary">Версия приложения, разработчики, соц. сети</string>
-    <string name="pref_ads_category_summary">Посмотреть рекламу, чтобы поддержать проект</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Новые оценки</string>
     <string name="channel_new_homework">Новое домашнее задание</string>

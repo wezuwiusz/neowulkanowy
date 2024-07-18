@@ -100,9 +100,6 @@
     <string name="main_session_relogin">Relace vypršela. Přihlaste se prosím znovu</string>
     <string name="main_expired_credentials_title">Heslo vypršelo nebo bylo změněno</string>
     <string name="main_expired_credentials_description">Platnost hesla k vašemu účtu vypršela nebo bylo změněno. Budete se muset znovu přihlásit do Wulkanového</string>
-    <string name="main_support_title">Podpora aplikace</string>
-    <string name="main_support_description">Líbí se Vám tato aplikace? Podpořte její vývoj tím, že povolíte neinvazivní reklamy, které můžete kdykoliv vypnout</string>
-    <string name="main_support_positive">Zapnout reklamy</string>
     <!--Grade-->
     <string name="grade_header">Známka</string>
     <string name="grade_semester">Pololetí %s</string>
@@ -786,23 +783,10 @@
     <string name="pref_other_optional_arithmetic_average">Vypočítat aritmetický průměr, pokud žádná známka nemá váhu</string>
     <string name="pref_other_incognito_mode">Anonymní režim</string>
     <string name="pref_other_incognito_mode_summary">Neinformovat o přečtení zprávy</string>
-    <string name="pref_ads_support_category_name">Podpora</string>
-    <string name="pref_ads_privacy_policy">Ochrana osobních údajů</string>
-    <string name="pref_ads_agreements">Souhlasy</string>
-    <string name="pref_ads_consent">Zobrazit souhlas se zpracováním údajů</string>
-    <string name="pref_ads_show_in_app">Zobrazit reklamy v aplikaci</string>
-    <string name="pref_ads_support">Podívejte se na jednu reklamu pro podporu projektu</string>
-    <string name="pref_ads_privacy_title">Souhlas se zpracováním dat</string>
-    <string name="pref_ads_privacy_description">Jestli chcete sledovat reklamu, musíte souhlasit s podmínkami zpracování údajů v našich Zásadách Ochrany Osobních Údajů</string>
-    <string name="pref_ads_privacy_agree">Souhlasím</string>
-    <string name="pref_ads_privacy_link">Ochrana osobních údajů</string>
-    <string name="pref_ads_loading">Reklama se načítá</string>
-    <string name="pref_ads_once_per_visit">Děkujeme za vaši podporu, vraťte se později pro více reklam</string>
     <string name="pref_settings_advanced_title">Pokročilé</string>
     <string name="pref_settings_appearance_title">Vzhled a chování</string>
     <string name="pref_settings_notifications_title">Oznámení</string>
     <string name="pref_settings_sync_title">Synchronizace</string>
-    <string name="pref_settings_ads_title">Reklamy</string>
     <string name="pref_grades_appearance_header">Známky</string>
     <string name="pref_dashboard_appearance_header">Domů</string>
     <string name="pref_dashboard_appearance_tiles_title">Viditelnost dlaždic</string>
@@ -822,7 +806,6 @@
     <string name="pref_advanced_category_summary">Hodnota plusu a mínusu, výpočet průměru</string>
     <string name="pref_advanced_category">Pokročilé</string>
     <string name="pref_about_category_summary">Verze aplikace, tvůrci, sociální portály</string>
-    <string name="pref_ads_category_summary">Zobrazování reklam, podpora projektu</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Nové známky</string>
     <string name="channel_new_homework">Nové domácí úkoly</string>

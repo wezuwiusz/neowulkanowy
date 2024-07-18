@@ -100,9 +100,6 @@
     <string name="main_session_relogin">Die Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein</string>
     <string name="main_expired_credentials_title">Das Passwort ist abgelaufen oder wurde geändert</string>
     <string name="main_expired_credentials_description">Ihr Passwort ist abgelaufen oder wurde geändert. Sie müssen sich erneut bei Wezuwiusz anmelden</string>
-    <string name="main_support_title">Anwendungsunterstützung</string>
-    <string name="main_support_description">Gefällt Ihnen diese App? Unterstützen Sie ihre Entwicklung, indem Sie nicht-invasive Werbung aktivieren, die Sie jederzeit deaktivieren können</string>
-    <string name="main_support_positive">Werbung aktivieren</string>
     <!--Grade-->
     <string name="grade_header">Note</string>
     <string name="grade_semester">Semester %s</string>
@@ -692,23 +689,10 @@
     <string name="pref_other_optional_arithmetic_average">Arithmetisches Mittel anzeigen, wenn keine Gewichte angegeben sind</string>
     <string name="pref_other_incognito_mode">Inkognito-Modus</string>
     <string name="pref_other_incognito_mode_summary">Nicht über das Lesen der Nachricht informieren</string>
-    <string name="pref_ads_support_category_name">Unterstützung</string>
-    <string name="pref_ads_privacy_policy">Datenschutz-Bestimmungen</string>
-    <string name="pref_ads_agreements">Vereinbarungen</string>
-    <string name="pref_ads_consent">Einwilligung zur Datenverarbeitung zeigen</string>
-    <string name="pref_ads_show_in_app">Anzeigen in der App anzeigen</string>
-    <string name="pref_ads_support">Einzelanzeige ansehen, um Projekt zu unterstützen</string>
-    <string name="pref_ads_privacy_title">Einwilligung in die Datenverarbeitung</string>
-    <string name="pref_ads_privacy_description">Um eine Anzeige zu sehen, müssen Sie mit den Datenverarbeitungsbedingungen unserer Datenschutzerklärung einverstanden sein</string>
-    <string name="pref_ads_privacy_agree">Einverstanden</string>
-    <string name="pref_ads_privacy_link">Datenschutzerklärung</string>
-    <string name="pref_ads_loading">Anzeige wird geladen</string>
-    <string name="pref_ads_once_per_visit">Vielen Dank für Ihre Unterstützung, kommen Sie später wieder für weitere Anzeigen</string>
     <string name="pref_settings_advanced_title">Erweitert</string>
     <string name="pref_settings_appearance_title">Aussehen &amp; Verhalten</string>
     <string name="pref_settings_notifications_title">Benachrichtigungen</string>
     <string name="pref_settings_sync_title">Synchronisierung</string>
-    <string name="pref_settings_ads_title">Werbung</string>
     <string name="pref_grades_appearance_header">Noten</string>
     <string name="pref_dashboard_appearance_header">Dashboard</string>
     <string name="pref_dashboard_appearance_tiles_title">Sichtbarkeit der Kacheln</string>
@@ -728,7 +712,6 @@
     <string name="pref_advanced_category_summary">Plus und Minus Werte, Durchschnittsberechnung</string>
     <string name="pref_advanced_category">Erweitert</string>
     <string name="pref_about_category_summary">App-Version, Mitwirkende, soziale Portale</string>
-    <string name="pref_ads_category_summary">Anzeigen, Projektunterstützung</string>
     <!--Notification Channels-->
     <string name="channel_new_grades">Neue Noten</string>
     <string name="channel_new_homework">Neue Hausaufgaben</string>

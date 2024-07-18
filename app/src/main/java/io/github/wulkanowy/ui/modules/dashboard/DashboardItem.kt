@@ -3,7 +3,6 @@ package io.github.wulkanowy.ui.modules.dashboard
 import io.github.wulkanowy.data.db.entities.*
 import io.github.wulkanowy.data.enums.GradeColorTheme
 import io.github.wulkanowy.data.pojos.TimetableFull
-import io.github.wulkanowy.utils.AdBanner
 import io.github.wulkanowy.data.db.entities.Homework as EntitiesHomework
 
 sealed class DashboardItem(val type: Type) {
@@ -111,15 +110,6 @@ sealed class DashboardItem(val type: Type) {
         override val isDataLoaded get() = conferences != null
     }
 
-    data class Ads(
-        val adBanner: AdBanner? = null,
-        override val error: Throwable? = null,
-        override val isLoading: Boolean = false
-    ) : DashboardItem(Type.ADS) {
-
-        override val isDataLoaded get() = adBanner != null
-    }
-
     data class PanicMode(
         override val error: Throwable? = null,
         override val isLoading: Boolean = false
@@ -133,7 +123,6 @@ sealed class DashboardItem(val type: Type) {
         ACCOUNT,
         HORIZONTAL_GROUP,
         LESSONS,
-        ADS,
         GRADES,
         HOMEWORK,
         ANNOUNCEMENTS,
@@ -149,7 +138,6 @@ sealed class DashboardItem(val type: Type) {
         MESSAGES,
         ATTENDANCE,
         LESSONS,
-        ADS,
         GRADES,
         HOMEWORK,
         ANNOUNCEMENTS,
@@ -171,6 +159,5 @@ fun DashboardItem.Tile.toDashboardItemType() = when (this) {
     DashboardItem.Tile.ANNOUNCEMENTS -> DashboardItem.Type.ANNOUNCEMENTS
     DashboardItem.Tile.EXAMS -> DashboardItem.Type.EXAMS
     DashboardItem.Tile.CONFERENCES -> DashboardItem.Type.CONFERENCES
-    DashboardItem.Tile.ADS -> DashboardItem.Type.ADS
     DashboardItem.Tile.PANIC_MODE -> DashboardItem.Type.PANIC_MODE
 }

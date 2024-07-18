@@ -29,7 +29,6 @@ import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
 import io.github.wulkanowy.domain.timetable.IsStudentHasLessonsOnWeekendUseCase
 import io.github.wulkanowy.ui.base.BasePresenter
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.calculatePercentage
 import io.github.wulkanowy.utils.nextOrSameSchoolDay
 import io.github.wulkanowy.utils.sunday
@@ -38,7 +37,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -68,7 +66,6 @@ class DashboardPresenter @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val schoolAnnouncementRepository: SchoolAnnouncementRepository,
     private val getAppropriateAdminMessageUseCase: GetAppropriateAdminMessageUseCase,
-    private val adsHelper: AdsHelper
 ) : BasePresenter<DashboardView>(errorHandler, studentRepository) {
 
     private val dashboardItemLoadedList = mutableListOf<DashboardItem>()
@@ -83,7 +80,6 @@ class DashboardPresenter @Inject constructor(
 
     private val selectedDashboardTiles
         get() = preferencesRepository.selectedDashboardTiles
-            .filterNot { it == DashboardItem.Tile.ADS && !adsHelper.canShowAd }
             .toSet()
 
     private lateinit var lastError: Throwable
@@ -99,17 +95,9 @@ class DashboardPresenter @Inject constructor(
 
         val selectedDashboardTilesFlow = preferencesRepository.selectedDashboardTilesFlow
             .map { selectedDashboardTiles }
-        val isAdsEnabledFlow = preferencesRepository.isAdsEnabledFlow
-            .filter { (adsHelper.canShowAd && it) || !it }
-            .map { selectedDashboardTiles }
-        val isMobileAdsSdkInitializedFlow = adsHelper.isMobileAdsSdkInitialized
-            .filter { it }
-            .map { selectedDashboardTiles }
 
         merge(
-            selectedDashboardTilesFlow,
-            isAdsEnabledFlow,
-            isMobileAdsSdkInitializedFlow
+            selectedDashboardTilesFlow
         )
             .onEach { loadData(tilesToLoad = it) }
             .launch("dashboard_pref")
@@ -225,7 +213,6 @@ class DashboardPresenter @Inject constructor(
                         loadConferences(student, forceRefresh)
                     }
 
-                    DashboardItem.Type.ADS -> loadAds(forceRefresh)
                     DashboardItem.Type.ADMIN_MESSAGE -> loadAdminMessage(student, forceRefresh)
                     DashboardItem.Type.PANIC_MODE -> updateData(DashboardItem.PanicMode(), false)
                 }
@@ -716,23 +703,6 @@ class DashboardPresenter @Inject constructor(
             .launchWithUniqueRefreshJob("dashboard_admin_messages", forceRefresh)
     }
 
-    private fun loadAds(forceRefresh: Boolean) {
-        presenterScope.launch {
-            if (!forceRefresh) {
-                updateData(DashboardItem.Ads(), false)
-            }
-
-            val dashboardAdItem =
-                runCatching {
-                    DashboardItem.Ads(adsHelper.getDashboardTileAdBanner(view!!.tileWidth))
-                }
-                    .onFailure { Timber.e(it) }
-                    .getOrElse { DashboardItem.Ads(error = it) }
-
-            updateData(dashboardAdItem, forceRefresh)
-        }
-    }
-
     private fun updateData(dashboardItem: DashboardItem, forceRefresh: Boolean) {
         val isForceRefreshError = forceRefresh && dashboardItem.error != null
         val isFirstRunDataLoadedError =
@@ -754,18 +724,6 @@ class DashboardPresenter @Inject constructor(
             } else {
                 dashboardItemsToLoad = dashboardItemsToLoad + DashboardItem.Type.ADMIN_MESSAGE
                 dashboardTileLoadedList = dashboardTileLoadedList + DashboardItem.Tile.ADMIN_MESSAGE
-            }
-        }
-
-        if (dashboardItem is DashboardItem.Ads) {
-            if (!dashboardItem.isDataLoaded) {
-                dashboardItemsToLoad = dashboardItemsToLoad - DashboardItem.Type.ADS
-                dashboardTileLoadedList = dashboardTileLoadedList - DashboardItem.Tile.ADS
-
-                dashboardItemLoadedList.removeAll { it.type == DashboardItem.Type.ADS }
-            } else {
-                dashboardItemsToLoad = dashboardItemsToLoad + DashboardItem.Type.ADS
-                dashboardTileLoadedList = dashboardTileLoadedList + DashboardItem.Tile.ADS
             }
         }
 

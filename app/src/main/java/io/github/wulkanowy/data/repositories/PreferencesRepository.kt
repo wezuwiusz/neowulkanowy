@@ -275,7 +275,6 @@ class PreferencesRepository @Inject constructor(
                         listOfNotNull(
                             DashboardItem.Tile.ACCOUNT,
                             DashboardItem.Tile.ADMIN_MESSAGE,
-                            DashboardItem.Tile.ADS.takeIf { isAdsEnabled }
                         )
                     )
                     .toSet()
@@ -288,7 +287,6 @@ class PreferencesRepository @Inject constructor(
                 listOfNotNull(
                     DashboardItem.Tile.ACCOUNT,
                     DashboardItem.Tile.ADMIN_MESSAGE,
-                    DashboardItem.Tile.ADS.takeIf { isAdsEnabled }
                 )
             )
             .toSet()
@@ -337,20 +335,6 @@ class PreferencesRepository @Inject constructor(
     var isAppSupportShown: Boolean
         get() = sharedPref.getBoolean(PREF_KEY_APP_SUPPORT_SHOWN, false)
         set(value) = sharedPref.edit { putBoolean(PREF_KEY_APP_SUPPORT_SHOWN, value) }
-
-    val isAdsEnabledFlow = flowSharedPref.getBoolean(
-        context.getString(R.string.pref_key_ads_enabled),
-        context.resources.getBoolean(R.bool.pref_default_ads_enabled)
-    ).asFlow()
-
-    var isAdsEnabled: Boolean
-        get() = getBoolean(
-            R.string.pref_key_ads_enabled,
-            R.bool.pref_default_ads_enabled
-        )
-        set(value) = sharedPref.edit {
-            putBoolean(context.getString(R.string.pref_key_ads_enabled), value)
-        }
 
     var appMenuItemOrder: List<AppMenuItem>
         get() {

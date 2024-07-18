@@ -6,7 +6,6 @@ import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.repositories.WulkanowyRepository
 import io.github.wulkanowy.services.sync.SyncManager
 import io.github.wulkanowy.ui.base.ErrorHandler
-import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
 import io.mockk.MockKAnnotations
@@ -50,9 +49,6 @@ class MainPresenterTest {
     @MockK(relaxed = true)
     lateinit var appInfo: AppInfo
 
-    @MockK(relaxed = true)
-    lateinit var adsHelper: AdsHelper
-
     private lateinit var presenter: MainPresenter
 
     @Before
@@ -69,7 +65,6 @@ class MainPresenterTest {
             analytics = analytics,
             json = Json,
             appInfo = appInfo,
-            adsHelper = adsHelper,
             wulkanowyRepository = wulkanowyRepository
         )
         presenter.onAttachView(mainView, null)

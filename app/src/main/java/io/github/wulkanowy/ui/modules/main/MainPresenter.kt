@@ -16,7 +16,6 @@ import io.github.wulkanowy.ui.modules.Destination
 import io.github.wulkanowy.ui.modules.account.AccountView
 import io.github.wulkanowy.ui.modules.account.accountdetails.AccountDetailsView
 import io.github.wulkanowy.ui.modules.studentinfo.StudentInfoView
-import io.github.wulkanowy.utils.AdsHelper
 import io.github.wulkanowy.utils.AnalyticsHelper
 import io.github.wulkanowy.utils.AppInfo
 import kotlinx.coroutines.launch
@@ -34,7 +33,6 @@ class MainPresenter @Inject constructor(
     private val syncManager: SyncManager,
     private val analytics: AnalyticsHelper,
     private val json: Json,
-    private val adsHelper: AdsHelper,
     private val appInfo: AppInfo
 ) : BasePresenter<MainView>(errorHandler, studentRepository) {
 
@@ -74,7 +72,6 @@ class MainPresenter @Inject constructor(
 
         syncManager.startPeriodicSyncWorker()
 
-        checkAppSupport()
         updateCurrentStudentAuthStatus()
 
         analytics.logEvent("app_open", "destination" to initDestination.toString())
@@ -151,11 +148,6 @@ class MainPresenter @Inject constructor(
         } == true
     }
 
-    fun onEnableAdsSelected() {
-        preferencesRepository.isAdsEnabled = true
-        adsHelper.initialize()
-    }
-
     private fun checkInAppReview() {
         preferencesRepository.inAppReviewCount++
 
@@ -168,23 +160,6 @@ class MainPresenter @Inject constructor(
         ) {
             view?.showInAppReview()
             preferencesRepository.isAppReviewDone = true
-        }
-    }
-
-    private fun checkAppSupport() {
-        if (!preferencesRepository.isAppSupportShown && !preferencesRepository.isAdsEnabled
-            && appInfo.buildFlavor == "play"
-        ) {
-            presenterScope.launch {
-                val student = runCatching { studentRepository.getCurrentStudent(false) }
-                    .onFailure { Timber.e(it) }
-                    .getOrElse { return@launch }
-
-                if (Instant.now().minus(Duration.ofDays(28)).isAfter(student.registrationDate)) {
-                    preferencesRepository.isAppSupportShown = true
-                    view?.showAppSupport()
-                }
-            }
         }
     }
 

@@ -123,10 +123,6 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
                 onAdminMessageClickListener = onAdminMessageClickListener,
             )
 
-            DashboardItem.Type.ADS.ordinal -> AdsViewHolder(
-                ItemDashboardAdsBinding.inflate(inflater, parent, false)
-            )
-
             DashboardItem.Type.PANIC_MODE.ordinal -> PanicModeViewHolder(
                 ItemDashboardPanicButtonBinding.inflate(inflater, parent, false),
                 onPanicButtonClickListener = onPanicButtonClickListener,
@@ -149,8 +145,6 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             is AdminMessageViewHolder -> holder.bind(
                 (items[position] as DashboardItem.AdminMessages).adminMessage,
             )
-
-            is AdsViewHolder -> bindAdsViewHolder(holder, position)
             is PanicModeViewHolder -> bindPanicViewHolder(holder)
         }
     }
@@ -772,20 +766,6 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
         }
     }
 
-    private fun bindAdsViewHolder(adsViewHolder: AdsViewHolder, position: Int) {
-        val item = (items[position] as DashboardItem.Ads).adBanner ?: return
-        val binding = adsViewHolder.binding
-
-        binding.dashboardAdminMessageItemContent.removeAllViews()
-        binding.dashboardAdminMessageItemContent.addView(
-            item.view,
-            ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        )
-    }
-
     private fun bindPanicViewHolder(panicViewHolder: PanicModeViewHolder) {
         panicViewHolder.bind()
         val binding = panicViewHolder.binding
@@ -830,9 +810,6 @@ class DashboardAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
 
         val adapter by lazy { DashboardConferencesAdapter() }
     }
-
-    class AdsViewHolder(val binding: ItemDashboardAdsBinding) :
-        RecyclerView.ViewHolder(binding.root)
 
     private class DiffCallback(
         private val newList: List<DashboardItem>,
