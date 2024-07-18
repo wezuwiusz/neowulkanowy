@@ -163,7 +163,7 @@ class MessageRepository @Inject constructor(
     ): Flow<Resource<MessageWithAttachment?>> = networkBoundResource(
         isResultEmpty = { it?.message?.content.isNullOrBlank() },
         shouldFetch = {
-            checkNotNull(it) { "This message no longer exist!" }
+            checkNotNull(it) { "This message no longer exists!" }
             Timber.d("Message content in db empty: ${it.message.content.isBlank()}")
             (it.message.unread && markAsRead) || it.message.content.isBlank()
         },
@@ -173,7 +173,7 @@ class MessageRepository @Inject constructor(
                 .getMessageDetails(messageKey = message.messageGlobalKey)
         },
         saveFetchResult = { old, new ->
-            checkNotNull(old) { "Fetched message no longer exist!" }
+            checkNotNull(old) { "Fetched message no longer exists!" }
             messagesDb.updateAll(
                 listOf(old.message.apply {
                     id = message.id
@@ -209,7 +209,7 @@ class MessageRepository @Inject constructor(
     ): Flow<Resource<MessageWithAttachment?>> = networkBoundResource(
         isResultEmpty = { it?.message?.content.isNullOrBlank() },
         shouldFetch = {
-            checkNotNull(it) { "This message no longer exist!" }
+            checkNotNull(it) { "This message no longer exists!" }
             message.unread
         },
         query = { messagesDb.loadMessageWithAttachment(message.messageGlobalKey) },
@@ -221,7 +221,7 @@ class MessageRepository @Inject constructor(
                 )
         },
         saveFetchResult = { old, _ ->
-            checkNotNull(old) { "Fetched message no longer exist!" }
+            checkNotNull(old) { "Fetched message no longer exists!" }
             messagesDb.updateAll(
                 listOf(old.message.apply { unread = false })
             )
