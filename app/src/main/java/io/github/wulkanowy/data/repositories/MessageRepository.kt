@@ -170,10 +170,7 @@ class MessageRepository @Inject constructor(
         query = { messagesDb.loadMessageWithAttachment(message.messageGlobalKey) },
         fetch = {
             wulkanowySdkFactory.create(student)
-                .getMessageDetails(
-                    messageKey = message.messageGlobalKey,
-                    markAsRead = message.unread && markAsRead,
-                )
+                .getMessageDetails(messageKey = message.messageGlobalKey)
         },
         saveFetchResult = { old, new ->
             checkNotNull(old) { "Fetched message no longer exist!" }
@@ -194,6 +191,15 @@ class MessageRepository @Inject constructor(
             )
 
             Timber.d("Message ${message.messageId} with blank content: ${old.message.content.isBlank()}, marked as read: $markAsRead")
+        },
+        postTransaction = {
+            if(markAsRead) {
+                wulkanowySdkFactory.create()
+                    .markMessageRead(
+                        messageKey = message.messageGlobalKey,
+                        boxKey = message.mailboxKey
+                    )
+            }
         }
     )
 
