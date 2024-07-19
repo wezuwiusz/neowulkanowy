@@ -883,4 +883,11 @@
     <string name="message_unmute_success">You have unmuted this user</string>
     <string name="message_deleted_message">Deleted message</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_title">Welcome to\nDzienniczek Wezuwiusz!</string>
+    <string name="onboarding_text_warning">Dzienniczek Wezuwiusz IS NOT an official app for the Vulcan e-register.</string>
+    <string name="onboarding_text_about">Dzienniczek Wezuwiusz is an app created by students, for students and parents.</string>
+    <string name="onboarding_text_dev">This app is free (as in freedom) software. If you know how to code, we encourage you to participate in it\'s development!</string>
+    <string name="onboarding_text_hate">We are not related to VULCAN and we do not condone any hate towards them.</string>
+    <string name="onboarding_button_agree">Agree</string>
 </resources>

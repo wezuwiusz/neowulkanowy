@@ -971,4 +971,11 @@
     <string name="message_mute_success">Wyciszyłeś tego użytkownika</string>
     <string name="message_unmute_success">Wyłączyłeś wyciszenie tego użytkownika</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_title">Witaj w\nDzienniczku Wezuwiusz!</string>
+    <string name="onboarding_text_warning">Dzienniczek Wezuwiusz NIE JEST oficjalną aplikacją dziennika VULCAN.</string>
+    <string name="onboarding_text_about">Dzienniczek Wezuwiusz jest aplikacją tworzoną przez uczniów, dla uczniów oraz rodziców.</string>
+    <string name="onboarding_text_dev">Aplikacja jest wolnym oprogramowaniem. Jeżeli umiesz programować, zachęcamy cię do dołączenia nas w jej tworzeniu!</string>
+    <string name="onboarding_text_hate">Nie jesteśmy związani z firmą VULCAN i nie aprobujemy hejtu na nią.</string>
+    <string name="onboarding_button_agree">Akceptuję</string>
 </resources>
