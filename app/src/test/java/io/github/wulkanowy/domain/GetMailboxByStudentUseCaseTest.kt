@@ -225,6 +225,7 @@ class GetMailboxByStudentUseCaseTest {
         isAuthorized = false,
         isEduOne = false,
         diaryNumber = 1,
-        constituentUnitId = 1
+        constituentUnitId = 1,
+        partition = "powiatwezuwiusz-000000"
     )
 }

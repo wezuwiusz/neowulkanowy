@@ -75,7 +75,8 @@ fun getStudentEntity(mode: Sdk.Mode = Sdk.Mode.HEBE) = Student(
     isEduOne = false,
     isAuthorized = false,
     diaryNumber = 1,
-    constituentUnitId = 1
+    constituentUnitId = 1,
+    partition = "powiatwezuwiusz-000000"
 ).apply {
     id = 1
 }
