@@ -26,7 +26,6 @@ open class AppInfo @Inject constructor() {
     open val systemModel: String get() = Build.MODEL
 
     open val messagesBaseUrl: String = BuildConfig.MESSAGES_BASE_URL
-    open val schoolsBaseUrl: String = BuildConfig.SCHOOLS_BASE_URL
 
     @Suppress("DEPRECATION")
     open val systemLanguage: String

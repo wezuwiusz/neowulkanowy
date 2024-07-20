@@ -77,7 +77,7 @@ class GradeAverageProviderTest {
         isEduOne = false,
         diaryNumber = 1,
         constituentUnitId = 1,
-        partition = "powiatwulkanowy-000000"
+        partition = "powiatwezuwiusz-000000"
     )
 
     private val semesters = mutableListOf(

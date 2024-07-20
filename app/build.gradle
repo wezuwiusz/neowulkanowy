@@ -61,7 +61,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             buildConfigField "String", "MESSAGES_BASE_URL", "\"https://messages.wezuwiusz.eu/\""
-            buildConfigField "String", "SCHOOLS_BASE_URL", '"https://schools.wulkanowy.net.pl"'
         }
         debug {
             minifyEnabled false
@@ -70,7 +69,6 @@ android {
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
             buildConfigField "String", "MESSAGES_BASE_URL", "\"https://messages.wezuwiusz.eu/\""
-            buildConfigField "String", "SCHOOLS_BASE_URL", '"https://schools.wulkanowy.net.pl"'
         }
     }
 
@@ -242,7 +240,6 @@ dependencies {
     implementation 'com.fredporciuncula:flow-preferences:1.9.1'
     implementation 'org.apache.commons:commons-text:1.12.0'
 
-    playImplementation "com.google.android.play:integrity:1.3.0"
     playImplementation 'com.google.android.play:app-update-ktx:2.1.0'
     playImplementation 'com.google.android.play:review-ktx:2.0.1'
     playImplementation "com.google.android.ump:user-messaging-platform:2.2.0"

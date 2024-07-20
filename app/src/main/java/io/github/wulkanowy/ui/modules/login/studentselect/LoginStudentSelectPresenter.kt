@@ -15,7 +15,6 @@ import io.github.wulkanowy.data.pojos.RegisterSymbol
 import io.github.wulkanowy.data.pojos.RegisterUnit
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.data.repositories.PreferencesRepository
-import io.github.wulkanowy.data.repositories.SchoolsRepository
 import io.github.wulkanowy.data.repositories.StudentRepository
 import io.github.wulkanowy.data.resourceFlow
 import io.github.wulkanowy.domain.adminmessage.GetAppropriateAdminMessageUseCase
@@ -35,7 +34,6 @@ import javax.inject.Inject
 
 class LoginStudentSelectPresenter @Inject constructor(
     studentRepository: StudentRepository,
-    private val schoolsRepository: SchoolsRepository,
     private val loginErrorHandler: LoginErrorHandler,
     private val syncManager: SyncManager,
     private val analytics: AnalyticsHelper,
@@ -302,7 +300,6 @@ class LoginStudentSelectPresenter @Inject constructor(
         }
         resourceFlow {
             studentRepository.saveStudents(studentsWithSemesters)
-            schoolsRepository.logSchoolLogin(loginData, studentsWithSemesters)
         }
             .logResourceStatus("registration")
             .onEach {

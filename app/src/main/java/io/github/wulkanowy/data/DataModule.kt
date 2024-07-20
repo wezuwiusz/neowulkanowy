@@ -13,7 +13,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.github.wulkanowy.data.api.services.SchoolsService
 import io.github.wulkanowy.data.api.services.WulkanowyService
 import io.github.wulkanowy.data.db.AppDatabase
 import io.github.wulkanowy.data.db.SharedPrefProvider
@@ -73,19 +72,6 @@ internal class DataModule {
         appInfo: AppInfo
     ): WulkanowyService = Retrofit.Builder()
         .baseUrl(appInfo.messagesBaseUrl)
-        .client(okHttpClient)
-        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-        .build()
-        .create()
-
-    @Singleton
-    @Provides
-    fun provideSchoolsService(
-        okHttpClient: OkHttpClient,
-        json: Json,
-        appInfo: AppInfo,
-    ): SchoolsService = Retrofit.Builder()
-        .baseUrl(appInfo.schoolsBaseUrl)
         .client(okHttpClient)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
