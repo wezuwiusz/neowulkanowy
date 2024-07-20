@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.fragment.app.commit
+import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.RegisterUser
@@ -17,6 +18,7 @@ import io.github.wulkanowy.databinding.ActivityLoginBinding
 import io.github.wulkanowy.ui.base.BaseActivity
 import io.github.wulkanowy.ui.modules.login.advanced.LoginAdvancedFragment
 import io.github.wulkanowy.ui.modules.login.form.LoginFormFragment
+import io.github.wulkanowy.ui.modules.login.onboarding.LoginOnboardingFragment
 import io.github.wulkanowy.ui.modules.login.recover.LoginRecoverFragment
 import io.github.wulkanowy.ui.modules.login.studentselect.LoginStudentSelectFragment
 import io.github.wulkanowy.ui.modules.login.symbol.LoginSymbolFragment
@@ -52,7 +54,13 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         presenter.onAttachView(this)
         inAppUpdateHelper.checkAndInstallUpdates()
 
-        if (savedInstanceState == null) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val hasCompletedOnboarding = prefs.getBoolean("completedOnboarding", false)
+
+        if (!hasCompletedOnboarding) {
+            openFragment(LoginOnboardingFragment.newInstance(), clearBackStack = true)
+        }
+        else if (savedInstanceState == null) {
             openFragment(LoginFormFragment.newInstance(), clearBackStack = true)
         }
     }
@@ -71,6 +79,10 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
 
     fun showActionBar(show: Boolean) {
         supportActionBar?.run { if (show) show() else hide() }
+    }
+
+    fun navigateToLoginForm() {
+        openFragment(LoginFormFragment.newInstance(), clearBackStack = true)
     }
 
     fun navigateToSymbolFragment(loginData: LoginData) {
@@ -106,7 +118,11 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
     }
 
     private fun openFragment(fragment: Fragment, clearBackStack: Boolean = false) {
-        supportFragmentManager.popBackStack(fragment::class.java.name, POP_BACK_STACK_INCLUSIVE)
+        if (clearBackStack) {
+            supportFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
+        } else {
+            supportFragmentManager.popBackStack(fragment::class.java.name, POP_BACK_STACK_INCLUSIVE)
+        }
 
         supportFragmentManager.commit {
             replace(R.id.loginContainer, fragment)
