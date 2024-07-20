@@ -71,7 +71,7 @@
     <string name="login_advanced">Other options</string>
     <string name="login_advanced_warning_mobile_api">In this mode, class grade stats, excuse for absence, completed lessons, school information and preview of the list of registered devices are non-functioning</string>
     <string name="login_advanced_warning_scraper">This mode displays the same data as it appears on the register website. Unreliable, but the most functional.</string>
-    <string name="login_advanced_warning_hybrid">The combination of the best features of the other two modes. It works faster than the scrapper and provides features not available in the Mobile API mode. It will become the default mode for Wezuwiusz.</string>
+    <string name="login_advanced_warning_hybrid">The combination of the best features of the other two modes. It works faster than the scrapper and provides features not available in the Mobile API mode. It is default mode for Wezuwiusz.</string>
     <string name="login_privacy_policy">Privacy policy</string>
     <string name="login_contact_header">Trouble signing in? Contact us!</string>
     <string name="login_contact_email">Email</string>

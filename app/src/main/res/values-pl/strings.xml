@@ -71,7 +71,7 @@
     <string name="login_advanced">Inne opcje</string>
     <string name="login_advanced_warning_mobile_api">W tym trybie nie działa uczeń na tle klasy, lekcje zrealizowane, informacje o szkole i podgląd listy zarejestrowanych urządzeń.</string>
     <string name="login_advanced_warning_scraper">Tryb ten wyświetla te same dane, które widoczne są na stronie internetowej dziennika, lecz jest zawodny.</string>
-    <string name="login_advanced_warning_hybrid">Połączenie najlepszych cech dwóch pozostałych trybów. Działa szybciej niż scrapper i zapewnia funkcje niedostępne w trybie Mobilne API. Ten tryb zostanie wkrótce domyślny w Wezuwiuszu.</string>
+    <string name="login_advanced_warning_hybrid">Połączenie najlepszych cech dwóch pozostałych trybów. Działa szybciej niż scrapper i zapewnia funkcje niedostępne w trybie Mobilne API. Ten tryb jest domyślny w Wezuwiuszu.</string>
     <string name="login_privacy_policy">Polityka prywatności</string>
     <string name="login_contact_header">Problemy z logowaniem? Napisz do nas!</string>
     <string name="login_contact_email">E-mail</string>
