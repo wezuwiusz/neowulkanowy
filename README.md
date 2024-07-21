@@ -1,9 +1,8 @@
 # Wezuwiusz
 
 Nieoficjalny klient dziennika VULCAN UONET+ dla ucznia i rodzica. Fork projektu Wulkanowy,
-skupiony na rozwoju wsparcia dla mobilnego API. Celem projektu jest ukończenie wsparcia API mobilnego
-na wystarczającym poziomie, aby domyślną opcją dla wszystkich użytkowników był tryb hybrydowy SDK
-(wykorzystujemy API mobilne tam gdzie się ta, i jest wspierany scrapperem tam gdzie się nie da)
+skupiony na rozwoju wsparcia dla mobilnego API. W obecnej chwili tryb Hybrydowy SDK jest domyślny,
+a zdecydowana większość requestów jest przetwarzana przez API mobilne.
 
 [Oficjalny kanał na telegramie](https://t.me/dzienniczekwezuwiusz)
 [Oficjalny chat na telegramie](https://t.me/wezuwiuszchat)
@@ -34,9 +33,7 @@ na wystarczającym poziomie, aby domyślną opcją dla wszystkich użytkowników
 
 ## Pobierz
 
-Aktualnie projekt jest w fazie aktywnego rozwoju. Zalecam zbudowanie aplikacji ze źródeł.
-SDK neoWulkanowego obecnie nie jest w żadnym repozytorium, zatem należy zbudować je osobno i podmienić
-jar SDK w cache gradle.
+Beta 1 jest już dostępna do pobrania z [GitHub Releases](https://github.com/wezuwiusz/neowulkanowy/releases/tag/3.0.0-beta1)!
 
 ## Zbudowana za pomocą
 
