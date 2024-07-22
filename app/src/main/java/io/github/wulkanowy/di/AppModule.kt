@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.internal.Provider
 import io.github.wulkanowy.utils.DispatchersProvider
 import javax.inject.Singleton
 
@@ -22,6 +23,11 @@ internal class AppModule {
     @Singleton
     @Provides
     fun provideAppWidgetManager(@ApplicationContext context: Context): AppWidgetManager = AppWidgetManager.getInstance(context)
+
+    @Provides
+    fun provideAppWidgetManagerProvider(@ApplicationContext context: Context): Provider<AppWidgetManager> {
+        return Provider { context.getSystemService(Context.APPWIDGET_SERVICE) as AppWidgetManager }
+    }
 
     @Singleton
     @Provides
