@@ -9,17 +9,18 @@
         android:id="@+id/onboardingIcon"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_marginLeft="20pt"
         android:background="@drawable/background_grade_rounded"
         android:clipToOutline="true"
         android:importantForAccessibility="no"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/bulletPointsLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bulletPointsLayout"
         android:layout_width="220pt"
         android:layout_height="match_parent"
         app:layout_constraintRight_toRightOf="parent"
