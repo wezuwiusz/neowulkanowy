@@ -20,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.elevation.ElevationOverlayProvider
+import com.google.android.material.navigation.NavigationBarView
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavController.Companion.HIDE
 import dagger.hilt.android.AndroidEntryPoint
@@ -192,8 +193,10 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
         startMenuIndex: Int,
         rootAppMenuItems: List<AppMenuItem>
     ) {
-        with(binding.mainBottomNav) {
-            with(menu) {
+        val navigationView = binding.mainBottomNav
+
+        if (navigationView is NavigationBarView) {
+            with(navigationView.menu) {
                 rootAppMenuItems.forEachIndexed { index, item ->
                     add(Menu.NONE, index, Menu.NONE, item.title)
                         .setIcon(item.icon)
@@ -201,15 +204,22 @@ class MainActivity : BaseActivity<MainPresenter, ActivityMainBinding>(), MainVie
                 add(Menu.NONE, 4, Menu.NONE, R.string.more_title)
                     .setIcon(R.drawable.ic_main_more)
             }
-            selectedItemId = startMenuIndex
-            setOnItemSelectedListener {
-                this@MainActivity.presenter.onTabSelected(it.itemId, false)
+
+            navigationView.selectedItemId = startMenuIndex
+
+            navigationView.setOnItemSelectedListener { menuItem ->
+                this@MainActivity.presenter.onTabSelected(menuItem.itemId, false)
+                true
             }
-            setOnItemReselectedListener {
-                this@MainActivity.presenter.onTabSelected(it.itemId, true)
+
+            navigationView.setOnItemReselectedListener { menuItem ->
+                this@MainActivity.presenter.onTabSelected(menuItem.itemId, true)
             }
+        } else {
+            throw IllegalStateException("Unsupported navigation view type")
         }
     }
+
 
     private fun initializeFragmentContainer() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.mainFragmentContainer) { view, insets ->
