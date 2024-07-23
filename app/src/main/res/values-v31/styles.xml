@@ -62,4 +62,13 @@
     </style>
 
     <style name="WulkanowyTheme.Login" parent="WulkanowyTheme.NoActionBar" />
+
+    <style name="WulkanowyTheme.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/material_dynamic_primary95</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+        <item name="postSplashScreenTheme">@style/WulkanowyTheme.NoActionBar</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+
+    <color name="splash_screen_logo">@color/colorPrimary</color>
 </resources>

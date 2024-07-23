@@ -67,4 +67,13 @@
         <item name="colorOnPrimaryContainer">?attr/colorSurface</item>
         <item name="backgroundColor">@color/material_dynamic_neutral10</item>
     </style>
+
+    <style name="WulkanowyTheme.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/material_dynamic_primary10</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+        <item name="postSplashScreenTheme">@style/WulkanowyTheme.NoActionBar</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+
+    <color name="splash_screen_logo">@color/colorPrimaryDark</color>
 </resources>

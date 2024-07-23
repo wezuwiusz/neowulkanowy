@@ -74,4 +74,6 @@
         <item name="colorOnPrimaryContainer">?attr/colorSurface</item>
         <item name="backgroundColor">@color/widget_list_item_dark</item>
     </style>
+
+    <color name="splash_screen_logo">#fff</color>
 </resources>
