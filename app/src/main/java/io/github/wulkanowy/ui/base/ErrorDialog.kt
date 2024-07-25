@@ -102,7 +102,7 @@ class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
             ) + "\n" + content,
             onActivityNotFound = {
                 requireContext().openInternetBrowser(
-                    "https://github.com/wulkanowy/wulkanowy/issues",
+                    "https://github.com/wezuwiusz/neowulkanowy/issues",
                     ::showMessage
                 )
             }

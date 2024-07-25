@@ -25,7 +25,7 @@ fun Context.openInternetBrowser(uri: String, onActivityNotFound: (uri: String) -
 
 fun Context.openAppInMarket(onActivityNotFound: (uri: String) -> Unit) {
     openInternetBrowser("market://details?id=${BuildConfig.APPLICATION_ID}") {
-        openInternetBrowser("https://github.com/wulkanowy/wulkanowy/releases", onActivityNotFound)
+        openInternetBrowser("https://github.com/wezuwiusz/neowulkanowy/releases", onActivityNotFound)
     }
 }
 

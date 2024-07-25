@@ -151,7 +151,7 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
     }
 
     override fun openHomepage() {
-        context?.openInternetBrowser("https://wulkanowy.github.io/", ::showMessage)
+        context?.openInternetBrowser("https://wezuwiusz.eu/", ::showMessage)
     }
 
     override fun openEmailClient() {
@@ -168,7 +168,7 @@ class AboutFragment : BaseFragment<FragmentAboutBinding>(R.layout.fragment_about
             ),
             onActivityNotFound = {
                 requireContext().openInternetBrowser(
-                    "https://github.com/wulkanowy/wulkanowy/issues",
+                    "https://github.com/wezuwiusz/neowulkanowy/issues",
                     ::showMessage
                 )
             }

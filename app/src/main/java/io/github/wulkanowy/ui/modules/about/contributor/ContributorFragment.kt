@@ -59,7 +59,7 @@ class ContributorFragment : BaseFragment<FragmentContributorBinding>(R.layout.fr
     }
 
     override fun openGithubContributorsPage() {
-        context?.openInternetBrowser("https://github.com/wulkanowy/wulkanowy/graphs/contributors", ::showMessage)
+        context?.openInternetBrowser("https://github.com/wezuwiusz/neowulkanowy/graphs/contributors", ::showMessage)
     }
 
     override fun showProgress(show: Boolean) {
