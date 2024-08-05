@@ -127,6 +127,7 @@ class WulkanowySdkFactoryTest {
         semesters = emptyList(),
         isEduOne = isEduOne,
         diaryNumber = diaryNumber,
-        partition = "powiatwezuwiusz-000000"
+        partition = "powiatwezuwiusz-000000",
+        vContext = ""
     )
 }

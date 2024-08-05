@@ -64,6 +64,7 @@ class ErrorDialog : BaseDialogFragment<DialogErrorBinding>() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             errorDialogHumanizedMessage.text = resources.getErrorString(error)
+            errorDialogErrorHaiku.text = resources.getErrorHaiku(error)
             errorDialogErrorMessage.text = error.localizedMessage
             errorDialogErrorMessage.isGone = error.localizedMessage.isNullOrBlank()
             errorDialogContent.text = error.stackTraceToString()

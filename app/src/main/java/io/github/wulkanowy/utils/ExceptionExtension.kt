@@ -47,6 +47,30 @@ fun Resources.getErrorString(error: Throwable): String = when (error) {
     else -> R.string.error_unknown
 }.let { getString(it) }
 
+fun Resources.getErrorHaiku(error: Throwable): String = when (error) {
+    is UnknownHostException -> R.string.error_haiku_no_internet
+    is ConnectException,
+    is SocketException,
+    is SocketTimeoutException,
+    is InterruptedIOException,
+    is StreamResetException -> R.string.error_haiku_timeout
+    is NotLoggedInException -> R.string.error_haiku_login_failed
+    is PasswordChangeRequiredException -> R.string.error_haiku_password_change_required
+    is ServiceUnavailableException -> R.string.error_haiku_service_unavailable
+    is FeatureDisabledException -> R.string.error_haiku_feature_disabled
+    is FeatureNotAvailableException -> R.string.error_haiku_feature_not_available
+    is BadCredentialsException -> R.string.error_haiku_bad_credentials
+    is AccountInactiveException -> R.string.error_haiku_account_inactive
+    is VulcanException -> R.string.error_haiku_unknown_uonet
+    is ScrapperException -> R.string.error_haiku_unknown_scrapper
+    is CloudflareVerificationException -> R.string.error_haiku_cloudflare_captcha
+    is SSLHandshakeException -> when {
+        error.isCausedByCertificateNotValidNow() -> R.string.error_haiku_device_datetime
+        else -> R.string.error_haiku_timeout
+    }
+    else -> R.string.error_haiku_unknown
+}.let { getString(it) }
+
 fun Throwable.isShouldBeReported(): Boolean = when (this) {
     is UnknownHostException,
     is ConnectException,

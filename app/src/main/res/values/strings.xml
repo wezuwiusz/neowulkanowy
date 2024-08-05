@@ -875,6 +875,21 @@
     <string name="error_feature_not_available">Feature not available. Login in a mode other than Mobile API</string>
     <string name="error_field_required">This field is required</string>
 
+    <!-- Errors - Haiku -->
+    <string name="error_haiku_timeout">Servers embrace silence\nOverloaded with work now\nConnection fades out</string>
+    <string name="error_haiku_login_failed">Data gets lost in\nDigital space of schools\nTry once again, please</string>
+    <string name="error_haiku_password_change_required">Password like an autumn leaf\nChanges when the time has come\nEnter a new one</string>
+    <string name="error_haiku_service_unavailable">Journal under repair\nUONET+ rests now\nPatience blossoms here</string>
+    <string name="error_haiku_feature_disabled">Function is asleep\nSchool has closed its doors to it\nSilence in system</string>
+    <string name="error_haiku_feature_not_available">The SDK is calling\nA different login mode awaits\nKey to functions locked</string>
+    <string name="error_haiku_bad_credentials">Key does not fit in\nTo system\'s digital door\nTry one more time, please</string>
+    <string name="error_haiku_account_inactive">Account sleeps deeply\nLogin alarm clock now rings\nTry again anew</string>
+    <string name="error_haiku_unknown_uonet">UONET+ błądzi\nW labiryncie własnych kodów\nWróć tu za chwilę</string>
+    <string name="error_haiku_unknown_scrapper">App remains quiet now\nLost in algorithms\' realm\nTry again later</string>
+    <string name="error_haiku_cloudflare_captcha">Captcha alike to a guardian\nDefends entry to system\nProve yourself human</string>
+    <string name="error_haiku_unknown">Unknown error lurks\nSystem\'s mystery endures\nAwait patiently here</string>
+    <string name="error_haiku_device_datetime">SSL trembles unsure\nClock beats out of rhythm now\nSynchronize your time</string>
+    <string name="error_haiku_no_internet">Network access no more\nDigital world falls silent now\nWaiting for connection</string>
 
     <!-- Mute system -->
     <string name="message_mute">Mute</string>

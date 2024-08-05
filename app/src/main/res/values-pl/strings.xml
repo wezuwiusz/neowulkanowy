@@ -964,6 +964,21 @@
     <string name="error_feature_not_available">Funkcja niedostępna. Zaloguj się w trybie innym niż Mobilne API</string>
     <string name="error_field_required">To pole jest wymagane</string>
 
+    <!-- Errors - Haiku -->
+    <string name="error_haiku_timeout">Serwery milczą\nPrzeładowane pracą\nPołączenie znika</string>
+    <string name="error_haiku_login_failed">Dane się gubią\nW cyfrowej przestrzeni szkół\nPróbuj raz jeszcze</string>
+    <string name="error_haiku_password_change_required">Hasło jak liść jesienią\nZmienia się, gdy czas nadejdzie\nNowe wpisz teraz</string>
+    <string name="error_haiku_service_unavailable">Dziennik w naprawie\nUONET+ odpoczywa\nCierpliwość kwitnie</string>
+    <string name="error_haiku_feature_disabled">Funkcja uśpiona\nSzkoła zamknęła jej drzwi\nCisza w systemie</string>
+    <string name="error_haiku_feature_not_available">SDK woła\nInny tryb logowania\nKlucz do funkcji</string>
+    <string name="error_haiku_bad_credentials">Klucz nie pasuje\nDo cyfrowych drzwi systemu\nSpróbuj raz jeszcze</string>
+    <string name="error_haiku_account_inactive">Konto drzemie głęboko\nBudzik logowania dzwoni\nPróbuj od nowa</string>
+    <string name="error_haiku_unknown_uonet">UONET+ błądzi\nW labiryncie własnych kodów\nWróć tu za chwilę</string>
+    <string name="error_haiku_unknown_scrapper">Aplikacja milczy\nZagubiona w algorytmach\nSpróbuj ponownie</string>
+    <string name="error_haiku_cloudflare_captcha">Captcha jak strażnik\nBroni wejścia do systemu\nUdowodnij się</string>
+    <string name="error_haiku_unknown">Błąd nieznajomy\nTajemnica systemu trwa\nCzekaj cierpliwie</string>
+    <string name="error_haiku_device_datetime">SSL drży niepewnie\nZegar bije nie w rytmie\nSynchronizuj czas</string>
+    <string name="error_haiku_no_internet">Sieć się urwała\nCyfrowy świat zamilkł nam\nCzekamy na łącze</string>
 
     <!-- Mute system -->
     <string name="message_mute">Wycisz</string>
