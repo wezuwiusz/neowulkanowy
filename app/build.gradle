@@ -1,5 +1,4 @@
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
-import ru.cian.huawei.publish.ReleaseNote
 
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
@@ -9,9 +8,7 @@ apply plugin: "com.google.devtools.ksp"
 apply plugin: "dagger.hilt.android.plugin"
 apply plugin: "com.google.gms.google-services"
 apply plugin: "com.github.triplet.play"
-apply plugin: "ru.cian.huawei-publish"
 apply plugin: "com.mikepenz.aboutlibraries.plugin"
-apply plugin: "com.huawei.agconnect"
 apply plugin: "kotlin-kapt"
 apply from: "jacoco.gradle"
 apply from: "sonarqube.gradle"
@@ -74,11 +71,6 @@ android {
     flavorDimensions += "platform"
 
     productFlavors {
-        hms {
-            dimension "platform"
-            manifestPlaceholders = [install_channel: "AppGallery"]
-        }
-
         play {
             dimension "platform"
             manifestPlaceholders = [
@@ -154,22 +146,6 @@ play {
     enabled.set(false)
 }
 
-huaweiPublish {
-    instances {
-        hmsRelease {
-            credentialsPath = "$rootDir/app/src/release/agconnect-credentials.json"
-            buildFormat = "aab"
-            deployType = "publish"
-            releaseNotes = [
-                new ReleaseNote(
-                    "pl-PL",
-                    "$projectDir/src/main/play/release-notes/pl-PL/default.txt"
-                )
-            ]
-        }
-    }
-}
-
 ext {
     work_manager = "2.9.0"
     android_hilt = "1.2.0"
@@ -241,9 +217,6 @@ dependencies {
 
     playImplementation "com.google.android.play:app-update-ktx:2.1.0"
     playImplementation "com.google.android.play:review-ktx:2.0.1"
-
-    hmsImplementation "com.huawei.hms:hianalytics:6.12.0.301"
-    hmsImplementation "com.huawei.agconnect:agconnect-crash:1.9.1.303"
 
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:$chucker"
 

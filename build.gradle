@@ -8,7 +8,6 @@ buildscript {
         mavenCentral()
         google()
         maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "https://developer.huawei.com/repo/" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -17,9 +16,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:8.5.1'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath 'com.google.gms:google-services:4.4.2'
-        classpath 'com.huawei.agconnect:agcp:1.9.1.303'
         classpath "com.github.triplet.gradle:play-publisher:3.8.4"
-        classpath "ru.cian:huawei-publish-gradle-plugin:1.4.2"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:5.0.0.4638"
         classpath "gradle.plugin.com.star-zero.gradle:githook:1.2.0"
         classpath "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:$about_libraries"
@@ -33,6 +30,5 @@ allprojects {
         google()
         maven { url "https://jitpack.io" }
         maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://developer.huawei.com/repo/" }
     }
 }

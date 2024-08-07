@@ -26,17 +26,5 @@
 #Config for Material Components
 -keep class com.google.android.material.tabs.** { *; }
 
-
-#Config for HMS SDK
--keepattributes *Annotation*
--keepattributes Exceptions
--keepattributes InnerClasses
--keepattributes Signature
--keep class com.huawei.agconnect.**{*;}
--keep class com.huawei.hianalytics.**{*;}
--keep class com.huawei.updatesdk.**{*;}
--keep class com.huawei.hms.**{*;}
-
-
 #Config for Wulkanowy SDK
 -keep,allowobfuscation,allowshrinking class retrofit2.Response
