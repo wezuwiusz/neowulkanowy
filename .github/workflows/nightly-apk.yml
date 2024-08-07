@@ -19,7 +19,7 @@ jobs:
     - name: Make Gradle executable
       run: chmod +x ./gradlew
     - name: Build Debug APK
-      run: ./gradlew assembleDebug
+      run: ./gradlew assembleFdroidDebug
     - name: Releasing using Hub
       uses: sangatdesai/release-apk@main
       env:
