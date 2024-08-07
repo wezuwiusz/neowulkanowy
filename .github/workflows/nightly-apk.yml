@@ -18,8 +18,8 @@ jobs:
         java-version: 17
     - name: Make Gradle executable
       run: chmod +x ./gradlew
-    - name: Build Release APK
-      run: ./gradlew assembleRelease
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug
     - name: Releasing using Hub
       uses: sangatdesai/release-apk@main
       env:
