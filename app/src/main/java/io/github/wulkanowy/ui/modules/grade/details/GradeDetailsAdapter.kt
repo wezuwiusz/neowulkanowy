@@ -21,6 +21,8 @@ import io.github.wulkanowy.utils.getBackgroundColor
 import io.github.wulkanowy.utils.getCompatColor
 import io.github.wulkanowy.utils.toFormattedString
 import timber.log.Timber
+import java.text.DecimalFormat
+import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 
@@ -157,6 +159,30 @@ class GradeDetailsAdapter @Inject constructor() : BaseExpandableAdapter<Recycler
             gradeHeaderContainer.isEnabled = expandMode != GradeExpandMode.ALWAYS_EXPANDED
             gradeHeaderContainer.setOnClickListener {
                 expandGradeHeader(headerPosition, header, holder)
+            }
+
+            if (header.grades.first().value is Grade) {
+                val formatter = DecimalFormat("#0.00")
+                val average = formatter.format(header.average)
+                gradeHeaderItemValue?.text = average;
+                gradeHeaderItemValue?.backgroundTintList = ColorStateList.valueOf(
+                    context.getCompatColor(Grade(
+                        value = header.average ?: 0.0,
+                        semesterId = 0,
+                        studentId = 0,
+                        subject = "",
+                        entry = "",
+                        modifier = 0.0,
+                        comment = "",
+                        color = "",
+                        gradeSymbol = "",
+                        description = "",
+                        weight = "",
+                        weightValue = 0.0,
+                        date = LocalDate.now(),
+                        teacher = ""
+                    ).getBackgroundColor(gradeColorTheme))
+                )
             }
         }
     }

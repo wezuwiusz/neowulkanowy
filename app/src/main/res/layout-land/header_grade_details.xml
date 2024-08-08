@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:windowBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gradeHeaderContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        tools:context=".ui.modules.grade.details.GradeDetailsAdapter">
+
+        <View
+            android:id="@+id/gradeHeaderDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/gradeHeaderSubject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/gradeHeaderNote"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/gradeHeaderAverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/gradeHeaderAverageAllYear"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/gradeHeaderSubject"
+            app:layout_constraintTop_toBottomOf="@+id/gradeHeaderSubject"
+            tools:text="Average: 6,00" />
+
+        <TextView
+            android:id="@+id/gradeHeaderAverageAllYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/gradeHeaderPointsSum"
+            app:layout_constraintStart_toEndOf="@+id/gradeHeaderAverage"
+            app:layout_constraintTop_toBottomOf="@+id/gradeHeaderSubject"
+            tools:text="Roczna: 5,00"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/gradeHeaderPointsSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/gradeHeaderNumber"
+            app:layout_constraintStart_toEndOf="@+id/gradeHeaderAverageAllYear"
+            app:layout_constraintTop_toBottomOf="@+id/gradeHeaderSubject"
+            tools:text="Points: 123/200 (61,5%)" />
+
+        <TextView
+            android:id="@+id/gradeHeaderNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gradeHeaderPointsSum"
+            app:layout_constraintTop_toBottomOf="@id/gradeHeaderSubject"
+            tools:text="12 grades" />
+
+        <TextView
+            android:id="@+id/gradeHeaderNote"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/background_header_note"
+            android:gravity="center"
+            android:minWidth="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="?colorOnPrimary"
+            android:textSize="14sp"
+            app:autoSizeMaxTextSize="16dp"
+            app:autoSizeMinTextSize="10dp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/gradeHeaderItemValue"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="255" />
+
+        <TextView
+            android:id="@+id/gradeHeaderItemValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_grade_rounded"
+            android:backgroundTint="@color/grade_material_default"
+            android:gravity="center"
+            android:maxLength="5"
+            android:minWidth="45dp"
+            android:minHeight="45dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginRight="16dp"
+            tools:text="6" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
