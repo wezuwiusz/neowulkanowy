@@ -27,6 +27,6 @@ jobs:
           path: app/build/outputs/apk/fdroid/debug/app-fdroid-debug.apk
     - name: Send Telegram message
       run: |
-          printf "<b>Nowy build nightly\!</b>\nZbudowany z commitu: ${{ github.event.head_commit.message }}\n\nPobierz z: https://github.com/wezuwiusz/neowulkanowy/actions/workflows/nightly-apk.yml?query=is%3Asuccess++" > tg.html
+          printf  printf '<b>Nowy build nightly!</b>\nZbudowany z commitu: ${{ github.event.head_commit.message }}\n\nPobierz z: https://github.com/wezuwiusz/neowulkanowy/actions/workflows/nightly-apk.yml?query=is:success' > tg.html
           TEXT=$(< "./tg.html")
           curl -s "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendmessage" --data "text=${TEXT}&chat_id=-1002156238140&parse_mode=HTML&disable_web_page_preview=True" > /dev/null
