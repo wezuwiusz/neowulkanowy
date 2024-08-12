@@ -995,5 +995,6 @@
     <string name="onboarding_text_about">Dzienniczek Wezuwiusz jest aplikacją tworzoną przez uczniów, dla uczniów oraz rodziców.</string>
     <string name="onboarding_text_dev">Aplikacja jest wolnym oprogramowaniem. Jeżeli umiesz programować, zachęcamy cię do dołączenia nas w jej tworzeniu!</string>
     <string name="onboarding_text_hate">Nie jesteśmy związani z firmą VULCAN i nie aprobujemy hejtu na nią.</string>
+    <string name="onboarding_text_liability">Ponosisz pełną odpowiedzialność za użytkowanie nieoficjalnej aplikacji do obsługi dziennika VULCAN.</string>
     <string name="onboarding_button_agree">Akceptuję</string>
 </resources>
