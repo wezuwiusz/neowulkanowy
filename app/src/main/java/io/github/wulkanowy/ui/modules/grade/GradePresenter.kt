@@ -53,6 +53,11 @@ class GradePresenter @Inject constructor(
         return true
     }
 
+    fun onShowFutureGPACalculator(): Boolean {
+        view?.showFutureGPACalculator()
+        return true
+    }
+
     fun onSemesterSelected(index: Int) {
         if (selectedIndex != index - 1) {
             Timber.i("Change semester in grade view to ${index + 1}")

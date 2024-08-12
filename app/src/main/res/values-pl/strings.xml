@@ -150,6 +150,9 @@
     <string name="grade_statistics_student_grade">Twoja ocena: %1$s</string>
     <string name="grade_statistics_average_class">Klasa</string>
     <string name="grade_statistics_average_student">Uczeń</string>
+    <string name="grade_future_calculator_header">Oblicz średnią po dodaniu nowej oceny</string>
+    <string name="grade_future_calculator_result">Twoja przyszła średnia:</string>
+    <string name="grade_future_calculator_menu">Oblicz średnią po dodaniu oceny</string>
     <plurals name="grade_number_item">
         <item quantity="one">%d ocena</item>
         <item quantity="few">%d oceny</item>

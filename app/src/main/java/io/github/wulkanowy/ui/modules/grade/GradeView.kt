@@ -23,6 +23,8 @@ interface GradeView : BaseView {
 
     fun showSemesterDialog(selectedIndex: Int, semesters: List<Semester>)
 
+    fun showFutureGPACalculator()
+
     fun setCurrentSemesterName(semester: Int, schoolYear: Int, nextSchoolYear: Int = 0)
 
     fun notifyChildLoadData(index: Int, semesterId: Int, forceRefresh: Boolean)

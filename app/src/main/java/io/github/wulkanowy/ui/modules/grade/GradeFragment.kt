@@ -12,12 +12,16 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.wulkanowy.R
 import io.github.wulkanowy.data.db.entities.Semester
+import io.github.wulkanowy.databinding.DialogHomeworkAddBinding
 import io.github.wulkanowy.databinding.FragmentGradeBinding
 import io.github.wulkanowy.ui.base.BaseFragment
 import io.github.wulkanowy.ui.base.BaseFragmentPagerAdapter
 import io.github.wulkanowy.ui.modules.grade.details.GradeDetailsFragment
+import io.github.wulkanowy.ui.modules.grade.futurecalculator.GradeFutureCalculatorDialog
 import io.github.wulkanowy.ui.modules.grade.statistics.GradeStatisticsFragment
 import io.github.wulkanowy.ui.modules.grade.summary.GradeSummaryFragment
+import io.github.wulkanowy.ui.modules.homework.details.HomeworkDetailsDialog
+import io.github.wulkanowy.ui.modules.main.MainActivity
 import io.github.wulkanowy.ui.modules.main.MainView
 import io.github.wulkanowy.utils.dpToPx
 import io.github.wulkanowy.utils.setOnSelectPageListener
@@ -60,6 +64,7 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_menu_grade, menu)
         semesterSwitchMenu = menu.findItem(R.id.gradeMenuSemester)
+        inflater.inflate(R.menu.action_menu_future_gpa_calculator, menu)
         presenter.onCreateMenu()
     }
 
@@ -109,6 +114,7 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.gradeMenuSemester) presenter.onSemesterSwitch()
+        else if (item.itemId == R.id.gradeMenuFutureGPACalculator) presenter.onShowFutureGPACalculator()
         else false
     }
 
@@ -158,6 +164,10 @@ class GradeFragment : BaseFragment<FragmentGradeBinding>(R.layout.fragment_grade
             .setTitle(R.string.grade_switch_semester)
             .setNegativeButton(android.R.string.cancel) { _, _ -> }
             .show()
+    }
+
+    override fun showFutureGPACalculator() {
+        (activity as? MainActivity)?.showDialogFragment(GradeFutureCalculatorDialog())
     }
 
     override fun setCurrentSemesterName(semester: Int, schoolYear: Int, nextSchoolYear: Int) {
