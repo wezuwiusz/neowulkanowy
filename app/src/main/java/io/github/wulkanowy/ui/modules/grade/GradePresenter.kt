@@ -59,13 +59,17 @@ class GradePresenter @Inject constructor(
     }
 
     fun onSemesterSelected(index: Int) {
-        if (selectedIndex != index - 1) {
+        if (selectedIndex != index + 1) {
             Timber.i("Change semester in grade view to ${index + 1}")
             selectedIndex = index + 1
             selectedSemesterId = availableSemesters[index].semesterId
             loadedSemesterId.clear()
             view?.let {
-                it.setCurrentSemesterName(availableSemesters[index].semesterName, availableSemesters[index].start.year, availableSemesters[index].end.year)
+                it.setCurrentSemesterName(
+                    availableSemesters[index].semesterName,
+                    availableSemesters[index].start.year,
+                    availableSemesters[index].end.year
+                )
                 notifyChildrenSemesterChange()
                 loadChild(it.currentPageIndex)
             }
