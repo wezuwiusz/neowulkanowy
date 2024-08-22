@@ -71,6 +71,8 @@ class TimetableWidgetFactory(
 
         items = emptyList()
 
+        return
+
         runBlocking {
             runCatching {
                 val student = getStudent(studentId) ?: return@runBlocking

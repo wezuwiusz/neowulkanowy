@@ -130,6 +130,7 @@ class LuckyNumberWidgetProvider : AppWidgetProvider() {
     }
 
     private fun getLuckyNumber(studentId: Long, appWidgetId: Int) = runBlocking {
+        return@runBlocking null
         try {
             val students = studentRepository.getSavedStudents()
             val student = students.singleOrNull { it.student.id == studentId }?.student

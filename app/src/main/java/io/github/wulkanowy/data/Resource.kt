@@ -267,7 +267,7 @@ inline fun <DatabaseType, ApiType, OutputType> networkBoundResource(
     emit(Resource.Loading())
 
     val data = query().first()
-    if (shouldFetch(data)) {
+    if (false) {
         emit(Resource.Intermediate(data))
 
         try {

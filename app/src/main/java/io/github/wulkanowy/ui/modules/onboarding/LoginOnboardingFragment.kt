@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager
 import io.github.wulkanowy.R
 import io.github.wulkanowy.databinding.FragmentOnboardingBinding
 import io.github.wulkanowy.ui.base.BaseFragment
+import io.github.wulkanowy.ui.modules.end.EndFragment
 import io.github.wulkanowy.ui.modules.login.LoginActivity
 
 class LoginOnboardingFragment : BaseFragment<FragmentOnboardingBinding>(R.layout.fragment_onboarding), LoginOnboardingView {

@@ -41,6 +41,7 @@ class SyncWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result = withContext(dispatchersProvider.io) {
         Timber.i("SyncWorker is starting")
+        return@withContext Result.failure()
 
         if (!studentRepository.isCurrentStudentSet()) return@withContext Result.failure()
 

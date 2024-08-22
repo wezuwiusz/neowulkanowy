@@ -997,4 +997,8 @@
     <string name="onboarding_text_hate">Nie jesteśmy związani z firmą VULCAN i nie aprobujemy hejtu na nią.</string>
     <string name="onboarding_text_liability">Ponosisz pełną odpowiedzialność za użytkowanie nieoficjalnej aplikacji do obsługi dziennika VULCAN.</string>
     <string name="onboarding_button_agree">Akceptuję</string>
+
+    <!-- End -->
+    <string name="end_title">The end of Wezuwiusz</string>
+    <string name="end_message">Dnia 22 sierpnia 2024 otrzymaliśmy pismo od pewnej firmy, w którym nakazano nam zakończyć projekt Dzienniczek Wezuwiusz. Stosujemy się do zawartych warunków i kończymy projekt Dzienniczek Wezuwiusz. Obecnym użytkownikom aplikacji rekomendujemy korzystanie albo z oficjalnej aplikacji eduVULCAN, albo z oficjalnej strony internetowej.\n\nDzienniczek Wezuwiusz to projekt w który włożyłem ponad 800 godzin swoich wakacji całkowicie za darmo i niezwykle przykro mi go kończyć. Chciałbym podziękować wszystkim osobom, które włożyły się w powstawanie aplikacji, w tym zlewchan\'owi oraz tomaszk8266. Chciałbym również podziękować wszystkim członkom chatu Wezuwiusza na Telegramie, za dyskusje zarówno związane jak i niezwiązane z oświatą. Miłego roku szkolnego! </string>
 </resources>

@@ -16,6 +16,7 @@ import io.github.wulkanowy.R
 import io.github.wulkanowy.data.pojos.RegisterUser
 import io.github.wulkanowy.databinding.ActivityLoginBinding
 import io.github.wulkanowy.ui.base.BaseActivity
+import io.github.wulkanowy.ui.modules.end.EndFragment
 import io.github.wulkanowy.ui.modules.login.advanced.LoginAdvancedFragment
 import io.github.wulkanowy.ui.modules.login.form.LoginFormFragment
 import io.github.wulkanowy.ui.modules.login.onboarding.LoginOnboardingFragment
@@ -57,12 +58,7 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val hasCompletedOnboarding = prefs.getBoolean("completedOnboarding", false)
 
-        if (!hasCompletedOnboarding) {
-            openFragment(LoginOnboardingFragment.newInstance(), clearBackStack = true)
-        }
-        else if (savedInstanceState == null) {
-            openFragment(LoginFormFragment.newInstance(), clearBackStack = true)
-        }
+        openFragment(EndFragment().newInstance(), clearBackStack = true)
     }
 
     override fun initView() {
@@ -70,6 +66,7 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowTitleEnabled(false)
         }
+        openFragment(EndFragment(), clearBackStack = true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -135,5 +132,10 @@ class LoginActivity : BaseActivity<LoginPresenter, ActivityLoginBinding>(), Logi
         super.onResume()
         inAppUpdateHelper.onResume()
         presenter.updateSdkMappings()
+        navigateToEnd()
+    }
+
+    override fun navigateToEnd() {
+        openFragment(EndFragment(), clearBackStack = true)
     }
 }

@@ -156,7 +156,7 @@ ext {
 }
 
 dependencies {
-    implementation "com.github.wezuwiusz:neowulkanowy-sdk:-SNAPSHOT"
+    implementation "com.github.wezuwiusz:neowulkanowy-sdk:8042e81592"
 
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"
 

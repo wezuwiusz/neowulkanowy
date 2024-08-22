@@ -17,6 +17,7 @@ import io.github.wulkanowy.services.sync.channels.Channel
 import io.github.wulkanowy.utils.AppInfo
 import io.github.wulkanowy.utils.isHolidays
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import timber.log.Timber
 import java.time.LocalDate.now
 import java.util.concurrent.TimeUnit.MINUTES
@@ -70,6 +71,7 @@ class SyncManager @Inject constructor(
 
     // if quiet, no notifications will be sent
     fun startOneTimeSyncWorker(quiet: Boolean = false): Flow<WorkInfo?> {
+        return flowOf(null)
         val work = OneTimeWorkRequestBuilder<SyncWorker>()
             .setInputData(
                 Data.Builder()
